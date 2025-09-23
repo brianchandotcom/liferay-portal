@@ -796,30 +796,32 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return sitePage;
 	}
 
-	private SitePage _getRandomSitePageWithWidgetPageTemplate() throws Exception {
+	private SitePage _getRandomSitePageWithWidgetPageTemplate()
+		throws Exception {
+
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
 
 		WidgetPageSettings widgetPageSettings =
-				(WidgetPageSettings)sitePage.getPageSettings();
+			(WidgetPageSettings)sitePage.getPageSettings();
 
 		widgetPageSettings.setInheritChanges(true);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-				LayoutPageTemplateEntryTestUtil.
-						getWidgetPageLayoutPageTemplateEntry(
-								ServiceContextTestUtil.getServiceContext(
-										testGroup.getGroupId()));
+			LayoutPageTemplateEntryTestUtil.
+				getWidgetPageLayoutPageTemplateEntry(
+					ServiceContextTestUtil.getServiceContext(
+						testGroup.getGroupId()));
 
 		ItemExternalReference itemExternalReference =
-				new ItemExternalReference() {
-					{
-						setExternalReferenceCode(
-								layoutPageTemplateEntry.getExternalReferenceCode());
-					}
-				};
+			new ItemExternalReference() {
+				{
+					setExternalReferenceCode(
+						layoutPageTemplateEntry.getExternalReferenceCode());
+				}
+			};
 
 		widgetPageSettings.setWidgetPageTemplateReference(
-				itemExternalReference);
+			itemExternalReference);
 
 		return sitePage;
 	}
@@ -1362,34 +1364,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPatchSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
 		throws Exception {
 
-		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
-
-		WidgetPageSettings widgetPageSettings =
-			(WidgetPageSettings)randomSitePage.getPageSettings();
-
-		widgetPageSettings.setInheritChanges(true);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.
-				getWidgetPageLayoutPageTemplateEntry(
-					ServiceContextTestUtil.getServiceContext(
-						testGroup.getGroupId()));
-
-		ItemExternalReference itemExternalReference =
-			new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						layoutPageTemplateEntry.getExternalReferenceCode());
-				}
-			};
-
-		widgetPageSettings.setWidgetPageTemplateReference(
-			itemExternalReference);
+		SitePage randomSitePage = _getRandomSitePageWithWidgetPageTemplate();
 
 		SitePage sitePage = _testPutSiteSitePage(
 			randomSitePage, randomSitePage);
 
-		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
 
 		widgetPageSettings.setInheritChanges(false);
 		widgetPageSettings.setLayoutTemplateId("2_columns_ii");
@@ -1406,7 +1387,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 								setInheritChanges(false);
 								setType(Type.WIDGET_PAGE_SETTINGS);
 								setWidgetPageTemplateReference(
-									itemExternalReference);
+									widgetPageSettings.
+										getWidgetPageTemplateReference());
 							}
 						});
 					setType(SitePage.Type.WIDGET_PAGE);
@@ -1633,13 +1615,14 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private void _testPostSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
-			throws Exception {
+		throws Exception {
 
 		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate());
 
 		SitePage sitePage = _getRandomSitePageWithWidgetPageTemplate();
 
-		WidgetPageSettings widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
 
 		widgetPageSettings.setInheritChanges(false);
 
@@ -1938,34 +1921,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPutSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
 		throws Exception {
 
-		SitePage randomSitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
-
-		WidgetPageSettings widgetPageSettings =
-			(WidgetPageSettings)randomSitePage.getPageSettings();
-
-		widgetPageSettings.setInheritChanges(true);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			LayoutPageTemplateEntryTestUtil.
-				getWidgetPageLayoutPageTemplateEntry(
-					ServiceContextTestUtil.getServiceContext(
-						testGroup.getGroupId()));
-
-		ItemExternalReference itemExternalReference =
-			new ItemExternalReference() {
-				{
-					setExternalReferenceCode(
-						layoutPageTemplateEntry.getExternalReferenceCode());
-				}
-			};
-
-		widgetPageSettings.setWidgetPageTemplateReference(
-			itemExternalReference);
+		SitePage randomSitePage = _getRandomSitePageWithWidgetPageTemplate();
 
 		SitePage sitePage = _testPutSiteSitePage(
 			randomSitePage, randomSitePage);
 
-		widgetPageSettings = (WidgetPageSettings)sitePage.getPageSettings();
+		WidgetPageSettings widgetPageSettings =
+			(WidgetPageSettings)sitePage.getPageSettings();
 
 		widgetPageSettings.setInheritChanges(false);
 

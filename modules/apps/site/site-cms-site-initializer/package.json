@@ -38,6 +38,7 @@
 		"@liferay/layout-js-components-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"classnames": "2.3.1",
+		"document-library-preview-document": "*",
 		"document-library-preview-image": "*",
 		"document-library-video": "*",
 		"formik": "2.1.4",

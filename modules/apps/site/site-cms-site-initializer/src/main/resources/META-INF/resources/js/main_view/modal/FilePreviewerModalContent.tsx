@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
 import classNames from 'classnames';
+import {DocumentPreviewer} from 'document-library-preview-document';
 import {ImagePreviewer} from 'document-library-preview-image';
 import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
@@ -21,6 +22,7 @@ export type File = {
 	};
 	mimeType: string;
 	name: string;
+	numberOfPages?: number;
 	previewURL: string;
 	thumbnailURL: string;
 };
@@ -34,8 +36,11 @@ export default function FilePreviewerModalContent({
 	file,
 	headerName,
 }: FilePreviewerModalContentProps) {
-	const {link, mimeType, name, previewURL, thumbnailURL} = file;
+	const {link, mimeType, name, numberOfPages, previewURL, thumbnailURL} =
+		file;
 	const params = new URLSearchParams(thumbnailURL);
+	const hasDocumentPreview = numberOfPages && previewURL;
+	const baseDocumentImageURL = new URL(previewURL, window.location.href);
 	const hasImagePreview = params.has('imageThumbnail');
 	const isVideo = mimeType.startsWith('video/') && previewURL;
 
@@ -71,7 +76,12 @@ export default function FilePreviewerModalContent({
 					'bg-light': !hasImagePreview,
 				})}
 			>
-				{hasImagePreview ? (
+				{hasDocumentPreview ? (
+					<DocumentPreviewer
+						baseImageURL={baseDocumentImageURL.toString()}
+						totalPages={numberOfPages}
+					/>
+				) : hasImagePreview ? (
 					<ImagePreviewer alt={name} imageURL={link.href} />
 				) : isVideo ? (
 					<DLVideoIframe videoPreviewURL={previewURL} />

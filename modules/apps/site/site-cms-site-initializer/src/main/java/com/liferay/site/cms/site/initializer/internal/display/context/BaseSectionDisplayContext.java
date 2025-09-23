@@ -226,7 +226,7 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(8);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
 
@@ -250,8 +250,9 @@ public abstract class BaseSectionDisplayContext {
 			sb.append(getCMSSectionFilterString());
 		}
 
-		sb.append("&nestedFields=embedded,file.previewURL,file.");
-		sb.append("thumbnailURL,systemProperties.objectDefinitionBrief");
+		sb.append("&nestedFields=embedded,file.numberOfPages,");
+		sb.append("file.previewURL,file.thumbnailURL,");
+		sb.append("systemProperties.objectDefinitionBrief");
 
 		return sb.toString();
 	}

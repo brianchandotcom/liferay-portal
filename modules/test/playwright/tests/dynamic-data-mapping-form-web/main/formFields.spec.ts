@@ -22,7 +22,7 @@ test.afterEach(async ({formsPage}) => {
 });
 
 test.describe('Manage fields through Form Preview page', () => {
-	test('assert that it is possible to delete the predefined value of a text field', async ({
+	test('Assert that it is possible to delete the predefined value of a text field', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
@@ -56,7 +56,7 @@ test.describe('Manage fields through Form Preview page', () => {
 		await newTabPage.close();
 	});
 
-	test('duplicating field with evaluation rules has correct behavior', async ({
+	test('Duplicating field with evaluation rules has correct behavior', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		page,
@@ -99,76 +99,77 @@ test.describe('Manage fields through Form Preview page', () => {
 		).toHaveCount(2);
 	});
 
-	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types', async ({
-		formBuilderPage,
-		formBuilderSidePanelPage,
-	}) => {
-		const testData: {
-			expectedValue: string;
-			fieldTitle: FormFieldTypeTitle;
-			inputValue: string;
-		}[] = [
-			{
-				expectedValue: 'bday',
-				fieldTitle: 'Date',
-				inputValue: '+)(*&^%$#@ bday$__%  ',
-			},
-			{
-				expectedValue: 'one-time-code',
-				fieldTitle: 'Numeric',
-				inputValue: '****[][one-time-code&&#()',
-			},
-			{
-				expectedValue: 'transaction-currency',
-				fieldTitle: 'Text',
-				inputValue: 'transaction-currencyextracharacters',
-			},
-		];
+	test(
+		'HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types',
+		{tag: ['@LPD-12824']},
+		async ({formBuilderPage, formBuilderSidePanelPage}) => {
+			const testData: {
+				expectedValue: string;
+				fieldTitle: FormFieldTypeTitle;
+				inputValue: string;
+			}[] = [
+				{
+					expectedValue: 'bday',
+					fieldTitle: 'Date',
+					inputValue: '+)(*&^%$#@ bday$__%  ',
+				},
+				{
+					expectedValue: 'one-time-code',
+					fieldTitle: 'Numeric',
+					inputValue: '****[][one-time-code&&#()',
+				},
+				{
+					expectedValue: 'transaction-currency',
+					fieldTitle: 'Text',
+					inputValue: 'transaction-currencyextracharacters',
+				},
+			];
 
-		await formBuilderPage.goToNew();
+			await formBuilderPage.goToNew();
 
-		await expect(formBuilderPage.newFormHeading).toBeVisible();
+			await expect(formBuilderPage.newFormHeading).toBeVisible();
 
-		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+			await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
-		for (const data of testData) {
-			await formBuilderSidePanelPage.addFieldByDoubleClick(
-				data.fieldTitle
-			);
+			for (const data of testData) {
+				await formBuilderSidePanelPage.addFieldByDoubleClick(
+					data.fieldTitle
+				);
 
-			await formBuilderSidePanelPage.clickAdvancedTab();
+				await formBuilderSidePanelPage.clickAdvancedTab();
 
-			await expect(
-				formBuilderSidePanelPage.htmlAutocompleteAttributeField
-			).toBeVisible();
-
-			await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
-				data.inputValue
-			);
-
-			await formBuilderSidePanelPage.clickBackButton();
-		}
-
-		const newTabPage = await formBuilderPage.openPreviewForm();
-
-		for (const data of testData) {
-			if (data.fieldTitle === 'Date') {
 				await expect(
-					newTabPage.getByPlaceholder('__/__/____')
-				).toHaveAttribute('autocomplete', data.expectedValue);
+					formBuilderSidePanelPage.htmlAutocompleteAttributeField
+				).toBeVisible();
 
-				continue;
+				await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
+					data.inputValue
+				);
+
+				await formBuilderSidePanelPage.clickBackButton();
 			}
 
-			await expect(
-				newTabPage.getByLabel(data.fieldTitle)
-			).toHaveAttribute('autocomplete', data.expectedValue);
+			const newTabPage = await formBuilderPage.openPreviewForm();
+
+			for (const data of testData) {
+				if (data.fieldTitle === 'Date') {
+					await expect(
+						newTabPage.getByPlaceholder('__/__/____')
+					).toHaveAttribute('autocomplete', data.expectedValue);
+
+					continue;
+				}
+
+				await expect(
+					newTabPage.getByLabel(data.fieldTitle)
+				).toHaveAttribute('autocomplete', data.expectedValue);
+			}
+
+			await newTabPage.close();
 		}
+	);
 
-		await newTabPage.close();
-	});
-
-	test('make sure the aria-labelledby reference is present in the captcha form view', async ({
+	test('Make sure the aria-labelledby reference is present in the captcha form view', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
@@ -206,7 +207,7 @@ test.describe('Manage fields through Form Preview page', () => {
 		await newTabPage.close();
 	});
 
-	test('verify boolean field aria-labelledby is only created when there is corresponding label rendered', async ({
+	test('Verify boolean field aria-labelledby is only created when there is corresponding label rendered', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
@@ -351,7 +352,7 @@ test.describe('Manage fields through Form Preview page', () => {
 });
 
 test.describe('Manage fields through Form Builder page', () => {
-	test('assert edition of a rich text field predefined value that contains a rule', async ({
+	test('Assert edition of a rich text field predefined value that contains a rule', async ({
 		formBuilderPage,
 		formsPage,
 		page,
@@ -399,7 +400,7 @@ test.describe('Manage fields through Form Builder page', () => {
 		).toBeVisible();
 	});
 
-	test('assert that a date field can be previewed', async ({
+	test('Assert that a date field can be previewed', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
@@ -430,7 +431,7 @@ test.describe('Manage fields through Form Builder page', () => {
 		await expect(newTabPage.getByText(formattedDate)).toBeVisible();
 	});
 
-	test('assert that a fields group can be previewed', async ({
+	test('Assert that a fields group can be previewed', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 	}) => {
@@ -492,6 +493,7 @@ test.describe('Manage fields through Form Builder page', () => {
 		).toHaveCount(2);
 	});
 
+	test('Fields group can be translated and collapsed', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		page,

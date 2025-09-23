@@ -98,6 +98,7 @@ exports[`document-library-preview-document renders a document previewer with nin
       class="preview-file-container preview-file-max-height"
     >
       <img
+        alt=""
         class="preview-file-document preview-file-document-fit"
         src="http://localhost/document-images/?previewFileIndex=5"
       />
@@ -185,6 +186,7 @@ exports[`document-library-preview-document renders a document previewer with ten
       class="preview-file-container preview-file-max-height"
     >
       <img
+        alt=""
         class="preview-file-document preview-file-document-fit"
         src="http://localhost/document-images/?previewFileIndex=1"
       />

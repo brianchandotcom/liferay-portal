@@ -15,8 +15,6 @@ describe('document-library-preview-document', () => {
 		const {asFragment} = render(
 			<DocumentPreviewer
 				baseImageURL="http://localhost/document-images/"
-				initialPage={1}
-				spritemap="icons.svg"
 				totalPages={10}
 			/>
 		);
@@ -29,7 +27,6 @@ describe('document-library-preview-document', () => {
 			<DocumentPreviewer
 				baseImageURL="http://localhost/document-images/"
 				initialPage={5}
-				spritemap="icons.svg"
 				totalPages={19}
 			/>
 		);
@@ -43,7 +40,6 @@ describe('document-library-preview-document', () => {
 				alt="alt text"
 				baseImageURL="http://localhost/document-images/"
 				initialPage={1}
-				spritemap="icons.svg"
 				totalPages={10}
 			/>
 		);

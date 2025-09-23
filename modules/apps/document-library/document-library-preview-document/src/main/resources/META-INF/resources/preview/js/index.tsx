@@ -30,9 +30,9 @@ const VALID_KEY_CODES = [
 const WAIT_BETWEEN_GO_TO_PAGE = 250;
 
 type DocumentPreviewerProps = {
-	alt: string;
+	alt?: string;
 	baseImageURL: string;
-	initialPage: number;
+	initialPage?: number;
 	totalPages: number;
 };
 
@@ -42,9 +42,9 @@ type LoadedPage = {
 };
 
 const DocumentPreviewer = ({
-	alt,
+	alt = '',
 	baseImageURL,
-	initialPage,
+	initialPage = 1,
 	totalPages,
 }: DocumentPreviewerProps) => {
 	const [currentPage, setCurrentPage] = useState(initialPage);

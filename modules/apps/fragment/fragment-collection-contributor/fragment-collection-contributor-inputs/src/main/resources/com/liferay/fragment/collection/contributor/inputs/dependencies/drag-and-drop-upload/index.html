@@ -8,7 +8,7 @@
 [/#if]
 
 <div aria-label="${input.label}" class="drag-and-drop-upload d-flex flex-column" data-lfr-styles role="group">
-	<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if] mb-0 flex-grow-0" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-label">
+	<label class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]flex-grow-0" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-label">
 		${htmlUtil.escape(input.label)}
 
 		<span id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-read-only" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
@@ -18,7 +18,7 @@
 
 	<div class="d-flex flex-grow-1 flex-row overflow-hidden">
 		<div class="dropzone h-100 w-100" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-dropzone">
-			<div class="dropzone-default-content">
+			<div class="dropzone-default-content rounded">
 				<img alt="" class="pb-3" role="presentation" src="${themeDisplay.getPortalURL() + themeDisplay.getPathContext() + '/o/fragment-collection-contributor-inputs/drag_drop_illustration.svg'}" />
 
 				<p class="text-4 text-secondary text-weight-semi-bold" id="${fragmentEntryLinkNamespace}-drag-and-drop-upload-dropzone-text">

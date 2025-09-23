@@ -7,6 +7,8 @@ export type Site = {
 	externalReferenceCode: string;
 	id: string;
 	logo: string;
-	name: string;
+	name: {
+		[key: string]: string;
+	};
 	searchable: boolean;
 };

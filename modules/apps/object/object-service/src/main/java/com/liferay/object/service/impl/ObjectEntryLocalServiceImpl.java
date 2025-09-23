@@ -943,7 +943,7 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public Map<Object, Long> getAggregationCounts(
 			long groupId, long objectDefinitionId, String aggregationTerm,
-			Predicate predicate, int start, int end)
+			Predicate predicate, boolean preferApproved, int start, int end)
 		throws PortalException {
 
 		Map<Object, Long> aggregationCounts = new HashMap<>();
@@ -979,13 +979,12 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(
 				dynamicObjectDefinitionTable.getPrimaryKeyColumn())
 		).where(
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				ObjectEntryTable.INSTANCE.headObjectEntryId
-			).and(
-				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinitionId)
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinitionId
 			).and(
 				Predicate.withParentheses(predicate)
+			).and(
+				_getHeadObjectEntryPredicate(preferApproved)
 			).and(
 				_getPermissionWherePredicate(
 					dynamicObjectDefinitionTable, groupId, 0L)
@@ -1237,8 +1236,8 @@ public class ObjectEntryLocalServiceImpl
 				).as(
 					"aggregationCount"
 				)),
-			groupId, objectRelationshipId, predicate, objectEntryId, related,
-			search
+			groupId, objectRelationshipId, predicate, false, objectEntryId,
+			related, search
 		).groupBy(
 			table.getColumn(objectField.getDBColumnName())
 		).limit(
@@ -1258,13 +1257,14 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, Predicate predicate,
-			long primaryKey, boolean related, String search, int start, int end,
-			Sort[] sorts)
+			boolean preferApproved, long primaryKey, boolean related,
+			String search, int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.select(ObjectEntryTable.INSTANCE), groupId,
-			objectRelationshipId, predicate, primaryKey, related, search
+			objectRelationshipId, predicate, preferApproved, primaryKey,
+			related, search
 		).limit(
 			start, end
 		);
@@ -1294,8 +1294,8 @@ public class ObjectEntryLocalServiceImpl
 		DSLQuery dslQuery = _getOneToManyObjectEntriesGroupByStep(
 			DSLQueryFactoryUtil.countDistinct(
 				ObjectEntryTable.INSTANCE.objectEntryId),
-			groupId, objectRelationshipId, predicate, primaryKey, related,
-			search);
+			groupId, objectRelationshipId, predicate, false, primaryKey,
+			related, search);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -1345,14 +1345,15 @@ public class ObjectEntryLocalServiceImpl
 
 	public List<Long> getPrimaryKeys(
 			Long[] groupIds, long companyId, long userId,
-			long objectDefinitionId, Predicate predicate, String search,
-			int start, int end, Sort[] sorts)
+			long objectDefinitionId, Predicate predicate,
+			boolean preferApproved, String search, int start, int end,
+			Sort[] sorts)
 		throws PortalException {
 
 		DSLQuery dslQuery = _getObjectEntriesGroupByStep(
 			groupIds,
 			DSLQueryFactoryUtil.select(ObjectEntryTable.INSTANCE.objectEntryId),
-			objectDefinitionId, predicate, search
+			objectDefinitionId, predicate, preferApproved, search
 		).limit(
 			start, end
 		);
@@ -1608,7 +1609,8 @@ public class ObjectEntryLocalServiceImpl
 
 	public int getValuesListCount(
 			Long[] groupIds, long companyId, long userId,
-			long objectDefinitionId, Predicate predicate, String search)
+			long objectDefinitionId, Predicate predicate,
+			boolean preferApproved, String search)
 		throws PortalException {
 
 		return objectEntryPersistence.dslQueryCount(
@@ -1616,7 +1618,7 @@ public class ObjectEntryLocalServiceImpl
 				groupIds,
 				DSLQueryFactoryUtil.countDistinct(
 					ObjectEntryTable.INSTANCE.objectEntryId),
-				objectDefinitionId, predicate, search));
+				objectDefinitionId, predicate, preferApproved, search));
 	}
 
 	@Override
@@ -3746,6 +3748,16 @@ public class ObjectEntryLocalServiceImpl
 		throw new IllegalArgumentException("Invalid function " + function);
 	}
 
+	private Predicate _getHeadObjectEntryPredicate(boolean preferApproved) {
+		if (preferApproved) {
+			return ObjectEntryTable.INSTANCE.status.eq(
+				WorkflowConstants.STATUS_APPROVED);
+		}
+
+		return ObjectEntryTable.INSTANCE.objectEntryId.eq(
+			ObjectEntryTable.INSTANCE.headObjectEntryId);
+	}
+
 	private Predicate _getInnerJoinRootObjectDefinitionTablePredicate(
 		DynamicObjectDefinitionTable dynamicObjectDefinitionTable) {
 
@@ -3946,7 +3958,7 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getObjectEntriesGroupByStep(
 			Long[] groupIds, FromStep fromStep, long objectDefinitionId,
-			Predicate predicate, String search)
+			Predicate predicate, boolean preferApproved, String search)
 		throws PortalException {
 
 		DynamicObjectDefinitionLocalizationTable
@@ -3978,11 +3990,8 @@ public class ObjectEntryLocalServiceImpl
 				dynamicObjectDefinitionLocalizationTable,
 				dynamicObjectDefinitionTable)
 		).where(
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				ObjectEntryTable.INSTANCE.headObjectEntryId
-			).and(
-				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
-					objectDefinitionId)
+			ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
+				objectDefinitionId
 			).and(
 				ObjectEntryTable.INSTANCE.rootObjectEntryId.eq(
 					ObjectEntryTable.INSTANCE.objectEntryId
@@ -4003,6 +4012,8 @@ public class ObjectEntryLocalServiceImpl
 			).and(
 				Predicate.withParentheses(
 					_fillPredicate(objectDefinitionId, predicate, search))
+			).and(
+				_getHeadObjectEntryPredicate(preferApproved)
 			).and(
 				_getPermissionWherePredicate(
 					dynamicObjectDefinitionTable, groupIds)
@@ -4026,8 +4037,8 @@ public class ObjectEntryLocalServiceImpl
 
 	private GroupByStep _getOneToManyObjectEntriesGroupByStep(
 			FromStep fromStep, long groupId, long objectRelationshipId,
-			Predicate predicate, long primaryKey, boolean related,
-			String search)
+			Predicate predicate, boolean preferApproved, long primaryKey,
+			boolean related, String search)
 		throws PortalException {
 
 		ObjectRelationship objectRelationship =
@@ -4089,9 +4100,6 @@ public class ObjectEntryLocalServiceImpl
 					return null;
 				}
 			).and(
-				ObjectEntryTable.INSTANCE.objectEntryId.eq(
-					ObjectEntryTable.INSTANCE.headObjectEntryId)
-			).and(
 				ObjectEntryTable.INSTANCE.objectDefinitionId.eq(
 					objectRelationship.getObjectDefinitionId2())
 			).and(
@@ -4107,6 +4115,8 @@ public class ObjectEntryLocalServiceImpl
 				() ->
 					objectRelationship.isSelf() ?
 						primaryKeyColumn.neq(primaryKey) : null
+			).and(
+				_getHeadObjectEntryPredicate(preferApproved)
 			).and(
 				() -> {
 					if (ObjectEntryThreadLocal.

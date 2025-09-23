@@ -323,14 +323,14 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	@Override
 	public List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId, Predicate predicate,
-			long primaryKey, boolean related, String search, int start, int end,
-			Sort[] sorts)
+			boolean preferApproved, long primaryKey, boolean related,
+			String search, int start, int end, Sort[] sorts)
 		throws PortalException {
 
 		List<ObjectEntry> objectEntries =
 			objectEntryLocalService.getOneToManyObjectEntries(
-				groupId, objectRelationshipId, predicate, primaryKey, related,
-				search, start, end, sorts);
+				groupId, objectRelationshipId, predicate, preferApproved,
+				primaryKey, related, search, start, end, sorts);
 
 		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
 			for (ObjectEntry objectEntry : objectEntries) {

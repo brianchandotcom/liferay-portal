@@ -1007,6 +1007,19 @@ public class TaxonomyCategoryResourceTest
 		throws Exception {
 
 		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
+				taxonomyCategory.getId(),
+				new TaxonomyCategory() {
+					{
+						taxonomyVocabularyId = randomTaxonomyVocabulary.getId();
+					}
+				}));
+
+		taxonomyCategoryResource.deleteTaxonomyCategory(
+			taxonomyCategory.getId());
+
+		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.patchTaxonomyCategoryHttpResponse(
 				taxonomyCategory.getId(),

@@ -6820,6 +6820,14 @@ public class ObjectEntryLocalServiceImpl
 				objectField.getName());
 		}
 		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE)) {
+
+			if (MapUtil.isEmpty((Map<String, Serializable>)value)) {
+				throw new ObjectEntryValuesException.Required(
+					objectField.getName());
+			}
+		}
+		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN)) {
 
 			if (!GetterUtil.getBoolean(value)) {

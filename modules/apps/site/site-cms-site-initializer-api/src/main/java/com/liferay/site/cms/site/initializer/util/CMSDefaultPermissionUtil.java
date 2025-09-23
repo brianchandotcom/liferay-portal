@@ -79,7 +79,7 @@ public class CMSDefaultPermissionUtil {
 
 		List<Long> primaryKeys = ObjectEntryLocalServiceUtil.getPrimaryKeys(
 			new Long[0], companyId, userId,
-			objectDefinition.getObjectDefinitionId(), predicate, null,
+			objectDefinition.getObjectDefinitionId(), predicate, false, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (ListUtil.isEmpty(primaryKeys)) {

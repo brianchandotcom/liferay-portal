@@ -150,8 +150,8 @@ public class ObjectEntry1to1ObjectRelatedModelsProviderImpl
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, primaryKey, true, search,
-			0, 1, sorts);
+			groupId, objectRelationshipId, predicate, false, primaryKey, true,
+			search, 0, 1, sorts);
 	}
 
 	@Override

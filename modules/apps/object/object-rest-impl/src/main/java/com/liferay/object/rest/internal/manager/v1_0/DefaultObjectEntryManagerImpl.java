@@ -682,18 +682,26 @@ public class DefaultObjectEntryManagerImpl
 				aggregation,
 				aggregationTerm -> objectEntryLocalService.getAggregationCounts(
 					groupId, objectDefinition.getObjectDefinitionId(),
-					aggregationTerm, predicate, start, end)),
+					aggregationTerm, predicate,
+					GetterUtil.getBoolean(
+						dtoConverterContext.getAttribute("preferApproved")),
+					start, end)),
 			TransformUtil.transform(
 				objectEntryLocalService.getPrimaryKeys(
 					groupIds, companyId, dtoConverterContext.getUserId(),
-					objectDefinition.getObjectDefinitionId(), predicate, search,
-					start, end, sorts),
+					objectDefinition.getObjectDefinitionId(), predicate,
+					GetterUtil.getBoolean(
+						dtoConverterContext.getAttribute("preferApproved")),
+					search, start, end, sorts),
 				primaryKey -> _getObjectEntry(
 					dtoConverterContext, objectDefinition, primaryKey)),
 			pagination,
 			objectEntryLocalService.getValuesListCount(
 				groupIds, companyId, dtoConverterContext.getUserId(),
-				objectDefinition.getObjectDefinitionId(), predicate, search));
+				objectDefinition.getObjectDefinitionId(), predicate,
+				GetterUtil.getBoolean(
+					dtoConverterContext.getAttribute("preferApproved")),
+				search));
 	}
 
 	@Override
@@ -2153,7 +2161,7 @@ public class DefaultObjectEntryManagerImpl
 				new Long[] {groupId}, objectDefinition.getCompanyId(),
 				objectDefinition.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
-				objectFieldColumn.eq(newValue), null);
+				objectFieldColumn.eq(newValue), false, null);
 
 			if (count == 0) {
 				return newValue;

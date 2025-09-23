@@ -39,7 +39,7 @@ public class OneToManyObjectRelationshipRelatedInfoCollectionProvider
 		return InfoPage.of(
 			objectEntryLocalService.getOneToManyObjectEntries(
 				objectEntry.getGroupId(),
-				objectRelationship.getObjectRelationshipId(), null,
+				objectRelationship.getObjectRelationshipId(), null, false,
 				objectEntry.getObjectEntryId(), true, null,
 				pagination.getStart(), pagination.getEnd(), null),
 			pagination,

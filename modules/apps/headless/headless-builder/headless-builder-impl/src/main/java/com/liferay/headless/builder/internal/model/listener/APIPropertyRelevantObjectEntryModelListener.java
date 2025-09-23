@@ -252,7 +252,7 @@ public class APIPropertyRelevantObjectEntryModelListener
 						apiSchemaId, "'"),
 					_objectDefinitionLocalService.getObjectDefinition(
 						objectEntry.getObjectDefinitionId())),
-				null);
+				false, null);
 
 			if (count > 0) {
 				throw new ObjectEntryValuesException.InvalidObjectField(

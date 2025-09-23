@@ -688,7 +688,7 @@ public class ProjectController extends BaseFaroController {
 						try {
 							if (_log.isInfoEnabled()) {
 								_log.info(
-									"Populating BQProjects in location " +
+									"Populating BigQuery projects in " +
 										faroProjects.getKey());
 							}
 
@@ -697,14 +697,14 @@ public class ProjectController extends BaseFaroController {
 
 							if (_log.isInfoEnabled()) {
 								_log.info(
-									"BQProjects were populated in location " +
+									"BigQuery projects were populated in " +
 										faroProjects.getKey() +
 											" successfully");
 							}
 						}
 						catch (Exception exception) {
 							_log.error(
-								"Fail to populate BQProjects in location " +
+								"Unable to populate BigQuery projects in " +
 									faroProjects.getKey(),
 								exception);
 						}

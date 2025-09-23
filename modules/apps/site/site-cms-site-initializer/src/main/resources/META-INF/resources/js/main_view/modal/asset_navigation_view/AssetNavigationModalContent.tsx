@@ -50,12 +50,18 @@ const AssetNavigationCommentsPanel = ({
 	)}&classPK=${id}`;
 
 	return (
-		<CommentsPanel
-			{...commentsProps}
-			addCommentURL={`${addCommentURL}${dynamicURL}`}
-			editCommentURL={`${editCommentURL}${dynamicURL}`}
-			getCommentsURL={`${getCommentsURL}${dynamicURL}`}
-		></CommentsPanel>
+		<>
+			<h3 className="font-weight-semi-bold px-3 py-4 text-7">
+				{Liferay.Language.get('comments')}
+			</h3>
+
+			<CommentsPanel
+				{...commentsProps}
+				addCommentURL={`${addCommentURL}${dynamicURL}`}
+				editCommentURL={`${editCommentURL}${dynamicURL}`}
+				getCommentsURL={`${getCommentsURL}${dynamicURL}`}
+			></CommentsPanel>
+		</>
 	);
 };
 
@@ -152,7 +158,7 @@ export default function AssetNavigationModalContent({
 				/>
 			</ClayModal.Header>
 
-			<ClayModal.Body>
+			<ClayModal.Body className="p-0">
 				<div className="h-100" ref={containerRef}>
 					<Carousel
 						contentViewURL={contentViewURL}

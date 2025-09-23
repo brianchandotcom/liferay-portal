@@ -33,9 +33,17 @@ window.addEventListener('load', () => {
 		}
 	};
 
-	headers.forEach((header, index) => {
+	for (let i = 0; i < headers.length; i++) {
+		const header = headers[i];
+
+		const trimmedHeader = header.textContent.trim();
+
+		if (!trimmedHeader.length) {
+			continue;
+		}
+
 		if (!header.id) {
-			header.id = 'section-' + index;
+			header.id = 'section-' + i;
 		}
 
 		header.style.scrollMarginTop = '200px';
@@ -58,7 +66,7 @@ window.addEventListener('load', () => {
 		dynamicOutlineUl.appendChild(li);
 
 		outlineMap.set(header.id, a);
-	});
+	}
 
 	dynamicOutline.classList.remove('d-none');
 

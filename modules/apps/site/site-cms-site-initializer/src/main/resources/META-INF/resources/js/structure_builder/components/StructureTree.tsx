@@ -22,8 +22,8 @@ import {
 } from '../contexts/StateContext';
 import selectInvalids from '../selectors/selectInvalids';
 import selectSelection from '../selectors/selectSelection';
+import selectStructure from '../selectors/selectStructure';
 import selectStructureChildren from '../selectors/selectStructureChildren';
-import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureUuid from '../selectors/selectStructureUuid';
@@ -36,6 +36,7 @@ import {
 import {Uuid} from '../types/Uuid';
 import {FIELD_TYPE_ICON, FieldType} from '../utils/field';
 import isLocked from '../utils/isLocked';
+import isReferenced from '../utils/isReferenced';
 
 type TreeItem = {
 	actions?: Array<{
@@ -67,7 +68,7 @@ export default function StructureTree({search}: {search: string}) {
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 	const structureError = useSelector(selectStructureError);
-	const structureERC = useSelector(selectStructureERC);
+	const structure = useSelector(selectStructure);
 
 	const {load: loadObjectDefinitions, status: objectDefinitionsStatus} =
 		useCache('object-definitions');
@@ -96,7 +97,7 @@ export default function StructureTree({search}: {search: string}) {
 					dispatch,
 					invalids,
 					search,
-					structureERC,
+					structure,
 				}),
 				icon: 'edit-layout',
 				id: structureUuid,
@@ -112,7 +113,7 @@ export default function StructureTree({search}: {search: string}) {
 		invalids,
 		objectDefinitionsStatus,
 		search,
-		structureERC,
+		structure,
 		structureLabel,
 		structureUuid,
 	]);
@@ -387,16 +388,14 @@ function buildItems({
 	children,
 	dispatch,
 	invalids,
-	isReferenced,
 	search,
-	structureERC,
+	structure,
 }: {
 	children: (ReferencedStructure | RepeatableGroup | Structure)['children'];
 	dispatch: React.Dispatch<Action>;
 	invalids: State['invalids'];
-	isReferenced?: boolean;
 	search: string;
-	structureERC: Structure['erc'];
+	structure: Structure;
 }): TreeItem[] {
 	return Array.from(children.values()).reduce(
 		(items: TreeItem[], child: StructureChild) => {
@@ -409,18 +408,15 @@ function buildItems({
 				const item: TreeItem = {
 					actions: getItemActions({
 						dispatch,
-						isReferenced,
 						item: child,
+						structure,
 					}),
 					children: buildItems({
 						children: child.children,
 						dispatch,
 						invalids,
-						isReferenced:
-							isReferenced ||
-							child.type === 'referenced-structure',
 						search,
-						structureERC,
+						structure,
 					}),
 					erc: child.erc,
 					icon: 'fieldset',
@@ -446,8 +442,8 @@ function buildItems({
 					items.push({
 						actions: getItemActions({
 							dispatch,
-							isReferenced,
 							item: child,
+							structure,
 						}),
 						icon: FIELD_TYPE_ICON[child.type],
 						id: child.uuid,
@@ -475,12 +471,12 @@ function match(value: string, keyword: string) {
 
 function getItemActions({
 	dispatch,
-	isReferenced,
 	item,
+	structure,
 }: {
 	dispatch: React.Dispatch<Action>;
-	isReferenced?: boolean;
 	item: StructureChild;
+	structure: Structure;
 }) {
 	if (isLocked(item)) {
 		return [];
@@ -498,7 +494,7 @@ function getItemActions({
 		});
 	}
 
-	if (!isReferenced) {
+	if (!isReferenced({item, root: structure})) {
 		if (
 			item.type !== 'referenced-structure' &&
 			item.type !== 'repeatable-group'

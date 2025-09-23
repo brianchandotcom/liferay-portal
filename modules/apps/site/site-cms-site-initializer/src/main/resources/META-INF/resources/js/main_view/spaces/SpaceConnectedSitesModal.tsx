@@ -77,7 +77,7 @@ const ConnectedSiteActions = ({
 
 	return (
 		<div className="align-items-center d-flex">
-			<span className="mr-2 text-secondary">
+			<span className="c-mr-3 text-2 text-secondary">
 				{`${Liferay.Language.get('searchable-content')}: ${isSearchableLabel}`}
 			</span>
 
@@ -99,7 +99,7 @@ const ConnectedSiteActions = ({
 						aria-label={Liferay.Language.get('site-actions')}
 						borderless
 						displayType="secondary"
-						size="sm"
+						size="xs"
 						symbol="ellipsis-v"
 						title={Liferay.Language.get('actions')}
 					/>
@@ -278,7 +278,10 @@ export default function SpaceConnectedSitesModal({
 				) : (
 					<>
 						{hasConnectSitesPermission && (
-							<label className="d-block" id={listLabelId}>
+							<label
+								className="c-mb-2 c-mt-n2 d-block"
+								id={listLabelId}
+							>
 								{Liferay.Language.get('connected-sites')}
 							</label>
 						)}
@@ -289,39 +292,40 @@ export default function SpaceConnectedSitesModal({
 						>
 							{connectedSites.map((site) => {
 								return (
-									<li className="mb-2" key={site.id}>
-										<div className="align-items-center d-flex justify-content-between">
-											<div className="align-items-center d-flex">
-												<ClaySticker
-													className="c-mr-2"
-													displayType="secondary"
-													shape="circle"
-													size="lg"
-												>
-													<ClaySticker.Image
-														alt={getLocalizedName(
-															site.name
-														)}
-														src={site.logo}
-													/>
-												</ClaySticker>
-
-												{getLocalizedName(site.name)}
-											</div>
-
-											{hasConnectSitesPermission && (
-												<ConnectedSiteActions
-													externalReferenceCode={
-														externalReferenceCode
-													}
-													onSiteChange={onSiteChange}
-													onSiteDisconnected={
-														onSiteDisconnected
-													}
-													site={site}
+									<li
+										className="align-items-center c-py-2 d-flex font-weight-semi-bold justify-content-between text-3"
+										key={site.id}
+									>
+										<div className="align-items-center d-flex">
+											<ClaySticker
+												className="c-mr-2"
+												displayType="secondary"
+												shape="circle"
+												size="sm"
+											>
+												<ClaySticker.Image
+													alt={getLocalizedName(
+														site.name
+													)}
+													src={site.logo}
 												/>
-											)}
+											</ClaySticker>
+
+											{getLocalizedName(site.name)}
 										</div>
+
+										{hasConnectSitesPermission && (
+											<ConnectedSiteActions
+												externalReferenceCode={
+													externalReferenceCode
+												}
+												onSiteChange={onSiteChange}
+												onSiteDisconnected={
+													onSiteDisconnected
+												}
+												site={site}
+											/>
+										)}
 									</li>
 								);
 							})}

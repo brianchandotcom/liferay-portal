@@ -37,6 +37,8 @@ components:
                         -   restricted
                     type: string
                 name:
+                    type: string
+                name_i18n:
                     additionalProperties:
                         type: string
                     type: object

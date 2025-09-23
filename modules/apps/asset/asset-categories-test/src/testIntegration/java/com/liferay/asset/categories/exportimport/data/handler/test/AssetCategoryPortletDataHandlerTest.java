@@ -103,7 +103,9 @@ public class AssetCategoryPortletDataHandlerTest
 		}
 	)
 	@Test
-	public void testExportImportCategoriesWithErrorReport() throws Exception {
+	public void testFailureReportHandlerForExportImportAssetCategory()
+		throws Exception {
+
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
 

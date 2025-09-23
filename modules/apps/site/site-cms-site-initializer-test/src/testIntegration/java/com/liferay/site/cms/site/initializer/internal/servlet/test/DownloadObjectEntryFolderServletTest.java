@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -68,12 +69,65 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	@Test
+	public void testDownloadBulkAction() throws Exception {
+		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
+			_depotEntry.getGroupId());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				_jsonFactory.createJSONObject(
+				).put(
+					"bulkActionItems",
+					_jsonFactory.createJSONArray(
+					).put(
+						_jsonFactory.createJSONObject(
+						).put(
+							"className",
+							"com.liferay.object.model.ObjectEntryFolder"
+						).put(
+							"classPK",
+							objectEntryFolder.getObjectEntryFolderId()
+						).put(
+							"classExternalReferenceCode",
+							objectEntryFolder.getExternalReferenceCode()
+						).put(
+							"name", objectEntryFolder.getName()
+						)
+					)
+				).put(
+					"selectAll", false
+				).put(
+					"type", "DownloadBulkAction"
+				).toString(
+				).getBytes(),
+				HttpMethods.POST, 0);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			ContentTypes.APPLICATION_ZIP,
+			mockHttpServletResponse.getContentType());
+		Assert.assertEquals(
+			HttpServletResponse.SC_OK, mockHttpServletResponse.getStatus());
+	}
+
+	@Test
 	public void testDownloadFolder() throws Exception {
 		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
 			_depotEntry.getGroupId());
 
 		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(objectEntryFolder);
+			_getMockHttpServletRequest(
+				null, HttpMethods.GET,
+				objectEntryFolder.getObjectEntryFolderId());
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
@@ -116,7 +170,7 @@ public class DownloadObjectEntryFolderServletTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			ObjectEntryFolder objectEntryFolder)
+			byte[] content, String method, long objectEntryFolderId)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -128,13 +182,22 @@ public class DownloadObjectEntryFolderServletTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(mockHttpServletRequest));
 		mockHttpServletRequest.setAttribute(
 			WebKeys.USER, TestPropsValues.getUserId());
+
+		if (content != null) {
+			mockHttpServletRequest.setContent(content);
+		}
+
 		mockHttpServletRequest.setContextPath("/o");
-		mockHttpServletRequest.setMethod(HttpMethods.GET);
-		mockHttpServletRequest.setRequestURI(
-			StringBundler.concat(
-				"/o/cmd/download-folder/",
-				_portal.getClassNameId(ObjectEntryFolder.class), "/",
-				objectEntryFolder.getObjectEntryFolderId()));
+		mockHttpServletRequest.setMethod(method);
+
+		if (objectEntryFolderId != 0) {
+			mockHttpServletRequest.setRequestURI(
+				StringBundler.concat(
+					"/o/cmd/download-folder/",
+					_portal.getClassNameId(ObjectEntryFolder.class), "/",
+					objectEntryFolderId));
+		}
+
 		mockHttpServletRequest.setServletPath("/cms/download-folder");
 
 		return mockHttpServletRequest;
@@ -164,6 +227,9 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

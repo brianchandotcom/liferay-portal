@@ -49,7 +49,7 @@ public class ElasticsearchServerUtil {
 				(HttpServerTransport)getInstanceMethod.invoke(
 					injectorMethod.invoke(
 						_nodeField.get(_instanceField.get(null))),
-						HttpServerTransport.class);
+					HttpServerTransport.class);
 
 			BoundTransportAddress boundTransportAddress =
 				httpServerTransport.boundAddress();

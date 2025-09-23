@@ -1704,6 +1704,24 @@ public class DefaultObjectEntryManagerImpl
 				scopeKey));
 	}
 
+	private void _checkApprovedObjectEntry(
+			boolean preferApproved,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
+		throws Exception {
+
+		if (!preferApproved) {
+			_checkHeadObjectEntry(serviceBuilderObjectEntry);
+
+			return;
+		}
+
+		if (serviceBuilderObjectEntry.isApproved()) {
+			return;
+		}
+
+		throw new NoSuchObjectEntryException();
+	}
+
 	private void _checkHeadObjectEntry(
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
@@ -2198,7 +2216,10 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.getObjectEntry(objectEntryId);
 
-		_checkHeadObjectEntry(serviceBuilderObjectEntry);
+		_checkApprovedObjectEntry(
+			GetterUtil.getBoolean(
+				dtoConverterContext.getAttribute("preferApproved")),
+			serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 
@@ -2212,7 +2233,10 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		_checkHeadObjectEntry(serviceBuilderObjectEntry);
+		_checkApprovedObjectEntry(
+			GetterUtil.getBoolean(
+				dtoConverterContext.getAttribute("preferApproved")),
+			serviceBuilderObjectEntry);
 		_checkObjectEntryObjectDefinitionId(
 			objectDefinition, serviceBuilderObjectEntry);
 		_checkRootDescendantNode(serviceBuilderObjectEntry, false);

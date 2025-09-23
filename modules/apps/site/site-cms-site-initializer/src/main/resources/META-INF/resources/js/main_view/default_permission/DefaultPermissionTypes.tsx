@@ -53,6 +53,7 @@ export enum DefaultAssetTypes {
 export interface DefaultPermissionFormContainerProps {
 	actions: ActionsMap;
 	disabled?: boolean;
+	infoBoxMessage?: string;
 	onChange?: (data: AssetRoleSelectedActions) => void;
 	roles: Role[];
 	types?: AssetType[];
@@ -62,6 +63,7 @@ export interface DefaultPermissionFormContainerProps {
 export interface DefaultPermissionFormProps {
 	actions: Action[];
 	disabled?: boolean;
+	infoBoxMessage?: string;
 	onChange?: (data: CheckedRoleActions) => void;
 	roles: Role[];
 	values?: RoleSelectedActions;

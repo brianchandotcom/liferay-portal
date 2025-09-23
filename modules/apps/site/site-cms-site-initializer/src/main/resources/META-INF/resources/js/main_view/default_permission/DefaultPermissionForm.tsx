@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
@@ -20,6 +21,7 @@ import {
 export default function DefaultPermissionForm({
 	actions,
 	disabled,
+	infoBoxMessage,
 	onChange,
 	roles,
 	values,
@@ -113,6 +115,21 @@ export default function DefaultPermissionForm({
 					</ClayInput.Group>
 				</ClayManagementToolbar.Search>
 			</ClayManagementToolbar>
+
+			{infoBoxMessage ? (
+				<ClayAlert
+					className="info-box-message"
+					data-testid="info-box-message"
+					displayType="info"
+					role={null}
+					title="Info"
+					variant="stripe"
+				>
+					{infoBoxMessage}
+				</ClayAlert>
+			) : (
+				<></>
+			)}
 
 			<div className="border-top pb-3 pl-4 pr-4 pt-4">
 				<ClayTable responsive={true}>

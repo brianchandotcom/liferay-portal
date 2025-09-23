@@ -263,6 +263,15 @@ export default function BulkDefaultPermissionModalContent({
 					Liferay.Language.get('default-permissions')
 				)}
 
+				<span className="pl-2 text-4 text-secondary text-weight-normal">
+					{`(${sub(Liferay.Language.get('x-x-selected'), [
+						selectedData.items.length,
+						className === DEPOT_CLASS_NAME
+							? Liferay.Language.get('spaces')
+							: Liferay.Language.get('folders'),
+					])})`}
+				</span>
+
 				<ClayTooltipProvider>
 					<span
 						className="pl-2 text-3"
@@ -280,6 +289,9 @@ export default function BulkDefaultPermissionModalContent({
 				<DefaultPermissionFormContainer
 					actions={actions}
 					disabled={loading}
+					infoBoxMessage={Liferay.Language.get(
+						'please-be-aware-that-the-configuration-shown-at-the-beginning-is-the-default-of-the-parent-level'
+					)}
 					onChange={onChangeHandler}
 					roles={roles}
 					values={currentValues}

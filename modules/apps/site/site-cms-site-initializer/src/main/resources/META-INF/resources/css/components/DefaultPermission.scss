@@ -1,5 +1,11 @@
 @import 'atlas-variables';
 
+.info-box-message.alert-fluid {
+	.container {
+		max-width: 100% !important;
+	}
+}
+
 .toolbar-search,
 .toolbar-tabs {
 	.container-fluid {

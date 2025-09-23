@@ -1273,8 +1273,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
 
 		ObjectEntry objectEntry = _emptyModelManager.getOrAddEmptyModel(
-			objectDefinition.getClassName(), objectDefinition.getName(),
-			objectDefinition.getCompanyId(),
+			objectDefinition.getClassName(), objectDefinition.getCompanyId(),
 			() -> _addObjectEntry(
 				externalReferenceCode, groupId, userId, objectDefinitionId,
 				ObjectEntryFolderConstants.
@@ -1285,7 +1284,7 @@ public class ObjectEntryLocalServiceImpl
 				_externalReferenceCode, _groupId, objectDefinitionId),
 			(_externalReferenceCode, _groupId) -> getObjectEntry(
 				_externalReferenceCode, _groupId, objectDefinitionId),
-			groupId);
+			groupId, objectDefinition.getName());
 
 		_addResourcePermissions(objectDefinition, objectEntry);
 

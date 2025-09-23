@@ -49,10 +49,6 @@ export function writeStateInURL(
 
 	const currentState = readStateFromURL(id);
 
-	if (contains(state, currentState)) {
-		return;
-	}
-
 	Object.keys(state).forEach((key: string) => {
 		const stateKey: keyof IStateInURL = key as keyof IStateInURL;
 
@@ -64,6 +60,10 @@ export function writeStateInURL(
 			}
 		}
 	});
+
+	if (contains(state, currentState)) {
+		return;
+	}
 
 	const params = new URLSearchParams(window.location.search);
 
@@ -131,12 +131,14 @@ function deepContains(subset: any, superset: any) {
 		return false;
 	}
 
-	if (
-		Array.isArray(subset) &&
-		Array.isArray(superset) &&
-		(subset.length > superset.length || !subset.length)
-	) {
-		return false;
+	if (Array.isArray(subset) && Array.isArray(superset)) {
+		if (subset.length === superset.length && !subset.length) {
+			return true;
+		}
+
+		if (subset.length > superset.length || !subset.length) {
+			return false;
+		}
 	}
 
 	for (const key of Object.keys(subset)) {

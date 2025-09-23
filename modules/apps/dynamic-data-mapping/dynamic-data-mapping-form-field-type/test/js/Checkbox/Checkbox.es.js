@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -213,6 +213,45 @@ describe('Field Checkbox', () => {
 			);
 
 			expect(swithcerIcon).toBeInTheDocument();
+		});
+
+		describe('Non localizable Tooltip', () => {
+			test.each`
+				isLocalizationSupported | message
+				${true}                 | ${'translation-is-disabled-for-this-field'}
+				${false}                | ${'this-field-does-not-support-translations'}
+				${undefined}            | ${'this-field-cannot-be-localized'}
+			`(
+				'shows message $message when isLocalizationSupported is $isLocalizationSupported',
+				({isLocalizationSupported, message}) => {
+					render(
+						<Checkbox
+							editOnlyInDefaultLanguage={true}
+							isLocalizationSupported={isLocalizationSupported}
+							readOnly={true}
+							showLabel={true}
+						/>
+					);
+
+					const tooltipMessage = screen.getByTitle(message);
+
+					expect(tooltipMessage).toBeInTheDocument();
+				}
+			);
+
+			it('hides when editOnlyInDefaultLanguage is false', () => {
+				render(
+					<Checkbox
+						editOnlyInDefaultLanguage={false}
+						readOnly={true}
+						showLabel={true}
+					/>
+				);
+
+				const tooltip = screen.queryByRole('presentation');
+
+				expect(tooltip).not.toBeInTheDocument();
+			});
 		});
 	});
 });

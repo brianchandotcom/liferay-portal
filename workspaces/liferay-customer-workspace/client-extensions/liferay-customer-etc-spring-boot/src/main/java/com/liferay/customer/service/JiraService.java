@@ -197,13 +197,13 @@ public class JiraService extends BaseService {
 			JSONObject issueFieldsJSONObject = jsonObject.optJSONObject(
 				"fields");
 
-			String organizationString = _getAssetObjectFieldId(
+			String organizationObjectFieldId = _getAssetObjectFieldId(
 				issueFieldsJSONObject.optJSONArray(
 					_jiraSupportHCFieldOrganization));
 
-			if (Validator.isNotNull(organizationString)) {
+			if (Validator.isNotNull(organizationObjectFieldId)) {
 				String[] organizationCompositeIdArray = StringUtil.split(
-					organizationString, CharPool.COLON);
+					organizationObjectFieldId, CharPool.COLON);
 
 				return new JiraSupportIssue(
 					jsonObject, organizationCompositeIdArray[1],

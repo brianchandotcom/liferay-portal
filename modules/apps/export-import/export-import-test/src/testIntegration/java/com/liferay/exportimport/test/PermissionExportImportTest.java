@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -141,7 +142,53 @@ public class PermissionExportImportTest {
 	}
 
 	@Test
-	public void testPortletGuestPermissionsExportImport() throws Exception {
+	public void testPortletGuestPermissionsExportImportToGroup()
+		throws Exception {
+
+		// Export
+
+		LayoutSetPrototype exportLayoutSetPrototype =
+			LayoutTestUtil.addLayoutSetPrototype(RandomTestUtil.randomString());
+
+		Group exportGroup = exportLayoutSetPrototype.getGroup();
+
+		Layout exportLayout = LayoutTestUtil.addTypePortletLayout(
+			exportGroup, true);
+
+		String exportResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			exportLayout.getPlid(), _PORTLET_ID);
+
+		Role role = RoleLocalServiceUtil.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		addPortletPermissions(exportGroup, role, exportResourcePrimKey);
+
+		Element portletElement = exportPortletPermissions(
+			exportGroup, exportLayout);
+
+		// Import
+
+		Group importGroup = GroupTestUtil.addGroup();
+
+		Layout importLayout = LayoutTestUtil.addTypePortletLayout(
+			importGroup, true);
+
+		String importResourcePrimKey = PortletPermissionUtil.getPrimaryKey(
+			importLayout.getPlid(), _PORTLET_ID);
+
+		importPortletPermissions(importGroup, importLayout, portletElement);
+
+		validateImportedPortletPermissions(
+			importGroup, role, importResourcePrimKey);
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			exportLayoutSetPrototype);
+		GroupTestUtil.deleteGroup(importGroup);
+	}
+
+	@Test
+	public void testPortletGuestPermissionsExportImportToLayoutSetPrototype()
+		throws Exception {
 
 		// Export
 

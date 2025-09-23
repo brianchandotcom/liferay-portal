@@ -107,10 +107,10 @@ public class ImportStagedModelExceptionHandlerTest {
 				getExportImportReportEntriesCount();
 
 		String externalReferenceCode = RandomTestUtil.randomString();
-		long id = RandomTestUtil.randomLong();
+		long classPK = RandomTestUtil.randomLong();
 
 		try {
-			ExportImportThreadLocal.setExportImportConfigurationId(id);
+			ExportImportThreadLocal.setExportImportConfigurationId(classPK);
 			ExportImportThreadLocal.setPortletImportInProcess(true);
 
 			TransactionInvokerUtil.invoke(
@@ -119,7 +119,7 @@ public class ImportStagedModelExceptionHandlerTest {
 				() -> {
 					StagedModelDataHandlerUtil.importStagedModel(
 						portletDataContext,
-						new TestStagedModel(externalReferenceCode, id));
+						new TestStagedModel(externalReferenceCode, classPK));
 
 					return null;
 				});
@@ -168,7 +168,7 @@ public class ImportStagedModelExceptionHandlerTest {
 		Assert.assertEquals(
 			_classNameLocalService.getClassNameId(TestStagedModel.class),
 			exportImportReportEntry.getClassNameId());
-		Assert.assertEquals(id, exportImportReportEntry.getClassPK());
+		Assert.assertEquals(classPK, exportImportReportEntry.getClassPK());
 		Assert.assertEquals(error, exportImportReportEntry.getError());
 		Assert.assertNotNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(

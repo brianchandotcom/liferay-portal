@@ -13,9 +13,9 @@ import AssetTypeInfoPanel from '../../info_panel/AssetTypeInfoPanelContent';
 import Carousel from './Carousel';
 import Header from './Header';
 
-import '../../../../css/components/ItemNavigation.scss';
+import '../../../../css/components/AssetNavigation.scss';
 
-interface ItemNavigationModalContent {
+interface AssetNavigationModalContentProps {
 	additionalProps: any;
 	contentViewURL: string;
 	currentIndex: number;
@@ -59,12 +59,12 @@ const AssetNavigationCommentsPanel = ({
 	);
 };
 
-export default function ItemNavigationModalContent({
+export default function AssetNavigationModalContent({
 	additionalProps,
 	contentViewURL,
 	currentIndex = 0,
 	items,
-}: ItemNavigationModalContent) {
+}: AssetNavigationModalContentProps) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [openSidePanel, setOpenSidePanel] = useState(false);
 	const [currentPanel, setCurrentPanel] = useState<String>();

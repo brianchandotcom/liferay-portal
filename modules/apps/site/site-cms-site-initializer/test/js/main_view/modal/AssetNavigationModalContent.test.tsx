@@ -10,7 +10,7 @@ import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__
 import {fireEvent, render, screen} from '@testing-library/react';
 import React from 'react';
 
-import ItemNavigationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/item_navigation_view/ItemNavigationModalContent';
+import AssetNavigationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/asset_navigation_view/AssetNavigationModalContent';
 
 const item1 = {
 	embedded: {
@@ -89,16 +89,17 @@ const item3 = {
 };
 
 const DEFAULT_PROPS = {
+	additionalProps: {cmsGroupId: 123},
 	contentViewURL: '/my-random-content-view',
 	currentIndex: 0,
 	items: [item1, item2, item3],
 };
 
 const renderComponent = (props = DEFAULT_PROPS) => {
-	return render(<ItemNavigationModalContent {...props} />);
+	return render(<AssetNavigationModalContent {...props} />);
 };
 
-describe('ItemNavigationModalContent', () => {
+describe('AssetNavigationModalContent', () => {
 	it('checks the accessibility of the item navigation component', async () => {
 		const {container} = renderComponent();
 

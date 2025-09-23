@@ -86,9 +86,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _generateFeatureFlagProperties(String content)
-		throws IOException {
-
+	private String _generateFeatureFlagProperties(String content) {
 		List<String> featureFlagKeys = new ArrayList<>();
 
 		List<String> fileNames = SourceFormatterUtil.filterFileNames(

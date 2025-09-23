@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
@@ -63,7 +65,11 @@ public class RESTClientTemplateContextContributorTest {
 		try {
 			JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 				JSONUtil.put(
-					"name", RandomTestUtil.randomString()
+					"name",
+					JSONUtil.put(
+						StringUtil.toLowerCase(
+							String.valueOf(LocaleUtil.getDefault())),
+						RandomTestUtil.randomString())
 				).put(
 					"templateKey",
 					"com.liferay.portal.vulcan.test.site.initializer"

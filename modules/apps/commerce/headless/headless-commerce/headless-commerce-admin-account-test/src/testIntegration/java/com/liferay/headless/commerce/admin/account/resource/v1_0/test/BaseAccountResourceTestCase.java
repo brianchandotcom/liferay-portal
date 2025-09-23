@@ -615,7 +615,7 @@ public abstract class BaseAccountResourceTestCase {
 			testGraphQLDeleteAccountGroupByExternalReferenceCodeAccount_addAccount()
 		throws Exception {
 
-		return testGraphQLAccount_addAccount();
+		return testGraphQLAdminAccountGroupAccount_addAccount();
 	}
 
 	@Test
@@ -1592,6 +1592,13 @@ public abstract class BaseAccountResourceTestCase {
 						graphQLFields)),
 				"JSONObject/data", "JSONObject/createAccount"),
 			Account.class);
+	}
+
+	protected Account testGraphQLAdminAccountGroupAccount_addAccount()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected String getGraphQLValue(Object value) throws Exception {

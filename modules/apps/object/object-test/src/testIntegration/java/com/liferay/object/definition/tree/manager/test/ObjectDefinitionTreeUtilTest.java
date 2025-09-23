@@ -2173,7 +2173,7 @@ public class ObjectDefinitionTreeUtilTest {
 				className, classPK, false, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 				null);
 
-		WorkflowInstance workflowInstance = workflowInstances.getFirst();
+		WorkflowInstance workflowInstance = workflowInstances.get(0);
 
 		for (WorkflowTask workflowTask :
 				_workflowTaskManager.getWorkflowTasksBySubmittingUser(

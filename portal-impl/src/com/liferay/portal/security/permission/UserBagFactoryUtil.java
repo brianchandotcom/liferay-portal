@@ -36,7 +36,9 @@ public class UserBagFactoryUtil {
 
 		UserBag userBag = PermissionCacheUtil.getUserBag(userId);
 
-		if (userBag != null) {
+		if ((userBag != null) &&
+			(user.getMvccVersion() == userBag.getUserMvccVersion())) {
+
 			return userBag;
 		}
 
@@ -96,16 +98,18 @@ public class UserBagFactoryUtil {
 				userId);
 
 			userBag = new UserBagImpl(
-				userId, userGroupIds, userOrgs, userOrgGroupIds, userUserGroups,
-				userUserGroupGroupIds, userRoleIds);
+				userId, user.getMvccVersion(), userGroupIds, userOrgs,
+				userOrgGroupIds, userUserGroups, userUserGroupGroupIds,
+				userRoleIds);
 		}
 		else {
 			List<Role> userRoles = RoleLocalServiceUtil.getUserRelatedRoles(
 				userId, ArrayUtil.toLongArray(allGroupIds));
 
 			userBag = new UserBagImpl(
-				userId, userGroupIds, userOrgs, userOrgGroupIds, userUserGroups,
-				userUserGroupGroupIds, userRoles);
+				userId, user.getMvccVersion(), userGroupIds, userOrgs,
+				userOrgGroupIds, userUserGroups, userUserGroupGroupIds,
+				userRoles);
 		}
 
 		PermissionCacheUtil.putUserBag(userId, userBag);

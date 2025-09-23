@@ -66,6 +66,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -85,6 +86,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1270,7 +1272,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		objectEntry.setExternalReferenceCode(StringUtil.randomString());
 
-		_objectEntryLocalService.updateObjectEntry(objectEntry);
+		objectEntry = _objectEntryLocalService.updateObjectEntry(objectEntry);
 
 		ExportImportConfiguration exportImportConfiguration = _importLayouts(
 			false, true, file, group.getGroupId(), objectDefinition);
@@ -1283,15 +1285,27 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), 1,
 			exportImportReportEntries.size());
-		Assert.assertTrue(
-			ListUtil.exists(
-				exportImportReportEntries,
-				exportImportReportEntry ->
-					Objects.equals(
-						exportImportReportEntry.getClassExternalReferenceCode(),
-						originalExternalReferenceCode) &&
-					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_ERROR)));
+
+		ExportImportReportEntry exportImportReportEntry =
+			exportImportReportEntries.get(0);
+
+		Assert.assertEquals(
+			originalExternalReferenceCode,
+			exportImportReportEntry.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			_portal.getClassNameId(objectDefinition.getClassName()),
+			exportImportReportEntry.getClassNameId());
+		Assert.assertEquals(
+			objectEntry.getPrimaryKey(), exportImportReportEntry.getClassPK());
+		Assert.assertEquals(
+			objectEntry.getGroupId(), exportImportReportEntry.getGroupId());
+		Assert.assertEquals(
+			objectDefinition.getShortName(),
+			exportImportReportEntry.getModelName());
+		Assert.assertEquals(scope, exportImportReportEntry.getScope());
+		Assert.assertEquals(
+			ExportImportReportEntryConstants.TYPE_ERROR,
+			exportImportReportEntry.getType());
 	}
 
 	private void _testExportImportObjectEntriesWithRelatedObjectEntries(
@@ -1479,6 +1493,9 @@ public class BatchEnginePortletDataHandlerTest {
 		_batchEngineImportTaskLocalService;
 
 	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
@@ -1503,6 +1520,9 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	@Inject
 	private PortletDataHandlerProvider _portletDataHandlerProvider;

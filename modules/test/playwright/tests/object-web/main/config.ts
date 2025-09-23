@@ -6,7 +6,4 @@
 export const config = {
 	name: 'object-web.main',
 	testDir: 'tests/object-web/main',
-	use: {
-		testIdAttribute: 'data-qa-id',
-	},
 };

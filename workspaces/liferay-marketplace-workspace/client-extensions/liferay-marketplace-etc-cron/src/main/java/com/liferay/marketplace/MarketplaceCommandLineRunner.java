@@ -282,7 +282,8 @@ public class MarketplaceCommandLineRunner
 					StringBundler.concat(
 						"/o/headless-commerce-admin-order/v1.0/orders",
 						"?nestedFields=orderItems",
-						"&filter=totalAmount gt 0.0&page=-1&pageSize=-1&sort=createDate:desc")
+						"&filter=totalAmount gt 0.0",
+						"&page=-1&pageSize=-1&sort=createDate:desc")
 				).build(
 				).toUri()));
 	}

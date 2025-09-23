@@ -309,6 +309,14 @@ public class ObjectFieldLocalServiceUtil {
 			externalReferenceCode, objectDefinitionId);
 	}
 
+	public static ObjectField fetchObjectFieldByBusinessType(
+		long objectDefinitionId, String businessType,
+		OrderByComparator<ObjectField> orderByComparator) {
+
+		return getService().fetchObjectFieldByBusinessType(
+			objectDefinitionId, businessType, orderByComparator);
+	}
+
 	/**
 	 * Returns the object field with the matching UUID and company.
 	 *

@@ -551,6 +551,37 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async setWorkflows(workflows: {space: string; workflow: string}[]) {
+		for (const {space, workflow} of workflows) {
+			if (!space) {
+				await this.page
+					.getByLabel('Default Workflow')
+					.selectOption(workflow);
+			}
+			else {
+				const row = this.page.locator('tr', {hasText: space});
+
+				await row.getByLabel('Select Workflow').selectOption(workflow);
+			}
+		}
+	}
+
+	async switchTab(name: 'General' | 'Search' | 'Workflow') {
+		const target =
+			name === 'General'
+				? this.page.getByLabel('ERC')
+				: name === 'Search'
+					? this.page.getByText('Searchable')
+					: this.page.getByText(
+							'Set the default workflow for entries'
+						);
+
+		await clickAndExpectToBeVisible({
+			target,
+			trigger: this.page.getByRole('tab', {name}),
+		});
+	}
+
 	async waitForExperienceCustomizerModal() {
 		await this.page.waitForTimeout(4000);
 

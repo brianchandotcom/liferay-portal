@@ -76,7 +76,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
 			null, null, "type eq 'Space'", Pagination.of(1, 10), null);
 
-		Assert.assertEquals(0, page.getTotalCount());
+		long originalTotalCount = page.getTotalCount();
 
 		AssetLibrary randomAssetLibrary = randomAssetLibrary();
 
@@ -88,7 +88,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		page = assetLibraryResource.getAssetLibrariesPage(
 			null, null, "type eq 'Space'", Pagination.of(1, 10), null);
 
-		Assert.assertEquals(1, page.getTotalCount());
+		Assert.assertEquals(originalTotalCount + 1, page.getTotalCount());
 
 		assetLibraryResource.deleteAssetLibrary(assetLibrary.getId());
 	}

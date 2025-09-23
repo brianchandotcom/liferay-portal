@@ -233,24 +233,6 @@ components:
                 -   id
                 -   collectionViewportDefinition
             type: object
-        ColumnViewport:
-            # @review
-            description:
-                A column in a viewport.
-            properties:
-                columnViewportDefinition:
-                    properties:
-                        size:
-                            maximum: 12
-                            minimum: 1
-                            type: integer
-                    type: object
-                id:
-                    type: string
-            required:
-                -   columnViewportDefinition
-                -   id
-            type: object
         ContainerPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -2027,23 +2009,39 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        columnViewports:
-                            # @review
+                        moduleViewports:
                             description:
-                                A list of column viewports of the column page element.
+                                A list of module viewports of the module page element.
                             items:
-                                $ref: "#/components/schemas/ColumnViewport"
+                                $ref: "#/components/schemas/ModuleViewport"
                             type: array
                         size:
-                            # @review
                             description:
-                                The page column's size.
+                                The module's size.
                             maximum: 12
                             minimum: 1
                             type: integer
             # @review
             description:
                 The page element definition of a Column.
+            type: object
+        ModuleViewport:
+            # @review
+            description:
+                A module in a viewport.
+            properties:
+                id:
+                    type: string
+                moduleViewportDefinition:
+                    properties:
+                        size:
+                            maximum: 12
+                            minimum: 1
+                            type: integer
+                    type: object
+            required:
+                -   id
+                -   moduleViewportDefinition
             type: object
         NavigationSettings:
             # @review

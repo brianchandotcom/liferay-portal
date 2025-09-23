@@ -7,16 +7,18 @@ import ClayAlert from '@clayui/alert';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectInvalids from '../../selectors/selectInvalids';
 import selectState from '../../selectors/selectState';
 import selectStructureERC from '../../selectors/selectStructureERC';
 import selectStructureError from '../../selectors/selectStructureError';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
 import selectStructureName from '../../selectors/selectStructureName';
 import selectStructureStatus from '../../selectors/selectStructureStatus';
+import selectStructureUuid from '../../selectors/selectStructureUuid';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
@@ -26,11 +28,22 @@ import WorkflowTab from './WorkflowTab';
 export default function StructureSettings() {
 	const dispatch = useStateDispatch();
 	const error = useSelector(selectStructureError);
+	const invalids = useSelector(selectInvalids);
+	const structureError = useSelector(selectStructureError);
 	const structureLabel = useSelector(selectStructureLabel);
+	const structureUuid = useSelector(selectStructureUuid);
+
+	const [activeTab, setActiveTab] = useState(0);
 
 	useEffect(() => {
 		focusInvalidElement();
 	}, []);
+
+	useEffect(() => {
+		if (structureError || invalids.has(structureUuid)) {
+			setActiveTab(0);
+		}
+	}, [invalids, structureError, structureUuid]);
 
 	return (
 		<ClayLayout.ContainerFluid className="px-4" size="md" view>
@@ -62,7 +75,7 @@ export default function StructureSettings() {
 				translations={structureLabel}
 			/>
 
-			<ClayTabs>
+			<ClayTabs active={activeTab} onActiveChange={setActiveTab}>
 				<ClayTabs.List>
 					<ClayTabs.Item>
 						{Liferay.Language.get('general')}

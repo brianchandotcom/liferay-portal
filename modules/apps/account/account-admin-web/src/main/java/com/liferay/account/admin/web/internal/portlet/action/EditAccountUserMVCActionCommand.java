@@ -103,37 +103,37 @@ public class EditAccountUserMVCActionCommand
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
-		if (Validator.isNull(parameterValue)) {
-			User currentUser = _portal.getUser(portletRequest);
+		if (Validator.isNotNull(parameterValue)) {
+			ListType listType = _listTypeLocalService.addListType(
+				accountUser.getCompanyId(), parameterValue, type);
 
-			if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
-				if (!UsersAdminUtil.hasUpdateFieldPermission(
-						_permissionCheckerFactory.create(currentUser),
-						currentUser, accountUser, "prefix")) {
-
-					Contact contact = accountUser.getContact();
-
-					return contact.getPrefixListTypeId();
-				}
-			}
-			else {
-				if (!UsersAdminUtil.hasUpdateFieldPermission(
-						_permissionCheckerFactory.create(currentUser),
-						currentUser, accountUser, "suffix")) {
-
-					Contact contact = accountUser.getContact();
-
-					return contact.getSuffixListTypeId();
-				}
-			}
-
-			return 0;
+			return listType.getListTypeId();
 		}
 
-		ListType listType = _listTypeLocalService.addListType(
-			accountUser.getCompanyId(), parameterValue, type);
+		User currentUser = _portal.getUser(portletRequest);
 
-		return listType.getListTypeId();
+		if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
+			if (!UsersAdminUtil.hasUpdateFieldPermission(
+					_permissionCheckerFactory.create(currentUser), currentUser,
+					accountUser, "prefix")) {
+
+				Contact contact = accountUser.getContact();
+
+				return contact.getPrefixListTypeId();
+			}
+		}
+		else {
+			if (!UsersAdminUtil.hasUpdateFieldPermission(
+					_permissionCheckerFactory.create(currentUser), currentUser,
+					accountUser, "suffix")) {
+
+				Contact contact = accountUser.getContact();
+
+				return contact.getSuffixListTypeId();
+			}
+		}
+
+		return 0;
 	}
 
 	@Reference

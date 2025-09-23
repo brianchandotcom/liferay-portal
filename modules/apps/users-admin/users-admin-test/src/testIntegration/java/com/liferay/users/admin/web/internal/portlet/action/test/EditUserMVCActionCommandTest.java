@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.servlet.PortletServlet;
+import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -156,40 +157,42 @@ public class EditUserMVCActionCommandTest {
 					TestPropsValues.getCompanyId(),
 					TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
-			PrincipalThreadLocal.setName(user.getUserId());
-
 			PermissionChecker userPermissionChecker =
 				PermissionCheckerFactoryUtil.create(user);
 
-			PermissionThreadLocal.setPermissionChecker(userPermissionChecker);
+			try (ContextUserReplace contextUserReplace = new ContextUserReplace(
+					user, userPermissionChecker)) {
 
-			Assert.assertFalse(
-				UsersAdminUtil.hasUpdateFieldPermission(
-					userPermissionChecker, user, user, "suffix"));
+				Assert.assertFalse(
+					UsersAdminUtil.hasUpdateFieldPermission(
+						userPermissionChecker, user, user, "suffix"));
 
-			String firstName = RandomTestUtil.randomString();
+				String firstName = RandomTestUtil.randomString();
 
-			_processAction(
-				"/users_admin/edit_user",
-				HashMapBuilder.put(
-					Constants.CMD, Constants.UPDATE
-				).put(
-					"firstName", firstName
-				).put(
-					"p_u_i_d", String.valueOf(user.getUserId())
-				).build(),
-				userPermissionChecker, user.getUserId());
+				_processAction(
+					"/users_admin/edit_user",
+					HashMapBuilder.put(
+						Constants.CMD, Constants.UPDATE
+					).put(
+						"firstName", firstName
+					).put(
+						"p_u_i_d", String.valueOf(user.getUserId())
+					).build(),
+					userPermissionChecker, user.getUserId());
 
-			user = _userLocalService.getUser(user.getUserId());
+				user = _userLocalService.getUser(user.getUserId());
 
-			Assert.assertEquals(user.getFirstName(), firstName);
+				Assert.assertEquals(user.getFirstName(), firstName);
 
-			Contact contact = user.getContact();
+				Contact contact = user.getContact();
 
-			Assert.assertEquals(
-				prefixListType.getListTypeId(), contact.getPrefixListTypeId());
-			Assert.assertEquals(
-				suffixListType.getListTypeId(), contact.getSuffixListTypeId());
+				Assert.assertEquals(
+					prefixListType.getListTypeId(),
+					contact.getPrefixListTypeId());
+				Assert.assertEquals(
+					suffixListType.getListTypeId(),
+					contact.getSuffixListTypeId());
+			}
 		}
 		finally {
 			PropsUtil.set(

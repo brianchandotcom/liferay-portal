@@ -611,38 +611,38 @@ public class EditUserMVCActionCommand
 		String parameterValue = ParamUtil.getString(
 			portletRequest, parameterName);
 
-		if (Validator.isNull(parameterValue)) {
-			User currentUser = _portal.getUser(portletRequest);
-			User selUser = _portal.getSelectedUser(portletRequest);
+		if (Validator.isNotNull(parameterValue)) {
+			ListType listType = _listTypeLocalService.addListType(
+				companyId, parameterValue, type);
 
-			if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
-				if (!UsersAdminUtil.hasUpdateFieldPermission(
-						_permissionCheckerFactory.create(currentUser),
-						currentUser, selUser, "prefix")) {
-
-					Contact contact = selUser.getContact();
-
-					return contact.getPrefixListTypeId();
-				}
-			}
-			else {
-				if (!UsersAdminUtil.hasUpdateFieldPermission(
-						_permissionCheckerFactory.create(currentUser),
-						currentUser, selUser, "suffix")) {
-
-					Contact contact = selUser.getContact();
-
-					return contact.getSuffixListTypeId();
-				}
-			}
-
-			return 0;
+			return listType.getListTypeId();
 		}
 
-		ListType listType = _listTypeLocalService.addListType(
-			companyId, parameterValue, type);
+		User currentUser = _portal.getUser(portletRequest);
+		User selUser = _portal.getSelectedUser(portletRequest);
 
-		return listType.getListTypeId();
+		if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
+			if (!UsersAdminUtil.hasUpdateFieldPermission(
+					_permissionCheckerFactory.create(currentUser), currentUser,
+					selUser, "prefix")) {
+
+				Contact contact = selUser.getContact();
+
+				return contact.getPrefixListTypeId();
+			}
+		}
+		else {
+			if (!UsersAdminUtil.hasUpdateFieldPermission(
+					_permissionCheckerFactory.create(currentUser), currentUser,
+					selUser, "suffix")) {
+
+				Contact contact = selUser.getContact();
+
+				return contact.getSuffixListTypeId();
+			}
+		}
+
+		return 0;
 	}
 
 	private WorkflowTask _getWorkflowTask(

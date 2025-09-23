@@ -14,7 +14,7 @@ import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPer
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
-import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
+import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
 import deleteAssetEntriesBulkAction, {
@@ -264,7 +264,7 @@ export default function AssetsFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: () =>
-						ItemNavigationModalContent({
+						AssetNavigationModalContent({
 							additionalProps,
 							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,

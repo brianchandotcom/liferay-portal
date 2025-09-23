@@ -6,7 +6,7 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
-import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
+import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
 import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import shareAction from './actions/shareAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -152,7 +152,8 @@ export default function SharedWithMeFDSPropsTransformer({
 						className: '',
 					},
 					contentComponent: () =>
-						ItemNavigationModalContent({
+						AssetNavigationModalContent({
+							additionalProps,
 							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,
 							items: transformedItems,

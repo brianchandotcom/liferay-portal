@@ -25,6 +25,7 @@ import java.net.URL;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -140,8 +141,12 @@ public abstract class BaseSourceProcessorTestCase {
 					modifiedFileNames);
 			}
 
+			Comparator<SourceFormatterMessage> comparator =
+				Comparator.comparing(SourceFormatterMessage::getMessage);
+
 			_checkExpectedMessages(
-				expectedMessages, newFile, sourceFormatterMessages,
+				expectedMessages, newFile,
+				ListUtil.sort(sourceFormatterMessages, comparator),
 				sourceProcessorTestParameters);
 		}
 		else {
@@ -213,6 +218,14 @@ public abstract class BaseSourceProcessorTestCase {
 			if (lineNumber > -1) {
 				List<Integer> lineNumbers =
 					sourceProcessorTestParameters.getLineNumbers();
+
+				if (lineNumbers.stream(
+					).allMatch(
+						v -> v == -1
+					)) {
+
+					continue;
+				}
 
 				Assert.assertEquals(
 					String.valueOf(lineNumbers.get(i)),

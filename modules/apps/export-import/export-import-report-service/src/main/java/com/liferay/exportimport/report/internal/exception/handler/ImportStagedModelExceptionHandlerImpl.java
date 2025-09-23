@@ -43,8 +43,6 @@ public class ImportStagedModelExceptionHandlerImpl
 
 		String externalReferenceCode = null;
 
-		Class<?> clazz = stagedModel.getModelClass();
-
 		if (stagedModel instanceof ExternalReferenceCodeModel) {
 			ExternalReferenceCodeModel externalReferenceCodeModel =
 				(ExternalReferenceCodeModel)stagedModel;
@@ -53,7 +51,8 @@ public class ImportStagedModelExceptionHandlerImpl
 				externalReferenceCodeModel.getExternalReferenceCode();
 		}
 
-		String modelName = ExportImportReportEntryUtil.getModelName(clazz);
+		String modelName = ExportImportReportEntryUtil.getModelName(
+			stagedModel.getModelClass());
 
 		try {
 			long groupId = portletDataContext.getGroupId();

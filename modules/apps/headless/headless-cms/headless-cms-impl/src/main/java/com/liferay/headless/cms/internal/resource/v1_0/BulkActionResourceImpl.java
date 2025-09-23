@@ -254,9 +254,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private void _addBulkActionTaskItem(
+			BulkActionTask bulkActionTask,
 			Map.Entry<String, List<BulkActionItem>> entry,
-			BulkActionTask bulkActionTask, ImportTask importTask,
-			String taskItemDelegateName, List<BulkActionItem> bulkActionItems)
+			ImportTask importTask, String taskItemDelegateName,
+			List<BulkActionItem> bulkActionItems)
 		throws Exception {
 
 		for (BulkActionItem bulkActionItem : entry.getValue()) {
@@ -346,7 +347,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				entry, bulkActionTask, importTask, taskItemDelegateName,
+				bulkActionTask, entry, importTask, taskItemDelegateName,
 				bulkActionItems);
 		}
 
@@ -390,7 +391,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				entry, bulkActionTask, importTask, taskItemDelegateName,
+				bulkActionTask, entry, importTask, taskItemDelegateName,
 				bulkActionItems);
 		}
 
@@ -445,7 +446,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				entry, bulkActionTask, importTask, taskItemDelegateName,
+				bulkActionTask, entry, importTask, taskItemDelegateName,
 				bulkActionItems);
 		}
 
@@ -507,7 +508,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				entry, bulkActionTask, importTask, taskItemDelegateName,
+				bulkActionTask, entry, importTask, taskItemDelegateName,
 				bulkActionItems);
 		}
 
@@ -564,7 +565,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				entry, bulkActionTask, importTask, taskItemDelegateName,
+				bulkActionTask, entry, importTask, taskItemDelegateName,
 				bulkActionItems);
 		}
 

@@ -8247,6 +8247,83 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testUpdateObjectEntryWithAssigneeObjectField()
+		throws Exception {
+
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		User user = UserTestUtil.addUser();
+
+		ObjectEntry objectEntry = _addObjectEntryWithAssigneeObjectField(
+			HashMapBuilder.put(
+				"externalReferenceCode", user.getExternalReferenceCode()
+			).put(
+				"type", "User"
+			).build());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		_updateObjectEntryWithAssigneeObjectField(
+			HashMapBuilder.put(
+				"externalReferenceCode",
+				() -> {
+					Role role = _addRoleUser(
+						new String[] {ActionKeys.VIEW}, _objectDefinition1,
+						user);
+
+					return role.getExternalReferenceCode();
+				}
+			).put(
+				"type", "Role"
+			).build(),
+			objectEntry.getId());
+		_updateObjectEntryWithAssigneeObjectField(
+			HashMapBuilder.put(
+				"externalReferenceCode",
+				() -> {
+					Organization organization =
+						OrganizationTestUtil.addOrganization();
+
+					_assignOrganizationRole(
+						organization, _accountManagerRole, user);
+
+					return _accountManagerRole.getExternalReferenceCode();
+				}
+			).put(
+				"type", "Role"
+			).build(),
+			objectEntry.getId());
+		_updateObjectEntryWithAssigneeObjectField(
+			Collections.emptyMap(), objectEntry.getId());
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have UPDATE permission for ",
+				_objectDefinition1.getClassName(), StringPool.SPACE,
+				objectEntry.getId()),
+			() -> _defaultObjectEntryManager.updateObjectEntry(
+				_simpleDTOConverterContext, _objectDefinition1,
+				objectEntry.getId(), objectEntry));
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateObjectEntryWithScheduleDates() throws Exception {
@@ -10636,6 +10713,21 @@ public class DefaultObjectEntryManagerImplTest
 				}
 			},
 			objectEntry.getScopeKey());
+	}
+
+	private void _updateObjectEntryWithAssigneeObjectField(
+			Map<String, String> assigneeMap, long objectEntryId)
+		throws Exception {
+
+		_defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, _objectDefinition1, objectEntryId,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"assignee", assigneeMap
+					).build();
+				}
+			});
 	}
 
 	private static ObjectDefinition _accountEntryObjectDefinition;

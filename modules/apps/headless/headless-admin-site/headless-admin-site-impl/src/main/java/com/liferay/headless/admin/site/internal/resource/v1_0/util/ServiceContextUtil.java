@@ -17,6 +17,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -66,11 +67,23 @@ public class ServiceContextUtil {
 				widgetPageSettings.getWidgetPageTemplateReference();
 
 			if (itemExternalReference != null) {
+				Scope scope = itemExternalReference.getScope();
+
+				long scopeGroupId = groupId;
+
+				if (scope != null) {
+					Group group =
+						GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+							scope.getExternalReferenceCode(), companyId);
+
+					scopeGroupId = group.getGroupId();
+				}
+
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					LayoutPageTemplateEntryLocalServiceUtil.
 						fetchLayoutPageTemplateEntryByExternalReferenceCode(
 							itemExternalReference.getExternalReferenceCode(),
-							groupId);
+							scopeGroupId);
 
 				if (layoutPageTemplateEntry == null) {
 					throw new UnsupportedOperationException();

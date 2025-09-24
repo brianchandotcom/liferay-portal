@@ -183,10 +183,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		JSONArray jsonArray = jsonObject.getJSONArray("bulkActionItems");
-
-		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject itemJSONObject = jsonArray.getJSONObject(i);

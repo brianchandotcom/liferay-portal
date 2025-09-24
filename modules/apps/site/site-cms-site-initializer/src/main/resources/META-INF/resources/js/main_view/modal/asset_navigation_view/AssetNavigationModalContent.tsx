@@ -14,12 +14,12 @@ import Carousel from './Carousel';
 import Header from './Header';
 
 import '../../../../css/components/AssetNavigation.scss';
-
+import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 interface AssetNavigationModalContentProps {
 	additionalProps: any;
 	contentViewURL: string;
 	currentIndex: number;
-	items: ItemData[];
+	items: ISearchAssetObjectEntry[];
 }
 
 const KEY_CODE = {
@@ -37,13 +37,13 @@ const AssetNavigationCommentsPanel = ({
 	item,
 }: {
 	additionalProps: any;
-	item: ItemData;
+	item: ISearchAssetObjectEntry;
 }) => {
 	const {addCommentURL, editCommentURL, getCommentsURL} = commentsProps;
 	const {
 		embedded: {id},
 		entryClassName,
-	}: ItemData = item;
+	}: ISearchAssetObjectEntry = item;
 
 	const dynamicURL = `?className=${encodeURIComponent(
 		entryClassName

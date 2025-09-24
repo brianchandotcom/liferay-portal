@@ -4,12 +4,17 @@
  */
 
 export interface IAssetFile {
+	alternativeText?: string;
 	externalReferenceCode: string;
 	id: number;
 	link: {
 		href: string;
 		label: string;
 	};
+	metadata: {
+		numberOfPages?: number;
+	};
+	mimeType?: string;
 	name: string;
 	previewURL: string;
 	thumbnailURL: string;

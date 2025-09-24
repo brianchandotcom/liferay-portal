@@ -7223,17 +7223,7 @@ public class DefaultObjectEntryManagerImplTest
 	public void testSubscribeObjectEntryWithHierarchy() throws Exception {
 		ObjectDefinition objectDefinitionA = _addObjectDefinition(
 			true,
-			Collections.singletonList(
-				new TextObjectFieldBuilder(
-				).labelMap(
-					RandomTestUtil.randomLocaleStringMap()
-				).name(
-					"textObjectFieldName"
-				).build()),
-			ObjectDefinitionConstants.SCOPE_COMPANY);
-		ObjectDefinition objectDefinitionAA = _addObjectDefinition(
-			true,
-			Collections.singletonList(
+			List.of(
 				new TextObjectFieldBuilder(
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
@@ -7242,57 +7232,56 @@ public class DefaultObjectEntryManagerImplTest
 				).build()),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, adminUser.getUserId(),
-				objectDefinitionA.getObjectDefinitionId(),
-				objectDefinitionAA.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, true,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		ObjectEntry rootObjectEntry = _addObjectEntry(
-			objectDefinitionA, Collections.emptyMap());
+		ObjectEntry objectEntryA = _addObjectEntry(objectDefinitionA, Map.of());
 
 		_defaultObjectEntryManager.subscribeObjectEntry(
-			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
-			rootObjectEntry.getScopeKey());
+			objectEntryA.getExternalReferenceCode(), objectDefinitionA,
+			objectEntryA.getScopeKey());
 
 		Assert.assertTrue(
 			_subscriptionLocalService.isSubscribed(
 				objectDefinitionA.getCompanyId(), adminUser.getUserId(),
-				objectDefinitionA.getClassName(), rootObjectEntry.getId()));
+				objectDefinitionA.getClassName(), objectEntryA.getId()));
 
 		_defaultObjectEntryManager.unsubscribeObjectEntry(
-			rootObjectEntry.getExternalReferenceCode(), objectDefinitionA,
-			rootObjectEntry.getScopeKey());
+			objectEntryA.getExternalReferenceCode(), objectDefinitionA,
+			objectEntryA.getScopeKey());
 
 		Assert.assertFalse(
 			_subscriptionLocalService.isSubscribed(
 				objectDefinitionA.getCompanyId(), adminUser.getUserId(),
-				objectDefinitionA.getClassName(), rootObjectEntry.getId()));
+				objectDefinitionA.getClassName(), objectEntryA.getId()));
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			objectRelationship.getObjectFieldId2());
+		ObjectDefinition objectDefinitionAA = _addObjectDefinition(
+			true,
+			List.of(
+				new TextObjectFieldBuilder(
+				).labelMap(
+					RandomTestUtil.randomLocaleStringMap()
+				).name(
+					"textObjectFieldName"
+				).build()),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		ObjectEntry childObjectEntry = _addObjectEntry(
-			objectDefinitionAA,
-			Collections.singletonMap(
-				objectField.getName(), rootObjectEntry.getId()));
+		ObjectEntry objectEntryAA =
+			_defaultObjectEntryManager.addRelatedObjectEntry(
+				_simpleDTOConverterContext,
+				new ObjectEntry() {
+					{
+						properties = new HashMap<>();
+					}
+				},
+				objectEntryA.getId(),
+				TreeTestUtil.bind(
+					objectDefinitionA.getObjectDefinitionId(),
+					objectDefinitionAA.getObjectDefinitionId(),
+					_objectRelationshipLocalService));
 
 		AssertUtils.assertFailure(
 			UnsupportedOperationException.class, null,
 			() -> _defaultObjectEntryManager.subscribeObjectEntry(
-				childObjectEntry.getExternalReferenceCode(), objectDefinitionAA,
-				childObjectEntry.getScopeKey()));
-
-		TreeTestUtil.deleteObjectDefinitionHierarchy(
-			objectDefinitionLocalService,
-			new String[] {
-				objectDefinitionA.getName(), objectDefinitionAA.getName()
-			},
-			_objectEntryLocalService, _objectRelationshipLocalService);
+				objectEntryAA.getExternalReferenceCode(), objectDefinitionAA,
+				objectEntryAA.getScopeKey()));
 	}
 
 	@Test

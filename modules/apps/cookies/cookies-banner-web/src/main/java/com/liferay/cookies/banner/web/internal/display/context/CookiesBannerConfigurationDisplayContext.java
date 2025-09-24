@@ -37,8 +37,8 @@ public class CookiesBannerConfigurationDisplayContext
 		HttpServletRequest httpServletRequest) {
 
 		super(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			httpServletRequest);
+			cookiesConfigurationProvider, httpServletRequest,
+			layoutUtilityPageEntryLayoutProvider);
 	}
 
 	public Map<String, Object> getContext() {

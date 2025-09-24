@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsCookiesConstants;
 
-import jakarta.portlet.RenderRequest;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -33,25 +31,13 @@ import java.util.List;
 public abstract class BaseDisplayContext {
 
 	public BaseDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LayoutUtilityPageEntryLayoutProvider
-			layoutUtilityPageEntryLayoutProvider,
-		HttpServletRequest httpServletRequest) {
+			layoutUtilityPageEntryLayoutProvider) {
 
+		_httpServletRequest = httpServletRequest;
 		_layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
-		_httpServletRequest = httpServletRequest;
-	}
-
-	public BaseDisplayContext(
-		LayoutUtilityPageEntryLayoutProvider
-			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
-
-		this(
-			layoutUtilityPageEntryLayoutProvider,
-			PortalUtil.getHttpServletRequest(renderRequest));
-
-		_renderRequest = renderRequest;
 	}
 
 	public String getCookieTitle(
@@ -141,10 +127,6 @@ public abstract class BaseDisplayContext {
 		return _httpServletRequest;
 	}
 
-	protected RenderRequest getRenderRequest() {
-		return _renderRequest;
-	}
-
 	private ConsentCookieType _getConsentCookieType(
 		boolean hideFromEndUser, String name, boolean prechecked) {
 
@@ -160,7 +142,6 @@ public abstract class BaseDisplayContext {
 	private final LayoutUtilityPageEntryLayoutProvider
 		_layoutUtilityPageEntryLayoutProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
-	private RenderRequest _renderRequest;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 
 }

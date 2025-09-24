@@ -41,14 +41,14 @@ public class CookiesBannerDisplayContext
 		RenderRequest renderRequest) {
 
 		super(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			renderRequest);
+			cookiesConfigurationProvider,
+			PortalUtil.getHttpServletRequest(renderRequest),
+			layoutUtilityPageEntryLayoutProvider);
 	}
 
 	public Object getConfigurationURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(
-				PortalUtil.getLiferayPortletRequest(renderRequest));
+			RequestBackedPortletURLFactoryUtil.create(httpServletRequest);
 
 		return PortletURLBuilder.create(
 			requestBackedPortletURLFactory.createRenderURL(

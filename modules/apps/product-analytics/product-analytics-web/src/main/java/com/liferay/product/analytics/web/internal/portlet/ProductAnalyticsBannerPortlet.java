@@ -65,7 +65,8 @@ public class ProductAnalyticsBannerPortlet extends MVCPortlet {
 		ProductAnalyticsBannerDisplayContext
 			productAnalyticsBannerDisplayContext =
 				new ProductAnalyticsBannerDisplayContext(
-					_layoutUtilityPageEntryLayoutProvider, renderRequest);
+					_portal.getHttpServletRequest(renderRequest),
+					_layoutUtilityPageEntryLayoutProvider);
 
 		renderRequest.setAttribute(
 			ProductAnalyticsWebKeys.PRODUCT_ANALYTICS_BANNER_DISPLAY_CONTEXT,

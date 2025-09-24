@@ -12,10 +12,9 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.product.analytics.web.internal.constants.ProductAnalyticsPortletKeys;
 
-import jakarta.portlet.RenderRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 import java.util.Map;
@@ -26,11 +25,11 @@ import java.util.Map;
 public class ProductAnalyticsBannerDisplayContext extends BaseDisplayContext {
 
 	public ProductAnalyticsBannerDisplayContext(
+		HttpServletRequest httpServletRequest,
 		LayoutUtilityPageEntryLayoutProvider
-			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
+			layoutUtilityPageEntryLayoutProvider) {
 
-		super(layoutUtilityPageEntryLayoutProvider, renderRequest);
+		super(httpServletRequest, layoutUtilityPageEntryLayoutProvider);
 	}
 
 	public Map<String, Object> getContext(Locale locale) {
@@ -53,8 +52,7 @@ public class ProductAnalyticsBannerDisplayContext extends BaseDisplayContext {
 
 	private String _getConfigurationURL() {
 		RequestBackedPortletURLFactory requestBackedPortletURLFactory =
-			RequestBackedPortletURLFactoryUtil.create(
-				PortalUtil.getLiferayPortletRequest(getRenderRequest()));
+			RequestBackedPortletURLFactoryUtil.create(getHttpServletRequest());
 
 		return PortletURLBuilder.create(
 			requestBackedPortletURLFactory.createRenderURL(

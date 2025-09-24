@@ -25,7 +25,7 @@ public class ProductAnalyticsConsentPanelDisplayContext
 			layoutUtilityPageEntryLayoutProvider,
 		HttpServletRequest httpServletRequest) {
 
-		super(layoutUtilityPageEntryLayoutProvider, httpServletRequest);
+		super(httpServletRequest, layoutUtilityPageEntryLayoutProvider);
 	}
 
 	public Map<String, Object> getContext() {

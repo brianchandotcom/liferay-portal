@@ -810,11 +810,11 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 										docker system prune --volumes -f
 
-										docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach --scale osbfarofrontend=0
+										docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach --scale osbfarofrontend=0
 
 										sleep 30
 
-										docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach osbfarofrontend
+										docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} up --detach osbfarofrontend
 
 										while [[ -n $(docker ps | grep "health: starting") ]] || [[ -n $(docker ps | grep "unhealthy") ]]
 										do
@@ -903,7 +903,7 @@ networks:
 			/>
 
 			<execute dir="${analytics.cloud.asah.dir}">
-				docker-compose -f docker-compose.integration-test.yml up -d
+				docker compose -f docker-compose.integration-test.yml up -d
 
 				docker ps
 			</execute>
@@ -980,7 +980,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 
 						touch local.env
 
-						docker-compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} down --volumes
+						docker compose --file=${analytics.cloud.docker.test.yaml} --project-name=${analytics.cloud.project.name} down --volumes
 
 						docker system df
 					</execute>
@@ -996,7 +996,7 @@ if (Os.isFamily(Os.FAMILY_WINDOWS)) {
 			<execute dir="${analytics.cloud.asah.dir}">
 				docker ps -a
 
-				docker-compose -f docker-compose.integration-test.yml down --volumes
+				docker compose -f docker-compose.integration-test.yml down --volumes
 
 				docker system df
 			</execute>

@@ -17,10 +17,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import jakarta.portlet.RenderRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -46,19 +43,6 @@ public class BaseCookiesBannerDisplayContext {
 			httpServletRequest);
 		cookiesConsentConfiguration = _getCookiesConsentConfiguration(
 			httpServletRequest);
-	}
-
-	public BaseCookiesBannerDisplayContext(
-		CookiesConfigurationProvider cookiesConfigurationProvider,
-		LayoutUtilityPageEntryLayoutProvider
-			layoutUtilityPageEntryLayoutProvider,
-		RenderRequest renderRequest) {
-
-		this(
-			cookiesConfigurationProvider, layoutUtilityPageEntryLayoutProvider,
-			PortalUtil.getHttpServletRequest(renderRequest));
-
-		this.renderRequest = renderRequest;
 	}
 
 	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
@@ -124,7 +108,6 @@ public class BaseCookiesBannerDisplayContext {
 	protected HttpServletRequest httpServletRequest;
 	protected LayoutUtilityPageEntryLayoutProvider
 		layoutUtilityPageEntryLayoutProvider;
-	protected RenderRequest renderRequest;
 
 	private CookiesBannerConfiguration _getCookiesBannerConfiguration(
 		HttpServletRequest httpServletRequest) {

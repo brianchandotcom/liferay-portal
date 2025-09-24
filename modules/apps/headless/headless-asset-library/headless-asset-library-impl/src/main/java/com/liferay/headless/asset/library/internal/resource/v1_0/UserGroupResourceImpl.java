@@ -5,12 +5,10 @@
 
 package com.liferay.headless.asset.library.internal.resource.v1_0;
 
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.UserGroup;
 import com.liferay.headless.asset.library.resource.v1_0.UserGroupResource;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -28,8 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.SearchUtil;
@@ -43,16 +39,14 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-group.properties",
-	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = UserGroupResource.class
+	scope = ServiceScope.PROTOTYPE, service = UserGroupResource.class
 )
 public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 	@Override
-	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
+	public void deleteAssetLibraryUserGroup(
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -64,28 +58,14 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			_userGroupService.getUserGroupByExternalReferenceCode(
 				userGroupExternalReferenceCode, contextCompany.getCompanyId());
 
-		deleteAssetLibraryUserGroup(
-			group.getGroupId(), userGroup.getUserGroupId());
-	}
-
-	@Override
-	public void deleteAssetLibraryUserGroup(
-			Long assetLibraryId, Long userGroupId)
-		throws PortalException {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
 		_userGroupService.unsetGroupUserGroups(
-			assetLibraryId, new long[] {userGroupId});
+			group.getGroupId(), new long[] {userGroup.getUserGroupId()});
 	}
 
 	@Override
-	public UserGroup
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
+	public UserGroup getAssetLibraryUserGroup(
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -103,7 +83,7 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
-	public Page<UserGroup> getAssetLibraryByExternalReferenceCodeUserGroupsPage(
+	public Page<UserGroup> getAssetLibraryUserGroupsPage(
 			String externalReferenceCode, String keywords, String search,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
@@ -119,35 +99,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 	}
 
 	@Override
-	public UserGroup getAssetLibraryUserGroup(
-			Long assetLibraryId, Long userGroupId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		_checkGroupUserGroup(assetLibraryId, userGroupId);
-
-		return _toUserGroup(_userGroupService.getUserGroup(userGroupId));
-	}
-
-	@NestedField(parentClass = AssetLibrary.class, value = "userGroups")
-	@Override
-	public Page<UserGroup> getAssetLibraryUserGroupsPage(
-			@NestedFieldId("siteId") Long assetLibraryId, String keywords,
-			String search, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		return _getUserGroupPage(
-			assetLibraryId, keywords, search, pagination, sorts);
-	}
-
-	@Override
-	public UserGroup
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
+	public UserGroup putAssetLibraryUserGroup(
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -160,23 +114,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			_userGroupService.getUserGroupByExternalReferenceCode(
 				userGroupExternalReferenceCode, contextCompany.getCompanyId());
 
-		return putAssetLibraryUserGroup(
-			group.getGroupId(), userGroup.getUserGroupId());
-	}
-
-	@Override
-	public UserGroup putAssetLibraryUserGroup(
-			Long assetLibraryId, Long userGroupId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
 		_userGroupService.addGroupUserGroups(
-			assetLibraryId, new long[] {userGroupId});
+			group.getGroupId(), new long[] {userGroup.getUserGroupId()});
 
-		return _toUserGroup(_userGroupService.getUserGroup(userGroupId));
+		return _toUserGroup(
+			_userGroupService.getUserGroup(userGroup.getUserGroupId()));
 	}
 
 	private void _checkGroupUserGroup(Long assetLibraryId, Long userGroupId)

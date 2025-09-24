@@ -5,7 +5,6 @@
 
 package com.liferay.headless.asset.library.internal.resource.v1_0;
 
-import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.headless.asset.library.resource.v1_0.UserAccountResource;
 import com.liferay.petra.string.StringBundler;
@@ -35,8 +34,6 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.fields.NestedField;
-import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
@@ -56,16 +53,14 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/user-account.properties",
-	property = "nested.field.support=true", scope = ServiceScope.PROTOTYPE,
-	service = UserAccountResource.class
+	scope = ServiceScope.PROTOTYPE, service = UserAccountResource.class
 )
 public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
-	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+	public void deleteAssetLibraryUserAccount(
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -76,26 +71,13 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		User user = _userService.getUserByExternalReferenceCode(
 			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
-		deleteAssetLibraryUserAccount(group.getGroupId(), user.getUserId());
+		_updateUser(group.getGroupId(), user.getUserId(), false);
 	}
 
 	@Override
-	public void deleteAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		_updateUser(assetLibraryId, userAccountId, false);
-	}
-
-	@Override
-	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+	public UserAccount getAssetLibraryUserAccount(
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -115,10 +97,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public Page<UserAccount>
-			getAssetLibraryByExternalReferenceCodeUserAccountsPage(
-				String externalReferenceCode, String keywords, String search,
-				Pagination pagination, Sort[] sorts)
+	public Page<UserAccount> getAssetLibraryUserAccountsPage(
+			String externalReferenceCode, String keywords, String search,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -134,45 +115,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 	}
 
 	@Override
-	public UserAccount getAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		_checkAssetLibraryAdminOrAssetLibraryMember(assetLibraryId);
-
-		User user = _userLocalService.getUserById(userAccountId);
-
-		_checkAssetLibraryMember(assetLibraryId, user.getUserId());
-
-		return _toUserAccount(assetLibraryId, user);
-	}
-
-	@NestedField(parentClass = AssetLibrary.class, value = "userAccounts")
-	@Override
-	public Page<UserAccount> getAssetLibraryUserAccountsPage(
-			@NestedFieldId("siteId") Long assetLibraryId, String keywords,
-			String search, Pagination pagination, Sort[] sorts)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		_checkAssetLibraryAdminOrAssetLibraryMember(assetLibraryId);
-
-		return _getUserAccountsPage(
-			assetLibraryId, keywords, pagination, sorts);
-	}
-
-	@Override
-	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+	public UserAccount putAssetLibraryUserAccount(
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -183,20 +128,9 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 		User user = _userService.getUserByExternalReferenceCode(
 			userAccountExternalReferenceCode, contextCompany.getCompanyId());
 
-		return putAssetLibraryUserAccount(group.getGroupId(), user.getUserId());
-	}
-
-	@Override
-	public UserAccount putAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
 		return _toUserAccount(
-			assetLibraryId, _updateUser(assetLibraryId, userAccountId, true));
+			group.getGroupId(),
+			_updateUser(group.getGroupId(), user.getUserId(), true));
 	}
 
 	private void _checkAssetLibraryAdminOrAssetLibraryMember(long groupId)

@@ -31,10 +31,10 @@ import java.util.Map;
 /**
  * @author Leandro Aguiar
  */
-public class MCPServerTransportProvider
+public class AuthorizedHttpServletSseServerTransportProvider
 	extends HttpServletSseServerTransportProvider {
 
-	public MCPServerTransportProvider(String baseURL) {
+	public AuthorizedHttpServletSseServerTransportProvider(String baseURL) {
 		super(new ObjectMapper(), baseURL, "/message", "/sse");
 	}
 
@@ -50,10 +50,11 @@ public class MCPServerTransportProvider
 
 			sessionField.setAccessible(true);
 
-			Session session = (Session)sessionField.get(
-				exchangeField.get(exchange));
+			AuthorizedMcpServerSession authorizedMcpServerSession =
+				(AuthorizedMcpServerSession)sessionField.get(
+					exchangeField.get(exchange));
 
-			return session.getAuthorizationHeader();
+			return authorizedMcpServerSession.getAuthorizationHeader();
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
@@ -62,7 +63,8 @@ public class MCPServerTransportProvider
 
 	@Override
 	public void setSessionFactory(McpServerSession.Factory sessionFactory) {
-		super.setSessionFactory(new Session.Factory(sessionFactory));
+		super.setSessionFactory(
+			new AuthorizedMcpServerSession.Factory(sessionFactory));
 	}
 
 	@Override
@@ -99,9 +101,9 @@ public class MCPServerTransportProvider
 
 	}
 
-	private static class Session extends McpServerSession {
+	private static class AuthorizedMcpServerSession extends McpServerSession {
 
-		public Session(
+		public AuthorizedMcpServerSession(
 			String id, Duration requestTimeout, McpServerTransport transport,
 			InitRequestHandler initHandler,
 			InitNotificationHandler initNotificationHandler,
@@ -160,7 +162,7 @@ public class MCPServerTransportProvider
 
 					notificationHandlersField.setAccessible(true);
 
-					return new Session(
+					return new AuthorizedMcpServerSession(
 						mcpServerSession.getId(),
 						(Duration)requestTimeoutField.get(mcpServerSession),
 						transport,

@@ -79,11 +79,21 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				skipValidation = true;
 			}
 
-			if ((from.contains(StringPool.OPEN_PARENTHESIS) &&
-				 !skipValidation && fileName.endsWith("java")) ||
-				keys.contains("hasMessage")) {
+			if (from.contains(StringPool.OPEN_PARENTHESIS) && !skipValidation &&
+				fileName.endsWith("java")) {
 
 				expectedMessages.add(_getMessage(jsonObject));
+			}
+
+			if (keys.contains("hasMessage")) {
+				String[] classNames = JSONUtil.toStringArray(
+					jsonObject.getJSONArray("classNames"));
+
+				int count = (classNames.length > 0) ? classNames.length : 1;
+
+				for (int y = 0; y < count; y++) {
+					expectedMessages.add(_getMessage(jsonObject));
+				}
 			}
 		}
 
@@ -342,6 +352,41 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 				classLoader.getResourceAsStream("dependencies/" + fileName)));
 	}
 
+	private static boolean _isAlreadyReplaced(
+		List<String> parameterNames, String to) {
+
+		List<String> toParameters = JavaSourceUtil.getParameterNames(to);
+
+		if (parameterNames.size() == toParameters.size()) {
+			for (int i = 0; i < toParameters.size(); i++) {
+				String toParameter = toParameters.get(i);
+
+				toParameter = toParameter.replaceFirst(
+					"param\\#\\d+\\#", "\\$\\$");
+
+				if (StringUtil.equals(toParameter, "$$")) {
+					continue;
+				}
+
+				toParameter = StringParser.escapeRegex(toParameter);
+
+				toParameter = StringUtil.replace(toParameter, "\\$\\$", "(.+)");
+
+				String parameterName = parameterNames.get(i);
+
+				Pattern pattern = Pattern.compile(toParameter);
+
+				Matcher matcher = pattern.matcher(parameterName);
+
+				if (matcher.find()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private String _addNewReference(String content, String newReference) {
 		if (!newReference.equals(StringPool.BLANK)) {
 			content = JavaSourceUtil.addImports(
@@ -544,7 +589,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				if (keys.contains("hasMessage")) {
 					addMessage(
-						fileName, _getMessage(jsonObject), matcher.start());
+						fileName, _getMessage(jsonObject),
+						getLineNumber(content, matcher.start()));
 
 					_newMessage = true;
 
@@ -800,62 +846,40 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		boolean hasMessage = false;
+		boolean valid = true;
+
+		if (fileName.endsWith(".java")) {
+			if (!to.isEmpty() && _isAlreadyReplaced(parameterNames, to)) {
+				valid = false;
+			}
+			else {
+				for (int i = 0; i < fromParameters.size(); i++) {
+					String parameterName = parameterNames.get(i);
+
+					String variableTypeName = getVariableTypeName(
+						javaMethodContent, null, newContent, fileName,
+						StringParser.escapeRegex(parameterName.trim()), true,
+						false);
+
+					if ((variableTypeName == null) ||
+						parameterName.contains(StringPool.OPEN_BRACKET)) {
+
+						hasMessage = true;
+					}
+					else if (!StringUtil.equals(
+								fromParameters.get(i), variableTypeName)) {
+
+						valid = false;
+
+						break;
+					}
+				}
+			}
+		}
 
 		Set<String> keys = jsonObject.keySet();
 
-		if (keys.contains("hasMessage")) {
-			hasMessage = true;
-		}
-		else if (fileName.endsWith(".java")) {
-			List<String> toParameters = JavaSourceUtil.getParameterNames(to);
-
-			if (parameterNames.size() == toParameters.size()) {
-				for (int i = 0; i < toParameters.size(); i++) {
-					String toParameter = toParameters.get(i);
-
-					toParameter = toParameter.replaceFirst(
-						"param\\#\\d+\\#", "\\$\\$");
-
-					if (StringUtil.equals(toParameter, "$$")) {
-						continue;
-					}
-
-					toParameter = StringParser.escapeRegex(toParameter);
-
-					toParameter = StringUtil.replace(
-						toParameter, "\\$\\$", "(.+)");
-
-					String parameterName = parameterNames.get(i);
-
-					Pattern pattern = Pattern.compile(toParameter);
-
-					Matcher matcher = pattern.matcher(parameterName);
-
-					if (matcher.find()) {
-						return false;
-					}
-				}
-			}
-
-			for (int i = 0; i < fromParameters.size(); i++) {
-				String parameterName = parameterNames.get(i);
-
-				String variableTypeName = getVariableTypeName(
-					javaMethodContent, null, newContent, fileName,
-					parameterName.trim(), true, false);
-
-				if (variableTypeName == null) {
-					hasMessage = true;
-				}
-				else if (!StringUtil.equals(
-							fromParameters.get(i), variableTypeName)) {
-
-					return false;
-				}
-			}
-		}
-
-		if (hasMessage) {
+		if (valid && (hasMessage || keys.contains("hasMessage"))) {
 			addMessage(fileName, _getMessage(jsonObject), lineNumber);
 
 			_newMessage = true;
@@ -863,7 +887,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return false;
 		}
 
-		return true;
+		return valid;
 	}
 
 	private String _insertMethodAlphabetically(

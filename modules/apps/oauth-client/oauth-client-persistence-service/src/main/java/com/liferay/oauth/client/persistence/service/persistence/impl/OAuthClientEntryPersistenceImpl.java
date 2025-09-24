@@ -2949,24 +2949,24 @@ public class OAuthClientEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_AUTHSERVERWELLKNOWNURI_3 =
 		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '')";
 
-	private FinderPath _finderPathFetchByC_A_C;
+	private FinderPath _finderPathFetchByC_C_A;
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
 	@Override
-	public OAuthClientEntry findByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public OAuthClientEntry findByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = fetchByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		OAuthClientEntry oAuthClientEntry = fetchByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 
 		if (oAuthClientEntry == null) {
 			StringBundler sb = new StringBundler(8);
@@ -2976,11 +2976,11 @@ public class OAuthClientEntryPersistenceImpl
 			sb.append("companyId=");
 			sb.append(companyId);
 
-			sb.append(", authServerWellKnownURI=");
-			sb.append(authServerWellKnownURI);
-
 			sb.append(", clientId=");
 			sb.append(clientId);
+
+			sb.append(", authServerWellKnownURI=");
+			sb.append(authServerWellKnownURI);
 
 			sb.append("}");
 
@@ -2995,42 +2995,42 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
-	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId) {
+	public OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI) {
 
-		return fetchByC_A_C(companyId, authServerWellKnownURI, clientId, true);
+		return fetchByC_C_A(companyId, clientId, authServerWellKnownURI, true);
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
 	@Override
-	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId,
+	public OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI,
 		boolean useFinderCache) {
 
-		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 		clientId = Objects.toString(clientId, "");
+		authServerWellKnownURI = Objects.toString(authServerWellKnownURI, "");
 
 		Object[] finderArgs = null;
 
 		if (useFinderCache) {
 			finderArgs = new Object[] {
-				companyId, authServerWellKnownURI, clientId
+				companyId, clientId, authServerWellKnownURI
 			};
 		}
 
@@ -3038,17 +3038,17 @@ public class OAuthClientEntryPersistenceImpl
 
 		if (useFinderCache) {
 			result = finderCache.getResult(
-				_finderPathFetchByC_A_C, finderArgs, this);
+				_finderPathFetchByC_C_A, finderArgs, this);
 		}
 
 		if (result instanceof OAuthClientEntry) {
 			OAuthClientEntry oAuthClientEntry = (OAuthClientEntry)result;
 
 			if ((companyId != oAuthClientEntry.getCompanyId()) ||
+				!Objects.equals(clientId, oAuthClientEntry.getClientId()) ||
 				!Objects.equals(
 					authServerWellKnownURI,
-					oAuthClientEntry.getAuthServerWellKnownURI()) ||
-				!Objects.equals(clientId, oAuthClientEntry.getClientId())) {
+					oAuthClientEntry.getAuthServerWellKnownURI())) {
 
 				result = null;
 			}
@@ -3059,28 +3059,28 @@ public class OAuthClientEntryPersistenceImpl
 
 			sb.append(_SQL_SELECT_OAUTHCLIENTENTRY_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_A_C_COMPANYID_2);
-
-			boolean bindAuthServerWellKnownURI = false;
-
-			if (authServerWellKnownURI.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3);
-			}
-			else {
-				bindAuthServerWellKnownURI = true;
-
-				sb.append(_FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2);
-			}
+			sb.append(_FINDER_COLUMN_C_C_A_COMPANYID_2);
 
 			boolean bindClientId = false;
 
 			if (clientId.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_A_C_CLIENTID_3);
+				sb.append(_FINDER_COLUMN_C_C_A_CLIENTID_3);
 			}
 			else {
 				bindClientId = true;
 
-				sb.append(_FINDER_COLUMN_C_A_C_CLIENTID_2);
+				sb.append(_FINDER_COLUMN_C_C_A_CLIENTID_2);
+			}
+
+			boolean bindAuthServerWellKnownURI = false;
+
+			if (authServerWellKnownURI.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_C_A_AUTHSERVERWELLKNOWNURI_3);
+			}
+			else {
+				bindAuthServerWellKnownURI = true;
+
+				sb.append(_FINDER_COLUMN_C_C_A_AUTHSERVERWELLKNOWNURI_2);
 			}
 
 			String sql = sb.toString();
@@ -3096,12 +3096,12 @@ public class OAuthClientEntryPersistenceImpl
 
 				queryPos.add(companyId);
 
-				if (bindAuthServerWellKnownURI) {
-					queryPos.add(authServerWellKnownURI);
-				}
-
 				if (bindClientId) {
 					queryPos.add(clientId);
+				}
+
+				if (bindAuthServerWellKnownURI) {
+					queryPos.add(authServerWellKnownURI);
 				}
 
 				List<OAuthClientEntry> list = query.list();
@@ -3109,7 +3109,7 @@ public class OAuthClientEntryPersistenceImpl
 				if (list.isEmpty()) {
 					if (useFinderCache) {
 						finderCache.putResult(
-							_finderPathFetchByC_A_C, finderArgs, list);
+							_finderPathFetchByC_C_A, finderArgs, list);
 					}
 				}
 				else {
@@ -3137,38 +3137,38 @@ public class OAuthClientEntryPersistenceImpl
 	}
 
 	/**
-	 * Removes the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
+	 * Removes the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the o auth client entry that was removed
 	 */
 	@Override
-	public OAuthClientEntry removeByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public OAuthClientEntry removeByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws NoSuchOAuthClientEntryException {
 
-		OAuthClientEntry oAuthClientEntry = findByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		OAuthClientEntry oAuthClientEntry = findByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 
 		return remove(oAuthClientEntry);
 	}
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries
 	 */
 	@Override
-	public int countByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId) {
+	public int countByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI) {
 
-		OAuthClientEntry oAuthClientEntry = fetchByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		OAuthClientEntry oAuthClientEntry = fetchByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 
 		if (oAuthClientEntry == null) {
 			return 0;
@@ -3177,20 +3177,20 @@ public class OAuthClientEntryPersistenceImpl
 		return 1;
 	}
 
-	private static final String _FINDER_COLUMN_C_A_C_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_C_A_COMPANYID_2 =
 		"oAuthClientEntry.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_2 =
-		"oAuthClientEntry.authServerWellKnownURI = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_A_CLIENTID_2 =
+		"oAuthClientEntry.clientId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_A_C_AUTHSERVERWELLKNOWNURI_3 =
-		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '') AND ";
+	private static final String _FINDER_COLUMN_C_C_A_CLIENTID_3 =
+		"(oAuthClientEntry.clientId IS NULL OR oAuthClientEntry.clientId = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_A_C_CLIENTID_2 =
-		"oAuthClientEntry.clientId = ?";
+	private static final String _FINDER_COLUMN_C_C_A_AUTHSERVERWELLKNOWNURI_2 =
+		"oAuthClientEntry.authServerWellKnownURI = ?";
 
-	private static final String _FINDER_COLUMN_C_A_C_CLIENTID_3 =
-		"(oAuthClientEntry.clientId IS NULL OR oAuthClientEntry.clientId = '')";
+	private static final String _FINDER_COLUMN_C_C_A_AUTHSERVERWELLKNOWNURI_3 =
+		"(oAuthClientEntry.authServerWellKnownURI IS NULL OR oAuthClientEntry.authServerWellKnownURI = '')";
 
 	public OAuthClientEntryPersistenceImpl() {
 		setModelClass(OAuthClientEntry.class);
@@ -3213,11 +3213,10 @@ public class OAuthClientEntryPersistenceImpl
 			oAuthClientEntry);
 
 		finderCache.putResult(
-			_finderPathFetchByC_A_C,
+			_finderPathFetchByC_C_A,
 			new Object[] {
-				oAuthClientEntry.getCompanyId(),
-				oAuthClientEntry.getAuthServerWellKnownURI(),
-				oAuthClientEntry.getClientId()
+				oAuthClientEntry.getCompanyId(), oAuthClientEntry.getClientId(),
+				oAuthClientEntry.getAuthServerWellKnownURI()
 			},
 			oAuthClientEntry);
 	}
@@ -3297,12 +3296,12 @@ public class OAuthClientEntryPersistenceImpl
 
 		Object[] args = new Object[] {
 			oAuthClientEntryModelImpl.getCompanyId(),
-			oAuthClientEntryModelImpl.getAuthServerWellKnownURI(),
-			oAuthClientEntryModelImpl.getClientId()
+			oAuthClientEntryModelImpl.getClientId(),
+			oAuthClientEntryModelImpl.getAuthServerWellKnownURI()
 		};
 
 		finderCache.putResult(
-			_finderPathFetchByC_A_C, args, oAuthClientEntryModelImpl);
+			_finderPathFetchByC_C_A, args, oAuthClientEntryModelImpl);
 	}
 
 	/**
@@ -3817,13 +3816,13 @@ public class OAuthClientEntryPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "authServerWellKnownURI"}, false);
 
-		_finderPathFetchByC_A_C = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_A_C",
+		_finderPathFetchByC_C_A = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByC_C_A",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			new String[] {"companyId", "authServerWellKnownURI", "clientId"},
+			new String[] {"companyId", "clientId", "authServerWellKnownURI"},
 			true);
 
 		OAuthClientEntryUtil.setPersistence(this);

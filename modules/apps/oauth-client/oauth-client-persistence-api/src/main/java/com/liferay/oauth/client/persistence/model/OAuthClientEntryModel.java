@@ -178,6 +178,21 @@ public interface OAuthClientEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the client ID of this o auth client entry.
+	 *
+	 * @return the client ID of this o auth client entry
+	 */
+	@AutoEscape
+	public String getClientId();
+
+	/**
+	 * Sets the client ID of this o auth client entry.
+	 *
+	 * @param clientId the client ID of this o auth client entry
+	 */
+	public void setClientId(String clientId);
+
+	/**
 	 * Returns the auth request parameters json of this o auth client entry.
 	 *
 	 * @return the auth request parameters json of this o auth client entry
@@ -208,19 +223,19 @@ public interface OAuthClientEntryModel
 	public void setAuthServerWellKnownURI(String authServerWellKnownURI);
 
 	/**
-	 * Returns the client ID of this o auth client entry.
+	 * Returns the custom claims json of this o auth client entry.
 	 *
-	 * @return the client ID of this o auth client entry
+	 * @return the custom claims json of this o auth client entry
 	 */
 	@AutoEscape
-	public String getClientId();
+	public String getCustomClaimsJSON();
 
 	/**
-	 * Sets the client ID of this o auth client entry.
+	 * Sets the custom claims json of this o auth client entry.
 	 *
-	 * @param clientId the client ID of this o auth client entry
+	 * @param customClaimsJSON the custom claims json of this o auth client entry
 	 */
-	public void setClientId(String clientId);
+	public void setCustomClaimsJSON(String customClaimsJSON);
 
 	/**
 	 * Returns the info json of this o auth client entry.

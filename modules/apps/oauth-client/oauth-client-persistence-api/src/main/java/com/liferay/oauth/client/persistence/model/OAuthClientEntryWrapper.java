@@ -40,10 +40,11 @@ public class OAuthClientEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("clientId", getClientId());
 		attributes.put(
 			"authRequestParametersJSON", getAuthRequestParametersJSON());
 		attributes.put("authServerWellKnownURI", getAuthServerWellKnownURI());
-		attributes.put("clientId", getClientId());
+		attributes.put("customClaimsJSON", getCustomClaimsJSON());
 		attributes.put("infoJSON", getInfoJSON());
 		attributes.put("metadataCacheTime", getMetadataCacheTime());
 		attributes.put("oidcUserInfoMapperJSON", getOIDCUserInfoMapperJSON());
@@ -97,6 +98,12 @@ public class OAuthClientEntryWrapper
 			setModifiedDate(modifiedDate);
 		}
 
+		String clientId = (String)attributes.get("clientId");
+
+		if (clientId != null) {
+			setClientId(clientId);
+		}
+
 		String authRequestParametersJSON = (String)attributes.get(
 			"authRequestParametersJSON");
 
@@ -111,10 +118,10 @@ public class OAuthClientEntryWrapper
 			setAuthServerWellKnownURI(authServerWellKnownURI);
 		}
 
-		String clientId = (String)attributes.get("clientId");
+		String customClaimsJSON = (String)attributes.get("customClaimsJSON");
 
-		if (clientId != null) {
-			setClientId(clientId);
+		if (customClaimsJSON != null) {
+			setCustomClaimsJSON(customClaimsJSON);
 		}
 
 		String infoJSON = (String)attributes.get("infoJSON");
@@ -197,6 +204,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public Date getCreateDate() {
 		return model.getCreateDate();
+	}
+
+	/**
+	 * Returns the custom claims json of this o auth client entry.
+	 *
+	 * @return the custom claims json of this o auth client entry
+	 */
+	@Override
+	public String getCustomClaimsJSON() {
+		return model.getCustomClaimsJSON();
 	}
 
 	/**
@@ -367,6 +384,16 @@ public class OAuthClientEntryWrapper
 	@Override
 	public void setCreateDate(Date createDate) {
 		model.setCreateDate(createDate);
+	}
+
+	/**
+	 * Sets the custom claims json of this o auth client entry.
+	 *
+	 * @param customClaimsJSON the custom claims json of this o auth client entry
+	 */
+	@Override
+	public void setCustomClaimsJSON(String customClaimsJSON) {
+		model.setCustomClaimsJSON(customClaimsJSON);
 	}
 
 	/**

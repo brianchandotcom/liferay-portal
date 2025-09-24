@@ -675,64 +675,64 @@ public interface OAuthClientEntryPersistence
 	public int filterCountByC_A(long companyId, String authServerWellKnownURI);
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
-	public OAuthClientEntry findByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public OAuthClientEntry findByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
-	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId);
+	public OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI);
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
-	public OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId,
+	public OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI,
 		boolean useFinderCache);
 
 	/**
-	 * Removes the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
+	 * Removes the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the o auth client entry that was removed
 	 */
-	public OAuthClientEntry removeByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public OAuthClientEntry removeByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws NoSuchOAuthClientEntryException;
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries
 	 */
-	public int countByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId);
+	public int countByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI);
 
 	/**
 	 * Caches the o auth client entry in the entity cache if it is enabled.

@@ -898,85 +898,85 @@ public class OAuthClientEntryUtil {
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or throws a <code>NoSuchOAuthClientEntryException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry
 	 * @throws NoSuchOAuthClientEntryException if a matching o auth client entry could not be found
 	 */
-	public static OAuthClientEntry findByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public static OAuthClientEntry findByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientEntryException {
 
-		return getPersistence().findByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		return getPersistence().findByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
-	public static OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId) {
+	public static OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI) {
 
-		return getPersistence().fetchByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		return getPersistence().fetchByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**
-	 * Returns the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching o auth client entry, or <code>null</code> if a matching o auth client entry could not be found
 	 */
-	public static OAuthClientEntry fetchByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId,
+	public static OAuthClientEntry fetchByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI,
 		boolean useFinderCache) {
 
-		return getPersistence().fetchByC_A_C(
-			companyId, authServerWellKnownURI, clientId, useFinderCache);
+		return getPersistence().fetchByC_C_A(
+			companyId, clientId, authServerWellKnownURI, useFinderCache);
 	}
 
 	/**
-	 * Removes the o auth client entry where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63; from the database.
+	 * Removes the o auth client entry where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the o auth client entry that was removed
 	 */
-	public static OAuthClientEntry removeByC_A_C(
-			long companyId, String authServerWellKnownURI, String clientId)
+	public static OAuthClientEntry removeByC_C_A(
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws com.liferay.oauth.client.persistence.exception.
 			NoSuchOAuthClientEntryException {
 
-		return getPersistence().removeByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		return getPersistence().removeByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**
-	 * Returns the number of o auth client entries where companyId = &#63; and authServerWellKnownURI = &#63; and clientId = &#63;.
+	 * Returns the number of o auth client entries where companyId = &#63; and clientId = &#63; and authServerWellKnownURI = &#63;.
 	 *
 	 * @param companyId the company ID
-	 * @param authServerWellKnownURI the auth server well known uri
 	 * @param clientId the client ID
+	 * @param authServerWellKnownURI the auth server well known uri
 	 * @return the number of matching o auth client entries
 	 */
-	public static int countByC_A_C(
-		long companyId, String authServerWellKnownURI, String clientId) {
+	public static int countByC_C_A(
+		long companyId, String clientId, String authServerWellKnownURI) {
 
-		return getPersistence().countByC_A_C(
-			companyId, authServerWellKnownURI, clientId);
+		return getPersistence().countByC_C_A(
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**

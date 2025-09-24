@@ -69,7 +69,7 @@ public class OAuthClientEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -85,12 +85,14 @@ public class OAuthClientEntryCacheModel
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", clientId=");
+		sb.append(clientId);
 		sb.append(", authRequestParametersJSON=");
 		sb.append(authRequestParametersJSON);
 		sb.append(", authServerWellKnownURI=");
 		sb.append(authServerWellKnownURI);
-		sb.append(", clientId=");
-		sb.append(clientId);
+		sb.append(", customClaimsJSON=");
+		sb.append(customClaimsJSON);
 		sb.append(", infoJSON=");
 		sb.append(infoJSON);
 		sb.append(", metadataCacheTime=");
@@ -134,6 +136,13 @@ public class OAuthClientEntryCacheModel
 			oAuthClientEntryImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (clientId == null) {
+			oAuthClientEntryImpl.setClientId("");
+		}
+		else {
+			oAuthClientEntryImpl.setClientId(clientId);
+		}
+
 		if (authRequestParametersJSON == null) {
 			oAuthClientEntryImpl.setAuthRequestParametersJSON("");
 		}
@@ -150,11 +159,11 @@ public class OAuthClientEntryCacheModel
 				authServerWellKnownURI);
 		}
 
-		if (clientId == null) {
-			oAuthClientEntryImpl.setClientId("");
+		if (customClaimsJSON == null) {
+			oAuthClientEntryImpl.setCustomClaimsJSON("");
 		}
 		else {
-			oAuthClientEntryImpl.setClientId(clientId);
+			oAuthClientEntryImpl.setCustomClaimsJSON(customClaimsJSON);
 		}
 
 		if (infoJSON == null) {
@@ -201,9 +210,10 @@ public class OAuthClientEntryCacheModel
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		clientId = objectInput.readUTF();
 		authRequestParametersJSON = objectInput.readUTF();
 		authServerWellKnownURI = objectInput.readUTF();
-		clientId = objectInput.readUTF();
+		customClaimsJSON = objectInput.readUTF();
 		infoJSON = (String)objectInput.readObject();
 
 		metadataCacheTime = objectInput.readLong();
@@ -231,6 +241,13 @@ public class OAuthClientEntryCacheModel
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
+		if (clientId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(clientId);
+		}
+
 		if (authRequestParametersJSON == null) {
 			objectOutput.writeUTF("");
 		}
@@ -245,11 +262,11 @@ public class OAuthClientEntryCacheModel
 			objectOutput.writeUTF(authServerWellKnownURI);
 		}
 
-		if (clientId == null) {
+		if (customClaimsJSON == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(clientId);
+			objectOutput.writeUTF(customClaimsJSON);
 		}
 
 		if (infoJSON == null) {
@@ -283,9 +300,10 @@ public class OAuthClientEntryCacheModel
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String clientId;
 	public String authRequestParametersJSON;
 	public String authServerWellKnownURI;
-	public String clientId;
+	public String customClaimsJSON;
 	public String infoJSON;
 	public long metadataCacheTime;
 	public String oidcUserInfoMapperJSON;

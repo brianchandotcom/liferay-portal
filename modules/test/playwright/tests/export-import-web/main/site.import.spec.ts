@@ -427,7 +427,7 @@ testWithExportImportAtInstanceLevelFF(
 		styleBooksPage,
 		uploadServletRequestSystemSettingsPage,
 	}) => {
-		test.setTimeout(180000);
+		test.setTimeout(300000);
 
 		let exportFilePath: string;
 		let exportName: string;

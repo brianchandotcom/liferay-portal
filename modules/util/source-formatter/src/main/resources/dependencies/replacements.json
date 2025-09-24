@@ -4932,6 +4932,14 @@
 	},
 	{
 		"classNames": [
+			"LayoutCopyHelper"
+		],
+		"from": "copyLayout",
+		"issueKey": "LPD-58415",
+		"to": "copyLayoutContent"
+	},
+	{
+		"classNames": [
 			"SitemapManager"
 		],
 		"from": "getSiteMapManager(long paramName, boolean paramName, ThemeDisplay paramName)",

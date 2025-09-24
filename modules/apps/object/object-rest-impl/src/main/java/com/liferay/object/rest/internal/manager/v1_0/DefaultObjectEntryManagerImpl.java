@@ -117,6 +117,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.odata.filter.expression.Expression;
@@ -2189,35 +2190,27 @@ public class DefaultObjectEntryManagerImpl
 			ObjectField objectField, String value)
 		throws Exception {
 
-		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
-
-		String newValue = StringBundler.concat(
-			value, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
-			StringPool.CLOSE_PARENTHESIS);
-
-		String prefix = value;
-
 		Table<?> table = _objectFieldLocalService.getTable(
 			objectDefinition.getObjectDefinitionId(), objectField.getName());
 
 		Column<?, String> objectFieldColumn =
 			(Column<?, String>)table.getColumn(objectField.getDBColumnName());
 
-		for (int i = 1;; i++) {
-			long count = objectEntryLocalService.getValuesListCount(
-				new Long[] {groupId}, objectDefinition.getCompanyId(),
-				objectDefinition.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				objectFieldColumn.eq(newValue), false, null);
+		return UniqueUtil.getCopyName(
+			value,
+			copyValue -> {
+				long count = objectEntryLocalService.getValuesListCount(
+					new Long[] {groupId}, objectDefinition.getCompanyId(),
+					objectDefinition.getUserId(),
+					objectDefinition.getObjectDefinitionId(),
+					objectFieldColumn.eq(copyValue), false, null);
 
-			if (count == 0) {
-				return newValue;
-			}
+				if (count == 0) {
+					return true;
+				}
 
-			newValue = StringBundler.concat(
-				prefix, StringPool.SPACE, StringPool.OPEN_PARENTHESIS, copy,
-				StringPool.SPACE, i, StringPool.CLOSE_PARENTHESIS);
-		}
+				return false;
+			});
 	}
 
 	private ObjectEntry _getObjectEntry(

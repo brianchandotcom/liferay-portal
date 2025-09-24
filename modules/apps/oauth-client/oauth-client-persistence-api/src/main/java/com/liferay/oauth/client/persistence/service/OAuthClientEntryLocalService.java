@@ -104,7 +104,7 @@ public interface OAuthClientEntryLocalService
 		throws PortalException;
 
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException;
 
 	/**
@@ -207,7 +207,7 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientEntry fetchOAuthClientEntry(
-		long companyId, String authServerWellKnownURI, String clientId);
+		long companyId, String clientId, String authServerWellKnownURI);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -258,7 +258,7 @@ public interface OAuthClientEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException;
 
 	/**

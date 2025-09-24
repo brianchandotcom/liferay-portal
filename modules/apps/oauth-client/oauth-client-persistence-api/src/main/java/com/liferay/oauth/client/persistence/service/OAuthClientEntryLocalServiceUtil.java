@@ -106,11 +106,11 @@ public class OAuthClientEntryLocalServiceUtil {
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException {
 
 		return getService().deleteOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**
@@ -233,10 +233,10 @@ public class OAuthClientEntryLocalServiceUtil {
 	}
 
 	public static OAuthClientEntry fetchOAuthClientEntry(
-		long companyId, String authServerWellKnownURI, String clientId) {
+		long companyId, String clientId, String authServerWellKnownURI) {
 
 		return getService().fetchOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -306,11 +306,11 @@ public class OAuthClientEntryLocalServiceUtil {
 	}
 
 	public static OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException {
 
 		return getService().getOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**

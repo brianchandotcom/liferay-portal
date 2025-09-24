@@ -8,7 +8,11 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessException;
 
+import java.io.IOException;
 import java.io.Serializable;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Tina Tian
@@ -37,6 +41,30 @@ public class StartSidecarProcessCallable
 		System.setProperty(
 			"org.apache.lucene.vectorization.upperJavaFeatureVersion", "21");
 		System.setProperty("jdk.module.main", "org.elasticsearch.server");
+
+		try {
+			Path tempPath = Path.of(System.getProperty("java.io.tmpdir"));
+
+			Files.createDirectories(tempPath);
+
+			Path tempSidecarPath = Files.createTempDirectory(
+				tempPath, "sidecar");
+
+			Path configPath = tempSidecarPath.resolve("config");
+
+			Files.createDirectories(configPath);
+
+			System.setProperty(
+				"es.path.conf", String.valueOf(configPath.toAbsolutePath()));
+
+			Files.writeString(
+				configPath.resolve("log4j2.properties"),
+				System.getProperty("sidecar.log4j2.properties"));
+		}
+		catch (IOException ioException) {
+			throw new ProcessException(
+				"Unable to create log4j2.properties", ioException);
+		}
 
 		ElasticsearchServerUtil.start(_settings);
 

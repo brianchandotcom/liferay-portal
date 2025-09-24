@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.concurrent.NoticeableFuture;
-import com.liferay.petra.io.OutputStreamWriter;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch7.internal.settings.SettingsHelperImpl;
@@ -45,7 +45,6 @@ import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +72,9 @@ public class Sidecar {
 		_sidecarManager = sidecarManager;
 
 		_sidecarHomePath = elasticsearchInstancePaths.getHomePath();
+
+		_sidecarTempPath = Path.of(
+			SystemProperties.get(SystemProperties.TMP_DIR), "sidecar");
 	}
 
 	public String getNetworkHostAddress() {
@@ -87,34 +89,6 @@ public class Sidecar {
 		String sidecarVersion = _getSidecarVersion();
 
 		_installElasticsearchIfNeeded(sidecarVersion);
-
-		Path configPath = _elasticsearchInstancePaths.getConfigPath();
-
-		Path log4jPropertiesPath = configPath.resolve("log4j2.properties");
-
-		try {
-			byte[] log4jProperties = _getLog4jProperties();
-
-			File log4jPropertiesFile = log4jPropertiesPath.toFile();
-
-			if (log4jPropertiesFile.exists() &&
-				!Arrays.equals(
-					log4jProperties, Files.readAllBytes(log4jPropertiesPath))) {
-
-				log4jPropertiesFile.delete();
-			}
-
-			if (!log4jPropertiesFile.exists()) {
-				Files.createDirectories(configPath);
-
-				Files.write(log4jPropertiesPath, log4jProperties);
-			}
-		}
-		catch (IOException ioException) {
-			_log.error(
-				"Unable to copy log4j2.properties to " + configPath,
-				ioException);
-		}
 
 		if (!Files.isDirectory(_sidecarHomePath)) {
 			throw new IllegalArgumentException(
@@ -230,6 +204,8 @@ public class Sidecar {
 
 			_processChannel = null;
 		}
+
+		PathUtil.deleteDir(_sidecarTempPath);
 	}
 
 	private void _addFutureListener(
@@ -380,14 +356,20 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.sidecarDebugSettings());
 		}
 
-		arguments.add(
-			"-Des.path.conf=" + _elasticsearchInstancePaths.getConfigPath());
 		arguments.add("-Des.path.log=" + _sidecarHomePath.resolve("logs"));
-		arguments.add(
-			"-Djava.io.tmpdir=" + System.getProperty("java.io.tmpdir"));
+		arguments.add("-Djava.io.tmpdir=" + _sidecarTempPath.toAbsolutePath());
 		arguments.add(
 			"-Dsidecar.heart.beat.interval=" +
 				_elasticsearchConfigurationWrapper.sidecarHeartbeatInterval());
+		arguments.add(
+			StringBundler.concat(
+				"-Dsidecar.log4j2.properties=",
+				"logger.bootstrapchecks.name=org.elasticsearch.bootstrap.",
+				"BootstrapChecks\nlogger.bootstrapchecks.level=error\n",
+				"logger.deprecation.name=org.elasticsearch.deprecation\n",
+				"logger.deprecation.level=error\n",
+				ResourceUtil.getResourceAsString(
+					Sidecar.class, "/log4j2.properties")));
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add(
 			"--enable-native-access=org.elasticsearch.nativeaccess," +
@@ -430,29 +412,6 @@ public class Sidecar {
 		arguments.add("-javaagent:" + agentPath);
 
 		return arguments;
-	}
-
-	private byte[] _getLog4jProperties() throws IOException {
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
-				unsyncByteArrayOutputStream)) {
-
-			outputStreamWriter.write(
-				StringBundler.concat(
-					"logger.bootstrapchecks.name=org.elasticsearch.bootstrap.",
-					"BootstrapChecks\nlogger.bootstrapchecks.level=error\n",
-					"logger.deprecation.name=org.elasticsearch.deprecation\n",
-					"logger.deprecation.level=error\n"));
-
-			outputStreamWriter.write(
-				ResourceUtil.getResourceAsString(
-					Sidecar.class, "/log4j2.properties"));
-
-			outputStreamWriter.flush();
-
-			return unsyncByteArrayOutputStream.toByteArray();
-		}
 	}
 
 	private String _getNodeName() {
@@ -659,6 +618,7 @@ public class Sidecar {
 	private FutureListener<Serializable> _restartFutureListener;
 	private final Path _sidecarHomePath;
 	private SidecarManager _sidecarManager;
+	private final Path _sidecarTempPath;
 
 	private static class RestartFutureListener
 		implements FutureListener<Serializable> {

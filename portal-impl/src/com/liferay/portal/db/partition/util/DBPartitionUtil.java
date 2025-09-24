@@ -91,7 +91,7 @@ public class DBPartitionUtil {
 		throws PortalException {
 
 		if (DBPartition.isPartitionEnabled() &&
-			(_DATABASE_PARTITION_SCHEMA_NAME_PREFIX.length() > 11)) {
+			(PropsValues.DATABASE_PARTITION_SCHEMA_NAME_PREFIX.length() > 11)) {
 
 			throw new PortalException(
 				"The value for property " +
@@ -196,7 +196,7 @@ public class DBPartitionUtil {
 			return;
 		}
 
-		if (_DATABASE_PARTITION_THREAD_POOL_ENABLED) {
+		if (PropsValues.DATABASE_PARTITION_THREAD_POOL_ENABLED) {
 			_forEachCompanyIdConcurrently(unsafeConsumer);
 
 			return;
@@ -302,7 +302,7 @@ public class DBPartitionUtil {
 			return _defaultPartitionName;
 		}
 
-		return _DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
+		return PropsValues.DATABASE_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	public static boolean importDBPartition(long companyId)
@@ -1612,7 +1612,8 @@ public class DBPartitionUtil {
 
 				if (!defaultCompany) {
 					int count = StringUtil.count(
-						lowerCaseSQL, _DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
+						lowerCaseSQL,
+						PropsValues.DATABASE_PARTITION_SCHEMA_NAME_PREFIX);
 
 					if (count == 0) {
 						count = StringUtil.count(
@@ -1705,15 +1706,6 @@ public class DBPartitionUtil {
 
 	private static final String
 		_DATABASE_EXPORTED_PARTITION_SCHEMA_NAME_PREFIX = "lexported_";
-
-	private static final String _DATABASE_PARTITION_SCHEMA_NAME_PREFIX =
-		GetterUtil.get(
-			PropsUtil.get("database.partition.schema.name.prefix"),
-			"lpartition_");
-
-	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get("database.partition.thread.pool.enabled"), true);
 
 	private static final String _QUARTZ_TABLE_NAME_PREFIX = GetterUtil.get(
 		PropsUtil.get("persisted.scheduler.org.quartz.jobStore.tablePrefix"),

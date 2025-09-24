@@ -327,6 +327,89 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
+			'URL in state, push history, page number',
+			{tag: '@LPD-20947'},
+			async ({page}) => {
+				const assertPageNumber = async (
+					pageNumber: number,
+					fdsId: string,
+					page: Page
+				) => {
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						fdsId
+					);
+
+					expect(state.page).toBe(pageNumber);
+				};
+
+				const changePageNumber = async (
+					pageNumber: number,
+					fdsId: string,
+					page: Page
+				) => {
+					await page.getByLabel(`Go to page, ${pageNumber}`).click();
+
+					await waitForFDS({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+
+					await assertPageNumber(pageNumber, fdsId, page);
+				};
+
+				const setPageNumber = (pageNumber: number) =>
+					changePageNumber(pageNumber, 'advanced', page);
+
+				const checkPageNumber = (pageNumber: number) =>
+					assertPageNumber(pageNumber, 'advanced', page);
+
+				await test.step('Change page number via UI several times', async () => {
+					await setPageNumber(2);
+					await setPageNumber(3);
+					await setPageNumber(1);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+					await checkPageNumber(3);
+
+					await page.goBack();
+					await checkPageNumber(2);
+
+					await page.goBack();
+					await checkPageNumber(1);
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkPageNumber(2);
+
+					await page.goForward();
+					await checkPageNumber(3);
+
+					await page.goForward();
+					await checkPageNumber(1);
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+					await checkPageNumber(3);
+
+					await setPageNumber(2);
+
+					await page.goBack();
+					await checkPageNumber(3);
+
+					await page.goForward();
+					await checkPageNumber(2);
+
+					expect(await page.goForward()).toBeNull();
+				});
+			}
+		);
+
+		test(
 			'URL in state, push history, search parameter',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {

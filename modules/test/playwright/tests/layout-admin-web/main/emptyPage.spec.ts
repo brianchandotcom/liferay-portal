@@ -139,4 +139,31 @@ test('Empty pages show correct label in UI and correct alert in view mode', asyn
 			'This page was automatically generated during the import process to ensure the correct hierarchy of imported elements. Edit the page to configure.'
 		)
 	).toBeVisible();
+
+	// Assert that the edit button in the dummy page's alert banner goes to the select layout template page
+
+	await page.getByTestId('editEmptyLayoutButton').click();
+
+	await expect(page.locator('//h1[@data-qa-id="headerTitle"]')).toHaveText(
+		'Select Template'
+	);
+	await expect(page.getByText('Page Template Sets')).toBeVisible();
+	await expect(page.locator('.card-page-item').first()).toBeVisible();
+
+	// Assert that templates that should be hidden when editing an empty page are not present
+
+	const basicTemplatesNavItem = page.getByRole('menuitem', {
+		name: 'Basic Templates',
+	});
+
+	if ((await basicTemplatesNavItem.getAttribute('aria-current')) === null) {
+		await basicTemplatesNavItem.click();
+	}
+
+	await expect(
+		page.locator('.card-page-item', {hasText: 'Embedded'})
+	).toBeHidden();
+	await expect(
+		page.locator('.card-page-item', {hasText: 'Link to URL'})
+	).toBeHidden();
 });

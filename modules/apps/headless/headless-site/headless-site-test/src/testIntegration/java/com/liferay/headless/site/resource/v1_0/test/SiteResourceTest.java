@@ -56,7 +56,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -269,10 +268,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 				membershipType = MembershipType.create(
 					GroupConstants.getTypeLabel(GroupConstants.TYPE_SITE_OPEN));
-				name = LinkedHashMapBuilder.put(
-					String.valueOf(LocaleUtil.getDefault()),
-					RandomTestUtil.randomString()
-				).build();
+				name = RandomTestUtil.randomString();
 				typeSettings = LinkedHashMapBuilder.put(
 					RandomTestUtil.randomString(), RandomTestUtil.randomString()
 				).build();
@@ -367,11 +363,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 			Site.MembershipType.create(
 				GroupConstants.getTypeLabel(group.getType())));
 		Assert.assertEquals(
-			site.getName(
-			).get(
-				String.valueOf(LocaleUtil.getDefault())
-			),
-			group.getName(LocaleUtil.getDefault()));
+			site.getName(), group.getName(LocaleUtil.getDefault()));
 	}
 
 	private void _testGetSiteByExternalReferenceCodeWithDollar()
@@ -498,10 +490,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site randomSite = new Site();
 
-		randomSite.setName(
-			LinkedHashMapBuilder.put(
-				String.valueOf(LocaleUtil.getDefault()), name
-			).build());
+		randomSite.setName(name);
 
 		Site postSite = _testPostSite_addSite(randomSite);
 
@@ -561,11 +550,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testPostSiteFailureDuplicateName() throws Exception {
 		Site randomSite = new Site() {
 			{
-				name = LinkedHashMapBuilder.put(
-					StringUtil.toLowerCase(
-						String.valueOf(LocaleUtil.getDefault())),
-					RandomTestUtil.randomString()
-				).build();
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 			}
 		};
 
@@ -592,10 +577,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testPostSiteFailureInvalidKey() throws Exception {
 		Site randomSite = randomSite();
 
-		randomSite.setName(
-			LinkedHashMapBuilder.put(
-				String.valueOf(LocaleUtil.getDefault()), "*"
-			).build());
+		randomSite.setName("*");
 
 		try {
 			_testPostSite_addSite(randomSite);
@@ -613,12 +595,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _testPostSiteFailureNoName() throws Exception {
 		Site randomSite = randomSite();
 
-		randomSite.setName(
-			new LinkedHashMap<String, String>() {
-				{
-					put(String.valueOf(LocaleUtil.getDefault()), null);
-				}
-			});
+		randomSite.setName((String)null);
 
 		try {
 			_testPostSite_addSite(randomSite);
@@ -932,21 +909,19 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		String name1 = RandomTestUtil.randomString();
 		String name2 = RandomTestUtil.randomString();
 
-		randomSite.setName(
+		randomSite.setName_i18n(
 			LinkedHashMapBuilder.put(
-				String.valueOf(LocaleUtil.getDefault()), name1
+				"en-US", name1
 			).put(
-				String.valueOf(LocaleUtil.BRAZIL), name2
+				"pt-BR", name2
 			).build());
 
 		Site postSite = _testPostSite_addSite(randomSite);
 
-		Map<String, String> nameMap = postSite.getName();
+		Map<String, String> nameMap = postSite.getName_i18n();
 
-		Assert.assertEquals(
-			name1, nameMap.get(String.valueOf(LocaleUtil.getDefault())));
-		Assert.assertEquals(
-			name2, nameMap.get(String.valueOf(LocaleUtil.BRAZIL)));
+		Assert.assertEquals(name1, nameMap.get("en-US"));
+		Assert.assertEquals(name2, nameMap.get("pt-BR"));
 	}
 
 	private void _testPostSiteWithNondefaultLocales() throws Exception {

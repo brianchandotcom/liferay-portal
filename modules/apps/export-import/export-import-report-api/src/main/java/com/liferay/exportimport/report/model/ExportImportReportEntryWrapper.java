@@ -48,7 +48,7 @@ public class ExportImportReportEntryWrapper
 		attributes.put("classPK", getClassPK());
 		attributes.put(
 			"exportImportConfigurationId", getExportImportConfigurationId());
-		attributes.put("error", getError());
+		attributes.put("errorMessage", getErrorMessage());
 		attributes.put("errorStacktrace", getErrorStacktrace());
 		attributes.put("modelName", getModelName());
 		attributes.put("origin", getOrigin());
@@ -125,10 +125,10 @@ public class ExportImportReportEntryWrapper
 			setExportImportConfigurationId(exportImportConfigurationId);
 		}
 
-		String error = (String)attributes.get("error");
+		String errorMessage = (String)attributes.get("errorMessage");
 
-		if (error != null) {
-			setError(error);
+		if (errorMessage != null) {
+			setErrorMessage(errorMessage);
 		}
 
 		String errorStacktrace = (String)attributes.get("errorStacktrace");
@@ -240,13 +240,13 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Returns the error of this export import report entry.
+	 * Returns the error message of this export import report entry.
 	 *
-	 * @return the error of this export import report entry
+	 * @return the error message of this export import report entry
 	 */
 	@Override
-	public String getError() {
-		return model.getError();
+	public String getErrorMessage() {
+		return model.getErrorMessage();
 	}
 
 	/**
@@ -442,13 +442,13 @@ public class ExportImportReportEntryWrapper
 	}
 
 	/**
-	 * Sets the error of this export import report entry.
+	 * Sets the error message of this export import report entry.
 	 *
-	 * @param error the error of this export import report entry
+	 * @param errorMessage the error message of this export import report entry
 	 */
 	@Override
-	public void setError(String error) {
-		model.setError(error);
+	public void setErrorMessage(String errorMessage) {
+		model.setErrorMessage(errorMessage);
 	}
 
 	/**

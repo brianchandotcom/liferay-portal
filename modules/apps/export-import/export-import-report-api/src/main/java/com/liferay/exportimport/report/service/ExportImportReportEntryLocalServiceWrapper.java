@@ -50,14 +50,14 @@ public class ExportImportReportEntryLocalServiceWrapper
 		addErrorExportImportReportEntry(
 			long groupId, long companyId, String classExternalReferenceCode,
 			long classNameId, long classPK, long exportImportConfigurationId,
-			String error, String errorStacktrace, String modelName, int origin,
-			String scope, String scopeKey) {
+			String errorMessage, String errorStacktrace, String modelName,
+			int origin, String scope, String scopeKey) {
 
 		return _exportImportReportEntryLocalService.
 			addErrorExportImportReportEntry(
 				groupId, companyId, classExternalReferenceCode, classNameId,
-				classPK, exportImportConfigurationId, error, errorStacktrace,
-				modelName, origin, scope, scopeKey);
+				classPK, exportImportConfigurationId, errorMessage,
+				errorStacktrace, modelName, origin, scope, scopeKey);
 	}
 
 	/**

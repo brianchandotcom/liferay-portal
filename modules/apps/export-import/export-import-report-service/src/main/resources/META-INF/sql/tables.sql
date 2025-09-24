@@ -9,7 +9,7 @@ create table ExportImportReportEntry (
 	classNameId LONG,
 	classPK LONG,
 	exportImportConfigurationId LONG,
-	error TEXT null,
+	errorMessage TEXT null,
 	errorStacktrace TEXT null,
 	modelName VARCHAR(255) null,
 	origin INTEGER,

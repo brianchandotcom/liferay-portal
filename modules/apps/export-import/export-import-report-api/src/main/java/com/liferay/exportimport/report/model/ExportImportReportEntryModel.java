@@ -213,19 +213,19 @@ public interface ExportImportReportEntryModel
 		long exportImportConfigurationId);
 
 	/**
-	 * Returns the error of this export import report entry.
+	 * Returns the error message of this export import report entry.
 	 *
-	 * @return the error of this export import report entry
+	 * @return the error message of this export import report entry
 	 */
 	@AutoEscape
-	public String getError();
+	public String getErrorMessage();
 
 	/**
-	 * Sets the error of this export import report entry.
+	 * Sets the error message of this export import report entry.
 	 *
-	 * @param error the error of this export import report entry
+	 * @param errorMessage the error message of this export import report entry
 	 */
-	public void setError(String error);
+	public void setErrorMessage(String errorMessage);
 
 	/**
 	 * Returns the error stacktrace of this export import report entry.

@@ -91,8 +91,8 @@ public class ExportImportReportEntryCacheModel
 		sb.append(classPK);
 		sb.append(", exportImportConfigurationId=");
 		sb.append(exportImportConfigurationId);
-		sb.append(", error=");
-		sb.append(error);
+		sb.append(", errorMessage=");
+		sb.append(errorMessage);
 		sb.append(", errorStacktrace=");
 		sb.append(errorStacktrace);
 		sb.append(", modelName=");
@@ -149,7 +149,7 @@ public class ExportImportReportEntryCacheModel
 		exportImportReportEntryImpl.setClassPK(classPK);
 		exportImportReportEntryImpl.setExportImportConfigurationId(
 			exportImportConfigurationId);
-		exportImportReportEntryImpl.setError(error);
+		exportImportReportEntryImpl.setErrorMessage(errorMessage);
 		exportImportReportEntryImpl.setErrorStacktrace(errorStacktrace);
 
 		if (modelName == null) {
@@ -203,7 +203,7 @@ public class ExportImportReportEntryCacheModel
 		classPK = objectInput.readLong();
 
 		exportImportConfigurationId = objectInput.readLong();
-		error = (String)objectInput.readObject();
+		errorMessage = (String)objectInput.readObject();
 		errorStacktrace = (String)objectInput.readObject();
 		modelName = objectInput.readUTF();
 
@@ -241,11 +241,11 @@ public class ExportImportReportEntryCacheModel
 
 		objectOutput.writeLong(exportImportConfigurationId);
 
-		if (error == null) {
+		if (errorMessage == null) {
 			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeObject(error);
+			objectOutput.writeObject(errorMessage);
 		}
 
 		if (errorStacktrace == null) {
@@ -293,7 +293,7 @@ public class ExportImportReportEntryCacheModel
 	public long classNameId;
 	public long classPK;
 	public long exportImportConfigurationId;
-	public String error;
+	public String errorMessage;
 	public String errorStacktrace;
 	public String modelName;
 	public int origin;

@@ -17,7 +17,7 @@ import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureUuid from '../selectors/selectStructureUuid';
-import {ObjectDefinitions} from '../types/ObjectDefinition';
+import {ObjectDefinition, ObjectDefinitions} from '../types/ObjectDefinition';
 import {ReferencedStructure, Structure} from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import {buildReferencedStructure} from '../utils/buildStructure';
@@ -100,7 +100,7 @@ export default function ReferencedStructureModal({
 
 							setHasError(!selection.length);
 						}}
-						sourceItems={getItems(objectDefinitions)}
+						sourceItems={getItems(objectDefinitions, structureERC)}
 					/>
 
 					{hasError ? (
@@ -154,17 +154,70 @@ export default function ReferencedStructureModal({
 	);
 }
 
-function getItems(objectDefinitions: ObjectDefinitions): Item[] {
-	return Object.values(objectDefinitions)
-		.filter(
-			(objectDefinition) =>
-				objectDefinition.objectFolderExternalReferenceCode !==
-				'L_CMS_STRUCTURE_REPEATABLE_GROUPS'
-		)
-		.map((objectDefinition) => ({
+function getItems(
+	objectDefinitions: ObjectDefinitions,
+	mainStructureERC: Structure['erc']
+): Item[] {
+	const items = [];
+
+	// Exclude objectDefinitions that are repeatable groups,
+	// main objectDefinition itself and objectDefinitions
+	// that have a circular dependency with the main one
+
+	for (const objectDefinition of Object.values(objectDefinitions)) {
+		if (
+			objectDefinition.externalReferenceCode === mainStructureERC ||
+			objectDefinition.objectFolderExternalReferenceCode ===
+				'L_CMS_STRUCTURE_REPEATABLE_GROUPS' ||
+			hasCircularDependency(
+				objectDefinition,
+				objectDefinitions,
+				mainStructureERC
+			)
+		) {
+			continue;
+		}
+
+		items.push({
 			label: getLocalizedValue(objectDefinition.label),
 			value: objectDefinition.externalReferenceCode,
-		}));
+		});
+	}
+
+	return items;
+}
+
+function hasCircularDependency(
+	objectDefinition: ObjectDefinition,
+	objectDefinitions: ObjectDefinitions,
+	mainStructureERC: Structure['erc']
+) {
+	if (!objectDefinition.objectRelationships?.length) {
+		return false;
+	}
+
+	for (const relationship of objectDefinition.objectRelationships) {
+		if (
+			relationship.objectDefinitionExternalReferenceCode2 ===
+			mainStructureERC
+		) {
+			return true;
+		}
+
+		const hasDependency = hasCircularDependency(
+			objectDefinitions[
+				relationship.objectDefinitionExternalReferenceCode2
+			],
+			objectDefinitions,
+			mainStructureERC
+		);
+
+		if (hasDependency) {
+			return true;
+		}
+	}
+
+	return false;
 }
 
 function buildStructures(

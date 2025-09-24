@@ -449,25 +449,6 @@ public abstract class BaseSectionDisplayContext {
 				null));
 	}
 
-	public Map<String, Object> getToolbarProps() throws PortalException {
-		return HashMapBuilder.<String, Object>put(
-			"title",
-			() -> {
-				Layout layout = themeDisplay.getLayout();
-
-				if (layout == null) {
-					return null;
-				}
-
-				return layout.getName(themeDisplay.getLocale(), true);
-			}
-		).put(
-			"toolbarClassName", "section-toolbar tbar-light"
-		).put(
-			"toolbarTitleClassName", "section-toolbar-title"
-		).build();
-	}
-
 	protected void addBreadcrumbItem(
 		JSONArray jsonArray, boolean active, String friendlyURL, String label) {
 

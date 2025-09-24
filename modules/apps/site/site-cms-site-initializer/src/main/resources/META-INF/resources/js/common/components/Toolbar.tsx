@@ -13,27 +13,11 @@ type Props = {
 	backURL?: string;
 	children?: React.ReactNode;
 	title: string;
-	toolbarClassName?: string;
-	toolbarTitleClassName?: string;
 };
 
-function Toolbar({
-	backURL,
-	children,
-	title,
-	toolbarClassName,
-	toolbarTitleClassName,
-}: Props) {
-	const clayToolbarClassName = toolbarClassName
-		? toolbarClassName
-		: 'bg-white cms-control-menu px-4';
-
-	const clayToolbarTitleClassName = toolbarTitleClassName
-		? toolbarTitleClassName
-		: 'font-weight-semi-bold m-0 tbar-section text-5 text-dark';
-
+function Toolbar({backURL, children, title}: Props) {
 	return (
-		<ClayToolbar className={clayToolbarClassName}>
+		<ClayToolbar className="bg-white cms-control-menu px-4">
 			<div className="container-fluid">
 				<ClayToolbar.Nav>
 					{backURL ? (
@@ -49,7 +33,7 @@ function Toolbar({
 
 					<ClayToolbar.Item className="text-left" expand>
 						<ClayToolbar.Section>
-							<h1 className={clayToolbarTitleClassName}>
+							<h1 className="font-weight-semi-bold m-0 tbar-section text-5 text-dark">
 								{title}
 							</h1>
 						</ClayToolbar.Section>

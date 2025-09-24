@@ -14,6 +14,6 @@
 		<dynamic-content language-id="ja_JP"><![CDATA[解決策が見つからない場合は、お知らせください。 チケットのサポートは、管理者またはリクエスタのロールを持っているプロジェクトメンバーがご利用可能です。]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="ActionUrl" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[https://help.liferay.com/hc/en-us/requests/new]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[https://liferay.atlassian.net/servicedesk/customer/portals]]></dynamic-content>
 	</dynamic-element>
 </root>

@@ -69,7 +69,7 @@ export function writeStateInURL(
 
 	params.set(
 		getStateParamName(id),
-		JSON.stringify({...(currentState || {}), ...state})
+		JSON.stringify(sortObjectKeys({...(currentState || {}), ...state}))
 	);
 
 	const path = `${window.location.pathname}?${params.toString()}`;
@@ -152,4 +152,22 @@ function deepContains(subset: any, superset: any) {
 	}
 
 	return true;
+}
+
+function sortObjectKeys(object: any): any {
+	if (typeof object !== 'object' || object === null) {
+		return object;
+	}
+
+	if (Array.isArray(object)) {
+		return object.map(sortObjectKeys).sort();
+	}
+
+	return Object.keys(object)
+		.sort()
+		.reduce((result: {[key: string]: any}, key: string) => {
+			result[key] = sortObjectKeys(object[key]);
+
+			return result;
+		}, {});
 }

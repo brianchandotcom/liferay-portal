@@ -253,7 +253,7 @@ public class LayoutLookAndFeelDisplayContext {
 							selLayout.getGroupId());
 
 				if (styleBookEntry == null) {
-					return null;
+					return "0";
 				}
 
 				return String.valueOf(styleBookEntry.getStyleBookEntryId());

@@ -5798,6 +5798,39 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
+	public void testGetObjectEntriesPageActions() throws Exception {
+		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
+			null, _objectDefinition4.getRESTContextPath(), Http.Method.GET);
+
+		JSONObject actionsJSONObject1 = jsonObject1.getJSONObject("actions");
+
+		Assert.assertFalse(actionsJSONObject1.isNull("create"));
+		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
+		Assert.assertTrue(actionsJSONObject1.isNull("deleteBatch"));
+		Assert.assertTrue(actionsJSONObject1.isNull("get"));
+		Assert.assertTrue(actionsJSONObject1.isNull("updateBatch"));
+
+		HTTPTestUtil.customize(
+		).withGuest(
+		).apply(
+			() -> {
+				JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
+					null, _objectDefinition4.getRESTContextPath(),
+					Http.Method.GET);
+
+				JSONObject actionsJSONObject2 = jsonObject2.getJSONObject(
+					"actions");
+
+				Assert.assertTrue(actionsJSONObject2.isNull("create"));
+				Assert.assertTrue(actionsJSONObject2.isNull("createBatch"));
+				Assert.assertTrue(actionsJSONObject2.isNull("deleteBatch"));
+				Assert.assertTrue(actionsJSONObject2.isNull("get"));
+				Assert.assertTrue(actionsJSONObject2.isNull("updateBatch"));
+			}
+		);
+	}
+
+	@Test
 	public void testGetObjectEntriesPageWithLocalizedObjectField()
 		throws Exception {
 

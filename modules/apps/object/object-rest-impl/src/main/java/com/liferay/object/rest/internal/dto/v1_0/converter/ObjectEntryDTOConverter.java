@@ -418,23 +418,30 @@ public class ObjectEntryDTOConverter
 			() -> _getAttribute(
 				objectEntryVersion, ObjectEntryVersionModel::getReviewDate,
 				serviceBuilderObjectEntry, ObjectEntryModel::getReviewDate));
+		objectEntry.setScopeId(serviceBuilderObjectEntry::getGroupId);
+		objectEntry.setScopeKey(
+			() -> _getScopeKey(objectDefinition, serviceBuilderObjectEntry));
 		objectEntry.setStatus(
-			() -> {
-				int status = _getAttribute(
-					objectEntryVersion, ObjectEntryVersionModel::getStatus,
-					serviceBuilderObjectEntry, ObjectEntryModel::getStatus);
-
-				return _toStatus(dtoConverterContext.getLocale(), status);
-			});
+			() -> _getAttribute(
+				objectEntryVersion,
+				curObjectEntryVersion -> _toStatus(
+					dtoConverterContext.getLocale(),
+					curObjectEntryVersion.getStatus()),
+				serviceBuilderObjectEntry,
+				curServiceBuilderObjectEntry -> _toStatus(
+					dtoConverterContext.getLocale(),
+					curServiceBuilderObjectEntry.getStatus())));
 		objectEntry.setSystemProperties(
 			() -> {
 				if (objectEntryVersion != null) {
 					return _toSystemProperties(
+						serviceBuilderObjectEntry.getGroupId(),
 						dtoConverterContext.getLocale(), objectDefinition,
 						objectEntryVersion.getVersion());
 				}
 
 				return _toSystemProperties(
+					serviceBuilderObjectEntry.getGroupId(),
 					dtoConverterContext.getLocale(), objectDefinition,
 					serviceBuilderObjectEntry.getVersion());
 			});
@@ -1575,29 +1582,47 @@ public class ObjectEntryDTOConverter
 	}
 
 	private SystemProperties _toSystemProperties(
-			Locale locale, ObjectDefinition objectDefinition, int versionInt)
+			long groupId, Locale locale, ObjectDefinition objectDefinition,
+			int versionInt)
 		throws Exception {
 
-		boolean enableObjectEntryVersioning =
-			objectDefinition.isEnableObjectEntryVersioning();
+		SystemProperties systemProperties = new SystemProperties();
+
+		systemProperties.setScope(
+			() -> {
+				Group group = _groupLocalService.fetchGroup(groupId);
+
+				if (group == null) {
+					return null;
+				}
+
+				Scope scope = new Scope();
+
+				scope.setExternalReferenceCode(group::getExternalReferenceCode);
+				scope.setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Scope.Type.ASSET_LIBRARY;
+						}
+
+						return Scope.Type.SITE;
+					});
+
+				return scope;
+			});
+
 		ObjectDefinitionBrief objectDefinitionBrief =
 			NestedFieldsSupplier.supply(
 				"systemProperties.objectDefinitionBrief",
 				nestedField -> _toObjectDefinitionBrief(
 					locale, objectDefinition));
 
-		if (!enableObjectEntryVersioning && (objectDefinitionBrief == null)) {
-			return null;
-		}
-
-		SystemProperties systemProperties = new SystemProperties();
-
 		if (objectDefinitionBrief != null) {
 			systemProperties.setObjectDefinitionBrief(
 				() -> objectDefinitionBrief);
 		}
 
-		if (enableObjectEntryVersioning) {
+		if (objectDefinition.isEnableObjectEntryVersioning()) {
 			systemProperties.setVersion(
 				() -> new Version() {
 					{

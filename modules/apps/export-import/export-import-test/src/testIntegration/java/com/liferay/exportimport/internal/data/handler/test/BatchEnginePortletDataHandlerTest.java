@@ -1214,7 +1214,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Class<S> clazz, S service, Dictionary<String, ?> properties) {
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			BatchEnginePortletDataHandlerRegistryTest.class);
+			BatchEnginePortletDataHandlerTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 

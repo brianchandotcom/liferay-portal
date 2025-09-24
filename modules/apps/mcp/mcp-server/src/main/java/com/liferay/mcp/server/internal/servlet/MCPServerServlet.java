@@ -16,7 +16,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -83,15 +83,20 @@ public class MCPServerServlet extends HttpServlet {
 	public void service(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws IOException, ServletException {
+		throws ServletException {
 
-		Servlet servlet = _getServlet(httpServletRequest);
+		try {
+			Servlet servlet = _getServlet(httpServletRequest);
 
-		if (servlet == null) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			if (servlet == null) {
+				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			}
+			else {
+				servlet.service(httpServletRequest, httpServletResponse);
+			}
 		}
-		else {
-			servlet.service(httpServletRequest, httpServletResponse);
+		catch (Exception exception) {
+			throw new ServletException(exception);
 		}
 	}
 
@@ -101,9 +106,15 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private McpSyncServer _buildMcpSyncServer(
-		String baseURL, long companyId,
-		AuthorizedHttpServletSseServerTransportProvider
-			authorizedHttpServletSseServerTransportProvider) {
+			String baseURL, long companyId,
+			AuthorizedHttpServletSseServerTransportProvider
+				authorizedHttpServletSseServerTransportProvider)
+		throws Exception {
+
+		JSONObject toolsJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.replace(
+				StringUtil.read(MCPServerServlet.class, "/tools.json"),
+				"$BASE_URL", baseURL));
 
 		return McpServer.sync(
 			authorizedHttpServletSseServerTransportProvider
@@ -115,85 +126,19 @@ public class MCPServerServlet extends HttpServlet {
 				true
 			).build()
 		).tool(
-			new McpSchema.Tool(
-				"get-openapis",
-				StringBundler.concat(
-					"Retrieves the current available Liferay OpenAPIs. Use it ",
-					"to discover the most suitable API that could fulfill the ",
-					"user request. The flow should be: get-openapis, ",
-					"get-openapi, call-http-endpoint. If you are not sure ",
-					"what the user wants, just call this to get an idea of ",
-					"what is possible."),
-				JSONUtil.put(
-					"properties", _jsonFactory.createJSONObject()
-				).put(
-					"type", "object"
-				).toString()),
+			_getTool("get-openapis", toolsJSONObject),
 			(exchange, arguments) -> _callEndpoint(
 				authorizedHttpServletSseServerTransportProvider.
 					getAuthorizationHeader(exchange),
 				"GET", baseURL + "/openapi", null)
 		).tool(
-			new McpSchema.Tool(
-				"get-openapi", "Retrieves the OpenAPI YAML file.",
-				JSONUtil.put(
-					"properties",
-					JSONUtil.put(
-						"url",
-						JSONUtil.put(
-							"description", "The OpenAPI YAML URL"
-						).put(
-							"type", "string"
-						))
-				).put(
-					"type", "object"
-				).toString()),
+			_getTool("get-openapi", toolsJSONObject),
 			(exchange, arguments) -> _callEndpoint(
 				authorizedHttpServletSseServerTransportProvider.
 					getAuthorizationHeader(exchange),
 				"GET", String.valueOf(arguments.get("url")), null)
 		).tool(
-			new McpSchema.Tool(
-				"call-http-endpoint",
-				"Calls an HTTP endpoint from a Liferay OpenAPI. Never call a " +
-					"batch endpoint, always use individual operations.",
-				JSONUtil.put(
-					"additionalProperties", false
-				).put(
-					"properties",
-					JSONUtil.put(
-						"method",
-						JSONUtil.put(
-							"description", "The HTTP method"
-						).put(
-							"type", "string"
-						)
-					).put(
-						"path",
-						JSONUtil.put(
-							"description",
-							StringBundler.concat(
-								"The full endpoint path starting with / ",
-								"relative to ", baseURL,
-								". Do not include the leading /o")
-						).put(
-							"type", "string"
-						)
-					).put(
-						"payload",
-						JSONUtil.put(
-							"description",
-							"The endpoint payload. Can be an empty string if " +
-								"there is no payload."
-						).put(
-							"type", "string"
-						)
-					)
-				).put(
-					"required", JSONUtil.putAll("method", "path", "payload")
-				).put(
-					"type", "object"
-				).toString()),
+			_getTool("call-http-endpoint", toolsJSONObject),
 			(exchange, arguments) -> {
 				String path = String.valueOf(arguments.get("path"));
 
@@ -254,7 +199,9 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
-	private Servlet _getServlet(HttpServletRequest httpServletRequest) {
+	private Servlet _getServlet(HttpServletRequest httpServletRequest)
+		throws Exception {
+
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
@@ -338,6 +285,16 @@ public class MCPServerServlet extends HttpServlet {
 									(String)objectEntryValues.get(
 										"prompt"))))));
 			});
+	}
+
+	private McpSchema.Tool _getTool(String name, JSONObject toolsJSONObject) {
+		JSONObject toolJSONObject = toolsJSONObject.getJSONObject(name);
+
+		return new McpSchema.Tool(
+			name, toolJSONObject.getString("description"),
+			toolJSONObject.getJSONObject(
+				"schema"
+			).toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

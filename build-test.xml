@@ -948,6 +948,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 
 					if (propertyName.equals("browser.version") && !browserVersion.isEmpty()) {
 						project.setProperty(propertyName, browserVersion);
+
 						return;
 					}
 

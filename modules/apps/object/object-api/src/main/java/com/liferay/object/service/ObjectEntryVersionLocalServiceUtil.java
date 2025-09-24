@@ -261,6 +261,14 @@ public class ObjectEntryVersionLocalServiceUtil {
 			userId, objectEntry, serviceContext);
 	}
 
+	public static ObjectEntryVersion fetchLatestApprovedObjectEntryVersion(
+		long objectEntryId,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		return getService().fetchLatestApprovedObjectEntryVersion(
+			objectEntryId, orderByComparator);
+	}
+
 	public static ObjectEntryVersion fetchObjectEntryVersion(
 		long objectEntryVersionId) {
 

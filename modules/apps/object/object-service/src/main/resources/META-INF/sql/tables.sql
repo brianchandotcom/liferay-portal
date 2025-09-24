@@ -93,6 +93,7 @@ create table ObjectEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	headObjectEntryId LONG,
 	objectDefinitionId LONG,
 	objectEntryFolderId LONG,
 	rootObjectEntryId LONG,

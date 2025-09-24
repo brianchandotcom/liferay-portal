@@ -6,7 +6,7 @@
 import {ClayInput} from '@clayui/form';
 import React, {ComponentProps, useEffect, useState} from 'react';
 
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import ObjectEntryService, {
 	Categorization,
 } from '../services/ObjectEntryService';

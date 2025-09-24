@@ -6,7 +6,7 @@
 import ClayCard from '@clayui/card';
 import React, {useContext} from 'react';
 
-import {ISearchAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import AssetMetadata from '../components/AssetMetadata';
 import {AssetTypeInfoPanelContext} from '../context';
 import {ASSET_TYPE} from '../util/constants';

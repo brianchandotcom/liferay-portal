@@ -14,7 +14,7 @@ import {
 	IAssetObjectEntry,
 	IGroupedTaxonomies,
 	ITaxonomyCategoryFacade,
-} from '../../../structure_builder/types/AssetType';
+} from '../../../common/types/AssetType';
 import {Categorization} from '../services/ObjectEntryService';
 import {CategorizationInputSize} from './AssetCategorization';
 

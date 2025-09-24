@@ -11,7 +11,7 @@ import {fetch, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import TagService from '../../../common/services/TagService';
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import {Categorization} from '../services/ObjectEntryService';
 import {CategorizationInputSize} from './AssetCategorization';
 

@@ -8,7 +8,7 @@ import List from '@clayui/list';
 import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 
 const AssetVersionsListItem = ({items}: {items: IAssetObjectEntry[]}) => {
 	return (

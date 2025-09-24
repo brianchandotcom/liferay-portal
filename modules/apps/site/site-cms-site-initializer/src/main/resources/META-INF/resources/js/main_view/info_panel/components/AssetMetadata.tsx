@@ -10,7 +10,7 @@ import ClayPanel from '@clayui/panel';
 import {dateUtils, sub} from 'frontend-js-web';
 import React, {useCallback, useContext} from 'react';
 
-import {ISearchAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import {
 	AssetTypeInfoPanelContext,
 	IAssetTypeInfoPanelContext,

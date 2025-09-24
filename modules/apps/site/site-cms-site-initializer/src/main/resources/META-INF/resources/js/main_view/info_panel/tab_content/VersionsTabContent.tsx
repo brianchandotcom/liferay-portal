@@ -8,7 +8,7 @@ import List from '@clayui/list';
 import {fetch} from 'frontend-js-web';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import AssetVersionsListItem from '../components/AssetVersionsListItem';
 import {
 	AssetTypeInfoPanelContext,

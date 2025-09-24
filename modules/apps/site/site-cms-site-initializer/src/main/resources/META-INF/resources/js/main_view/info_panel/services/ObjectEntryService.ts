@@ -4,7 +4,7 @@
  */
 
 import ApiHelper, {RequestResult} from '../../../common/services/ApiHelper';
-import {IAssetObjectEntry} from '../../../structure_builder/types/AssetType';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 
 export type Categorization = {
 	keywords?: IAssetObjectEntry['keywords'];

@@ -141,7 +141,7 @@
 										"displayStyle": "stacked",
 										"hoveredItemColor": "",
 										"selectedItemColor": "",
-										"source": "",
+										"source": "{\"parentSiteNavigationMenuItemId\": \"0\", \"privateLayout\": \"false\", \"siteNavigationMenuExternalReferenceCode\": \"CMSPRIMARYNAVIGATION\", \"title\": \"CMS Primary Navigation\", \"type\": \"class com.liferay.site.navigation.item.selector.SiteNavigationMenuItemSelectorReturnType\"}",
 										"sublevels": "-1"
 									},
 									"fragmentFields": [

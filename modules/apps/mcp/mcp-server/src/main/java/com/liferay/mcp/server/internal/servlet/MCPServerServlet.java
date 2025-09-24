@@ -7,18 +7,23 @@ package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
 import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
-import com.liferay.mcp.server.internal.util.MCPServerHttpUtil;
 import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
@@ -124,7 +129,7 @@ public class MCPServerServlet extends HttpServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
+				(exchange, arguments) -> _callEndpoint(
 					"GET", baseURL + "/openapi", null,
 					authorizedHttpServletSseServerTransportProvider.
 						getAuthorizationHeader(exchange)))
@@ -144,7 +149,7 @@ public class MCPServerServlet extends HttpServlet {
 					"type", "object"
 				).toString()),
 			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
+				(exchange, arguments) -> _callEndpoint(
 					"GET", String.valueOf(arguments.get("url")), null,
 					authorizedHttpServletSseServerTransportProvider.
 						getAuthorizationHeader(exchange)))
@@ -198,7 +203,7 @@ public class MCPServerServlet extends HttpServlet {
 						path = "/" + path;
 					}
 
-					return MCPServerHttpUtil.callEndpoint(
+					return _callEndpoint(
 						String.valueOf(arguments.get("method")), baseURL + path,
 						String.valueOf(arguments.get("payload")),
 						authorizedHttpServletSseServerTransportProvider.
@@ -207,6 +212,35 @@ public class MCPServerServlet extends HttpServlet {
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
+	}
+
+	private String _callEndpoint(
+			String method, String path, String payload,
+			String authorizationHeader)
+		throws Exception {
+
+		Http.Options options = new Http.Options();
+
+		if (Validator.isNotNull(payload)) {
+			options.setBody(
+				payload, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
+		}
+
+		options.setHeaders(
+			HashMapBuilder.put(
+				"Authorization", () -> authorizationHeader
+			).build());
+
+		options.setLocation(path);
+		options.setMethod(Http.Method.valueOf(StringUtil.toUpperCase(method)));
+
+		String content = _http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		return StringBundler.concat(
+			"Status code: ", response.getResponseCode(), "\nContent:\n",
+			content);
 	}
 
 	private Servlet _getServlet(HttpServletRequest httpServletRequest) {
@@ -294,6 +328,9 @@ public class MCPServerServlet extends HttpServlet {
 										"prompt"))))));
 			});
 	}
+
+	@Reference
+	private Http _http;
 
 	@Reference
 	private JSONFactory _jsonFactory;

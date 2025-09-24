@@ -590,6 +590,10 @@ public class StagingImpl implements Staging {
 		Locale locale, Exception exception,
 		ExportImportConfiguration exportImportConfiguration) {
 
+		if (_log.isDebugEnabled()) {
+			_log.debug(exception);
+		}
+
 		String errorMessage = StringPool.BLANK;
 		JSONArray errorMessagesJSONArray = null;
 		int errorType = 0;

@@ -289,7 +289,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertEquals(expectedName, bulkActionItem.getName());
 	}
 
-	private BulkActionItem[] _createBulkActionItems(
+	private BulkActionItem[] _toBulkActionItems(
 			ObjectEntry basicWebContentObjectEntry)
 		throws Exception {
 
@@ -761,7 +761,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				Collections.emptyMap());
 
 		bulkAction.setBulkActionItems(
-			_createBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(basicWebContentObjectEntry));
 
 		_postBulkAction(bulkAction);
 
@@ -779,7 +779,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				Collections.emptyMap());
 
 		keywordBulkAction.setBulkActionItems(
-			_createBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(basicWebContentObjectEntry));
 
 		String[] keywords = {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()
@@ -812,7 +812,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				Collections.emptyMap());
 
 		permissionBulkAction.setBulkActionItems(
-			_createBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(basicWebContentObjectEntry));
 
 		permissionBulkAction.setPermissions(
 			new Permission[] {
@@ -854,7 +854,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				Collections.emptyMap());
 
 		taxonomyCategoryBulkAction.setBulkActionItems(
-			_createBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(basicWebContentObjectEntry));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());

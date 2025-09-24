@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.model.ExpandoValue;
@@ -15,6 +16,8 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -125,12 +128,12 @@ public class OIDCUserInfoProcessorTest {
 	@Test
 	public void testProcessUserInfo() throws Exception {
 		_testProcessUserInfo(
-			new String[0], new String[0], _customOIDCUserInfoMapperJSON);
+			"{}", new String[0], new String[0], _customOIDCUserInfoMapperJSON);
 		_testProcessUserInfo(
-			new String[0], new String[0],
+			"{}", new String[0], new String[0],
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 		_testProcessUserInfo(
-			new String[] {"group1"}, new String[] {"group1"},
+			"{}", new String[] {"group1"}, new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		UserGroup userGroup = _userGroupLocalService.addUserGroup(
@@ -145,25 +148,51 @@ public class OIDCUserInfoProcessorTest {
 			user.getUserId(), new long[] {userGroup.getUserGroupId()});
 
 		_testProcessUserInfo(
-			new String[] {"group1", "group2", "group3"},
+			"{}", new String[] {"group1", "group2", "group3"},
 			new String[] {"group1", "group3"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 		_testProcessUserInfo(
-			new String[] {"group1", "group2"}, new String[] {"group1"},
+			"{}", new String[] {"group1", "group2"}, new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 		_testProcessUserInfo(
-			new String[] {"group2"}, new String[0],
+			"{}", new String[] {"group2"}, new String[0],
 			_customOIDCUserInfoMapperJSON);
 
 		_userGroupLocalService.deleteUserUserGroup(
 			user.getUserId(), userGroup.getUserGroupId());
 
 		_testProcessUserInfo(
-			new String[0], new String[0], _customOIDCUserInfoMapperJSON);
+			"{}", new String[0], new String[0], _customOIDCUserInfoMapperJSON);
 		_testProcessUserInfo(
-			new String[0], new String[0],
+			"{}", new String[0], new String[0],
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 		_testProcessUserInfo(
+			"{}", new String[] {"group1"}, new String[] {"group1"},
+			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
+
+		ExpandoTable userCustomFieldsExpandoTable =
+			_expandoTableLocalService.fetchTable(
+				TestPropsValues.getCompanyId(),
+				_classNameLocalService.getClassNameId(User.class.getName()),
+				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		ExpandoColumn phoneNumberVerifiedExpandoColumn =
+			_expandoColumnLocalService.addColumn(
+				userCustomFieldsExpandoTable.getTableId(),
+				"phoneNumberVerified", ExpandoColumnConstants.BOOLEAN);
+
+		ExpandoColumn websiteExpandoColumn =
+			_expandoColumnLocalService.addColumn(
+				userCustomFieldsExpandoTable.getTableId(), "website",
+				ExpandoColumnConstants.STRING);
+
+		_testProcessUserInfo(
+			JSONUtil.put(
+				phoneNumberVerifiedExpandoColumn.getName(),
+				"phone_number_verified"
+			).put(
+				websiteExpandoColumn.getName(), "website"
+			).toString(),
 			new String[] {"group1"}, new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 	}
@@ -185,8 +214,8 @@ public class OIDCUserInfoProcessorTest {
 	}
 
 	private void _testProcessUserInfo(
-			String[] expectedUserGroupNames, String[] userGroupNames,
-			String userInfoMapperJSON)
+			String customClaimsJSON, String[] expectedUserGroupNames,
+			String[] userGroupNames, String userInfoMapperJSON)
 		throws Exception {
 
 		User existingUser = _userLocalService.fetchUserByEmailAddress(
@@ -205,36 +234,41 @@ public class OIDCUserInfoProcessorTest {
 			newUserGroupNames.add(userGroupName);
 		}
 
+		JSONObject userInfoJSONObject = JSONUtil.put(
+			"birthdate", String.valueOf(RandomTestUtil.nextDate())
+		).put(
+			"email", _emailAddress
+		).put(
+			"email_verified", true
+		).put(
+			"family_name", StringUtil.randomString()
+		).put(
+			"given_name", StringUtil.randomString()
+		).put(
+			"groups", userGroupNames
+		).put(
+			"middle_name", StringUtil.randomString()
+		).put(
+			"name", StringUtil.randomString()
+		).put(
+			"phone_number_verified", "true"
+		).put(
+			"preferred_username", StringUtil.randomString()
+		).put(
+			"sub", _uuid
+		).put(
+			"website", "www.test.com"
+		);
+
 		long userId = ReflectionTestUtil.invoke(
 			_oidcUserInfoProcessor, "processUserInfo",
 			new Class<?>[] {
-				long.class, String.class, ServiceContext.class, String.class,
-				String.class
+				long.class, String.class, String.class, ServiceContext.class,
+				String.class, String.class
 			},
-			TestPropsValues.getCompanyId(), StringUtil.randomString(),
-			_serviceContext,
-			JSONUtil.put(
-				"birthdate", String.valueOf(RandomTestUtil.nextDate())
-			).put(
-				"email", _emailAddress
-			).put(
-				"email_verified", true
-			).put(
-				"family_name", StringUtil.randomString()
-			).put(
-				"given_name", StringUtil.randomString()
-			).put(
-				"groups", userGroupNames
-			).put(
-				"middle_name", StringUtil.randomString()
-			).put(
-				"name", StringUtil.randomString()
-			).put(
-				"preferred_username", StringUtil.randomString()
-			).put(
-				"sub", _uuid
-			).toString(),
-			userInfoMapperJSON);
+			TestPropsValues.getCompanyId(), customClaimsJSON,
+			StringUtil.randomString(), _serviceContext,
+			userInfoJSONObject.toString(), userInfoMapperJSON);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
 			TestPropsValues.getCompanyId(), _emailAddress);
@@ -263,6 +297,29 @@ public class OIDCUserInfoProcessorTest {
 				_userGroupLocalService.getUserGroup(
 					TestPropsValues.getCompanyId(), userGroupName));
 		}
+
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject(
+			customClaimsJSON);
+
+		for (String key : customClaimsJSONObject.keySet()) {
+			String value = customClaimsJSONObject.getString(key);
+
+			ExpandoColumn expandoColumn =
+				_expandoColumnLocalService.fetchColumn(
+					expandoTable.getTableId(), key);
+
+			ExpandoValue expandoValue = _expandoValueLocalService.getValue(
+				expandoColumn.getTableId(), expandoColumn.getColumnId(),
+				user.getUserId());
+
+			Assert.assertEquals(
+				userInfoJSONObject.get(value), expandoValue.getData());
+		}
 	}
 
 	private static String _customOIDCUserInfoMapperJSON;
@@ -280,6 +337,9 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private long _oAuthClientEntryId;
 

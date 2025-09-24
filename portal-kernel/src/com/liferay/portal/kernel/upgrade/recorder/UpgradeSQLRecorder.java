@@ -14,9 +14,7 @@ import com.liferay.portal.kernel.dao.jdbc.util.PreparedStatementWrapper;
 import com.liferay.portal.kernel.dao.jdbc.util.StatementWrapper;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -334,7 +332,7 @@ public class UpgradeSQLRecorder {
 
 		long duration = System.currentTimeMillis() - startTime;
 
-		if (duration < _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD) {
+		if (duration < PropsValues.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD) {
 			return;
 		}
 
@@ -495,10 +493,6 @@ public class UpgradeSQLRecorder {
 
 		};
 	}
-
-	private static final long _UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD =
-		GetterUtil.getLong(
-			PropsUtil.get(PropsKeys.UPGRADE_REPORT_SQL_STATEMENT_THRESHOLD));
 
 	private static boolean _enabled;
 	private static final List<FailedSQL> _failedSQLs =

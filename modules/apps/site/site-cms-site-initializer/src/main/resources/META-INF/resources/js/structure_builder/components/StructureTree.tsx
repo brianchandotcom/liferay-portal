@@ -221,7 +221,11 @@ export default function StructureTree({search}: {search: string}) {
 							symbol={item.icon}
 						/>
 
-						<span className="ml-1">{item.label}</span>
+						<span className="ml-1">
+							{item.label}
+
+							<ItemStatus item={item} />
+						</span>
 
 						{item.type === 'referenced-structure' ||
 						item.type === 'repeatable-group' ? (
@@ -274,7 +278,11 @@ export default function StructureTree({search}: {search: string}) {
 									symbol={childItem.icon}
 								/>
 
-								<span className="ml-1">{childItem.label}</span>
+								<span className="ml-1">
+									{childItem.label}
+
+									<ItemStatus item={childItem} />
+								</span>
 
 								{childItem.invalid ? (
 									<ClayIcon
@@ -291,6 +299,24 @@ export default function StructureTree({search}: {search: string}) {
 			)}
 		</ClayTreeView>
 	);
+}
+
+function ItemStatus({item: {invalid, locked}}: {item: TreeItem}) {
+	const messages = [];
+
+	if (locked) {
+		messages.push(Liferay.Language.get('locked-field'));
+	}
+
+	if (invalid) {
+		messages.push(Liferay.Language.get('invalid-element'));
+	}
+
+	if (!messages.length) {
+		return null;
+	}
+
+	return <span className="sr-only">{messages.join(' ')}</span>;
 }
 
 function useSelectionMode() {

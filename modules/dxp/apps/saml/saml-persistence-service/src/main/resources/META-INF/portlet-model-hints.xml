@@ -8,9 +8,15 @@
 		<field name="samlIbSloMessageId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="createDate" type="Date" />
-		<field name="samlIdpEntityId" type="String" />
-		<field name="logoutRequestXml" type="String" />
-		<field name="samlIdpSessionIndex" type="String" />
+		<field name="samlIdpEntityId" type="String">
+			<hint-collection name="ENTITY-ID" />
+		</field>
+		<field name="logoutRequestXml" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="samlIdpSessionIndex" type="String">
+			<hint name="max-length">200</hint>
+		</field>
 	</model>
 	<model name="com.liferay.saml.persistence.model.SamlIdpSpConnection">
 		<field name="samlIdpSpConnectionId" type="long" />

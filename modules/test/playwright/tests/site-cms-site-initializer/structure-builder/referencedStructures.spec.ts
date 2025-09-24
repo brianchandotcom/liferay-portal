@@ -297,3 +297,96 @@ test(
 		await expect(page.getByLabel('Label')).toHaveValue('Date');
 	}
 );
+
+test(
+	'Can not do references that cause circular dependencies',
+	{
+		tag: '@LPD-50628',
+	},
+	async ({page, structureBuilderPage}) => {
+		const labelA = getRandomString();
+		const labelB = getRandomString();
+		const labelC = getRandomString();
+		const labelD = getRandomString();
+
+		// Create four structures, one of them in draft
+
+		await structureBuilderPage.createStructureFromData({
+			erc: labelA,
+			label: labelA,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			erc: labelB,
+			label: labelB,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			erc: labelC,
+			label: labelC,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		await structureBuilderPage.createStructureFromData({
+			erc: labelD,
+			label: labelD,
+			page: structureBuilderPage,
+			structureIds,
+		});
+
+		// C will reference A and D will reference C
+
+		await structureBuilderPage.editStructure(labelC);
+
+		await structureBuilderPage.addReferencedStructures([labelA]);
+
+		await structureBuilderPage.publishStructure();
+
+		await structureBuilderPage.editStructure(labelD);
+
+		await structureBuilderPage.addReferencedStructures([labelC]);
+
+		await structureBuilderPage.publishStructure();
+
+		// Now edit A and check we can reference B, but not C or D
+
+		await structureBuilderPage.editStructure(labelA);
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Referenced Structure',
+			}),
+			trigger: page.getByLabel('Add Field'),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.modal-title', {
+				hasText: 'Referenced Structure',
+			}),
+			timeout: 2000,
+			trigger: page.getByRole('menuitem', {
+				exact: true,
+				name: 'Referenced Structure',
+			}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByRole('option', {name: labelB}),
+			trigger: page.getByLabel('Structures'),
+		});
+
+		await expect(
+			page.getByRole('option', {name: labelC})
+		).not.toBeVisible();
+
+		await expect(
+			page.getByRole('option', {name: labelD})
+		).not.toBeVisible();
+	}
+);

@@ -46,6 +46,7 @@ public class ObjectEntryWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("headObjectEntryId", getHeadObjectEntryId());
 		attributes.put("objectDefinitionId", getObjectDefinitionId());
 		attributes.put("objectEntryFolderId", getObjectEntryFolderId());
 		attributes.put("rootObjectEntryId", getRootObjectEntryId());
@@ -125,6 +126,12 @@ public class ObjectEntryWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long headObjectEntryId = (Long)attributes.get("headObjectEntryId");
+
+		if (headObjectEntryId != null) {
+			setHeadObjectEntryId(headObjectEntryId);
 		}
 
 		Long objectDefinitionId = (Long)attributes.get("objectDefinitionId");
@@ -292,6 +299,16 @@ public class ObjectEntryWrapper
 	@Override
 	public long getGroupId() {
 		return model.getGroupId();
+	}
+
+	/**
+	 * Returns the head object entry ID of this object entry.
+	 *
+	 * @return the head object entry ID of this object entry
+	 */
+	@Override
+	public long getHeadObjectEntryId() {
+		return model.getHeadObjectEntryId();
 	}
 
 	/**
@@ -727,6 +744,16 @@ public class ObjectEntryWrapper
 	@Override
 	public void setGroupId(long groupId) {
 		model.setGroupId(groupId);
+	}
+
+	/**
+	 * Sets the head object entry ID of this object entry.
+	 *
+	 * @param headObjectEntryId the head object entry ID of this object entry
+	 */
+	@Override
+	public void setHeadObjectEntryId(long headObjectEntryId) {
+		model.setHeadObjectEntryId(headObjectEntryId);
 	}
 
 	/**

@@ -30,6 +30,21 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry addLatestApprovedObjectEntry(
+			String externalReferenceCode, long groupId, long userId,
+			long headObjectEntryId,
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long objectEntryFolderId, String defaultLanguageId, int version,
+			java.util.Map<String, java.io.Serializable> values)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryLocalService.addLatestApprovedObjectEntry(
+			externalReferenceCode, groupId, userId, headObjectEntryId,
+			objectDefinition, objectEntryFolderId, defaultLanguageId, version,
+			values);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry addObjectEntry(
 			long groupId, long userId, long objectDefinitionId,
 			long objectEntryFolderId, String defaultLanguageId,
@@ -341,6 +356,14 @@ public class ObjectEntryLocalServiceWrapper
 
 		return _objectEntryLocalService.fetchObjectEntry(
 			externalReferenceCode, groupId, objectDefinitionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry
+		fetchObjectEntryByHeadObjectEntryId(long headObjectEntryId) {
+
+		return _objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
+			headObjectEntryId);
 	}
 
 	/**

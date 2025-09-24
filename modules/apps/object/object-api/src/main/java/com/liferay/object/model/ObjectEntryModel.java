@@ -232,6 +232,20 @@ public interface ObjectEntryModel
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the head object entry ID of this object entry.
+	 *
+	 * @return the head object entry ID of this object entry
+	 */
+	public long getHeadObjectEntryId();
+
+	/**
+	 * Sets the head object entry ID of this object entry.
+	 *
+	 * @param headObjectEntryId the head object entry ID of this object entry
+	 */
+	public void setHeadObjectEntryId(long headObjectEntryId);
+
+	/**
 	 * Returns the object definition ID of this object entry.
 	 *
 	 * @return the object definition ID of this object entry

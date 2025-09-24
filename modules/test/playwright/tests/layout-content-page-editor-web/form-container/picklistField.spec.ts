@@ -517,29 +517,42 @@ test(
 	}
 );
 
-test(
-	'Dropdown shows all results when there is no filter applied',
-	{tag: ['@LPD-64860']},
-	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+test.describe('Dropdown behavior with several object entries', () => {
+	let lemonBaskets = [];
 
-		// Create lemon baskets
+	test.beforeEach(() => {
+		lemonBaskets = [];
+	});
 
-		const lemonBaskets = [];
-
-		for (let i = 0; i < 19; i++) {
-			const lemonBasket = await apiHelpers.objectEntry.postObjectEntry(
-				{
-					lemonDimensions: ['large'],
-					material: 'plastic',
-				},
+	test.afterEach(async ({apiHelpers}) => {
+		for (const lemonBasket of lemonBaskets) {
+			await apiHelpers.objectEntry.deleteObjectEntry(
 				'c/lemonbaskets',
-				pageManagementSite.key
+				lemonBasket.id
 			);
-
-			lemonBaskets.push({lemonBasket});
 		}
+	});
 
-		try {
+	test(
+		'Dropdown shows all results when there is no filter applied',
+		{tag: ['@LPD-64860']},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create lemon baskets
+
+			for (let i = 0; i < 19; i++) {
+				const lemonBasket =
+					await apiHelpers.objectEntry.postObjectEntry(
+						{
+							lemonDimensions: ['large'],
+							material: 'plastic',
+						},
+						'c/lemonbaskets',
+						pageManagementSite.key
+					);
+
+				lemonBaskets.push(lemonBasket);
+			}
 
 			// Create a page with a Form fragment
 
@@ -580,13 +593,5 @@ test(
 
 			await expect(page.getByRole('option')).toHaveCount(21);
 		}
-		finally {
-			for (const lemonBasket of lemonBaskets) {
-				await apiHelpers.objectEntry.deleteObjectEntry(
-					'c/lemonbaskets',
-					String(lemonBasket.id)
-				);
-			}
-		}
-	}
-);
+	);
+});

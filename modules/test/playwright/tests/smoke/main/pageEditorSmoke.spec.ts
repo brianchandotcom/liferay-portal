@@ -20,6 +20,7 @@ import getBasicWebContentStructureId from '../../../utils/structured-content/get
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import {OBJECT_ENTITIES} from '../../setup/page-management-site/main/constants/objects';
+import {PAGE_MANAGEMENT_SITE_NAME} from '../../setup/page-management-site/main/constants/site';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -98,7 +99,7 @@ test('Can create and delete Page Management site', async ({backendPage}) => {
 	const site = await apiHelpers.headlessSite.createSiteFromZip(
 		{
 			externalReferenceCode: PAGE_MANAGEMENT_SITE_ERC,
-			name: 'Page Management Site',
+			name: PAGE_MANAGEMENT_SITE_NAME,
 		},
 		resolve(
 			__dirname,

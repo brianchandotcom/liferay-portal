@@ -180,6 +180,32 @@ public class JspAnalyzerPluginTest {
 		Assert.assertEquals(requireCapability1, requireCapability2);
 	}
 
+	@Test
+	public void testTaglibRequirementsWithJavaxJstlCoreUri() throws Exception {
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource(
+			"dependencies/imports_without_comments_with_javax.jsp");
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder builder = new Builder();
+
+		builder.build();
+
+		Set<String> taglibURIs = new HashSet<>();
+
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
+
+		String requireCapability = builder.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		Assert.assertFalse(
+			requireCapability.contains("http://java.sun.com/jsp/jstl/core"));
+	}
+
 	protected URL getResource(String path) {
 		Class<?> clazz = getClass();
 

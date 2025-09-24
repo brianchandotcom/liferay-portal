@@ -14,10 +14,7 @@ import com.liferay.layout.model.LockedLayoutType;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.petra.sql.dsl.Column;
-import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
-import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
-import com.liferay.petra.sql.dsl.base.BaseTable;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -29,7 +26,6 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTable;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -44,7 +40,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.lock.model.LockTable;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.model.impl.LayoutModelImpl;
 
@@ -53,9 +48,6 @@ import jakarta.portlet.PortletRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.sql.Types;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
@@ -125,70 +117,22 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 	public List<LockedLayout> getLockedLayouts(
 		long companyId, long groupId, Locale locale) {
 
-		List<LockedLayout> lockedLayouts = new ArrayList<>();
+		return TransformUtil.transform(
+			_lockLocalService.getLocks(companyId, Layout.class.getName()),
+			lock -> {
+				Layout layout = _layoutLocalService.fetchLayout(
+					GetterUtil.getLong(lock.getKey()));
 
-		List<Object[]> results = _layoutLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-			).from(
-				DSLQueryFactoryUtil.select(
-					LayoutTable.INSTANCE.classPK, LockTable.INSTANCE.createDate,
-					LayoutTable.INSTANCE.plid, LayoutTable.INSTANCE.type,
-					LockTable.INSTANCE.userName
-				).from(
-					LayoutTable.INSTANCE
-				).innerJoinON(
-					LockTable.INSTANCE,
-					LockTable.INSTANCE.companyId.eq(
-						companyId
-					).and(
-						LockTable.INSTANCE.className.eq(Layout.class.getName())
-					).and(
-						LockTable.INSTANCE.key.eq(
-							DSLFunctionFactoryUtil.castText(
-								LayoutTable.INSTANCE.plid))
-					)
-				).where(
-					LayoutTable.INSTANCE.groupId.eq(
-						groupId
-					).and(
-						LayoutTable.INSTANCE.classPK.gt(0L)
-					).and(
-						LayoutTable.INSTANCE.hidden.eq(true)
-					).and(
-						LayoutTable.INSTANCE.system.eq(true)
-					).and(
-						LayoutTable.INSTANCE.type.in(
-							new String[] {
-								LayoutConstants.TYPE_ASSET_DISPLAY,
-								LayoutConstants.TYPE_CONTENT,
-								LayoutConstants.TYPE_UTILITY
-							})
-					)
-				).as(
-					"LockedLayoutsTable", LockedLayoutsTable.INSTANCE
-				)
-			));
+				if ((layout == null) || (layout.getGroupId() != groupId)) {
+					return null;
+				}
 
-		for (Object[] columns : results) {
-			Layout layout = _layoutLocalService.fetchLayout(
-				GetterUtil.getLong(columns[2]));
-
-			if (layout == null) {
-				continue;
-			}
-
-			long classPK = GetterUtil.getLong(columns[0]);
-
-			lockedLayouts.add(
-				new LockedLayout(
-					classPK, (Date)columns[1],
-					_getLockedLayoutType(
-						classPK, GetterUtil.getString(columns[3])),
-					layout.getName(locale), GetterUtil.getLong(columns[2]),
-					GetterUtil.getString(columns[4])));
-		}
-
-		return lockedLayouts;
+				return new LockedLayout(
+					layout.getClassPK(), lock.getCreateDate(),
+					_getLockedLayoutType(layout.getClassPK(), layout.getType()),
+					layout.getName(locale), layout.getPlid(),
+					lock.getUserName());
+			});
 	}
 
 	@Override
@@ -508,35 +452,5 @@ public class LayoutLockManagerImpl implements LayoutLockManager {
 
 	@Reference
 	private Portal _portal;
-
-	private static class LockedLayoutsTable
-		extends BaseTable<LockedLayoutsTable> {
-
-		public static final LockedLayoutsTable INSTANCE =
-			new LockedLayoutsTable();
-
-		public final Column<LockedLayoutsTable, Long> classPKColumn =
-			createColumn(
-				"classPK", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-		public final Column<LockedLayoutsTable, Date> createDateColumn =
-			createColumn(
-				"createDate", Date.class, Types.TIMESTAMP, Column.FLAG_DEFAULT);
-		public final Column<LockedLayoutsTable, Long> groupIdColumn =
-			createColumn(
-				"groupId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-		public final Column<LockedLayoutsTable, Long> plidColumn = createColumn(
-			"plid", Long.class, Types.BIGINT, Column.FLAG_PRIMARY);
-		public final Column<LockedLayoutsTable, String> typeColumn =
-			createColumn(
-				"type_", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-		public final Column<LockedLayoutsTable, String> userNameColumn =
-			createColumn(
-				"userName", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-
-		private LockedLayoutsTable() {
-			super("LockedLayoutsTable", LockedLayoutsTable::new);
-		}
-
-	}
 
 }

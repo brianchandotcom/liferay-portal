@@ -566,7 +566,7 @@ public class ObjectEntryServiceTest {
 		tree = TreeTestUtil.createObjectEntryTree(
 			"1", _objectDefinitionLocalService, _objectEntryLocalService,
 			_objectFieldLocalService, _objectRelationshipLocalService,
-			_rootObjectDefinition.getRootObjectDefinitionId());
+			_rootObjectDefinition.getObjectDefinitionId());
 
 		objectEntryRootNode = tree.getRootNode();
 

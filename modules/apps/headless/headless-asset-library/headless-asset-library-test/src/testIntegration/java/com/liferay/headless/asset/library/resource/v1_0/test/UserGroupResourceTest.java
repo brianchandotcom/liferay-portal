@@ -67,69 +67,17 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
-	protected UserGroup
-			testDeleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup()
-		throws Exception {
-
-		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntry.getGroupId(), _testUserGroup.getId());
-	}
-
-	@Override
-	protected String
-			testDeleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		Group group = testDepotEntry.getGroup();
-
-		return group.getExternalReferenceCode();
-	}
-
-	@Override
 	protected UserGroup testDeleteAssetLibraryUserGroup_addUserGroup()
 		throws Exception {
 
 		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntry.getGroupId(), _testUserGroup.getId());
-	}
-
-	@Override
-	protected Long testDeleteAssetLibraryUserGroup_getAssetLibraryId() {
-		return testDepotEntry.getGroupId();
-	}
-
-	@Override
-	protected UserGroup
-			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup()
-		throws Exception {
-
-		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntry.getGroupId(), _testUserGroup.getId());
+			testDepotEntryGroup.getExternalReferenceCode(),
+			_testUserGroup.getExternalReferenceCode());
 	}
 
 	@Override
 	protected String
-			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		Group group = testDepotEntry.getGroup();
-
-		return group.getExternalReferenceCode();
-	}
-
-	@Override
-	protected UserGroup
-			testGetAssetLibraryByExternalReferenceCodeUserGroupsPage_addUserGroup(
-				String externalReferenceCode, UserGroup userGroup)
-		throws Exception {
-
-		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntry.getGroupId(), userGroup.getId());
-	}
-
-	@Override
-	protected String
-			testGetAssetLibraryByExternalReferenceCodeUserGroupsPage_getExternalReferenceCode()
+			testDeleteAssetLibraryUserGroup_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		Group group = testDepotEntry.getGroup();
@@ -142,33 +90,33 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		throws Exception {
 
 		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntry.getGroupId(), _testUserGroup.getId());
-	}
-
-	@Override
-	protected Long testGetAssetLibraryUserGroup_getAssetLibraryId() {
-		return testDepotEntry.getGroupId();
-	}
-
-	@Override
-	protected UserGroup testGetAssetLibraryUserGroupsPage_addUserGroup(
-			Long assetLibraryId, UserGroup userGroup)
-		throws Exception {
-
-		return userGroupResource.putAssetLibraryUserGroup(
-			assetLibraryId, userGroup.getId());
-	}
-
-	@Override
-	protected UserGroup
-		testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_addUserGroup() {
-
-		return _testUserGroup;
+			testDepotEntryGroup.getExternalReferenceCode(),
+			_testUserGroup.getExternalReferenceCode());
 	}
 
 	@Override
 	protected String
-			testPutAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode_getAssetLibraryExternalReferenceCode()
+			testGetAssetLibraryUserGroup_getAssetLibraryExternalReferenceCode()
+		throws Exception {
+
+		Group group = testDepotEntry.getGroup();
+
+		return group.getExternalReferenceCode();
+	}
+
+	@Override
+	protected UserGroup testGetAssetLibraryUserGroupsPage_addUserGroup(
+			String externalReferenceCode, UserGroup userGroup)
+		throws Exception {
+
+		return userGroupResource.putAssetLibraryUserGroup(
+			testDepotEntryGroup.getExternalReferenceCode(),
+			userGroup.getExternalReferenceCode());
+	}
+
+	@Override
+	protected String
+			testGetAssetLibraryUserGroupsPage_getExternalReferenceCode()
 		throws Exception {
 
 		Group group = testDepotEntry.getGroup();
@@ -182,10 +130,13 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	}
 
 	@Override
-	protected Long testPutAssetLibraryUserGroup_getAssetLibraryId()
+	protected String
+			testPutAssetLibraryUserGroup_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
-		return testDepotEntry.getGroupId();
+		Group group = testDepotEntry.getGroup();
+
+		return group.getExternalReferenceCode();
 	}
 
 	private UserGroup _addUserGroup() throws Exception {

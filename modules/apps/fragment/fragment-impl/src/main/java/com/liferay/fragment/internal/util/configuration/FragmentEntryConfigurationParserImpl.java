@@ -47,6 +47,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.taglib.servlet.taglib.util.NavItemUtil;
 
 import java.util.ArrayList;
@@ -754,13 +756,35 @@ public class FragmentEntryConfigurationParserImpl
 			fragmentEntryMenuDisplayConfiguration =
 				new FragmentEntryMenuDisplayConfiguration(value);
 
+		long siteNavigationMenuId =
+			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId();
+
+		if (siteNavigationMenuId <= 0) {
+			String siteNavigationMenuExternalReferenceCode =
+				fragmentEntryMenuDisplayConfiguration.
+					getSiteNavigationMenuExternalReferenceCode();
+
+			if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+				SiteNavigationMenu siteNavigationMenu =
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByExternalReferenceCode(
+							siteNavigationMenuExternalReferenceCode,
+							serviceContext.getScopeGroupId());
+
+				if (siteNavigationMenu != null) {
+					siteNavigationMenuId =
+						siteNavigationMenu.getSiteNavigationMenuId();
+				}
+			}
+		}
+
 		return NavItemUtil.getNavigationMenuContext(
 			1, "auto", serviceContext.getRequest(),
 			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode(),
 			false, fragmentEntryMenuDisplayConfiguration.getRootItemId(),
 			fragmentEntryMenuDisplayConfiguration.getRootItemLevel(),
 			fragmentEntryMenuDisplayConfiguration.getRootItemType(),
-			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId());
+			siteNavigationMenuId);
 	}
 
 	private Object _getURLValue(String value) {
@@ -904,5 +928,8 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

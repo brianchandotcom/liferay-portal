@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,10 +33,15 @@ public class FragmentEntryMenuDisplayConfiguration {
 				source = ContextualMenu.parse(
 					jsonObject.getString("contextualMenu"));
 			}
-			else if (jsonObject.has("siteNavigationMenuId")) {
+			else if (jsonObject.has("siteNavigationMenuId") ||
+					 jsonObject.has(
+						 "siteNavigationMenuExternalReferenceCode")) {
+
 				source = new SiteNavigationMenuSource(
 					jsonObject.getLong("parentSiteNavigationMenuItemId"),
 					jsonObject.getBoolean("privateLayout"),
+					jsonObject.getString(
+						"siteNavigationMenuExternalReferenceCode"),
 					jsonObject.getLong("siteNavigationMenuId"));
 			}
 		}
@@ -109,6 +115,18 @@ public class FragmentEntryMenuDisplayConfiguration {
 		return "select";
 	}
 
+	public String getSiteNavigationMenuExternalReferenceCode() {
+		if (_source instanceof SiteNavigationMenuSource) {
+			SiteNavigationMenuSource siteNavigationMenuSource =
+				(SiteNavigationMenuSource)_source;
+
+			return siteNavigationMenuSource.
+				getSiteNavigationMenuExternalReferenceCode();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	public long getSiteNavigationMenuId() {
 		if (_source instanceof SiteNavigationMenuSource) {
 			SiteNavigationMenuSource siteNavigationMenuSource =
@@ -147,15 +165,22 @@ public class FragmentEntryMenuDisplayConfiguration {
 
 		public SiteNavigationMenuSource(
 			long parentSiteNavigationMenuItemId, boolean privateLayout,
+			String siteNavigationMenuExternalReferenceCode,
 			long siteNavigationMenuId) {
 
 			_parentSiteNavigationMenuItemId = parentSiteNavigationMenuItemId;
 			_privateLayout = privateLayout;
+			_siteNavigationMenuExternalReferenceCode =
+				siteNavigationMenuExternalReferenceCode;
 			_siteNavigationMenuId = siteNavigationMenuId;
 		}
 
 		public long getParentSiteNavigationMenuItemId() {
 			return _parentSiteNavigationMenuItemId;
+		}
+
+		public String getSiteNavigationMenuExternalReferenceCode() {
+			return _siteNavigationMenuExternalReferenceCode;
 		}
 
 		public long getSiteNavigationMenuId() {
@@ -168,6 +193,7 @@ public class FragmentEntryMenuDisplayConfiguration {
 
 		private final long _parentSiteNavigationMenuItemId;
 		private final boolean _privateLayout;
+		private final String _siteNavigationMenuExternalReferenceCode;
 		private final long _siteNavigationMenuId;
 
 	}

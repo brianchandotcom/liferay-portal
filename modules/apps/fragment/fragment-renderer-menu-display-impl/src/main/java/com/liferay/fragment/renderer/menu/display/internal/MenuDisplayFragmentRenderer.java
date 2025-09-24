@@ -29,7 +29,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -118,7 +121,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					WebKeys.THEME_DISPLAY);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
-				themeDisplay.getCompanyId(), configurationJSONObject,
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				configurationJSONObject,
 				fragmentEntryLink.getEditableValuesJSONObject());
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
@@ -131,7 +135,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(
-			long companyId, JSONObject configurationJSONObject,
+			long companyId, long groupId, JSONObject configurationJSONObject,
 			JSONObject editableValuesJSONObject)
 		throws PortalException {
 
@@ -173,8 +177,27 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 			fragmentEntryMenuDisplayConfiguration.getRootItemLevel());
 		navigationMenuTag.setRootItemType(
 			fragmentEntryMenuDisplayConfiguration.getRootItemType());
-		navigationMenuTag.setSiteNavigationMenuId(
-			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId());
+
+		long siteNavigationMenuId =
+			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId();
+
+		if (siteNavigationMenuId <= 0) {
+			String siteNavigationMenuExternalReferenceCode =
+				fragmentEntryMenuDisplayConfiguration.
+					getSiteNavigationMenuExternalReferenceCode();
+
+			if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+				SiteNavigationMenu siteNavigationMenu =
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByExternalReferenceCode(
+							siteNavigationMenuExternalReferenceCode, groupId);
+
+				siteNavigationMenuId =
+					siteNavigationMenu.getSiteNavigationMenuId();
+			}
+		}
+
+		navigationMenuTag.setSiteNavigationMenuId(siteNavigationMenuId);
 
 		return navigationMenuTag;
 	}
@@ -247,5 +270,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

@@ -79,7 +79,11 @@ export default function Assignee({
 				aria-label={label}
 				defaultValue={value?.name ?? ''}
 				disabled={readOnly}
-				items={resource ? resource.items : []}
+				items={
+					resource
+						? resource.items.filter((item: any) => !!item.embedded)
+						: []
+				}
 				loadingState={networkStatus}
 				menuTrigger="focus"
 				messages={{

@@ -53,6 +53,7 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
@@ -399,8 +400,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		Group group = _groupService.addGroup(
 			_getParentGroupId(site.getParentSiteKey()),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			_getLocalizationMap(site.getName()),
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, _getNameMap(site),
 			_getLocalizationMap(site.getDescription()),
 			_getType(site.getMembershipType()),
 			_isManualMembership(site.getManualMembership()),
@@ -469,6 +469,16 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		}
 
 		return membershipRestriction;
+	}
+
+	private Map<Locale, String> _getNameMap(Site site) {
+		if (Validator.isNotNull(site.getName_i18n())) {
+			return LocalizedMapUtil.getLocalizedMap(site.getName_i18n());
+		}
+
+		return HashMapBuilder.put(
+			LocaleUtil.getDefault(), site.getName()
+		).build();
 	}
 
 	private long _getParentGroupId(String parentSiteKey)
@@ -638,23 +648,9 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				setMembershipType(
 					() -> MembershipType.create(
 						GroupConstants.getTypeLabel(group.getType())));
-				setName(
-					() -> {
-						Map<String, String> nameMap = new LinkedHashMap<>();
-
-						for (String availableLanguageId :
-								availableLanguageIds) {
-
-							String name = group.getName(
-								availableLanguageId, false);
-
-							if (Validator.isNotNull(name)) {
-								nameMap.put(availableLanguageId, name);
-							}
-						}
-
-						return nameMap;
-					});
+				setName(() -> group.getName(LocaleUtil.getDefault()));
+				setName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(group.getNameMap()));
 				setTypeSettings(
 					() -> {
 						UnicodeProperties unicodeProperties =
@@ -681,8 +677,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 			Group updatedGroup = _groupLocalService.updateGroup(
 				group.getGroupId(), _getParentGroupId(site.getParentSiteKey()),
-				_getLocalizationMap(site.getName()),
-				_getLocalizationMap(site.getDescription()),
+				_getNameMap(site), _getLocalizationMap(site.getDescription()),
 				_getType(site.getMembershipType()),
 				_isManualMembership(site.getManualMembership()),
 				_getMembershipRestriction(site.getMembershipRestriction()),

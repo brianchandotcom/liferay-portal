@@ -117,7 +117,17 @@ public class BatchEnginePortletDataHandlerUtil {
 			}
 		).putAll(
 			exportImportDescriptor.getParameters()
+		).putAll(
+			exportImportDescriptor.getContextAwareParameters()
 		).build();
+	}
+
+	public static Map<String, Serializable> buildExportParameters(
+		List<String> nestedFields, Map<String, Serializable> parameters,
+		PortletDataContext portletDataContext) {
+
+		return buildExportParameters(
+			nestedFields, parameters, null, portletDataContext);
 	}
 
 	public static Map<String, Serializable> buildImportParameters(

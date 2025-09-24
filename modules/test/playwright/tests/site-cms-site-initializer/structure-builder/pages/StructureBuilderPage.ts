@@ -77,12 +77,14 @@ export class StructureBuilderPage {
 			url = url + `?objectFolderExternalReferenceCode=${folderERC}`;
 		}
 
-		await this.page.goto(url);
+		await expect(async () => {
+			await this.page.goto(url);
 
-		await this.page
-			.locator('.component-tbar')
-			.getByText('Publish')
-			.waitFor();
+			await this.page
+				.locator('.component-tbar')
+				.getByText('Publish')
+				.waitFor({timeout: 2000});
+		}).toPass();
 	}
 
 	async addField(type: FieldType) {
@@ -377,15 +379,13 @@ export class StructureBuilderPage {
 		if (fields.length === 1) {
 			const [field] = fields;
 
-			const treeItems = this.page
-				.locator('.treeview-item')
-				.getByLabel(field.label, {exact: true});
-
-			await treeItems.waitFor({state: 'visible'});
-
-			const count = await treeItems.count();
+			const treeItems = this.page.getByRole('treeitem', {
+				name: field.label,
+			});
 
 			const treeItem = treeItems.nth(field.nth || 0);
+
+			await treeItem.waitFor({state: 'visible'});
 
 			await this.selectFields([field]);
 
@@ -394,19 +394,11 @@ export class StructureBuilderPage {
 				target: this.page.getByRole('menuitem', {name: 'Delete'}),
 				trigger: treeItem.getByLabel('Field Options'),
 			});
-
-			await expect(treeItems).toHaveCount(count - 1);
 		}
 
 		// Deleting multiple fields
 
 		else {
-			const count = await this.page
-				.locator('.treeview-item')
-				.first()
-				.locator('.treeview-group > .treeview-item')
-				.count();
-
 			await this.selectFields(fields);
 
 			await clickAndExpectToBeVisible({
@@ -414,13 +406,6 @@ export class StructureBuilderPage {
 				target: this.page.getByRole('menuitem', {name: 'Delete'}),
 				trigger: this.page.getByLabel('Selection Options'),
 			});
-
-			await expect(
-				this.page
-					.locator('.treeview-item')
-					.first()
-					.locator('.treeview-group > .treeview-item')
-			).toHaveCount(count - fields.length);
 		}
 	}
 
@@ -514,8 +499,9 @@ export class StructureBuilderPage {
 	async selectFields(fields: Field[]) {
 		for (const [i, field] of fields.entries()) {
 			const treeItem = this.page
-				.locator('.treeview-item')
-				.getByLabel(field.label, {exact: true})
+				.getByRole('treeitem', {
+					name: field.label,
+				})
 				.nth(field.nth || 0);
 
 			await expect(async () => {

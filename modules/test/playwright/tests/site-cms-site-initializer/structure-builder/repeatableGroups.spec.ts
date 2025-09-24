@@ -150,12 +150,29 @@ test(
 			structureIds,
 		});
 
+		// Add fields
+
+		await structureBuilderPage.addField('Text');
+		await structureBuilderPage.addField('Date');
+		await structureBuilderPage.addField('Decimal');
+		await structureBuilderPage.addField('Numeric');
+		await structureBuilderPage.addField('Boolean');
+
+		// Create a repeatable group and delete one field
+
+		await structureBuilderPage.createRepeatableGroup({
+			fields: [{label: 'Numeric'}, {label: 'Boolean'}],
+			label: 'Repeatable Group 0',
+		});
+
+		await structureBuilderPage.deleteFields([{label: 'Boolean'}]);
+
 		// Check a group can't be created if there's only one field
 
-		await structureBuilderPage.selectFields([{label: 'Title'}]);
+		await structureBuilderPage.selectFields([{label: 'Numeric'}]);
 
 		await structureBuilderPage.clickFieldAction(
-			{label: 'Title'},
+			{label: 'Numeric'},
 			'Create Repeatable Group'
 		);
 
@@ -175,11 +192,11 @@ test(
 			trigger: page.locator('.modal-footer').getByText('Done'),
 		});
 
-		// Add fields
+		// Delete the group
 
-		await structureBuilderPage.addField('Text');
-		await structureBuilderPage.addField('Date');
-		await structureBuilderPage.addField('Decimal');
+		await structureBuilderPage.deleteFields([
+			{label: 'Repeatable Group 0'},
+		]);
 
 		// Create repeatable group with two of them
 
@@ -218,7 +235,7 @@ test(
 			trigger: page.locator('.modal-footer').getByText('Done'),
 		});
 
-		// Check a group can't be created with published fields
+		// Check a group can't be created with system fields
 
 		await structureBuilderPage.publishStructure();
 
@@ -236,7 +253,7 @@ test(
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
-				'The repeatable group cannot be created because one or more fields of the selection are already published.'
+				'The repeatable group cannot be created because one or more fields of the selection are system fields.'
 			),
 			trigger: page.getByRole('menuitem', {
 				name: 'Create Repeatable Group',
@@ -245,7 +262,7 @@ test(
 
 		await clickAndExpectToBeHidden({
 			target: page.getByText(
-				'The repeatable group cannot be created because one or more fields of the selection are already published.'
+				'The repeatable group cannot be created because one or more fields of the selection are system fields.'
 			),
 			trigger: page.locator('.modal-footer').getByText('Done'),
 		});

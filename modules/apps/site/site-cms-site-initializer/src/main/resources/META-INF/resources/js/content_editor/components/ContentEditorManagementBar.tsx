@@ -15,9 +15,11 @@ export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
 export default function ContentEditorManagementBar({
 	backURL,
+	hasWorkflow,
 	headerTitle,
 }: {
 	backURL: string;
+	hasWorkflow: boolean;
 	headerTitle: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
@@ -69,7 +71,9 @@ export default function ContentEditorManagementBar({
 						type="submit"
 						value={backURL}
 					>
-						{Liferay.Language.get('publish')}
+						{hasWorkflow
+							? Liferay.Language.get('submit-for-workflow')
+							: Liferay.Language.get('publish')}
 					</ClayButton>
 				</ManagementToolbar.Item>
 			</ManagementToolbar.ItemList>

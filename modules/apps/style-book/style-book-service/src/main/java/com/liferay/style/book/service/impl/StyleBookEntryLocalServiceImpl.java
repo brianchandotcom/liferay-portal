@@ -133,7 +133,19 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry sourceStyleBookEntry = getStyleBookEntry(
 			sourceStyleBookEntryId);
 
-		String name = _getUniqueCopyName(sourceStyleBookEntry);
+		String name = UniqueNameUtils.getCopyName(
+			sourceStyleBookEntry.getName(),
+			copyName -> {
+				StyleBookEntry existingStyleBookEntry =
+					styleBookEntryPersistence.fetchByG_LikeN_First(
+						sourceStyleBookEntry.getGroupId(), copyName, null);
+
+				if (existingStyleBookEntry == null) {
+					return true;
+				}
+
+				return false;
+			});
 
 		StyleBookEntry targetStyleBookEntry = addStyleBookEntry(
 			null, userId, groupId, false,
@@ -552,24 +564,6 @@ public class StyleBookEntryLocalServiceImpl
 		}
 
 		return StringPool.BLANK;
-	}
-
-	private String _getUniqueCopyName(StyleBookEntry styleBookEntry)
-		throws PortalException {
-
-		return UniqueNameUtils.getCopyName(
-			styleBookEntry.getName(),
-			copyName -> {
-				StyleBookEntry existingStyleBookEntry =
-					styleBookEntryPersistence.fetchByG_LikeN_First(
-						styleBookEntry.getGroupId(), copyName, null);
-
-				if (existingStyleBookEntry == null) {
-					return true;
-				}
-
-				return false;
-			});
 	}
 
 	private void _validate(String name) throws PortalException {

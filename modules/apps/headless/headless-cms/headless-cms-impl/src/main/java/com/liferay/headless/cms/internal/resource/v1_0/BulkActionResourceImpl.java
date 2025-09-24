@@ -254,10 +254,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private void _addBulkActionTaskItem(
-			BulkActionTask bulkActionTask,
+			List<BulkActionItem> bulkActionItems, BulkActionTask bulkActionTask,
 			Map.Entry<String, List<BulkActionItem>> entry,
-			ImportTask importTask, String taskItemDelegateName,
-			List<BulkActionItem> bulkActionItems)
+			ImportTask importTask, String taskItemDelegateName)
 		throws Exception {
 
 		for (BulkActionItem bulkActionItem : entry.getValue()) {
@@ -347,8 +346,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				bulkActionTask, entry, importTask, taskItemDelegateName,
-				bulkActionItems);
+				bulkActionItems, bulkActionTask, entry, importTask,
+				taskItemDelegateName);
 		}
 
 		bulkActionTask.setNumberOfItems(bulkActionItems::size);
@@ -391,8 +390,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				bulkActionTask, entry, importTask, taskItemDelegateName,
-				bulkActionItems);
+				bulkActionItems, bulkActionTask, entry, importTask,
+				taskItemDelegateName);
 		}
 
 		bulkActionTask.setNumberOfItems(bulkActionItems::size);
@@ -435,8 +434,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
 
-			ImportTask importTask = _putImportTaskObject(
-				entry, importTaskResource, taskItemDelegateName,
+			ImportTask importTask = importTaskResource.putImportTaskObject(
+				_getClassName(entry.getKey()), null, null,
+				ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue(),
+				taskItemDelegateName, "PARTIAL_UPDATE",
 				transform(
 					entry.getValue(),
 					bulkActionItem -> HashMapBuilder.<String, Object>put(
@@ -446,8 +447,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				bulkActionTask, entry, importTask, taskItemDelegateName,
-				bulkActionItems);
+				bulkActionItems, bulkActionTask, entry, importTask,
+				taskItemDelegateName);
 		}
 
 		bulkActionTask.setNumberOfItems(bulkActionItems::size);
@@ -484,8 +485,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
 
-			ImportTask importTask = _putImportTaskObject(
-				entry, importTaskResource, taskItemDelegateName,
+			ImportTask importTask = importTaskResource.putImportTaskObject(
+				_getClassName(entry.getKey()), null, null,
+				ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue(),
+				taskItemDelegateName, "PARTIAL_UPDATE",
 				transform(
 					entry.getValue(),
 					bulkActionItem -> HashMapBuilder.<String, Object>put(
@@ -508,8 +511,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				bulkActionTask, entry, importTask, taskItemDelegateName,
-				bulkActionItems);
+				bulkActionItems, bulkActionTask, entry, importTask,
+				taskItemDelegateName);
 		}
 
 		bulkActionTask.setNumberOfItems(bulkActionItems::size);
@@ -554,8 +557,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
 
-			ImportTask importTask = _putImportTaskObject(
-				entry, importTaskResource, taskItemDelegateName,
+			ImportTask importTask = importTaskResource.putImportTaskObject(
+				_getClassName(entry.getKey()), null, null,
+				ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue(),
+				taskItemDelegateName, "PARTIAL_UPDATE",
 				transform(
 					entry.getValue(),
 					bulkActionItem -> HashMapBuilder.<String, Object>put(
@@ -565,8 +570,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					).build()));
 
 			_addBulkActionTaskItem(
-				bulkActionTask, entry, importTask, taskItemDelegateName,
-				bulkActionItems);
+				bulkActionItems, bulkActionTask, entry, importTask,
+				taskItemDelegateName);
 		}
 
 		bulkActionTask.setNumberOfItems(bulkActionItems::size);
@@ -990,18 +995,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		return usagesCount;
-	}
-
-	private ImportTask _putImportTaskObject(
-			Map.Entry<String, List<BulkActionItem>> entry,
-			ImportTaskResource importTaskResource, String taskItemDelegateName,
-			List<HashMap<String, Object>> object)
-		throws Exception {
-
-		return importTaskResource.putImportTaskObject(
-			_getClassName(entry.getKey()), null, null,
-			ImportTask.ImportStrategy.ON_ERROR_CONTINUE.getValue(),
-			taskItemDelegateName, "PARTIAL_UPDATE", object);
 	}
 
 	private BulkActionItem _toBulkActionItem(long classPK) {

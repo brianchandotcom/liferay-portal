@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -93,8 +94,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
-
-import org.apache.commons.lang3.ArrayUtils;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -816,16 +815,17 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			_createBulkActionItems(basicWebContentObjectEntry));
 
 		permissionBulkAction.setPermissions(
-			ArrayUtils.toArray(
+			new Permission[] {
 				new Permission() {
 					{
-						setActionIds(ArrayUtils.toArray("VIEW"));
+						setActionIds(new String[] {"VIEW"});
 						setRoleExternalReferenceCode(
 							role.getExternalReferenceCode());
 						setRoleName(role.getName());
 						setRoleType(role.getTypeLabel());
 					}
-				}));
+				}
+			});
 
 		permissionBulkAction.setType(BulkAction.Type.PERMISSION_BULK_ACTION);
 
@@ -885,7 +885,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_postBulkAction(taxonomyCategoryBulkAction);
 
 		Assert.assertArrayEquals(
-			ArrayUtils.toPrimitive(taxonomyCategoryIds),
+			ArrayUtil.toArray(taxonomyCategoryIds),
 			_assetCategoryLocalService.getCategoryIds(
 				_basicWebContentObjectDefinition.getClassName(),
 				basicWebContentObjectEntry.getObjectEntryId()));

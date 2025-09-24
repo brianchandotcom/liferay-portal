@@ -13,11 +13,8 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -25,8 +22,10 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -38,7 +37,10 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.internal.display.context.test.BaseDisplayContextTestCase;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.File;
 
@@ -73,39 +75,7 @@ public class GroupModelListenerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		if (_isCMSSiteInitialized()) {
-			return;
-		}
-
-		// These tests require the instance to be created with the feature
-		// flag LPD-17564 enabled. On CI, feature flags are enabled on
-		// demand for each test, but not during instance initialization.
-		// Until the feature flag LPD-17564 is removed, run the batch
-		// engine unit processor manually so that the object definitions
-		// are created.
-
-		Bundle testBundle = FrameworkUtil.getBundle(
-			GroupModelListenerTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (!Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				continue;
-			}
-
-			_deleteFile(bundle, "01.object.folder");
-			_deleteFile(bundle, "02.object.definition");
-
-			CompletableFuture<Void> completableFuture =
-				_batchEngineUnitProcessor.processBatchEngineUnits(
-					_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-			completableFuture.join();
-		}
+		_cmsGroup = _getGroup();
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -154,10 +124,7 @@ public class GroupModelListenerTest {
 	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateDepotEntry() throws Exception {
-		Group siteGroup = _groupLocalService.getGroup(
-			TestPropsValues.getCompanyId(), GroupConstants.CMS);
-
-		Layout layout = _getRecycleBinLayout(siteGroup);
+		Layout layout = _getRecycleBinLayout(_cmsGroup);
 
 		Assert.assertFalse(layout.isHidden());
 
@@ -170,7 +137,7 @@ public class GroupModelListenerTest {
 			GetterUtil.getBoolean(
 				defaultGroup.getTypeSettingsProperty("trashEnabled")));
 
-		layout = _getRecycleBinLayout(siteGroup);
+		layout = _getRecycleBinLayout(_cmsGroup);
 
 		Assert.assertTrue(layout.isHidden());
 
@@ -184,7 +151,7 @@ public class GroupModelListenerTest {
 			GetterUtil.getBoolean(
 				depotGroup.getTypeSettingsProperty("trashEnabled")));
 
-		layout = _getRecycleBinLayout(siteGroup);
+		layout = _getRecycleBinLayout(_cmsGroup);
 
 		Assert.assertFalse(layout.isHidden());
 
@@ -217,22 +184,69 @@ public class GroupModelListenerTest {
 		}
 	}
 
+	private Group _getGroup() throws Exception {
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getCompanyId(), GroupConstants.CMS);
+
+		if (group != null) {
+			return group;
+		}
+
+		group = GroupTestUtil.addGroup();
+
+		group.setGroupKey(GroupConstants.CMS);
+
+		group = _groupLocalService.updateGroup(group);
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		try {
+
+			// These tests require the instance to be created with the feature
+			// flag LPD-17564 enabled. On CI, feature flags are enabled on
+			// demand for each test, but not during instance initialization.
+			// Until the feature flag LPD-17564 is removed, run the instance
+			// lifecycle initializer manually so that the role is created.
+
+			SiteInitializer siteInitializer =
+				_siteInitializerRegistry.getSiteInitializer(
+					"com.liferay.site.initializer.cms");
+
+			siteInitializer.initialize(group.getGroupId());
+
+			Bundle testBundle = FrameworkUtil.getBundle(
+				BaseDisplayContextTestCase.class);
+
+			BundleContext bundleContext = testBundle.getBundleContext();
+
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"com.liferay.site.initializer.cms")) {
+
+					_deleteFile(bundle, "00.list.type.definition");
+					_deleteFile(bundle, "01.object.folder");
+					_deleteFile(bundle, "02.object.definition");
+
+					CompletableFuture<Void> completableFuture =
+						_batchEngineUnitProcessor.processBatchEngineUnits(
+							_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+					completableFuture.join();
+				}
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+
+		return group;
+	}
+
 	private Layout _getRecycleBinLayout(Group group) throws Exception {
 		return _layoutLocalService.getLayoutByFriendlyURL(
 			group.getGroupId(), false, "/recycle-bin");
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _setTrashEnabled(Group group, String value) throws Exception {
@@ -255,6 +269,8 @@ public class GroupModelListenerTest {
 	@Inject
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
+	private Group _cmsGroup;
+
 	@DeleteAfterTestRun
 	private final List<DepotEntry> _depotEntries = new ArrayList<>();
 
@@ -276,6 +292,6 @@ public class GroupModelListenerTest {
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Inject
-	private ObjectFolderLocalService _objectFolderLocalService;
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

@@ -31,6 +31,8 @@ public class ExportImportReportServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.0.0", "2.1.0",
+			UpgradeProcessFactory.alterColumnName(
+				"ExportImportReportEntry", "error", "errorMessage TEXT null"),
 			UpgradeProcessFactory.alterColumnType(
 				"ExportImportReportEntry", "modelName", "VARCHAR(255) null"));
 	}

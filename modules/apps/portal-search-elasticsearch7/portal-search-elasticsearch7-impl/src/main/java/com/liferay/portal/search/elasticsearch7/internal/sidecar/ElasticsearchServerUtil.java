@@ -32,10 +32,13 @@ import org.elasticsearch.cli.ExitCodes;
 import org.elasticsearch.common.hash.MessageDigests;
 import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
 import org.elasticsearch.common.io.stream.StreamOutput;
+import org.elasticsearch.common.logging.LogConfigurator;
 import org.elasticsearch.common.settings.KeyStoreWrapper;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.BoundTransportAddress;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.http.HttpServerTransport;
+import org.elasticsearch.xcontent.XContentType;
 
 /**
  * @author Tina Tian
@@ -89,12 +92,11 @@ public class ElasticsearchServerUtil {
 		_shutdownCountDownLatch.countDown();
 	}
 
-	public static void start(byte[] settings) throws ProcessException {
+	public static void start() throws ProcessException {
 		InputStream originalSystemInInputStream = System.in;
 
 		try (UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-				new UnsyncByteArrayInputStream(
-					_getSidecarServerArgs(settings))) {
+				new UnsyncByteArrayInputStream(_getSidecarServerArgs())) {
 
 			System.setIn(unsyncByteArrayInputStream);
 
@@ -168,7 +170,7 @@ public class ElasticsearchServerUtil {
 		}
 	}
 
-	private static byte[] _getSidecarServerArgs(byte[] settings) {
+	private static byte[] _getSidecarServerArgs() {
 		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 				new UnsyncByteArrayOutputStream();
 			StreamOutput streamOutput = new OutputStreamStreamOutput(
@@ -198,10 +200,25 @@ public class ElasticsearchServerUtil {
 				streamOutput.writeBoolean(false);
 			}
 
-			streamOutput.writeBytes(settings);
+			Method method = ReflectionUtil.getDeclaredMethod(
+				LogConfigurator.class, "configureESLogging");
+
+			method.invoke(null);
+
+			Settings.Builder builder = Settings.builder();
+
+			builder.loadFromSource(
+				System.getProperty("sidecar.settings"), XContentType.YAML);
+
+			Settings settings = builder.build();
+
+			method = ReflectionUtil.getDeclaredMethod(
+				Settings.class, "writeTo", new Class<?>[] {StreamOutput.class});
+
+			method.invoke(settings, streamOutput);
 
 			streamOutput.writeString(System.getProperty("es.path.conf"));
-			streamOutput.writeString(System.getProperty("es.path.log"));
+			streamOutput.writeString(settings.get("path.logs"));
 
 			streamOutput.flush();
 

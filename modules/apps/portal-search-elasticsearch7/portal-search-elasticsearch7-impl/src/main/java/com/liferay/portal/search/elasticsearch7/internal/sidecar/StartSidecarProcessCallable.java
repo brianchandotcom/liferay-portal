@@ -20,10 +20,6 @@ import java.nio.file.Path;
 public class StartSidecarProcessCallable
 	implements ProcessCallable<Serializable> {
 
-	public StartSidecarProcessCallable(byte[] settings) {
-		_settings = settings;
-	}
-
 	@Override
 	public Serializable call() throws ProcessException {
 		System.setProperty("es.distribution.type", "tar");
@@ -66,13 +62,11 @@ public class StartSidecarProcessCallable
 				"Unable to create log4j2.properties", ioException);
 		}
 
-		ElasticsearchServerUtil.start(_settings);
+		ElasticsearchServerUtil.start();
 
 		return null;
 	}
 
 	private static final long serialVersionUID = 1L;
-
-	private final byte[] _settings;
 
 }

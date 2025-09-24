@@ -79,51 +79,14 @@ public class MCPServerServlet extends HttpServlet {
 			HttpServletResponse httpServletResponse)
 		throws IOException, ServletException {
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
+		Servlet servlet = _getServlet(httpServletRequest);
 
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+		if (servlet == null) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-
-			return;
 		}
-
-		Servlet servlet = _servlets.computeIfAbsent(
-			companyId,
-			__ -> {
-				String baseURL =
-					_portal.getPortalURL(httpServletRequest) +
-						_portal.getPathModule();
-
-				AuthorizedHttpServletSseServerTransportProvider
-					authorizedHttpServletSseServerTransportProvider =
-						new AuthorizedHttpServletSseServerTransportProvider(
-							baseURL + "/mcp");
-
-				McpSyncServer mcpSyncServer = _buildMcpSyncServer(
-					baseURL, companyId,
-					authorizedHttpServletSseServerTransportProvider);
-
-				return new GenericServlet() {
-
-					@Override
-					public void destroy() {
-						mcpSyncServer.closeGracefully();
-					}
-
-					@Override
-					public void service(
-							ServletRequest servletRequest,
-							ServletResponse servletResponse)
-						throws IOException, ServletException {
-
-						authorizedHttpServletSseServerTransportProvider.service(
-							servletRequest, servletResponse);
-					}
-
-				};
-			});
-
-		servlet.service(httpServletRequest, httpServletResponse);
+		else {
+			servlet.service(httpServletRequest, httpServletResponse);
+		}
 	}
 
 	@Deactivate
@@ -244,6 +207,55 @@ public class MCPServerServlet extends HttpServlet {
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
+	}
+
+	private Servlet _getServlet(HttpServletRequest httpServletRequest) {
+		long companyId = _portal.getCompanyId(httpServletRequest);
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+			return null;
+		}
+
+		Servlet servlet = _servlets.get(companyId);
+
+		if (servlet != null) {
+			return servlet;
+		}
+
+		String baseURL =
+			_portal.getPortalURL(httpServletRequest) + _portal.getPathModule();
+
+		AuthorizedHttpServletSseServerTransportProvider
+			authorizedHttpServletSseServerTransportProvider =
+				new AuthorizedHttpServletSseServerTransportProvider(
+					baseURL + "/mcp");
+
+		McpSyncServer mcpSyncServer = _buildMcpSyncServer(
+			baseURL, companyId,
+			authorizedHttpServletSseServerTransportProvider);
+
+		servlet = new GenericServlet() {
+
+			@Override
+			public void destroy() {
+				mcpSyncServer.closeGracefully();
+			}
+
+			@Override
+			public void service(
+					ServletRequest servletRequest,
+					ServletResponse servletResponse)
+				throws IOException, ServletException {
+
+				authorizedHttpServletSseServerTransportProvider.service(
+					servletRequest, servletResponse);
+			}
+
+		};
+
+		_servlets.put(companyId, servlet);
+
+		return servlet;
 	}
 
 	private List<McpServerFeatures.SyncPromptSpecification>

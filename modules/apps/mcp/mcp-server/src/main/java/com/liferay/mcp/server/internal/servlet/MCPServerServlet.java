@@ -105,58 +105,6 @@ public class MCPServerServlet extends HttpServlet {
 		destroy();
 	}
 
-	private McpSyncServer _buildMcpSyncServer(
-			String baseURL, long companyId,
-			AuthorizedHttpServletSseServerTransportProvider
-				authorizedHttpServletSseServerTransportProvider)
-		throws Exception {
-
-		JSONObject toolsJSONObject = _jsonFactory.createJSONObject(
-			StringUtil.replace(
-				StringUtil.read(MCPServerServlet.class, "/tools.json"),
-				"$BASE_URL", baseURL));
-
-		return McpServer.sync(
-			authorizedHttpServletSseServerTransportProvider
-		).capabilities(
-			McpSchema.ServerCapabilities.builder(
-			).tools(
-				true
-			).prompts(
-				true
-			).build()
-		).tool(
-			_getTool("get-openapis", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", baseURL + "/openapi", null)
-		).tool(
-			_getTool("get-openapi", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", String.valueOf(arguments.get("url")), null)
-		).tool(
-			_getTool("call-http-endpoint", toolsJSONObject),
-			(exchange, arguments) -> {
-				String path = String.valueOf(arguments.get("path"));
-
-				if (!path.startsWith("/")) {
-					path = "/" + path;
-				}
-
-				return _callEndpoint(
-					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange),
-					String.valueOf(arguments.get("method")), baseURL + path,
-					String.valueOf(arguments.get("payload")));
-			}
-		).prompts(
-			_getSyncPromptSpecifications(companyId)
-		).build();
-	}
-
 	private McpSchema.CallToolResult _callEndpoint(
 		String authorizationHeader, String method, String path,
 		String payload) {
@@ -222,9 +170,50 @@ public class MCPServerServlet extends HttpServlet {
 				new AuthorizedHttpServletSseServerTransportProvider(
 					baseURL + "/mcp");
 
-		McpSyncServer mcpSyncServer = _buildMcpSyncServer(
-			baseURL, companyId,
-			authorizedHttpServletSseServerTransportProvider);
+		JSONObject toolsJSONObject = _jsonFactory.createJSONObject(
+			StringUtil.replace(
+				StringUtil.read(MCPServerServlet.class, "/tools.json"),
+				"$BASE_URL", baseURL));
+
+		McpSyncServer mcpSyncServer = McpServer.sync(
+			authorizedHttpServletSseServerTransportProvider
+		).capabilities(
+			McpSchema.ServerCapabilities.builder(
+			).tools(
+				true
+			).prompts(
+				true
+			).build()
+		).tool(
+			_getTool("get-openapis", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", baseURL + "/openapi", null)
+		).tool(
+			_getTool("get-openapi", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", String.valueOf(arguments.get("url")), null)
+		).tool(
+			_getTool("call-http-endpoint", toolsJSONObject),
+			(exchange, arguments) -> {
+				String path = String.valueOf(arguments.get("path"));
+
+				if (!path.startsWith("/")) {
+					path = "/" + path;
+				}
+
+				return _callEndpoint(
+					authorizedHttpServletSseServerTransportProvider.
+						getAuthorizationHeader(exchange),
+					String.valueOf(arguments.get("method")), baseURL + path,
+					String.valueOf(arguments.get("payload")));
+			}
+		).prompts(
+			_getSyncPromptSpecifications(companyId)
+		).build();
 
 		servlet = new GenericServlet() {
 

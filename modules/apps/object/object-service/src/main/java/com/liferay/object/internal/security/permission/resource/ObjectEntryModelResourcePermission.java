@@ -169,16 +169,17 @@ public class ObjectEntryModelResourcePermission
 		if (user.isGuestUser()) {
 			return permissionChecker.hasPermission(
 				objectEntry.getGroupId(), objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), actionId);
+				objectEntry.getHeadObjectEntryId(), actionId);
 		}
 
 		if (permissionChecker.hasOwnerPermission(
 				permissionChecker.getCompanyId(),
-				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				objectEntry.getUserId(), actionId) ||
+				objectDefinition.getClassName(),
+				objectEntry.getHeadObjectEntryId(), objectEntry.getUserId(),
+				actionId) ||
 			permissionChecker.hasPermission(
 				objectEntry.getGroupId(), objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), actionId)) {
+				objectEntry.getHeadObjectEntryId(), actionId)) {
 
 			return true;
 		}

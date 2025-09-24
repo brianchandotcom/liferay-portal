@@ -4169,7 +4169,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		Column<?, Long> primaryKeyColumn =
-			dynamicObjectDefinitionTable.getPrimaryKeyColumn();
+			ObjectEntryTable.INSTANCE.headObjectEntryId;
 
 		if (rootObjectDefinitionId != 0L) {
 			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(

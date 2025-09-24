@@ -62,15 +62,14 @@ public class Sidecar {
 
 	public Sidecar(
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
-		ElasticsearchInstancePaths elasticsearchInstancePaths,
-		ProcessExecutor processExecutor, SidecarManager sidecarManager) {
+		ProcessExecutor processExecutor, SidecarManager sidecarManager,
+		Path sidecarHomePath, Path sidecarWorkPath) {
 
 		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
-		_elasticsearchInstancePaths = elasticsearchInstancePaths;
 		_processExecutor = processExecutor;
 		_sidecarManager = sidecarManager;
-
-		_sidecarHomePath = elasticsearchInstancePaths.getHomePath();
+		_sidecarHomePath = sidecarHomePath;
+		_sidecarWorkPath = sidecarWorkPath;
 
 		_sidecarTempPath = Path.of(
 			SystemProperties.get(SystemProperties.TMP_DIR), "sidecar");
@@ -498,9 +497,7 @@ public class Sidecar {
 
 		// Configure paths
 
-		Path workPath = _elasticsearchInstancePaths.getWorkPath();
-
-		Path dataParentPath = workPath.resolve("data/elasticsearch7");
+		Path dataParentPath = _sidecarWorkPath.resolve("data/elasticsearch7");
 
 		settingsHelperImpl.put(
 			"path.data", String.valueOf(dataParentPath.resolve("indices")));
@@ -509,7 +506,7 @@ public class Sidecar {
 			"path.home", String.valueOf(_sidecarHomePath.toAbsolutePath()));
 
 		settingsHelperImpl.put(
-			"path.logs", String.valueOf(workPath.resolve("logs")));
+			"path.logs", String.valueOf(_sidecarWorkPath.resolve("logs")));
 
 		settingsHelperImpl.put(
 			"path.repo", String.valueOf(dataParentPath.resolve("repo")));
@@ -547,7 +544,7 @@ public class Sidecar {
 	private void _installElasticsearchIfNeeded(String sidecarVersion) {
 		ElasticsearchInstaller.builder(
 		).distributablesDirectoryPath(
-			_elasticsearchInstancePaths.getWorkPath()
+			_sidecarWorkPath
 		).distribution(
 			_getElasticsearchDistribution(sidecarVersion)
 		).installationDirectoryPath(
@@ -603,13 +600,13 @@ public class Sidecar {
 	private String _address;
 	private final ElasticsearchConfigurationWrapper
 		_elasticsearchConfigurationWrapper;
-	private final ElasticsearchInstancePaths _elasticsearchInstancePaths;
 	private ProcessChannel<Serializable> _processChannel;
 	private final ProcessExecutor _processExecutor;
 	private FutureListener<Serializable> _restartFutureListener;
 	private final Path _sidecarHomePath;
 	private SidecarManager _sidecarManager;
 	private final Path _sidecarTempPath;
+	private final Path _sidecarWorkPath;
 
 	private static class RestartFutureListener
 		implements FutureListener<Serializable> {

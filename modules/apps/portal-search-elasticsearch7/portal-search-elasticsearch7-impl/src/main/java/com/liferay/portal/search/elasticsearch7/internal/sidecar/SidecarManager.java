@@ -85,9 +85,11 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 				_sidecar.stop();
 			}
 
+			Path workPath = Paths.get(PropsValues.LIFERAY_HOME);
+
 			_sidecar = new Sidecar(
-				elasticsearchConfigurationWrapper,
-				_getElasticsearchInstancePaths(), processExecutor, this);
+				elasticsearchConfigurationWrapper, processExecutor, this,
+				_resolveHomePath(workPath), workPath);
 
 			ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =
 				new ElasticsearchConnectionBuilder();
@@ -136,23 +138,6 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 
 	@Reference
 	protected ProcessExecutor processExecutor;
-
-	private ElasticsearchInstancePaths _getElasticsearchInstancePaths() {
-		ElasticsearchInstancePathsBuilder elasticsearchInstancePathsBuilder =
-			new ElasticsearchInstancePathsBuilder();
-
-		Path workPath = Paths.get(PropsValues.LIFERAY_HOME);
-
-		Path dataPath = workPath.resolve("data/elasticsearch7");
-
-		return elasticsearchInstancePathsBuilder.dataPath(
-			dataPath
-		).homePath(
-			_resolveHomePath(workPath)
-		).workPath(
-			workPath
-		).build();
-	}
 
 	private Path _resolveHomePath(Path path) {
 		String sidecarHome = elasticsearchConfigurationWrapper.sidecarHome();

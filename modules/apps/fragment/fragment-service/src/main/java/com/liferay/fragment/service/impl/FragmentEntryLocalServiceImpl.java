@@ -191,7 +191,21 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.fetchDraftFragmentEntry();
 		}
 
-		String name = _getUniqueCopyName(sourceFragmentEntry);
+		String name = UniqueNameUtils.getCopyName(
+			sourceFragmentEntry.getName(),
+			copyName -> {
+				FragmentEntry existingFragmentEntry =
+					fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
+						sourceFragmentEntry.getGroupId(),
+						sourceFragmentEntry.getFragmentCollectionId(), copyName,
+						null);
+
+				if (existingFragmentEntry == null) {
+					return true;
+				}
+
+				return false;
+			});
 
 		FragmentEntry copyPublishedFragmentEntry = null;
 
@@ -930,26 +944,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 
 		return repository;
-	}
-
-	private String _getUniqueCopyName(FragmentEntry fragmentEntry)
-		throws PortalException {
-
-		return UniqueNameUtils.getCopyName(
-			fragmentEntry.getName(),
-			copyName -> {
-				FragmentEntry existingFragmentEntry =
-					fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
-						fragmentEntry.getGroupId(),
-						fragmentEntry.getFragmentCollectionId(), copyName,
-						null);
-
-				if (existingFragmentEntry == null) {
-					return true;
-				}
-
-				return false;
-			});
 	}
 
 	private void _propagateChanges(long fragmentEntryId)

@@ -58,7 +58,7 @@ public class MasterPageDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});

@@ -89,7 +89,7 @@ public class PageTemplateDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});
@@ -165,7 +165,7 @@ public class PageTemplateDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});

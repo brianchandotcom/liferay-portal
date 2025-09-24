@@ -87,7 +87,7 @@ public class DisplayPageTemplateDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});

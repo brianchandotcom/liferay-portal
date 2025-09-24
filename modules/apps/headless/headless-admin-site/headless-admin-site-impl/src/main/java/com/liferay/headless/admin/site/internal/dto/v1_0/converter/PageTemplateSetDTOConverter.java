@@ -51,7 +51,7 @@ public class PageTemplateSetDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});

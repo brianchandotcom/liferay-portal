@@ -128,6 +128,7 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 
 		themeDisplay.setCompany(contextCompany);
 		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setLocale(contextAcceptLanguage.getPreferredLocale());
 		themeDisplay.setPathMain(_portal.getPathMain());
 		themeDisplay.setPermissionChecker(
@@ -139,7 +140,6 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 		themeDisplay.setPortalDomain(HttpComponentsUtil.getDomain(portalURL));
 		themeDisplay.setPortalURL(portalURL);
 
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setRequest(contextHttpServletRequest);
 		themeDisplay.setScopeGroupId(layout.getGroupId());
 		themeDisplay.setSiteGroupId(layout.getGroupId());

@@ -213,8 +213,8 @@ public class LayoutActionsHelper {
 	public boolean isShowPermissionsAction(Layout layout, Group selGroup)
 		throws PortalException {
 
-		if (StagingUtil.isIncomplete(layout) || selGroup.isLayoutPrototype() ||
-			layout.isTypeEmpty()) {
+		if (StagingUtil.isIncomplete(layout) || layout.isTypeEmpty() ||
+			selGroup.isLayoutPrototype()) {
 
 			return false;
 		}

@@ -103,9 +103,10 @@ public class CPAttachmentFileEntryInfoItemObjectProvider
 			if (group == null) {
 				throw new NoSuchInfoItemException(
 					StringBundler.concat(
-						"No group found with external reference code ",
-						ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-						" and company ID ", serviceContext.getCompanyId()));
+						"No group found with company ID ",
+						serviceContext.getCompanyId(),
+						" and external reference code ",
+						ercInfoItemIdentifier.getScopeExternalReferenceCode()));
 			}
 		}
 
@@ -118,9 +119,9 @@ public class CPAttachmentFileEntryInfoItemObjectProvider
 		if (cpAttachmentFileEntry == null) {
 			throw new NoSuchInfoItemException(
 				StringBundler.concat(
-					"No file entry found with external reference code ",
-					ercInfoItemIdentifier.getExternalReferenceCode(),
-					" and company ID ", group.getCompanyId()));
+					"No file entry found with company ID ",
+					group.getCompanyId(), " and external reference code ",
+					ercInfoItemIdentifier.getExternalReferenceCode()));
 		}
 
 		return cpAttachmentFileEntry;

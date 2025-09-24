@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -576,32 +575,27 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		ObjectEntry rootObjectEntry = _getRootObjectEntry(
 			objectDefinition, values);
 
-		PortletResourcePermission portletResourcePermission = null;
+		if (rootObjectEntry != null) {
+			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
+				rootObjectEntry.getObjectDefinitionId());
 
-		if (rootObjectEntry == null) {
-			portletResourcePermission =
-				ObjectDefinitionPortletResourcePermissionRegistryUtil.
-					getService(objectDefinition.getResourceName());
-
-			portletResourcePermission.check(
-				getPermissionChecker(), groupId,
-				ObjectActionKeys.ADD_OBJECT_ENTRY);
-		}
-		else {
 			ModelResourcePermission<ObjectEntry> modelResourcePermission =
 				getModelResourcePermission(
 					rootObjectEntry.getObjectDefinitionId());
 
-			modelResourcePermission.check(
-				getPermissionChecker(), rootObjectEntry, ActionKeys.UPDATE);
+			if (modelResourcePermission.contains(
+					permissionChecker, rootObjectEntry, ActionKeys.UPDATE)) {
 
-			objectDefinition = _objectDefinitionPersistence.findByPrimaryKey(
-				rootObjectEntry.getObjectDefinitionId());
-
-			portletResourcePermission =
-				ObjectDefinitionPortletResourcePermissionRegistryUtil.
-					getService(objectDefinition.getResourceName());
+				return;
+			}
 		}
+
+		PortletResourcePermission portletResourcePermission =
+			ObjectDefinitionPortletResourcePermissionRegistryUtil.getService(
+				objectDefinition.getResourceName());
+
+		portletResourcePermission.check(
+			permissionChecker, groupId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 
 		if (LazyReferencingThreadLocal.isEnabled() ||
 			permissionChecker.hasPermission(
@@ -640,9 +634,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
 			accountEntryId);
 
-		if (_hasAddObjectEntryPermission(
-				accountEntry.getAccountEntryGroup(), objectDefinition,
-				permissionChecker, rootObjectEntry)) {
+		if (permissionChecker.hasPermission(
+				accountEntry.getAccountEntryGroupId(),
+				objectDefinition.getResourceName(), 0,
+				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 			return;
 		}
@@ -657,9 +652,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Organization organization =
 				accountEntryOrganizationRel.getOrganization();
 
-			if (_hasAddObjectEntryPermission(
-					organization.getGroup(), objectDefinition,
-					permissionChecker, rootObjectEntry)) {
+			if (permissionChecker.hasPermission(
+					organization.getGroupId(),
+					objectDefinition.getResourceName(), 0,
+					ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 				return;
 			}
@@ -667,9 +663,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			for (Organization ancestorOrganization :
 					organization.getAncestors()) {
 
-				if (_hasAddObjectEntryPermission(
-						ancestorOrganization.getGroup(), objectDefinition,
-						permissionChecker, rootObjectEntry)) {
+				if (permissionChecker.hasPermission(
+						ancestorOrganization.getGroupId(),
+						objectDefinition.getResourceName(), 0,
+						ObjectActionKeys.ADD_OBJECT_ENTRY)) {
 
 					return;
 				}
@@ -745,29 +742,6 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			).atStartOfDay(
 				ZoneId.systemDefault()
 			).toInstant());
-	}
-
-	private boolean _hasAddObjectEntryPermission(
-			Group group, ObjectDefinition objectDefinition,
-			PermissionChecker permissionChecker, ObjectEntry rootObjectEntry)
-		throws PortalException {
-
-		if (permissionChecker.hasPermission(
-				group.getGroupId(), objectDefinition.getResourceName(), 0,
-				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-
-			return true;
-		}
-
-		if ((rootObjectEntry == null) || objectDefinition.isRootNode()) {
-			return false;
-		}
-
-		ModelResourcePermission<ObjectEntry> modelResourcePermission =
-			getModelResourcePermission(rootObjectEntry.getObjectDefinitionId());
-
-		return modelResourcePermission.contains(
-			permissionChecker, rootObjectEntry, ActionKeys.UPDATE);
 	}
 
 	private void _sendUserNotificationEvents(

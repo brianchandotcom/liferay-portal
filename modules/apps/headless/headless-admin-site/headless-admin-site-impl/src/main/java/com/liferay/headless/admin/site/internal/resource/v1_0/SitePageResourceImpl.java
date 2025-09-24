@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
@@ -24,7 +25,11 @@ import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -42,6 +47,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -63,9 +69,11 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -166,6 +174,52 @@ public class SitePageResourceImpl
 
 	public ExportImportDescriptor getExportImportDescriptor() {
 		return new ExportImportDescriptor() {
+
+			@Override
+			public Map<String, Serializable> getContextAwareParameters(
+				PortletDataContext portletDataContext) {
+
+				if ((portletDataContext.getLayoutIds() == null) ||
+					(portletDataContext.getLayoutIds().length == 0)) {
+
+					return null;
+				}
+
+				Set<String> layoutExternalReferenceCodes = new HashSet<>();
+
+				for (long layoutId : portletDataContext.getLayoutIds()) {
+					Layout layout = null;
+
+					try {
+						layout = _layoutService.fetchLayout(
+							portletDataContext.getScopeGroupId(),
+							portletDataContext.isPrivateLayout(), layoutId);
+					}
+					catch (PortalException portalException) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(portalException);
+						}
+					}
+
+					if (layout != null) {
+						layoutExternalReferenceCodes.add(
+							layout.getExternalReferenceCode());
+					}
+				}
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("externalReferenceCode in ('");
+
+				sb.append(
+					ListUtil.toString(
+						ListUtil.fromCollection(layoutExternalReferenceCodes),
+						StringPool.BLANK, "', '"));
+
+				sb.append("')");
+
+				return Map.of("filter", sb.toString());
+			}
 
 			@Override
 			public String getItemClassName() {
@@ -659,6 +713,9 @@ public class SitePageResourceImpl
 	}
 
 	private static final EntityModel _entityModel = new SitePageEntityModel();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SitePageResourceImpl.class);
 
 	@Reference
 	private CETManager _cetManager;

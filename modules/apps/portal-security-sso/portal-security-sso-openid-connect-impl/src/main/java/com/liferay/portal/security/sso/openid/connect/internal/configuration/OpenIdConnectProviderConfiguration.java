@@ -39,19 +39,19 @@ public interface OpenIdConnectProviderConfiguration {
 		deflt = "", description = "discovery-endpoint-help",
 		name = "discovery-endpoint", required = false
 	)
-	public String discoveryEndPoint();
+	public String discoveryEndpoint();
 
 	@Meta.AD(
 		deflt = "360000", description = "discovery-endpoint-cache-help",
 		name = "discovery-endpoint-cache-in-millis", required = false
 	)
-	public long discoveryEndPointCacheInMillis();
+	public long discoveryEndpointCacheInMillis();
 
 	@Meta.AD(
 		deflt = "", description = "authorization-endpoint-help",
 		name = "authorization-endpoint", required = false
 	)
-	public String authorizationEndPoint();
+	public String authorizationEndpoint();
 
 	@Meta.AD(
 		deflt = "", description = "issuer-url-help", name = "issuer-url",
@@ -81,7 +81,7 @@ public interface OpenIdConnectProviderConfiguration {
 		deflt = "", description = "token-endpoint-help",
 		name = "token-endpoint", required = false
 	)
-	public String tokenEndPoint();
+	public String tokenEndpoint();
 
 	@Meta.AD(
 		deflt = "1000", description = "token-connection-timeout-help",
@@ -93,7 +93,7 @@ public interface OpenIdConnectProviderConfiguration {
 		deflt = "", description = "user-info-endpoint-help",
 		name = "user-info-endpoint", required = false
 	)
-	public String userInfoEndPoint();
+	public String userInfoEndpoint();
 
 	@Meta.AD(
 		deflt = "", description = "open-id-connect-client-id-help",

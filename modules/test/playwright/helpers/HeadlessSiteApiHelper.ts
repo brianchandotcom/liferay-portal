@@ -49,10 +49,7 @@ export class HeadlessSiteApiHelper {
 				},
 				multipart: {
 					file: createReadStream(zip),
-					site: JSON.stringify({
-						...site,
-						name: {'en-US': site.name},
-					}),
+					site: JSON.stringify(site),
 				},
 			}
 		);

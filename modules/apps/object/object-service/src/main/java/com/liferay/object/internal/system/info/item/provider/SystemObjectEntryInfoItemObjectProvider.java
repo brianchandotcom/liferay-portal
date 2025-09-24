@@ -125,9 +125,10 @@ public class SystemObjectEntryInfoItemObjectProvider
 
 			throw new NoSuchInfoItemException(
 				StringBundler.concat(
-					"No info item found with external reference code ",
-					ercInfoItemIdentifier.getExternalReferenceCode(),
-					" and company ID ", serviceContext.getCompanyId()),
+					"No info item found with company ID ",
+					serviceContext.getCompanyId(),
+					" and external reference code ",
+					ercInfoItemIdentifier.getExternalReferenceCode()),
 				exception);
 		}
 	}

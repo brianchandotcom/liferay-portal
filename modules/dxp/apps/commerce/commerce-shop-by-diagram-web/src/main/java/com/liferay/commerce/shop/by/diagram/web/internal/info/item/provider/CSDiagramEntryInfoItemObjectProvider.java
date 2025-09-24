@@ -103,9 +103,10 @@ public class CSDiagramEntryInfoItemObjectProvider
 			if (group == null) {
 				throw new NoSuchInfoItemException(
 					StringBundler.concat(
-						"No group found with external reference code ",
-						ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-						" and company ID ", serviceContext.getCompanyId()));
+						"No group found with company ID ",
+						serviceContext.getCompanyId(),
+						" and external reference code ",
+						ercInfoItemIdentifier.getScopeExternalReferenceCode()));
 			}
 		}
 
@@ -118,10 +119,9 @@ public class CSDiagramEntryInfoItemObjectProvider
 		if (csDiagramEntry == null) {
 			throw new NoSuchInfoItemException(
 				StringBundler.concat(
-					"No commerce shop by diagram entry found with external ",
-					"reference code ",
-					ercInfoItemIdentifier.getExternalReferenceCode(),
-					" and company ID ", group.getCompanyId()));
+					"No commerce shop by diagram entry found with company ID ",
+					group.getCompanyId(), " and external reference code ",
+					ercInfoItemIdentifier.getExternalReferenceCode()));
 		}
 
 		return csDiagramEntry;

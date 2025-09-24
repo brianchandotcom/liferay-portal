@@ -110,9 +110,10 @@ public class ObjectEntryInfoItemObjectProvider
 			if (group == null) {
 				throw new NoSuchInfoItemException(
 					StringBundler.concat(
-						"No group found with external reference code ",
-						ercInfoItemIdentifier.getScopeExternalReferenceCode(),
-						" and company ID ", serviceContext.getCompanyId()));
+						"No group found with company ID ",
+						serviceContext.getCompanyId(),
+						" and external reference code ",
+						ercInfoItemIdentifier.getScopeExternalReferenceCode()));
 			}
 		}
 

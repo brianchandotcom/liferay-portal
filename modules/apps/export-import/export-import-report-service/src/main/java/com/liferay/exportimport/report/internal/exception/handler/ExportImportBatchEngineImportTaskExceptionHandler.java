@@ -75,7 +75,7 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			_getClassPK(item),
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),
-			exception.getMessage(), _getTraceString(exception),
+			exception.getMessage(), _getErrorStackTrace(exception),
 			ExportImportReportEntryUtil.getModelName(item),
 			ExportImportReportEntryConstants.ORIGIN_BATCH,
 			ExportImportReportEntryUtil.getScope(groupId),
@@ -99,6 +99,14 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 		}
 	}
 
+	private String _getErrorStackTrace(Throwable throwable) {
+		OutputStream outputStream = new ByteArrayOutputStream();
+
+		throwable.printStackTrace(new PrintStream(outputStream));
+
+		return outputStream.toString();
+	}
+
 	private String _getExternalReferenceCode(Object item) {
 		try {
 			Class<?> clazz = item.getClass();
@@ -114,14 +122,6 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 
 			return null;
 		}
-	}
-
-	private String _getTraceString(Throwable throwable) {
-		OutputStream outputStream = new ByteArrayOutputStream();
-
-		throwable.printStackTrace(new PrintStream(outputStream));
-
-		return outputStream.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

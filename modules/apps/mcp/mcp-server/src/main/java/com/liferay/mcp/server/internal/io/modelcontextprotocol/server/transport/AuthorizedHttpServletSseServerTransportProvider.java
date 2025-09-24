@@ -64,7 +64,7 @@ public class AuthorizedHttpServletSseServerTransportProvider
 	@Override
 	public void setSessionFactory(McpServerSession.Factory sessionFactory) {
 		super.setSessionFactory(
-			new AuthorizedMcpServerSession.Factory(sessionFactory));
+			new AuthorizedMcpServerSessionFactory(sessionFactory));
 	}
 
 	@Override
@@ -121,70 +121,71 @@ public class AuthorizedHttpServletSseServerTransportProvider
 			return _authorizationHeader;
 		}
 
-		public static class Factory implements McpServerSession.Factory {
+		private final String _authorizationHeader;
 
-			public Factory(McpServerSession.Factory factory) {
-				_factory = factory;
-			}
+	}
 
-			@Override
-			public McpServerSession create(McpServerTransport transport) {
-				McpServerSession mcpServerSession = _factory.create(transport);
+	private static class AuthorizedMcpServerSessionFactory
+		implements McpServerSession.Factory {
 
-				try {
-					Field requestTimeoutField =
-						McpServerSession.class.getDeclaredField(
-							"requestTimeout");
+		public AuthorizedMcpServerSessionFactory(
+			McpServerSession.Factory factory) {
 
-					requestTimeoutField.setAccessible(true);
-
-					Field initRequestHandlerField =
-						McpServerSession.class.getDeclaredField(
-							"initRequestHandler");
-
-					initRequestHandlerField.setAccessible(true);
-
-					Field initNotificationHandlerField =
-						McpServerSession.class.getDeclaredField(
-							"initNotificationHandler");
-
-					initNotificationHandlerField.setAccessible(true);
-
-					Field requestHandlersField =
-						McpServerSession.class.getDeclaredField(
-							"requestHandlers");
-
-					requestHandlersField.setAccessible(true);
-
-					Field notificationHandlersField =
-						McpServerSession.class.getDeclaredField(
-							"notificationHandlers");
-
-					notificationHandlersField.setAccessible(true);
-
-					return new AuthorizedMcpServerSession(
-						mcpServerSession.getId(),
-						(Duration)requestTimeoutField.get(mcpServerSession),
-						transport,
-						(McpServerSession.InitRequestHandler)
-							initRequestHandlerField.get(mcpServerSession),
-						(McpServerSession.InitNotificationHandler)
-							initNotificationHandlerField.get(mcpServerSession),
-						(Map<String, McpServerSession.RequestHandler<?>>)
-							requestHandlersField.get(mcpServerSession),
-						(Map<String, McpServerSession.NotificationHandler>)
-							notificationHandlersField.get(mcpServerSession));
-				}
-				catch (Exception exception) {
-					throw new RuntimeException(exception);
-				}
-			}
-
-			private final McpServerSession.Factory _factory;
-
+			_factory = factory;
 		}
 
-		private final String _authorizationHeader;
+		@Override
+		public McpServerSession create(McpServerTransport transport) {
+			McpServerSession mcpServerSession = _factory.create(transport);
+
+			try {
+				Field requestTimeoutField =
+					McpServerSession.class.getDeclaredField("requestTimeout");
+
+				requestTimeoutField.setAccessible(true);
+
+				Field initRequestHandlerField =
+					McpServerSession.class.getDeclaredField(
+						"initRequestHandler");
+
+				initRequestHandlerField.setAccessible(true);
+
+				Field initNotificationHandlerField =
+					McpServerSession.class.getDeclaredField(
+						"initNotificationHandler");
+
+				initNotificationHandlerField.setAccessible(true);
+
+				Field requestHandlersField =
+					McpServerSession.class.getDeclaredField("requestHandlers");
+
+				requestHandlersField.setAccessible(true);
+
+				Field notificationHandlersField =
+					McpServerSession.class.getDeclaredField(
+						"notificationHandlers");
+
+				notificationHandlersField.setAccessible(true);
+
+				return new AuthorizedMcpServerSession(
+					mcpServerSession.getId(),
+					(Duration)requestTimeoutField.get(mcpServerSession),
+					transport,
+					(McpServerSession.InitRequestHandler)
+						initRequestHandlerField.get(mcpServerSession),
+					(McpServerSession.InitNotificationHandler)
+						initNotificationHandlerField.get(mcpServerSession),
+					(Map<String, McpServerSession.RequestHandler<?>>)
+						requestHandlersField.get(mcpServerSession),
+					(Map<String, McpServerSession.NotificationHandler>)
+						notificationHandlersField.get(mcpServerSession));
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		}
+
+		private final McpServerSession.Factory _factory;
 
 	}
 

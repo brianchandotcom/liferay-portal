@@ -139,12 +139,12 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 			HttpHeaders.CACHE_CONTROL,
 			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 
-		String content = StreamUtil.toString(
-			httpServletRequest.getInputStream(), StringPool.UTF8);
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 
 		try {
-			jsonObject = _jsonFactory.createJSONObject(content);
+			jsonObject = _jsonFactory.createJSONObject(
+				StreamUtil.toString(
+					httpServletRequest.getInputStream(), StringPool.UTF8));
 		}
 		catch (JSONException jsonException) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);

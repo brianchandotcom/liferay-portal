@@ -311,25 +311,28 @@ public class DepotAssetRendererFactoryWrapper<T>
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if (serviceContext == null) {
-			Group group = _groupLocalService.fetchGroup(
-				GroupThreadLocal.getGroupId());
+		if (serviceContext != null) {
+			long scopeGroupId = GetterUtil.getLong(
+				serviceContext.getAttribute("scopeGroupId"));
 
-			if (group != null) {
-				return group;
+			if (scopeGroupId != 0) {
+				return _groupLocalService.fetchGroup(scopeGroupId);
 			}
 
-			return fallbackGroup;
+			if (serviceContext.getScopeGroupId() != 0) {
+				return _groupLocalService.fetchGroup(
+					serviceContext.getScopeGroupId());
+			}
 		}
 
-		long scopeGroupId = GetterUtil.getLong(
-			serviceContext.getAttribute("scopeGroupId"));
+		Group group = _groupLocalService.fetchGroup(
+			GroupThreadLocal.getGroupId());
 
-		if (scopeGroupId != 0) {
-			return _groupLocalService.fetchGroup(scopeGroupId);
+		if (group != null) {
+			return group;
 		}
 
-		return _groupLocalService.fetchGroup(serviceContext.getScopeGroupId());
+		return fallbackGroup;
 	}
 
 	private long _getGroupId(long groupId) throws PortalException {

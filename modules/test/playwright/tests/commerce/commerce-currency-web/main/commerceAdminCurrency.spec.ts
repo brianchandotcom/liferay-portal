@@ -80,7 +80,12 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	).toHaveCount(0);
 
 	await commerceAdminCurrenciesPage.resetFiltersButton.click();
-	await commerceAdminCurrenciesPage.addDataSetFilter('Active', 'No', false);
+	await commerceAdminCurrenciesPage.addDataSetFilter(
+		'Active',
+		'No',
+		false,
+		true
+	);
 
 	await expect(
 		commerceAdminCurrenciesPage.currencyNameLink(currencyName)

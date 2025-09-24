@@ -307,7 +307,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 
 	await (
 		await commerceAdminProductConfigurationListsPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: configurationList.name,
 		})
 	).click();
@@ -492,7 +492,7 @@ test('LPD-43013 Configuration Entry form in side panel for virtual products', as
 
 	await (
 		await commerceAdminProductConfigurationListsPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: configurationList.name,
 		})
 	).click();
@@ -555,7 +555,7 @@ test('LPD-43013 Edit configuration template', async ({
 
 	await (
 		await commerceAdminProductConfigurationListsPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: configurationList.name,
 		})
 	).click();
@@ -844,7 +844,7 @@ test(
 
 		await (
 			await commerceAdminProductConfigurationListsPage.tableRowLink({
-				colIndex: 0,
+				colIndex: 1,
 				rowValue: productConfigurationList.name,
 			})
 		).click();
@@ -903,6 +903,7 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Product Type',
 			'Simple',
+			true,
 			true
 		);
 
@@ -914,7 +915,8 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Purchasable',
 			'Yes',
-			false
+			false,
+			true
 		);
 
 		await expect(
@@ -946,7 +948,8 @@ test(
 		await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
 			'Shippable',
 			'Yes',
-			false
+			false,
+			true
 		);
 
 		await expect(

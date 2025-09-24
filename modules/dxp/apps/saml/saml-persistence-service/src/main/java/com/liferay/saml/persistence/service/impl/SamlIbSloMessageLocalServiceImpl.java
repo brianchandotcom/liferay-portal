@@ -46,7 +46,7 @@ public class SamlIbSloMessageLocalServiceImpl
 	}
 
 	@Override
-	public SamlIbSloMessage getSamlIbSloMessageByIdpSessionIndex(
+	public SamlIbSloMessage getSamlIbSloMessageBySamlIdpSessionIndex(
 			String samlIdpSessionIndex)
 		throws NoSuchIbSloMessageException {
 

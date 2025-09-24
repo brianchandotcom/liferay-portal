@@ -78,7 +78,7 @@ public class RelatedModelsFDSDataProvider
 
 		return TransformUtil.transform(
 			(List<ObjectEntry>)objectRelatedModelsProvider.getRelatedModels(
-				groupId, objectRelationshipId, null, objectEntryId,
+				groupId, objectRelationshipId, null, false, objectEntryId,
 				fdsKeywords.getKeywords(), fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition(), null),
 			objectEntry -> new RelatedModel(

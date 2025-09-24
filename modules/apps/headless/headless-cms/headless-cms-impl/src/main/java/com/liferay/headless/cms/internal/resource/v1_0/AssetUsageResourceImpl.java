@@ -348,8 +348,9 @@ public class AssetUsageResourceImpl extends BaseAssetUsageResourceImpl {
 			List<ObjectEntry> objectEntries =
 				objectRelatedModelsProvider.getRelatedModels(
 					0, objectRelationship.getObjectRelationshipId(),
-					ObjectEntryTable.INSTANCE.groupId.in(groupIds), assetId,
-					search, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+					ObjectEntryTable.INSTANCE.groupId.in(groupIds), false,
+					assetId, search, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null);
 
 			for (ObjectEntry objectEntry : objectEntries) {
 				String finalName = _getName(

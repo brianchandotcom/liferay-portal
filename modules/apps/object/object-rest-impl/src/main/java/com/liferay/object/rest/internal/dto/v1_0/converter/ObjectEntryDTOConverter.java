@@ -976,6 +976,8 @@ public class ObjectEntryDTOConverter
 					objectRelatedModelsProvider.getRelatedModels(
 						relatedObjectDefinitionGroupId,
 						objectRelationship.getObjectRelationshipId(), null,
+						GetterUtil.getBoolean(
+							dtoConverterContext.getAttribute("preferApproved")),
 						primaryKey, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 						null);
 

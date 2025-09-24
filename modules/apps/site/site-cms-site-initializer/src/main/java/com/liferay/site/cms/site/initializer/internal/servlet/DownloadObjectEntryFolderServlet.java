@@ -149,7 +149,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		catch (JSONException jsonException) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			_log.error(jsonException);
+			if (_log.isWarnEnabled()) {
+				_log.warn(jsonException);
+			}
 
 			return;
 		}
@@ -159,7 +161,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		if (!StringUtil.equalsIgnoreCase("DownloadBulkAction", type)) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			_log.error("Unsupported Operation");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unsupported Operation");
+			}
 
 			return;
 		}
@@ -169,7 +173,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		if (selectAll) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-			_log.error("Unsupported Operation");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unsupported Operation");
+			}
 
 			return;
 		}
@@ -211,7 +217,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 				httpServletResponse.setStatus(
 					HttpServletResponse.SC_BAD_REQUEST);
 
-				_log.error("Unsupported Operation");
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unsupported Operation");
+				}
 
 				return;
 			}

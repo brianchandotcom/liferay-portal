@@ -5,6 +5,7 @@
 
 package com.liferay.exportimport.vulcan.batch.engine;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.io.Serializable;
@@ -21,6 +22,12 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	public ExportImportDescriptor getExportImportDescriptor();
 
 	public interface ExportImportDescriptor {
+
+		public default Map<String, Serializable> getContextAwareParameters(
+			PortletDataContext portletDataContext) {
+
+			return null;
+		}
 
 		public String getItemClassName();
 

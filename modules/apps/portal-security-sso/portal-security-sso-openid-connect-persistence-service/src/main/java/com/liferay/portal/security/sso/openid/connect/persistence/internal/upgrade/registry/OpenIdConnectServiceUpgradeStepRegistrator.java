@@ -6,6 +6,7 @@
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.registry;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v2_2_0.OpenIdConnectProviderConfigurationUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -16,7 +17,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Arthur Chan
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class OpenIdConnectSessionServiceUpgradeStepRegistrator
+public class OpenIdConnectServiceUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
 	@Override
@@ -44,6 +45,10 @@ public class OpenIdConnectSessionServiceUpgradeStepRegistrator
 				"OpenIdConnectSession", "accessToken", "TEXT null"),
 			UpgradeProcessFactory.alterColumnType(
 				"OpenIdConnectSession", "idToken", "TEXT null"));
+
+		registry.register(
+			"2.1.1", "2.2.0",
+			new OpenIdConnectProviderConfigurationUpgradeProcess());
 	}
 
 	@Reference

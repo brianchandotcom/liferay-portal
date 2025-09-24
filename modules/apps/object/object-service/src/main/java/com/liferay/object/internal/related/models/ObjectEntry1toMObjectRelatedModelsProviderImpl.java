@@ -59,7 +59,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, null, primaryKey, null,
+			groupId, objectRelationshipId, null, false, primaryKey, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
@@ -155,12 +155,13 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 	@Override
 	public List<ObjectEntry> getRelatedModels(
 			long groupId, long objectRelationshipId, Predicate predicate,
-			long primaryKey, String search, int start, int end, Sort[] sorts)
+			boolean preferApproved, long primaryKey, String search, int start,
+			int end, Sort[] sorts)
 		throws PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, false, primaryKey, true,
-			search, start, end, sorts);
+			groupId, objectRelationshipId, predicate, preferApproved,
+			primaryKey, true, search, start, end, sorts);
 	}
 
 	@Override
@@ -206,7 +207,7 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 				objectRelationshipId);
 
 		List<ObjectEntry> relatedModels = getRelatedModels(
-			groupId, objectRelationshipId, null, primaryKey, null,
+			groupId, objectRelationshipId, null, false, primaryKey, null,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		if (relatedModels.isEmpty()) {
@@ -245,8 +246,8 @@ public class ObjectEntry1toMObjectRelatedModelsProviderImpl
 
 		for (ObjectEntry objectEntry :
 				getRelatedModels(
-					groupId, objectRelationshipId, null, primaryKey, null,
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+					groupId, objectRelationshipId, null, false, primaryKey,
+					null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			if (!objectEntry.isInTrash()) {
 				continue;

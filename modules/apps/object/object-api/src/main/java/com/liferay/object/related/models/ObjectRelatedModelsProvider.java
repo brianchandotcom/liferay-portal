@@ -45,7 +45,8 @@ public interface ObjectRelatedModelsProvider<T extends BaseModel<T>> {
 
 	public List<T> getRelatedModels(
 			long groupId, long objectRelationshipId, Predicate predicate,
-			long primaryKey, String search, int start, int end, Sort[] sorts)
+			boolean preferApproved, long primaryKey, String search, int start,
+			int end, Sort[] sorts)
 		throws PortalException;
 
 	public int getRelatedModelsCount(

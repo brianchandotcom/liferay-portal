@@ -215,6 +215,8 @@ components:
                 reviewDate:
                     format: date
                     type: string
+                scope:
+                    $ref: "#/components/schemas/Scope"
                 scopeId:
                     format: int64
                     readOnly: true

@@ -16,6 +16,10 @@ import {FDSSamplePage} from '../../pages/FDSSamplePage';
 
 interface IStateInURL {
 	delta: number;
+	filters: any[];
+	page: number;
+	q: string;
+	vf: any;
 	view: string;
 }
 
@@ -318,6 +322,95 @@ for (const spaConfiguration of spaConfigurations) {
 					await page.goForward();
 					await checkView(EFDSVisualizationMode.TABLE);
 					await checkDelta(40);
+				});
+			}
+		);
+
+		test(
+			'URL in state, push history, search parameter',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}) => {
+				const assertSearchParam = async (
+					searchParam: string,
+					fdsId: string,
+					page: Page
+				) => {
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						fdsId
+					);
+
+					if (searchParam) {
+						expect(state.q).toBe(searchParam);
+					}
+					else {
+						expect(state.q).toBeUndefined();
+					}
+				};
+
+				const changeSearchParam = async (
+					searchParam: string,
+					fdsId: string,
+					fdsSamplePage: FDSSamplePage,
+					page: Page
+				) => {
+					await fdsSamplePage.managementToolbar.searchInput.fill(
+						searchParam
+					);
+					await fdsSamplePage.managementToolbar.searchButton.click();
+
+					await page.waitForTimeout(1000);
+
+					await assertSearchParam(searchParam, fdsId, page);
+				};
+
+				const setSearchParam = (searchParam: string) =>
+					changeSearchParam(
+						searchParam,
+						'advanced',
+						fdsSamplePage,
+						page
+					);
+
+				const checkSearchParam = (searchParam: string) =>
+					assertSearchParam(searchParam, 'advanced', page);
+
+				await test.step('Change search parameter via UI several times', async () => {
+					await setSearchParam('test1');
+					await setSearchParam('test2');
+					await setSearchParam('test3');
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+					await checkSearchParam('test2');
+					await page.goBack();
+					await checkSearchParam('test1');
+
+					await page.goBack();
+					await checkSearchParam('');
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkSearchParam('test1');
+					await page.goForward();
+					await checkSearchParam('test2');
+					await page.goForward();
+					await checkSearchParam('test3');
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+					await checkSearchParam('test2');
+
+					await setSearchParam('test4');
+
+					await page.goBack();
+					await checkSearchParam('test2');
+					await page.goForward();
+					await checkSearchParam('test4');
+					expect(await page.goForward()).toBeNull();
 				});
 			}
 		);

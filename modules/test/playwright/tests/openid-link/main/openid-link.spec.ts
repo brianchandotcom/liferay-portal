@@ -38,7 +38,7 @@ async function setupOpenIdConnection(
 
 	providerName = getRandomString();
 
-	await openIDInstanceSettingsPage.AddOpenIDConnectProviderConnectionConfiguration(
+	await openIDInstanceSettingsPage.addOpenIDConnectProviderConnectionConfiguration(
 		providerName,
 		openIdConfig.openIdProvider
 	);

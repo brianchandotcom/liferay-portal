@@ -11,53 +11,63 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class OpenIdInstanceSettingsPage {
-	readonly page: Page;
-	readonly instanceSettingsPage: InstanceSettingsPage;
-	readonly openIdConnectMenuItem: Locator;
-	readonly enabledCheckbox: Locator;
-	readonly saveButton: Locator;
-	readonly openIDConnectProviderConnection: Locator;
 	readonly addButton: Locator;
-	readonly providerNameField: Locator;
 	readonly discoveryEndpointField: Locator;
+	readonly enabledCheckbox: Locator;
+	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly openIDConnectClientIDField: Locator;
 	readonly openIDConnectClientSecret: Locator;
+	readonly openIdConnectMenuItem: Locator;
+	readonly openIDConnectProviderConnection: Locator;
+	readonly page: Page;
+	readonly providerNameField: Locator;
+	readonly saveButton: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
-		this.instanceSettingsPage = new InstanceSettingsPage(page);
-		this.openIdConnectMenuItem = page.getByRole('menuitem', {
-			exact: true,
-			name: 'OpenID Connect',
-		});
-		this.enabledCheckbox = page.getByText(' Enabled ');
-		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.openIDConnectProviderConnection = page.getByRole('menuitem', {
-			name: 'OpenID Connect Provider Connection',
-		});
 		this.addButton = page.getByRole('link', {name: 'Add'});
-		this.providerNameField = page.getByLabel('Provider Name');
 		this.discoveryEndpointField = page.getByLabel(
 			'Discovery Endpoint Set the'
 		);
+		this.enabledCheckbox = page.getByText(' Enabled ');
+		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.openIDConnectClientIDField = page.getByLabel(
 			'OpenID Connect Client ID'
 		);
 		this.openIDConnectClientSecret = page.getByLabel(
 			'OpenID Connect Client Secret'
 		);
+		this.openIdConnectMenuItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'OpenID Connect',
+		});
+		this.openIDConnectProviderConnection = page.getByRole('menuitem', {
+			name: 'OpenID Connect Provider Connection',
+		});
+		this.page = page;
+		this.providerNameField = page.getByLabel('Provider Name');
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 	}
 
-	async goto() {
-		await this.instanceSettingsPage.goToSSO();
-	}
-
-	async clickSetupOpenIdConnectionMenuItem() {
-		await this.openIdConnectMenuItem.click();
+	async addOpenIDConnectProviderConnectionConfiguration(
+		providerName: string,
+		openIdProvider: string
+	) {
+		await this.clickOpenIDConnectProviderConnectionMenuItem();
+		await this.addButton.click();
+		await this.providerNameField.fill(providerName);
+		await this.discoveryEndpointField.fill(openIdProvider);
+		await this.openIDConnectClientIDField.fill(getRandomString());
+		await this.openIDConnectClientSecret.fill(getRandomString());
+		await this.saveButton.click();
+		await waitForAlert(this.page);
 	}
 
 	async clickOpenIDConnectProviderConnectionMenuItem() {
 		await this.openIDConnectProviderConnection.click();
+	}
+
+	async clickSetupOpenIdConnectionMenuItem() {
+		await this.openIdConnectMenuItem.click();
 	}
 
 	async disableOpenIDConnect() {
@@ -74,18 +84,8 @@ export class OpenIdInstanceSettingsPage {
 		await waitForAlert(this.page);
 	}
 
-	async AddOpenIDConnectProviderConnectionConfiguration(
-		providerName: string,
-		openIdProvider: string
-	) {
-		await this.clickOpenIDConnectProviderConnectionMenuItem();
-		await this.addButton.click();
-		await this.providerNameField.fill(providerName);
-		await this.discoveryEndpointField.fill(openIdProvider);
-		await this.openIDConnectClientIDField.fill(getRandomString());
-		await this.openIDConnectClientSecret.fill(getRandomString());
-		await this.saveButton.click();
-		await waitForAlert(this.page);
+	async goto() {
+		await this.instanceSettingsPage.goToSSO();
 	}
 
 	async removeOpenIDConnectProviderConnectionConfiguration(

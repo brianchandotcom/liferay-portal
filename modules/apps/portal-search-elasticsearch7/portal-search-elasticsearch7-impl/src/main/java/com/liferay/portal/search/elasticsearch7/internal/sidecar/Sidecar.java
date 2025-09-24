@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.concurrent.FutureListener;
 import com.liferay.petra.concurrent.NoticeableFuture;
-import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
 import com.liferay.petra.process.ProcessException;
@@ -49,11 +48,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
-import org.elasticsearch.common.io.stream.OutputStreamStreamOutput;
-import org.elasticsearch.common.io.stream.StreamOutput;
 import org.elasticsearch.common.settings.Settings;
 
 /**
@@ -122,7 +121,7 @@ public class Sidecar {
 		_addFutureListener(processChannel, futureListener);
 
 		NoticeableFuture<Serializable> noticeableFuture = processChannel.write(
-			new StartSidecarProcessCallable(_getSettings()));
+			new StartSidecarProcessCallable());
 
 		try {
 			noticeableFuture.get();
@@ -356,7 +355,6 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.sidecarDebugSettings());
 		}
 
-		arguments.add("-Des.path.log=" + _sidecarHomePath.resolve("logs"));
 		arguments.add("-Djava.io.tmpdir=" + _sidecarTempPath.toAbsolutePath());
 		arguments.add(
 			"-Dsidecar.heart.beat.interval=" +
@@ -370,6 +368,7 @@ public class Sidecar {
 				"logger.deprecation.level=error\n",
 				ResourceUtil.getResourceAsString(
 					Sidecar.class, "/log4j2.properties")));
+		arguments.add("-Dsidecar.settings=" + _getSettings());
 		arguments.add("--enable-native-access=ALL-UNNAMED");
 		arguments.add(
 			"--enable-native-access=org.elasticsearch.nativeaccess," +
@@ -424,7 +423,7 @@ public class Sidecar {
 		return "liferay_sidecar";
 	}
 
-	private byte[] _getSettings() {
+	private String _getSettings() {
 		SettingsHelperImpl settingsHelperImpl = new SettingsHelperImpl(
 			Settings.builder());
 
@@ -530,22 +529,20 @@ public class Sidecar {
 		settingsHelperImpl.loadFromSource(
 			_elasticsearchConfigurationWrapper.additionalConfigurations());
 
-		try (UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-			StreamOutput streamOutput = new OutputStreamStreamOutput(
-				unsyncByteArrayOutputStream)) {
+		Settings settings = settingsHelperImpl.build();
 
-			Settings.writeSettingsToStream(
-				settingsHelperImpl.build(), streamOutput);
+		Set<String> keys = new TreeSet<>(settings.keySet());
 
-			streamOutput.flush();
+		StringBundler sb = new StringBundler(keys.size() * 4);
 
-			return unsyncByteArrayOutputStream.toByteArray();
+		for (String key : keys) {
+			sb.append(key);
+			sb.append(": ");
+			sb.append(settings.get(key));
+			sb.append(StringPool.NEW_LINE);
 		}
-		catch (Exception exception) {
-			throw new IllegalStateException(
-				"Unable to prepare sidecar server arguments", exception);
-		}
+
+		return sb.toString();
 	}
 
 	private String _getSidecarVersion() {

@@ -199,7 +199,6 @@ const FrontendDataSetContent = ({
 					return {
 						id: filter.id,
 						selectedData: filter.selectedData,
-						type: filter.type,
 					};
 				});
 		},

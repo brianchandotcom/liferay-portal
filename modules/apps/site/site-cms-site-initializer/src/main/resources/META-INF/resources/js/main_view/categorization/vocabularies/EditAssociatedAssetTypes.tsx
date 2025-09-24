@@ -6,6 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayCheckbox, ClayToggle} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
+import ClayPanel from '@clayui/panel';
 import ClayTable from '@clayui/table';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -208,120 +209,128 @@ export default function EditAssociatedAssetTypes({
 	};
 
 	return (
-		<div className="vertical-nav-content-wrapper">
-			<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
-				<div className="form-title">
-					{Liferay.Language.get('associated-asset-types')}
-				</div>
+		<div className="container-fluid container-fluid-max-md p-0 p-md-4">
+			<ClayPanel
+				aria-label="associated-asset-types"
+				className="mb-4"
+				collapsable={false}
+				displayType="secondary"
+				role="group"
+			>
+				<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
+					<h2 className="mb-0 py-2 text-6 text-dark">
+						{Liferay.Language.get('associated-asset-types')}
+					</h2>
 
-				<p className="text-secondary">
-					{Liferay.Language.get(
-						'choose-the-asset-types-this-vocabulary-is-associated-with-and-whether-it-is-required'
-					)}
-				</p>
-
-				<div className={assetTypeInputError ? 'has-error' : ''}>
-					<label>{Liferay.Language.get('asset-types')}</label>
-
-					<ClayMultiSelect
-						aria-label="Asset Type Selector"
-						disabled={allAssetTypesSelected}
-						items={allAssetTypesSelected ? [] : selectedItems}
-						onItemsChange={(items: Structure[]) => {
-							_handleChangeAssetTypes(items);
-						}}
-						placeholder={
-							allAssetTypesSelected
-								? Liferay.Language.get('all-asset-types')
-								: ''
-						}
-						sourceItems={availableStructures}
-					>
-						{(item: any) => (
-							<ClayMultiSelect.Item
-								key={item.value}
-								onClick={() => {
-									_handleChangeAssetTypeChecked(item);
-								}}
-								textValue={item.label}
-							>
-								<div className="autofit-row autofit-row-center">
-									<div className="autofit-col mr-3">
-										<ClayCheckbox
-											aria-label={item.label}
-											checked={isChecked(item)}
-											className="invisible"
-											onChange={() => {
-												_handleChangeAssetTypeChecked(
-													item
-												);
-											}}
-										/>
-									</div>
-
-									<div className="autofit-col">
-										<span>{item.label}</span>
-									</div>
-								</div>
-							</ClayMultiSelect.Item>
+					<p className="text-secondary">
+						{Liferay.Language.get(
+							'choose-the-asset-types-this-vocabulary-is-associated-with-and-whether-it-is-required'
 						)}
-					</ClayMultiSelect>
+					</p>
 
-					{assetTypeInputError && (
-						<ClayAlert displayType="danger" variant="feedback">
-							{assetTypeInputError}
-						</ClayAlert>
-					)}
-				</div>
+					<div className={assetTypeInputError ? 'has-error' : ''}>
+						<label>{Liferay.Language.get('asset-types')}</label>
 
-				<ClayCheckbox
-					checked={allAssetTypesSelected}
-					label={Liferay.Language.get(
-						'make-this-vocabulary-available-in-all-asset-types'
-					)}
-					onChange={_handleChangeAllAssetTypes}
-				/>
+						<ClayMultiSelect
+							aria-label="Asset Type Selector"
+							disabled={allAssetTypesSelected}
+							items={allAssetTypesSelected ? [] : selectedItems}
+							onItemsChange={(items: Structure[]) => {
+								_handleChangeAssetTypes(items);
+							}}
+							placeholder={
+								allAssetTypesSelected
+									? Liferay.Language.get('all-asset-types')
+									: ''
+							}
+							sourceItems={availableStructures}
+						>
+							{(item: any) => (
+								<ClayMultiSelect.Item
+									key={item.value}
+									onClick={() => {
+										_handleChangeAssetTypeChecked(item);
+									}}
+									textValue={item.label}
+								>
+									<div className="autofit-row autofit-row-center">
+										<div className="autofit-col mr-3">
+											<ClayCheckbox
+												aria-label={item.label}
+												checked={isChecked(item)}
+												className="invisible"
+												onChange={() => {
+													_handleChangeAssetTypeChecked(
+														item
+													);
+												}}
+											/>
+										</div>
 
-				{!!selectedItems.length && (
-					<ClayTable striped>
-						<ClayTable.Head>
-							<ClayTable.Row>
-								<ClayTable.Cell className="text-secondary">
-									{Liferay.Language.get('title')}
-								</ClayTable.Cell>
+										<div className="autofit-col">
+											<span>{item.label}</span>
+										</div>
+									</div>
+								</ClayMultiSelect.Item>
+							)}
+						</ClayMultiSelect>
 
-								<ClayTable.Cell className="text-secondary">
-									{Liferay.Language.get('required')}
-								</ClayTable.Cell>
-							</ClayTable.Row>
-						</ClayTable.Head>
+						{assetTypeInputError && (
+							<ClayAlert displayType="danger" variant="feedback">
+								{assetTypeInputError}
+							</ClayAlert>
+						)}
+					</div>
 
-						<ClayTable.Body>
-							{selectedItems.map((assetType: Structure) => (
-								<ClayTable.Row key={assetType.value}>
-									<ClayTable.Cell>
-										{assetType.label as String}
+					<ClayCheckbox
+						checked={allAssetTypesSelected}
+						label={Liferay.Language.get(
+							'make-this-vocabulary-available-in-all-asset-types'
+						)}
+						onChange={_handleChangeAllAssetTypes}
+					/>
+
+					{!!selectedItems.length && (
+						<ClayTable striped>
+							<ClayTable.Head>
+								<ClayTable.Row>
+									<ClayTable.Cell className="text-secondary">
+										{Liferay.Language.get('title')}
 									</ClayTable.Cell>
 
-									<ClayTable.Cell>
-										<ClayToggle
-											aria-label={Liferay.Language.get(
-												'toggle-asset-type'
-											)}
-											onToggle={() => {
-												_handleChangeAssetTypeRequired(
-													assetType
-												);
-											}}
-											toggled={assetType.required}
-										/>
+									<ClayTable.Cell className="text-secondary">
+										{Liferay.Language.get('required')}
 									</ClayTable.Cell>
 								</ClayTable.Row>
-							))}
-						</ClayTable.Body>
-					</ClayTable>
-				)}
-			</ClayForm.Group>
+							</ClayTable.Head>
+
+							<ClayTable.Body>
+								{selectedItems.map((assetType: Structure) => (
+									<ClayTable.Row key={assetType.value}>
+										<ClayTable.Cell>
+											{assetType.label as String}
+										</ClayTable.Cell>
+
+										<ClayTable.Cell>
+											<ClayToggle
+												aria-label={Liferay.Language.get(
+													'toggle-asset-type'
+												)}
+												onToggle={() => {
+													_handleChangeAssetTypeRequired(
+														assetType
+													);
+												}}
+												toggled={assetType.required}
+											/>
+										</ClayTable.Cell>
+									</ClayTable.Row>
+								))}
+							</ClayTable.Body>
+						</ClayTable>
+					)}
+				</ClayForm.Group>
+			</ClayPanel>
 		</div>
 	);
 }

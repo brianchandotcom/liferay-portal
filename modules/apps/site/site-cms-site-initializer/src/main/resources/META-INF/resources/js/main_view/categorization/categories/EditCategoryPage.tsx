@@ -353,21 +353,19 @@ const EditCategoryPage = ({
 
 	return (
 		<div className="categorization-section">
-			<div className="d-flex edit-vocabulary flex-column">
-				<CategorizationManagementToolbar
-					backURL={backURL}
-					handleSave={handleSave}
-					handleSaveAndAddAnother={
-						isCreateNew ? handleSaveAndAddAnother : undefined
-					}
-					showSaveAndAddAnotherButton={isCreateNew}
-					title={getTitle()}
-				/>
+			<CategorizationManagementToolbar
+				backURL={backURL}
+				handleSave={handleSave}
+				handleSaveAndAddAnother={
+					isCreateNew ? handleSaveAndAddAnother : undefined
+				}
+				showSaveAndAddAnotherButton={isCreateNew}
+				title={getTitle()}
+			/>
 
-				<CategorizationContentContainer
-					mainContentMap={createMainContentMap()}
-				/>
-			</div>
+			<CategorizationContentContainer
+				mainContentMap={createMainContentMap()}
+			/>
 		</div>
 	);
 };

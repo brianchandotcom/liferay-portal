@@ -22,6 +22,7 @@ public class LPD_8010 {
 	}
 
 	public void method(PreparedStatement preparedStatement) {
+		AutoBatchPreparedStatementUtil.autoBatch(null);
 		AutoBatchPreparedStatementUtil.autoBatch(preparedStatement);
 	}
 

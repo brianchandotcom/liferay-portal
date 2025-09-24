@@ -11,6 +11,7 @@ import com.liferay.cookies.banner.web.internal.display.context.CookiesBannerConf
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -70,7 +71,8 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 			return false;
 		}
 
-		return true;
+		return FeatureFlagManagerUtil.isEnabled(
+			user.getCompanyId(), "LPD-51356");
 	}
 
 	@Override

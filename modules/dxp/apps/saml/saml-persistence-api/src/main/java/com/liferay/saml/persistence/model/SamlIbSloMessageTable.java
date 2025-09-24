@@ -8,6 +8,7 @@ package com.liferay.saml.persistence.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -36,10 +37,9 @@ public class SamlIbSloMessageTable extends BaseTable<SamlIbSloMessageTable> {
 		createColumn(
 			"samlIdpEntityId", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
-	public final Column<SamlIbSloMessageTable, String> logoutRequestXml =
+	public final Column<SamlIbSloMessageTable, Clob> logoutRequestXml =
 		createColumn(
-			"logoutRequestXml", String.class, Types.VARCHAR,
-			Column.FLAG_DEFAULT);
+			"logoutRequestXml", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<SamlIbSloMessageTable, String> samlIdpSessionIndex =
 		createColumn(
 			"samlIdpSessionIndex", String.class, Types.VARCHAR,

@@ -230,7 +230,7 @@ public interface SamlIbSloMessageLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public SamlIbSloMessage getSamlIbSloMessageByIdpSessionIndex(
+	public SamlIbSloMessage getSamlIbSloMessageBySamlIdpSessionIndex(
 			String samlIdpSessionIndex)
 		throws NoSuchIbSloMessageException;
 

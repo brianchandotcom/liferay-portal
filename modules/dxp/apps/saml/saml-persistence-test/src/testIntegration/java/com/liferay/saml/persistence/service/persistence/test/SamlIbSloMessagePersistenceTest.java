@@ -186,8 +186,8 @@ public class SamlIbSloMessagePersistenceTest {
 	protected OrderByComparator<SamlIbSloMessage> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
 			"SamlIbSloMessage", "samlIbSloMessageId", true, "companyId", true,
-			"createDate", true, "samlIdpEntityId", true, "logoutRequestXml",
-			true, "samlIdpSessionIndex", true);
+			"createDate", true, "samlIdpEntityId", true, "samlIdpSessionIndex",
+			true);
 	}
 
 	@Test

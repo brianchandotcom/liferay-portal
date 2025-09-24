@@ -35,19 +35,19 @@ const RECIPIENT_OPTIONS = [
 		label: Liferay.Language.get('roles'),
 		value: 'role',
 	},
-] as LabelValueObject[];
-
-if (Liferay.FeatureFlags['LPD-50091']) {
-	RECIPIENT_OPTIONS.push({
+	Liferay.FeatureFlags['LPD-17564'] && {
+		label: Liferay.Language.get('subscribers'),
+		value: 'subscribers',
+	},
+	Liferay.FeatureFlags['LPD-6233'] && {
+		label: Liferay.Language.get('definition-of-terms'),
+		value: 'term',
+	},
+	Liferay.FeatureFlags['LPD-50091'] && {
 		label: Liferay.Language.get('user-groups'),
 		value: 'user-group',
-	});
-}
-
-const SUBSCRIBERS_OPTION = {
-	label: Liferay.Language.get('subscribers'),
-	value: 'subscribers',
-} as LabelValueObject;
+	},
+] as LabelValueObject[];
 
 export function EmailNotificationSettings({
 	baseResourceURL,
@@ -97,11 +97,7 @@ export function EmailNotificationSettings({
 					<PrimaryRecipient
 						errors={errors}
 						learnResources={learnResources}
-						recipientOptions={
-							Liferay.FeatureFlags['LPD-17564']
-								? [...RECIPIENT_OPTIONS, SUBSCRIBERS_OPTION]
-								: RECIPIENT_OPTIONS
-						}
+						recipientOptions={RECIPIENT_OPTIONS}
 						roles={roles}
 						selectedLocale={selectedLocale}
 						setValues={setValues}

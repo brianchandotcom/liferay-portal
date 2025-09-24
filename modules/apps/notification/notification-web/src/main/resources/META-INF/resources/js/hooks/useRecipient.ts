@@ -35,7 +35,7 @@ export function useRecipient(
 					...recipient,
 					[`${key}Type`]: type,
 					[key]:
-						type === 'email'
+						type === 'term' || type === 'email'
 							? ''
 							: type === 'subscribers'
 								? '[%EMAIL_RECIPIENT_ADDRESS%]'

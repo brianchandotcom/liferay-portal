@@ -76,7 +76,7 @@ export function validate(values: NotificationTemplate) {
 			errors.fromName = constantsUtils.REQUIRED_MSG;
 		}
 
-		if (recipient.toType !== 'subscribers') {
+		if (recipient.toType !== 'subscribers' && recipient.toType !== 'term') {
 			if (
 				!Array.isArray(recipient.to) &&
 				!(recipient.to as LocalizedValue<string>)[defaultLanguageId]
@@ -87,6 +87,10 @@ export function validate(values: NotificationTemplate) {
 			if (Array.isArray(recipient.to) && !recipient.to.length) {
 				errors.to = constantsUtils.REQUIRED_MSG;
 			}
+		}
+
+		if (recipient.toType === 'term' && !recipient.to) {
+			errors.to = constantsUtils.REQUIRED_MSG;
 		}
 	}
 

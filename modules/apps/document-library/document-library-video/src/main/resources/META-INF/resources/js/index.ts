@@ -7,5 +7,8 @@ export {default as DLVideoExternalShortcutDLFilePicker} from './DLVideoExternalS
 export {default as DLVideoExternalShortcutURLItemSelectorView} from './DLVideoExternalShortcutURLItemSelectorView';
 export {default as DLVideoIframe} from './DLVideoIframe';
 export {default as generating} from './embed/generating';
-export {default as updateDLVideoFields} from './utils/updateDLVideoFields';
+export {
+	default as updateDLVideoFields,
+	type Fields,
+} from './utils/updateDLVideoFields';
 export {default as validateUrl} from './utils/validateUrl';

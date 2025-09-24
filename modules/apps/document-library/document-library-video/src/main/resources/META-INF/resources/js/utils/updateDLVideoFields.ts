@@ -5,7 +5,7 @@
 
 import {addParams, fetch} from 'frontend-js-web';
 
-type Fields = {
+export type Fields = {
 	DESCRIPTION: string;
 	HTML: string;
 	THUMBNAIL_URL: string;

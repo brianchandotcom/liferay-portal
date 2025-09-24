@@ -18,8 +18,6 @@ import com.liferay.portal.search.elasticsearch7.internal.connection.constants.Co
 import com.liferay.portal.search.elasticsearch7.internal.sidecar.constants.SidecarConstants;
 import com.liferay.portal.search.elasticsearch7.internal.util.ResourceUtil;
 
-import java.io.File;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -143,18 +141,11 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 		ElasticsearchInstancePathsBuilder elasticsearchInstancePathsBuilder =
 			new ElasticsearchInstancePathsBuilder();
 
-		File bundleDataFile = _bundleContext.getDataFile(
-			SidecarManager.class.getName());
-
-		Path bundleDataPath = bundleDataFile.toPath();
-
 		Path workPath = Paths.get(PropsValues.LIFERAY_HOME);
 
 		Path dataPath = workPath.resolve("data/elasticsearch7");
 
-		return elasticsearchInstancePathsBuilder.configPath(
-			bundleDataPath.resolve("config")
-		).dataPath(
+		return elasticsearchInstancePathsBuilder.dataPath(
 			dataPath
 		).homePath(
 			_resolveHomePath(workPath)

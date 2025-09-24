@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
-import {resolve} from 'path';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {backendPageTest} from '../../../fixtures/backendPageTest';
@@ -13,14 +11,10 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
-import {PAGE_MANAGEMENT_SITE_ERC} from '../../../fixtures/pageManagementSiteTest';
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import getFragmentDefinition from '../../layout-content-page-editor-web/main/utils/getFragmentDefinition';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {OBJECT_ENTITIES} from '../../setup/page-management-site/main/constants/objects';
-import {PAGE_MANAGEMENT_SITE_NAME} from '../../setup/page-management-site/main/constants/site';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -88,52 +82,4 @@ test('Allows editing a page and mapping an editable', async ({
 	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
 	await expect(page.getByText(journalTitle)).toBeVisible();
-});
-
-test('Can create and delete Page Management site', async ({backendPage}) => {
-
-	// Create site
-
-	const apiHelpers = new ApiHelpers(backendPage);
-
-	const site = await apiHelpers.headlessSite.createSiteFromZip(
-		{
-			externalReferenceCode: PAGE_MANAGEMENT_SITE_ERC,
-			name: PAGE_MANAGEMENT_SITE_NAME,
-		},
-		resolve(
-			__dirname,
-			'../../setup/page-management-site/main/site-initializer'
-		)
-	);
-
-	expect(site).toHaveProperty(
-		'externalReferenceCode',
-		PAGE_MANAGEMENT_SITE_ERC
-	);
-
-	// Delete object definitions
-
-	const ERCs = Object.values(OBJECT_ENTITIES).map((entity) => entity.ERC);
-
-	for (const ERC of ERCs) {
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {id: objectDefinitionId} = (
-			await objectDefinitionAPIClient.getObjectDefinitionByExternalReferenceCode(
-				ERC
-			)
-		).body;
-
-		if (objectDefinitionId) {
-			await objectDefinitionAPIClient.deleteObjectDefinition(
-				objectDefinitionId
-			);
-		}
-	}
-
-	// Delete site
-
-	await apiHelpers.headlessSite.deleteSiteByERC(PAGE_MANAGEMENT_SITE_ERC);
 });

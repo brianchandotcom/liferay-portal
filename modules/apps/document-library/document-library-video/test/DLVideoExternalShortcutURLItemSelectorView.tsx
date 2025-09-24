@@ -4,8 +4,9 @@
  */
 
 import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {fireEvent, render} from '@testing-library/react';
+import {type RenderResult, fireEvent, render} from '@testing-library/react';
 import {getOpener} from 'frontend-js-web';
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
@@ -15,7 +16,7 @@ import DLVideoExternalShortcutURLItemSelectorView from '../src/main/resources/ME
 const mockLiferayOpenerFire = jest.fn();
 
 jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
+	...(jest.requireActual('frontend-js-web') as any),
 	getOpener: jest.fn(() => ({
 		Liferay: {
 			fire: mockLiferayOpenerFire,
@@ -30,12 +31,15 @@ const defaultProps = {
 	returnType: 'returnType',
 };
 
-const renderComponent = (props) =>
-	render(<DLVideoExternalShortcutURLItemSelectorView {...props} />);
+const renderComponent = (
+	props: React.ComponentProps<
+		typeof DLVideoExternalShortcutURLItemSelectorView
+	>
+) => render(<DLVideoExternalShortcutURLItemSelectorView {...props} />);
 
 describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 	describe('when rendered with the default props', () => {
-		let result;
+		let result: RenderResult;
 
 		beforeEach(() => {
 			result = renderComponent(defaultProps);
@@ -58,7 +62,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 			URL: 'https://video-url.com',
 		};
 
-		let result;
+		let result: RenderResult;
 
 		beforeEach(async () => {
 			jest.useFakeTimers();
@@ -73,7 +77,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 				target: {value: 'https://video-url.com'},
 			});
 
-			jest.advanceTimersByTime(500);
+			jest.advanceTimersByTime(600);
 
 			await waitForElementToBeRemoved(() =>
 				document.querySelector('span.loading-animation')
@@ -121,7 +125,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 	});
 
 	describe('when there is an invalid server response', () => {
-		let result;
+		let result: RenderResult;
 
 		beforeEach(async () => {
 			jest.useFakeTimers();
@@ -135,7 +139,7 @@ describe('DLVideoExternalShortcutURLItemSelectorView', () => {
 				target: {value: 'https://unsupported-video-url.com'},
 			});
 
-			jest.advanceTimersByTime(500);
+			jest.advanceTimersByTime(600);
 
 			await waitForElementToBeRemoved(() =>
 				document.querySelector('span.loading-animation')

@@ -3,15 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {waitForElementToBeRemoved} from '@testing-library/dom';
-import {fireEvent, render} from '@testing-library/react';
+import {
+	type RenderResult,
+	fireEvent,
+	render,
+	waitForElementToBeRemoved,
+} from '@testing-library/react';
+import fetch from 'jest-fetch-mock';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
 
-import DLVideoExternalShortcutDLFilePicker from '../src/main/resources/META-INF/resources/js/DLVideoExternalShortcutDLFilePicker';
+import {
+	DLVideoExternalShortcutDLFilePicker,
+	type Fields,
+} from '../src/main/resources/META-INF/resources/js';
 
-global.onFilePickCallback = jest.fn();
+declare global {
+	interface Window {
+		onFilePickCallback: jest.Mock;
+	}
+}
+
+window.onFilePickCallback = jest.fn();
 
 const defaultProps = {
 	getDLVideoExternalShortcutFieldsURL:
@@ -20,12 +34,13 @@ const defaultProps = {
 	onFilePickCallback: 'onFilePickCallback',
 };
 
-const renderComponent = (props) =>
-	render(<DLVideoExternalShortcutDLFilePicker {...props} />);
+const renderComponent = (
+	props: React.ComponentProps<typeof DLVideoExternalShortcutDLFilePicker>
+): RenderResult => render(<DLVideoExternalShortcutDLFilePicker {...props} />);
 
 describe('DLVideoExternalShortcutDLFilePicker', () => {
 	describe('when rendered with the default props', () => {
-		let result;
+		let result: RenderResult;
 
 		beforeEach(() => {
 			result = renderComponent(defaultProps);
@@ -48,23 +63,20 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 	});
 
 	describe('when rendered with initial video', () => {
-		let result;
+		let result: RenderResult;
 		const props = {
 			dlVideoExternalShortcutHTML: '<iframe data-video-liferay></iframe>',
 			dlVideoExternalShortcutURL: 'VIDEO-URL',
 		};
 
 		beforeEach(() => {
-			result = renderComponent({
-				...defaultProps,
-				...props,
-			});
+			result = renderComponent({...defaultProps, ...props});
 		});
 
 		it('has a url input filled with the video url', () => {
-			expect(result.getByLabelText('video-url').value).toBe(
-				props.dlVideoExternalShortcutURL
-			);
+			expect(
+				(result.getByLabelText('video-url') as HTMLInputElement).value
+			).toBe(props.dlVideoExternalShortcutURL);
 		});
 
 		it('has a video preview with embedded iframe', () => {
@@ -75,7 +87,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 	});
 
 	describe('when there is a valid server response', () => {
-		const responseFields = {
+		const responseFields: Fields = {
 			DESCRIPTION: 'DESCRIPTION',
 			HTML: '<iframe data-video-liferay></iframe>',
 			THUMBNAIL_URL: 'https://thumbnail-url',
@@ -131,7 +143,7 @@ describe('DLVideoExternalShortcutDLFilePicker', () => {
 	});
 
 	describe('when there is an invalid server response', () => {
-		let result;
+		let result: RenderResult;
 
 		beforeEach(async () => {
 			jest.useFakeTimers();

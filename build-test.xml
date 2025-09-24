@@ -946,7 +946,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					String browserVersion = "@{browser.version}";
 					String propertyName = project.getProperty("property.name");
 
-					if (propertyName.equals("browser.version") && !browserVersion.isEmpty()) {
+					if (!browserVersion.isEmpty() && propertyName.equals("browser.version")) {
 						project.setProperty(propertyName, browserVersion);
 
 						return;
@@ -7727,12 +7727,12 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 	<macrodef name="start-docker-browser">
 		<sequential>
-			<get-browser-property property.name="browser.docker.browser.options" />
 			<get-testcase-property property.name="browser.chrome.version" />
-
-			<get-browser-property browser.version="${browser.chrome.version}" property.name="browser.docker.image" />
+			<get-browser-property property.name="browser.docker.browser.options" />
 			<get-browser-property property.name="browser.docker.run.options" />
 			<get-browser-property property.name="browser.host" />
+
+			<get-browser-property browser.version="${browser.chrome.version}" property.name="browser.docker.image" />
 
 			<propertyregex
 				input="${portal.dir}"

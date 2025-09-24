@@ -2114,6 +2114,7 @@ app.server.type=@{app.server.type}]]></echo>
 						<stop-docker-browser />
 
 						<start-docker-browser />
+
 						<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" rebuild.database="false">
 							<test-action>
 								<lstopwatch action="start" name="test.execution.duration" />

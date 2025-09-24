@@ -100,6 +100,10 @@ public class TreeTestUtil {
 				expectedRootObjectDefinitionIds.length,
 				actualRootObjectDefinitionIds.length);
 
+			if (actualRootObjectDefinitionIds.length == 0) {
+				continue;
+			}
+
 			Assert.assertTrue(
 				ArrayUtil.containsAll(
 					actualRootObjectDefinitionIds,

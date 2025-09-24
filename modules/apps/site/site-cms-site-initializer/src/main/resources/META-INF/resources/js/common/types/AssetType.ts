@@ -16,7 +16,7 @@ export interface IAssetFile {
 	};
 	mimeType?: string;
 	name: string;
-	previewURL: string;
+	previewURL?: string;
 	thumbnailURL: string;
 }
 

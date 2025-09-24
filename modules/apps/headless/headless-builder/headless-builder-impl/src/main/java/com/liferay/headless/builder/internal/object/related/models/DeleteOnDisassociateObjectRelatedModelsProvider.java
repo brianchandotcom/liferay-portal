@@ -92,12 +92,13 @@ public class DeleteOnDisassociateObjectRelatedModelsProvider
 	@Override
 	public List<ObjectEntry> getRelatedModels(
 			long groupId, long objectRelationshipId, Predicate predicate,
-			long primaryKey, String search, int start, int end, Sort[] sorts)
+			boolean preferApproved, long primaryKey, String search, int start,
+			int end, Sort[] sorts)
 		throws PortalException {
 
 		return _objectRelatedModelsProvider.getRelatedModels(
-			groupId, objectRelationshipId, predicate, primaryKey, search, start,
-			end, sorts);
+			groupId, objectRelationshipId, predicate, false, primaryKey, search,
+			start, end, sorts);
 	}
 
 	@Override

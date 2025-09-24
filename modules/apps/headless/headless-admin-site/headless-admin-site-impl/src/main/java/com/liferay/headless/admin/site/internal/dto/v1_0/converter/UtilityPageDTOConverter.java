@@ -64,7 +64,7 @@ public class UtilityPageDTOConverter
 						return new Creator() {
 							{
 								setExternalReferenceCode(
-									user.getExternalReferenceCode());
+									user::getExternalReferenceCode);
 							}
 						};
 					});

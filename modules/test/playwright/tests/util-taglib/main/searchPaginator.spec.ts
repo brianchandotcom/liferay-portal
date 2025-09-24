@@ -6,35 +6,24 @@
 import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
+import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
 
 export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedSiteTest,
-	loginTest(),
 	samplePageTest
 );
-
-const linkName = 'Search Paginator';
 
 test(
 	'Search Paginator dropdown generates page links on scrolling',
 	{tag: '@LPD-37458'},
-	async ({page, samplePage, site}) => {
+	async ({page, samplePage}) => {
 		let dropdownMenuHandler: Locator;
 
-		await test.step('Create a content site and the frontend taglib sample widget', async () => {
-			await samplePage.setupSampleWidget({
-				site,
-			});
-		});
-
-		await test.step('Select Panel link', async () => {
-			await samplePage.selectLink(linkName);
+		await test.step('Select Search Paginator tab', async () => {
+			await samplePage.selectTab(TabName.SEARCH_PAGINATOR);
 		});
 
 		await test.step('Open navigator dropdown', async () => {

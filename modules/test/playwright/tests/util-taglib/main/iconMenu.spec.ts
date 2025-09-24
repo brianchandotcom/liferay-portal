@@ -6,35 +6,26 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
+import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
 
 export const test = mergeTests(
-	isolatedSiteTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	loginTest(),
 	samplePageTest
 );
-
-const linkName = 'Icon Menu';
 
 test(
 	'Overlay is removed from DOM after menu is closed',
 	{
 		tag: '@LPD-53924',
 	},
-	async ({page, samplePage, site}) => {
+	async ({page, samplePage}) => {
 		const overlay = page.locator('.overlay');
 
-		await test.step('Add taglib sample to page', async () => {
-			await samplePage.setupSampleWidget({
-				site,
-			});
-
-			await samplePage.selectLink(linkName);
+		await test.step('Select Icon Menu tab', async () => {
+			await samplePage.selectTab(TabName.ICON_MENU);
 		});
 
 		await test.step('Set viewport for mobile resolution', async () => {

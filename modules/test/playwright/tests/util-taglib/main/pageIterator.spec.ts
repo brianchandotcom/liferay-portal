@@ -5,90 +5,33 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
+import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 const test = mergeTests(
-	apiHelpersTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedSiteTest,
-	loginTest(),
 	pageEditorPagesTest,
 	samplePageTest
 );
 
-const linkName = 'Search Paginator';
-
 test(
 	'Check various accessibility in pagination',
 	{tag: ['@LPD-38101', '@LPD-38653', '@LPD-38653']},
-	async ({page}) => {
-		await test.step('Use searchbar to go to search page', async () => {
-			await page.goto('/');
-
-			const searchBar = page.getByPlaceholder('Search...');
-
-			await searchBar.waitFor({state: 'visible'});
-
-			await searchBar.fill('png');
-
-			await searchBar.press('Enter');
-
-			await page
-				.getByRole('heading', {name: 'Search Results'})
-				.waitFor({state: 'visible'});
-		});
-
-		await test.step('Configure search pagination', async () => {
-			await page
-				.locator('header')
-				.filter({hasText: 'Search Results'})
-				.click();
-
-			const searchResultsOptionsButton = page
-				.locator('header')
-				.filter({hasText: 'Search Results'})
-				.getByRole('button', {name: 'Options'});
-
-			await searchResultsOptionsButton.click();
-
-			await searchResultsOptionsButton.isVisible();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Configuration'})
-				.isVisible();
-
-			await page
-				.getByRole('menuitem', {exact: true, name: 'Configuration'})
-				.click();
-
-			const configurationIframe = page.frameLocator('iframe');
-
-			await configurationIframe
-				.getByLabel('Pagination Delta', {exact: true})
-				.fill('5');
-
-			await configurationIframe
-				.getByRole('button', {exact: true, name: 'Save'})
-				.click();
-
-			await page.press('body', 'Escape');
-
-			await page.reload();
+	async ({page, samplePage}) => {
+		await test.step('Select Search Paginator tab', async () => {
+			await samplePage.selectTab(TabName.SEARCH_PAGINATOR);
 		});
 
 		await test.step('Check pagination button is selected and contains option role', async () => {
@@ -112,25 +55,19 @@ test(
 		});
 
 		await test.step('Check pagination list has aria-labelledby', async () => {
-			const element = page.locator('.dropdown-menu.dropdown-menu-top');
+			const element = page.locator('ul.dropdown-menu.dropdown-menu-top');
 
 			await expect(element).toHaveAttribute('aria-labelledby');
 		});
 
 		await test.step('Check aria-label is being translated', async () => {
-			await page.goto('/es/web/guest/search?q=png');
+			const url = page.url();
 
-			await page
-				.getByRole('heading', {name: 'Barra de búsqueda'})
-				.waitFor({state: 'visible'});
+			const esURL = url.replace('/web/', '/es/web/');
 
-			const paginationTranslated = page.getByLabel('Paginación');
+			await page.goto(esURL);
 
-			await expect(paginationTranslated).toBeVisible();
-		});
-
-		await test.step('Go back to english site', async () => {
-			await page.goto('/en/web/guest');
+			await expect(page.getByLabel('Paginación')).toBeVisible();
 		});
 	}
 );
@@ -138,13 +75,9 @@ test(
 test(
 	'Intermediate pages button and dropdown accesibility issues',
 	{tag: '@LPD-42610'},
-	async ({page, samplePage, site}) => {
-		await test.step('Add taglib sample to page', async () => {
-			await samplePage.setupSampleWidget({
-				site,
-			});
-
-			await samplePage.selectLink(linkName);
+	async ({page, samplePage}) => {
+		await test.step('Select Search Paginator tab', async () => {
+			await samplePage.selectTab(TabName.SEARCH_PAGINATOR);
 		});
 
 		await test.step('Check intermediate pages button has a tooltip', async () => {

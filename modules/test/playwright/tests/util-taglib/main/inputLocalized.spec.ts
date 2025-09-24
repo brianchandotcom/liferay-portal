@@ -6,29 +6,19 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
-import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
+import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
 
 export const test = mergeTests(
-	isolatedSiteTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	loginTest(),
 	samplePageTest
 );
 
-test.beforeEach(async ({samplePage, site}) => {
-
-	// Add taglib sample to page
-
-	await samplePage.setupSampleWidget({
-		site,
-	});
-
-	await samplePage.selectLink('Input Localized');
+test.beforeEach(async ({samplePage}) => {
+	await samplePage.selectTab(TabName.INPUT_LOCALIZED);
 });
 
 test(

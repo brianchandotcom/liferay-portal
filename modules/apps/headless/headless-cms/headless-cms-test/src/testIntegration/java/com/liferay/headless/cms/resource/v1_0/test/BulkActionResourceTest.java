@@ -289,24 +289,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertEquals(expectedName, bulkActionItem.getName());
 	}
 
-	private BulkActionItem[] _toBulkActionItems(
-			ObjectEntry basicWebContentObjectEntry)
-		throws Exception {
-
-		return new BulkActionItem[] {
-			new BulkActionItem() {
-				{
-					setClassExternalReferenceCode(
-						basicWebContentObjectEntry.getExternalReferenceCode());
-					setClassName(
-						_basicWebContentObjectDefinition.getClassName());
-					setClassPK(basicWebContentObjectEntry.getObjectEntryId());
-					setName(basicWebContentObjectEntry.getTitleValue());
-				}
-			}
-		};
-	}
-
 	private void _deleteFile(Bundle bundle, String fileName) {
 		File file = bundle.getDataFile(
 			".com.liferay.site.initializer.cms.internal.batch." + fileName +
@@ -918,6 +900,24 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		bulkActionItem.setName(objectEntry.getTitleValue(_LANGUAGE_ID));
 
 		return bulkActionItem;
+	}
+
+	private BulkActionItem[] _toBulkActionItems(
+			ObjectEntry basicWebContentObjectEntry)
+		throws Exception {
+
+		return new BulkActionItem[] {
+			new BulkActionItem() {
+				{
+					setClassExternalReferenceCode(
+						basicWebContentObjectEntry.getExternalReferenceCode());
+					setClassName(
+						_basicWebContentObjectDefinition.getClassName());
+					setClassPK(basicWebContentObjectEntry.getObjectEntryId());
+					setName(basicWebContentObjectEntry.getTitleValue());
+				}
+			}
+		};
 	}
 
 	private void _waitForFinish(long importTaskId) throws Exception {

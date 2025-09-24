@@ -3945,6 +3945,8 @@ public class ObjectEntryLocalServiceImpl
 						primaryKey);
 				}
 			).and(
+				_getHeadObjectEntryPredicate(false)
+			).and(
 				ObjectEntrySearchUtil.getRelatedModelsPredicate(
 					objectDefinition2, _objectFieldLocalService, search,
 					dynamicObjectDefinitionTable)

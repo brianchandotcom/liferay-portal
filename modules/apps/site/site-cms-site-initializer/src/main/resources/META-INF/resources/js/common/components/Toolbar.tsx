@@ -17,7 +17,7 @@ type Props = {
 
 function Toolbar({backURL, children, title}: Props) {
 	return (
-		<ClayToolbar className="bg-white cms-control-menu px-4">
+		<ClayToolbar className="bg-white cms-control-menu px-4 sticky-top top-bar">
 			<div className="container-fluid">
 				<ClayToolbar.Nav>
 					{backURL ? (

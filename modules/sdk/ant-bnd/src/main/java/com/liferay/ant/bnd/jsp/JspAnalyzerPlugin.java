@@ -334,11 +334,9 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 				continue;
 			}
 
-			if (Arrays.binarySearch(_JSTL_CORE_URIS_JAKARTA, uri) < 0) {
-				addTaglibRequirement(taglibRequirements, uri);
-			}
+			if ((Arrays.binarySearch(_JSTL_CORE_URIS_JAKARTA, uri) < 0) &&
+				(Arrays.binarySearch(_JSTL_CORE_URIS_JAVAX, uri) < 0)) {
 
-			if (Arrays.binarySearch(_JSTL_CORE_URIS_JAVAX, uri) < 0) {
 				addTaglibRequirement(taglibRequirements, uri);
 			}
 		}

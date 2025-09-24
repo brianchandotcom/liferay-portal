@@ -7,7 +7,6 @@ package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
 import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
-import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -18,6 +17,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -128,11 +129,10 @@ public class MCPServerServlet extends HttpServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> _callEndpoint(
-					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange),
-					"GET", baseURL + "/openapi", null))
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", baseURL + "/openapi", null)
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -148,11 +148,10 @@ public class MCPServerServlet extends HttpServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> _callEndpoint(
-					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange),
-					"GET", String.valueOf(arguments.get("url")), null))
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", String.valueOf(arguments.get("url")), null)
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -195,29 +194,27 @@ public class MCPServerServlet extends HttpServlet {
 				).put(
 					"type", "object"
 				).toString()),
-			MCPServerToolCallHandler.of(
-				(exchange, arguments) -> {
-					String path = String.valueOf(arguments.get("path"));
+			(exchange, arguments) -> {
+				String path = String.valueOf(arguments.get("path"));
 
-					if (!path.startsWith("/")) {
-						path = "/" + path;
-					}
+				if (!path.startsWith("/")) {
+					path = "/" + path;
+				}
 
-					return _callEndpoint(
-						authorizedHttpServletSseServerTransportProvider.
-							getAuthorizationHeader(exchange),
-						String.valueOf(arguments.get("method")), baseURL + path,
-						String.valueOf(arguments.get("payload")));
-				})
+				return _callEndpoint(
+					authorizedHttpServletSseServerTransportProvider.
+						getAuthorizationHeader(exchange),
+					String.valueOf(arguments.get("method")), baseURL + path,
+					String.valueOf(arguments.get("payload")));
+			}
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
 	}
 
-	private String _callEndpoint(
-			String authorizationHeader, String method, String path,
-			String payload)
-		throws Exception {
+	private McpSchema.CallToolResult _callEndpoint(
+		String authorizationHeader, String method, String path,
+		String payload) {
 
 		Http.Options options = new Http.Options();
 
@@ -234,13 +231,27 @@ public class MCPServerServlet extends HttpServlet {
 		options.setLocation(path);
 		options.setMethod(Http.Method.valueOf(StringUtil.toUpperCase(method)));
 
-		String content = _http.URLtoString(options);
+		try {
+			String content = _http.URLtoString(options);
 
-		Http.Response response = options.getResponse();
+			Http.Response response = options.getResponse();
 
-		return StringBundler.concat(
-			"Status code: ", response.getResponseCode(), "\nContent:\n",
-			content);
+			int responseCode = response.getResponseCode();
+
+			if (responseCode < 300) {
+				return new McpSchema.CallToolResult(content, false);
+			}
+
+			return new McpSchema.CallToolResult(
+				StringBundler.concat(
+					"Status code: ", responseCode, ", Content:\n", content),
+				true);
+		}
+		catch (IOException ioException) {
+			_log.error(ioException);
+
+			return new McpSchema.CallToolResult(ioException.getMessage(), true);
+		}
 	}
 
 	private Servlet _getServlet(HttpServletRequest httpServletRequest) {
@@ -328,6 +339,9 @@ public class MCPServerServlet extends HttpServlet {
 										"prompt"))))));
 			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MCPServerServlet.class);
 
 	@Reference
 	private Http _http;

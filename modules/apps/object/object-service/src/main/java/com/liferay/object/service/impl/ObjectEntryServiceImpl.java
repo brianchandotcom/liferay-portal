@@ -556,10 +556,10 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 			Map<String, Serializable> values)
 		throws PortalException {
 
+		PermissionChecker permissionChecker = getPermissionChecker();
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
-
-		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (FeatureFlagManagerUtil.isEnabled(
 				objectDefinition.getCompanyId(), "LPD-17564") &&

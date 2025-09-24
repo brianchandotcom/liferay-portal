@@ -77,7 +77,6 @@ public class DownloadObjectEntryFolderServletTest {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(
@@ -135,7 +134,6 @@ public class DownloadObjectEntryFolderServletTest {
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 
 		ObjectEntryFolder objectEntryFolder = _addObjectFolderEntry(

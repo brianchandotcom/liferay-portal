@@ -58,8 +58,7 @@ public class SamlIbSloMessageModelImpl
 	public static final Object[][] TABLE_COLUMNS = {
 		{"samlIbSloMessageId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"createDate", Types.TIMESTAMP}, {"samlIdpEntityId", Types.VARCHAR},
-		{"logoutRequestXml", Types.VARCHAR},
-		{"samlIdpSessionIndex", Types.VARCHAR}
+		{"logoutRequestXml", Types.CLOB}, {"samlIdpSessionIndex", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -70,12 +69,12 @@ public class SamlIbSloMessageModelImpl
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("samlIdpEntityId", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("logoutRequestXml", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("logoutRequestXml", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("samlIdpSessionIndex", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SamlIbSloMessage (samlIbSloMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(75) null,logoutRequestXml VARCHAR(75) null,samlIdpSessionIndex VARCHAR(75) null)";
+		"create table SamlIbSloMessage (samlIbSloMessageId LONG not null primary key,companyId LONG,createDate DATE null,samlIdpEntityId VARCHAR(1024) null,logoutRequestXml TEXT null,samlIdpSessionIndex VARCHAR(200) null)";
 
 	public static final String TABLE_SQL_DROP = "drop table SamlIbSloMessage";
 

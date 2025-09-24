@@ -1,4 +1,4 @@
-create index IX_847AC537 on SamlIbSloMessage (samlIdpSessionIndex[$COLUMN_LENGTH:75$]);
+create index IX_847AC537 on SamlIbSloMessage (samlIdpSessionIndex[$COLUMN_LENGTH:200$]);
 
 create index IX_87463CFB on SamlIdpSpConnection (companyId, samlSpEntityId[$COLUMN_LENGTH:1024$]);
 

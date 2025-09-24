@@ -302,12 +302,12 @@ public class SamlIbSloMessageLocalServiceWrapper
 
 	@Override
 	public com.liferay.saml.persistence.model.SamlIbSloMessage
-			getSamlIbSloMessageByIdpSessionIndex(String samlIdpSessionIndex)
+			getSamlIbSloMessageBySamlIdpSessionIndex(String samlIdpSessionIndex)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIbSloMessageException {
 
 		return _samlIbSloMessageLocalService.
-			getSamlIbSloMessageByIdpSessionIndex(samlIdpSessionIndex);
+			getSamlIbSloMessageBySamlIdpSessionIndex(samlIdpSessionIndex);
 	}
 
 	/**

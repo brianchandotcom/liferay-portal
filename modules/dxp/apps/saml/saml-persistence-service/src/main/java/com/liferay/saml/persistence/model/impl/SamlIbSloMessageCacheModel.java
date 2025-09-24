@@ -115,13 +115,15 @@ public class SamlIbSloMessageCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		samlIbSloMessageId = objectInput.readLong();
 
 		companyId = objectInput.readLong();
 		createDate = objectInput.readLong();
 		samlIdpEntityId = objectInput.readUTF();
-		logoutRequestXml = objectInput.readUTF();
+		logoutRequestXml = (String)objectInput.readObject();
 		samlIdpSessionIndex = objectInput.readUTF();
 	}
 
@@ -140,10 +142,10 @@ public class SamlIbSloMessageCacheModel
 		}
 
 		if (logoutRequestXml == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(logoutRequestXml);
+			objectOutput.writeObject(logoutRequestXml);
 		}
 
 		if (samlIdpSessionIndex == null) {

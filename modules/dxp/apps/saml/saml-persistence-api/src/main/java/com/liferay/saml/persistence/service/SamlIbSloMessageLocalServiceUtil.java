@@ -261,12 +261,12 @@ public class SamlIbSloMessageLocalServiceUtil {
 		return getService().getSamlIbSloMessage(samlIbSloMessageId);
 	}
 
-	public static SamlIbSloMessage getSamlIbSloMessageByIdpSessionIndex(
+	public static SamlIbSloMessage getSamlIbSloMessageBySamlIdpSessionIndex(
 			String samlIdpSessionIndex)
 		throws com.liferay.saml.persistence.exception.
 			NoSuchIbSloMessageException {
 
-		return getService().getSamlIbSloMessageByIdpSessionIndex(
+		return getService().getSamlIbSloMessageBySamlIdpSessionIndex(
 			samlIdpSessionIndex);
 	}
 

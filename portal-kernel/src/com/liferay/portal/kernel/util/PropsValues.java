@@ -2379,6 +2379,13 @@ public class PropsValues {
 	public static final String UNICODE_TEXT_NORMALIZER_FORM = PropsUtil.get(
 		PropsKeys.UNICODE_TEXT_NORMALIZER_FORM);
 
+	public static final int UPGRADE_CONCURRENT_FETCH_SIZE =
+		GetterUtil.getInteger(PropsKeys.UPGRADE_CONCURRENT_FETCH_SIZE);
+
+	public static final int UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE =
+		GetterUtil.getInteger(
+			PropsKeys.UPGRADE_CONCURRENT_PROCESS_FUTURE_LIST_MAX_SIZE);
+
 	public static final boolean UPGRADE_DATABASE_DL_STORAGE_CHECK_DISABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get(

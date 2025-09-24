@@ -1130,8 +1130,13 @@ public class StagingImpl implements Staging {
 							"live-environment-and-the-staging-environment");
 			}
 			else {
-				long maxSize = _dlValidator.getMaxAllowableSize(
-					exportImportConfiguration.getGroupId(), null);
+				long groupId = 0L;
+
+				if (exportImportConfiguration != null) {
+					groupId = exportImportConfiguration.getGroupId();
+				}
+
+				long maxSize = _dlValidator.getMaxAllowableSize(groupId, null);
 
 				if (exception instanceof FileSizeException) {
 					FileSizeException fileSizeException =

@@ -4931,6 +4931,14 @@
 		]
 	},
 	{
+		"classNames": [
+			"CompanyThreadLocal"
+		],
+		"from": "setWithSafeCloseable",
+		"issueKey": "LPD-58435",
+		"to": "setCompanyIdWithSafeCloseable"
+	},
+	{
 		"from": "PropsValues.XML_SITEMAP_INDEX_ENABLED",
 		"issueKey": "LPD-59753",
 		"newImports": [

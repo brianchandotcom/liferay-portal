@@ -871,7 +871,7 @@ public class OrganizationResourceImpl
 	}
 
 	private long[] _getAssetCategoryIds(Organization organization) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return null;
 		}
 
@@ -1136,7 +1136,7 @@ public class OrganizationResourceImpl
 			return Long.valueOf(parentOrganization.getId());
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			com.liferay.portal.kernel.model.Organization
 				serviceBuilderOrganization =
 					_organizationService.
@@ -1427,7 +1427,7 @@ public class OrganizationResourceImpl
 				serviceBuilderOrganization)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return serviceBuilderOrganization;
 		}
 

@@ -107,7 +107,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 					value="<%= addressDisplay.getSubtype() %>"
 				/>
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand-small table-cell-minw-150"
 						name="status"

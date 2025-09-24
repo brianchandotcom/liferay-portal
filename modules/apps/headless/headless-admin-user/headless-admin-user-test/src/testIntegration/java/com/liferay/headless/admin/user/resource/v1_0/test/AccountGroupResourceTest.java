@@ -133,7 +133,7 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		_testPatchAccountGroupByExternalReferenceCodeWithoutName();
 	}
 
-	@FeatureFlag("LPD-47858")
+	@FeatureFlag("LPD-35914")
 	@LazyReferencing
 	@Override
 	@Test

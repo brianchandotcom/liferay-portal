@@ -265,7 +265,7 @@ public class RoleResourceTest extends BaseRoleResourceTestCase {
 		}
 	}
 
-	@FeatureFlag("LPD-47858")
+	@FeatureFlag("LPD-35914")
 	@LazyReferencing
 	@Override
 	@Test

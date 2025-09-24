@@ -415,7 +415,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				_accountEntry.getAccountEntryId(), "-"));
 	}
 
-	@FeatureFlag("LPD-47858")
+	@FeatureFlag("LPD-35914")
 	@LazyReferencing
 	@Override
 	@Test

@@ -714,7 +714,7 @@ public class AccountResourceImpl
 	}
 
 	private Long[] _getAssetCategoryIds(Account account) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return null;
 		}
 
@@ -791,7 +791,7 @@ public class AccountResourceImpl
 			Account account, long accountEntryId, long defaultBillingAddressId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
 			Validator.isNotNull(
 				account.getDefaultBillingAddressExternalReferenceCode())) {
 
@@ -826,7 +826,7 @@ public class AccountResourceImpl
 			Account account, long accountEntryId, long defaultShippingAddressId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
 			Validator.isNotNull(
 				account.getDefaultShippingAddressExternalReferenceCode())) {
 
@@ -1057,7 +1057,7 @@ public class AccountResourceImpl
 			organizationIds = transformToArray(
 				Arrays.asList(organizationExternalReferenceCodes),
 				externalReferenceCode -> {
-					if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+					if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 						com.liferay.portal.kernel.model.Organization
 							organization =
 								_organizationService.getOrAddEmptyOrganization(
@@ -1094,7 +1094,7 @@ public class AccountResourceImpl
 			Account account, long defaultParentAccountId)
 		throws Exception {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-47858") &&
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35914") &&
 			Validator.isNotNull(
 				account.getParentAccountExternalReferenceCode())) {
 
@@ -1344,7 +1344,7 @@ public class AccountResourceImpl
 			}
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return accountEntry;
 		}
 

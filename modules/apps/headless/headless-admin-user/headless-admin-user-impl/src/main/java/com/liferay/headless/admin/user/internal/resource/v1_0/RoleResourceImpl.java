@@ -611,7 +611,7 @@ public class RoleResourceImpl
 			Role role, com.liferay.portal.kernel.model.Role serviceBuilderRole)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return serviceBuilderRole;
 		}
 

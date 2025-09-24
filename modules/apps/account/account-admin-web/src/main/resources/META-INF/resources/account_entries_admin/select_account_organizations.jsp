@@ -38,7 +38,7 @@ SearchContainer<Organization> organizationSearchContainer = AssignableAccountOrg
 				value="<%= HtmlUtil.escape(organization.getParentOrganizationName()) %>"
 			/>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand-smallest table-cell-ws-nowrap table-column-text-center"
 					name="status"

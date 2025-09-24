@@ -35,7 +35,7 @@ public class OrganizationTableItemView implements TableItemView {
 
 	@Override
 	public List<String> getHeaderNames() {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return ListUtil.fromArray("name", "path", "type", "status");
 		}
 
@@ -71,7 +71,7 @@ public class OrganizationTableItemView implements TableItemView {
 
 		searchEntries.add(typeTextSearchEntry);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
 
 			statusSearchEntry.setCssClass("text-nowrap");

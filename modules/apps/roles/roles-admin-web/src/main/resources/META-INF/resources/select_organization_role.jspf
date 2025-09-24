@@ -237,7 +237,7 @@ else {
 						/>
 					</liferay-ui:search-container-column-text>
 
-					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+					<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand table-cell-minw-200"
 							name="status"

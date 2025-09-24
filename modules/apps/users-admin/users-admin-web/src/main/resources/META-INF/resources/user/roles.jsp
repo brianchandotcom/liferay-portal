@@ -114,7 +114,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 				/>
 			</liferay-ui:search-container-column-text>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="status"
@@ -346,7 +346,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					value="<%= HtmlUtil.escape(userGroupRole.getGroup().getDescriptiveName(locale)) %>"
 				/>
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="status"
@@ -607,7 +607,7 @@ currentURLObj.setParameter("historyKey", liferayPortletResponse.getNamespace() +
 					/>
 				</liferay-ui:search-container-column-text>
 
-				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+				<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-expand"
 						name="status"

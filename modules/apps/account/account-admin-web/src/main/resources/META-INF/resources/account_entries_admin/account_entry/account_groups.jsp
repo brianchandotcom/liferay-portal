@@ -46,7 +46,7 @@ renderResponse.setTitle(accountEntryDisplay.getName());
 				value="<%= HtmlUtil.escape(accountGroupDisplay.getDescription()) %>"
 			/>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-47858") %>'>
+			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-35914") %>'>
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand"
 					name="status"

@@ -492,7 +492,7 @@ public class AccountGroupResourceImpl
 			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35914")) {
 			return serviceBuilderAccountGroup;
 		}
 

@@ -15,6 +15,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -83,26 +84,94 @@ public class MCPServerServlet extends HttpServlet {
 	public void service(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
-		throws ServletException {
+		throws IOException, ServletException {
 
-		try {
-			Servlet servlet = _getServlet(httpServletRequest);
+		long companyId = _portal.getCompanyId(httpServletRequest);
 
-			if (servlet == null) {
-				httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			}
-			else {
-				servlet.service(httpServletRequest, httpServletResponse);
-			}
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
+			httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND);
+
+			return;
 		}
-		catch (Exception exception) {
-			throw new ServletException(exception);
-		}
+
+		Servlet servlet = _getServlet(
+			_portal.getPortalURL(httpServletRequest) + _portal.getPathModule(),
+			companyId);
+
+		servlet.service(httpServletRequest, httpServletResponse);
 	}
 
 	@Deactivate
 	protected void deactivate() {
 		destroy();
+	}
+
+	private Servlet _buildServlet(String baseURL, long companyId) {
+		AuthorizedHttpServletSseServerTransportProvider
+			authorizedHttpServletSseServerTransportProvider =
+				new AuthorizedHttpServletSseServerTransportProvider(
+					baseURL + "/mcp");
+
+		JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
+
+		McpSyncServer mcpSyncServer = McpServer.sync(
+			authorizedHttpServletSseServerTransportProvider
+		).capabilities(
+			McpSchema.ServerCapabilities.builder(
+			).tools(
+				true
+			).prompts(
+				true
+			).build()
+		).tool(
+			_getTool("get-openapis", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", baseURL + "/openapi", null)
+		).tool(
+			_getTool("get-openapi", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", String.valueOf(arguments.get("url")), null)
+		).tool(
+			_getTool("call-http-endpoint", toolsJSONObject),
+			(exchange, arguments) -> {
+				String path = String.valueOf(arguments.get("path"));
+
+				if (!path.startsWith("/")) {
+					path = "/" + path;
+				}
+
+				return _callEndpoint(
+					authorizedHttpServletSseServerTransportProvider.
+						getAuthorizationHeader(exchange),
+					String.valueOf(arguments.get("method")), baseURL + path,
+					String.valueOf(arguments.get("payload")));
+			}
+		).prompts(
+			_getSyncPromptSpecifications(companyId)
+		).build();
+
+		return new GenericServlet() {
+
+			@Override
+			public void destroy() {
+				mcpSyncServer.closeGracefully();
+			}
+
+			@Override
+			public void service(
+					ServletRequest servletRequest,
+					ServletResponse servletResponse)
+				throws IOException, ServletException {
+
+				authorizedHttpServletSseServerTransportProvider.service(
+					servletRequest, servletResponse);
+			}
+
+		};
 	}
 
 	private McpSchema.CallToolResult _callEndpoint(
@@ -147,96 +216,26 @@ public class MCPServerServlet extends HttpServlet {
 		}
 	}
 
-	private Servlet _getServlet(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		long companyId = _portal.getCompanyId(httpServletRequest);
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-63311")) {
-			return null;
-		}
-
+	private Servlet _getServlet(String baseURL, long companyId) {
 		Servlet servlet = _servlets.get(companyId);
 
 		if (servlet != null) {
 			return servlet;
 		}
 
-		String baseURL =
-			_portal.getPortalURL(httpServletRequest) + _portal.getPathModule();
+		synchronized (this) {
+			servlet = _servlets.get(companyId);
 
-		AuthorizedHttpServletSseServerTransportProvider
-			authorizedHttpServletSseServerTransportProvider =
-				new AuthorizedHttpServletSseServerTransportProvider(
-					baseURL + "/mcp");
-
-		JSONObject toolsJSONObject = _jsonFactory.createJSONObject(
-			StringUtil.replace(
-				StringUtil.read(MCPServerServlet.class, "/tools.json"),
-				"$BASE_URL", baseURL));
-
-		McpSyncServer mcpSyncServer = McpServer.sync(
-			authorizedHttpServletSseServerTransportProvider
-		).capabilities(
-			McpSchema.ServerCapabilities.builder(
-			).tools(
-				true
-			).prompts(
-				true
-			).build()
-		).tool(
-			_getTool("get-openapis", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", baseURL + "/openapi", null)
-		).tool(
-			_getTool("get-openapi", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", String.valueOf(arguments.get("url")), null)
-		).tool(
-			_getTool("call-http-endpoint", toolsJSONObject),
-			(exchange, arguments) -> {
-				String path = String.valueOf(arguments.get("path"));
-
-				if (!path.startsWith("/")) {
-					path = "/" + path;
-				}
-
-				return _callEndpoint(
-					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange),
-					String.valueOf(arguments.get("method")), baseURL + path,
-					String.valueOf(arguments.get("payload")));
-			}
-		).prompts(
-			_getSyncPromptSpecifications(companyId)
-		).build();
-
-		servlet = new GenericServlet() {
-
-			@Override
-			public void destroy() {
-				mcpSyncServer.closeGracefully();
+			if (servlet != null) {
+				return servlet;
 			}
 
-			@Override
-			public void service(
-					ServletRequest servletRequest,
-					ServletResponse servletResponse)
-				throws IOException, ServletException {
+			servlet = _buildServlet(baseURL, companyId);
 
-				authorizedHttpServletSseServerTransportProvider.service(
-					servletRequest, servletResponse);
-			}
+			_servlets.put(companyId, servlet);
 
-		};
-
-		_servlets.put(companyId, servlet);
-
-		return servlet;
+			return servlet;
+		}
 	}
 
 	private List<McpServerFeatures.SyncPromptSpecification>
@@ -284,6 +283,18 @@ public class MCPServerServlet extends HttpServlet {
 			toolJSONObject.getJSONObject(
 				"schema"
 			).toString());
+	}
+
+	private JSONObject _getToolsJSONObject(String baseURL) {
+		try {
+			return _jsonFactory.createJSONObject(
+				StringUtil.replace(
+					StringUtil.read(MCPServerServlet.class, "/tools.json"),
+					"$BASE_URL", baseURL));
+		}
+		catch (JSONException jsonException) {
+			throw new RuntimeException(jsonException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

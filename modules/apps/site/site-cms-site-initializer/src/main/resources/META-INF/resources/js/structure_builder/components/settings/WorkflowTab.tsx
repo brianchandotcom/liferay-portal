@@ -30,7 +30,7 @@ export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
 		<div>
 			<p className="text-secondary">
 				{Liferay.Language.get(
-					'set-the-default-workflow-for-entries-created-with-this-content-structure.-it-will-apply-to-all-spaces-using-the-default-workflow-including-new-ones'
+					'set-the-default-workflow-for-entries-created-with-this-content-structure'
 				)}
 			</p>
 

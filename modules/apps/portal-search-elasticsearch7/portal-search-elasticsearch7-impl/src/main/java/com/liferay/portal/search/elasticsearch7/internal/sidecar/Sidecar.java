@@ -502,17 +502,11 @@ public class Sidecar {
 
 		Path dataParentPath = workPath.resolve("data/elasticsearch7");
 
-		Path homePath = _elasticsearchInstancePaths.getHomePath();
-
-		if (homePath == null) {
-			homePath = workPath.resolve("data/elasticsearch7");
-		}
-
 		settingsHelperImpl.put(
 			"path.data", String.valueOf(dataParentPath.resolve("indices")));
 
 		settingsHelperImpl.put(
-			"path.home", String.valueOf(homePath.toAbsolutePath()));
+			"path.home", String.valueOf(_sidecarHomePath.toAbsolutePath()));
 
 		settingsHelperImpl.put(
 			"path.logs", String.valueOf(workPath.resolve("logs")));

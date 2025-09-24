@@ -152,11 +152,17 @@ public class RowLayoutStructureItemImporter
 	}
 
 	private JSONObject _toViewportJSONObject(GridViewport gridViewport) {
+		if (gridViewport == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		GridViewportDefinition gridViewportDefinition =
 			gridViewport.getGridViewportDefinition();
 
 		if (Validator.isNull(gridViewport.getCustomCSS()) &&
-			(gridViewportDefinition == null)) {
+			((gridViewportDefinition == null) ||
+			 ((gridViewportDefinition.getModulesPerRow() == null) &&
+			  (gridViewportDefinition.getVerticalAlignment() == null)))) {
 
 			return JSONFactoryUtil.createJSONObject();
 		}

@@ -29,9 +29,11 @@ import WorkflowTaskRenderer from '../props_transformer/cell_renderers/WorkflowTa
 export default function ViewWorkflowTasks({
 	id,
 	myWorkflowTasksURL,
+	objectDefinitions,
 }: {
 	id: string;
 	myWorkflowTasksURL: string;
+	objectDefinitions: any[];
 }) {
 	const filterItems = [
 		{
@@ -84,6 +86,7 @@ export default function ViewWorkflowTasks({
 					: getWorkflowTasksAssignedToMyRoles;
 
 			const res = await getWorkflowTasksAPI({
+				objectDefinitions,
 				page: pagination.currentPage,
 				pageSize: pagination.pageSize,
 			});
@@ -103,7 +106,7 @@ export default function ViewWorkflowTasks({
 		catch (error) {
 			setWorkflowTasks({items: [], totalCount: 0});
 		}
-	}, [pagination, selectedItem.value, myWorkflowTasksURL]);
+	}, [pagination, selectedItem.value, myWorkflowTasksURL, objectDefinitions]);
 
 	useEffect(() => {
 		getWorkflowTasks();

@@ -16,9 +16,11 @@ export async function getWorkflowDefinitions(): Promise<Workflow[]> {
 }
 
 export async function getWorkflowTasksAssignedToMe({
+	objectDefinitions,
 	page,
 	pageSize,
 }: {
+	objectDefinitions: any[];
 	page: number;
 	pageSize: number;
 }): Promise<{items: WorkflowTask[]; totalCount: number}> {
@@ -38,8 +40,15 @@ export async function getWorkflowTasksAssignedToMe({
 	}>(fetchUrl);
 
 	if (data) {
+		const assetTypes = objectDefinitions.map(
+			(item) => item.label[item.defaultLanguageId]
+		);
+
 		const filteredWorkflowTasks = data.items.filter(
-			(item) => !item.completed && item.name === 'review'
+			(item) =>
+				!item.completed &&
+				item.name === 'review' &&
+				assetTypes.includes(item.objectReviewed.assetType)
 		);
 
 		const transformedWorkflowTasks = filteredWorkflowTasks.map(
@@ -78,9 +87,11 @@ export async function getWorkflowTasksAssignedToMe({
 }
 
 export async function getWorkflowTasksAssignedToMyRoles({
+	objectDefinitions,
 	page,
 	pageSize,
 }: {
+	objectDefinitions: any[];
 	page: number;
 	pageSize: number;
 }): Promise<{items: WorkflowTask[]; totalCount: number}> {
@@ -100,8 +111,15 @@ export async function getWorkflowTasksAssignedToMyRoles({
 	}>(fetchUrl);
 
 	if (data) {
+		const assetTypes = objectDefinitions.map(
+			(item) => item.label[item.defaultLanguageId]
+		);
+
 		const filteredWorkflowTasks = data.items.filter(
-			(item) => !item.completed && item.name === 'review'
+			(item) =>
+				!item.completed &&
+				item.name === 'review' &&
+				assetTypes.includes(item.objectReviewed.assetType)
 		);
 
 		const transformedWorkflowTasks = filteredWorkflowTasks.map(

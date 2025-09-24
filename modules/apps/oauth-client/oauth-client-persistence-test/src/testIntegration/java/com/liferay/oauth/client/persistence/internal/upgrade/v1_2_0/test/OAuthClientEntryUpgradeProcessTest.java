@@ -78,6 +78,7 @@ public class OAuthClientEntryUpgradeProcessTest {
 					TestPropsValues.getUserId(), StringPool.BLANK,
 					"https://accounts.google.com/.well-known" +
 						"/openid-configuration",
+					null,
 					JSONUtil.put(
 						"client_id", RandomTestUtil.randomString()
 					).put(

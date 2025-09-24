@@ -12,7 +12,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
 import {fetch} from 'frontend-js-web';
-import React, {useId, useState} from 'react';
+import React, {useEffect, useId, useState} from 'react';
 
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
@@ -45,30 +45,35 @@ export function SpaceMembersInputWithSelect({
 			? '/o/headless-admin-user/v1.0/user-accounts'
 			: '/o/headless-admin-user/v1.0/user-groups';
 
-	const {refetch, resource} = useResource({
-		fetch: async (link, options) => {
-			const result = await fetch(link, {
-				...options,
-				headers: {
-					...(options?.headers ? options.headers : {}),
-					'x-csrf-token': Liferay.authToken,
+	const {refetch, resource} = disabled
+		? {refetch: () => {}, resource: {items: []}}
+		: useResource({
+				fetch: async (link, options) => {
+					const result = await fetch(link, {
+						...options,
+						headers: {
+							...(options?.headers ? options.headers : {}),
+							'x-csrf-token': Liferay.authToken,
+						},
+					});
+
+					const json = await result.json();
+
+					return {
+						cursor: json.next,
+						items: json.items.map((item: any) => {
+							return {
+								...item,
+								numberOfUserAccounts: item.usersCount,
+							};
+						}),
+					};
 				},
+				fetchPolicy: 'no-cache' as FetchPolicy.NoCache,
+				link: `${window.location.origin}${endpoint}`,
+				onNetworkStatusChange: setNetworkStatus,
+				variables: {search: value},
 			});
-
-			const json = await result.json();
-
-			return {
-				cursor: json.next,
-				items: json.items.map((item: any) => {
-					return {...item, numberOfUserAccounts: item.usersCount};
-				}),
-			};
-		},
-		fetchPolicy: 'no-cache' as FetchPolicy.NoCache,
-		link: `${window.location.origin}${endpoint}`,
-		onNetworkStatusChange: setNetworkStatus,
-		variables: {search: value},
-	});
 
 	const renderAutocompleteItem = () => {
 		if (selectValue === SelectOptions.USERS) {

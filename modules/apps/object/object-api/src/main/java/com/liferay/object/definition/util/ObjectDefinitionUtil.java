@@ -99,8 +99,8 @@ public class ObjectDefinitionUtil {
 		"com.liferay.commerce.service", "com.liferay.cookies.impl",
 		"com.liferay.frontend.data.set.admin.web",
 		"com.liferay.frontend.data.set.impl",
-		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
-		"com.liferay.mcp.server", "com.liferay.notification.service",
+		"com.liferay.headless.builder.impl", "com.liferay.headless.mcp.server",
+		"com.liferay.list.type.service", "com.liferay.notification.service",
 		"com.liferay.object.service", "com.liferay.site.initializer.cms"
 	};
 

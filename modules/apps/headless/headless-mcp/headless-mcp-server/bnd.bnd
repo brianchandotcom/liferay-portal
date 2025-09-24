@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Headless MCP Server
+Bundle-SymbolicName: com.liferay.headless.mcp.server
+Bundle-Version: 0.0.1
+Import-Package:\
+	!javax.annotation.*,\
+	\
+	*
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore
+Liferay-Client-Extension-Batch: com/liferay/headless/mcp/server/internal/batch

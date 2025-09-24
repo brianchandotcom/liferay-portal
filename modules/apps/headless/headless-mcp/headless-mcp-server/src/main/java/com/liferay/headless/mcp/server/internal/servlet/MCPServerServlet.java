@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.mcp.server.internal.servlet;
+package com.liferay.headless.mcp.server.internal.servlet;
 
-import com.liferay.mcp.server.internal.constants.MCPServerConstants;
-import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
+import com.liferay.headless.mcp.server.internal.constants.MCPServerConstants;
+import com.liferay.headless.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"osgi.http.whiteboard.context.path=/mcp",
-		"osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.internal.servlet.MCPServerServlet",
+		"osgi.http.whiteboard.servlet.name=com.liferay.headless.mcp.server.internal.servlet.MCPServerServlet",
 		"osgi.http.whiteboard.servlet.pattern=/mcp/*"
 	},
 	service = Servlet.class

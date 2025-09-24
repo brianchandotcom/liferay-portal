@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.mcp.server.internal.model.listener;
+package com.liferay.headless.mcp.server.internal.model.listener;
 
-import com.liferay.mcp.server.internal.constants.MCPServerConstants;
+import com.liferay.headless.mcp.server.internal.constants.MCPServerConstants;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.listener.RelevantObjectEntryModelListener;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -52,7 +52,7 @@ public class ObjectEntryModelListener
 	}
 
 	@Reference(
-		target = "(osgi.http.whiteboard.servlet.name=com.liferay.mcp.server.internal.servlet.MCPServerServlet)"
+		target = "(osgi.http.whiteboard.servlet.name=com.liferay.headless.mcp.server.internal.servlet.MCPServerServlet)"
 	)
 	private Servlet _servlet;
 

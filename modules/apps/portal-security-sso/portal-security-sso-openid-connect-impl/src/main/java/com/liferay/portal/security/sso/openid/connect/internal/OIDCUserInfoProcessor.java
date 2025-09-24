@@ -322,14 +322,18 @@ public class OIDCUserInfoProcessor {
 			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
+		if (expandoTable == null) {
+			return;
+		}
+
 		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject(
 			customClaimsJSON);
 
 		for (String key : customClaimsJSONObject.keySet()) {
-			String claimValue = userInfoJSONObject.getString(
+			String value = userInfoJSONObject.getString(
 				customClaimsJSONObject.getString(key));
 
-			if (claimValue.isEmpty()) {
+			if (value.isEmpty()) {
 				continue;
 			}
 
@@ -348,7 +352,7 @@ public class OIDCUserInfoProcessor {
 			_expandoValueLocalService.addValue(
 				_classNameLocalService.getClassNameId(User.class.getName()),
 				expandoColumn.getTableId(), expandoColumn.getColumnId(), userId,
-				claimValue);
+				value);
 		}
 	}
 

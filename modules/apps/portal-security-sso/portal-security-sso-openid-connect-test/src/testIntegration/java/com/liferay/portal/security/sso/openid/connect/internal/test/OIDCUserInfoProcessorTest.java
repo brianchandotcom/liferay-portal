@@ -170,20 +170,19 @@ public class OIDCUserInfoProcessorTest {
 			"{}", new String[] {"group1"}, new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		ExpandoTable userCustomFieldsExpandoTable =
-			_expandoTableLocalService.fetchTable(
-				TestPropsValues.getCompanyId(),
-				_classNameLocalService.getClassNameId(User.class.getName()),
-				ExpandoTableConstants.DEFAULT_TABLE_NAME);
+		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
+			TestPropsValues.getCompanyId(),
+			_classNameLocalService.getClassNameId(User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		ExpandoColumn phoneNumberVerifiedExpandoColumn =
 			_expandoColumnLocalService.addColumn(
-				userCustomFieldsExpandoTable.getTableId(),
-				"phoneNumberVerified", ExpandoColumnConstants.BOOLEAN);
+				expandoTable.getTableId(), "phoneNumberVerified",
+				ExpandoColumnConstants.BOOLEAN);
 
 		ExpandoColumn websiteExpandoColumn =
 			_expandoColumnLocalService.addColumn(
-				userCustomFieldsExpandoTable.getTableId(), "website",
+				expandoTable.getTableId(), "website",
 				ExpandoColumnConstants.STRING);
 
 		_testProcessUserInfo(

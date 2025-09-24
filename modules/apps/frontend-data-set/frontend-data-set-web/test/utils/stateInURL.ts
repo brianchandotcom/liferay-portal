@@ -23,7 +23,7 @@ describe('contains utility', () => {
 		});
 	});
 
-	describe('containment with different values', () => {
+	describe('containment with different values, objects', () => {
 		it('returns false when both subset and superset has the property with a different value', () => {
 			expect(
 				contains(
@@ -52,7 +52,7 @@ describe('contains utility', () => {
 		});
 	});
 
-	describe('containment with same values', () => {
+	describe('containment with same values, objects', () => {
 		it('returns true when both superset and subset are deep equals', () => {
 			expect(
 				contains(
@@ -102,7 +102,7 @@ describe('contains utility', () => {
 		});
 	});
 
-	describe('partial overlap', () => {
+	describe('partial overlap, objects', () => {
 		it('returns false when subset is a superset of the superset', () => {
 			expect(
 				contains(
@@ -111,6 +111,148 @@ describe('contains utility', () => {
 						[EStateInURLKeys.DELTA]: 1,
 					},
 					{[EStateInURLKeys.DELTA]: 1}
+				)
+			).toBeFalsy();
+		});
+	});
+
+	describe('emptiness, arrays', () => {
+		it('returns true when both subset and superset are empty arrays', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: []},
+					{[EStateInURLKeys.ACTIVE_SORTS]: []}
+				)
+			).toBeTruthy();
+		});
+
+		it('returns false when superset is empty object and subset is not', () => {
+			expect(
+				contains({[EStateInURLKeys.ACTIVE_SORTS]: []}, {})
+			).toBeFalsy();
+		});
+
+		it('returns false when subset is empty but superset is not', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: []},
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]}
+				)
+			).toBeFalsy();
+		});
+	});
+
+	describe('containment with different values, arrays', () => {
+		it('returns false when both subset and superset has array with a different value', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]},
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'bar'}]}
+				)
+			).toBeFalsy();
+		});
+
+		it('returns false when superset has the property with a undefined value', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]},
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: undefined}]}
+				)
+			).toBeFalsy();
+		});
+
+		it('returns false when superset has the property with a undefined value', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]},
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{direction: 'desc'}]}
+				)
+			).toBeFalsy();
+		});
+	});
+
+	describe('containment with same values, arrays', () => {
+		it('returns true when both superset and subset are deep equals', () => {
+			expect(
+				contains(
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc', key: 'foo'},
+						],
+					},
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc', key: 'foo'},
+						],
+					}
+				)
+			).toBeTruthy();
+		});
+
+		it('returns true when both superset and subset are deep equals, different order', () => {
+			expect(
+				contains(
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{key: 'foo'},
+							{direction: 'desc'},
+						],
+					},
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc'},
+							{key: 'foo'},
+						],
+					}
+				)
+			).toBeTruthy();
+		});
+
+		it('returns true when subset is strictly contained in superset', () => {
+			expect(
+				contains(
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc'},
+							{key: 'bar'},
+						],
+					},
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc', key: 'foo'},
+							{key: 'bar'},
+						],
+					}
+				)
+			).toBeTruthy();
+		});
+
+		it('returns false when subset is not strictly contained in superset', () => {
+			expect(
+				contains(
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]},
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc'},
+							{key: 'foo'},
+						],
+					}
+				)
+			).toBeFalsy();
+		});
+	});
+
+	describe('partial overlap, arrays', () => {
+		it('returns false when subset is a superset of the superset', () => {
+			expect(
+				contains(
+					{
+						[EStateInURLKeys.ACTIVE_SORTS]: [
+							{direction: 'desc'},
+							{key: 'foo'},
+						],
+					},
+					{[EStateInURLKeys.ACTIVE_SORTS]: [{key: 'foo'}]}
 				)
 			).toBeFalsy();
 		});

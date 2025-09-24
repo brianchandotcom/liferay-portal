@@ -131,14 +131,38 @@ function deepContains(subset: any, superset: any) {
 		return false;
 	}
 
-	if (Array.isArray(subset) && Array.isArray(superset)) {
-		if (subset.length === superset.length && !subset.length) {
+	if (Array.isArray(subset)) {
+		if (!Array.isArray(superset) || subset.length > superset.length) {
+			return false;
+		}
+
+		if (!subset.length && !!superset.length) {
+			return false;
+		}
+
+		if (subset.length === superset.length && !superset.length) {
 			return true;
 		}
 
-		if (subset.length > superset.length || !subset.length) {
+		const supersetItems = [...superset];
+
+		for (const subsetItem of subset) {
+			const index = supersetItems.findIndex((supersetItem) =>
+				deepContains(subsetItem, supersetItem)
+			);
+
+			if (index === -1) {
+				return false;
+			}
+
+			supersetItems.splice(index, 1);
+		}
+
+		if (supersetItems.length) {
 			return false;
 		}
+
+		return true;
 	}
 
 	for (const key of Object.keys(subset)) {

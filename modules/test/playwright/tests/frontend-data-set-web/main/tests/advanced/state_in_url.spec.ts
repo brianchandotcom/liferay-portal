@@ -437,5 +437,119 @@ for (const spaConfiguration of spaConfigurations) {
 				});
 			}
 		);
+
+		test(
+			'URL in state, push history, visible fields',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}) => {
+				const initialBodyCellText = await page
+					.locator('td')
+					.nth(1)
+					.innerText();
+
+				await test.step('Update visible fields via UI', async () => {
+					const button = page.getByLabel('Manage Columns Visibility');
+
+					await expect(button).toBeAttached();
+
+					await button.click();
+
+					const menuItem = page.getByRole('menuitem').nth(0);
+
+					await menuItem.click();
+				});
+
+				await test.step('Check visible fields in the UI', async () => {
+					await expect(page.locator('td').nth(1)).not.toHaveText(
+						initialBodyCellText
+					);
+
+					await expect(fdsSamplePage.table.headerCells).toHaveCount(
+						9
+					);
+				});
+
+				await test.step('Assert that the URL state is updated', async () => {
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.vf).toBeDefined();
+					expect(state.vf.id).toBe(false);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+					expect(state.vf).toBeUndefined();
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+					expect(state.vf).toBeDefined();
+					expect(state.vf.id).toBe(false);
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+
+					let state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+					expect(state.vf).toBeUndefined();
+
+					await fdsSamplePage.table.manageColumnsVisibilityButton.click();
+					await page.getByRole('menu').waitFor();
+
+					const titleMenuItem = page
+						.getByRole('menu')
+						.getByRole('menuitem', {name: 'title'});
+
+					await titleMenuItem.click();
+
+					await page.waitForTimeout(1000);
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.vf).toBeDefined();
+					expect(state.vf.title).toBe(false);
+
+					await page.goBack();
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.vf).toBeUndefined();
+
+					await page.goForward();
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.vf).toBeDefined();
+					expect(state.vf.title).toBe(false);
+
+					expect(await page.goForward()).toBeNull();
+				});
+			}
+		);
 	});
 }

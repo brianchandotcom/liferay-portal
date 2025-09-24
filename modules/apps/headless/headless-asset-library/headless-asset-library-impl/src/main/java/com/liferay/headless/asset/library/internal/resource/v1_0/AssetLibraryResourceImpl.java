@@ -82,49 +82,29 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
-	public void deleteAssetLibrary(Long assetLibraryId) throws Exception {
+	public void deleteAssetLibrary(String externalReferenceCode)
+		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(
+			_getGroupIdByExternalReferenceCode(externalReferenceCode));
 
 		_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
 	}
 
 	@Override
-	public void deleteAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
+	public void deleteAssetLibraryPin(String externalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		deleteAssetLibrary(
+		DepotEntry depotEntry = _getGroupDepotEntry(
 			_getGroupIdByExternalReferenceCode(externalReferenceCode));
-	}
-
-	@Override
-	public void deleteAssetLibraryByExternalReferenceCodePin(
-			String externalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		deleteAssetLibraryPin(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode));
-	}
-
-	@Override
-	public void deleteAssetLibraryPin(Long assetLibraryId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		_depotEntryPinService.deleteDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -161,18 +141,15 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	public Page<Permission>
-			getAssetLibraryByExternalReferenceCodePermissionsPage(
-				String externalReferenceCode, String roleNames)
+	public Page<Permission> getAssetLibraryPermissionsPage(
+			String externalReferenceCode, String roleNames)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		return getAssetLibraryPermissionsPage(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode),
-			roleNames);
+		return getAssetLibraryPermissionsPage(externalReferenceCode, roleNames);
 	}
 
 	@Override
@@ -182,14 +159,15 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public AssetLibrary patchAssetLibrary(
-			Long assetLibraryId, AssetLibrary assetLibrary)
+			String externalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
+		DepotEntry depotEntry = _getGroupDepotEntry(
+			_getGroupIdByExternalReferenceCode(externalReferenceCode));
 
 		Group group = depotEntry.getGroup();
 
@@ -231,7 +209,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putAssetLibraryPermissionsPage(
-				updatedAssetLibrary.getId(), permissions);
+				updatedAssetLibrary.getExternalReferenceCode(), permissions);
 
 			updatedAssetLibrary.setPermissions(
 				() -> NestedFieldsSupplier.supply(
@@ -248,23 +226,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	public AssetLibrary patchAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return patchAssetLibrary(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode),
-			assetLibrary);
-	}
-
-	@Override
-	public Page<Permission>
-			putAssetLibraryByExternalReferenceCodePermissionsPage(
-				String externalReferenceCode, Permission[] permissions)
+	public Page<Permission> putAssetLibraryPermissionsPage(
+			String externalReferenceCode, Permission[] permissions)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -272,32 +235,19 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		return putAssetLibraryPermissionsPage(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode),
-			permissions);
+			externalReferenceCode, permissions);
 	}
 
 	@Override
-	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
-			String externalReferenceCode)
+	public AssetLibrary putAssetLibraryPin(String externalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		return putAssetLibraryPin(
+		DepotEntry depotEntry = _getGroupDepotEntry(
 			_getGroupIdByExternalReferenceCode(externalReferenceCode));
-	}
-
-	@Override
-	public AssetLibrary putAssetLibraryPin(Long assetLibraryId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		DepotEntry depotEntry = _getGroupDepotEntry(assetLibraryId);
 
 		_depotEntryPinService.addDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -336,19 +286,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	protected AssetLibrary doGetAssetLibrary(Long assetLibraryId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _toAssetLibrary(_getGroupDepotEntry(assetLibraryId));
-	}
-
-	@Override
-	protected AssetLibrary doGetAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
+	protected AssetLibrary doGetAssetLibrary(String externalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -383,7 +321,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	protected AssetLibrary doPutAssetLibraryByExternalReferenceCode(
+	protected AssetLibrary doPutAssetLibrary(
 			String externalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception {
 
@@ -403,25 +341,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				_getServiceContext(),
 				_putUnicodeProperties(assetLibrary.getSettings()),
 				new LinkedHashMap<>()));
-	}
-
-	@Override
-	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
-		DepotEntry depotEntry = _getGroupDepotEntry(GetterUtil.getLong(id));
-
-		return depotEntry.getGroupId();
-	}
-
-	@Override
-	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
-		DepotEntry depotEntry = _getGroupDepotEntry(GetterUtil.getLong(id));
-
-		return depotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected String getPermissionCheckerResourceName(Object id) {
-		return DepotEntry.class.getName();
 	}
 
 	private DepotEntry _addOrUpdateDepotEntry(

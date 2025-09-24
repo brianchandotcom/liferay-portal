@@ -8,27 +8,23 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {samplePageTest} from '../../frontend-taglib/main/fixtures/samplePageTest';
+import {TabName} from '../../frontend-taglib/main/pages/SamplePage';
 
 export const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedSiteTest,
-	loginTest(),
 	pageViewModePagesTest,
 	samplePageTest
 );
 const testLegacy = mergeTests(dataApiHelpersTest, loginTest());
-
-const linkName = 'Search Iterator';
 
 test(
 	'Search Iterator overlaps fixed header on scrolling',
@@ -72,15 +68,9 @@ test(
 test(
 	'Checkboxes can be selected when using RowChecker',
 	{tag: '@LPD-63803'},
-	async ({page, samplePage, site}) => {
-		await test.step('Create a content site and the frontend taglib sample widget', async () => {
-			await samplePage.setupSampleWidget({
-				site,
-			});
-		});
-
-		await test.step('Select Panel link', async () => {
-			await samplePage.selectLink(linkName);
+	async ({page, samplePage}) => {
+		await test.step('Select Search Iterator tab', async () => {
+			await samplePage.selectTab(TabName.SEARCH_ITERATOR);
 		});
 
 		await test.step('Select checkbox and assert it remains marked', async () => {
@@ -92,7 +82,7 @@ test(
 
 			await firstCheckbox.check();
 
-			expect(firstCheckbox).toBeChecked();
+			await expect(firstCheckbox).toBeChecked();
 		});
 	}
 );

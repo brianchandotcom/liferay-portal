@@ -10,7 +10,7 @@
 		"prop-types": "15.7.2",
 		"react": "18.2.0"
 	},
-	"main": "js/index.js",
+	"main": "js/index.ts",
 	"name": "document-library-video",
 	"scripts": {
 		"build": "node-scripts build",

@@ -16,6 +16,7 @@ import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -120,9 +121,12 @@ public class ObjectEntryDTOConverterTest {
 			group.getGroupId(), GetterUtil.getLong(objectEntry.getScopeId()));
 		Assert.assertEquals(group.getGroupKey(), objectEntry.getScopeKey());
 
-		Scope scope = objectEntry.getScope();
+		SystemProperties systemProperties = objectEntry.getSystemProperties();
 
-		Assert.assertNotNull(scope);
+		Assert.assertNotNull(systemProperties);
+
+		Scope scope = systemProperties.getScope();
+
 		Assert.assertEquals(
 			group.getExternalReferenceCode(), scope.getExternalReferenceCode());
 		Assert.assertEquals(Scope.Type.SITE, scope.getType());

@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -51,10 +50,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -933,27 +932,24 @@ public class FragmentEntryLocalServiceImpl
 		return repository;
 	}
 
-	private String _getUniqueCopyName(FragmentEntry fragmentEntry) {
-		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
+	private String _getUniqueCopyName(FragmentEntry fragmentEntry)
+		throws PortalException {
 
-		String name = StringUtil.appendParentheticalSuffix(
-			fragmentEntry.getName(), copy);
+		return UniqueUtil.getCopyName(
+			fragmentEntry.getName(),
+			copyName -> {
+				FragmentEntry existingFragmentEntry =
+					fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
+						fragmentEntry.getGroupId(),
+						fragmentEntry.getFragmentCollectionId(), copyName,
+						null);
 
-		for (int i = 1;; i++) {
-			FragmentEntry existingFragmentEntry =
-				fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
-					fragmentEntry.getGroupId(),
-					fragmentEntry.getFragmentCollectionId(), name, null);
+				if (existingFragmentEntry == null) {
+					return true;
+				}
 
-			if (existingFragmentEntry == null) {
-				break;
-			}
-
-			name = StringUtil.appendParentheticalSuffix(
-				fragmentEntry.getName(), copy + StringPool.SPACE + i);
-		}
-
-		return name;
+				return false;
+			});
 	}
 
 	private void _propagateChanges(long fragmentEntryId)
@@ -1096,9 +1092,6 @@ public class FragmentEntryLocalServiceImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private ResourceLocalService _resourceLocalService;

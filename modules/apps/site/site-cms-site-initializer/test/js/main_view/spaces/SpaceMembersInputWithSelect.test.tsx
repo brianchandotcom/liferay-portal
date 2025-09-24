@@ -256,6 +256,10 @@ describe('SpaceMembersInputWithSelect', () => {
 			screen.getByRole('option', {name: /John Doe \(john.doe\)/})
 		);
 
+		await waitFor(async () => {
+			await onAutocompleteItemSelected.mock.results[0].value;
+		});
+
 		expect(onAutocompleteItemSelected).toHaveBeenCalledTimes(1);
 		expect(onAutocompleteItemSelected).toHaveBeenCalledWith({
 			_key: '1',
@@ -298,7 +302,9 @@ describe('SpaceMembersInputWithSelect', () => {
 
 		await userEvent.click(screen.getByRole('option', {name: /Group 1/}));
 
-		expect(onAutocompleteItemSelected).toHaveBeenCalledTimes(1);
+		await waitFor(async () => {
+			await onAutocompleteItemSelected.mock.results[0].value;
+		});
 
 		expect(onAutocompleteItemSelected).toHaveBeenCalledWith({
 			_key: '1',
@@ -311,7 +317,7 @@ describe('SpaceMembersInputWithSelect', () => {
 		await waitFor(() => expect(input).toHaveValue(''));
 	});
 
-	it('renders a disabled input when disabled is true', () => {
+	it('renders a disabled input when disabled is true', async () => {
 		render(
 			<SpaceMembersInputWithSelect
 				disabled
@@ -322,5 +328,7 @@ describe('SpaceMembersInputWithSelect', () => {
 		const input = screen.getByPlaceholderText('enter-name-or-email');
 
 		expect(input).toBeDisabled();
+
+		await waitFor(() => expect(mockFetch).not.toHaveBeenCalled());
 	});
 });

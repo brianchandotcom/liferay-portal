@@ -8,6 +8,7 @@ import {LanguagePicker, Provider} from '@clayui/core';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -80,84 +81,98 @@ const EditCategoryGeneralInfoTab = ({
 	};
 
 	return (
-		<div className="vertical-nav-content-wrapper">
-			<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
-				<ClayLayout.Row className="form-title" justify="between">
-					<div className="form-title">
-						{Liferay.Language.get('basic-info')}
-					</div>
+		<div className="container-fluid container-fluid-max-md p-0 p-md-4">
+			<ClayPanel
+				aria-label="basic-info"
+				className="mb-4"
+				collapsable={false}
+				displayType="secondary"
+				role="group"
+			>
+				<ClayForm.Group className="c-gap-4 d-flex flex-column p-4">
+					<ClayLayout.Row className="form-title" justify="between">
+						<h2 className="mb-0 py-2 text-6 text-dark">
+							{Liferay.Language.get('basic-info')}
+						</h2>
 
-					<div className="autofit-col" style={{width: 'fit-content'}}>
-						<Provider spritemap={spritemap}>
-							<LanguagePicker
-								defaultLocaleId={defaultLanguageId}
-								locales={locales}
-								onSelectedLocaleChange={(
-									localId: React.Key
-								) => {
-									setLanguageId(localId as string);
-								}}
-								selectedLocaleId={languageId}
-								small
+						<div
+							className="autofit-col"
+							style={{width: 'fit-content'}}
+						>
+							<Provider spritemap={spritemap}>
+								<LanguagePicker
+									defaultLocaleId={defaultLanguageId}
+									locales={locales}
+									onSelectedLocaleChange={(
+										localId: React.Key
+									) => {
+										setLanguageId(localId as string);
+									}}
+									selectedLocaleId={languageId}
+									small
+								/>
+							</Provider>
+						</div>
+					</ClayLayout.Row>
+
+					<div className={nameInputError ? 'has-error' : ''}>
+						<label>
+							{Liferay.Language.get('name')}
+
+							<ClayIcon
+								className="c-ml-1 reference-mark"
+								focusable="false"
+								role="presentation"
+								symbol="asterisk"
 							/>
-						</Provider>
-					</div>
-				</ClayLayout.Row>
+						</label>
 
-				<div className={nameInputError ? 'has-error' : ''}>
-					<label>
-						{Liferay.Language.get('name')}
-
-						<ClayIcon
-							className="c-ml-1 reference-mark"
-							focusable="false"
-							role="presentation"
-							symbol="asterisk"
+						<ClayInput
+							aria-label={Liferay.Language.get('name')}
+							data-testid="name-input"
+							id="name"
+							onChange={({target: {value}}) =>
+								onChangeName(value)
+							}
+							required
+							type="text"
+							value={
+								category.name_i18n[
+									getLanguageLabel(languageId)
+								] || ''
+							}
 						/>
-					</label>
 
-					<ClayInput
-						aria-label={Liferay.Language.get('name')}
-						data-testid="name-input"
-						id="name"
-						onChange={({target: {value}}) => onChangeName(value)}
-						required
-						type="text"
-						value={
-							category.name_i18n[getLanguageLabel(languageId)] ||
-							''
-						}
-					/>
+						{nameInputError && (
+							<ClayAlert displayType="danger" variant="feedback">
+								{nameInputError}
+							</ClayAlert>
+						)}
+					</div>
 
-					{nameInputError && (
-						<ClayAlert displayType="danger" variant="feedback">
-							{nameInputError}
-						</ClayAlert>
-					)}
-				</div>
+					<div>
+						<label>{Liferay.Language.get('description')}</label>
 
-				<div>
-					<label>{Liferay.Language.get('description')}</label>
-
-					<ClayInput
-						aria-label={Liferay.Language.get('description')}
-						component="textarea"
-						data-testid="description-input"
-						id="description"
-						onChange={({target: {value}}) =>
-							onChangeDescription(value)
-						}
-						type="text"
-						value={
-							category.description_i18n
-								? category.description_i18n[
-										getLanguageLabel(languageId)
-									] || ''
-								: ''
-						}
-					/>
-				</div>
-			</ClayForm.Group>
+						<ClayInput
+							aria-label={Liferay.Language.get('description')}
+							component="textarea"
+							data-testid="description-input"
+							id="description"
+							onChange={({target: {value}}) =>
+								onChangeDescription(value)
+							}
+							type="text"
+							value={
+								category.description_i18n
+									? category.description_i18n[
+											getLanguageLabel(languageId)
+										] || ''
+									: ''
+							}
+						/>
+					</div>
+				</ClayForm.Group>
+			</ClayPanel>
 
 			{showPermissions && (
 				<PermissionsFormGroup

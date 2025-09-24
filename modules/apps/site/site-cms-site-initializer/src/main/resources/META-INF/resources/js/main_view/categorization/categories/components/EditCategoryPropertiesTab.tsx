@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
+import ClayPanel from '@clayui/panel';
 import React, {useEffect, useState} from 'react';
 
 interface Props {
@@ -137,35 +138,43 @@ const EditCategoryPropertiesTab = ({
 	};
 
 	return (
-		<div className="vertical-nav-content-wrapper">
-			<ClayForm.Group
-				className="c-gap-4 d-flex flex-column p-4"
-				data-testid="edit-category-properties-form-group"
+		<div className="container-fluid container-fluid-max-md p-0 p-md-4">
+			<ClayPanel
+				aria-label="properties"
+				className="mb-4"
+				collapsable={false}
+				displayType="secondary"
+				role="group"
 			>
-				<div className="autofit-col autofit-col-expand form-title">
-					{Liferay.Language.get('properties')}
-				</div>
-
-				<div>
-					{Liferay.Language.get('edit-category-properties-help')}
-				</div>
-
-				<div
-					className="autofit-col c-gap-3"
-					data-testid="edit-category-properties-table"
+				<ClayForm.Group
+					className="c-gap-4 d-flex flex-column p-4"
+					data-testid="edit-category-properties-form-group"
 				>
-					{properties.length
-						? properties.map(
-								(
-									property: TaxonomyCategoryProperty,
-									index: number
-								) => {
-									return PropertyRow(index, property);
-								}
-							)
-						: PropertyRow(0)}
-				</div>
-			</ClayForm.Group>
+					<h2 className="mb-0 py-2 text-6 text-dark">
+						{Liferay.Language.get('properties')}
+					</h2>
+
+					<div>
+						{Liferay.Language.get('edit-category-properties-help')}
+					</div>
+
+					<div
+						className="autofit-col c-gap-3"
+						data-testid="edit-category-properties-table"
+					>
+						{properties.length
+							? properties.map(
+									(
+										property: TaxonomyCategoryProperty,
+										index: number
+									) => {
+										return PropertyRow(index, property);
+									}
+								)
+							: PropertyRow(0)}
+					</div>
+				</ClayForm.Group>
+			</ClayPanel>
 		</div>
 	);
 };

@@ -48,26 +48,22 @@ const CategorizationContentContainer = ({mainContentMap}: Props) => {
 
 	return (
 		<>
-			<ClayLayout.ContainerFluid
-				className="cms-parent-container m-0"
-				formSize="xl"
-				size="xl"
-			>
-				<ClayLayout.Row className="cms-container-child">
+			<ClayLayout.ContainerFluid size={false}>
+				<ClayLayout.Row className="min-vh-100">
 					<ClayLayout.Col
-						className="categorization-vertical-nav p-0"
-						md={3}
+						className="cms-sidebar-nav sidebar-layout"
+						md="auto"
 						sm={12}
 					>
 						<div
-							className="p-4"
+							className="px-md-2 py-3 py-md-4"
 							data-testid="categorization-sidebar"
 						>
 							<ClayVerticalNav items={verticalNavItems} />
 						</div>
 					</ClayLayout.Col>
 
-					<ClayLayout.Col md={9} sm={12}>
+					<ClayLayout.Col className="col-md" sm={12}>
 						{mainContentMap.has(activeVerticalNavKey) &&
 							mainContentMap.get(activeVerticalNavKey)}
 					</ClayLayout.Col>

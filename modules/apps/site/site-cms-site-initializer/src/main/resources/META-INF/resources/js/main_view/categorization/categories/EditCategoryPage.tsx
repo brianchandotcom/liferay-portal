@@ -353,19 +353,21 @@ const EditCategoryPage = ({
 
 	return (
 		<div className="categorization-section">
-			<CategorizationManagementToolbar
-				backURL={backURL}
-				handleSave={handleSave}
-				handleSaveAndAddAnother={
-					isCreateNew ? handleSaveAndAddAnother : undefined
-				}
-				showSaveAndAddAnotherButton={isCreateNew}
-				title={getTitle()}
-			/>
+			<div className="edit-page">
+				<CategorizationManagementToolbar
+					backURL={backURL}
+					handleSave={handleSave}
+					handleSaveAndAddAnother={
+						isCreateNew ? handleSaveAndAddAnother : undefined
+					}
+					showSaveAndAddAnotherButton={isCreateNew}
+					title={getTitle()}
+				/>
 
-			<CategorizationContentContainer
-				mainContentMap={createMainContentMap()}
-			/>
+				<CategorizationContentContainer
+					mainContentMap={createMainContentMap()}
+				/>
+			</div>
 		</div>
 	);
 };

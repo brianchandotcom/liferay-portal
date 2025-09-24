@@ -6,7 +6,7 @@
 import {
 	ISearchAssetObjectEntry,
 	ISearchAssetTypeInformation,
-} from '../../../structure_builder/types/AssetType';
+} from '../../../common/types/AssetType';
 import {ASSET_TYPE} from './constants';
 
 export function getBaseAssetInformation({

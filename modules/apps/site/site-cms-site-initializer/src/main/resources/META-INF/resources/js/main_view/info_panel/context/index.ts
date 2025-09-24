@@ -8,7 +8,7 @@ import React from 'react';
 import {
 	ISearchAssetObjectEntry,
 	ISearchAssetTypeInformation,
-} from '../../../structure_builder/types/AssetType';
+} from '../../../common/types/AssetType';
 
 export interface IAssetTypeInfoPanelContext
 	extends ISearchAssetTypeInformation {

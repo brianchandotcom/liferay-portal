@@ -5,8 +5,8 @@
 
 import React, {useContext} from 'react';
 
+import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
 import CommentsPanel from '../../../content_editor/components/panels/CommentsPanel';
-import {ISearchAssetObjectEntry} from '../../../structure_builder/types/AssetType';
 import {
 	AssetTypeInfoPanelContext,
 	IAssetTypeInfoPanelContext,

@@ -97,7 +97,7 @@
 			</li>
 
 			[#assign
-				navItemsJSONArray = navItemsJSONArray + '"icon": "${(navItem.getIcon??)?then(navItem.getIcon(), "")}", "id": "${navItem.getLayoutId()}", "label": "${navItem.getName()}"}'
+				navItemsJSONArray = navItemsJSONArray + '"icon": "${(navItem.getDisplayIcon??)?then(navItem.getDisplayIcon(), "")}", "id": "${navItem.getLayoutId()}", "label": "${navItem.getName()}"}'
 			/]
 
 			[#if navItem?has_next]
@@ -111,7 +111,7 @@
 
 [#macro labelWithIcon navItem]
 	<div class="autofit-row">
-		[#assign icon = (navItem.getIcon??)?then(navItem.getIcon(), "") /]
+		[#assign icon = (navItem.getDisplayIcon??)?then(navItem.getDisplayIcon(), "") /]
 
 		[#if icon?length > 0]
 			<div class="autofit-col">

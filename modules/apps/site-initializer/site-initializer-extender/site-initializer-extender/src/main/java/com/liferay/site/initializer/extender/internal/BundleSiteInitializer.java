@@ -109,6 +109,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.utility.page.converter.LayoutUtilityPageEntryTypeConverter;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.layout.utility.page.service.LayoutUtilityPageEntryLocalService;
+import com.liferay.list.type.exception.NoSuchListTypeDefinitionException;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.message.boards.model.MBMessage;
 import com.liferay.notification.rest.dto.v1_0.NotificationTemplate;
@@ -2988,20 +2989,22 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			ListTypeDefinition existingListTypeDefinition =
-				listTypeDefinitionResource.
-					getListTypeDefinitionByExternalReferenceCode(
-						listTypeDefinition.getExternalReferenceCode());
+			try {
+				ListTypeDefinition existingListTypeDefinition =
+					listTypeDefinitionResource.
+						getListTypeDefinitionByExternalReferenceCode(
+							listTypeDefinition.getExternalReferenceCode());
 
-			if (existingListTypeDefinition == null) {
-				listTypeDefinition =
-					listTypeDefinitionResource.postListTypeDefinition(
-						listTypeDefinition);
-			}
-			else {
 				listTypeDefinition =
 					listTypeDefinitionResource.patchListTypeDefinition(
 						existingListTypeDefinition.getId(), listTypeDefinition);
+			}
+			catch (NoSuchListTypeDefinitionException
+						noSuchListTypeDefinitionException) {
+
+				listTypeDefinition =
+					listTypeDefinitionResource.postListTypeDefinition(
+						listTypeDefinition);
 			}
 
 			stringUtilReplaceValues.put(

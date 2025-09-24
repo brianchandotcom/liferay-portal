@@ -1171,9 +1171,7 @@ public class ObjectEntryLocalServiceImpl
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				objectDefinition.getScope());
 
-		predicate = predicate.and(
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				ObjectEntryTable.INSTANCE.headObjectEntryId));
+		predicate = predicate.and(_getHeadObjectEntryPredicate(false));
 
 		if (!objectScopeProvider.isGroupAware()) {
 			return dslQueryCount(joinStep.where(predicate));
@@ -3499,9 +3497,7 @@ public class ObjectEntryLocalServiceImpl
 			ObjectEntryTable.INSTANCE,
 			ObjectEntryTable.INSTANCE.objectEntryId.eq(primaryKeyColumn));
 
-		predicate = predicate.and(
-			ObjectEntryTable.INSTANCE.objectEntryId.eq(
-				ObjectEntryTable.INSTANCE.headObjectEntryId));
+		predicate = predicate.and(_getHeadObjectEntryPredicate(false));
 
 		return joinStep.where(predicate);
 	}

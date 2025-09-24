@@ -14,6 +14,7 @@
 	* https://www.schema.org/Document
 	*/
 	export class BatchTestEntity {
+			"customFields"?: Array<any>;
 			"externalReferenceCode"?: string;
 			"id"?: number;
 			"name"?: string;
@@ -27,6 +28,11 @@
 		name: string;
 		type: string;
 	}> = [
+		{
+			baseName: "customFields",
+			name: "customFields",
+			type: "Array<any>",
+		},
 		{
 			baseName: "externalReferenceCode",
 			name: "externalReferenceCode",

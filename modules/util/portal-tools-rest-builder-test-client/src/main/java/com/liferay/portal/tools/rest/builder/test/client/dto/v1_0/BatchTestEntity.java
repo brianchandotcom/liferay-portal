@@ -25,6 +25,38 @@ public class BatchTestEntity implements Cloneable, Serializable {
 		return BatchTestEntitySerDes.toDTO(json);
 	}
 
+	public
+		com.liferay.portal.tools.rest.builder.test.client.custom.field.
+			CustomField[] getCustomFields() {
+
+		return customFields;
+	}
+
+	public void setCustomFields(
+		com.liferay.portal.tools.rest.builder.test.client.custom.field.
+			CustomField[] customFields) {
+
+		this.customFields = customFields;
+	}
+
+	public void setCustomFields(
+		UnsafeSupplier
+			<com.liferay.portal.tools.rest.builder.test.client.custom.field.
+				CustomField[],
+			 Exception> customFieldsUnsafeSupplier) {
+
+		try {
+			customFields = customFieldsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected
+		com.liferay.portal.tools.rest.builder.test.client.custom.field.
+			CustomField[] customFields;
+
 	public String getExternalReferenceCode() {
 		return externalReferenceCode;
 	}

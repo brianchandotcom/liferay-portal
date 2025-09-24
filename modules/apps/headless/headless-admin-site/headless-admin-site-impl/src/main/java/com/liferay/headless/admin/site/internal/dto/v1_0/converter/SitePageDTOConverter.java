@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -174,6 +175,10 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 					{
 						setExternalReferenceCode(
 							layoutPageTemplateEntry::getExternalReferenceCode);
+						setScope(
+							() -> ScopeUtil.getScope(
+								layout.getGroupId(),
+								layoutPageTemplateEntry.getGroupId()));
 					}
 				};
 			});

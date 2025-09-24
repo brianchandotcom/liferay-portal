@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -84,13 +85,10 @@ public class DownloadObjectEntryFolderServletTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			_getMockHttpServletRequest(
-				_jsonFactory.createJSONObject(
-				).put(
+				JSONUtil.put(
 					"bulkActionItems",
-					_jsonFactory.createJSONArray(
-					).put(
-						_jsonFactory.createJSONObject(
-						).put(
+					JSONUtil.put(
+						JSONUtil.put(
 							"className",
 							"com.liferay.object.model.ObjectEntryFolder"
 						).put(
@@ -101,8 +99,7 @@ public class DownloadObjectEntryFolderServletTest {
 							objectEntryFolder.getExternalReferenceCode()
 						).put(
 							"name", objectEntryFolder.getName()
-						)
-					)
+						))
 				).put(
 					"selectAll", false
 				).put(
@@ -240,9 +237,6 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
-
-	@Inject
-	private JSONFactory _jsonFactory;
 
 	@Inject
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

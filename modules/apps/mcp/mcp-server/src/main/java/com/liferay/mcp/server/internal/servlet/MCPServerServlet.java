@@ -6,7 +6,7 @@
 package com.liferay.mcp.server.internal.servlet;
 
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
-import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.MCPServerTransportProvider;
+import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
 import com.liferay.mcp.server.internal.util.MCPServerHttpUtil;
 import com.liferay.mcp.server.internal.util.MCPServerToolCallHandler;
 import com.liferay.object.model.ObjectDefinition;
@@ -94,11 +94,14 @@ public class MCPServerServlet extends HttpServlet {
 					_portal.getPortalURL(httpServletRequest) +
 						_portal.getPathModule();
 
-				MCPServerTransportProvider mcpServerTransportProvider =
-					new MCPServerTransportProvider(baseURL + "/mcp");
+				AuthorizedHttpServletSseServerTransportProvider
+					authorizedHttpServletSseServerTransportProvider =
+						new AuthorizedHttpServletSseServerTransportProvider(
+							baseURL + "/mcp");
 
 				McpSyncServer mcpSyncServer = _buildMcpSyncServer(
-					baseURL, companyId, mcpServerTransportProvider);
+					baseURL, companyId,
+					authorizedHttpServletSseServerTransportProvider);
 
 				return new GenericServlet() {
 
@@ -113,7 +116,7 @@ public class MCPServerServlet extends HttpServlet {
 							ServletResponse servletResponse)
 						throws IOException, ServletException {
 
-						mcpServerTransportProvider.service(
+						authorizedHttpServletSseServerTransportProvider.service(
 							servletRequest, servletResponse);
 					}
 
@@ -130,10 +133,11 @@ public class MCPServerServlet extends HttpServlet {
 
 	private McpSyncServer _buildMcpSyncServer(
 		String baseURL, long companyId,
-		MCPServerTransportProvider mcpServerTransportProvider) {
+		AuthorizedHttpServletSseServerTransportProvider
+			authorizedHttpServletSseServerTransportProvider) {
 
 		return McpServer.sync(
-			mcpServerTransportProvider
+			authorizedHttpServletSseServerTransportProvider
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
 			).tools(
@@ -159,8 +163,8 @@ public class MCPServerServlet extends HttpServlet {
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
 					"GET", baseURL + "/openapi", null,
-					mcpServerTransportProvider.getAuthorizationHeader(
-						exchange)))
+					authorizedHttpServletSseServerTransportProvider.
+						getAuthorizationHeader(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -179,8 +183,8 @@ public class MCPServerServlet extends HttpServlet {
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> MCPServerHttpUtil.callEndpoint(
 					"GET", String.valueOf(arguments.get("url")), null,
-					mcpServerTransportProvider.getAuthorizationHeader(
-						exchange)))
+					authorizedHttpServletSseServerTransportProvider.
+						getAuthorizationHeader(exchange)))
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -234,8 +238,8 @@ public class MCPServerServlet extends HttpServlet {
 					return MCPServerHttpUtil.callEndpoint(
 						String.valueOf(arguments.get("method")), baseURL + path,
 						String.valueOf(arguments.get("payload")),
-						mcpServerTransportProvider.getAuthorizationHeader(
-							exchange));
+						authorizedHttpServletSseServerTransportProvider.
+							getAuthorizationHeader(exchange));
 				})
 		).prompts(
 			_getSyncPromptSpecifications(companyId)

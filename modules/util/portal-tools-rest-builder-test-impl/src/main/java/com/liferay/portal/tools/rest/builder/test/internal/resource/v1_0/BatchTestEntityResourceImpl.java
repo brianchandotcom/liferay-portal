@@ -16,6 +16,7 @@ import com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.BatchTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.CompanyTestEntityResource;
+import com.liferay.portal.vulcan.custom.field.CustomField;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 
@@ -294,6 +295,40 @@ public class BatchTestEntityResourceImpl
 
 		return new BatchTestEntity() {
 			{
+				setCustomFields(
+					() -> {
+						CustomField[] originalCustomFields =
+							originalBatchTestEntity.getCustomFields();
+
+						if (originalCustomFields == null) {
+							return new CustomField[0];
+						}
+
+						CustomField[] customFields =
+							new CustomField[originalCustomFields.length];
+
+						for (int i = 0; i < originalCustomFields.length; i++) {
+							CustomField customField = new CustomField();
+							CustomField originalCustomField =
+								originalCustomFields[i];
+
+							customField.setAttributeType(
+								() -> NestedFieldsSupplier.supply(
+									"customFields.attributeType",
+									nestedField ->
+										originalCustomField.
+											getAttributeType()));
+							customField.setCustomValue(
+								originalCustomField.getCustomValue());
+							customField.setDataType(
+								originalCustomField.getDataType());
+							customField.setName(originalCustomField.getName());
+
+							customFields[i] = customField;
+						}
+
+						return customFields;
+					});
 				setExternalReferenceCode(
 					originalBatchTestEntity.getExternalReferenceCode());
 				setId(originalBatchTestEntity.getId());

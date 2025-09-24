@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
@@ -38,10 +39,12 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CustomizedPages;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -828,7 +831,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		return sitePage;
 	}
 
-	private SitePage _getRandomSitePageWithWidgetPageTemplate()
+	private SitePage _getRandomSitePageWithWidgetPageTemplate(
+			boolean globalPageTemplate)
 		throws Exception {
 
 		SitePage sitePage = _getRandomSitePage(SitePage.Type.WIDGET_PAGE);
@@ -838,17 +842,33 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		widgetPageSettings.setInheritChanges(true);
 
+		long groupId =
+			globalPageTemplate ? testCompany.getGroupId() :
+				testGroup.getGroupId();
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryTestUtil.
 				getWidgetPageLayoutPageTemplateEntry(
-					ServiceContextTestUtil.getServiceContext(
-						testGroup.getGroupId()));
+					ServiceContextTestUtil.getServiceContext(groupId));
 
 		ItemExternalReference itemExternalReference =
 			new ItemExternalReference() {
 				{
 					setExternalReferenceCode(
 						layoutPageTemplateEntry.getExternalReferenceCode());
+
+					if (globalPageTemplate) {
+						Group group = _groupLocalService.getGroup(groupId);
+
+						setScope(
+							() -> new Scope() {
+								{
+									setExternalReferenceCode(
+										group::getExternalReferenceCode);
+									setType(() -> Type.SITE);
+								}
+							});
+					}
 				}
 			};
 
@@ -1397,7 +1417,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		SitePage sitePageWithWidgetPageTemplate =
-			_getRandomSitePageWithWidgetPageTemplate();
+			_getRandomSitePageWithWidgetPageTemplate(false);
 
 		SitePage sitePage = _testPutSiteSitePage(
 			sitePageWithWidgetPageTemplate, sitePageWithWidgetPageTemplate);
@@ -1650,10 +1670,10 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private void _testPostSiteSitePageWithWidgetPageSettingsWithWidgetPageTemplate()
 		throws Exception {
 
-		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate());
+		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate(false));
 
 		SitePage sitePageWithWidgetPageTemplate =
-			_getRandomSitePageWithWidgetPageTemplate();
+			_getRandomSitePageWithWidgetPageTemplate(false);
 
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)
@@ -1662,6 +1682,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		widgetPageSettings.setInheritChanges(false);
 
 		_testPostSiteSitePage(sitePageWithWidgetPageTemplate);
+
+		_testPostSiteSitePage(_getRandomSitePageWithWidgetPageTemplate(true));
 	}
 
 	private void _testPutSiteSitePage(
@@ -1957,7 +1979,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		throws Exception {
 
 		SitePage sitePageWithWidgetPageTemplate =
-			_getRandomSitePageWithWidgetPageTemplate();
+			_getRandomSitePageWithWidgetPageTemplate(false);
 
 		SitePage sitePage = _testPutSiteSitePage(
 			sitePageWithWidgetPageTemplate, sitePageWithWidgetPageTemplate);
@@ -2077,6 +2099,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	private static final List<SitePage.Type> _types = Arrays.asList(
 		SitePage.Type.CONTENT_PAGE, SitePage.Type.WIDGET_PAGE);
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private JSONFactory _jsonFactory;

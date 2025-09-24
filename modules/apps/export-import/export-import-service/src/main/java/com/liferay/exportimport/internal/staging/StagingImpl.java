@@ -600,7 +600,9 @@ public class StagingImpl implements Staging {
 
 		Throwable throwable = exception.getCause();
 
-		if (exception.getCause() instanceof ConnectException) {
+		if ((exportImportConfiguration != null) &&
+			(throwable instanceof ConnectException)) {
+
 			Map<String, Serializable> settingsMap =
 				exportImportConfiguration.getSettingsMap();
 

@@ -23,6 +23,10 @@ components:
             description:
                 "https://www.schema.org/Document"
             properties:
+                customFields:
+                    items:
+                        type: customField
+                    type: array
                 externalReferenceCode:
                     type: string
                 id:

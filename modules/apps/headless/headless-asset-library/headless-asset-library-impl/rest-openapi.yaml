@@ -388,7 +388,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/connected-sites/by-external-reference-code/{connectedSiteExternalReferenceCode}":
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/connected-sites/{connectedSiteExternalReferenceCode}":
         delete:
             description:
                 Disconnects the site with the given external reference code from the asset library.
@@ -474,7 +474,7 @@ paths:
                     description:
                         default response
             tags: ["ConnectedSite"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}":
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts/{userAccountExternalReferenceCode}":
         delete:
             description:
                 Removes the user account from the asset library using the provided external reference codes.
@@ -552,7 +552,7 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/roles":
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts/{userAccountExternalReferenceCode}/roles":
         get:
             operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage
             parameters:
@@ -619,7 +619,7 @@ paths:
                                     $ref: "#/components/schemas/Role"
                                 type: array
             tags: ["Role"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}":
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/user-groups/{userGroupExternalReferenceCode}":
         delete:
             description:
                 Removes a user group from the asset library using the provided external reference codes.
@@ -697,7 +697,7 @@ paths:
                     description:
                         default response
             tags: ["UserGroup"]
-    "/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}/roles":
+    "/asset-libraries/{assetLibraryExternalReferenceCode}/user-groups/{userGroupExternalReferenceCode}/roles":
         get:
             operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage
             parameters:
@@ -764,7 +764,7 @@ paths:
                                     $ref: "#/components/schemas/Role"
                                 type: array
             tags: ["Role"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}":
+    "/asset-libraries/{externalReferenceCode}":
         delete:
             description:
                 Deletes the asset library by external reference code.
@@ -879,7 +879,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/connected-sites":
+    "/asset-libraries/{externalReferenceCode}/connected-sites":
         get:
             description:
                 Get the asset library's with the provided external reference code connected sites. Results can be
@@ -919,7 +919,7 @@ paths:
                     description:
                         default response
             tags: ["ConnectedSite"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions":
+    "/asset-libraries/{externalReferenceCode}/permissions":
         get:
             operationId: getAssetLibraryByExternalReferenceCodePermissionsPage
             parameters:
@@ -964,7 +964,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins":
+    "/asset-libraries/{externalReferenceCode}/pins":
         delete:
             description:
                 Unpins the asset library.
@@ -1005,7 +1005,7 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/user-accounts":
+    "/asset-libraries/{externalReferenceCode}/user-accounts":
         get:
             description:
                 Get the asset library with the provided external reference code associated user accounts. Results can be
@@ -1057,7 +1057,7 @@ paths:
                     description:
                         default response
             tags: ["UserAccount"]
-    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/user-groups":
+    "/asset-libraries/{externalReferenceCode}/user-groups":
         get:
             description:
                 Get the asset library associated with the provided external reference code user groups. Results can be

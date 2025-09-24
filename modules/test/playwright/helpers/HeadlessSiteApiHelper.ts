@@ -27,20 +27,10 @@ export class HeadlessSiteApiHelper {
 	}
 
 	async createSite(site: TSite): Promise<Site> {
-		const payload = {
-			...site,
-			name: {'en-US': site.name},
-		};
-
-		const createdSite = await this.apiHelpers.post(
+		return this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites`,
-			{data: payload}
+			{data: site}
 		);
-
-		return {
-			...createdSite,
-			name: site.name,
-		};
 	}
 
 	async createSiteFromZip(

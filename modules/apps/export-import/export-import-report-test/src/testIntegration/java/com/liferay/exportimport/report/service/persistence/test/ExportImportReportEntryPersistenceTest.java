@@ -139,7 +139,8 @@ public class ExportImportReportEntryPersistenceTest {
 		newExportImportReportEntry.setExportImportConfigurationId(
 			RandomTestUtil.nextLong());
 
-		newExportImportReportEntry.setError(RandomTestUtil.randomString());
+		newExportImportReportEntry.setErrorMessage(
+			RandomTestUtil.randomString());
 
 		newExportImportReportEntry.setErrorStacktrace(
 			RandomTestUtil.randomString());
@@ -197,8 +198,8 @@ public class ExportImportReportEntryPersistenceTest {
 			existingExportImportReportEntry.getExportImportConfigurationId(),
 			newExportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(
-			existingExportImportReportEntry.getError(),
-			newExportImportReportEntry.getError());
+			existingExportImportReportEntry.getErrorMessage(),
+			newExportImportReportEntry.getErrorMessage());
 		Assert.assertEquals(
 			existingExportImportReportEntry.getErrorStacktrace(),
 			newExportImportReportEntry.getErrorStacktrace());
@@ -533,7 +534,7 @@ public class ExportImportReportEntryPersistenceTest {
 		exportImportReportEntry.setExportImportConfigurationId(
 			RandomTestUtil.nextLong());
 
-		exportImportReportEntry.setError(RandomTestUtil.randomString());
+		exportImportReportEntry.setErrorMessage(RandomTestUtil.randomString());
 
 		exportImportReportEntry.setErrorStacktrace(
 			RandomTestUtil.randomString());

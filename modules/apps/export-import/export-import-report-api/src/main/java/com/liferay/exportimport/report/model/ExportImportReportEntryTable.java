@@ -57,8 +57,9 @@ public class ExportImportReportEntryTable
 		exportImportConfigurationId = createColumn(
 			"exportImportConfigurationId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<ExportImportReportEntryTable, Clob> error =
-		createColumn("error", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ExportImportReportEntryTable, Clob> errorMessage =
+		createColumn(
+			"errorMessage", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<ExportImportReportEntryTable, Clob> errorStacktrace =
 		createColumn(
 			"errorStacktrace", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);

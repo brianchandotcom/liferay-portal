@@ -147,9 +147,20 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
 				sourceLayoutUtilityPageEntryId);
 
-		String name = _getUniqueCopyName(
-			groupId, sourceLayoutUtilityPageEntry.getName(),
-			sourceLayoutUtilityPageEntry.getType());
+		String name = UniqueNameUtils.getCopyName(
+			sourceLayoutUtilityPageEntry.getName(),
+			copyName -> {
+				LayoutUtilityPageEntry layoutUtilityPageEntry =
+					layoutUtilityPageEntryPersistence.fetchByG_N_T(
+						groupId, copyName,
+						sourceLayoutUtilityPageEntry.getType());
+
+				if (layoutUtilityPageEntry == null) {
+					return true;
+				}
+
+				return false;
+			});
 
 		long masterLayoutPlid = 0;
 
@@ -571,25 +582,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			externalReferenceCode =
 				externalReferenceCode + CharPool.DASH + count++;
 		}
-	}
-
-	private String _getUniqueCopyName(
-			long groupId, String sourceName, String type)
-		throws Exception {
-
-		return UniqueNameUtils.getCopyName(
-			sourceName,
-			copyName -> {
-				LayoutUtilityPageEntry layoutUtilityPageEntry =
-					layoutUtilityPageEntryPersistence.fetchByG_N_T(
-						groupId, copyName, type);
-
-				if (layoutUtilityPageEntry == null) {
-					return true;
-				}
-
-				return false;
-			});
 	}
 
 	private void _validateName(

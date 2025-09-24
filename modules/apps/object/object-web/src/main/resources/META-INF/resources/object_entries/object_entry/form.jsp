@@ -16,8 +16,10 @@ ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinitio
 ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
 String portletNamespace = portletDisplay.getNamespace();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+if (ParamUtil.getBoolean(request, "showHeader", true)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(backURL);
+}
 %>
 
 <portlet:actionURL name="/object_entries/edit_object_entry" var="editObjectEntryURL" />

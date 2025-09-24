@@ -960,7 +960,9 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					sb.append(propertyName.substring(8));
 
 					if (!browserVersion.isEmpty()) {
-						sb.append("[" + browserVersion + "]");
+						sb.append("[");
+						sb.append(browserVersion);
+						sb.append("]");
 					}
 
 					propertyValue = project.getProperty(sb.toString());

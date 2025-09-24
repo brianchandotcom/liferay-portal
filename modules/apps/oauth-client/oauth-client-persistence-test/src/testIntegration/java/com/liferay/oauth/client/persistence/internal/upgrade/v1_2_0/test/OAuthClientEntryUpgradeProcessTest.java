@@ -69,15 +69,15 @@ public class OAuthClientEntryUpgradeProcessTest {
 		try {
 			OAuthClientEntry oAuthClientEntry1 =
 				_oAuthClientEntryLocalService.getOAuthClientEntry(
-					TestPropsValues.getCompanyId(),
+					TestPropsValues.getCompanyId(), openIdConnectClientId,
 					"https://accounts.google.com/.well-known" +
-						"/openid-configuration",
-					openIdConnectClientId);
+						"/openid-configuration");
 			OAuthClientEntry oAuthClientEntry2 =
 				_oAuthClientEntryLocalService.addOAuthClientEntry(
 					TestPropsValues.getUserId(), StringPool.BLANK,
 					"https://accounts.google.com/.well-known" +
 						"/openid-configuration",
+					null,
 					JSONUtil.put(
 						"client_id", RandomTestUtil.randomString()
 					).put(

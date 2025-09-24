@@ -198,7 +198,27 @@ const FrontendDataSetContent = ({
 				.map((filter: any) => {
 					return {
 						id: filter.id,
-						selectedData: filter.selectedData,
+						selectedData:
+							filter.type === 'selection'
+								? {
+										...filter.selectedData,
+										selectedItems:
+											filter.selectedData.selectedItems.map(
+												(item: any) => {
+													if (filter.items?.length) {
+														const newSelectedItem =
+															{...item};
+
+														delete newSelectedItem.label;
+
+														return newSelectedItem;
+													}
+
+													return item;
+												}
+											),
+									}
+								: filter.selectedData,
 					};
 				});
 		},
@@ -404,7 +424,32 @@ const FrontendDataSetContent = ({
 			if (newFilter) {
 				return activateFilter({
 					filter,
-					selectedData: newFilter.selectedData,
+					selectedData:
+						filter.type === 'selection' && filter.items?.length
+							? {
+									...filter.selectedData,
+									selectedItems:
+										newFilter.selectedData.selectedItems.map(
+											(newItem: any) => {
+												const selectedItem =
+													filter.items.find(
+														(item: any) =>
+															item.value ===
+															newItem.value
+													);
+
+												if (selectedItem) {
+													return selectedItem;
+												}
+
+												return newItem;
+											}
+										),
+								}
+							: {
+									...filter.selectedData,
+									...newFilter.selectedData,
+								},
 				});
 			}
 

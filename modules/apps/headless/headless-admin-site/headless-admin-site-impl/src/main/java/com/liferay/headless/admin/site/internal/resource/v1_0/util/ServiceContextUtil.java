@@ -54,7 +54,7 @@ public class ServiceContextUtil {
 		serviceContext.setUserId(userId);
 		serviceContext.setUuid(uuid);
 
-		if ((pageSettings instanceof WidgetPageSettings)) {
+		if (pageSettings instanceof WidgetPageSettings) {
 			WidgetPageSettings widgetPageSettings =
 				(WidgetPageSettings)pageSettings;
 

@@ -607,14 +607,13 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		JSONArray jsonArray = jsonObject.getJSONArray("methodsToFormat");
 
-		if (JSONUtil.isEmpty(jsonArray)) {
-			return newContent;
-		}
+		if (!JSONUtil.isEmpty(jsonArray)) {
+			for (Object method : jsonArray) {
+				JSONObject methodJSONObject = (JSONObject)method;
 
-		for (Object method : jsonArray) {
-			JSONObject methodJSONObject = (JSONObject)method;
-
-			newContent = _formatMethodSignature(newContent, methodJSONObject);
+				newContent = _formatMethodSignature(
+					newContent, methodJSONObject);
+			}
 		}
 
 		return _processReplacementOrMessage(

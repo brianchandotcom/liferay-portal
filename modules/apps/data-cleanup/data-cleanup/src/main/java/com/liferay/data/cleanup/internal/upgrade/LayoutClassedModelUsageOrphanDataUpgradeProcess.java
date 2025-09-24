@@ -69,7 +69,6 @@ public class LayoutClassedModelUsageOrphanDataUpgradeProcess
 				FragmentEntryLink.class.getName()),
 			"fragmentEntryLinkId", "FragmentEntryLink",
 			this::_updateFragmentEntryLayoutClassedModelUsage);
-
 		_processLayoutClassedModelUsage(
 			_classNameLocalService.getClassNameId(
 				LayoutPageTemplateStructure.class.getName()),

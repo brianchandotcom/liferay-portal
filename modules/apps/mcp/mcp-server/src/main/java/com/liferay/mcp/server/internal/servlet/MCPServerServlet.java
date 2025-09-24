@@ -130,9 +130,9 @@ public class MCPServerServlet extends HttpServlet {
 				).toString()),
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> _callEndpoint(
-					"GET", baseURL + "/openapi", null,
 					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange)))
+						getAuthorizationHeader(exchange),
+					"GET", baseURL + "/openapi", null))
 		).tool(
 			new McpSchema.Tool(
 				"get-openapi", "Retrieves the OpenAPI YAML file.",
@@ -150,9 +150,9 @@ public class MCPServerServlet extends HttpServlet {
 				).toString()),
 			MCPServerToolCallHandler.of(
 				(exchange, arguments) -> _callEndpoint(
-					"GET", String.valueOf(arguments.get("url")), null,
 					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange)))
+						getAuthorizationHeader(exchange),
+					"GET", String.valueOf(arguments.get("url")), null))
 		).tool(
 			new McpSchema.Tool(
 				"call-http-endpoint",
@@ -204,10 +204,10 @@ public class MCPServerServlet extends HttpServlet {
 					}
 
 					return _callEndpoint(
-						String.valueOf(arguments.get("method")), baseURL + path,
-						String.valueOf(arguments.get("payload")),
 						authorizedHttpServletSseServerTransportProvider.
-							getAuthorizationHeader(exchange));
+							getAuthorizationHeader(exchange),
+						String.valueOf(arguments.get("method")), baseURL + path,
+						String.valueOf(arguments.get("payload")));
 				})
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
@@ -215,8 +215,8 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private String _callEndpoint(
-			String method, String path, String payload,
-			String authorizationHeader)
+			String authorizationHeader, String method, String path,
+			String payload)
 		throws Exception {
 
 		Http.Options options = new Http.Options();

@@ -12,14 +12,32 @@ import React from 'react';
 
 import AssetNavigationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/asset_navigation_view/AssetNavigationModalContent';
 
+const ACTIONS = {
+	get: {href: '/link-to-get-action'},
+	update: {href: '/link-to-update-action'},
+	versions: {href: '/link-to-versions'},
+};
+
+const DATES = {
+	dateCreated: '2025-09-23T12:05:16Z',
+	dateModified: '2025-09-23T12:05:16Z',
+};
+
+const CREATOR = {
+	contentType: 'UserAccount',
+	id: 20132,
+	name: 'Test Test',
+};
+
 const item1 = {
+	...DATES,
+	actions: ACTIONS,
 	embedded: {
+		...DATES,
 		content: 'asd',
 		creator: {
-			contentType: 'UserAccount',
+			...CREATOR,
 			externalReferenceCode: '38e08113-4166-162b-5d2c-9ec3a68aabb2',
-			id: 20132,
-			name: 'Test Test',
 		},
 		externalReferenceCode: 'cd9c3564-80ad-8d3f-300f-76659955e96d',
 		file: {
@@ -43,16 +61,17 @@ const item1 = {
 	},
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#Z7P5',
 	id: 36535,
+	score: 0,
 	title: 'liferay icon.png',
 };
+
 const item2 = {
+	...DATES,
+	actions: ACTIONS,
 	embedded: {
+		...DATES,
 		content: '<p>asd</p>',
-		creator: {
-			contentType: 'UserAccount',
-			id: 20132,
-			name: 'Test Test',
-		},
+		creator: CREATOR,
 		externalReferenceCode: 'aa35cc56-67ec-44f4-23bf-2f2ea3799b21',
 		id: 36599,
 		objectEntryFolderExternalReferenceCode:
@@ -64,16 +83,17 @@ const item2 = {
 	},
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#H6H2',
 	id: 36599,
+	score: 0,
 	title: 'KB Article',
 };
+
 const item3 = {
+	...DATES,
+	actions: ACTIONS,
 	embedded: {
+		...DATES,
 		content: '<p>Third content</p>',
-		creator: {
-			contentType: 'UserAccount',
-			id: 20132,
-			name: 'Test Test',
-		},
+		creator: CREATOR,
 		externalReferenceCode: 'aa35cc56-67ec-44f4-23bf-2f2ea3799b21',
 		id: 36590,
 		objectEntryFolderExternalReferenceCode:
@@ -85,11 +105,22 @@ const item3 = {
 	},
 	entryClassName: 'com.liferay.object.model.ObjectDefinition#H6H2',
 	id: 36590,
+	score: 0,
 	title: 'First Blog',
 };
 
 const DEFAULT_PROPS = {
-	additionalProps: {cmsGroupId: 123},
+	additionalProps: {
+		cmsGroupId: 123,
+		commentsProps: {
+			addCommentURL: '',
+			comments: [],
+			deleteCommentURL: '',
+			editCommentURL: '',
+			editorConfig: {},
+			getCommentsURL: '',
+		},
+	},
 	contentViewURL: '/my-random-content-view',
 	currentIndex: 0,
 	items: [item1, item2, item3],

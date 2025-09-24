@@ -63,9 +63,11 @@ const VersionsTabContent = () => {
 
 	return (
 		<>
-			<List>
-				<AssetVersionsListItem {...objectEntryVersions} />
-			</List>
+			{objectEntryVersions.count > 0 && (
+				<List>
+					<AssetVersionsListItem {...objectEntryVersions} />
+				</List>
+			)}
 
 			{objectEntryVersions.count > MAX_LIST_SIZE && (
 				<div className="d-flex justify-content-center">

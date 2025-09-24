@@ -18,7 +18,6 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ColorScheme;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -45,6 +44,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UniqueNameUtils;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -574,26 +574,22 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 	}
 
 	private String _getUniqueCopyName(
-		long groupId, String sourceName, String type) {
+			long groupId, String sourceName, String type)
+		throws Exception {
 
-		String copy = _language.get(LocaleUtil.getSiteDefault(), "copy");
+		return UniqueNameUtils.getCopyName(
+			sourceName,
+			copyName -> {
+				LayoutUtilityPageEntry layoutUtilityPageEntry =
+					layoutUtilityPageEntryPersistence.fetchByG_N_T(
+						groupId, copyName, type);
 
-		String name = StringUtil.appendParentheticalSuffix(sourceName, copy);
+				if (layoutUtilityPageEntry == null) {
+					return true;
+				}
 
-		for (int i = 1;; i++) {
-			LayoutUtilityPageEntry layoutUtilityPageEntry =
-				layoutUtilityPageEntryPersistence.fetchByG_N_T(
-					groupId, name, type);
-
-			if (layoutUtilityPageEntry == null) {
-				break;
-			}
-
-			name = StringUtil.appendParentheticalSuffix(
-				sourceName, copy + StringPool.SPACE + i);
-		}
-
-		return name;
+				return false;
+			});
 	}
 
 	private void _validateName(
@@ -638,9 +634,6 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 
 	@Reference
 	private File _file;
-
-	@Reference
-	private Language _language;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

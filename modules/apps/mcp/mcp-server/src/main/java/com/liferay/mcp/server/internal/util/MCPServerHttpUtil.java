@@ -6,16 +6,15 @@
 package com.liferay.mcp.server.internal.util;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URL;
-
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 
 /**
  * @author Alejandro Tardín
@@ -23,53 +22,41 @@ import java.nio.charset.StandardCharsets;
 public class MCPServerHttpUtil {
 
 	public static String callEndpoint(
-		String method, String path, String payload,
-		String authorizationHeader) {
+			String method, String path, String payload,
+			String authorizationHeader)
+		throws IOException {
 
-		try {
-			URL url = new URL(path);
+		Http http = HttpUtil.getHttp();
 
-			HttpURLConnection connection =
-				(HttpURLConnection)url.openConnection();
+		Http.Options options = new Http.Options();
 
-			if (authorizationHeader != null) {
-				connection.setRequestProperty(
-					"Authorization", authorizationHeader);
-			}
-
-			connection.setDoOutput(true);
-			connection.setRequestMethod(StringUtil.toUpperCase(method));
-
-			if (Validator.isNotNull(payload)) {
-				connection.setRequestProperty(
-					"Content-Type", "application/json");
-
-				try (OutputStream outputStream = connection.getOutputStream()) {
-					outputStream.write(
-						payload.getBytes(StandardCharsets.UTF_8));
-				}
-			}
-
-			int status = connection.getResponseCode();
-
-			if (status >= 300) {
-				String errorMessage = StringBundler.concat(
-					"Request to ", path, " failed with status ", status);
-
-				InputStream inputStream = connection.getErrorStream();
-
-				if (inputStream != null) {
-					errorMessage += StringUtil.read(inputStream);
-				}
-
-				throw new Exception(errorMessage);
-			}
-
-			return StringUtil.read(connection.getInputStream());
+		if (Validator.isNotNull(payload)) {
+			options.setBody(
+				payload, ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
+
+		options.setHeaders(
+			HashMapBuilder.put(
+				"Authorization", () -> authorizationHeader
+			).build());
+
+		options.setLocation(path);
+		options.setMethod(Http.Method.valueOf(StringUtil.toUpperCase(method)));
+
+		String content = http.URLtoString(options);
+
+		Http.Response response = options.getResponse();
+
+		int responseCode = response.getResponseCode();
+
+		if (responseCode >= 300) {
+			throw new RuntimeException(
+				StringBundler.concat(
+					"Request to ", path, " failed with status ", responseCode,
+					content));
 		}
+
+		return content;
 	}
 
 }

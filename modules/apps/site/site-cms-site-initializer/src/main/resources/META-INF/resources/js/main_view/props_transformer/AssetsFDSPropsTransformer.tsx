@@ -8,8 +8,8 @@ import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
+import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import formatActionURL from '../../common/utils/formatActionURL';
-import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';

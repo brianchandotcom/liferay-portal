@@ -9,7 +9,7 @@ import {ImagePreviewer} from 'document-library-preview-image';
 import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
-import {File} from '../FilePreviewerModalContent';
+import {IAssetFile} from '../../../common/types/AssetType';
 
 export default function FilePreview({
 	file: {
@@ -22,13 +22,13 @@ export default function FilePreview({
 		thumbnailURL,
 	},
 }: {
-	file: File;
+	file: IAssetFile;
 }) {
 	const params = new URLSearchParams(thumbnailURL);
 	const hasDocumentPreview = numberOfPages && previewURL;
 	const baseDocumentImageURL = new URL(previewURL, window.location.href);
 	const hasImagePreview = params.has('imageThumbnail');
-	const isVideo = mimeType.startsWith('video/') && previewURL;
+	const isVideo = mimeType?.startsWith('video/') && previewURL;
 
 	return (
 		<>

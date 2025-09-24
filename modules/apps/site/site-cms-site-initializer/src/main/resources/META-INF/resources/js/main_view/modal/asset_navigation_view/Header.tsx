@@ -8,6 +8,8 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import React from 'react';
 
+import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
+
 export default function Header({
 	handleClickComments,
 	handleClickInfo,
@@ -15,9 +17,9 @@ export default function Header({
 }: {
 	handleClickComments: () => void;
 	handleClickInfo: () => void;
-	item: ItemData;
+	item: ISearchAssetObjectEntry;
 }) {
-	const headerName = item.embedded?.title || item.embedded.file.name;
+	const headerName = item.embedded?.title || item.embedded.file?.name;
 
 	const file = item.embedded.file;
 

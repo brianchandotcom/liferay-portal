@@ -14,7 +14,7 @@ definition {
 			var userPassword = JSONUtil2.getDefaultUserPassword();
 		}
 
-		var data = "\"name\": ${siteName}";
+		var data = "\"name\": \"${siteName}\"";
 
 		if (isSet(membershipType)) {
 			var data = StringUtil.add(${data}, ",\"membershipType\": \"${membershipType}\"", "");

@@ -188,6 +188,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1737,6 +1738,22 @@ public class BundleSiteInitializerTest {
 			0.1, expandoBridge.getAttribute("Test Expando Column 1"));
 		Assert.assertEquals(
 			"Test Value", expandoBridge.getAttribute("Test Expando Column 2"));
+	}
+
+	private void _assertNavigationItemDisplayIcon() throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					"TESTSITENAVIGATIONMENUITEM1", _group.getGroupId());
+
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.fastLoad(
+			siteNavigationMenuItem.getTypeSettings()
+		).build();
+
+		String displayIcon = unicodeProperties.getProperty("displayIcon", StringPool.BLANK);
+
+		Assert.assertEquals("home", displayIcon);
 	}
 
 	private void _assertExpandoValues2() throws Exception {
@@ -4524,6 +4541,7 @@ public class BundleSiteInitializerTest {
 		_assertLayouts1();
 		_assertLayoutUtilityPageEntries();
 		_assertListTypeDefinitions1();
+		_assertNavigationItemDisplayIcon();
 		_assertNotificationTemplate1();
 		_assertObjectDefinitions1();
 		_assertObjectFolders1();

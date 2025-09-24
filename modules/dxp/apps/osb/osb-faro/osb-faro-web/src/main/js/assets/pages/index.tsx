@@ -21,6 +21,10 @@ const BlogsList = lazy(
 	() => import(/* webpackChunkName: "BlogsList" */ './BlogsList')
 );
 
+const CustomList = lazy(
+	() => import(/* webpackChunkName: "CustomList" */ './CustomAssetsList')
+);
+
 const DocumentsAndMediaList = lazy(
 	() =>
 		import(
@@ -56,6 +60,12 @@ const NAV_ITEMS = [
 		exact: true,
 		label: Liferay.Language.get('web-content'),
 		route: Routes.ASSETS_WEB_CONTENT
+	},
+	{
+		deprecated: true,
+		exact: true,
+		label: Liferay.Language.get('custom'),
+		route: Routes.ASSETS_CUSTOM
 	}
 ];
 
@@ -208,6 +218,13 @@ const Assets: React.FC<IAssetsProps> = ({className, router}) => {
 										destructured={false}
 										exact
 										path={Routes.ASSETS_BLOGS}
+									/>
+
+									<BundleRouter
+										data={CustomList}
+										destructured={false}
+										exact
+										path={Routes.ASSETS_CUSTOM}
 									/>
 
 									<BundleRouter

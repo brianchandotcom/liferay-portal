@@ -12,6 +12,7 @@ import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLo
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
@@ -113,6 +114,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		_oAuthClientEntryLocalService.addOAuthClientEntry(
 			guestUserId, _generateAuthRequestParametersJSON(properties),
 			_updateOAuthClientASLocalMetadata(guestUserId, properties),
+			_generateCustomClaimsJSON(properties),
 			_generateInfoJSON(properties),
 			GetterUtil.getLong(
 				properties.get("discoveryEndPointCacheInMillis")),
@@ -194,6 +196,25 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		}
 
 		return _CLIENT_TO + providerName;
+	}
+
+	private String _generateCustomClaimsJSON(Dictionary<String, ?> properties) {
+		JSONObject customClaimsJSONObject = _jsonFactory.createJSONObject();
+
+		String[] customClaims = GetterUtil.getStringValues(
+			properties.get("customClaims"));
+
+		for (String customClaim : customClaims) {
+			if (customClaim.isEmpty()) {
+				continue;
+			}
+
+			String[] parts = customClaim.split(StringPool.EQUAL);
+
+			customClaimsJSONObject.put(parts[0], parts[1]);
+		}
+
+		return customClaimsJSONObject.toString();
 	}
 
 	private String _generateInfoJSON(Dictionary<String, ?> properties) {
@@ -447,6 +468,7 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 						_generateAuthRequestParametersJSON(properties),
 						_updateOAuthClientASLocalMetadata(
 							guestUserId, properties),
+						_generateCustomClaimsJSON(properties),
 						_generateInfoJSON(properties),
 						GetterUtil.getLong(
 							properties.get("discoveryEndPointCacheInMillis")),

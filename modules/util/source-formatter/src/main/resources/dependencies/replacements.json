@@ -144,7 +144,7 @@
 		"classNames": [
 			"AutoBatchPreparedStatementUtil"
 		],
-		"from": "autoBatch(PreparedStatement  preparedStatement)",
+		"from": "autoBatch(PreparedStatement preparedStatement)",
 		"hasMessage": true,
 		"issueKey": "LPD-8010"
 	},

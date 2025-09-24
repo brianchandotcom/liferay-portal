@@ -349,6 +349,19 @@ const SpacesPanel = ({cms}) => {
 							className="list-unstyled"
 						>
 							{cms.spaces && <Spaces spaces={cms.spaces} />}
+
+							<li className="c-mt-3">
+								<a
+									className="applications-menu-nav-link d-inline-flex"
+									href={cms.allSpacesURL}
+								>
+									<span className="align-items-center autofit-row autofit-row-center">
+										<ClayIcon symbol="box-container" />
+
+										<span className="applications-menu-shrink autofit-col c-ml-2">{`${Liferay.Language.get('all-spaces')} (${cms.allSpacesCount})`}</span>
+									</span>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</>

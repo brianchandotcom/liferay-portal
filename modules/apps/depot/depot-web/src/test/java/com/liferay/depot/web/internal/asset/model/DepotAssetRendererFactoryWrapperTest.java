@@ -14,6 +14,8 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -77,6 +79,22 @@ public class DepotAssetRendererFactoryWrapperTest {
 				assetRenderer,
 				depotAssetRendererFactoryWrapper.getAssetRenderer(
 					RandomTestUtil.randomLong()));
+		}
+
+		try (SafeCloseable safeCloseable =
+				GroupThreadLocal.setGroupIdWithSafeCloseable(-1)) {
+
+			ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+
+			try {
+				Assert.assertSame(
+					assetRenderer,
+					depotAssetRendererFactoryWrapper.getAssetRenderer(
+						RandomTestUtil.randomLong()));
+			}
+			finally {
+				ServiceContextThreadLocal.popServiceContext();
+			}
 		}
 	}
 

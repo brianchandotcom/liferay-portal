@@ -104,7 +104,7 @@ public class AssetTagsPortletDataHandlerTest
 				exportImportReportEntries,
 				exportImportReportEntry ->
 					Objects.equals(
-						exportImportReportEntry.getError(),
+						exportImportReportEntry.getErrorMessage(),
 						"A tag with the name " + assetTag.getName() +
 							" already exists") &&
 					(exportImportReportEntry.getType() ==

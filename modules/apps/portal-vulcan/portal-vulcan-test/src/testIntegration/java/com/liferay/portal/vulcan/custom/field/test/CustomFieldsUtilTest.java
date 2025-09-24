@@ -2745,7 +2745,7 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			exportImportConfigurationId,
 			exportImportReportEntry.getExportImportConfigurationId());
-		Assert.assertNull(exportImportReportEntry.getError());
+		Assert.assertNull(exportImportReportEntry.getErrorMessage());
 		Assert.assertNull(exportImportReportEntry.getErrorStacktrace());
 		Assert.assertEquals(
 			ExpandoColumn.class.getName(),

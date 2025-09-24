@@ -639,7 +639,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			expectedClass.getName(), exportImportReportEntry.getClassName());
 		Assert.assertEquals(
-			expectedErrorMessage, exportImportReportEntry.getError());
+			expectedErrorMessage, exportImportReportEntry.getErrorMessage());
 
 		if (expectedErrorMessage == null) {
 			Assert.assertNull(exportImportReportEntry.getErrorStacktrace());

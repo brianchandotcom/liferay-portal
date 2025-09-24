@@ -111,7 +111,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 						getExportImportConfigurationId());
 				setDateCreated(exportImportReportEntry.getCreateDate());
 				setDateModified(exportImportReportEntry.getModifiedDate());
-				setErrorMessage(exportImportReportEntry.getError());
+				setErrorMessage(exportImportReportEntry.getErrorMessage());
 				setErrorStacktrace(
 					exportImportReportEntry.getErrorStacktrace());
 				setId(exportImportReportEntry.getExportImportReportEntryId());

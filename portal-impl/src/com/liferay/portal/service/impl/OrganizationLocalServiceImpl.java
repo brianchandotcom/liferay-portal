@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
+import com.liferay.portal.kernel.exception.OrganizationCommentsException;
 import com.liferay.portal.kernel.exception.OrganizationNameException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.exception.OrganizationTypeException;
@@ -297,7 +298,7 @@ public class OrganizationLocalServiceImpl
 
 		validate(
 			user.getCompanyId(), parentOrganizationId, name, type, countryId,
-			statusListTypeId);
+			statusListTypeId, comments);
 
 		long organizationId = counterLocalService.increment();
 
@@ -2147,7 +2148,7 @@ public class OrganizationLocalServiceImpl
 
 		validate(
 			companyId, organizationId, parentOrganizationId, name, type,
-			countryId, statusListTypeId);
+			countryId, statusListTypeId, comments);
 
 		Organization organization = organizationPersistence.findByPrimaryKey(
 			organizationId);
@@ -2609,7 +2610,8 @@ public class OrganizationLocalServiceImpl
 
 	protected void validate(
 			long companyId, long organizationId, long parentOrganizationId,
-			String name, String type, long countryId, long statusListTypeId)
+			String name, String type, long countryId, long statusListTypeId,
+			String comments)
 		throws PortalException {
 
 		if (!ArrayUtil.contains(getTypes(), type)) {
@@ -2701,16 +2703,24 @@ public class OrganizationLocalServiceImpl
 
 		_listTypeLocalService.validate(
 			statusListTypeId, ListTypeConstants.ORGANIZATION_STATUS);
+
+		maxLength = ModelHintsUtil.getMaxLength(
+			Organization.class.getName(), "comments");
+
+		if (Validator.isNotNull(comments) && (comments.length() > maxLength)) {
+			throw new OrganizationCommentsException.MustNotExceedMaximumLength(
+				comments, maxLength);
+		}
 	}
 
 	protected void validate(
 			long companyId, long parentOrganizationId, String name, String type,
-			long countryId, long statusListTypeId)
+			long countryId, long statusListTypeId, String comments)
 		throws PortalException {
 
 		validate(
 			companyId, 0, parentOrganizationId, name, type, countryId,
-			statusListTypeId);
+			statusListTypeId, comments);
 	}
 
 	private Sort[] _getSorts(Sort sort) {

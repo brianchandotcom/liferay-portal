@@ -1057,6 +1057,7 @@
 		<field name="comments" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">400</hint>
+			<hint name="max-length">4000</hint>
 		</field>
 		<field name="logoId" type="long" />
 		<field name="status" type="int" />
@@ -1591,6 +1592,7 @@
 		<field name="comments" type="String">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">400</hint>
+			<hint name="max-length">4000</hint>
 		</field>
 		<field name="firstName" type="String">
 			<validator name="required" />

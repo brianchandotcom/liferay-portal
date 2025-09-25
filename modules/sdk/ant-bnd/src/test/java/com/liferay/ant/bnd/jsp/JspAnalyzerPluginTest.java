@@ -38,54 +38,17 @@ public class JspAnalyzerPluginTest {
 	public void testAddTaglibRequirementsIgnoreJakaraJstlCoreUri()
 		throws Exception {
 
-		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
-
-		URL url = getResource("dependencies/imports_without_comments.jsp");
-
-		InputStream inputStream = url.openStream();
-
-		String content = IO.collect(inputStream);
-
-		Builder builder = new Builder();
-
-		builder.build();
-
-		Set<String> taglibURIs = new HashSet<>();
-
-		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
-
-		String requireCapability = builder.getProperty(
-			Constants.REQUIRE_CAPABILITY);
-
-		Assert.assertFalse(requireCapability.contains("jakarta.tags.core"));
+		_testAddTaglibRequirements(
+			"dependencies/imports_without_comments.jsp", "jakarta.tags.core");
 	}
 
 	@Test
 	public void testAddTaglibRequirementsIgnoreJavaxJstlCoreUri()
 		throws Exception {
 
-		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
-
-		URL url = getResource(
-			"dependencies/imports_without_comments_with_javax.jsp");
-
-		InputStream inputStream = url.openStream();
-
-		String content = IO.collect(inputStream);
-
-		Builder builder = new Builder();
-
-		builder.build();
-
-		Set<String> taglibURIs = new HashSet<>();
-
-		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
-
-		String requireCapability = builder.getProperty(
-			Constants.REQUIRE_CAPABILITY);
-
-		Assert.assertFalse(
-			requireCapability.contains("http://java.sun.com/jsp/jstl/core"));
+		_testAddTaglibRequirements(
+			"dependencies/imports_without_comments_with_javax.jsp",
+			"http://java.sun.com/jsp/jstl/core");
 	}
 
 	@Test
@@ -238,6 +201,32 @@ public class JspAnalyzerPluginTest {
 		Class<?> clazz = getClass();
 
 		return clazz.getResource(path);
+	}
+
+	private void _testAddTaglibRequirements(
+			String jspPath, String notExpectedURI)
+		throws Exception {
+
+		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
+
+		URL url = getResource(jspPath);
+
+		InputStream inputStream = url.openStream();
+
+		String content = IO.collect(inputStream);
+
+		Builder builder = new Builder();
+
+		builder.build();
+
+		Set<String> taglibURIs = new HashSet<>();
+
+		jspAnalyzerPlugin.addTaglibRequirements(builder, content, taglibURIs);
+
+		String requireCapability = builder.getProperty(
+			Constants.REQUIRE_CAPABILITY);
+
+		Assert.assertFalse(requireCapability.contains(notExpectedURI));
 	}
 
 	private void _testImplicitImports(

@@ -36,6 +36,7 @@ import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
+import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -138,7 +139,9 @@ public class BaseNotificationTypeTest {
 		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,
 			null, RandomTestUtil.randomString() + "@liferay.com",
-			user1.getLocale(), RandomTestUtil.randomString(),
+			user1.getLocale(),
+			RandomTestUtil.randomString(
+				firstName -> !firstName.equals(user1.getFirstName())),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			prefixListType.getListTypeId(), suffixListType.getListTypeId(),
 			true, Month.FEBRUARY.getValue(), 7, 1988, null,
@@ -204,6 +207,11 @@ public class BaseNotificationTypeTest {
 			"textObjectField", "textObjectFieldValue"
 		).put(
 			"singleRecipientTextObjectField", String.valueOf(user2.getUserId())
+		).put(
+			"multipleRecipientsLongTextObjectField",
+			StringUtil.merge(
+				new long[] {user1.getUserId(), user2.getUserId()},
+				StringPool.COMMA)
 		).build();
 
 		group = GroupTestUtil.addGroup();
@@ -256,6 +264,11 @@ public class BaseNotificationTypeTest {
 			"textObjectField", RandomTestUtil.randomString()
 		).put(
 			"singleRecipientTextObjectField", String.valueOf(user2.getUserId())
+		).put(
+			"multipleRecipientsLongTextObjectField",
+			StringUtil.merge(
+				new long[] {user1.getUserId(), user2.getUserId()},
+				StringPool.COMMA)
 		).build();
 	}
 
@@ -391,6 +404,13 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"singleRecipientTextObjectField"
+					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"multipleRecipientsLongTextObjectField"
 					).build()),
 				Collections.emptyList());
 
@@ -477,6 +497,13 @@ public class BaseNotificationTypeTest {
 							RandomTestUtil.randomString())
 					).name(
 						"singleRecipientTextObjectField"
+					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"multipleRecipientsLongTextObjectField"
 					).build()),
 				Collections.emptyList());
 
@@ -750,13 +777,15 @@ public class BaseNotificationTypeTest {
 				getTermName("picklistObjectField"),
 				getTermName("textObjectField"),
 				getTermName("singleRecipientTextObjectField"),
+				getTermName("multipleRecipientsLongTextObjectField"),
 				getTermName(true, "dateObjectField"),
 				getTermName(true, "dateTimeObjectField"),
 				getTermName(true, "multiselectPicklistObjectField"),
 				getTermName(true, "picklistObjectField"),
 				getTermName(true, "systemObjectField"),
 				getTermName(true, "textObjectField"),
-				getTermName(true, "singleRecipientTextObjectField")));
+				getTermName(true, "singleRecipientTextObjectField"),
+				getTermName(true, "multipleRecipientsLongTextObjectField")));
 	}
 
 	protected List<String> getTermValues() {

@@ -119,9 +119,20 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					},
 					scopeKey);
 
-			if (curProperties.containsKey("reviewDate") ||
-				curProperties.containsKey("expirationDate")) {
+			if (curProperties.containsKey("displayDate") ||
+				curProperties.containsKey("expirationDate") ||
+				curProperties.containsKey("reviewDate")) {
 
+				dtoObjectEntry.setDisplayDate(
+					() -> {
+						if (curProperties.containsKey("displayDate")) {
+							return GetterUtil.getDate(
+								curProperties.get("displayDate"),
+								_dateTimeFormatter, null);
+						}
+
+						return objectEntry.getDisplayDate();
+					});
 				dtoObjectEntry.setExpirationDate(
 					() -> {
 						if (curProperties.containsKey("expirationDate")) {
@@ -132,7 +143,6 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 						return objectEntry.getExpirationDate();
 					});
-
 				dtoObjectEntry.setReviewDate(
 					() -> {
 						if (curProperties.containsKey("reviewDate")) {

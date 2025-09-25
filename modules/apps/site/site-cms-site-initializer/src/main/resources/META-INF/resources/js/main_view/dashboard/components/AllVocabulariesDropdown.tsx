@@ -21,6 +21,7 @@ const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 	onSelectItem,
 }) => {
 	const {
+		constants: {cmsGroupId},
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
@@ -36,7 +37,7 @@ const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 			search,
 		});
 
-		const endpoint = `/o/headless-admin-taxonomy/v1.0/sites/${item.siteId}/taxonomy-vocabularies${queryParams}`;
+		const endpoint = `/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/taxonomy-vocabularies${queryParams}`;
 
 		const {data, error} = await ApiHelper.get<{
 			items: {assetLibraries: {id: number}[]; id: string; name: string}[];

@@ -20,9 +20,11 @@ export type File = {
 		href: string;
 		label: string;
 	};
+	metadata?: {
+		numberOfPages?: number;
+	};
 	mimeType: string;
 	name: string;
-	numberOfPages?: number;
 	previewURL: string;
 	thumbnailURL: string;
 };
@@ -33,11 +35,16 @@ interface FilePreviewerModalContentProps {
 }
 
 export default function FilePreviewerModalContent({
-	file,
+	file: {
+		link,
+		metadata: {numberOfPages} = {},
+		mimeType,
+		name,
+		previewURL,
+		thumbnailURL,
+	},
 	headerName,
 }: FilePreviewerModalContentProps) {
-	const {link, mimeType, name, numberOfPages, previewURL, thumbnailURL} =
-		file;
 	const params = new URLSearchParams(thumbnailURL);
 	const hasDocumentPreview = numberOfPages && previewURL;
 	const baseDocumentImageURL = new URL(previewURL, window.location.href);

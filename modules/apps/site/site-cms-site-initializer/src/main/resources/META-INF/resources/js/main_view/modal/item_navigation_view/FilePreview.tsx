@@ -11,9 +11,18 @@ import React from 'react';
 
 import {File} from '../FilePreviewerModalContent';
 
-export default function FilePreview({file}: {file: File}) {
-	const {link, mimeType, name, numberOfPages, previewURL, thumbnailURL} =
-		file;
+export default function FilePreview({
+	file: {
+		link,
+		metadata: {numberOfPages} = {},
+		mimeType,
+		name,
+		previewURL,
+		thumbnailURL,
+	},
+}: {
+	file: File;
+}) {
 	const params = new URLSearchParams(thumbnailURL);
 	const hasDocumentPreview = numberOfPages && previewURL;
 	const baseDocumentImageURL = new URL(previewURL, window.location.href);

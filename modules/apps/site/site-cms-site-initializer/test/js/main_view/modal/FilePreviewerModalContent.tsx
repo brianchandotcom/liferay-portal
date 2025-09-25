@@ -46,9 +46,11 @@ const baseDocumentFile = {
 		href: '/pdfs/doc1.pdf',
 		label: 'Download PDF',
 	},
+	metadata: {
+		numberOfPages: 5,
+	},
 	mimeType: 'application/pdf',
 	name: 'Document 1',
-	numberOfPages: 5,
 	previewURL: '/preview/doc1.pdf',
 	thumbnailURL: '/thumbs/doc1.pdf?version=1.0',
 };

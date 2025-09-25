@@ -250,7 +250,7 @@ public abstract class BaseSectionDisplayContext {
 			sb.append(getCMSSectionFilterString());
 		}
 
-		sb.append("&nestedFields=embedded,file.numberOfPages,");
+		sb.append("&nestedFields=embedded,file.metadata,");
 		sb.append("file.previewURL,file.thumbnailURL,");
 		sb.append("systemProperties.objectDefinitionBrief");
 

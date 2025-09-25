@@ -13,7 +13,7 @@
 	},
 	"items": [
 		{
-			"externalReferenceCode": "L_BULK_ACTION_TASK_EXECUTION_STATUSES",
+			"externalReferenceCode": "L_BULK_ACTION_EXECUTION_STATUSES",
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "COMPLETED",
@@ -40,38 +40,7 @@
 					"system": true
 				}
 			],
-			"name": "Bulk Action Task Execution Statuses",
-			"system": true
-		},
-		{
-			"externalReferenceCode": "L_BULK_ACTION_TASK_ITEM_EXECUTION_STATUSES",
-			"listTypeEntries": [
-				{
-					"externalReferenceCode": "COMPLETED",
-					"key": "completed",
-					"name": "Completed",
-					"system": true
-				},
-				{
-					"externalReferenceCode": "FAILED",
-					"key": "failed",
-					"name": "Failed",
-					"system": true
-				},
-				{
-					"externalReferenceCode": "INITIAL",
-					"key": "initial",
-					"name": "Initial",
-					"system": true
-				},
-				{
-					"externalReferenceCode": "STARTED",
-					"key": "started",
-					"name": "Started",
-					"system": true
-				}
-			],
-			"name": "Bulk Action Task Item Execution Statuses",
+			"name": "Bulk Action Statuses",
 			"system": true
 		}
 	]

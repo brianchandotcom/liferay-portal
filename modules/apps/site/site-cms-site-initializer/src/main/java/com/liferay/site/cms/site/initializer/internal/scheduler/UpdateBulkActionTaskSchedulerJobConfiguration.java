@@ -125,10 +125,10 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 				StringBundler.concat(
 					"executionStatus in ('",
 					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_INITIAL,
+						BULK_ACTION_EXECUTION_STATUS_INITIAL,
 					"','",
 					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_STARTED,
+						BULK_ACTION_EXECUTION_STATUS_STARTED,
 					"')"),
 				objectDefinition),
 			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
@@ -161,14 +161,14 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 
 					if (executionStatus.equals(
 							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) ||
+								BULK_ACTION_EXECUTION_STATUS_COMPLETED) ||
 						executionStatus.equals(
 							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_FAILED)) {
+								BULK_ACTION_EXECUTION_STATUS_FAILED)) {
 
 						if (executionStatus.equals(
 								BulkActionTaskConstants.
-									BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) &&
+									BULK_ACTION_EXECUTION_STATUS_COMPLETED) &&
 							Validator.isBlank(
 								GetterUtil.getString(
 									values.get("description")))) {
@@ -219,7 +219,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 
 					if (executionStatus.equals(
 							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) &&
+								BULK_ACTION_EXECUTION_STATUS_COMPLETED) &&
 						Validator.isBlank(
 							GetterUtil.getString(values.get("description")))) {
 
@@ -227,7 +227,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 					}
 					else if (executionStatus.equals(
 								BulkActionTaskConstants.
-									BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_FAILED) ||
+									BULK_ACTION_EXECUTION_STATUS_FAILED) ||
 							 !Validator.isBlank(
 								 GetterUtil.getString(
 									 values.get("description")))) {
@@ -255,7 +255,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 				values.put(
 					"executionStatus",
 					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_FAILED);
+						BULK_ACTION_EXECUTION_STATUS_FAILED);
 
 				_objectEntryLocalService.partialUpdateObjectEntry(
 					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
@@ -283,13 +283,13 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 				values.put(
 					"executionStatus",
 					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_COMPLETED);
+						BULK_ACTION_EXECUTION_STATUS_COMPLETED);
 			}
 			else {
 				values.put(
 					"executionStatus",
 					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_STARTED);
+						BULK_ACTION_EXECUTION_STATUS_STARTED);
 			}
 
 			_objectEntryLocalService.partialUpdateObjectEntry(

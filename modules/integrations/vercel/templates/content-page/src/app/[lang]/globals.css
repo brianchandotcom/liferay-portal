@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --background: var(--color-blue-50);
+  --foreground: var(--color-blue-900);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  @apply min-h-screen flex flex-col gap-4 md:gap-8;
+  @apply text-foreground;
+
+  &::before {
+    display: block;
+    content: "";
+    width: 100%;
+    height: 500px;
+    position: absolute;
+    z-index: -1;
+
+    @apply bg-gradient-to-b from-blue-300 from-0% to-white to-100%;
+  }
+}
+
+@layer components {
+  .button {
+    @apply bg-blue-600 text-white rounded-md py-2 px-4 inline-block font-bold text-center;
+  }
+  .button:not(.button--active) {
+    @apply hover:bg-blue-700;
+  }
+  .button--active {
+    @apply bg-blue-900;
+  }
+
+  .card {
+    @apply h-full shadow-md rounded-md overflow-hidden bg-white;
+  }
+
+  .layout-header {
+    @apply bg-white py-4 px-4 shadow;
+  }
+  .layout-header__container {
+    @apply container mx-auto sm:max-w-4xl flex flex-row items-center justify-between gap-4;
+  }
+
+  .layout-main {
+    @apply grow-1 px-4;
+  }
+
+  .layout-footer {
+    @apply bg-white py-4 px-4 border-t border-t-blue-100;
+  }
+  .layout-footer__container {
+    @apply container mx-auto sm:max-w-4xl flex flex-col sm:flex-row justify-between gap-4;
+  }
+}

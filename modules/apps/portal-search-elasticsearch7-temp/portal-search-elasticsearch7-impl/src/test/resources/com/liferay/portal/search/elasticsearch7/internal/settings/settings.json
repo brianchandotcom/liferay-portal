@@ -1,0 +1,22 @@
+{
+	"analysis": {
+		"analyzer": {
+			"1_10_ngram": {
+				"filter": [
+					"lowercase",
+					"1_10_ngram"
+				]
+			}
+		}
+	},
+	"index": {
+		"auto_expand_replicas": "0-all",
+		"default_pipeline": "timestamp",
+		"mapping": {
+			"total_fields": {
+				"limit": "7500"
+			}
+		},
+		"max_ngram_diff": 9
+	}
+}

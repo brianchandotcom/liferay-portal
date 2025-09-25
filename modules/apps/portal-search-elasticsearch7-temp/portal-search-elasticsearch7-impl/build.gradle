@@ -1,0 +1,242 @@
+import com.liferay.gradle.util.FileUtil
+import com.liferay.gradle.util.StringUtil
+
+task cleanSidecar
+task deploySidecar(type: Copy)
+
+String elasticsearchClientVersion = "7.17.28"
+String luceneVersion = "8.11.3"
+String sidecarElasticsearchServerVersion = file('src/main/resources/META-INF/sidecar/sidecar.version').text
+
+String elasticsearchDownloadURL = "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-${sidecarElasticsearchServerVersion}-linux-x86_64.tar.gz"
+
+File elasticsearchDistributionFile = file("${buildDir}/${elasticsearchDownloadURL.drop(elasticsearchDownloadURL.lastIndexOf('/') + 1)}")
+
+File sidecarDeployDir = file("${project.'liferay.home'}/elasticsearch-sidecar/" + sidecarElasticsearchServerVersion)
+
+List<String> sidecarPluginURLs = [
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-icu/analysis-icu-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-kuromoji/analysis-kuromoji-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-smartcn/analysis-smartcn-${sidecarElasticsearchServerVersion}.zip",
+	"https://artifacts.elastic.co/downloads/elasticsearch-plugins/analysis-stempel/analysis-stempel-${sidecarElasticsearchServerVersion}.zip"
+]
+
+cleanSidecar {
+	doLast {
+		delete file("${buildDir}/elasticsearch-" + sidecarElasticsearchServerVersion)
+	}
+}
+
+dependencies {
+	compileInclude group: "com.carrotsearch", name: "hppc", version: "0.10.0"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-smile", version: "2.18.2"
+	compileInclude group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-yaml", version: "2.18.2"
+	compileInclude group: "com.liferay", name: "org.apache.commons.logging", version: "1.2.LIFERAY-PATCHED-2"
+	compileInclude group: "com.liferay", name: "org.apache.logging.log4j", version: "2.17.1.LIFERAY-PATCHED-1"
+	compileInclude group: "com.liferay", name: "org.apache.logging.log4j.core", version: "2.17.1.LIFERAY-PATCHED-2"
+	compileInclude group: "com.liferay", name: "org.elasticsearch.plugin.legacy.geo", version: elasticsearchClientVersion
+	compileInclude group: "commons-lang", name: "commons-lang", version: "2.6"
+	compileInclude group: "org.apache.lucene", name: "lucene-core", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-highlighter", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-join", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-queries", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-queryparser", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-sandbox", version: luceneVersion
+	compileInclude group: "org.apache.lucene", name: "lucene-suggest", version: luceneVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-cli", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-core", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-geo", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-lz4", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch", name: "elasticsearch-x-content", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-client", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.client", name: "elasticsearch-rest-high-level-client", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.plugin", name: "lang-mustache-client", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.plugin", name: "parent-join-client", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.plugin", name: "percolator-client", version: elasticsearchClientVersion
+	compileInclude group: "org.elasticsearch.plugin", name: "rank-eval-client", version: elasticsearchClientVersion
+	compileInclude group: "org.locationtech.jts", name: "jts-core", version: "1.20.0"
+	compileInclude group: "org.locationtech.spatial4j", name: "spatial4j", version: "0.8"
+	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
+	compileInclude project(":apps:portal-search-elasticsearch7:portal-search-elasticsearch7-sidecar-agent")
+	compileOnly group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.18.2"
+	compileOnly group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-cbor", version: "2.18.2"
+	compileOnly group: "com.fasterxml.woodstox", name: "woodstox-core", version: "6.4.0"
+	compileOnly group: "com.google.code.gson", name: "gson", version: "2.9.0"
+	compileOnly group: "com.ibm.icu", name: "icu4j", version: "69.1"
+	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "commons-codec", name: "commons-codec", version: "1.15"
+	compileOnly group: "commons-io", name: "commons-io", version: "2.19.0"
+	compileOnly group: "jakarta.annotation", name: "jakarta.annotation-api", version: "2.1.1"
+	compileOnly group: "joda-time", name: "joda-time", version: "2.12.1"
+	compileOnly group: "org.apache.commons", name: "commons-compress", version: "1.26.0"
+	compileOnly group: "org.apache.httpcomponents", name: "httpasyncclient", version: "4.1.4"
+	compileOnly group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
+	compileOnly group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
+	compileOnly group: "org.apache.httpcomponents", name: "httpcore-nio", version: "4.4.14"
+	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
+	compileOnly group: "org.osgi", name: "org.osgi.annotation.versioning", version: "1.1.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.cm", version: "1.6.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly group: "org.ow2.asm", name: "asm", version: "9.7"
+	compileOnly project(":apps:configuration-admin:configuration-admin-api")
+	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
+	compileOnly project(":apps:portal-search-elasticsearch7:portal-search-elasticsearch7-api")
+	compileOnly project(":apps:portal-search:portal-search-api")
+	compileOnly project(":apps:portal-search:portal-search-engine-adapter-api")
+	compileOnly project(":apps:portal-search:portal-search-spi")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-metatype-api")
+	compileOnly project(":apps:static:portal-configuration:portal-configuration-persistence-api")
+	compileOnly project(":apps:static:portal:portal-upgrade-api")
+	compileOnly project(":core:osgi-service-tracker-collections")
+	compileOnly project(":core:petra:petra-concurrent")
+	compileOnly project(":core:petra:petra-function")
+	compileOnly project(":core:petra:petra-io")
+	compileOnly project(":core:petra:petra-lang")
+	compileOnly project(":core:petra:petra-memory")
+	compileOnly project(":core:petra:petra-nio")
+	compileOnly project(":core:petra:petra-process")
+	compileOnly project(":core:petra:petra-reflect")
+	compileOnly project(":core:petra:petra-string")
+	testImplementation group: "com.liferay.portal", name: "com.liferay.util.java", version: "default"
+	testImplementation project(":apps:portal-search:portal-search")
+	testImplementation project(":apps:portal-search:portal-search-test-util")
+	testImplementation project(":apps:static:portal-file-install:portal-file-install-api")
+	testImplementation project(":core:petra:petra-sql-dsl-api")
+}
+
+deploy {
+	finalizedBy deploySidecar
+}
+
+deployDependencies {
+	from configurations.compileOnly
+
+	include "stax2-api-*.jar"
+
+	rename(/stax2-api-(.+)\.jar/, "org.codehaus.stax2" + renameSuffix)
+
+}
+
+deploySidecar {
+	dependsOn cleanSidecar
+
+	description = "Assembles the Elasticsearch sidecar and deploys it to Liferay."
+	group = "build"
+
+	destinationDir = sidecarDeployDir
+
+	enabled = !destinationDir.exists()
+
+	ext {
+		autoClean = false
+	}
+
+	from {
+		file("${buildDir}/elasticsearch-" + sidecarElasticsearchServerVersion)
+	}
+
+	doFirst {
+		FileUtil.get(project, elasticsearchDownloadURL, elasticsearchDistributionFile, false, true)
+
+		project.copy {
+			fileMode = 0777
+			include "elasticsearch-${sidecarElasticsearchServerVersion}/**"
+			into buildDir
+			from tarTree(elasticsearchDistributionFile)
+		}
+	}
+
+	doLast {
+		delete file("${destinationDir}/jdk")
+
+		logger.lifecycle "Deployed Elasticsearch Sidecar: {}", destinationDir
+	}
+}
+
+test {
+	dependsOn {
+		configurations.compileOnly
+
+		deploySidecar {
+			destinationDir = file("tmp/sidecar-elasticsearch")
+			enabled = true
+		}
+	}
+
+	forkEvery = 0
+
+	doFirst {
+		File libProcessExecutorDir = file("tmp/lib-process-executor")
+
+		if (!libProcessExecutorDir.exists()) {
+			libProcessExecutorDir.mkdir()
+		}
+
+		project.copy {
+			include "com.liferay.petra.*.jar"
+
+			configurations.compileOnly.allDependencies.each {
+				rename "-${it.version}", ""
+			}
+
+			into libProcessExecutorDir.getPath()
+			from configurations.compileOnly
+		}
+
+		File libSidecarAgentDir = file("tmp/elasticsearch-sidecar")
+
+		if (!libSidecarAgentDir.exists()) {
+			libSidecarAgentDir.mkdir()
+		}
+
+		project.copy {
+			include "com.liferay.portal.search.elasticsearch7.sidecar.agent*.jar"
+
+			configurations.compileInclude.allDependencies.each {
+				rename "-${it.version}", ""
+			}
+
+			into libSidecarAgentDir.getPath()
+			from configurations.compileInclude
+		}
+	}
+}
+
+_createPluginTasks(sidecarElasticsearchServerVersion, sidecarPluginURLs)
+
+private void _createPluginTasks(String sidecarElasticsearchServerVersion, List<String> sidecarPluginURLs) {
+	sidecarPluginURLs.each {
+		String url ->
+
+		String fileName = url.substring(url.lastIndexOf("/") + 1)
+
+		String suffix = fileName.replaceAll(/[\.-](\w)/) {
+			return it[1].toUpperCase()
+		}
+
+		Task installPluginTask = tasks.create(name: "installPlugin" + StringUtil.capitalize(suffix)) {
+			doLast {
+				FileUtil.get(project, url, new File(project.buildDir, fileName), false, true)
+
+				String dirName = fileName.take(fileName.lastIndexOf("-" + sidecarElasticsearchServerVersion))
+
+				project.copy {
+					fileMode = 0777
+					includeEmptyDirs = false
+
+					into new File(buildDir, "elasticsearch-${sidecarElasticsearchServerVersion}/plugins/${dirName}")
+					from zipTree(new File(project.buildDir, fileName))
+				}
+			}
+		}
+
+		deploySidecar.dependsOn installPluginTask
+
+		installPluginTask.mustRunAfter cleanSidecar
+	}
+}

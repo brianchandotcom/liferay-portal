@@ -1,0 +1,17 @@
+{
+	"dynamic_templates": [
+		{
+			"template_double": {
+				"mapping": {
+					"type": "integer"
+				},
+				"match": "*_double"
+			}
+		}
+	],
+	"properties": {
+		"subtitle": {
+			"type": "keyword"
+		}
+	}
+}

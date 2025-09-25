@@ -6,6 +6,7 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitionAPI,
+	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
@@ -102,6 +103,128 @@ test('can export and import custom object entries at instance level', async ({
 			name: objectEntry.name,
 		})
 	);
+});
+
+test('can import account restricted entry when account does and does not exist in enviroment', async ({
+	apiHelpers,
+	companyExportImportPage,
+}) => {
+	const account = await apiHelpers.headlessAdminUser.postAccount();
+
+	apiHelpers.data.push({
+		id: account.id,
+		type: 'account',
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
+
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
+	);
+
+	const {body: objectRelationship} =
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			'L_ACCOUNT',
+			{
+				label: {
+					en_US: 'objectRelationshipLabel' + getRandomInt(),
+				},
+				name: 'objectRelationshipName' + Math.floor(Math.random() * 99),
+				objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				type: 'oneToMany',
+			}
+		);
+
+	apiHelpers.data.push({
+		id: objectRelationship.id,
+		type: 'objectRelationship',
+	});
+
+	const accountEntryERC = `r_${objectRelationship.name}_accountEntryERC`;
+	const accountEntryId = `r_${objectRelationship.name}_accountEntryId`;
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+
+	const objectDefinitionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	await objectDefinitionAPIClient.patchObjectDefinition(objectDefinition.id, {
+		accountEntryRestricted: true,
+		accountEntryRestrictedObjectFieldName: accountEntryId,
+	});
+
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{
+			[accountEntryERC]: account.externalReferenceCode.toString(),
+			[accountEntryId]: account.id.toString(),
+		},
+		applicationName
+	);
+
+	const exportFilePath = await companyExportImportPage.export(
+		`${objectDefinition.name} 1 Items`
+	);
+
+	await test.step('assert entry is imported with account relationship properties when it exists', async () => {
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntry.id}`
+		);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+				applicationName,
+				objectEntry.externalReferenceCode
+			)
+		).toEqual({status: 'NOT_FOUND'});
+
+		await companyExportImportPage.import(exportFilePath);
+
+		const importedObjectEntry = await apiHelpers.get(
+			`${apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		);
+
+		expect(importedObjectEntry).toMatchObject({
+			[accountEntryERC]: account.externalReferenceCode,
+			[accountEntryId]: account.id,
+		});
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${importedObjectEntry.id}`
+		);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+				applicationName,
+				importedObjectEntry.externalReferenceCode
+			)
+		).toEqual({status: 'NOT_FOUND'});
+	});
+
+	await test.step('assert entry is imported wiht account relationship properties when it does not exist', async () => {
+		await apiHelpers.headlessAdminUser.deleteAccount(account.id);
+
+		expect(
+			await apiHelpers.headlessAdminUser.getAccountByName(account.name)
+		).toBe(undefined);
+
+		await companyExportImportPage.import(exportFilePath);
+
+		const newImportedObjectEntry = await apiHelpers.get(
+			`${apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		);
+
+		const importedAccount =
+			await apiHelpers.headlessAdminUser.getAccountByName(account.name);
+
+		expect(newImportedObjectEntry).toMatchObject({
+			[accountEntryERC]: importedAccount.externalReferenceCode,
+			[accountEntryId]: importedAccount.id,
+		});
+	});
 });
 
 test('can import custom object entries at instance level with or without permissions based on selection', async ({

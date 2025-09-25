@@ -73,6 +73,27 @@ describe('useRecipient handleTypeChange', () => {
 		).toStrictEqual('');
 	});
 
+	it('returns empty string to term recipient type', () => {
+		const {result} = renderHook(() =>
+			useForm({
+				initialValues,
+				onSubmit: () => {},
+				validate,
+			})
+		);
+
+		const {handleTypeChange} = useRecipient(
+			result.current.setValues,
+			result.current.values
+		);
+
+		handleTypeChange('to', 'term');
+
+		expect(
+			(result.current.values.recipients[0] as EmailRecipients).to
+		).toStrictEqual('');
+	});
+
 	it('returns [%EMAIL_RECIPIENT_ADDRESS%] to subscribers recipient type', () => {
 		const {result} = renderHook(() =>
 			useForm({

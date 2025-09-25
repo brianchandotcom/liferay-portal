@@ -159,8 +159,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
-					objectEntry.getExternalReferenceCode(), _objectDefinition,
-					dtoObjectEntry, scopeKey);
+					dtoObjectEntry.getExternalReferenceCode(),
+					_objectDefinition, dtoObjectEntry, scopeKey);
 			}
 
 			return ObjectEntryUtil.toObjectEntry(

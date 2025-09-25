@@ -46,6 +46,7 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 	onSelectItem,
 }) => {
 	const {
+		constants: {cmsGroupId},
 		filters: {space},
 	} = useContext(ViewDashboardContext);
 
@@ -78,7 +79,7 @@ const AllCategoriesDropdown: React.FC<IAllFiltersDropdown> = ({
 		});
 
 		const data = await fetchData(
-			`/o/headless-admin-taxonomy/v1.0/sites/${item.siteId}/taxonomy-vocabularies${queryParams}`
+			`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/taxonomy-vocabularies${queryParams}`
 		);
 
 		const filteredData = data?.items

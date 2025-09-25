@@ -85,12 +85,12 @@ export default function PageDesignOptionsSidebar() {
 	);
 
 	const onSelectStyleBook = useCallback(
-		(styleBookEntryId) => {
+		(styleBookEntryERC) => {
 			LayoutService.changeStyleBookEntry({
 				onNetworkStatus: dispatch,
-				styleBookEntryId,
+				styleBookEntryERC,
 			}).then(({tokenValues}) => {
-				setSelectedStyleBook({styleBookEntryId, tokenValues});
+				setSelectedStyleBook({styleBookEntryERC, tokenValues});
 			});
 		},
 		[setSelectedStyleBook, dispatch]
@@ -346,9 +346,9 @@ function getTabs(
 		options: styleBooks.map((styleBook) => ({
 			...styleBook,
 			isActive:
-				selectedStyleBook.styleBookEntryId ===
-				styleBook.styleBookEntryId,
-			onClick: () => onSelectStyleBook(styleBook.styleBookEntryId),
+				selectedStyleBook.styleBookEntryERC ===
+				styleBook.styleBookEntryERC,
+			onClick: () => onSelectStyleBook(styleBook.styleBookEntryERC),
 		})),
 		type: OPTIONS_TYPES.styleBook,
 	});

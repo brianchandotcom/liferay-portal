@@ -7,7 +7,9 @@ package com.liferay.mail.messaging.internal;
 
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailService;
+import com.liferay.mail.settings.configuration.MailSettingSystemConfiguration;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -27,9 +29,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -38,10 +43,18 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Balogh
  */
 @Component(
+	configurationPid = "com.liferay.mail.settings.configuration.MailSettingSystemConfiguration",
 	property = "destination.name=" + DestinationNames.MAIL,
 	service = MessageListener.class
 )
 public class MailMessageListener extends BaseMessageListener {
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_mailSettingSystemConfiguration = ConfigurableUtil.createConfigurable(
+			MailSettingSystemConfiguration.class, properties);
+	}
 
 	protected void doMailMessage(MailMessage mailMessage) throws Exception {
 		InternetAddress from = filterInternetAddress(mailMessage.getFrom());
@@ -67,7 +80,7 @@ public class MailMessageListener extends BaseMessageListener {
 		InternetAddress[] bcc = filterInternetAddresses(mailMessage.getBCC());
 
 		InternetAddress[] auditTrail = InternetAddress.parse(
-			PropsValues.MAIL_AUDIT_TRAIL);
+			_mailSettingSystemConfiguration.mailAuditTrail());
 
 		if (auditTrail.length > 0) {
 			if (ArrayUtil.isNotEmpty(bcc)) {
@@ -164,5 +177,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 	@Reference
 	private MailService _mailService;
+
+	private volatile MailSettingSystemConfiguration
+		_mailSettingSystemConfiguration;
 
 }

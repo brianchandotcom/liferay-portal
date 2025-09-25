@@ -226,7 +226,9 @@ public class JspAnalyzerPluginTest {
 		String requireCapability = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);
 
-		Assert.assertFalse(requireCapability.contains(notExpectedURI));
+		Assert.assertFalse(
+			"Not expected: " + notExpectedURI,
+			requireCapability.contains(notExpectedURI));
 	}
 
 	private void _testImplicitImports(

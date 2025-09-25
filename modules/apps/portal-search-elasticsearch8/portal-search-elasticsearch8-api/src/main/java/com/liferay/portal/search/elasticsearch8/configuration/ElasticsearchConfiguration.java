@@ -60,17 +60,6 @@ public interface ElasticsearchConfiguration {
 	)
 	public String clusterName();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "9300-9400",
-		description = "discovery-zen-ping-unicast-hosts-port-help",
-		name = "discovery-zen-ping-unicast-hosts-port", required = false
-	)
-	public String discoveryZenPingUnicastHostsPort();
-
 	@Meta.AD(
 		deflt = "/https?:\\/\\/localhost(:[0-9]+)?/",
 		description = "http-cors-allow-origin-help",

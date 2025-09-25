@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentLinkValueSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FragmentMappedValueItemReferenceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public abstract class FragmentLinkValue implements Cloneable, Serializable {
+public abstract class FragmentMappedValueItemReference
+	implements Cloneable, Serializable {
 
-	public static FragmentLinkValue toDTO(String json) {
-		return FragmentLinkValueSerDes.toDTO(json);
+	public static FragmentMappedValueItemReference toDTO(String json) {
+		return FragmentMappedValueItemReferenceSerDes.toDTO(json);
 	}
 
 	public Type getType() {
@@ -53,8 +54,10 @@ public abstract class FragmentLinkValue implements Cloneable, Serializable {
 	protected Type type;
 
 	@Override
-	public FragmentLinkValue clone() throws CloneNotSupportedException {
-		return (FragmentLinkValue)super.clone();
+	public FragmentMappedValueItemReference clone()
+		throws CloneNotSupportedException {
+
+		return (FragmentMappedValueItemReference)super.clone();
 	}
 
 	@Override
@@ -63,13 +66,15 @@ public abstract class FragmentLinkValue implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentLinkValue)) {
+		if (!(object instanceof FragmentMappedValueItemReference)) {
 			return false;
 		}
 
-		FragmentLinkValue fragmentLinkValue = (FragmentLinkValue)object;
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			(FragmentMappedValueItemReference)object;
 
-		return Objects.equals(toString(), fragmentLinkValue.toString());
+		return Objects.equals(
+			toString(), fragmentMappedValueItemReference.toString());
 	}
 
 	@Override
@@ -80,13 +85,13 @@ public abstract class FragmentLinkValue implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return FragmentLinkValueSerDes.toJSON(this);
+		return FragmentMappedValueItemReferenceSerDes.toJSON(this);
 	}
 
 	public static enum Type {
 
-		FRAGMENT_INLINE_VALUE("FragmentInlineValue"),
-		FRAGMENT_MAPPED_VALUE("FragmentMappedValue");
+		CONTEXT_REFERENCE("ContextReference"),
+		ITEM_EXTERNAL_REFERENCE("ItemExternalReference");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

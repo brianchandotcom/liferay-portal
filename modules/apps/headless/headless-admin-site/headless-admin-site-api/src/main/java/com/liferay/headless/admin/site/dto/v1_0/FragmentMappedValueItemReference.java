@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -41,16 +41,19 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment link value.", value = "FragmentLinkValue"
+	description = "A fragment mapped value item reference.",
+	value = "FragmentMappedValueItemReference"
 )
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
 		@JsonSubTypes.Type(
-			name = "FragmentInlineValue", value = FragmentLinkInlineValue.class
+			name = "ContextReference",
+			value = FragmentMappedValueItemContextReference.class
 		),
 		@JsonSubTypes.Type(
-			name = "FragmentMappedValue", value = FragmentLinkMappedValue.class
+			name = "ItemExternalReference",
+			value = FragmentMappedValueItemExternalReference.class
 		)
 	}
 )
@@ -58,19 +61,21 @@ import java.util.function.Supplier;
 	include = JsonTypeInfo.As.PROPERTY, property = "type",
 	use = JsonTypeInfo.Id.NAME, visible = true
 )
-@XmlRootElement(name = "FragmentLinkValue")
-public abstract class FragmentLinkValue implements Serializable {
+@XmlRootElement(name = "FragmentMappedValueItemReference")
+public abstract class FragmentMappedValueItemReference implements Serializable {
 
-	public static FragmentLinkValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentLinkValue.class, json);
+	public static FragmentMappedValueItemReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FragmentMappedValueItemReference.class, json);
 	}
 
-	public static FragmentLinkValue unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentLinkValue.class, json);
+	public static FragmentMappedValueItemReference unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentMappedValueItemReference.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
+		description = "The fragment mapped item reference. Can be a context reference value or external reference to an external value."
 	)
 	@JsonGetter("type")
 	@Valid
@@ -117,7 +122,7 @@ public abstract class FragmentLinkValue implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
+		description = "The fragment mapped item reference. Can be a context reference value or external reference to an external value."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Type type;
@@ -131,13 +136,15 @@ public abstract class FragmentLinkValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentLinkValue)) {
+		if (!(object instanceof FragmentMappedValueItemReference)) {
 			return false;
 		}
 
-		FragmentLinkValue fragmentLinkValue = (FragmentLinkValue)object;
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			(FragmentMappedValueItemReference)object;
 
-		return Objects.equals(toString(), fragmentLinkValue.toString());
+		return Objects.equals(
+			toString(), fragmentMappedValueItemReference.toString());
 	}
 
 	@Override
@@ -175,7 +182,7 @@ public abstract class FragmentLinkValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -183,8 +190,8 @@ public abstract class FragmentLinkValue implements Serializable {
 	@GraphQLName("Type")
 	public static enum Type {
 
-		FRAGMENT_INLINE_VALUE("FragmentInlineValue"),
-		FRAGMENT_MAPPED_VALUE("FragmentMappedValue");
+		CONTEXT_REFERENCE("ContextReference"),
+		ITEM_EXTERNAL_REFERENCE("ItemExternalReference");
 
 		@JsonCreator
 		public static Type create(String value) {

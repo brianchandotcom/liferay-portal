@@ -6,35 +6,48 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.ColumnPageElementDefinition;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.RowPageElementDefinition;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -206,101 +219,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		}
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
-		super.testPostSitePageSpecificationPageExperiencePageElement();
-
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new CollectionPageElementDefinition() {
-					{
-						setType(Type.COLLECTION);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new CollectionItemPageElementDefinition() {
-					{
-						setType(Type.COLLECTION_ITEM);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new ColumnPageElementDefinition() {
-					{
-						setType(Type.COLUMN);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new ContainerPageElementDefinition() {
-					{
-						setContentVisibility(ContentVisibility.AUTO);
-						setHtmlProperties(new HtmlProperties());
-						setIndexed(Boolean.FALSE);
-						setType(Type.CONTAINER);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new DropZonePageElementDefinition() {
-					{
-						setType(Type.DROP_ZONE);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormPageElementDefinition() {
-					{
-						setType(Type.FORM);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormStepPageElementDefinition() {
-					{
-						setType(Type.FORM_STEP);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormStepContainerPageElementDefinition() {
-					{
-						setType(Type.FORM_STEP_CONTAINER);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FragmentDropZonePageElementDefinition() {
-					{
-						setType(Type.FRAGMENT_DROP_ZONE);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FragmentInstancePageElementDefinition() {
-					{
-						setFragmentReference(
-							new DefaultFragmentReference() {
-								{
-									setDefaultFragmentKey(
-										() -> "BASIC_COMPONENT-heading");
-								}
-							});
-						setType(Type.FRAGMENT);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new RowPageElementDefinition() {
-					{
-						setType(Type.ROW);
-					}
-				}));
+		_testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedContextField();
+		_testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedFileEntry();
+		_testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedJournalArticle();
+		_testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedLayout();
+		_testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkURL();
 	}
 
 	@Ignore
@@ -318,23 +246,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	public void testPutSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
-		PageElement pageElement = randomPageElement();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_layout.getPlid());
-
-		PageElement putPageElement =
-			pageElementResource.
-				putSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					pageElement.getExternalReferenceCode(), pageElement);
-
-		assertEquals(pageElement, putPageElement);
-		assertValid(putPageElement);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedContextField(
+			externalReferenceCode);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedFileEntry(
+			externalReferenceCode);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerMappedJournalArticle(
+			externalReferenceCode);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedLayout(
+			externalReferenceCode);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkURL(
+			externalReferenceCode);
+		_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
+			externalReferenceCode);
 	}
 
 	@Override
@@ -477,16 +402,167 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				segmentsExperience.getExternalReferenceCode(), pageElement);
 	}
 
-	private void _assertPostSitePageSpecificationPageExperiencePageElement(
-			PageElement pageElement)
+	private PageElement _createContainerPageElement(
+			String[] curCssClasses, String curCustomCss,
+			String curFragmentLinkClassName,
+			String curFragmentLinkExternalReferenceCode,
+			String curFragmentLinkFieldKey, boolean curIndexed,
+			Map<String, String> curUrls,
+			String curPageElementExternalReferenceCode)
 		throws Exception {
 
-		PageElement postPageElement =
-			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(
-				pageElement);
+		return _getPageElement(
+			new ContainerPageElementDefinition() {
+				{
+					setContentVisibility(ContentVisibility.AUTO);
+					setCssClasses(curCssClasses);
+					setCustomCSS(curCustomCss);
+					setFragmentLink(
+						() -> new FragmentLink() {
+							{
+								setTarget(Target.BLANK);
+								setValue(
+									() -> {
+										if (curUrls != null) {
+											return _getFragmentLinkInlineValue(
+												curUrls);
+										}
 
-		assertEquals(pageElement, postPageElement);
-		assertValid(postPageElement);
+										return _getFragmentLinkMappedValue(
+											curFragmentLinkClassName,
+											curFragmentLinkExternalReferenceCode,
+											curFragmentLinkFieldKey);
+									});
+							}
+						});
+					setFragmentViewports(_getFragmentViewports());
+					setHtmlProperties(
+						() -> new HtmlProperties() {
+							{
+								setHtmlTag(HtmlTag.DIV);
+							}
+						});
+					setIndexed(curIndexed);
+					setLayout(
+						() ->
+							new com.liferay.headless.admin.site.client.dto.v1_0.
+								Layout() {
+
+								{
+									setAlign(Align.END);
+									setContentDisplay(ContentDisplay.FLEX_ROW);
+									setFlexWrap(FlexWrap.WRAP_REVERSE);
+									setJustify(Justify.CENTER);
+									setWidthType(WidthType.FIXED);
+								}
+							});
+					setType(PageElementDefinition.Type.CONTAINER);
+				}
+			},
+			curPageElementExternalReferenceCode);
+	}
+
+	private PageElement _createContainerPageElementWithMappedField(
+			String fragmentLinkClassName,
+			String fragmentLinkExternalReferenceCode,
+			String fragmentLinkFieldKey,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		return _createContainerPageElement(
+			null, "custom css 1", fragmentLinkClassName,
+			fragmentLinkExternalReferenceCode, fragmentLinkFieldKey, false,
+			null, pageElementExternalReferenceCode);
+	}
+
+	private PageElement _createContainerPageElementWithMappedLayout(
+			Layout layout, String pageElementExternalReferenceCode)
+		throws Exception {
+
+		return _createContainerPageElement(
+			new String[] {"1", "2", "3"}, null, Layout.class.getName(),
+			layout.getExternalReferenceCode(), null, true, null,
+			pageElementExternalReferenceCode);
+	}
+
+	private PageElement _createContainerPageElementWithURLs(
+			String pageElementExternalReferenceCode, Map<String, String> urls)
+		throws Exception {
+
+		return _createContainerPageElement(
+			new String[] {"cssClass1", "cssClass2"}, "custom css 2", null, null,
+			null, false, urls, pageElementExternalReferenceCode);
+	}
+
+	private FragmentLinkInlineValue _getFragmentLinkInlineValue(
+		Map<String, String> urls) {
+
+		return new FragmentLinkInlineValue() {
+			{
+				setType(Type.FRAGMENT_INLINE_VALUE);
+				setValue_i18n(urls);
+			}
+		};
+	}
+
+	private FragmentLinkMappedValue _getFragmentLinkMappedValue(
+		String itemClassName, String itemExternalReferenceCode,
+		String itemFieldKey) {
+
+		return new FragmentLinkMappedValue() {
+			{
+				setMapping(
+					() -> new Mapping() {
+						{
+							setFieldKey(() -> itemFieldKey);
+							setItemReference(
+								() -> {
+									if (Validator.isNull(itemClassName)) {
+										return new FragmentMappedValueItemContextReference() {
+											{
+												setContextSource(
+													() ->
+														ContextSource.
+															DISPLAY_PAGE_ITEM);
+												setType(Type.CONTEXT_REFERENCE);
+											}
+										};
+									}
+
+									return new FragmentMappedValueItemExternalReference() {
+										{
+											setClassName(itemClassName);
+											setExternalReferenceCode(
+												itemExternalReferenceCode);
+											setType(
+												Type.ITEM_EXTERNAL_REFERENCE);
+										}
+									};
+								});
+						}
+					});
+				setType(Type.FRAGMENT_MAPPED_VALUE);
+			}
+		};
+	}
+
+	private FragmentViewport[] _getFragmentViewports() {
+		return new FragmentViewport[] {
+			new FragmentViewport() {
+				{
+					setCustomCSS("mobile custom css");
+					setFragmentViewportStyle(FragmentViewportStyle::new);
+					setId(ViewportSize.MOBILE_LANDSCAPE::getViewportSizeId);
+				}
+			},
+			new FragmentViewport() {
+				{
+					setCustomCSS("tablet custom css");
+					setFragmentViewportStyle(FragmentViewportStyle::new);
+					setId(ViewportSize.TABLET::getViewportSizeId);
+				}
+			}
+		};
 	}
 
 	private LayoutStructure _getLayoutStructure() {
@@ -497,6 +573,19 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
+	private PageElement _getPageElement(
+			PageElementDefinition pageElementDefinition,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		PageElement pageElement = _randomPageElement(pageElementDefinition);
+
+		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
+		pageElement.setPosition(0);
+
+		return pageElement;
 	}
 
 	private PageElement _randomPageElement(
@@ -511,6 +600,197 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(_position++);
 
 		return pageElement;
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElement(
+			PageElement pageElement)
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement postPageElement =
+			pageElementResource.
+				postSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(), pageElement);
+
+		assertEquals(pageElement, postPageElement);
+		assertValid(postPageElement);
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedContextField()
+		throws Exception {
+
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				null, null, "FileEntry_fileName",
+				RandomTestUtil.randomString()));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedFileEntry()
+		throws Exception {
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				FileEntry.class.getName(), fileEntry.getExternalReferenceCode(),
+				"FileEntry_fileName", RandomTestUtil.randomString()));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedJournalArticle()
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				JournalArticle.class.getName(),
+				journalArticle.getExternalReferenceCode(),
+				"JournalArticle_title", RandomTestUtil.randomString()));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedLayout()
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedLayout(
+				LayoutTestUtil.addTypeContentLayout(testGroup),
+				RandomTestUtil.randomString()));
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElementContainerFragmentLinkURL()
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithURLs(
+				RandomTestUtil.randomString(),
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+				).put(
+					LocaleUtil.US.toString(), "https://www.liferay.com"
+				).build()));
+	}
+
+	private void _testPutSitePageSpecificationPageExperiencePageElement(
+			PageElement pageElement)
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement putPageElement =
+			pageElementResource.
+				putSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
+					pageElement.getExternalReferenceCode(), pageElement);
+
+		assertEquals(pageElement, putPageElement);
+		assertValid(putPageElement);
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElement(
+				new ContainerPageElementDefinition() {
+					{
+						setIndexed(false);
+						setType(Type.CONTAINER);
+					}
+				},
+				pageElementExternalReferenceCode));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedContextField(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				null, null, "FileEntry_fileName",
+				pageElementExternalReferenceCode));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedFileEntry(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				FileEntry.class.getName(), fileEntry.getExternalReferenceCode(),
+				"FileEntry_fileName", pageElementExternalReferenceCode));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkMappedLayout(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedLayout(
+				LayoutTestUtil.addTypeContentLayout(testGroup),
+				pageElementExternalReferenceCode));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerFragmentLinkURL(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithURLs(
+				pageElementExternalReferenceCode,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+				).put(
+					LocaleUtil.US.toString(), "https://www.liferay.com"
+				).build()));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerMappedJournalArticle(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_createContainerPageElementWithMappedField(
+				JournalArticle.class.getName(),
+				journalArticle.getExternalReferenceCode(),
+				"JournalArticle_title", pageElementExternalReferenceCode));
 	}
 
 	private Layout _draftLayout;

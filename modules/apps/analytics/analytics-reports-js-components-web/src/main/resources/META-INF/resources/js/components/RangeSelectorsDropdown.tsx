@@ -10,7 +10,7 @@ import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {dateUtils} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 type Item = {
 	description?: string;
@@ -116,12 +116,14 @@ interface IView {
 	onActiveChange: (active: boolean) => void;
 	onChange: (rangeSelector: RangeSelector) => void;
 	onViewChange: (view: View) => void;
+	triggerRef: React.RefObject<HTMLButtonElement> | null;
 }
 
 const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 	onActiveChange,
 	onChange,
 	onViewChange,
+	triggerRef,
 }) => {
 	const [rangeStart, setRangeStart] = useState('');
 	const [rangeEnd, setRangeEnd] = useState('');
@@ -190,6 +192,7 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 							`${Liferay.Language.get('december')}`,
 						]}
 						onChange={setRangeStart}
+						onClick={() => triggerRef?.current?.focus()}
 						placeholder="YYYY-MM-DD"
 						value={rangeStart}
 						weekdaysShort={dateUtils.getWeekdaysShort()}
@@ -235,6 +238,8 @@ const CustomRangeView: React.FC<Omit<IView, 'availableRangeSelectors'>> = ({
 						});
 
 						onActiveChange(false);
+
+						triggerRef?.current?.focus();
 					}}
 				>
 					{Liferay.Language.get('add-filter')}
@@ -250,6 +255,7 @@ const DefaultView: React.FC<IView> = ({
 	onActiveChange,
 	onChange,
 	onViewChange,
+	triggerRef,
 }) => {
 	const hasCustomRange = availableRangeSelectors.some(
 		(item) => item.value === RangeSelectors.CustomRange
@@ -275,6 +281,7 @@ const DefaultView: React.FC<IView> = ({
 							});
 
 							onActiveChange(false);
+							triggerRef?.current?.focus();
 						}}
 						symbolLeft={
 							item.value === activeRangeSelector.rangeKey
@@ -355,6 +362,8 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 		);
 	};
 
+	const triggerRef = useRef<HTMLButtonElement | null>(null);
+
 	const ViewComponent = Views[view];
 
 	return (
@@ -371,6 +380,9 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 					borderless
 					data-testid="rangeSelectors"
 					displayType="secondary"
+					ref={(node: HTMLButtonElement) => {
+						triggerRef.current = node;
+					}}
 					size={size}
 				>
 					<span className="align-items-center d-flex ml-2 range-selector-dropdown__trigger-label">
@@ -391,6 +403,7 @@ const RangeSelectorsDropdown: React.FC<IRangeSelectorsDropdown> = ({
 				onActiveChange={setDropdownActive}
 				onChange={onChange}
 				onViewChange={setView}
+				triggerRef={triggerRef}
 			/>
 		</ClayDropdown>
 	);

@@ -117,6 +117,41 @@ describe('Field Checkbox Multiple', () => {
 		expect(getByLabelText('Option 3')).not.toBeChecked();
 	});
 
+	it('does not have aria-invalid attribute on first render when it is required', () => {
+		const {container} = render(<CheckboxMultipleWithProvider required />);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('does not have aria-invalid attribute when it is required and has a value', () => {
+		const {container} = render(
+			<CheckboxMultipleWithProvider
+				options={[
+					{
+						label: 'Option 1',
+						value: 'option1',
+					},
+					{
+						label: 'Option 2',
+						value: 'option2',
+					},
+					{
+						label: 'Option 3',
+						value: 'option3',
+					},
+				]}
+				required={true}
+				value={['option1', 'option2']}
+			/>
+		);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
 	it('does not render field label if showLabel is false', () => {
 		render(
 			<CheckboxMultipleWithProvider

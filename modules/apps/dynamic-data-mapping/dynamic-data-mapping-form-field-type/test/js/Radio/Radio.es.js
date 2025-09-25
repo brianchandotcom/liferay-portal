@@ -51,6 +51,30 @@ describe('Field Radio', () => {
 		fetch.mockResponseOnce(JSON.stringify({}));
 	});
 
+	it('does not have aria-invalid attribute on first render when it is required', () => {
+		const {container} = render(
+			<RadioWithProvider {...defaultRadioConfig} required={true} />
+		);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('does not have aria-invalid attribute when it is required and has a value', () => {
+		const {container} = render(
+			<RadioWithProvider
+				{...defaultRadioConfig}
+				required={true}
+				value="value"
+			/>
+		);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
 	it('has a helptext', () => {
 		const {container} = render(
 			<RadioWithProvider {...defaultRadioConfig} tip="Type something" />

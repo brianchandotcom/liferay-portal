@@ -91,6 +91,24 @@ describe('DatePicker', () => {
 		);
 	});
 
+	it('does not have aria-invalid attribute on first render when it is required', () => {
+		const {container} = render(<DatePicker required={true} />);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('does not have aria-invalid attribute when it is required and has a value', () => {
+		const {container} = render(
+			<DatePicker required={true} value="2021-01-01" />
+		);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
 	it('does not render the html autocomplete attribute', () => {
 		render(<DatePicker />);
 

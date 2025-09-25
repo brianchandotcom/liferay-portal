@@ -316,7 +316,7 @@ exports[`Field Text is readOnly 1`] = `
 </div>
 `;
 
-exports[`Field Text renders Label if showLabel is true 1`] = `
+exports[`Field Text renders label if showLabel is true 1`] = `
 <div>
   <div
     class="form-group hide"

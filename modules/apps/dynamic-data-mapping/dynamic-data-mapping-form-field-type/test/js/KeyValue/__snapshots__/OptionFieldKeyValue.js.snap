@@ -6,7 +6,7 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-2"
+      aria-controls="clay-id-1"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -42,9 +42,9 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-2"
+      aria-labelledby="clay-id-1"
       class="panel-collapse collapse"
-      id="clay-id-2"
+      id="clay-id-1"
       role="region"
     >
       <div
@@ -192,7 +192,7 @@ exports[`OptionFieldKeyValue has a label 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-4"
+      aria-controls="clay-id-2"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -228,9 +228,9 @@ exports[`OptionFieldKeyValue has a label 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-4"
+      aria-labelledby="clay-id-2"
       class="panel-collapse collapse"
-      id="clay-id-4"
+      id="clay-id-2"
       role="region"
     >
       <div
@@ -382,7 +382,7 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-5"
+      aria-controls="clay-id-3"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -418,9 +418,9 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-5"
+      aria-labelledby="clay-id-3"
       class="panel-collapse collapse"
-      id="clay-id-5"
+      id="clay-id-3"
       role="region"
     >
       <div
@@ -550,7 +550,7 @@ exports[`OptionFieldKeyValue has a value 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-9"
+      aria-controls="clay-id-4"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -586,9 +586,9 @@ exports[`OptionFieldKeyValue has a value 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-9"
+      aria-labelledby="clay-id-4"
       class="panel-collapse collapse"
-      id="clay-id-9"
+      id="clay-id-4"
       role="region"
     >
       <div
@@ -717,7 +717,7 @@ exports[`OptionFieldKeyValue has an id 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-3"
+      aria-controls="clay-id-5"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -753,9 +753,9 @@ exports[`OptionFieldKeyValue has an id 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-3"
+      aria-labelledby="clay-id-5"
       class="panel-collapse collapse"
-      id="clay-id-3"
+      id="clay-id-5"
       role="region"
     >
       <div
@@ -883,7 +883,7 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-1"
+      aria-controls="clay-id-7"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -919,9 +919,9 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-1"
+      aria-labelledby="clay-id-7"
       class="panel-collapse collapse"
-      id="clay-id-1"
+      id="clay-id-7"
       role="region"
     >
       <div
@@ -1050,7 +1050,7 @@ exports[`OptionFieldKeyValue is not required 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-7"
+      aria-controls="clay-id-8"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -1086,9 +1086,9 @@ exports[`OptionFieldKeyValue is not required 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-7"
+      aria-labelledby="clay-id-8"
       class="panel-collapse collapse"
-      id="clay-id-7"
+      id="clay-id-8"
       role="region"
     >
       <div
@@ -1217,7 +1217,7 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-8"
+      aria-controls="clay-id-10"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -1253,9 +1253,9 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-8"
+      aria-labelledby="clay-id-10"
       class="panel-collapse collapse"
-      id="clay-id-8"
+      id="clay-id-10"
       role="region"
     >
       <div
@@ -1407,7 +1407,7 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
     class="panel panel-secondary"
   >
     <button
-      aria-controls="clay-id-10"
+      aria-controls="clay-id-9"
       aria-expanded="false"
       class="panel-header panel-header-link collapsable-option-header collapse-icon collapse-icon-middle collapsed btn btn-unstyled"
       type="button"
@@ -1443,9 +1443,9 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
       </span>
     </button>
     <div
-      aria-labelledby="clay-id-10"
+      aria-labelledby="clay-id-9"
       class="panel-collapse collapse"
-      id="clay-id-10"
+      id="clay-id-9"
       role="region"
     >
       <div

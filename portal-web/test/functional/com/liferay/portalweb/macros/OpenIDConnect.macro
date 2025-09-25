@@ -117,12 +117,12 @@ definition {
 
 		if (isSet(discoveryEndpoint)) {
 			FormFields.editTextMultiline(
-				fieldName = "discoveryEndPoint",
+				fieldName = "discoveryEndpoint",
 				fieldValue = ${discoveryEndpoint});
 		}
 		else {
 			FormFields.editTextMultiline(
-				fieldName = "discoveryEndPoint",
+				fieldName = "discoveryEndpoint",
 				fieldValue = "https://accounts.google.com/.well-known/openid-configuration");
 		}
 

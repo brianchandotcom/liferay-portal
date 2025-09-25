@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -84,6 +84,8 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		);
 
 		_objectEntryUtilMockedStatic.reset();
+
+		_userLocalService = Mockito.mock(UserLocalService.class);
 	}
 
 	@Test
@@ -268,7 +270,7 @@ public class ObjectEntryInfoItemObjectProviderTest {
 		ObjectEntryInfoItemObjectProvider objectEntryInfoItemObjectProvider =
 			new ObjectEntryInfoItemObjectProvider(
 				_groupLocalService, _objectDefinition, _objectEntryLocalService,
-				_objectEntryManagerRegistry);
+				_objectEntryManagerRegistry, _userLocalService);
 
 		try {
 			_pushServiceContext(httpServletRequest);
@@ -417,20 +419,6 @@ public class ObjectEntryInfoItemObjectProviderTest {
 			httpServletRequest
 		);
 
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			themeDisplay.getScopeGroup()
-		).thenReturn(
-			_group
-		);
-
-		Mockito.when(
-			serviceContext.getThemeDisplay()
-		).thenReturn(
-			themeDisplay
-		);
-
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
@@ -472,5 +460,6 @@ public class ObjectEntryInfoItemObjectProviderTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 	private ObjectEntryManager _objectEntryManager;
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private UserLocalService _userLocalService;
 
 }

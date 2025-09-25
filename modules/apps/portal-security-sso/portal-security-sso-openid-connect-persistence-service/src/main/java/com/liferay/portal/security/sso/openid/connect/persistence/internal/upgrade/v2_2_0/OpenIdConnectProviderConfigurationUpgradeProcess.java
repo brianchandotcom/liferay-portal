@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v2_2_0;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import java.util.Dictionary;
 
@@ -31,15 +33,15 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 			return;
 		}
 
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select * from Configuration_ where configurationId LIKE ?");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				"update Configuration_ set dictionary = ? where " +
-					"configurationId = ?")) {
-
-			preparedStatement1.setString(1, _CONFIGURATION_ID);
-
-			ResultSet resultSet = preparedStatement1.executeQuery();
+		try (Statement statement = connection.createStatement();
+			 ResultSet resultSet = statement.executeQuery(
+				 StringBundler.concat(
+					 "select * from Configuration_ where configurationId LIKE ",
+					 "%com.liferay.portal.security.sso.openid.connect.internal.",
+					 "configuration.OpenIdConnectProviderConfiguration%"));
+			 PreparedStatement preparedStatement = connection.prepareStatement(
+				 "update Configuration_ set dictionary = ? where " +
+				 "configurationId = ?")) {
 
 			if (resultSet.next()) {
 				String dictionaryString = resultSet.getString("dictionary");
@@ -53,38 +55,24 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				String discoveryEndpointValue = GetterUtil.getString(
-					dictionary.get("discoveryEndPoint"));
-
-				dictionary.remove("discoveryEndPoint");
-				dictionary.put("discoveryEndpoint", discoveryEndpointValue);
-
-				long discoveryEndpointCacheInMillisValue = GetterUtil.getLong(
-					dictionary.get("discoveryEndPointCacheInMillis"));
-
-				dictionary.remove("discoveryEndPointCacheInMillis");
+				dictionary.put(
+					"discoveryEndpoint",
+					GetterUtil.getString(
+						dictionary.remove("discoveryEndPoint")));
 				dictionary.put(
 					"discoveryEndpointCacheInMillis",
-					discoveryEndpointCacheInMillisValue);
-
-				String authorizationEndpointValue = GetterUtil.getString(
-					dictionary.get("authorizationEndPoint"));
-
-				dictionary.remove("authorizationEndPoint");
+					GetterUtil.getLong(
+						dictionary.remove("discoveryEndPointCacheInMillis")));
 				dictionary.put(
-					"authorizationEndpoint", authorizationEndpointValue);
-
-				String tokenEndpointValue = GetterUtil.getString(
-					dictionary.get("tokenEndPoint"));
-
-				dictionary.remove("tokenEndPoint");
-				dictionary.put("tokenEndpoint", tokenEndpointValue);
-
-				String userInfoEndpointValue = GetterUtil.getString(
-					dictionary.get("userInfoEndPoint"));
-
-				dictionary.remove("userInfoEndPoint");
-				dictionary.put("userInfoEndpoint", userInfoEndpointValue);
+					"authorizationEndpoint",
+					GetterUtil.getString(
+						dictionary.remove("authorizationEndPoint")));
+				dictionary.put(
+					"tokenEndpoint",
+					GetterUtil.getString(dictionary.remove("tokenEndPoint")));
+				dictionary.put(
+					"userInfoEndpoint",
+					GetterUtil.getString(dictionary.get("userInfoEndPoint")));
 
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 					new UnsyncByteArrayOutputStream();
@@ -92,19 +80,15 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 				ConfigurationHandler.write(
 					unsyncByteArrayOutputStream, dictionary);
 
-				preparedStatement2.setString(
+				preparedStatement.setString(
 					1, unsyncByteArrayOutputStream.toString());
 
-				preparedStatement2.setString(
+				preparedStatement.setString(
 					2, resultSet.getString("configurationId"));
 
-				preparedStatement2.executeUpdate();
+				preparedStatement.executeUpdate();
 			}
 		}
 	}
-
-	private static final String _CONFIGURATION_ID =
-		"%com.liferay.portal.security.sso.openid.connect.internal." +
-			"configuration.OpenIdConnectProviderConfiguration%";
 
 }

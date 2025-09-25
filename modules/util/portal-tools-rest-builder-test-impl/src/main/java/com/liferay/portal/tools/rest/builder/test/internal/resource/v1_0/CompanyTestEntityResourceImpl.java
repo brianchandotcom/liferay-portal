@@ -50,7 +50,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public Page<CompanyTestEntity> doGetCompanyTestEntitiesPage()
+	protected Page<CompanyTestEntity> doGetCompanyTestEntitiesPage()
 		throws Exception {
 
 		return Page.of(
@@ -68,7 +68,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public CompanyTestEntity doGetCompanyTestEntity(Long companyTestEntityId)
+	protected CompanyTestEntity doGetCompanyTestEntity(Long companyTestEntityId)
 		throws Exception {
 
 		CompanyTestEntity companyTestEntity = _fetchCompanyTestEntity(
@@ -82,7 +82,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public CompanyTestEntity doGetCompanyTestEntityByExternalReferenceCode(
+	protected CompanyTestEntity doGetCompanyTestEntityByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -97,7 +97,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public CompanyTestEntity doPostCompanyTestEntity(
+	protected CompanyTestEntity doPostCompanyTestEntity(
 			CompanyTestEntity companyTestEntity)
 		throws Exception {
 
@@ -124,7 +124,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public CompanyTestEntity doPutCompanyTestEntity(
+	protected CompanyTestEntity doPutCompanyTestEntity(
 			Long companyTestEntityId, CompanyTestEntity companyTestEntity)
 		throws Exception {
 
@@ -156,7 +156,7 @@ public class CompanyTestEntityResourceImpl
 	}
 
 	@Override
-	public CompanyTestEntity doPutCompanyTestEntityByExternalReferenceCode(
+	protected CompanyTestEntity doPutCompanyTestEntityByExternalReferenceCode(
 			String externalReferenceCode, CompanyTestEntity companyTestEntity)
 		throws Exception {
 

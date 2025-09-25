@@ -100,7 +100,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplate doGetSiteDisplayPageTemplate(
+	protected DisplayPageTemplate doGetSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode)
 		throws Exception {
@@ -128,7 +128,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public Page<DisplayPageTemplate> doGetSiteDisplayPageTemplatesPage(
+	protected Page<DisplayPageTemplate> doGetSiteDisplayPageTemplatesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -156,7 +156,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplate doPostSiteDisplayPageTemplate(
+	protected DisplayPageTemplate doPostSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			DisplayPageTemplate displayPageTemplate)
 		throws Exception {
@@ -174,7 +174,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplate doPutSiteDisplayPageTemplate(
+	protected DisplayPageTemplate doPutSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode,
 			DisplayPageTemplate displayPageTemplate)

@@ -77,7 +77,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage doGetSiteMasterPage(
+	protected MasterPage doGetSiteMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode)
 		throws Exception {
@@ -105,7 +105,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public Page<MasterPage> doGetSiteMasterPagesPage(
+	protected Page<MasterPage> doGetSiteMasterPagesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -142,7 +142,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage doPostSiteMasterPage(
+	protected MasterPage doPostSiteMasterPage(
 			String siteExternalReferenceCode, MasterPage masterPage)
 		throws Exception {
 
@@ -158,7 +158,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage doPutSiteMasterPage(
+	protected MasterPage doPutSiteMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode, MasterPage masterPage)
 		throws Exception {

@@ -64,7 +64,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder doGetSiteDisplayPageTemplateFolder(
+	protected DisplayPageTemplateFolder doGetSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
@@ -123,7 +123,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder doPostSiteDisplayPageTemplateFolder(
+	protected DisplayPageTemplateFolder doPostSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
@@ -140,7 +140,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder doPutSiteDisplayPageTemplateFolder(
+	protected DisplayPageTemplateFolder doPutSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode,
 			DisplayPageTemplateFolder displayPageTemplateFolder)

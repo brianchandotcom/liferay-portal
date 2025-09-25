@@ -66,7 +66,9 @@ public class AssetCategoryPortletDataHandlerTest
 		}
 	)
 	@Test
-	public void testAssetCategoryExportImportReportEntries() throws Exception {
+	public void testAssetCategoryExportImportReportEntriesDuplicateExternalReferenceCode()
+		throws Exception {
+
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
 
@@ -77,11 +79,59 @@ public class AssetCategoryPortletDataHandlerTest
 		String originalExternalReferenceCode =
 			assetCategory.getExternalReferenceCode();
 
-		File larFile = _exportLayouts();
+		File larFile = _exportLayoutsAsFile();
 
 		assetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		_assetCategoryLocalService.updateAssetCategory(assetCategory);
+
+		ExportImportConfiguration exportImportConfiguration =
+			_setUpExportImportConfiguration();
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+		Assert.assertTrue(
+			ListUtil.exists(
+				exportImportReportEntries,
+				exportImportReportEntry ->
+					Objects.equals(
+						exportImportReportEntry.getClassExternalReferenceCode(),
+						originalExternalReferenceCode) &&
+					(exportImportReportEntry.getType() ==
+						ExportImportReportEntryConstants.TYPE_ERROR)));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
+		}
+	)
+	@Test
+	public void testAssetVocabularyExportImportReportEntriesDuplicateTitle()
+		throws Exception {
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+
+		String originalExternalReferenceCode =
+			assetVocabulary.getExternalReferenceCode();
+
+		File larFile = _exportLayoutsAsFile();
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+
+		_addAssetVocabulary();
 
 		ExportImportConfiguration exportImportConfiguration =
 			_setUpExportImportConfiguration();
@@ -122,7 +172,7 @@ public class AssetCategoryPortletDataHandlerTest
 
 		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
 
-		File larFile = _exportLayouts();
+		File larFile = _exportLayoutsAsFile();
 
 		_assetCategoryLocalService.deleteCategory(assetCategory);
 
@@ -156,7 +206,7 @@ public class AssetCategoryPortletDataHandlerTest
 
 		AssetVocabulary assetVocabulary = _addAssetVocabulary();
 
-		File larFile = _exportLayouts();
+		File larFile = _exportLayoutsAsFile();
 
 		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
 
@@ -217,11 +267,10 @@ public class AssetCategoryPortletDataHandlerTest
 	private AssetVocabulary _addAssetVocabulary() throws Exception {
 		return _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
+			"vocabulary", ServiceContextTestUtil.getServiceContext());
 	}
 
-	private File _exportLayouts() throws Exception {
+	private File _exportLayoutsAsFile() throws Exception {
 		return _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(

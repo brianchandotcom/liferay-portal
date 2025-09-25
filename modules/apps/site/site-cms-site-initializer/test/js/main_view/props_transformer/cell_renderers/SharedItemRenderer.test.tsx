@@ -14,13 +14,21 @@ const testActionBase = {
 	href: 'http://www.test.com',
 };
 
+const testItemDataContent = {
+	assetType: 'Web Content',
+	siteName: 'Site Name',
+};
+
+const testItemDataDocument = {
+	assetType: 'Basic Document',
+	fileTypeIcon: 'document-image',
+	fileTypeIconColor: 'file-icon-color-5',
+	siteName: 'Site Name',
+};
+
 const testProps = {
 	actions: [testActionBase],
-	itemData: {
-		fileTypeIcon: 'document-image',
-		fileTypeIconColor: 'file-icon-color-5',
-		siteName: 'Site Name',
-	},
+	itemData: testItemDataDocument,
 	options: {
 		actionId: 'view',
 	},
@@ -45,6 +53,20 @@ describe('SharedItemRenderer', () => {
 
 		expect(
 			container.querySelector('.lexicon-icon-document-image')
+		).toBeInTheDocument();
+	});
+
+	it('shows the default icon for basic web content', () => {
+		const {container} = render(
+			<SharedItemRenderer {...testProps} itemData={testItemDataContent} />
+		);
+
+		expect(container.querySelectorAll('.sticker')[0]).toHaveClass(
+			'content-icon-basic-content'
+		);
+
+		expect(
+			container.querySelector('.lexicon-icon-forms')
 		).toBeInTheDocument();
 	});
 

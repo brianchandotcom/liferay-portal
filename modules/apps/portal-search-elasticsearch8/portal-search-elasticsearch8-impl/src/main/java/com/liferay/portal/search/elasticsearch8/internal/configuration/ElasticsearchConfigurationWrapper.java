@@ -80,14 +80,6 @@ public class ElasticsearchConfigurationWrapper
 		return -1;
 	}
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x)
-	 */
-	@Deprecated
-	public int embeddedHttpPort() {
-		return _elasticsearchConfiguration.embeddedHttpPort();
-	}
-
 	public String httpCORSAllowOrigin() {
 		return _elasticsearchConfiguration.httpCORSAllowOrigin();
 	}

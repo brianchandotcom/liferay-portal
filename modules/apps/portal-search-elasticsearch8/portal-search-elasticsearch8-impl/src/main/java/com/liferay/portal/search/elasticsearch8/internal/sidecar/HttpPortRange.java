@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.sidecar;
 
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 
 import java.util.Objects;
@@ -43,12 +42,7 @@ public class HttpPortRange {
 			return "9201-9300";
 		}
 
-		if (!Validator.isBlank(sidecarHttpPort)) {
-			return sidecarHttpPort;
-		}
-
-		return String.valueOf(
-			elasticsearchConfigurationWrapper.embeddedHttpPort());
+		return sidecarHttpPort;
 	}
 
 	private final String _httpPort;

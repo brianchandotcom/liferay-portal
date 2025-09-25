@@ -295,6 +295,16 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 		assertEquals(
 			postDisplayPageTemplateFolder, getDisplayPageTemplateFolder);
 		assertValid(getDisplayPageTemplateFolder);
+
+		Assert.assertNull(getDisplayPageTemplateFolder.getPermissions());
+
+		getDisplayPageTemplateFolder =
+			permissionsDisplayPageTemplateFolderResource.
+				getSiteDisplayPageTemplateFolder(
+					testGetSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode(),
+					postDisplayPageTemplateFolder.getExternalReferenceCode());
+
+		Assert.assertNotNull(getDisplayPageTemplateFolder.getPermissions());
 	}
 
 	protected DisplayPageTemplateFolder
@@ -986,6 +996,8 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 			randomDisplayPageTemplateFolder, putDisplayPageTemplateFolder);
 		assertValid(putDisplayPageTemplateFolder);
 
+		Assert.assertNull(putDisplayPageTemplateFolder.getPermissions());
+
 		DisplayPageTemplateFolder getDisplayPageTemplateFolder =
 			displayPageTemplateFolderResource.getSiteDisplayPageTemplateFolder(
 				testPutSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode(),
@@ -994,6 +1006,31 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 		assertEquals(
 			randomDisplayPageTemplateFolder, getDisplayPageTemplateFolder);
 		assertValid(getDisplayPageTemplateFolder);
+
+		DisplayPageTemplateFolder randomPermissionsDisplayPageTemplateFolder =
+			randomPermissionsDisplayPageTemplateFolder();
+
+		putDisplayPageTemplateFolder =
+			displayPageTemplateFolderResource.putSiteDisplayPageTemplateFolder(
+				testPutSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode(),
+				postDisplayPageTemplateFolder.getExternalReferenceCode(),
+				randomPermissionsDisplayPageTemplateFolder);
+
+		assertEquals(
+			randomPermissionsDisplayPageTemplateFolder,
+			putDisplayPageTemplateFolder);
+		assertValid(putDisplayPageTemplateFolder);
+
+		Assert.assertNull(putDisplayPageTemplateFolder.getPermissions());
+
+		putDisplayPageTemplateFolder =
+			permissionsDisplayPageTemplateFolderResource.
+				putSiteDisplayPageTemplateFolder(
+					testPutSiteDisplayPageTemplateFolder_getSiteExternalReferenceCode(),
+					postDisplayPageTemplateFolder.getExternalReferenceCode(),
+					randomPermissionsDisplayPageTemplateFolder);
+
+		Assert.assertNotNull(putDisplayPageTemplateFolder.getPermissions());
 	}
 
 	protected DisplayPageTemplateFolder

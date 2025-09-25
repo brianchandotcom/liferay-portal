@@ -260,6 +260,14 @@ public abstract class BaseSitePageResourceTestCase {
 
 		assertEquals(postSitePage, getSitePage);
 		assertValid(getSitePage);
+
+		Assert.assertNull(getSitePage.getPermissions());
+
+		getSitePage = permissionsSitePageResource.getSiteSitePage(
+			testGetSiteSitePage_getSiteExternalReferenceCode(),
+			postSitePage.getExternalReferenceCode());
+
+		Assert.assertNotNull(getSitePage.getPermissions());
 	}
 
 	protected SitePage testGetSiteSitePage_addSitePage() throws Exception {
@@ -785,12 +793,31 @@ public abstract class BaseSitePageResourceTestCase {
 		assertEquals(randomSitePage, putSitePage);
 		assertValid(putSitePage);
 
+		Assert.assertNull(putSitePage.getPermissions());
+
 		SitePage getSitePage = sitePageResource.getSiteSitePage(
 			testPutSiteSitePage_getSiteExternalReferenceCode(),
 			putSitePage.getExternalReferenceCode());
 
 		assertEquals(randomSitePage, getSitePage);
 		assertValid(getSitePage);
+
+		SitePage randomPermissionsSitePage = randomPermissionsSitePage();
+
+		putSitePage = sitePageResource.putSiteSitePage(
+			testPutSiteSitePage_getSiteExternalReferenceCode(),
+			postSitePage.getExternalReferenceCode(), randomPermissionsSitePage);
+
+		assertEquals(randomPermissionsSitePage, putSitePage);
+		assertValid(putSitePage);
+
+		Assert.assertNull(putSitePage.getPermissions());
+
+		putSitePage = permissionsSitePageResource.putSiteSitePage(
+			testPutSiteSitePage_getSiteExternalReferenceCode(),
+			postSitePage.getExternalReferenceCode(), randomPermissionsSitePage);
+
+		Assert.assertNotNull(putSitePage.getPermissions());
 	}
 
 	protected SitePage testPutSiteSitePage_addSitePage() throws Exception {

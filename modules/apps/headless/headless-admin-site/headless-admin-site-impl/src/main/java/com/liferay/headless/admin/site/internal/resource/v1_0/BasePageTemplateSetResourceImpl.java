@@ -126,6 +126,11 @@ public abstract class BasePageTemplateSetResourceImpl
 		throws Exception {
 	}
 
+	protected abstract PageTemplateSet doGetSitePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -169,7 +174,7 @@ public abstract class BasePageTemplateSetResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageTemplateSet getSitePageTemplateSet(
+	public final PageTemplateSet getSitePageTemplateSet(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -180,7 +185,27 @@ public abstract class BasePageTemplateSetResourceImpl
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
 
-		return new PageTemplateSet();
+		PageTemplateSet getPageTemplateSet = doGetSitePageTemplateSet(
+			siteExternalReferenceCode, pageTemplateSetExternalReferenceCode);
+
+		getPageTemplateSet.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSitePageTemplateSetPermissionsPage(
+							siteExternalReferenceCode,
+							getPageTemplateSet.getExternalReferenceCode(),
+							null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getPageTemplateSet;
 	}
 
 	/**
@@ -699,6 +724,12 @@ public abstract class BasePageTemplateSetResourceImpl
 		).build();
 	}
 
+	protected abstract PageTemplateSet doPutSitePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode,
+			PageTemplateSet pageTemplateSet)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -743,7 +774,7 @@ public abstract class BasePageTemplateSetResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public PageTemplateSet putSitePageTemplateSet(
+	public final PageTemplateSet putSitePageTemplateSet(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -755,7 +786,31 @@ public abstract class BasePageTemplateSetResourceImpl
 			PageTemplateSet pageTemplateSet)
 		throws Exception {
 
-		return new PageTemplateSet();
+		Permission[] permissions = pageTemplateSet.getPermissions();
+
+		PageTemplateSet putPageTemplateSet = doPutSitePageTemplateSet(
+			siteExternalReferenceCode, pageTemplateSetExternalReferenceCode,
+			pageTemplateSet);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSitePageTemplateSetPermissionsPage(
+					siteExternalReferenceCode,
+					putPageTemplateSet.getExternalReferenceCode(), permissions);
+
+			putPageTemplateSet.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putPageTemplateSet;
 	}
 
 	/**

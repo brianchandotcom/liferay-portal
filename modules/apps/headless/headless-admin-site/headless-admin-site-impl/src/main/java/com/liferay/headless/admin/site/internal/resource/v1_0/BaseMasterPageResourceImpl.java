@@ -125,6 +125,11 @@ public abstract class BaseMasterPageResourceImpl
 		throws Exception {
 	}
 
+	protected abstract MasterPage doGetSiteMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -166,7 +171,7 @@ public abstract class BaseMasterPageResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public MasterPage getSiteMasterPage(
+	public final MasterPage getSiteMasterPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -177,7 +182,26 @@ public abstract class BaseMasterPageResourceImpl
 			String masterPageExternalReferenceCode)
 		throws Exception {
 
-		return new MasterPage();
+		MasterPage getMasterPage = doGetSiteMasterPage(
+			siteExternalReferenceCode, masterPageExternalReferenceCode);
+
+		getMasterPage.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSiteMasterPagePermissionsPage(
+							siteExternalReferenceCode,
+							getMasterPage.getExternalReferenceCode(), null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getMasterPage;
 	}
 
 	/**
@@ -738,6 +762,11 @@ public abstract class BaseMasterPageResourceImpl
 		).build();
 	}
 
+	protected abstract MasterPage doPutSiteMasterPage(
+			String siteExternalReferenceCode,
+			String masterPageExternalReferenceCode, MasterPage masterPage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -780,7 +809,7 @@ public abstract class BaseMasterPageResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public MasterPage putSiteMasterPage(
+	public final MasterPage putSiteMasterPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -792,7 +821,30 @@ public abstract class BaseMasterPageResourceImpl
 			MasterPage masterPage)
 		throws Exception {
 
-		return new MasterPage();
+		Permission[] permissions = masterPage.getPermissions();
+
+		MasterPage putMasterPage = doPutSiteMasterPage(
+			siteExternalReferenceCode, masterPageExternalReferenceCode,
+			masterPage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage = putSiteMasterPagePermissionsPage(
+				siteExternalReferenceCode,
+				putMasterPage.getExternalReferenceCode(), permissions);
+
+			putMasterPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putMasterPage;
 	}
 
 	/**

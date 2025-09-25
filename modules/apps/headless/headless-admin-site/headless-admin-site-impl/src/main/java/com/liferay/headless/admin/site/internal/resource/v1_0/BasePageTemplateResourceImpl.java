@@ -125,6 +125,11 @@ public abstract class BasePageTemplateResourceImpl
 		throws Exception {
 	}
 
+	protected abstract PageTemplate doGetSitePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -166,7 +171,7 @@ public abstract class BasePageTemplateResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public PageTemplate getSitePageTemplate(
+	public final PageTemplate getSitePageTemplate(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -177,7 +182,26 @@ public abstract class BasePageTemplateResourceImpl
 			String pageTemplateExternalReferenceCode)
 		throws Exception {
 
-		return null;
+		PageTemplate getPageTemplate = doGetSitePageTemplate(
+			siteExternalReferenceCode, pageTemplateExternalReferenceCode);
+
+		getPageTemplate.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSitePageTemplatePermissionsPage(
+							siteExternalReferenceCode,
+							getPageTemplate.getExternalReferenceCode(), null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getPageTemplate;
 	}
 
 	/**
@@ -861,6 +885,11 @@ public abstract class BasePageTemplateResourceImpl
 		).build();
 	}
 
+	protected abstract PageTemplate doPutSitePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -903,7 +932,7 @@ public abstract class BasePageTemplateResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public PageTemplate putSitePageTemplate(
+	public final PageTemplate putSitePageTemplate(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -915,7 +944,31 @@ public abstract class BasePageTemplateResourceImpl
 			PageTemplate pageTemplate)
 		throws Exception {
 
-		return null;
+		Permission[] permissions = pageTemplate.getPermissions();
+
+		PageTemplate putPageTemplate = doPutSitePageTemplate(
+			siteExternalReferenceCode, pageTemplateExternalReferenceCode,
+			pageTemplate);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSitePageTemplatePermissionsPage(
+					siteExternalReferenceCode,
+					putPageTemplate.getExternalReferenceCode(), permissions);
+
+			putPageTemplate.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putPageTemplate;
 	}
 
 	/**

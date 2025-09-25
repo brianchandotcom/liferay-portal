@@ -1,5 +1,6 @@
 {
 	"deletionType": "prevent",
+	"externalReferenceCode": "TEST_OBJECT_RELATIONSHIP_2",
 	"label": {
 		"en_US": "Test Object Relationship 2"
 	},

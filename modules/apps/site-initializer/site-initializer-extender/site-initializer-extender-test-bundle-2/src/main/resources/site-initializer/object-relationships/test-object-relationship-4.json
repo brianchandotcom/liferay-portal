@@ -1,5 +1,6 @@
 {
 	"deletionType": "cascade",
+	"externalReferenceCode": "TEST_OBJECT_RELATIONSHIP_4",
 	"label": {
 		"en_US": "Test Object Relationship 4"
 	},

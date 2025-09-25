@@ -153,7 +153,7 @@ public class ObjectEntryVersionModelListenerTest {
 	@Test
 	public void testOnAfterUpdate() throws Exception {
 
-		// Approved Object Entry
+		// Approved object entry
 
 		_assertNullLatestApprovedObjectEntry(_objectEntry.getObjectEntryId());
 
@@ -171,7 +171,7 @@ public class ObjectEntryVersionModelListenerTest {
 
 		_assertNullLatestApprovedObjectEntry(_objectEntry.getObjectEntryId());
 
-		// Expired Object Entry
+		// Expired object entry
 
 		_objectEntry = _objectEntryLocalService.expireObjectEntry(
 			TestPropsValues.getUserId(), _objectEntry.getObjectEntryId(),
@@ -194,7 +194,7 @@ public class ObjectEntryVersionModelListenerTest {
 
 		Map<String, Serializable> values3 = _objectEntry.getValues();
 
-		// Pending Object Entry
+		// Pending object entry
 
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,

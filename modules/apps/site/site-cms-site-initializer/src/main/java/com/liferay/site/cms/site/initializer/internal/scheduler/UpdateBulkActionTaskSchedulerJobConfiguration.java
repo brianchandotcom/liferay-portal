@@ -176,16 +176,11 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 						continue;
 					}
 
+					long classPK = GetterUtil.getLong(values.get("classPK"));
+
 					BatchEngineImportTask batchEngineImportTask =
 						_batchEngineImportTaskService.getBatchEngineImportTask(
 							GetterUtil.getLong(values.get("importTaskId")));
-
-					values.put(
-						"executionStatus",
-						StringUtil.toLowerCase(
-							batchEngineImportTask.getExecuteStatus()));
-
-					long classPK = GetterUtil.getLong(values.get("classPK"));
 
 					BatchEngineImportTaskError batchEngineImportTaskError =
 						_getBatchEngineImportTaskError(
@@ -198,6 +193,11 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 							"description",
 							batchEngineImportTaskError.getMessage());
 					}
+
+					values.put(
+						"executionStatus",
+						StringUtil.toLowerCase(
+							batchEngineImportTask.getExecuteStatus()));
 
 					ObjectEntry updateObjectEntry =
 						_objectEntryLocalService.partialUpdateObjectEntry(

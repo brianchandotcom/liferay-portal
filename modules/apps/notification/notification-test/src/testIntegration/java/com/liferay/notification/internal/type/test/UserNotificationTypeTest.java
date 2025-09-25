@@ -300,8 +300,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			Arrays.asList(
 				NotificationRecipientSettingUtil.
 					createNotificationRecipientSetting(
-						"term", getTermName("AUTHOR_ID"))),
-			NotificationRecipientConstants.TYPE_TERM);
+						"term", getTermName("AUTHOR_ID"))));
 	}
 
 	@Test
@@ -392,8 +391,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			Arrays.asList(
 				NotificationRecipientSettingUtil.
 					createNotificationRecipientSetting(
-						"term", "[%CURRENT_USER_ID%]")),
-			NotificationRecipientConstants.TYPE_TERM);
+						"term", "[%CURRENT_USER_ID%]")));
 	}
 
 	@Test
@@ -404,8 +402,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			Arrays.asList(
 				NotificationRecipientSettingUtil.
 					createNotificationRecipientSetting(
-						"term", getTermName(true, "AUTHOR_ID"))),
-			NotificationRecipientConstants.TYPE_TERM);
+						"term", getTermName(true, "AUTHOR_ID"))));
 	}
 
 	@Test
@@ -722,8 +719,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	private void _testSendNotificationRecipientTypeTerm(
-			List<NotificationRecipientSetting> notificationRecipientSettings,
-			String recipientType)
+			List<NotificationRecipientSetting> notificationRecipientSettings)
 		throws Exception {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
@@ -743,7 +739,8 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			0,
 			notificationTemplateLocalService.addNotificationTemplate(
 				_createNotificationContext(
-					notificationRecipientSettings, recipientType)));
+					notificationRecipientSettings,
+					NotificationRecipientConstants.TYPE_TERM)));
 
 		notificationQueueEntries =
 			notificationQueueEntryLocalService.getNotificationQueueEntries(

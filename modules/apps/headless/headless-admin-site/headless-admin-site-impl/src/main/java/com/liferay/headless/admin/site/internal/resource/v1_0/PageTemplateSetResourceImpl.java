@@ -61,6 +61,25 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
+	public PageTemplateSet doGetSitePageTemplateSet(
+			String siteExternalReferenceCode,
+			String pageTemplateSetExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _toPageTemplateSet(
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollection(
+					pageTemplateSetExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
+	}
+
+	@Override
 	public Page<PageTemplateSet> doGetSitePageTemplateSetsPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -116,30 +135,6 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public PageTemplateSet doGetSitePageTemplateSet(
-			String siteExternalReferenceCode,
-			String pageTemplateSetExternalReferenceCode)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return _toPageTemplateSet(
-			_layoutPageTemplateCollectionService.
-				getLayoutPageTemplateCollection(
-					pageTemplateSetExternalReferenceCode,
-					GroupUtil.getGroupId(
-						true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode)));
-	}
-
-	@Override
 	public PageTemplateSet doPutSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
@@ -171,6 +166,11 @@ public class PageTemplateSetResourceImpl
 						getLayoutPageTemplateCollectionId(),
 					pageTemplateSet.getName(),
 					pageTemplateSet.getDescription()));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override

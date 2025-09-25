@@ -97,6 +97,37 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
+	public PageTemplate doGetSitePageTemplate(
+			String siteExternalReferenceCode,
+			String pageTemplateExternalReferenceCode)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+			throw new UnsupportedOperationException();
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode));
+
+		if (!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				layoutPageTemplateEntry.getType()) &&
+			!Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				layoutPageTemplateEntry.getType())) {
+
+			throw new UnsupportedOperationException();
+		}
+
+		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
+	}
+
+	@Override
 	public Page<PageTemplate> doGetSitePageTemplatesPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -149,39 +180,78 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 	}
 
 	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
-		return _entityModel;
-	}
-
-	@Override
-	public PageTemplate doGetSitePageTemplate(
+	public PageTemplate doPutSitePageTemplate(
 			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode)
+			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			_isTypeWidgetPageTemplate(pageTemplate), false,
+			contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.
-				getLayoutPageTemplateEntryByExternalReferenceCode(
-					pageTemplateExternalReferenceCode,
-					GroupUtil.getGroupId(
-						true, true, contextCompany.getCompanyId(),
-						siteExternalReferenceCode));
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					pageTemplateExternalReferenceCode, groupId);
 
-		if (!Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.BASIC,
-				layoutPageTemplateEntry.getType()) &&
-			!Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
-				layoutPageTemplateEntry.getType())) {
+		if (layoutPageTemplateEntry == null) {
+			return _addPageTemplate(groupId, pageTemplate);
+		}
+
+		if ((Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.BASIC) &&
+			 !(pageTemplate instanceof ContentPageTemplate)) ||
+			(Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) &&
+			 !(pageTemplate instanceof WidgetPageTemplate))) {
 
 			throw new UnsupportedOperationException();
 		}
 
-		return _pageTemplateDTOConverter.toDTO(layoutPageTemplateEntry);
+		long layoutPageTemplateCollectionId =
+			LayoutPageTemplateConstants.
+				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_getOrAddLayoutPageTemplateCollection(groupId, pageTemplate);
+
+		if (layoutPageTemplateCollection != null) {
+			layoutPageTemplateCollectionId =
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId();
+		}
+
+		if (!Objects.equals(
+				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+				layoutPageTemplateCollectionId)) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					layoutPageTemplateCollectionId);
+		}
+
+		if (Objects.equals(
+				layoutPageTemplateEntry.getType(),
+				LayoutPageTemplateEntryTypeConstants.BASIC)) {
+
+			return _updatePageTemplate(
+				(ContentPageTemplate)pageTemplate, layoutPageTemplateEntry);
+		}
+
+		return _updatePageTemplate(
+			layoutPageTemplateEntry, (WidgetPageTemplate)pageTemplate);
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -286,76 +356,6 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 			layoutPageTemplateCollection.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
 			pageTemplate);
-	}
-
-	@Override
-	public PageTemplate doPutSitePageTemplate(
-			String siteExternalReferenceCode,
-			String pageTemplateExternalReferenceCode, PageTemplate pageTemplate)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
-			throw new UnsupportedOperationException();
-		}
-
-		long groupId = GroupUtil.getGroupId(
-			_isTypeWidgetPageTemplate(pageTemplate), false,
-			contextCompany.getCompanyId(), siteExternalReferenceCode);
-
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_layoutPageTemplateEntryService.
-				fetchLayoutPageTemplateEntryByExternalReferenceCode(
-					pageTemplateExternalReferenceCode, groupId);
-
-		if (layoutPageTemplateEntry == null) {
-			return _addPageTemplate(groupId, pageTemplate);
-		}
-
-		if ((Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.BASIC) &&
-			 !(pageTemplate instanceof ContentPageTemplate)) ||
-			(Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE) &&
-			 !(pageTemplate instanceof WidgetPageTemplate))) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		long layoutPageTemplateCollectionId =
-			LayoutPageTemplateConstants.
-				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
-
-		LayoutPageTemplateCollection layoutPageTemplateCollection =
-			_getOrAddLayoutPageTemplateCollection(groupId, pageTemplate);
-
-		if (layoutPageTemplateCollection != null) {
-			layoutPageTemplateCollectionId =
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId();
-		}
-
-		if (!Objects.equals(
-				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateCollectionId)) {
-
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.moveLayoutPageTemplateEntry(
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					layoutPageTemplateCollectionId);
-		}
-
-		if (Objects.equals(
-				layoutPageTemplateEntry.getType(),
-				LayoutPageTemplateEntryTypeConstants.BASIC)) {
-
-			return _updatePageTemplate(
-				(ContentPageTemplate)pageTemplate, layoutPageTemplateEntry);
-		}
-
-		return _updatePageTemplate(
-			layoutPageTemplateEntry, (WidgetPageTemplate)pageTemplate);
 	}
 
 	@Override

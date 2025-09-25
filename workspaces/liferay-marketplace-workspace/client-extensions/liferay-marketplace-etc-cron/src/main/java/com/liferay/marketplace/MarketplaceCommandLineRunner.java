@@ -281,8 +281,8 @@ public class MarketplaceCommandLineRunner
 				UriComponentsBuilder.fromPath(
 					StringBundler.concat(
 						"/o/headless-commerce-admin-order/v1.0/orders",
-						"?nestedFields=orderItems",
-						"&filter=totalAmount gt 0.0",
+						"?filter=totalAmount gt 0.0",
+						"&nestedFields=orderItems",
 						"&page=-1&pageSize=-1&sort=createDate:desc")
 				).build(
 				).toUri()));
@@ -306,9 +306,10 @@ public class MarketplaceCommandLineRunner
 					_liferayOAuthApplicationExternalReferenceCodes),
 				UriComponentsBuilder.fromPath(
 					StringBundler.concat(
-						"/o/c/publishersalessummaries",
-						"?filter=r_accountToPublisher_accountEntryId eq '",
-						accountId, "' and quarter eq '", quarter, "'")
+						"/o/c/publishersalessummaries?filter=quarter eq '",
+						quarter,
+						"' and r_accountToPublisher_accountEntryId eq '",
+						accountId, "'")
 				).build(
 				).toUri()));
 

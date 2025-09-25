@@ -277,20 +277,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        backgroundFragmentImage:
-                            $ref: "#/components/schemas/FragmentImage"
-                            # @review
-                            description:
-                                The background fragment image of the container page element.
                         contentVisibility:
                             # @review
                             description:
                                 The content visibility of the container.
+                            enum: [Auto]
                             type: string
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS Classes that are applied to the element.
+                                A list of CSS Classes that are applied to all viewports.
                             items:
                                 type: string
                             type: array
@@ -299,13 +295,6 @@ components:
                             description:
                                 Custom CSS that is applied on the container page element.
                             type: string
-                        customCSSViewports:
-                            # @review
-                            description:
-                                The custom CSS viewports of the container page element.
-                            items:
-                                $ref: "#/components/schemas/CustomCSSViewport"
-                            type: array
                         fragmentLink:
                             $ref: "#/components/schemas/FragmentLink"
                             # @review
@@ -335,19 +324,19 @@ components:
                             description:
                                 the container page element's layout.
                             properties:
-                                containerType:
-                                    # @review
-                                    description:
-                                        The container's type (fixed or fluid).
-                                    enum: [Fixed, Fluid]
+                                align:
+                                    enum: [Baseline, Center, End, None, Start, Stretch]
+                                    type: string
+                                contentDisplay:
+                                    enum: [Block, FlexColumn, FlexRow]
                                     type: string
                                 flexWrap:
                                     enum: [NoWrap, Wrap, WrapReverse]
                                     type: string
+                                justify:
+                                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                                    type: string
                                 widthType:
-                                    # @review
-                                    description:
-                                        The width's type (fixed or fluid).
                                     enum: [Fixed, Fluid]
                                     type: string
                             type: object
@@ -1322,39 +1311,57 @@ components:
             description:
                 A fragment link.
             properties:
-                value_i18n:
-                    additionalProperties:
-                        $ref: "#/components/schemas/FragmentLinkValue"
+                target:
                     # @review
                     description:
-                        The localized fragment link's values.
-                    type: object
+                        The fragment link value's target (blank, self).
+                    enum: [Blank, Self]
+                    type: string
+                value:
+                    $ref: "#/components/schemas/FragmentLinkValue"
+                    description:
+                        The fragment link's value.
+        FragmentLinkInlineValue:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/FragmentInlineValue"
+                -   $ref: "#/components/schemas/FragmentLinkValue"
+            description:
+                A unique reference to a FragmentLinkValue of type FragmentInlineValue which remains constant across
+                environments.
+            type: object
+        FragmentLinkMappedValue:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/FragmentLinkValue"
+                -   $ref: "#/components/schemas/FragmentMappedValue"
+            description:
+                A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across
+                environments.
+            type: object
         FragmentLinkValue:
             # @review
             description:
                 A fragment link value.
+            discriminator:
+                mapping:
+                    FragmentInlineValue: "#/components/schemas/FragmentLinkInlineValue"
+                    FragmentMappedValue: "#/components/schemas/FragmentLinkMappedValue"
+                propertyName: type
             properties:
-                href:
+                type:
                     # @review
                     description:
                         The fragment link value's hypertext reference. Can be an inline value or mapped to an external
                         value.
-                    oneOf:
-                        -   $ref: "#/components/schemas/FragmentInlineValue"
-                        -   $ref: "#/components/schemas/FragmentMappedValue"
-                target:
-                    # @review
-                    description:
-                        The fragment link value's target (blank, parent, self, top).
-                    enum: [Blank, Parent, Self, Top]
+                    enum: [FragmentInlineValue, FragmentMappedValue]
                     type: string
+            type: object
         FragmentMappedValue:
-            # @review
             description:
                 A fragment mapped value.
             properties:
                 mapping:
-                    # @review
                     description:
                         The mapping of the fragment mapped value.
                     properties:
@@ -1365,12 +1372,44 @@ components:
                             type: string
                         itemReference:
                             # @review
+                            $ref: "#/components/schemas/FragmentMappedValueItemReference"
                             description:
                                 The mapping's item reference.
-                            oneOf:
-                                -   $ref: "#/components/schemas/ItemExternalReference"
-                                -   $ref: "#/components/schemas/ContextReference"
                     type: object
+            type: object
+        FragmentMappedValueItemContextReference:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/ContextReference"
+                -   $ref: "#/components/schemas/FragmentMappedValueItemReference"
+            description:
+                A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemContextReference
+                which remains constant across environments.
+            type: object
+        FragmentMappedValueItemExternalReference:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/FragmentMappedValueItemReference"
+                -   $ref: "#/components/schemas/ItemExternalReference"
+            description:
+                A unique reference to a FragmentMappedValueItemReference of type
+                FragmentMappedValueItemExternalReference which remains constant across environments.
+            type: object
+        FragmentMappedValueItemReference:
+            description:
+                A fragment mapped value item reference.
+            discriminator:
+                mapping:
+                    ContextReference: "#/components/schemas/FragmentMappedValueItemContextReference"
+                    ItemExternalReference: "#/components/schemas/FragmentMappedValueItemExternalReference"
+                propertyName: type
+            properties:
+                type:
+                    description:
+                        The fragment mapped item reference. Can be a context reference value or external reference to an
+                        external value.
+                    enum: [ContextReference, ItemExternalReference]
+                    type: string
             type: object
         FragmentSettingsAllowed:
             # @review
@@ -1546,6 +1585,10 @@ components:
             description:
                 A fragment viewport.
             properties:
+                customCSS:
+                    description:
+                        Custom CSS that is applied to the fragment viewport.
+                    type: string
                 fragmentViewportStyle:
                     # @review
                     description:

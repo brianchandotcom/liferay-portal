@@ -31,7 +31,18 @@ export default function SharedItemRenderer({
 	options: {actionId: string};
 	value: string;
 }) {
-	const {fileTypeIcon, fileTypeIconColor, siteName} = itemData;
+	const {assetType, fileTypeIcon, fileTypeIconColor, siteName} = itemData;
+
+	const [icon, iconColor] =
+		fileTypeIcon && fileTypeIconColor
+			? [fileTypeIcon, fileTypeIconColor]
+			: assetType?.includes('Web Content')
+				? ['forms', 'content-icon-basic-content']
+				: assetType?.includes('Blog')
+					? ['blogs', 'content-icon-blog']
+					: assetType?.includes('Knowledge')
+						? ['wiki', 'content-icon-knowledge-base']
+						: ['web-content', 'content-icon-web-content'];
 
 	const linkHref = useMemo(() => {
 		const {actionId} = options;
@@ -62,11 +73,9 @@ export default function SharedItemRenderer({
 
 	return (
 		<span className="align-items-center c-gap-2 d-flex table-list-title">
-			{fileTypeIcon && fileTypeIconColor && (
-				<ClaySticker className={`flex-shrink-0 ${fileTypeIconColor}`}>
-					<ClayIcon aria-hidden="true" symbol={fileTypeIcon} />
-				</ClaySticker>
-			)}
+			<ClaySticker className={`flex-shrink-0 ${iconColor}`}>
+				<ClayIcon aria-hidden="true" symbol={icon} />
+			</ClaySticker>
 
 			{linkHref ? (
 				<ClayLink aria-label={value} data-senna-off href={linkHref}>

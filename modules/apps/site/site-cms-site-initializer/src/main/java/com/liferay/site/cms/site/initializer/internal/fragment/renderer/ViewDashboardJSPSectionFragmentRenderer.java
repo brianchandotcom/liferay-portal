@@ -32,7 +32,7 @@ public class ViewDashboardJSPSectionFragmentRenderer
 
 		return new ViewDashboardDisplayContext(
 			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY));
+				WebKeys.THEME_DISPLAY), groupLocalService);
 	}
 
 	@Override

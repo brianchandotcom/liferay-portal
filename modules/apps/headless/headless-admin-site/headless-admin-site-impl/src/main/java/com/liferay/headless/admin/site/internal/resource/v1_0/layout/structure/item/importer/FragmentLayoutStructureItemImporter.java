@@ -244,7 +244,7 @@ public class FragmentLayoutStructureItemImporter
 		int type = FragmentConstants.TYPE_COMPONENT;
 
 		if (Objects.equals(
-				FragmentInstancePageElementDefinition.FragmentType.BASIC,
+				FragmentInstancePageElementDefinition.FragmentType.FORM,
 				fragmentInstancePageElementDefinition.getFragmentType())) {
 
 			type = FragmentConstants.TYPE_INPUT;

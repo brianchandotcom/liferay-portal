@@ -134,8 +134,8 @@ public class OAuthClientEntryServiceHttp {
 
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			deleteOAuthClientEntry(
-				HttpPrincipal httpPrincipal, long companyId,
-				String authServerWellKnownURI, String clientId)
+				HttpPrincipal httpPrincipal, long companyId, String clientId,
+				String authServerWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -144,7 +144,7 @@ public class OAuthClientEntryServiceHttp {
 				_deleteOAuthClientEntryParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, authServerWellKnownURI, clientId);
+				methodKey, companyId, clientId, authServerWellKnownURI);
 
 			Object returnObj = null;
 
@@ -298,8 +298,8 @@ public class OAuthClientEntryServiceHttp {
 
 	public static com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			getOAuthClientEntry(
-				HttpPrincipal httpPrincipal, long companyId,
-				String authServerWellKnownURI, String clientId)
+				HttpPrincipal httpPrincipal, long companyId, String clientId,
+				String authServerWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -308,7 +308,7 @@ public class OAuthClientEntryServiceHttp {
 				_getOAuthClientEntryParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, authServerWellKnownURI, clientId);
+				methodKey, companyId, clientId, authServerWellKnownURI);
 
 			Object returnObj = null;
 

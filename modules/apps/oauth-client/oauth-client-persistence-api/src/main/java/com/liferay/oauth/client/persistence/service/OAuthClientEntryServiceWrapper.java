@@ -56,11 +56,11 @@ public class OAuthClientEntryServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			deleteOAuthClientEntry(
-				long companyId, String authServerWellKnownURI, String clientId)
+				long companyId, String clientId, String authServerWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryService.deleteOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	@Override
@@ -95,11 +95,11 @@ public class OAuthClientEntryServiceWrapper
 	@Override
 	public com.liferay.oauth.client.persistence.model.OAuthClientEntry
 			getOAuthClientEntry(
-				long companyId, String authServerWellKnownURI, String clientId)
+				long companyId, String clientId, String authServerWellKnownURI)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _oAuthClientEntryService.getOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**

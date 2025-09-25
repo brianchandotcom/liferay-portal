@@ -51,11 +51,11 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException {
 
 		return getService().deleteOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	public static List<OAuthClientEntry>
@@ -80,11 +80,11 @@ public class OAuthClientEntryServiceUtil {
 	}
 
 	public static OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException {
 
 		return getService().getOAuthClientEntry(
-			companyId, authServerWellKnownURI, clientId);
+			companyId, clientId, authServerWellKnownURI);
 	}
 
 	/**

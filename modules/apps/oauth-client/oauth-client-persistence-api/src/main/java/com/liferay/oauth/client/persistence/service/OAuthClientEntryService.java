@@ -53,7 +53,7 @@ public interface OAuthClientEntryService extends BaseService {
 		throws PortalException;
 
 	public OAuthClientEntry deleteOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -71,7 +71,7 @@ public interface OAuthClientEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public OAuthClientEntry getOAuthClientEntry(
-			long companyId, String authServerWellKnownURI, String clientId)
+			long companyId, String clientId, String authServerWellKnownURI)
 		throws PortalException;
 
 	/**

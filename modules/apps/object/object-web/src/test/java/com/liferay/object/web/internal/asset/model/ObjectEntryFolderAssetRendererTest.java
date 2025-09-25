@@ -44,13 +44,11 @@ public class ObjectEntryFolderAssetRendererTest {
 				_objectEntryFolder, null, _portal);
 
 		Assert.assertNull(assetRenderer.getURLViewInContext(null, null));
-
-		Assert.assertEquals(
-			_getFriendlyURL(),
-			assetRenderer.getURLViewInContext(_themeDisplay, null));
-
 		Assert.assertEquals(
 			_getCMSFriendlyURL(),
+			assetRenderer.getURLViewInContext(_themeDisplay, null));
+		Assert.assertEquals(
+			_getFriendlyURL(),
 			assetRenderer.getURLViewInContext(_themeDisplay, null));
 	}
 

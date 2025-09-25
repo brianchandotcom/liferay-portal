@@ -81,14 +81,12 @@ public class ObjectEntryAssetRendererTest {
 		Assert.assertNull(
 			assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse, null));
-
-		Assert.assertEquals(
-			_getFriendlyURL(liferayPortletRequest),
-			assetRenderer.getURLViewInContext(
-				liferayPortletRequest, liferayPortletResponse, null));
-
 		Assert.assertEquals(
 			_getCMSFriendlyURL(liferayPortletRequest),
+			assetRenderer.getURLViewInContext(
+				liferayPortletRequest, liferayPortletResponse, null));
+		Assert.assertEquals(
+			_getFriendlyURL(liferayPortletRequest),
 			assetRenderer.getURLViewInContext(
 				liferayPortletRequest, liferayPortletResponse, null));
 	}

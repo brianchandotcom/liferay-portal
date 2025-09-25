@@ -46,6 +46,8 @@ public class LayoutModelDocumentContributor
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());
 		document.addKeyword(Field.STATUS, _getStatus(layout));
+		document.addKeyword(
+			"externalReferenceCode", layout.getExternalReferenceCode());
 
 		_addLayoutContentFields(document, layout);
 
@@ -60,8 +62,7 @@ public class LayoutModelDocumentContributor
 		document.addText(Field.TYPE, layout.getType());
 		document.addText(
 			"privateLayout", String.valueOf(layout.isPrivateLayout()));
-		document.addText(
-			"systemLayout", String.valueOf(layout.isSystem()));
+		document.addText("systemLayout", String.valueOf(layout.isSystem()));
 		document.addLocalizedKeyword(
 			"localized_title",
 			_localization.populateLocalizationMap(

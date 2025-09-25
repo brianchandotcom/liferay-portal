@@ -753,6 +753,34 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		Assert.assertFalse(jsonObject.has("test1"));
 		Assert.assertTrue(jsonObject.has("test2"));
+
+		defaultPermissionBulkAction.setBulkActionItems(
+			new BulkActionItem[] {
+				_toBulkActionItem(objectEntryFolder2),
+				_toBulkActionItem(objectEntryFolder4)
+			});
+		defaultPermissionBulkAction.setDefaultPermissions(
+			"{\"test3\": \"test3\"}");
+		defaultPermissionBulkAction.setSelectAll(false);
+
+		bulkActionTask = bulkActionResource.postBulkAction(
+			null, null, defaultPermissionBulkAction);
+
+		values = _getImportTaskValues(bulkActionTask);
+
+		_waitForFinish(GetterUtil.getLong(values.get("importTaskId")));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder2);
+
+		Assert.assertFalse(jsonObject.has("test2"));
+		Assert.assertTrue(jsonObject.has("test3"));
+
+		jsonObject = _getDefaultPermissionsJSONObject(
+			objectDefinition, objectEntryFolder4);
+
+		Assert.assertFalse(jsonObject.has("test2"));
+		Assert.assertTrue(jsonObject.has("test3"));
 	}
 
 	private void _testPostBulkActionWithTypeDelete() throws Exception {

@@ -73,6 +73,26 @@ describe('Field Color Picker', () => {
 		expect(inputEl.value).toBe('ffffff');
 	});
 
+	it('does not have aria-invalid attribute on first render when it is required', () => {
+		const {container} = render(<ColorPickerWithProvider required={true} />);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('does not have aria-invalid attribute when it is required and has a value', () => {
+		const color = '#FF67AA';
+
+		const {container} = render(
+			<ColorPickerWithProvider required={true} value={color} />
+		);
+
+		const input = container.querySelector('input[aria-required="true"]');
+
+		expect(input.hasAttribute('aria-invalid')).toBe(false);
+	});
+
 	it('renders field disabled', () => {
 		const {container} = render(
 			<ColorPickerWithProvider

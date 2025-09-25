@@ -109,6 +109,30 @@ describe('Field Text', () => {
 		});
 	});
 
+	it('does not have aria-invalid attribute on first render when it is required', () => {
+		const {container} = render(
+			<TextWithProvider {...defaultTextConfig} required={true} />
+		);
+
+		const textInputTag = container.querySelector('.ddm-field-text');
+
+		expect(textInputTag.hasAttribute('aria-invalid')).toBe(false);
+	});
+
+	it('does not have aria-invalid attribute when it is required and has a value', () => {
+		const {container} = render(
+			<TextWithProvider
+				{...defaultTextConfig}
+				required={true}
+				value="test"
+			/>
+		);
+
+		const textInputTag = container.querySelector('.ddm-field-text');
+
+		expect(textInputTag.hasAttribute('aria-invalid')).toBe(false);
+	});
+
 	it('does not render a counter when show counter is false, there is a maxLength and value is different from empty', () => {
 		const {queryByText} = render(
 			<TextWithProvider

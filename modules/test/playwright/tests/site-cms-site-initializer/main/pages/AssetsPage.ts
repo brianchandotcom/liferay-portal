@@ -15,17 +15,26 @@ export class AssetsPage {
 	readonly page: Page;
 
 	readonly dataSetFragmentPage: DataSetPage;
+	readonly modalDeleteButton: Locator;
 	readonly newButton: Locator;
+	readonly processingTasksButton: Locator;
 	readonly table: {
 		bodyRows: Locator;
 		container: Locator;
+
 		headRow: Locator;
 	};
+	readonly taskStatusButton: (buttonName: string) => Locator;
+	readonly taskStatusDropdownItemButton: (taskName: string) => Locator;
+	readonly taskStatusDropdownList: Locator;
+	readonly taskStatusFormsButton: Locator;
+	readonly viewAllTasksLink: Locator;
 
 	readonly modalContainer: Locator;
 	readonly modal: {
 		body: Locator;
 		container: Locator;
+		footer: Locator;
 		title: Locator;
 	};
 
@@ -34,6 +43,23 @@ export class AssetsPage {
 
 		this.dataSetFragmentPage = new DataSetPage(page);
 		this.newButton = page.getByLabel('New');
+		this.processingTasksButton = page.getByRole('button', {
+			name: /Processing Tasks?/,
+		}) as Locator;
+		this.taskStatusButton = (buttonName: string) => {
+			return page.getByRole('button', {exact: true, name: buttonName});
+		};
+		this.taskStatusDropdownItemButton = (taskName: string) => {
+			return page.getByRole('button', {name: taskName});
+		};
+		this.taskStatusDropdownList = page.locator('ul.task-status');
+		this.taskStatusFormsButton = page
+			.locator('li.tbar-item')
+			.locator('svg.lexicon-icon-forms');
+		this.viewAllTasksLink = page.getByRole('link', {
+			exact: true,
+			name: 'View All Tasks',
+		});
 
 		this.table = this.dataSetFragmentPage.table;
 
@@ -42,8 +68,14 @@ export class AssetsPage {
 		this.modal = {
 			body: modalContainer.locator('.modal-body'),
 			container: modalContainer,
+			footer: modalContainer.locator('.modal-footer'),
 			title: modalContainer.locator('.modal-title'),
 		};
+
+		this.modalDeleteButton = this.modal.footer.getByRole('button', {
+			exact: true,
+			name: 'Delete',
+		});
 	}
 
 	async gotoAll() {

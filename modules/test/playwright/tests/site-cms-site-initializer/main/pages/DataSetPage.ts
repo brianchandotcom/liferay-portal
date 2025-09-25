@@ -13,9 +13,12 @@ export class DataSetPage {
 		container: Locator;
 		headRow: Locator;
 	};
+	readonly selectAllLink: Locator;
 
 	constructor(page: Page) {
-		this.activeViewSelector = page.getByLabel('Show View Options');
+		this.activeViewSelector = page.getByLabel(
+			'Show View Options'
+		) as Locator;
 
 		const tableContainer = page.locator('.fds table');
 		this.table = {
@@ -25,6 +28,10 @@ export class DataSetPage {
 		};
 
 		this.page = page;
+		this.selectAllLink = page.getByRole('link', {
+			exact: true,
+			name: 'Select All',
+		});
 	}
 
 	getRow(filter: string) {

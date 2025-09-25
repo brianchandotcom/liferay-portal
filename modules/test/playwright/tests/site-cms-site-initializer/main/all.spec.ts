@@ -453,14 +453,6 @@ test(
 					}
 				);
 			});
-
-			await test.step('view Delete confirmation modal', async () => {
-				await assetsPage.execBulkItemAction('Delete');
-
-				await expect(page.locator('.modal-title')).toContainText(
-					'Delete Entry'
-				);
-			});
 		}
 		finally {
 			await apiHelpers.objectEntry.deleteObjectEntry(
@@ -513,5 +505,256 @@ test(
 		await expect(assetsPage.modal.body).toContainText(
 			'file_upload_image_1.jpeg'
 		);
+	}
+);
+
+test(
+	'Task Status Manager component',
+	{tag: '@LPD-57835'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const basicWebContent = 'cms/basic-web-contents';
+		const bulkActionTasks = 'cms/bulk-action-tasks';
+		const bulkActionTasksItems = 'cms/bulk-action-task-items';
+		const spaceName = 'Default';
+
+		const filesNames = [
+			getRandomString(),
+			getRandomString(),
+			getRandomString(),
+		];
+
+		for (const fileName of filesNames) {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: fileName,
+				},
+				basicWebContent,
+				spaceName
+			);
+		}
+		try {
+			await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
+				await assetsPage.gotoAll();
+
+				await expect(assetsPage.taskStatusFormsButton).toBeDisabled();
+
+				await assetsPage
+					.getItem(filesNames[0])
+					.locator('input[title="Select Item"]')
+					.check();
+				await assetsPage.execBulkItemAction('Delete');
+
+				await expect(assetsPage.modal.title).toContainText(
+					'Delete Entry'
+				);
+
+				await assetsPage.modalDeleteButton.click();
+
+				await waitForAlert(
+					page,
+					'Info:Asset delete action started for 1 asset.' +
+						' Check the Task Report for details.',
+					{
+						autoClose: true,
+						type: 'info',
+					}
+				);
+			});
+
+			await test.step('Check that the processingTask button Appear and click on it', async () => {
+				await expect(assetsPage.processingTasksButton).toBeVisible();
+
+				await assetsPage.processingTasksButton.click();
+			});
+
+			await test.step('After the click, the dropdown component is shown and 1 task with details is visible', async () => {
+				await expect(
+					assetsPage
+						.taskStatusDropdownItemButton('Asset Deletion')
+						.nth(0)
+				).toBeVisible();
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'1 Items'
+				);
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'a few seconds ago'
+				);
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'processing'
+				);
+
+				await assetsPage
+					.taskStatusDropdownItemButton('Asset Deletion')
+					.click();
+
+				await expect(assetsPage.taskStatusButton('View')).toBeVisible();
+				await expect(assetsPage.viewAllTasksLink).toBeVisible();
+
+				await assetsPage.processingTasksButton.click();
+			});
+
+			// This test step will be removed once the API flow will be completed
+
+			await test.step('Update the task status to Completed', async () => {
+				const tasks =
+					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+						bulkActionTasks
+					);
+
+				await apiHelpers.objectEntry.patchObjectEntry(
+					{
+						executionStatus: 'COMPLETED',
+					},
+					bulkActionTasks,
+					tasks.items[0].id
+				);
+
+				expect.poll(
+					async () => {
+						await expect(
+							assetsPage.taskStatusFormsButton
+						).toBeEnabled();
+					},
+					{
+						timeout: 10000,
+					}
+				);
+
+				await assetsPage.taskStatusFormsButton.click();
+
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'completed'
+				);
+			});
+
+			await test.step('Delete the assets using the selectAll', async () => {
+				await page.reload();
+
+				await assetsPage
+					.getItem(filesNames[1])
+					.locator('input[title="Select Item"]')
+					.check();
+				await assetsPage
+					.getItem(filesNames[2])
+					.locator('input[title="Select Item"]')
+					.check();
+				await assetsPage.dataSetFragmentPage.selectAllLink.click();
+				await assetsPage.execBulkItemAction('Delete');
+
+				await expect(assetsPage.modal.title).toContainText(
+					'Delete All Entries'
+				);
+
+				await assetsPage.modalDeleteButton.click();
+
+				await waitForAlert(
+					page,
+					'Info:Asset delete action started for 2 assets.' +
+						' Check the Task Report for details.',
+					{
+						autoClose: true,
+						type: 'info',
+					}
+				);
+			});
+
+			await test.step('Check that the processingTask button Appear, click on it and check that there are 2 task', async () => {
+				await expect(assetsPage.processingTasksButton).toBeVisible();
+
+				await assetsPage.processingTasksButton.click();
+
+				await expect(
+					assetsPage
+						.taskStatusDropdownItemButton('Asset Deletion')
+						.nth(0)
+				).toBeVisible();
+				await expect(
+					assetsPage
+						.taskStatusDropdownItemButton('Asset Deletion')
+						.nth(1)
+				).toBeVisible();
+			});
+
+			await test.step('Check details of the selectAll asset deletion', async () => {
+				await assetsPage.processingTasksButton.click();
+
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'2 Items'
+				);
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'a few seconds ago'
+				);
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'processing'
+				);
+
+				await assetsPage.processingTasksButton.click();
+			});
+
+			// This test step will be removed once the API flow will be completed
+
+			await test.step('Update the status of the task to Failed', async () => {
+				const processingTasks =
+					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+						bulkActionTasks,
+						new URLSearchParams({
+							filter: `executionStatus eq 'STARTED'`,
+						})
+					);
+
+				await apiHelpers.objectEntry.patchObjectEntry(
+					{
+						executionStatus: 'FAILED',
+					},
+					bulkActionTasks,
+					processingTasks.items[0].id
+				);
+
+				expect.poll(
+					async () => {
+						await expect(
+							page
+								.getByLabel('CMS Control Menu')
+								.getByRole('button')
+								.locator('svg.lexicon-icon-forms')
+						).toBeVisible();
+					},
+					{
+						timeout: 10000,
+					}
+				);
+
+				await assetsPage.taskStatusFormsButton.click();
+
+				await expect(assetsPage.taskStatusDropdownList).toContainText(
+					'failed'
+				);
+			});
+		}
+		finally {
+			const tasksItems =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasksItems
+				);
+
+			const tasks =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					bulkActionTasks
+				);
+
+			for (let i = 0; i < tasksItems.totalCount; i++) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasksItems,
+					tasksItems.items[i].id
+				);
+			}
+			for (let i = 0; i < tasks.totalCount; i++) {
+				await apiHelpers.objectEntry.deleteObjectEntry(
+					bulkActionTasks,
+					tasks.items[i].id
+				);
+			}
+		}
 	}
 );

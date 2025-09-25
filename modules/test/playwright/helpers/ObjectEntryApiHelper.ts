@@ -29,7 +29,16 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
-	async getObjectDefinitionObjectEntries(applicationName: string) {
+	async getObjectDefinitionObjectEntries(
+		applicationName: string,
+		searchParams?: URLSearchParams
+	) {
+		if (searchParams) {
+			return this.apiHelpers.get(
+				`${this.apiHelpers.baseUrl}${applicationName}/?${searchParams.toString()}`
+			);
+		}
+
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${applicationName}/`
 		);
@@ -71,6 +80,25 @@ export class ObjectEntryApiHelper {
 		return this.apiHelpers.postResponse(
 			`${liferayConfig.environment.baseUrl}${restContextPath}`,
 			{data}
+		);
+	}
+
+	async patchObjectEntry(
+		data: DataObject,
+		applicationName: string,
+		objectEntryId: number,
+		scopeKey?: string
+	): Promise<ObjectEntry> {
+		if (scopeKey) {
+			return this.apiHelpers.patch(
+				`${this.apiHelpers.baseUrl}${applicationName}/scopes/${scopeKey}/${objectEntryId}`,
+				data
+			);
+		}
+
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${applicationName}/${objectEntryId}`,
+			data
 		);
 	}
 

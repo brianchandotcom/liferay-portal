@@ -324,7 +324,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			defaultPermissionBulkAction.getTypeAsString());
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();
-
 		ImportTaskResource importTaskResource = _createImportTaskResource();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
@@ -418,7 +417,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			keywordBulkAction.getTypeAsString());
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();
-
 		ImportTaskResource importTaskResource = _createImportTaskResource();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
@@ -476,7 +474,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			permissionBulkAction.getTypeAsString());
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();
-
 		ImportTaskResource importTaskResource = _createImportTaskResource();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
@@ -541,7 +538,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			taxonomyCategoryBulkAction.getTypeAsString());
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();
-
 		ImportTaskResource importTaskResource = _createImportTaskResource();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :

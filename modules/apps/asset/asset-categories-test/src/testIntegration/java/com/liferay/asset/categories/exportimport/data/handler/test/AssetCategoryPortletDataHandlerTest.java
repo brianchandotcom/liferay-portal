@@ -114,6 +114,54 @@ public class AssetCategoryPortletDataHandlerTest
 		}
 	)
 	@Test
+	public void testAssetVocabularyExportImportReportEntries()
+		throws Exception {
+
+		FeatureFlagTestUtil.invokeFeatureFlagListeners(
+			TestPropsValues.getCompanyId(), true, "LPD-35914");
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary();
+
+		String originalExternalReferenceCode =
+			assetVocabulary.getExternalReferenceCode();
+
+		File larFile = _exportLayouts();
+
+		_assetVocabularyLocalService.deleteVocabulary(assetVocabulary);
+
+		_addAssetVocabulary();
+
+		ExportImportConfiguration exportImportConfiguration =
+			_setUpExportImportConfiguration();
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+		Assert.assertTrue(
+			ListUtil.exists(
+				exportImportReportEntries,
+				exportImportReportEntry ->
+					Objects.equals(
+						exportImportReportEntry.getClassExternalReferenceCode(),
+						originalExternalReferenceCode) &&
+					(exportImportReportEntry.getType() ==
+						ExportImportReportEntryConstants.TYPE_ERROR)));
+	}
+
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
+		}
+	)
+	@Test
 	public void testExportImportAssetCategory() throws Exception {
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			TestPropsValues.getCompanyId(), true, "LPD-35914");
@@ -265,8 +313,7 @@ public class AssetCategoryPortletDataHandlerTest
 	private AssetVocabulary _addAssetVocabulary() throws Exception {
 		return _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-			RandomTestUtil.randomString(),
-			ServiceContextTestUtil.getServiceContext());
+			"vocabulary", ServiceContextTestUtil.getServiceContext());
 	}
 
 	private File _exportLayouts() throws Exception {

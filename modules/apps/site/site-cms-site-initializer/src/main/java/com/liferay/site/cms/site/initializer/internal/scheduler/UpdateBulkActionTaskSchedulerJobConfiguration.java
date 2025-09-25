@@ -114,11 +114,11 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 			ObjectRelationship objectRelationship, Long primaryKey)
 		throws Exception {
 
-		Date completionDate = null;
-		int numberOfFailedItems = 0;
-		int numberOfSuccessfulItems = 0;
-
 		try {
+			Date completionDate = null;
+			int numberOfFailedItems = 0;
+			int numberOfSuccessfulItems = 0;
+
 			for (ObjectEntry objectEntry :
 					_objectEntryLocalService.getOneToManyObjectEntries(
 						0, objectRelationship.getObjectRelationshipId(), null,
@@ -202,6 +202,36 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 					completionDate = batchEngineImportTask.getEndTime();
 				}
 			}
+
+			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+				primaryKey);
+
+			Map<String, Serializable> values = objectEntry.getValues();
+
+			values.put("completionDate", completionDate);
+			values.put("numberOfFailedItems", numberOfFailedItems);
+			values.put("numberOfSuccessfulItems", numberOfSuccessfulItems);
+
+			long numberOfItems = GetterUtil.getInteger(
+				values.get("numberOfItems"));
+
+			if (numberOfItems ==
+					(numberOfSuccessfulItems + numberOfFailedItems)) {
+
+				values.put(
+					"executionStatus",
+					BulkActionExecutionStatusConstants.COMPLETED);
+			}
+			else {
+				values.put(
+					"executionStatus",
+					BulkActionExecutionStatusConstants.STARTED);
+			}
+
+			_objectEntryLocalService.partialUpdateObjectEntry(
+				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
+				objectEntry.getObjectEntryFolderId(), values,
+				new ServiceContext());
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -219,34 +249,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 				objectEntry.getUserId(), objectEntry.getObjectEntryId(),
 				objectEntry.getObjectEntryFolderId(), values,
 				new ServiceContext());
-
-			return;
 		}
-
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			primaryKey);
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		values.put("completionDate", completionDate);
-		values.put("numberOfFailedItems", numberOfFailedItems);
-		values.put("numberOfSuccessfulItems", numberOfSuccessfulItems);
-
-		long numberOfItems = GetterUtil.getInteger(values.get("numberOfItems"));
-
-		if (numberOfItems == (numberOfSuccessfulItems + numberOfFailedItems)) {
-			values.put(
-				"executionStatus",
-				BulkActionExecutionStatusConstants.COMPLETED);
-		}
-		else {
-			values.put(
-				"executionStatus", BulkActionExecutionStatusConstants.STARTED);
-		}
-
-		_objectEntryLocalService.partialUpdateObjectEntry(
-			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(), values, new ServiceContext());
 	}
 
 	private void _updateObjectEntries(long companyId) throws Exception {

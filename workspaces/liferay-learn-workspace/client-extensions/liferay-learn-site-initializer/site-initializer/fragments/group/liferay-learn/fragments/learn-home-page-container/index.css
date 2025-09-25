@@ -54,15 +54,6 @@
 	display: flex;
 	justify-content: space-evenly;
 
-	@media (max-width: 1287px) {
-		display: flex !important;
-		flex-direction: column !important;
-
-		.learn-welcome-container {
-			margin: 0 !important;
-		}
-	}
-
 	@media (max-width: 415px) {
 		font-size: 0.5rem;
 		padding-left: 1.5rem;
@@ -73,6 +64,15 @@
 			flex-direction: column !important;
 			width: 95%;
 			z-index: 1;
+		}
+	}
+
+	@media (max-width: 1287px) {
+		display: flex !important;
+		flex-direction: column !important;
+
+		.learn-welcome-container {
+			margin: 0 !important;
 		}
 	}
 }

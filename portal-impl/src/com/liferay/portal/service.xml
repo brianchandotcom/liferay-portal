@@ -3270,6 +3270,7 @@
 		<exception>MasterLayout</exception>
 		<exception>MembershipRequestComments</exception>
 		<exception>OldServiceComponent</exception>
+		<exception>OrganizationComments</exception>
 		<exception>OrganizationId</exception>
 		<exception>OrganizationName</exception>
 		<exception>OrganizationParent</exception>
@@ -3309,6 +3310,7 @@
 		<exception>SitemapPagePriority</exception>
 		<exception>TeamName</exception>
 		<exception>UserActive</exception>
+		<exception>UserComments</exception>
 		<exception>UserEmailAddress</exception>
 		<exception>UserField</exception>
 		<exception>UserGroupName</exception>

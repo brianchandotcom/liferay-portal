@@ -41,6 +41,8 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.portal.tools.rest.builder.test.client.custom.field.CustomField;
+import com.liferay.portal.tools.rest.builder.test.client.custom.field.CustomValue;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.BatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.dto.v1_0.CompanyTestEntity;
 import com.liferay.portal.tools.rest.builder.test.client.http.HttpInvoker;
@@ -113,7 +115,8 @@ public class BatchTestEntityExportImportTest {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "nestedField,relatedCompanyTestEntity"
+			"nestedFields",
+			"customFields.attributeType,nestedField,relatedCompanyTestEntity"
 		).build();
 		_companyTestEntityResource = CompanyTestEntityResource.builder(
 		).authentication(
@@ -151,6 +154,21 @@ public class BatchTestEntityExportImportTest {
 			_batchTestEntityResource.postBatchTestEntity(
 				new BatchTestEntity() {
 					{
+						customFields = new CustomField[] {
+							new CustomField() {
+								{
+									attributeType = AttributeType.STRING;
+									customValue = new CustomValue() {
+										{
+											data =
+												RandomTestUtil.randomString();
+										}
+									};
+									dataType = "Text";
+									name = RandomTestUtil.randomString();
+								}
+							}
+						};
 						externalReferenceCode = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
 						id = RandomTestUtil.randomLong();
@@ -164,6 +182,20 @@ public class BatchTestEntityExportImportTest {
 			_batchTestEntityResource.postBatchTestEntity(
 				new BatchTestEntity() {
 					{
+						customFields = new CustomField[] {
+							new CustomField() {
+								{
+									attributeType = AttributeType.INTEGER;
+									customValue = new CustomValue() {
+										{
+											data = RandomTestUtil.randomInt();
+										}
+									};
+									dataType = "Integer";
+									name = RandomTestUtil.randomString();
+								}
+							}
+						};
 						externalReferenceCode = StringUtil.toLowerCase(
 							RandomTestUtil.randomString());
 						id = RandomTestUtil.randomLong();
@@ -601,6 +633,9 @@ public class BatchTestEntityExportImportTest {
 	private void _assertEquals(
 		BatchTestEntity batchTestEntity1, BatchTestEntity batchTestEntity2) {
 
+		Assert.assertEquals(
+			batchTestEntity1.getCustomFields(),
+			batchTestEntity2.getCustomFields());
 		Assert.assertEquals(
 			batchTestEntity1.getExternalReferenceCode(),
 			batchTestEntity2.getExternalReferenceCode());

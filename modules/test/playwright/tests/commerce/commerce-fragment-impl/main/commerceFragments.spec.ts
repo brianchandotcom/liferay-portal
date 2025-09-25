@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -33,7 +33,16 @@ export const test = mergeTests(
 
 test(
 	'Account selector fragments are visible',
-	{tag: ['@LPD-63173', '@LPD-63175']},
+	{
+		tag: [
+			'@LPD-63169',
+			'@LPD-63170',
+			'@LPD-63171',
+			'@LPD-63172',
+			'@LPD-63173',
+			'@LPD-63175',
+		],
+	},
 	async ({apiHelpers, applicationsMenuPage, page, site}) => {
 		await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([
@@ -52,6 +61,14 @@ test(
 				getFragmentDefinition({
 					id: getRandomString(),
 					key: 'com.liferay.commerce.fragment.internal.renderer.CommerceAccountSelectorCreateOrderFragmentRenderer',
+				}),
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.commerce.fragment.internal.renderer.AccountsDataSetFragmentRenderer',
+				}),
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.commerce.fragment.internal.renderer.PendingAccountOrdersDataSetFragmentRenderer',
 				}),
 			]),
 			siteId: site.id,
@@ -74,6 +91,16 @@ test(
 		await expect(
 			page.locator(
 				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-commerceaccountselectorcreateorderfragmentrenderer'
+			)
+		).toHaveCount(1);
+		await expect(
+			page.locator(
+				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountsdatasetfragmentrenderer'
+			)
+		).toHaveCount(1);
+		await expect(
+			page.locator(
+				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-pendingaccountordersdatasetfragmentrenderer'
 			)
 		).toHaveCount(1);
 	}

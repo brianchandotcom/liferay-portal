@@ -8,6 +8,7 @@ package com.liferay.info.request.struts.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -215,6 +216,99 @@ public class EditInfoItemStrutsActionTest {
 		Assert.assertEquals(
 			friendlyURL,
 			objectEntry.getURLTitle(_objectDefinition.getDefaultLocale()));
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testAddAndUpdateInfoItemWithEnableObjectEntrySchedule()
+		throws Exception {
+
+		_objectDefinition.setEnableObjectEntrySchedule(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		_objectDefinitionLocalService.deployObjectDefinition(_objectDefinition);
+
+		InfoFormValidationException.InvalidExpirationDate
+			invalidExpirationDate =
+				(InfoFormValidationException.InvalidExpirationDate)_execute(
+					HashMapBuilder.<String, List<String>>put(
+						"expirationDate",
+						Collections.singletonList("2020-03-01T11:11")
+					).build());
+
+		Assert.assertEquals(
+			"Expiration date must be a future date.",
+			invalidExpirationDate.getLocalizedMessage(LocaleUtil.US));
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_execute(
+			HashMapBuilder.<String, List<String>>put(
+				"displayDate", Collections.singletonList("2020-03-01T11:11")
+			).put(
+				"expirationDate", Collections.singletonList("2999-03-01T11:11")
+			).put(
+				"externalReferenceCode",
+				Collections.singletonList(externalReferenceCode)
+			).put(
+				"reviewDate", Collections.singletonList("2021-03-01T11:11")
+			).build());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			externalReferenceCode, 0,
+			_objectDefinition.getObjectDefinitionId());
+
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2020-03-01T11:11", LocaleUtil.US),
+			objectEntry.getDisplayDate());
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2999-03-01T11:11", LocaleUtil.US),
+			objectEntry.getExpirationDate());
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2021-03-01T11:11", LocaleUtil.US),
+			objectEntry.getReviewDate());
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		_execute(
+			HashMapBuilder.put(
+				"classPK",
+				Collections.singletonList(
+					String.valueOf(objectEntry.getObjectEntryId()))
+			).put(
+				"displayDate", Collections.singletonList("2022-03-01T11:11")
+			).put(
+				"expirationDate", Collections.singletonList("3000-03-01T11:11")
+			).put(
+				"externalReferenceCode",
+				Collections.singletonList(externalReferenceCode)
+			).put(
+				"reviewDate", Collections.singletonList("2023-03-01T11:11")
+			).build());
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2022-03-01T11:11", LocaleUtil.US),
+			objectEntry.getDisplayDate());
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "3000-03-01T11:11", LocaleUtil.US),
+			objectEntry.getExpirationDate());
+		Assert.assertEquals(
+			externalReferenceCode, objectEntry.getExternalReferenceCode());
+		Assert.assertEquals(
+			DateUtil.parseDate(
+				"yyyy-MM-dd'T'HH:mm", "2023-03-01T11:11", LocaleUtil.US),
+			objectEntry.getReviewDate());
 	}
 
 	@Test
@@ -1034,6 +1128,64 @@ public class EditInfoItemStrutsActionTest {
 		objectFieldSetting.setValue(value);
 
 		return objectFieldSetting;
+	}
+
+	private Object _execute(Map<String, List<String>> regularParameters)
+		throws Exception {
+
+		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
+			new MockMultipartHttpServletRequest();
+
+		mockMultipartHttpServletRequest.addHeader(
+			HttpHeaders.REFERER, "http://localhost:8080/error");
+		mockMultipartHttpServletRequest.setContentType(
+			"multipart/form-data;boundary=" + System.currentTimeMillis());
+
+		UploadPortletRequest uploadPortletRequest =
+			UploadTestUtil.createUploadPortletRequest(
+				UploadTestUtil.createUploadServletRequest(
+					mockMultipartHttpServletRequest, null,
+					HashMapBuilder.<String, List<String>>put(
+						"classNameId", Collections.singletonList(_classNameId)
+					).put(
+						"formItemId", Collections.singletonList(_formItemId)
+					).put(
+						"groupId",
+						Collections.singletonList(
+							String.valueOf(_group.getGroupId()))
+					).put(
+						"myBoolean",
+						Collections.singletonList(Boolean.TRUE.toString())
+					).put(
+						"p_l_id",
+						Collections.singletonList(
+							String.valueOf(_layout.getPlid()))
+					).put(
+						"p_l_mode", Collections.singletonList(Constants.VIEW)
+					).put(
+						"plid",
+						Collections.singletonList(
+							String.valueOf(_layout.getPlid()))
+					).put(
+						"segmentsExperienceId",
+						Collections.singletonList(
+							String.valueOf(_defaultSegmentsExperienceId))
+					).putAll(
+						regularParameters
+					).build()),
+				null, RandomTestUtil.randomString());
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_processEvents(mockHttpServletResponse, uploadPortletRequest, _user);
+
+		_editInfoItemStrutsAction.execute(
+			uploadPortletRequest,
+			new PipingServletResponse(
+				mockHttpServletResponse, new UnsyncStringWriter()));
+
+		return SessionErrors.get(uploadPortletRequest, _formItemId);
 	}
 
 	private MockMultipartHttpServletRequest _getMultipartHttpServletRequest(

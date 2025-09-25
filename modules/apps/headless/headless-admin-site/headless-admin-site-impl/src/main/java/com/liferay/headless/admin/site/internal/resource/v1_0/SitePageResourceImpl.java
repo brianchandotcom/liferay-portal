@@ -150,7 +150,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage getSiteSitePage(
+	public SitePage doGetSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode)
 		throws Exception {
@@ -200,7 +200,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 	}
 
 	@Override
-	public SitePage putSiteSitePage(
+	public SitePage doPutSiteSitePage(
 			String siteExternalReferenceCode,
 			String sitePageExternalReferenceCode, SitePage sitePage)
 		throws Exception {

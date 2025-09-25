@@ -151,7 +151,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplate getSiteDisplayPageTemplate(
+	public DisplayPageTemplate doGetSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode)
 		throws Exception {
@@ -287,7 +287,7 @@ public class DisplayPageTemplateResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplate putSiteDisplayPageTemplate(
+	public DisplayPageTemplate doPutSiteDisplayPageTemplate(
 			String siteExternalReferenceCode,
 			String displayPageTemplateExternalReferenceCode,
 			DisplayPageTemplate displayPageTemplate)

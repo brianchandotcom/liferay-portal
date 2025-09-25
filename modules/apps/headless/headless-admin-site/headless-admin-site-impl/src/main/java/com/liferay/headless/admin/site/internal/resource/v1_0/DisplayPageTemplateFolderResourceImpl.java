@@ -126,7 +126,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder getSiteDisplayPageTemplateFolder(
+	public DisplayPageTemplateFolder doGetSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
@@ -145,7 +145,7 @@ public class DisplayPageTemplateFolderResourceImpl
 	}
 
 	@Override
-	public DisplayPageTemplateFolder putSiteDisplayPageTemplateFolder(
+	public DisplayPageTemplateFolder doPutSiteDisplayPageTemplateFolder(
 			String siteExternalReferenceCode,
 			String displayPageTemplateFolderExternalReferenceCode,
 			DisplayPageTemplateFolder displayPageTemplateFolder)

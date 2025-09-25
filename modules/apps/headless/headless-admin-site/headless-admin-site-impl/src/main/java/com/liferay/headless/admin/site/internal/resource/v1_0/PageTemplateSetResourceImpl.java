@@ -121,7 +121,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet getSitePageTemplateSet(
+	public PageTemplateSet doGetSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
@@ -140,7 +140,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet putSitePageTemplateSet(
+	public PageTemplateSet doPutSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
 			PageTemplateSet pageTemplateSet)

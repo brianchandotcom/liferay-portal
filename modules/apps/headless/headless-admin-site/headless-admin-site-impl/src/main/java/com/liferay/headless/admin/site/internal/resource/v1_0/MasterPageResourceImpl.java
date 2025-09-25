@@ -135,7 +135,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage getSiteMasterPage(
+	public MasterPage doGetSiteMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode)
 		throws Exception {
@@ -199,7 +199,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	}
 
 	@Override
-	public MasterPage putSiteMasterPage(
+	public MasterPage doPutSiteMasterPage(
 			String siteExternalReferenceCode,
 			String masterPageExternalReferenceCode, MasterPage masterPage)
 		throws Exception {

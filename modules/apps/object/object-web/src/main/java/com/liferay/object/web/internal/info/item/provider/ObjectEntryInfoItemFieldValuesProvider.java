@@ -18,6 +18,7 @@ import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.info.type.WebImage;
 import com.liferay.layout.page.template.info.item.provider.DisplayPageInfoItemFieldSetProvider;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.info.field.converter.ObjectFieldInfoFieldConverter;
 import com.liferay.object.info.item.ObjectEntryInfoItemFields;
 import com.liferay.object.info.item.provider.util.ObjectEntryInfoItemValuesProviderUtil;
@@ -48,8 +49,12 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.template.info.item.provider.TemplateInfoItemFieldSetProvider;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,8 +184,14 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getCreateDate()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
-				ObjectEntryInfoItemFields.expirationDateInfoField,
-				objectEntry.getExpirationDate()));
+				ObjectEntryInfoItemFields.getDisplayDateInfoField(
+					_objectDefinition),
+				_getLocalDateTime(objectEntry.getDisplayDate())));
+		objectEntryFieldValues.add(
+			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.getExpirationDateInfoField(
+					_objectDefinition),
+				_getLocalDateTime(objectEntry.getExpirationDate())));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.externalReferenceCodeInfoField,
@@ -199,8 +210,9 @@ public class ObjectEntryInfoItemFieldValuesProvider
 				objectEntry.getLastPublishDate()));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
-				ObjectEntryInfoItemFields.reviewDateInfoField,
-				objectEntry.getReviewDate()));
+				ObjectEntryInfoItemFields.getReviewDateInfoField(
+					_objectDefinition),
+				_getLocalDateTime(objectEntry.getReviewDate())));
 		objectEntryFieldValues.add(
 			new InfoFieldValue<>(
 				ObjectEntryInfoItemFields.statusInfoField,
@@ -314,6 +326,17 @@ public class ObjectEntryInfoItemFieldValuesProvider
 		return new InfoItemReference(
 			_objectDefinition.getClassName(),
 			new ERCInfoItemIdentifier(objectEntry.getExternalReferenceCode()));
+	}
+
+	private LocalDateTime _getLocalDateTime(Date date) {
+		if (date == null) {
+			return null;
+		}
+
+		return LocalDateTime.parse(
+			date.toString(),
+			DateTimeFormatter.ofPattern(
+				ObjectFieldUtil.getDateTimePattern(date.toString())));
 	}
 
 	private com.liferay.object.rest.dto.v1_0.ObjectEntry _getObjectEntry(

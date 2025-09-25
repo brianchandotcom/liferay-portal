@@ -6,10 +6,10 @@
 package com.liferay.frontend.js.web.internal.servlet.filter;
 
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
-import com.liferay.frontend.js.web.internal.frontend.resource.FrontendResource;
-import com.liferay.frontend.js.web.internal.frontend.resource.handler.FrontendResourceRequestHandler;
-import com.liferay.frontend.js.web.internal.frontend.resource.handler.HashedFileFrontendResourceRequestHandler;
-import com.liferay.frontend.js.web.internal.frontend.resource.handler.StyleSheetFrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.resource.FrontendResource;
+import com.liferay.frontend.js.web.internal.resource.handler.FrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.resource.handler.HashedFileFrontendResourceRequestHandler;
+import com.liferay.frontend.js.web.internal.resource.handler.StyleSheetFrontendResourceRequestHandler;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

@@ -3876,7 +3876,7 @@
 		},
 		{
 			"properties": {
-				"authorizationEndPoint": {
+				"authorizationEndpoint": {
 					"default": "",
 					"description": "Set the authorization endpoint for the OpenID Connect provider.",
 					"title": "Authorization Endpoint",
@@ -3900,13 +3900,13 @@
 					"title": "Custom Token Request Parameters",
 					"type": "array"
 				},
-				"discoveryEndPoint": {
+				"discoveryEndpoint": {
 					"default": "",
 					"description": "Set the discovery endpoint for the OpenID Connect provider. If this is set, manually set endpoints will be ignored.",
 					"title": "Discovery Endpoint",
 					"type": "string"
 				},
-				"discoveryEndPointCacheInMillis": {
+				"discoveryEndpointCacheInMillis": {
 					"default": 360000,
 					"description": "Discovery endpoint metadata will be cached on this interval in milliseconds. If set to 0, Ehcache's default time to live value of 600 seconds will be used.",
 					"title": "Discovery Endpoint Cache in Milliseconds",
@@ -3982,13 +3982,13 @@
 					"title": "Token Connection Timeout in Milliseconds",
 					"type": "number"
 				},
-				"tokenEndPoint": {
+				"tokenEndpoint": {
 					"default": "",
 					"description": "Set the token endpoint for the OpenID Connect provider.",
 					"title": "Token Endpoint",
 					"type": "string"
 				},
-				"userInfoEndPoint": {
+				"userInfoEndpoint": {
 					"default": "",
 					"description": "Set the user information endpoint for the OpenID Connect provider.",
 					"title": "User Information Endpoint",

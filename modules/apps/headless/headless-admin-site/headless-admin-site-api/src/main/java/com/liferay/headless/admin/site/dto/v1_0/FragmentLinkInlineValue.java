@@ -1,18 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,71 +36,51 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment link value.", value = "FragmentLinkValue"
+	description = "A unique reference to a FragmentLinkValue of type FragmentInlineValue which remains constant across environments.",
+	value = "FragmentLinkInlineValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "FragmentInlineValue", value = FragmentLinkInlineValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentMappedValue", value = FragmentLinkMappedValue.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentLinkValue")
-public abstract class FragmentLinkValue implements Serializable {
+@XmlRootElement(name = "FragmentLinkInlineValue")
+public class FragmentLinkInlineValue
+	extends FragmentLinkValue implements Serializable {
 
-	public static FragmentLinkValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentLinkValue.class, json);
+	public static FragmentLinkInlineValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentLinkInlineValue.class, json);
 	}
 
-	public static FragmentLinkValue unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentLinkValue.class, json);
+	public static FragmentLinkInlineValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentLinkInlineValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
+		description = "The localized fragment's inline values."
 	)
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public Map<String, String> getValue_i18n() {
+		if (_value_i18nSupplier != null) {
+			value_i18n = _value_i18nSupplier.get();
 
-			_typeSupplier = null;
+			_value_i18nSupplier = null;
 		}
 
-		return type;
+		return value_i18n;
+	}
+
+	public void setValue_i18n(Map<String, String> value_i18n) {
+		this.value_i18n = value_i18n;
+
+		_value_i18nSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setValue_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			value_i18nUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_value_i18nSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return value_i18nUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -116,14 +91,12 @@ public abstract class FragmentLinkValue implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
-	)
+	@GraphQLField(description = "The localized fragment's inline values.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected Map<String, String> value_i18n;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<Map<String, String>> _value_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,13 +104,14 @@ public abstract class FragmentLinkValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentLinkValue)) {
+		if (!(object instanceof FragmentLinkInlineValue)) {
 			return false;
 		}
 
-		FragmentLinkValue fragmentLinkValue = (FragmentLinkValue)object;
+		FragmentLinkInlineValue fragmentLinkInlineValue =
+			(FragmentLinkInlineValue)object;
 
-		return Objects.equals(toString(), fragmentLinkValue.toString());
+		return Objects.equals(toString(), fragmentLinkInlineValue.toString());
 	}
 
 	@Override
@@ -151,6 +125,18 @@ public abstract class FragmentLinkValue implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Map<String, String> value_i18n = getValue_i18n();
+
+		if (value_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"value_i18n\": ");
+
+			sb.append(_toJSON(value_i18n));
+		}
 
 		Type type = getType();
 
@@ -175,49 +161,10 @@ public abstract class FragmentLinkValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkInlineValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		FRAGMENT_INLINE_VALUE("FragmentInlineValue"),
-		FRAGMENT_MAPPED_VALUE("FragmentMappedValue");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

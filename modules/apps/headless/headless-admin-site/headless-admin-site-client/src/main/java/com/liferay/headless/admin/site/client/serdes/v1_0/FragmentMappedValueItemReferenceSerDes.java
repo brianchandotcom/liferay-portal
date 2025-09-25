@@ -1,13 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -23,40 +23,47 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentLinkValueSerDes {
+public class FragmentMappedValueItemReferenceSerDes {
 
-	public static FragmentLinkValue toDTO(String json) {
-		FragmentLinkValueJSONParser fragmentLinkValueJSONParser =
-			new FragmentLinkValueJSONParser();
+	public static FragmentMappedValueItemReference toDTO(String json) {
+		FragmentMappedValueItemReferenceJSONParser
+			fragmentMappedValueItemReferenceJSONParser =
+				new FragmentMappedValueItemReferenceJSONParser();
 
-		return fragmentLinkValueJSONParser.parseToDTO(json);
+		return fragmentMappedValueItemReferenceJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentLinkValue[] toDTOs(String json) {
-		FragmentLinkValueJSONParser fragmentLinkValueJSONParser =
-			new FragmentLinkValueJSONParser();
+	public static FragmentMappedValueItemReference[] toDTOs(String json) {
+		FragmentMappedValueItemReferenceJSONParser
+			fragmentMappedValueItemReferenceJSONParser =
+				new FragmentMappedValueItemReferenceJSONParser();
 
-		return fragmentLinkValueJSONParser.parseToDTOs(json);
+		return fragmentMappedValueItemReferenceJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentLinkValue fragmentLinkValue) {
-		if (fragmentLinkValue == null) {
+	public static String toJSON(
+		FragmentMappedValueItemReference fragmentMappedValueItemReference) {
+
+		if (fragmentMappedValueItemReference == null) {
 			return "null";
 		}
 
-		FragmentLinkValue.Type type = fragmentLinkValue.getType();
+		FragmentMappedValueItemReference.Type type =
+			fragmentMappedValueItemReference.getType();
 
 		if (type != null) {
 			String typeString = type.toString();
 
-			if (typeString.equals("FragmentInlineValue")) {
-				return FragmentLinkInlineValueSerDes.toJSON(
-					(FragmentLinkInlineValue)fragmentLinkValue);
+			if (typeString.equals("ContextReference")) {
+				return FragmentMappedValueItemContextReferenceSerDes.toJSON(
+					(FragmentMappedValueItemContextReference)
+						fragmentMappedValueItemReference);
 			}
 
-			if (typeString.equals("FragmentMappedValue")) {
-				return FragmentLinkMappedValueSerDes.toJSON(
-					(FragmentLinkMappedValue)fragmentLinkValue);
+			if (typeString.equals("ItemExternalReference")) {
+				return FragmentMappedValueItemExternalReferenceSerDes.toJSON(
+					(FragmentMappedValueItemExternalReference)
+						fragmentMappedValueItemReference);
 			}
 
 			throw new IllegalArgumentException("Unknown type " + typeString);
@@ -67,42 +74,45 @@ public class FragmentLinkValueSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentLinkValueJSONParser fragmentLinkValueJSONParser =
-			new FragmentLinkValueJSONParser();
+		FragmentMappedValueItemReferenceJSONParser
+			fragmentMappedValueItemReferenceJSONParser =
+				new FragmentMappedValueItemReferenceJSONParser();
 
-		return fragmentLinkValueJSONParser.parseToMap(json);
+		return fragmentMappedValueItemReferenceJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		FragmentLinkValue fragmentLinkValue) {
+		FragmentMappedValueItemReference fragmentMappedValueItemReference) {
 
-		if (fragmentLinkValue == null) {
+		if (fragmentMappedValueItemReference == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentLinkValue.getType() == null) {
+		if (fragmentMappedValueItemReference.getType() == null) {
 			map.put("type", null);
 		}
 		else {
-			map.put("type", String.valueOf(fragmentLinkValue.getType()));
+			map.put(
+				"type",
+				String.valueOf(fragmentMappedValueItemReference.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentLinkValueJSONParser
-		extends BaseJSONParser<FragmentLinkValue> {
+	public static class FragmentMappedValueItemReferenceJSONParser
+		extends BaseJSONParser<FragmentMappedValueItemReference> {
 
 		@Override
-		protected FragmentLinkValue createDTO() {
+		protected FragmentMappedValueItemReference createDTO() {
 			return null;
 		}
 
 		@Override
-		protected FragmentLinkValue[] createDTOArray(int size) {
-			return new FragmentLinkValue[size];
+		protected FragmentMappedValueItemReference[] createDTOArray(int size) {
+			return new FragmentMappedValueItemReference[size];
 		}
 
 		@Override
@@ -115,7 +125,7 @@ public class FragmentLinkValueSerDes {
 		}
 
 		@Override
-		public FragmentLinkValue parseToDTO(String json) {
+		public FragmentMappedValueItemReference parseToDTO(String json) {
 			Map<String, Object> jsonMap = parseToMap(json);
 
 			Object type = jsonMap.get("type");
@@ -123,12 +133,12 @@ public class FragmentLinkValueSerDes {
 			if (type != null) {
 				String typeString = type.toString();
 
-				if (typeString.equals("FragmentInlineValue")) {
-					return FragmentLinkInlineValue.toDTO(json);
+				if (typeString.equals("ContextReference")) {
+					return FragmentMappedValueItemContextReference.toDTO(json);
 				}
 
-				if (typeString.equals("FragmentMappedValue")) {
-					return FragmentLinkMappedValue.toDTO(json);
+				if (typeString.equals("ItemExternalReference")) {
+					return FragmentMappedValueItemExternalReference.toDTO(json);
 				}
 
 				throw new IllegalArgumentException(
@@ -141,13 +151,13 @@ public class FragmentLinkValueSerDes {
 
 		@Override
 		protected void setField(
-			FragmentLinkValue fragmentLinkValue, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentMappedValueItemReference fragmentMappedValueItemReference,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentLinkValue.setType(
-						FragmentLinkValue.Type.create(
+					fragmentMappedValueItemReference.setType(
+						FragmentMappedValueItemReference.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

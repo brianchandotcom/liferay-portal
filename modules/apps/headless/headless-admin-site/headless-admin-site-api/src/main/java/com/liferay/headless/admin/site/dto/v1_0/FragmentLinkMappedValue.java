@@ -1,18 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -41,71 +36,50 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment link value.", value = "FragmentLinkValue"
+	description = "A unique reference to a FragmentLinkValue of type FragmentMappedValue which remains constant across environments.",
+	value = "FragmentLinkMappedValue"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "FragmentInlineValue", value = FragmentLinkInlineValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentMappedValue", value = FragmentLinkMappedValue.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentLinkValue")
-public abstract class FragmentLinkValue implements Serializable {
+@XmlRootElement(name = "FragmentLinkMappedValue")
+public class FragmentLinkMappedValue
+	extends FragmentLinkValue implements Serializable {
 
-	public static FragmentLinkValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentLinkValue.class, json);
+	public static FragmentLinkMappedValue toDTO(String json) {
+		return ObjectMapperUtil.readValue(FragmentLinkMappedValue.class, json);
 	}
 
-	public static FragmentLinkValue unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentLinkValue.class, json);
+	public static FragmentLinkMappedValue unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentLinkMappedValue.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
+		description = "The mapping of the fragment mapped value."
 	)
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public Mapping getMapping() {
+		if (_mappingSupplier != null) {
+			mapping = _mappingSupplier.get();
 
-			_typeSupplier = null;
+			_mappingSupplier = null;
 		}
 
-		return type;
+		return mapping;
+	}
+
+	public void setMapping(Mapping mapping) {
+		this.mapping = mapping;
+
+		_mappingSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setMapping(
+		UnsafeSupplier<Mapping, Exception> mappingUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_mappingSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return mappingUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -116,14 +90,12 @@ public abstract class FragmentLinkValue implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
-	)
+	@GraphQLField(description = "The mapping of the fragment mapped value.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected Mapping mapping;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<Mapping> _mappingSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,13 +103,14 @@ public abstract class FragmentLinkValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentLinkValue)) {
+		if (!(object instanceof FragmentLinkMappedValue)) {
 			return false;
 		}
 
-		FragmentLinkValue fragmentLinkValue = (FragmentLinkValue)object;
+		FragmentLinkMappedValue fragmentLinkMappedValue =
+			(FragmentLinkMappedValue)object;
 
-		return Objects.equals(toString(), fragmentLinkValue.toString());
+		return Objects.equals(toString(), fragmentLinkMappedValue.toString());
 	}
 
 	@Override
@@ -151,6 +124,18 @@ public abstract class FragmentLinkValue implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		Mapping mapping = getMapping();
+
+		if (mapping != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"mapping\": ");
+
+			sb.append(String.valueOf(mapping));
+		}
 
 		Type type = getType();
 
@@ -175,49 +160,10 @@ public abstract class FragmentLinkValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkMappedValue",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("Type")
-	public static enum Type {
-
-		FRAGMENT_INLINE_VALUE("FragmentInlineValue"),
-		FRAGMENT_MAPPED_VALUE("FragmentMappedValue");
-
-		@JsonCreator
-		public static Type create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private Type(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

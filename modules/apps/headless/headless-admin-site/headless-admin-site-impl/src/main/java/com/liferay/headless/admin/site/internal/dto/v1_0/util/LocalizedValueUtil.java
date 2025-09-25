@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -21,6 +22,16 @@ public class LocalizedValueUtil {
 	public static List<String> getAvailableLanguageIds() {
 		return TransformUtil.transform(
 			LanguageUtil.getAvailableLocales(), LanguageUtil::getLanguageId);
+	}
+
+	public static JSONObject toJSONObject(Map<String, String> localizedValues) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
+			jsonObject.put(entry.getKey(), entry.getValue());
+		}
+
+		return jsonObject;
 	}
 
 	public static Map<String, String> toLocalizedValues(JSONObject jsonObject) {

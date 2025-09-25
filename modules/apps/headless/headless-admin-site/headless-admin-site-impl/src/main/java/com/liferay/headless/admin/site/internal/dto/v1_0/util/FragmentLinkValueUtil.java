@@ -10,28 +10,40 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
+import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Objects;
 
 /**
  * @author Mikel Lorza
  */
 public class FragmentLinkValueUtil {
 
-	public static boolean isSaveFragmentMappedValue(JSONObject jsonObject) {
+	public static boolean isMappedValue(JSONObject jsonObject) {
 		if (jsonObject == null) {
 			return false;
 		}
@@ -55,9 +67,9 @@ public class FragmentLinkValueUtil {
 			return null;
 		}
 
-		boolean saveFragmentMappedValue = isSaveFragmentMappedValue(jsonObject);
+		boolean mappedValue = isMappedValue(jsonObject);
 
-		if (jsonObject.isNull("href") && !saveFragmentMappedValue) {
+		if (jsonObject.isNull("href") && !mappedValue) {
 			return null;
 		}
 
@@ -82,8 +94,8 @@ public class FragmentLinkValueUtil {
 					});
 				setValue(
 					() -> _toFragmentLinkValue(
-						infoItemServiceRegistry, jsonObject,
-						saveFragmentMappedValue, scopeGroupId));
+						infoItemServiceRegistry, jsonObject, mappedValue,
+						scopeGroupId));
 			}
 		};
 	}
@@ -110,6 +122,67 @@ public class FragmentLinkValueUtil {
 		};
 	}
 
+	public static JSONObject toJSONObject(
+		FragmentLink fragmentLink,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		if ((fragmentLink == null) || (fragmentLink.getValue() == null)) {
+			return null;
+		}
+
+		FragmentLinkValue fragmentLinkValue = fragmentLink.getValue();
+
+		if (fragmentLinkValue == null) {
+			return null;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (fragmentLinkValue instanceof FragmentLinkInlineValue) {
+			FragmentLinkInlineValue fragmentLinkInlineValue =
+				(FragmentLinkInlineValue)fragmentLinkValue;
+
+			jsonObject.put(
+				"href",
+				LocalizedValueUtil.toJSONObject(
+					fragmentLinkInlineValue.getValue_i18n()));
+		}
+		else {
+			jsonObject = _getFragmentMappedValueJSONObject(
+				(FragmentLinkMappedValue)fragmentLinkValue,
+				infoItemServiceRegistry, scopeGroupId);
+
+			if (jsonObject == null) {
+				return null;
+			}
+		}
+
+		FragmentLink.Target target = fragmentLink.getTarget();
+
+		if (target != null) {
+			jsonObject.put(
+				"target", TargetUtil.toInternalValue(target.getValue()));
+		}
+
+		return JSONUtil.put("link", jsonObject);
+	}
+
+	private static Long _getCompanyId(long scopeGroupId) {
+		Group group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+
+		if (group != null) {
+			return group.getCompanyId();
+		}
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId != null) {
+			return companyId;
+		}
+
+		return null;
+	}
+
 	private static String _getFieldKey(JSONObject jsonObject) {
 		String fieldId = jsonObject.getString("fieldId");
 
@@ -120,11 +193,199 @@ public class FragmentLinkValueUtil {
 		return null;
 	}
 
+	private static JSONObject _getFragmentMappedValueJSONObject(
+		FragmentLinkMappedValue fragmentLinkMappedValue,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		Mapping mapping = fragmentLinkMappedValue.getMapping();
+
+		if (mapping == null) {
+			return null;
+		}
+
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			mapping.getItemReference();
+
+		if ((fragmentMappedValueItemReference == null) ||
+			(fragmentMappedValueItemReference.getType() !=
+				FragmentMappedValueItemReference.Type.
+					ITEM_EXTERNAL_REFERENCE)) {
+
+			return null;
+		}
+
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				(FragmentMappedValueItemExternalReference)
+					fragmentMappedValueItemReference;
+
+		String className =
+			fragmentMappedValueItemExternalReference.getClassName();
+
+		String externalReferenceCode =
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode();
+
+		if ((className == null) || (externalReferenceCode == null)) {
+			return null;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		String fieldKey = mapping.getFieldKey();
+
+		if (Validator.isNotNull(fieldKey)) {
+			jsonObject.put("fieldId", fieldKey);
+		}
+
+		if (Objects.equals(className, Layout.class.getName())) {
+			jsonObject.put(
+				"layout",
+				_getMappedLayoutJSONObject(
+					fragmentMappedValueItemExternalReference, scopeGroupId));
+		}
+		else {
+			_setMappedItemJSONObject(
+				fragmentMappedValueItemExternalReference,
+				infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
+		return jsonObject;
+	}
+
+	private static Long _getGroupId(Scope scope, long scopeGroupId) {
+		if ((scope == null) || (scope.getExternalReferenceCode() == null)) {
+			return scopeGroupId;
+		}
+
+		Long companyId = _getCompanyId(scopeGroupId);
+
+		if (companyId == null) {
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			scope.getExternalReferenceCode(), companyId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return group.getGroupId();
+	}
+
+	private static JSONObject _getMappedLayoutJSONObject(
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference,
+		long scopeGroupId) {
+
+		Long groupId = _getGroupId(
+			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+
+		if (groupId == null) {
+			return null;
+		}
+
+		Layout layout =
+			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode(),
+				groupId);
+
+		if (layout == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"groupId", String.valueOf(layout.getGroupId())
+		).put(
+			"id", layout.getUuid()
+		).put(
+			"layoutId", String.valueOf(layout.getLayoutId())
+		).put(
+			"layoutUuid", layout.getUuid()
+		).put(
+			"privateLayout", layout.isPrivateLayout()
+		).put(
+			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
+		).put(
+			"value", layout.getFriendlyURL()
+		);
+	}
+
+	private static void _setMappedItemJSONObject(
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference,
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
+
+		String className =
+			fragmentMappedValueItemExternalReference.getClassName();
+		String classNameId = null;
+
+		try {
+			classNameId = String.valueOf(PortalUtil.getClassNameId(className));
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to process mapping because class name ID could " +
+						"not be obtained for class name " + className,
+					exception);
+			}
+		}
+
+		if (classNameId == null) {
+			return;
+		}
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		ClassedModel classedModel = null;
+
+		if (infoItemObjectProvider != null) {
+			try {
+				classedModel = (ClassedModel)infoItemObjectProvider.getInfoItem(
+					scopeGroupId,
+					new ERCInfoItemIdentifier(
+						fragmentMappedValueItemExternalReference.
+							getExternalReferenceCode(),
+						ScopeUtil.getScopeExternalReferenceCode(
+							fragmentMappedValueItemExternalReference.getScope(),
+							scopeGroupId)));
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Item external reference could not be set since no " +
+							"item could be obtained",
+						portalException);
+				}
+			}
+		}
+
+		if (classedModel != null) {
+			jsonObject.put(
+				"className", className
+			).put(
+				"classNameId", classNameId
+			).put(
+				"classPK", classedModel.getPrimaryKeyObj()
+			).put(
+				"externalReferenceCode",
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode()
+			);
+		}
+	}
+
 	private static FragmentLinkValue _toFragmentLinkValue(
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		boolean saveFragmentMappedValue, long scopeGroupId) {
+		boolean mappedValue, long scopeGroupId) {
 
-		if (saveFragmentMappedValue) {
+		if (mappedValue) {
 			return toFragmentLinkMappedValue(
 				infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}

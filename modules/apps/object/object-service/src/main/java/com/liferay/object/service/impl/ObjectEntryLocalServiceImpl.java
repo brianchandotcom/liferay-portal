@@ -342,7 +342,6 @@ public class ObjectEntryLocalServiceImpl
 		_insertIntoLocalizationTable(
 			new HashMap<>(), objectDefinition, objectEntry.getObjectEntryId(),
 			null, false, values);
-
 		_insertIntoTable(
 			_getDynamicObjectDefinitionTable(
 				objectDefinition.getObjectDefinitionId()),

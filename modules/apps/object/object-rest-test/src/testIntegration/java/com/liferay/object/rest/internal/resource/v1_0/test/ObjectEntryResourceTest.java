@@ -6977,8 +6977,8 @@ public class ObjectEntryResourceTest {
 			StringUtil.randomString() + ".pdf", ContentTypes.APPLICATION_PDF,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringUtil.randomString(), StringUtil.randomString(),
-			FileUtil.getBytes(getClass(), "dependencies/test_2_pages.pdf"),
-			null, null, null, ServiceContextTestUtil.getServiceContext());
+			FileUtil.getBytes(getClass(), "dependencies/document.pdf"), null,
+			null, null, ServiceContextTestUtil.getServiceContext());
 
 		DLFileEntry pdfDLFileEntry = _dlFileEntryLocalService.getFileEntry(
 			pdfFileEntry.getFileEntryId());

@@ -10,7 +10,7 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {LinkOrButton} from '@clayui/shared';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 
 import FrontendDataSetContext, {
 	IFrontendDataSetContext,
@@ -51,7 +51,7 @@ function DropdownItem({
 			}
 		>
 			{icon && (
-				<span className="pr-2">
+				<span className="dropdown-item-indicator-start">
 					<ClayIcon symbol={icon} />
 				</span>
 			)}
@@ -97,6 +97,26 @@ function ActionsDropdown({
 	}
 
 	const editModeActive = !!itemsChanges![parsedItemId];
+
+	const hasIcons = useMemo(() => {
+		const checkHasIcon = (currentActions: IItemsActions[]): boolean => {
+			for (const action of currentActions) {
+				if (action.icon) {
+					return true;
+				}
+
+				if (action.type === 'group' && action.items?.length) {
+					if (checkHasIcon(action.items)) {
+						return true;
+					}
+				}
+			}
+
+			return false;
+		};
+
+		return checkHasIcon(actions);
+	}, [actions]);
 
 	const itemChanges =
 		editModeActive && Object.keys(itemsChanges![parsedItemId]).length
@@ -233,6 +253,7 @@ function ActionsDropdown({
 
 			<ClayDropDown
 				active={menuActive}
+				hasLeftSymbols={hasIcons}
 				onActiveChange={() =>
 					onMenuActiveChange && onMenuActiveChange(!menuActive)
 				}

@@ -630,6 +630,11 @@ public class BatchEnginePortletDataHandlerTest {
 				).put(
 					"batch.engine.task.item.delegate.name",
 					RandomTestUtil.randomString()
+				).put(
+					"companyId", String.valueOf(TestPropsValues.getCompanyId())
+				).put(
+					"export.import.vulcan.batch.engine.task.item.delegate",
+					"true"
 				).build())) {
 
 			// Filter is not null
@@ -637,7 +642,8 @@ public class BatchEnginePortletDataHandlerTest {
 			Thread.sleep(1000);
 
 			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(portletId);
+				_portletDataHandlerProvider.provide(
+					TestPropsValues.getCompanyId(), portletId);
 
 			Assert.assertEquals(
 				1,

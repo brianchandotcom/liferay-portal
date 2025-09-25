@@ -108,7 +108,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 					messages.contains(
 						StringBundler.concat(
 							"Counter ", Counter.class.getName(),
-							" has been reset to value ", fileEntryId)));
+							" has been reset to value ", fileEntryId,
+							" due to table DLFileEntry")));
 			});
 	}
 
@@ -157,7 +158,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 					messages.contains(
 						StringBundler.concat(
 							"Counter ", Counter.class.getName(),
-							" has been reset to value ", roleId)));
+							" has been reset to value ", roleId,
+							" due to table Role_")));
 			});
 	}
 

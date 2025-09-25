@@ -1740,22 +1740,6 @@ public class BundleSiteInitializerTest {
 			"Test Value", expandoBridge.getAttribute("Test Expando Column 2"));
 	}
 
-	private void _assertNavigationItemDisplayIcon() throws Exception {
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			_siteNavigationMenuItemLocalService.
-				fetchSiteNavigationMenuItemByExternalReferenceCode(
-					"TESTSITENAVIGATIONMENUITEM1", _group.getGroupId());
-
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.fastLoad(
-			siteNavigationMenuItem.getTypeSettings()
-		).build();
-
-		String displayIcon = unicodeProperties.getProperty("displayIcon", StringPool.BLANK);
-
-		Assert.assertEquals("home", displayIcon);
-	}
-
 	private void _assertExpandoValues2() throws Exception {
 		CPDefinition cpDefinition =
 			_cpDefinitionLocalService.
@@ -2390,6 +2374,20 @@ public class BundleSiteInitializerTest {
 
 		Assert.assertEquals("testlisttypeentry6", listTypeEntry6.getKey());
 		Assert.assertEquals("Test List Type Entry 6", listTypeEntry6.getName());
+	}
+
+	private void _assertNavigationItemDisplayIcon() throws Exception {
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			_siteNavigationMenuItemLocalService.
+				fetchSiteNavigationMenuItemByExternalReferenceCode(
+					"TESTSITENAVIGATIONMENUITEM1", _group.getGroupId());
+
+		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.fastLoad(
+			siteNavigationMenuItem.getTypeSettings()
+		).build();
+
+		Assert.assertEquals(
+			"home", unicodeProperties.getProperty("displayIcon"));
 	}
 
 	private void _assertNotificationTemplate1() throws Exception {

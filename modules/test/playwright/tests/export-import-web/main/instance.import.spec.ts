@@ -28,6 +28,8 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {readFileFromZip} from '../../../utils/zip';
+import {generateObjectEntryValues} from '../../object-web/main/utils/generateObjectEntry';
+import {generateObjectFields} from '../../object-web/main/utils/generateObjectFields';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
@@ -499,6 +501,92 @@ test(
 
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+	}
+);
+
+test(
+	'can import custom object entry values',
+	{
+		tag: '@LPD-66167',
+	},
+	async ({apiHelpers, companyExportImportPage}) => {
+		const objectFields = generateObjectFields({
+			objectFieldBusinessTypes: [
+				'Boolean',
+				'Date',
+				'Decimal',
+				'Integer',
+				'LongInteger',
+				'LongText',
+				'PrecisionDecimal',
+				'RichText',
+				'Text',
+			],
+		});
+
+		const objectActionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+		const {body: objectDefinition} =
+			await objectActionAPIClient.postObjectDefinition(
+				objectDefitionRequestData({objectFields})
+			);
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const {objectEntry: objectEntryValues} =
+			await generateObjectEntryValues({
+				objectEntryFormat: 'API',
+				objectFields,
+			});
+
+		const applicationName =
+			'c/' + objectDefinition.name.toLowerCase() + 's';
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			objectEntryValues,
+			applicationName
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			`Tests 1 Items`,
+			true
+		);
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntry.id}`
+		);
+
+		expect(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+				applicationName,
+				objectEntry.externalReferenceCode
+			)
+		).toEqual({status: 'NOT_FOUND'});
+
+		await companyExportImportPage.import(exportFilePath, true);
+
+		const importedObjectEntry = await apiHelpers.get(
+			`${apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${objectEntry.externalReferenceCode}`
+		);
+
+		// Exclude friendlyUrl properties until LPD-66545 is resolved
+
+		delete objectEntry.friendlyUrlPath;
+		delete objectEntry.friendlyUrlPath_i18n;
+
+		expect(importedObjectEntry).toEqual(
+			expect.objectContaining({
+				...objectEntry,
+				actions: expect.any(Object),
+				dateCreated: expect.any(String),
+				dateModified: expect.any(String),
+				id: expect.any(Number),
+			})
+		);
 	}
 );
 

@@ -63,8 +63,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 					GetterUtil.getLong(
 						ExportImportThreadLocal.
 							getExportImportConfigurationId()),
-					ExportImportReportEntryUtil.getModelName(clazz),
-					ExportImportReportEntryUtil.getOrigin(),
+					clazz.getName(), ExportImportReportEntryUtil.getOrigin(),
 					ObjectDefinitionConstants.SCOPE_COMPANY, null);
 
 			return emptyModelUnsafeSupplier.get();
@@ -85,7 +84,7 @@ public class EmptyModelManagerImpl implements EmptyModelManager {
 			clazz.getName(), null, emptyModelUnsafeSupplier,
 			externalReferenceCode, fetchByExternalReferenceCodeBiFunction,
 			getByExternalReferenceCodeUnsafeBiFunction, groupId,
-			ExportImportReportEntryUtil.getModelName(clazz));
+			clazz.getName());
 	}
 
 	@Override

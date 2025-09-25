@@ -432,7 +432,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders/{displayPageTemplateFolderExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders/{displayPageTemplateFolderExternalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates only the fields received in the request body, leaving any other fields untouched."
@@ -493,13 +493,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 			getSiteDisplayPageTemplateFolder(
 				siteExternalReferenceCode,
 				displayPageTemplateFolderExternalReferenceCode);
-
-		if (displayPageTemplateFolder.getCreatorExternalReferenceCode() !=
-				null) {
-
-			existingDisplayPageTemplateFolder.setCreatorExternalReferenceCode(
-				displayPageTemplateFolder.getCreatorExternalReferenceCode());
-		}
 
 		if (displayPageTemplateFolder.getDateCreated() != null) {
 			existingDisplayPageTemplateFolder.setDateCreated(
@@ -569,7 +562,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds a new display page template folder."
@@ -795,7 +788,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders/{displayPageTemplateFolderExternalReferenceCode}' -d $'{"creatorExternalReferenceCode": ___, "dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/display-page-template-folders/{displayPageTemplateFolderExternalReferenceCode}' -d $'{"dateCreated": ___, "dateModified": ___, "description": ___, "externalReferenceCode": ___, "key": ___, "name": ___, "parentDisplayPageTemplateFolder": ___, "parentDisplayPageTemplateFolderExternalReferenceCode": ___, "permissions": ___, "uuid": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the display page template folder with the given external reference code, or creates it if it does not exist."

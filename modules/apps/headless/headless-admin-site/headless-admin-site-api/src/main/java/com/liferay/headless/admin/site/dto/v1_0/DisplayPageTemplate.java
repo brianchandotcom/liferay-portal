@@ -152,55 +152,6 @@ public class DisplayPageTemplate implements Serializable {
 	private Supplier<Creator> _creatorSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The display page template's creator external reference code."
-	)
-	public String getCreatorExternalReferenceCode() {
-		if (_creatorExternalReferenceCodeSupplier != null) {
-			creatorExternalReferenceCode =
-				_creatorExternalReferenceCodeSupplier.get();
-
-			_creatorExternalReferenceCodeSupplier = null;
-		}
-
-		return creatorExternalReferenceCode;
-	}
-
-	public void setCreatorExternalReferenceCode(
-		String creatorExternalReferenceCode) {
-
-		this.creatorExternalReferenceCode = creatorExternalReferenceCode;
-
-		_creatorExternalReferenceCodeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCreatorExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			creatorExternalReferenceCodeUnsafeSupplier) {
-
-		_creatorExternalReferenceCodeSupplier = () -> {
-			try {
-				return creatorExternalReferenceCodeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The display page template's creator external reference code."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String creatorExternalReferenceCode;
-
-	@JsonIgnore
-	private Supplier<String> _creatorExternalReferenceCodeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The display page template's creation date."
 	)
 	public Date getDateCreated() {
@@ -931,22 +882,6 @@ public class DisplayPageTemplate implements Serializable {
 			sb.append("\"creator\": ");
 
 			sb.append(creator);
-		}
-
-		String creatorExternalReferenceCode = getCreatorExternalReferenceCode();
-
-		if (creatorExternalReferenceCode != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creatorExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(creatorExternalReferenceCode));
-
-			sb.append("\"");
 		}
 
 		Date dateCreated = getDateCreated();

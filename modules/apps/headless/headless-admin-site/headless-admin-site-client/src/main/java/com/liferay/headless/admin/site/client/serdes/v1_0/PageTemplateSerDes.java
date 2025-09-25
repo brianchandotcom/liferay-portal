@@ -95,15 +95,6 @@ public class PageTemplateSerDes {
 			map.put("creator", String.valueOf(pageTemplate.getCreator()));
 		}
 
-		if (pageTemplate.getCreatorExternalReferenceCode() == null) {
-			map.put("creatorExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"creatorExternalReferenceCode",
-				String.valueOf(pageTemplate.getCreatorExternalReferenceCode()));
-		}
-
 		if (pageTemplate.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -242,11 +233,6 @@ public class PageTemplateSerDes {
 			if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -336,14 +322,6 @@ public class PageTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					pageTemplate.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					pageTemplate.setCreatorExternalReferenceCode(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

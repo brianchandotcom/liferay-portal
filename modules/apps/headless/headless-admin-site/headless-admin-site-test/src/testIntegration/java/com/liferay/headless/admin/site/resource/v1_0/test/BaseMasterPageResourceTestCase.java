@@ -199,7 +199,6 @@ public abstract class BaseMasterPageResourceTestCase {
 
 		MasterPage masterPage = randomMasterPage();
 
-		masterPage.setCreatorExternalReferenceCode(regex);
 		masterPage.setExternalReferenceCode(regex);
 		masterPage.setKey(regex);
 		masterPage.setName(regex);
@@ -211,8 +210,6 @@ public abstract class BaseMasterPageResourceTestCase {
 
 		masterPage = MasterPageSerDes.toDTO(json);
 
-		Assert.assertEquals(
-			regex, masterPage.getCreatorExternalReferenceCode());
 		Assert.assertEquals(regex, masterPage.getExternalReferenceCode());
 		Assert.assertEquals(regex, masterPage.getKey());
 		Assert.assertEquals(regex, masterPage.getName());
@@ -1071,17 +1068,6 @@ public abstract class BaseMasterPageResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (masterPage.getCreatorExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (masterPage.getDatePublished() == null) {
 					valid = false;
@@ -1343,20 +1329,6 @@ public abstract class BaseMasterPageResourceTestCase {
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						masterPage1.getCreator(), masterPage2.getCreator())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						masterPage1.getCreatorExternalReferenceCode(),
-						masterPage2.getCreatorExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1667,52 +1639,6 @@ public abstract class BaseMasterPageResourceTestCase {
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("creatorExternalReferenceCode")) {
-			Object object = masterPage.getCreatorExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -2061,8 +1987,6 @@ public abstract class BaseMasterPageResourceTestCase {
 	protected MasterPage randomMasterPage() throws Exception {
 		return new MasterPage() {
 			{
-				creatorExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();

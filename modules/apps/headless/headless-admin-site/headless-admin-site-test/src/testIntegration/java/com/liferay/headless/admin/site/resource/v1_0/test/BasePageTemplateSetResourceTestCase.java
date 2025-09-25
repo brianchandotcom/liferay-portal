@@ -198,7 +198,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		PageTemplateSet pageTemplateSet = randomPageTemplateSet();
 
-		pageTemplateSet.setCreatorExternalReferenceCode(regex);
 		pageTemplateSet.setDescription(regex);
 		pageTemplateSet.setExternalReferenceCode(regex);
 		pageTemplateSet.setKey(regex);
@@ -211,8 +210,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		pageTemplateSet = PageTemplateSetSerDes.toDTO(json);
 
-		Assert.assertEquals(
-			regex, pageTemplateSet.getCreatorExternalReferenceCode());
 		Assert.assertEquals(regex, pageTemplateSet.getDescription());
 		Assert.assertEquals(regex, pageTemplateSet.getExternalReferenceCode());
 		Assert.assertEquals(regex, pageTemplateSet.getKey());
@@ -1145,17 +1142,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (pageTemplateSet.getCreatorExternalReferenceCode() == null) {
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (pageTemplateSet.getDescription() == null) {
 					valid = false;
@@ -1332,20 +1318,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 				if (!Objects.deepEquals(
 						pageTemplateSet1.getCreator(),
 						pageTemplateSet2.getCreator())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						pageTemplateSet1.getCreatorExternalReferenceCode(),
-						pageTemplateSet2.getCreatorExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1553,52 +1525,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("creatorExternalReferenceCode")) {
-			Object object = pageTemplateSet.getCreatorExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -1939,8 +1865,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	protected PageTemplateSet randomPageTemplateSet() throws Exception {
 		return new PageTemplateSet() {
 			{
-				creatorExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

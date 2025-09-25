@@ -61,7 +61,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet doGetSitePageTemplateSet(
+	protected PageTemplateSet doGetSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode)
 		throws Exception {
@@ -80,7 +80,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public Page<PageTemplateSet> doGetSitePageTemplateSetsPage(
+	protected Page<PageTemplateSet> doGetSitePageTemplateSetsPage(
 			String siteExternalReferenceCode, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
 			Sort[] sorts)
@@ -118,7 +118,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet doPostSitePageTemplateSet(
+	protected PageTemplateSet doPostSitePageTemplateSet(
 			String siteExternalReferenceCode, PageTemplateSet pageTemplateSet)
 		throws Exception {
 
@@ -135,7 +135,7 @@ public class PageTemplateSetResourceImpl
 	}
 
 	@Override
-	public PageTemplateSet doPutSitePageTemplateSet(
+	protected PageTemplateSet doPutSitePageTemplateSet(
 			String siteExternalReferenceCode,
 			String pageTemplateSetExternalReferenceCode,
 			PageTemplateSet pageTemplateSet)

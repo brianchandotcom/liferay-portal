@@ -54,7 +54,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public Page<SiteTestEntity> doGetSiteSiteTestEntitiesPage(Long siteId)
+	protected Page<SiteTestEntity> doGetSiteSiteTestEntitiesPage(Long siteId)
 		throws Exception {
 
 		List<SiteTestEntity> siteTestEntities = new ArrayList<>();
@@ -80,7 +80,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public SiteTestEntity doGetSiteSiteTestEntityByExternalReferenceCode(
+	protected SiteTestEntity doGetSiteSiteTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
@@ -96,7 +96,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public SiteTestEntity doGetSiteTestEntity(Long siteTestEntityId)
+	protected SiteTestEntity doGetSiteTestEntity(Long siteTestEntityId)
 		throws Exception {
 
 		SiteTestEntity siteTestEntity = _fetchSiteTestEntity(siteTestEntityId);
@@ -109,7 +109,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public SiteTestEntity doPostSiteSiteTestEntity(
+	protected SiteTestEntity doPostSiteSiteTestEntity(
 			Long siteId, SiteTestEntity siteTestEntity)
 		throws Exception {
 
@@ -135,7 +135,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public SiteTestEntity doPutSiteSiteTestEntityByExternalReferenceCode(
+	protected SiteTestEntity doPutSiteSiteTestEntityByExternalReferenceCode(
 			Long siteId, String externalReferenceCode,
 			SiteTestEntity siteTestEntity)
 		throws Exception {
@@ -155,7 +155,7 @@ public class SiteTestEntityResourceImpl extends BaseSiteTestEntityResourceImpl {
 	}
 
 	@Override
-	public SiteTestEntity doPutSiteTestEntity(
+	protected SiteTestEntity doPutSiteTestEntity(
 			Long siteTestEntityId, SiteTestEntity siteTestEntity)
 		throws Exception {
 

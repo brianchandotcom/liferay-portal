@@ -225,6 +225,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_ROW)) {
 
 			return _gridPageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(RowStyledLayoutStructureItem)layoutStructureItem);
 		}
 

@@ -31,6 +31,8 @@ const panels = Array.from(
 if (layoutMode !== 'edit') {
 	handleTitleChange(panels[0]);
 
+	Liferay.on('current-account-updated', () => window.location.reload());
+
 	const accountSelectorDropdownMenu = fragmentElement.querySelector(
 		`#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu`
 	);

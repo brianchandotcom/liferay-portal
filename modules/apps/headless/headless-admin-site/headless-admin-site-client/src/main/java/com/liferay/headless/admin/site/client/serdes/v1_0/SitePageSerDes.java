@@ -82,20 +82,6 @@ public class SitePageSerDes {
 			sb.append(sitePage.getCreator());
 		}
 
-		if (sitePage.getCreatorExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creatorExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sitePage.getCreatorExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (sitePage.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -379,15 +365,6 @@ public class SitePageSerDes {
 			map.put("creator", String.valueOf(sitePage.getCreator()));
 		}
 
-		if (sitePage.getCreatorExternalReferenceCode() == null) {
-			map.put("creatorExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"creatorExternalReferenceCode",
-				String.valueOf(sitePage.getCreatorExternalReferenceCode()));
-		}
-
 		if (sitePage.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -543,11 +520,6 @@ public class SitePageSerDes {
 			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -629,14 +601,6 @@ public class SitePageSerDes {
 				if (jsonParserFieldValue != null) {
 					sitePage.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					sitePage.setCreatorExternalReferenceCode(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

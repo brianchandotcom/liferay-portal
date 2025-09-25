@@ -64,21 +64,6 @@ public class ContentPageTemplateSerDes {
 			sb.append(contentPageTemplate.getCreator());
 		}
 
-		if (contentPageTemplate.getCreatorExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"creatorExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(
-				_escape(contentPageTemplate.getCreatorExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (contentPageTemplate.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -349,16 +334,6 @@ public class ContentPageTemplateSerDes {
 				"creator", String.valueOf(contentPageTemplate.getCreator()));
 		}
 
-		if (contentPageTemplate.getCreatorExternalReferenceCode() == null) {
-			map.put("creatorExternalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"creatorExternalReferenceCode",
-				String.valueOf(
-					contentPageTemplate.getCreatorExternalReferenceCode()));
-		}
-
 		if (contentPageTemplate.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -504,11 +479,6 @@ public class ContentPageTemplateSerDes {
 			if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -573,14 +543,6 @@ public class ContentPageTemplateSerDes {
 				if (jsonParserFieldValue != null) {
 					contentPageTemplate.setCreator(
 						CreatorSerDes.toDTO((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "creatorExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					contentPageTemplate.setCreatorExternalReferenceCode(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

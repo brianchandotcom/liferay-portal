@@ -201,7 +201,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 		DisplayPageTemplate displayPageTemplate = randomDisplayPageTemplate();
 
-		displayPageTemplate.setCreatorExternalReferenceCode(regex);
 		displayPageTemplate.setExternalReferenceCode(regex);
 		displayPageTemplate.setKey(regex);
 		displayPageTemplate.setName(regex);
@@ -213,8 +212,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 		displayPageTemplate = DisplayPageTemplateSerDes.toDTO(json);
 
-		Assert.assertEquals(
-			regex, displayPageTemplate.getCreatorExternalReferenceCode());
 		Assert.assertEquals(
 			regex, displayPageTemplate.getExternalReferenceCode());
 		Assert.assertEquals(regex, displayPageTemplate.getKey());
@@ -1375,19 +1372,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 				continue;
 			}
 
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (displayPageTemplate.getCreatorExternalReferenceCode() ==
-						null) {
-
-					valid = false;
-				}
-
-				continue;
-			}
-
 			if (Objects.equals("datePublished", additionalAssertFieldName)) {
 				if (displayPageTemplate.getDatePublished() == null) {
 					valid = false;
@@ -1686,21 +1670,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 				if (!Objects.deepEquals(
 						displayPageTemplate1.getCreator(),
 						displayPageTemplate2.getCreator())) {
-
-					return false;
-				}
-
-				continue;
-			}
-
-			if (Objects.equals(
-					"creatorExternalReferenceCode",
-					additionalAssertFieldName)) {
-
-				if (!Objects.deepEquals(
-						displayPageTemplate1.getCreatorExternalReferenceCode(),
-						displayPageTemplate2.
-							getCreatorExternalReferenceCode())) {
 
 					return false;
 				}
@@ -2046,53 +2015,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		if (entityFieldName.equals("creator")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
-		}
-
-		if (entityFieldName.equals("creatorExternalReferenceCode")) {
-			Object object =
-				displayPageTemplate.getCreatorExternalReferenceCode();
-
-			String value = String.valueOf(object);
-
-			if (operator.equals("contains")) {
-				sb = new StringBundler();
-
-				sb.append("contains(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 2)) {
-					sb.append(value.substring(1, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else if (operator.equals("startswith")) {
-				sb = new StringBundler();
-
-				sb.append("startswith(");
-				sb.append(entityFieldName);
-				sb.append(",'");
-
-				if ((object != null) && (value.length() > 1)) {
-					sb.append(value.substring(0, value.length() - 1));
-				}
-				else {
-					sb.append(value);
-				}
-
-				sb.append("')");
-			}
-			else {
-				sb.append("'");
-				sb.append(value);
-				sb.append("'");
-			}
-
-			return sb.toString();
 		}
 
 		if (entityFieldName.equals("dateCreated")) {
@@ -2453,8 +2375,6 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 	protected DisplayPageTemplate randomDisplayPageTemplate() throws Exception {
 		return new DisplayPageTemplate() {
 			{
-				creatorExternalReferenceCode = StringUtil.toLowerCase(
-					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				datePublished = RandomTestUtil.nextDate();

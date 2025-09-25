@@ -3184,8 +3184,6 @@ definition {
 
 	@priority = 4
 	test ViewSortedSearchResults {
-		property portal.acceptance = "quarantine";
-
 		JSONWebcontent.addWebContent(
 			content = "Fruit",
 			groupName = "Guest",

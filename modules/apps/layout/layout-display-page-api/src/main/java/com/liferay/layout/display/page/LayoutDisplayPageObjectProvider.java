@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -38,6 +40,16 @@ public interface LayoutDisplayPageObjectProvider<T> {
 	public long getGroupId();
 
 	public String getKeywords(Locale locale);
+
+	public default String getParentExternalReferenceCode() {
+		return StringPool.BLANK;
+	}
+
+	public default List<LayoutDisplayPageObjectProvider<T>>
+		getRelatedLayoutDisplayPageObjectProviders(String contentType) {
+
+		return Collections.emptyList();
+	}
 
 	public default String getScopeExternalReferenceCode(long groupId) {
 		if (getGroupId() == groupId) {

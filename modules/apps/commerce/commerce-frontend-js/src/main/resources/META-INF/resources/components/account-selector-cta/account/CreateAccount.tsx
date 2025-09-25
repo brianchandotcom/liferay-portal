@@ -48,8 +48,6 @@ const CreateAccount = ({
 				Liferay.fire(commerceEvents.CURRENT_ACCOUNT_UPDATED, {
 					id: account.id,
 				});
-
-				Liferay.fire(commerceEvents.ACCOUNT_SELECTOR_UPDATED);
 			})
 			.catch(showErrorNotification);
 	};

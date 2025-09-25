@@ -6998,6 +6998,13 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE),
 			scopeJSONObject);
 
+		Assert.assertNull(
+			JSONUtil.getValueAsJSONObject(
+				jsonObject,
+				"JSONObject/" +
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				"JSONObject/metadata"));
+
 		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			StringBundler.concat(
@@ -7008,19 +7015,16 @@ public class ObjectEntryResourceTest {
 				".metadata"),
 			Http.Method.GET);
 
-		JSONObject fieldJSONObject = jsonObject.getJSONObject(
-			_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE);
-
-		DLFileVersion dlFileVersion = pdfDLFileEntry.getFileVersion();
-
-		Assert.assertEquals(
-			dlFileVersion.getDescription(),
-			fieldJSONObject.getString("alternativeText"));
-
-		JSONObject metadataJSONObject = fieldJSONObject.getJSONObject(
-			"metadata");
-
-		Assert.assertEquals(2, metadataJSONObject.getInt("numberOfPages"));
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"numberOfPages", 2
+			).toString(),
+			JSONUtil.getValueAsString(
+				jsonObject,
+				"JSONObject/" +
+					_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE,
+				"JSONObject/metadata"),
+			JSONCompareMode.LENIENT);
 	}
 
 	@Test
@@ -14761,10 +14765,17 @@ public class ObjectEntryResourceTest {
 	}
 
 	private void _assertAttachmentJSONObject(
-		DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject,
-		JSONObject scopeJSONObject) {
+			DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject,
+			JSONObject scopeJSONObject)
+		throws Exception {
 
 		if (dlFileEntry != null) {
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+			Assert.assertEquals(
+				dlFileVersion.getDescription(),
+				jsonObject.getString("alternativeText"));
+
 			Assert.assertEquals(
 				dlFileEntry.getExternalReferenceCode(),
 				jsonObject.getString("externalReferenceCode"));

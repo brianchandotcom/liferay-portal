@@ -43,7 +43,12 @@ public class ObjectEntryVersionModelListener
 	public void onAfterCreate(ObjectEntryVersion objectEntryVersion)
 		throws ModelListenerException {
 
-		_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
+		try {
+			_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	@Override
@@ -51,34 +56,7 @@ public class ObjectEntryVersionModelListener
 		throws ModelListenerException {
 
 		try {
-			_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntryVersion.getObjectDefinitionId());
-
-			if (!objectDefinition.isEnableObjectEntryHistory()) {
-				return;
-			}
-
-			AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
-				EventTypes.DELETE, objectEntryVersion, null);
-
-			JSONObject additionalInfoJSONObject =
-				auditMessage.getAdditionalInfo();
-
-			JSONObject contentJSONObject = _jsonFactory.createJSONObject(
-				objectEntryVersion.getContent());
-
-			JSONObject propertiesJSONObject = contentJSONObject.getJSONObject(
-				"properties");
-
-			for (String key : propertiesJSONObject.keySet()) {
-				additionalInfoJSONObject.put(
-					key, propertiesJSONObject.get(key));
-			}
-
-			_auditRouter.route(auditMessage);
+			_onAfterRemove(objectEntryVersion);
 		}
 		catch (PortalException portalException) {
 			throw new ModelListenerException(portalException);
@@ -97,11 +75,17 @@ public class ObjectEntryVersionModelListener
 			return;
 		}
 
-		_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
+		try {
+			_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
 	}
 
 	private void _addOrUpdateLatestApprovedObjectEntry(
-		ObjectEntryVersion objectEntryVersion) {
+			ObjectEntryVersion objectEntryVersion)
+		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
 				objectEntryVersion.getCompanyId(), "LPD-17564")) {
@@ -109,66 +93,61 @@ public class ObjectEntryVersionModelListener
 			return;
 		}
 
-		try {
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntryVersion.getObjectEntryId());
+
+		if ((objectEntry == null) || objectEntry.isApproved()) {
+			_deleteLatestApprovedObjectEntry(
 				objectEntryVersion.getObjectEntryId());
 
-			if ((objectEntry == null) || objectEntry.isApproved()) {
-				_deleteLatestApprovedObjectEntry(
-					objectEntryVersion.getObjectEntryId());
+			return;
+		}
+
+		ObjectEntryVersion latestApprovedObjectEntryVersion =
+			_objectEntryVersionLocalService.
+				fetchLatestApprovedObjectEntryVersion(
+					objectEntry.getObjectEntryId(),
+					ObjectEntryVersionVersionComparator.getInstance(false));
+
+		if (latestApprovedObjectEntryVersion == null) {
+			_deleteLatestApprovedObjectEntry(
+				objectEntryVersion.getObjectEntryId());
+
+			return;
+		}
+
+		ObjectEntry latestApprovedObjectEntry =
+			_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
+				objectEntryVersion.getObjectEntryId());
+
+		if (latestApprovedObjectEntry != null) {
+			if (latestApprovedObjectEntry.getVersion() ==
+					latestApprovedObjectEntryVersion.getVersion()) {
 
 				return;
 			}
 
-			ObjectEntryVersion latestApprovedObjectEntryVersion =
-				_objectEntryVersionLocalService.
-					fetchLatestApprovedObjectEntryVersion(
-						objectEntry.getObjectEntryId(),
-						ObjectEntryVersionVersionComparator.getInstance(false));
-
-			if (latestApprovedObjectEntryVersion == null) {
-				_deleteLatestApprovedObjectEntry(
-					objectEntryVersion.getObjectEntryId());
-
-				return;
-			}
-
-			ObjectEntry latestApprovedObjectEntry =
-				_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
-					objectEntryVersion.getObjectEntryId());
-
-			if (latestApprovedObjectEntry != null) {
-				if (latestApprovedObjectEntry.getVersion() ==
-						latestApprovedObjectEntryVersion.getVersion()) {
-
-					return;
-				}
-
-				_objectEntryLocalService.deleteObjectEntry(
-					latestApprovedObjectEntry);
-			}
-
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					objectEntryVersion.getObjectDefinitionId());
-
-			com.liferay.object.rest.dto.v1_0.ObjectEntry contentObjectEntry =
-				com.liferay.object.rest.dto.v1_0.ObjectEntry.unsafeToDTO(
-					latestApprovedObjectEntryVersion.getContent());
-
-			Map<String, Object> properties = contentObjectEntry.getProperties();
-
-			_objectEntryLocalService.addLatestApprovedObjectEntry(
-				null, objectEntry.getGroupId(), objectEntry.getUserId(),
-				objectEntry.getObjectEntryId(), objectDefinition,
-				objectEntry.getObjectEntryFolderId(),
-				objectEntry.getDefaultLanguageId(),
-				latestApprovedObjectEntryVersion.getVersion(),
-				(Map<String, Serializable>)properties.get("properties"));
+			_objectEntryLocalService.deleteObjectEntry(
+				latestApprovedObjectEntry);
 		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
-		}
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntryVersion.getObjectDefinitionId());
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry contentObjectEntry =
+			com.liferay.object.rest.dto.v1_0.ObjectEntry.unsafeToDTO(
+				latestApprovedObjectEntryVersion.getContent());
+
+		Map<String, Object> properties = contentObjectEntry.getProperties();
+
+		_objectEntryLocalService.addLatestApprovedObjectEntry(
+			null, objectEntry.getGroupId(), objectEntry.getUserId(),
+			objectEntry.getObjectEntryId(), objectDefinition,
+			objectEntry.getObjectEntryFolderId(),
+			objectEntry.getDefaultLanguageId(),
+			latestApprovedObjectEntryVersion.getVersion(),
+			(Map<String, Serializable>)properties.get("properties"));
 	}
 
 	private void _deleteLatestApprovedObjectEntry(long headObjectEntryId)
@@ -183,6 +162,37 @@ public class ObjectEntryVersionModelListener
 		}
 
 		_objectEntryLocalService.deleteObjectEntry(latestApprovedObjectEntry);
+	}
+
+	private void _onAfterRemove(ObjectEntryVersion objectEntryVersion)
+		throws PortalException {
+
+		_addOrUpdateLatestApprovedObjectEntry(objectEntryVersion);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntryVersion.getObjectDefinitionId());
+
+		if (!objectDefinition.isEnableObjectEntryHistory()) {
+			return;
+		}
+
+		AuditMessage auditMessage = AuditMessageBuilder.buildAuditMessage(
+			EventTypes.DELETE, objectEntryVersion, null);
+
+		JSONObject additionalInfoJSONObject = auditMessage.getAdditionalInfo();
+
+		JSONObject contentJSONObject = _jsonFactory.createJSONObject(
+			objectEntryVersion.getContent());
+
+		JSONObject propertiesJSONObject = contentJSONObject.getJSONObject(
+			"properties");
+
+		for (String key : propertiesJSONObject.keySet()) {
+			additionalInfoJSONObject.put(key, propertiesJSONObject.get(key));
+		}
+
+		_auditRouter.route(auditMessage);
 	}
 
 	@Reference

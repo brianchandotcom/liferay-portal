@@ -114,8 +114,6 @@ public class EditUserMVCActionCommandTest {
 
 		try {
 			PropsUtil.set(
-				PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
-			PropsUtil.set(
 				PropsKeys.FIELD_EDITABLE_DOMAINS + "[firstName]",
 				StringPool.STAR);
 			PropsUtil.set(
@@ -124,6 +122,8 @@ public class EditUserMVCActionCommandTest {
 			PropsUtil.set(
 				PropsKeys.FIELD_EDITABLE_DOMAINS + "[suffix]",
 				StringPool.BLANK);
+			PropsUtil.set(
+				PropsKeys.FIELD_EDITABLE_USER_TYPES, StringPool.BLANK);
 
 			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 

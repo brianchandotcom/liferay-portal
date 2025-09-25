@@ -85,19 +85,19 @@ public class EditAccountUserMVCActionCommand
 
 		accountUserContact.setPrefixListTypeId(
 			_getListTypeId(
-				accountUser, actionRequest, "prefixListTypeValue",
-				ListTypeConstants.CONTACT_PREFIX));
+				actionRequest, "prefixListTypeValue",
+				ListTypeConstants.CONTACT_PREFIX, accountUser));
 		accountUserContact.setSuffixListTypeId(
 			_getListTypeId(
-				accountUser, actionRequest, "suffixListTypeValue",
-				ListTypeConstants.CONTACT_SUFFIX));
+				actionRequest, "suffixListTypeValue",
+				ListTypeConstants.CONTACT_SUFFIX, accountUser));
 
 		_contactLocalService.updateContact(accountUserContact);
 	}
 
 	private long _getListTypeId(
-			User accountUser, PortletRequest portletRequest,
-			String parameterName, String type)
+			PortletRequest portletRequest, String parameterName, String type,
+			User accountUser)
 		throws Exception {
 
 		String parameterValue = ParamUtil.getString(

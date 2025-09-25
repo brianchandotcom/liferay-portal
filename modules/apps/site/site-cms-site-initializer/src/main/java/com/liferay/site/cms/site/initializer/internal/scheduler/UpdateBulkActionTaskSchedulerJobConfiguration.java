@@ -111,7 +111,10 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 		return null;
 	}
 
-	private Tuple _getTuple(ObjectRelationship objectRelationship, Long primaryKey) throws Exception {
+	private Tuple _getTuple(
+			ObjectRelationship objectRelationship, Long primaryKey)
+		throws Exception {
+
 		Date completionDate = null;
 		int numberOfFailedItems = 0;
 		int numberOfSuccessfulItems = 0;
@@ -252,8 +255,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 
 		_objectEntryLocalService.partialUpdateObjectEntry(
 			objectEntry.getUserId(), objectEntry.getObjectEntryId(),
-			objectEntry.getObjectEntryFolderId(), values,
-			new ServiceContext());
+			objectEntry.getObjectEntryFolderId(), values, new ServiceContext());
 	}
 
 	private void _updateObjectEntries(long companyId) throws Exception {

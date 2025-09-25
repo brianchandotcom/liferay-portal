@@ -20,15 +20,15 @@ public class TargetUtil {
 		HashMapBuilder.put(
 			"Blank", "_blank"
 		).put(
-			"Parent", "_parent"
-		).put(
 			"Self", "_self"
-		).put(
-			"Top", "_top"
 		).build();
 
 	public static String toExternalValue(String value) {
 		Set<String> externalValues = externalToInternalValuesMap.keySet();
+
+		if (Objects.equals(value, "_parent") || Objects.equals(value, "_top")) {
+			value = "_self";
+		}
 
 		for (String externalValue : externalValues) {
 			if (Objects.equals(
@@ -39,6 +39,10 @@ public class TargetUtil {
 		}
 
 		return null;
+	}
+
+	public static String toInternalValue(String label) {
+		return externalToInternalValuesMap.get(label);
 	}
 
 }

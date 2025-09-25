@@ -243,9 +243,7 @@ public abstract class BaseStyledLayoutStructureItem {
 				setTitle(() -> jsonObject.getString("title"));
 				setUrl(
 					() -> {
-						if (FragmentLinkValueUtil.isSaveFragmentMappedValue(
-								jsonObject)) {
-
+						if (FragmentLinkValueUtil.isMappedValue(jsonObject)) {
 							return FragmentLinkValueUtil.
 								toFragmentLinkMappedValue(
 									infoItemServiceRegistry, jsonObject,

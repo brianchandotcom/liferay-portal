@@ -27,7 +27,6 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
-import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -50,6 +49,7 @@ import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.ObjectStateTransitionLocalService;
 import com.liferay.object.test.util.ObjectActionTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -60,7 +60,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -197,30 +196,18 @@ public class ObjectEntryInfoItemFormProviderTest {
 
 		_childInfoForm = _getInfoForm(_childObjectDefinition);
 
-		_parentObjectDefinition = _addObjectDefinition(
-			new TextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"parentTextObjectFieldName"
-			).build());
-
 		_parentObjectDefinition =
-			_objectDefinitionLocalService.publishCustomObjectDefinition(
-				TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId());
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"parentTextObjectFieldName"
+					).build()));
 
 		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
-
-		_objectRelationship =
-			_objectRelationshipLocalService.addObjectRelationship(
-				null, TestPropsValues.getUserId(),
-				_parentObjectDefinition.getObjectDefinitionId(),
-				_childObjectDefinition.getObjectDefinitionId(), 0,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
 	}
 
 	@Test
@@ -228,7 +215,7 @@ public class ObjectEntryInfoItemFormProviderTest {
 		_testGetInfoFormWithAttachmentObjectField();
 		_testGetInfoFormWithEnableObjectEntrySchedule();
 		_testGetInfoFormWithObjectAction();
-		_testGetInfoFormWithParentObjectDefinition();
+		_testGetInfoFormWithObjectRelationship();
 		_testGetInfoFormWithPicklistObjectField();
 	}
 
@@ -392,7 +379,14 @@ public class ObjectEntryInfoItemFormProviderTest {
 			objectAction.getName(), _getInfoForm(_childObjectDefinition));
 	}
 
-	private void _testGetInfoFormWithParentObjectDefinition() throws Exception {
+	private void _testGetInfoFormWithObjectRelationship() throws Exception {
+		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
+			_objectRelationshipLocalService, _parentObjectDefinition,
+			_childObjectDefinition);
+
+		_childInfoForm = _getInfoForm(_childObjectDefinition);
+		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
+
 		_assertInfoField("parentTextObjectFieldName", _childInfoForm);
 		_assertInfoField("parentTextObjectFieldName", _parentInfoForm);
 

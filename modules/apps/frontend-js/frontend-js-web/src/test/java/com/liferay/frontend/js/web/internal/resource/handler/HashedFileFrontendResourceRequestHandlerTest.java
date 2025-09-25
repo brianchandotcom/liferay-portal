@@ -32,7 +32,6 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.MockedStatic;
@@ -63,12 +62,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		}
 	}
 
-	@Ignore
 	@Test
 	public void testCanHandleRequest() throws Exception {
-
-		// LPD-52709
-
 		_mockFallbackKeysSettingsUtil(
 			HashMapBuilder.<String, Object>put(
 				"maxAgeKey", RandomTestUtil.randomLong()
@@ -132,12 +127,8 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		Assert.assertFalse(frontendResource.isSendNoCache());
 	}
 
-	@Ignore
 	@Test
 	public void testHandleRequestWithNoConfiguration() throws Exception {
-
-		// LPD-52709
-
 		_mockFallbackKeysSettingsUtil(null);
 
 		long maxAge = RandomTestUtil.randomLong();

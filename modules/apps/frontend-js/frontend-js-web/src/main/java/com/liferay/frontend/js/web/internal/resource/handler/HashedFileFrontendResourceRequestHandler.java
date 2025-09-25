@@ -56,12 +56,6 @@ public class HashedFileFrontendResourceRequestHandler
 			return true;
 		}
 
-		// LPD-52709
-
-		if (true) {
-			return false;
-		}
-
 		String hashedFileURI = _hashedFilesRegistry.getHashedFileURI(
 			requestURI);
 

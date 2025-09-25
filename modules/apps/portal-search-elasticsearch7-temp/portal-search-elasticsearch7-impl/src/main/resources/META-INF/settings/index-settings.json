@@ -1,0 +1,465 @@
+{
+	"analysis": {
+		"analyzer": {
+			"1_10_ngram": {
+				"filter": [
+					"lowercase",
+					"1_10_ngram"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
+			"email_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "uax_url_email"
+			},
+			"keyword_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "keyword"
+			},
+			"liferay_analyzer_ar": {
+				"filter": [
+					"lowercase",
+					"decimal_digit",
+					"arabic_stop",
+					"arabic_normalization",
+					"liferay_filter_synonym_ar",
+					"arabic_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_ca": {
+				"filter": [
+					"catalan_elision",
+					"lowercase",
+					"catalan_stop",
+					"liferay_filter_synonym_ca",
+					"catalan_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_de": {
+				"filter": [
+					"lowercase",
+					"german_stop",
+					"liferay_filter_synonym_de",
+					"german_normalization",
+					"german_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_en": {
+				"filter": [
+					"english_possessive_stemmer",
+					"lowercase",
+					"liferay_filter_synonym_en",
+					"english_stop",
+					"english_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_es": {
+				"filter": [
+					"lowercase",
+					"spanish_stop",
+					"liferay_filter_synonym_es",
+					"spanish_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_fi": {
+				"filter": [
+					"lowercase",
+					"finnish_stop",
+					"liferay_filter_synonym_fi",
+					"finnish_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_fr": {
+				"filter": [
+					"french_elision",
+					"lowercase",
+					"french_stop",
+					"liferay_filter_synonym_fr",
+					"french_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_hu": {
+				"filter": [
+					"lowercase",
+					"hungarian_stop",
+					"liferay_filter_synonym_hu",
+					"hungarian_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_it": {
+				"filter": [
+					"italian_elision",
+					"lowercase",
+					"italian_stop",
+					"liferay_filter_synonym_it",
+					"italian_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_ja": {
+				"filter": [
+					"kuromoji_baseform",
+					"kuromoji_part_of_speech",
+					"cjk_width",
+					"lowercase",
+					"ja_stop",
+					"liferay_filter_synonym_ja",
+					"kuromoji_stemmer"
+				],
+				"tokenizer": "kuromoji_tokenizer"
+			},
+			"liferay_analyzer_nl": {
+				"filter": [
+					"lowercase",
+					"dutch_stop",
+					"liferay_filter_synonym_nl",
+					"dutch_stemmer",
+					"dutch_override"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_pt_BR": {
+				"filter": [
+					"lowercase",
+					"brazilian_stop",
+					"liferay_filter_synonym_pt_BR",
+					"brazilian_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_pt_PT": {
+				"filter": [
+					"lowercase",
+					"portuguese_stop",
+					"liferay_filter_synonym_pt_PT",
+					"portuguese_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_sv": {
+				"filter": [
+					"lowercase",
+					"swedish_stop",
+					"liferay_filter_synonym_sv",
+					"swedish_stemmer"
+				],
+				"tokenizer": "standard"
+			},
+			"liferay_analyzer_zh": {
+				"filter": [
+					"lowercase",
+					"cjk_width",
+					"liferay_filter_synonym_zh"
+				],
+				"tokenizer": "smartcn_tokenizer"
+			},
+			"reverse_keyword_lowercase": {
+				"filter": [
+					"lowercase",
+					"reverse"
+				],
+				"tokenizer": "keyword",
+				"type": "custom"
+			},
+			"text_whitespace_lowercase": {
+				"filter": "lowercase",
+				"tokenizer": "whitespace"
+			}
+		},
+		"filter": {
+			"1_10_ngram": {
+				"max_gram": 10,
+				"min_gram": 1,
+				"type": "ngram"
+			},
+			"arabic_stemmer": {
+				"language": "arabic",
+				"type": "stemmer"
+			},
+			"arabic_stop": {
+				"stopwords": "_arabic_",
+				"type": "stop"
+			},
+			"brazilian_stemmer": {
+				"language": "brazilian",
+				"type": "stemmer"
+			},
+			"brazilian_stop": {
+				"stopwords": "_brazilian_",
+				"type": "stop"
+			},
+			"catalan_elision": {
+				"articles": [
+					"d",
+					"l",
+					"m",
+					"n",
+					"s",
+					"t"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"catalan_stemmer": {
+				"language": "catalan",
+				"type": "stemmer"
+			},
+			"catalan_stop": {
+				"stopwords": "_catalan_",
+				"type": "stop"
+			},
+			"chinese_stop": {
+				"stopwords": "_smartcn_",
+				"type": "stop"
+			},
+			"dutch_override": {
+				"rules": [
+					"fiets=>fiets",
+					"bromfiets=>bromfiets",
+					"ei=>eier",
+					"kind=>kinder"
+				],
+				"type": "stemmer_override"
+			},
+			"dutch_stemmer": {
+				"language": "dutch",
+				"type": "stemmer"
+			},
+			"dutch_stop": {
+				"stopwords": "_dutch_",
+				"type": "stop"
+			},
+			"english_possessive_stemmer": {
+				"language": "possessive_english",
+				"type": "stemmer"
+			},
+			"english_stemmer": {
+				"language": "english",
+				"type": "stemmer"
+			},
+			"english_stop": {
+				"stopwords": "_english_",
+				"type": "stop"
+			},
+			"finnish_stemmer": {
+				"language": "finnish",
+				"type": "stemmer"
+			},
+			"finnish_stop": {
+				"stopwords": "_finnish_",
+				"type": "stop"
+			},
+			"french_elision": {
+				"articles": [
+					"l",
+					"m",
+					"t",
+					"qu",
+					"n",
+					"s",
+					"j",
+					"d",
+					"c",
+					"jusqu",
+					"quoiqu",
+					"lorsqu",
+					"puisqu"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"french_stemmer": {
+				"language": "light_french",
+				"type": "stemmer"
+			},
+			"french_stop": {
+				"stopwords": "_french_",
+				"type": "stop"
+			},
+			"german_stemmer": {
+				"language": "light_german",
+				"type": "stemmer"
+			},
+			"german_stop": {
+				"stopwords": "_german_",
+				"type": "stop"
+			},
+			"hungarian_stemmer": {
+				"language": "hungarian",
+				"type": "stemmer"
+			},
+			"hungarian_stop": {
+				"stopwords": "_hungarian_",
+				"type": "stop"
+			},
+			"italian_elision": {
+				"articles": [
+					"c",
+					"l",
+					"all",
+					"dall",
+					"dell",
+					"nell",
+					"sull",
+					"coll",
+					"pell",
+					"gl",
+					"agl",
+					"dagl",
+					"degl",
+					"negl",
+					"sugl",
+					"un",
+					"m",
+					"t",
+					"s",
+					"v",
+					"d"
+				],
+				"articles_case": true,
+				"type": "elision"
+			},
+			"italian_stemmer": {
+				"language": "light_italian",
+				"type": "stemmer"
+			},
+			"italian_stop": {
+				"stopwords": "_italian_",
+				"type": "stop"
+			},
+			"liferay_filter_synonym_ar": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_ca": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_de": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_en": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_es": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_fi": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_fr": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_hu": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_it": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_ja": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_nl": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_pt_BR": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_pt_PT": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_sv": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"liferay_filter_synonym_zh": {
+				"lenient": true,
+				"synonyms": [
+				],
+				"type": "synonym_graph"
+			},
+			"portuguese_stemmer": {
+				"language": "light_portuguese",
+				"type": "stemmer"
+			},
+			"portuguese_stop": {
+				"stopwords": "_portuguese_",
+				"type": "stop"
+			},
+			"spanish_stemmer": {
+				"language": "light_spanish",
+				"type": "stemmer"
+			},
+			"spanish_stop": {
+				"stopwords": "_spanish_",
+				"type": "stop"
+			},
+			"swedish_stemmer": {
+				"language": "swedish",
+				"type": "stemmer"
+			},
+			"swedish_stop": {
+				"stopwords": "_swedish_",
+				"type": "stop"
+			}
+		}
+	},
+	"index": {
+		"auto_expand_replicas": "0-all",
+		"default_pipeline": "timestamp",
+		"mapping": {
+			"total_fields": {
+				"limit": "7500"
+			}
+		},
+		"max_ngram_diff": 9
+	}
+}

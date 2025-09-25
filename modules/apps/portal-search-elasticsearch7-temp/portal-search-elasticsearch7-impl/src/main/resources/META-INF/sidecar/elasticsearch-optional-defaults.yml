@@ -1,0 +1,6 @@
+http.host: _local_
+indices.breaker.total.use_real_memory: false
+monitor.jvm.gc.enabled: false
+thread_pool:
+    write:
+        queue_size: 100

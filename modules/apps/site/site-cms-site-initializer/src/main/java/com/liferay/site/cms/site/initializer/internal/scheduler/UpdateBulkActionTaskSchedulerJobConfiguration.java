@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration;
-import com.liferay.site.cms.site.initializer.constants.BulkActionTaskConstants;
+import com.liferay.site.cms.site.initializer.constants.BulkActionExecutionStatusConstants;
 
 import java.io.Serializable;
 
@@ -124,12 +124,8 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 			_filterFactory.create(
 				StringBundler.concat(
 					"executionStatus in ('",
-					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_INITIAL,
-					"','",
-					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_STARTED,
-					"')"),
+					BulkActionExecutionStatusConstants.INITIAL, "','",
+					BulkActionExecutionStatusConstants.STARTED, "')"),
 				objectDefinition),
 			null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
@@ -160,15 +156,12 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 						values.get("executionStatus"));
 
 					if (executionStatus.equals(
-							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) ||
+							BulkActionExecutionStatusConstants.COMPLETED) ||
 						executionStatus.equals(
-							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_FAILED)) {
+							BulkActionExecutionStatusConstants.FAILED)) {
 
 						if (executionStatus.equals(
-								BulkActionTaskConstants.
-									BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) &&
+								BulkActionExecutionStatusConstants.COMPLETED) &&
 							Validator.isBlank(
 								GetterUtil.getString(
 									values.get("description")))) {
@@ -218,16 +211,14 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 						values.get("executionStatus"));
 
 					if (executionStatus.equals(
-							BulkActionTaskConstants.
-								BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_COMPLETED) &&
+							BulkActionExecutionStatusConstants.COMPLETED) &&
 						Validator.isBlank(
 							GetterUtil.getString(values.get("description")))) {
 
 						numberOfSuccessfulItems++;
 					}
 					else if (executionStatus.equals(
-								BulkActionTaskConstants.
-									BULK_ACTION_TASK_ITEM_EXECUTION_STATUS_FAILED) ||
+								BulkActionExecutionStatusConstants.FAILED) ||
 							 !Validator.isBlank(
 								 GetterUtil.getString(
 									 values.get("description")))) {
@@ -254,8 +245,7 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 				values.put("completionDate", new Date());
 				values.put(
 					"executionStatus",
-					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_FAILED);
+					BulkActionExecutionStatusConstants.FAILED);
 
 				_objectEntryLocalService.partialUpdateObjectEntry(
 					objectEntry.getUserId(), objectEntry.getObjectEntryId(),
@@ -282,14 +272,12 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 
 				values.put(
 					"executionStatus",
-					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_COMPLETED);
+					BulkActionExecutionStatusConstants.COMPLETED);
 			}
 			else {
 				values.put(
 					"executionStatus",
-					BulkActionTaskConstants.
-						BULK_ACTION_TASK_EXECUTION_STATUS_STARTED);
+					BulkActionExecutionStatusConstants.STARTED);
 			}
 
 			_objectEntryLocalService.partialUpdateObjectEntry(

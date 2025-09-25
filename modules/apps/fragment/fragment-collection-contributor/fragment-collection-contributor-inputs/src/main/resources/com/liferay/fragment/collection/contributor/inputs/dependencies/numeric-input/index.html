@@ -1,7 +1,7 @@
 <div class="numeric-input">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-numeric-input" id="${fragmentEntryLinkNamespace}-numeric-input-label">
-			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">
+			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]">
 				${htmlUtil.escape(input.label)}
 
 				<span id="${fragmentEntryLinkNamespace}-numeric-read-only" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>

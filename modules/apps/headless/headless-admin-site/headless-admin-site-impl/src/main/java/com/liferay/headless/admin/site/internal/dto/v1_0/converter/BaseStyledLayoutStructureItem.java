@@ -7,11 +7,9 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.FragmentImage;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentStyle;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentViewportStyle;
-import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkValueUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,25 +45,9 @@ public abstract class BaseStyledLayoutStructureItem {
 		return null;
 	}
 
-	protected FragmentMappedValue toFragmentMappedValue(JSONObject jsonObject) {
-		return new FragmentMappedValue() {
-			{
-				setMapping(
-					() -> new Mapping() {
-						{
-							setFieldKey(
-								() -> FragmentLinkValueUtil.getFieldKey(
-									jsonObject));
-							setItemReference(
-								() -> FragmentLinkValueUtil.toItemReference(
-									jsonObject));
-						}
-					});
-			}
-		};
-	}
+	protected FragmentStyle toFragmentStyle(
+		JSONObject jsonObject, long scopeGroupId) {
 
-	protected FragmentStyle toFragmentStyle(JSONObject jsonObject) {
 		if (JSONUtil.isEmpty(jsonObject)) {
 			return null;
 		}
@@ -87,7 +69,7 @@ public abstract class BaseStyledLayoutStructureItem {
 							(JSONObject)backgroundImage;
 
 						return _toBackgroundFragmentImage(
-							backgroundImageJSONObject);
+							backgroundImageJSONObject, scopeGroupId);
 					});
 				setBorderColor(() -> jsonObject.getString("borderColor", null));
 				setBorderRadius(
@@ -138,7 +120,7 @@ public abstract class BaseStyledLayoutStructureItem {
 		};
 	}
 
-	protected FragmentViewport[] toFragmentViewPorts(JSONObject jsonObject) {
+	protected FragmentViewport[] toFragmentViewports(JSONObject jsonObject) {
 		if (JSONUtil.isEmpty(jsonObject)) {
 			return null;
 		}
@@ -243,7 +225,9 @@ public abstract class BaseStyledLayoutStructureItem {
 		};
 	}
 
-	private FragmentImage _toBackgroundFragmentImage(JSONObject jsonObject) {
+	private FragmentImage _toBackgroundFragmentImage(
+		JSONObject jsonObject, long scopeGroupId) {
+
 		if (jsonObject == null) {
 			return null;
 		}
@@ -258,7 +242,10 @@ public abstract class BaseStyledLayoutStructureItem {
 						if (FragmentLinkValueUtil.isSaveFragmentMappedValue(
 								jsonObject)) {
 
-							return toFragmentMappedValue(jsonObject);
+							return FragmentLinkValueUtil.
+								toFragmentLinkMappedValue(
+									infoItemServiceRegistry, jsonObject,
+									scopeGroupId);
 						}
 
 						if (Validator.isNull(urlValue)) {

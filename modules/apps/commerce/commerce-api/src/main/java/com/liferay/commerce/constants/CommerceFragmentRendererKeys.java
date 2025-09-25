@@ -14,6 +14,10 @@ public class CommerceFragmentRendererKeys {
 		"com_liferay_commerce_fragment_internal_fragment_renderer_" +
 			"AccountOrdersDataSetFragmentRenderer";
 
+	public static final String ACCOUNTS_DATA_SET =
+		"com_liferay_commerce_fragment_internal_fragment_renderer_" +
+			"AccountsDataSetFragmentRenderer";
+
 	public static final String ORDER_ITEMS_DATA_SET =
 		"com_liferay_commerce_order_content_web_internal_fragment_renderer_" +
 			"OrderItemsDataSetFragmentRenderer";

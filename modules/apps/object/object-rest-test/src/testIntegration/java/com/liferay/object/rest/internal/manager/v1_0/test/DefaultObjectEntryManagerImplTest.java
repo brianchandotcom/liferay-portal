@@ -4344,13 +4344,151 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry3.getId(), 2);
 
 		_assertApprovedObjectEntries(
-			_getLatestApprovedObjectEntry(objectEntry3.getId()));
+			_getLatestApprovedObjectEntry(
+				objectEntry3.getId(), _objectDefinition1));
 
 		_defaultObjectEntryManager.expireObjectEntryByVersion(
 			_createDTOConverterContext(), _objectDefinition1,
 			objectEntry3.getId(), 1);
 
 		_assertApprovedObjectEntries();
+	}
+
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testGetApprovedObjectEntriesWithNestedFields()
+		throws Exception {
+
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1, Collections.emptyMap());
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, false, true,
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationship objectRelationship1 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectDefinition1, objectDefinition2,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField1 = objectFieldLocalService.getObjectField(
+			objectRelationship1.getObjectFieldId2());
+
+		ObjectEntry objectEntry2 = _updateObjectEntryVersion(
+			objectDefinition2,
+			_addObjectEntry(
+				objectDefinition2,
+				HashMapBuilder.<String, Object>put(
+					objectField1.getName(), objectEntry1.getId()
+				).build()),
+			objectField1.getName(), objectEntry1.getId(), 2);
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			_createDTOConverterContext(), objectDefinition2,
+			objectEntry2.getId(), 2);
+
+		ObjectDefinition objectDefinition3 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				false, false, true,
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"a" + RandomTestUtil.randomString()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		ObjectRelationship objectRelationship2 =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				objectDefinition2, objectDefinition3,
+				TestPropsValues.getUserId(),
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectField objectField2 = objectFieldLocalService.getObjectField(
+			objectRelationship2.getObjectFieldId2());
+
+		ObjectEntry objectEntry3 = _updateObjectEntryVersion(
+			objectDefinition3,
+			_addObjectEntry(
+				objectDefinition3,
+				HashMapBuilder.<String, Object>put(
+					objectField2.getName(), objectEntry2.getId()
+				).build()),
+			objectField2.getName(), objectEntry2.getId(), 2);
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinition3.getClassName(), 0, 0, "Single Approver", 1);
+
+		objectEntry3 = _updateObjectEntryVersion(
+			objectDefinition3, objectEntry3, objectField2.getName(),
+			objectEntry2.getId(), 2);
+
+		NestedFieldsContext originalNestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		try {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				new NestedFieldsContext(
+					3, null,
+					Arrays.asList(
+						objectRelationship1.getName(),
+						objectRelationship2.getName()),
+					null, null, null));
+
+			Page<ObjectEntry> page =
+				_defaultObjectEntryManager.getApprovedObjectEntries(
+					companyId, _objectDefinition1, null, null,
+					dtoConverterContext, null, null, null, null);
+
+			List<ObjectEntry> approvedObjectEntries =
+				(List<ObjectEntry>)page.getItems();
+
+			Assert.assertEquals(
+				approvedObjectEntries.toString(), 1,
+				approvedObjectEntries.size());
+
+			ObjectEntry approvedObjectEntry = approvedObjectEntries.get(0);
+
+			ObjectEntry[] nestedApprovedObjectEntries =
+				(ObjectEntry[])approvedObjectEntry.getPropertyValue(
+					objectRelationship1.getName());
+
+			ObjectEntry nestedApprovedObjectEntry =
+				nestedApprovedObjectEntries[0];
+
+			assertEquals(
+				_getLatestApprovedObjectEntry(
+					objectEntry2.getId(), objectDefinition2),
+				nestedApprovedObjectEntry);
+
+			ObjectEntry[] nestedObjectEntries =
+				(ObjectEntry[])nestedApprovedObjectEntry.getPropertyValue(
+					objectRelationship2.getName());
+
+			assertEquals(
+				_getLatestApprovedObjectEntry(
+					objectEntry3.getId(), objectDefinition3),
+				nestedObjectEntries[0]);
+		}
+		finally {
+			NestedFieldsContextThreadLocal.setNestedFieldsContext(
+				originalNestedFieldsContext);
+		}
 	}
 
 	@Test
@@ -8517,6 +8655,19 @@ public class DefaultObjectEntryManagerImplTest
 			Map.Entry<String, Object> expectedEntry)
 		throws Exception {
 
+		NestedFieldsContext nestedFieldsContext =
+			NestedFieldsContextThreadLocal.getNestedFieldsContext();
+
+		if ((nestedFieldsContext != null) &&
+			(ListUtil.exists(
+				nestedFieldsContext.getNestedFields(),
+				nestedField -> Objects.equals(
+					nestedField, expectedEntry.getKey())) ||
+			 StringUtil.startsWith(expectedEntry.getKey(), "r_"))) {
+
+			return;
+		}
+
 		if (Objects.equals(
 				expectedEntry.getKey(),
 				_localizedMultiselectPicklistObjectFieldName)) {
@@ -9647,7 +9798,8 @@ public class DefaultObjectEntryManagerImplTest
 		return fileEntry.getId();
 	}
 
-	private ObjectEntry _getLatestApprovedObjectEntry(long headObjectEntryId)
+	private ObjectEntry _getLatestApprovedObjectEntry(
+			long headObjectEntryId, ObjectDefinition objectDefinition)
 		throws Exception {
 
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
@@ -9657,7 +9809,7 @@ public class DefaultObjectEntryManagerImplTest
 		return _defaultObjectEntryManager.getApprovedObjectEntry(
 			companyId, dtoConverterContext,
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
-			_objectDefinition1, null);
+			objectDefinition, null);
 	}
 
 	private String _getListEntryKey(ObjectEntry objectEntry) {
@@ -10769,6 +10921,16 @@ public class DefaultObjectEntryManagerImplTest
 			int versionNumber)
 		throws Exception {
 
+		return _updateObjectEntryVersion(
+			objectDefinition, objectEntry, "textObjectFieldName",
+			RandomTestUtil.randomString(), versionNumber);
+	}
+
+	private ObjectEntry _updateObjectEntryVersion(
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			String objectFieldName, Object objectFieldValue, int versionNumber)
+		throws Exception {
+
 		return _defaultObjectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(),
 			_createDTOConverterContext(adminUser),
@@ -10777,7 +10939,7 @@ public class DefaultObjectEntryManagerImplTest
 				{
 					keywords = new String[] {RandomTestUtil.randomString()};
 					properties = HashMapBuilder.<String, Object>put(
-						"textObjectFieldName", RandomTestUtil.randomString()
+						objectFieldName, objectFieldValue
 					).build();
 					systemProperties = new SystemProperties() {
 						{

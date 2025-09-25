@@ -15,13 +15,11 @@
 	<div class="align-items-center d-flex flex-row">
 		<liferay-ui:message key="empty-layout-alert-message" />
 
-		<clay:button
-			cssClass="alert-btn btn flex-shrink-0 ml-4"
-			data-testid="editEmptyLayoutButton"
-			displayType="secondary"
-			id="editButton"
-			label='<%= LanguageUtil.format(locale, "edit-x", "page") %>'
-			onClick='<%= "location.href='" + HtmlUtil.escapeJS((String)request.getAttribute("editURL")) + "';" %>'
+		<clay:link
+			cssClass="alert-btn btn btn-secondary ml-4"
+			href='<%= (String)request.getAttribute("editURL") %>'
+			label='<%= LanguageUtil.get(request, "edit-page") %>'
+			role="button"
 		/>
 	</div>
 </clay:alert>

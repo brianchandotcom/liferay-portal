@@ -391,7 +391,7 @@
 					"label": {
 						"en_US": "Execution Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_TASK_EXECUTION_STATUSES",
+					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_EXECUTION_STATUSES",
 					"name": "executionStatus",
 					"required": true,
 					"state": true,
@@ -602,7 +602,7 @@
 					"label": {
 						"en_US": "Execution Status"
 					},
-					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_TASK_ITEM_EXECUTION_STATUSES",
+					"listTypeDefinitionExternalReferenceCode": "L_BULK_ACTION_EXECUTION_STATUSES",
 					"name": "executionStatus",
 					"required": true,
 					"state": true,

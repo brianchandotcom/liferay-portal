@@ -195,6 +195,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 				TestPropsValues.getUserId(),
 				_childObjectDefinition.getObjectDefinitionId());
 
+		_childInfoForm = _getInfoForm(_childObjectDefinition);
+
 		_parentObjectDefinition = _addObjectDefinition(
 			new TextObjectFieldBuilder(
 			).labelMap(
@@ -208,6 +210,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 				TestPropsValues.getUserId(),
 				_parentObjectDefinition.getObjectDefinitionId());
 
+		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
+
 		_objectRelationship =
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
@@ -217,9 +221,6 @@ public class ObjectEntryInfoItemFormProviderTest {
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
 				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
-
-		_childInfoForm = _getInfoForm(_childObjectDefinition);
-		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
 	}
 
 	@Test

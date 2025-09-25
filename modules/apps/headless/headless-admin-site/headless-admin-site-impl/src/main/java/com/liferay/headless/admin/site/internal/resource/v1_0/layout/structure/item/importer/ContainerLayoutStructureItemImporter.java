@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.converter.AlignConverter;
@@ -21,6 +22,7 @@ import com.liferay.layout.converter.WidthTypeConverter;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -65,8 +67,7 @@ public class ContainerLayoutStructureItemImporter
 		}
 
 		containerStyledLayoutStructureItem.setCssClasses(
-			new LinkedHashSet<>(
-				Arrays.asList(containerPageElementDefinition.getCssClasses())));
+			_getCssClasses(containerPageElementDefinition.getCssClasses()));
 		containerStyledLayoutStructureItem.setCustomCSS(
 			containerPageElementDefinition.getCustomCSS());
 
@@ -125,7 +126,24 @@ public class ContainerLayoutStructureItemImporter
 		containerStyledLayoutStructureItem.setName(
 			containerPageElementDefinition.getName());
 
+		JSONObject fragmentViewportsJSONObject =
+			FragmentViewportUtil.toFragmentViewportsJSONObject(
+				containerPageElementDefinition.getFragmentViewports());
+
+		if (fragmentViewportsJSONObject != null) {
+			containerStyledLayoutStructureItem.updateItemConfig(
+				fragmentViewportsJSONObject);
+		}
+
 		return containerStyledLayoutStructureItem;
+	}
+
+	private LinkedHashSet<String> _getCssClasses(String[] cssClasses) {
+		if (cssClasses == null) {
+			return null;
+		}
+
+		return new LinkedHashSet<>(Arrays.asList(cssClasses));
 	}
 
 }

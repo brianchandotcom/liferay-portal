@@ -183,7 +183,7 @@ async function unlinkUserGroupFromSpace({
 	userGroupExternalReferenceCode: string;
 }) {
 	return await ApiHelper.delete(
-		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/by-external-reference-code/${userGroupExternalReferenceCode}`
+		`/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${spaceExternalReferenceCode}/user-groups/by-external-reference-code/${userGroupExternalReferenceCode}`
 	);
 }
 

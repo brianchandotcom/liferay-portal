@@ -500,6 +500,7 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 		_testPostOrganizationBatch();
 		_testPostOrganizationWithCustomFields();
+		_testPostOrganizationWithCommentsOverMaximumLength();
 		_testPostOrganizationWithNameOverMaximumLength();
 		_testPostOrganizationWithImageExternalReferenceCode();
 	}
@@ -1671,6 +1672,18 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 						assetCategory3.getCategoryId()));
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_EMPTY, assetCategory3.getStatus());
+	}
+
+	private void _testPostOrganizationWithCommentsOverMaximumLength()
+		throws Exception {
+
+		Organization organization = randomOrganization();
+
+		organization.setComment(RandomTestUtil.randomString(4001));
+
+		assertHttpResponseStatusCode(
+			400,
+			organizationResource.postOrganizationHttpResponse(organization));
 	}
 
 	private void _testPostOrganizationWithCustomFields() throws Exception {

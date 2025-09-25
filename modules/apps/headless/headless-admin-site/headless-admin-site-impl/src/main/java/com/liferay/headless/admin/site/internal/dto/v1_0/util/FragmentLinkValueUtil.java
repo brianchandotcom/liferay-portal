@@ -292,7 +292,7 @@ public class FragmentLinkValueUtil {
 				groupId);
 
 		if (layout == null) {
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 		return JSONUtil.put(
@@ -363,6 +363,8 @@ public class FragmentLinkValueUtil {
 							"item could be obtained",
 						portalException);
 				}
+
+				throw new UnsupportedOperationException();
 			}
 		}
 
@@ -457,6 +459,8 @@ public class FragmentLinkValueUtil {
 									"since no item could be obtained",
 								portalException);
 						}
+
+						throw new UnsupportedOperationException();
 					}
 				}
 
@@ -529,7 +533,7 @@ public class FragmentLinkValueUtil {
 					portalException);
 			}
 
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
 		return new FragmentMappedValueItemExternalReference() {

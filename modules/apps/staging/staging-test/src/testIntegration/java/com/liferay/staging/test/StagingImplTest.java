@@ -193,9 +193,7 @@ public class StagingImplTest {
 	}
 
 	@Test
-	public void testGetExceptionMessagesJSONObjectConnectException()
-		throws Exception {
-
+	public void testGetExceptionMessagesJSONObject() throws Exception {
 		Exception exception = new Exception(new ConnectException());
 
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(

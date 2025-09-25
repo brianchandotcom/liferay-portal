@@ -1793,13 +1793,6 @@ components:
                             # @review
                             description:
                                 The fragment style of the row page element.
-                        fragmentViewports:
-                            # @review
-                            description:
-                                A list of fragment viewports of a row page element.
-                            items:
-                                $ref: "#/components/schemas/FragmentViewport"
-                            type: array
                         gridViewports:
                             # @review
                             description:
@@ -1851,6 +1844,15 @@ components:
             description:
                 A grid viewport.
             properties:
+                customCSS:
+                    description:
+                        Custom CSS that is applied on the container viewport's page element.
+                    type: string
+                fragmentViewportStyle:
+                    $ref: "#/components/schemas/FragmentViewportStyle"
+                    # @review
+                    description:
+                        The fragment's viewport style.
                 gridViewportDefinition:
                     # @review
                     description:

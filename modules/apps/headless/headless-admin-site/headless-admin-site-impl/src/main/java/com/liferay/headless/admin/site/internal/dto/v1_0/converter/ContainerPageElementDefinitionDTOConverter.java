@@ -18,6 +18,7 @@ import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -115,6 +116,10 @@ public class ContainerPageElementDefinitionDTOConverter
 	private HtmlProperties _toHtmlProperties(
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
 
+		if (Validator.isNull(containerStyledLayoutStructureItem.getHtmlTag())) {
+			return null;
+		}
+
 		return new HtmlProperties() {
 			{
 				setHtmlTag(
@@ -127,11 +132,15 @@ public class ContainerPageElementDefinitionDTOConverter
 	private Layout _toLayout(
 		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
 
-		if ((containerStyledLayoutStructureItem.getAlign() == null) &&
-			(containerStyledLayoutStructureItem.getContentDisplay() == null) &&
-			(containerStyledLayoutStructureItem.getFlexWrap() == null) &&
-			(containerStyledLayoutStructureItem.getJustify() == null) &&
-			(containerStyledLayoutStructureItem.getWidthType() == null)) {
+		JSONObject itemConfigJSONObject =
+			containerStyledLayoutStructureItem.getItemConfigJSONObject();
+
+		if ((itemConfigJSONObject.getString("align", null) == null) &&
+			(itemConfigJSONObject.getString("contentVisibility", null) ==
+				null) &&
+			(itemConfigJSONObject.getString("flexWrap", null) == null) &&
+			(itemConfigJSONObject.getString("justify", null) == null) &&
+			(itemConfigJSONObject.getString("widthType", null) == null)) {
 
 			return null;
 		}
@@ -140,8 +149,8 @@ public class ContainerPageElementDefinitionDTOConverter
 			{
 				setAlign(
 					() -> {
-						String align =
-							containerStyledLayoutStructureItem.getAlign();
+						String align = itemConfigJSONObject.getString(
+							"align", null);
 
 						if (Validator.isNull(align)) {
 							return null;
@@ -152,9 +161,8 @@ public class ContainerPageElementDefinitionDTOConverter
 					});
 				setContentDisplay(
 					() -> {
-						Object contentDisplay =
-							containerStyledLayoutStructureItem.
-								getContentDisplay();
+						String contentDisplay = itemConfigJSONObject.getString(
+							"contentDisplay", null);
 
 						if (Validator.isNull(contentDisplay)) {
 							return null;
@@ -166,8 +174,8 @@ public class ContainerPageElementDefinitionDTOConverter
 					});
 				setFlexWrap(
 					() -> {
-						String flexWrap =
-							containerStyledLayoutStructureItem.getFlexWrap();
+						String flexWrap = itemConfigJSONObject.getString(
+							"flexWrap", null);
 
 						if (Validator.isNull(flexWrap)) {
 							return null;
@@ -178,8 +186,8 @@ public class ContainerPageElementDefinitionDTOConverter
 					});
 				setJustify(
 					() -> {
-						String justify =
-							containerStyledLayoutStructureItem.getJustify();
+						String justify = itemConfigJSONObject.getString(
+							"justify", null);
 
 						if (Validator.isNull(justify)) {
 							return null;
@@ -190,8 +198,8 @@ public class ContainerPageElementDefinitionDTOConverter
 					});
 				setWidthType(
 					() -> {
-						String widthType =
-							containerStyledLayoutStructureItem.getWidthType();
+						String widthType = itemConfigJSONObject.getString(
+							"widthType", null);
 
 						if (Validator.isNull(widthType) ||
 							Objects.equals(

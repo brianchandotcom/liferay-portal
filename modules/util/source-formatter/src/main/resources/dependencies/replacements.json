@@ -3678,6 +3678,18 @@
 	},
 	{
 		"classNames": [
+			"Address",
+			"EmailAddress",
+			"OrgLabor",
+			"Phone",
+			"Website"
+		],
+		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>get|set)Type(?<suffix>Id)?",
+		"issueKey": "LPD-36750",
+		"to": "${variableName}.${prefixMethodName}ListType${suffix}"
+	},
+	{
+		"classNames": [
 			"Contact"
 		],
 		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>getPrefix|getSuffix|setPrefix|setSuffix)Id",
@@ -3689,18 +3701,6 @@
 			"Organization"
 		],
 		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>getStatus|setStatus)Id",
-		"issueKey": "LPD-36750",
-		"to": "${variableName}.${prefixMethodName}ListTypeId"
-	},
-	{
-		"classNames": [
-			"Address",
-			"EmailAddress",
-			"OrgLabor",
-			"Phone",
-			"Website"
-		],
-		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>get|set)TypeId",
 		"issueKey": "LPD-36750",
 		"to": "${variableName}.${prefixMethodName}ListTypeId"
 	},

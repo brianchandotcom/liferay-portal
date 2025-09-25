@@ -173,6 +173,23 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		if (ArrayUtil.isNotEmpty(sorts)) {
+			Sort sort = sorts[0];
+
+			String fieldName = sort.getFieldName();
+
+			if ((!StringUtil.equalsIgnoreCase(fieldName, "name") &&
+				 !StringUtil.equalsIgnoreCase(fieldName, "usages")) ||
+				(sorts.length > 1)) {
+
+				throw new BadRequestException(
+					"Only the fields \"name\" and \"usages\" are sortable");
+			}
+		}
+		else {
+			sorts = new Sort[] {new Sort("usages", true)};
+		}
+
 		BulkActionItem[] bulkActionItems = bulkAction.getBulkActionItems();
 
 		if (GetterUtil.getBoolean(fetchChildren)) {
@@ -194,7 +211,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return _getBulkActionItemPreviewPage(
 				_getObjectEntryFolderBulkActionItems(
 					bulkActionItem.getClassPK()),
-				pagination, search, sorts);
+				pagination, search, sorts[0]);
 		}
 
 		if (ArrayUtil.isEmpty(bulkActionItems) &&
@@ -203,23 +220,14 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return Page.of(Collections.emptyList());
 		}
 
-		if (ArrayUtil.isNotEmpty(sorts)) {
-			Sort sort = sorts[0];
-
-			if (!StringUtil.equalsIgnoreCase(sort.getFieldName(), "name") ||
-				(sorts.length > 1)) {
-
-				throw new BadRequestException(
-					"Only the field \"name\" is sortable");
-			}
-		}
-
 		if (!GetterUtil.getBoolean(bulkAction.getSelectAll())) {
 			return _getBulkActionItemPreviewPage(
-				ListUtil.fromArray(bulkActionItems), pagination, search, sorts);
+				ListUtil.fromArray(bulkActionItems), pagination, search,
+				sorts[0]);
 		}
 
-		return _getBulkActionItemPreviewPage(filter, pagination, search, sorts);
+		return _getBulkActionItemPreviewPage(
+			filter, pagination, search, sorts[0]);
 	}
 
 	private BulkActionTask _addBulkActionTask(String type) throws Exception {
@@ -576,7 +584,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private Page<BulkActionItem> _getBulkActionItemPreviewPage(
-			Filter filter, Pagination pagination, String search, Sort[] sorts)
+			Filter filter, Pagination pagination, String search, Sort sort)
 		throws Exception {
 
 		if (filter == null) {
@@ -604,16 +612,15 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 				contextUser
 			).build();
 
-		if (ArrayUtil.isNotEmpty(sorts)) {
-			Sort sort = sorts[0];
-
+		if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "name")) {
 			sort.setFieldName(
 				Field.getSortableFieldName(
 					"localized_title_".concat(contextUser.getLanguageId())));
 		}
 
 		Page<SearchResult> searchPage = searchResultResource.getSearchPage(
-			null, true, null, null, search, filter, pagination, sorts);
+			null, true, null, null, search, filter, pagination,
+			new Sort[] {sort});
 
 		for (SearchResult searchResult : searchPage.getItems()) {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
@@ -622,23 +629,20 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			bulkActionItems.add(_toBulkActionItem(jsonObject.getLong("id")));
 		}
 
+		if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "usages")) {
+			bulkActionItems = _sortBulkActionItems(bulkActionItems, sort);
+		}
+
 		return Page.of(bulkActionItems, pagination, searchPage.getTotalCount());
 	}
 
 	private Page<BulkActionItem> _getBulkActionItemPreviewPage(
-			List<BulkActionItem> bulkActionItems1, Pagination pagination,
-			String search, Sort[] sorts)
-		throws Exception {
+		List<BulkActionItem> bulkActionItems1, Pagination pagination,
+		String search, Sort sort) {
 
 		List<BulkActionItem> bulkActionItems2 = new ArrayList<>();
 
 		long totalCount = bulkActionItems1.size();
-
-		if (Validator.isNull(search) && ArrayUtil.isEmpty(sorts)) {
-			bulkActionItems1 = ListUtil.subList(
-				bulkActionItems1, pagination.getStartPosition(),
-				pagination.getEndPosition());
-		}
 
 		for (BulkActionItem bulkActionItem : bulkActionItems1) {
 			bulkActionItems2.add(
@@ -655,25 +659,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			totalCount = bulkActionItems2.size();
 		}
 
-		if (ArrayUtil.isNotEmpty(sorts)) {
-			Sort sort = sorts[0];
-
-			bulkActionItems2 = ListUtil.sort(
-				bulkActionItems2,
-				(bulkActionItem1, bulkActionItem2) -> {
-					String name = bulkActionItem1.getName();
-
-					int value = name.compareTo(bulkActionItem2.getName());
-
-					if (!sort.isReverse()) {
-						return value;
-					}
-
-					return -value;
-				});
-		}
-
-		return Page.of(bulkActionItems2, pagination, totalCount);
+		return Page.of(
+			_sortBulkActionItems(bulkActionItems2, sort), pagination,
+			totalCount);
 	}
 
 	private Map<String, List<BulkActionItem>> _getBulkActionItemsMap(
@@ -991,6 +979,43 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		}
 
 		return usagesCount;
+	}
+
+	private List<BulkActionItem> _sortBulkActionItems(
+		List<BulkActionItem> bulkActionItems, Sort sort) {
+
+		return ListUtil.sort(
+			bulkActionItems,
+			(bulkActionItem1, bulkActionItem2) -> {
+				if (StringUtil.equalsIgnoreCase(sort.getFieldName(), "name")) {
+					String name = bulkActionItem1.getName();
+
+					int value = name.compareTo(bulkActionItem2.getName());
+
+					if (!sort.isReverse()) {
+						return value;
+					}
+
+					return -value;
+				}
+
+				Map<String, Object> attributes1 =
+					bulkActionItem1.getAttributes();
+
+				Long usages = GetterUtil.getLong(attributes1.get("usages"));
+
+				Map<String, Object> attributes2 =
+					bulkActionItem2.getAttributes();
+
+				int value = usages.compareTo(
+					GetterUtil.getLong(attributes2.get("usages")));
+
+				if (!sort.isReverse()) {
+					return value;
+				}
+
+				return -value;
+			});
 	}
 
 	private BulkActionItem _toBulkActionItem(long classPK) {

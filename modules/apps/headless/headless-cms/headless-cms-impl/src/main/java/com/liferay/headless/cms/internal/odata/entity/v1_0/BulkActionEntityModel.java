@@ -80,7 +80,8 @@ public class BulkActionEntityModel implements EntityModel {
 							LocaleUtil.toLanguageId(locale)));
 
 					return sortableFieldName.concat(".keyword_lowercase");
-				}));
+				}),
+			new StringEntityField("usages", locale -> "usages"));
 	}
 
 	@Override

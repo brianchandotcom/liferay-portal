@@ -15,7 +15,10 @@ import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemDetails;
+import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -23,14 +26,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -165,6 +166,65 @@ public class FragmentLinkValueUtil {
 		}
 
 		return JSONUtil.put("link", jsonObject);
+	}
+
+	private static ClassPKInfoItemIdentifier _getClassPKInfoItemIdentifier(
+		String className,
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		InfoItemDetailsProvider<Object> infoItemDetailsProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		if ((infoItemObjectProvider == null) ||
+			(infoItemDetailsProvider == null)) {
+
+			return null;
+		}
+
+		try {
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				scopeGroupId,
+				new ERCInfoItemIdentifier(
+					fragmentMappedValueItemExternalReference.
+						getExternalReferenceCode(),
+					ScopeUtil.getScopeExternalReferenceCode(
+						fragmentMappedValueItemExternalReference.getScope(),
+						scopeGroupId)));
+
+			InfoItemDetails infoItemDetails =
+				infoItemDetailsProvider.getInfoItemDetails(
+					scopeGroupId, ClassPKInfoItemIdentifier.class, infoItem);
+
+			if (infoItemDetails == null) {
+				return null;
+			}
+
+			InfoItemReference infoItemReference =
+				infoItemDetails.getInfoItemReference();
+
+			if (infoItemReference == null) {
+				return null;
+			}
+
+			return (ClassPKInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private static Long _getCompanyId(long scopeGroupId) {
@@ -338,49 +398,33 @@ public class FragmentLinkValueUtil {
 			return;
 		}
 
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+			_getClassPKInfoItemIdentifier(
+				className, fragmentMappedValueItemExternalReference,
+				infoItemServiceRegistry, scopeGroupId);
 
-		ClassedModel classedModel = null;
-
-		if (infoItemObjectProvider != null) {
-			try {
-				classedModel = (ClassedModel)infoItemObjectProvider.getInfoItem(
-					scopeGroupId,
-					new ERCInfoItemIdentifier(
-						fragmentMappedValueItemExternalReference.
-							getExternalReferenceCode(),
-						ScopeUtil.getScopeExternalReferenceCode(
-							fragmentMappedValueItemExternalReference.getScope(),
-							scopeGroupId)));
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Item external reference could not be set since no " +
-							"item could be obtained",
-						portalException);
+		jsonObject.put(
+			"className", className
+		).put(
+			"classNameId", classNameId
+		).put(
+			"classPK",
+			() -> {
+				if (classPKInfoItemIdentifier == null) {
+					return null;
 				}
 
-				throw new UnsupportedOperationException();
+				return classPKInfoItemIdentifier.getClassPK();
 			}
-		}
-
-		if (classedModel != null) {
-			jsonObject.put(
-				"className", className
-			).put(
-				"classNameId", classNameId
-			).put(
-				"classPK", classedModel.getPrimaryKeyObj()
-			).put(
-				"externalReferenceCode",
-				fragmentMappedValueItemExternalReference.
-					getExternalReferenceCode()
-			);
-		}
+		).put(
+			"externalReferenceCode",
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
+		).put(
+			"scopeExternalReferenceCode",
+			() -> ScopeUtil.getScopeExternalReferenceCode(
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId)
+		);
 	}
 
 	private static FragmentLinkValue _toFragmentLinkValue(
@@ -419,13 +463,14 @@ public class FragmentLinkValueUtil {
 				layoutJSONObject, scopeGroupId);
 		}
 
-		String itemClassPK = jsonObject.getString("classPK");
 		String itemExternalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
 		String itemClassName = _toItemClassName(jsonObject);
+		String itemScopeExternalReferenceCode = jsonObject.getString(
+			"scopeExternalReferenceCode");
 
-		if ((itemClassPK == null) || (itemClassName == null) ||
-			(itemExternalReferenceCode == null)) {
+		if ((itemClassName == null) || (itemExternalReferenceCode == null) ||
+			(itemScopeExternalReferenceCode == null)) {
 
 			return null;
 		}
@@ -445,8 +490,11 @@ public class FragmentLinkValueUtil {
 					try {
 						GroupedModel groupedModel =
 							(GroupedModel)infoItemObjectProvider.getInfoItem(
-								new ClassPKInfoItemIdentifier(
-									GetterUtil.getLong(itemClassPK)));
+								new ERCInfoItemIdentifier(
+									itemExternalReferenceCode,
+									GroupUtil.getExternalReferenceCode(
+										itemScopeExternalReferenceCode,
+										scopeGroupId)));
 
 						setScope(
 							() -> ScopeUtil.getScope(

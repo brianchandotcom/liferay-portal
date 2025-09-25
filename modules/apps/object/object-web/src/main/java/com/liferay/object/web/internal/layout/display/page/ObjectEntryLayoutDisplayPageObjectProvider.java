@@ -10,7 +10,12 @@ import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -19,6 +24,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -32,10 +40,22 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 		InfoItemFriendlyURLProvider<ObjectEntry> infoItemFriendlyURLProvider,
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
 
+		this(
+			assetHelper, infoItemFriendlyURLProvider, objectDefinition,
+			objectEntry, StringPool.BLANK);
+	}
+
+	public ObjectEntryLayoutDisplayPageObjectProvider(
+		AssetHelper assetHelper,
+		InfoItemFriendlyURLProvider<ObjectEntry> infoItemFriendlyURLProvider,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		String parentExternalReferenceCode) {
+
 		_assetHelper = assetHelper;
 		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
 		_objectDefinition = objectDefinition;
 		_objectEntry = objectEntry;
+		_parentExternalReferenceCode = parentExternalReferenceCode;
 	}
 
 	@Override
@@ -86,6 +106,55 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 	}
 
 	@Override
+	public String getParentExternalReferenceCode() {
+		return _parentExternalReferenceCode;
+	}
+
+	@Override
+	public List<LayoutDisplayPageObjectProvider<ObjectEntry>>
+		getRelatedLayoutDisplayPageObjectProviders(String contentType) {
+
+		try {
+			ObjectRelationship objectRelationship =
+				ObjectRelationshipLocalServiceUtil.getObjectRelationship(
+					_objectDefinition.getObjectDefinitionId(), contentType);
+
+			if (objectRelationship != null) {
+				List<LayoutDisplayPageObjectProvider<ObjectEntry>>
+					layoutDisplayPageObjectProviders = new ArrayList<>();
+
+				List<ObjectEntry> objectEntries =
+					ObjectEntryLocalServiceUtil.getOneToManyObjectEntries(
+						getGroupId(),
+						objectRelationship.getObjectRelationshipId(), null,
+						_objectEntry.getObjectEntryId(), true, null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+				ObjectDefinition objectDefinition =
+					ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+						objectRelationship.getObjectDefinitionId2());
+
+				for (ObjectEntry objectEntry : objectEntries) {
+					layoutDisplayPageObjectProviders.add(
+						new ObjectEntryLayoutDisplayPageObjectProvider(
+							_assetHelper, _infoItemFriendlyURLProvider,
+							objectDefinition, objectEntry,
+							_objectEntry.getExternalReferenceCode()));
+				}
+
+				return layoutDisplayPageObjectProviders;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return Collections.emptyList();
+	}
+
+	@Override
 	public String getTitle(Locale locale) {
 		if (!_objectDefinition.isDefaultStorageType()) {
 			return _objectEntry.getExternalReferenceCode();
@@ -122,5 +191,6 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 		_infoItemFriendlyURLProvider;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntry _objectEntry;
+	private String _parentExternalReferenceCode;
 
 }

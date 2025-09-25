@@ -239,7 +239,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_randomPageElement(
 				new ContainerPageElementDefinition() {
 					{
-						setContentVisibility(StringPool.BLANK);
+						setContentVisibility(ContentVisibility.AUTO);
 						setHtmlProperties(new HtmlProperties());
 						setIndexed(Boolean.FALSE);
 						setType(Type.CONTAINER);
@@ -350,7 +350,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _randomPageElement(
 			new ContainerPageElementDefinition() {
 				{
-					setContentVisibility(StringPool.BLANK);
+					setContentVisibility(ContentVisibility.AUTO);
 					setHtmlProperties(new HtmlProperties());
 					setIndexed(Boolean.FALSE);
 					setType(Type.CONTAINER);

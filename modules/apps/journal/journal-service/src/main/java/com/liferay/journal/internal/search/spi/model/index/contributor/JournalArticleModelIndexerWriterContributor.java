@@ -197,7 +197,10 @@ public class JournalArticleModelIndexerWriterContributor
 			_fetchLatestIndexableArticleVersion(
 				journalArticle.getResourcePrimKey());
 
-		if (latestIndexableArticle.getVersion() < journalArticle.getVersion()) {
+		if ((latestIndexableArticle != null) &&
+			(latestIndexableArticle.getVersion() <
+				journalArticle.getVersion())) {
+
 			_reindexOtherArticleVersions(journalArticle);
 		}
 	}
@@ -214,8 +217,9 @@ public class JournalArticleModelIndexerWriterContributor
 			_fetchLatestIndexableArticleVersion(
 				journalArticle.getResourcePrimKey());
 
-		if (latestIndexableArticle.getVersion() ==
-				journalArticle.getVersion()) {
+		if ((latestIndexableArticle != null) &&
+			(latestIndexableArticle.getVersion() <=
+				journalArticle.getVersion())) {
 
 			_reindexOtherArticleVersions(journalArticle);
 		}

@@ -5,11 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
@@ -21,7 +17,6 @@ import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -90,15 +85,16 @@ public class ContainerPageElementDefinitionDTOConverter
 					() -> toCustomCSS(
 						containerStyledLayoutStructureItem.getCustomCSS()));
 				setFragmentLink(
-					() -> _toFragmentLink(
-						containerStyledLayoutStructureItem.
-							getLinkJSONObject()));
+					() -> FragmentLinkValueUtil.toFragmentLink(
+						containerStyledLayoutStructureItem.getLinkJSONObject(),
+						scopeGroupId));
 				setFragmentStyle(
 					() -> toFragmentStyle(
 						containerStyledLayoutStructureItem.
-							getStylesJSONObject()));
+							getStylesJSONObject(),
+						scopeGroupId));
 				setFragmentViewports(
-					() -> toFragmentViewPorts(
+					() -> toFragmentViewports(
 						containerStyledLayoutStructureItem.
 							getItemConfigJSONObject()));
 				setHtmlProperties(
@@ -108,68 +104,6 @@ public class ContainerPageElementDefinitionDTOConverter
 				setLayout(() -> _toLayout(containerStyledLayoutStructureItem));
 				setName(containerStyledLayoutStructureItem::getName);
 				setType(PageElementDefinition.Type.CONTAINER);
-			}
-		};
-	}
-
-	private FragmentLink _toFragmentLink(JSONObject jsonObject) {
-		if (jsonObject == null) {
-			return null;
-		}
-
-		boolean saveFragmentMappedValue =
-			FragmentLinkValueUtil.isSaveFragmentMappedValue(jsonObject);
-
-		if (jsonObject.isNull("href") && !saveFragmentMappedValue) {
-			return null;
-		}
-
-		return new FragmentLink() {
-			{
-				setValue(
-					() -> _toFragmentLinkValue(
-						jsonObject, saveFragmentMappedValue));
-			}
-		};
-	}
-
-	private FragmentLinkValue _toFragmentLinkValue(
-		JSONObject jsonObject, boolean saveFragmentMappedValue) {
-
-		return new FragmentLinkValue() {
-			{
-				setHref(
-					() -> {
-						if (saveFragmentMappedValue) {
-							return toFragmentMappedValue(jsonObject);
-						}
-
-						return new FragmentInlineValue() {
-							{
-								setValue_i18n(
-									() -> LocalizedValueUtil.toLocalizedValues(
-										jsonObject.getJSONObject("href")));
-							}
-						};
-					});
-				setTarget(
-					() -> {
-						String target = jsonObject.getString("target");
-
-						if (Validator.isNull(target)) {
-							return null;
-						}
-
-						if (StringUtil.equalsIgnoreCase(target, "_parent") ||
-							StringUtil.equalsIgnoreCase(target, "_top")) {
-
-							target = "_self";
-						}
-
-						return Target.create(
-							StringUtil.upperCaseFirstLetter(
-								target.substring(1)));
-					});
 			}
 		};
 	}

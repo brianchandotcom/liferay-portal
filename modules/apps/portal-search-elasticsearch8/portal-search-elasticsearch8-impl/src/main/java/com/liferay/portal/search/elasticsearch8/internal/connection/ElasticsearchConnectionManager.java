@@ -24,7 +24,6 @@ import com.liferay.portal.search.ccr.CrossClusterReplicationConfigurationHelper;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationObserver;
 import com.liferay.portal.search.elasticsearch8.internal.configuration.ElasticsearchConfigurationWrapper;
 import com.liferay.portal.search.elasticsearch8.internal.connection.constants.ConnectionConstants;
-import com.liferay.portal.search.elasticsearch8.internal.helper.SearchLogHelperUtil;
 
 import java.lang.reflect.Field;
 
@@ -354,9 +353,6 @@ public class ElasticsearchConnectionManager
 	}
 
 	protected void applyConfigurations() {
-		SearchLogHelperUtil.setRESTClientLoggerLevel(
-			elasticsearchConfigurationWrapper.restClientLoggerLevel());
-
 		if (elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			if (Validator.isBlank(
 					elasticsearchConfigurationWrapper.

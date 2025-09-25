@@ -6,7 +6,6 @@
 package com.liferay.portal.search.elasticsearch8.internal.helper;
 
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.search.elasticsearch8.configuration.RESTClientLoggerLevel;
 
 import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -19,8 +18,5 @@ public interface SearchLogHelper {
 	public void logActionResponse(Log log, ActionResponse actionResponse);
 
 	public void logActionResponse(Log log, BulkResponse bulkResponse);
-
-	public void setRESTClientLoggerLevel(
-		RESTClientLoggerLevel restClientLoggerLevel);
 
 }

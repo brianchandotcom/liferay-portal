@@ -213,12 +213,6 @@ public interface ElasticsearchConfiguration {
 	public String remoteClusterConnectionId();
 
 	@Meta.AD(
-		deflt = "ERROR", description = "rest-client-logger-level-help",
-		name = "rest-client-logger-level", required = false
-	)
-	public RESTClientLoggerLevel restClientLoggerLevel();
-
-	@Meta.AD(
 		deflt = "false", description = "sidecar-debug-help",
 		name = "sidecar-debug", required = false
 	)

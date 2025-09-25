@@ -121,9 +121,9 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 					WebKeys.THEME_DISPLAY);
 
 			NavigationMenuTag navigationMenuTag = _getNavigationMenuTag(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				configurationJSONObject,
-				fragmentEntryLink.getEditableValuesJSONObject());
+				themeDisplay.getCompanyId(), configurationJSONObject,
+				fragmentEntryLink.getEditableValuesJSONObject(),
+				themeDisplay.getScopeGroupId());
 
 			navigationMenuTag.doTag(httpServletRequest, httpServletResponse);
 
@@ -135,8 +135,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 	}
 
 	private NavigationMenuTag _getNavigationMenuTag(
-			long companyId, long groupId, JSONObject configurationJSONObject,
-			JSONObject editableValuesJSONObject)
+			long companyId, JSONObject configurationJSONObject,
+			JSONObject editableValuesJSONObject, long groupId)
 		throws PortalException {
 
 		NavigationMenuTag navigationMenuTag = new NavigationMenuTag();

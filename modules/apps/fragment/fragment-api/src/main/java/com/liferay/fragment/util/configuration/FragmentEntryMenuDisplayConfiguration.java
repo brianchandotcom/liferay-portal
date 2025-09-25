@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.util.configuration;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -33,9 +32,9 @@ public class FragmentEntryMenuDisplayConfiguration {
 				source = ContextualMenu.parse(
 					jsonObject.getString("contextualMenu"));
 			}
-			else if (jsonObject.has("siteNavigationMenuId") ||
-					 jsonObject.has(
-						 "siteNavigationMenuExternalReferenceCode")) {
+			else if (jsonObject.has(
+						"siteNavigationMenuExternalReferenceCode") ||
+					 jsonObject.has("siteNavigationMenuId")) {
 
 				source = new SiteNavigationMenuSource(
 					jsonObject.getLong("parentSiteNavigationMenuItemId"),
@@ -124,7 +123,7 @@ public class FragmentEntryMenuDisplayConfiguration {
 				getSiteNavigationMenuExternalReferenceCode();
 		}
 
-		return StringPool.BLANK;
+		return null;
 	}
 
 	public long getSiteNavigationMenuId() {

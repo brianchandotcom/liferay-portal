@@ -100,7 +100,8 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				_mockPortletDataContext(null, null, null));
 
 		Assert.assertEquals(
-			"nestedField1,nestedField2", parameters.get("batchNestedFields"));
+			"customFields.attributeType,nestedField1,nestedField2",
+			parameters.get("batchNestedFields"));
 
 		parameters = BatchEnginePortletDataHandlerUtil.buildExportParameters(
 			List.of("nestedField1", "nestedField2"), null,
@@ -112,7 +113,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				null));
 
 		Assert.assertEquals(
-			"permissions,nestedField1,nestedField2",
+			"customFields.attributeType,permissions,nestedField1,nestedField2",
 			parameters.get("batchNestedFields"));
 	}
 

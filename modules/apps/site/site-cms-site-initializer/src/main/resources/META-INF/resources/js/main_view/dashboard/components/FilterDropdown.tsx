@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 export type Item = {
 	description?: string;
@@ -59,6 +59,8 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 }) => {
 	const [value, setValue] = useState('');
 
+	const triggerRef = useRef<HTMLButtonElement | null>(null);
+
 	const triggerLabelClass = classNames(
 		'filter-dropdown__trigger-label',
 		'ml-2',
@@ -87,6 +89,9 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 
 							setValue('');
 						}
+					}}
+					ref={(node: HTMLButtonElement) => {
+						triggerRef.current = node;
 					}}
 					size="sm"
 				>
@@ -163,8 +168,9 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 						key={item.value}
 						onClick={() => {
 							onSelectItem(item);
-
 							setValue('');
+
+							triggerRef?.current?.focus();
 						}}
 						symbolLeft={
 							item.value === selectedItem.value ? 'check' : ''

@@ -8,9 +8,16 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 
 import java.util.Map;
 
@@ -19,8 +26,9 @@ import java.util.Map;
  */
 public class ViewDashboardDisplayContext {
 
-	public ViewDashboardDisplayContext(ThemeDisplay themeDisplay) {
+	public ViewDashboardDisplayContext(ThemeDisplay themeDisplay, GroupLocalService groupLocalService) {
 		_themeDisplay = themeDisplay;
+		_groupLocalService = groupLocalService;
 	}
 
 	public Map<String, Object> getConstants() {
@@ -30,6 +38,23 @@ public class ViewDashboardDisplayContext {
 		).put(
 			"ercFileTypes",
 			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
+		).put(
+			"cmsGroupId",
+			() -> {
+				try {
+					Group group = _groupLocalService.getGroup(
+						_themeDisplay.getCompanyId(), GroupConstants.CMS);
+
+					return GetterUtil.getLong(group.getGroupId());
+				}
+				catch (PortalException portalException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(portalException);
+					}
+				}
+
+				return null;
+			}
 		).build();
 	}
 
@@ -44,7 +69,11 @@ public class ViewDashboardDisplayContext {
 				_themeDisplay)
 		).build();
 	}
+	
+	private static final Log _log = LogFactoryUtil.getLog(
+			ViewDashboardDisplayContext.class);
 
 	private final ThemeDisplay _themeDisplay;
+	private final GroupLocalService _groupLocalService;
 
 }

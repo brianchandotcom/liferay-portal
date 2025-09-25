@@ -1202,8 +1202,6 @@ public class ObjectDefinitionResourceTest
 
 		postObjectDefinition = _addObjectDefinition(postObjectDefinition);
 
-		Group group3 = GroupTestUtil.addGroup();
-
 		String content = workflowDefinition1.getContentAsXML();
 
 		WorkflowDefinition workflowDefinition2 =
@@ -1215,11 +1213,40 @@ public class ObjectDefinitionResourceTest
 		WorkflowDefinitionLink workflowDefinitionLink2 =
 			new WorkflowDefinitionLink() {
 				{
-					groupExternalReferenceCode =
-						group3.getExternalReferenceCode();
+					groupExternalReferenceCode = RandomTestUtil.randomString();
 					workflowDefinitionName = workflowDefinition2.getName();
 				}
 			};
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink1, workflowDefinitionLink2
+		};
+
+		postObjectDefinition.setWorkflowDefinitionLinks(
+			workflowDefinitionLinks);
+
+		try {
+			objectDefinitionResource.putObjectDefinition(
+				postObjectDefinition.getId(), postObjectDefinition);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				"An object definition can only be linked to a workflow " +
+					"definition with an existing group",
+				problem.getTitle());
+			Assert.assertEquals(
+				"ObjectDefinitionScopeException", problem.getType());
+		}
+
+		Group group3 = GroupTestUtil.addGroup();
+
+		workflowDefinitionLink2.setGroupExternalReferenceCode(
+			group3.getExternalReferenceCode());
 
 		Group group4 = GroupTestUtil.addGroup();
 
@@ -2260,8 +2287,6 @@ public class ObjectDefinitionResourceTest
 
 		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
 
-		Group group1 = GroupTestUtil.addGroup();
-
 		String content = workflowDefinition1.getContentAsXML();
 
 		WorkflowDefinition workflowDefinition2 =
@@ -2273,11 +2298,38 @@ public class ObjectDefinitionResourceTest
 		WorkflowDefinitionLink workflowDefinitionLink2 =
 			new WorkflowDefinitionLink() {
 				{
-					groupExternalReferenceCode =
-						group1.getExternalReferenceCode();
+					groupExternalReferenceCode = RandomTestUtil.randomString();
 					workflowDefinitionName = workflowDefinition2.getName();
 				}
 			};
+
+		workflowDefinitionLinks = new WorkflowDefinitionLink[] {
+			workflowDefinitionLink1, workflowDefinitionLink2
+		};
+
+		objectDefinition.setWorkflowDefinitionLinks(workflowDefinitionLinks);
+
+		try {
+			_addObjectDefinition(objectDefinition);
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertEquals(
+				"An object definition can only be linked to a workflow " +
+					"definition with an existing group",
+				problem.getTitle());
+			Assert.assertEquals(
+				"ObjectDefinitionScopeException", problem.getType());
+		}
+
+		Group group1 = GroupTestUtil.addGroup();
+
+		workflowDefinitionLink2.setGroupExternalReferenceCode(
+			group1.getExternalReferenceCode());
 
 		Group group2 = GroupTestUtil.addGroup();
 

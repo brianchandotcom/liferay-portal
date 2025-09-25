@@ -68,7 +68,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -133,7 +132,6 @@ exports[`OptionFieldKeyValue has a helptext 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -259,7 +257,6 @@ exports[`OptionFieldKeyValue has a label 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -326,7 +323,6 @@ exports[`OptionFieldKeyValue has a label 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -444,7 +440,6 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
               title="Option 1"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -500,7 +495,6 @@ exports[`OptionFieldKeyValue has a predefined Value 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -612,7 +606,6 @@ exports[`OptionFieldKeyValue has a value 1`] = `
               title="value"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -667,7 +660,6 @@ exports[`OptionFieldKeyValue has a value 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -778,7 +770,6 @@ exports[`OptionFieldKeyValue has an id 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -833,7 +824,6 @@ exports[`OptionFieldKeyValue has an id 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -944,7 +934,6 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 disabled=""
                 id="keyValueDisplayNameOptionFieldKeyValue"
@@ -1000,7 +989,6 @@ exports[`OptionFieldKeyValue is not editable 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -1111,7 +1099,6 @@ exports[`OptionFieldKeyValue is not required 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 aria-required="false"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
@@ -1167,7 +1154,6 @@ exports[`OptionFieldKeyValue is not required 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -1284,7 +1270,6 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -1351,7 +1336,6 @@ exports[`OptionFieldKeyValue renders Label if showLabel is true 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"
@@ -1468,7 +1452,6 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueDisplayNameOptionFieldKeyValue"
                 name="keyValueDisplayNameOptionFieldKeyValue"
@@ -1523,7 +1506,6 @@ exports[`OptionFieldKeyValue renders component with a key 1`] = `
               data-tooltip-align="top"
             >
               <input
-                aria-invalid="true"
                 class="form-control ddm-field-text"
                 id="keyValueReferenceundefined"
                 name="keyValueReferenceundefined"

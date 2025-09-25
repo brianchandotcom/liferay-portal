@@ -1,6 +1,7 @@
 @component-name = "portal-db-infrastructure"
 definition {
 
+	property browser.chrome.version = "139.0";
 	property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";
 	property portal.release = "true";
 	property portal.upstream = "true";

@@ -2,6 +2,7 @@
 definition {
 
 	property app.server.types = "jboss,tomcat,weblogic,wildfly";
+	property browser.chrome.version = "139.0";
 	property ci.retries.disabled = "true";
 	property database.auto.upgrade.enabled = "true";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";

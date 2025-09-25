@@ -7,17 +7,16 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Map;
 
@@ -26,19 +25,15 @@ import java.util.Map;
  */
 public class ViewDashboardDisplayContext {
 
-	public ViewDashboardDisplayContext(ThemeDisplay themeDisplay, GroupLocalService groupLocalService) {
+	public ViewDashboardDisplayContext(
+		ThemeDisplay themeDisplay, GroupLocalService groupLocalService) {
+
 		_themeDisplay = themeDisplay;
 		_groupLocalService = groupLocalService;
 	}
 
 	public Map<String, Object> getConstants() {
 		return HashMapBuilder.<String, Object>put(
-			"ercContentStructures",
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
-		).put(
-			"ercFileTypes",
-			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
-		).put(
 			"cmsGroupId",
 			() -> {
 				try {
@@ -55,6 +50,12 @@ public class ViewDashboardDisplayContext {
 
 				return null;
 			}
+		).put(
+			"ercContentStructures",
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES
+		).put(
+			"ercFileTypes",
+			ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 		).build();
 	}
 
@@ -69,11 +70,11 @@ public class ViewDashboardDisplayContext {
 				_themeDisplay)
 		).build();
 	}
-	
-	private static final Log _log = LogFactoryUtil.getLog(
-			ViewDashboardDisplayContext.class);
 
-	private final ThemeDisplay _themeDisplay;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewDashboardDisplayContext.class);
+
 	private final GroupLocalService _groupLocalService;
+	private final ThemeDisplay _themeDisplay;
 
 }

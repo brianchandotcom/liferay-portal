@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.site.cms.site.initializer.configuration.BulkActionTaskConfiguration;
 import com.liferay.site.cms.site.initializer.constants.BulkActionExecutionStatusConstants;
@@ -181,8 +182,8 @@ public class UpdateBulkActionTaskSchedulerJobConfiguration
 
 					values.put(
 						"executionStatus",
-						batchEngineImportTask.getExecuteStatus(
-						).toLowerCase());
+						StringUtil.toLowerCase(
+							batchEngineImportTask.getExecuteStatus()));
 
 					long classPK = GetterUtil.getLong(values.get("classPK"));
 

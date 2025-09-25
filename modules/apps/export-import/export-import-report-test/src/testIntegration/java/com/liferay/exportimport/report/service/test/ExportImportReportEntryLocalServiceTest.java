@@ -9,13 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
-import com.liferay.exportimport.report.service.persistence.ExportImportReportEntryPersistence;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.TransactionalTestRule;
 
 import java.util.List;
 
@@ -33,16 +29,14 @@ public class ExportImportReportEntryLocalServiceTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			new TransactionalTestRule(
-				Propagation.REQUIRED,
-				"com.liferay.exportimport.report.service"));
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAddEmptyExportImportReportEntry() throws Exception {
-		int count = _exportImportReportEntryPersistence.countAll();
+		int count =
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount();
 
 		long groupId = RandomTestUtil.randomLong();
 		long companyId = RandomTestUtil.randomLong();
@@ -85,12 +79,16 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportReportEntry.getStatus());
 
 		Assert.assertEquals(
-			count + 1, _exportImportReportEntryPersistence.countAll());
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
 	}
 
 	@Test
 	public void testAddErrorExportImportReportEntry() throws Exception {
-		int count = _exportImportReportEntryPersistence.countAll();
+		int count =
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount();
 
 		long groupId = RandomTestUtil.randomLong();
 		long companyId = RandomTestUtil.randomLong();
@@ -139,7 +137,9 @@ public class ExportImportReportEntryLocalServiceTest {
 			exportImportReportEntry.getStatus());
 
 		Assert.assertEquals(
-			count + 1, _exportImportReportEntryPersistence.countAll());
+			count + 1,
+			_exportImportReportEntryLocalService.
+				getExportImportReportEntriesCount());
 	}
 
 	@Test
@@ -188,9 +188,5 @@ public class ExportImportReportEntryLocalServiceTest {
 	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
-
-	@Inject
-	private ExportImportReportEntryPersistence
-		_exportImportReportEntryPersistence;
 
 }

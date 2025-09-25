@@ -17,6 +17,7 @@ import com.liferay.info.exception.InfoFormInvalidGroupException;
 import com.liferay.info.exception.InfoFormInvalidLayoutModeException;
 import com.liferay.info.exception.InfoFormPrincipalException;
 import com.liferay.info.exception.InfoFormValidationException;
+import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
@@ -203,35 +204,38 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					throw new InfoFormException();
 				}
 
-				infoItem =
-					infoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
-						infoItemObjectProvider.getInfoItem(infoItemIdentifier),
-						InfoItemFieldValues.builder(
-						).infoFieldValues(
-							new ArrayList<>(infoFieldValues.values())
-						).infoItemReference(
-							new InfoItemReference(className, 0)
-						).build(),
-						status);
+				try {
+					infoItem =
+						infoItemFieldValuesUpdater.
+							updateFromInfoItemFieldValues(
+								infoItemObjectProvider.getInfoItem(
+									infoItemIdentifier),
+								InfoItemFieldValues.builder(
+								).infoFieldValues(
+									new ArrayList<>(infoFieldValues.values())
+								).infoItemReference(
+									new InfoItemReference(className, 0)
+								).build(),
+								status);
+				}
+				catch (NoSuchInfoItemException noSuchInfoItemException) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(noSuchInfoItemException);
+					}
+
+					if (!(infoItemIdentifier instanceof
+							ERCInfoItemIdentifier)) {
+
+						throw noSuchInfoItemException;
+					}
+
+					infoItem = _createFromInfoItemFieldValues(
+						className, groupId, infoFieldValues, status);
+				}
 			}
 			else {
-				InfoItemCreator<Object> infoItemCreator =
-					_infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemCreator.class, className);
-
-				if (infoItemCreator == null) {
-					throw new InfoFormException();
-				}
-
-				infoItem = infoItemCreator.createFromInfoItemFieldValues(
-					groupId,
-					InfoItemFieldValues.builder(
-					).infoFieldValues(
-						new ArrayList<>(infoFieldValues.values())
-					).infoItemReference(
-						new InfoItemReference(className, 0)
-					).build(),
-					status);
+				infoItem = _createFromInfoItemFieldValues(
+					className, groupId, infoFieldValues, status);
 			}
 
 			String displayPageURL = _getDisplayPageURL(
@@ -411,6 +415,30 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	protected void activate() {
 		_infoRequestFieldValuesProviderHelper =
 			new InfoRequestFieldValuesProviderHelper(_infoItemServiceRegistry);
+	}
+
+	private Object _createFromInfoItemFieldValues(
+			String className, long groupId,
+			Map<String, InfoFieldValue<Object>> infoFieldValues, int status)
+		throws InfoFormException {
+
+		InfoItemCreator<Object> infoItemCreator =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemCreator.class, className);
+
+		if (infoItemCreator == null) {
+			throw new InfoFormException();
+		}
+
+		return infoItemCreator.createFromInfoItemFieldValues(
+			groupId,
+			InfoItemFieldValues.builder(
+			).infoFieldValues(
+				new ArrayList<>(infoFieldValues.values())
+			).infoItemReference(
+				new InfoItemReference(className, 0)
+			).build(),
+			status);
 	}
 
 	private FragmentEntryLink _getCaptchaFragmentEntryLink(

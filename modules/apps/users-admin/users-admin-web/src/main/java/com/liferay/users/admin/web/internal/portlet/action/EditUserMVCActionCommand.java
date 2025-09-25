@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
+import com.liferay.portal.kernel.exception.UserCommentsException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserFieldException;
 import com.liferay.portal.kernel.exception.UserIdException;
@@ -287,6 +288,7 @@ public class EditUserMVCActionCommand
 					 exception instanceof MembershipPolicyException ||
 					 exception instanceof NoSuchListTypeException ||
 					 exception instanceof RequiredUserException ||
+					 exception instanceof UserCommentsException ||
 					 exception instanceof UserEmailAddressException ||
 					 exception instanceof UserFieldException ||
 					 exception instanceof UserIdException ||

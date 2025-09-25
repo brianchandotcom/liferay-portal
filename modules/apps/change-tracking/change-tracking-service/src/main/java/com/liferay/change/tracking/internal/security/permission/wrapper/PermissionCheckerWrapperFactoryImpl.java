@@ -22,7 +22,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "service.ranking:Integer=100",
 	service = PermissionCheckerWrapperFactory.class
 )
-public class PermissionCheckerFactoryImpl
+public class PermissionCheckerWrapperFactoryImpl
 	implements PermissionCheckerWrapperFactory {
 
 	@Override

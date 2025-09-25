@@ -166,8 +166,9 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 				properties);
 
 			_oAuthClientEntryLocalService.deleteOAuthClientEntry(
-				companyId, authServerWellKnownURI,
-				_getPropertyAsString("openIdConnectClientId", properties));
+				companyId,
+				_getPropertyAsString("openIdConnectClientId", properties),
+				authServerWellKnownURI);
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

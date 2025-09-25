@@ -23,7 +23,10 @@ import com.liferay.layout.converter.WidthTypeConverter;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
@@ -66,6 +69,9 @@ public class ContainerLayoutStructureItemImporter
 				ContentVisibilityConverter.convertToInternalValue(
 					contentVisibility));
 		}
+		else {
+			containerStyledLayoutStructureItem.setContentVisibility(null);
+		}
 
 		containerStyledLayoutStructureItem.setCssClasses(
 			_getCssClasses(containerPageElementDefinition.getCssClasses()));
@@ -80,9 +86,12 @@ public class ContainerLayoutStructureItemImporter
 				HtmlTagConverter.convertToInternalValue(
 					htmlProperties.getHtmlTagAsString()));
 		}
+		else {
+			containerStyledLayoutStructureItem.setHtmlTag(null);
+		}
 
 		containerStyledLayoutStructureItem.setIndexed(
-			containerPageElementDefinition.getIndexed());
+			GetterUtil.getBoolean(containerPageElementDefinition.getIndexed()));
 
 		Layout layout = containerPageElementDefinition.getLayout();
 
@@ -123,6 +132,13 @@ public class ContainerLayoutStructureItemImporter
 					WidthTypeConverter.convertToInternalValue(widthType));
 			}
 		}
+		else {
+			containerStyledLayoutStructureItem.setAlign(null);
+			containerStyledLayoutStructureItem.setContentDisplay(null);
+			containerStyledLayoutStructureItem.setFlexWrap(null);
+			containerStyledLayoutStructureItem.setJustify(null);
+			containerStyledLayoutStructureItem.setWidthType(null);
+		}
 
 		containerStyledLayoutStructureItem.setName(
 			containerPageElementDefinition.getName());
@@ -144,6 +160,10 @@ public class ContainerLayoutStructureItemImporter
 		if (fragmentLinkJSONObject != null) {
 			containerStyledLayoutStructureItem.updateItemConfig(
 				fragmentLinkJSONObject);
+		}
+		else {
+			containerStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put("link", JSONFactoryUtil.createJSONObject()));
 		}
 
 		return containerStyledLayoutStructureItem;

@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkMappedValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
@@ -49,11 +50,14 @@ public class FragmentLinkValueUtil {
 			return false;
 		}
 
-		if ((jsonObject.has("classNameId") &&
-			 jsonObject.has("externalReferenceCode") &&
-			 jsonObject.has("fieldId")) ||
-			jsonObject.has("layout")) {
+		if (jsonObject.has("classNameId") &&
+			jsonObject.has("externalReferenceCode") &&
+			jsonObject.has("fieldId")) {
 
+			return true;
+		}
+
+		if (jsonObject.has("layout") || jsonObject.has("mappedField")) {
 			return true;
 		}
 
@@ -112,10 +116,23 @@ public class FragmentLinkValueUtil {
 						{
 							setFieldKey(() -> _getFieldKey(jsonObject));
 							setItemReference(
-								() ->
-									_toFragmentMappedValueItemExternalReference(
+								() -> {
+									if (jsonObject.has("mappedField")) {
+										return new FragmentMappedValueItemContextReference() {
+											{
+												setContextSource(
+													() ->
+														ContextSource.
+															DISPLAY_PAGE_ITEM);
+												setType(Type.CONTEXT_REFERENCE);
+											}
+										};
+									}
+
+									return _toFragmentMappedValueItemExternalReference(
 										infoItemServiceRegistry, jsonObject,
-										scopeGroupId));
+										scopeGroupId);
+								});
 						}
 					});
 				setType(Type.FRAGMENT_MAPPED_VALUE);
@@ -250,6 +267,12 @@ public class FragmentLinkValueUtil {
 			return fieldId;
 		}
 
+		String mappedField = jsonObject.getString("mappedField");
+
+		if (Validator.isNotNull(mappedField)) {
+			return mappedField;
+		}
+
 		return null;
 	}
 
@@ -267,11 +290,24 @@ public class FragmentLinkValueUtil {
 			mapping.getItemReference();
 
 		if ((fragmentMappedValueItemReference == null) ||
-			(fragmentMappedValueItemReference.getType() !=
-				FragmentMappedValueItemReference.Type.
-					ITEM_EXTERNAL_REFERENCE)) {
+			(fragmentMappedValueItemReference.getType() == null)) {
 
 			return null;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		if (Objects.equals(
+				fragmentMappedValueItemReference.getType(),
+				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE)) {
+
+			String fieldKey = mapping.getFieldKey();
+
+			if (Validator.isNotNull(fieldKey)) {
+				jsonObject.put("mappedField", fieldKey);
+			}
+
+			return jsonObject;
 		}
 
 		FragmentMappedValueItemExternalReference
@@ -288,8 +324,6 @@ public class FragmentLinkValueUtil {
 		if ((className == null) || (externalReferenceCode == null)) {
 			return null;
 		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		String fieldKey = mapping.getFieldKey();
 

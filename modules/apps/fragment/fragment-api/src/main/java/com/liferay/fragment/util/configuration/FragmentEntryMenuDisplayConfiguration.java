@@ -13,6 +13,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuMode;
 
 import java.util.Objects;
@@ -126,15 +129,35 @@ public class FragmentEntryMenuDisplayConfiguration {
 		return null;
 	}
 
-	public long getSiteNavigationMenuId() {
-		if (_source instanceof SiteNavigationMenuSource) {
-			SiteNavigationMenuSource siteNavigationMenuSource =
-				(SiteNavigationMenuSource)_source;
-
-			return siteNavigationMenuSource.getSiteNavigationMenuId();
+	public long getSiteNavigationMenuId(long groupId) {
+		if (!(_source instanceof SiteNavigationMenuSource)) {
+			return 0;
 		}
 
-		return 0;
+		SiteNavigationMenuSource siteNavigationMenuSource =
+			(SiteNavigationMenuSource)_source;
+
+		long siteNavigationMenuId =
+			siteNavigationMenuSource.getSiteNavigationMenuId();
+
+		if (siteNavigationMenuId <= 0) {
+			String siteNavigationMenuExternalReferenceCode =
+				getSiteNavigationMenuExternalReferenceCode();
+
+			if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+				SiteNavigationMenu siteNavigationMenu =
+					SiteNavigationMenuLocalServiceUtil.
+						fetchSiteNavigationMenuByExternalReferenceCode(
+							siteNavigationMenuExternalReferenceCode, groupId);
+
+				if (siteNavigationMenu != null) {
+					siteNavigationMenuId =
+						siteNavigationMenu.getSiteNavigationMenuId();
+				}
+			}
+		}
+
+		return siteNavigationMenuId;
 	}
 
 	private JSONObject _createJSONObject(String value) {

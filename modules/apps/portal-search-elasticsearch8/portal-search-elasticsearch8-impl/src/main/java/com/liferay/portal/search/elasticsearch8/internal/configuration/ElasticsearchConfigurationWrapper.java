@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch8.configuration.RESTClientLoggerLevel;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -184,10 +183,6 @@ public class ElasticsearchConfigurationWrapper
 
 	public String remoteClusterConnectionId() {
 		return _elasticsearchConfiguration.remoteClusterConnectionId();
-	}
-
-	public RESTClientLoggerLevel restClientLoggerLevel() {
-		return _elasticsearchConfiguration.restClientLoggerLevel();
 	}
 
 	public boolean sidecarDebug() {

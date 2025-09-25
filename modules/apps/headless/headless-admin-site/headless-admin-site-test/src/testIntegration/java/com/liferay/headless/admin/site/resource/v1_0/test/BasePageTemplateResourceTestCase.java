@@ -270,6 +270,14 @@ public abstract class BasePageTemplateResourceTestCase {
 
 		assertEquals(postPageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);
+
+		Assert.assertNull(getPageTemplate.getPermissions());
+
+		getPageTemplate = permissionsPageTemplateResource.getSitePageTemplate(
+			testGetSitePageTemplate_getSiteExternalReferenceCode(),
+			postPageTemplate.getExternalReferenceCode());
+
+		Assert.assertNotNull(getPageTemplate.getPermissions());
 	}
 
 	protected PageTemplate testGetSitePageTemplate_addPageTemplate()
@@ -1078,12 +1086,34 @@ public abstract class BasePageTemplateResourceTestCase {
 		assertEquals(randomPageTemplate, putPageTemplate);
 		assertValid(putPageTemplate);
 
+		Assert.assertNull(putPageTemplate.getPermissions());
+
 		PageTemplate getPageTemplate = pageTemplateResource.getSitePageTemplate(
 			testPutSitePageTemplate_getSiteExternalReferenceCode(),
 			putPageTemplate.getExternalReferenceCode());
 
 		assertEquals(randomPageTemplate, getPageTemplate);
 		assertValid(getPageTemplate);
+
+		PageTemplate randomPermissionsPageTemplate =
+			randomPermissionsPageTemplate();
+
+		putPageTemplate = pageTemplateResource.putSitePageTemplate(
+			testPutSitePageTemplate_getSiteExternalReferenceCode(),
+			postPageTemplate.getExternalReferenceCode(),
+			randomPermissionsPageTemplate);
+
+		assertEquals(randomPermissionsPageTemplate, putPageTemplate);
+		assertValid(putPageTemplate);
+
+		Assert.assertNull(putPageTemplate.getPermissions());
+
+		putPageTemplate = permissionsPageTemplateResource.putSitePageTemplate(
+			testPutSitePageTemplate_getSiteExternalReferenceCode(),
+			postPageTemplate.getExternalReferenceCode(),
+			randomPermissionsPageTemplate);
+
+		Assert.assertNotNull(putPageTemplate.getPermissions());
 	}
 
 	protected PageTemplate testPutSitePageTemplate_addPageTemplate()

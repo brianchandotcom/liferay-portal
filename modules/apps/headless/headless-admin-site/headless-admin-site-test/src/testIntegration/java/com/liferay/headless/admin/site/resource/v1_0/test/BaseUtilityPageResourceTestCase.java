@@ -262,6 +262,14 @@ public abstract class BaseUtilityPageResourceTestCase {
 
 		assertEquals(postUtilityPage, getUtilityPage);
 		assertValid(getUtilityPage);
+
+		Assert.assertNull(getUtilityPage.getPermissions());
+
+		getUtilityPage = permissionsUtilityPageResource.getSiteUtilityPage(
+			testGetSiteUtilityPage_getSiteExternalReferenceCode(),
+			postUtilityPage.getExternalReferenceCode());
+
+		Assert.assertNotNull(getUtilityPage.getPermissions());
 	}
 
 	protected UtilityPage testGetSiteUtilityPage_addUtilityPage()
@@ -824,12 +832,34 @@ public abstract class BaseUtilityPageResourceTestCase {
 		assertEquals(randomUtilityPage, putUtilityPage);
 		assertValid(putUtilityPage);
 
+		Assert.assertNull(putUtilityPage.getPermissions());
+
 		UtilityPage getUtilityPage = utilityPageResource.getSiteUtilityPage(
 			testPutSiteUtilityPage_getSiteExternalReferenceCode(),
 			putUtilityPage.getExternalReferenceCode());
 
 		assertEquals(randomUtilityPage, getUtilityPage);
 		assertValid(getUtilityPage);
+
+		UtilityPage randomPermissionsUtilityPage =
+			randomPermissionsUtilityPage();
+
+		putUtilityPage = utilityPageResource.putSiteUtilityPage(
+			testPutSiteUtilityPage_getSiteExternalReferenceCode(),
+			postUtilityPage.getExternalReferenceCode(),
+			randomPermissionsUtilityPage);
+
+		assertEquals(randomPermissionsUtilityPage, putUtilityPage);
+		assertValid(putUtilityPage);
+
+		Assert.assertNull(putUtilityPage.getPermissions());
+
+		putUtilityPage = permissionsUtilityPageResource.putSiteUtilityPage(
+			testPutSiteUtilityPage_getSiteExternalReferenceCode(),
+			postUtilityPage.getExternalReferenceCode(),
+			randomPermissionsUtilityPage);
+
+		Assert.assertNotNull(putUtilityPage.getPermissions());
 	}
 
 	protected UtilityPage testPutSiteUtilityPage_addUtilityPage()

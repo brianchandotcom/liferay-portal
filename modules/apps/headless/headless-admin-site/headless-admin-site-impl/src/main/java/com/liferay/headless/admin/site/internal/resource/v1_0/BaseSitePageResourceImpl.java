@@ -125,6 +125,11 @@ public abstract class BaseSitePageResourceImpl
 		throws Exception {
 	}
 
+	protected abstract SitePage doGetSiteSitePage(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -166,7 +171,7 @@ public abstract class BaseSitePageResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public SitePage getSiteSitePage(
+	public final SitePage getSiteSitePage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -177,7 +182,26 @@ public abstract class BaseSitePageResourceImpl
 			String sitePageExternalReferenceCode)
 		throws Exception {
 
-		return new SitePage();
+		SitePage getSitePage = doGetSiteSitePage(
+			siteExternalReferenceCode, sitePageExternalReferenceCode);
+
+		getSitePage.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSiteSitePagePermissionsPage(
+							siteExternalReferenceCode,
+							getSitePage.getExternalReferenceCode(), null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getSitePage;
 	}
 
 	/**
@@ -745,6 +769,11 @@ public abstract class BaseSitePageResourceImpl
 		).build();
 	}
 
+	protected abstract SitePage doPutSiteSitePage(
+			String siteExternalReferenceCode,
+			String sitePageExternalReferenceCode, SitePage sitePage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -787,7 +816,7 @@ public abstract class BaseSitePageResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public SitePage putSiteSitePage(
+	public final SitePage putSiteSitePage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -799,7 +828,29 @@ public abstract class BaseSitePageResourceImpl
 			SitePage sitePage)
 		throws Exception {
 
-		return new SitePage();
+		Permission[] permissions = sitePage.getPermissions();
+
+		SitePage putSitePage = doPutSiteSitePage(
+			siteExternalReferenceCode, sitePageExternalReferenceCode, sitePage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage = putSiteSitePagePermissionsPage(
+				siteExternalReferenceCode,
+				putSitePage.getExternalReferenceCode(), permissions);
+
+			putSitePage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putSitePage;
 	}
 
 	/**

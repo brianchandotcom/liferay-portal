@@ -130,6 +130,12 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 		throws Exception {
 	}
 
+	protected abstract DisplayPageTemplateFolder
+			doGetSiteDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -175,7 +181,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public DisplayPageTemplateFolder getSiteDisplayPageTemplateFolder(
+	public final DisplayPageTemplateFolder getSiteDisplayPageTemplateFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -188,7 +194,30 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 			String displayPageTemplateFolderExternalReferenceCode)
 		throws Exception {
 
-		return new DisplayPageTemplateFolder();
+		DisplayPageTemplateFolder getDisplayPageTemplateFolder =
+			doGetSiteDisplayPageTemplateFolder(
+				siteExternalReferenceCode,
+				displayPageTemplateFolderExternalReferenceCode);
+
+		getDisplayPageTemplateFolder.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSiteDisplayPageTemplateFolderPermissionsPage(
+							siteExternalReferenceCode,
+							getDisplayPageTemplateFolder.
+								getExternalReferenceCode(),
+							null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getDisplayPageTemplateFolder;
 	}
 
 	/**
@@ -756,6 +785,13 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 		).build();
 	}
 
+	protected abstract DisplayPageTemplateFolder
+			doPutSiteDisplayPageTemplateFolder(
+				String siteExternalReferenceCode,
+				String displayPageTemplateFolderExternalReferenceCode,
+				DisplayPageTemplateFolder displayPageTemplateFolder)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -802,7 +838,7 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public DisplayPageTemplateFolder putSiteDisplayPageTemplateFolder(
+	public final DisplayPageTemplateFolder putSiteDisplayPageTemplateFolder(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -816,7 +852,34 @@ public abstract class BaseDisplayPageTemplateFolderResourceImpl
 			DisplayPageTemplateFolder displayPageTemplateFolder)
 		throws Exception {
 
-		return new DisplayPageTemplateFolder();
+		Permission[] permissions = displayPageTemplateFolder.getPermissions();
+
+		DisplayPageTemplateFolder putDisplayPageTemplateFolder =
+			doPutSiteDisplayPageTemplateFolder(
+				siteExternalReferenceCode,
+				displayPageTemplateFolderExternalReferenceCode,
+				displayPageTemplateFolder);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSiteDisplayPageTemplateFolderPermissionsPage(
+					siteExternalReferenceCode,
+					putDisplayPageTemplateFolder.getExternalReferenceCode(),
+					permissions);
+
+			putDisplayPageTemplateFolder.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putDisplayPageTemplateFolder;
 	}
 
 	/**

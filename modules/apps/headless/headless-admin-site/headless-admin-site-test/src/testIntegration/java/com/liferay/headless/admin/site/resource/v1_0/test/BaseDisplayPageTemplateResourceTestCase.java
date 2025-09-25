@@ -274,6 +274,15 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 		assertEquals(postDisplayPageTemplate, getDisplayPageTemplate);
 		assertValid(getDisplayPageTemplate);
+
+		Assert.assertNull(getDisplayPageTemplate.getPermissions());
+
+		getDisplayPageTemplate =
+			permissionsDisplayPageTemplateResource.getSiteDisplayPageTemplate(
+				testGetSiteDisplayPageTemplate_getSiteExternalReferenceCode(),
+				postDisplayPageTemplate.getExternalReferenceCode());
+
+		Assert.assertNotNull(getDisplayPageTemplate.getPermissions());
 	}
 
 	protected DisplayPageTemplate
@@ -1070,6 +1079,8 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 		assertEquals(randomDisplayPageTemplate, putDisplayPageTemplate);
 		assertValid(putDisplayPageTemplate);
 
+		Assert.assertNull(putDisplayPageTemplate.getPermissions());
+
 		DisplayPageTemplate getDisplayPageTemplate =
 			displayPageTemplateResource.getSiteDisplayPageTemplate(
 				testPutSiteDisplayPageTemplate_getSiteExternalReferenceCode(),
@@ -1077,6 +1088,29 @@ public abstract class BaseDisplayPageTemplateResourceTestCase {
 
 		assertEquals(randomDisplayPageTemplate, getDisplayPageTemplate);
 		assertValid(getDisplayPageTemplate);
+
+		DisplayPageTemplate randomPermissionsDisplayPageTemplate =
+			randomPermissionsDisplayPageTemplate();
+
+		putDisplayPageTemplate =
+			displayPageTemplateResource.putSiteDisplayPageTemplate(
+				testPutSiteDisplayPageTemplate_getSiteExternalReferenceCode(),
+				postDisplayPageTemplate.getExternalReferenceCode(),
+				randomPermissionsDisplayPageTemplate);
+
+		assertEquals(
+			randomPermissionsDisplayPageTemplate, putDisplayPageTemplate);
+		assertValid(putDisplayPageTemplate);
+
+		Assert.assertNull(putDisplayPageTemplate.getPermissions());
+
+		putDisplayPageTemplate =
+			permissionsDisplayPageTemplateResource.putSiteDisplayPageTemplate(
+				testPutSiteDisplayPageTemplate_getSiteExternalReferenceCode(),
+				postDisplayPageTemplate.getExternalReferenceCode(),
+				randomPermissionsDisplayPageTemplate);
+
+		Assert.assertNotNull(putDisplayPageTemplate.getPermissions());
 	}
 
 	protected DisplayPageTemplate

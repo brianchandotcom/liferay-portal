@@ -125,6 +125,11 @@ public abstract class BaseUtilityPageResourceImpl
 		throws Exception {
 	}
 
+	protected abstract UtilityPage doGetSiteUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -166,7 +171,7 @@ public abstract class BaseUtilityPageResourceImpl
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public UtilityPage getSiteUtilityPage(
+	public final UtilityPage getSiteUtilityPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -177,7 +182,26 @@ public abstract class BaseUtilityPageResourceImpl
 			String utilityPageExternalReferenceCode)
 		throws Exception {
 
-		return new UtilityPage();
+		UtilityPage getUtilityPage = doGetSiteUtilityPage(
+			siteExternalReferenceCode, utilityPageExternalReferenceCode);
+
+		getUtilityPage.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionsPage =
+						getSiteUtilityPagePermissionsPage(
+							siteExternalReferenceCode,
+							getUtilityPage.getExternalReferenceCode(), null);
+
+					Collection<Permission> permissions =
+						permissionsPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getUtilityPage;
 	}
 
 	/**
@@ -742,6 +766,11 @@ public abstract class BaseUtilityPageResourceImpl
 		).build();
 	}
 
+	protected abstract UtilityPage doPutSiteUtilityPage(
+			String siteExternalReferenceCode,
+			String utilityPageExternalReferenceCode, UtilityPage utilityPage)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -784,7 +813,7 @@ public abstract class BaseUtilityPageResourceImpl
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public UtilityPage putSiteUtilityPage(
+	public final UtilityPage putSiteUtilityPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
 			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
@@ -796,7 +825,31 @@ public abstract class BaseUtilityPageResourceImpl
 			UtilityPage utilityPage)
 		throws Exception {
 
-		return new UtilityPage();
+		Permission[] permissions = utilityPage.getPermissions();
+
+		UtilityPage putUtilityPage = doPutSiteUtilityPage(
+			siteExternalReferenceCode, utilityPageExternalReferenceCode,
+			utilityPage);
+
+		if (permissions != null) {
+			Page<Permission> permissionsPage =
+				putSiteUtilityPagePermissionsPage(
+					siteExternalReferenceCode,
+					putUtilityPage.getExternalReferenceCode(), permissions);
+
+			putUtilityPage.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionsPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putUtilityPage;
 	}
 
 	/**

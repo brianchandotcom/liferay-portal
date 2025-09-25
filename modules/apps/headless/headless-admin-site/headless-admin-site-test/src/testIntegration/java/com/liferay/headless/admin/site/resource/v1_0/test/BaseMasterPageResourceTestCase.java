@@ -264,6 +264,14 @@ public abstract class BaseMasterPageResourceTestCase {
 
 		assertEquals(postMasterPage, getMasterPage);
 		assertValid(getMasterPage);
+
+		Assert.assertNull(getMasterPage.getPermissions());
+
+		getMasterPage = permissionsMasterPageResource.getSiteMasterPage(
+			testGetSiteMasterPage_getSiteExternalReferenceCode(),
+			postMasterPage.getExternalReferenceCode());
+
+		Assert.assertNotNull(getMasterPage.getPermissions());
 	}
 
 	protected MasterPage testGetSiteMasterPage_addMasterPage()
@@ -807,12 +815,33 @@ public abstract class BaseMasterPageResourceTestCase {
 		assertEquals(randomMasterPage, putMasterPage);
 		assertValid(putMasterPage);
 
+		Assert.assertNull(putMasterPage.getPermissions());
+
 		MasterPage getMasterPage = masterPageResource.getSiteMasterPage(
 			testPutSiteMasterPage_getSiteExternalReferenceCode(),
 			putMasterPage.getExternalReferenceCode());
 
 		assertEquals(randomMasterPage, getMasterPage);
 		assertValid(getMasterPage);
+
+		MasterPage randomPermissionsMasterPage = randomPermissionsMasterPage();
+
+		putMasterPage = masterPageResource.putSiteMasterPage(
+			testPutSiteMasterPage_getSiteExternalReferenceCode(),
+			postMasterPage.getExternalReferenceCode(),
+			randomPermissionsMasterPage);
+
+		assertEquals(randomPermissionsMasterPage, putMasterPage);
+		assertValid(putMasterPage);
+
+		Assert.assertNull(putMasterPage.getPermissions());
+
+		putMasterPage = permissionsMasterPageResource.putSiteMasterPage(
+			testPutSiteMasterPage_getSiteExternalReferenceCode(),
+			postMasterPage.getExternalReferenceCode(),
+			randomPermissionsMasterPage);
+
+		Assert.assertNotNull(putMasterPage.getPermissions());
 	}
 
 	protected MasterPage testPutSiteMasterPage_addMasterPage()

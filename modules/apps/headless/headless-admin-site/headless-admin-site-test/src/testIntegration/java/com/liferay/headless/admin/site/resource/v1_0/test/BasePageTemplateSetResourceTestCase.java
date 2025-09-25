@@ -270,6 +270,15 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		assertEquals(postPageTemplateSet, getPageTemplateSet);
 		assertValid(getPageTemplateSet);
+
+		Assert.assertNull(getPageTemplateSet.getPermissions());
+
+		getPageTemplateSet =
+			permissionsPageTemplateSetResource.getSitePageTemplateSet(
+				testGetSitePageTemplateSet_getSiteExternalReferenceCode(),
+				postPageTemplateSet.getExternalReferenceCode());
+
+		Assert.assertNotNull(getPageTemplateSet.getPermissions());
 	}
 
 	protected PageTemplateSet testGetSitePageTemplateSet_addPageTemplateSet()
@@ -881,6 +890,8 @@ public abstract class BasePageTemplateSetResourceTestCase {
 		assertEquals(randomPageTemplateSet, putPageTemplateSet);
 		assertValid(putPageTemplateSet);
 
+		Assert.assertNull(putPageTemplateSet.getPermissions());
+
 		PageTemplateSet getPageTemplateSet =
 			pageTemplateSetResource.getSitePageTemplateSet(
 				testPutSitePageTemplateSet_getSiteExternalReferenceCode(),
@@ -888,6 +899,27 @@ public abstract class BasePageTemplateSetResourceTestCase {
 
 		assertEquals(randomPageTemplateSet, getPageTemplateSet);
 		assertValid(getPageTemplateSet);
+
+		PageTemplateSet randomPermissionsPageTemplateSet =
+			randomPermissionsPageTemplateSet();
+
+		putPageTemplateSet = pageTemplateSetResource.putSitePageTemplateSet(
+			testPutSitePageTemplateSet_getSiteExternalReferenceCode(),
+			postPageTemplateSet.getExternalReferenceCode(),
+			randomPermissionsPageTemplateSet);
+
+		assertEquals(randomPermissionsPageTemplateSet, putPageTemplateSet);
+		assertValid(putPageTemplateSet);
+
+		Assert.assertNull(putPageTemplateSet.getPermissions());
+
+		putPageTemplateSet =
+			permissionsPageTemplateSetResource.putSitePageTemplateSet(
+				testPutSitePageTemplateSet_getSiteExternalReferenceCode(),
+				postPageTemplateSet.getExternalReferenceCode(),
+				randomPermissionsPageTemplateSet);
+
+		Assert.assertNotNull(putPageTemplateSet.getPermissions());
 	}
 
 	protected PageTemplateSet testPutSitePageTemplateSet_addPageTemplateSet()

@@ -12,6 +12,9 @@ import com.liferay.commerce.constants.CommerceFragmentRendererKeys;
  */
 public class CommerceFragmentFDSNames {
 
+	public static final String ACCOUNT_ENTRIES =
+		CommerceFragmentRendererKeys.ACCOUNTS_DATA_SET + "-accountEntries";
+
 	public static final String PENDING_ACCOUNT_ORDERS =
 		CommerceFragmentRendererKeys.ACCOUNT_ORDERS_DATA_SET +
 			"-pendingAccountOrders";

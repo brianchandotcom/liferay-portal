@@ -9,6 +9,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
 const test = mergeTests(
@@ -81,6 +82,40 @@ test(
 		expect(page.getByRole('link', {name: spaceName})).toBeVisible();
 		expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
 		expect(page.getByText('No Content Yet')).toBeVisible();
+	}
+);
+
+test(
+	'Can add and delete a user group as a member of the space',
+	{tag: '@LPD-61617'},
+	async ({apiHelpers, page, spaceSummaryPage}) => {
+		const spaceName = 'Default';
+
+		await spaceSummaryPage.goto(spaceName);
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await spaceSummaryPage.addUserOrUserGroup(userGroup.name, 'groups');
+
+		await waitForAlert(
+			page,
+			`Success:Group ${userGroup.name} successfully added to space.`
+		);
+
+		await spaceSummaryPage.userGroupsTab.click();
+
+		expect(page.getByText(userGroup.name, {exact: true})).toBeVisible();
+
+		await spaceSummaryPage.removeUserOrUserGroup(userGroup.name, 'groups');
+
+		await waitForAlert(
+			page,
+			`Success:Group ${userGroup.name} successfully removed from space.`
+		);
+
+		await spaceSummaryPage.userGroupsTab.click();
+
+		expect(page.getByText(userGroup.name, {exact: true})).not.toBeVisible();
 	}
 );
 

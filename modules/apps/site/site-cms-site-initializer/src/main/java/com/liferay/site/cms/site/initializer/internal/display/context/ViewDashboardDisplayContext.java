@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -26,10 +25,10 @@ import java.util.Map;
 public class ViewDashboardDisplayContext {
 
 	public ViewDashboardDisplayContext(
-		ThemeDisplay themeDisplay, GroupLocalService groupLocalService) {
+		GroupLocalService groupLocalService, ThemeDisplay themeDisplay) {
 
-		_themeDisplay = themeDisplay;
 		_groupLocalService = groupLocalService;
+		_themeDisplay = themeDisplay;
 	}
 
 	public Map<String, Object> getConstants() {
@@ -40,11 +39,11 @@ public class ViewDashboardDisplayContext {
 					Group group = _groupLocalService.getGroup(
 						_themeDisplay.getCompanyId(), GroupConstants.CMS);
 
-					return GetterUtil.getLong(group.getGroupId());
+					return group.getGroupId();
 				}
 				catch (PortalException portalException) {
 					if (_log.isDebugEnabled()) {
-						_log.debug(portalException);
+						_log.error(portalException);
 					}
 				}
 

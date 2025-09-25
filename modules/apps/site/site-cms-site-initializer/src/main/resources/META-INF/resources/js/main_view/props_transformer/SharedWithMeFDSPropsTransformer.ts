@@ -134,11 +134,16 @@ export default function SharedWithMeFDSPropsTransformer({
 			) {
 				event?.preventDefault();
 
-				const currentItemPos = items.findIndex(
+				const filteredItems = items.filter(
+					(item: any) =>
+						item?.className !== OBJECT_ENTRY_FOLDER_CLASS_NAME
+				);
+
+				const currentItemPos = filteredItems.findIndex(
 					(item: any) => item.id === itemData.id
 				);
 
-				const transformedItems = items.map((item: any) => ({
+				const transformedItems = filteredItems.map((item: any) => ({
 					...item,
 					embedded: {
 						file: item.file ?? undefined,
@@ -157,6 +162,7 @@ export default function SharedWithMeFDSPropsTransformer({
 							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,
 							items: transformedItems,
+							showInfoPanel: false,
 						}),
 					size: 'full-screen',
 				});

@@ -20,6 +20,7 @@ interface AssetNavigationModalContentProps {
 	contentViewURL: string;
 	currentIndex: number;
 	items: ISearchAssetObjectEntry[];
+	showInfoPanel?: boolean;
 }
 
 const KEY_CODE = {
@@ -70,6 +71,7 @@ export default function AssetNavigationModalContent({
 	contentViewURL,
 	currentIndex = 0,
 	items,
+	showInfoPanel = true,
 }: AssetNavigationModalContentProps) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
 	const [openSidePanel, setOpenSidePanel] = useState(false);
@@ -155,6 +157,7 @@ export default function AssetNavigationModalContent({
 					handleClickComments={handleClickComments}
 					handleClickInfo={handleClickInfo}
 					item={currentItem}
+					showInfoPanel={showInfoPanel}
 				/>
 			</ClayModal.Header>
 
@@ -178,12 +181,12 @@ export default function AssetNavigationModalContent({
 								additionalProps={additionalProps as any}
 								item={currentItem}
 							/>
-						) : (
+						) : showInfoPanel ? (
 							<AssetTypeInfoPanel
 								additionalProps={additionalProps as any}
 								items={[currentItem]}
 							/>
-						)}
+						) : null}
 					</SidePanel>
 				</div>
 			</ClayModal.Body>

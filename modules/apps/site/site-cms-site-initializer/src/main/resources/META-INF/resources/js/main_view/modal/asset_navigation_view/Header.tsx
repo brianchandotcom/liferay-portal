@@ -14,10 +14,12 @@ export default function Header({
 	handleClickComments,
 	handleClickInfo,
 	item,
+	showInfoPanel,
 }: {
 	handleClickComments: () => void;
 	handleClickInfo: () => void;
 	item: ISearchAssetObjectEntry;
+	showInfoPanel: boolean;
 }) {
 	const headerName = item.embedded?.title || item.embedded.file?.name;
 
@@ -38,13 +40,15 @@ export default function Header({
 					symbol="message"
 				/>
 
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('show-details')}
-					borderless
-					displayType="secondary"
-					onClick={handleClickInfo}
-					symbol="info-circle-open"
-				/>
+				{showInfoPanel && (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('show-details')}
+						borderless
+						displayType="secondary"
+						onClick={handleClickInfo}
+						symbol="info-circle-open"
+					/>
+				)}
 
 				{file && (
 					<div className="autofit-col pr-3">

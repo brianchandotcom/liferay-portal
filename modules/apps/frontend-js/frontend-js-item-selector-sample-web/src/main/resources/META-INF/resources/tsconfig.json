@@ -1,5 +1,5 @@
 {
-	"@generated": "5d0081df3bea9ece4f3c1a525abd7e7fe608fb0c",
+	"@generated": "fa317ee45cd7dba24316e97ee408d833ec086a06",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -14,7 +14,7 @@
 			"@liferay/frontend-data-set-web": [
 				"../../../../../../../frontend-data-set/frontend-data-set-web/src/main/resources/META-INF/resources/index.ts"
 			],
-			"frontend-js-item-selector-web": [
+			"@liferay/frontend-js-item-selector-web": [
 				"../../../../../../frontend-js-item-selector-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [

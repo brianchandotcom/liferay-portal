@@ -7,7 +7,7 @@
 		"@clayui/modal": "3.145.0",
 		"@clayui/sticker": "3.147.0",
 		"@liferay/frontend-data-set-web": "*",
-		"frontend-js-item-selector-web": "*",
+		"@liferay/frontend-js-item-selector-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0",
 		"uuid": "9.0.0"

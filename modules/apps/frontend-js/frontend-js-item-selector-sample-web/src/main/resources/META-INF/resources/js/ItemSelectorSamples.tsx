@@ -14,7 +14,7 @@ import {
 	ItemSelector,
 	ItemSelectorModal,
 	openItemSelectorModal,
-} from 'frontend-js-item-selector-web';
+} from '@liferay/frontend-js-item-selector-web';
 import React, {useState} from 'react';
 
 import CMSFilesItemSelectorModal from './CMSFilesItemSelectorModal';

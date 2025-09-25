@@ -21,7 +21,7 @@
 		"uuid": "9.0.0"
 	},
 	"main": "index.ts",
-	"name": "frontend-js-item-selector-web",
+	"name": "@liferay/frontend-js-item-selector-web",
 	"scripts": {
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",

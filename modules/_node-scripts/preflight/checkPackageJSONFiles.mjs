@@ -274,7 +274,6 @@ const ALLOWED_NAMED_SCOPE_EXCEPTIONS = [
 	'frontend-js-aui-web',
 	'frontend-js-clay-sample-web',
 	'frontend-js-components-web',
-	'frontend-js-item-selector-web',
 	'frontend-js-jquery-web',
 	'frontend-js-loader-modules-extender',
 	'frontend-js-lodash-web',

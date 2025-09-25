@@ -5,9 +5,9 @@
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
-import {ItemSelector} from 'frontend-js-item-selector-web';
 import React from 'react';
 
 import SpaceSticker from '../../common/components/SpaceSticker';

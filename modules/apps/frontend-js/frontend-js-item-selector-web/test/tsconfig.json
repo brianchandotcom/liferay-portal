@@ -1,5 +1,5 @@
 {
-	"@generated": "9c1b098799c8aa9f215c67fedf96fab490f33fd9",
+	"@generated": "54c42a9f3e7bfd00433ae955aca619485886c1b9",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -29,7 +29,7 @@
 		"sourceMap": false,
 		"strict": true,
 		"target": "esnext",
-		"tsBuildInfoFile": "../../../../.tsc/buildinfo/frontend-js-item-selector-web-test.tsbuildinfo",
+		"tsBuildInfoFile": "../../../../.tsc/buildinfo/@liferay/frontend-js-item-selector-web-test.tsbuildinfo",
 		"typeRoots": [
 			"../../../../node_modules/@types"
 		]

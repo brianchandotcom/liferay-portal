@@ -12,6 +12,7 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../liferay.config';
+import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
 import {openProductMenu} from '../../../utils/productMenu';
 import {pagesPagesTest} from './fixtures/pagesPagesTest';
@@ -142,27 +143,35 @@ test('Empty pages show correct label in UI and correct alert in view mode', asyn
 
 	// Assert that the edit button in the dummy page's alert banner goes to the select layout template page
 
-	await page.getByTestId('editEmptyLayoutButton').click();
-
-	await expect(page.locator('//h1[@data-qa-id="headerTitle"]')).toHaveText(
-		'Select Template'
-	);
-	await expect(page.getByText('Page Template Sets')).toBeVisible();
-	await expect(page.locator('.card-page-item').first()).toBeVisible();
-
-	// Assert that templates that should be hidden when editing an empty page are not present
-
-	const basicTemplatesNavItem = page.getByRole('menuitem', {
-		name: 'Basic Templates',
+	await clickAndExpectToBeVisible({
+		target: page.locator('.control-menu').getByText('Select Template'),
+		trigger: page.locator('.alert').getByText('Edit Page'),
 	});
 
-	if ((await basicTemplatesNavItem.getAttribute('aria-current')) === null) {
-		await basicTemplatesNavItem.click();
-	}
+	// Click first in Global templates and then come back to Basic templates
+
+	await clickAndExpectToBeVisible({
+		target: page.locator('.sheet').getByText('Global Templates'),
+		timeout: 3000,
+		trigger: page.getByRole('menuitem', {
+			name: 'Global Templates',
+		}),
+	});
+
+	await clickAndExpectToBeVisible({
+		target: page.locator('.sheet').getByText('Basic Templates'),
+		timeout: 3000,
+		trigger: page.getByRole('menuitem', {
+			name: 'Basic Templates',
+		}),
+	});
+
+	// Assert that templates that should be hidden when editing an empty page are not present
 
 	await expect(
 		page.locator('.card-page-item', {hasText: 'Embedded'})
 	).toBeHidden();
+
 	await expect(
 		page.locator('.card-page-item', {hasText: 'Link to URL'})
 	).toBeHidden();

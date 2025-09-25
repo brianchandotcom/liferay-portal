@@ -121,33 +121,59 @@ const Card = forwardRef<HTMLDivElement, any>(
 			});
 		};
 
-		const props = {
-			actions: formattedActions?.map((action: IItemsActions) => ({
-				...action,
-				href: isLink(action.target, null)
-					? formatActionURL(action.href, item, action.target)
-					: null,
-				onClick: (event: Event) => {
-					handleActionClick({
-						action,
-						event,
-						executeAsyncItemAction,
-						highlightItems,
-						infoPanelOpen,
-						itemData: item,
-						itemId: selectedItemKey,
-						items,
-						loadData,
-						onActionDropdownItemClick,
-						onInfoPanelToggleButtonClick,
-						onItemSelectionChange,
-						openModal,
-						openSidePanel,
-						toggleItemInlineEdit,
+		const getDropdownActions = (actions: IItemsActions[]): Array<any> => {
+			const processedActions: any[] = [];
+
+			actions.forEach((action, index) => {
+				if (action.type === 'group') {
+					const {items: nestedItems, ...otherProps} = action;
+
+					if (nestedItems?.length) {
+						if (action.separator && index !== 0) {
+							processedActions.push({type: 'divider'});
+						}
+
+						processedActions.push({
+							...otherProps,
+							items: getDropdownActions(nestedItems),
+						});
+					}
+				}
+				else {
+					processedActions.push({
+						...action,
+						href: isLink(action.target, null)
+							? formatActionURL(action.href, item, action.target)
+							: null,
+						onClick: (event: Event) => {
+							handleActionClick({
+								action,
+								event,
+								executeAsyncItemAction,
+								highlightItems,
+								infoPanelOpen,
+								itemData: item,
+								itemId: selectedItemKey,
+								items,
+								loadData,
+								onActionDropdownItemClick,
+								onInfoPanelToggleButtonClick,
+								onItemSelectionChange,
+								openModal,
+								openSidePanel,
+								toggleItemInlineEdit,
+							});
+						},
+						symbolLeft: action.icon,
 					});
-				},
-				symbolLeft: action.icon,
-			})),
+				}
+			});
+
+			return processedActions;
+		};
+
+		const props = {
+			actions: formattedActions && getDropdownActions(formattedActions),
 			description: getLocalizedValue(item, schema.description)?.value,
 			href: (schema.link && item[schema.link]) || null,
 			imgProps:

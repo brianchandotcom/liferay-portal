@@ -4301,6 +4301,58 @@ public class DefaultObjectEntryManagerImplTest
 					dtoConverterContext, _objectDefinition4, objectEntryId, 1));
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testGetApprovedObjectEntries() throws Exception {
+		_assertApprovedObjectEntries();
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1, Collections.emptyMap());
+
+		_assertApprovedObjectEntries(objectEntry1);
+
+		ObjectEntry objectEntry2 = _addObjectEntry(
+			_objectDefinition1, Collections.emptyMap());
+
+		_assertApprovedObjectEntries(objectEntry1, objectEntry2);
+
+		_defaultObjectEntryManager.expireObjectEntry(
+			_createDTOConverterContext(), objectEntry1.getId());
+
+		_assertApprovedObjectEntries(objectEntry2);
+
+		_defaultObjectEntryManager.expireObjectEntry(
+			_createDTOConverterContext(), objectEntry2.getId());
+
+		_assertApprovedObjectEntries();
+
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry3 = _updateObjectEntryVersion(
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
+			2);
+
+		_assertApprovedObjectEntries(objectEntry3);
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			_createDTOConverterContext(), _objectDefinition1,
+			objectEntry3.getId(), 2);
+
+		_assertApprovedObjectEntries(
+			_getLatestApprovedObjectEntry(objectEntry3.getId()));
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			_createDTOConverterContext(), _objectDefinition1,
+			objectEntry3.getId(), 1);
+
+		_assertApprovedObjectEntries();
+	}
+
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		testGetObjectEntries(Collections.emptyMap());
@@ -9112,6 +9164,19 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntryActions.containsKey(action2)));
 	}
 
+	private void _assertApprovedObjectEntries(
+			ObjectEntry... expectedObjectEntries)
+		throws Exception {
+
+		assertEquals(
+			_defaultObjectEntryManager.getApprovedObjectEntries(
+				companyId, _objectDefinition1, null, null, dtoConverterContext,
+				null, null, null, null),
+			Page.of(
+				ListUtil.fromArray(expectedObjectEntries), null,
+				expectedObjectEntries.length));
+	}
+
 	private void _assertCountAggregationObjectFieldValue(
 			int expectedValue, ObjectEntry objectEntry)
 		throws Exception {
@@ -9580,6 +9645,19 @@ public class DefaultObjectEntryManagerImplTest
 			"attachmentObjectFieldName");
 
 		return fileEntry.getId();
+	}
+
+	private ObjectEntry _getLatestApprovedObjectEntry(long headObjectEntryId)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
+				headObjectEntryId);
+
+		return _defaultObjectEntryManager.getApprovedObjectEntry(
+			companyId, dtoConverterContext,
+			serviceBuilderObjectEntry.getExternalReferenceCode(),
+			_objectDefinition1, null);
 	}
 
 	private String _getListEntryKey(ObjectEntry objectEntry) {

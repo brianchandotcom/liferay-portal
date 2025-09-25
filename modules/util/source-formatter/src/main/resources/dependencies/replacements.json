@@ -4005,62 +4005,6 @@
 	},
 	{
 		"classNames": [
-			"CommercePriceEntryLocalService",
-			"CommercePriceEntryLocalServiceUtil",
-			"CommercePriceEntryService",
-			"CommercePriceEntryServiceUtil"
-		],
-		"from": "fetchCommercePriceEntry(long paramName, long paramName, boolean paramName)",
-		"issueKey": "LPD-41285",
-		"newImports": [
-			"com.liferay.petra.string.StringPool"
-		],
-		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK, param#2#)"
-	},
-	{
-		"classNames": [
-			"CommercePriceEntryLocalService",
-			"CommercePriceEntryLocalServiceUtil",
-			"CommercePriceEntryService",
-			"CommercePriceEntryServiceUtil"
-		],
-		"from": "fetchCommercePriceEntry(long paramName, String paramName)",
-		"issueKey": "LPD-41285",
-		"newImports": [
-			"com.liferay.petra.string.StringPool"
-		],
-		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK)"
-	},
-	{
-		"classNames": [
-			"CommercePriceEntryLocalService",
-			"CommercePriceEntryLocalServiceUtil",
-			"CommercePriceEntryService",
-			"CommercePriceEntryServiceUtil"
-		],
-		"from": "fetchCommercePriceEntry(long paramName, String paramName, boolean paramName)",
-		"issueKey": "LPD-41285",
-		"newImports": [
-			"com.liferay.petra.string.StringPool"
-		],
-		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK, param#2#)"
-	},
-	{
-		"classNames": [
-			"CommercePriceEntryLocalService",
-			"CommercePriceEntryLocalServiceUtil",
-			"CommercePriceEntryService",
-			"CommercePriceEntryServiceUtil"
-		],
-		"from": "fetchCommercePriceEntry(long paramName, String paramName, int paramName)",
-		"issueKey": "LPD-41285",
-		"newImports": [
-			"com.liferay.petra.string.StringPool"
-		],
-		"to": "fetchCommercePriceEntry(param#0#, param#1#, param#2#, StringPool.BLANK)"
-	},
-	{
-		"classNames": [
 			"CommercePriceListService",
 			"CommercePriceListServiceUtil"
 		],
@@ -4942,6 +4886,62 @@
 		"from": "PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION",
 		"issueKey": "LPD-61573",
 		"to": "\"xml\""
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, long paramName, boolean paramName)",
+		"issueKey": "LPD-66666",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK, param#2#)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName)",
+		"issueKey": "LPD-66667",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName, boolean paramName)",
+		"issueKey": "LPD-66668",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, StringPool.BLANK, param#2#)"
+	},
+	{
+		"classNames": [
+			"CommercePriceEntryLocalService",
+			"CommercePriceEntryLocalServiceUtil",
+			"CommercePriceEntryService",
+			"CommercePriceEntryServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, String paramName, int paramName)",
+		"issueKey": "LPD-66669",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#0#, param#1#, param#2#, StringPool.BLANK)"
 	},
 	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",

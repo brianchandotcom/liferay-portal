@@ -395,6 +395,18 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 	}
 
 	@Test
+	public void testSendNotificationRecipientTypeTermDynamicUserSingle()
+		throws Exception {
+
+		_testSendNotificationRecipientTypeTerm(
+			Arrays.asList(
+				NotificationRecipientSettingUtil.
+					createNotificationRecipientSetting(
+						"term",
+						getTermName(true, "singleRecipientTextObjectField"))));
+	}
+
+	@Test
 	public void testSendNotificationRecipientTypeTermParentAuthorTerm()
 		throws Exception {
 

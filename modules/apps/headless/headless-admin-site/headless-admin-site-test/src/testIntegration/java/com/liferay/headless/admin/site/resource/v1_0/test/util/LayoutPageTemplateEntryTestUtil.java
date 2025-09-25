@@ -125,12 +125,12 @@ public class LayoutPageTemplateEntryTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Group group = GroupLocalServiceUtil.getGroup(
-			serviceContext.getScopeGroupId());
-
 		long layoutPageTemplateCollectionId =
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT;
+
+		Group group = GroupLocalServiceUtil.getGroup(
+			serviceContext.getScopeGroupId());
 
 		if (!group.isCompany()) {
 			LayoutPageTemplateCollection layoutPageTemplateCollection =

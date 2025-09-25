@@ -67,9 +67,9 @@ public class ServiceContextUtil {
 				widgetPageSettings.getWidgetPageTemplateReference();
 
 			if (itemExternalReference != null) {
-				Scope scope = itemExternalReference.getScope();
-
 				long scopeGroupId = groupId;
+
+				Scope scope = itemExternalReference.getScope();
 
 				if (scope != null) {
 					Group group =

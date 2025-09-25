@@ -161,9 +161,10 @@ definition {
 			fieldName = "displayStyleGroupId",
 			fieldValue = ${siteId});
 
-		FormFields.editTextMultiline(
-			fieldName = "displayStyle",
-			fieldValue = "ddmTemplate_${templateKey}");
+		Type(
+			key_fieldName = "displayStyle",
+			locator1 = "FormFields#TEXT_MULTILINE_FIELD_EXACT_MATCH",
+			value1 = "ddmTemplate_${templateKey}");
 
 		PortletEntry.save();
 

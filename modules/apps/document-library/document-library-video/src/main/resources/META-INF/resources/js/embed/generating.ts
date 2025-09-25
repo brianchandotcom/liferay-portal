@@ -7,27 +7,23 @@ import {fetch} from 'frontend-js-web';
 
 const INTERVAL = 3000;
 
-function scheduleEmbedVideoStatusCheck(url: string) {
+export default function scheduleEmbedVideoStatusCheck({
+	getEmbedVideoStatusURL,
+}: {
+	getEmbedVideoStatusURL: string;
+}) {
 	setTimeout(() => {
-		fetch(url)
+		fetch(getEmbedVideoStatusURL)
 			.then(({status}) => {
 				if (status !== 202) {
 					window.location.reload();
 				}
 				else {
-					scheduleEmbedVideoStatusCheck(url);
+					scheduleEmbedVideoStatusCheck({getEmbedVideoStatusURL});
 				}
 			})
 			.catch(() => {
 				window.location.reload();
 			});
 	}, INTERVAL);
-}
-
-export default function ({
-	getEmbedVideoStatusURL,
-}: {
-	getEmbedVideoStatusURL: string;
-}) {
-	scheduleEmbedVideoStatusCheck(getEmbedVideoStatusURL);
 }

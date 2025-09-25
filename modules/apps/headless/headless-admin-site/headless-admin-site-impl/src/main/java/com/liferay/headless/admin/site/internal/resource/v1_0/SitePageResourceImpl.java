@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
+import com.liferay.headless.admin.site.internal.odata.entity.v1_0.SitePageEntityModel;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
@@ -43,6 +44,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.aggregation.Aggregation;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -55,6 +57,7 @@ import com.liferay.portal.vulcan.util.SearchUtil;
 import jakarta.validation.ValidationException;
 
 import jakarta.ws.rs.NotSupportedException;
+import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
@@ -98,6 +101,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			ServiceContextUtil.createServiceContext(
 				layout.getGroupId(), contextHttpServletRequest,
 				contextUser.getUserId()));
+	}
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
 	}
 
 	@Override
@@ -624,6 +632,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 	}
+
+	private static final EntityModel _entityModel = new SitePageEntityModel();
 
 	@Reference
 	private CETManager _cetManager;

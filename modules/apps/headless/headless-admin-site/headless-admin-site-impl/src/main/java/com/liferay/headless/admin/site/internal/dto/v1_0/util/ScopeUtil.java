@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Rubén Pulido
@@ -45,9 +46,16 @@ public class ScopeUtil {
 		throws PortalException {
 
 		if (scope == null) {
-			Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+			return null;
+		}
 
-			return group.getExternalReferenceCode();
+		Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+		if (StringUtil.equals(
+				scope.getExternalReferenceCode(),
+				group.getExternalReferenceCode())) {
+
+			return null;
 		}
 
 		return scope.getExternalReferenceCode();

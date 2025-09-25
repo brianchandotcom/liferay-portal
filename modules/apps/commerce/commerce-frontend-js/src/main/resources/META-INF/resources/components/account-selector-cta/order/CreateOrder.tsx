@@ -6,6 +6,8 @@
 import ClayButton from '@clayui/button';
 import React from 'react';
 
+// @ts-ignore
+
 import {createCommerceCart} from '../../../utilities/createCommerceCart.js';
 
 interface CreateOrderProps {

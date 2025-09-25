@@ -81,6 +81,10 @@ public class ObjectEntryInfoItemCreator
 					_objectDefinition,
 					new com.liferay.object.rest.dto.v1_0.ObjectEntry() {
 						{
+							setDisplayDate(
+								() -> GetterUtil.getDate(
+									curProperties.get("displayDate"),
+									dateFormat, null));
 							setExpirationDate(
 								() -> GetterUtil.getDate(
 									curProperties.get("expirationDate"),

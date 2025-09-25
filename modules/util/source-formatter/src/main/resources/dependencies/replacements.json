@@ -80,6 +80,19 @@
 	},
 	{
 		"classNames": [
+			"BasePanelApp"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-7870",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\s*@Reference\\s*\\(\\s*target\\s*=\\s*(?<target>\"[\\s\\S]*?\"\\)\"),[\\s\\S]*?\\)\\s*public\\s+void\\s+setPortlet\\(Portlet\\s+portlet\\)\\s*\\{[\\s\\S]*?\\}",
+				"to": "@Reference(\n\t\ttarget = ${target}\n\t)\n\tprivate Portlet _portlet;\n\n\t@Override\n\tpublic Portlet getPortlet() {\n\t\treturn _portlet;\n\t}"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"AssetDisplayPageFriendlyURLProvider"
 		],
 		"from": "getFriendlyURL(String paramName, long paramName, Locale paramName, ThemeDisplay paramName)",

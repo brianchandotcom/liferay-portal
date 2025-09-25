@@ -7,7 +7,9 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.display.context.ViewHomeQuickActionsDisplayContext;
@@ -35,7 +37,7 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 
 		return new ViewHomeQuickActionsDisplayContext(
 			_depotEntryLocalService, groupLocalService,
-			_objectDefinitionService,
+			_objectDefinitionService, _objectEntryFolderModelResourcePermission,
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY));
 	}
@@ -50,5 +52,11 @@ public class ViewHomeQuickActionsJSPSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionService _objectDefinitionService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 }

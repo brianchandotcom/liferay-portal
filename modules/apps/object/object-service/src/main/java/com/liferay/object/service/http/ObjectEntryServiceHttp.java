@@ -588,8 +588,9 @@ public class ObjectEntryServiceHttp {
 				HttpPrincipal httpPrincipal, long groupId,
 				long objectRelationshipId,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
-				long primaryKey, boolean related, String search, int start,
-				int end, com.liferay.portal.kernel.search.Sort[] sorts)
+				boolean preferApproved, long primaryKey, boolean related,
+				String search, int start, int end,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -598,8 +599,8 @@ public class ObjectEntryServiceHttp {
 				_getOneToManyObjectEntriesParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, objectRelationshipId, predicate, primaryKey,
-				related, search, start, end, sorts);
+				methodKey, groupId, objectRelationshipId, predicate,
+				preferApproved, primaryKey, related, search, start, end, sorts);
 
 			Object returnObj = null;
 
@@ -1215,8 +1216,8 @@ public class ObjectEntryServiceHttp {
 	private static final Class<?>[] _getOneToManyObjectEntriesParameterTypes13 =
 		new Class[] {
 			long.class, long.class,
-			com.liferay.petra.sql.dsl.expression.Predicate.class, long.class,
-			boolean.class, String.class, int.class, int.class,
+			com.liferay.petra.sql.dsl.expression.Predicate.class, boolean.class,
+			long.class, boolean.class, String.class, int.class, int.class,
 			com.liferay.portal.kernel.search.Sort[].class
 		};
 	private static final Class<?>[]

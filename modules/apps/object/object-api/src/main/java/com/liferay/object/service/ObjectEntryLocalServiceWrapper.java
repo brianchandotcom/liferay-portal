@@ -391,13 +391,13 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public java.util.Map<Object, Long> getAggregationCounts(
 			long groupId, long objectDefinitionId, String aggregationTerm,
-			com.liferay.petra.sql.dsl.expression.Predicate predicate, int start,
-			int end)
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
+			boolean preferApproved, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getAggregationCounts(
-			groupId, objectDefinitionId, aggregationTerm, predicate, start,
-			end);
+			groupId, objectDefinitionId, aggregationTerm, predicate,
+			preferApproved, start, end);
 	}
 
 	@Override
@@ -644,13 +644,14 @@ public class ObjectEntryLocalServiceWrapper
 			getOneToManyObjectEntries(
 				long groupId, long objectRelationshipId,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
-				long primaryKey, boolean related, String search, int start,
-				int end, com.liferay.portal.kernel.search.Sort[] sorts)
+				boolean preferApproved, long primaryKey, boolean related,
+				String search, int start, int end,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, primaryKey, related,
-			search, start, end, sorts);
+			groupId, objectRelationshipId, predicate, preferApproved,
+			primaryKey, related, search, start, end, sorts);
 	}
 
 	@Override
@@ -701,13 +702,13 @@ public class ObjectEntryLocalServiceWrapper
 			Long[] groupIds, long companyId, long userId,
 			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search, int start, int end,
+			boolean preferApproved, String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getPrimaryKeys(
-			groupIds, companyId, userId, objectDefinitionId, predicate, search,
-			start, end, sorts);
+			groupIds, companyId, userId, objectDefinitionId, predicate,
+			preferApproved, search, start, end, sorts);
 	}
 
 	@Override
@@ -772,11 +773,12 @@ public class ObjectEntryLocalServiceWrapper
 			Long[] groupIds, long companyId, long userId,
 			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search)
+			boolean preferApproved, String search)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.getValuesListCount(
-			groupIds, companyId, userId, objectDefinitionId, predicate, search);
+			groupIds, companyId, userId, objectDefinitionId, predicate,
+			preferApproved, search);
 	}
 
 	@Override

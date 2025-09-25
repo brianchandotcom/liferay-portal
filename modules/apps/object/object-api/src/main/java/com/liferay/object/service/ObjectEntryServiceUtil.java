@@ -144,13 +144,14 @@ public class ObjectEntryServiceUtil {
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			long primaryKey, boolean related, String search, int start, int end,
+			boolean preferApproved, long primaryKey, boolean related,
+			String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, primaryKey, related,
-			search, start, end, sorts);
+			groupId, objectRelationshipId, predicate, preferApproved,
+			primaryKey, related, search, start, end, sorts);
 	}
 
 	public static int getOneToManyObjectEntriesCount(

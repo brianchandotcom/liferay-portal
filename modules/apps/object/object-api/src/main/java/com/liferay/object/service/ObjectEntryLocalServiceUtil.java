@@ -348,13 +348,13 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static Map<Object, Long> getAggregationCounts(
 			long groupId, long objectDefinitionId, String aggregationTerm,
-			com.liferay.petra.sql.dsl.expression.Predicate predicate, int start,
-			int end)
+			com.liferay.petra.sql.dsl.expression.Predicate predicate,
+			boolean preferApproved, int start, int end)
 		throws PortalException {
 
 		return getService().getAggregationCounts(
-			groupId, objectDefinitionId, aggregationTerm, predicate, start,
-			end);
+			groupId, objectDefinitionId, aggregationTerm, predicate,
+			preferApproved, start, end);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
@@ -564,13 +564,14 @@ public class ObjectEntryLocalServiceUtil {
 	public static List<ObjectEntry> getOneToManyObjectEntries(
 			long groupId, long objectRelationshipId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			long primaryKey, boolean related, String search, int start, int end,
+			boolean preferApproved, long primaryKey, boolean related,
+			String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws PortalException {
 
 		return getService().getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, primaryKey, related,
-			search, start, end, sorts);
+			groupId, objectRelationshipId, predicate, preferApproved,
+			primaryKey, related, search, start, end, sorts);
 	}
 
 	public static int getOneToManyObjectEntriesCount(
@@ -615,13 +616,13 @@ public class ObjectEntryLocalServiceUtil {
 			Long[] groupIds, long companyId, long userId,
 			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search, int start, int end,
+			boolean preferApproved, String search, int start, int end,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws PortalException {
 
 		return getService().getPrimaryKeys(
-			groupIds, companyId, userId, objectDefinitionId, predicate, search,
-			start, end, sorts);
+			groupIds, companyId, userId, objectDefinitionId, predicate,
+			preferApproved, search, start, end, sorts);
 	}
 
 	public static Map<String, Object> getSystemModelAttributes(
@@ -674,11 +675,12 @@ public class ObjectEntryLocalServiceUtil {
 			Long[] groupIds, long companyId, long userId,
 			long objectDefinitionId,
 			com.liferay.petra.sql.dsl.expression.Predicate predicate,
-			String search)
+			boolean preferApproved, String search)
 		throws PortalException {
 
 		return getService().getValuesListCount(
-			groupIds, companyId, userId, objectDefinitionId, predicate, search);
+			groupIds, companyId, userId, objectDefinitionId, predicate,
+			preferApproved, search);
 	}
 
 	public static void insertIntoOrUpdateExtensionTable(

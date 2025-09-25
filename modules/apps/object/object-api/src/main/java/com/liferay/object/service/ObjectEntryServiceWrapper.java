@@ -160,13 +160,14 @@ public class ObjectEntryServiceWrapper
 			getOneToManyObjectEntries(
 				long groupId, long objectRelationshipId,
 				com.liferay.petra.sql.dsl.expression.Predicate predicate,
-				long primaryKey, boolean related, String search, int start,
-				int end, com.liferay.portal.kernel.search.Sort[] sorts)
+				boolean preferApproved, long primaryKey, boolean related,
+				String search, int start, int end,
+				com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryService.getOneToManyObjectEntries(
-			groupId, objectRelationshipId, predicate, primaryKey, related,
-			search, start, end, sorts);
+			groupId, objectRelationshipId, predicate, preferApproved,
+			primaryKey, related, search, start, end, sorts);
 	}
 
 	@Override

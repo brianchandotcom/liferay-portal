@@ -42,6 +42,13 @@ public class ContainerPageElementDefinitionDTOConverter
 				containerStyledLayoutStructureItem)
 		throws Exception {
 
+		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
+			"scopeGroupId");
+
+		if (scopeGroupId == null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return new ContainerPageElementDefinition() {
 			{
 				setContentVisibility(

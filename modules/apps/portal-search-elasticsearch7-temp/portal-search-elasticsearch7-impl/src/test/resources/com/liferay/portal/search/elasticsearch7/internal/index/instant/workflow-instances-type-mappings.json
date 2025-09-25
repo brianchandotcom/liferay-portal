@@ -1,0 +1,29 @@
+{
+	"mappings": {
+		"WorkflowInstancesType": {
+			"properties": {
+				"companyId": {
+					"type": "keyword"
+				},
+				"date": {
+					"type": "date"
+				},
+				"deleted": {
+					"type": "boolean"
+				},
+				"id": {
+					"type": "keyword"
+				},
+				"instanceId": {
+					"type": "keyword"
+				},
+				"processId": {
+					"type": "keyword"
+				},
+				"userId": {
+					"type": "keyword"
+				}
+			}
+		}
+	}
+}

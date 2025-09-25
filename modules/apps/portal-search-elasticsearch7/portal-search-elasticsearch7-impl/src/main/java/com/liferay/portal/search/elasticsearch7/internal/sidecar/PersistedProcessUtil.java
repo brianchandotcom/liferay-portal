@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch7.internal.sidecar;
 
 import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.io.Deserializer;
 import com.liferay.petra.process.ProcessCallable;
 import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessConfig;
@@ -15,14 +16,20 @@ import com.liferay.petra.process.ProcessLog;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+
+import java.nio.ByteBuffer;
+import java.nio.file.Files;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +38,43 @@ import java.util.List;
  * @author Tina Tian
  */
 public class PersistedProcessUtil {
+
+	public static <T extends Serializable>
+		ObjectValuePair<ProcessChannel<T>, byte[]> start(
+			ProcessExecutor processExecutor, File processFile) {
+
+		if (!processFile.exists()) {
+			throw new IllegalArgumentException(
+				"Unable to find persisted process file " + processFile);
+		}
+
+		byte[] bytes = null;
+
+		try {
+			bytes = Files.readAllBytes(processFile.toPath());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read persisted process file " + processFile,
+				ioException);
+		}
+
+		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
+
+		PersistedProcess persistedProcess = null;
+
+		try {
+			persistedProcess = deserializer.readObject();
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(
+				"Unable to deserialize persisted process file " + processFile,
+				classNotFoundException);
+		}
+
+		return new ObjectValuePair<>(
+			start(processExecutor, persistedProcess), bytes);
+	}
 
 	public static <T extends Serializable> ProcessChannel<T> start(
 		ProcessExecutor processExecutor, PersistedProcess persistedProcess) {

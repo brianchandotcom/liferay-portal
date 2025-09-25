@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -41,71 +39,63 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A fragment link value.", value = "FragmentLinkValue"
+	description = "A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemContextReference which remains constant across environments.",
+	value = "FragmentMappedValueItemContextReference"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "FragmentInlineValue", value = FragmentLinkInlineValue.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentMappedValue", value = FragmentLinkMappedValue.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "FragmentLinkValue")
-public abstract class FragmentLinkValue implements Serializable {
+@XmlRootElement(name = "FragmentMappedValueItemContextReference")
+public class FragmentMappedValueItemContextReference
+	extends FragmentMappedValueItemReference implements Serializable {
 
-	public static FragmentLinkValue toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentLinkValue.class, json);
+	public static FragmentMappedValueItemContextReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FragmentMappedValueItemContextReference.class, json);
 	}
 
-	public static FragmentLinkValue unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentLinkValue.class, json);
+	public static FragmentMappedValueItemContextReference unsafeToDTO(
+		String json) {
+
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentMappedValueItemContextReference.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
-	)
-	@JsonGetter("type")
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("contextSource")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public ContextSource getContextSource() {
+		if (_contextSourceSupplier != null) {
+			contextSource = _contextSourceSupplier.get();
 
-			_typeSupplier = null;
+			_contextSourceSupplier = null;
 		}
 
-		return type;
+		return contextSource;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public String getContextSourceAsString() {
+		ContextSource contextSource = getContextSource();
 
-		if (type == null) {
+		if (contextSource == null) {
 			return null;
 		}
 
-		return type.toString();
+		return contextSource.toString();
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setContextSource(ContextSource contextSource) {
+		this.contextSource = contextSource;
 
-		_typeSupplier = null;
+		_contextSourceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+	public void setContextSource(
+		UnsafeSupplier<ContextSource, Exception> contextSourceUnsafeSupplier) {
+
+		_contextSourceSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return contextSourceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -116,14 +106,12 @@ public abstract class FragmentLinkValue implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The fragment link value's hypertext reference. Can be an inline value or mapped to an external value."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected ContextSource contextSource;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<ContextSource> _contextSourceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -131,13 +119,16 @@ public abstract class FragmentLinkValue implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentLinkValue)) {
+		if (!(object instanceof FragmentMappedValueItemContextReference)) {
 			return false;
 		}
 
-		FragmentLinkValue fragmentLinkValue = (FragmentLinkValue)object;
+		FragmentMappedValueItemContextReference
+			fragmentMappedValueItemContextReference =
+				(FragmentMappedValueItemContextReference)object;
 
-		return Objects.equals(toString(), fragmentLinkValue.toString());
+		return Objects.equals(
+			toString(), fragmentMappedValueItemContextReference.toString());
 	}
 
 	@Override
@@ -151,6 +142,22 @@ public abstract class FragmentLinkValue implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		ContextSource contextSource = getContextSource();
+
+		if (contextSource != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contextSource\": ");
+
+			sb.append("\"");
+
+			sb.append(contextSource);
+
+			sb.append("\"");
+		}
 
 		Type type = getType();
 
@@ -175,26 +182,25 @@ public abstract class FragmentLinkValue implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemContextReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Type")
-	public static enum Type {
+	@GraphQLName("ContextSource")
+	public static enum ContextSource {
 
-		FRAGMENT_INLINE_VALUE("FragmentInlineValue"),
-		FRAGMENT_MAPPED_VALUE("FragmentMappedValue");
+		COLLECTION_ITEM("CollectionItem"), DISPLAY_PAGE_ITEM("DisplayPageItem");
 
 		@JsonCreator
-		public static Type create(String value) {
+		public static ContextSource create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
+			for (ContextSource contextSource : values()) {
+				if (Objects.equals(contextSource.getValue(), value)) {
+					return contextSource;
 				}
 			}
 
@@ -211,7 +217,7 @@ public abstract class FragmentLinkValue implements Serializable {
 			return _value;
 		}
 
-		private Type(String value) {
+		private ContextSource(String value) {
 			_value = value;
 		}
 

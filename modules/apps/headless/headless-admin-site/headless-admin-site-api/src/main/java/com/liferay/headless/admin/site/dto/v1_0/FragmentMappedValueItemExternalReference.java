@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -19,8 +19,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -37,49 +35,51 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "A fragment viewport.", value = "FragmentViewport")
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "A fragment viewport.",
-	requiredProperties = {"fragmentViewportStyle", "id"}
+@GraphQLName(
+	description = "A unique reference to a FragmentMappedValueItemReference of type FragmentMappedValueItemExternalReference which remains constant across environments.",
+	value = "FragmentMappedValueItemExternalReference"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FragmentViewport")
-public class FragmentViewport implements Serializable {
+@XmlRootElement(name = "FragmentMappedValueItemExternalReference")
+public class FragmentMappedValueItemExternalReference
+	extends FragmentMappedValueItemReference implements Serializable {
 
-	public static FragmentViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(FragmentViewport.class, json);
+	public static FragmentMappedValueItemExternalReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FragmentMappedValueItemExternalReference.class, json);
 	}
 
-	public static FragmentViewport unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FragmentViewport.class, json);
+	public static FragmentMappedValueItemExternalReference unsafeToDTO(
+		String json) {
+
+		return ObjectMapperUtil.unsafeReadValue(
+			FragmentMappedValueItemExternalReference.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied to the fragment viewport."
-	)
-	public String getCustomCSS() {
-		if (_customCSSSupplier != null) {
-			customCSS = _customCSSSupplier.get();
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getClassName() {
+		if (_classNameSupplier != null) {
+			className = _classNameSupplier.get();
 
-			_customCSSSupplier = null;
+			_classNameSupplier = null;
 		}
 
-		return customCSS;
+		return className;
 	}
 
-	public void setCustomCSS(String customCSS) {
-		this.customCSS = customCSS;
+	public void setClassName(String className) {
+		this.className = className;
 
-		_customCSSSupplier = null;
+		_classNameSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setCustomCSS(
-		UnsafeSupplier<String, Exception> customCSSUnsafeSupplier) {
+	public void setClassName(
+		UnsafeSupplier<String, Exception> classNameUnsafeSupplier) {
 
-		_customCSSSupplier = () -> {
+		_classNameSupplier = () -> {
 			try {
-				return customCSSUnsafeSupplier.get();
+				return classNameUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -90,45 +90,77 @@ public class FragmentViewport implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "Custom CSS that is applied to the fragment viewport."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String customCSS;
+	protected String className;
 
 	@JsonIgnore
-	private Supplier<String> _customCSSSupplier;
+	private Supplier<String> _classNameSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment's viewport style."
-	)
+	@io.swagger.v3.oas.annotations.media.Schema
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public FragmentViewportStyle getFragmentViewportStyle() {
-		if (_fragmentViewportStyleSupplier != null) {
-			fragmentViewportStyle = _fragmentViewportStyleSupplier.get();
+	public Scope getScope() {
+		if (_scopeSupplier != null) {
+			scope = _scopeSupplier.get();
 
-			_fragmentViewportStyleSupplier = null;
+			_scopeSupplier = null;
 		}
 
-		return fragmentViewportStyle;
+		return scope;
 	}
 
-	public void setFragmentViewportStyle(
-		FragmentViewportStyle fragmentViewportStyle) {
+	public void setScope(Scope scope) {
+		this.scope = scope;
 
-		this.fragmentViewportStyle = fragmentViewportStyle;
-
-		_fragmentViewportStyleSupplier = null;
+		_scopeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentViewportStyle(
-		UnsafeSupplier<FragmentViewportStyle, Exception>
-			fragmentViewportStyleUnsafeSupplier) {
-
-		_fragmentViewportStyleSupplier = () -> {
+	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+		_scopeSupplier = () -> {
 			try {
-				return fragmentViewportStyleUnsafeSupplier.get();
+				return scopeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -139,55 +171,12 @@ public class FragmentViewport implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The fragment's viewport style.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected FragmentViewportStyle fragmentViewportStyle;
+	protected Scope scope;
 
 	@JsonIgnore
-	private Supplier<FragmentViewportStyle> _fragmentViewportStyleSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment viewport's ID."
-	)
-	public String getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
-
-			_idSupplier = null;
-		}
-
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-
-		_idSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
-			try {
-				return idUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The fragment viewport's ID.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
-
-	@JsonIgnore
-	private Supplier<String> _idSupplier;
+	private Supplier<Scope> _scopeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -195,13 +184,16 @@ public class FragmentViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FragmentViewport)) {
+		if (!(object instanceof FragmentMappedValueItemExternalReference)) {
 			return false;
 		}
 
-		FragmentViewport fragmentViewport = (FragmentViewport)object;
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				(FragmentMappedValueItemExternalReference)object;
 
-		return Objects.equals(toString(), fragmentViewport.toString());
+		return Objects.equals(
+			toString(), fragmentMappedValueItemExternalReference.toString());
 	}
 
 	@Override
@@ -216,47 +208,62 @@ public class FragmentViewport implements Serializable {
 
 		sb.append("{");
 
-		String customCSS = getCustomCSS();
+		String className = getClassName();
 
-		if (customCSS != null) {
+		if (className != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"customCSS\": ");
+			sb.append("\"className\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(customCSS));
+			sb.append(_escape(className));
 
 			sb.append("\"");
 		}
 
-		FragmentViewportStyle fragmentViewportStyle =
-			getFragmentViewportStyle();
+		String externalReferenceCode = getExternalReferenceCode();
 
-		if (fragmentViewportStyle != null) {
+		if (externalReferenceCode != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentViewportStyle\": ");
-
-			sb.append(String.valueOf(fragmentViewportStyle));
-		}
-
-		String id = getId();
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
+			sb.append("\"externalReferenceCode\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(id));
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		Scope scope = getScope();
+
+		if (scope != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"scope\": ");
+
+			sb.append(String.valueOf(scope));
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
 
 			sb.append("\"");
 		}
@@ -268,7 +275,7 @@ public class FragmentViewport implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentViewport",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalReference",
 		name = "x-class-name"
 	)
 	public String xClassName;

@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentLinkSerDes {
+public class FragmentLinkMappedValueSerDes {
 
-	public static FragmentLink toDTO(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+	public static FragmentLinkMappedValue toDTO(String json) {
+		FragmentLinkMappedValueJSONParser fragmentLinkMappedValueJSONParser =
+			new FragmentLinkMappedValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToDTO(json);
+		return fragmentLinkMappedValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentLink[] toDTOs(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+	public static FragmentLinkMappedValue[] toDTOs(String json) {
+		FragmentLinkMappedValueJSONParser fragmentLinkMappedValueJSONParser =
+			new FragmentLinkMappedValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToDTOs(json);
+		return fragmentLinkMappedValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentLink fragmentLink) {
-		if (fragmentLink == null) {
+	public static String toJSON(
+		FragmentLinkMappedValue fragmentLinkMappedValue) {
+
+		if (fragmentLinkMappedValue == null) {
 			return "null";
 		}
 
@@ -46,28 +48,28 @@ public class FragmentLinkSerDes {
 
 		sb.append("{");
 
-		if (fragmentLink.getTarget() != null) {
+		if (fragmentLinkMappedValue.getMapping() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"target\": ");
+			sb.append("\"mapping\": ");
 
-			sb.append("\"");
-
-			sb.append(fragmentLink.getTarget());
-
-			sb.append("\"");
+			sb.append(String.valueOf(fragmentLinkMappedValue.getMapping()));
 		}
 
-		if (fragmentLink.getValue() != null) {
+		if (fragmentLinkMappedValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"type\": ");
 
-			sb.append(String.valueOf(fragmentLink.getValue()));
+			sb.append("\"");
+
+			sb.append(fragmentLinkMappedValue.getType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -76,55 +78,59 @@ public class FragmentLinkSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+		FragmentLinkMappedValueJSONParser fragmentLinkMappedValueJSONParser =
+			new FragmentLinkMappedValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToMap(json);
+		return fragmentLinkMappedValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FragmentLink fragmentLink) {
-		if (fragmentLink == null) {
+	public static Map<String, String> toMap(
+		FragmentLinkMappedValue fragmentLinkMappedValue) {
+
+		if (fragmentLinkMappedValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentLink.getTarget() == null) {
-			map.put("target", null);
+		if (fragmentLinkMappedValue.getMapping() == null) {
+			map.put("mapping", null);
 		}
 		else {
-			map.put("target", String.valueOf(fragmentLink.getTarget()));
+			map.put(
+				"mapping",
+				String.valueOf(fragmentLinkMappedValue.getMapping()));
 		}
 
-		if (fragmentLink.getValue() == null) {
-			map.put("value", null);
+		if (fragmentLinkMappedValue.getType() == null) {
+			map.put("type", null);
 		}
 		else {
-			map.put("value", String.valueOf(fragmentLink.getValue()));
+			map.put("type", String.valueOf(fragmentLinkMappedValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentLinkJSONParser
-		extends BaseJSONParser<FragmentLink> {
+	public static class FragmentLinkMappedValueJSONParser
+		extends BaseJSONParser<FragmentLinkMappedValue> {
 
 		@Override
-		protected FragmentLink createDTO() {
-			return new FragmentLink();
+		protected FragmentLinkMappedValue createDTO() {
+			return new FragmentLinkMappedValue();
 		}
 
 		@Override
-		protected FragmentLink[] createDTOArray(int size) {
-			return new FragmentLink[size];
+		protected FragmentLinkMappedValue[] createDTOArray(int size) {
+			return new FragmentLinkMappedValue[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "target")) {
+			if (Objects.equals(jsonParserFieldName, "mapping")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -133,20 +139,19 @@ public class FragmentLinkSerDes {
 
 		@Override
 		protected void setField(
-			FragmentLink fragmentLink, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentLinkMappedValue fragmentLinkMappedValue,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "target")) {
+			if (Objects.equals(jsonParserFieldName, "mapping")) {
 				if (jsonParserFieldValue != null) {
-					fragmentLink.setTarget(
-						FragmentLink.Target.create(
-							(String)jsonParserFieldValue));
+					fragmentLinkMappedValue.setMapping(
+						MappingSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentLink.setValue(
-						FragmentLinkValueSerDes.toDTO(
+					fragmentLinkMappedValue.setType(
+						FragmentLinkMappedValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

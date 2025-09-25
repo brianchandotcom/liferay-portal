@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,26 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class FragmentLinkSerDes {
+public class FragmentLinkInlineValueSerDes {
 
-	public static FragmentLink toDTO(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+	public static FragmentLinkInlineValue toDTO(String json) {
+		FragmentLinkInlineValueJSONParser fragmentLinkInlineValueJSONParser =
+			new FragmentLinkInlineValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToDTO(json);
+		return fragmentLinkInlineValueJSONParser.parseToDTO(json);
 	}
 
-	public static FragmentLink[] toDTOs(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+	public static FragmentLinkInlineValue[] toDTOs(String json) {
+		FragmentLinkInlineValueJSONParser fragmentLinkInlineValueJSONParser =
+			new FragmentLinkInlineValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToDTOs(json);
+		return fragmentLinkInlineValueJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(FragmentLink fragmentLink) {
-		if (fragmentLink == null) {
+	public static String toJSON(
+		FragmentLinkInlineValue fragmentLinkInlineValue) {
+
+		if (fragmentLinkInlineValue == null) {
 			return "null";
 		}
 
@@ -46,28 +48,28 @@ public class FragmentLinkSerDes {
 
 		sb.append("{");
 
-		if (fragmentLink.getTarget() != null) {
+		if (fragmentLinkInlineValue.getValue_i18n() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"target\": ");
+			sb.append("\"value_i18n\": ");
 
-			sb.append("\"");
-
-			sb.append(fragmentLink.getTarget());
-
-			sb.append("\"");
+			sb.append(_toJSON(fragmentLinkInlineValue.getValue_i18n()));
 		}
 
-		if (fragmentLink.getValue() != null) {
+		if (fragmentLinkInlineValue.getType() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"value\": ");
+			sb.append("\"type\": ");
 
-			sb.append(String.valueOf(fragmentLink.getValue()));
+			sb.append("\"");
+
+			sb.append(fragmentLinkInlineValue.getType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -76,55 +78,59 @@ public class FragmentLinkSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		FragmentLinkJSONParser fragmentLinkJSONParser =
-			new FragmentLinkJSONParser();
+		FragmentLinkInlineValueJSONParser fragmentLinkInlineValueJSONParser =
+			new FragmentLinkInlineValueJSONParser();
 
-		return fragmentLinkJSONParser.parseToMap(json);
+		return fragmentLinkInlineValueJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(FragmentLink fragmentLink) {
-		if (fragmentLink == null) {
+	public static Map<String, String> toMap(
+		FragmentLinkInlineValue fragmentLinkInlineValue) {
+
+		if (fragmentLinkInlineValue == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (fragmentLink.getTarget() == null) {
-			map.put("target", null);
+		if (fragmentLinkInlineValue.getValue_i18n() == null) {
+			map.put("value_i18n", null);
 		}
 		else {
-			map.put("target", String.valueOf(fragmentLink.getTarget()));
+			map.put(
+				"value_i18n",
+				String.valueOf(fragmentLinkInlineValue.getValue_i18n()));
 		}
 
-		if (fragmentLink.getValue() == null) {
-			map.put("value", null);
+		if (fragmentLinkInlineValue.getType() == null) {
+			map.put("type", null);
 		}
 		else {
-			map.put("value", String.valueOf(fragmentLink.getValue()));
+			map.put("type", String.valueOf(fragmentLinkInlineValue.getType()));
 		}
 
 		return map;
 	}
 
-	public static class FragmentLinkJSONParser
-		extends BaseJSONParser<FragmentLink> {
+	public static class FragmentLinkInlineValueJSONParser
+		extends BaseJSONParser<FragmentLinkInlineValue> {
 
 		@Override
-		protected FragmentLink createDTO() {
-			return new FragmentLink();
+		protected FragmentLinkInlineValue createDTO() {
+			return new FragmentLinkInlineValue();
 		}
 
 		@Override
-		protected FragmentLink[] createDTOArray(int size) {
-			return new FragmentLink[size];
+		protected FragmentLinkInlineValue[] createDTOArray(int size) {
+			return new FragmentLinkInlineValue[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "target")) {
-				return false;
+			if (Objects.equals(jsonParserFieldName, "value_i18n")) {
+				return true;
 			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -133,20 +139,19 @@ public class FragmentLinkSerDes {
 
 		@Override
 		protected void setField(
-			FragmentLink fragmentLink, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			FragmentLinkInlineValue fragmentLinkInlineValue,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "target")) {
+			if (Objects.equals(jsonParserFieldName, "value_i18n")) {
 				if (jsonParserFieldValue != null) {
-					fragmentLink.setTarget(
-						FragmentLink.Target.create(
-							(String)jsonParserFieldValue));
+					fragmentLinkInlineValue.setValue_i18n(
+						(Map<String, String>)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "value")) {
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				if (jsonParserFieldValue != null) {
-					fragmentLink.setValue(
-						FragmentLinkValueSerDes.toDTO(
+					fragmentLinkInlineValue.setType(
+						FragmentLinkInlineValue.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

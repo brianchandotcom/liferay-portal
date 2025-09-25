@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayCheckbox} from '@clayui/form';
+import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import ClayMultiSelect from '@clayui/multi-select';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
+import {ItemSelector} from 'frontend-js-item-selector-web';
 import React from 'react';
 
+import SpaceSticker from '../../common/components/SpaceSticker';
 import {Space} from '../../common/types/Space';
 import {useCache} from '../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
@@ -28,6 +29,8 @@ export default function Spaces({
 	disabled?: boolean;
 	structure: Structure | ReferencedStructure;
 }) {
+	const [value, setValue] = React.useState('');
+
 	const {spaces: structureSpaces, uuid: structureUuid} = structure;
 
 	const dispatch = useStateDispatch();
@@ -36,9 +39,11 @@ export default function Spaces({
 
 	const id = useId();
 
-	const {data: spaces, status} = useCache('spaces');
+	const {data: spaces} = useCache('spaces');
 
 	const hasError = validationErrors.has('no-space');
+
+	const selectedSpaces = getSelection(structureSpaces, spaces);
 
 	return (
 		<div className="mt-5">
@@ -64,11 +69,18 @@ export default function Spaces({
 					/>
 				</label>
 
-				<ClayMultiSelect
+				<ItemSelector<Space>
+					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
+					as={ClayInput}
 					disabled={disabled || structureSpaces === 'all'}
 					id={id}
-					items={getSelection(structureSpaces, spaces)}
-					loadingState={status === 'saving' ? 1 : 0}
+					items={selectedSpaces}
+					locator={{
+						id: 'value',
+						label: 'label',
+						value: 'value',
+					}}
+					multiSelect
 					onBlur={() => {
 						if (!structureSpaces.length) {
 							dispatch({
@@ -78,25 +90,29 @@ export default function Spaces({
 							});
 						}
 					}}
-					onItemsChange={(items: Item[]) => {
-						const ercs = items
-							.filter((item) =>
-								spaces.some(({name}) => name === item.label)
-							)
-							.map(({value}) => value);
-
+					onChange={setValue}
+					onItemsChange={(items: Array<Item | Space>) => {
 						dispatch({
-							spaces: ercs,
+							spaces: items.map(
+								(item) =>
+									(item as Space).externalReferenceCode ||
+									(item as Item).value
+							),
 							type: 'update-structure',
 						});
 					}}
-					sourceItems={spaces.map(toItem)}
 					value={
 						structureSpaces === 'all'
 							? Liferay.Language.get('all-spaces')
-							: ''
+							: value
 					}
-				/>
+				>
+					{(item: Space) => (
+						<ItemSelector.Item key={item.id} textValue={item.name}>
+							<SpaceSticker name={item.name} />
+						</ItemSelector.Item>
+					)}
+				</ItemSelector>
 
 				{hasError ? (
 					<FieldFeedback
@@ -131,16 +147,7 @@ function getSelection(structureSpaces: Structure['spaces'], spaces: Space[]) {
 		return [];
 	}
 
-	return spaces
-		.filter(({externalReferenceCode}) =>
-			structureSpaces.includes(externalReferenceCode)
-		)
-		.map(toItem);
-}
-
-function toItem(space: Space): Item {
-	return {
-		label: space.name,
-		value: space.externalReferenceCode,
-	};
+	return spaces.filter(({externalReferenceCode}) =>
+		structureSpaces.includes(externalReferenceCode)
+	);
 }

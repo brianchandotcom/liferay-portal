@@ -107,7 +107,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 
 export interface IItemSelectorProps<T>
 	extends Omit<
-		React.HTMLAttributes<HTMLInputElement>,
+		React.InputHTMLAttributes<HTMLInputElement>,
 		'onChange' | 'children'
 	> {
 
@@ -321,7 +321,7 @@ function ItemSelector<T extends Record<string, any>>({
 	if (multiSelect && displaySelectedItems) {
 		itemSelectorComponent = (
 			<ClayMultiSelect
-				{...otherProps}
+				{...(otherProps as any)}
 				items={items}
 				locator={{
 					id: (item: T) => {

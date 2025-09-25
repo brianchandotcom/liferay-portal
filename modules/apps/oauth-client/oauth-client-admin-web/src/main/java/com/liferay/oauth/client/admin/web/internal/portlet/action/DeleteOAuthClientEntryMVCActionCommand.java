@@ -48,7 +48,7 @@ public class DeleteOAuthClientEntryMVCActionCommand
 			String clientId = ParamUtil.getString(actionRequest, "clientId");
 
 			_oAuthClientEntryService.deleteOAuthClientEntry(
-				themeDisplay.getCompanyId(), authServerWellKnownURI, clientId);
+				themeDisplay.getCompanyId(), clientId, authServerWellKnownURI);
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

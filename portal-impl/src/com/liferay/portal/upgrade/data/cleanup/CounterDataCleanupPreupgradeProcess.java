@@ -140,6 +140,7 @@ public class CounterDataCleanupPreupgradeProcess
 		tableNames.removeAll(excludedTableNames);
 
 		long latestCounterValue = 0L;
+		String maxValueTableName = null;
 
 		for (String tableName : tableNames) {
 			String columnName = _getPrimaryKeyColumnName(
@@ -155,6 +156,7 @@ public class CounterDataCleanupPreupgradeProcess
 
 			if (maxValue > latestCounterValue) {
 				latestCounterValue = maxValue;
+				maxValueTableName = tableName;
 			}
 		}
 
@@ -162,7 +164,9 @@ public class CounterDataCleanupPreupgradeProcess
 			CounterLocalServiceUtil.reset(counterName, latestCounterValue);
 
 			if (_log.isInfoEnabled()) {
-				_log.info(_getLogMessage(counterName, latestCounterValue));
+				_log.info(
+					_getLogMessage(
+						counterName, latestCounterValue, maxValueTableName));
 			}
 		}
 	}
@@ -214,7 +218,7 @@ public class CounterDataCleanupPreupgradeProcess
 				CounterLocalServiceUtil.reset(counterName, maxValue);
 
 				if (_log.isInfoEnabled()) {
-					_log.info(_getLogMessage(counterName, maxValue));
+					_log.info(_getLogMessage(counterName, maxValue, null));
 				}
 			}
 		}
@@ -244,13 +248,16 @@ public class CounterDataCleanupPreupgradeProcess
 		CounterLocalServiceUtil.reset(counterName, maxValue);
 
 		if (_log.isInfoEnabled()) {
-			_log.info(_getLogMessage(counterName, maxValue));
+			_log.info(_getLogMessage(counterName, maxValue, null));
 		}
 	}
 
-	private String _getLogMessage(String counterName, long countervalue) {
+	private String _getLogMessage(
+		String counterName, long countervalue, String tableName) {
+
 		return StringBundler.concat(
-			"Counter ", counterName, " has been reset to value ", countervalue);
+			"Counter ", counterName, " has been reset to value ", countervalue,
+			(tableName != null) ? " due to table " + tableName : "");
 	}
 
 	private long _getMaxValue(

@@ -292,6 +292,14 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceId()));
 
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				pageElement.getExternalReferenceCode());
+
+		if (layoutStructureItem != null) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _addOrUpdatePageElement(
 			groupId, layout, layoutStructure, pageElement,
 			segmentsExperience.getSegmentsExperienceId());

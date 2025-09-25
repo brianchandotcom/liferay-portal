@@ -165,6 +165,17 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 			String.valueOf(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId())
 		).put(
+			"modalTitle",
+			() -> {
+				if (ParamUtil.getBoolean(
+						_httpServletRequest, "convertEmptyLayout")) {
+
+					return LanguageUtil.get(_httpServletRequest, "page-name");
+				}
+
+				return LanguageUtil.get(_httpServletRequest, "add-page");
+			}
+		).put(
 			"subtitle",
 			() -> {
 				if (Objects.equals(

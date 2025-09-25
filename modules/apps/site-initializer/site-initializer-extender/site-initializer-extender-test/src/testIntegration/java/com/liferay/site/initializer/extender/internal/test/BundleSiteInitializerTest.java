@@ -188,7 +188,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -2376,20 +2375,6 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals("Test List Type Entry 6", listTypeEntry6.getName());
 	}
 
-	private void _assertNavigationItemDisplayIcon() throws Exception {
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			_siteNavigationMenuItemLocalService.
-				fetchSiteNavigationMenuItemByExternalReferenceCode(
-					"TESTSITENAVIGATIONMENUITEM1", _group.getGroupId());
-
-		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.fastLoad(
-			siteNavigationMenuItem.getTypeSettings()
-		).build();
-
-		Assert.assertEquals(
-			"home", unicodeProperties.getProperty("displayIcon"));
-	}
-
 	private void _assertNotificationTemplate1() throws Exception {
 		NotificationTemplateResource.Builder
 			notificationTemplateResourceBuilder =
@@ -3889,6 +3874,7 @@ public class BundleSiteInitializerTest {
 		String typeSettings = siteNavigationMenuItem1.getTypeSettings();
 
 		Assert.assertFalse(typeSettings.contains("useCustomName"));
+		Assert.assertTrue(typeSettings.contains("displayIcon=home"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);
@@ -4539,7 +4525,6 @@ public class BundleSiteInitializerTest {
 		_assertLayouts1();
 		_assertLayoutUtilityPageEntries();
 		_assertListTypeDefinitions1();
-		_assertNavigationItemDisplayIcon();
 		_assertNotificationTemplate1();
 		_assertObjectDefinitions1();
 		_assertObjectFolders1();

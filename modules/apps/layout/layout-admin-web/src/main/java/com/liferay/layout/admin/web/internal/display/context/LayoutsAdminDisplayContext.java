@@ -237,15 +237,11 @@ public class LayoutsAdminDisplayContext {
 		).build();
 	}
 
-	public String getAddLayoutURL(boolean editAction) {
+	public String getAddLayoutURL() {
 		return PortletURLBuilder.createActionURL(
 			_liferayPortletResponse
 		).setActionName(
 			() -> {
-				if (editAction) {
-					return "/layout_admin/convert_empty_layout";
-				}
-
 				long layoutPageTemplateEntryId = ParamUtil.getLong(
 					httpServletRequest, "layoutPageTemplateEntryId");
 
@@ -296,12 +292,7 @@ public class LayoutsAdminDisplayContext {
 	public String getAddModalTitle() {
 		String title = "add-page";
 
-		String initialType = ParamUtil.getString(
-			httpServletRequest, "initialType");
-		boolean editAction = ParamUtil.getBoolean(
-			httpServletRequest, "editAction");
-
-		if (isConvertEmptyPage(initialType, editAction)) {
+		if (ParamUtil.getBoolean(httpServletRequest, "convertEmptyLayout")) {
 			title = "page-name";
 		}
 
@@ -381,6 +372,31 @@ public class LayoutsAdminDisplayContext {
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(
 			"selPlid", layout.getPlid()
+		).buildString();
+	}
+
+	public String getConvertEmptyLayoutURL() {
+		return PortletURLBuilder.createActionURL(
+			_liferayPortletResponse
+		).setActionName(
+			"/layout_admin/convert_empty_layout"
+		).setParameter(
+			"layoutPageTemplateEntryId",
+			ParamUtil.getLong(httpServletRequest, "layoutPageTemplateEntryId")
+		).setParameter(
+			"masterLayoutPlid",
+			ParamUtil.getLong(httpServletRequest, "masterLayoutPlid")
+		).setParameter(
+			"type",
+			() -> {
+				String type = ParamUtil.getString(httpServletRequest, "type");
+
+				if (Validator.isNotNull(type)) {
+					return type;
+				}
+
+				return null;
+			}
 		).buildString();
 	}
 
@@ -1177,12 +1193,10 @@ public class LayoutsAdminDisplayContext {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				selectLayoutPageTemplateEntryURL.setParameter(
-					"initialType", LayoutConstants.TYPE_EMPTY);
-				selectLayoutPageTemplateEntryURL.setParameter(
-					"editAction",
+					"convertEmptyLayout",
 					String.valueOf(
 						ParamUtil.getBoolean(
-							httpServletRequest, "editAction")));
+							httpServletRequest, "convertEmptyLayout")));
 				selectLayoutPageTemplateEntryURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
 			}
@@ -1754,14 +1768,6 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		return false;
-	}
-
-	public boolean isConvertEmptyPage(String type, boolean editAction) {
-		if (!editAction) {
-			return false;
-		}
-
-		return Objects.equals(type, LayoutConstants.TYPE_EMPTY);
 	}
 
 	public boolean isDraft() {

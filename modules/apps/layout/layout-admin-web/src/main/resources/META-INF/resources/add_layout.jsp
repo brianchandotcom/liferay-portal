@@ -9,16 +9,23 @@
 
 <%
 List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
+boolean convertEmptyLayout = ParamUtil.getBoolean(request, "convertEmptyLayout");
 boolean copyPermissions = ParamUtil.getBoolean(request, "copyPermissions");
 long sourcePlid = ParamUtil.getLong(request, "sourcePlid");
 
-boolean editAction = ParamUtil.getBoolean(request, "editAction");
-String initialType = ParamUtil.getString(request, "initialType");
+String actionURL;
+
+if (convertEmptyLayout) {
+	actionURL = layoutsAdminDisplayContext.getConvertEmptyLayoutURL();
+}
+else {
+	actionURL = (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL() : layoutsAdminDisplayContext.getCopyLayoutActionURL(copyPermissions, sourcePlid);
+}
 %>
 
 <clay:container-fluid>
 	<liferay-frontend:edit-form
-		action="<%= (sourcePlid <= 0) ? layoutsAdminDisplayContext.getAddLayoutURL(editAction) : layoutsAdminDisplayContext.getCopyLayoutActionURL(copyPermissions, sourcePlid) %>"
+		action="<%= actionURL %>"
 		cssClass="add-layout-form d-none"
 		method="post"
 		name="fm"
@@ -27,7 +34,7 @@ String initialType = ParamUtil.getString(request, "initialType");
 	>
 		<liferay-frontend:edit-form-body>
 			<c:choose>
-				<c:when test="<%= layoutsAdminDisplayContext.isConvertEmptyPage(initialType, editAction) %>">
+				<c:when test="<%= convertEmptyLayout %>">
 					<aui:input data-qa-id="addPageNameInput" label="name" name="name" required="<%= true %>" value='<%= ParamUtil.getString(request, "externalReferenceCode") %>' />
 				</c:when>
 				<c:otherwise>

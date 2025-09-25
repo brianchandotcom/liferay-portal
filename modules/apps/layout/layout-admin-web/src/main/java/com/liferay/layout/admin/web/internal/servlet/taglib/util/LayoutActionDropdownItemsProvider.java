@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
@@ -511,13 +510,11 @@ public class LayoutActionDropdownItemsProvider {
 		).setBackURL(
 			_getBackURL()
 		).setParameter(
-			"editAction", Boolean.TRUE
+			"convertEmptyLayout", Boolean.TRUE
 		).setParameter(
 			"externalReferenceCode", layout.getExternalReferenceCode()
 		).setParameter(
 			"groupId", layout.getGroupId()
-		).setParameter(
-			"initialType", LayoutConstants.TYPE_EMPTY
 		).setParameter(
 			"privateLayout", layout.isPrivateLayout()
 		).setParameter(

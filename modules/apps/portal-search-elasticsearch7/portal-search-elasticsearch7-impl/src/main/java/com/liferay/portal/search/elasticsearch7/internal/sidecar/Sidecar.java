@@ -438,14 +438,14 @@ public class Sidecar {
 			"bootstrap.memory_lock",
 			_elasticsearchConfigurationWrapper.bootstrapMlockAll());
 
-		// config clustering
+		// Configure clustering
 
 		settingsHelperImpl.put("cluster.name", _getClusterName());
 		settingsHelperImpl.put(
 			"cluster.routing.allocation.disk.threshold_enabled", false);
 		settingsHelperImpl.put("discovery.type", "single-node");
 
-		// config http
+		// Configure HTTP
 
 		HttpPortRange httpPortRange = new HttpPortRange(
 			_elasticsearchConfigurationWrapper);
@@ -465,7 +465,7 @@ public class Sidecar {
 				_elasticsearchConfigurationWrapper.httpCORSConfigurations());
 		}
 
-		// config networking
+		// Configure networking
 
 		String networkBindHost =
 			_elasticsearchConfigurationWrapper.networkBindHost();
@@ -496,7 +496,7 @@ public class Sidecar {
 		settingsHelperImpl.put(
 			"node.roles", List.of("master", "ingest", "data"));
 
-		// config paths
+		// Configure paths
 
 		Path workPath = _elasticsearchInstancePaths.getWorkPath();
 

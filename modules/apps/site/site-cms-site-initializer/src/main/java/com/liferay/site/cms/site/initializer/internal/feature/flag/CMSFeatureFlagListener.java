@@ -5,6 +5,8 @@
 
 package com.liferay.site.cms.site.initializer.internal.feature.flag;
 
+import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.log.Log;
@@ -40,7 +42,10 @@ public class CMSFeatureFlagListener implements FeatureFlagListener {
 				return;
 			}
 
-			try {
+			try (SafeCloseable safeCloseable =
+					CTCollectionThreadLocal.
+						setProductionModeWithSafeCloseable()) {
+
 				_groupLocalService.checkSystemGroups(companyId);
 
 				SiteInitializerUtil.initialize(companyId, _siteInitializer);

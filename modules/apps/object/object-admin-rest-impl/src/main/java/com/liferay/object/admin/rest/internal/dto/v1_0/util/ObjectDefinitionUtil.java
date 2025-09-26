@@ -52,6 +52,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 /**
  * @author Carolina Barbosa
@@ -411,19 +412,6 @@ public class ObjectDefinitionUtil {
 		};
 	}
 
-	private static String _getValue(
-		UnsafeFunction<String, String, Exception> unsafeFunction,
-		String value) {
-
-		if (value == StringPool.BLANK) {
-			return StringPool.BLANK;
-		}
-
-		return StringUtil.merge(
-			TransformUtil.transform(
-				value.split("\\s*,\\s*"), unsafeFunction, String.class));
-	}
-
 	private static ObjectDefinitionSetting _toObjectDefinitionSetting(
 		GroupLocalService groupLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
@@ -434,70 +422,68 @@ public class ObjectDefinitionUtil {
 			return null;
 		}
 
+		if (StringUtil.equals(
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				serviceBuilderObjectDefinitionSetting.getName())) {
+
+			return _toObjectDefinitionSetting(
+				ObjectDefinitionSettingConstants.
+					NAME_ACCEPTED_GROUP_EXTERNAL_REFERENCE_CODES,
+				groupId -> {
+					Group group = groupLocalService.getGroup(
+						GetterUtil.getLong(groupId));
+
+					return group.getExternalReferenceCode();
+				},
+				serviceBuilderObjectDefinitionSetting.getValue());
+		}
+		else if (StringUtil.equals(
+					ObjectDefinitionSettingConstants.
+						NAME_ROOT_OBJECT_DEFINITION_IDS,
+					serviceBuilderObjectDefinitionSetting.getName())) {
+
+			return _toObjectDefinitionSetting(
+				ObjectDefinitionSettingConstants.
+					NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES,
+				rootObjectDefinitionId -> {
+					com.liferay.object.model.ObjectDefinition
+						serviceBuilderObjectDefinition =
+							objectDefinitionLocalService.getObjectDefinition(
+								GetterUtil.getLong(rootObjectDefinitionId));
+
+					return serviceBuilderObjectDefinition.
+						getExternalReferenceCode();
+				},
+				serviceBuilderObjectDefinitionSetting.getValue());
+		}
+
 		ObjectDefinitionSetting objectDefinitionSetting =
 			new ObjectDefinitionSetting();
 
 		objectDefinitionSetting.setName(
-			() -> {
-				if (StringUtil.equals(
-						ObjectDefinitionSettingConstants.
-							NAME_ACCEPTED_GROUP_IDS,
-						serviceBuilderObjectDefinitionSetting.getName())) {
-
-					return ObjectDefinitionSettingConstants.
-						NAME_ACCEPTED_GROUP_EXTERNAL_REFERENCE_CODES;
-				}
-
-				if (StringUtil.equals(
-						ObjectDefinitionSettingConstants.
-							NAME_ROOT_OBJECT_DEFINITION_IDS,
-						serviceBuilderObjectDefinitionSetting.getName())) {
-
-					return ObjectDefinitionSettingConstants.
-						NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES;
-				}
-
-				return serviceBuilderObjectDefinitionSetting.getName();
-			});
+			serviceBuilderObjectDefinitionSetting::getName);
 		objectDefinitionSetting.setValue(
-			() -> {
-				if (StringUtil.equals(
-						ObjectDefinitionSettingConstants.
-							NAME_ACCEPTED_GROUP_IDS,
-						serviceBuilderObjectDefinitionSetting.getName())) {
+			serviceBuilderObjectDefinitionSetting::getValue);
 
-					return _getValue(
-						groupId -> {
-							Group group = groupLocalService.getGroup(
-								GetterUtil.getLong(groupId));
+		return objectDefinitionSetting;
+	}
 
-							return group.getExternalReferenceCode();
-						},
-						serviceBuilderObjectDefinitionSetting.getValue());
-				}
+	private static ObjectDefinitionSetting _toObjectDefinitionSetting(
+		String name, UnsafeFunction<String, String, Exception> unsafeFunction,
+		String value) {
 
-				if (StringUtil.equals(
-						ObjectDefinitionSettingConstants.
-							NAME_ROOT_OBJECT_DEFINITION_IDS,
-						serviceBuilderObjectDefinitionSetting.getName())) {
+		if (Objects.equals(value, StringPool.BLANK)) {
+			return null;
+		}
 
-					return _getValue(
-						rootObjectDefinitionId -> {
-							com.liferay.object.model.ObjectDefinition
-								serviceBuilderObjectDefinition =
-									objectDefinitionLocalService.
-										getObjectDefinition(
-											GetterUtil.getLong(
-												rootObjectDefinitionId));
+		ObjectDefinitionSetting objectDefinitionSetting =
+			new ObjectDefinitionSetting();
 
-							return serviceBuilderObjectDefinition.
-								getExternalReferenceCode();
-						},
-						serviceBuilderObjectDefinitionSetting.getValue());
-				}
-
-				return serviceBuilderObjectDefinitionSetting.getValue();
-			});
+		objectDefinitionSetting.setName(() -> name);
+		objectDefinitionSetting.setValue(
+			() -> StringUtil.merge(
+				TransformUtil.transform(
+					value.split("\\s*,\\s*"), unsafeFunction, String.class)));
 
 		return objectDefinitionSetting;
 	}

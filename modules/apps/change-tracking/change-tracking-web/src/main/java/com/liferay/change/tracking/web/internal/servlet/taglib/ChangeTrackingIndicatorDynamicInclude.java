@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -105,6 +106,15 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-17564") &&
+			scopeGroup.isCMS() && CTCollectionThreadLocal.isProductionMode()) {
+
+			return;
+		}
 
 		User user = themeDisplay.getUser();
 
@@ -320,14 +330,35 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			cms = true;
 		}
 
-		if ((ctCollection != null) && !cms) {
+		if (ctCollection != null) {
 			ctCollectionId = ctCollection.getCtCollectionId();
 
-			data.put("disableDropdown", false);
 			data.put("iconClass", "change-tracking-indicator-icon-publication");
 			data.put("iconName", "radio-button");
 
-			if (productionOnlyApplication) {
+			if (cms && !CTCollectionThreadLocal.isProductionMode()) {
+				data.put("cms", true);
+				data.put(
+					"title",
+					StringBundler.concat(
+						ctCollection.getName(), " (",
+						_language.get(
+							themeDisplay.getLocale(),
+							"do-not-make-cms-changes-inside-a-publication"),
+						")"));
+				data.put(
+					"warningBody",
+					_language.get(
+						themeDisplay.getLocale(), "publication-cms-warning"));
+				data.put("warningButton", true);
+				data.put(
+					"warningHeader",
+					_language.get(
+						themeDisplay.getLocale(),
+						"do-not-make-cms-changes-inside-a-publication"));
+				data.put("warningLearnLink", null);
+			}
+			else if (productionOnlyApplication) {
 				data.put(
 					"title",
 					StringBundler.concat(
@@ -389,13 +420,6 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 			}
 		}
 		else {
-			if (cms) {
-				data.put("disableDropdown", true);
-			}
-			else {
-				data.put("disableDropdown", false);
-			}
-
 			data.put("iconClass", "change-tracking-indicator-icon-production");
 			data.put("iconName", "simple-circle");
 			data.put(
@@ -431,7 +455,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				}
 			}
 			else {
-				if (!sandboxOnlyEnabled ||
+				if (cms || !sandboxOnlyEnabled ||
 					PortletPermissionUtil.contains(
 						themeDisplay.getPermissionChecker(),
 						CTPortletKeys.PUBLICATIONS,
@@ -442,24 +466,27 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 						String.valueOf(
 							CTConstants.CT_COLLECTION_ID_PRODUCTION));
 
-					data.put(
-						"checkoutDropdownItem",
-						JSONUtil.put(
+					JSONObject jsonObject = JSONUtil.put(
+						"href", checkoutURL.toString()
+					).put(
+						"label",
+						_language.get(
+							themeDisplay.getLocale(), "work-on-production")
+					).put(
+						"symbolLeft", "simple-circle"
+					);
+
+					if (!cms) {
+						jsonObject.put(
 							"confirmationMessage",
 							_language.get(
 								themeDisplay.getLocale(),
 								"any-changes-made-in-production-will-" +
 									"immediately-be-live.-continue-to-" +
-										"production")
-						).put(
-							"href", checkoutURL.toString()
-						).put(
-							"label",
-							_language.get(
-								themeDisplay.getLocale(), "work-on-production")
-						).put(
-							"symbolLeft", "simple-circle"
-						));
+										"production"));
+					}
+
+					data.put("checkoutDropdownItem", jsonObject);
 				}
 				else if (FeatureFlagManagerUtil.isEnabled(
 							themeDisplay.getCompanyId(), "LPD-20556")) {

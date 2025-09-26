@@ -1793,6 +1793,10 @@ public interface UserLocalService
 		LinkedHashMap<String, Object> params, boolean andSearch);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int searchCountBySocial(
+		long companyId, long[] groupIds, long[] userGroupIds, String keywords);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Map<Long, Integer> searchCounts(
 		long companyId, int status, long[] groupIds);
 

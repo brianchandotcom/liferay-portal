@@ -141,10 +141,11 @@ public class AuthorizedHttpServletSseServerTransportProvider
 			McpServerSession mcpServerSession = _factory.create(mcpServerTransport);
 
 			try {
-				Field requestTimeoutField =
-					McpServerSession.class.getDeclaredField("requestTimeout");
+				Field initNotificationHandlerField =
+					McpServerSession.class.getDeclaredField(
+						"initNotificationHandler");
 
-				requestTimeoutField.setAccessible(true);
+				initNotificationHandlerField.setAccessible(true);
 
 				Field initRequestHandlerField =
 					McpServerSession.class.getDeclaredField(
@@ -152,22 +153,21 @@ public class AuthorizedHttpServletSseServerTransportProvider
 
 				initRequestHandlerField.setAccessible(true);
 
-				Field initNotificationHandlerField =
+				Field notificationHandlersField =
 					McpServerSession.class.getDeclaredField(
-						"initNotificationHandler");
+						"notificationHandlers");
 
-				initNotificationHandlerField.setAccessible(true);
+				notificationHandlersField.setAccessible(true);
 
 				Field requestHandlersField =
 					McpServerSession.class.getDeclaredField("requestHandlers");
 
 				requestHandlersField.setAccessible(true);
 
-				Field notificationHandlersField =
-					McpServerSession.class.getDeclaredField(
-						"notificationHandlers");
+				Field requestTimeoutField =
+					McpServerSession.class.getDeclaredField("requestTimeout");
 
-				notificationHandlersField.setAccessible(true);
+				requestTimeoutField.setAccessible(true);
 
 				return new AuthorizedMcpServerSession(
 					mcpServerSession.getId(),

@@ -52,29 +52,7 @@ public class MCPServerTest {
 			).sseEndpoint(
 				"sse"
 			).customizeRequest(
-				builder -> {
-					try {
-						Base64.Encoder encoder = Base64.getEncoder();
-
-						String userNameAndPassword =
-							"test@liferay.com:" +
-								PropsValues.DEFAULT_ADMIN_PASSWORD;
-
-						builder.header(
-							"Authorization",
-							"Basic " +
-								new String(
-									encoder.encode(
-										userNameAndPassword.getBytes("UTF-8")),
-									"UTF-8"));
-					}
-					catch (UnsupportedEncodingException
-								unsupportedEncodingException) {
-
-						throw new RuntimeException(
-							unsupportedEncodingException);
-					}
-				}
+				builder -> builder.header("Authorization", _getAuthorization())
 			).build()
 		).build();
 
@@ -147,6 +125,23 @@ public class MCPServerTest {
 			));
 
 		mcpSyncClient.closeGracefully();
+	}
+
+	private String _getAuthorization() {
+		try {
+			Base64.Encoder encoder = Base64.getEncoder();
+
+			String userNameAndPassword =
+				"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD;
+
+			return "Basic " +
+				new String(
+					encoder.encode(userNameAndPassword.getBytes("UTF-8")),
+					"UTF-8");
+		}
+		catch (UnsupportedEncodingException unsupportedEncodingException) {
+			throw new RuntimeException(unsupportedEncodingException);
+		}
 	}
 
 }

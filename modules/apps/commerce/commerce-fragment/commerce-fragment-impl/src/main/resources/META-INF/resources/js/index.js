@@ -4,4 +4,5 @@
  */
 
 export {default as PendingAccountOrdersFDSPropsTransformer} from './account_orders_data_set/props_transformers/PendingAccountOrdersFDSPropsTransformer';
+export {default as AccountSelectorButton} from './account_selector_button/AccountSelectorButton';
 export {default as AccountsFDSPropsTransformer} from './accounts_data_set/props_transformers/AccountsFDSPropsTransformer';

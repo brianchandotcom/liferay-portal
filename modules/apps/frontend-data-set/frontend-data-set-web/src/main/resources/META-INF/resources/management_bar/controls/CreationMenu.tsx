@@ -17,7 +17,7 @@ const DropDown = ({
 	inEmptyState,
 	primaryItems,
 }: {
-	inEmptyState: any;
+	inEmptyState: boolean;
 	primaryItems: Array<ICreationActionItem>;
 }) => {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);
@@ -80,7 +80,7 @@ function CreationMenu({
 	inEmptyState,
 	primaryItems,
 }: {
-	inEmptyState: any;
+	inEmptyState: boolean;
 	primaryItems: Array<ICreationActionItem>;
 }) {
 	const frontendDataSetContext = useContext(FrontendDataSetContext);

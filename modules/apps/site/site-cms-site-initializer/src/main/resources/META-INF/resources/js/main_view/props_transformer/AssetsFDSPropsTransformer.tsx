@@ -11,6 +11,7 @@ import {START_TASK} from '../../common/utils/events';
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
+import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
@@ -284,6 +285,14 @@ export default function AssetsFDSPropsTransformer({
 			else if (action?.data?.id === 'download') {
 				Liferay.fire(START_TASK, {
 					actionId: action.data.id,
+					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'permissions') {
+				permissionsBulkAction({
+					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
+					defaultPermissionAdditionalProps:
+						additionalProps.defaultPermissionAdditionalProps || {},
 					selectedData,
 				});
 			}

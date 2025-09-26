@@ -69,6 +69,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -318,6 +319,28 @@ public class BatchEnginePortletDataHandlerTest {
 		_testExportImportObjectEntriesWithRelatedObjectEntries(
 			group, ObjectDefinitionConstants.SCOPE_COMPANY,
 			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+	}
+
+	@FeatureFlag("LPD-35443")
+	@Test
+	@TestInfo("LPD-64365")
+	public void testExportImportLayoutsToOtherSite() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group1);
+
+		File larFile = _exportLayouts(
+			false, group1.getGroupId(), false,
+			new long[] {layout1.getLayoutId()});
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		_importLayouts(false, false, larFile, group2.getGroupId());
+
+		Layout layout2 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			layout1.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertNotNull(layout2);
 	}
 
 	@Test
@@ -1121,6 +1144,10 @@ public class BatchEnginePortletDataHandlerTest {
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
 			new String[] {Boolean.TRUE.toString()}
+		).put(
+			"PORTLET_DATA_com_liferay_layout_admin_web_portlet_" +
+				"GroupPagesPortlet",
+			new String[] {Boolean.TRUE.toString()}
 		).build();
 
 		objectDefinitions.forEach(
@@ -1517,6 +1544,9 @@ public class BatchEnginePortletDataHandlerTest {
 	@Inject
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;

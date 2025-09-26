@@ -134,6 +134,11 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 				null, "pencil", "edit-tags",
 				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
 				"edit-tags", null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies", "permissions",
+				LanguageUtil.get(_httpServletRequest, "permissions"), null,
+				null, null));
 
 		return fdsBulkActionDropdownItems;
 	}

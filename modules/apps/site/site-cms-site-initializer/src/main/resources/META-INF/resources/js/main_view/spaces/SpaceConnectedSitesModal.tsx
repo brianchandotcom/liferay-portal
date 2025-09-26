@@ -304,9 +304,7 @@ export default function SpaceConnectedSitesModal({
 												size="sm"
 											>
 												<ClaySticker.Image
-													alt={getLocalizedName(
-														site.name
-													)}
+													alt=""
 													src={site.logo}
 												/>
 											</ClaySticker>

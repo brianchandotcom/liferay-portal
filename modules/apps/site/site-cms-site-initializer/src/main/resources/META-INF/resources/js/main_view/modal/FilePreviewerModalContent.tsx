@@ -14,6 +14,7 @@ import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
 export type File = {
+	alternativeText?: string;
 	externalReferenceCode: string;
 	id: number;
 	link: {
@@ -36,6 +37,7 @@ interface FilePreviewerModalContentProps {
 
 export default function FilePreviewerModalContent({
 	file: {
+		alternativeText,
 		link,
 		metadata: {numberOfPages} = {},
 		mimeType,
@@ -85,6 +87,7 @@ export default function FilePreviewerModalContent({
 			>
 				{hasDocumentPreview ? (
 					<DocumentPreviewer
+						alt={alternativeText}
 						baseImageURL={baseDocumentImageURL.toString()}
 						totalPages={numberOfPages}
 					/>

@@ -13,6 +13,7 @@ import {File} from '../FilePreviewerModalContent';
 
 export default function FilePreview({
 	file: {
+		alternativeText,
 		link,
 		metadata: {numberOfPages} = {},
 		mimeType,
@@ -33,6 +34,7 @@ export default function FilePreview({
 		<>
 			{hasDocumentPreview ? (
 				<DocumentPreviewer
+					alt={alternativeText}
 					baseImageURL={baseDocumentImageURL.toString()}
 					totalPages={numberOfPages}
 				/>

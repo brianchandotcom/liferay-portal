@@ -316,7 +316,7 @@ const FrontendDataSetContent = ({
 				({name}) => name && name.toLowerCase().includes('table')
 			);
 
-			if (view) {
+			if (view && visibleFieldNames) {
 				const tableSchema = view.schema as ITableSchema;
 
 				const updatedVisibleFieldNames: VisibleFieldNames = {};
@@ -343,19 +343,7 @@ const FrontendDataSetContent = ({
 		stateWriter: (
 			visibleFields: VisibleFieldNames | undefined
 		): VisibleFieldNames | undefined => {
-			if (visibleFields) {
-				const someFieldHidden = Object.values(visibleFields).some(
-					(value: boolean) => {
-						return value !== undefined && value === false;
-					}
-				);
-
-				if (someFieldHidden) {
-					return visibleFields;
-				}
-			}
-
-			return undefined;
+			return visibleFields;
 		},
 	});
 

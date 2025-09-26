@@ -162,7 +162,10 @@ export default function AssetNavigationModalContent({
 			</ClayModal.Header>
 
 			<ClayModal.Body className="p-0">
-				<div className="h-100" ref={containerRef}>
+				<div
+					className="asset-navigation-container h-100"
+					ref={containerRef}
+				>
 					<Carousel
 						contentViewURL={contentViewURL}
 						currentItem={currentItem}

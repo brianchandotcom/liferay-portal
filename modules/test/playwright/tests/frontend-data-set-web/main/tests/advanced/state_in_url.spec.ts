@@ -65,9 +65,11 @@ const assertDelta = async (
 	fdsSamplePage: FDSSamplePage,
 	page: Page
 ) => {
-	const state = getStateFromURL(new URL(page.url()).search, fdsId);
+	await expect(() => {
+		const state = getStateFromURL(new URL(page.url()).search, fdsId);
 
-	expect(state.delta).toBe(delta);
+		expect(state.delta).toBe(delta);
+	}).toPass();
 
 	await expect(fdsSamplePage.paginator.itemsPerPageSelector).toHaveText(
 		`${delta} Items`
@@ -75,11 +77,12 @@ const assertDelta = async (
 };
 
 const assertNoActiveFiltersInURL = async (fdsId: string, page: Page) => {
-	const state = getStateFromURL(new URL(page.url()).search, fdsId);
-
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 
-	expect(state.filters.length).toBe(0);
+	await expect(() => {
+		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+		expect(state.filters.length).toBe(0);
+	}).toPass();
 };
 
 const assertActiveFiltersInURL = async (
@@ -88,15 +91,17 @@ const assertActiveFiltersInURL = async (
 	fdsId: string,
 	page: Page
 ) => {
-	const state = getStateFromURL(new URL(page.url()).search, fdsId);
-
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 
-	for (const id of ids) {
-		expect(state.filters.some((filter: any) => filter.id === id)).toBe(
-			active
-		);
-	}
+	await expect(() => {
+		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+		for (const id of ids) {
+			expect(state.filters.some((filter: any) => filter.id === id)).toBe(
+				active
+			);
+		}
+	}).toPass();
 };
 
 const assertActiveFilter = async (
@@ -191,11 +196,13 @@ const assertView = async (
 	visualizationMode: EFDSVisualizationMode,
 	viewName?: string
 ) => {
-	const state = getStateFromURL(new URL(page.url()).search, fdsId);
-
 	await waitForFDS({page, visualizationMode});
 
-	expect(state.view).toBe(viewName ? viewName : visualizationMode);
+	await expect(() => {
+		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+		expect(state.view).toBe(viewName ? viewName : visualizationMode);
+	}).toPass();
 };
 
 const changeDelta = async (
@@ -627,12 +634,22 @@ for (const spaConfiguration of spaConfigurations) {
 					fdsId: string,
 					page: Page
 				) => {
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						fdsId
+					const pageSelector = page.getByLabel(
+						`Go to page, ${pageNumber}`
 					);
 
-					expect(state.page).toBe(pageNumber);
+					await page
+						.locator('li.page-item.active', {has: pageSelector})
+						.waitFor({state: 'visible'});
+
+					await expect(() => {
+						const state = getStateFromURL(
+							new URL(page.url()).search,
+							fdsId
+						);
+
+						expect(state.page).toBe(pageNumber);
+					}).toPass();
 				};
 
 				const changePageNumber = async (
@@ -641,11 +658,6 @@ for (const spaConfiguration of spaConfigurations) {
 					page: Page
 				) => {
 					await page.getByLabel(`Go to page, ${pageNumber}`).click();
-
-					await waitForFDS({
-						page,
-						visualizationMode: EFDSVisualizationMode.TABLE,
-					});
 
 					await assertPageNumber(pageNumber, fdsId, page);
 				};

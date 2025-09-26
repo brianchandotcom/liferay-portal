@@ -5,14 +5,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.SetUtil" %><%@
-page import="com.liferay.portal.util.PropsValues" %>
-
 <%
 instance._notice = new Liferay.Notice({
 	closeText: false,
-	type: 'warning',
+	type: 'warning'
 });
-
-instance._notice.show();
 %>

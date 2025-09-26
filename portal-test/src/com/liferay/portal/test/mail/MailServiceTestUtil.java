@@ -144,8 +144,7 @@ public class MailServiceTestUtil {
 		ReflectionTestUtil.setFieldValue(
 			mailService, "_sessions",
 			ProxyUtil.newProxyInstance(
-				clazz.getClassLoader(),
-				new Class<?>[] {Map.class},
+				clazz.getClassLoader(), new Class<?>[] {Map.class},
 				new InvocationHandler() {
 
 					public Object invoke(

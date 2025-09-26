@@ -125,8 +125,8 @@ public class MCPServerServlet extends HttpServlet {
 			).build()
 		).tool(
 			_getTool("call-http-endpoint", toolsJSONObject),
-			(exchange, arguments) -> {
-				String path = String.valueOf(arguments.get("path"));
+			(mcpAsyncServerExchange, monos) -> {
+				String path = String.valueOf(monos.get("path"));
 
 				if (!path.startsWith("/")) {
 					path = "/" + path;
@@ -134,21 +134,21 @@ public class MCPServerServlet extends HttpServlet {
 
 				return _callEndpoint(
 					authorizedHttpServletSseServerTransportProvider.
-						getAuthorizationHeader(exchange),
-					String.valueOf(arguments.get("method")), baseURL + path,
-					String.valueOf(arguments.get("payload")));
+						getAuthorizationHeader(mcpAsyncServerExchange),
+					String.valueOf(monos.get("method")), baseURL + path,
+					String.valueOf(monos.get("payload")));
 			}
 		).tool(
 			_getTool("get-openapi", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
+			(mcpAsyncServerExchange, monos) -> _callEndpoint(
 				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", String.valueOf(arguments.get("url")), null)
+					getAuthorizationHeader(mcpAsyncServerExchange),
+				"GET", String.valueOf(monos.get("url")), null)
 		).tool(
 			_getTool("get-openapis", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
+			(mcpAsyncServerExchange, monos) -> _callEndpoint(
 				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
+					getAuthorizationHeader(mcpAsyncServerExchange),
 				"GET", baseURL + "/openapi", null)
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
@@ -265,7 +265,7 @@ public class MCPServerServlet extends HttpServlet {
 						(String)objectEntryValues.get("name"),
 						(String)objectEntryValues.get("description"),
 						Collections.emptyList()),
-					(exchange, request) -> new McpSchema.GetPromptResult(
+					(mcpAsyncServerExchange, request) -> new McpSchema.GetPromptResult(
 						(String)objectEntryValues.get("description"),
 						List.of(
 							new McpSchema.PromptMessage(

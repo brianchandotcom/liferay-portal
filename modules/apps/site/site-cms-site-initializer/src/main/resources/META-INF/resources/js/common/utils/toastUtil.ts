@@ -15,6 +15,21 @@ const displayCreateSuccessToast = (name: string) => {
 	});
 };
 
+const displayCreateTaskErrorToast = (message: string | null) => {
+	openToast({
+		message:
+			message || Liferay.Language.get('an-unexpected-error-occurred'),
+		type: 'danger',
+	});
+};
+
+const displayCreateTaskSuccessToast = (message: string) => {
+	openToast({
+		message,
+		type: 'info',
+	});
+};
+
 const displayDeleteSuccessToast = (name: string) => {
 	openToast({
 		message: sub(
@@ -69,6 +84,8 @@ const displayNameInUseErrorToast = () => {
 
 export {
 	displayCreateSuccessToast,
+	displayCreateTaskErrorToast,
+	displayCreateTaskSuccessToast,
 	displayDeleteSuccessToast,
 	displayEditSuccessToast,
 	displayErrorToast,

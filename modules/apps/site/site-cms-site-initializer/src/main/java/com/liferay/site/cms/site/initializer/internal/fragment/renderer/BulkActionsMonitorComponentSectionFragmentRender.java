@@ -21,24 +21,25 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Fabio Monaco
+ * @author Giamarco Brunialti Masera
  */
 @Component(service = FragmentRenderer.class)
-public class TaskStatusComponentSectionFragmentRender
+public class BulkActionsMonitorComponentSectionFragmentRender
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "task-status";
+		return "bulk-actions";
 	}
 
 	@Override
 	protected String getLabelKey() {
-		return "task-status";
+		return "bulk-actions-monitor";
 	}
 
 	@Override
 	protected String getModuleName() {
-		return "TaskStatusManager";
+		return "BulkActionsMonitor";
 	}
 
 	@Override

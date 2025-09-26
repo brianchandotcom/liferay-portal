@@ -45,7 +45,6 @@ public class JspAnalyzerPluginTest {
 		_testAddTaglibRequirements(
 			"dependencies/imports_without_comments.jsp", expectedTaglibURIs,
 			"jakarta.tags.core");
-
 		_testAddTaglibRequirements(
 			"dependencies/imports_without_comments_with_javax.jsp",
 			expectedTaglibURIs, "http://java.sun.com/jsp/jstl/core");
@@ -204,7 +203,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	private void _testAddTaglibRequirements(
-			String jspPath, List<String> expectedURIs, String notExpectedURI)
+			String jspPath, List<String> expectedURIs, String unexpectedURI)
 		throws Exception {
 
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
@@ -235,8 +234,8 @@ public class JspAnalyzerPluginTest {
 		}
 
 		Assert.assertFalse(
-			"Not expected: " + notExpectedURI,
-			requireCapability.contains(notExpectedURI));
+			"Not expected: " + unexpectedURI,
+			requireCapability.contains(unexpectedURI));
 	}
 
 	private void _testImplicitImports(

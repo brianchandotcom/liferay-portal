@@ -9,7 +9,7 @@
 					"type": "string"
 				},
 				"path": {
-					"description": "The full endpoint path starting with / relative to $BASE_URL. Do not include the leading /o.",
+					"description": "The full endpoint path starting with / relative to [$BASE_URL$]. Do not include the leading /o.",
 					"type": "string"
 				},
 				"payload": {

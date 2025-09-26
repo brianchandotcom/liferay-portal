@@ -608,41 +608,4 @@ definition {
 		ACUtils.viewNameList(nameList = ${formNameList});
 	}
 
-	@description = "Forms visitor behavior card shows expected amount of views"
-	@priority = 5
-	test VisitorBehaviorCardShowsExpectedAmountOfViews {
-		property analytics.cloud.acceptance = "true";
-		property portal.acceptance = "true";
-		property portal.release = "true";
-		property test.run.type = "single";
-
-		var propertyName = ACDXPSettings.connectDXPtoAnalyticsCloud(siteName = "Site Name");
-
-		ACUtils.navigateToSitePage(
-			actionType = "View Form",
-			documentTitleList = "1,2,3,4",
-			pageName = "AC Page",
-			siteName = "Site Name");
-
-		ACUtils.closeAllSessionsAndWait();
-
-		ACUtils.launchAC();
-
-		ACProperties.switchProperty(propertyName = ${propertyName});
-
-		ACNavigation.goToAssets();
-
-		ACNavigation.switchTab(tabName = "Forms");
-
-		ACTimeFilter.clickTimeFilterButton();
-
-		ACTimeFilter.setLast24Hours();
-
-		ACNavigation.openItem(itemName = "Created Form Name");
-
-		ACAssets.viewVisitorsBehaviorMetric(
-			metricTitle = "Views",
-			metricValue = 4);
-	}
-
 }

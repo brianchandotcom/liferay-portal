@@ -232,7 +232,11 @@ export default function StructureTree({search}: {search: string}) {
 
 						{item.type === 'referenced-structure' ||
 						item.type === 'repeatable-group' ? (
-							<ClayIcon className="ml-2" symbol="repeat" />
+							<ClayIcon
+								className="ml-2"
+								data-title={Liferay.Language.get('repeatable')}
+								symbol="repeat"
+							/>
 						) : (
 							<></>
 						)}
@@ -241,6 +245,9 @@ export default function StructureTree({search}: {search: string}) {
 						(item.id === structureUuid && structureError) ? (
 							<ClayIcon
 								className="ml-2 text-danger"
+								data-title={Liferay.Language.get(
+									'invalid-element'
+								)}
 								symbol="exclamation-full"
 							/>
 						) : (
@@ -288,7 +295,13 @@ export default function StructureTree({search}: {search: string}) {
 								</span>
 
 								{childItem.locked ? (
-									<ClayIcon className="ml-2" symbol="lock" />
+									<ClayIcon
+										className="ml-2"
+										data-title={Liferay.Language.get(
+											'locked-field'
+										)}
+										symbol="lock"
+									/>
 								) : (
 									<></>
 								)}
@@ -296,6 +309,9 @@ export default function StructureTree({search}: {search: string}) {
 								{childItem.invalid ? (
 									<ClayIcon
 										className="ml-2 text-danger"
+										data-title={Liferay.Language.get(
+											'invalid-element'
+										)}
 										symbol="exclamation-full"
 									/>
 								) : (

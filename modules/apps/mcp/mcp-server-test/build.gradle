@@ -1,0 +1,4 @@
+dependencies {
+	testIntegrationImplementation group: "io.modelcontextprotocol.sdk", name: "mcp", version: "0.10.0"
+	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
+}

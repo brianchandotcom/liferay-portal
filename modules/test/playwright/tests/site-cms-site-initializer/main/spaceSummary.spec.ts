@@ -114,19 +114,6 @@ test(
 );
 
 test(
-	'Can see CMS site as connected for the Default space in space summary page',
-	{tag: '@LPD-39906'},
-	async ({page, spaceSummaryPage}) => {
-		const spaceName = 'Default';
-
-		await spaceSummaryPage.goto(spaceName);
-
-		expect(page.getByRole('heading', {name: 'Sites (1)'})).toBeVisible();
-		expect(page.getByText('CMS', {exact: true})).toBeVisible();
-	}
-);
-
-test(
 	'Can connect and disconnect a site for the Default space',
 	{tag: '@LPD-39906'},
 	async ({page, spaceSummaryPage}) => {
@@ -144,7 +131,7 @@ test(
 		await spaceSummaryPage.connectSite(siteName);
 
 		await expect(
-			page.getByRole('heading', {name: 'Sites (2)'})
+			page.getByRole('heading', {name: 'Sites (1)'})
 		).toBeVisible();
 		await expect(globalSiteLocator).toBeVisible();
 

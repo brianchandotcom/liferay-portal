@@ -44,7 +44,9 @@ export class SpaceSummaryPage {
 		this.page.getByRole('dialog').waitFor();
 		await this.page.getByLabel('Site', {exact: true}).click();
 		await this.page.getByRole('option', {name: siteName}).click();
-		await this.page.getByRole('button', {name: 'Connect'}).click();
+		await this.page
+			.getByRole('button', {exact: true, name: 'Connect'})
+			.click();
 
 		this.page.getByLabel('Connected Sites').getByText(siteName).waitFor();
 

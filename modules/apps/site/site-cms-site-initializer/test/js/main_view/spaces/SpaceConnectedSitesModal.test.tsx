@@ -50,18 +50,14 @@ const mockConnectedSites: Site[] = [
 		externalReferenceCode: '1',
 		id: '1',
 		logo: 'logo1.png',
-		name: {
-			en_US: 'Connected Site 1',
-		},
+		name: 'Connected Site 1',
 		searchable: true,
 	},
 	{
 		externalReferenceCode: '2',
 		id: '2',
 		logo: 'logo2.png',
-		name: {
-			en_US: 'Connected Site 2',
-		},
+		name: 'Connected Site 2',
 		searchable: false,
 	},
 ];
@@ -70,9 +66,7 @@ const mockUnconnectedSite: Site = {
 	externalReferenceCode: '3',
 	id: '3',
 	logo: 'logo3.png',
-	name: {
-		en_US: 'Unconnected Site 3',
-	},
+	name: 'Unconnected Site 3',
 	searchable: true,
 };
 
@@ -193,67 +187,6 @@ describe('SpaceConnectedSitesModal', () => {
 		).toBeInTheDocument();
 	});
 
-	it('uses the correct name when i18n translation is available', async () => {
-		jest.spyOn(
-			global.Liferay.ThemeDisplay,
-			'getLanguageId'
-		).mockReturnValue('pt_BR');
-
-		mockGetAllSites.mockResolvedValue({
-			data: {
-				items: [
-					{
-						...mockUnconnectedSite,
-						name: {
-							...mockUnconnectedSite.name,
-							pt_BR: 'Site 3 nao conectado',
-						},
-					},
-				],
-			},
-			error: null,
-		});
-
-		renderComponent();
-
-		await waitFor(() => {
-			expect(mockGetAllSites).toHaveBeenCalled();
-		});
-
-		await userEvent.click(screen.getByPlaceholderText('select-a-site'));
-
-		expect(screen.getByText('Site 3 nao conectado')).toBeInTheDocument();
-	});
-
-	it('uses the default name when i18n translation for user languageId is not available', async () => {
-		jest.spyOn(
-			global.Liferay.ThemeDisplay,
-			'getLanguageId'
-		).mockReturnValue('pt_BR');
-
-		jest.spyOn(
-			global.Liferay.ThemeDisplay,
-			'getDefaultLanguageId'
-		).mockReturnValue('en_US');
-
-		mockGetAllSites.mockResolvedValue({
-			data: {
-				items: [mockUnconnectedSite],
-			},
-			error: null,
-		});
-
-		renderComponent();
-
-		await waitFor(() => {
-			expect(mockGetAllSites).toHaveBeenCalled();
-		});
-
-		await userEvent.click(screen.getByPlaceholderText('select-a-site'));
-
-		expect(screen.getByText('Unconnected Site 3')).toBeInTheDocument();
-	});
-
 	describe('when hasConnectSitesPermission is true', () => {
 		it('allows connecting a new site', async () => {
 			mockGetAllSites.mockResolvedValue({
@@ -267,9 +200,7 @@ describe('SpaceConnectedSitesModal', () => {
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
 			await userEvent.click(
-				screen.getByRole('option', {
-					name: mockUnconnectedSite.name['en_US'],
-				})
+				screen.getByRole('option', {name: mockUnconnectedSite.name})
 			);
 
 			await userEvent.click(
@@ -284,7 +215,7 @@ describe('SpaceConnectedSitesModal', () => {
 			});
 
 			expect(
-				screen.getByText(mockUnconnectedSite.name['en_US'])
+				screen.getByText(mockUnconnectedSite.name)
 			).toBeInTheDocument();
 		});
 
@@ -305,9 +236,7 @@ describe('SpaceConnectedSitesModal', () => {
 			await userEvent.click(screen.getByPlaceholderText('select-a-site'));
 
 			await userEvent.click(
-				screen.getByRole('option', {
-					name: mockUnconnectedSite.name['en_US'],
-				})
+				screen.getByRole('option', {name: mockUnconnectedSite.name})
 			);
 
 			await userEvent.click(

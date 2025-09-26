@@ -64,7 +64,7 @@ public class PlacedCommerceOrderFDSAPIURLResolverTest {
 		);
 
 		Mockito.when(
-			_commerceChannelLocalService.getCommerceChannel(Mockito.anyLong())
+			_commerceChannelLocalService.fetchCommerceChannel(Mockito.anyLong())
 		).thenReturn(
 			_commerceChannel
 		);

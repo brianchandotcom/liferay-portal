@@ -45,11 +45,7 @@ const DropDown = ({
 					title={Liferay.Language.get('new')}
 					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 				>
-					{inEmptyState ? (
-						Liferay.Language.get('new')
-					) : (
-						<ClayIcon symbol="plus" />
-					)}
+					{Liferay.Language.get('new')}
 				</ClayButton>
 			}
 		>
@@ -131,7 +127,7 @@ function CreationMenu({
 						{inEmptyState ? (
 							primaryItems[0].label
 						) : (
-							<ClayIcon symbol="plus" />
+							Liferay.Language.get('new')
 						)}
 					</ClayButton>
 				)}

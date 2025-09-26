@@ -58,19 +58,17 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 					_mockHashedFilesRegistry(true, false), _mockPortal(),
 					_mockThemeLocalService());
 
+		Assert.assertFalse(
+			styleSheetFrontendResourceRequestHandler.canHandleRequest(
+				_mockHttpServletRequest("/nonsense/request/main.css", false)));
 		Assert.assertTrue(
 			styleSheetFrontendResourceRequestHandler.canHandleRequest(
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _UNHASHED_FILE_PATH, false)));
-
 		Assert.assertTrue(
 			styleSheetFrontendResourceRequestHandler.canHandleRequest(
 				_mockHttpServletRequest(
 					"/o/frontend-js-web" + _hashedFilePath, false)));
-
-		Assert.assertFalse(
-			styleSheetFrontendResourceRequestHandler.canHandleRequest(
-				_mockHttpServletRequest("/nonsense/request/main.css", false)));
 	}
 
 	@Test

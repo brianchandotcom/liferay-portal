@@ -98,14 +98,14 @@
 									},
 									{
 										"definition": {
-											"fragmentDropZoneId": "taskStatusManager"
+											"fragmentDropZoneId": "bulkActionsMonitor"
 										},
 										"id": "851aaf07-1933-26df-fe28-4fb2ea7df68f",
 										"pageElements": [
 											{
 												"definition": {
 													"fragment": {
-														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.TaskStatusComponentSectionFragmentRender"
+														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.BulkActionsMonitorComponentSectionFragmentRender"
 													},
 													"fragmentConfig": {
 													},

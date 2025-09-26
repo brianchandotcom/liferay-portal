@@ -10,116 +10,105 @@ import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import {
-	ActionId,
-	IBulkActionTaskItem,
-	STATUS_PROPERTIES,
-} from '../TaskStatusType';
-
 import '../../../../css/components/AssetTaskStatus.scss';
 
 import moment from 'moment';
 
-import {TASKS_REPORT_URL, TASK_ITEMS_REPORT_URL} from '../util';
-import handleMessageAndName from '../util/HandleMessageAndName';
+import {IBulkActionTask} from '../../../common/types/BulkActionTask';
+import {
+	LABELS_BULK_ACTIONS,
+	TASK_STATUS_PROPS,
+	URL_TASKS_REPORT_DETAIL,
+} from '../util/constants';
 
-function TaskStatusDropdownItemList({items, taskClassNameId}: any) {
+function TaskStatusDropdownItemList({
+	classNameId,
+	items,
+}: {
+	classNameId: number;
+	items: IBulkActionTask[];
+}) {
 	return (
-		<>
-			<DropDown.ItemList className="task-status" items={items}>
-				{(rawTask: unknown) => {
-					const {...task} = rawTask as IBulkActionTaskItem;
+		<DropDown.ItemList className="task-status" items={items}>
+			{(bulkActionTask: unknown) => {
+				const {dateModified, executionStatus, id, numberOfItems, type} =
+					bulkActionTask as IBulkActionTask;
 
-					const {name} = handleMessageAndName(
-						task.actionName as ActionId
-					);
+				const {
+					component: Component,
+					displayType,
+					icon,
+					label,
+				} = TASK_STATUS_PROPS[executionStatus];
 
-					const properties = STATUS_PROPERTIES[task.executionStatus];
+				return (
+					<ClayPanel
+						collapsable
+						displayTitle={
+							<ClayPanel.Title className="d-flex task-status-item">
+								<div className="task-status-item-icon">
+									<Component
+										className={
+											icon
+												? `text-${displayType}`
+												: 'loading-animation text-info'
+										}
+										displayType={displayType}
+										size="sm"
+										symbol={icon}
+									/>
+								</div>
 
-					return (
-						<ClayPanel
-							collapsable
-							displayTitle={
-								<ClayPanel.Title className="d-flex task-status-item">
-									<div className="task-status-item-icon">
-										<properties.component
-											className={properties.iconClassName}
-											displayType={
-												properties?.displayType
-											}
-											size="sm"
-											symbol={properties?.icon}
-										/>
-									</div>
+								<div className="task-status-item-text">
+									<p className="mb-1 text-secondary">
+										{LABELS_BULK_ACTIONS[type]}
+									</p>
 
-									<div className="task-status-item-text">
-										<p className="h5 m-0 mr-1">
-											{Liferay.Language.get(name)}
-										</p>
-
-										<span className="d-flex">
-											<p className="m-0 small text-secondary text-uppercase">
-												{sub(
-													Liferay.Language.get(
-														'x-items'
-													),
-													[task.numberOfItems]
-												)}
-											</p>
-
-											<span className="ml-1 mr-1 small">
-												-
-											</span>
-
-											<p className="m-0 small text-secondary text-uppercase">
-												{moment(
-													task.dateModified
-												).fromNow(false)}
-											</p>
+									<span className="d-flex text-1 text-secondary text-uppercase">
+										<span>
+											{sub(
+												Liferay.Language.get('x-items'),
+												[numberOfItems]
+											)}
 										</span>
 
-										<p className="mb-2">
-											<Label
-												displayType={
-													properties.labelDisplayType
-												}
-											>
-												{Liferay.Language.get(
-													properties.label
-												)}
-											</Label>
-										</p>
-									</div>
-								</ClayPanel.Title>
-							}
-							key={task.id}
-							showCollapseIcon={true}
-						>
-							<ClayPanel.Body className="d-flex">
-								<a
-									href={`${TASK_ITEMS_REPORT_URL}${taskClassNameId}/${task.id}`}
-								>
-									<Button
-										className={
-											properties.viewButtonClassName
-										}
-										displayType="secondary"
+										<span className="mx-1">-</span>
+
+										<span className="text-secondary">
+											{moment(dateModified).fromNow(
+												false
+											)}
+										</span>
+									</span>
+
+									<Label
+										className="align-self-start"
+										displayType={displayType}
 									>
-										{Liferay.Language.get('view')}
-									</Button>
-								</a>
-							</ClayPanel.Body>
-						</ClayPanel>
-					);
-				}}
-			</DropDown.ItemList>
-			<a
-				className="border-top btn btn-link text-secondary w-100"
-				href={TASKS_REPORT_URL}
-			>
-				{Liferay.Language.get('view-all-tasks')}
-			</a>
-		</>
+										{label}
+									</Label>
+								</div>
+							</ClayPanel.Title>
+						}
+						key={id}
+						showCollapseIcon={false}
+					>
+						<ClayPanel.Body className="d-flex">
+							<a
+								href={`${URL_TASKS_REPORT_DETAIL}${classNameId}/${id}`}
+							>
+								<Button
+									className={`border-${displayType} btn-xs text-${displayType}`}
+									displayType={displayType}
+								>
+									{Liferay.Language.get('view')}
+								</Button>
+							</a>
+						</ClayPanel.Body>
+					</ClayPanel>
+				);
+			}}
+		</DropDown.ItemList>
 	);
 }
 

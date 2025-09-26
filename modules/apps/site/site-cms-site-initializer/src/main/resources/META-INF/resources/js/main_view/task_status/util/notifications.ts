@@ -1,0 +1,134 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {
+	IBulkActionFDSData,
+	IBulkActionTaskType,
+} from '../../../common/types/BulkActionTask';
+import {
+	BULK_ACTION_CATEGORIES,
+	BULK_ACTION_DEFAULT_PERMISSIONS,
+	BULK_ACTION_DELETE,
+	BULK_ACTION_DOWNLOAD,
+	BULK_ACTION_MOVE,
+	BULK_ACTION_PERMISSIONS,
+	BULK_ACTION_TAGS,
+} from './constants';
+
+type BulkActionMessage = {
+	[actionType in keyof IBulkActionTaskType]: {
+		[messageType: string]: {
+			all: string;
+			plural: string;
+			singular: string;
+		};
+	};
+};
+
+const BULK_ACTION_MESSAGES: BulkActionMessage = {
+	[BULK_ACTION_CATEGORIES]: {
+		info: {
+			all: Liferay.Language.get(
+				'categories-update-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'categories-update-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'categories-update-action-started-for-x-asset'
+			),
+		},
+	},
+	[BULK_ACTION_DEFAULT_PERMISSIONS]: {
+		info: {
+			all: Liferay.Language.get(
+				'permission-update-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'permission-update-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'permission-update-action-started-for-1-asset'
+			),
+		},
+	},
+	[BULK_ACTION_DELETE]: {
+		info: {
+			all: Liferay.Language.get(
+				'asset-delete-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'asset-delete-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'asset-delete-action-started-for-1-asset'
+			),
+		},
+	},
+	[BULK_ACTION_DOWNLOAD]: {
+		info: {
+			all: Liferay.Language.get(
+				'asset-download-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'asset-download-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'asset-download-action-started-for-1-asset'
+			),
+		},
+	},
+	[BULK_ACTION_MOVE]: {
+		info: {
+			all: Liferay.Language.get(
+				'assets-move-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'assets-move-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'assets-move-action-started-for-1-asset'
+			),
+		},
+	},
+	[BULK_ACTION_PERMISSIONS]: {
+		info: {
+			all: Liferay.Language.get(
+				'permission-update-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'permission-update-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'permission-update-action-started-for-1-asset'
+			),
+		},
+	},
+	[BULK_ACTION_TAGS]: {
+		info: {
+			all: Liferay.Language.get(
+				'tags-update-action-started-for-all-assets'
+			),
+			plural: Liferay.Language.get(
+				'tags-update-action-started-for-x-assets'
+			),
+			singular: Liferay.Language.get(
+				'tags-update-action-started-for-1-asset'
+			),
+		},
+	},
+};
+
+export function getBulkActionTaskMessage(
+	actionType: keyof IBulkActionTaskType,
+	messageType: 'danger' | 'info' | 'success' | 'warning' = 'info',
+	{items = [], selectAll = false}: IBulkActionFDSData
+): string {
+	return (
+		BULK_ACTION_MESSAGES?.[actionType]?.[messageType]?.[
+			selectAll ? 'all' : items.length === 1 ? 'singular' : 'plural'
+		] || ''
+	);
+}

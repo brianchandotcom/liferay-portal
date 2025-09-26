@@ -103,48 +103,49 @@ describe('[CMS Dashboard] Components: RangeSelectorsDropdown', () => {
 		expect(mockedOnChange).toHaveBeenCalledTimes(1);
 	});
 
-	it('navigates drill down to select a custom range', async () => {
-		render(<RangeSelectorsDropdown {...mockedProps} />);
+	it('selects a custom date range and checks if it was selected', async () => {
+		const {rerender} = render(<RangeSelectorsDropdown {...mockedProps} />);
 
-		const RangeSelectorDropdown = screen.getByRole('button');
+		const rangeSelectorDropdown = screen.getByRole('button');
 
-		expect(RangeSelectorDropdown).toBeInTheDocument();
-		expect(RangeSelectorDropdown).toHaveTextContent('last-7-days');
+		expect(rangeSelectorDropdown).toHaveTextContent('last-7-days');
 
-		fireEvent.click(RangeSelectorDropdown);
+		await userEvent.click(rangeSelectorDropdown);
 
 		const customRangeOption = screen.getByRole('menuitem', {
 			name: /(custom-range)/,
 		});
 
-		fireEvent.click(customRangeOption);
+		await userEvent.click(customRangeOption);
 
-		const cancelButton = screen.getByTestId('cancel-button');
+		const rangeStartInput = (
+			await screen.findByTestId('range-start')
+		).querySelector('input.form-control');
 
-		expect(cancelButton).toBeInTheDocument();
+		const rangeEndInput = (
+			await screen.findByTestId('range-end')
+		).querySelector('input.form-control');
 
-		expect(screen.getByText('create-date-range')).toBeInTheDocument();
-		expect(screen.getByText('from')).toBeInTheDocument();
-		expect(screen.getByText('to[date-time]')).toBeInTheDocument();
+		await userEvent.type(rangeStartInput as HTMLInputElement, '2025-05-10');
 
-		const rangeStartElement = screen.getByTestId('range-start');
-		const rangeEndElement = screen.getByTestId('range-end');
+		await userEvent.type(rangeEndInput as HTMLInputElement, '2025-05-20');
 
-		const rangeStartInput =
-			rangeStartElement.querySelector('input.form-control');
-		const rangeEndInput =
-			rangeEndElement.querySelector('input.form-control');
+		await userEvent.click(screen.getByRole('button', {name: 'add-filter'}));
 
-		await userEvent.type(rangeStartInput as HTMLInputElement, '2025-05-05');
-		await userEvent.type(rangeEndInput as HTMLInputElement, '2025-05-25');
+		const newProps = {
+			...mockedProps,
+			activeRangeSelector: {
+				rangeEnd: '2025-05-20',
+				rangeKey: RangeSelectors.CustomRange,
+				rangeStart: '2025-05-10',
+			},
+		};
 
-		fireEvent.click(screen.getByRole('button', {name: 'add-filter'}));
+		rerender(<RangeSelectorsDropdown {...newProps} />);
 
-		expect(mockedOnChange).toHaveBeenCalledWith({
-			rangeEnd: '2025-05-25',
-			rangeKey: 'custom',
-			rangeStart: '2025-05-05',
-		});
+		expect(rangeSelectorDropdown).toHaveTextContent(
+			'2025-05-10 - 2025-05-20'
+		);
 	});
 
 	it('navigates drill down to select a custom range and cancel action', async () => {

@@ -99,7 +99,7 @@ public class ConvertEmptyLayoutMVCActionCommand
 					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-				if (layoutPageTemplateEntry.getLayoutPrototypeId() <= 0) {
+				if (layoutPageTemplateEntry.getLayoutPrototypeId() == 0) {
 					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {

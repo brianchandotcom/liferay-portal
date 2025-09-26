@@ -127,9 +127,8 @@ public class ConvertEmptyLayoutMVCActionCommandTest {
 
 		Layout layout = _layoutLocalService.getLayout(emptyLayout.getPlid());
 
-		Assert.assertTrue(layout.isTypeContent());
-
 		Assert.assertFalse(layout.isPublished());
+		Assert.assertTrue(layout.isTypeContent());
 	}
 
 	@Test

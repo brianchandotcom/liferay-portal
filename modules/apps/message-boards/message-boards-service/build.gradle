@@ -24,7 +24,6 @@ dependencies {
 	compileOnly project(":apps:export-import:export-import-api")
 	compileOnly project(":apps:friendly-url:friendly-url-api")
 	compileOnly project(":apps:layout:layout-api")
-	compileOnly project(":apps:mail:mail-settings-api")
 	compileOnly project(":apps:message-boards:message-boards-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:portal-search:portal-search-api")

@@ -248,7 +248,7 @@ public class MCPServerServlet extends HttpServlet {
 					companyId);
 
 		if (objectDefinition == null) {
-			return new ArrayList<>();
+			return Collections.emptyList();
 		}
 
 		return TransformUtil.transform(

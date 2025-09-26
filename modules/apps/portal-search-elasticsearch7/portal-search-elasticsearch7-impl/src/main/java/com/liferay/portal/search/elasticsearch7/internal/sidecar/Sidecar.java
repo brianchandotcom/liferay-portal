@@ -65,13 +65,14 @@ public class Sidecar {
 
 	public Sidecar(
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
-		ProcessExecutor processExecutor, SidecarManager sidecarManager,
-		Path sidecarHomePath, File sidecarProcessFile, Path sidecarWorkPath) {
+		ProcessExecutor processExecutor, Path sidecarHomePath,
+		SidecarManager sidecarManager, File sidecarProcessFile,
+		Path sidecarWorkPath) {
 
 		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 		_processExecutor = processExecutor;
-		_sidecarManager = sidecarManager;
 		_sidecarHomePath = sidecarHomePath;
+		_sidecarManager = sidecarManager;
 		_sidecarProcessFile = sidecarProcessFile;
 		_sidecarWorkPath = sidecarWorkPath;
 

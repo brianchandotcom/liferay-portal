@@ -73,8 +73,8 @@ public class ElasticsearchConnectionFixture
 
 		Sidecar sidecar = new Sidecar(
 			elasticsearchConfigurationWrapper, new LocalProcessExecutor(),
-			Mockito.mock(SidecarManager.class),
 			_TMP_PATH.resolve("sidecar-elasticsearch"),
+			Mockito.mock(SidecarManager.class),
 			new File(_workPath.toFile(), "sidecar.process"), _workPath);
 
 		ElasticsearchConnectionBuilder elasticsearchConnectionBuilder =

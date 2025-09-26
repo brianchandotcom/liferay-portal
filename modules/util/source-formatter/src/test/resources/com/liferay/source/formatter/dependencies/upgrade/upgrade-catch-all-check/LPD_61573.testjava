@@ -11,9 +11,9 @@ package com.liferay.source.formatter.dependencies.upgrade;
 public class LPD_61573 {
 
 	public void method() {
-		StringBuilder filename = new StringBuilder();
+		StringBuilder stringBuilder = new StringBuilder();
 
-		filename.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
+		stringBuilder.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
 	}
 
 }

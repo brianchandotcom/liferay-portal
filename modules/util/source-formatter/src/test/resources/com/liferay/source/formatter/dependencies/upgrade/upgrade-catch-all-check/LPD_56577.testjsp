@@ -6,8 +6,5 @@
 --%>
 
 <%
-instance._notice = new Liferay.Notice({
-	closeText: false,
-	type: 'warning'
-});
+new Liferay.Notice({});
 %>

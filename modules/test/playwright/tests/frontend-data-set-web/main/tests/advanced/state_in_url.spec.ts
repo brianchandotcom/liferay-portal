@@ -836,17 +836,23 @@ for (const spaConfiguration of spaConfigurations) {
 					fdsId: string,
 					page: Page
 				) => {
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						fdsId
-					);
+					await expect(
+						fdsSamplePage.managementToolbar.searchInput
+					).toHaveValue(searchParam);
 
-					if (searchParam) {
-						expect(state.q).toBe(searchParam);
-					}
-					else {
-						expect(state.q).toBeUndefined();
-					}
+					await expect(() => {
+						const state = getStateFromURL(
+							new URL(page.url()).search,
+							fdsId
+						);
+
+						if (searchParam) {
+							expect(state.q).toBe(searchParam);
+						}
+						else {
+							expect(state.q).toBeUndefined();
+						}
+					}).toPass();
 				};
 
 				const changeSearchParam = async (
@@ -859,8 +865,6 @@ for (const spaConfiguration of spaConfigurations) {
 						searchParam
 					);
 					await fdsSamplePage.managementToolbar.searchButton.click();
-
-					await page.waitForTimeout(1000);
 
 					await assertSearchParam(searchParam, fdsId, page);
 				};

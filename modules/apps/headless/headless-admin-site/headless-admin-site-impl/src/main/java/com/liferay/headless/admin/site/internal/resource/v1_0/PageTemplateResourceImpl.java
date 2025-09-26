@@ -64,6 +64,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -112,6 +113,11 @@ public class PageTemplateResourceImpl
 			@Override
 			public String getItemClassName() {
 				return LayoutPageTemplateEntry.class.getName();
+			}
+
+			@Override
+			public List<String> getNestedFields() {
+				return List.of("friendlyUrlHistory", "pageSpecifications");
 			}
 
 			@Override

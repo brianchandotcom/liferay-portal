@@ -7,7 +7,6 @@ import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import {START_TASK} from '../../common/utils/events';
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
@@ -21,6 +20,7 @@ import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction
 import deleteItemAction from './actions/deleteItemAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
+import {triggerAssetBulkAction} from './actions/triggerAssetBulkAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import NameRenderer from './cell_renderers/NameRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
@@ -60,6 +60,7 @@ export default function AssetsFDSPropsTransformer({
 	...otherProps
 }: {
 	additionalProps: AdditionalProps;
+	apiURL: string;
 	creationMenu: any;
 	itemsActions?: any[];
 	otherProps: any;
@@ -280,15 +281,15 @@ export default function AssetsFDSPropsTransformer({
 			}
 			else if (action?.data?.id === 'delete') {
 				deleteAssetEntriesBulkAction({
+					apiURL: otherProps.apiURL,
 					selectedData,
-					...otherProps,
 				});
 			}
 			else if (action?.data?.id === 'download') {
-				Liferay.fire(START_TASK, {
-					actionId: action.data.id,
+				triggerAssetBulkAction({
+					apiURL: otherProps.apiURL,
 					selectedData,
-					...otherProps,
+					type: 'DownloadBulkAction',
 				});
 			}
 			else if (action?.data?.id === 'permissions') {

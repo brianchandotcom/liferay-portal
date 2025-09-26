@@ -211,9 +211,11 @@ public class JspAnalyzerPluginTest {
 
 		URL url = getResource(jspPath);
 
-		InputStream inputStream = url.openStream();
+		String content;
 
-		String content = IO.collect(inputStream);
+		try (InputStream inputStream = url.openStream()) {
+			content = IO.collect(inputStream);
+		}
 
 		Builder builder = new Builder();
 

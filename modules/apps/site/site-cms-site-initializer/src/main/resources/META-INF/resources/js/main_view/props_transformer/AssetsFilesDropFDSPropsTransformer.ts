@@ -31,13 +31,12 @@ export default function AssetsFilesDropFDSPropsTransformer({
 		additionalProps,
 		creationMenu,
 		itemsActions,
-		otherProps,
+		...otherProps,
 		views,
 	});
 
 	return {
 		...assetsData,
-		...otherProps,
 		fileDropSettings: {
 			enabled: true,
 			isDropTarget: ({item}: {item: any}) => {

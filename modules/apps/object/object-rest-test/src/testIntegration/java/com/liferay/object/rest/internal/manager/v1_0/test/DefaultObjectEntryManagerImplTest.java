@@ -4491,6 +4491,63 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
+	@FeatureFlag("LPD-17564")
+	@Test
+	public void testGetApprovedObjectEntry() throws Exception {
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			_objectDefinition1, Collections.emptyMap());
+
+		assertEquals(
+			objectEntry1,
+			_defaultObjectEntryManager.getApprovedObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry1.getExternalReferenceCode(), _objectDefinition1,
+				null));
+
+		_defaultObjectEntryManager.expireObjectEntry(
+			_createDTOConverterContext(), objectEntry1.getId());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class, null,
+			() -> _defaultObjectEntryManager.getApprovedObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry1.getExternalReferenceCode(), _objectDefinition1,
+				null));
+
+		_enableObjectEntryVersioning();
+
+		ObjectEntry objectEntry2 = _updateObjectEntryVersion(
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
+			2);
+
+		assertEquals(
+			objectEntry2,
+			_defaultObjectEntryManager.getApprovedObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry2.getExternalReferenceCode(), _objectDefinition1,
+				null));
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			_createDTOConverterContext(), _objectDefinition1,
+			objectEntry2.getId(), 2);
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class, null,
+			() -> _defaultObjectEntryManager.getApprovedObjectEntry(
+				companyId, dtoConverterContext,
+				objectEntry2.getExternalReferenceCode(), _objectDefinition1,
+				null));
+
+		Assert.assertNotNull(
+			_getLatestApprovedObjectEntry(
+				objectEntry2.getId(), _objectDefinition1));
+	}
+
 	@Test
 	public void testGetObjectEntries() throws Exception {
 		testGetObjectEntries(Collections.emptyMap());
@@ -9805,6 +9862,10 @@ public class DefaultObjectEntryManagerImplTest
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.fetchObjectEntryByHeadObjectEntryId(
 				headObjectEntryId);
+
+		if (serviceBuilderObjectEntry == null) {
+			return null;
+		}
 
 		return _defaultObjectEntryManager.getApprovedObjectEntry(
 			companyId, dtoConverterContext,

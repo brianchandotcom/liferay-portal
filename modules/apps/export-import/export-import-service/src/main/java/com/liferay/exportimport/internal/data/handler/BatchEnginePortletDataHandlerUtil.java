@@ -116,18 +116,8 @@ public class BatchEnginePortletDataHandlerUtil {
 				return portletDataContext.getScopeGroupId();
 			}
 		).putAll(
-			exportImportDescriptor.getParameters()
-		).putAll(
-			exportImportDescriptor.getContextAwareParameters()
+			exportImportDescriptor.getParameters(portletDataContext)
 		).build();
-	}
-
-	public static Map<String, Serializable> buildExportParameters(
-		List<String> nestedFields, Map<String, Serializable> parameters,
-		PortletDataContext portletDataContext) {
-
-		return buildExportParameters(
-			nestedFields, parameters, null, portletDataContext);
 	}
 
 	public static Map<String, Serializable> buildImportParameters(

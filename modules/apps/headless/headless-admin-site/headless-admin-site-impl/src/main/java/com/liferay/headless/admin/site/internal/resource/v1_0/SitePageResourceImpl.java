@@ -177,7 +177,12 @@ public class SitePageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public Map<String, Serializable> getContextAwareParameters(
+			public String getItemClassName() {
+				return SitePage.class.getName();
+			}
+
+			@Override
+			public Map<String, Serializable> getParameters(
 				PortletDataContext portletDataContext) {
 
 				return HashMapBuilder.<String, Serializable>put(
@@ -240,11 +245,6 @@ public class SitePageResourceImpl
 						return group.getExternalReferenceCode();
 					}
 				).build();
-			}
-
-			@Override
-			public String getItemClassName() {
-				return SitePage.class.getName();
 			}
 
 			@Override

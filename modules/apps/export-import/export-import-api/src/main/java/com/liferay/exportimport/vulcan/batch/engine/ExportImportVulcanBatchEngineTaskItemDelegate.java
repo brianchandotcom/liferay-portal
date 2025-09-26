@@ -23,12 +23,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
-		public default Map<String, Serializable> getContextAwareParameters(
-			PortletDataContext portletDataContext) {
-
-			return null;
-		}
-
 		public String getItemClassName();
 
 		public default String getItemModelName() {
@@ -43,7 +37,9 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return null;
 		}
 
-		public default Map<String, Serializable> getParameters() {
+		public default Map<String, Serializable> getParameters(
+			PortletDataContext portletDataContext) {
+
 			return null;
 		}
 

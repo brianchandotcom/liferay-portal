@@ -19,12 +19,21 @@ export enum SelectOptions {
 	GROUPS = 'groups',
 }
 
-type HeadlessAdminUserGroup = Pick<
-	UserGroup,
-	'id' | 'externalReferenceCode' | 'name'
-> & {
+interface AdminUserAccount {
+	emailAddress: string;
+	externalReferenceCode: string;
+	id: number;
+	image: string;
+	imageId: number;
+	name: string;
+}
+
+interface AdminUserGroup {
+	externalReferenceCode: string;
+	id: number;
+	name: string;
 	usersCount: number;
-};
+}
 
 export interface SpaceMembersInputWithSelectProps {
 	className?: string;
@@ -49,13 +58,21 @@ export function SpaceMembersInputWithSelect({
 	const selectId = useId();
 	const [value, setValue] = useState('');
 
-	const renderUserAccountItem = (item: UserAccount) => {
+	const renderUserAccountItem = (item: AdminUserAccount) => {
 		return (
 			<ItemSelector.Item
 				className="align-items-center d-flex text-truncate"
 				key={item.id}
 				onClick={() => {
-					onAutocompleteItemSelected?.(item);
+					onAutocompleteItemSelected?.({
+						emailAddress: item.emailAddress,
+						externalReferenceCode: item.externalReferenceCode,
+						id: String(item.id),
+						image: item.image,
+						imageId: String(item.imageId),
+						name: item.name,
+						roles: [],
+					});
 					setTimeout(() => setValue(''), 0);
 				}}
 				textValue={item.name}
@@ -75,7 +92,7 @@ export function SpaceMembersInputWithSelect({
 		);
 	};
 
-	const renderUserGroupItem = (item: HeadlessAdminUserGroup) => {
+	const renderUserGroupItem = (item: AdminUserGroup) => {
 		const groupCount = item.usersCount || 0;
 
 		return (
@@ -84,7 +101,9 @@ export function SpaceMembersInputWithSelect({
 				key={item.id}
 				onClick={() => {
 					onAutocompleteItemSelected?.({
-						...item,
+						externalReferenceCode: item.externalReferenceCode,
+						id: String(item.id),
+						name: item.name,
 						numberOfUserAccounts: String(groupCount),
 						roles: [],
 					});
@@ -155,7 +174,7 @@ export function SpaceMembersInputWithSelect({
 							)}
 						/>
 					) : selectValue === SelectOptions.USERS ? (
-						<ItemSelector<UserAccount>
+						<ItemSelector<AdminUserAccount>
 							apiURL={endpoints[SelectOptions.USERS]}
 							id="autocomplete"
 							key="select-user"
@@ -173,7 +192,7 @@ export function SpaceMembersInputWithSelect({
 							{renderUserAccountItem}
 						</ItemSelector>
 					) : (
-						<ItemSelector<HeadlessAdminUserGroup>
+						<ItemSelector<AdminUserGroup>
 							apiURL={endpoints[SelectOptions.GROUPS]}
 							id="autocomplete"
 							key="select-group"

@@ -80,7 +80,7 @@ public class PageTemplateDTOConverter
 				setCreator(
 					() -> {
 						User user = _userLocalService.fetchUser(
-							layout.getUserId());
+							layoutPageTemplateEntry.getUserId());
 
 						if (user == null) {
 							return null;

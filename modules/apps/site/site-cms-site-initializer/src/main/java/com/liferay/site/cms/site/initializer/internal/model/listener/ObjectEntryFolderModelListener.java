@@ -29,15 +29,18 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.util.Iterator;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -178,6 +181,9 @@ public class ObjectEntryFolderModelListener
 			return;
 		}
 
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
+			ObjectEntryFolder.class.getName());
+
 		Iterator<String> iterator = objectEntryFoldersJSONObject.keys();
 
 		while (iterator.hasNext()) {
@@ -202,7 +208,10 @@ public class ObjectEntryFolderModelListener
 				ObjectEntryFolder.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectEntryFolder.getObjectEntryFolderId()),
-				role.getRoleId(), JSONUtil.toStringArray(jsonArray));
+				role.getRoleId(),
+				ArrayUtil.filter(
+					JSONUtil.toStringArray(jsonArray),
+					action -> resourceActions.contains(action)));
 		}
 	}
 

@@ -204,11 +204,14 @@ public class ObjectEntryFolderModelListenerTest {
 
 		Assert.assertEquals(jsonObject1.toString(), jsonObject2.toString());
 
+		String randomString = RandomTestUtil.randomString();
+
 		jsonObject2.put(
 			"OBJECT_ENTRY_FOLDERS",
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)
+				JSONUtil.putAll(
+					ActionKeys.UPDATE, ActionKeys.VIEW, randomString)
 			).put(
 				RoleConstants.USER, JSONUtil.putAll(ActionKeys.VIEW)
 			));
@@ -255,6 +258,7 @@ public class ObjectEntryFolderModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		Assert.assertFalse(resourcePermission.hasActionId(randomString));
 
 		role = _roleLocalService.getRole(
 			objectEntryFolder2.getCompanyId(), RoleConstants.USER);

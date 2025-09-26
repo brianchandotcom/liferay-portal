@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -42,6 +44,14 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.site.cms.site.initializer.internal.util.BooleanQueryParseUtil;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletException;
@@ -113,6 +123,19 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		}
 	}
 
+	private void _bulkActionItemsDownload(
+			JSONArray jsonArray, ThemeDisplay themeDisplay, ZipWriter zipWriter)
+		throws IOException, PortalException {
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
+
+			_handleZipObjectEntry(
+				itemJSONObject.getString("className"),
+				itemJSONObject.getLong("classPK"), themeDisplay, zipWriter);
+		}
+	}
+
 	private void _createContext(
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
@@ -156,25 +179,13 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 			return;
 		}
 
-		String type = jsonObject.getString("type");
+		if (!StringUtil.equalsIgnoreCase(
+				"DownloadBulkAction", jsonObject.getString("type"))) {
 
-		if (!StringUtil.equalsIgnoreCase("DownloadBulkAction", type)) {
 			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
 			if (_log.isWarnEnabled()) {
 				_log.warn("Type is not \"DownloadBulkAction\"");
-			}
-
-			return;
-		}
-
-		boolean selectAll = jsonObject.getBoolean("selectAll");
-
-		if (selectAll) {
-			httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn("The value for \"selectAll\" is true");
 			}
 
 			return;
@@ -186,43 +197,13 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 
 		ZipWriter zipWriter = _zipWriterFactory.getZipWriter();
 
-		JSONArray jsonArray = jsonObject.getJSONArray("bulkActionItems");
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject itemJSONObject = jsonArray.getJSONObject(i);
-
-			String className = itemJSONObject.getString("className");
-			long classPK = itemJSONObject.getLong("classPK");
-
-			if (StringUtil.equalsIgnoreCase(
-					className, ObjectEntryFolder.class.getName())) {
-
-				ObjectEntryFolder objectEntryFolder =
-					_objectEntryFolderService.getObjectEntryFolder(classPK);
-
-				_zipObjectEntryFolder(
-					objectEntryFolder.getGroupId(), classPK,
-					objectEntryFolder.getName(), themeDisplay, zipWriter);
-			}
-			else if (StringUtil.equalsIgnoreCase(
-						className,
-						"com.liferay.object.model.ObjectDefinition#Z7P5")) {
-
-				_zipObjectEntry(
-					_objectEntryLocalService.getObjectEntry(classPK),
-					StringPool.SLASH, themeDisplay.getPermissionChecker(),
-					zipWriter);
-			}
-			else {
-				httpServletResponse.setStatus(
-					HttpServletResponse.SC_BAD_REQUEST);
-
-				if (_log.isWarnEnabled()) {
-					_log.warn("Invalid class name " + className);
-				}
-
-				return;
-			}
+		if (jsonObject.getBoolean("selectAll")) {
+			_selectAllDownload(httpServletRequest, themeDisplay, zipWriter);
+		}
+		else {
+			_bulkActionItemsDownload(
+				jsonObject.getJSONArray("bulkActionItems"), themeDisplay,
+				zipWriter);
 		}
 
 		try (InputStream inputStream = new FileInputStream(
@@ -237,7 +218,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		finally {
 			File file = zipWriter.getFile();
 
-			file.delete();
+			if ((file != null) && file.exists()) {
+				file.delete();
+			}
 		}
 	}
 
@@ -290,7 +273,9 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 		finally {
 			File file = zipWriter.getFile();
 
-			file.delete();
+			if ((file != null) && file.exists()) {
+				file.delete();
+			}
 		}
 	}
 
@@ -304,6 +289,82 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 				httpServletRequest.getServletPath();
 
 		return requestURI.substring(path.length() + 1);
+	}
+
+	private User _getUser(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if (user == null) {
+			user = _userLocalService.getGuestUser(
+				_portal.getCompanyId(httpServletRequest));
+		}
+
+		return user;
+	}
+
+	private void _handleZipObjectEntry(
+			String className, long classPK, ThemeDisplay themeDisplay,
+			ZipWriter zipWriter)
+		throws IOException, PortalException {
+
+		if (StringUtil.equalsIgnoreCase(
+				className, ObjectEntryFolder.class.getName())) {
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(classPK);
+
+			_zipObjectEntryFolder(
+				objectEntryFolder.getGroupId(), classPK,
+				objectEntryFolder.getName(), themeDisplay, zipWriter);
+		}
+		else {
+			_zipObjectEntry(
+				_objectEntryLocalService.getObjectEntry(classPK),
+				StringPool.SLASH, themeDisplay.getPermissionChecker(),
+				zipWriter);
+		}
+	}
+
+	private void _selectAllDownload(
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
+			ZipWriter zipWriter)
+		throws IOException, PortalException {
+
+		User user = _getUser(httpServletRequest);
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).emptySearchEnabled(
+				true
+			).fetchSource(
+				true
+			).query(
+				BooleanQueryParseUtil.parse(
+					_queries, httpServletRequest.getParameter("filter"))
+			).withSearchContext(
+				searchContext -> {
+					searchContext.setCompanyId(user.getCompanyId());
+					searchContext.setEnd(QueryUtil.ALL_POS);
+					searchContext.setKeywords(
+						httpServletRequest.getParameter("search"));
+					searchContext.setLocale(user.getLocale());
+					searchContext.setStart(QueryUtil.ALL_POS);
+					searchContext.setTimeZone(user.getTimeZone());
+					searchContext.setUserId(user.getUserId());
+				}
+			).build());
+
+		SearchHits searchHits = searchResponse.getSearchHits();
+
+		for (SearchHit searchHit : searchHits.getSearchHits()) {
+			Document document = searchHit.getDocument();
+
+			_handleZipObjectEntry(
+				document.getString("entryClassName"),
+				document.getLong("entryClassPK"), themeDisplay, zipWriter);
+		}
 	}
 
 	private void _zipObjectEntry(
@@ -396,6 +457,18 @@ public class DownloadObjectEntryFolderServlet extends HttpServlet {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private Queries _queries;
+
+	@Reference
+	private Searcher _searcher;
+
+	@Reference
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private ZipWriterFactory _zipWriterFactory;

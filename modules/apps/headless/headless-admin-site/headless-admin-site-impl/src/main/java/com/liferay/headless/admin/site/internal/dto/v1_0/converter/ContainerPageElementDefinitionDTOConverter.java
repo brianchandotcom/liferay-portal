@@ -5,17 +5,32 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.data.engine.field.type.util.LocalizedValueUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentLinkValue;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkValueUtil;
+import com.liferay.layout.converter.AlignConverter;
+import com.liferay.layout.converter.ContentDisplayConverter;
+import com.liferay.layout.converter.ContentVisibilityConverter;
+import com.liferay.layout.converter.FlexWrapConverter;
+import com.liferay.layout.converter.JustifyConverter;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,6 +42,7 @@ import org.osgi.service.component.annotations.Component;
 	service = DTOConverter.class
 )
 public class ContainerPageElementDefinitionDTOConverter
+	extends BaseStyledLayoutStructureItem
 	implements DTOConverter
 		<ContainerStyledLayoutStructureItem, ContainerPageElementDefinition> {
 
@@ -52,26 +68,108 @@ public class ContainerPageElementDefinitionDTOConverter
 		return new ContainerPageElementDefinition() {
 			{
 				setContentVisibility(
-					containerStyledLayoutStructureItem::getContentVisibility);
-				setCssClasses(
 					() -> {
-						if (SetUtil.isEmpty(
-								containerStyledLayoutStructureItem.
-									getCssClasses())) {
+						String contentVisibility =
+							containerStyledLayoutStructureItem.
+								getContentVisibility();
+
+						if ((contentVisibility == null) ||
+							contentVisibility.isEmpty()) {
 
 							return null;
 						}
 
-						return ArrayUtil.toStringArray(
-							containerStyledLayoutStructureItem.getCssClasses());
+						return ContentVisibility.create(
+							ContentVisibilityConverter.convertToExternalValue(
+								contentVisibility));
 					});
-				setCustomCSS(containerStyledLayoutStructureItem::getCustomCSS);
+				setCssClasses(
+					() -> toCssClasses(
+						containerStyledLayoutStructureItem.getCssClasses()));
+				setCustomCSS(
+					() -> toCustomCSS(
+						containerStyledLayoutStructureItem.getCustomCSS()));
+				setFragmentLink(
+					() -> _toFragmentLink(
+						containerStyledLayoutStructureItem.
+							getLinkJSONObject()));
+				setFragmentStyle(
+					() -> toFragmentStyle(
+						containerStyledLayoutStructureItem.
+							getStylesJSONObject()));
+				setFragmentViewports(
+					() -> toFragmentViewPorts(
+						containerStyledLayoutStructureItem.
+							getItemConfigJSONObject()));
 				setHtmlProperties(
 					() -> _toHtmlProperties(
 						containerStyledLayoutStructureItem));
 				setIndexed(containerStyledLayoutStructureItem::isIndexed);
+				setLayout(() -> _toLayout(containerStyledLayoutStructureItem));
 				setName(containerStyledLayoutStructureItem::getName);
 				setType(PageElementDefinition.Type.CONTAINER);
+			}
+		};
+	}
+
+	private FragmentLink _toFragmentLink(JSONObject jsonObject) {
+		if (jsonObject == null) {
+			return null;
+		}
+
+		boolean saveFragmentMappedValue =
+			FragmentLinkValueUtil.isSaveFragmentMappedValue(jsonObject);
+
+		if (jsonObject.isNull("href") && !saveFragmentMappedValue) {
+			return null;
+		}
+
+		return new FragmentLink() {
+			{
+				setValue(
+					() -> _toFragmentLinkValue(
+						jsonObject, saveFragmentMappedValue));
+			}
+		};
+	}
+
+	private FragmentLinkValue _toFragmentLinkValue(
+		JSONObject jsonObject, boolean saveFragmentMappedValue) {
+
+		return new FragmentLinkValue() {
+			{
+				setHref(
+					() -> {
+						if (saveFragmentMappedValue) {
+							return toFragmentMappedValue(jsonObject);
+						}
+
+						return new FragmentInlineValue() {
+							{
+								setValue_i18n(
+									() -> LocalizedValueUtil.toLocalizedValues(
+										jsonObject.getJSONObject("href")));
+							}
+						};
+					});
+				setTarget(
+					() -> {
+						String target = jsonObject.getString("target");
+
+						if (Validator.isNull(target)) {
+							return null;
+						}
+
+						if (StringUtil.equalsIgnoreCase(target, "_parent") ||
+							StringUtil.equalsIgnoreCase(target, "_top")) {
+
+							target = "_self";
+						}
+
+						return Target.create(
+							StringUtil.upperCaseFirstLetter(
+								target.substring(1)));
+					});
 			}
 		};
 	}
@@ -84,6 +182,90 @@ public class ContainerPageElementDefinitionDTOConverter
 				setHtmlTag(
 					() -> _internalToExternalValuesMap.get(
 						containerStyledLayoutStructureItem.getHtmlTag()));
+			}
+		};
+	}
+
+	private Layout _toLayout(
+		ContainerStyledLayoutStructureItem containerStyledLayoutStructureItem) {
+
+		if ((containerStyledLayoutStructureItem.getAlign() == null) &&
+			(containerStyledLayoutStructureItem.getContentDisplay() == null) &&
+			(containerStyledLayoutStructureItem.getFlexWrap() == null) &&
+			(containerStyledLayoutStructureItem.getJustify() == null) &&
+			(containerStyledLayoutStructureItem.getWidthType() == null)) {
+
+			return null;
+		}
+
+		return new Layout() {
+			{
+				setAlign(
+					() -> {
+						String align =
+							containerStyledLayoutStructureItem.getAlign();
+
+						if (Validator.isNull(align)) {
+							return null;
+						}
+
+						return Align.create(
+							AlignConverter.convertToExternalValue(align));
+					});
+				setContentDisplay(
+					() -> {
+						Object contentDisplay =
+							containerStyledLayoutStructureItem.
+								getContentDisplay();
+
+						if (Validator.isNull(contentDisplay)) {
+							return null;
+						}
+
+						return ContentDisplay.create(
+							ContentDisplayConverter.convertToExternalValue(
+								GetterUtil.getString(contentDisplay)));
+					});
+				setFlexWrap(
+					() -> {
+						String flexWrap =
+							containerStyledLayoutStructureItem.getFlexWrap();
+
+						if (Validator.isNull(flexWrap)) {
+							return null;
+						}
+
+						return FlexWrap.create(
+							FlexWrapConverter.convertToExternalValue(flexWrap));
+					});
+				setJustify(
+					() -> {
+						String justify =
+							containerStyledLayoutStructureItem.getJustify();
+
+						if (Validator.isNull(justify)) {
+							return null;
+						}
+
+						return Justify.create(
+							JustifyConverter.convertToExternalValue(justify));
+					});
+				setWidthType(
+					() -> {
+						String widthType =
+							containerStyledLayoutStructureItem.getWidthType();
+
+						if (Validator.isNull(widthType) ||
+							Objects.equals(
+								widthType,
+								StyledLayoutStructureConstants.WIDTH_TYPE)) {
+
+							return null;
+						}
+
+						return WidthType.create(
+							StringUtil.upperCaseFirstLetter(widthType));
+					});
 			}
 		};
 	}

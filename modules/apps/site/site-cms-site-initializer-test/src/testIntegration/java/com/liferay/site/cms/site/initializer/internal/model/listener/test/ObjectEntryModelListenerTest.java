@@ -166,11 +166,14 @@ public class ObjectEntryModelListenerTest {
 			objectEntryFolder2.getExternalReferenceCode(),
 			objectEntryFolder2.getModelClassName(), _filterFactory);
 
+		String randomString = RandomTestUtil.randomString();
+
 		jsonObject.put(
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.UPDATE, ActionKeys.VIEW)
+				JSONUtil.putAll(
+					ActionKeys.UPDATE, ActionKeys.VIEW, randomString)
 			).put(
 				RoleConstants.USER, JSONUtil.putAll(ActionKeys.VIEW)
 			));
@@ -217,6 +220,7 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		Assert.assertFalse(resourcePermission.hasActionId(randomString));
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -255,7 +259,8 @@ public class ObjectEntryModelListenerTest {
 			ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 			JSONUtil.put(
 				RoleConstants.CMS_ADMINISTRATOR,
-				JSONUtil.putAll(ActionKeys.DELETE, ActionKeys.VIEW)
+				JSONUtil.putAll(
+					ActionKeys.DELETE, ActionKeys.VIEW, randomString)
 			).put(
 				RoleConstants.USER, JSONUtil.putAll(ActionKeys.UPDATE)
 			));
@@ -306,6 +311,7 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+		Assert.assertFalse(resourcePermission.hasActionId(randomString));
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(

@@ -16,47 +16,31 @@ import React, {useCallback, useEffect, useState} from 'react';
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
 import {
+	ActionsMap,
 	AssetRoleSelectedActions,
 	BulkDefaultPermissionModalContentProps,
 } from './DefaultPermissionTypes';
 
-const DEFAULT_PERMISSIONS = {
-	L_CONTENTS: {
-		'CMS Administrator': [
-			'UPDATE_DISCUSSION',
-			'DELETE',
-			'PERMISSIONS',
-			'OBJECT_ENTRY_HISTORY',
-			'DELETE_DISCUSSION',
-			'UPDATE',
-			'VIEW',
-			'ADD_DISCUSSION',
-		],
-	},
-	L_FILES: {
-		'CMS Administrator': [
-			'UPDATE_DISCUSSION',
-			'DELETE',
-			'PERMISSIONS',
-			'OBJECT_ENTRY_HISTORY',
-			'DELETE_DISCUSSION',
-			'UPDATE',
-			'VIEW',
-			'ADD_DISCUSSION',
-		],
-	},
-	OBJECT_ENTRY_FOLDERS: {
-		'CMS Administrator': [
-			'DELETE',
-			'PERMISSIONS',
-			'UPDATE',
-			'SUBSCRIBE',
-			'VIEW',
-			'ADD_ENTRY',
-		],
-	},
-};
-const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
+export function DEFAULT_PERMISSIONS(actions: ActionsMap) {
+	return {
+		L_CONTENTS: {
+			'CMS Administrator': actions.L_CONTENTS.map((item) => item.key),
+		},
+		L_FILES: {
+			'CMS Administrator': actions.L_FILES.map((item) => item.key),
+		},
+		OBJECT_ENTRY_FOLDERS: {
+			'CMS Administrator': actions.OBJECT_ENTRY_FOLDERS.map(
+				(item) => item.key
+			),
+		},
+	};
+}
+export const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
+export const OBJECT_DEFINITION_CLASS_NAME =
+	'com.liferay.object.model.ObjectDefinition';
+export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
+	'com.liferay.object.model.ObjectEntryFolder';
 
 export function defaultPermissionsBulkAction({
 	className,
@@ -173,7 +157,7 @@ export default function BulkDefaultPermissionModalContent({
 
 			try {
 				if (className === DEPOT_CLASS_NAME) {
-					setCurrentValues(DEFAULT_PERMISSIONS);
+					setCurrentValues(DEFAULT_PERMISSIONS(actions));
 				}
 				else {
 					let entryClassExternalReferenceCode = '';
@@ -202,7 +186,7 @@ export default function BulkDefaultPermissionModalContent({
 								);
 							})
 						) {
-							setCurrentValues(DEFAULT_PERMISSIONS);
+							setCurrentValues(DEFAULT_PERMISSIONS(actions));
 
 							return;
 						}
@@ -241,7 +225,7 @@ export default function BulkDefaultPermissionModalContent({
 			catch (error) {
 				console.error(error);
 
-				setCurrentValues(DEFAULT_PERMISSIONS);
+				setCurrentValues(DEFAULT_PERMISSIONS(actions));
 			}
 			finally {
 				setLoading(false);
@@ -253,7 +237,7 @@ export default function BulkDefaultPermissionModalContent({
 		return () => {
 			isMounted = false;
 		};
-	}, [className, selectedData.items]);
+	}, [actions, className, selectedData.items]);
 
 	return (
 		<>

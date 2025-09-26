@@ -28,14 +28,17 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
@@ -173,6 +176,9 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 			return;
 		}
 
+		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
+			objectEntry.getModelClassName());
+
 		Iterator<String> iterator = objectEntryJSONObject.keys();
 
 		while (iterator.hasNext()) {
@@ -195,7 +201,10 @@ public class ObjectEntryModelListener extends BaseModelListener<ObjectEntry> {
 				objectEntry.getCompanyId(), objectEntry.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectEntry.getObjectEntryId()),
-				role.getRoleId(), JSONUtil.toStringArray(jsonArray));
+				role.getRoleId(),
+				ArrayUtil.filter(
+					JSONUtil.toStringArray(jsonArray),
+					action -> resourceActions.contains(action)));
 		}
 	}
 

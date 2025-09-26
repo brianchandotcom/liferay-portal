@@ -1393,7 +1393,11 @@ public class LayoutsImporterTest {
 			StringPool.BLANK, _group1.getGroupId());
 
 		List<InfoField<?>> infoFields = ListUtil.filter(
-			infoForm.getAllInfoFields(), InfoField::isEditable);
+			infoForm.getAllInfoFields(),
+			infoField ->
+				infoField.isEditable() &&
+				!StringUtil.equals(
+					infoField.getName(), "externalReferenceCode"));
 
 		Assert.assertEquals(infoFields.toString(), 1, infoFields.size());
 

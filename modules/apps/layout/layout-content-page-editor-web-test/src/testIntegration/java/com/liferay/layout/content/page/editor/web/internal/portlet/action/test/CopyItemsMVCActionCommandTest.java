@@ -275,7 +275,11 @@ public class CopyItemsMVCActionCommandTest {
 			StringPool.BLANK, _group.getGroupId());
 
 		List<InfoField<?>> allInfoFields = ListUtil.filter(
-			infoForm.getAllInfoFields(), InfoField::isEditable);
+			infoForm.getAllInfoFields(),
+			infoField ->
+				infoField.isEditable() &&
+				!StringUtil.equals(
+					infoField.getName(), "externalReferenceCode"));
 
 		String classNameId = String.valueOf(
 			_portal.getClassNameId(objectDefinition.getClassName()));

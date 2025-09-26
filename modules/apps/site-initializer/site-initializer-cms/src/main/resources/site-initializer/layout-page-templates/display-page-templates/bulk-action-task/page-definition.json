@@ -1291,7 +1291,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ErrorItemsBulkActionTaskReportJSPSectionFragmentRenderer"
+														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewBulkActionTaskReportErrorItemsJSPSectionFragmentRenderer"
 													},
 													"fragmentConfig": {
 													},
@@ -1314,7 +1314,7 @@
 											{
 												"definition": {
 													"fragment": {
-														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SuccessfulItemsBulkActionTaskReportJSPSectionFragmentRenderer"
+														"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewBulkActionTaskReportSuccessfulItemsJSPSectionFragmentRenderer"
 													},
 													"fragmentConfig": {
 													},

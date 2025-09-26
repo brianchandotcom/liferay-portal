@@ -43,11 +43,12 @@ public class JspAnalyzerPluginTest {
 			"http://liferay.com/tld/util");
 
 		_testAddTaglibRequirements(
-			"dependencies/imports_without_comments.jsp", expectedTaglibURIs,
+			expectedTaglibURIs, "dependencies/imports_without_comments.jsp",
 			"jakarta.tags.core");
 		_testAddTaglibRequirements(
+			expectedTaglibURIs,
 			"dependencies/imports_without_comments_with_javax.jsp",
-			expectedTaglibURIs, "http://java.sun.com/jsp/jstl/core");
+			"http://java.sun.com/jsp/jstl/core");
 	}
 
 	@Test
@@ -203,7 +204,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	private void _testAddTaglibRequirements(
-			String jspPath, List<String> expectedURIs, String unexpectedURI)
+			List<String> expectedURIs, String jspPath, String unexpectedURI)
 		throws Exception {
 
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();

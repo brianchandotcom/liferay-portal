@@ -13,13 +13,6 @@ import FrontendDataSetContext from '../../FrontendDataSetContext';
 import {triggerAction} from '../../utils/actionItems/triggerAction';
 import {ICreationActionItem} from '../../utils/types';
 
-const EMPTY_STATE_BUTTON_PROPS = {
-	'aria-label': undefined,
-	'className': undefined,
-	'displayType': 'secondary',
-	'title': undefined,
-};
-
 const DropDown = ({
 	inEmptyState,
 	primaryItems,
@@ -39,9 +32,9 @@ const DropDown = ({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					className="nav-btn"
+					className={!inEmptyState ? 'nav-btn' : undefined}
 					data-testid="fdsCreationActionButton"
-					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
+					displayType={inEmptyState ? 'secondary' : undefined}
 				>
 					{Liferay.Language.get('new')}
 
@@ -109,7 +102,11 @@ function CreationMenu({
 				) : (
 					<ClayButton
 						aria-label={primaryItems[0].label}
-						className="nav-btn"
+						className={
+							inEmptyState
+								? 'btn btn-secondary'
+								: 'btn btn-primary nav-btn'
+						}
 						data-testid="fdsCreationActionButton"
 						data-tooltip-align="top"
 						onClick={() => {
@@ -123,8 +120,7 @@ function CreationMenu({
 								triggerAction(item, frontendDataSetContext);
 							}
 						}}
-						title={primaryItems[0].label}
-						{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
+						title={!inEmptyState ? primaryItems[0].label : undefined}
 					>
 						{inEmptyState ? (
 							primaryItems[0].label

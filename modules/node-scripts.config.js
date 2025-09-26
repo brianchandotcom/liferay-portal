@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'e0716bc3a1169e76a69665d0d17d3284cfba0221f555ab29737a7b682065d498',
+	hash: 'a7313205c19f6f07c01ac71955b48055104fd5d5441717c28bafe9e401319fbe',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -33,6 +33,7 @@ module.exports = {
 		'@liferay/commerce-channel-web': [],
 		'@liferay/commerce-checkout-web': [],
 		'@liferay/commerce-client-extension-web': [],
+		'@liferay/commerce-fragment-impl': [],
 		'@liferay/commerce-order-content-web': [],
 		'@liferay/commerce-order-rule-web': [],
 		'@liferay/commerce-order-web': [],

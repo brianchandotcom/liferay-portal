@@ -127,7 +127,7 @@ public class HashedFileFrontendResourceRequestHandler
 			}
 		}
 
-		URL resourceURL = _hashedFilesRegistry.getResourceURL(resourceURI);
+		URL resourceURL = _hashedFilesRegistry.getResource(resourceURI);
 
 		if (resourceURL == null) {
 			return null;

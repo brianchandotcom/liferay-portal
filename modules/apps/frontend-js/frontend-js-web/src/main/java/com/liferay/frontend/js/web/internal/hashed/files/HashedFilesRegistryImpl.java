@@ -58,26 +58,25 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 	}
 
 	@Override
-	public URL getResourceURL(String fileURI) {
+	public URL getResource(String path) {
 		_lazyActivate();
 
-		List<String> fileURIParts = Arrays.asList(
-			fileURI.split(StringPool.SLASH));
+		List<String> pathParts = Arrays.asList(path.split(StringPool.SLASH));
 
 		ServletContext servletContext = _serviceTrackerMap.getService(
-			StringUtil.merge(fileURIParts.subList(0, 3), StringPool.SLASH));
+			StringUtil.merge(pathParts.subList(0, 3), StringPool.SLASH));
 
 		if (servletContext == null) {
 			return null;
 		}
 
-		String resourcePath = StringUtil.merge(
-			fileURIParts.subList(3, fileURIParts.size()), StringPool.SLASH);
+		String subpath = StringUtil.merge(
+			pathParts.subList(3, pathParts.size()), StringPool.SLASH);
 
-		resourcePath = StringPool.SLASH + resourcePath;
+		subpath = StringPool.SLASH + subpath;
 
 		try {
-			return servletContext.getResource(resourcePath);
+			return servletContext.getResource(subpath);
 		}
 		catch (MalformedURLException malformedURLException) {
 			throw new RuntimeException(malformedURLException);

@@ -73,7 +73,7 @@ public class StyleSheetFrontendResourceRequestHandler
 			return true;
 		}
 
-		URL resourceURL = _hashedFilesRegistry.getResourceURL(requestURI);
+		URL resourceURL = _hashedFilesRegistry.getResource(requestURI);
 
 		if (resourceURL != null) {
 			return true;
@@ -122,7 +122,7 @@ public class StyleSheetFrontendResourceRequestHandler
 				_frontendCachingConfiguration.sendNoCacheForCSSStyleSheets();
 		}
 
-		URL resourceURL = _hashedFilesRegistry.getResourceURL(resourceURI);
+		URL resourceURL = _hashedFilesRegistry.getResource(resourceURI);
 
 		if (resourceURL == null) {
 			return null;

@@ -282,7 +282,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		);
 
 		Mockito.when(
-			hashedFilesRegistry.getResourceURL(
+			hashedFilesRegistry.getResource(
 				Mockito.eq(
 					"/o/frontend-js-web" +
 						(hashedFile ? _hashedFilePath : _UNHASHED_FILE_PATH)))

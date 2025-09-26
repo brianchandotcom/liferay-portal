@@ -27,11 +27,11 @@ public interface HashedFilesRegistry {
 	/**
 	 * Get the URL of the file associated to a given URI.
 	 *
-	 * @param fileURI an URI like '/o/frontend-js-web/__liferay__/index.js' or
+	 * @param path a path like '/o/frontend-js-web/__liferay__/index.js' or
 	 *                '/o/frontend-js-web/__liferay__/index.(zXjA8D).js'
 	 * @return a valid URL or null if the file does not exist
 	 * @review
 	 */
-	public URL getResourceURL(String fileURI);
+	public URL getResource(String path);
 
 }

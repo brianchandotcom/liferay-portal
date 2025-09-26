@@ -30,11 +30,11 @@ public class HashedFilesRegistryUtil {
 		return hashedFilesRegistry.getHashedFileURI(unhashedFileURI);
 	}
 
-	public static URL getResourceURL(String fileURI) {
+	public static URL getResource(String path) {
 		HashedFilesRegistry hashedFilesRegistry =
 			_hashedFilesRegistrySnapshot.get();
 
-		return hashedFilesRegistry.getResourceURL(fileURI);
+		return hashedFilesRegistry.getResource(path);
 	}
 
 	private static final Snapshot<HashedFilesRegistry>

@@ -220,7 +220,7 @@ public class AccountSelectorButtonFragmentRenderer implements FragmentRenderer {
 		catch (Exception exception) {
 			_log.error(exception);
 
-			throw new RuntimeException(exception);
+			throw new IOException(exception);
 		}
 	}
 

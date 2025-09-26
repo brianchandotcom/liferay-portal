@@ -42,9 +42,7 @@ public class ViewDashboardDisplayContext {
 					return group.getGroupId();
 				}
 				catch (PortalException portalException) {
-					if (_log.isDebugEnabled()) {
-						_log.error(portalException);
-					}
+					_log.error(portalException);
 				}
 
 				return null;

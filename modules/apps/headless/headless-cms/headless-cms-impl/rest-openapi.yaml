@@ -108,6 +108,8 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/BulkAction"
                 -   properties:
+                        configuration:
+                            type: string
                         permissions:
                             items:
                                 type: permission

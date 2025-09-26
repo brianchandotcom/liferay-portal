@@ -846,9 +846,7 @@ const Table = ({
 					const visibleFieldNames: VisibleFieldNames = {};
 
 					schema.fields.forEach(({fieldName}) => {
-						if (typeof fieldName === 'string') {
-							visibleFieldNames[fieldName] = false;
-						}
+						visibleFieldNames[String(fieldName)] = false;
 					});
 
 					visibleColumns.forEach((value: any, key: any) => {

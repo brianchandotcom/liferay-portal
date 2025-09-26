@@ -204,7 +204,7 @@ public class JspAnalyzerPluginTest {
 	}
 
 	private void _testAddTaglibRequirements(
-			String jspPath, String notExpectedURI)
+			String jspPath, List<String> expectedURIs, String notExpectedURI)
 		throws Exception {
 
 		JspAnalyzerPlugin jspAnalyzerPlugin = new JspAnalyzerPlugin();
@@ -225,6 +225,12 @@ public class JspAnalyzerPluginTest {
 
 		String requireCapability = builder.getProperty(
 			Constants.REQUIRE_CAPABILITY);
+
+		for (String expectedURI : expectedURIs) {
+			Assert.assertTrue(
+				"Expected: " + expectedURI,
+				requireCapability.contains(expectedURI));
+		}
 
 		Assert.assertFalse(
 			"Not expected: " + notExpectedURI,

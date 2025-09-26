@@ -64,7 +64,7 @@ public class PendingCommerceOrderFDSAPIURLResolverTest {
 		);
 
 		Mockito.when(
-			_commerceChannelLocalService.getCommerceChannel(Mockito.anyLong())
+			_commerceChannelLocalService.fetchCommerceChannel(Mockito.anyLong())
 		).thenReturn(
 			_commerceChannel
 		);
@@ -119,7 +119,7 @@ public class PendingCommerceOrderFDSAPIURLResolverTest {
 				_accountEntry.getAccountEntryId(), "/",
 				_commerceOrder.getCommerceOrderId(), "/",
 				_commerceChannel.getExternalReferenceCode(), "/",
-				_commerceContext.getCommerceChannelId(), "/",
+				_commerceChannel.getCommerceChannelId(), "/",
 				_commerceOrder.getExternalReferenceCode()));
 	}
 

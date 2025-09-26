@@ -510,7 +510,7 @@ public class LayoutActionDropdownItemsProvider {
 		).setBackURL(
 			_getBackURL()
 		).setParameter(
-			"convertEmptyLayout", Boolean.TRUE
+			"emptyLayout", Boolean.TRUE
 		).setParameter(
 			"externalReferenceCode", layout.getExternalReferenceCode()
 		).setParameter(

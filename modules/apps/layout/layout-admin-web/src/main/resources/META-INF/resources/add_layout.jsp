@@ -9,13 +9,13 @@
 
 <%
 List<SiteNavigationMenu> autoSiteNavigationMenus = layoutsAdminDisplayContext.getAutoSiteNavigationMenus();
-boolean convertEmptyLayout = ParamUtil.getBoolean(request, "convertEmptyLayout");
+boolean emptyLayout = ParamUtil.getBoolean(request, "emptyLayout");
 boolean copyPermissions = ParamUtil.getBoolean(request, "copyPermissions");
 long sourcePlid = ParamUtil.getLong(request, "sourcePlid");
 
 String actionURL;
 
-if (convertEmptyLayout) {
+if (emptyLayout) {
 	actionURL = layoutsAdminDisplayContext.getConvertEmptyLayoutURL();
 }
 else {
@@ -34,7 +34,7 @@ else {
 	>
 		<liferay-frontend:edit-form-body>
 			<c:choose>
-				<c:when test="<%= convertEmptyLayout %>">
+				<c:when test="<%= emptyLayout %>">
 					<aui:input data-qa-id="addPageNameInput" label="name" name="name" required="<%= true %>" value='<%= ParamUtil.getString(request, "externalReferenceCode") %>' />
 				</c:when>
 				<c:otherwise>

@@ -167,9 +167,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 		).put(
 			"modalTitle",
 			() -> {
-				if (ParamUtil.getBoolean(
-						_httpServletRequest, "convertEmptyLayout")) {
-
+				if (ParamUtil.getBoolean(_httpServletRequest, "emptyLayout")) {
 					return LanguageUtil.get(_httpServletRequest, "page-name");
 				}
 
@@ -286,9 +284,7 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 				LayoutTypeController layoutTypeController =
 					LayoutTypeControllerTracker.getLayoutTypeController(type);
 
-				if (ParamUtil.getBoolean(
-						_httpServletRequest, "convertEmptyLayout")) {
-
+				if (ParamUtil.getBoolean(_httpServletRequest, "emptyLayout")) {
 					return layoutTypeController.isInstanceable() &&
 						   !layoutTypeController.isPrimaryType() &&
 						   !type.equals(LayoutConstants.TYPE_URL) &&
@@ -364,10 +360,10 @@ public class SelectLayoutPageTemplateEntryDisplayContext {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				addLayoutURL.setParameter(
-					"convertEmptyLayout",
+					"emptyLayout",
 					String.valueOf(
 						ParamUtil.getBoolean(
-							_httpServletRequest, "convertEmptyLayout")));
+							_httpServletRequest, "emptyLayout")));
 				addLayoutURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
 			}

@@ -8,6 +8,7 @@ package com.liferay.object.internal.notification.term.contributor;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
 import com.liferay.object.internal.notification.term.evaluator.util.ObjectDefinitionNotificationTermEvaluatorUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -202,16 +203,45 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private String _evaluateObjectEntry(
 		Context context, String termName, Map<String, Object> termValues) {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			return null;
-		}
-
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
 			GetterUtil.getLong(termValues.get("id")));
 
 		if (objectEntry == null) {
+			return null;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-6233") &&
+			termName.equals("[%OBJECT_ENTRY_ASSIGNEE%]")) {
+
+			ObjectField objectField =
+				_objectFieldLocalService.fetchObjectFieldByBusinessType(
+					_objectDefinition.getObjectDefinitionId(),
+					ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE, null);
+
+			if (objectField == null) {
+				return null;
+			}
+
+			Map<String, Object> entryDTO = (Map<String, Object>)termValues.get(
+				"entryDTO");
+
+			Map<String, Object> properties = (Map<String, Object>)entryDTO.get(
+				"properties");
+
+			Map<String, Object> assigneeMap =
+				(Map<String, Object>)properties.get(objectField.getName());
+
+			if (MapUtil.isEmpty(assigneeMap)) {
+				return null;
+			}
+
+			return GetterUtil.getString(assigneeMap.get("name"));
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_objectDefinition.getCompanyId(), "LPD-17564")) {
+
 			return null;
 		}
 

@@ -202,12 +202,10 @@ public class JiraService extends BaseService {
 					_jiraSupportHCFieldOrganization));
 
 			if (Validator.isNotNull(organizationObjectFieldId)) {
-				String[] organizationCompositeIdArray = StringUtil.split(
+				String[] parts = StringUtil.split(
 					organizationObjectFieldId, CharPool.COLON);
 
-				return new JiraSupportIssue(
-					jsonObject, organizationCompositeIdArray[1],
-					organizationCompositeIdArray[0]);
+				return new JiraSupportIssue(jsonObject, parts[1], parts[0]);
 			}
 
 			return new JiraSupportIssue(jsonObject);

@@ -106,9 +106,9 @@ public class TicketAttachmentsRestController extends BaseRestController {
 		sb.append(StringPool.COMMA);
 		sb.append(_jiraSupportHCProject);
 		sb.append(")) and (status in ('");
-		sb.append(StringUtil.merge(JiraIssueConstants.STATUSES_CLOSED, "','"));
+		sb.append(StringUtil.merge(JiraIssueConstants.STATUSES_CLOSED, "', '"));
 		sb.append("')) and (status changed to ('");
-		sb.append(StringUtil.merge(JiraIssueConstants.STATUSES_CLOSED, "','"));
+		sb.append(StringUtil.merge(JiraIssueConstants.STATUSES_CLOSED, "', '"));
 		sb.append("') after -8d before -7d)");
 
 		List<JiraSupportIssue> jiraSupportIssues = _jiraService.search(

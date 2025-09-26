@@ -44,10 +44,6 @@ public class JiraSupportIssue {
 		_status = statusJSONObject.optString("name");
 
 		_summary = fieldsJSONObject.optString("summary");
-
-		_ticketURL = StringPool.BLANK;
-
-		_workspaceId = StringPool.BLANK;
 	}
 
 	public JiraSupportIssue(JSONObject jsonObject, String ticketURL) {
@@ -102,7 +98,7 @@ public class JiraSupportIssue {
 	private String _organizationId;
 	private final String _status;
 	private final String _summary;
-	private String _ticketURL;
-	private String _workspaceId;
+	private String _ticketURL = StringPool.BLANK;
+	private String _workspaceId = StringPool.BLANK;
 
 }

@@ -74,6 +74,117 @@ const assertDelta = async (
 	);
 };
 
+const assertNoActiveFiltersInURL = async (fdsId: string, page: Page) => {
+	const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+
+	expect(state.filters.length).toBe(0);
+};
+
+const assertActiveFiltersInURL = async (
+	active: boolean,
+	ids: string[],
+	fdsId: string,
+	page: Page
+) => {
+	const state = getStateFromURL(new URL(page.url()).search, fdsId);
+
+	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
+
+	for (const id of ids) {
+		expect(state.filters.some((filter: any) => filter.id === id)).toBe(
+			active
+		);
+	}
+};
+
+const assertActiveFilter = async (
+	active: boolean,
+	id: string,
+	fdsId: string,
+	filterResumeExpectedText: string,
+	page: Page
+) => {
+	await assertActiveFiltersInURL(active, [id], fdsId, page);
+
+	const filterResumeLocator = page.getByRole('button', {
+		name: filterResumeExpectedText,
+	});
+
+	if (active) {
+		await expect(filterResumeLocator).toBeVisible();
+	}
+	else {
+		await expect(filterResumeLocator).not.toBeVisible();
+	}
+};
+
+const activateFilter = async (
+	checkItems: string[],
+	filterLabel: string,
+	fdsSamplePage: FDSSamplePage,
+	page: Page
+) => {
+	await fdsSamplePage.managementToolbar.container
+		.getByRole('button', {name: 'Filter'})
+		.click();
+
+	const backButton = page.getByRole('button', {name: 'Back'});
+
+	if (await backButton.isVisible()) {
+		await backButton.click();
+	}
+
+	await page
+		.locator('.dropdown-menu')
+		.getByRole('menuitem', {name: filterLabel})
+		.click();
+
+	for (const item of checkItems) {
+		await page
+			.locator('.dropdown-menu')
+			.getByRole('checkbox', {name: item})
+			.check();
+	}
+
+	await page
+		.locator('.dropdown-menu')
+		.getByRole('button', {name: 'Add Filter'})
+		.click();
+};
+
+const removeFilter = async (filterResumeInitialText: string, page: Page) => {
+	const filterResumeLocator = page.getByRole('button', {
+		name: filterResumeInitialText,
+	});
+
+	await page
+		.getByRole('group')
+		.filter({has: filterResumeLocator})
+		.getByRole('button', {name: 'Remove Filter'})
+		.click();
+};
+
+const changeFilterSelections = async (
+	checkItems: string[],
+	filterResumeInitialText: string,
+	page: Page,
+	uncheckItems: string[]
+) => {
+	await page.getByRole('button', {name: filterResumeInitialText}).click();
+
+	for (const item of checkItems) {
+		await page.getByRole('checkbox', {name: item}).check();
+	}
+
+	for (const item of uncheckItems) {
+		await page.getByRole('checkbox', {name: item}).uncheck();
+	}
+
+	await page.getByRole('button', {name: 'Show Results'}).click();
+};
+
 const assertView = async (
 	fdsId: string,
 	page: Page,
@@ -268,6 +379,175 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
+			'URL in state, push history, filters',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}) => {
+				const checkFilter = (
+					active: boolean,
+					id: string,
+					filterResumeText: string
+				) =>
+					assertActiveFilter(
+						active,
+						id,
+						'advanced',
+						filterResumeText,
+						page
+					);
+
+				const checkFiltersInURL = (active: boolean, ids: string[]) =>
+					assertActiveFiltersInURL(active, ids, 'advanced', page);
+
+				await test.step('Check color filter is pre-applied, and no other else', async () => {
+					await checkFilter(
+						true,
+						'color',
+						'Color: Blue, Green, Yellow'
+					);
+
+					await checkFiltersInURL(false, [
+						'date',
+						'size',
+						'status',
+						'title',
+					]);
+				});
+
+				await test.step('Deactivate color filter', async () => {
+					await removeFilter('Color: Blue, Green, Yellow', page);
+					await checkFilter(
+						false,
+						'color',
+						'Color: Blue, Green, Yellow'
+					);
+					await assertNoActiveFiltersInURL('advanced', page);
+				});
+
+				await test.step('Change filter name via UI several times', async () => {
+					await activateFilter(
+						['Blue', 'Yellow'],
+						'Color',
+						fdsSamplePage,
+						page
+					);
+
+					await changeFilterSelections(
+						['Green'],
+						'Color: Blue, Yellow',
+						page,
+						['Blue']
+					);
+
+					await changeFilterSelections(
+						['Red'],
+						'Color: Yellow, Green',
+						page,
+						['Yellow']
+					);
+				});
+
+				await test.step('Check back navigation', async () => {
+					await checkFilter(true, 'color', 'Color: Green, Red');
+
+					await page.goBack();
+					await checkFilter(true, 'color', 'Color: Yellow, Green');
+					await page.goBack();
+					await checkFilter(true, 'color', 'Color: Blue, Yellow');
+
+					await page.goBack();
+					await checkFilter(
+						false,
+						'color',
+						'Color: Blue, Green, Yellow'
+					);
+
+					// initial, pre-applied filter
+
+					await page.goBack();
+					await checkFilter(
+						true,
+						'color',
+						'Color: Blue, Green, Yellow'
+					);
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+					await checkFilter(
+						false,
+						'color',
+						'Color: Blue, Green, Yellow'
+					);
+					await page.goForward();
+					await checkFilter(true, 'color', 'Color: Blue, Yellow');
+					await page.goForward();
+					await checkFilter(true, 'color', 'Color: Yellow, Green');
+					await page.goForward();
+					await checkFilter(true, 'color', 'Color: Green, Red');
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+					await checkFilter(true, 'color', 'Color: Yellow, Green');
+					await changeFilterSelections(
+						['Blue'],
+						'Color: Yellow, Green',
+						page,
+						['Yellow', 'Green']
+					);
+
+					// last view value (green, red) is removed from history
+
+					await page.goBack();
+					await checkFilter(true, 'color', 'Color: Yellow, Green');
+					await page.goForward();
+					await checkFilter(true, 'color', 'Color: Blue');
+					await checkFiltersInURL(false, [
+						'date',
+						'size',
+						'status',
+						'title',
+					]);
+					expect(await page.goForward()).toBeNull();
+				});
+
+				await test.step('Operating with several filters', async () => {
+					await checkFilter(true, 'color', 'Color: Blue');
+
+					await activateFilter(
+						['Approved', 'Draft'],
+						'Status',
+						fdsSamplePage,
+						page
+					);
+					await checkFilter(true, 'color', 'Color: Blue');
+					await checkFilter(
+						true,
+						'status',
+						'Status: Approved, Draft'
+					);
+					await checkFiltersInURL(false, ['date', 'size', 'title']);
+
+					await removeFilter('Color: Blue', page);
+					await checkFilter(
+						true,
+						'status',
+						'Status: Approved, Draft'
+					);
+					await checkFiltersInURL(false, [
+						'color',
+						'date',
+						'size',
+						'title',
+					]);
+
+					await removeFilter('Status: Approved, Draft', page);
+					await assertNoActiveFiltersInURL('advanced', page);
+				});
+			}
+		);
+
+		test(
 			'URL in state, replace history',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
@@ -317,12 +597,23 @@ for (const spaConfiguration of spaConfigurations) {
 						'customizedTable'
 					);
 					await assertDelta(20, 'advanced', fdsSamplePage, page);
+					await assertActiveFilter(
+						true,
+						'color',
+						'advanced',
+						'Color: Blue, Green, Yellow',
+						page
+					);
 				});
 
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
 					await checkView(EFDSVisualizationMode.TABLE);
 					await checkDelta(40);
+					await assertNoActiveFiltersInURL(
+						'customInternalView',
+						page
+					);
 				});
 			}
 		);

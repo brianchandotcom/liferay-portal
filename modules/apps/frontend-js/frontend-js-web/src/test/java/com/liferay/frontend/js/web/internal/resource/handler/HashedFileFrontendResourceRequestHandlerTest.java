@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import java.io.ByteArrayInputStream;
 
 import java.net.URL;
@@ -293,7 +295,7 @@ public class HashedFileFrontendResourceRequestHandlerTest {
 		return hashedFilesRegistry;
 	}
 
-	private MockHttpServletRequest _mockHttpServletRequest(String requestURI) {
+	private HttpServletRequest _mockHttpServletRequest(String requestURI) {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 

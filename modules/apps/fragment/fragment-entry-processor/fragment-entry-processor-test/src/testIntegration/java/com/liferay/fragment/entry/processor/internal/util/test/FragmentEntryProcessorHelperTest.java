@@ -203,6 +203,9 @@ public class FragmentEntryProcessorHelperTest {
 	@Test
 	@TestInfo("LPD-62842")
 	public void testGetFieldValueFromLongText() throws Exception {
+		String fieldValue = StringBundler.concat(
+			"<script>alert(\"", RandomTestUtil.randomString(), "\")</script>");
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				Collections.singletonList(
@@ -212,26 +215,18 @@ public class FragmentEntryProcessorHelperTest {
 						"myLongText")),
 				ObjectDefinitionConstants.SCOPE_SITE);
 
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
-		String fieldValue = StringBundler.concat(
-			"<script>alert(\"", RandomTestUtil.randomString(), "\")</script>");
-
-		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getGroupId(), objectDefinition.getUserId(),
 			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", externalReferenceCode
+				"externalReferenceCode", RandomTestUtil.randomString()
 			).put(
 				"myLongText", fieldValue
 			).build(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(
+				TestPropsValues.getGroupId(), TestPropsValues.getUserId()));
 
 		try {
 			_pushServiceContext(_layout, _themeDisplay);
@@ -245,7 +240,7 @@ public class FragmentEntryProcessorHelperTest {
 						"classNameId",
 						_portal.getClassNameId(objectDefinition.getClassName())
 					).put(
-						"classPK", objectEntry1.getObjectEntryId()
+						"classPK", objectEntry.getObjectEntryId()
 					).put(
 						"fieldId", "myLongText"
 					),

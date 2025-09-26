@@ -17,6 +17,7 @@ import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.FileInfoFieldType;
 import com.liferay.info.field.type.ImageInfoFieldType;
+import com.liferay.info.field.type.LongTextInfoFieldType;
 import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.field.type.URLInfoFieldType;
 import com.liferay.info.formatter.InfoCollectionTextFormatter;
@@ -587,7 +588,9 @@ public class FragmentEntryProcessorHelperImpl
 				}
 			}
 			else if (infoField.getInfoFieldType() instanceof
-						TextInfoFieldType) {
+						TextInfoFieldType ||
+					 infoField.getInfoFieldType() instanceof
+						 LongTextInfoFieldType) {
 
 				URI uri = null;
 

@@ -3296,18 +3296,20 @@ definition {
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
 		for (var count : list "2,3,4") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_entryTitle = "Test Blueprint ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
+
+		Check.checkNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		for (var count : list "2,3,4") {
 			AssertChecked.assertCheckedNotVisible(
 				key_entryTitle = "Test Blueprint ${count}",
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 		}
 
 		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
-
-		for (var count : list "2,3,4") {
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_entryTitle = "Test Blueprint ${count}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
-		}
 
 		Search.searchCP(searchTerm = 2);
 
@@ -3322,10 +3324,6 @@ definition {
 		Blueprints.viewEntryTitle(title = "Test Blueprint 3");
 
 		Blueprints.viewEntryTitle(title = "Test Blueprint 4");
-
-		Check.checkNotVisible(
-			key_entryTitle = "Test Blueprint 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
@@ -4539,18 +4537,20 @@ definition {
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 
 		for (var count : list "2,3,4") {
+			AssertNotChecked.assertNotCheckedNotVisible(
+				key_entryTitle = "Test Element ${count}",
+				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
+		}
+
+		Check.checkNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
+
+		for (var count : list "2,3,4") {
 			AssertChecked.assertCheckedNotVisible(
 				key_entryTitle = "Test Element ${count}",
 				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 		}
 
 		Uncheck.uncheckNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
-
-		for (var count : list "2,3,4") {
-			AssertNotChecked.assertNotCheckedNotVisible(
-				key_entryTitle = "Test Element ${count}",
-				locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
-		}
 
 		Search.searchCP(searchTerm = 2);
 
@@ -4565,10 +4565,6 @@ definition {
 		Blueprints.viewEntryTitle(title = "Test Element 3");
 
 		Blueprints.viewEntryTitle(title = "Test Element 4");
-
-		Check.checkNotVisible(
-			key_entryTitle = "Test Element 3",
-			locator1 = "Blueprints#BLUEPRINTS_ADMIN_ENTRY_CHECKBOX");
 
 		Click.clickAtNotVisible(locator1 = "Checkbox#FDS_SELECT_ALL");
 

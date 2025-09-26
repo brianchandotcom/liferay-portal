@@ -8,5 +8,4 @@ export const ASSET_TYPE = {
 	CONTENTS: 'basic-web-contents',
 	FILES: 'files',
 	FOLDER: 'folder',
-	KNOWLEDGE_BASES: 'knowledge-bases',
 };

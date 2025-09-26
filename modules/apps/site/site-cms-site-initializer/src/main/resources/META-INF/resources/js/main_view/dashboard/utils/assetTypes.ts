@@ -15,7 +15,6 @@ export enum AssetType {
 	FileVectorial = 'FILE_VECTORIAL',
 	FileText = 'FILE_TEXT',
 	FileCode = 'FILE_CODE',
-	KnowledgeBase = 'KNOWLEDGE_BASE',
 }
 
 export const AssetTypeIcons: Record<
@@ -39,5 +38,4 @@ export const AssetTypeIcons: Record<
 	[AssetType.FileVectorial]: {color: '#BF66FF', symbol: 'document-vectorial'},
 	[AssetType.FileText]: {color: '#0099E6', symbol: 'document-text'},
 	[AssetType.FileCode]: {color: '#FF4DB2', symbol: 'document-code'},
-	[AssetType.KnowledgeBase]: {color: '#E50082', symbol: 'wiki'},
 };

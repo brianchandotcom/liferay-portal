@@ -478,10 +478,6 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
-				getKnowledgeBaseDropdownItem(
-					httpServletRequest,
-					ObjectEntryFolderConstants.
-						EXTERNAL_REFERENCE_CODE_CONTENTS),
 				getExternalVideoShortcutDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)));
@@ -644,8 +640,6 @@ public class ActionUtil {
 				getBasicWebContentDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
 				getBlogDropdownItem(
-					httpServletRequest, objectEntryFolderExternalReferenceCode),
-				getKnowledgeBaseDropdownItem(
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 
@@ -866,15 +860,6 @@ public class ActionUtil {
 		dropdownItems.addAll(filesCustomDropdownItems);
 
 		return dropdownItems;
-	}
-
-	public static DropdownItem getKnowledgeBaseDropdownItem(
-		HttpServletRequest httpServletRequest,
-		String objectEntryFolderExternalReferenceCode) {
-
-		return getStructuredContentDropdownItem(
-			httpServletRequest, "wiki", null, "L_KNOWLEDGE_BASE",
-			objectEntryFolderExternalReferenceCode);
 	}
 
 	public static String getRecycleBinURL(ThemeDisplay themeDisplay) {

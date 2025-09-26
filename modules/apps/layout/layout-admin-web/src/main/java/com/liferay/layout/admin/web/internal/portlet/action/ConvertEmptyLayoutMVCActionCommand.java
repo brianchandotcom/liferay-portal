@@ -86,25 +86,24 @@ public class ConvertEmptyLayoutMVCActionCommand
 
 			Layout layout = _layoutLocalService.fetchLayout(selPlid);
 
-			Layout layoutPageTemplateEntryLayout = null;
-
 			long layoutPageTemplateEntryId = ParamUtil.getLong(
 				actionRequest, "layoutPageTemplateEntryId");
-
 			long masterLayoutPlid = ParamUtil.getLong(
 				actionRequest, "masterLayoutPlid",
 				LayoutConstants.DEFAULT_PLID);
+
+			Layout layoutPageTemplateEntryLayout = null;
 
 			if (layoutPageTemplateEntryId > 0) {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					_layoutPageTemplateEntryLocalService.
 						fetchLayoutPageTemplateEntry(layoutPageTemplateEntryId);
 
-				if (layoutPageTemplateEntry.getLayoutPrototypeId() > 0) {
-					type = LayoutConstants.TYPE_PORTLET;
+				if (layoutPageTemplateEntry.getLayoutPrototypeId() <= 0) {
+					type = LayoutConstants.TYPE_CONTENT;
 				}
 				else {
-					type = LayoutConstants.TYPE_CONTENT;
+					type = LayoutConstants.TYPE_PORTLET;
 				}
 
 				layoutPageTemplateEntryLayout = _layoutLocalService.fetchLayout(

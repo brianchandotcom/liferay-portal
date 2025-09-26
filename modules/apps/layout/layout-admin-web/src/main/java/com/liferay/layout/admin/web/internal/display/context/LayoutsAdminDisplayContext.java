@@ -292,7 +292,7 @@ public class LayoutsAdminDisplayContext {
 	public String getAddModalTitle() {
 		String title = "add-page";
 
-		if (ParamUtil.getBoolean(httpServletRequest, "convertEmptyLayout")) {
+		if (ParamUtil.getBoolean(httpServletRequest, "emptyLayout")) {
 			title = "page-name";
 		}
 
@@ -1193,10 +1193,10 @@ public class LayoutsAdminDisplayContext {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				selectLayoutPageTemplateEntryURL.setParameter(
-					"convertEmptyLayout",
+					"emptyLayout",
 					String.valueOf(
 						ParamUtil.getBoolean(
-							httpServletRequest, "convertEmptyLayout")));
+							httpServletRequest, "emptyLayout")));
 				selectLayoutPageTemplateEntryURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
 			}

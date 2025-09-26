@@ -95,10 +95,10 @@ public class SelectBasicTemplatesNavigationCard implements NavigationCard {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				addLayoutURL.setParameter(
-					"convertEmptyLayout",
+					"emptyLayout",
 					String.valueOf(
 						ParamUtil.getBoolean(
-							_httpServletRequest, "convertEmptyLayout")));
+							_httpServletRequest, "emptyLayout")));
 				addLayoutURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
 			}

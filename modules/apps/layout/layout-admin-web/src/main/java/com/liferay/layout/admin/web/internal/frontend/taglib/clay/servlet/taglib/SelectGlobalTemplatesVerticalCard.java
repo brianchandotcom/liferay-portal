@@ -118,10 +118,9 @@ public class SelectGlobalTemplatesVerticalCard implements VerticalCard {
 
 			if ((layout != null) && layout.isTypeEmpty()) {
 				addLayoutURL.setParameter(
-					"convertEmptyLayout",
+					"emptyLayout",
 					String.valueOf(
-						ParamUtil.getBoolean(
-							_renderRequest, "convertEmptyLayout")));
+						ParamUtil.getBoolean(_renderRequest, "emptyLayout")));
 				addLayoutURL.setParameter(
 					"externalReferenceCode", layout.getExternalReferenceCode());
 			}

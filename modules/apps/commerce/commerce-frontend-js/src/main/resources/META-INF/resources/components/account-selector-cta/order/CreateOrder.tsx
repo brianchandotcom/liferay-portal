@@ -29,6 +29,7 @@ const CreateOrder = ({
 }: CreateOrderProps) => {
 	return (
 		<ClayButton
+			className="btn-create-order"
 			disabled={
 				!hasAddCommerceOrderPermission || !currentCommerceAccountId
 			}

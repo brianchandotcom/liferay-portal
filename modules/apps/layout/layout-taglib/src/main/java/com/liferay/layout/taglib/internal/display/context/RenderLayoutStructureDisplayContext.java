@@ -593,9 +593,11 @@ public class RenderLayoutStructureDisplayContext {
 		if (backgroundImageJSONObject.has("fileEntryId")) {
 			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
 		}
-		else if (backgroundImageJSONObject.has("classNameId") &&
-				 backgroundImageJSONObject.has("classPK") &&
-				 backgroundImageJSONObject.has("fieldId")) {
+
+		if ((fileEntryId == 0) &&
+			backgroundImageJSONObject.has("classNameId") &&
+			backgroundImageJSONObject.has("classPK") &&
+			backgroundImageJSONObject.has("fieldId")) {
 
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
@@ -606,9 +608,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
-		else if (backgroundImageJSONObject.has("className") &&
-				 backgroundImageJSONObject.has("externalReferenceCode") &&
-				 backgroundImageJSONObject.has("fieldId")) {
+
+		if ((fileEntryId == 0) && backgroundImageJSONObject.has("className") &&
+			backgroundImageJSONObject.has("externalReferenceCode") &&
+			backgroundImageJSONObject.has("fieldId")) {
 
 			String scopeExternalReferenceCode = null;
 
@@ -631,7 +634,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
-		else if (backgroundImageJSONObject.has("collectionFieldId")) {
+
+		if ((fileEntryId == 0) &&
+			backgroundImageJSONObject.has("collectionFieldId")) {
+
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
 
@@ -641,7 +647,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("collectionFieldId"),
 				_themeDisplay.getLocale());
 		}
-		else if (backgroundImageJSONObject.has("mappedField")) {
+
+		if ((fileEntryId == 0) &&
+			backgroundImageJSONObject.has("mappedField")) {
+
 			fileEntryId = _getFileEntryId(
 				backgroundImageJSONObject.getString("mappedField"));
 		}
@@ -847,11 +856,8 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			String className = jsonObject.getString("className");
 			long classNameId = jsonObject.getLong("classNameId");
 			long classPK = jsonObject.getLong("classPK");
-			String externalReferenceCode = jsonObject.getString(
-				"externalReferenceCode");
 
 			if ((classNameId > 0) && (classPK > 0)) {
 				InfoItemReference infoItemReference = new InfoItemReference(
@@ -864,8 +870,13 @@ public class RenderLayoutStructureDisplayContext {
 					return value;
 				}
 			}
-			else if (Validator.isNotNull(className) &&
-					 Validator.isNotNull(externalReferenceCode)) {
+
+			String className = jsonObject.getString("className");
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
+
+			if (Validator.isNotNull(className) &&
+				Validator.isNotNull(externalReferenceCode)) {
 
 				String scopeExternalReferenceCode = null;
 

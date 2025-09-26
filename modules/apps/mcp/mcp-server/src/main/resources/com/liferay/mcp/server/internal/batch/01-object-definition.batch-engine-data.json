@@ -29,9 +29,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Name"
+						"en_US": "Description"
 					},
-					"name": "name",
+					"name": "description",
 					"required": true,
 					"state": false,
 					"system": true,
@@ -45,9 +45,9 @@
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Description"
+						"en_US": "Name"
 					},
-					"name": "description",
+					"name": "name",
 					"required": true,
 					"state": false,
 					"system": true,

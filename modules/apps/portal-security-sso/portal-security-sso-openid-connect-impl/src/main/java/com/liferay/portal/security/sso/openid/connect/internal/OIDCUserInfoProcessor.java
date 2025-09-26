@@ -272,8 +272,7 @@ public class OIDCUserInfoProcessor {
 				user.getUserId(), String.valueOf(oAuthClientEntryId));
 
 			_addOrUpdateUserCustomClaims(
-				companyId, user.getUserId(), customClaimsJSON,
-				userInfoJSONObject);
+				customClaimsJSON, user, userInfoJSONObject);
 
 			return _userLocalService.updatePasswordReset(
 				user.getUserId(), false);
@@ -284,7 +283,7 @@ public class OIDCUserInfoProcessor {
 		serviceContext.setUuid(user.getUuid());
 
 		_addOrUpdateUserCustomClaims(
-			companyId, user.getUserId(), customClaimsJSON, userInfoJSONObject);
+			customClaimsJSON, user, userInfoJSONObject);
 
 		return _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
@@ -313,12 +312,11 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private void _addOrUpdateUserCustomClaims(
-			long companyId, long userId, String customClaimsJSON,
-			JSONObject userInfoJSONObject)
+			String customClaimsJSON, User user, JSONObject userInfoJSONObject)
 		throws Exception {
 
 		ExpandoTable expandoTable = _expandoTableLocalService.fetchTable(
-			companyId,
+			user.getCompanyId(),
 			_classNameLocalService.getClassNameId(User.class.getName()),
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
@@ -351,8 +349,8 @@ public class OIDCUserInfoProcessor {
 
 			_expandoValueLocalService.addValue(
 				_classNameLocalService.getClassNameId(User.class.getName()),
-				expandoColumn.getTableId(), expandoColumn.getColumnId(), userId,
-				value);
+				expandoColumn.getTableId(), expandoColumn.getColumnId(),
+				user.getUserId(), value);
 		}
 	}
 

@@ -26,6 +26,27 @@ public class PermissionBulkAction
 		return PermissionBulkActionSerDes.toDTO(json);
 	}
 
+	public String getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
+	}
+
+	public void setConfiguration(
+		UnsafeSupplier<String, Exception> configurationUnsafeSupplier) {
+
+		try {
+			configuration = configurationUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String configuration;
+
 	public com.liferay.headless.cms.client.permission.Permission[]
 		getPermissions() {
 

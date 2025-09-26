@@ -176,4 +176,24 @@ describe('AssetNavigationModalContent', () => {
 			screen.queryByRole('button', {name: /next/i})
 		).not.toBeInTheDocument();
 	});
+
+	it('can see info panel', () => {
+		const {getByLabelText} = renderComponent();
+
+		fireEvent.click(getByLabelText('show-details'));
+
+		expect(
+			screen.queryByRole('button', {name: /details/i})
+		).toBeInTheDocument();
+
+		expect(screen.getByText('Test Test')).toBeInTheDocument();
+	});
+
+	it('can see comments panel', () => {
+		const {getByLabelText} = renderComponent();
+
+		fireEvent.click(getByLabelText('show-comments'));
+
+		expect(screen.getByText('add-comment')).toBeInTheDocument();
+	});
 });

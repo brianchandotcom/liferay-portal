@@ -87,7 +87,13 @@ function CreationMenu({
 
 	const {loadData} = frontendDataSetContext;
 
-	return primaryItems?.length > 0 ? (
+	if (primaryItems?.length === 0) {
+		return null;
+	}
+
+	const firstItem = primaryItems[0];
+
+	return (
 		<ul
 			className={classNames('navbar-nav', {
 				'd-inline-flex': inEmptyState,
@@ -101,7 +107,7 @@ function CreationMenu({
 					/>
 				) : (
 					<ClayButton
-						aria-label={primaryItems[0].label}
+						aria-label={firstItem.label}
 						className={
 							inEmptyState
 								? 'btn btn-secondary'
@@ -110,20 +116,21 @@ function CreationMenu({
 						data-testid="fdsCreationActionButton"
 						data-tooltip-align="top"
 						onClick={() => {
-							const item = primaryItems[0];
-
-							item.onClick?.({
+							firstItem.onClick?.({
 								loadData,
 							});
 
-							if (item.href || item.target) {
-								triggerAction(item, frontendDataSetContext);
+							if (firstItem.href || firstItem.target) {
+								triggerAction(
+									firstItem,
+									frontendDataSetContext
+								);
 							}
 						}}
-						title={!inEmptyState ? primaryItems[0].label : undefined}
+						title={!inEmptyState ? firstItem.label : undefined}
 					>
 						{inEmptyState ? (
-							primaryItems[0].label
+							firstItem.label
 						) : (
 							Liferay.Language.get('new')
 						)}
@@ -131,8 +138,6 @@ function CreationMenu({
 				)}
 			</li>
 		</ul>
-	) : (
-		<></>
 	);
 }
 

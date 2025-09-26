@@ -2388,33 +2388,6 @@ public class ObjectDefinitionLocalServiceImpl
 				"at-least-one-object-field-must-be-added");
 		}
 
-		if ((objectDefinition.getStatus() == WorkflowConstants.STATUS_DRAFT) &&
-			objectDefinition.isRootNode()) {
-
-			for (ObjectRelationship objectRelationship :
-					_objectRelationshipLocalService.getObjectRelationships(
-						objectDefinition.getObjectDefinitionId())) {
-
-				int objectEntriesCount =
-					_objectEntryLocalService.getObjectEntriesCount(
-						objectRelationship.getObjectDefinitionId2());
-
-				if (objectEntriesCount > 0) {
-					throw new ObjectRelationshipEdgeException(
-						StringBundler.concat(
-							"There must be no unrelated object entries when ",
-							"both object definitions are published so that ",
-							"the object relationship can be an edge to a root ",
-							"context"),
-						StringBundler.concat(
-							"there-must-be-no-unrelated-object-entries-when-",
-							"both-object-definitions-are-published-so-that-",
-							"the-object-relationship-can-be-an-edge-to-a-root-",
-							"context"));
-				}
-			}
-		}
-
 		_validateFriendlyURLSeparator(objectDefinition);
 
 		objectDefinition.setActive(true);

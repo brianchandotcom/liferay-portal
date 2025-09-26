@@ -132,19 +132,7 @@ public class ObjectDefinitionResourceTest
 	@Override
 	@Test
 	public void testGetObjectDefinition() throws Exception {
-		super.testGetObjectDefinition();
-
-		ObjectDefinition objectDefinition =
-			objectDefinitionResource.postObjectDefinition(
-				randomObjectDefinition());
-
-		String objectDefinitionPluralName = StringUtil.lowerCaseFirstLetter(
-			TextFormatter.formatPlural(objectDefinition.getName()));
-
-		Assert.assertEquals(
-			"/o/c/" + objectDefinitionPluralName,
-			objectDefinition.getRestContextPath());
-
+		_testGetObjectDefinition();
 		_testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes();
 		_testGetObjectDefinitionWithWorkflowDefinitionLink();
 	}
@@ -1928,13 +1916,27 @@ public class ObjectDefinitionResourceTest
 		return objectDefinition;
 	}
 
+	private void _testGetObjectDefinition() throws Exception {
+		super.testGetObjectDefinition();
+
+		ObjectDefinition objectDefinition =
+			objectDefinitionResource.postObjectDefinition(
+				randomObjectDefinition());
+
+		String objectDefinitionPluralName = StringUtil.lowerCaseFirstLetter(
+			TextFormatter.formatPlural(objectDefinition.getName()));
+
+		Assert.assertEquals(
+			"/o/c/" + objectDefinitionPluralName,
+			objectDefinition.getRestContextPath());
+	}
+
 	private void _testGetObjectDefinitionWithRootObjectDefinitionExternalReferenceCodes()
 		throws Exception {
 
 		ObjectDefinition objectDefinitionA =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
-
 		ObjectDefinition objectDefinitionAA =
 			objectDefinitionResource.postObjectDefinition(
 				randomObjectDefinition());
@@ -1954,18 +1956,16 @@ public class ObjectDefinitionResourceTest
 		objectDefinitionAA = objectDefinitionResource.getObjectDefinition(
 			objectDefinitionAA.getId());
 
-		Assert.assertEquals(
+		Assert.assertArrayEquals(
 			new ObjectDefinitionSetting[] {
 				new ObjectDefinitionSetting() {
 					{
-						setName(
+						name =
 							ObjectDefinitionSettingConstants.
-								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
-						setValue(
-							StringBundler.concat(
-								objectDefinitionA.getExternalReferenceCode(),
-								",",
-								objectDefinitionB.getExternalReferenceCode()));
+								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES;
+						value =
+							objectDefinitionA.getExternalReferenceCode() + "," +
+								objectDefinitionB.getExternalReferenceCode();
 					}
 				}
 			},
@@ -1979,18 +1979,9 @@ public class ObjectDefinitionResourceTest
 		objectDefinitionAA = objectDefinitionResource.getObjectDefinition(
 			objectDefinitionAA.getId());
 
-		Assert.assertEquals(
-			new ObjectDefinitionSetting[] {
-				new ObjectDefinitionSetting() {
-					{
-						setName(
-							ObjectDefinitionSettingConstants.
-								NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES);
-						setValue("");
-					}
-				}
-			},
-			objectDefinitionAA.getObjectDefinitionSettings());
+		Assert.assertTrue(
+			ArrayUtil.isEmpty(
+				objectDefinitionAA.getObjectDefinitionSettings()));
 	}
 
 	@TestInfo("LPD-63538")

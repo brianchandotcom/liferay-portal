@@ -244,7 +244,8 @@ public class MCPServerServlet extends HttpServlet {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				fetchObjectDefinitionByExternalReferenceCode(
-					MCPServerConstants.MCP_SERVER_PROMPT_OBJECT_DEFINITION_ERC,
+					MCPServerConstants.
+						EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROMPT,
 					companyId);
 
 		if (objectDefinition == null) {

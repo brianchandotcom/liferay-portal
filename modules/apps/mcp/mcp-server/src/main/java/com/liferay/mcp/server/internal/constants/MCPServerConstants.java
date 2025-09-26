@@ -10,7 +10,7 @@ package com.liferay.mcp.server.internal.constants;
  */
 public class MCPServerConstants {
 
-	public static final String MCP_SERVER_PROMPT_OBJECT_DEFINITION_ERC =
+	public static final String EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROMPT =
 		"L_MCP_SERVER_PROMPT";
 
 }

@@ -26,7 +26,7 @@ public class ObjectEntryModelListener
 
 	@Override
 	public String getObjectDefinitionExternalReferenceCode() {
-		return MCPServerConstants.MCP_SERVER_PROMPT_OBJECT_DEFINITION_ERC;
+		return MCPServerConstants.EXTERNAL_REFERENCE_CODE_MCP_SERVER_PROMPT;
 	}
 
 	@Override

@@ -476,12 +476,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		PermissionBulkAction permissionBulkAction =
 			(PermissionBulkAction)bulkAction;
 
-		Permission[] permissions = permissionBulkAction.getPermissions();
 		String configuration = permissionBulkAction.getConfiguration();
+		Permission[] permissions = permissionBulkAction.getPermissions();
 
 		if (MapUtil.isEmpty(bulkActionItemsMap) ||
-			(ArrayUtil.isEmpty(permissions) &&
-			 Validator.isNull(configuration))) {
+			(Validator.isNull(configuration) &&
+			 ArrayUtil.isEmpty(permissions))) {
 
 			return new BulkActionTask();
 		}

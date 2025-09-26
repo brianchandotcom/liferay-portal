@@ -105,3 +105,39 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Assert publication bar dropdown is disabled for CMS site',
+	{tag: '@LPD-64065'},
+	async ({changeTrackingPage, ctCollection, page}) => {
+		await changeTrackingPage.workOnPublication(ctCollection);
+
+		await page.goto(`/web/cms`);
+
+		const changeTrackingIndicatorButtonProduction = page.locator(
+			'.change-tracking-indicator-button'
+		);
+
+		await expect(changeTrackingIndicatorButtonProduction).toBeVisible();
+
+		await changeTrackingIndicatorButtonProduction.click();
+
+		const selectPublicationMenuItem = page.getByRole('menuitem', {
+			name: 'Select a Publication',
+		});
+
+		await expect(selectPublicationMenuItem).not.toBeVisible();
+
+		await page.goto('/');
+
+		const changeTrackingIndicatorButtonPublication = page
+			.locator('.change-tracking-indicator-button')
+			.filter({hasText: ctCollection.body.name});
+
+		await expect(changeTrackingIndicatorButtonPublication).toBeVisible();
+
+		await changeTrackingIndicatorButtonPublication.click();
+
+		await expect(selectPublicationMenuItem).toBeVisible();
+	}
+);

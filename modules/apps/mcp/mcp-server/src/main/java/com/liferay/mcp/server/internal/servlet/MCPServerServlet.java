@@ -44,7 +44,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -135,8 +134,8 @@ public class MCPServerServlet extends HttpServlet {
 				return _call(
 					authorizedHttpServletSseServerTransportProvider.
 						getAuthorizationHeader(mcpAsyncServerExchange),
-					String.valueOf(monos.get("payload")),
-					baseURL + path, String.valueOf(monos.get("method")));
+					String.valueOf(monos.get("payload")), baseURL + path,
+					String.valueOf(monos.get("method")));
 			}
 		).tool(
 			_getTool("get-openapi", toolsJSONObject),
@@ -256,21 +255,21 @@ public class MCPServerServlet extends HttpServlet {
 				0, objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS),
 			objectEntry -> {
-				Map<String, Serializable> values =
-					objectEntry.getValues();
+				Map<String, Serializable> values = objectEntry.getValues();
 
 				return new McpServerFeatures.SyncPromptSpecification(
 					new McpSchema.Prompt(
 						(String)values.get("name"),
 						(String)values.get("description"),
 						Collections.emptyList()),
-					(mcpAsyncServerExchange, request) -> new McpSchema.GetPromptResult(
-						(String)values.get("description"),
-						List.of(
-							new McpSchema.PromptMessage(
-								McpSchema.Role.USER,
-								new McpSchema.TextContent(
-									(String)values.get("prompt"))))));
+					(mcpAsyncServerExchange, request) ->
+						new McpSchema.GetPromptResult(
+							(String)values.get("description"),
+							List.of(
+								new McpSchema.PromptMessage(
+									McpSchema.Role.USER,
+									new McpSchema.TextContent(
+										(String)values.get("prompt"))))));
 			});
 	}
 

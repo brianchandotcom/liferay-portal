@@ -47,6 +47,20 @@ public class PermissionBulkActionSerDes {
 
 		sb.append("{");
 
+		if (permissionBulkAction.getConfiguration() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(permissionBulkAction.getConfiguration()));
+
+			sb.append("\"");
+		}
+
 		if (permissionBulkAction.getPermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -140,6 +154,15 @@ public class PermissionBulkActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (permissionBulkAction.getConfiguration() == null) {
+			map.put("configuration", null);
+		}
+		else {
+			map.put(
+				"configuration",
+				String.valueOf(permissionBulkAction.getConfiguration()));
+		}
+
 		if (permissionBulkAction.getPermissions() == null) {
 			map.put("permissions", null);
 		}
@@ -192,7 +215,10 @@ public class PermissionBulkActionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "permissions")) {
+			if (Objects.equals(jsonParserFieldName, "configuration")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "bulkActionItems")) {
@@ -213,7 +239,13 @@ public class PermissionBulkActionSerDes {
 			PermissionBulkAction permissionBulkAction,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "permissions")) {
+			if (Objects.equals(jsonParserFieldName, "configuration")) {
+				if (jsonParserFieldValue != null) {
+					permissionBulkAction.setConfiguration(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
 						(Object[])jsonParserFieldValue;

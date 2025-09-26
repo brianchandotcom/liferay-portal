@@ -50,6 +50,47 @@ public class PermissionBulkAction extends BulkAction implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
+	public String getConfiguration() {
+		if (_configurationSupplier != null) {
+			configuration = _configurationSupplier.get();
+
+			_configurationSupplier = null;
+		}
+
+		return configuration;
+	}
+
+	public void setConfiguration(String configuration) {
+		this.configuration = configuration;
+
+		_configurationSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setConfiguration(
+		UnsafeSupplier<String, Exception> configurationUnsafeSupplier) {
+
+		_configurationSupplier = () -> {
+			try {
+				return configurationUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String configuration;
+
+	@JsonIgnore
+	private Supplier<String> _configurationSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
 	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
 		if (_permissionsSupplier != null) {
@@ -123,6 +164,22 @@ public class PermissionBulkAction extends BulkAction implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String configuration = getConfiguration();
+
+		if (configuration != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"configuration\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(configuration));
+
+			sb.append("\"");
+		}
 
 		com.liferay.portal.vulcan.permission.Permission[] permissions =
 			getPermissions();

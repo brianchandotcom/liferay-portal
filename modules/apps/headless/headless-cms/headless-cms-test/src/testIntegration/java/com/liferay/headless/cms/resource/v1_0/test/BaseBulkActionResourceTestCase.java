@@ -368,6 +368,20 @@ public abstract class BaseBulkActionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("configuration", additionalAssertFieldName)) {
+				if (!(bulkAction instanceof PermissionBulkAction)) {
+					continue;
+				}
+
+				if (((PermissionBulkAction)bulkAction).getConfiguration() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("permissions", additionalAssertFieldName)) {
 				if (!(bulkAction instanceof PermissionBulkAction)) {
 					continue;
@@ -739,6 +753,24 @@ public abstract class BaseBulkActionResourceTestCase {
 						((MoveBulkAction)bulkAction1).getObjectEntryFolderId(),
 						((MoveBulkAction)bulkAction2).
 							getObjectEntryFolderId())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("configuration", additionalAssertFieldName)) {
+				if (!(bulkAction1 instanceof PermissionBulkAction) ||
+					!(bulkAction2 instanceof PermissionBulkAction)) {
+
+					continue;
+				}
+
+				if (!Objects.deepEquals(
+						((PermissionBulkAction)bulkAction1).getConfiguration(),
+						((PermissionBulkAction)bulkAction2).
+							getConfiguration())) {
 
 					return false;
 				}
@@ -1134,6 +1166,9 @@ public abstract class BaseBulkActionResourceTestCase {
 				PermissionBulkAction bulkAction = new PermissionBulkAction();
 
 				bulkAction.setSelectAll(RandomTestUtil.randomBoolean());
+
+				bulkAction.setConfiguration(
+					StringUtil.toLowerCase(RandomTestUtil.randomString()));
 
 				bulkAction.setType(
 					BulkAction.Type.create("PermissionBulkAction"));

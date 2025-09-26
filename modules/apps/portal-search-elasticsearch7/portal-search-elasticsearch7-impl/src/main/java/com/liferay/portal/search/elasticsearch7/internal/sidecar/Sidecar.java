@@ -65,13 +65,14 @@ public class Sidecar {
 
 	public Sidecar(
 		ElasticsearchConfigurationWrapper elasticsearchConfigurationWrapper,
-		ProcessExecutor processExecutor, SidecarManager sidecarManager,
-		Path sidecarHomePath, File sidecarProcessFile, Path sidecarWorkPath) {
+		ProcessExecutor processExecutor, Path sidecarHomePath,
+		SidecarManager sidecarManager, File sidecarProcessFile,
+		Path sidecarWorkPath) {
 
 		_elasticsearchConfigurationWrapper = elasticsearchConfigurationWrapper;
 		_processExecutor = processExecutor;
-		_sidecarManager = sidecarManager;
 		_sidecarHomePath = sidecarHomePath;
+		_sidecarManager = sidecarManager;
 		_sidecarProcessFile = sidecarProcessFile;
 		_sidecarWorkPath = sidecarWorkPath;
 
@@ -103,16 +104,16 @@ public class Sidecar {
 
 		PersistedProcess persistedProcess = new PersistedProcess(
 			bundleURL,
+			new String[] {
+				SidecarMainProcessCallable.class.getName(),
+				StartSidecarProcessCallable.class.getName()
+			},
 			_createProcessConfig(
 				_getJVMArguments(), bootstrapClassPath, _getEnvironment(),
 				StringBundler.concat(
 					bundleURL.getPath(), File.pathSeparator,
 					bootstrapClassPath)),
-			"sidecar",
-			new String[] {
-				SidecarMainProcessCallable.class.getName(),
-				StartSidecarProcessCallable.class.getName()
-			});
+			"sidecar");
 
 		Serializer serializer = new Serializer();
 
@@ -176,7 +177,7 @@ public class Sidecar {
 		if (processChannel == null) {
 			try {
 				processChannel = PersistedProcessUtil.start(
-					_processExecutor, persistedProcess);
+					persistedProcess, _processExecutor);
 			}
 			catch (Exception exception) {
 				throw new RuntimeException(

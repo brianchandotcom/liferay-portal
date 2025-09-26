@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProce
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -43,7 +43,7 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
 			dataCleanupPreupgradeProcessMap =
-				HashMapBuilder.
+				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
 						dlFileEntryDataCleanupPreupgradeProcess,

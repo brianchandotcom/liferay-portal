@@ -8,7 +8,7 @@ package com.liferay.portal.upgrade.data.cleanup;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
-import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -31,7 +31,7 @@ public class DDMDataCleanupPreupgradeProcess
 
 		Map<DataCleanupPreupgradeProcess, List<DataCleanupPreupgradeProcess>>
 			dataCleanupPreupgradeProcessMap =
-				HashMapBuilder.
+				LinkedHashMapBuilder.
 					<DataCleanupPreupgradeProcess,
 					 List<DataCleanupPreupgradeProcess>>put(
 						_getDDMFieldDataCleanupPreupgradeProcess(),

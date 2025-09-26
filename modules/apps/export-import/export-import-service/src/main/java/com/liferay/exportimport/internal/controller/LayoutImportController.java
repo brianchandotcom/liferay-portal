@@ -690,6 +690,10 @@ public class LayoutImportController implements ImportController {
 		Element layoutsElement = rootElement.element(
 			Layout.class.getSimpleName());
 
+		if (layoutsElement == null) {
+			return;
+		}
+
 		_validateLayoutPrototypes(companyId, headerElement, layoutsElement);
 	}
 

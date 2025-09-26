@@ -159,6 +159,8 @@ public class BatchEnginePortletDataHandlerUtil {
 			"itemModelName", exportImportDescriptor.getItemModelName()
 		).put(
 			"siteId", portletDataContext.getScopeGroupId()
+		).putAll(
+			exportImportDescriptor.getParameters(portletDataContext)
 		).build();
 	}
 

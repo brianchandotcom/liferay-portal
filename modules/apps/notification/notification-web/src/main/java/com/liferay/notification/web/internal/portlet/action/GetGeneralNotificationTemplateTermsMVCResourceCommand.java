@@ -54,6 +54,13 @@ public class GetGeneralNotificationTemplateTermsMVCResourceCommand
 		List<ObjectField> objectFields, String partialTermName,
 		ThemeDisplay themeDisplay) {
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-6233")) {
+
+			_termNames.put(
+				"object-entry-assignee", "[%OBJECT_ENTRY_ASSIGNEE%]");
+		}
+
 		if (FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			_termNames.putAll(
 				HashMapBuilder.put(

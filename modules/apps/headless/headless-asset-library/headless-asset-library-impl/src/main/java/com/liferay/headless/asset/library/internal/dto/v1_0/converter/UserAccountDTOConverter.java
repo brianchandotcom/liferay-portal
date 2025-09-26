@@ -41,11 +41,7 @@ public class UserAccountDTOConverter
 	public UserAccount toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		// Permission checks are performed in the user account resource so it is
-		// safe to invoke the local service.
-		// It is a product requirement that asset library members should be able
-		// to see other asset library members, even if they don't have VIEW
-		// permission over User. See LPD-62456.
+		// Use the local service. See LPD-62456.
 
 		User user = _userLocalService.getUserById(
 			(Long)dtoConverterContext.getId());
@@ -73,17 +69,12 @@ public class UserAccountDTOConverter
 					() -> NestedFieldsSupplier.supply(
 						"roles",
 						nestedFieldNames -> {
+
+							// Use the local service. See LPD-62456.
+
 							long assetLibraryId = GetterUtil.getLong(
 								dtoConverterContext.getAttribute(
 									"assetLibraryId"));
-
-							// Permission checks are performed in the user
-							// account resource so it is safe to invoke the
-							// local service.
-							// It is a product requirement that asset library
-							// members should be able to see other asset library
-							// members, even if they don't have VIEW permission
-							// over User. See LPD-62456.
 
 							return TransformUtil.transformToArray(
 								_roleLocalService.getUserGroupRoles(

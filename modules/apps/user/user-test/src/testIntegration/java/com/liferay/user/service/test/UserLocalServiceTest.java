@@ -1121,8 +1121,8 @@ public class UserLocalServiceTest {
 		Assert.assertTrue(users.contains(user));
 
 		_testSearchBySocialWithGroup();
-		_testSearchBySocialWithUserGroup();
 		_testSearchBySocialWithGroupAndUserGroup();
+		_testSearchBySocialWithUserGroup();
 	}
 
 	@Test
@@ -1138,8 +1138,8 @@ public class UserLocalServiceTest {
 		Assert.assertEquals(usersCount1 + 1, usersCount2);
 
 		_testSearchCountBySocialWithGroup();
-		_testSearchCountBySocialWithUserGroup();
 		_testSearchCountBySocialWithGroupAndUserGroup();
+		_testSearchCountBySocialWithUserGroup();
 	}
 
 	@Test

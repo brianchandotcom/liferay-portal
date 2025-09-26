@@ -194,12 +194,12 @@ public class IndexUpdaterUtilTest {
 		_db.runSQL(
 			StringBundler.concat(
 				"create table TestTable (id1 INTEGER, id2 INTEGER, column1 ",
-				"INTEGER, column2 INTEGER, column3 INTEGER, column4 INTEGER, ",
-				"primary key (id1, id2))"));
+				"INTEGER, column2 INTEGER, column3 VARCHAR(255), column4 ",
+				"VARCHAR(255), primary key (id1, id2))"));
 
 		try {
-			_db.runSQL("insert into TestTable values(1, 2, 3, 4, 5, 6)");
-			_db.runSQL("insert into TestTable values(11, 12, 13, 14, 5, 6)");
+			_db.runSQL("insert into TestTable values(1, 2, 3, 4, '5', '6')");
+			_db.runSQL("insert into TestTable values(7, 9, 10, 11, '5', '6')");
 
 			boolean upgrading = StartupHelperUtil.isUpgrading();
 
@@ -214,8 +214,8 @@ public class IndexUpdaterUtilTest {
 				ReflectionTestUtil.invoke(
 					IndexUpdaterUtil.class, "_updateIndexes",
 					new Class<?>[] {String.class, String.class}, "TestTable",
-					"create unique index IX_TestTable on TestTable(column3, " +
-						"column4)");
+					"create unique index IX_TestTable on TestTable(column3" +
+						"[$COLUMN_LENGTH:255$], column4[$COLUMN_LENGTH:255$])");
 
 				List<LogEntry> logEntries = logCapture.getLogEntries();
 

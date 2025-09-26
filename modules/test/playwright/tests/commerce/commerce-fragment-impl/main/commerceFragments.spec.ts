@@ -40,6 +40,7 @@ test(
 			'@LPD-63171',
 			'@LPD-63172',
 			'@LPD-63173',
+			'@LPD-63174',
 			'@LPD-63175',
 		],
 	},
@@ -56,11 +57,11 @@ test(
 				}),
 				getFragmentDefinition({
 					id: getRandomString(),
-					key: 'com.liferay.commerce.fragment.internal.renderer.CommerceAccountSelectorCreateAccountFragmentRenderer',
+					key: 'com.liferay.commerce.fragment.internal.renderer.CreateAccountButtonFragmentRenderer',
 				}),
 				getFragmentDefinition({
 					id: getRandomString(),
-					key: 'com.liferay.commerce.fragment.internal.renderer.CommerceAccountSelectorCreateOrderFragmentRenderer',
+					key: 'com.liferay.commerce.fragment.internal.renderer.CreateOrderButtonFragmentRenderer',
 				}),
 				getFragmentDefinition({
 					id: getRandomString(),
@@ -69,6 +70,10 @@ test(
 				getFragmentDefinition({
 					id: getRandomString(),
 					key: 'com.liferay.commerce.fragment.internal.renderer.PendingAccountOrdersDataSetFragmentRenderer',
+				}),
+				getFragmentDefinition({
+					id: getRandomString(),
+					key: 'com.liferay.commerce.fragment.internal.renderer.AccountSelectorButtonFragmentRenderer',
 				}),
 			]),
 			siteId: site.id,
@@ -85,12 +90,12 @@ test(
 		).toHaveCount(1);
 		await expect(
 			page.locator(
-				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-commerceaccountselectorcreateaccountfragmentrenderer'
+				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-createaccountbuttonfragmentrenderer'
 			)
 		).toHaveCount(1);
 		await expect(
 			page.locator(
-				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-commerceaccountselectorcreateorderfragmentrenderer'
+				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-createorderbuttonfragmentrenderer'
 			)
 		).toHaveCount(1);
 		await expect(
@@ -101,6 +106,11 @@ test(
 		await expect(
 			page.locator(
 				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-pendingaccountordersdatasetfragmentrenderer'
+			)
+		).toHaveCount(1);
+		await expect(
+			page.locator(
+				'.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountselectorbuttonfragmentrenderer'
 			)
 		).toHaveCount(1);
 	}

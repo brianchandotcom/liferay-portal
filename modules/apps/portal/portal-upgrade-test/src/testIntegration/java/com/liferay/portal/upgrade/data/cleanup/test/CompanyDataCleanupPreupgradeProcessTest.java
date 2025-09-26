@@ -97,6 +97,10 @@ public class CompanyDataCleanupPreupgradeProcessTest
 		}
 
 		upgrade();
+
+		runSQL(
+			"delete from SystemEvent where companyId = " +
+				company.getCompanyId());
 	}
 
 	private static List<ClassName> _classNames;

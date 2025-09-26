@@ -48,7 +48,6 @@ public class PortletDataHandlerProviderTest {
 	public void test() throws Exception {
 		long companyId1 = RandomTestUtil.randomLong();
 		long companyId2 = RandomTestUtil.randomLong();
-
 		BasePortletDataHandler portletDataHandler1 =
 			new TestPortletDataHandler();
 		BasePortletDataHandler portletDataHandler2 =
@@ -59,7 +58,6 @@ public class PortletDataHandlerProviderTest {
 			new TestPortletDataHandler();
 		BasePortletDataHandler portletDataHandler5 =
 			new TestPortletDataHandler();
-
 		String portletId1 = RandomTestUtil.randomString();
 		String portletId2 = RandomTestUtil.randomString();
 		String portletId3 = RandomTestUtil.randomString();

@@ -14,6 +14,9 @@ import {CommerceServiceProvider} from 'commerce-frontend-js';
 import {debounce, fetch} from 'frontend-js-web';
 import React, {useCallback, useMemo, useState} from 'react';
 
+// @ts-ignore
+
+import {showErrorNotification} from '../../../utilities/notifications';
 import AccountCreationModalBody from './AccountCreationModalBody';
 import {OnAccountChangeParams} from './CreateAccount';
 
@@ -75,7 +78,7 @@ const AccountCreationModal = ({
 				onAccountChange({account: response, doCheckout: false});
 				closeModal();
 			})
-			.catch((error) => console.error(error));
+			.catch(showErrorNotification);
 	}, [accountData, apiUrl, closeModal, onAccountChange]);
 
 	const debouncedCreateAccount = useMemo(

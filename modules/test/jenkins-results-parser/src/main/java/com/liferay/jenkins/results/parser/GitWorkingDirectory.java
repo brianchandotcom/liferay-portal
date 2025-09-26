@@ -1000,7 +1000,7 @@ public class GitWorkingDirectory {
 		}
 
 		GitUtil.ExecutionResult result = executeBashCommands(
-			5, 1000, 30 * 1000, sb.toString());
+			5, 1000, 60 * 1000, sb.toString());
 
 		if (result.getExitValue() != 0) {
 			throw new GitWorkingDirectoryRuntimeException(

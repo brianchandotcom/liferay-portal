@@ -383,12 +383,13 @@ public class RenderLayoutStructureTagTest {
 			layoutStructure.getFragmentLayoutStructureItems();
 
 		Assert.assertEquals(
-			MapUtil.toString(fragmentLayoutStructureItems), 3,
+			MapUtil.toString(fragmentLayoutStructureItems), 4,
 			fragmentLayoutStructureItems.size());
 
 		String content = _getRenderLayoutHTML(layout);
 
 		List<String> expectedList = new ArrayList<>();
+		String externalReferenceCode = RandomTestUtil.randomString();
 		String friendlyURLValue = StringUtil.toLowerCase(
 			StringUtil.removeSubstring(
 				RandomTestUtil.randomString(
@@ -437,7 +438,20 @@ public class RenderLayoutStructureTagTest {
 			if (Objects.equals(
 					fremarkerFragmentEntryProcessorJSONObject.getString(
 						"inputFieldId"),
-					"ObjectEntry_objectEntryFriendlyURL")) {
+					"ObjectEntry_externalReferenceCode")) {
+
+				expectedContent = StringBundler.concat(
+					"id=\"", fragmentEntryLink.getNamespace(),
+					"-text-input\" name=\"externalReferenceCode\" ",
+					"placeholder=\"\" type=\"text\" value=\"");
+
+				expectedList.add(
+					expectedContent + externalReferenceCode + StringPool.QUOTE);
+			}
+			else if (Objects.equals(
+						fremarkerFragmentEntryProcessorJSONObject.getString(
+							"inputFieldId"),
+						"ObjectEntry_objectEntryFriendlyURL")) {
 
 				expectedContent = StringBundler.concat(
 					"id=\"", fragmentEntryLink.getNamespace(),
@@ -522,6 +536,8 @@ public class RenderLayoutStructureTagTest {
 			HashMapBuilder.<String, Serializable>put(
 				objectRelationship.getName(),
 				relationshipObjectEntry.getObjectEntryId()
+			).put(
+				"externalReferenceCode", externalReferenceCode
 			).put(
 				"text", textValue
 			).build(),
@@ -3455,7 +3471,11 @@ public class RenderLayoutStructureTagTest {
 			StringPool.BLANK, _group.getGroupId());
 
 		return ListUtil.filter(
-			infoForm.getAllInfoFields(), InfoField::isEditable);
+			infoForm.getAllInfoFields(),
+			infoField ->
+				infoField.isEditable() &&
+				!StringUtil.equals(
+					infoField.getName(), "externalReferenceCode"));
 	}
 
 	private InfoField<TextInfoFieldType> _getInfoField(boolean readOnly) {

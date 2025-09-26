@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -327,7 +328,11 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 
 		for (InfoField<?> infoField :
 				ListUtil.filter(
-					infoForm.getAllInfoFields(), InfoField::isEditable)) {
+					infoForm.getAllInfoFields(),
+					infoField ->
+						infoField.isEditable() &&
+						!StringUtil.equals(
+							infoField.getName(), "externalReferenceCode"))) {
 
 			InfoFieldType infoFieldType = infoField.getInfoFieldType();
 

@@ -148,6 +148,11 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 				"edit-tags", null));
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
+				"#", "password-policies", "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
+				null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				"#", "password-policies", "default-permissions",
 				LanguageUtil.get(httpServletRequest, "default-permissions"),
 				null, null, null));

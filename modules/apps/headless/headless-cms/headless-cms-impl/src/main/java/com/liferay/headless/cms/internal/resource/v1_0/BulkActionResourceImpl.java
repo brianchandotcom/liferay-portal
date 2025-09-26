@@ -21,6 +21,7 @@ import com.liferay.headless.cms.resource.v1_0.BulkActionResource;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -43,9 +44,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -75,6 +80,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -471,9 +477,11 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			(PermissionBulkAction)bulkAction;
 
 		Permission[] permissions = permissionBulkAction.getPermissions();
+		String configuration = permissionBulkAction.getConfiguration();
 
 		if (MapUtil.isEmpty(bulkActionItemsMap) ||
-			ArrayUtil.isEmpty(permissions)) {
+			(ArrayUtil.isEmpty(permissions) &&
+			 Validator.isNull(configuration))) {
 
 			return new BulkActionTask();
 		}
@@ -482,13 +490,23 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			permissionBulkAction.getTypeAsString());
 
 		List<BulkActionItem> bulkActionItems = new ArrayList<>();
+		JSONObject configurationJSONObject = _jsonFactory.createJSONObject(
+			GetterUtil.get(configuration, "{}"));
 		ImportTaskResource importTaskResource = _createImportTaskResource();
+		Map<String, Role> rolesMap = new HashMap<>();
 
 		for (Map.Entry<String, List<BulkActionItem>> entry :
 				bulkActionItemsMap.entrySet()) {
 
 			String taskItemDelegateName = _getTaskItemDelegateName(
 				entry.getKey());
+
+			List<HashMap<String, Object>> permissionsList = _getPermissionsList(
+				configurationJSONObject, entry, permissions, rolesMap);
+
+			if (ListUtil.isEmpty(permissionsList)) {
+				continue;
+			}
 
 			ImportTask importTask = importTaskResource.putImportTaskObject(
 				_getClassName(entry.getKey()), null, null,
@@ -499,20 +517,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 					bulkActionItem -> HashMapBuilder.<String, Object>put(
 						"id", bulkActionItem.getClassPK()
 					).put(
-						"permissions",
-						transformToList(
-							permissions,
-							permission -> HashMapBuilder.<String, Object>put(
-								"actionIds",
-								ListUtil.fromArray(permission.getActionIds())
-							).put(
-								"roleExternalReferenceCode",
-								permission.getRoleExternalReferenceCode()
-							).put(
-								"roleName", permission.getRoleName()
-							).put(
-								"roleType", permission.getRoleType()
-							).build())
+						"permissions", permissionsList
 					).build()));
 
 			_addBulkActionTaskItem(
@@ -903,6 +908,114 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return bulkActionItems;
 	}
 
+	private List<HashMap<String, Object>> _getPermissionsList(
+		JSONObject configurationJSONObject,
+		Map.Entry<String, List<BulkActionItem>> entry, Permission[] permissions,
+		Map<String, Role> rolesMap) {
+
+		if (ArrayUtil.isNotEmpty(permissions)) {
+			return transformToList(
+				permissions,
+				permission -> HashMapBuilder.<String, Object>put(
+					"actionIds", ListUtil.fromArray(permission.getActionIds())
+				).put(
+					"roleExternalReferenceCode",
+					permission.getRoleExternalReferenceCode()
+				).put(
+					"roleName", permission.getRoleName()
+				).put(
+					"roleType", permission.getRoleType()
+				).build());
+		}
+
+		JSONObject jsonObject = null;
+		List<String> resourceActions;
+
+		if (Objects.equals(entry.getKey(), ObjectEntryFolder.class.getName())) {
+			jsonObject = configurationJSONObject.getJSONObject(
+				"OBJECT_ENTRY_FOLDERS");
+			resourceActions = ResourceActionsUtil.getResourceActions(
+				ObjectEntryFolder.class.getName());
+		}
+		else {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchObjectDefinitionByClassName(
+					contextCompany.getCompanyId(), entry.getKey());
+
+			if (objectDefinition == null) {
+				return null;
+			}
+
+			if (Objects.equals(
+					objectDefinition.getObjectFolderExternalReferenceCode(),
+					ObjectFolderConstants.
+						EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES)) {
+
+				jsonObject = configurationJSONObject.getJSONObject(
+					ObjectEntryFolderConstants.
+						EXTERNAL_REFERENCE_CODE_CONTENTS);
+			}
+			else if (Objects.equals(
+						objectDefinition.getObjectFolderExternalReferenceCode(),
+						ObjectFolderConstants.
+							EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
+				jsonObject = configurationJSONObject.getJSONObject(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES);
+			}
+
+			resourceActions = ResourceActionsUtil.getResourceActions(
+				objectDefinition.getClassName());
+		}
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		JSONObject finalJSONObject = jsonObject;
+		List<String> finalResourceActions = resourceActions;
+
+		Iterator<String> iterator = finalJSONObject.keys();
+
+		List<HashMap<String, Object>> permissionsList = new ArrayList<>();
+
+		iterator.forEachRemaining(
+			key -> {
+				if (!rolesMap.containsKey(key)) {
+					Role role = _roleLocalService.fetchRole(
+						contextCompany.getCompanyId(), key);
+
+					if (role == null) {
+						return;
+					}
+
+					rolesMap.put(key, role);
+				}
+
+				Role role = rolesMap.get(key);
+
+				permissionsList.add(
+					HashMapBuilder.<String, Object>put(
+						"actionIds",
+						ListUtil.fromArray(
+							ArrayUtil.filter(
+								JSONUtil.toStringArray(
+									finalJSONObject.getJSONArray(key)),
+								action -> finalResourceActions.contains(
+									action)))
+					).put(
+						"roleExternalReferenceCode",
+						role.getExternalReferenceCode()
+					).put(
+						"roleName", role.getName()
+					).put(
+						"roleType", role.getType()
+					).build());
+			});
+
+		return permissionsList;
+	}
+
 	private String _getTaskItemDelegateName(String className) throws Exception {
 		if (StringUtil.equals(
 				"com.liferay.object.model.ObjectEntryFolder", className)) {
@@ -1163,6 +1276,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SearchResultResource.Factory _searchResultResourceFactory;

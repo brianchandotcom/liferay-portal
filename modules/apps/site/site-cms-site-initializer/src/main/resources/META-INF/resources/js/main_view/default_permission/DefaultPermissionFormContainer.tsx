@@ -84,8 +84,10 @@ export default function DefaultPermissionFormContainer({
 	);
 
 	useEffect(() => {
-		setActiveActions(actions[tabs[activeIndex].key]);
-		setActiveValues((data || {})[tabs[activeIndex].key]);
+		if (tabs && tabs.length) {
+			setActiveActions(actions[tabs[activeIndex]?.key]);
+			setActiveValues((data || {})[tabs[activeIndex]?.key]);
+		}
 	}, [actions, activeIndex, data, tabs]);
 
 	useEffect(() => {

@@ -46,6 +46,10 @@ const DropDown = ({
 					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 				>
 					{Liferay.Language.get('new')}
+
+					<span className="d-inline-flex inline-item-after">
+						<ClayIcon symbol="caret-bottom" />
+					</span>
 				</ClayButton>
 			}
 		>

@@ -245,7 +245,7 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 		return hashedFilesRegistry;
 	}
 
-	private MockHttpServletRequest _mockHttpServletRequest(
+	private HttpServletRequest _mockHttpServletRequest(
 		String requestURI, boolean tokenizedRequest) {
 
 		MockHttpServletRequest mockHttpServletRequest =

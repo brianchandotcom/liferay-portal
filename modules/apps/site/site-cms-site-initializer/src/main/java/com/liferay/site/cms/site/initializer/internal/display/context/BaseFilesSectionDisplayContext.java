@@ -59,21 +59,6 @@ public abstract class BaseFilesSectionDisplayContext
 
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
-				"#", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), null, null,
-				null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-categories",
-				LanguageUtil.get(httpServletRequest, "edit-categories"), "post",
-				"edit-categories", null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
-				null, "pencil", "edit-tags",
-				LanguageUtil.get(httpServletRequest, "edit-tags"), "post",
-				"edit-tags", null));
-		fdsBulkActionDropdownItems.add(
-			new FDSActionDropdownItem(
 				"#", "password-policies", "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
 				null));

@@ -290,7 +290,8 @@ public class MCPServerServlet extends HttpServlet {
 		try {
 			return _jsonFactory.createJSONObject(
 				StringUtil.replace(
-					StringUtil.read(MCPServerServlet.class, "/tools.json"),
+					StringUtil.read(
+						MCPServerServlet.class, "dependencies/tools.json"),
 					"[$BASE_URL$]", baseURL));
 		}
 		catch (JSONException jsonException) {

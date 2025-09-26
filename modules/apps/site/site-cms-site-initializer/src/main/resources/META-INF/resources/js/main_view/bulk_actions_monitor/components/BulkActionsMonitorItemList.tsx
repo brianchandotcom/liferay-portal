@@ -8,11 +8,8 @@ import DropDown from '@clayui/drop-down';
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
-import React from 'react';
-
-import '../../../../css/components/AssetTaskStatus.scss';
-
 import moment from 'moment';
+import React from 'react';
 
 import {IBulkActionTask} from '../../../common/types/BulkActionTask';
 import {
@@ -21,7 +18,7 @@ import {
 	URL_TASKS_REPORT_DETAIL,
 } from '../util/constants';
 
-function TaskStatusDropdownItemList({
+function BulkActionsMonitorItemList({
 	classNameId,
 	items,
 }: {
@@ -39,7 +36,7 @@ function TaskStatusDropdownItemList({
 					displayType,
 					icon,
 					label,
-				} = TASK_STATUS_PROPS[executionStatus];
+				} = TASK_STATUS_PROPS[executionStatus.key];
 
 				return (
 					<ClayPanel
@@ -98,7 +95,7 @@ function TaskStatusDropdownItemList({
 								href={`${URL_TASKS_REPORT_DETAIL}${classNameId}/${id}`}
 							>
 								<Button
-									className={`border-${displayType} btn-xs text-${displayType}`}
+									className={`border-${displayType} btn-xs`}
 									displayType={displayType}
 								>
 									{Liferay.Language.get('view')}
@@ -112,4 +109,4 @@ function TaskStatusDropdownItemList({
 	);
 }
 
-export default TaskStatusDropdownItemList;
+export default BulkActionsMonitorItemList;

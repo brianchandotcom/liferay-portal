@@ -68,7 +68,11 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			keyValues,
 			selectedData
 		) as TBulkActionTaskDTO;
-		this.postURL = composeCreateTaskURL(apiURL, selectedData);
+		this.postURL = composeCreateTaskURL(
+			apiURL,
+			selectedData,
+			type === 'DownloadBulkAction'
+		);
 		this.selectedData = selectedData as IBulkActionFDSData;
 		this.type = type;
 	}
@@ -85,13 +89,23 @@ export class BulkActionTaskStarter implements IBulkActionTaskStarter {
 			);
 
 			displayCreateTaskSuccessToast(
-				sub(message, [
-					this.selectedData?.items?.length || 0,
-					getTaskReportLink(
-						this.bulkActionClassNameId,
-						response?.data?.id
-					),
-				])
+				sub(
+					message,
+					this.selectedData.selectAll
+						? [
+								getTaskReportLink(
+									this.bulkActionClassNameId,
+									response?.data?.id
+								),
+							]
+						: [
+								this.selectedData?.items?.length || 0,
+								getTaskReportLink(
+									this.bulkActionClassNameId,
+									response?.data?.id
+								),
+							]
+				)
 			);
 
 			if (this.onCreateTaskSuccess) {

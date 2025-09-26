@@ -44,65 +44,51 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_DEFAULT_PERMISSIONS]: {
 		info: {
 			all: Liferay.Language.get(
-				'permission-update-action-started-for-all-assets'
+				'default-permissions-update-action-started-for-all-assets'
 			),
 			plural: Liferay.Language.get(
-				'permission-update-action-started-for-x-assets'
+				'default-permissions-update-action-started-for-x-assets'
 			),
 			singular: Liferay.Language.get(
-				'permission-update-action-started-for-1-asset'
+				'default-permissions-update-action-started-for-1-asset'
 			),
 		},
 	},
 	[BULK_ACTION_DELETE]: {
 		info: {
-			all: Liferay.Language.get(
-				'asset-delete-action-started-for-all-assets'
-			),
-			plural: Liferay.Language.get(
-				'asset-delete-action-started-for-x-assets'
-			),
-			singular: Liferay.Language.get(
-				'asset-delete-action-started-for-1-asset'
-			),
+			all: Liferay.Language.get('delete-action-started-for-all-assets'),
+			plural: Liferay.Language.get('delete-action-started-for-x-assets'),
+			singular: Liferay.Language.get('delete-action-started-for-1-asset'),
 		},
 	},
 	[BULK_ACTION_DOWNLOAD]: {
 		info: {
-			all: Liferay.Language.get(
-				'asset-download-action-started-for-all-assets'
-			),
+			all: Liferay.Language.get('download-action-started-for-all-assets'),
 			plural: Liferay.Language.get(
-				'asset-download-action-started-for-x-assets'
+				'download-action-started-for-x-assets'
 			),
 			singular: Liferay.Language.get(
-				'asset-download-action-started-for-1-asset'
+				'download-action-started-for-1-asset'
 			),
 		},
 	},
 	[BULK_ACTION_MOVE]: {
 		info: {
-			all: Liferay.Language.get(
-				'assets-move-action-started-for-all-assets'
-			),
-			plural: Liferay.Language.get(
-				'assets-move-action-started-for-x-assets'
-			),
-			singular: Liferay.Language.get(
-				'assets-move-action-started-for-1-asset'
-			),
+			all: Liferay.Language.get('move-action-started-for-all-assets'),
+			plural: Liferay.Language.get('move-action-started-for-x-assets'),
+			singular: Liferay.Language.get('move-action-started-for-1-asset'),
 		},
 	},
 	[BULK_ACTION_PERMISSIONS]: {
 		info: {
 			all: Liferay.Language.get(
-				'permission-update-action-started-for-all-assets'
+				'permissions-update-action-started-for-all-assets'
 			),
 			plural: Liferay.Language.get(
-				'permission-update-action-started-for-x-assets'
+				'permissions-update-action-started-for-x-assets'
 			),
 			singular: Liferay.Language.get(
-				'permission-update-action-started-for-1-asset'
+				'permissions-update-action-started-for-1-asset'
 			),
 		},
 	},

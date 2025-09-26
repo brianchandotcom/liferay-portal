@@ -9,7 +9,8 @@ import React from 'react';
 
 import {IBulkActionTaskType} from '../../../common/types/BulkActionTask';
 
-export const URL_BULK_ACTION_TASK = `/o/headless-cms/v1.0/bulk-action`;
+export const URL_BULK_ACTION_TASK = '/o/headless-cms/v1.0/bulk-action';
+export const URL_DOWNLOAD_BULK_ACTION_TASK = '/o/cms/download-folder';
 
 export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
 export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';
@@ -19,7 +20,7 @@ export const BULK_ACTION_MOVE = 'MoveBulkAction';
 export const BULK_ACTION_PERMISSIONS = 'PermissionBulkAction';
 export const BULK_ACTION_TAGS = 'KeywordBulkAction';
 
-export const INTERVAL_TASK_POLLING_MS = 10000;
+export const INTERVAL_TASK_POLLING_MS = 5000;
 
 export const URL_TASKS_REPORT_DETAIL = `${Liferay.ThemeDisplay.getPortalURL()}/e/bulk-action-task/`;
 export const URL_TASKS_REPORT = `${Liferay.ThemeDisplay.getPortalURL()}/o/cms/bulk-action-tasks`;
@@ -31,15 +32,18 @@ export const LABELS_BULK_ACTIONS: {[key in keyof IBulkActionTaskType]: string} =
 			'assets-permissioning'
 		),
 		[BULK_ACTION_DELETE]: Liferay.Language.get('assets-deletion'),
-		[BULK_ACTION_DOWNLOAD]: Liferay.Language.get('download'),
+		[BULK_ACTION_DOWNLOAD]: Liferay.Language.get('assets-download'),
 		[BULK_ACTION_MOVE]: Liferay.Language.get('assets-movement'),
-		[BULK_ACTION_PERMISSIONS]: Liferay.Language.get('default-permissions'),
+		[BULK_ACTION_PERMISSIONS]: Liferay.Language.get(
+			'assets-default-permissioning'
+		),
 		[BULK_ACTION_TAGS]: Liferay.Language.get('assets-tagging'),
 	};
 
-export const STATUS_COMPLETED = 'COMPLETED';
-export const STATUS_FAILED = 'FAILED';
-export const STATUS_STARTED = 'STARTED';
+export const STATUS_COMPLETED = 'completed';
+export const STATUS_FAILED = 'failed';
+export const STATUS_INITIAL = 'initial';
+export const STATUS_STARTED = 'started';
 
 export const TASK_STATUS_PROPS: Record<
 	string,
@@ -67,6 +71,11 @@ export const TASK_STATUS_PROPS: Record<
 		displayType: 'danger',
 		icon: 'times-circle-full',
 		label: Liferay.Language.get('failed'),
+	},
+	[STATUS_INITIAL]: {
+		component: LoadingIndicator,
+		displayType: 'info',
+		label: Liferay.Language.get('processing'),
 	},
 	[STATUS_STARTED]: {
 		component: LoadingIndicator,

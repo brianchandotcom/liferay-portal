@@ -4,22 +4,30 @@
  */
 
 import {
+	IBulkActionFDSData,
 	IBulkActionFDSDataItemTransformed,
 	IBulkActionTaskType,
 	TBulkActionTaskDTO,
 } from '../../../common/types/BulkActionTask';
-import {URL_BULK_ACTION_TASK, URL_TASKS_REPORT_DETAIL} from './constants';
+import {
+	URL_BULK_ACTION_TASK,
+	URL_DOWNLOAD_BULK_ACTION_TASK,
+	URL_TASKS_REPORT_DETAIL,
+} from './constants';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export function composeCreateTaskURL(
 	apiURL: string,
-	{searchQuery = '', selectAll = false}
+	{filters = [], searchQuery = '', selectAll = false}: IBulkActionFDSData,
+	useDownloadURL: boolean = false
 ): string {
-	const postURL = new URL(
-		`${Liferay.ThemeDisplay.getPortalURL()}${URL_BULK_ACTION_TASK}`
-	);
+	const url: string = useDownloadURL
+		? URL_DOWNLOAD_BULK_ACTION_TASK
+		: URL_BULK_ACTION_TASK;
+
+	const postURL = new URL(`${Liferay.ThemeDisplay.getPortalURL()}${url}`);
 
 	if (!selectAll) {
 		return postURL.toString();
@@ -29,32 +37,18 @@ export function composeCreateTaskURL(
 		postURL.searchParams.append('search', searchQuery);
 	}
 
-	let scopeFilter = new URL(
-		`${Liferay.ThemeDisplay.getPortalURL()}${apiURL}`
-	).searchParams.get('filter');
+	const fullFilters = filters.map(({odataFilterString}) => odataFilterString);
 
-	if (!scopeFilter) {
-		return postURL.toString();
-	}
+	const scopeFilter =
+		new URL(
+			`${Liferay.ThemeDisplay.getPortalURL()}${apiURL}`
+		).searchParams.get('filter') || '';
 
-	if (scopeFilter.includes('cmsKind')) {
-		scopeFilter = `(cmsSection eq 'contents' or cmsSection eq 'files')`;
-	}
-	else if (scopeFilter.includes(`cmsSection eq 'contents'`)) {
-		scopeFilter = `cmsSection eq 'contents'`;
-	}
-	else if (scopeFilter.includes('folderId')) {
-		const match = scopeFilter.match(/folderId eq (\d+)/);
-
-		if (match && match[1]) {
-			scopeFilter = `folderId eq ${parseInt(match[1], 10)}`;
-		}
-	}
-	else {
-		scopeFilter = `cmsSection eq 'files'`;
+	if (scopeFilter) {
+		fullFilters.unshift(scopeFilter);
 	}
 
-	postURL.searchParams.append('filter', scopeFilter);
+	postURL.searchParams.append('filter', fullFilters.join(' and '));
 
 	return postURL.toString();
 }

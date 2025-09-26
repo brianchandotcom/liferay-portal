@@ -59,6 +59,11 @@ public abstract class BaseFilesSectionDisplayContext
 
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
+				"#", "download", "download",
+				LanguageUtil.get(httpServletRequest, "download"), null, null,
+				null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				"#", "password-policies", "permissions",
 				LanguageUtil.get(httpServletRequest, "permissions"), null, null,
 				null));

@@ -96,13 +96,13 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 	[BULK_ACTION_PERMISSIONS]: {
 		info: {
 			all: Liferay.Language.get(
-				'permission-update-action-started-for-all-assets'
+				'permissions-update-action-started-for-all-assets'
 			),
 			plural: Liferay.Language.get(
-				'permission-update-action-started-for-x-assets'
+				'permissions-update-action-started-for-x-assets'
 			),
 			singular: Liferay.Language.get(
-				'permission-update-action-started-for-1-asset'
+				'permissions-update-action-started-for-1-asset'
 			),
 		},
 	},

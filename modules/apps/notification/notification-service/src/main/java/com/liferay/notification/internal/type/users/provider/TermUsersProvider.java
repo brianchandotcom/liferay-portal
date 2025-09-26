@@ -11,14 +11,17 @@ import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -32,10 +35,13 @@ public class TermUsersProvider implements UsersProvider {
 	public TermUsersProvider(
 		PermissionCheckerFactory permissionCheckerFactory,
 		NotificationTermEvaluatorTracker notificationTermEvaluatorTracker,
+		RoleLocalService roleLocalService, RoleUsersProvider roleUsersProvider,
 		UserLocalService userLocalService) {
 
 		_permissionCheckerFactory = permissionCheckerFactory;
 		_notificationTermEvaluatorTracker = notificationTermEvaluatorTracker;
+		_roleLocalService = roleLocalService;
+		_roleUsersProvider = roleUsersProvider;
 		_userLocalService = userLocalService;
 	}
 
@@ -101,6 +107,18 @@ public class TermUsersProvider implements UsersProvider {
 							return null;
 						}
 
+						Role role = _roleLocalService.fetchRole(
+							GetterUtil.getLong(termValue));
+
+						if (role != null) {
+							users.addAll(
+								_roleUsersProvider.provide(
+									notificationContext,
+									Collections.singletonList(role.getName())));
+
+							return null;
+						}
+
 						User user = _userLocalService.getUser(
 							GetterUtil.getLong(termValue));
 
@@ -127,6 +145,8 @@ public class TermUsersProvider implements UsersProvider {
 	private final NotificationTermEvaluatorTracker
 		_notificationTermEvaluatorTracker;
 	private final PermissionCheckerFactory _permissionCheckerFactory;
+	private final RoleLocalService _roleLocalService;
+	private final RoleUsersProvider _roleUsersProvider;
 	private final UserLocalService _userLocalService;
 
 }

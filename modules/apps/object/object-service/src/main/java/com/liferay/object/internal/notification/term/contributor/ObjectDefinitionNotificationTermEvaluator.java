@@ -236,7 +236,21 @@ public class ObjectDefinitionNotificationTermEvaluator
 				return null;
 			}
 
-			return GetterUtil.getString(assigneeMap.get("name"));
+			if (!context.equals(Context.RECIPIENT)) {
+				return GetterUtil.getString(assigneeMap.get("name"));
+			}
+
+			String type = GetterUtil.getString(assigneeMap.get("type"));
+
+			if (StringUtil.equalsIgnoreCase("Role", type) ||
+				StringUtil.equalsIgnoreCase("User", type)) {
+
+				return MapUtil.getString(
+					(Map<String, Object>)termValues.get(objectField.getName()),
+					"classPK");
+			}
+
+			return null;
 		}
 
 		if (!FeatureFlagManagerUtil.isEnabled(

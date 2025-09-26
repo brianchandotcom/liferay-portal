@@ -209,16 +209,18 @@ public class UserNotificationType extends BaseNotificationType {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
+		RoleUsersProvider roleUsersProvider = new RoleUsersProvider(
+			_permissionCheckerFactory, _roleLocalService,
+			_userGroupRoleLocalService, userLocalService);
+
 		_usersProviders.put(
-			NotificationRecipientConstants.TYPE_ROLE,
-			new RoleUsersProvider(
-				_permissionCheckerFactory, _roleLocalService,
-				_userGroupRoleLocalService, userLocalService));
+			NotificationRecipientConstants.TYPE_ROLE, roleUsersProvider);
 		_usersProviders.put(
 			NotificationRecipientConstants.TYPE_TERM,
 			new TermUsersProvider(
 				_permissionCheckerFactory, notificationTermEvaluatorTracker,
-				userLocalService));
+				_roleLocalService, roleUsersProvider, userLocalService));
+
 		_usersProviders.put(
 			NotificationRecipientConstants.TYPE_USER,
 			new DefaultUsersProvider(

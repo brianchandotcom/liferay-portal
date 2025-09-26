@@ -315,7 +315,7 @@ public class FunctionalBatchTestClassGroup extends BatchTestClassGroup {
 						"test.base.dir.name", testBaseDirPath);
 				}
 
-				properties.setProperty("poshi.file.read.thread.pool", "4");
+				properties.setProperty("poshi.file.read.thread.pool", "8");
 				properties.setProperty("poshi.file.read.timeout", "30");
 
 				PropsUtil.clear();

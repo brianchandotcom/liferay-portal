@@ -15,6 +15,8 @@ import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineImportTaskErrorLocalServiceUtil;
 import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -57,29 +59,47 @@ public abstract class BaseBatchEngineImportStrategy
 					ImportTaskContext importTaskContext =
 						new ImportTaskContext();
 
-					for (ImportTaskPreAction importTaskPreAction :
-							importTaskPreActions) {
+					UnsafeSupplier<T, Exception> unsafeSupplier = () -> {
+						for (ImportTaskPreAction importTaskPreAction :
+								importTaskPreActions) {
 
-						importTaskPreAction.run(
-							batchEngineImportTask, batchEngineTaskItemDelegate,
-							importTaskContext, element);
+							importTaskPreAction.run(
+								batchEngineImportTask,
+								batchEngineTaskItemDelegate, importTaskContext,
+								element);
+						}
+
+						T persistedItem = unsafeFunction.apply(element);
+
+						if (persistedItem == null) {
+							return null;
+						}
+
+						for (ImportTaskPostAction importTaskPostAction :
+								importTaskPostActions) {
+
+							importTaskPostAction.run(
+								batchEngineImportTask,
+								batchEngineTaskItemDelegate, importTaskContext,
+								element, persistedItem);
+						}
+
+						return persistedItem;
+					};
+
+					if (LazyReferencingThreadLocal.isEnabled()) {
+						try {
+							return TransactionInvokerUtil.invoke(
+								_transactionConfig, unsafeSupplier::get);
+						}
+						catch (Throwable throwable) {
+							throw new RuntimeException(
+								throwable.getMessage(), throwable);
+						}
 					}
-
-					T persistedItem = unsafeFunction.apply(element);
-
-					if (persistedItem == null) {
-						return null;
+					else {
+						return unsafeSupplier.get();
 					}
-
-					for (ImportTaskPostAction importTaskPostAction :
-							importTaskPostActions) {
-
-						importTaskPostAction.run(
-							batchEngineImportTask, batchEngineTaskItemDelegate,
-							importTaskContext, element, persistedItem);
-					}
-
-					return persistedItem;
 				});
 		}
 	}

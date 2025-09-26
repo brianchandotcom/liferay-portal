@@ -17,6 +17,9 @@ const accountSelectorDropdownPrevButton = fragmentElement.querySelector(
 const accountSelectorPanelTitle = fragmentElement.querySelector(
 	`#${fragmentEntryLinkNamespace}-account-selector-panel-title`
 );
+const accountSelectorPanelSlider = fragmentElement.querySelector(
+	`#${fragmentEntryLinkNamespace}-account-selector-panel-slider`
+);
 const panels = Array.from(
 	fragmentElement.querySelectorAll('.account-selector-panel-content')
 ).map((value, index) => {
@@ -29,36 +32,26 @@ const panels = Array.from(
 });
 
 if (layoutMode !== 'edit') {
-	handleTitleChange(panels[0]);
-
 	Liferay.on('current-account-updated', () => window.location.reload());
-
-	const accountSelectorDropdownMenu = fragmentElement.querySelector(
-		`#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu`
-	);
-
-	accountSelectorDropdownMenu.style.maxHeight = `${configuration.dropdownHeight}px`;
-	accountSelectorDropdownMenu.style.minHeight = `${configuration.dropdownHeight}px`;
-	accountSelectorDropdownMenu.style.maxWidth = `${configuration.dropdownWidth}px`;
-	accountSelectorDropdownMenu.style.minWidth = `${configuration.dropdownWidth}px`;
-
-	accountSelectorDropdownNextButton.addEventListener('click', () => {
-		const step = Number(accountSelectorDropdownHeader.dataset.step);
-
-		handleNav(step, step + 1);
-	});
-
-	accountSelectorDropdownPrevButton.addEventListener('click', () => {
-		const step = Number(accountSelectorDropdownHeader.dataset.step);
-
-		handleNav(step, step - 1);
-	});
 }
+
+handleTitleChange(panels[0]);
+accountSelectorDropdownNextButton.addEventListener('click', () => {
+	const step = Number(accountSelectorDropdownHeader.dataset.step);
+
+	handleNav(step, step + 1);
+});
+
+accountSelectorDropdownPrevButton.addEventListener('click', () => {
+	const step = Number(accountSelectorDropdownHeader.dataset.step);
+
+	handleNav(step, step - 1);
+});
 
 function handleTitleChange(panel) {
 	accountSelectorPanelTitle.innerHTML = panel.value.querySelector(
-		'.account-selector-panel-title'
-	)?.innerHTML;
+		'.account-selector-panel-drop-zone-container'
+	).dataset.panelTitle;
 }
 
 function handleNav(step, nextStep) {
@@ -68,25 +61,18 @@ function handleNav(step, nextStep) {
 
 	const panel = panels[nextStep];
 
-	if (panel.index === panels.length - 1) {
-		accountSelectorDropdownNextButton.classList.add('invisible');
-	}
-	else {
-		accountSelectorDropdownNextButton.classList.remove('invisible');
-	}
-
-	if (panel.index === 0) {
-		accountSelectorDropdownPrevButton.classList.add('invisible');
-	}
-	else {
-		accountSelectorDropdownPrevButton.classList.remove('invisible');
-	}
+	accountSelectorDropdownNextButton.classList.toggle(
+		'invisible',
+		panel.index === panels.length - 1
+	);
+	accountSelectorDropdownPrevButton.classList.toggle(
+		'invisible',
+		panel.index === 0
+	);
 
 	accountSelectorDropdownHeader.dataset.step = nextStep;
 
-	panels[step].value.classList.add('d-none');
-
-	panel.value.classList.remove('d-none');
+	accountSelectorPanelSlider.style.transform = `translate(-${nextStep * configuration.dropdownWidth}px, 0)`;
 
 	handleTitleChange(panel);
 }

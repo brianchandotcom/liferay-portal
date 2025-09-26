@@ -1,3 +1,25 @@
+[@liferay_aui.style]
+	.account-selector-panel-content {
+	  width: ${configuration.dropdownWidth}px;
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu {
+		max-height: ${configuration.dropdownHeight}px;
+		min-height: ${configuration.dropdownHeight}px;
+		max-width: ${configuration.dropdownWidth}px;
+		min-width: ${configuration.dropdownWidth}px
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-panel-slider {
+		display: flex;
+		transition: transform ${configuration.panelAnimationDuration}s linear;
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-panel-wrapper {
+		overflow-x: hidden;
+	}
+[/@]
+
 <div class="account-selector-container" id="${fragmentEntryLinkNamespace}-account-selector-container">
 	<div class="account-selector-cta-container"[#if layoutMode != 'edit'] data-toggle="liferay-dropdown"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-cta-container">
 		<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
@@ -27,13 +49,15 @@
 
 			<div class="dropdown-divider"></div>
 
-			[#list 1..configuration.numberOfPanels as i]
-				<div class="account-selector-panel-content[#if layoutMode != 'edit' && i > 1] d-none[/#if]">
-					<lfr-drop-zone data-lfr-drop-zone-id="${i + 1}" data-lfr-priority="${i + 1}"></lfr-drop-zone>
+			<div id="${fragmentEntryLinkNamespace}-account-selector-panel-wrapper">
+				<div id="${fragmentEntryLinkNamespace}-account-selector-panel-slider">
+					[#list 1..configuration.numberOfPanels as i]
+						<div class="account-selector-panel-content">
+							<lfr-drop-zone data-lfr-drop-zone-id="${i + 1}" data-lfr-priority="${i + 1}"></lfr-drop-zone>
+						</div>
+					[/#list]
 				</div>
-
-				<div class="dropdown-divider[#if layoutMode != 'edit'] d-none[/#if]"></div>
-			[/#list]
+			</div>
 		</div>
 	</div>
 </div>

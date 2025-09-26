@@ -53,6 +53,13 @@
 							}
 						]
 					}
+				},
+				{
+					"dataType": "double",
+					"defaultValue": "0.5",
+					"label": "panel-animation-duration",
+					"name": "panelAnimationDuration",
+					"type": "text"
 				}
 			],
 			"label": "account-selector-options"

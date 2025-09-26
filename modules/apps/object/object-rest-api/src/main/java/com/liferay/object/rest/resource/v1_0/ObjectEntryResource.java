@@ -67,6 +67,18 @@ public interface ObjectEntryResource {
 			String scopeKey, String externalReferenceCode, Integer version)
 		throws Exception;
 
+	public ObjectEntry getApprovedByExternalReferenceCode(
+			String externalReferenceCode)
+		throws Exception;
+
+	public Page<ObjectEntry> getApprovedPage(
+			String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
+		throws Exception;
+
 	public ObjectEntry getByExternalReferenceCode(String externalReferenceCode)
 		throws Exception;
 
@@ -98,6 +110,18 @@ public interface ObjectEntryResource {
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getObjectEntryPermissionsPage(Long objectEntryId, String roleNames)
+		throws Exception;
+
+	public ObjectEntry getScopeScopeKeyApprovedByExternalReferenceCode(
+			String scopeKey, String externalReferenceCode)
+		throws Exception;
+
+	public Page<ObjectEntry> getScopeScopeKeyApprovedPage(
+			String scopeKey, String search,
+			com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			Pagination pagination,
+			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public ObjectEntry getScopeScopeKeyByExternalReferenceCode(

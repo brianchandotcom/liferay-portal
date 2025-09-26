@@ -16,6 +16,19 @@
 	}
 }
 
+.asset-navigation-container {
+	--asset-sidebar-layout-width: 472px;
+
+	@include media-breakpoint-up(sm) {
+		.sidebar {
+			width: var(--asset-sidebar-layout-width);
+		}
+
+		&.c-slideout-push-end {
+			padding-right: var(--asset-sidebar-layout-width);
+		}
+	}
+}
 .c-slideout .sidebar {
 	.asset-metadata-section {
 		margin-top: 1rem;

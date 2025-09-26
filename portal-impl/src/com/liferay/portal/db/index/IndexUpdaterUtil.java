@@ -239,11 +239,16 @@ public class IndexUpdaterUtil {
 				db.getPrimaryKeyColumnNames(connection, tableName),
 				StringPool.COMMA_AND_SPACE);
 
+			String indexColumns = matcher.group(2);
+
 			DuplicateUniqueFinderRowsCleaner duplicateUniqueFinderRowsCleaner =
 				new DuplicateUniqueFinderRowsCleaner(
 					connection, tableName,
 					StringUtil.split(
-						matcher.group(2), StringPool.COMMA_AND_SPACE),
+						indexColumns.replaceAll(
+							"\\[\\$COLUMN_LENGTH:(\\d+)\\$\\]",
+							StringPool.BLANK),
+						StringPool.COMMA_AND_SPACE),
 					orderByColumns + " asc");
 
 			duplicateUniqueFinderRowsCleaner.deleteDuplicates();

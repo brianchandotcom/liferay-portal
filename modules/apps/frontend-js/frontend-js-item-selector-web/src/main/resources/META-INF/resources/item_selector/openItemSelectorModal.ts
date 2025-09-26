@@ -13,8 +13,8 @@ import DetachedItemSelectorModal, {
  * This utility enables item selector to be rendered from any JS context.
  */
 
-export default function openItemSelectorModal(
-	props: TDetachedItemSelectorModal<any>
+export default function openItemSelectorModal<T>(
+	props: TDetachedItemSelectorModal<T>
 ) {
 
 	// Mount in detached node; Clay will take care of appending to `document.body`.

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 
@@ -41,12 +41,14 @@ public class ObjectEntryInfoItemObjectProvider
 	public ObjectEntryInfoItemObjectProvider(
 		GroupLocalService groupLocalService, ObjectDefinition objectDefinition,
 		ObjectEntryLocalService objectEntryLocalService,
-		ObjectEntryManagerRegistry objectEntryManagerRegistry) {
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		UserLocalService userLocalService) {
 
 		_groupLocalService = groupLocalService;
 		_objectDefinition = objectDefinition;
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectEntryManagerRegistry = objectEntryManagerRegistry;
+		_userLocalService = userLocalService;
 	}
 
 	@Override
@@ -117,8 +119,6 @@ public class ObjectEntryInfoItemObjectProvider
 			}
 		}
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
 				_objectDefinition.getStorageType());
@@ -126,10 +126,11 @@ public class ObjectEntryInfoItemObjectProvider
 		try {
 			com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
 				objectEntryManager.getObjectEntry(
-					themeDisplay.getCompanyId(),
+					group.getCompanyId(),
 					new DefaultDTOConverterContext(
-						false, null, null, null, null, themeDisplay.getLocale(),
-						null, themeDisplay.getUser()),
+						false, null, null, null, null,
+						serviceContext.getLocale(), null,
+						_userLocalService.getUser(serviceContext.getUserId())),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
 					_objectDefinition, group.getGroupKey());
 
@@ -185,5 +186,6 @@ public class ObjectEntryInfoItemObjectProvider
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectEntryManagerRegistry _objectEntryManagerRegistry;
+	private final UserLocalService _userLocalService;
 
 }

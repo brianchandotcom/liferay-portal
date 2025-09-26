@@ -25,14 +25,18 @@ describe('SpaceMembersInputWithSelect', () => {
 		items: [
 			{
 				emailAddress: 'john.doe@example.com',
+				externalReferenceCode: 'john.doe',
 				id: '1',
 				image: '/image/user_portrait',
+				imageId: 'john.doe.image',
 				name: 'John Doe',
 			},
 			{
 				emailAddress: 'jane.smith@example.com',
+				externalReferenceCode: 'jane.smith',
 				id: '2',
 				image: '/image/user_portrait',
+				imageId: 'jane.smith.image',
 				name: 'Jane Smith',
 			},
 		],
@@ -41,13 +45,17 @@ describe('SpaceMembersInputWithSelect', () => {
 	const mockGroupApiResponse = {
 		items: [
 			{
+				externalReferenceCode: 'group.1',
 				id: '1',
 				name: 'Group 1',
+				roles: [],
 				usersCount: 5,
 			},
 			{
+				externalReferenceCode: 'group.2',
 				id: '2',
 				name: 'Group 2',
+				roles: [],
 				usersCount: 10,
 			},
 		],
@@ -268,11 +276,13 @@ describe('SpaceMembersInputWithSelect', () => {
 		});
 
 		expect(onAutocompleteItemSelected).toHaveBeenCalledWith({
-			_key: '1',
 			emailAddress: 'john.doe@example.com',
+			externalReferenceCode: 'john.doe',
 			id: '1',
 			image: '/image/user_portrait',
+			imageId: 'john.doe.image',
 			name: 'John Doe',
+			roles: [],
 		});
 
 		await waitFor(() => {
@@ -314,12 +324,11 @@ describe('SpaceMembersInputWithSelect', () => {
 		});
 
 		expect(onAutocompleteItemSelected).toHaveBeenCalledWith({
-			_key: '1',
+			externalReferenceCode: 'group.1',
 			id: '1',
 			name: 'Group 1',
 			numberOfUserAccounts: '5',
 			roles: [],
-			usersCount: 5,
 		});
 
 		await waitFor(() => expect(input).toHaveValue(''));

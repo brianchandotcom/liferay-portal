@@ -249,6 +249,8 @@ describe('SpaceMembersWithList', () => {
 				emailAddress: 'new@user.com',
 				externalReferenceCode: 'ERC_3',
 				id: '3',
+				image: '/image/profile.jpg',
+				imageId: '3.image.profile',
 				name: 'New User',
 			};
 
@@ -274,8 +276,12 @@ describe('SpaceMembersWithList', () => {
 			);
 
 			await waitFor(() => {
+				const {_key, ...expectedValue} = newUser as typeof newUser & {
+					_key: string;
+				};
+
 				expect(mockAddMember).toHaveBeenCalledWith(
-					expect.objectContaining(newUser),
+					{...expectedValue, roles: []},
 					SelectOptions.USERS
 				);
 			});

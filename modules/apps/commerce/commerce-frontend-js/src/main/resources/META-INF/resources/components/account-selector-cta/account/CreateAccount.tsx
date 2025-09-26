@@ -55,6 +55,7 @@ const CreateAccount = ({
 	return (
 		<>
 			<ClayButton
+				className="btn-create-account"
 				disabled={!hasAddAccountsPermission}
 				onClick={() => onOpenChange(true)}
 			>

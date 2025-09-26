@@ -182,7 +182,7 @@ public class ObjectDefinitionUtil {
 		).put(
 			"KnowledgeBase", "/cms/knowledge-bases"
 		).put(
-			"MCPServerPrompt", "/mcp/prompts"
+			"MCPServerPrompt", "/mcp/server-prompts"
 		).put(
 			"NecessaryCookieEntry", "/necessary-cookies-entries"
 		).put(

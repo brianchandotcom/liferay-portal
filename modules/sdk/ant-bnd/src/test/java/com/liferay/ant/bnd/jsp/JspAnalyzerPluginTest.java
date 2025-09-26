@@ -35,20 +35,20 @@ import org.junit.Test;
 public class JspAnalyzerPluginTest {
 
 	@Test
-	public void testAddTaglibRequirementsIgnoreJakaraJstlCoreUri()
-		throws Exception {
+	public void testAddTaglibRequirements() throws Exception {
+		List<String> expectedTaglibURIs = Arrays.asList(
+			"http://java.sun.com/portlet_2_0", "http://liferay.com/tld/aui",
+			"http://liferay.com/tld/portlet", "http://liferay.com/tld/security",
+			"http://liferay.com/tld/theme", "http://liferay.com/tld/ui",
+			"http://liferay.com/tld/util");
 
 		_testAddTaglibRequirements(
-			"dependencies/imports_without_comments.jsp", "jakarta.tags.core");
-	}
-
-	@Test
-	public void testAddTaglibRequirementsIgnoreJavaxJstlCoreUri()
-		throws Exception {
+			"dependencies/imports_without_comments.jsp", expectedTaglibURIs,
+			"jakarta.tags.core");
 
 		_testAddTaglibRequirements(
 			"dependencies/imports_without_comments_with_javax.jsp",
-			"http://java.sun.com/jsp/jstl/core");
+			expectedTaglibURIs, "http://java.sun.com/jsp/jstl/core");
 	}
 
 	@Test

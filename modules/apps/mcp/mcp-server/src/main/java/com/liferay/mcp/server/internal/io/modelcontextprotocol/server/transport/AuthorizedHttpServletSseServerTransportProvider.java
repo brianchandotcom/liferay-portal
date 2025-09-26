@@ -106,14 +106,14 @@ public class AuthorizedHttpServletSseServerTransportProvider
 	private static class AuthorizedMcpServerSession extends McpServerSession {
 
 		public AuthorizedMcpServerSession(
-			String id, Duration requestTimeout, McpServerTransport transport,
-			InitRequestHandler initHandler,
+			String id, Duration requestTimeout, McpServerTransport mcpServerTransport,
+			InitRequestHandler initRequestHandler,
 			InitNotificationHandler initNotificationHandler,
 			Map<String, RequestHandler<?>> requestHandlers,
 			Map<String, NotificationHandler> notificationHandlers) {
 
 			super(
-				id, requestTimeout, transport, initHandler,
+				id, requestTimeout, mcpServerTransport, initRequestHandler,
 				initNotificationHandler, requestHandlers, notificationHandlers);
 
 			_authorization = AuthorizationThreadLocal.get();
@@ -137,8 +137,8 @@ public class AuthorizedHttpServletSseServerTransportProvider
 		}
 
 		@Override
-		public McpServerSession create(McpServerTransport transport) {
-			McpServerSession mcpServerSession = _factory.create(transport);
+		public McpServerSession create(McpServerTransport mcpServerTransport) {
+			McpServerSession mcpServerSession = _factory.create(mcpServerTransport);
 
 			try {
 				Field requestTimeoutField =

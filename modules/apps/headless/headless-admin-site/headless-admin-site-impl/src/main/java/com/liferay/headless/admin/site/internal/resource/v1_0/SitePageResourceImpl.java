@@ -184,7 +184,9 @@ public class SitePageResourceImpl
 					"filter",
 					() -> {
 						if ((portletDataContext.getLayoutIds() == null) ||
-							(portletDataContext.getLayoutIds().length == 0)) {
+							(portletDataContext.getLayoutIds().length == 0) ||
+							((portletDataContext.getLayoutIds().length == 1) &&
+							 (portletDataContext.getLayoutIds()[0] == 0))) {
 
 							return null;
 						}

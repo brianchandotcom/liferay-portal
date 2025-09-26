@@ -19,7 +19,6 @@ public class LPD_58976 {
 	}
 
 	@Reference
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
+	private LayoutPageTemplateStructureLocalService _layoutPageTemplateStructureLocalService;
 
 }

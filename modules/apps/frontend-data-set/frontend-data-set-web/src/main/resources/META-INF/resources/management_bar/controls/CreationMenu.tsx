@@ -6,10 +6,12 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {LinkOrButton} from '@clayui/shared';
 import classNames from 'classnames';
 import React, {useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
+import {ACTION_ITEM_TARGETS} from '../../utils/actionItems/constants';
 import {triggerAction} from '../../utils/actionItems/triggerAction';
 import {ICreationActionItem} from '../../utils/types';
 
@@ -93,6 +95,8 @@ function CreationMenu({
 
 	const firstItem = primaryItems[0];
 
+	const opensInNewTab = firstItem.target === ACTION_ITEM_TARGETS.BLANK;
+
 	return (
 		<ul
 			className={classNames('navbar-nav', {
@@ -106,7 +110,7 @@ function CreationMenu({
 						primaryItems={primaryItems}
 					/>
 				) : (
-					<ClayButton
+					<LinkOrButton
 						aria-label={firstItem.label}
 						className={
 							inEmptyState
@@ -115,7 +119,12 @@ function CreationMenu({
 						}
 						data-testid="fdsCreationActionButton"
 						data-tooltip-align="top"
+						href={opensInNewTab ? firstItem.href : undefined}
 						onClick={() => {
+							if (opensInNewTab) {
+								return;
+							}
+
 							firstItem.onClick?.({
 								loadData,
 							});
@@ -127,14 +136,26 @@ function CreationMenu({
 								);
 							}
 						}}
+						target={opensInNewTab ? '_blank' : undefined}
 						title={!inEmptyState ? firstItem.label : undefined}
 					>
-						{inEmptyState ? (
-							firstItem.label
-						) : (
-							Liferay.Language.get('new')
+						{inEmptyState
+							? firstItem.label
+							: Liferay.Language.get('new')}
+
+						{opensInNewTab && (
+							<span
+								className={classNames(
+									'inline-item-after',
+									inEmptyState
+										? 'inline-item'
+										: 'd-inline-flex'
+								)}
+							>
+								<ClayIcon symbol="shortcut" />
+							</span>
 						)}
-					</ClayButton>
+					</LinkOrButton>
 				)}
 			</li>
 		</ul>

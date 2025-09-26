@@ -695,9 +695,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testForceAuthn() throws Exception {
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
-		samlSpIdpConnection.setForceAuthn(true);
-
 		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+		samlSpIdpConnection.setForceAuthn(true);
 
 		_setUpWebSsoProfilerImpl(samlSpIdpConnection);
 
@@ -738,9 +737,8 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 	public void testIsPassive() throws Exception {
 		SamlSpIdpConnection samlSpIdpConnection = new SamlSpIdpConnectionImpl();
 
-		samlSpIdpConnection.setForceAuthn(true);
-
 		samlSpIdpConnection.setSamlIdpEntityId(IDP_ENTITY_ID);
+		samlSpIdpConnection.setForceAuthn(true);
 
 		_setUpWebSsoProfilerImpl(samlSpIdpConnection);
 

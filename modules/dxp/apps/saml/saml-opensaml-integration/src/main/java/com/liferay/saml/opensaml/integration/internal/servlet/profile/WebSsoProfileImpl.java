@@ -1607,8 +1607,8 @@ public class WebSsoProfileImpl extends BaseProfile implements WebSsoProfile {
 
 		Response response = OpenSamlUtil.buildResponse();
 
-		response.setDestination(assertionConsumerService.getLocation());
 		response.setID(generateIdentifier(20));
+		response.setDestination(assertionConsumerService.getLocation());
 
 		MessageContext<?> messageContext =
 			samlSsoRequestContext.getSAMLMessageContext();

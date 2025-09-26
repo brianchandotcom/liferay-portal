@@ -65,6 +65,7 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {saveViewSettings} from './utils/saveViewSettings';
+import {contains} from './utils/stateInURL';
 import {
 	EStateInURLKeys,
 	EStateInURLSettings,
@@ -535,9 +536,17 @@ const FrontendDataSetContent = ({
 
 		const visibleFieldNames = getVisibleFields();
 
+		let saveVisibleFieldNames = false;
+
 		if (visibleFieldNames) {
+			if (!contains(visibleFieldNames, initialVisibleFieldNames)) {
+				saveVisibleFieldNames = true;
+			}
+
 			initialVisibleFieldNames = visibleFieldNames;
 		}
+
+		let saveViewName = false;
 
 		const view = getView();
 
@@ -545,6 +554,10 @@ const FrontendDataSetContent = ({
 			const activeView = views.find(({name}) => name === view);
 
 			if (activeView) {
+				if (initialActiveView !== activeView) {
+					saveViewName = true;
+				}
+
 				initialActiveView = activeView;
 			}
 		}
@@ -602,6 +615,20 @@ const FrontendDataSetContent = ({
 			[EStateInURLKeys.VIEW_NAME]: activeView.name,
 			[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
 		});
+
+		if (saveVisibleFieldNames || saveViewName) {
+			saveViewSettings({
+				appURL,
+				id,
+				portletId,
+				settings: {
+					...(saveViewName && {name: activeView.name}),
+					...(saveVisibleFieldNames && {
+						visibleFieldNames: initialVisibleFieldNames,
+					}),
+				},
+			});
+		}
 
 		return {
 			activeView,
@@ -1045,6 +1072,13 @@ const FrontendDataSetContent = ({
 			stateUpdates.push({
 				type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
 				value: visibleFields,
+			});
+
+			saveViewSettings({
+				appURL,
+				id,
+				portletId,
+				settings: {visibleFieldNames: visibleFields},
 			});
 		}
 

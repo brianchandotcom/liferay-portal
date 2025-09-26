@@ -13,7 +13,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -89,14 +88,14 @@ public class DownloadObjectEntryFolderServletTest {
 					"bulkActionItems",
 					JSONUtil.put(
 						JSONUtil.put(
+							"classExternalReferenceCode",
+							objectEntryFolder.getExternalReferenceCode()
+						).put(
 							"className",
 							"com.liferay.object.model.ObjectEntryFolder"
 						).put(
 							"classPK",
 							objectEntryFolder.getObjectEntryFolderId()
-						).put(
-							"classExternalReferenceCode",
-							objectEntryFolder.getExternalReferenceCode()
 						).put(
 							"name", objectEntryFolder.getName()
 						))

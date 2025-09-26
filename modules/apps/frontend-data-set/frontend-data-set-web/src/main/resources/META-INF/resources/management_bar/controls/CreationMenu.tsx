@@ -39,10 +39,8 @@ const DropDown = ({
 			onActiveChange={setActive}
 			trigger={
 				<ClayButton
-					aria-label={Liferay.Language.get('new')}
-					className="nav-btn nav-btn-monospaced"
+					className="nav-btn"
 					data-testid="fdsCreationActionButton"
-					title={Liferay.Language.get('new')}
 					{...(inEmptyState && EMPTY_STATE_BUTTON_PROPS)}
 				>
 					{Liferay.Language.get('new')}
@@ -111,7 +109,7 @@ function CreationMenu({
 				) : (
 					<ClayButton
 						aria-label={primaryItems[0].label}
-						className="nav-btn nav-btn-monospaced"
+						className="nav-btn"
 						data-testid="fdsCreationActionButton"
 						data-tooltip-align="top"
 						onClick={() => {

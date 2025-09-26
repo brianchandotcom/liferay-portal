@@ -50,7 +50,7 @@ test(
 		const spaceName = `Space ${getRandomString()}`;
 
 		const {id: spaceId} =
-			await apiHelpers.headlessAssetLibrary.createAssetLibrariesPage({
+			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 				name: spaceName,
 				settings: {},
 				type: 'Space',
@@ -135,9 +135,7 @@ test(
 		// Delete space
 
 		expect(
-			await apiHelpers.headlessAssetLibrary.deleteAssetLibrariesPage(
-				spaceId
-			)
+			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(spaceId)
 		).toBeOK();
 	}
 );

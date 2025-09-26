@@ -124,6 +124,7 @@ public class DataCleanupPreupgradeProcessSuite {
 			).put(
 				companyDataCleanupPreupgradeProcess,
 				DataCleanupPreupgradeProcess.dependsOn(
+					analyticsMessageDataCleanupPreupgradeProcess,
 					updateAllPrimaryKeysDataCleanupPreupgradeProcess)
 			).put(
 				configurationDataCleanupPreupgradeProcess,

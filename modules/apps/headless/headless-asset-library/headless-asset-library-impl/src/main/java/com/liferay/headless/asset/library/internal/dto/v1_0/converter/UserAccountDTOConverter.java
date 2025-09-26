@@ -10,8 +10,8 @@ import com.liferay.headless.asset.library.dto.v1_0.UserAccount;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.RoleService;
-import com.liferay.portal.kernel.service.UserService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,7 +41,14 @@ public class UserAccountDTOConverter
 	public UserAccount toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		User user = _userService.getUserById((Long)dtoConverterContext.getId());
+		// Permission checks are performed in the user account resource so it is
+		// safe to invoke the local service.
+		// It is a product requirement that asset library members should be able
+		// to see other asset library members, even if they don't have VIEW
+		// permission over User. See LPD-62456.
+
+		User user = _userLocalService.getUserById(
+			(Long)dtoConverterContext.getId());
 
 		return new UserAccount() {
 			{
@@ -70,8 +77,16 @@ public class UserAccountDTOConverter
 								dtoConverterContext.getAttribute(
 									"assetLibraryId"));
 
+							// Permission checks are performed in the user
+							// account resource so it is safe to invoke the
+							// local service.
+							// It is a product requirement that asset library
+							// members should be able to see other asset library
+							// members, even if they don't have VIEW permission
+							// over User. See LPD-62456.
+
 							return TransformUtil.transformToArray(
-								_roleService.getUserGroupRoles(
+								_roleLocalService.getUserGroupRoles(
 									user.getUserId(), assetLibraryId),
 								role -> _toRole(role), Role.class);
 						}));
@@ -96,9 +111,9 @@ public class UserAccountDTOConverter
 	private Portal _portal;
 
 	@Reference
-	private RoleService _roleService;
+	private RoleLocalService _roleLocalService;
 
 	@Reference
-	private UserService _userService;
+	private UserLocalService _userLocalService;
 
 }

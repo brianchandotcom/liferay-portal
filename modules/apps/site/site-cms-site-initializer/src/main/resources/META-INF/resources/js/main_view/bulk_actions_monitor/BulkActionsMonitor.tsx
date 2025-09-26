@@ -5,10 +5,10 @@
 
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
-import '../../../css/components/AssetTaskStatus.scss';
+import '../../../css/components/BulkActionsMonitor.scss';
 
 import Badge from '@clayui/badge';
-import Button, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import DropDown from '@clayui/drop-down';
 import ClayLink from '@clayui/link';
 import classnames from 'classnames';
@@ -23,34 +23,48 @@ import {
 } from '../../common/types/BulkActionTask';
 import {START_TASK} from '../../common/utils/events';
 import {displaySystemErrorToast} from '../../common/utils/toastUtil';
-import TaskStatusDropdownItemList from './components/TaskStatusDropdownItemList';
+import BulkActionsMonitorItemList from './components/BulkActionsMonitorItemList';
 import {BulkActionTaskStarter} from './services/BulkActionTaskStarter';
 import {INTERVAL_TASK_POLLING_MS, URL_TASKS_REPORT} from './util/constants';
 
-function TaskStatusManager({
+function BulkActionsMonitor({
 	bulkActionTaskClassNameId: classNameId,
 }: {
 	bulkActionTaskClassNameId: number;
 }) {
 	const [active, setActive] = useState<boolean>(false);
-	const [disabled, setDisabled] = useState(true);
 	const [processingTasks, setProcessingTask] = useState(0);
-	const [taskItems, setTaskItems] = useState<IBulkActionTask[]>([]);
+	const [tasks, setTasks] = useState<IBulkActionTask[]>([]);
+	const [tasksLoading, setTasksLoading] = useState<boolean>(false);
 
 	const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-	const getTaskItems = useCallback(async () => {
-		const {data} = await AssetBulkActionTaskService.getTasks({
-			pageSize: 5,
-			sort: 'dateCreated:desc',
-		});
+	const getTasks = useCallback(
+		() =>
+			debounce(async () => {
+				setTasksLoading(true);
 
-		if (data?.items?.length) {
-			setDisabled(false);
-		}
+				const {data} = await AssetBulkActionTaskService.getTasks({
+					pageSize: 5,
+					sort: 'dateCreated:desc',
+				});
 
-		setTaskItems(data?.items || []);
-	}, [setDisabled, setTaskItems]);
+				setTasks(data?.items || []);
+				setTasksLoading(false);
+			}, 500)(),
+		[setTasks]
+	);
+
+	const onActiveChange = useCallback(
+		(active: boolean) => {
+			setActive(active);
+
+			if (active) {
+				getTasks();
+			}
+		},
+		[getTasks, setActive]
+	);
 
 	const stopPolling = useCallback(() => {
 		if (intervalRef.current) {
@@ -68,7 +82,7 @@ function TaskStatusManager({
 		const getProcessingTasks = async () => {
 			try {
 				const {data} = await AssetBulkActionTaskService.getTasks({
-					filter: `executionStatus eq 'STARTED'`,
+					filter: `executionStatus eq 'initial' or executionStatus eq 'started'`,
 				});
 
 				if (!data?.totalCount) {
@@ -109,8 +123,6 @@ function TaskStatusManager({
 				if (response.data) {
 					bulkAction.onCreateSuccess(response);
 
-					setDisabled(false);
-
 					pollProcessingTasks();
 				}
 
@@ -126,7 +138,7 @@ function TaskStatusManager({
 				}
 			}
 		},
-		[classNameId, pollProcessingTasks, setDisabled]
+		[classNameId, pollProcessingTasks]
 	);
 
 	useEffect(() => {
@@ -137,41 +149,40 @@ function TaskStatusManager({
 
 			stopPolling();
 		};
-	}, [postBulkAction, setDisabled, stopPolling]);
+	}, [postBulkAction, stopPolling]);
 
 	useEffect(() => {
+		getTasks();
+
 		pollProcessingTasks();
-	}, [pollProcessingTasks]);
+	}, [getTasks, pollProcessingTasks]);
 
-	useEffect(() => {
-		if (disabled) {
-			getTaskItems();
-		}
-	}, [disabled, getTaskItems]);
+	return processingTasks || tasks.length ? (
+		<DropDown
+			active={active}
+			onActiveChange={onActiveChange}
+			trigger={
+				<div>
+					<ClayButtonWithIcon
+						borderless
+						className={classnames('task-status-toggle', {
+							'task-status-toggle-show': !processingTasks,
+						})}
+						displayType="secondary"
+						symbol="forms"
+					/>
 
-	const onActiveChange = useCallback(
-		(active: boolean) => {
-			setActive(active);
-
-			if (active) {
-				debounce(async () => await getTaskItems(), 500);
-			}
-		},
-		[getTaskItems, setActive]
-	);
-
-	return (
-		<div className="p-2">
-			<DropDown
-				active={active}
-				onActiveChange={onActiveChange}
-				trigger={
-					processingTasks > 0 ? (
-						<Button
-							className={classnames({
-								'btn-sm border-info text-info pb-1': !active,
-								'btn-sm btn-info pb-1': active,
-							})}
+					{processingTasks > 0 ? (
+						<ClayButton
+							className={classnames(
+								'task-status-toggle',
+								'task-status-toggle-processing',
+								'task-status-toggle-show',
+								{
+									'border-info text-3 text-info': !active,
+									'btn-info text-3': active,
+								}
+							)}
 							displayType="secondary"
 						>
 							<Badge
@@ -185,35 +196,34 @@ function TaskStatusManager({
 							{processingTasks === 1
 								? Liferay.Language.get('processing-task')
 								: Liferay.Language.get('processing-tasks')}
-						</Button>
-					) : (
-						<ClayButtonWithIcon
-							borderless
-							disabled={disabled}
-							displayType="unstyled"
-							symbol="forms"
-						/>
-					)
-				}
-			>
-				<>
-					<TaskStatusDropdownItemList
-						classNameId={classNameId}
-						items={taskItems}
-					/>
+						</ClayButton>
+					) : null}
+				</div>
+			}
+		>
+			<>
+				<BulkActionsMonitorItemList
+					classNameId={classNameId}
+					items={tasks}
+				/>
 
-					<ClayLink
-						block
-						className="border-0 btn btn-block btn-secondary task-status-view-all text-3"
-						displayType="secondary"
-						href={URL_TASKS_REPORT}
-					>
-						{Liferay.Language.get('view-all-tasks')}
-					</ClayLink>
-				</>
-			</DropDown>
-		</div>
-	);
+				{tasksLoading ? (
+					<div className="task-status-loading">
+						<span className="loading-animation text-secondary" />
+					</div>
+				) : null}
+
+				<ClayLink
+					block
+					className="btn btn-block btn-secondary task-status-view-all text-3"
+					displayType="secondary"
+					href={URL_TASKS_REPORT}
+				>
+					{Liferay.Language.get('view-all-tasks')}
+				</ClayLink>
+			</>
+		</DropDown>
+	) : null;
 }
 
-export default TaskStatusManager;
+export default BulkActionsMonitor;

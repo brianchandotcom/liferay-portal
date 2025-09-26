@@ -126,6 +126,11 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 		fdsBulkActionDropdownItems.add(
 			new FDSActionDropdownItem(
+				StringPool.BLANK, "download", "download",
+				LanguageUtil.get(_httpServletRequest, "download"), null, null,
+				null));
+		fdsBulkActionDropdownItems.add(
+			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), null,
 				null, null));

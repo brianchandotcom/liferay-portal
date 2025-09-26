@@ -253,6 +253,7 @@ describe('SpaceMembersWithList', () => {
 			};
 
 			mockFetch.mockResolvedValue({
+				headers: new Headers([['Content-Type', 'application/json']]),
 				json: async () => ({items: [newUser]}),
 			} as Response);
 

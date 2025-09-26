@@ -124,18 +124,6 @@ public class MCPServerServlet extends HttpServlet {
 				true
 			).build()
 		).tool(
-			_getTool("get-openapis", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", baseURL + "/openapi", null)
-		).tool(
-			_getTool("get-openapi", toolsJSONObject),
-			(exchange, arguments) -> _callEndpoint(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorizationHeader(exchange),
-				"GET", String.valueOf(arguments.get("url")), null)
-		).tool(
 			_getTool("call-http-endpoint", toolsJSONObject),
 			(exchange, arguments) -> {
 				String path = String.valueOf(arguments.get("path"));
@@ -150,6 +138,18 @@ public class MCPServerServlet extends HttpServlet {
 					String.valueOf(arguments.get("method")), baseURL + path,
 					String.valueOf(arguments.get("payload")));
 			}
+		).tool(
+			_getTool("get-openapi", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", String.valueOf(arguments.get("url")), null)
+		).tool(
+			_getTool("get-openapis", toolsJSONObject),
+			(exchange, arguments) -> _callEndpoint(
+				authorizedHttpServletSseServerTransportProvider.
+					getAuthorizationHeader(exchange),
+				"GET", baseURL + "/openapi", null)
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();

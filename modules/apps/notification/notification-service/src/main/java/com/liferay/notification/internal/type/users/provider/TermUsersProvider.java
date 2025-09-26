@@ -7,9 +7,6 @@ package com.liferay.notification.internal.type.users.provider;
 
 import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.context.NotificationContext;
-import com.liferay.notification.model.NotificationRecipient;
-import com.liferay.notification.model.NotificationRecipientSetting;
-import com.liferay.notification.model.NotificationTemplate;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.petra.function.transform.TransformUtil;
@@ -48,7 +45,8 @@ public class TermUsersProvider implements UsersProvider {
 	}
 
 	@Override
-	public List<User> provide(NotificationContext notificationContext)
+	public List<User> provide(
+			NotificationContext notificationContext, List<String> values)
 		throws PortalException {
 
 		List<User> users = new ArrayList<>();
@@ -56,23 +54,14 @@ public class TermUsersProvider implements UsersProvider {
 		List<String> screenNames = new ArrayList<>();
 		List<String> terms = new ArrayList<>();
 
-		NotificationTemplate notificationTemplate =
-			notificationContext.getNotificationTemplate();
-
-		NotificationRecipient notificationRecipient =
-			notificationTemplate.getNotificationRecipient();
-
-		for (NotificationRecipientSetting notificationRecipientSetting :
-				notificationRecipient.getNotificationRecipientSettings()) {
-
-			Matcher matcher = _pattern.matcher(
-				notificationRecipientSetting.getValue());
+		for (String value : values) {
+			Matcher matcher = _pattern.matcher(value);
 
 			if (matcher.find()) {
-				terms.add(notificationRecipientSetting.getValue());
+				terms.add(value);
 			}
 			else {
-				screenNames.add(notificationRecipientSetting.getValue());
+				screenNames.add(value);
 			}
 		}
 
@@ -81,7 +70,7 @@ public class TermUsersProvider implements UsersProvider {
 				screenNames,
 				screenName -> {
 					User user = _userLocalService.getUserByScreenName(
-						notificationRecipient.getCompanyId(), screenName);
+						notificationContext.getCompanyId(), screenName);
 
 					if (!ModelResourcePermissionUtil.contains(
 							_permissionCheckerFactory.create(user),

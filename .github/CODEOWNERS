@@ -190,6 +190,7 @@ modules/apps/login/    @liferay-appsec
 modules/apps/mail/
 modules/apps/map    @liferay-frontend
 modules/apps/marketplace/    @liferay-commerce
+modules/apps/mcp/    @liferay-headless
 modules/apps/mentions/    @liferay-content-management
 modules/apps/message-boards/    @liferay-content-management
 modules/apps/microblogs/    @liferay-content-management

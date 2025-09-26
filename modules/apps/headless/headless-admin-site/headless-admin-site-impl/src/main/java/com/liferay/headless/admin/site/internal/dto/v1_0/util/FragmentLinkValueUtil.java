@@ -109,35 +109,36 @@ public class FragmentLinkValueUtil {
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
 		long scopeGroupId) {
 
-		return new FragmentLinkMappedValue() {
-			{
-				setMapping(
-					() -> new Mapping() {
-						{
-							setFieldKey(() -> _getFieldKey(jsonObject));
-							setItemReference(
-								() -> {
-									if (jsonObject.has("mappedField")) {
-										return new FragmentMappedValueItemContextReference() {
-											{
-												setContextSource(
-													() ->
-														ContextSource.
-															DISPLAY_PAGE_ITEM);
-												setType(Type.CONTEXT_REFERENCE);
-											}
-										};
-									}
+		FragmentLinkMappedValue fragmentLinkMappedValue =
+			new FragmentLinkMappedValue();
 
-									return _toFragmentMappedValueItemExternalReference(
-										infoItemServiceRegistry, jsonObject,
-										scopeGroupId);
-								});
-						}
-					});
-				setType(Type.FRAGMENT_MAPPED_VALUE);
-			}
-		};
+		fragmentLinkMappedValue.setMapping(
+			() -> new Mapping() {
+				{
+					setFieldKey(() -> _getFieldKey(jsonObject));
+					setItemReference(
+						() -> {
+							if (jsonObject.has("mappedField")) {
+								FragmentMappedValueItemContextReference
+									fragmentMappedValueItemContextReference =
+										new FragmentMappedValueItemContextReference();
+
+								fragmentMappedValueItemContextReference.
+									setContextSource(
+										() ->
+											FragmentMappedValueItemContextReference.ContextSource.DISPLAY_PAGE_ITEM);
+
+								return fragmentMappedValueItemContextReference;
+							}
+
+							return _toFragmentMappedValueItemExternalReference(
+								infoItemServiceRegistry, jsonObject,
+								scopeGroupId);
+						});
+				}
+			});
+
+		return fragmentLinkMappedValue;
 	}
 
 	public static JSONObject toJSONObject(
@@ -470,14 +471,14 @@ public class FragmentLinkValueUtil {
 				infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
-		return new FragmentLinkInlineValue() {
-			{
-				setType(Type.FRAGMENT_INLINE_VALUE);
-				setValue_i18n(
-					() -> LocalizedValueUtil.toLocalizedValues(
-						jsonObject.getJSONObject("href")));
-			}
-		};
+		FragmentLinkInlineValue fragmentLinkInlineValue =
+			new FragmentLinkInlineValue();
+
+		fragmentLinkInlineValue.setValue_i18n(
+			() -> LocalizedValueUtil.toLocalizedValues(
+				jsonObject.getJSONObject("href")));
+
+		return fragmentLinkInlineValue;
 	}
 
 	private static FragmentMappedValueItemExternalReference
@@ -509,46 +510,47 @@ public class FragmentLinkValueUtil {
 			return null;
 		}
 
-		return new FragmentMappedValueItemExternalReference() {
-			{
-				setClassName(() -> itemClassName);
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				new FragmentMappedValueItemExternalReference();
 
-				setExternalReferenceCode(() -> itemExternalReferenceCode);
+		fragmentMappedValueItemExternalReference.setClassName(
+			() -> itemClassName);
 
-				InfoItemObjectProvider<Object> infoItemObjectProvider =
-					infoItemServiceRegistry.getFirstInfoItemService(
-						InfoItemObjectProvider.class, itemClassName,
-						ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
+			() -> itemExternalReferenceCode);
 
-				if (infoItemObjectProvider != null) {
-					try {
-						GroupedModel groupedModel =
-							(GroupedModel)infoItemObjectProvider.getInfoItem(
-								new ERCInfoItemIdentifier(
-									itemExternalReferenceCode,
-									GroupUtil.getExternalReferenceCode(
-										itemScopeExternalReferenceCode,
-										scopeGroupId)));
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, itemClassName,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
-						setScope(
-							() -> ScopeUtil.getScope(
-								groupedModel.getGroupId(), scopeGroupId));
-					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"Item external reference could not be set " +
-									"since no item could be obtained",
-								portalException);
-						}
+		if (infoItemObjectProvider != null) {
+			try {
+				GroupedModel groupedModel =
+					(GroupedModel)infoItemObjectProvider.getInfoItem(
+						new ERCInfoItemIdentifier(
+							itemExternalReferenceCode,
+							GroupUtil.getExternalReferenceCode(
+								itemScopeExternalReferenceCode, scopeGroupId)));
 
-						throw new UnsupportedOperationException();
-					}
+				fragmentMappedValueItemExternalReference.setScope(
+					() -> ScopeUtil.getScope(
+						groupedModel.getGroupId(), scopeGroupId));
+			}
+			catch (PortalException portalException) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Item external reference could not be set since no " +
+							"item could be obtained",
+						portalException);
 				}
 
-				setType(Type.ITEM_EXTERNAL_REFERENCE);
+				throw new UnsupportedOperationException();
 			}
-		};
+		}
+
+		return fragmentMappedValueItemExternalReference;
 	}
 
 	private static String _toItemClassName(JSONObject jsonObject) {
@@ -618,16 +620,18 @@ public class FragmentLinkValueUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		return new FragmentMappedValueItemExternalReference() {
-			{
-				setClassName(Layout.class::getName);
-				setExternalReferenceCode(layout::getExternalReferenceCode);
-				setScope(
-					() -> ScopeUtil.getScope(
-						layout.getGroupId(), scopeGroupId));
-				setType(Type.ITEM_EXTERNAL_REFERENCE);
-			}
-		};
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				new FragmentMappedValueItemExternalReference();
+
+		fragmentMappedValueItemExternalReference.setClassName(
+			Layout.class::getName);
+		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
+			layout::getExternalReferenceCode);
+		fragmentMappedValueItemExternalReference.setScope(
+			() -> ScopeUtil.getScope(layout.getGroupId(), scopeGroupId));
+
+		return fragmentMappedValueItemExternalReference;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

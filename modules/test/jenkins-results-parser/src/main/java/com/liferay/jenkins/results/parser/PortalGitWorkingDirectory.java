@@ -47,7 +47,8 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 			return _jsUnitFiles;
 		}
 
-		_jsUnitFiles = new ArrayList<>(findFiles(null, "describe\\("));
+		_jsUnitFiles = new ArrayList<>(
+			findFiles(null, "describe\\( -- '*.js' '*.jsx' '*.ts' '*.tsx'"));
 
 		return _jsUnitFiles;
 	}

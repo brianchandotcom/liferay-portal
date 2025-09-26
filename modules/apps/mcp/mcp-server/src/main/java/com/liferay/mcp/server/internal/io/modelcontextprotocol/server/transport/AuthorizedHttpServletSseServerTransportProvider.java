@@ -172,7 +172,7 @@ public class AuthorizedHttpServletSseServerTransportProvider
 				return new AuthorizedMcpServerSession(
 					mcpServerSession.getId(),
 					(Duration)requestTimeoutField.get(mcpServerSession),
-					transport,
+					mcpServerTransport,
 					(McpServerSession.InitRequestHandler)
 						initRequestHandlerField.get(mcpServerSession),
 					(McpServerSession.InitNotificationHandler)

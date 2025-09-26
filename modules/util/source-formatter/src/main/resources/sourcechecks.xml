@@ -1886,10 +1886,6 @@
 			<category name="Upgrade" />
 			<description name="Add parameter in the onAfterUpdate and onBeforeUpdate methods of the BaseModelListener class." />
 		</check>
-		<check name="UpgradeJavaBasePanelAppExtendedClassesCheck">
-			<category name="Upgrade" />
-			<description name="Replace the setPortlet method with getPortlet." />
-		</check>
 		<check name="UpgradeJavaDDMFormValuesSerializerTrackerCheck">
 			<category name="Upgrade" />
 			<description name="Replaces the references of `DDMFormValuesSerializerTracker` class and also its methods usages." />

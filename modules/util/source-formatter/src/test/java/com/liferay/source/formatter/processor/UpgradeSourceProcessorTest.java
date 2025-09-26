@@ -90,13 +90,6 @@ public class UpgradeSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testUpgradeJavaBasePanelAppExtendedClassesCheck()
-		throws Exception {
-
-		test("upgrade/UpgradeJavaBasePanelAppExtendedClassesCheck.testjava");
-	}
-
-	@Test
 	public void testUpgradeJavaDDMFormValuesSerializerTrackerCheck()
 		throws Exception {
 

@@ -179,7 +179,6 @@ public class OIDCUserInfoProcessorTest {
 			_expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), "phoneNumberVerified",
 				ExpandoColumnConstants.BOOLEAN);
-
 		ExpandoColumn websiteExpandoColumn =
 			_expandoColumnLocalService.addColumn(
 				expandoTable.getTableId(), "website",

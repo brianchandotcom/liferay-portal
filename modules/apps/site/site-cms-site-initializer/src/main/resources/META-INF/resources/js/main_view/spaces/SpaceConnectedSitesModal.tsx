@@ -14,13 +14,6 @@ import React, {useEffect, useId, useState} from 'react';
 import ConnectedSiteService from '../../common/services/ConnectedSiteService';
 import {Site} from '../../common/types/Site';
 
-const getLocalizedName = (name: Site['name']) => {
-	return (
-		name[Liferay.ThemeDisplay.getLanguageId()] ||
-		name[Liferay.ThemeDisplay.getDefaultLanguageId()]
-	);
-};
-
 const showErrorMessage = (message: string) => {
 	openToast({
 		message,
@@ -174,7 +167,7 @@ const SitesSelector = ({
 									setSiteSelected(site);
 								}}
 							>
-								{getLocalizedName(site.name)}
+								{site.name}
 							</Autocomplete.Item>
 						))}
 					</Autocomplete>
@@ -299,14 +292,12 @@ export default function SpaceConnectedSitesModal({
 													size="lg"
 												>
 													<ClaySticker.Image
-														alt={getLocalizedName(
-															site.name
-														)}
+														alt={site.name}
 														src={site.logo}
 													/>
 												</ClaySticker>
 
-												{getLocalizedName(site.name)}
+												{site.name}
 											</div>
 
 											{hasConnectSitesPermission && (

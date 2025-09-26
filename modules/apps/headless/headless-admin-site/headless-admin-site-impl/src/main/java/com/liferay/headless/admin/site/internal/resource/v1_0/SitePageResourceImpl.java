@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -179,46 +180,64 @@ public class SitePageResourceImpl
 			public Map<String, Serializable> getContextAwareParameters(
 				PortletDataContext portletDataContext) {
 
-				if ((portletDataContext.getLayoutIds() == null) ||
-					(portletDataContext.getLayoutIds().length == 0)) {
+				return HashMapBuilder.<String, Serializable>put(
+					"filter",
+					() -> {
+						if ((portletDataContext.getLayoutIds() == null) ||
+							(portletDataContext.getLayoutIds().length == 0)) {
 
-					return null;
-				}
-
-				Set<String> layoutExternalReferenceCodes = new HashSet<>();
-
-				for (long layoutId : portletDataContext.getLayoutIds()) {
-					Layout layout = null;
-
-					try {
-						layout = _layoutService.fetchLayout(
-							portletDataContext.getScopeGroupId(),
-							portletDataContext.isPrivateLayout(), layoutId);
-					}
-					catch (PortalException portalException) {
-						if (_log.isWarnEnabled()) {
-							_log.warn(portalException);
+							return null;
 						}
+
+						Set<String> layoutExternalReferenceCodes =
+							new HashSet<>();
+
+						for (long layoutId :
+								portletDataContext.getLayoutIds()) {
+
+							Layout layout = null;
+
+							try {
+								layout = _layoutService.fetchLayout(
+									portletDataContext.getScopeGroupId(),
+									portletDataContext.isPrivateLayout(),
+									layoutId);
+							}
+							catch (PortalException portalException) {
+								if (_log.isWarnEnabled()) {
+									_log.warn(portalException);
+								}
+							}
+
+							if (layout != null) {
+								layoutExternalReferenceCodes.add(
+									layout.getExternalReferenceCode());
+							}
+						}
+
+						StringBundler sb = new StringBundler(3);
+
+						sb.append("externalReferenceCode in ('");
+
+						sb.append(
+							ListUtil.toString(
+								ListUtil.fromCollection(
+									layoutExternalReferenceCodes),
+								StringPool.BLANK, "', '"));
+
+						sb.append("')");
+
+						return sb.toString();
 					}
+				).put(
+					"siteExternalReferenceCode",
+					() -> {
+						Group group = _groupLocalService.fetchGroup(
+							portletDataContext.getScopeGroupId());
 
-					if (layout != null) {
-						layoutExternalReferenceCodes.add(
-							layout.getExternalReferenceCode());
+						return group.getExternalReferenceCode();
 					}
-				}
-
-				StringBundler sb = new StringBundler(3);
-
-				sb.append("externalReferenceCode in ('");
-
-				sb.append(
-					ListUtil.toString(
-						ListUtil.fromCollection(layoutExternalReferenceCodes),
-						StringPool.BLANK, "', '"));
-
-				sb.append("')");
-
-				return Map.of("filter", sb.toString());
+				).build();
 			}
 
 			@Override

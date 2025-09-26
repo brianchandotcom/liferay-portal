@@ -6,37 +6,27 @@
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 
-import AssetBatchService from '../../../common/services/AssetBatchService';
 import SpaceService from '../../../common/services/SpaceService';
-import {displayErrorToast} from '../../../common/utils/toastUtil';
+import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
 import {isFromRecycleBin} from '../utils/isFromRecycleBin';
+import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
 /**
  * Executes the bulk delete action.
  */
-async function executeBulkDeleteAction(
-	selectedData: any,
+function executeBulkDeleteAction(
+	apiURL: string,
+	selectedData: IBulkActionFDSData,
 	processClose?: () => void
-): Promise<void> {
-	const bulkActionItems = selectedData.items.map((item: any) => ({
-		classExternalReferenceCode: item.embedded.externalReferenceCode,
-		className: item.entryClassName,
-		classPK: item.embedded.id,
-		name: item.embedded.title,
-	}));
-
-	try {
-		AssetBatchService.deleteAssetEntries({
-			items: bulkActionItems,
-			selectAll: false,
-		});
-
-		processClose?.();
-	}
-	catch {
-		processClose?.();
-		displayErrorToast();
-	}
+): void {
+	triggerAssetBulkAction({
+		apiURL,
+		onCreateSuccess: () => {
+			processClose?.();
+		},
+		selectedData,
+		type: 'DeleteBulkAction',
+	});
 }
 
 /**
@@ -88,7 +78,13 @@ async function getEntriesSpaces(items: any[]): Promise<any[]> {
 /**
  * Handles bulk deletion logic and modal display based on trash status of spaces.
  */
-async function handleBulkDeletion(selectedData: any): Promise<void> {
+async function handleBulkDeletion({
+	apiURL,
+	selectedData,
+}: {
+	apiURL: string;
+	selectedData: IBulkActionFDSData;
+}): Promise<void> {
 	const spaces = await getEntriesSpaces(selectedData.items);
 
 	// Trash status checks
@@ -108,13 +104,14 @@ async function handleBulkDeletion(selectedData: any): Promise<void> {
 	// Scenario 1: All spaces have trash disabled
 
 	if (noEntriesHaveTrashEnabled) {
-		showModal(confirmationMessage, title, selectedData);
+		showModal(apiURL, confirmationMessage, title, selectedData);
 	}
 
 	// Scenario 2: Some spaces have trash enabled, but not all
 
 	else if (someEntriesHaveTrashEnabled && !allEntriesHaveTrashEnabled) {
 		showModal(
+			apiURL,
 			Liferay.Language.get('bulk-delete-cms-entries-confirmation'),
 			Liferay.Language.get('delete-entries'),
 			selectedData
@@ -125,10 +122,10 @@ async function handleBulkDeletion(selectedData: any): Promise<void> {
 
 	else if (allEntriesHaveTrashEnabled) {
 		if (!isFromRecycleBin(selectedData)) {
-			await executeBulkDeleteAction(selectedData);
+			executeBulkDeleteAction(apiURL, selectedData);
 		}
 		else {
-			showModal(confirmationMessage, title, selectedData);
+			showModal(apiURL, confirmationMessage, title, selectedData);
 		}
 	}
 }
@@ -137,6 +134,7 @@ async function handleBulkDeletion(selectedData: any): Promise<void> {
  * Shows the bulk delete confirmation modal.
  */
 async function showModal(
+	apiURL: string,
 	confirmationMessage: string,
 	title: string,
 	selectedData: any
@@ -163,7 +161,8 @@ async function showModal(
 				label: Liferay.Language.get('delete'),
 				onClick: async ({processClose}: {processClose: () => void}) => {
 					processClose();
-					await executeBulkDeleteAction(selectedData, processClose);
+
+					executeBulkDeleteAction(apiURL, selectedData, processClose);
 				},
 			},
 		],
@@ -177,9 +176,11 @@ async function showModal(
  * Entry point for bulk delete action.
  */
 export default async function deleteAssetEntriesBulkAction({
+	apiURL = '',
 	selectedData,
 }: {
-	selectedData: any;
+	apiURL?: string;
+	selectedData: IBulkActionFDSData;
 }): Promise<void> {
-	await handleBulkDeletion(selectedData);
+	await handleBulkDeletion({apiURL, selectedData});
 }

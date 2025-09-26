@@ -17,13 +17,13 @@ import java.net.URL;
 public class PersistedProcess implements Serializable {
 
 	public PersistedProcess(
-		URL bundleURL, ProcessConfig processConfig, String processName,
-		String[] processCallableClassNames) {
+		URL bundleURL, String[] processCallableClassNames,
+		ProcessConfig processConfig, String processName) {
 
 		_bundleURL = bundleURL;
+		_processCallableClassNames = processCallableClassNames;
 		_processConfig = processConfig;
 		_processName = processName;
-		_processCallableClassNames = processCallableClassNames;
 	}
 
 	public URL getBundleURL() {

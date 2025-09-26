@@ -39,45 +39,8 @@ import java.util.List;
  */
 public class PersistedProcessUtil {
 
-	public static <T extends Serializable>
-		ObjectValuePair<ProcessChannel<T>, byte[]> start(
-			ProcessExecutor processExecutor, File processFile) {
-
-		if (!processFile.exists()) {
-			throw new IllegalArgumentException(
-				"Unable to find persisted process file " + processFile);
-		}
-
-		byte[] bytes = null;
-
-		try {
-			bytes = Files.readAllBytes(processFile.toPath());
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(
-				"Unable to read persisted process file " + processFile,
-				ioException);
-		}
-
-		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
-
-		PersistedProcess persistedProcess = null;
-
-		try {
-			persistedProcess = deserializer.readObject();
-		}
-		catch (ClassNotFoundException classNotFoundException) {
-			throw new RuntimeException(
-				"Unable to deserialize persisted process file " + processFile,
-				classNotFoundException);
-		}
-
-		return new ObjectValuePair<>(
-			start(processExecutor, persistedProcess), bytes);
-	}
-
 	public static <T extends Serializable> ProcessChannel<T> start(
-		ProcessExecutor processExecutor, PersistedProcess persistedProcess) {
+		PersistedProcess persistedProcess, ProcessExecutor processExecutor) {
 
 		String[] processCallableClassNames =
 			persistedProcess.getProcessCallableClassNames();
@@ -152,6 +115,43 @@ public class PersistedProcessUtil {
 		}
 
 		return (ProcessChannel<T>)processChannel;
+	}
+
+	public static <T extends Serializable>
+		ObjectValuePair<ProcessChannel<T>, byte[]> start(
+			ProcessExecutor processExecutor, File processFile) {
+
+		if (!processFile.exists()) {
+			throw new IllegalArgumentException(
+				"Unable to find persisted process file " + processFile);
+		}
+
+		byte[] bytes = null;
+
+		try {
+			bytes = Files.readAllBytes(processFile.toPath());
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(
+				"Unable to read persisted process file " + processFile,
+				ioException);
+		}
+
+		Deserializer deserializer = new Deserializer(ByteBuffer.wrap(bytes));
+
+		PersistedProcess persistedProcess = null;
+
+		try {
+			persistedProcess = deserializer.readObject();
+		}
+		catch (ClassNotFoundException classNotFoundException) {
+			throw new RuntimeException(
+				"Unable to deserialize persisted process file " + processFile,
+				classNotFoundException);
+		}
+
+		return new ObjectValuePair<>(
+			start(persistedProcess, processExecutor), bytes);
 	}
 
 	private static void _consumeProcessLog(ProcessLog processLog) {

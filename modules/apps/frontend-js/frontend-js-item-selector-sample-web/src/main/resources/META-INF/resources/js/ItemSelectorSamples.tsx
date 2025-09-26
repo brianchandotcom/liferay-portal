@@ -476,6 +476,7 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal<Document>
 					apiURL={documentsItemSelectorConfig.apiURL}
+					createItemURL={Liferay.ThemeDisplay.getPortalURL()}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-documents-${getRandomId()}`,
@@ -521,6 +522,7 @@ export default function ItemSelectorSamples() {
 
 				<ItemSelectorModal<User>
 					apiURL={userAccountsItemSelectorConfig.apiURL}
+					createItemURL={Liferay.ThemeDisplay.getPortalURL()}
 					fdsProps={{
 						...FDS_DEFAULT_PROPS,
 						id: `itemSelectorModal-users-${getRandomId()}`,

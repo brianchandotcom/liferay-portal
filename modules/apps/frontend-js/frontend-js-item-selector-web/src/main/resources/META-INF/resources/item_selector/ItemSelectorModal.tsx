@@ -9,6 +9,7 @@ import ClayLayout from '@clayui/layout';
 import ClayModal from '@clayui/modal';
 import {InternalDispatch} from '@clayui/shared';
 import {
+	ACTION_ITEM_TARGETS,
 	FrontendDataSet,
 	IFrontendDataSetProps,
 } from '@liferay/frontend-data-set-web';
@@ -40,6 +41,11 @@ export interface IItemSelectorModalProps<T> {
 	 * Configuration of @clayui/breadcrumb items to show above the FDS table
 	 */
 	breadcrumbs?: React.ComponentProps<typeof ClayBreadcrumb>['items'];
+
+	/**
+	 * URL for item creation used to open a new tab.
+	 */
+	createItemURL?: string;
 
 	/**
 	 * Configuration properties of the Frontend Data Set used to display data.
@@ -93,9 +99,17 @@ export interface IItemSelectorModalProps<T> {
 	open: boolean;
 }
 
+const EMPTY_STATE_PROPS = {
+	description: Liferay.Language.get(
+		'fortunately-it-is-very-easy-to-add-new-ones'
+	),
+	title: Liferay.Language.get('no-items-were-found'),
+};
+
 function ItemSelectorModal<T extends Record<string, any>>({
 	apiURL,
 	breadcrumbs,
+	createItemURL,
 	fdsProps,
 	itemTypeLabel,
 	items: externalItems,
@@ -152,6 +166,22 @@ function ItemSelectorModal<T extends Record<string, any>>({
 				<FrontendDataSet
 					{...fdsProps}
 					apiURL={apiURL}
+					creationMenu={
+						createItemURL
+							? {
+									primaryItems: [
+										{
+											href: createItemURL,
+											label: Liferay.Language.get(
+												'add-new-item'
+											),
+											target: ACTION_ITEM_TARGETS.BLANK,
+										},
+									],
+								}
+							: undefined
+					}
+					emptyState={createItemURL ? EMPTY_STATE_PROPS : undefined}
 					onSelectedItemsChange={setSelectedItems}
 					selectedItems={selectedItems}
 					selectedItemsKey={locator.id}

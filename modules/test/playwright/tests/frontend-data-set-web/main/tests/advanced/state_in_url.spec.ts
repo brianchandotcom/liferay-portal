@@ -19,6 +19,7 @@ interface IStateInURL {
 	filters: any[];
 	page: number;
 	q: string;
+	sorts: any[];
 	vf: any;
 	view: string;
 }
@@ -403,6 +404,132 @@ for (const spaConfiguration of spaConfigurations) {
 
 					await page.goForward();
 					await checkPageNumber(2);
+
+					expect(await page.goForward()).toBeNull();
+				});
+			}
+		);
+
+		test(
+			'URL in state, push history, sorting',
+			{tag: '@LPD-20947'},
+			async ({fdsSamplePage, page}) => {
+				await test.step('Click on Sortable Content button', async () => {
+					const secondColumnHeader = page
+						.getByRole('columnheader')
+						.nth(2);
+
+					const sortButton = secondColumnHeader.getByRole('button');
+
+					await sortButton.click();
+				});
+
+				await test.step('Check sorting in the UI', async () => {
+					const tableBodyRows = await page
+						.locator('.table tbody tr')
+						.all();
+
+					const textsFromSecondColumn = await Promise.all(
+						tableBodyRows.map((row) =>
+							row.locator('td').nth(2).innerText()
+						)
+					);
+
+					textsFromSecondColumn.forEach((text, index) => {
+						if (index < textsFromSecondColumn.length - 1) {
+							expect(
+								text > textsFromSecondColumn[index + 1]
+							).toBeTruthy();
+						}
+					});
+				});
+
+				await test.step('Check back navigation', async () => {
+					await page.goBack();
+
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('asc');
+				});
+
+				await test.step('Check forward navigation', async () => {
+					await page.goForward();
+
+					const state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('desc');
+				});
+
+				await test.step('Mix navigation and change via UI', async () => {
+					await page.goBack();
+
+					let state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('asc');
+
+					const secondColumnHeader = page
+						.getByRole('columnheader')
+						.nth(2);
+
+					const sortButton = secondColumnHeader.getByRole('button');
+
+					await sortButton.click();
+
+					await waitForFDS({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('desc');
+
+					await page.goBack();
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('asc');
+
+					await page.goForward();
+
+					state = getStateFromURL(
+						new URL(page.url()).search,
+						'advanced'
+					);
+
+					expect(state.sorts).toBeDefined();
+					expect(state.sorts).toHaveLength(1);
+					expect(state.sorts[0].key).toBe('title');
+					expect(state.sorts[0].direction).toBe('desc');
 
 					expect(await page.goForward()).toBeNull();
 				});

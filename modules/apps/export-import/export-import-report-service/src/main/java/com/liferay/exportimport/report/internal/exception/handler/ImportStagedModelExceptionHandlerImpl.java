@@ -51,9 +51,6 @@ public class ImportStagedModelExceptionHandlerImpl
 				externalReferenceCodeModel.getExternalReferenceCode();
 		}
 
-		String modelName = ExportImportReportEntryUtil.getModelName(
-			stagedModel.getModelClass());
-
 		try {
 			long groupId = portletDataContext.getGroupId();
 
@@ -76,7 +73,9 @@ public class ImportStagedModelExceptionHandlerImpl
 					GetterUtil.getLong(
 						portletDataContext.getExportImportProcessId()),
 					portletDataException.getMessage(),
-					_getErrorStackTrace(portletDataException), modelName,
+					_getErrorStackTrace(portletDataException),
+					stagedModel.getModelClass(
+					).getName(),
 					ExportImportReportEntryUtil.getOrigin(), scope,
 					ExportImportReportEntryUtil.getScopeKey(group));
 		}
@@ -85,7 +84,10 @@ public class ImportStagedModelExceptionHandlerImpl
 				StringBundler.concat(
 					"Unable to add error export import report entry with ",
 					"external reference code \"", externalReferenceCode,
-					"\" and model name \"", modelName, "\""),
+					"\" and model name \"",
+					stagedModel.getModelClass(
+					).getName(),
+					"\""),
 				exception);
 		}
 	}

@@ -658,17 +658,19 @@ public class CloudBucketUtil {
 			destinationFile.getParentFile(),
 			destinationFile.getName() + _CHECKSUM_FILE_EXTENSION);
 
-		try {
-			downloadS3File(
-				destinationChecksumFile,
-				s3SourcePath + _CHECKSUM_FILE_EXTENSION);
-		}
-		catch (RuntimeException runtimeException) {
-			System.out.println(
-				"Unable to download " + s3SourcePath +
-					_CHECKSUM_FILE_EXTENSION);
+		if (!destinationChecksumFile.exists()) {
+			try {
+				downloadS3File(
+					destinationChecksumFile,
+					s3SourcePath + _CHECKSUM_FILE_EXTENSION);
+			}
+			catch (RuntimeException runtimeException) {
+				System.out.println(
+					"Unable to download " + s3SourcePath +
+						_CHECKSUM_FILE_EXTENSION);
 
-			return;
+				return;
+			}
 		}
 
 		if (destinationChecksumFile.exists()) {

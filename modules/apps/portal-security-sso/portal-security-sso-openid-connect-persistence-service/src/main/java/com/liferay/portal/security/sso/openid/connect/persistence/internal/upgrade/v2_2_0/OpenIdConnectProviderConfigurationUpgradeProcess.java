@@ -72,6 +72,10 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 							dictionaryString.getBytes(StringPool.UTF8)));
 
 				dictionary.put(
+					"authorizationEndpoint",
+					GetterUtil.getString(
+						dictionary.remove("authorizationEndPoint")));
+				dictionary.put(
 					"discoveryEndpoint",
 					GetterUtil.getString(
 						dictionary.remove("discoveryEndPoint")));
@@ -79,10 +83,6 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 					"discoveryEndpointCacheInMillis",
 					GetterUtil.getLong(
 						dictionary.remove("discoveryEndPointCacheInMillis")));
-				dictionary.put(
-					"authorizationEndpoint",
-					GetterUtil.getString(
-						dictionary.remove("authorizationEndPoint")));
 				dictionary.put(
 					"tokenEndpoint",
 					GetterUtil.getString(dictionary.remove("tokenEndPoint")));

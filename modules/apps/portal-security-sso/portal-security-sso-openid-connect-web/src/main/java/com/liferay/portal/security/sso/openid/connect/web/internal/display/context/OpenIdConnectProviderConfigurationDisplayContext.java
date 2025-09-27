@@ -56,28 +56,28 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 			).build();
 		}
 
+		_customAuthorizationRequestParameters = GetterUtil.getStringValues(
+			_properties.get("customAuthorizationRequestParameters"));
+
+		_customAuthorizationRequestParametersIndexes = _createIndexes(
+			_customAuthorizationRequestParameters.length);
+
+		_customTokenRequestParameters = GetterUtil.getStringValues(
+			_properties.get("customTokenRequestParameters"));
+
+		_customTokenRequestParametersIndexes = _createIndexes(
+			_customTokenRequestParameters.length);
+
 		_idTokenSigningAlgValues = GetterUtil.getStringValues(
 			_properties.get("idTokenSigningAlgValues"));
 
-		_idTokenSigningAlgValuesIndexes = _buildIndexes(
+		_idTokenSigningAlgValuesIndexes = _createIndexes(
 			_idTokenSigningAlgValues.length);
 
 		_subjectTypes = GetterUtil.getStringValues(
 			_properties.get("subjectTypes"));
 
-		_subjectTypesIndexes = _buildIndexes(_subjectTypes.length);
-
-		_customTokenRequestParameters = GetterUtil.getStringValues(
-			_properties.get("customTokenRequestParameters"));
-
-		_customTokenRequestParametersIndexes = _buildIndexes(
-			_customTokenRequestParameters.length);
-
-		_customAuthorizationRequestParameters = GetterUtil.getStringValues(
-			_properties.get("customAuthorizationRequestParameters"));
-
-		_customAuthorizationRequestParametersIndexes = _buildIndexes(
-			_customAuthorizationRequestParameters.length);
+		_subjectTypesIndexes = _createIndexes(_subjectTypes.length);
 	}
 
 	public String getAuthorizationEndpoint() {
@@ -167,7 +167,7 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 		return GetterUtil.getString(_properties.get("userInfoEndpoint"));
 	}
 
-	private int[] _buildIndexes(int size) {
+	private int[] _createIndexes(int size) {
 		int[] indexes = new int[size];
 
 		for (int i = 0; i < size; i++) {

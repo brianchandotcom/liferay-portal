@@ -104,16 +104,12 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		throws IOException {
 
 		try {
-			OpenIdConnectProviderConfigurationDisplayContext
-				openIdConnectProviderConfigurationDisplayContext =
-					new OpenIdConnectProviderConfigurationDisplayContext(
-						_configurationAdmin,
-						httpServletRequest.getParameter("pid"));
-
 			httpServletRequest.setAttribute(
 				OpenIdConnectWebKeys.
 					OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT,
-				openIdConnectProviderConfigurationDisplayContext);
+				new OpenIdConnectProviderConfigurationDisplayContext(
+					_configurationAdmin,
+					httpServletRequest.getParameter("pid")));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
@@ -131,10 +127,10 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 	private String[] _getStringValues(
 		HttpServletRequest httpServletRequest, String paramName) {
 
+		List<String> values = new ArrayList<>();
+
 		int[] indexes = ParamUtil.getIntegerValues(
 			httpServletRequest, paramName + "Indexes");
-
-		List<String> values = new ArrayList<>();
 
 		for (int index : indexes) {
 			String value = ParamUtil.getString(

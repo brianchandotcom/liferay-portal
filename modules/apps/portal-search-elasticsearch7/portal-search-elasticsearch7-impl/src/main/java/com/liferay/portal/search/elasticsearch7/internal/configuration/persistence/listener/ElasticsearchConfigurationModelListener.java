@@ -34,6 +34,12 @@ public class ElasticsearchConfigurationModelListener
 		throws ConfigurationModelListenerException {
 
 		try {
+			if (!GetterUtil.getBoolean(properties.get("trackTotalHits"))) {
+				_log.error(
+					"Track Total Hits is deprecated, use Track Total Hits " +
+						"Limit");
+			}
+
 			_validateTrackTotalHitsLimit(properties);
 		}
 		catch (Exception exception) {

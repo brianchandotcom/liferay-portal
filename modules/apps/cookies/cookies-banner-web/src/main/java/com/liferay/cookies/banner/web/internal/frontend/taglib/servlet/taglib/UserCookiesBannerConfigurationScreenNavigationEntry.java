@@ -81,6 +81,10 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(
+				"/cookies_banner_configuration/view.jsp");
+
 		CookiesBannerConfigurationDisplayContext
 			cookiesBannerConfigurationDisplayContext =
 				new CookiesBannerConfigurationDisplayContext(
@@ -90,10 +94,6 @@ public class UserCookiesBannerConfigurationScreenNavigationEntry
 		httpServletRequest.setAttribute(
 			CookiesBannerWebKeys.COOKIES_BANNER_CONFIGURATION_DISPLAY_CONTEXT,
 			cookiesBannerConfigurationDisplayContext);
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/cookies_banner_configuration/view.jsp");
 
 		try {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);

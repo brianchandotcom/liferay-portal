@@ -3216,6 +3216,8 @@ definition {
 		SearchPage.chooseSortOption(sortOption = "Created (oldest first)");
 
 		SearchResults.viewSearchResultsSpecificOrder(resultsList = "Apple,Banana,Cantaloupe");
+
+		Portlet.deletePG(portletName = "Sort");
 	}
 
 	@description = "This is a use case for LPS-134052."
@@ -3344,6 +3346,10 @@ definition {
 				key_position = 1,
 				locator1 = "Search#SORT_WIDGET_SORT_OPTION_POSITION",
 				value1 = "Relevant Test");
+		}
+
+		task ("Remove Sort widget for teardown") {
+			Portlet.deletePG(portletName = "Sort");
 		}
 	}
 

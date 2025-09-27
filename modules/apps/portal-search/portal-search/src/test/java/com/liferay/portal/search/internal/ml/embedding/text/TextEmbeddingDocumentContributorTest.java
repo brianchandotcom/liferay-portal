@@ -7,6 +7,7 @@ package com.liferay.portal.search.internal.ml.embedding.text;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -107,6 +108,29 @@ public class TextEmbeddingDocumentContributorTest {
 		Assert.assertNull(
 			_textEmbeddingDocumentContributorImpl.
 				getEmbeddingProviderConfiguration(_getBlogsEntry()));
+	}
+
+	@Test
+	public void testGetEmbeddingProviderConfigurationWithObjectEntry()
+		throws Exception {
+
+		String objectDefinitionClassName1 = RandomTestUtil.randomString();
+
+		_setSemanticSearchConfiguration(
+			new String[] {LocaleUtil.toLanguageId(LocaleUtil.US)},
+			new String[] {objectDefinitionClassName1}, true);
+
+		String objectDefinitionClassName2 = RandomTestUtil.randomString();
+
+		Assert.assertNotNull(
+			_textEmbeddingDocumentContributorImpl.
+				getEmbeddingProviderConfiguration(
+					_getObjectEntry(objectDefinitionClassName1)));
+
+		Assert.assertNull(
+			_textEmbeddingDocumentContributorImpl.
+				getEmbeddingProviderConfiguration(
+					_getObjectEntry(objectDefinitionClassName2)));
 	}
 
 	@Test
@@ -215,6 +239,32 @@ public class TextEmbeddingDocumentContributorTest {
 		);
 
 		return blogsEntry;
+	}
+
+	private ObjectEntry _getObjectEntry(String objectDefinitionClassName)
+		throws Exception {
+
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
+
+		Mockito.when(
+			objectEntry.getCompanyId()
+		).thenReturn(
+			RandomTestUtil.randomLong()
+		);
+
+		Mockito.doReturn(
+			ObjectEntry.class
+		).when(
+			objectEntry
+		).getModelClass();
+
+		Mockito.when(
+			objectEntry.getModelClassName()
+		).thenReturn(
+			objectDefinitionClassName
+		);
+
+		return objectEntry;
 	}
 
 	private void _setSemanticSearchConfiguration(

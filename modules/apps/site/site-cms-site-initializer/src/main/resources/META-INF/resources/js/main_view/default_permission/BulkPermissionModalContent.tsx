@@ -7,11 +7,12 @@ import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
+import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {
 	DEFAULT_PERMISSIONS,
 	DEPOT_CLASS_NAME,
@@ -27,10 +28,12 @@ import {
 } from './DefaultPermissionTypes';
 
 export function permissionsBulkAction({
+	apiURL,
 	className,
 	defaultPermissionAdditionalProps,
 	selectedData,
 }: {
+	apiURL: string;
 	className: string;
 	defaultPermissionAdditionalProps: any;
 	selectedData: any;
@@ -42,6 +45,7 @@ export function permissionsBulkAction({
 		contentComponent: ({closeModal}: {closeModal: () => void}) =>
 			BulkPermissionModalContent({
 				...defaultPermissionAdditionalProps,
+				apiURL,
 				className,
 				closeModal,
 				selectedData,
@@ -52,58 +56,39 @@ export function permissionsBulkAction({
 
 export default function BulkPermissionModalContent({
 	actions,
+	apiURL,
 	className,
 	closeModal,
 	roles,
 	selectedData,
-}: BulkPermissionModalContentProps) {
+}: BulkPermissionModalContentProps & {apiURL: string}) {
 	const [currentValues, setCurrentValues] =
 		useState<AssetRoleSelectedActions>({});
 	const [loading, setLoading] = useState(false);
 	const [tabs, setTabs] = useState<Array<AssetType> | undefined>(undefined);
 
-	const saveHandler = useCallback(() => {
-		setLoading(true);
+	const saveHandler = useCallback(
+		(event: any) => {
+			event.preventDefault();
 
-		return CMSDefaultPermissionService.batchUpdateObjectEntry({
-			bulkActionItems: selectedData.items.map((item: any) => {
-				return {
-					className: item.entryClassName || className,
-					classPK: item.embedded?.id,
-				};
-			}),
-			configuration: JSON.stringify(currentValues),
-			selectAll: selectedData.selectAll,
-			type: 'PermissionBulkAction',
-		})
-			.then(() => {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
+			setLoading(true);
 
-				closeModal();
-			})
-			.catch(() => {
-				openToast({
-					message: Liferay.Language.get(
-						'an-unexpected-system-error-occurred'
-					),
-					type: 'danger',
-				});
-			})
-			.finally(() => {
-				setLoading(false);
+			triggerAssetBulkAction({
+				apiURL,
+				keyValues: {
+					configuration: JSON.stringify(currentValues),
+				},
+				onCreateSuccess: (_response) => {
+					closeModal();
+
+					setLoading(false);
+				},
+				selectedData,
+				type: 'PermissionBulkAction',
 			});
-	}, [
-		className,
-		closeModal,
-		currentValues,
-		selectedData.items,
-		selectedData.selectAll,
-	]);
+		},
+		[apiURL, closeModal, currentValues, selectedData]
+	);
 
 	const onChangeHandler = useCallback((data: any) => {
 		setCurrentValues(data);

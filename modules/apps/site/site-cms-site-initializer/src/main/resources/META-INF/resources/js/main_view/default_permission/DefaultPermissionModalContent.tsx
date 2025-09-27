@@ -15,6 +15,7 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
+import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
 import {
 	AssetRoleSelectedActions,
@@ -24,11 +25,12 @@ import {
 
 export default function DefaultPermissionModalContent({
 	actions,
+	apiURL,
 	classExternalReferenceCode,
 	className,
 	closeModal,
 	roles,
-}: DefaultPermissionModalContentProps) {
+}: DefaultPermissionModalContentProps & {apiURL?: string}) {
 	const [currentObjectEntry, setCurrentObjectEntry] =
 		useState<CMSDefaultPermissionObjectEntryDTO | null>(null);
 	const [currentValues, setCurrentValues] =
@@ -36,64 +38,77 @@ export default function DefaultPermissionModalContent({
 	const [loading, setLoading] = useState(false);
 	const [propagate, setPropagate] = useState(false);
 
-	const saveHandler = useCallback(() => {
-		setLoading(true);
+	const saveHandler = useCallback(
+		async (event: any) => {
+			event.preventDefault();
 
-		return Promise.resolve()
-			.then(() => {
-				if (currentObjectEntry) {
-					return CMSDefaultPermissionService.updateObjectEntry({
+			setLoading(true);
+
+			try {
+				if (!currentObjectEntry) {
+					throw new Error();
+				}
+
+				const response =
+					await CMSDefaultPermissionService.updateObjectEntry({
 						defaultPermissions: JSON.stringify(currentValues),
 						externalReferenceCode:
 							currentObjectEntry.externalReferenceCode,
 					});
-				}
 
-				throw new Error();
-			})
-			.then(({error}) => {
-				if (error) {
-					throw new Error(error);
+				if (response.error) {
+					throw new Error();
 				}
 
 				if (propagate) {
-					return CMSDefaultPermissionService.batchUpdateObjectEntry({
-						defaultPermissions: JSON.stringify(currentValues),
-						depotGroupId: currentObjectEntry?.depotGroupId || 0,
-						selectAll: true,
-						treePath: currentObjectEntry?.treePath || '',
+					triggerAssetBulkAction({
+						apiURL,
+						keyValues: {
+							defaultPermissions: JSON.stringify(currentValues),
+							depotGroupId: currentObjectEntry?.depotGroupId || 0,
+							treePath: currentObjectEntry?.treePath || '',
+						},
+						onCreateError: ({error}) => {
+							throw new Error(error as unknown as any);
+						},
+						onCreateSuccess: () => {
+							closeModal();
+
+							setLoading(false);
+						},
+						overrideDefaultErrorToast: true,
+						selectedData: {
+							selectAll: true,
+						},
+						type: 'DefaultPermissionBulkAction',
 					});
 				}
+				else {
+					openToast({
+						message: Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+						type: 'success',
+					});
 
-				return Promise.resolve({error: ''}) as any;
-			})
-			.then(({error}) => {
-				if (error) {
-					throw new Error(error);
+					closeModal();
+
+					setLoading(false);
 				}
-			})
-			.then(() => {
-				openToast({
-					message: Liferay.Language.get(
-						'your-request-completed-successfully'
-					),
-					type: 'success',
-				});
-
-				closeModal();
-			})
-			.catch(() => {
+			}
+			catch (_error) {
 				openToast({
 					message: Liferay.Language.get(
 						'an-unexpected-system-error-occurred'
 					),
 					type: 'danger',
 				});
-			})
-			.finally(() => {
+
 				setLoading(false);
-			});
-	}, [closeModal, currentObjectEntry, currentValues, propagate]);
+			}
+		},
+		[apiURL, closeModal, currentObjectEntry, currentValues, propagate]
+	);
 
 	const onChangeHandler = useCallback((data: any) => {
 		setCurrentValues(data);

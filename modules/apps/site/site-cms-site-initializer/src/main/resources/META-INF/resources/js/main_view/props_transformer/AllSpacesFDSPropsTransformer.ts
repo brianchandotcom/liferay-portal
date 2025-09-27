@@ -182,6 +182,7 @@ export default function AllSpacesFDSPropsTransformer({
 		}) => {
 			if (action?.data?.id === 'default-permissions') {
 				defaultPermissionsBulkAction({
+					apiURL: otherProps.apiURL,
 					className: DEPOT_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},

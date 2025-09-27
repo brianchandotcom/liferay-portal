@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
 import java.io.Serializable;
@@ -72,7 +73,8 @@ public class ObjectEntryModelDocumentContributor
 		ObjectEntryFolderLocalService objectEntryFolderLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectFieldLocalService objectFieldLocalService,
-		ObjectFolderLocalService objectFolderLocalService) {
+		ObjectFolderLocalService objectFolderLocalService,
+		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 		_accountEntryOrganizationRelLocalService =
 			accountEntryOrganizationRelLocalService;
@@ -82,6 +84,7 @@ public class ObjectEntryModelDocumentContributor
 		_objectEntryLocalService = objectEntryLocalService;
 		_objectFieldLocalService = objectFieldLocalService;
 		_objectFolderLocalService = objectFolderLocalService;
+		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 	}
 
 	@Override
@@ -507,6 +510,8 @@ public class ObjectEntryModelDocumentContributor
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFolderLocalService _objectFolderLocalService;
+	private final TextEmbeddingDocumentContributor
+		_textEmbeddingDocumentContributor;
 
 	private static class ObjectContentHelper {
 

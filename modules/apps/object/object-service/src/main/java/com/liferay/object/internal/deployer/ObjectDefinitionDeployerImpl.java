@@ -97,6 +97,7 @@ import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.search.batch.DynamicQueryBatchIndexingActionableFactory;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
+import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelIndexerWriterContributor;
 import com.liferay.portal.search.spi.model.query.contributor.KeywordQueryContributor;
@@ -162,6 +163,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		SharingModelResourcePermissionConfigurator
 			sharingModelResourcePermissionConfigurator,
 		SystemEventLocalService systemEventLocalService,
+		TextEmbeddingDocumentContributor textEmbeddingDocumentContributor,
 		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
@@ -201,6 +203,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_sharingModelResourcePermissionConfigurator =
 			sharingModelResourcePermissionConfigurator;
 		_systemEventLocalService = systemEventLocalService;
+		_textEmbeddingDocumentContributor = textEmbeddingDocumentContributor;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_workflowStatusModelPreFilterContributor =
@@ -329,7 +332,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 						_objectDefinitionLocalService,
 						_objectEntryFolderLocalService,
 						_objectEntryLocalService, _objectFieldLocalService,
-						_objectFolderLocalService),
+						_objectFolderLocalService,
+						_textEmbeddingDocumentContributor),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"indexer.class.name", objectDefinition.getClassName()
 					).build()),
@@ -696,6 +700,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	private final SharingModelResourcePermissionConfigurator
 		_sharingModelResourcePermissionConfigurator;
 	private final SystemEventLocalService _systemEventLocalService;
+	private final TextEmbeddingDocumentContributor
+		_textEmbeddingDocumentContributor;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
 	private final WorkflowDefinitionLinkLocalService

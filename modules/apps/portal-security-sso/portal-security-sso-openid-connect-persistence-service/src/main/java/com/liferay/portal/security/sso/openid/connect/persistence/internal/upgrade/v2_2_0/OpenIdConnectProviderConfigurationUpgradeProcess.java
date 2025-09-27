@@ -5,8 +5,14 @@
 
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v2_2_0;
 
+import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.oauth.client.persistence.model.OAuthClientEntryTable;
+import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -18,6 +24,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import org.apache.felix.cm.file.ConfigurationHandler;
 
@@ -27,6 +34,12 @@ import org.apache.felix.cm.file.ConfigurationHandler;
 public class OpenIdConnectProviderConfigurationUpgradeProcess
 	extends UpgradeProcess {
 
+	public OpenIdConnectProviderConfigurationUpgradeProcess(
+		OAuthClientEntryLocalService oAuthClientEntryLocalService) {
+
+		_oAuthClientEntryLocalService = oAuthClientEntryLocalService;
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		if (!hasTable("Configuration_")) {
@@ -34,16 +47,19 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 		}
 
 		try (Statement statement = connection.createStatement();
-			 ResultSet resultSet = statement.executeQuery(
-				 StringBundler.concat(
-					 "select * from Configuration_ where configurationId LIKE ",
-					 "%com.liferay.portal.security.sso.openid.connect.internal.",
-					 "configuration.OpenIdConnectProviderConfiguration%"));
-			 PreparedStatement preparedStatement = connection.prepareStatement(
-				 "update Configuration_ set dictionary = ? where " +
-				 "configurationId = ?")) {
+			ResultSet resultSet = statement.executeQuery(
+				StringBundler.concat(
+					"select * from Configuration_ where configurationId LIKE ",
+					"'%com.liferay.portal.security.sso.openid.connect.",
+					"internal.configuration.",
+					"OpenIdConnectProviderConfiguration%'"));
+			PreparedStatement preparedStatement =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update Configuration_ set dictionary = ? where " +
+						"configurationId = ?")) {
 
-			if (resultSet.next()) {
+			while (resultSet.next()) {
 				String dictionaryString = resultSet.getString("dictionary");
 
 				if (Validator.isNull(dictionaryString)) {
@@ -86,9 +102,48 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 				preparedStatement.setString(
 					2, resultSet.getString("configurationId"));
 
-				preparedStatement.executeUpdate();
+				preparedStatement.addBatch();
+
+				_updateOAuthClientEntry(
+					GetterUtil.getLong(dictionary.get("companyId")),
+					GetterUtil.getLong(
+						dictionary.get("discoveryEndpointCacheInMillis")),
+					GetterUtil.getString(
+						dictionary.get("openIdConnectClientId")));
 			}
+
+			preparedStatement.executeBatch();
 		}
 	}
+
+	private void _updateOAuthClientEntry(
+		long companyId, long discoveryEndpointCacheInMillis,
+		String openIdConnectClientId) {
+
+		List<OAuthClientEntry> oAuthClientEntries =
+			_oAuthClientEntryLocalService.dslQuery(
+				DSLQueryFactoryUtil.selectDistinct(
+					OAuthClientEntryTable.INSTANCE
+				).from(
+					OAuthClientEntryTable.INSTANCE
+				).where(
+					Predicate.and(
+						OAuthClientEntryTable.INSTANCE.clientId.eq(
+							openIdConnectClientId),
+						OAuthClientEntryTable.INSTANCE.companyId.eq(companyId))
+				));
+
+		if (oAuthClientEntries.isEmpty()) {
+			return;
+		}
+
+		OAuthClientEntry oAuthClientEntry = oAuthClientEntries.get(0);
+
+		oAuthClientEntry.setMetadataCacheTime(discoveryEndpointCacheInMillis);
+
+		_oAuthClientEntryLocalService.updateOAuthClientEntry(oAuthClientEntry);
+	}
+
+	private final OAuthClientEntryLocalService _oAuthClientEntryLocalService;
 
 }

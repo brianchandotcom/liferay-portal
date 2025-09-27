@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.registry;
 
+import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.security.sso.openid.connect.persistence.internal.upgrade.v2_2_0.OpenIdConnectProviderConfigurationUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -48,10 +49,14 @@ public class OpenIdConnectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.1.1", "2.2.0",
-			new OpenIdConnectProviderConfigurationUpgradeProcess());
+			new OpenIdConnectProviderConfigurationUpgradeProcess(
+				_oAuthClientEntryLocalService));
 	}
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private OAuthClientEntryLocalService _oAuthClientEntryLocalService;
 
 }

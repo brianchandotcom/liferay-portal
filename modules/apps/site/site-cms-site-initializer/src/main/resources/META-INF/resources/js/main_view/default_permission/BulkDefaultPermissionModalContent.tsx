@@ -49,7 +49,7 @@ export function defaultPermissionsBulkAction({
 	defaultPermissionAdditionalProps,
 	selectedData,
 }: {
-	apiURL: string;
+	apiURL?: string;
 	className: string;
 	defaultPermissionAdditionalProps: any;
 	selectedData: any;

@@ -337,8 +337,6 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
 			defaultLanguageId, version, WorkflowConstants.STATUS_APPROVED);
 
-		_addResourcePermissions(objectDefinition, objectEntry);
-
 		_insertIntoLocalizationTable(
 			new HashMap<>(), objectDefinition, objectEntry.getObjectEntryId(),
 			null, false, values);

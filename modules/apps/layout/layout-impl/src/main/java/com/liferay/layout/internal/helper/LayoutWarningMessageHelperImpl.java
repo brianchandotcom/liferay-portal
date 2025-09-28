@@ -78,7 +78,13 @@ public class LayoutWarningMessageHelperImpl
 			HttpServletRequest httpServletRequest)
 		throws Exception {
 
-		int totalCount = _getTotalCount(collectionStyledLayoutStructureItem);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		int totalCount = _getTotalCount(
+			collectionStyledLayoutStructureItem,
+			themeDisplay.getScopeGroupId());
 
 		if (!Objects.equals(
 				collectionStyledLayoutStructureItem.getPaginationType(),
@@ -352,7 +358,8 @@ public class LayoutWarningMessageHelperImpl
 
 	private int _getTotalCount(
 			CollectionStyledLayoutStructureItem
-				collectionStyledLayoutStructureItem)
+				collectionStyledLayoutStructureItem,
+			long scopeGroupId)
 		throws Exception {
 
 		JSONObject layoutObjectReferenceJSONObject =
@@ -388,6 +395,8 @@ public class LayoutWarningMessageHelperImpl
 		if (infoItem != null) {
 			defaultLayoutListRetrieverContext.setContextObject(infoItem);
 		}
+
+		defaultLayoutListRetrieverContext.setScopeGroupId(scopeGroupId);
 
 		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			listObjectReferenceFactory.getListObjectReference(

@@ -199,9 +199,18 @@ public class FragmentEntryConfigurationParserImpl
 					fragmentConfigurationField.getType(),
 					"collectionSelector")) {
 
+				ServiceContext serviceContext =
+					ServiceContextThreadLocal.getServiceContext();
+
+				if (serviceContext == null) {
+					return null;
+				}
+
+				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
+
 				Object contextListObject = _getInfoListObjectEntry(
 					configurationValuesJSONObject.getString(name),
-					segmentsEntryIds,
+					segmentsEntryIds, themeDisplay.getScopeGroupId(),
 					fragmentConfigurationField.getTypeOptionsJSONObject());
 
 				if (contextListObject != null) {
@@ -662,7 +671,7 @@ public class FragmentEntryConfigurationParserImpl
 	}
 
 	private Object _getInfoListObjectEntry(
-		String value, long[] segmentsEntryIds,
+		String value, long[] segmentsEntryIds, long scopeGroupId,
 		JSONObject typeOptionsJSONObject) {
 
 		if (Validator.isNull(value)) {
@@ -707,6 +716,8 @@ public class FragmentEntryConfigurationParserImpl
 						Pagination.of(numberOfItems, 0));
 				}
 			}
+
+			defaultLayoutListRetrieverContext.setScopeGroupId(scopeGroupId);
 
 			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 				segmentsEntryIds);

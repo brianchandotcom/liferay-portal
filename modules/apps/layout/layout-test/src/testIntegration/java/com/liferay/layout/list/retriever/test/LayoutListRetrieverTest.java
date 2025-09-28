@@ -117,6 +117,7 @@ public class LayoutListRetrieverTest {
 			new DefaultLayoutListRetrieverContext();
 
 		layoutListRetrieverContext.setContextObject(fileEntry);
+		layoutListRetrieverContext.setScopeGroupId(_group.getGroupId());
 
 		InfoPage<?> infoPage = layoutListRetriever.getInfoPage(
 			keyListObjectReference, layoutListRetrieverContext);

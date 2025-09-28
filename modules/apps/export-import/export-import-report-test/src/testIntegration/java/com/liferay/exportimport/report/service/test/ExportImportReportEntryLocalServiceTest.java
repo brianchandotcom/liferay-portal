@@ -9,6 +9,9 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
@@ -144,47 +147,66 @@ public class ExportImportReportEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testGetImportReportEntries() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-		long exportImportConfigurationId = RandomTestUtil.randomLong();
+	public void testGetExportImportReportEntries() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
 
-		List<ExportImportReportEntry> exportImportReportEntries =
-			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				companyId, exportImportConfigurationId);
+		try {
+			long exportImportConfigurationId = RandomTestUtil.randomLong();
 
-		Assert.assertTrue(exportImportReportEntries.isEmpty());
+			List<ExportImportReportEntry> exportImportReportEntries =
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntries(
+						TestPropsValues.getCompanyId(),
+						exportImportConfigurationId);
 
-		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			exportImportConfigurationId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), companyId,
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-		_exportImportReportEntryLocalService.addEmptyExportImportReportEntry(
-			RandomTestUtil.randomLong(), companyId,
-			RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
-			exportImportConfigurationId, RandomTestUtil.randomString(),
-			RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
+			Assert.assertTrue(exportImportReportEntries.isEmpty());
 
-		exportImportReportEntries =
-			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				companyId, exportImportConfigurationId);
+			_exportImportReportEntryLocalService.
+				addEmptyExportImportReportEntry(
+					RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					exportImportConfigurationId, RandomTestUtil.randomString(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+			_exportImportReportEntryLocalService.
+				addEmptyExportImportReportEntry(
+					RandomTestUtil.randomLong(), TestPropsValues.getCompanyId(),
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+			_exportImportReportEntryLocalService.
+				addEmptyExportImportReportEntry(
+					RandomTestUtil.randomLong(), company.getCompanyId(),
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					exportImportConfigurationId, RandomTestUtil.randomString(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
+			_exportImportReportEntryLocalService.
+				addEmptyExportImportReportEntry(
+					RandomTestUtil.randomLong(), company.getCompanyId(),
+					RandomTestUtil.randomString(), RandomTestUtil.randomLong(),
+					RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString());
 
-		Assert.assertTrue(exportImportReportEntries.size() == 1);
+			exportImportReportEntries =
+				_exportImportReportEntryLocalService.
+					getExportImportReportEntries(
+						TestPropsValues.getCompanyId(),
+						exportImportConfigurationId);
+
+			Assert.assertEquals(
+				exportImportReportEntries.toString(), 1,
+				exportImportReportEntries.size());
+		}
+		finally {
+			_companyLocalService.deleteCompany(company);
+		}
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 	@Inject
 	private ExportImportReportEntryLocalService

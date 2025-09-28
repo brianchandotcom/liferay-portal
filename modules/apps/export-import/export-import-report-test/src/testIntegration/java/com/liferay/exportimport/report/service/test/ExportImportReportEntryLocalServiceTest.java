@@ -10,6 +10,7 @@ import com.liferay.exportimport.report.constants.ExportImportReportEntryConstant
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -39,7 +40,7 @@ public class ExportImportReportEntryLocalServiceTest {
 				getExportImportReportEntriesCount();
 
 		long groupId = RandomTestUtil.randomLong();
-		long companyId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
 		String classExternalReferenceCode = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 		long exportImportConfigurationId = RandomTestUtil.randomLong();
@@ -91,7 +92,7 @@ public class ExportImportReportEntryLocalServiceTest {
 				getExportImportReportEntriesCount();
 
 		long groupId = RandomTestUtil.randomLong();
-		long companyId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
 		String classExternalReferenceCode = RandomTestUtil.randomString();
 		long classNameId = RandomTestUtil.randomLong();
 		long classPK = RandomTestUtil.randomLong();
@@ -144,7 +145,7 @@ public class ExportImportReportEntryLocalServiceTest {
 
 	@Test
 	public void testGetImportReportEntries() throws Exception {
-		long companyId = RandomTestUtil.randomLong();
+		long companyId = TestPropsValues.getCompanyId();
 		long exportImportConfigurationId = RandomTestUtil.randomLong();
 
 		List<ExportImportReportEntry> exportImportReportEntries =

@@ -25,6 +25,8 @@ import com.liferay.layout.list.retriever.SegmentsEntryLayoutListRetriever;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
@@ -58,9 +60,42 @@ public class AssetEntryListLayoutListRetriever
 		ClassedModelListObjectReference classedModelListObjectReference,
 		LayoutListRetrieverContext layoutListRetrieverContext) {
 
-		AssetListEntry assetListEntry =
-			_assetListEntryLocalService.fetchAssetListEntry(
+		AssetListEntry assetListEntry = null;
+
+		if (classedModelListObjectReference.getClassPK() > 0) {
+			assetListEntry = _assetListEntryLocalService.fetchAssetListEntry(
 				classedModelListObjectReference.getClassPK());
+		}
+
+		if ((assetListEntry == null) &&
+			Validator.isNotNull(
+				classedModelListObjectReference.getExternalReferenceCode())) {
+
+			String scopeExternalReferenceCode =
+				classedModelListObjectReference.getScopeExternalReferenceCode();
+			Group scopeGroup = _groupLocalService.fetchGroup(
+				layoutListRetrieverContext.getScopeGroupId());
+
+			if (Validator.isNotNull(scopeExternalReferenceCode) &&
+				(scopeGroup != null) &&
+				!Objects.equals(
+					scopeExternalReferenceCode,
+					scopeGroup.getExternalReferenceCode())) {
+
+				scopeGroup =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						scopeExternalReferenceCode, scopeGroup.getCompanyId());
+			}
+
+			if (scopeGroup != null) {
+				assetListEntry =
+					_assetListEntryLocalService.
+						fetchAssetListEntryByExternalReferenceCode(
+							classedModelListObjectReference.
+								getExternalReferenceCode(),
+							scopeGroup.getGroupId());
+			}
+		}
 
 		if (assetListEntry == null) {
 			return InfoPage.of(
@@ -194,5 +229,8 @@ public class AssetEntryListLayoutListRetriever
 	@Reference
 	private AssetListEntrySegmentsEntryRelLocalService
 		_assetListEntrySegmentsEntryRelLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 }

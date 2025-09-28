@@ -1430,6 +1430,8 @@ public class TestrayImporter {
 					testrayBuild, _topLevelBuildReport, axisTestClassGroup));
 		}
 
+		String[] warnings = null;
+
 		for (TestrayCaseResult testrayCaseResult : testrayCaseResults) {
 			Element testcaseElement = rootElement.addElement("testcase");
 
@@ -1488,7 +1490,9 @@ public class TestrayImporter {
 
 			_addPropertyElements(propertiesElement, testcasePropertiesMap);
 
-			String[] warnings = testrayCaseResult.getWarnings();
+			if (warnings == null) {
+				warnings = testrayCaseResult.getWarnings();
+			}
 
 			if ((warnings != null) && (warnings.length > 0)) {
 				Element warningsPropertyElement = propertiesElement.addElement(

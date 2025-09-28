@@ -11,8 +11,11 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -28,13 +31,21 @@ public class AssetEntryListListObjectReferenceFactory
 	@Override
 	public ListObjectReference getListObjectReference(JSONObject jsonObject) {
 		String classPK = jsonObject.getString("classPK");
+		String itemType = jsonObject.getString("itemType");
+
+		try {
+			jsonObject = _jSONFactory.createJSONObject(jsonObject.toString());
+		}
+		catch (JSONException jsonException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(jsonException);
+			}
+
+			return null;
+		}
 
 		return new ClassedModelListObjectReference(
-			JSONUtil.put(
-				"className", jsonObject.getLong("className")
-			).put(
-				"classPK", classPK
-			).put(
+			jsonObject.put(
 				"itemType",
 				() -> {
 					AssetListEntry assetListEntry =
@@ -42,17 +53,20 @@ public class AssetEntryListListObjectReferenceFactory
 							GetterUtil.getLong(classPK));
 
 					if (assetListEntry == null) {
-						return jsonObject.getString("itemType");
+						return itemType;
 					}
 
 					return assetListEntry.getAssetEntryType();
-				}
-			).put(
-				"title", jsonObject.getString("title")
-			));
+				}));
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AssetEntryListListObjectReferenceFactory.class);
 
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
+
+	@Reference
+	private JSONFactory _jSONFactory;
 
 }

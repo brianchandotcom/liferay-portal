@@ -33,7 +33,7 @@ export function permissionsBulkAction({
 	defaultPermissionAdditionalProps,
 	selectedData,
 }: {
-	apiURL: string;
+	apiURL?: string;
 	className: string;
 	defaultPermissionAdditionalProps: any;
 	selectedData: any;

@@ -63,12 +63,14 @@ function getBulkDeleteMessage(selectedData: any): {
 /**
  * Fetches asset library spaces for the given items.
  */
-async function getEntriesSpaces(items: any[]): Promise<any[]> {
+async function getEntriesSpaces(
+	items: IBulkActionFDSData['items'] = []
+): Promise<any[]> {
 	const promises = items
 		.filter((item) => item.embedded.scopeId)
 		.map((item) =>
 			SpaceService.getSpace({
-				externalReferenceCode: item.embedded.scopeId,
+				spaceId: item?.embedded?.scopeId as number,
 			})
 		);
 
@@ -85,7 +87,7 @@ async function handleBulkDeletion({
 	apiURL: string;
 	selectedData: IBulkActionFDSData;
 }): Promise<void> {
-	const spaces = await getEntriesSpaces(selectedData.items);
+	const spaces = await getEntriesSpaces(selectedData?.items || []);
 
 	// Trash status checks
 

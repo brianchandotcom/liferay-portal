@@ -60,10 +60,9 @@ export default function AssetsFDSPropsTransformer({
 	...otherProps
 }: {
 	additionalProps: AdditionalProps;
-	apiURL: string;
+	apiURL?: string;
 	creationMenu: any;
 	itemsActions?: any[];
-	otherProps: any;
 	views: IView[];
 }) {
 	return {

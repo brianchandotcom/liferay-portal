@@ -1319,6 +1319,104 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-64102")
+	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryReferencedByERC()
+		throws Exception {
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				companyGroup.getGroupId(), TestPropsValues.getUserId());
+
+		AssetListEntry assetListEntry =
+			_assetListEntryLocalService.addAssetListEntry(
+				null, TestPropsValues.getUserId(), companyGroup.getGroupId(),
+				RandomTestUtil.randomString(),
+				AssetListEntryTypeConstants.TYPE_DYNAMIC,
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"anyAssetType",
+					String.valueOf(_portal.getClassNameId(JournalArticle.class))
+				).buildString(),
+				serviceContext);
+
+		String title = RandomTestUtil.randomString();
+
+		JournalTestUtil.addArticle(
+			companyGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, title,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			_portal.getSiteDefaultLocale(companyGroup), true, true,
+			serviceContext);
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		FragmentEntry fragmentEntry = _addFragmentEntry();
+
+		_addCollectionStyledLayoutStructureItem(
+			JSONUtil.put(
+				"className", AssetListEntry.class
+			).put(
+				"externalReferenceCode",
+				assetListEntry.getExternalReferenceCode()
+			).put(
+				"itemType", JournalArticle.class.getName()
+			).put(
+				"scopeExternalReferenceCode",
+				companyGroup.getExternalReferenceCode()
+			).put(
+				"type", InfoListItemSelectorReturnType.class.getName()
+			),
+			JSONUtil.put(
+				"displayAllPages", true
+			).put(
+				"numberOfItemsPerPage", 10
+			).put(
+				"paginationType", "none"
+			).put(
+				"showAllItems", true
+			),
+			layout, null, segmentsExperienceId,
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, 0,
+				segmentsExperienceId, draftLayout.getPlid(),
+				fragmentEntry.getCss(), fragmentEntry.getHtml(),
+				fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"collectionFieldId", "JournalArticle_title"
+						).put(
+							"defaultValue", "Heading Example"
+						))
+				).toString(),
+				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
+				fragmentEntry.getType(), _serviceContext));
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(layout);
+
+		String content = _getContent(
+			layout, mockHttpServletRequest, segmentsExperienceId);
+
+		Assert.assertFalse(content, content.contains(">Heading Example</h1>"));
+		Assert.assertTrue(content, content.contains(">" + title + "</h1>"));
+	}
+
+	@Test
 	@TestInfo("LPD-58700")
 	public void testRenderCollectionStyledLayoutStructureItemWithCollectionProviderItemClassChanged()
 		throws Exception {

@@ -16,15 +16,25 @@ import {Space} from '../../../common/types/Space';
 import {Workflow} from '../../../common/types/Workflow';
 import {useCache} from '../../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectStructureSpaces from '../../selectors/selectStructureSpaces';
 import selectStructureWorkflows from '../../selectors/selectStructureWorkflows';
 
 export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
 	const {data: spaces, status: spacesStatus} = useCache('spaces');
 	const {data: workflows, status: workflowsStatus} = useCache('workflows');
 
+	const structureSpaces = useSelector(selectStructureSpaces);
+
 	if (spacesStatus === 'saving' || workflowsStatus === 'saving') {
 		return <ClayLoadingIndicator className="my-6" />;
 	}
+
+	const availableSpaces =
+		structureSpaces === 'all'
+			? spaces
+			: spaces.filter((space) =>
+					structureSpaces.includes(space.externalReferenceCode)
+				);
 
 	return (
 		<div>
@@ -41,7 +51,7 @@ export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
 
 			<SpaceWorkflowPanel
 				disabled={disabled}
-				spaces={spaces}
+				spaces={availableSpaces}
 				workflows={workflows}
 			/>
 		</div>

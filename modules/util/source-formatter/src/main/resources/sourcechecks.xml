@@ -893,6 +893,10 @@
 			<category name="Documentation" />
 			<description name="Finds SourceFormatter checks that have no documentation." />
 		</check>
+		<check name="JavaSQLBooleanValuesCheck">
+			<category name="Bug Prevention" />
+			<description name="Perform several checks on boolean values in SQL statements." />
+		</check>
 		<check name="JavaStagedModelDataHandlerCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds missing method `setMvccVersion` in class extending `BaseStagedModelDataHandler` in module that has `mvcc-enabled=true` in `service.xml`." />

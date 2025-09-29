@@ -469,14 +469,6 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().getKaleoDefinitionsCount(name, serviceContext);
 	}
 
-	public static KaleoDefinition getOrAddEmptyKaleoDefinition(
-			String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws PortalException {
-
-		return getService().getOrAddEmptyKaleoDefinition(name, serviceContext);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *

@@ -537,16 +537,6 @@ public class KaleoDefinitionLocalServiceWrapper
 			name, serviceContext);
 	}
 
-	@Override
-	public KaleoDefinition getOrAddEmptyKaleoDefinition(
-			String name,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
-			name, serviceContext);
-	}
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *

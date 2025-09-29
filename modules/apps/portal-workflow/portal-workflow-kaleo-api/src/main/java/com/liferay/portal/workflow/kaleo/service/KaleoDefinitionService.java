@@ -66,11 +66,6 @@ public interface KaleoDefinitionService extends BaseService {
 			String name, ServiceContext serviceContext)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public KaleoDefinition getOrAddEmptyKaleoDefinition(
-			String externalReferenceCode, ServiceContext serviceContext)
-		throws PortalException;
-
 	/**
 	 * Returns the OSGi service identifier.
 	 *

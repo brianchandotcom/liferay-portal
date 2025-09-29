@@ -31,14 +31,14 @@ public class JavaRunSQLCheck extends BaseJavaTermCheck {
 
 		String content = javaTerm.getContent();
 
-		Matcher matcher = _runSqlPattern.matcher(content);
+		Matcher matcher = _runSQLPattern.matcher(content);
 
 		while (matcher.find()) {
-			String runSqlMethodCall = JavaSourceUtil.getMethodCall(
+			String runSQLMethodCall = JavaSourceUtil.getMethodCall(
 				content, matcher.start());
 
 			List<String> parameterList = JavaSourceUtil.getParameterList(
-				runSqlMethodCall);
+				runSQLMethodCall);
 
 			if (parameterList.isEmpty() || (parameterList.size() != 1)) {
 				continue;
@@ -69,7 +69,7 @@ public class JavaRunSQLCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private static final Pattern _runSqlPattern = Pattern.compile(
+	private static final Pattern _runSQLPattern = Pattern.compile(
 		"\\brunSQL\\(");
 
 }

@@ -138,7 +138,7 @@ public class MCPServerServlet extends HttpServlet {
 			).build()
 		).tool(
 			_getTool("call-http-endpoint", toolsJSONObject),
-			(mcpAsyncServerExchange, monos) -> {
+			(mcpSyncServerExchange, monos) -> {
 				String path = String.valueOf(monos.get("path"));
 
 				if (!path.startsWith("/")) {
@@ -146,19 +146,18 @@ public class MCPServerServlet extends HttpServlet {
 				}
 
 				return _call(
-					mcpAsyncServerExchange,
-					String.valueOf(monos.get("payload")), baseURL + path,
-					String.valueOf(monos.get("method")));
+					mcpSyncServerExchange, String.valueOf(monos.get("payload")),
+					baseURL + path, String.valueOf(monos.get("method")));
 			}
 		).tool(
 			_getTool("get-openapi", toolsJSONObject),
-			(mcpAsyncServerExchange, monos) -> _call(
-				mcpAsyncServerExchange, null, String.valueOf(monos.get("url")),
+			(mcpSyncServerExchange, monos) -> _call(
+				mcpSyncServerExchange, null, String.valueOf(monos.get("url")),
 				"GET")
 		).tool(
 			_getTool("get-openapis", toolsJSONObject),
-			(mcpAsyncServerExchange, monos) -> _call(
-				mcpAsyncServerExchange, null, baseURL + "/openapi", "GET")
+			(mcpSyncServerExchange, monos) -> _call(
+				mcpSyncServerExchange, null, baseURL + "/openapi", "GET")
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
@@ -286,7 +285,7 @@ public class MCPServerServlet extends HttpServlet {
 						(String)values.get("name"),
 						(String)values.get("description"),
 						Collections.emptyList()),
-					(mcpAsyncServerExchange, request) ->
+					(mcpSyncServerExchange, request) ->
 						new McpSchema.GetPromptResult(
 							(String)values.get("description"),
 							List.of(

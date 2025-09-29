@@ -5,8 +5,11 @@
 
 package com.liferay.portal.security.sso.openid.connect.web.internal.display.context;
 
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -14,6 +17,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import java.io.IOException;
 
 import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -25,8 +29,11 @@ import org.osgi.service.cm.ConfigurationAdmin;
 public class OpenIdConnectProviderConfigurationDisplayContext {
 
 	public OpenIdConnectProviderConfigurationDisplayContext(
-			ConfigurationAdmin configurationAdmin, String pid)
+			ConfigurationAdmin configurationAdmin,
+			ExpandoColumnLocalService expandoColumnLocalService, String pid)
 		throws InvalidSyntaxException, IOException {
+
+		_expandoColumnLocalService = expandoColumnLocalService;
 
 		Configuration[] configurations = configurationAdmin.listConfigurations(
 			StringBundler.concat(
@@ -41,6 +48,8 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 
 			_properties = HashMapDictionaryBuilder.<String, Object>put(
 				"customAuthorizationRequestParameters", defaultValue
+			).put(
+				"customClaims", defaultValue
 			).put(
 				"customTokenRequestParameters", defaultValue
 			).put(
@@ -61,6 +70,27 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 
 		_customAuthorizationRequestParametersIndexes = _createIndexes(
 			_customAuthorizationRequestParameters.length);
+
+		String[] customClaims = GetterUtil.getStringValues(
+			_properties.get("customClaims"));
+
+		_customClaimsIndexes = _createIndexes(customClaims.length);
+
+		_customClaimsKeys = new String[_customClaimsIndexes.length];
+		_customClaimsValues = new String[_customClaimsIndexes.length];
+
+		for (int i = 0; i < _customClaimsIndexes.length; i++) {
+			String[] customClaim = customClaims[i].split(StringPool.EQUAL);
+
+			_customClaimsKeys[i] = customClaim[0];
+
+			if (customClaim.length > 1) {
+				_customClaimsValues[i] = customClaim[1];
+			}
+			else {
+				_customClaimsValues[i] = StringPool.BLANK;
+			}
+		}
 
 		_customTokenRequestParameters = GetterUtil.getStringValues(
 			_properties.get("customTokenRequestParameters"));
@@ -84,12 +114,29 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 		return GetterUtil.getString(_properties.get("authorizationEndpoint"));
 	}
 
+	public List<ExpandoColumn> getAvailableCustomFields() {
+		return _expandoColumnLocalService.getDefaultTableColumns(
+			CompanyThreadLocal.getCompanyId(), User.class.getName());
+	}
+
 	public String[] getCustomAuthorizationRequestParameters() {
 		return _customAuthorizationRequestParameters;
 	}
 
 	public int[] getCustomAuthorizationRequestParametersIndexes() {
 		return _customAuthorizationRequestParametersIndexes;
+	}
+
+	public int[] getCustomClaimsIndexes() {
+		return _customClaimsIndexes;
+	}
+
+	public String[] getCustomClaimsKeys() {
+		return _customClaimsKeys;
+	}
+
+	public String[] getCustomClaimsValues() {
+		return _customClaimsValues;
 	}
 
 	public String[] getCustomTokenRequestParameters() {
@@ -179,8 +226,12 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 
 	private final String[] _customAuthorizationRequestParameters;
 	private final int[] _customAuthorizationRequestParametersIndexes;
+	private final int[] _customClaimsIndexes;
+	private final String[] _customClaimsKeys;
+	private final String[] _customClaimsValues;
 	private final String[] _customTokenRequestParameters;
 	private final int[] _customTokenRequestParametersIndexes;
+	private final ExpandoColumnLocalService _expandoColumnLocalService;
 	private final String[] _idTokenSigningAlgValues;
 	private final int[] _idTokenSigningAlgValuesIndexes;
 	private final Dictionary<String, Object> _properties;

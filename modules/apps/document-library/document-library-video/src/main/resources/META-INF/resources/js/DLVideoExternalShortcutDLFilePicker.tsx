@@ -7,7 +7,7 @@ import React, {useEffect, useState} from 'react';
 
 import DLVideoExternalShortcutInput from './components/DLVideoExternalShortcutInput';
 import DLVideoExternalShortcutPreview from './components/DLVideoExternalShortcutPreview';
-import {useDLVideoExternalShortcutFields} from './utils/hooks';
+import {useDLVideoExternalShortcutFields} from './utils/useDLVideoExternalShortcutFields';
 
 type DLVideoExternalShortcutDLFilePickerProps = {
 	dlVideoExternalShortcutHTML?: string;

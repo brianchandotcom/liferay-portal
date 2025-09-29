@@ -9,7 +9,7 @@ import React, {useState} from 'react';
 
 import DLVideoExternalShortcutInput from './components/DLVideoExternalShortcutInput';
 import DLVideoExternalShortcutPreview from './components/DLVideoExternalShortcutPreview';
-import {useDLVideoExternalShortcutFields} from './utils/hooks';
+import {useDLVideoExternalShortcutFields} from './utils/useDLVideoExternalShortcutFields';
 
 const DLVideoExternalShortcutURLItemSelectorView: React.FC<{
 	eventName: string;

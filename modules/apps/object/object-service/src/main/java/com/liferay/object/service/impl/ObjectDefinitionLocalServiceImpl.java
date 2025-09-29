@@ -1779,7 +1779,6 @@ public class ObjectDefinitionLocalServiceImpl
 			return;
 		}
 
-		long groupId = 0;
 		Set<Long> oldWorkflowDefinitionLinkIds = new HashSet<>(
 			TransformUtil.transform(
 				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
@@ -1793,18 +1792,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 		for (WorkflowDefinitionLink workflowDefinitionLink :
 				workflowDefinitionLinks) {
-
-			if (!Objects.equals(
-					objectDefinition.getScope(),
-					ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
-				groupId = workflowDefinitionLink.getGroupId();
-			}
-
-			WorkflowDefinitionLink existingWorkflowDefinitionLink =
-				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
-					objectDefinition.getCompanyId(), groupId,
-					objectDefinition.getClassName(), 0, 0, true);
 
 			String workflowDefinitionName =
 				workflowDefinitionLink.getWorkflowDefinitionName();
@@ -1821,6 +1808,13 @@ public class ObjectDefinitionLocalServiceImpl
 						WorkflowDefinitionConstants.SCOPE_ALL, 0,
 						serviceContext);
 			}
+
+			long groupId = workflowDefinitionLink.getGroupId();
+
+			WorkflowDefinitionLink existingWorkflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					objectDefinition.getCompanyId(), groupId,
+					objectDefinition.getClassName(), 0, 0, true);
 
 			if (existingWorkflowDefinitionLink == null) {
 				_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(

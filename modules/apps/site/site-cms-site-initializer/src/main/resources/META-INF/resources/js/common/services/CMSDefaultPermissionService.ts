@@ -30,6 +30,7 @@ async function batchUpdateObjectEntry({
 	configuration,
 	defaultPermissions,
 	depotGroupId,
+	permissions,
 	selectAll,
 	treePath,
 	type = 'DefaultPermissionBulkAction',
@@ -41,6 +42,11 @@ async function batchUpdateObjectEntry({
 	configuration?: string;
 	defaultPermissions?: string;
 	depotGroupId?: number;
+	permissions?: Array<{
+		actionIds: string[];
+		roleExternalReferenceCode?: string;
+		roleName: string;
+	}>;
 	selectAll: boolean;
 	treePath?: string;
 	type?: string;
@@ -50,6 +56,7 @@ async function batchUpdateObjectEntry({
 		configuration,
 		defaultPermissions,
 		depotGroupId,
+		permissions,
 		selectAll,
 		treePath,
 		type,

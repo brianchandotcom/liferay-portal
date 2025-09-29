@@ -78,6 +78,9 @@ export default function BulkPermissionModalContent({
 				keyValues: {
 					configuration: JSON.stringify(currentValues),
 				},
+				onCreateError: () => {
+					setLoading(false);
+				},
 				onCreateSuccess: (_response) => {
 					closeModal();
 

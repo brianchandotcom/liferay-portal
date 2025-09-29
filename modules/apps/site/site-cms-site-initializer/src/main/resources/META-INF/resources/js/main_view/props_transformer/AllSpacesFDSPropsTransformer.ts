@@ -9,6 +9,7 @@ import {sub} from 'frontend-js-web';
 
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
+import {permissionsBulkAction} from '../default_permission/SpacesBulkPermissionModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import manageConnectedSitesAction, {
 	ManageConnectedSitesData,
@@ -116,6 +117,12 @@ export default function AllSpacesFDSPropsTransformer({
 						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
+							apiURL:
+
+								// @ts-ignore
+
+								otherProps?.apiURL ||
+								otherProps?.otherProps?.apiURL,
 							classExternalReferenceCode:
 								itemData.externalReferenceCode,
 							className: DEPOT_CLASS_NAME,
@@ -191,6 +198,19 @@ export default function AllSpacesFDSPropsTransformer({
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
 					selectedData,
+				});
+			}
+			else if (action?.data?.id === 'permissions') {
+				permissionsBulkAction({
+					apiURL:
+
+						// @ts-ignore
+
+						otherProps?.apiURL || otherProps?.otherProps?.apiURL,
+					className: DEPOT_CLASS_NAME,
+					selectedData,
+					spacePermissionAdditionalProps:
+						additionalProps.spacePermissionAdditionalProps || {},
 				});
 			}
 		},

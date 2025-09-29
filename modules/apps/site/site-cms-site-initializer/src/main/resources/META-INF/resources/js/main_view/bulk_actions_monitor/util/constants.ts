@@ -9,8 +9,10 @@ import React from 'react';
 
 import {IBulkActionTaskType} from '../../../common/types/BulkActionTask';
 
-export const URL_BULK_ACTION_TASK = '/o/headless-cms/v1.0/bulk-action';
-export const URL_DOWNLOAD_BULK_ACTION_TASK = '/o/cms/download-folder';
+export const URL_BULK_ACTION_TASK =
+	'/o/headless-cms/v1.0/bulk-action?nestedFields=embedded';
+export const URL_DOWNLOAD_BULK_ACTION_TASK =
+	'/o/cms/download-folder?nestedFields=embedded';
 
 export const BULK_ACTION_CATEGORIES = 'TaxonomyCategoryBulkAction';
 export const BULK_ACTION_DEFAULT_PERMISSIONS = 'DefaultPermissionBulkAction';

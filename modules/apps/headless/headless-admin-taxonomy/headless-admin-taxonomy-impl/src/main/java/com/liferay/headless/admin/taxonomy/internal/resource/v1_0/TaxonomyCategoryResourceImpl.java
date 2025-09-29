@@ -975,7 +975,7 @@ public class TaxonomyCategoryResourceImpl
 
 		if (taxonomyVocabularyId == null) {
 			throw new BadRequestException(
-				"Taxonomy vocabulary id or external reference code is " +
+				"External reference code is taxonomy vocabulary ID or is " +
 					"required");
 		}
 

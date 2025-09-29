@@ -518,7 +518,7 @@ public class SingleLogoutProfileImpl
 			samlSloRequestInfo.getSamlIdpSpSession();
 
 		MessageContext<LogoutRequest> messageContext =
-			_createMessageContextLogoutRequest(
+			_buildMessageContextLogoutRequest(
 				httpServletRequest, httpServletResponse,
 				samlSloRequestInfo.getEntityId(),
 				_samlPeerBindingLocalService.getSamlPeerBinding(
@@ -847,7 +847,7 @@ public class SingleLogoutProfileImpl
 		return logoutResponse;
 	}
 
-	private MessageContext<LogoutRequest> _createMessageContextLogoutRequest(
+	private MessageContext<LogoutRequest> _buildMessageContextLogoutRequest(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String peerEntityId,
 			SamlPeerBinding samlPeerBinding)
@@ -1514,7 +1514,7 @@ public class SingleLogoutProfileImpl
 				samlIdpSpSession.getSamlPeerBindingId());
 
 		MessageContext<LogoutRequest> messageContext =
-			_createMessageContextLogoutRequest(
+			_buildMessageContextLogoutRequest(
 				httpServletRequest, httpServletResponse,
 				samlPeerBinding.getSamlPeerEntityId(), samlPeerBinding);
 

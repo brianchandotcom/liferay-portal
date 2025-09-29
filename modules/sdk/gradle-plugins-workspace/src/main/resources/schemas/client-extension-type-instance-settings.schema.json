@@ -3891,6 +3891,15 @@
 					"title": "Custom Authorization Request Parameters",
 					"type": "array"
 				},
+				"customClaims": {
+					"default": "",
+					"description": "Map the custom claims from the OpenId Connect provider to custom fields.",
+					"items": {
+						"type": "string"
+					},
+					"title": "Custom Claims",
+					"type": "array"
+				},
 				"customTokenRequestParameters": {
 					"default": "",
 					"description": "Add custom token request parameters, e.g.: resource=https://contacts.google.com https://maps.google.com",

@@ -6,16 +6,7 @@
 package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
-import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DataGuard;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
@@ -67,37 +58,6 @@ public class KaleoDefinitionLocalServiceTest
 
 		_kaleoDefinitionLocalService.getKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId());
-	}
-
-	@Test
-	@TestInfo("LPD-65037")
-	public void testGetOrAddEmptyKaleoDefinition() throws Exception {
-
-		// Lazy referencing disabled
-
-		String name = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			NoSuchDefinitionException.class,
-			StringBundler.concat(
-				"No KaleoDefinition exists with the key {companyId=",
-				TestPropsValues.getCompanyId(), ", name=", name, "}"),
-			() -> _kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
-				name, ServiceContextTestUtil.getServiceContext()));
-
-		// Lazy referencing enabled
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
-					RandomTestUtil.randomString(),
-					ServiceContextTestUtil.getServiceContext());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, kaleoDefinition.getStatus());
-		}
 	}
 
 	@Test

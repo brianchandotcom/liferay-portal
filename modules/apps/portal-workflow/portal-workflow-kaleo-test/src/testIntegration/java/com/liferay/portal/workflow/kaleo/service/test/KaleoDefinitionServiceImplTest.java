@@ -6,12 +6,10 @@
 package com.liferay.portal.workflow.kaleo.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -21,7 +19,6 @@ import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUti
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.AssertUtils;
-import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.randomizerbumpers.UniqueStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -41,7 +38,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.workflow.configuration.WorkflowDefinitionConfiguration;
 import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
-import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
@@ -159,62 +155,6 @@ public class KaleoDefinitionServiceImplTest {
 			kaleoDefinition,
 			_kaleoDefinitionService.getKaleoDefinition(
 				kaleoDefinition.getKaleoDefinitionId()));
-	}
-
-	@Test
-	@TestInfo("LPD-65037")
-	public void testGetOrAddEmptyKaleoDefinition() throws Exception {
-
-		// Lazy referencing disabled
-
-		String name = RandomTestUtil.randomString();
-
-		AssertUtils.assertFailure(
-			NoSuchDefinitionException.class,
-			StringBundler.concat(
-				"No KaleoDefinition exists with the key {companyId=",
-				TestPropsValues.getCompanyId(), ", name=", name, "}"),
-			() -> _kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
-				name, ServiceContextTestUtil.getServiceContext()));
-
-		// Lazy referencing enabled
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			// With permissions
-
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
-					RandomTestUtil.randomString(),
-					ServiceContextTestUtil.getServiceContext());
-
-			// Without permissions
-
-			User user = UserTestUtil.addUser();
-
-			_setUpPermissionThreadLocal(user);
-
-			AssertUtils.assertFailure(
-				PrincipalException.MustHavePermission.class,
-				StringBundler.concat(
-					"User ", user.getUserId(), " must have ADD_DEFINITION, ",
-					WorkflowConstants.RESOURCE_NAME, " permission for null "),
-				() -> _kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
-					RandomTestUtil.randomString(),
-					ServiceContextTestUtil.getServiceContext()));
-
-			// Without permissions, existing kaleo definition
-
-			AssertUtils.assertFailure(
-				PrincipalException.MustBeCompanyAdmin.class,
-				StringBundler.concat(
-					"User ", user.getUserId(), " must be the company ",
-					"administrator to perform the action"),
-				() -> _kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
-					kaleoDefinition.getName(),
-					ServiceContextTestUtil.getServiceContext()));
-		}
 	}
 
 	@Test

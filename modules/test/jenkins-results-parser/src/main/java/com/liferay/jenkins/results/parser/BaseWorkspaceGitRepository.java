@@ -235,7 +235,8 @@ public abstract class BaseWorkspaceGitRepository
 
 		if (jobName.equals("forward-pullrequest") ||
 			jobName.equals("publish-testray-report") ||
-			jobName.equals("test-portal-source-format")) {
+			jobName.equals("test-portal-source-format") ||
+			jobName.contains("validation")) {
 
 			return false;
 		}

@@ -10,8 +10,11 @@ import React from 'react';
 import ApiHelper from '../../../../src/main/resources/META-INF/resources/js/common/services/ApiHelper';
 import DefaultPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionModalContent';
 import {DefaultPermissionModalContentProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
+import * as BulkActionTrigger from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/triggerAssetBulkAction';
 
-const renderComponent = async (props: DefaultPermissionModalContentProps) => {
+const renderComponent = async (
+	props: DefaultPermissionModalContentProps & {apiURL?: string}
+) => {
 	return render(<DefaultPermissionModalContent {...props} />);
 };
 
@@ -52,7 +55,7 @@ describe('DefaultPermissionModalContent', () => {
 			error: null,
 		});
 		apiPatchSpy = jest.spyOn(ApiHelper, 'patch');
-		apiPostSpy = jest.spyOn(ApiHelper, 'post');
+		apiPostSpy = jest.spyOn(BulkActionTrigger, 'triggerAssetBulkAction');
 	});
 
 	afterEach(() => {
@@ -312,6 +315,7 @@ describe('DefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
+			apiURL: '',
 			classExternalReferenceCode: 'ERC1',
 			className: 'com.liferay.depot.model.DepotEntry',
 			closeModal: closeModalFn,
@@ -348,7 +352,9 @@ describe('DefaultPermissionModalContent', () => {
 			screen.getByTestId(`row-checkbox-admin_UPDATE3`)
 		).not.toBeChecked();
 
-		screen.getByTestId(`row-checkbox-guest_UPDATE3`).click();
+		await waitFor(async () => {
+			screen.getByTestId(`row-checkbox-guest_UPDATE3`).click();
+		});
 
 		expect(screen.getByTestId(`row-checkbox-guest_UPDATE3`)).toBeChecked();
 
@@ -367,19 +373,24 @@ describe('DefaultPermissionModalContent', () => {
 				},
 				'/o/cms/default-permissions/by-external-reference-code/fa9f1559-8256-4313-8868-6668c8b421c0'
 			);
+
 			expect(apiPostSpy).toHaveBeenCalledTimes(1);
-			expect(apiPostSpy).toHaveBeenCalledWith(
-				'/o/headless-cms/v1.0/bulk-action',
-				{
+			expect(apiPostSpy).toHaveBeenCalledWith({
+				apiURL: props.apiURL,
+				keyValues: {
 					defaultPermissions:
 						'{"L_CONTENTS":{"admin":["VIEW1"]},"L_FILES":{"admin":["VIEW2"]},"OBJECT_ENTRY_FOLDERS":{"admin":["VIEW3"],"guest":["VIEW3","UPDATE3"]}}',
 					depotGroupId: 100,
-					selectAll: true,
 					treePath: '/100/101',
-					type: 'DefaultPermissionBulkAction',
-				}
-			);
-			expect(closeModalFn).toHaveBeenCalledTimes(1);
+				},
+				onCreateError: expect.any(Function),
+				onCreateSuccess: expect.any(Function),
+				overrideDefaultErrorToast: true,
+				selectedData: {
+					selectAll: true,
+				},
+				type: 'DefaultPermissionBulkAction',
+			});
 		});
 	});
 });

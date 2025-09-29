@@ -10,9 +10,10 @@ import React from 'react';
 import CMSDefaultPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSDefaultPermissionService';
 import BulkDefaultPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/BulkDefaultPermissionModalContent';
 import {BulkDefaultPermissionModalContentProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
+import * as BulkActionTrigger from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/triggerAssetBulkAction';
 
 const renderComponent = async (
-	props: BulkDefaultPermissionModalContentProps
+	props: BulkDefaultPermissionModalContentProps & {apiURL?: string}
 ) => {
 	return render(<BulkDefaultPermissionModalContent {...props} />);
 };
@@ -86,13 +87,10 @@ describe('BulkDefaultPermissionModalContent', () => {
 				name: 'Test Space',
 			});
 
-		batchUpdateSpy = jest
-			.spyOn(CMSDefaultPermissionService, 'batchUpdateObjectEntry')
-			.mockResolvedValue({
-				data: {},
-				error: null,
-				status: '200',
-			});
+		batchUpdateSpy = jest.spyOn(
+			BulkActionTrigger,
+			'triggerAssetBulkAction'
+		);
 	});
 
 	afterEach(() => {
@@ -544,6 +542,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
+			apiURL: '',
 			className: 'com.liferay.object.model.ObjectEntryFolder',
 			closeModal: closeModalFn,
 			roles: [
@@ -614,24 +613,16 @@ describe('BulkDefaultPermissionModalContent', () => {
 
 		await waitFor(() => {
 			expect(batchUpdateSpy).toHaveBeenCalledTimes(1);
-			const callArg = (batchUpdateSpy as jest.Mock).mock.calls[0][0];
-			expect(callArg.bulkActionItems).toHaveLength(2);
-			expect(callArg.bulkActionItems).toEqual(
-				expect.arrayContaining([
-					expect.objectContaining({
-						classExternalReferenceCode:
-							'fa9f1559-8256-4313-8868-6668c8b421c0',
-						className: 'com.liferay.object.model.ObjectEntryFolder',
-					}),
-					expect.objectContaining({
-						classExternalReferenceCode:
-							'def321f1-8868-8256-3313-421c06668c8b',
-						className: 'com.liferay.object.model.ObjectEntryFolder',
-					}),
-				])
-			);
-
-			expect(closeModalFn).toHaveBeenCalledTimes(1);
+			expect(batchUpdateSpy).toHaveBeenCalledWith({
+				apiURL: props.apiURL,
+				keyValues: {
+					defaultPermissions:
+						'{"L_CONTENTS":{"admin":["VIEW1"]},"L_FILES":{"admin":["VIEW2"]},"OBJECT_ENTRY_FOLDERS":{"admin":["VIEW3"],"guest":["VIEW3","UPDATE3"]}}',
+				},
+				onCreateSuccess: expect.any(Function),
+				selectedData: props.selectedData,
+				type: 'DefaultPermissionBulkAction',
+			});
 		});
 	});
 });

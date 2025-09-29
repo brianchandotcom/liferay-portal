@@ -311,7 +311,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			assetLibrary::getDescription_i18n);
 
 		if (assetLibrary.getSettings() == null) {
-			assetLibrary.setSettings(() -> new Settings());
+			assetLibrary.setSettings(Settings::new);
 		}
 
 		UnicodeProperties unicodeProperties = _patchUnicodeProperties(
@@ -320,9 +320,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				contextCompany.getCompanyId(),
 				group.getExternalReferenceCode()));
 
-		Permission[] permissions = assetLibrary.getPermissions();
-
-		assetLibrary = _toAssetLibrary(
+		AssetLibrary updatedAssetLibrary = _toAssetLibrary(
 			_addOrUpdateDepotEntry(
 				assetLibrary,
 				LocalizedMapUtil.getLocalizedMap(
@@ -335,11 +333,13 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				_dlSizeLimitConfigurationProvider.getGroupMimeTypeSizeLimit(
 					group.getGroupId())));
 
+		Permission[] permissions = assetLibrary.getPermissions();
+
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putAssetLibraryPermissionsPage(
-				assetLibraryId, permissions);
+				updatedAssetLibrary.getId(), permissions);
 
-			assetLibrary.setPermissions(
+			updatedAssetLibrary.setPermissions(
 				() -> NestedFieldsSupplier.supply(
 					"permissions",
 					nestedField -> {
@@ -350,7 +350,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 					}));
 		}
 
-		return assetLibrary;
+		return updatedAssetLibrary;
 	}
 
 	@Override

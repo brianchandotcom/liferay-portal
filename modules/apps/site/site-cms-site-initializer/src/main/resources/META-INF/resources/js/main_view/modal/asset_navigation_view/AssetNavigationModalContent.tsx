@@ -5,7 +5,7 @@
 
 import {SidePanel} from '@clayui/core';
 import ClayModal from '@clayui/modal';
-import {sub} from 'frontend-js-web';
+import {addParams, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import CommentsPanel from '../../../content_editor/components/panels/CommentsPanel';
@@ -46,9 +46,7 @@ const AssetNavigationCommentsPanel = ({
 		entryClassName,
 	}: ISearchAssetObjectEntry = item;
 
-	const dynamicURL = `?className=${encodeURIComponent(
-		entryClassName
-	)}&classPK=${id}`;
+	const params = `?className=${encodeURIComponent(entryClassName)}&classPK=${id}`;
 
 	return (
 		<>
@@ -58,9 +56,9 @@ const AssetNavigationCommentsPanel = ({
 
 			<CommentsPanel
 				{...commentsProps}
-				addCommentURL={`${addCommentURL}${dynamicURL}`}
-				editCommentURL={`${editCommentURL}${dynamicURL}`}
-				getCommentsURL={`${getCommentsURL}${dynamicURL}`}
+				addCommentURL={addParams(params, addCommentURL)}
+				editCommentURL={addParams(params, editCommentURL)}
+				getCommentsURL={addParams(params, getCommentsURL)}
 			></CommentsPanel>
 		</>
 	);

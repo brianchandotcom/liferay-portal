@@ -114,11 +114,11 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
 		try {
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
 			if ((commerceContext == null) ||
 				(commerceContext.getCommerceChannelId() <= 0)) {
 

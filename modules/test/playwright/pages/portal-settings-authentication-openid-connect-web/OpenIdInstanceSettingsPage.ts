@@ -5,6 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {CustomClaim} from '../../tests/openid-link/main/helpers/CustomClaimHelper';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -12,6 +13,7 @@ import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsP
 
 export class OpenIdInstanceSettingsPage {
 	readonly addButton: Locator;
+	readonly customClaimField: Locator;
 	readonly discoveryEndpointField: Locator;
 	readonly enabledCheckbox: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
@@ -22,9 +24,11 @@ export class OpenIdInstanceSettingsPage {
 	readonly page: Page;
 	readonly providerNameField: Locator;
 	readonly saveButton: Locator;
+	readonly userCustomFieldsSelect: Locator;
 
 	constructor(page: Page) {
 		this.addButton = page.getByRole('link', {name: 'Add'});
+		this.customClaimField = page.getByLabel('Custom Claim');
 		this.discoveryEndpointField = page.getByLabel(
 			'Discovery Endpoint Set the'
 		);
@@ -46,11 +50,13 @@ export class OpenIdInstanceSettingsPage {
 		this.page = page;
 		this.providerNameField = page.getByLabel('Provider Name');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.userCustomFieldsSelect = page.getByLabel('User Custom Fields');
 	}
 
 	async addOpenIDConnectProviderConnectionConfiguration(
 		providerName: string,
-		openIdProvider: string
+		openIdProvider: string,
+		customClaim?: CustomClaim
 	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.addButton.click();
@@ -58,6 +64,16 @@ export class OpenIdInstanceSettingsPage {
 		await this.discoveryEndpointField.fill(openIdProvider);
 		await this.openIDConnectClientIDField.fill(getRandomString());
 		await this.openIDConnectClientSecret.fill(getRandomString());
+
+		if (customClaim) {
+			await this.userCustomFieldsSelect.selectOption({
+				label: customClaim.expandoColumnName,
+			});
+			await this.customClaimField.fill(
+				customClaim.oidcProviderCustomClaim
+			);
+		}
+
 		await this.saveButton.click();
 		await waitForAlert(this.page);
 	}

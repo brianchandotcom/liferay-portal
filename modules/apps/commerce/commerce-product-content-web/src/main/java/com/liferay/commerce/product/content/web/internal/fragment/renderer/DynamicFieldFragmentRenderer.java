@@ -54,7 +54,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -74,9 +73,6 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
@@ -86,7 +82,8 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 							"/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -142,14 +139,14 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 				fragmentRendererContext.getFragmentEntryLink(),
 				"valueElementType"));
 
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(
-				"/fragment/renderer/dynamic_field/page.jsp");
-
-		Object infoItem = httpServletRequest.getAttribute(
-			InfoDisplayWebKeys.INFO_ITEM);
-
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/fragment/renderer/dynamic_field/page.jsp");
+
+			Object infoItem = httpServletRequest.getAttribute(
+				InfoDisplayWebKeys.INFO_ITEM);
+
 			if (!(infoItem instanceof CPDefinition)) {
 				if (_isEditMode(httpServletRequest)) {
 					httpServletRequest.setAttribute(

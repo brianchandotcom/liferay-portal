@@ -4701,8 +4701,6 @@ public class ObjectEntryLocalServiceTest {
 			ExportImportReportEntry exportImportReportEntry =
 				exportImportReportEntries.get(0);
 
-			Group group = _groupLocalService.getGroup(groupId);
-
 			Assert.assertEquals(
 				externalReferenceCode,
 				exportImportReportEntry.getClassExternalReferenceCode());
@@ -4719,9 +4717,13 @@ public class ObjectEntryLocalServiceTest {
 			Assert.assertEquals(
 				ObjectDefinitionConstants.SCOPE_SITE,
 				exportImportReportEntry.getScope());
+
+			Group group = _groupLocalService.getGroup(groupId);
+
 			Assert.assertEquals(
 				exportImportReportEntry.getScopeKey(),
 				group.getExternalReferenceCode());
+
 			Assert.assertEquals(
 				ExportImportReportEntryConstants.STATUS_UNRESOLVED,
 				exportImportReportEntry.getStatus());

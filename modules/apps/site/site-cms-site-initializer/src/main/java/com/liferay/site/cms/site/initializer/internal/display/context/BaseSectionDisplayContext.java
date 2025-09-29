@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
@@ -597,11 +598,10 @@ public abstract class BaseSectionDisplayContext {
 					themeDisplay.getCompanyId(), null,
 					Arrays.asList(
 						RoleConstants.ADMINISTRATOR,
-						RoleConstants.SITE_ADMINISTRATOR,
-						RoleConstants.SITE_OWNER),
+						DepotRolesConstants.ASSET_LIBRARY_OWNER),
 					null, null,
 					new int[] {
-						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
+						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
 					},
 					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				role -> HashMapBuilder.put(

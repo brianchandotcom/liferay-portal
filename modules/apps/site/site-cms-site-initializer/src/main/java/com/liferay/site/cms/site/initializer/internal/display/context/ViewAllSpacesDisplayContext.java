@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryPin;
 import com.liferay.depot.service.DepotEntryPinLocalService;
@@ -28,12 +29,15 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -45,6 +49,7 @@ import jakarta.portlet.ActionRequest;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +88,9 @@ public class ViewAllSpacesDisplayContext {
 					_themeDisplay.getUserId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS),
 				DepotEntryPin::getDepotEntryId, Long.class)
+		).put(
+			"spacePermissionAdditionalProps",
+			_getSpacePermissionAdditionalProps()
 		).build();
 	}
 
@@ -110,6 +118,10 @@ public class ViewAllSpacesDisplayContext {
 				"#", "document", "sampleBulkAction",
 				LanguageUtil.get(_httpServletRequest, "label"), null, null,
 				null),
+			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies", "permissions",
+				LanguageUtil.get(_httpServletRequest, "permissions"), null,
+				null, null),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "default-permissions",
 				LanguageUtil.get(_httpServletRequest, "default-permissions"),
@@ -308,33 +320,25 @@ public class ViewAllSpacesDisplayContext {
 			).build()
 		).put(
 			"roles",
-			() -> {
-				Set<String> excludedRoleNamesSet = new HashSet<String>() {
-					{
-						add(RoleConstants.ADMINISTRATOR);
-						add(RoleConstants.SITE_ADMINISTRATOR);
-						add(RoleConstants.SITE_OWNER);
-					}
-				};
-
-				return TransformUtil.transformToArray(
-					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-						_themeDisplay.getCompanyId(), null,
-						ListUtil.fromCollection(excludedRoleNamesSet), null,
-						null,
-						new int[] {
-							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_SITE
-						},
-						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					role -> HashMapBuilder.put(
-						"key", role.getName()
-					).put(
-						"name", role.getTitle(_themeDisplay.getLocale())
-					).put(
-						"type", String.valueOf(role.getType())
-					).build(),
-					Map.class);
-			}
+			() -> TransformUtil.transformToArray(
+				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+					_themeDisplay.getCompanyId(), null,
+					Arrays.asList(
+						RoleConstants.ADMINISTRATOR,
+						DepotRolesConstants.ASSET_LIBRARY_OWNER),
+					null, null,
+					new int[] {
+						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
+					},
+					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+				role -> HashMapBuilder.put(
+					"key", role.getName()
+				).put(
+					"name", role.getTitle(_themeDisplay.getLocale())
+				).put(
+					"type", String.valueOf(role.getType())
+				).build(),
+				Map.class)
 		).build();
 	}
 
@@ -346,6 +350,72 @@ public class ViewAllSpacesDisplayContext {
 		}
 
 		return layout.getName(_themeDisplay.getLocale(), true);
+	}
+
+	private Map<String, Object> _getSpacePermissionAdditionalProps() {
+		return HashMapBuilder.<String, Object>put(
+			"actions",
+			() -> {
+				List<String> guestUnsupportedActions =
+					ResourceActionsUtil.getResourceGuestUnsupportedActions(
+						null, DepotEntry.class.getName());
+
+				return TransformUtil.transformToArray(
+					ResourceActionsUtil.getResourceActions(
+						DepotEntry.class.getName()),
+					resourceAction -> HashMapBuilder.<String, Object>put(
+						"guestUnsupported",
+						guestUnsupportedActions.contains(resourceAction)
+					).put(
+						"key", resourceAction
+					).put(
+						"label",
+						ResourceActionsUtil.getAction(
+							_httpServletRequest, resourceAction)
+					).build(),
+					Map.class);
+			}
+		).put(
+			"roles",
+			() -> {
+				Map<Long, Set<String>> availableResourcePermissionActionIds =
+					ResourcePermissionLocalServiceUtil.
+						getAvailableResourcePermissionActionIds(
+							_themeDisplay.getCompanyId(),
+							DepotEntry.class.getName(),
+							ResourceConstants.SCOPE_COMPANY,
+							String.valueOf(_themeDisplay.getCompanyId()),
+							ResourceActionsUtil.getResourceActions(
+								DepotEntry.class.getName()));
+
+				return TransformUtil.transformToArray(
+					RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
+						_themeDisplay.getCompanyId(), null,
+						Arrays.asList(
+							RoleConstants.ADMINISTRATOR,
+							DepotRolesConstants.ASSET_LIBRARY_OWNER),
+						null, null,
+						new int[] {
+							RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
+						},
+						0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					role -> HashMapBuilder.<String, Object>put(
+						"actions",
+						() -> ArrayUtil.toStringArray(
+							availableResourcePermissionActionIds.getOrDefault(
+								role.getRoleId(), new HashSet<>()))
+					).put(
+						"externalReferenceCode", role.getExternalReferenceCode()
+					).put(
+						"key", role.getName()
+					).put(
+						"name", role.getTitle(_themeDisplay.getLocale())
+					).put(
+						"type", String.valueOf(role.getType())
+					).build(),
+					Map.class);
+			}
+		).build();
 	}
 
 	private final DepotEntryPinLocalService _depotEntryPinLocalService;

@@ -92,7 +92,6 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
@@ -147,7 +146,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-import com.liferay.portal.workflow.kaleo.exception.NoSuchDefinitionException;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.sharing.security.permission.SharingEntryAction;
@@ -745,8 +743,6 @@ public class ObjectDefinitionLocalServiceTest {
 	public void testAddObjectDefinitionWithMissingWorkflowDefinitionReference()
 		throws Exception {
 
-		// Lazy referencing disabled
-
 		WorkflowDefinitionLink workflowDefinitionLink =
 			_workflowDefinitionLinkLocalService.createWorkflowDefinitionLink(
 				0L);
@@ -758,42 +754,25 @@ public class ObjectDefinitionLocalServiceTest {
 		List<WorkflowDefinitionLink> workflowDefinitionLinks =
 			Collections.singletonList(workflowDefinitionLink);
 
-		String randomObjectDefinitionName =
-			ObjectDefinitionTestUtil.getRandomName();
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				workflowDefinitionLinks);
 
-		AssertUtils.assertFailure(
-			NoSuchDefinitionException.class,
-			StringBundler.concat(
-				"No KaleoDefinition exists with the key {companyId=",
-				TestPropsValues.getCompanyId(), ", name=",
-				workflowDefinitionLink.getWorkflowDefinitionName(), "}"),
-			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				randomObjectDefinitionName, workflowDefinitionLinks));
+		workflowDefinitionLink =
+			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+				TestPropsValues.getCompanyId(), 0,
+				objectDefinition.getClassName(), 0, 0, true);
 
-		// Lazy referencing enabled
+		Assert.assertNotNull(workflowDefinitionLink);
 
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+		KaleoDefinition kaleoDefinition =
+			_kaleoDefinitionLocalService.getKaleoDefinition(
+				workflowDefinitionLink.getWorkflowDefinitionName(),
+				ServiceContextTestUtil.getServiceContext());
 
-			ObjectDefinition objectDefinition =
-				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					randomObjectDefinitionName, workflowDefinitionLinks);
-
-			workflowDefinitionLink =
-				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
-					TestPropsValues.getCompanyId(), 0,
-					objectDefinition.getClassName(), 0, 0, true);
-
-			Assert.assertNotNull(workflowDefinitionLink);
-
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.getKaleoDefinition(
-					workflowDefinitionLink.getWorkflowDefinitionName(),
-					ServiceContextTestUtil.getServiceContext());
-
-			Assert.assertEquals(
-				WorkflowConstants.STATUS_EMPTY, kaleoDefinition.getStatus());
-		}
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_DRAFT, kaleoDefinition.getStatus());
 	}
 
 	@Test

@@ -1742,16 +1742,10 @@ public class ObjectEntryLocalServiceTest {
 		workflowDefinitionLink.setWorkflowDefinitionName(
 			RandomTestUtil.randomString());
 
-		ObjectDefinition objectDefinition = null;
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			objectDefinition =
-				ObjectDefinitionTestUtil.addCustomObjectDefinition(
-					ObjectDefinitionTestUtil.getRandomName(),
-					List.of(workflowDefinitionLink));
-		}
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition(
+				ObjectDefinitionTestUtil.getRandomName(),
+				List.of(workflowDefinitionLink));
 
 		objectDefinition =
 			_objectDefinitionLocalService.publishCustomObjectDefinition(

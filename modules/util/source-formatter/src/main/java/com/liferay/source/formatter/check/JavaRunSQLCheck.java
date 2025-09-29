@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaRunSqlStylingCheck extends BaseJavaTermCheck {
+public class JavaRunSQLCheck extends BaseJavaTermCheck {
 
 	@Override
 	public boolean isLiferaySourceCheck() {

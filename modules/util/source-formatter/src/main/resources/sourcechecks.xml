@@ -865,7 +865,7 @@
 			<category name="Bug Prevention" />
 			<description name="Validates information in `ReleaseInfo.java`." />
 		</check>
-		<check name="JavaRunSqlStylingCheck">
+		<check name="JavaRunSQLCheck">
 			<category name="Styling" />
 			<description name="Applies rules to enforce consistency in code style." />
 		</check>

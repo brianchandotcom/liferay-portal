@@ -156,7 +156,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_SORTING,
 		},
 		stateInURLSettings,
-		stateReader: (sorts: Array<TSort>) => {
+		stateReader: (sorts: Array<TSort> | undefined) => {
 			return sorts;
 		},
 		stateWriter: (
@@ -184,7 +184,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_FILTERS,
 		},
 		stateInURLSettings,
-		stateReader: (filters: Array<any>) => {
+		stateReader: (filters: Array<any> | undefined) => {
 			return filters;
 		},
 		stateWriter: (
@@ -239,8 +239,8 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 		},
 		stateInURLSettings,
-		stateReader: (delta: number) => {
-			if (isNaN(delta) || delta < 1) {
+		stateReader: (delta: number | undefined) => {
+			if (!delta || isNaN(delta) || delta < 1) {
 				return undefined;
 			}
 
@@ -255,8 +255,8 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
 		},
 		stateInURLSettings,
-		stateReader: (pageNumber: number) => {
-			if (isNaN(pageNumber) || pageNumber < 1) {
+		stateReader: (pageNumber: number | undefined) => {
+			if (!pageNumber || isNaN(pageNumber) || pageNumber < 1) {
 				return 1;
 			}
 
@@ -271,7 +271,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
 		},
 		stateInURLSettings,
-		stateReader: (searchParam: string) => {
+		stateReader: (searchParam: string | undefined) => {
 			if (!searchParam) {
 				return '';
 			}
@@ -294,7 +294,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
 		},
 		stateInURLSettings,
-		stateReader: (viewName: string) => {
+		stateReader: (viewName: string | undefined) => {
 			const view = views.find(({name}) => name === viewName);
 
 			if (view) {
@@ -312,7 +312,7 @@ const FrontendDataSetContent = ({
 			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
 		},
 		stateInURLSettings,
-		stateReader: (visibleFieldNames: VisibleFieldNames) => {
+		stateReader: (visibleFieldNames: VisibleFieldNames | undefined) => {
 			const view = views.find(
 				({name}) => name && name.toLowerCase().includes('table')
 			);
@@ -1059,7 +1059,7 @@ const FrontendDataSetContent = ({
 
 		const searchParam = getSearchParam();
 
-		if (searchParam && !!searchParam.length) {
+		if (searchParam !== undefined) {
 			stateUpdates.push({
 				type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
 				value: searchParam,

@@ -437,7 +437,7 @@ export type IStateInURLGetter<K extends keyof IStateInURL> = () =>
 	| undefined;
 
 export type IStateReader<K extends keyof IStateInURL> = (
-	value: IStateInURL[K]
+	value: IStateInURL[K] | undefined
 ) => IStateInURL[K] | undefined;
 
 export type IStateWriter<K extends keyof IStateInURL> = (

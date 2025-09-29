@@ -142,11 +142,13 @@ function useGetter<K extends keyof IStateInURL>({
 	return useCallback((): IStateInURL[K] | undefined => {
 		const state: Partial<IStateInURL> | null = readStateFromURL(id);
 
-		if (!state || !state[key]) {
-			return undefined;
+		let value: IStateInURL[K] | undefined = undefined;
+
+		if (state && state[key]) {
+			value = state[key] as IStateInURL[K];
 		}
 
-		return stateReader(state[key] as IStateInURL[K]);
+		return stateReader(value);
 	}, [id, stateReader, key]);
 }
 

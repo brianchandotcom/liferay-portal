@@ -489,8 +489,8 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		Group group, String parentSiteExternalReferenceCode,
 		String parentSiteKey) {
 
-		if (Validator.isNull(parentSiteKey) &&
-			Validator.isNull(parentSiteExternalReferenceCode)) {
+		if (Validator.isNull(parentSiteExternalReferenceCode) &&
+			Validator.isNull(parentSiteKey)) {
 
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
 		}

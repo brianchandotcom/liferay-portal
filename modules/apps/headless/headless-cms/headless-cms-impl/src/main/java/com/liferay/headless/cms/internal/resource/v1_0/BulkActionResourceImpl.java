@@ -5,6 +5,7 @@
 
 package com.liferay.headless.cms.internal.resource.v1_0;
 
+import com.liferay.depot.model.DepotEntry;
 import com.liferay.document.library.display.context.DLMimeTypeDisplayContext;
 import com.liferay.headless.batch.engine.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.resource.v1_0.ImportTaskResource;
@@ -772,9 +773,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private String _getClassName(String key) {
-		if (StringUtil.equals(
-				key, "com.liferay.object.model.ObjectEntryFolder")) {
-
+		if (StringUtil.equals(key, DepotEntry.class.getName())) {
+			return "com.liferay.headless.asset.library.dto.v1_0.AssetLibrary";
+		}
+		else if (StringUtil.equals(key, ObjectEntryFolder.class.getName())) {
 			return "com.liferay.headless.object.dto.v1_0.ObjectEntryFolder";
 		}
 
@@ -1017,8 +1019,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	}
 
 	private String _getTaskItemDelegateName(String className) throws Exception {
-		if (StringUtil.equals(
-				"com.liferay.object.model.ObjectEntryFolder", className)) {
+		if (StringUtil.equals(DepotEntry.class.getName(), className) ||
+			StringUtil.equals(ObjectEntryFolder.class.getName(), className)) {
 
 			return null;
 		}

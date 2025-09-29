@@ -174,6 +174,6 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 	};
 
 	private static final Pattern _falseTruePattern = Pattern.compile(
-		"=\\s*\\b(false|true)\\b");
+		"=\\s*\\b(false|true)\\b", Pattern.CASE_INSENSITIVE);
 
 }

@@ -845,10 +845,6 @@ for (const spaConfiguration of spaConfigurations) {
 					fdsId: string,
 					page: Page
 				) => {
-					await expect(
-						fdsSamplePage.managementToolbar.searchInput
-					).toHaveValue(searchParam);
-
 					await expect(() => {
 						const state = getStateFromURL(
 							new URL(page.url()).search,
@@ -862,6 +858,10 @@ for (const spaConfiguration of spaConfigurations) {
 							expect(state.q).toBeUndefined();
 						}
 					}).toPass();
+
+					await expect(
+						fdsSamplePage.managementToolbar.searchInput
+					).toHaveValue(searchParam);
 				};
 
 				const changeSearchParam = async (

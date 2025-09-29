@@ -17,7 +17,6 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -133,15 +132,8 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
-
-			if (Objects.equals(
-					getAxisName(), cachedDownstreamBuildReport.getAxisName())) {
-
-				cachedDownstreamBuildReports.add(cachedDownstreamBuildReport);
-			}
-		}
+		cachedDownstreamBuildReports.add(
+			batchTestClassGroup.getCachedDownstreamBuildReport(getAxisName()));
 
 		return cachedDownstreamBuildReports;
 	}
@@ -238,14 +230,11 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+		DownstreamBuildReport cachedDownstreamBuildReport =
+			batchTestClassGroup.getCachedDownstreamBuildReport(getAxisName());
 
-			if (Objects.equals(
-					getAxisName(), cachedDownstreamBuildReport.getAxisName())) {
-
-				return true;
-			}
+		if (cachedDownstreamBuildReport != null) {
+			return true;
 		}
 
 		return false;

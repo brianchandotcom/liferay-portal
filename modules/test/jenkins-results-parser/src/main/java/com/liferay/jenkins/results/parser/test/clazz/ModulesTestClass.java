@@ -16,7 +16,6 @@ import java.io.File;
 import java.nio.file.Path;
 
 import java.util.List;
-import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -44,26 +43,11 @@ public abstract class ModulesTestClass extends BaseTestClass {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+		_cachedTestClassReport = batchTestClassGroup.getCachedTestClassReport(
+			getTestClassName());
 
-			for (TestClassReport testClassReport :
-					cachedDownstreamBuildReport.getTestClassReports()) {
-
-				if (!Objects.equals(
-						getTestClassName(),
-						testClassReport.getTestClassName())) {
-
-					continue;
-				}
-
-				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
-
-				_cachedTestClassReport = testClassReport;
-
-				break;
-			}
-		}
+		_cachedDownstreamBuildReport =
+			_cachedTestClassReport.getDownstreamBuildReport();
 
 		_cachedTestClassReportSearched = true;
 

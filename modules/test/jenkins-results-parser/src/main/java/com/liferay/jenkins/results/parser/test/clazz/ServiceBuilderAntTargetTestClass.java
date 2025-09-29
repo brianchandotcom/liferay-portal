@@ -12,8 +12,6 @@ import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 
 import java.io.File;
 
-import java.util.Objects;
-
 import org.json.JSONObject;
 
 /**
@@ -40,25 +38,11 @@ public class ServiceBuilderAntTargetTestClass extends BaseTestClass {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+		_cachedTestClassReport = batchTestClassGroup.getCachedTestClassReport(
+			getTestClassName());
 
-			for (TestClassReport testClassReport :
-					cachedDownstreamBuildReport.getTestClassReports()) {
-
-				if (!Objects.equals(
-						getTestClassName(),
-						testClassReport.getTestClassName())) {
-
-					continue;
-				}
-
-				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
-				_cachedTestClassReport = testClassReport;
-
-				break;
-			}
-		}
+		_cachedDownstreamBuildReport =
+			_cachedTestClassReport.getDownstreamBuildReport();
 
 		_cachedTestClassReportSearched = true;
 

@@ -9,7 +9,6 @@ import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.TestClassReport;
-import com.liferay.jenkins.results.parser.TestReport;
 import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 
@@ -43,49 +42,34 @@ public class JUnitTestClass extends BaseTestClass {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+		String testClassName = getTestClassName();
 
-			List<TestClassReport> cachedTestClassReports = new ArrayList<>();
+		List<TestClassReport> cachedTestClassReports = new ArrayList<>();
 
-			for (TestClassReport testClassReport :
-					cachedDownstreamBuildReport.getTestClassReports()) {
+		TestClassReport testClassReport = batchTestClassGroup.getCachedTestClassReport(testClassName);
 
-				String testClassName = testClassReport.getTestClassName();
+		if (testClassReport != null) {
+			cachedTestClassReports.add(
+				batchTestClassGroup.getCachedTestClassReport(testClassName));
+		}
 
-				if (testClassName.equals(getTestClassName()) ||
-					testClassName.startsWith(getTestClassName() + "$")) {
+		cachedTestClassReports.addAll(
+			batchTestClassGroup.getCachedTestClassReportByPrefix(
+				testClassName + "$"));
 
-					cachedTestClassReports.add(testClassReport);
+		if ((cachedTestClassReports != null) &&
+			!cachedTestClassReports.isEmpty()) {
 
-					continue;
-				}
+			_cachedTestClassReports = cachedTestClassReports;
 
-				if (testClassName.equals("junit.framework.TestSuite")) {
-					for (TestReport testReport :
-							testClassReport.getTestReports()) {
-
-						String testName = testReport.getTestName();
-
-						if (testName.equals(getTestClassName())) {
-							cachedTestClassReports.add(testClassReport);
-
-							break;
-						}
-					}
-				}
-			}
-
-			if ((cachedTestClassReports != null) &&
-				!cachedTestClassReports.isEmpty()) {
-
-				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
-				_cachedTestClassReports = cachedTestClassReports;
-
-				_cachedTestReportSearched = true;
+			for (TestClassReport cachedTestClassReport : cachedTestClassReports) {
+				_cachedDownstreamBuildReport =
+					cachedTestClassReport.getDownstreamBuildReport();
 
 				break;
 			}
+
+			_cachedTestReportSearched = true;
 		}
 
 		return _cachedTestClassReports;

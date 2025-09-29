@@ -14,7 +14,6 @@ import java.io.File;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import org.json.JSONObject;
 
@@ -40,25 +39,11 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		for (DownstreamBuildReport cachedDownstreamBuildReport :
-				batchTestClassGroup.getCachedDownstreamBuildReports()) {
+		_cachedTestClassReport = batchTestClassGroup.getCachedTestClassReport(
+			getName());
 
-			for (TestClassReport testClassResult :
-					cachedDownstreamBuildReport.getTestClassReports()) {
-
-				if (!Objects.equals(
-						getName(), testClassResult.getTestClassName())) {
-
-					continue;
-				}
-
-				_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
-				_cachedTestClassReport = testClassResult;
-				_cachedTestClassReportSearched = true;
-
-				return _cachedTestClassReport;
-			}
-		}
+		_cachedDownstreamBuildReport =
+			_cachedTestClassReport.getDownstreamBuildReport();
 
 		_cachedTestClassReportSearched = true;
 

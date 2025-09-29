@@ -589,7 +589,7 @@ public class ActionUtil {
 		String objectEntryFolderExternalReferenceCode) {
 
 		return getStructuredContentDropdownItem(
-			httpServletRequest, "blogs", null, "L_BLOG",
+			httpServletRequest, "blogs", "blog", "L_BLOG",
 			objectEntryFolderExternalReferenceCode);
 	}
 
@@ -873,7 +873,7 @@ public class ActionUtil {
 		String objectEntryFolderExternalReferenceCode) {
 
 		return getStructuredContentDropdownItem(
-			httpServletRequest, "wiki", null, "L_KNOWLEDGE_BASE",
+			httpServletRequest, "wiki", "knowledge-base", "L_KNOWLEDGE_BASE",
 			objectEntryFolderExternalReferenceCode);
 	}
 

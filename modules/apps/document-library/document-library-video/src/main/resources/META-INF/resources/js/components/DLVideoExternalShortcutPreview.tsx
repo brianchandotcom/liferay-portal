@@ -39,10 +39,7 @@ const DLVideoExternalShortcutPreview: React.FC<
 							<ClayLoadingIndicator />
 						) : (
 							<>
-								<ClayIcon
-									aria-label="Video icon"
-									symbol="video"
-								/>
+								<ClayIcon symbol="video" />
 								{error && (
 									<div className="video-preview-placeholder-text">
 										{error}

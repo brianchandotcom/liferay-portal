@@ -89,13 +89,12 @@ public class GraphQLServletTest {
 	}
 
 	@Test
-	public void testGraphQLNameConflictWithRegisteredCustomType()
-		throws Exception {
+	public void testGraphQLNameConflict() throws Exception {
 
-		// TestDTO2 has the GraphQL name 'FileEntry', which is already
+		// TestDTO2 has the GraphQL name "FileEntry" which is already
 		// registered in GraphQLServletExtender#registerCustomTypes.
-		// Because of this name conflict, it is registered using its
-		// fully qualified class name (FQCN). See LPD-66849.
+		// Because of this name conflict, custom DTOs will be registered using
+		// its fully qualified class name. See LPD-66849.
 
 		JSONAssert.assertEquals(
 			JSONUtil.put(

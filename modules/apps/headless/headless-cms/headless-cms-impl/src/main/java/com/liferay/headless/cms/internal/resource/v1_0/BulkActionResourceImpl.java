@@ -1210,8 +1210,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 							getObjectEntryFoldersCount(
 								objectEntryFolder.getGroupId(),
 								objectEntryFolder.getCompanyId(),
-								objectEntryFolder.
-									getParentObjectEntryFolderId());
+								objectEntryFolder.getObjectEntryFolderId());
 
 					itemsCount +=
 						_objectEntryLocalService.

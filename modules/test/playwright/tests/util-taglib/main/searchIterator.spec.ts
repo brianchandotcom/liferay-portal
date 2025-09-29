@@ -164,7 +164,7 @@ testLegacy(
 
 		await page
 			.frameLocator('iframe[title="Permissions"]')
-			.getByRole('cell', {name: 'Role', exact: true})
+			.getByRole('cell', {exact: true, name: 'Role'})
 			.click();
 
 		await page.keyboard.down('PageDown');

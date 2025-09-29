@@ -78,7 +78,7 @@ async function getEntriesSpaces(items: any[]): Promise<any[]> {
 		.filter((item) => item.embedded.scopeId)
 		.map((item) =>
 			SpaceService.getSpace({
-				externalReferenceCode: item.embedded.scopeId,
+				spaceId: item.embedded.scopeId,
 			})
 		);
 

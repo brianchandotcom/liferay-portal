@@ -11,7 +11,6 @@ import formatActionURL from '../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
-import NameRenderer from './cell_renderers/NameRenderer';
 import VersionRenderer from './cell_renderers/VersionRenderer';
 import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
 
@@ -30,11 +29,6 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				{
 					component: AuthorRenderer,
 					name: 'authorTableCellRenderer',
-					type: 'internal',
-				} as IInternalRenderer,
-				{
-					component: NameRenderer,
-					name: 'nameTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{

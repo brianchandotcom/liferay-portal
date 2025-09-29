@@ -5,8 +5,6 @@
 
 package com.liferay.portal.workflow.kaleo.service.impl;
 
-import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
-import com.liferay.exportimport.kernel.empty.model.EmptyModelManagerUtil;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -19,7 +17,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.definition.util.WorkflowDefinitionContentUtil;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
@@ -326,23 +323,6 @@ public class KaleoDefinitionLocalServiceImpl
 	}
 
 	@Override
-	public KaleoDefinition getOrAddEmptyKaleoDefinition(
-			String name, ServiceContext serviceContext)
-		throws PortalException {
-
-		return _emptyModelManager.getOrAddEmptyModel(
-			KaleoDefinition.class, serviceContext.getCompanyId(),
-			() -> kaleoDefinitionLocalService.addKaleoDefinition(
-				name, name, name, null, null,
-				WorkflowDefinitionConstants.SCOPE_ALL, 0, serviceContext),
-			name,
-			(externalReferenceCode, companyId) -> fetchKaleoDefinition(
-				name, serviceContext),
-			(externalReferenceCode, companyId) -> getKaleoDefinition(
-				name, serviceContext));
-	}
-
-	@Override
 	public List<KaleoDefinition> getScopeKaleoDefinitions(
 		String scope, boolean active, int start, int end,
 		OrderByComparator<KaleoDefinition> orderByComparator,
@@ -429,9 +409,6 @@ public class KaleoDefinitionLocalServiceImpl
 	private String _getVersion(int version) {
 		return version + StringPool.PERIOD + 0;
 	}
-
-	@Reference
-	private EmptyModelManager _emptyModelManager;
 
 	@Reference
 	private KaleoConditionLocalService _kaleoConditionLocalService;

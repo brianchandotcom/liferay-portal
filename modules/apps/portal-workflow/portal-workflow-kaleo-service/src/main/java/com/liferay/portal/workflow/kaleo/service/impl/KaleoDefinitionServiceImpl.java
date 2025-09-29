@@ -89,28 +89,6 @@ public class KaleoDefinitionServiceImpl extends KaleoDefinitionServiceBaseImpl {
 	}
 
 	@Override
-	public KaleoDefinition getOrAddEmptyKaleoDefinition(
-			String externalReferenceCode, ServiceContext serviceContext)
-		throws PortalException {
-
-		KaleoDefinition kaleoDefinition =
-			_kaleoDefinitionLocalService.fetchKaleoDefinition(
-				externalReferenceCode, serviceContext);
-
-		if (kaleoDefinition != null) {
-			_kaleoDefinitionModelResourcePermission.check(
-				getPermissionChecker(), null, ActionKeys.VIEW);
-
-			return kaleoDefinition;
-		}
-
-		_checkPermissions(serviceContext);
-
-		return _kaleoDefinitionLocalService.getOrAddEmptyKaleoDefinition(
-			externalReferenceCode, serviceContext);
-	}
-
-	@Override
 	public List<KaleoDefinition> getScopeKaleoDefinitions(
 			String scope, boolean active, int start, int end,
 			OrderByComparator<KaleoDefinition> orderByComparator,

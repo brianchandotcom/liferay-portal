@@ -13,6 +13,9 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.model.AssetListEntrySegmentsEntryRel;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.list.service.AssetListEntrySegmentsEntryRelLocalService;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
@@ -1938,6 +1941,96 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-55927")
+	public void testRenderContainerWithBackgroundImageMappedByERC()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		FileEntry fileEntry = _addFileEntry();
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"externalReferenceCode",
+						fileEntry.getExternalReferenceCode()
+					).put(
+						"fieldId", "FileEntry_title"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(content.contains("--lfr-background-image"));
+		Assert.assertTrue(content.contains(fileEntry.getTitle()));
+	}
+
+	@Test
+	@TestInfo("LPD-55927")
+	public void testRenderContainerWithBackgroundImageMappedByERCAndScope()
+		throws Exception {
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+
+		Group depotGroup = depotEntry.getGroup();
+
+		FileEntry fileEntry = _addFileEntry(depotGroup);
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"externalReferenceCode",
+						fileEntry.getExternalReferenceCode()
+					).put(
+						"fieldId", "FileEntry_title"
+					).put(
+						"scopeExternalReferenceCode",
+						depotGroup.getExternalReferenceCode()
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		String content = _getRenderLayoutHTML(layout);
+
+		Assert.assertTrue(content.contains("--lfr-background-image"));
+		Assert.assertTrue(content.contains(fileEntry.getTitle()));
+	}
+
+	@Test
 	@TestInfo("LPD-59838")
 	public void testRenderContainerWithBackgroundImageWhereInfoItemObjectIsNull()
 		throws Exception {
@@ -2847,6 +2940,18 @@ public class RenderLayoutStructureTagTest {
 				_group, TestPropsValues.getUserId()));
 	}
 
+	private FileEntry _addFileEntry(Group group) throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			null, TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".jpg", ContentTypes.IMAGE_JPEG,
+			FileUtil.getBytes(
+				RenderLayoutStructureTagTest.class, "dependencies/liferay.jpg"),
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				group, TestPropsValues.getUserId()));
+	}
+
 	private Map<String, String> _addFormToLayout(
 			String className, Layout layout)
 		throws Exception {
@@ -3745,6 +3850,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject(
 		filter = "info.item.capability.key=" + DisplayPageInfoItemCapability.KEY

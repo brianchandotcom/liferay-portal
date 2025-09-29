@@ -956,72 +956,113 @@ for (const spaConfiguration of spaConfigurations) {
 			'URL in state, push history, visible fields',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
-				const initialBodyCellText = await page
-					.locator('td')
-					.nth(1)
-					.innerText();
+				const tableFields = {
+					Author: 'creator,name',
+					ID: 'id',
+					Title: 'title',
+				};
+
+				const assertAllFieldsAreVisible = async () => {
+					await expect(fdsSamplePage.table.headerCells).toHaveCount(
+						10
+					);
+
+					await expect(() => {
+						const state = getStateFromURL(
+							new URL(page.url()).search,
+							'advanced'
+						);
+
+						expect(state.vf).toBeDefined();
+						expect(
+							Object.keys(state.vf).reduce(
+								(acc: boolean, key: string) =>
+									acc && state.vf[key],
+								true
+							)
+						).toBeTruthy();
+					}).toPass();
+				};
+
+				const assertFieldVisibility = async (
+					fieldName: string,
+					expectedNumberOfVisibleColumns: number,
+					visible: boolean
+				) => {
+					const tableColumnHeaderName =
+						fdsSamplePage.table.headerCells.filter({
+							hasText: fieldName,
+						});
+
+					if (visible) {
+						await expect(tableColumnHeaderName).toBeVisible();
+					}
+					else {
+						await expect(tableColumnHeaderName).not.toBeVisible();
+					}
+
+					await expect(fdsSamplePage.table.headerCells).toHaveCount(
+						expectedNumberOfVisibleColumns
+					);
+
+					await expect(() => {
+						const state = getStateFromURL(
+							new URL(page.url()).search,
+							'advanced'
+						);
+						expect(state.vf).toBeDefined();
+						expect(state.vf[tableFields[fieldName]]).toBe(visible);
+					}).toPass();
+				};
 
 				await test.step('Update visible fields via UI', async () => {
-					const button = page.getByLabel('Manage Columns Visibility');
+					await expect(
+						fdsSamplePage.table.manageColumnsVisibilityButton
+					).toBeAttached();
 
-					await expect(button).toBeAttached();
-
-					await button.click();
+					await fdsSamplePage.table.manageColumnsVisibilityButton.click();
 
 					const menuItem = page.getByRole('menuitem').nth(0);
 
 					await menuItem.click();
-				});
 
-				await test.step('Check visible fields in the UI', async () => {
-					await expect(page.locator('td').nth(1)).not.toHaveText(
-						initialBodyCellText
-					);
+					await assertFieldVisibility('ID', 9, false);
 
-					await expect(fdsSamplePage.table.headerCells).toHaveCount(
-						9
-					);
-				});
+					await page
+						.getByRole('menu')
+						.getByRole('menuitem', {name: 'author'})
+						.click();
 
-				await test.step('Assert that the URL state is updated', async () => {
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.vf).toBeDefined();
-					expect(state.vf.id).toBe(false);
+					await assertFieldVisibility('Author', 8, false);
 				});
 
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
 
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-					expect(state.vf).toBeUndefined();
+					await assertFieldVisibility('Author', 9, true);
+
+					await page.goBack();
+
+					await assertAllFieldsAreVisible();
 				});
 
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
 
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-					expect(state.vf).toBeDefined();
-					expect(state.vf.id).toBe(false);
+					await assertFieldVisibility('ID', 9, false);
+					await assertFieldVisibility('Author', 9, true);
+
+					await page.goForward();
+
+					await assertFieldVisibility('ID', 8, false);
+					await assertFieldVisibility('Author', 8, false);
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
 
-					let state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-					expect(state.vf).toBeUndefined();
+					await assertFieldVisibility('ID', 9, false);
+					await assertFieldVisibility('Author', 9, true);
 
 					await fdsSamplePage.table.manageColumnsVisibilityButton.click();
 					await page.getByRole('menu').waitFor();
@@ -1032,34 +1073,18 @@ for (const spaConfiguration of spaConfigurations) {
 
 					await titleMenuItem.click();
 
-					await page.waitForTimeout(1000);
-
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.vf).toBeDefined();
-					expect(state.vf.title).toBe(false);
+					await assertFieldVisibility('Author', 8, true);
+					await assertFieldVisibility('Title', 8, false);
 
 					await page.goBack();
 
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.vf).toBeUndefined();
+					await assertFieldVisibility('Author', 9, true);
+					await assertFieldVisibility('Title', 9, true);
 
 					await page.goForward();
 
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.vf).toBeDefined();
-					expect(state.vf.title).toBe(false);
+					await assertFieldVisibility('Author', 8, true);
+					await assertFieldVisibility('Title', 8, false);
 
 					expect(await page.goForward()).toBeNull();
 				});

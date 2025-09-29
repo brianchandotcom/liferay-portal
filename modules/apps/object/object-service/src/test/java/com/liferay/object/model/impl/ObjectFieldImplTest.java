@@ -30,12 +30,12 @@ public class ObjectFieldImplTest {
 		_testGetReadOnly(
 			ObjectFieldConstants.READ_ONLY_CONDITIONAL,
 			ObjectFieldConstants.READ_ONLY_CONDITIONAL);
-		_testGetReadOnly(null, ObjectFieldConstants.READ_ONLY_FALSE);
-		_testGetReadOnly(
-			StringPool.BLANK, ObjectFieldConstants.READ_ONLY_FALSE);
 		_testGetReadOnly(
 			ObjectFieldConstants.READ_ONLY_FALSE,
 			ObjectFieldConstants.READ_ONLY_FALSE);
+		_testGetReadOnly(
+			StringPool.BLANK, ObjectFieldConstants.READ_ONLY_FALSE);
+		_testGetReadOnly(null, ObjectFieldConstants.READ_ONLY_FALSE);
 		_testGetReadOnly(
 			ObjectFieldConstants.READ_ONLY_TRUE,
 			ObjectFieldConstants.READ_ONLY_TRUE);

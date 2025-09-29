@@ -175,10 +175,10 @@ test('can import account restricted entry when account does and does not exist i
 		);
 
 		expect(
-			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
 				applicationName,
-				objectEntry.externalReferenceCode
-			)
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
 		).toEqual({status: 'NOT_FOUND'});
 
 		await companyExportImportPage.import(exportFilePath);
@@ -197,10 +197,11 @@ test('can import account restricted entry when account does and does not exist i
 		);
 
 		expect(
-			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
 				applicationName,
-				importedObjectEntry.externalReferenceCode
-			)
+				externalReferenceCode:
+					importedObjectEntry.externalReferenceCode,
+			})
 		).toEqual({status: 'NOT_FOUND'});
 	});
 
@@ -267,10 +268,10 @@ test('can import custom object entries at instance level with or without permiss
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 
 	expect(
-		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
-			'c/tests',
-			objectEntry.externalReferenceCode
-		)
+		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+			applicationName: 'c/tests',
+			externalReferenceCode: objectEntry.externalReferenceCode,
+		})
 	).toEqual({status: 'NOT_FOUND'});
 
 	await companyExportImportPage.import(exportFilePath, true);
@@ -297,10 +298,10 @@ test('can import custom object entries at instance level with or without permiss
 	await apiHelpers.delete(`${apiHelpers.baseUrl}c/tests/${objectEntry.id}`);
 
 	expect(
-		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
-			'c/tests',
-			objectEntry.externalReferenceCode
-		)
+		await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+			applicationName: 'c/tests',
+			externalReferenceCode: objectEntry.externalReferenceCode,
+		})
 	).toEqual({status: 'NOT_FOUND'});
 
 	await companyExportImportPage.import(exportFilePath);
@@ -684,10 +685,10 @@ test(
 		);
 
 		expect(
-			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode(
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
 				applicationName,
-				objectEntry.externalReferenceCode
-			)
+				externalReferenceCode: objectEntry.externalReferenceCode,
+			})
 		).toEqual({status: 'NOT_FOUND'});
 
 		await companyExportImportPage.import(exportFilePath, true);

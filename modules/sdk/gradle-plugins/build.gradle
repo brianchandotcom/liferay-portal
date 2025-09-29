@@ -9,7 +9,7 @@ if (Boolean.getBoolean("gradle.test.enabled")) {
 
 tasks.eclipse {
 	ext.gradleVersion = gradleVersion
-}`
+}
 
 dependencies {
 	api group: "biz.aQute.bnd", name: "biz.aQute.bnd.gradle", version: "6.4.0"

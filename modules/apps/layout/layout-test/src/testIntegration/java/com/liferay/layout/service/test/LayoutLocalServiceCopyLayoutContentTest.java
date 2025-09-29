@@ -27,7 +27,6 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.model.FragmentEntryLinkModel;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -508,14 +507,21 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			updatedFragmentEntryLinkIds.toString(), 2,
 			updatedFragmentEntryLinkIds.size());
 
+		List<String> originalFragmentEntryLinkERCs = new ArrayList<>();
+
+		for (FragmentEntryLink originalFragmentEntryLink :
+				secondCopyFragmentEntryLinks) {
+
+			originalFragmentEntryLinkERCs.add(
+				originalFragmentEntryLink.getOriginalFragmentEntryLinkERC());
+		}
+
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
-				TransformUtil.transformToLongArray(
-					secondCopyFragmentEntryLinks,
-					FragmentEntryLinkModel::getOriginalFragmentEntryLinkId),
-				new long[] {
-					fragmentEntryLink2.getFragmentEntryLinkId(),
-					fragmentEntryLink3.getFragmentEntryLinkId()
+				originalFragmentEntryLinkERCs.toArray(new String[0]),
+				new String[] {
+					fragmentEntryLink2.getExternalReferenceCode(),
+					fragmentEntryLink3.getExternalReferenceCode()
 				}));
 	}
 

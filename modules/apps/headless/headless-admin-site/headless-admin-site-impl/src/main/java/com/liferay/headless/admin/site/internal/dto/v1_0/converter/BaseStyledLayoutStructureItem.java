@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentStyle;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkValueUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -46,7 +47,8 @@ public abstract class BaseStyledLayoutStructureItem {
 	}
 
 	protected FragmentStyle toFragmentStyle(
-		JSONObject jsonObject, long scopeGroupId) {
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
 
 		if (JSONUtil.isEmpty(jsonObject)) {
 			return null;
@@ -69,7 +71,8 @@ public abstract class BaseStyledLayoutStructureItem {
 							(JSONObject)backgroundImage;
 
 						return _toBackgroundFragmentImage(
-							backgroundImageJSONObject, scopeGroupId);
+							infoItemServiceRegistry, backgroundImageJSONObject,
+							scopeGroupId);
 					});
 				setBorderColor(() -> jsonObject.getString("borderColor", null));
 				setBorderRadius(
@@ -226,7 +229,8 @@ public abstract class BaseStyledLayoutStructureItem {
 	}
 
 	private FragmentImage _toBackgroundFragmentImage(
-		JSONObject jsonObject, long scopeGroupId) {
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;

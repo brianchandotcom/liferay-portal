@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkValueUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.ContentVisibilityConverter;
@@ -28,6 +29,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -86,10 +88,12 @@ public class ContainerPageElementDefinitionDTOConverter
 						containerStyledLayoutStructureItem.getCustomCSS()));
 				setFragmentLink(
 					() -> FragmentLinkValueUtil.toFragmentLink(
+						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.getLinkJSONObject(),
 						scopeGroupId));
 				setFragmentStyle(
 					() -> toFragmentStyle(
+						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.
 							getStylesJSONObject(),
 						scopeGroupId));
@@ -220,5 +224,8 @@ public class ContainerPageElementDefinitionDTOConverter
 		).put(
 			"section", HtmlProperties.HtmlTag.SECTION
 		).build();
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

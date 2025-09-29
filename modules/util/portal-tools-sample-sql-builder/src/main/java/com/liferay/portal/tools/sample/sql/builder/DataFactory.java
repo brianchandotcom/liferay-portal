@@ -4301,8 +4301,9 @@ public class DataFactory {
 
 		// Other fields
 
-		fragmentEntryLinkModel.setFragmentEntryId(
-			fragmentEntryModel.getFragmentEntryId());
+		fragmentEntryLinkModel.setFragmentEntryERC(
+			fragmentEntryModel.getExternalReferenceCode());
+		fragmentEntryLinkModel.setFragmentEntryScopeERC(null);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
 		fragmentEntryLinkModel.setCss(fragmentEntryModel.getCss());
@@ -4367,7 +4368,7 @@ public class DataFactory {
 
 			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, 0, segmentsExperienceId,
+					layoutModel, null, segmentsExperienceId,
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "css")),
 					_readFile(
@@ -4381,7 +4382,7 @@ public class DataFactory {
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, 0, segmentsExperienceId,
+					layoutModel, null, segmentsExperienceId,
 					_readFile(
 						_getFragmentComponentInputStream("paragraph", "css")),
 					_readFile(
@@ -4395,7 +4396,7 @@ public class DataFactory {
 					_FRAGMENT_COMPONENT_RENDER_KEY_PARAGRAPH));
 			hiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModel, 0, segmentsExperienceId, "",
+					layoutModel, null, segmentsExperienceId, "",
 					_readFile(
 						_getFragmentComponentInputStream("image", "html")),
 					_readFile(
@@ -4420,7 +4421,7 @@ public class DataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					nonhiddenLayoutModel,
-					hiddenFragmentEntryLinkModel.getFragmentEntryLinkId(),
+					hiddenFragmentEntryLinkModel.getExternalReferenceCode(),
 					segmentsExperienceId, hiddenFragmentEntryLinkModel.getCss(),
 					hiddenFragmentEntryLinkModel.getHtml(),
 					hiddenFragmentEntryLinkModel.getConfiguration(),
@@ -5996,7 +5997,7 @@ public class DataFactory {
 
 			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModels.get(1), 0, segmentsExperienceId, headingCss,
+					layoutModels.get(1), null, segmentsExperienceId, headingCss,
 					headingHtml, StringPool.BLANK, editValue,
 					paragraphRenderNamespace, 0,
 					_FRAGMENT_COMPONENT_RENDER_KEY_HEADING));
@@ -6014,7 +6015,7 @@ public class DataFactory {
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
 					layoutModels.get(0),
-					originalFragmentEntryLinkModel.getFragmentEntryLinkId(),
+					originalFragmentEntryLinkModel.getExternalReferenceCode(),
 					segmentsExperienceId,
 					originalFragmentEntryLinkModel.getCss(),
 					originalFragmentEntryLinkModel.getHtml(),
@@ -7730,7 +7731,8 @@ public class DataFactory {
 
 		// Other fields
 
-		fragmentEntryLinkModel.setFragmentEntryId(0);
+		fragmentEntryLinkModel.setFragmentEntryERC(null);
+		fragmentEntryLinkModel.setFragmentEntryScopeERC(null);
 		fragmentEntryLinkModel.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
@@ -7775,7 +7777,7 @@ public class DataFactory {
 	}
 
 	protected FragmentEntryLinkModel newFragmentEntryLinkModel(
-		LayoutModel layoutModel, long originalFragmentEntryLinkId,
+		LayoutModel layoutModel, String originalFragmentEntryLinkERC,
 		long segmentsExperienceId, String css, String html,
 		String configuration, String editValue, String nameSpace, int position,
 		String renderKey) {
@@ -7801,9 +7803,10 @@ public class DataFactory {
 
 		// Other fields
 
-		fragmentEntryLinkModel.setOriginalFragmentEntryLinkId(
-			originalFragmentEntryLinkId);
-		fragmentEntryLinkModel.setFragmentEntryId(0);
+		fragmentEntryLinkModel.setOriginalFragmentEntryLinkERC(
+			originalFragmentEntryLinkERC);
+		fragmentEntryLinkModel.setFragmentEntryERC(null);
+		fragmentEntryLinkModel.setFragmentEntryScopeERC(null);
 		fragmentEntryLinkModel.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());

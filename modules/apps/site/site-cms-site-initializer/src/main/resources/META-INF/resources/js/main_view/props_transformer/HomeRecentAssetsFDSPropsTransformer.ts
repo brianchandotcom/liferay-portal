@@ -6,6 +6,7 @@
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 
+import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import formatActionURL from '../../common/utils/formatActionURL';
 import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
 import {AdditionalProps} from './AssetsFDSPropsTransformer';
@@ -81,7 +82,18 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			loadData: () => {};
 		}) {
 			if (action?.data?.id === 'delete') {
-				await deleteItemAction(itemData, loadData);
+				if (additionalProps.brokenLinksCheckerEnabled) {
+					openAssetUsageListModal({
+						itemsData: [itemData],
+						onDelete: async () => {
+							await deleteItemAction(itemData, loadData);
+						},
+						selectAll: false,
+					});
+				}
+				else {
+					await deleteItemAction(itemData, loadData);
+				}
 			}
 
 			if (

@@ -88,6 +88,10 @@ components:
                         The number of this asset library's associated user groups.
                     readOnly: true
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 settings:
                     $ref: "#/components/schemas/Settings"
                     description:
@@ -905,6 +909,51 @@ paths:
                     description:
                         default response
             tags: ["ConnectedSite"]
+    "/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions":
+        get:
+            operationId: getAssetLibraryByExternalReferenceCodePermissionsPage
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AssetLibrary"]
+        put:
+            operationId: putAssetLibraryByExternalReferenceCodePermissionsPage
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AssetLibrary"]
     "/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins":
         delete:
             description:
@@ -1299,6 +1348,53 @@ paths:
                     description:
                         default response
             tags: ["ConnectedSite"]
+    "/asset-libraries/{assetLibraryId}/permissions":
+        get:
+            operationId: getAssetLibraryPermissionsPage
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+                -   in: query
+                    name: roleNames
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AssetLibrary"]
+        put:
+            operationId: putAssetLibraryPermissionsPage
+            parameters:
+                -   in: path
+                    name: assetLibraryId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+            requestBody:
+                content:
+                    application/json: {}
+                    application/xml: {}
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["AssetLibrary"]
     "/asset-libraries/{assetLibraryId}/pins":
         delete:
             description:

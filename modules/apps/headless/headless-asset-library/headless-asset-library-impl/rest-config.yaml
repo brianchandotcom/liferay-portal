@@ -10,5 +10,6 @@ compatibilityVersion: 12
 forcePredictableOperationId: true
 generateBatch: true
 generateGraphQL: false
+generatePermissions: true
 javaEEPackage: jakarta
 testDir: ../headless-asset-library-test/src/testIntegration/java

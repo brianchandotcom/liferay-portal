@@ -101,18 +101,18 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 					return StringPool.BLANK;
 				}
 
-				ObjectEntry objectEntry = (ObjectEntry)displayObject;
-
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
-
 				ThemeDisplay themeDisplay =
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
 				long assetLibraryId = InfoItemUtil.getGroupId(
 					httpServletRequest);
+
+				ObjectEntry objectEntry = (ObjectEntry)displayObject;
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
 
 				return _workflowDefinitionLinkLocalService.
 					hasWorkflowDefinitionLink(

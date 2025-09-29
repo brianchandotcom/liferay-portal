@@ -716,15 +716,46 @@ for (const spaConfiguration of spaConfigurations) {
 		test(
 			'URL in state, push history, sorting',
 			{tag: '@LPD-20947'},
-			async ({fdsSamplePage, page}) => {
+			async ({page}) => {
+				const assertSort = async (
+					fieldName: string,
+					direction: 'asc' | 'desc'
+				) => {
+					await waitForFDS({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+
+					await expect(() => {
+						const state = getStateFromURL(
+							new URL(page.url()).search,
+							'advanced'
+						);
+
+						expect(state.sorts).toBeDefined();
+						expect(state.sorts).toHaveLength(1);
+						expect(state.sorts[0].key).toBe(fieldName);
+						expect(state.sorts[0].direction).toBe(direction);
+					}).toPass();
+
+					await waitForFDS({
+						page,
+						visualizationMode: EFDSVisualizationMode.TABLE,
+					});
+				};
+
+				const idColumnHeader = page.getByRole('columnheader').nth(1);
+
+				const titleColumnHeader = page.getByRole('columnheader').nth(2);
+
+				const idSortButton = idColumnHeader.getByRole('button');
+
+				const titleSortButton = titleColumnHeader.getByRole('button');
+
 				await test.step('Click on Sortable Content button', async () => {
-					const secondColumnHeader = page
-						.getByRole('columnheader')
-						.nth(2);
+					await titleSortButton.click();
 
-					const sortButton = secondColumnHeader.getByRole('button');
-
-					await sortButton.click();
+					await assertSort('title', 'desc');
 				});
 
 				await test.step('Check sorting in the UI', async () => {
@@ -747,92 +778,58 @@ for (const spaConfiguration of spaConfigurations) {
 					});
 				});
 
+				await test.step('Change sort several times', async () => {
+					await idSortButton.click();
+					await assertSort('id', 'asc');
+					await idSortButton.click();
+					await assertSort('id', 'desc');
+					await titleSortButton.click();
+					await assertSort('title', 'asc');
+					await titleSortButton.click();
+					await assertSort('title', 'desc');
+				});
+
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
 
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
+					await assertSort('title', 'asc');
+					await page.goBack();
 
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('asc');
+					await assertSort('id', 'desc');
+
+					await page.goBack();
+
+					await assertSort('id', 'asc');
 				});
 
 				await test.step('Check forward navigation', async () => {
 					await page.goForward();
 
-					const state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('desc');
+					await assertSort('id', 'desc');
+					await page.goForward();
+
+					await assertSort('title', 'asc');
+					await page.goForward();
+
+					await assertSort('title', 'desc');
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
 
-					let state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
+					await assertSort('title', 'asc');
 
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('asc');
+					await idSortButton.click();
 
-					const secondColumnHeader = page
-						.getByRole('columnheader')
-						.nth(2);
-
-					const sortButton = secondColumnHeader.getByRole('button');
-
-					await sortButton.click();
-
-					await waitForFDS({
-						page,
-						visualizationMode: EFDSVisualizationMode.TABLE,
-					});
-
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('desc');
+					await assertSort('id', 'asc');
 
 					await page.goBack();
 
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('asc');
+					await assertSort('title', 'asc');
 
 					await page.goForward();
 
-					state = getStateFromURL(
-						new URL(page.url()).search,
-						'advanced'
-					);
-
-					expect(state.sorts).toBeDefined();
-					expect(state.sorts).toHaveLength(1);
-					expect(state.sorts[0].key).toBe('title');
-					expect(state.sorts[0].direction).toBe('desc');
+					await assertSort('id', 'asc');
 
 					expect(await page.goForward()).toBeNull();
 				});

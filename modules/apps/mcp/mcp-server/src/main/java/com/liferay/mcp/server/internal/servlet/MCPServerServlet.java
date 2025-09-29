@@ -146,18 +146,18 @@ public class MCPServerServlet extends HttpServlet {
 				}
 
 				return _call(
-					mcpSyncServerExchange, String.valueOf(monos.get("payload")),
-					baseURL + path, String.valueOf(monos.get("method")));
+					String.valueOf(monos.get("payload")), baseURL + path,
+					mcpSyncServerExchange, String.valueOf(monos.get("method")));
 			}
 		).tool(
 			_getTool("get-openapi", toolsJSONObject),
 			(mcpSyncServerExchange, monos) -> _call(
-				mcpSyncServerExchange, null, String.valueOf(monos.get("url")),
+				null, String.valueOf(monos.get("url")), mcpSyncServerExchange,
 				"GET")
 		).tool(
 			_getTool("get-openapis", toolsJSONObject),
 			(mcpSyncServerExchange, monos) -> _call(
-				mcpSyncServerExchange, null, baseURL + "/openapi", "GET")
+				null, baseURL + "/openapi", mcpSyncServerExchange, "GET")
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
@@ -183,8 +183,8 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private McpSchema.CallToolResult _call(
-		McpSyncServerExchange mcpSyncServerExchange, String body,
-		String location, String method) {
+		String body, String location,
+		McpSyncServerExchange mcpSyncServerExchange, String method) {
 
 		Http.Options options = new Http.Options();
 

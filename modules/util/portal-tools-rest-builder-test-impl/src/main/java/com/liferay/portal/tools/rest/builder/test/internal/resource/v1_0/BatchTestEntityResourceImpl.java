@@ -296,21 +296,10 @@ public class BatchTestEntityResourceImpl
 		return new BatchTestEntity() {
 			{
 				setCustomFields(
-					() -> {
-						CustomField[] originalCustomFields =
-							originalBatchTestEntity.getCustomFields();
-
-						if (originalCustomFields == null) {
-							return new CustomField[0];
-						}
-
-						CustomField[] customFields =
-							new CustomField[originalCustomFields.length];
-
-						for (int i = 0; i < originalCustomFields.length; i++) {
+					() -> transform(
+						originalBatchTestEntity.getCustomFields(),
+						originalCustomField -> {
 							CustomField customField = new CustomField();
-							CustomField originalCustomField =
-								originalCustomFields[i];
 
 							customField.setAttributeType(
 								() -> NestedFieldsSupplier.supply(
@@ -324,11 +313,9 @@ public class BatchTestEntityResourceImpl
 								originalCustomField.getDataType());
 							customField.setName(originalCustomField.getName());
 
-							customFields[i] = customField;
-						}
-
-						return customFields;
-					});
+							return customField;
+						},
+						CustomField.class));
 				setExternalReferenceCode(
 					originalBatchTestEntity.getExternalReferenceCode());
 				setId(originalBatchTestEntity.getId());

@@ -890,6 +890,10 @@ test.describe('Fragments Panel', () => {
 
 			await pageEditorPage.goToSidebarTab('Components');
 
+			await page
+				.getByLabel('Search Fragments and Widgets')
+				.fill('External Video');
+
 			const fragment = page
 				.locator('.page-editor__fragments-widgets__tab-list-item')
 				.filter({hasText: 'External Video'});

@@ -13,7 +13,6 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
 import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import dragAndDropElement from '../../../utils/dragAndDropElement';
 import getRandomString from '../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import chooseFileFromDocumentLibrary from './utils/chooseFileFromDocumentLibrary';
@@ -656,20 +655,42 @@ test(
 
 		// Drag the selected text
 
-		await page.getByText('option1').selectText();
+		await expect(async () => {
+			await page.getByText('option1').selectText({timeout: 1000});
 
-		await dragAndDropElement({
-			dragTarget: page.getByText('option1'),
-			dropTarget: page.getByText('option3'),
-			onDragging: () =>
-				expect(page.locator('.drag-preview')).not.toBeAttached(),
-			page,
-		});
+			const option1 = page.getByText('option1');
+			const option3 = page.getByText('option3');
 
-		// Check that the text has been dragged
+			await option1.hover({timeout: 1000});
 
-		await expect(paragraphFragment).toHaveText(
-			'List:option2option1⁠⁠⁠⁠⁠⁠⁠option3'
-		);
+			await page.mouse.down();
+
+			await option3.hover({timeout: 1000});
+
+			const boundingClientRect = await option3.evaluate((element) =>
+				element.getBoundingClientRect()
+			);
+
+			await option3.hover({
+				position: {
+					x: boundingClientRect.width / 2,
+					y: boundingClientRect.height / 2,
+				},
+				timeout: 1000,
+			});
+
+			await expect(page.locator('.drag-preview')).not.toBeAttached({
+				timeout: 1000,
+			});
+
+			await page.mouse.up();
+
+			// Check that the text has been dragged
+
+			await expect(paragraphFragment).toHaveText(
+				'List:option2option1⁠⁠⁠⁠⁠⁠⁠option3',
+				{timeout: 1000}
+			);
+		}).toPass();
 	}
 );

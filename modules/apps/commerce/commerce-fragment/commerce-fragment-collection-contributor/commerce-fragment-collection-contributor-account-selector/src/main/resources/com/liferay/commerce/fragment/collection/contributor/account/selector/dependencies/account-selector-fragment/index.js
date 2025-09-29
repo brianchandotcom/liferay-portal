@@ -25,36 +25,74 @@ const panels = Array.from(
 ).map((value, index) => {
 	return {
 		index,
-		key: value.querySelector('.account-selector-panel-title')?.dataset
-			.accountSelectorKey,
+		key: value.querySelector('.account-selector-panel-drop-zone-container')
+			?.dataset.panelKey,
 		value,
 	};
 });
 
-if (layoutMode !== 'edit') {
+if (layoutMode === 'edit') {
+	handleEditNav(0);
+}
+else {
 	Liferay.on('current-account-updated', () => window.location.reload());
+
+	const activePanel = panels.find(
+		(panel) =>
+			panel.key === accountSelectorDropdownHeader.dataset.activePanelKey
+	);
+
+	if (Liferay.CommerceContext.account && activePanel) {
+		handleNav(panels[activePanel.index].key);
+	}
+	else {
+		handleNav(panels[0].key);
+	}
 }
 
-handleTitleChange(panels[0]);
 accountSelectorDropdownNextButton.addEventListener('click', () => {
-	const step = Number(accountSelectorDropdownHeader.dataset.step);
+	if (layoutMode === 'edit') {
+		const step = Number(accountSelectorDropdownHeader.dataset.step);
 
-	handleNav(step, step + 1);
+		handleEditNav(step + 1);
+	}
+	else {
+		const activePanel = panels.find(
+			(panel) =>
+				panel.key ===
+				accountSelectorDropdownHeader.dataset.activePanelKey
+		);
+
+		if (!activePanel || activePanel.index + 1 > panels.length) {
+			return;
+		}
+
+		handleNav(panels[activePanel.index + 1].key);
+	}
 });
 
 accountSelectorDropdownPrevButton.addEventListener('click', () => {
-	const step = Number(accountSelectorDropdownHeader.dataset.step);
+	if (layoutMode === 'edit') {
+		const step = Number(accountSelectorDropdownHeader.dataset.step);
 
-	handleNav(step, step - 1);
+		handleEditNav(step - 1);
+	}
+	else {
+		const activePanel = panels.find(
+			(panel) =>
+				panel.key ===
+				accountSelectorDropdownHeader.dataset.activePanelKey
+		);
+
+		if (!activePanel || activePanel.index - 1 < 0) {
+			return;
+		}
+
+		handleNav(panels[activePanel.index - 1].key);
+	}
 });
 
-function handleTitleChange(panel) {
-	accountSelectorPanelTitle.innerHTML = panel.value.querySelector(
-		'.account-selector-panel-drop-zone-container'
-	).dataset.panelTitle;
-}
-
-function handleNav(step, nextStep) {
+function handleEditNav(nextStep) {
 	if (nextStep < 0 || nextStep > panels.length - 1) {
 		return;
 	}
@@ -75,4 +113,37 @@ function handleNav(step, nextStep) {
 	accountSelectorPanelSlider.style.transform = `translate(-${nextStep * configuration.dropdownWidth}px, 0)`;
 
 	handleTitleChange(panel);
+}
+
+function handleNav(nextPanelKey) {
+	const nextPanel = panels.find((panel) => panel.key === nextPanelKey);
+
+	if (!nextPanel) {
+		return;
+	}
+
+	accountSelectorDropdownNextButton.classList.toggle(
+		'invisible',
+		nextPanel.index === panels.length - 1
+	);
+	accountSelectorDropdownPrevButton.classList.toggle(
+		'invisible',
+		nextPanel.index === 0
+	);
+
+	accountSelectorDropdownHeader.dataset.activePanelKey = nextPanelKey;
+
+	accountSelectorPanelSlider.style.transform = `translate(-${nextPanel.index * configuration.dropdownWidth}px, 0)`;
+
+	handleTitleChange(nextPanel);
+}
+
+function handleTitleChange(panel) {
+	const currentPanelTitle = panel.value.querySelector(
+		'.account-selector-panel-drop-zone-container'
+	)?.dataset?.panelTitle;
+
+	if (currentPanelTitle) {
+		accountSelectorPanelTitle.innerHTML = currentPanelTitle;
+	}
 }

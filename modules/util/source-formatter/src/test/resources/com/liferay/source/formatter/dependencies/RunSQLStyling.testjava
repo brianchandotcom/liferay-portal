@@ -5,26 +5,25 @@
 
 package com.liferay.source.formatter.dependencies;
 
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
-import com.liferay.portal.kernel.upgrade.UpgradeStep;
-
 /**
  * @author Alan Huang
  */
-public class RunSQLStyling extends UpgradeProcess {
+public class RunSQLStyling {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		runSQL("update CTCollection set shareable = FALSE;");
+	protected void method() throws Exception {
+		runSQL("update CTProcess set type_ = 0;");
 	}
 
-	@Override
-	protected UpgradeStep[] getPreUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"CTCollection", "onDemandUserId LONG", "shareable BOOLEAN")
-		};
+	protected void method2() throws Exception {
+		runSQL(
+			StringBundler.concat(
+				"create table DDMFieldAttribute (mvccVersion LONG default 0 ",
+				"not null, ctCollectionId LONG default 0 not null, ",
+				"fieldAttributeId LONG not null, companyId LONG, fieldId ",
+				"LONG, storageId LONG, attributeName VARCHAR(255) null, ",
+				"languageId VARCHAR(75) null, largeAttributeValue TEXT null, ",
+				"smallAttributeValue VARCHAR(255) null, primary key ",
+				"(fieldAttributeId, ctCollectionId));"));
 	}
 
 }

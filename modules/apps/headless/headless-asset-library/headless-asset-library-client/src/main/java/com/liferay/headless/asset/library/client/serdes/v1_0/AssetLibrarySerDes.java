@@ -241,6 +241,26 @@ public class AssetLibrarySerDes {
 			sb.append(assetLibrary.getNumberOfUserGroups());
 		}
 
+		if (assetLibrary.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < assetLibrary.getPermissions().length; i++) {
+				sb.append(assetLibrary.getPermissions()[i]);
+
+				if ((i + 1) < assetLibrary.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (assetLibrary.getSettings() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -463,6 +483,14 @@ public class AssetLibrarySerDes {
 				String.valueOf(assetLibrary.getNumberOfUserGroups()));
 		}
 
+		if (assetLibrary.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(assetLibrary.getPermissions()));
+		}
+
 		if (assetLibrary.getSettings() == null) {
 			map.put("settings", null);
 		}
@@ -568,6 +596,9 @@ public class AssetLibrarySerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "numberOfUserGroups")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {
@@ -698,6 +729,26 @@ public class AssetLibrarySerDes {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setNumberOfUserGroups(
 						Integer.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.asset.library.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.asset.library.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.asset.library.client.
+								permission.Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					assetLibrary.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "settings")) {

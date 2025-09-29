@@ -17,9 +17,11 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.client.dto.v1_0.Role;
 import com.liferay.headless.asset.library.client.http.HttpInvoker;
 import com.liferay.headless.asset.library.client.pagination.Page;
 import com.liferay.headless.asset.library.client.pagination.Pagination;
+import com.liferay.headless.asset.library.client.permission.Permission;
 import com.liferay.headless.asset.library.client.resource.v1_0.AssetLibraryResource;
 import com.liferay.headless.asset.library.client.serdes.v1_0.AssetLibrarySerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -44,6 +47,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -177,6 +181,18 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
+		).build();
+
+		permissionsAssetLibraryResource = AssetLibraryResource.builder(
+		).authentication(
+			_testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
 		).build();
 	}
 
@@ -450,6 +466,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		assertContains(assetLibrary1, (List<AssetLibrary>)page.getItems());
 		assertContains(assetLibrary2, (List<AssetLibrary>)page.getItems());
 		assertValid(page, testGetAssetLibrariesPage_getExpectedActions());
+
+		for (AssetLibrary assetLibrary : page.getItems()) {
+			Assert.assertNull(assetLibrary.getPermissions());
+		}
+
+		page = permissionsAssetLibraryResource.getAssetLibrariesPage(
+			null, null, null, Pagination.of(1, 10), null);
+
+		for (AssetLibrary assetLibrary : page.getItems()) {
+			Assert.assertNotNull(assetLibrary.getPermissions());
+		}
 
 		assetLibraryResource.deleteAssetLibrary(assetLibrary1.getId());
 
@@ -936,6 +963,13 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		assertEquals(postAssetLibrary, getAssetLibrary);
 		assertValid(getAssetLibrary);
+
+		Assert.assertNull(getAssetLibrary.getPermissions());
+
+		getAssetLibrary = permissionsAssetLibraryResource.getAssetLibrary(
+			postAssetLibrary.getId());
+
+		Assert.assertNotNull(getAssetLibrary.getPermissions());
 	}
 
 	@Test
@@ -1145,10 +1179,64 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		assertEquals(postAssetLibrary, getAssetLibrary);
 		assertValid(getAssetLibrary);
+
+		Assert.assertNull(getAssetLibrary.getPermissions());
+
+		getAssetLibrary =
+			permissionsAssetLibraryResource.
+				getAssetLibraryByExternalReferenceCode(
+					postAssetLibrary.getExternalReferenceCode());
+
+		Assert.assertNotNull(getAssetLibrary.getPermissions());
 	}
 
 	protected AssetLibrary
 			testGetAssetLibraryByExternalReferenceCode_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAssetLibraryByExternalReferenceCodePermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary postAssetLibrary =
+			testGetAssetLibraryByExternalReferenceCodePermissionsPage_addAssetLibrary();
+
+		Page<Permission> page =
+			assetLibraryResource.
+				getAssetLibraryByExternalReferenceCodePermissionsPage(
+					postAssetLibrary.getExternalReferenceCode(),
+					RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected AssetLibrary
+			testGetAssetLibraryByExternalReferenceCodePermissionsPage_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAssetLibraryPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary postAssetLibrary =
+			testGetAssetLibraryPermissionsPage_addAssetLibrary();
+
+		Page<Permission> page =
+			assetLibraryResource.getAssetLibraryPermissionsPage(
+				postAssetLibrary.getId(), RoleConstants.GUEST);
+
+		Assert.assertNotNull(page);
+	}
+
+	protected AssetLibrary testGetAssetLibraryPermissionsPage_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1229,9 +1317,35 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		assertEquals(randomAssetLibrary, postAssetLibrary);
 		assertValid(postAssetLibrary);
+
+		AssetLibrary randomPermissionsAssetLibrary1 =
+			randomPermissionsAssetLibrary();
+
+		AssetLibrary postPermissionsAssetLibrary1 =
+			testPostAssetLibrary_addAssetLibrary(
+				randomPermissionsAssetLibrary1);
+
+		Assert.assertNull(postPermissionsAssetLibrary1.getPermissions());
+
+		AssetLibrary randomPermissionsAssetLibrary2 =
+			randomPermissionsAssetLibrary();
+
+		AssetLibrary postPermissionsAssetLibrary2 =
+			testPostAssetLibrary_addPermissionsAssetLibrary(
+				randomPermissionsAssetLibrary2);
+
+		Assert.assertNotNull(postPermissionsAssetLibrary2.getPermissions());
 	}
 
 	protected AssetLibrary testPostAssetLibrary_addAssetLibrary(
+			AssetLibrary assetLibrary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AssetLibrary testPostAssetLibrary_addPermissionsAssetLibrary(
 			AssetLibrary assetLibrary)
 		throws Exception {
 
@@ -1254,12 +1368,35 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		assertEquals(randomAssetLibrary, putAssetLibrary);
 		assertValid(putAssetLibrary);
 
+		Assert.assertNull(putAssetLibrary.getPermissions());
+
 		AssetLibrary getAssetLibrary =
 			assetLibraryResource.getAssetLibraryByExternalReferenceCode(
 				putAssetLibrary.getExternalReferenceCode());
 
 		assertEquals(randomAssetLibrary, getAssetLibrary);
 		assertValid(getAssetLibrary);
+
+		AssetLibrary randomPermissionsAssetLibrary =
+			randomPermissionsAssetLibrary();
+
+		putAssetLibrary =
+			assetLibraryResource.putAssetLibraryByExternalReferenceCode(
+				postAssetLibrary.getExternalReferenceCode(),
+				randomPermissionsAssetLibrary);
+
+		assertEquals(randomPermissionsAssetLibrary, putAssetLibrary);
+		assertValid(putAssetLibrary);
+
+		Assert.assertNull(putAssetLibrary.getPermissions());
+
+		putAssetLibrary =
+			permissionsAssetLibraryResource.
+				putAssetLibraryByExternalReferenceCode(
+					postAssetLibrary.getExternalReferenceCode(),
+					randomPermissionsAssetLibrary);
+
+		Assert.assertNotNull(putAssetLibrary.getPermissions());
 
 		AssetLibrary newAssetLibrary =
 			testPutAssetLibraryByExternalReferenceCode_createAssetLibrary();
@@ -1298,6 +1435,55 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
+	public void testPutAssetLibraryByExternalReferenceCodePermissionsPage()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary =
+			testPutAssetLibraryByExternalReferenceCodePermissionsPage_addAssetLibrary();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			assetLibraryResource.
+				putAssetLibraryByExternalReferenceCodePermissionsPageHttpResponse(
+					assetLibrary.getExternalReferenceCode(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"PERMISSIONS"});
+								setRoleName(role.getName());
+							}
+						}
+					}));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.
+				putAssetLibraryByExternalReferenceCodePermissionsPageHttpResponse(
+					assetLibrary.getExternalReferenceCode(),
+					new Permission[] {
+						new Permission() {
+							{
+								setActionIds(new String[] {"-"});
+								setRoleName("-");
+							}
+						}
+					}));
+	}
+
+	protected AssetLibrary
+			testPutAssetLibraryByExternalReferenceCodePermissionsPage_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPutAssetLibraryByExternalReferenceCodePin()
 		throws Exception {
 
@@ -1331,6 +1517,50 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 	protected AssetLibrary
 			testPutAssetLibraryByExternalReferenceCodePin_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutAssetLibraryPermissionsPage() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary =
+			testPutAssetLibraryPermissionsPage_addAssetLibrary();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assertHttpResponseStatusCode(
+			200,
+			assetLibraryResource.putAssetLibraryPermissionsPageHttpResponse(
+				assetLibrary.getId(),
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"PERMISSIONS"});
+							setRoleName(role.getName());
+						}
+					}
+				}));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.putAssetLibraryPermissionsPageHttpResponse(
+				0L,
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(new String[] {"-"});
+							setRoleName("-");
+						}
+					}
+				}));
+	}
+
+	protected AssetLibrary testPutAssetLibraryPermissionsPage_addAssetLibrary()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
@@ -1665,6 +1895,14 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (assetLibrary.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("settings", additionalAssertFieldName)) {
 				if (assetLibrary.getSettings() == null) {
 					valid = false;
@@ -1975,6 +2213,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 				if (!Objects.deepEquals(
 						assetLibrary1.getNumberOfUserGroups(),
 						assetLibrary2.getNumberOfUserGroups())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibrary1.getPermissions(),
+						assetLibrary2.getPermissions())) {
 
 					return false;
 				}
@@ -2422,6 +2671,11 @@ public abstract class BaseAssetLibraryResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("permissions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("settings")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -2526,6 +2780,25 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		return randomAssetLibrary();
 	}
 
+	protected AssetLibrary randomPermissionsAssetLibrary() throws Exception {
+		AssetLibrary assetLibrary = randomAssetLibrary();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		assetLibrary.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return assetLibrary;
+	}
+
 	protected final JSONObject waitForFinish(
 			String expectedExecuteStatus, JSONObject jsonObject)
 		throws Exception {
@@ -2551,6 +2824,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	protected AssetLibraryResource assetLibraryResource;
 	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
+	protected AssetLibraryResource permissionsAssetLibraryResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected DepotEntry irrelevantDepotEntry;
 	protected com.liferay.portal.kernel.model.Group irrelevantDepotEntryGroup;

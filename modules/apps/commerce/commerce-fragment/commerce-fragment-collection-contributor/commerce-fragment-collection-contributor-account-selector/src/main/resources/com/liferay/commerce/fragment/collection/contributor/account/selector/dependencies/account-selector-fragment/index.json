@@ -3,6 +3,12 @@
 		{
 			"fields": [
 				{
+					"description": "",
+					"label": "default-panel-key",
+					"name": "defaultPanelKey",
+					"type": "text"
+				},
+				{
 					"dataType": "int",
 					"defaultValue": "460",
 					"label": "dropdown-height-px",

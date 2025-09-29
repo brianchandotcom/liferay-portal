@@ -1,8 +1,4 @@
 [@liferay_aui.style]
-	.account-selector-panel-content {
-	  width: ${configuration.dropdownWidth}px;
-	}
-
 	#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu {
 		max-height: ${configuration.dropdownHeight}px;
 		min-height: ${configuration.dropdownHeight}px;
@@ -13,6 +9,10 @@
 	#${fragmentEntryLinkNamespace}-account-selector-panel-slider {
 		display: flex;
 		transition: transform ${configuration.panelAnimationDuration}s linear;
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-panel-slider .account-selector-panel-content {
+		width: ${configuration.dropdownWidth}px;
 	}
 
 	#${fragmentEntryLinkNamespace}-account-selector-panel-wrapper {
@@ -27,8 +27,8 @@
 
 	<div class="account-selector-dropdown-menu[#if layoutMode != 'edit'] dropdown-menu[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
 		<div class="account-selector-dropdown-panel">
-			<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-step="0" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
-				<button class="btn btn-monospaced btn-unstyled[#if layoutMode != 'edit'] invisible[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
+			<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-active-panel-key="${configuration.defaultPanelKey}" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
+				<button class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
 					<svg class="lexicon-icon lexicon-icon-angle-left-small" focusable="false" role="presentation">
 						<use href="/o/admin-theme/images/clay/icons.svg#angle-left-small"></use>
 					</svg>

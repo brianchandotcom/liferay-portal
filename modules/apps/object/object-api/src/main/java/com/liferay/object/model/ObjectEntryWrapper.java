@@ -616,6 +616,11 @@ public class ObjectEntryWrapper
 		return model.isExpired();
 	}
 
+	@Override
+	public boolean isHead() {
+		return model.isHead();
+	}
+
 	/**
 	 * Returns <code>true</code> if this object entry is inactive.
 	 *

@@ -197,20 +197,20 @@ public class TaxonomyVocabularyResourceImpl
 		throws Exception {
 
 		if (parameters.containsKey("siteId")) {
-			TermsFilter siteFilter = new TermsFilter(Field.GROUP_ID);
+			TermsFilter termsFilter = new TermsFilter(Field.GROUP_ID);
 
-			siteFilter.addValue(String.valueOf(parameters.get("siteId")));
+			termsFilter.addValue(String.valueOf(parameters.get("siteId")));
 
 			if (filter != null) {
 				BooleanFilter booleanFilter = new BooleanFilter();
 
 				booleanFilter.add(filter, BooleanClauseOccur.MUST);
-				booleanFilter.add(siteFilter, BooleanClauseOccur.MUST);
+				booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 
 				filter = booleanFilter;
 			}
 			else {
-				filter = siteFilter;
+				filter = termsFilter;
 			}
 		}
 

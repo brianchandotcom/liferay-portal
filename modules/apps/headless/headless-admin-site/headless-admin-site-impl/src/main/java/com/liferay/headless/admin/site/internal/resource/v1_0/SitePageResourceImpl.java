@@ -122,7 +122,7 @@ public class SitePageResourceImpl
 
 			@Override
 			public String getItemClassName() {
-				return SitePage.class.getName();
+				return Layout.class.getName();
 			}
 
 			@Override

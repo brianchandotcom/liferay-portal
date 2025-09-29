@@ -1327,7 +1327,7 @@ public class ObjectEntryLocalServiceImpl
 				_externalReferenceCode, _groupId, objectDefinitionId),
 			(_externalReferenceCode, _groupId) -> getObjectEntry(
 				_externalReferenceCode, _groupId, objectDefinitionId),
-			groupId, objectDefinition.getName());
+			groupId, objectDefinition.getShortName());
 
 		_addResourcePermissions(objectDefinition, objectEntry);
 

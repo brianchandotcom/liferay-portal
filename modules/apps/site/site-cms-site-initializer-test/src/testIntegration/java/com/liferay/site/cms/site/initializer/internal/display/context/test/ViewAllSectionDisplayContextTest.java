@@ -64,12 +64,12 @@ public class ViewAllSectionDisplayContextTest
 		).put(
 			"multiple-files", StringPool.BLANK
 		).put(
-			"Blog",
+			"blog",
 			getRedirect(
 				"L_BLOG",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
-			"Knowledge Base",
+			"knowledge-base",
 			getRedirect(
 				"L_KNOWLEDGE_BASE",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)

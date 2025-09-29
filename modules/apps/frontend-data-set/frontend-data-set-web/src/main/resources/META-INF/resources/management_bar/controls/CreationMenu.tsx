@@ -78,6 +78,60 @@ const DropDown = ({
 	);
 };
 
+function CreationButton({
+	firstItem,
+	inEmptyState,
+}: {
+	firstItem: ICreationActionItem;
+	inEmptyState: boolean;
+}) {
+	const frontendDataSetContext = useContext(FrontendDataSetContext);
+
+	const {loadData} = frontendDataSetContext;
+
+	const opensInNewTab = firstItem.target === ACTION_ITEM_TARGETS.BLANK;
+
+	return (
+		<LinkOrButton
+			aria-label={!inEmptyState ? firstItem.label : undefined}
+			className={
+				inEmptyState ? 'btn btn-secondary' : 'btn btn-primary nav-btn'
+			}
+			data-testid="fdsCreationActionButton"
+			data-tooltip-align="top"
+			href={opensInNewTab ? firstItem.href : undefined}
+			onClick={() => {
+				if (opensInNewTab) {
+					return;
+				}
+
+				firstItem.onClick?.({
+					loadData,
+				});
+
+				if (firstItem.href || firstItem.target) {
+					triggerAction(firstItem, frontendDataSetContext);
+				}
+			}}
+			target={opensInNewTab ? '_blank' : undefined}
+			title={!inEmptyState ? firstItem.label : undefined}
+		>
+			{inEmptyState ? firstItem.label : Liferay.Language.get('new')}
+
+			{opensInNewTab && (
+				<span
+					className={classNames(
+						'inline-item-after',
+						inEmptyState ? 'inline-item' : 'd-inline-flex'
+					)}
+				>
+					<ClayIcon symbol="shortcut" />
+				</span>
+			)}
+		</LinkOrButton>
+	);
+}
+
 function CreationMenu({
 	inEmptyState,
 	primaryItems,
@@ -85,17 +139,9 @@ function CreationMenu({
 	inEmptyState: boolean;
 	primaryItems: Array<ICreationActionItem>;
 }) {
-	const frontendDataSetContext = useContext(FrontendDataSetContext);
-
-	const {loadData} = frontendDataSetContext;
-
 	if (primaryItems?.length === 0) {
 		return null;
 	}
-
-	const firstItem = primaryItems[0];
-
-	const opensInNewTab = firstItem.target === ACTION_ITEM_TARGETS.BLANK;
 
 	return (
 		<ul
@@ -110,52 +156,10 @@ function CreationMenu({
 						primaryItems={primaryItems}
 					/>
 				) : (
-					<LinkOrButton
-						aria-label={firstItem.label}
-						className={
-							inEmptyState
-								? 'btn btn-secondary'
-								: 'btn btn-primary nav-btn'
-						}
-						data-testid="fdsCreationActionButton"
-						data-tooltip-align="top"
-						href={opensInNewTab ? firstItem.href : undefined}
-						onClick={() => {
-							if (opensInNewTab) {
-								return;
-							}
-
-							firstItem.onClick?.({
-								loadData,
-							});
-
-							if (firstItem.href || firstItem.target) {
-								triggerAction(
-									firstItem,
-									frontendDataSetContext
-								);
-							}
-						}}
-						target={opensInNewTab ? '_blank' : undefined}
-						title={!inEmptyState ? firstItem.label : undefined}
-					>
-						{inEmptyState
-							? firstItem.label
-							: Liferay.Language.get('new')}
-
-						{opensInNewTab && (
-							<span
-								className={classNames(
-									'inline-item-after',
-									inEmptyState
-										? 'inline-item'
-										: 'd-inline-flex'
-								)}
-							>
-								<ClayIcon symbol="shortcut" />
-							</span>
-						)}
-					</LinkOrButton>
+					<CreationButton
+						firstItem={primaryItems[0]}
+						inEmptyState={inEmptyState}
+					/>
 				)}
 			</li>
 		</ul>

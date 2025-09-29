@@ -25,9 +25,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.search.query.Queries;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.dto.v1_0.Group;
 import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.internal.manager.GroupResourceManagerImpl;
@@ -112,8 +109,7 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 			_countryLocalService, _emailAddressLocalService,
 			_expandoColumnLocalService, _expandoTableLocalService,
 			_expandoValueLocalService, _listTypeLocalService,
-			_phoneLocalService, _queries, _regionLocalService, _searcher,
-			_searchRequestBuilderFactory, _userGroupLocalService,
+			_phoneLocalService, _regionLocalService, _userGroupLocalService,
 			_userGroupService, _userLocalService, _userService,
 			_websiteLocalService);
 	}
@@ -161,16 +157,7 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 	private PhoneLocalService _phoneLocalService;
 
 	@Reference
-	private Queries _queries;
-
-	@Reference
 	private RegionLocalService _regionLocalService;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	@Reference
 	private UserGroupLocalService _userGroupLocalService;

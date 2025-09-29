@@ -33,16 +33,29 @@ export default function SharedItemRenderer({
 }) {
 	const {assetType, fileTypeIcon, fileTypeIconColor, siteName} = itemData;
 
-	const [icon, iconColor] =
-		fileTypeIcon && fileTypeIconColor
-			? [fileTypeIcon, fileTypeIconColor]
-			: assetType?.includes('Web Content')
-				? ['forms', 'content-icon-basic-content']
-				: assetType?.includes('Blog')
-					? ['blogs', 'content-icon-blog']
-					: assetType?.includes('Knowledge')
-						? ['wiki', 'content-icon-knowledge-base']
-						: ['web-content', 'content-icon-web-content'];
+	let icon;
+	let iconColor;
+
+	if (fileTypeIcon && fileTypeIconColor) {
+		icon = fileTypeIcon;
+		iconColor = fileTypeIconColor;
+	}
+	else if (assetType?.includes('Web Content')) {
+		icon = 'forms';
+		iconColor = 'content-icon-basic-content';
+	}
+	else if (assetType?.includes('Blog')) {
+		icon = 'blogs';
+		iconColor = 'content-icon-blog';
+	}
+	else if (assetType?.includes('Knowledge')) {
+		icon = 'wiki';
+		iconColor = 'content-icon-knowledge-base';
+	}
+	else {
+		icon = 'web-content';
+		iconColor = 'content-icon-web-content';
+	}
 
 	const linkHref = useMemo(() => {
 		const {actionId} = options;

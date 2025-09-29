@@ -141,12 +141,11 @@ public abstract class BaseSourceProcessorTestCase {
 					modifiedFileNames);
 			}
 
-			Comparator<SourceFormatterMessage> comparator =
-				Comparator.comparing(SourceFormatterMessage::getMessage);
-
 			_checkExpectedMessages(
 				expectedMessages, newFile,
-				ListUtil.sort(sourceFormatterMessages, comparator),
+				ListUtil.sort(
+					sourceFormatterMessages,
+					Comparator.comparing(SourceFormatterMessage::getMessage)),
 				sourceProcessorTestParameters);
 		}
 		else {
@@ -219,10 +218,8 @@ public abstract class BaseSourceProcessorTestCase {
 				List<Integer> lineNumbers =
 					sourceProcessorTestParameters.getLineNumbers();
 
-				if (lineNumbers.stream(
-					).allMatch(
-						v -> v == -1
-					)) {
+				if (Collections.frequency(lineNumbers, -1) ==
+						lineNumbers.size()) {
 
 					continue;
 				}

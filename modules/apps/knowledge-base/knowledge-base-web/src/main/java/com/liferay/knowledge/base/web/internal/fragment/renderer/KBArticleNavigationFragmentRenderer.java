@@ -261,20 +261,16 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _printPortletMessageInfo(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String message) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String message)
+		throws IOException {
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			printWriter.write(
-				StringBundler.concat(
-					"<div class=\"portlet-msg-info\">",
-					_language.get(httpServletRequest, message), "</div>"));
-		}
-		catch (IOException ioException) {
-			_log.error(ioException);
-		}
+		printWriter.write(
+			StringBundler.concat(
+				"<div class=\"portlet-msg-info\">",
+				_language.get(httpServletRequest, message), "</div>"));
 	}
 
 	private void _writeCss(String fragmentElementId, PrintWriter printWriter)

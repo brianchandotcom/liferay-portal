@@ -155,13 +155,7 @@ public class KaleoDefinitionLocalServiceImpl
 		kaleoDefinition.setScope(scope);
 		kaleoDefinition.setVersion(version);
 		kaleoDefinition.setActive(false);
-
-		if (EmptyModelManagerUtil.isEmptyModel()) {
-			kaleoDefinition.setStatus(WorkflowConstants.STATUS_EMPTY);
-		}
-		else {
-			kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
-		}
+		kaleoDefinition.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 		kaleoDefinition = kaleoDefinitionPersistence.update(kaleoDefinition);
 

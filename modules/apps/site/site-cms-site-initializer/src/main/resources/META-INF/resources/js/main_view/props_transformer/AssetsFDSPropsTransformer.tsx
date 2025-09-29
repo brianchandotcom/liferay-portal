@@ -7,6 +7,7 @@ import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
+import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import formatActionURL from '../../common/utils/formatActionURL';
 import {ISearchAssetObjectEntry} from '../../structure_builder/types/AssetType';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
@@ -16,7 +17,9 @@ import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import ItemNavigationModalContent from '../modal/item_navigation_view/ItemNavigationModalContent';
 import createAssetAction from './actions/createAssetAction';
 import createFolderAction from './actions/createFolderAction';
-import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction';
+import deleteAssetEntriesBulkAction, {
+	executeBulkDeleteAction,
+} from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
 import shareAction from './actions/shareAction';
@@ -41,6 +44,7 @@ const ACTIONS = {
 export type AdditionalProps = {
 	autocompleteURL: string;
 	baseFolderViewURL: string;
+	brokenLinksCheckerEnabled: boolean;
 	cmsGroupId?: number;
 	collaboratorURLs: Record<string, string>;
 	contentViewURL: string;
@@ -210,7 +214,18 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				await deleteItemAction(itemData, loadData);
+				if (additionalProps.brokenLinksCheckerEnabled) {
+					openAssetUsageListModal({
+						itemsData: [itemData],
+						onDelete: async () => {
+							await deleteItemAction(itemData, loadData);
+						},
+						selectAll: false,
+					});
+				}
+				else {
+					await deleteItemAction(itemData, loadData);
+				}
 			}
 			else if (
 				action?.data?.id === 'export-for-translation' ||
@@ -264,7 +279,7 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 		},
-		onBulkActionItemClick: ({
+		onBulkActionItemClick: async ({
 			action,
 			selectedData,
 		}: {
@@ -281,10 +296,37 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				deleteAssetEntriesBulkAction({
-					apiURL: otherProps.apiURL,
-					selectedData,
-				});
+				if (additionalProps.brokenLinksCheckerEnabled) {
+					openAssetUsageListModal({
+						apiURL: otherProps.apiURL,
+						itemsData: selectedData.items,
+						onDelete: async () => {
+							executeBulkDeleteAction(
+								otherProps.apiURL as string,
+								selectedData
+							);
+						},
+
+						// Callback triggered after the request returns all assets
+						// with no usages, will skip the asset usage list modal.
+						// Instead, the default delete asset entries bulk action modal
+						// will be displayed.
+
+						onSkip: async () => {
+							deleteAssetEntriesBulkAction({
+								apiURL: otherProps.apiURL,
+								selectedData,
+							});
+						},
+						selectAll: selectedData.selectAll,
+					});
+				}
+				else {
+					deleteAssetEntriesBulkAction({
+						apiURL: otherProps.apiURL,
+						selectedData,
+					});
+				}
 			}
 			else if (action?.data?.id === 'download') {
 				triggerAssetBulkAction({

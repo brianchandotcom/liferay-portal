@@ -24,13 +24,13 @@ const DLVideoExternalShortcutPreview: React.FC<
 				{Liferay.Language.get('video-url')}
 
 				{labelTooltip && (
-					<span title={labelTooltip}>
-						<ClayIcon
-							aria-label={labelTooltip}
-							className="ml-1 text-secondary"
-							symbol="question-circle-full"
-						/>
-					</span>
+					<ClayIcon
+						className="lfr-portal-tooltip ml-1 text-secondary"
+						data-title={labelTooltip}
+						role="tooltip"
+						symbol="question-circle-full"
+						tabIndex={0}
+					/>
 				)}
 			</label>
 			<ClayInput

@@ -43,7 +43,9 @@ export class ContentsPage {
 
 		this.apiHelpers = new ApiHelpers(page);
 		this.newButton = page.locator('.nav-item').getByLabel('New');
-		this.publishButton = page.getByText('Publish', {exact: true});
+		this.publishButton = page
+			.getByText('Publish', {exact: true})
+			.or(page.getByText('Submit for Workflow', {exact: true}));
 	}
 
 	async goto() {

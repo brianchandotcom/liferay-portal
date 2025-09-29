@@ -43,7 +43,7 @@ test(
 	{
 		tag: '@LPD-50371',
 	},
-	async ({apiHelpers, page, structureBuilderPage}) => {
+	async ({apiHelpers, contentsPage, page, structureBuilderPage}) => {
 
 		// Create a Space
 
@@ -58,11 +58,17 @@ test(
 
 		// Create structure
 
+		const structureLabel = `StructureName${getRandomInt()}`;
+
 		const erc = await structureBuilderPage.createStructureFromData({
-			label: `StructureName${getRandomInt()}`,
+			label: structureLabel,
 			page: structureBuilderPage,
 			structureIds,
 		});
+
+		// Select spaces specifically
+
+		await structureBuilderPage.selectSpaces(['Default', spaceName]);
 
 		// Configure workflows and save
 
@@ -71,13 +77,30 @@ test(
 		// Configure workflows
 
 		await structureBuilderPage.setWorkflows([
-			{space: '', workflow: 'Single Approver'},
 			{space: spaceName, workflow: 'Single Approver'},
 		]);
 
-		// Publish and edit again to check they were persisted
+		// Publish
 
 		await structureBuilderPage.publishStructure();
+
+		// Check Publish button label by creating a content for both spaces
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel, spaceName);
+
+		await expect(
+			page.getByText('Submit for Workflow', {exact: true})
+		).toBeVisible();
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel, 'Default');
+
+		await expect(page.getByText('Publish', {exact: true})).toBeVisible();
+
+		// Edit again to check they were persisted
 
 		await structureBuilderPage.editStructure(erc);
 
@@ -85,7 +108,7 @@ test(
 
 		await expect(
 			page.getByLabel('Default Workflow').locator('option:checked')
-		).toHaveText('Single Approver');
+		).toHaveText('No Workflow');
 
 		await expect(
 			page
@@ -95,6 +118,10 @@ test(
 		).toHaveText('Single Approver');
 
 		// Remove workflow for created space and check it takes default one
+
+		await structureBuilderPage.setWorkflows([
+			{space: '', workflow: 'Single Approver'},
+		]);
 
 		await structureBuilderPage.setWorkflows([
 			{space: spaceName, workflow: 'Default: Single Approver'},

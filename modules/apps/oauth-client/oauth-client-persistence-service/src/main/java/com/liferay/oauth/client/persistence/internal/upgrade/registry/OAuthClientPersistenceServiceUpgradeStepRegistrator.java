@@ -36,7 +36,7 @@ public class OAuthClientPersistenceServiceUpgradeStepRegistrator
 		registry.register(
 			"1.2.0", "1.3.0",
 			UpgradeProcessFactory.addColumns(
-				"OAuthClientEntry", "customClaimsJSON VARCHAR(3999) null"));
+				"OAuthClientEntry", "customClaimsJSON TEXT null"));
 	}
 
 	@Reference

@@ -1740,9 +1740,7 @@ public class DefaultObjectEntryManagerImpl
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry)
 		throws Exception {
 
-		if (serviceBuilderObjectEntry.getObjectEntryId() ==
-				serviceBuilderObjectEntry.getHeadObjectEntryId()) {
-
+		if (serviceBuilderObjectEntry.isHead()) {
 			return;
 		}
 

@@ -266,6 +266,15 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
+	public boolean isHead() {
+		if (getHeadObjectEntryId() == getObjectEntryId()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isRootDescendantNode() {
 		if ((getRootObjectEntryId() != 0) &&
 			(getRootObjectEntryId() != getObjectEntryId())) {

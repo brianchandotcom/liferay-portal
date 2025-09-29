@@ -51,6 +51,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -1189,6 +1190,64 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	}
 
+	private synchronized void _downloadBuildReports() {
+		if (_buildReportsDownloaded.get()) {
+			return;
+		}
+
+		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
+
+		List<Workspace> workspaces = buildDatabase.getWorkspaces();
+
+		Workspace workspace = workspaces.get(0);
+
+		WorkspaceGitRepository workspaceGitRepository =
+			workspace.getPrimaryWorkspaceGitRepository();
+
+		String path = JenkinsResultsParserUtil.combine(
+			workspaceGitRepository.getName(), "/",
+			workspaceGitRepository.getBaseBranchSHA(), "/",
+			workspaceGitRepository.getSenderBranchSHA());
+
+		File baseDir = new File(
+			System.getProperty("java.io.tmpdir"),
+			"cached-build-report-files/" + path);
+
+		if (!baseDir.exists()) {
+			baseDir.mkdirs();
+
+			StringBuilder sb = new StringBuilder();
+
+			try {
+				sb.append(
+					JenkinsResultsParserUtil.getBuildProperty(
+						"cloud.ci.s3.bucket.build.reports.path"));
+
+				sb.append("/");
+				sb.append(path);
+
+				long start = System.currentTimeMillis();
+
+				CloudBucketUtil.syncS3Files(
+					JenkinsResultsParserUtil.getCanonicalPath(baseDir),
+					sb.toString());
+
+				long duration = System.currentTimeMillis() - start;
+
+				System.out.println(
+					"Downloaded build reports from AWS S3 bucket in " +
+						JenkinsResultsParserUtil.toDurationString(duration));
+			}
+			catch (IOException | TimeoutException exception) {
+				System.out.println(
+					"Unable to sync cached build reports for " + path + ":" +
+						exception.getMessage());
+			}
+		}
+
+		_buildReportsDownloaded.set(true);
+	}
+
 	private long _getDefaultTestDuration() {
 		JobProperty jobProperty = getJobProperty(
 			"test.batch.default.test.duration");
@@ -1390,6 +1449,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return;
 		}
 
+		_downloadBuildReports();
+
 		BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 		List<Workspace> workspaces = buildDatabase.getWorkspaces();
@@ -1415,27 +1476,9 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			"cached-build-report-files/" + path);
 
 		if (!baseDir.exists()) {
-			baseDir.mkdirs();
+			_cachedReportsInitialized = true;
 
-			StringBuilder sb = new StringBuilder();
-
-			try {
-				sb.append(
-					JenkinsResultsParserUtil.getBuildProperty(
-						"cloud.ci.s3.bucket.build.reports.path"));
-
-				sb.append("/");
-				sb.append(path);
-
-				CloudBucketUtil.syncS3Files(
-					JenkinsResultsParserUtil.getCanonicalPath(baseDir),
-					sb.toString());
-			}
-			catch (IOException | TimeoutException exception) {
-				System.out.println(
-					"Unable to sync cached build reports for " + path + ":" +
-						exception.getMessage());
-			}
+			return;
 		}
 
 		File[] buildReportFiles = baseDir.listFiles();
@@ -1697,6 +1740,8 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 
 	private static final int _SEGMENT_MAX_CHILDREN_DEFAULT = 25;
 
+	private static final AtomicBoolean _buildReportsDownloaded =
+		new AtomicBoolean();
 	private static final Pattern _jobNamePattern = Pattern.compile(
 		"(?<jobBaseName>.*)(?<jobVariant>\\([^\\)]+\\))");
 

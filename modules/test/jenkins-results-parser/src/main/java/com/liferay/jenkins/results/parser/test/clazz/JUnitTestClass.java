@@ -46,7 +46,8 @@ public class JUnitTestClass extends BaseTestClass {
 
 		List<TestClassReport> cachedTestClassReports = new ArrayList<>();
 
-		TestClassReport testClassReport = batchTestClassGroup.getCachedTestClassReport(testClassName);
+		TestClassReport testClassReport =
+			batchTestClassGroup.getCachedTestClassReport(testClassName);
 
 		if (testClassReport != null) {
 			cachedTestClassReports.add(
@@ -62,7 +63,9 @@ public class JUnitTestClass extends BaseTestClass {
 
 			_cachedTestClassReports = cachedTestClassReports;
 
-			for (TestClassReport cachedTestClassReport : cachedTestClassReports) {
+			for (TestClassReport cachedTestClassReport :
+					cachedTestClassReports) {
+
 				_cachedDownstreamBuildReport =
 					cachedTestClassReport.getDownstreamBuildReport();
 

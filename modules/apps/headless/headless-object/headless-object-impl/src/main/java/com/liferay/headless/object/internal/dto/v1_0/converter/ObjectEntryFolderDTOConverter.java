@@ -8,13 +8,16 @@ package com.liferay.headless.object.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.dto.v1_0.ParentObjectEntryFolderBrief;
+import com.liferay.headless.object.dto.v1_0.Status;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
@@ -158,6 +161,21 @@ public class ObjectEntryFolderDTOConverter
 
 						return group.getGroupKey();
 					});
+				setStatus(
+					() -> new Status() {
+						{
+							setCode(objectEntryFolder::getStatus);
+							setLabel(
+								() -> WorkflowConstants.getStatusLabel(
+									objectEntryFolder.getStatus()));
+							setLabel_i18n(
+								() -> _language.get(
+									LanguageResources.getResourceBundle(
+										dtoConverterContext.getLocale()),
+									WorkflowConstants.getStatusLabel(
+										objectEntryFolder.getStatus())));
+						}
+					});
 				setTitle(objectEntryFolder::getName);
 			}
 		};
@@ -202,6 +220,9 @@ public class ObjectEntryFolderDTOConverter
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private Language _language;
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

@@ -299,6 +299,16 @@ public class ObjectEntryFolderSerDes {
 			sb.append("\"");
 		}
 
+		if (objectEntryFolder.getStatus() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"status\": ");
+
+			sb.append(String.valueOf(objectEntryFolder.getStatus()));
+		}
+
 		if (objectEntryFolder.getTitle() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -520,6 +530,13 @@ public class ObjectEntryFolderSerDes {
 				"scopeKey", String.valueOf(objectEntryFolder.getScopeKey()));
 		}
 
+		if (objectEntryFolder.getStatus() == null) {
+			map.put("status", null);
+		}
+		else {
+			map.put("status", String.valueOf(objectEntryFolder.getStatus()));
+		}
+
 		if (objectEntryFolder.getTitle() == null) {
 			map.put("title", null);
 		}
@@ -622,6 +639,9 @@ public class ObjectEntryFolderSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {
@@ -778,6 +798,12 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scopeKey")) {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setScopeKey((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "status")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setStatus(
+						StatusSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "title")) {

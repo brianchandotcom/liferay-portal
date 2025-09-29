@@ -219,7 +219,13 @@ export default function DefaultPermissionForm({
 																disabled ||
 																(action.guestUnsupported &&
 																	role.key ===
-																		'Guest')
+																		'Guest') ||
+																(
+																	role.actions ||
+																	[]
+																).includes(
+																	action.key
+																)
 															}
 															inline
 															key={`${role.key}_${action.key}`}

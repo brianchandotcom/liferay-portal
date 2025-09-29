@@ -116,12 +116,31 @@ export default function BulkDefaultPermissionModalContent({
 			keyValues: {
 				defaultPermissions: JSON.stringify(currentValues),
 			},
+			onCreateError: () => {
+				setLoading(false);
+			},
 			onCreateSuccess: (_response) => {
 				closeModal();
 
 				setLoading(false);
 			},
-			selectedData,
+			selectedData:
+				className !== DEPOT_CLASS_NAME
+					? selectedData
+					: {
+							...selectedData,
+							items: selectedData.items.map((item: any) => {
+								return {
+									...item,
+									embedded: {
+										externalReferenceCode:
+											item.externalReferenceCode,
+										id: item.siteId,
+									},
+									entryClassName: DEPOT_CLASS_NAME,
+								};
+							}),
+						},
 			type: 'DefaultPermissionBulkAction',
 		});
 	}, [apiURL, closeModal, currentValues, selectedData]);

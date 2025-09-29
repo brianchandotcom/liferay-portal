@@ -69,6 +69,8 @@ export default function DefaultPermissionModalContent({
 							treePath: currentObjectEntry?.treePath || '',
 						},
 						onCreateError: ({error}) => {
+							setLoading(false);
+
 							throw new Error(error as unknown as any);
 						},
 						onCreateSuccess: () => {

@@ -49,6 +49,7 @@ function BulkActions({
 	const {
 		actionParameterName,
 		allItemsSelectedActive,
+		apiURL,
 		onBulkActionItemClick,
 		searchParam,
 		showBulkActionsManagementBar,
@@ -113,6 +114,7 @@ function BulkActions({
 				loadData,
 				namespace,
 				selectedData: {
+					apiURL,
 					items: allItemsSelectedActive ? [] : selectedItems,
 					keyValues: allItemsSelectedActive ? [] : selectedItemsValue,
 					selectAll: allItemsSelectedActive,

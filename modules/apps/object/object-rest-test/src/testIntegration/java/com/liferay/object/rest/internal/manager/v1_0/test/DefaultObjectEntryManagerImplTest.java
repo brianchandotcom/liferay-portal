@@ -4352,6 +4352,45 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry3.getId(), 1);
 
 		_assertApprovedObjectEntries();
+
+		ObjectEntry objectEntry4 = _updateObjectEntryVersion(
+			_objectDefinition1,
+			_addObjectEntry(
+				_objectDefinition1,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, 1),
+			2);
+
+		_defaultObjectEntryManager.expireObjectEntryByVersion(
+			_createDTOConverterContext(), _objectDefinition1,
+			objectEntry4.getId(), 2);
+
+		_user = _addUser();
+
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.VIEW}, _objectDefinition1, _user);
+
+		_assertApprovedObjectEntries(
+			_getLatestApprovedObjectEntry(
+				objectEntry4.getId(), _objectDefinition1));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ActionKeys.VIEW);
+
+		_assertApprovedObjectEntries();
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry4.getId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		_assertApprovedObjectEntries(
+			_getLatestApprovedObjectEntry(
+				objectEntry4.getId(), _objectDefinition1));
 	}
 
 	@FeatureFlag("LPD-17564")
@@ -9378,8 +9417,8 @@ public class DefaultObjectEntryManagerImplTest
 
 		assertEquals(
 			_defaultObjectEntryManager.getApprovedObjectEntries(
-				companyId, _objectDefinition1, null, null, dtoConverterContext,
-				null, null, null, null),
+				companyId, _objectDefinition1, null, null,
+				_createDTOConverterContext(), null, null, null, null),
 			Page.of(
 				ListUtil.fromArray(expectedObjectEntries), null,
 				expectedObjectEntries.length));

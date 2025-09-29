@@ -433,6 +433,32 @@ public class ObjectEntryResourceTest {
 						).build()),
 					false),
 				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
+					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
+					_OBJECT_FIELD_NAME_LARGE_ATTACHMENT_USER_COMPUTER_SOURCE,
+					_OBJECT_FIELD_NAME_LARGE_ATTACHMENT_USER_COMPUTER_SOURCE,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.
+								NAME_ACCEPTED_FILE_EXTENSIONS
+						).value(
+							"txt"
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_FILE_SOURCE
+						).value(
+							ObjectFieldSettingConstants.VALUE_USER_COMPUTER
+						).build(),
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
+						).value(
+							String.valueOf(_MAX_LARGE_FILE_SIZE_VALUE)
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_BOOLEAN,
 					ObjectFieldConstants.DB_TYPE_BOOLEAN, true, false, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_BOOLEAN,
@@ -9386,6 +9412,35 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
+	@FeatureFlag("LPD-65423")
+	@Test
+	public void testPostCustomObjectEntryWithLargeAttachmentObjectField()
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				_OBJECT_FIELD_NAME_LARGE_ATTACHMENT_USER_COMPUTER_SOURCE,
+				JSONUtil.put(
+					"fileBase64", RandomTestUtil.randomBase64BySize(50000000)
+				).put(
+					"name", StringUtil.randomString() + ".txt"
+				)
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		_assertAttachmentJSONObject(
+			_dlFileEntryLocalService.getDLFileEntry(
+				_testDLFileEntryModelListener.getLastFileEntryId()),
+			null,
+			jsonObject.getJSONObject(
+				_OBJECT_FIELD_NAME_LARGE_ATTACHMENT_USER_COMPUTER_SOURCE),
+			JSONUtil.put(
+				"externalReferenceCode", "L_GLOBAL"
+			).put(
+				"type", Scope.Type.SITE.getValue()
+			));
+	}
+
 	@Test
 	public void testPostCustomObjectEntryWithManyToOneRelationshipPriorities()
 		throws Exception {
@@ -14823,7 +14878,9 @@ public class ObjectEntryResourceTest {
 			Assert.assertNotNull(jsonObject.get("externalReferenceCode"));
 		}
 
-		Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
+		if (fileBase64 != null) {
+			Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
+		}
 
 		if (scopeJSONObject == null) {
 			Assert.assertFalse(jsonObject.has("scope"));
@@ -19564,6 +19621,8 @@ public class ObjectEntryResourceTest {
 
 	private static final int _MAX_FILE_SIZE_VALUE = 1;
 
+	private static final int _MAX_LARGE_FILE_SIZE_VALUE = 100;
+
 	private static final String _NEW_OBJECT_FIELD_VALUE_1 =
 		RandomTestUtil.randomString();
 
@@ -19611,6 +19670,10 @@ public class ObjectEntryResourceTest {
 
 	private static final String _OBJECT_FIELD_NAME_INTEGER =
 		"x" + RandomTestUtil.randomString();
+
+	private static final String
+		_OBJECT_FIELD_NAME_LARGE_ATTACHMENT_USER_COMPUTER_SOURCE =
+			"x" + RandomTestUtil.randomString();
 
 	private static final String _OBJECT_FIELD_NAME_LOCALIZED_LONG_TEXT =
 		"x" + RandomTestUtil.randomString();

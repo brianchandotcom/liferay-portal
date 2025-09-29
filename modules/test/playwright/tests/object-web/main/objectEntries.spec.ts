@@ -2599,6 +2599,67 @@ test.describe('Manage object entries through View Object Entries', () => {
 		}
 	);
 
+	test('verify that relationship API is called only once when adding object entry', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+			ObjectRelationshipAPI
+		);
+
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			'L_ACCOUNT',
+			{
+				label: {
+					en_US: 'objectRelationshipLabel' + getRandomInt(),
+				},
+				name: 'objectRelationshipName' + getRandomInt(),
+				objectDefinitionExternalReferenceCode1: 'L_ACCOUNT',
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition.externalReferenceCode,
+				type: 'oneToMany',
+			}
+		);
+
+		let apiCalls = 0;
+
+		page.on('request', (request) => {
+			if (
+				request
+					.url()
+					.includes('/o/headless-admin-user/v1.0/accounts') &&
+				request.method() === 'GET'
+			) {
+				apiCalls++;
+			}
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		await page.waitForResponse(
+			(response) =>
+				response
+					.url()
+					.includes('/o/headless-admin-user/v1.0/accounts') &&
+				response.request().method() === 'GET'
+		);
+
+		expect(apiCalls).toBe(1);
+	});
+
 	test('verify that its not possible to paste file on richText field', async ({
 		apiHelpers,
 		page,

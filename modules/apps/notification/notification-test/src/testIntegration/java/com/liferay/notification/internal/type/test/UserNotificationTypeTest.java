@@ -212,6 +212,86 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 		_assertNotificationQueueEntry(user.getFullName());
 	}
 
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testSendNotificationRecipientTypeTermAssignee()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			addObjectDefinitionWithNotificationTemplateObjectAction(
+				Collections.singletonList(
+					NotificationRecipientSettingUtil.
+						createNotificationRecipientSetting(
+							NotificationRecipientConstants.TYPE_TERM,
+							"[%OBJECT_ENTRY_ASSIGNEE%]")),
+				"[%OBJECT_ENTRY_ASSIGNEE%]",
+				NotificationConstants.TYPE_USER_NOTIFICATION);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		addViewResourcePermission(objectDefinition, role);
+
+		User user1 = UserTestUtil.addUser();
+
+		_roleLocalService.addUserRole(user1.getUserId(), role.getRoleId());
+
+		objectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"assignee",
+						HashMapBuilder.put(
+							"externalReferenceCode",
+							user1.getExternalReferenceCode()
+						).put(
+							"type", "User"
+						).build()
+					).build();
+				}
+			},
+			null);
+
+		Assert.assertEquals(
+			1,
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				user1.getUserId()));
+		assertNotificationQueueEntrySubject(user1.getFullName());
+
+		User user2 = UserTestUtil.addUser();
+
+		_roleLocalService.addUserRole(user2.getUserId(), role.getRoleId());
+
+		objectEntryManager.addObjectEntry(
+			dtoConverterContext, objectDefinition,
+			new ObjectEntry() {
+				{
+					properties = HashMapBuilder.<String, Object>put(
+						"assignee",
+						HashMapBuilder.put(
+							"externalReferenceCode",
+							role.getExternalReferenceCode()
+						).put(
+							"type", "Role"
+						).build()
+					).build();
+				}
+			},
+			null);
+
+		Assert.assertEquals(
+			2,
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				user1.getUserId()));
+		Assert.assertEquals(
+			1,
+			_userNotificationEventLocalService.getUserNotificationEventsCount(
+				user2.getUserId()));
+		assertNotificationQueueEntrySubject(role.getName());
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
 	@Test
 	public void testSendNotificationRecipientTypeTermChildAuthorTerm()
 		throws Exception {

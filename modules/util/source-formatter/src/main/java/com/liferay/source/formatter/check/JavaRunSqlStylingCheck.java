@@ -46,16 +46,11 @@ public class JavaRunSqlStylingCheck extends BaseJavaTermCheck {
 
 			String parameter = parameterList.get(0);
 
-			String newParameter = parameter.replaceAll(
-				"([\\s\\S]*)?(?<!\\[\\$)\\b(FALSE|TRUE)\\b(?!\\$\\])" +
-					"([\\s\\S]*)",
-				"$1[\\$$2\\$]$3");
+			String newParameter = parameter;
 
-			if (newParameter.endsWith(";\"") &&
-				!newParameter.endsWith("\";\"")) {
-
+			if (parameter.endsWith(";\"") && !parameter.endsWith("\";\"")) {
 				newParameter = StringUtil.removeLast(
-					newParameter, StringPool.SEMICOLON);
+					parameter, StringPool.SEMICOLON);
 			}
 
 			if (parameter.equals(newParameter)) {

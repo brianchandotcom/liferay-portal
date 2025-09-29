@@ -5,6 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ClassLoaderUtil;
 
@@ -47,18 +50,17 @@ import org.apache.http.ssl.SSLContexts;
 
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author André de Oliveira
  */
-public class RestHighLevelClientFactory {
+public class RestClientTransportFactory {
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public RestHighLevelClient newRestHighLevelClient() {
+	public RestClientTransport newRestClientTransport() {
 		RestClientBuilder restClientBuilder = RestClient.builder(
 			_getHttpHosts()
 		).setDefaultHeaders(
@@ -77,110 +79,112 @@ public class RestHighLevelClientFactory {
 		);
 
 		return ClassLoaderUtil.getWithContextClassLoader(
-			() -> new RestHighLevelClient(restClientBuilder), getClass());
+			() -> new RestClientTransport(
+				restClientBuilder.build(), new JacksonJsonpMapper()),
+			getClass());
 	}
 
 	public static class Builder {
 
 		public Builder authenticationEnabled(boolean authenticationEnabled) {
-			_restHighLevelClientFactory._authenticationEnabled =
+			_restClientTransportFactory._authenticationEnabled =
 				authenticationEnabled;
 
 			return this;
 		}
 
-		public RestHighLevelClientFactory build() {
-			return new RestHighLevelClientFactory(_restHighLevelClientFactory);
+		public RestClientTransportFactory build() {
+			return new RestClientTransportFactory(_restClientTransportFactory);
 		}
 
 		public Builder httpSSLEnabled(boolean httpSSLEnabled) {
-			_restHighLevelClientFactory._httpSSLEnabled = httpSSLEnabled;
+			_restClientTransportFactory._httpSSLEnabled = httpSSLEnabled;
 
 			return this;
 		}
 
 		public Builder maxConnections(int maxConnections) {
-			_restHighLevelClientFactory._maxConnections = maxConnections;
+			_restClientTransportFactory._maxConnections = maxConnections;
 
 			return this;
 		}
 
 		public Builder maxConnectionsPerRoute(int maxConnectionsPerRoute) {
-			_restHighLevelClientFactory._maxConnectionsPerRoute =
+			_restClientTransportFactory._maxConnectionsPerRoute =
 				maxConnectionsPerRoute;
 
 			return this;
 		}
 
 		public Builder networkHostAddresses(String[] networkHostAddresses) {
-			_restHighLevelClientFactory._networkHostAddresses =
+			_restClientTransportFactory._networkHostAddresses =
 				networkHostAddresses;
 
 			return this;
 		}
 
 		public Builder password(String password) {
-			_restHighLevelClientFactory._password = password;
+			_restClientTransportFactory._password = password;
 
 			return this;
 		}
 
 		public Builder proxyConfig(ProxyConfig proxyConfig) {
-			_restHighLevelClientFactory._proxyConfig = proxyConfig;
+			_restClientTransportFactory._proxyConfig = proxyConfig;
 
 			return this;
 		}
 
 		public Builder truststorePassword(String truststorePassword) {
-			_restHighLevelClientFactory._truststorePassword =
+			_restClientTransportFactory._truststorePassword =
 				truststorePassword;
 
 			return this;
 		}
 
 		public Builder truststorePath(String truststorePath) {
-			_restHighLevelClientFactory._truststorePath = truststorePath;
+			_restClientTransportFactory._truststorePath = truststorePath;
 
 			return this;
 		}
 
 		public Builder truststoreType(String truststoreType) {
-			_restHighLevelClientFactory._truststoreType = truststoreType;
+			_restClientTransportFactory._truststoreType = truststoreType;
 
 			return this;
 		}
 
 		public Builder userName(String userName) {
-			_restHighLevelClientFactory._userName = userName;
+			_restClientTransportFactory._userName = userName;
 
 			return this;
 		}
 
-		private final RestHighLevelClientFactory _restHighLevelClientFactory =
-			new RestHighLevelClientFactory();
+		private final RestClientTransportFactory _restClientTransportFactory =
+			new RestClientTransportFactory();
 
 	}
 
-	private RestHighLevelClientFactory() {
+	private RestClientTransportFactory() {
 	}
 
-	private RestHighLevelClientFactory(
-		RestHighLevelClientFactory restHighLevelClientFactory) {
+	private RestClientTransportFactory(
+		RestClientTransportFactory restClientTransportFactory) {
 
 		_authenticationEnabled =
-			restHighLevelClientFactory._authenticationEnabled;
-		_httpSSLEnabled = restHighLevelClientFactory._httpSSLEnabled;
-		_maxConnections = restHighLevelClientFactory._maxConnections;
+			restClientTransportFactory._authenticationEnabled;
+		_httpSSLEnabled = restClientTransportFactory._httpSSLEnabled;
+		_maxConnections = restClientTransportFactory._maxConnections;
 		_maxConnectionsPerRoute =
-			restHighLevelClientFactory._maxConnectionsPerRoute;
+			restClientTransportFactory._maxConnectionsPerRoute;
 		_networkHostAddresses =
-			restHighLevelClientFactory._networkHostAddresses;
-		_password = restHighLevelClientFactory._password;
-		_truststorePassword = restHighLevelClientFactory._truststorePassword;
-		_truststorePath = restHighLevelClientFactory._truststorePath;
-		_truststoreType = restHighLevelClientFactory._truststoreType;
-		_proxyConfig = restHighLevelClientFactory._proxyConfig;
-		_userName = restHighLevelClientFactory._userName;
+			restClientTransportFactory._networkHostAddresses;
+		_password = restClientTransportFactory._password;
+		_truststorePassword = restClientTransportFactory._truststorePassword;
+		_truststorePath = restClientTransportFactory._truststorePath;
+		_truststoreType = restClientTransportFactory._truststoreType;
+		_proxyConfig = restClientTransportFactory._proxyConfig;
+		_userName = restClientTransportFactory._userName;
 	}
 
 	private CredentialsProvider _createCredentialsProvider() {

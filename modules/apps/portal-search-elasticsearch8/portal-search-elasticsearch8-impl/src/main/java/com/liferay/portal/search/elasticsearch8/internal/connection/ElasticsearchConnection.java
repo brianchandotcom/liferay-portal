@@ -5,14 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.connection;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.io.IOException;
 
 import java.util.function.Consumer;
-
-import org.elasticsearch.client.RestHighLevelClient;
 
 /**
  * @author Michael C. Han
@@ -21,18 +23,18 @@ public class ElasticsearchConnection {
 
 	public void close() {
 		try {
-			if (_restHighLevelClient == null) {
+			if (_elasticsearchClient == null) {
 				return;
 			}
 
 			try {
-				_restHighLevelClient.close();
+				_elasticsearchClient.close();
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);
 			}
 
-			_restHighLevelClient = null;
+			_elasticsearchClient = null;
 		}
 		finally {
 			if (_postCloseRunnable != null) {
@@ -52,15 +54,23 @@ public class ElasticsearchConnection {
 			_preConnectElasticsearchConnectionConsumer.accept(this);
 		}
 
-		_restHighLevelClient = _createRestHighLevelClient();
+		_elasticsearchClient = _createElasticsearchClient();
 	}
 
 	public String getConnectionId() {
 		return _connectionId;
 	}
 
-	public RestHighLevelClient getRestHighLevelClient() {
-		return _restHighLevelClient;
+	public ElasticsearchClient getElasticsearchClient() {
+		return _elasticsearchClient;
+	}
+
+	public JsonpMapper getJsonpMapper() {
+		return _restClientTransport.jsonpMapper();
+	}
+
+	public RestClientTransport getRestClientTransport() {
+		return _restClientTransport;
 	}
 
 	public boolean isActive() {
@@ -68,7 +78,7 @@ public class ElasticsearchConnection {
 	}
 
 	public boolean isConnected() {
-		if (_restHighLevelClient != null) {
+		if (_elasticsearchClient != null) {
 			return true;
 		}
 
@@ -139,32 +149,37 @@ public class ElasticsearchConnection {
 		_userName = userName;
 	}
 
-	private RestHighLevelClient _createRestHighLevelClient() {
-		return RestHighLevelClientFactory.builder(
-		).authenticationEnabled(
-			_authenticationEnabled
-		).httpSSLEnabled(
-			_httpSSLEnabled
-		).maxConnections(
-			_maxConnections
-		).maxConnectionsPerRoute(
-			_maxConnectionsPerRoute
-		).networkHostAddresses(
-			_networkHostAddresses
-		).password(
-			_password
-		).truststorePassword(
-			_truststorePassword
-		).proxyConfig(
-			_proxyConfig
-		).truststorePath(
-			_truststorePath
-		).truststoreType(
-			_truststoreType
-		).userName(
-			_userName
-		).build(
-		).newRestHighLevelClient();
+	private ElasticsearchClient _createElasticsearchClient() {
+		RestClientTransport restClientTransport =
+			RestClientTransportFactory.builder(
+			).authenticationEnabled(
+				_authenticationEnabled
+			).httpSSLEnabled(
+				_httpSSLEnabled
+			).maxConnections(
+				_maxConnections
+			).maxConnectionsPerRoute(
+				_maxConnectionsPerRoute
+			).networkHostAddresses(
+				_networkHostAddresses
+			).password(
+				_password
+			).truststorePassword(
+				_truststorePassword
+			).proxyConfig(
+				_proxyConfig
+			).truststorePath(
+				_truststorePath
+			).truststoreType(
+				_truststoreType
+			).userName(
+				_userName
+			).build(
+			).newRestClientTransport();
+
+		_restClientTransport = restClientTransport;
+
+		return new ElasticsearchClient(restClientTransport);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -173,6 +188,7 @@ public class ElasticsearchConnection {
 	private boolean _active;
 	private boolean _authenticationEnabled;
 	private String _connectionId;
+	private ElasticsearchClient _elasticsearchClient;
 	private boolean _httpSSLEnabled;
 	private int _maxConnections;
 	private int _maxConnectionsPerRoute;
@@ -182,7 +198,7 @@ public class ElasticsearchConnection {
 	private Consumer<ElasticsearchConnection>
 		_preConnectElasticsearchConnectionConsumer;
 	private ProxyConfig _proxyConfig;
-	private RestHighLevelClient _restHighLevelClient;
+	private RestClientTransport _restClientTransport;
 	private String _truststorePassword;
 	private String _truststorePath;
 	private String _truststoreType;

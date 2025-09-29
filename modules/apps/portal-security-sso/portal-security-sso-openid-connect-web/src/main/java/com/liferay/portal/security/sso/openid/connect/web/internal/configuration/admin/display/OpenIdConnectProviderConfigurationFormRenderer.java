@@ -45,41 +45,21 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
-		int[] customClaimsIndexes = ParamUtil.getIntegerValues(
-			httpServletRequest, "customClaimsIndexes");
-
-		List<String> customClaims = new ArrayList<>();
-
-		for (int customClaimsIndex : customClaimsIndexes) {
-			String key = ParamUtil.getString(
-				httpServletRequest, "customClaimsKey-" + customClaimsIndex);
-
-			if (key.isEmpty()) {
-				continue;
-			}
-
-			String value = ParamUtil.getString(
-				httpServletRequest, "customClaimsValue-" + customClaimsIndex);
-
-			customClaims.add(key + StringPool.EQUAL + value);
-		}
-
-		if (customClaims.isEmpty()) {
-			customClaims.add(StringPool.BLANK);
-		}
-
 		return HashMapBuilder.<String, Object>put(
 			"authorizationEndpoint",
 			ParamUtil.getString(httpServletRequest, "authorizationEndpoint")
 		).put(
 			"customAuthorizationRequestParameters",
 			_getStringValues(
-				httpServletRequest, "customAuthorizationRequestParameters")
+				httpServletRequest, false,
+				"customAuthorizationRequestParameters")
 		).put(
-			"customClaims", customClaims.toArray(String[]::new)
+			"customClaims",
+			_getStringValues(httpServletRequest, true, "customClaims")
 		).put(
 			"customTokenRequestParameters",
-			_getStringValues(httpServletRequest, "customTokenRequestParameters")
+			_getStringValues(
+				httpServletRequest, false, "customTokenRequestParameters")
 		).put(
 			"discoveryEndpoint",
 			ParamUtil.getString(httpServletRequest, "discoveryEndpoint")
@@ -89,7 +69,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 				httpServletRequest, "discoveryEndpointCacheInMillis")
 		).put(
 			"idTokenSigningAlgValues",
-			_getStringValues(httpServletRequest, "idTokenSigningAlgValues")
+			_getStringValues(
+				httpServletRequest, false, "idTokenSigningAlgValues")
 		).put(
 			"issuerURL", ParamUtil.getString(httpServletRequest, "issuerURL")
 		).put(
@@ -110,7 +91,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		).put(
 			"scopes", ParamUtil.getString(httpServletRequest, "scopes")
 		).put(
-			"subjectTypes", _getStringValues(httpServletRequest, "subjectTypes")
+			"subjectTypes",
+			_getStringValues(httpServletRequest, false, "subjectTypes")
 		).put(
 			"tokenConnectionTimeout",
 			ParamUtil.getInteger(httpServletRequest, "tokenConnectionTimeout")
@@ -150,8 +132,29 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		}
 	}
 
+	private String _getKeyValueParam(
+		HttpServletRequest httpServletRequest, int index, String paramName) {
+
+		String key = ParamUtil.getString(
+			httpServletRequest, paramName + "Key-" + index);
+
+		if (key.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		String value = ParamUtil.getString(
+			httpServletRequest, paramName + "Value-" + index);
+
+		if (value.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		return key + StringPool.EQUAL + value;
+	}
+
 	private String[] _getStringValues(
-		HttpServletRequest httpServletRequest, String paramName) {
+		HttpServletRequest httpServletRequest, boolean keyValueParam,
+		String paramName) {
 
 		List<String> values = new ArrayList<>();
 
@@ -159,8 +162,15 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			httpServletRequest, paramName + "Indexes");
 
 		for (int index : indexes) {
-			String value = ParamUtil.getString(
-				httpServletRequest, paramName + StringPool.DASH + index);
+			String value = null;
+
+			if (keyValueParam) {
+				value = _getKeyValueParam(httpServletRequest, index, paramName);
+			}
+			else {
+				value = ParamUtil.getString(
+					httpServletRequest, paramName + StringPool.DASH + index);
+			}
 
 			if (value.isEmpty()) {
 				continue;

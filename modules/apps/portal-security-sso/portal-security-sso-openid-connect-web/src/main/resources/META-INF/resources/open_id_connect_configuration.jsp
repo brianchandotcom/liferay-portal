@@ -133,12 +133,61 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 	<aui:input name="customTokenRequestParametersIndexes" type="hidden" value="<%= StringUtil.merge(customTokenRequestParametersIndexes) %>" />
 </aui:fieldset>
 
+<aui:fieldset helpMessage="custom-claims-help" id='<%= liferayPortletResponse.getNamespace() + "customClaimsContentBox" %>' label="custom-claims">
+
+	<%
+	int[] customClaimsIndexes = openIdConnectProviderConfigurationDisplayContext.getCustomClaimsIndexes();
+	String[] customClaimsKeys = openIdConnectProviderConfigurationDisplayContext.getCustomClaimsKeys();
+	String[] customClaimsValues = openIdConnectProviderConfigurationDisplayContext.getCustomClaimsValues();
+
+	for (int i = 0; i < customClaimsIndexes.length; i++) {
+		int index = i;
+
+		String claimColumnId = "customClaimsKey-" + index;
+		String fieldId = "customClaimsValue-" + index;
+	%>
+
+		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
+			<div class="form-group-item">
+				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
+
+					<%
+					for (ExpandoColumn expandoColumn : openIdConnectProviderConfigurationDisplayContext.getAvailableCustomFields()) {
+					%>
+
+						<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), customClaimsKeys[i]) %>" value="<%= expandoColumn.getName() %>"></aui:option>
+
+					<%
+					}
+					%>
+
+				</aui:select>
+			</div>
+
+			<div class="form-group-item">
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-claim" name="<%= fieldId %>" type="text" value="<%= customClaimsValues[i] %>" />
+			</div>
+		</div>
+
+	<%
+	}
+	%>
+
+	<aui:input name="customClaimsIndexes" type="hidden" value="<%= StringUtil.merge(customClaimsIndexes) %>" />
+</aui:fieldset>
+
 <aui:script use="liferay-auto-fields">
 	new Liferay.AutoFields({
 		contentBox:
 			'#<portlet:namespace />customAuthorizationRequestParametersContentBox',
 		fieldIndexes:
 			'<portlet:namespace />customAuthorizationRequestParametersIndexes',
+		namespace: '<portlet:namespace />',
+	}).render();
+
+	new Liferay.AutoFields({
+		contentBox: '#<portlet:namespace />customClaimsContentBox',
+		fieldIndexes: '<portlet:namespace />customClaimsIndexes',
 		namespace: '<portlet:namespace />',
 	}).render();
 

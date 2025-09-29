@@ -17,7 +17,8 @@ Export-Package:\
 	com.liferay.batch.engine.service.persistence,\
 	com.liferay.batch.engine.strategy,\
 	com.liferay.batch.engine.thread.local,\
-	com.liferay.batch.engine.unit
+	com.liferay.batch.engine.unit,\
+	com.liferay.batch.engine.zip
 Import-Package:\
 	org.hibernate.proxy,\
 	\

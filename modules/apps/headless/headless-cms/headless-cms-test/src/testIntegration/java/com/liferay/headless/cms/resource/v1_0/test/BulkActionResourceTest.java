@@ -295,7 +295,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		}
 		else {
 			Assert.assertEquals(
-				expectedUsages.longValue(), GetterUtil.getLong(usages));
+				expectedUsages.longValue(), GetterUtil.getLong(usages, -1));
 		}
 
 		Assert.assertEquals(expectedClassPK, (long)bulkActionItem.getClassPK());

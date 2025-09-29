@@ -427,6 +427,39 @@ public class GraphQLServletTest {
 	}
 
 	@Test
+	public void testRegisterFileEntryTypeWithAnUniqueName() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(GraphQLServletTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<ServletData> serviceRegistration =
+			bundleContext.registerService(
+				ServletData.class,
+				new FileEntryTestServletData(new FileEntryTestDTO()), null);
+
+		try {
+			JSONAssert.assertEquals(
+				JSONUtil.put(
+					JSONUtil.put("name", "testField")
+				).toString(),
+				JSONUtil.getValueAsString(
+					_invoke(
+						new GraphQLField(
+							"__type(name: \"com_liferay_portal_vulcan_" +
+								"internal_graphql_servlet_test_" +
+									"GraphQLServletTest_FileEntryTestDTO\")",
+							new GraphQLField(
+								"fields", new GraphQLField("name"))),
+						"query"),
+					"JSONObject/data", "JSONObject/__type", "JSONArray/fields"),
+				JSONCompareMode.LENIENT);
+		}
+		finally {
+			serviceRegistration.unregister();
+		}
+	}
+
+	@Test
 	public void testSchema() throws Exception {
 
 		// Mutation fields
@@ -515,6 +548,64 @@ public class GraphQLServletTest {
 			false, namespacedQueryFieldsJSONArray, false, "testDTO");
 		_assertGraphQLSchemaField(
 			false, namespacedQueryFieldsJSONArray, false, "testDTOPage");
+	}
+
+	@GraphQLName("FileEntry")
+	public static class FileEntryTestDTO {
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		protected String testField;
+
+	}
+
+	public static class FileEntryTestQuery {
+
+		public FileEntryTestQuery(FileEntryTestDTO fileEntryTestDTO) {
+			_fileEntryTestDTO = fileEntryTestDTO;
+		}
+
+		@com.liferay.portal.vulcan.graphql.annotation.GraphQLField
+		public FileEntryTestDTO fileEntryTestDTO() {
+			return _fileEntryTestDTO;
+		}
+
+		private final FileEntryTestDTO _fileEntryTestDTO;
+
+	}
+
+	public static class FileEntryTestServletData implements ServletData {
+
+		public FileEntryTestServletData(FileEntryTestDTO fileEntryTestDTO) {
+			_fileEntryTestQuery = new FileEntryTestQuery(fileEntryTestDTO);
+		}
+
+		@Override
+		public String getApplicationName() {
+			return "fileEntryTest";
+		}
+
+		@Override
+		public Object getMutation() {
+			return null;
+		}
+
+		@Override
+		public String getPath() {
+			return "/file-entry-test-path-graphql/v1_0";
+		}
+
+		@Override
+		public Object getQuery() {
+			return _fileEntryTestQuery;
+		}
+
+		@Override
+		public boolean isJaxRsResourceInvocation() {
+			return false;
+		}
+
+		private final FileEntryTestQuery _fileEntryTestQuery;
+
 	}
 
 	public static class TestDTO {

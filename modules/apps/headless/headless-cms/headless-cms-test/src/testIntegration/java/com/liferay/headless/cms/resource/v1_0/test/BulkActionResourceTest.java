@@ -265,13 +265,26 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 	private void _assertBulkActionItem(
 		BulkActionItem bulkActionItem, long expectedClassPK,
-		String expectedDeletionType, String expectedMimeType,
-		String expectedName, String expectedType, Long usages1) {
+		String expectedDeletionType, Long expectedItemsCount,
+		String expectedMimeType, String expectedName, String expectedType,
+		Long usages1) {
 
 		Map<String, Object> attributes = bulkActionItem.getAttributes();
 
 		Assert.assertEquals(
 			expectedDeletionType, attributes.get("deletionType"));
+
+		Object itemsCount = attributes.get("itemsCount");
+
+		if (expectedItemsCount == null) {
+			Assert.assertNull(expectedItemsCount);
+		}
+		else {
+			Assert.assertEquals(
+				expectedItemsCount.longValue(),
+				GetterUtil.getLong(itemsCount, -1));
+		}
+
 		Assert.assertEquals(expectedMimeType, attributes.get("mimeType"));
 		Assert.assertEquals(expectedType, attributes.get("type"));
 
@@ -443,7 +456,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			objectEntryFolder1.getObjectEntryFolderId());
 
 		_testPostBulkActionItemPreviewPageWithBulkActionItems(
-			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder2);
+			bulkAction, expectedDeletionType, 2L, objectEntry,
+			objectEntryFolder1);
+		_testPostBulkActionItemPreviewPageWithBulkActionItems(
+			bulkAction, expectedDeletionType, 0L, objectEntry,
+			objectEntryFolder2);
 		_testPostBulkActionItemPreviewPageWithFetchChildrenEnabled(
 			bulkAction, expectedDeletionType, objectEntry, objectEntryFolder1,
 			objectEntryFolder2);
@@ -454,7 +471,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 	private void _testPostBulkActionItemPreviewPageWithBulkActionItems(
 			BulkAction bulkAction, String expectedDeletionType,
-			ObjectEntry objectEntry, ObjectEntryFolder objectEntryFolder)
+			Long expectedItemsCount, ObjectEntry objectEntry,
+			ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
 		bulkAction.setBulkActionItems(
@@ -482,22 +500,22 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		if (name.compareTo(objectEntryFolder.getName()) < 0) {
 			_assertBulkActionItem(
 				items1.get(0), objectEntryFolder.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder.getName(),
-				"FOLDER", null);
+				expectedDeletionType, expectedItemsCount, null,
+				objectEntryFolder.getName(), "FOLDER", null);
 			_assertBulkActionItem(
 				items1.get(1), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
+				expectedDeletionType, null, "basic-web-content",
 				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
 		}
 		else {
 			_assertBulkActionItem(
 				items1.get(0), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
+				expectedDeletionType, null, "basic-web-content",
 				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
 			_assertBulkActionItem(
 				items1.get(1), objectEntryFolder.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder.getName(),
-				"FOLDER", null);
+				expectedDeletionType, expectedItemsCount, null,
+				objectEntryFolder.getName(), "FOLDER", null);
 		}
 
 		Page<BulkActionItem> page2 =
@@ -513,11 +531,11 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		_assertBulkActionItem(
 			items2.get(0), objectEntryFolder.getObjectEntryFolderId(),
-			expectedDeletionType, null, objectEntryFolder.getName(), "FOLDER",
-			null);
+			expectedDeletionType, expectedItemsCount, null,
+			objectEntryFolder.getName(), "FOLDER", null);
 		_assertBulkActionItem(
 			items2.get(1), objectEntry.getObjectEntryId(), expectedDeletionType,
-			"basic-web-content", objectEntry.getTitleValue(_LANGUAGE_ID),
+			null, "basic-web-content", objectEntry.getTitleValue(_LANGUAGE_ID),
 			"ASSET", 1L);
 	}
 
@@ -546,21 +564,21 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		if (name.compareTo(objectEntryFolder2.getName()) < 0) {
 			_assertBulkActionItem(
 				items1.get(0), objectEntryFolder2.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder2.getName(),
+				expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
 				"FOLDER", null);
 			_assertBulkActionItem(
 				items1.get(1), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
+				expectedDeletionType, null, "basic-web-content",
 				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
 		}
 		else {
 			_assertBulkActionItem(
 				items1.get(0), objectEntry.getObjectEntryId(),
-				expectedDeletionType, "basic-web-content",
+				expectedDeletionType, null, "basic-web-content",
 				objectEntry.getTitleValue(_LANGUAGE_ID), "ASSET", 1L);
 			_assertBulkActionItem(
 				items1.get(1), objectEntryFolder2.getObjectEntryFolderId(),
-				expectedDeletionType, null, objectEntryFolder2.getName(),
+				expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
 				"FOLDER", null);
 		}
 
@@ -577,12 +595,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		_assertBulkActionItem(
 			items2.get(0), objectEntry.getObjectEntryId(), expectedDeletionType,
-			"basic-web-content", objectEntry.getTitleValue(_LANGUAGE_ID),
+			null, "basic-web-content", objectEntry.getTitleValue(_LANGUAGE_ID),
 			"ASSET", 1L);
 		_assertBulkActionItem(
 			items2.get(1), objectEntryFolder2.getObjectEntryFolderId(),
-			expectedDeletionType, null, objectEntryFolder2.getName(), "FOLDER",
-			null);
+			expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
+			"FOLDER", null);
 	}
 
 	private void _testPostBulkActionItemPreviewPageWithSelectAllAndFilter(
@@ -607,8 +625,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		_assertBulkActionItem(
 			items.get(0), objectEntryFolder2.getObjectEntryFolderId(),
-			expectedDeletionType, null, objectEntryFolder2.getName(), "FOLDER",
-			null);
+			expectedDeletionType, 0L, null, objectEntryFolder2.getName(),
+			"FOLDER", null);
 	}
 
 	private void _testPostBulkActionWithTypeDefaultPermission()

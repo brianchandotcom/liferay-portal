@@ -37,6 +37,7 @@ type StructureType = 'content' | 'file';
 export class StructureBuilderPage {
 	readonly page: Page;
 
+	private readonly clearAllSpacesButton: Locator;
 	private readonly customizeExperienceButton: Locator;
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
@@ -49,6 +50,7 @@ export class StructureBuilderPage {
 	constructor(page: Page) {
 		this.page = page;
 
+		this.clearAllSpacesButton = this.page.getByLabel('Clear All');
 		this.customizeExperienceButton = this.page.getByRole('button', {
 			name: 'Customize Experience',
 		});
@@ -526,6 +528,13 @@ export class StructureBuilderPage {
 	}
 
 	async selectSpaces(spaces: string[]) {
+		if (await this.spaceCheckbox.isChecked()) {
+			await this.spaceCheckbox.uncheck();
+		}
+		else if (await this.clearAllSpacesButton.isVisible()) {
+			await this.clearAllSpacesButton.click();
+		}
+
 		for (const space of spaces) {
 			await expect(async () => {
 				await this.spaceSelector.click({timeout: 1000});

@@ -132,6 +132,30 @@ test(
 				.locator('option:checked')
 		).toHaveText('Default: No Workflow');
 
+		// Deselect space in General tab and check Workflow table is updated
+
+		await structureBuilderPage.switchTab('General');
+
+		await structureBuilderPage.selectSpaces([spaceName]);
+
+		await structureBuilderPage.switchTab('Workflow');
+
+		await expect(
+			page.locator('tr', {
+				has: page.locator('td:first-child', {hasText: 'Default'}),
+			})
+		).not.toBeVisible();
+
+		await expect(
+			page.locator('tr', {
+				has: page.locator('td:first-child', {hasText: spaceName}),
+			})
+		).toBeVisible();
+
+		// Publish the structure
+
+		await structureBuilderPage.publishStructure();
+
 		// Delete space
 
 		expect(

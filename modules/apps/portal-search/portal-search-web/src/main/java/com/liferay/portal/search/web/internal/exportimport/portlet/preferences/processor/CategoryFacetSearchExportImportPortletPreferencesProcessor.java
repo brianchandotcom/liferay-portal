@@ -283,7 +283,6 @@ public class CategoryFacetSearchExportImportPortletPreferencesProcessor
 				CategoryFacetPortletPreferences.
 					PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES,
 				null);
-
 		String[] vocabularyIds = portletPreferences.getValues(
 			"vocabularyIds", null);
 
@@ -325,7 +324,6 @@ public class CategoryFacetSearchExportImportPortletPreferencesProcessor
 				CategoryFacetPortletPreferences.
 					PREFERENCE_GROUP_VOCABULARY_EXTERNAL_REFERENCE_CODES,
 				null);
-
 		String[] vocabularyIds = portletPreferences.getValues(
 			"vocabularyIds", null);
 

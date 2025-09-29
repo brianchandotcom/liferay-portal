@@ -48,7 +48,10 @@ public class JavaRunSQLCheck extends BaseJavaTermCheck {
 
 			String newParameter = parameter;
 
-			if (parameter.endsWith(";\"") && !parameter.endsWith("\";\"")) {
+			if ((parameter.endsWith(";\")") &&
+				 parameter.startsWith("StringBundler.concat(")) ||
+				(parameter.endsWith(";\"") && !parameter.endsWith("\";\""))) {
+
 				newParameter = StringUtil.removeLast(
 					parameter, StringPool.SEMICOLON);
 			}

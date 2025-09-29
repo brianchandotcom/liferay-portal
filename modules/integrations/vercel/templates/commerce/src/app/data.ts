@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getChannelProductsPage} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
-import {SearchBuilder} from 'odata-search-builder';
-
-import {WithLiferay} from '../liferay/server';
+import {WithLiferay} from '../liferay';
+import {PageProduct} from '../types';
+import {SearchBuilder} from './search-builder/SearchBuilder';
 
 export async function getProductsPage({
 	keywords,
@@ -37,21 +36,26 @@ export async function getProductsPage({
 		});
 	}
 
-	const filter = searchBuider.build();
-
-	const response = await getChannelProductsPage({
-		client: liferay.client,
-		path: {
-			channelId: liferay.getChannel().id,
-		},
-		query: {
-			...(specificationValues && {filter}),
-			nestedFields: 'skus',
-			page,
-			pageSize,
-			search: keywords,
-		},
+	const searchParams = new URLSearchParams({
+		...(specificationValues && {filter: searchBuider.build()}),
+		nestedFields: 'skus',
+		page,
+		pageSize,
+		search: keywords || '',
 	});
 
-	return response;
+	try {
+		const response = await liferay.fetch(
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${liferay.getChannel().id}/products?${searchParams.toString()}`
+		);
+
+		return {
+			data: (await response.json()) as unknown as PageProduct,
+		};
+	}
+	catch (error) {
+		return {
+			error,
+		};
+	}
 }

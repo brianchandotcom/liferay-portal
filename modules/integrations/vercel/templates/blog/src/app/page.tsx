@@ -78,7 +78,7 @@ export default async function Home({
 
 									<div className="flex gap-2">
 										<span>
-											By
+											By &nbsp;
 											<strong>{blog.creator.name}</strong>
 										</span>
 

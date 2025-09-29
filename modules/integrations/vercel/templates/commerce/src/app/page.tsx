@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {PageProduct} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {Metadata} from 'next';
 
 import {ProductCatalog} from '../components/product/product-catalog';
 import {ProductFilters} from '../components/product/product-filters';
-import {getServerURL} from '../lib/server';
-import {liferay} from '../liferay/server';
+import {liferay} from '../liferay';
+import {getServerURL} from '../utils/server';
 import {getProductsPage} from './data';
 
 const defaultMetadata = {
@@ -90,8 +89,6 @@ export default async function ProductCatalogPage(props: PageProps<'/'>) {
 	});
 
 	if (error || !data) {
-		console.error(error);
-
 		return <h1>Error...</h1>;
 	}
 
@@ -103,7 +100,7 @@ export default async function ProductCatalogPage(props: PageProps<'/'>) {
 
 			<ProductCatalog
 				keywords={keywords || ''}
-				pageProduct={data as Required<PageProduct>}
+				pageProduct={data}
 				viewMode={viewMode}
 			/>
 		</div>

@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {Fragment} from 'react';
+
+import {Product} from '../../types';
 
 function getKeys(product: Product) {
 	try {
@@ -40,20 +41,24 @@ export default function ProductSpecifications({product}: {product: Product}) {
 									</td>
 								</tr>
 
-								{productSpecifications?.map((spec, index) => (
-									<tr key={index}>
-										<td
-											className="font-bold px-4 py-2 text-black"
-											width={250}
-										>
-											{spec.specificationTitle}
-										</td>
+								{productSpecifications?.map(
+									(specification, index) => (
+										<tr key={index}>
+											<td
+												className="font-bold px-4 py-2 text-black"
+												width={250}
+											>
+												{
+													specification.specificationTitle
+												}
+											</td>
 
-										<td className="px-4 py-4">
-											{spec.value}
-										</td>
-									</tr>
-								))}
+											<td className="px-4 py-4">
+												{specification.value}
+											</td>
+										</tr>
+									)
+								)}
 							</Fragment>
 						)
 					)}

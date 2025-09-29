@@ -3,34 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+const LIFERAY_CHANNEL_ID = process.env.LIFERAY_CHANNEL_ID || '0';
 const LIFERAY_HOST = process.env.LIFERAY_HOST || '';
-const LIFERAY_CONTENT_PATH = process.env.LIFERAY_CONTENT_PATH || '';
-const LIFERAY_LANGUAGES = process.env.LIFERAY_LANGUAGES || '';
+const LIFERAY_SITE_NAME =
+	process.env.NEXT_PUBLIC_SITE_NAME || 'Liferay Commerce';
 
 export const liferay = {
-	contentEndpoints: {
-		getContentURL: () => {
-			return `${LIFERAY_HOST}${LIFERAY_CONTENT_PATH}`;
-		},
-	},
-
-	fetch: async (
+	async fetch(
 		resource: string | URL | globalThis.Request,
-		{lang}: {lang: string},
 		init?: RequestInit
-	) => {
+	) {
 		const endpoint =
 			typeof resource === 'string' && resource.startsWith('/')
 				? `${LIFERAY_HOST}${resource}`
 				: resource;
 
-		const formattedLang = lang.replace('_', '-');
-
 		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(endpoint, {
 			headers: {
 				'accept': '*/*',
-				'accept-language': `${formattedLang};q=0.5`,
+				'accept-language': 'en-US,en;q=0.5',
 				'content-type': 'application/json',
 				...init?.headers,
 			},
@@ -43,16 +35,11 @@ export const liferay = {
 		return response;
 	},
 
-	getDocument: (documentPath: string) => {
-		if (documentPath.startsWith('/')) {
-			return `${LIFERAY_HOST}${documentPath}`;
-		}
-
-		return documentPath;
-	},
-
-	getSupportedLanguages: () => {
-		return LIFERAY_LANGUAGES.split(',');
+	getChannel: () => {
+		return {
+			id: LIFERAY_CHANNEL_ID,
+			siteName: LIFERAY_SITE_NAME,
+		};
 	},
 };
 

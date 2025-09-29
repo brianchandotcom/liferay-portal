@@ -75,7 +75,10 @@ export default async function RootLayout({
 
 				<footer className="layout-footer">
 					<div className="layout-footer__container">
-						<p>&copy; 2025 Liferay Inc. All Rights Reserved</p>
+						<p>
+							&copy; {new Date().getFullYear()} Liferay Inc. All
+							Rights Reserved
+						</p>
 
 						<nav className="flex gap-4">
 							{liferay.getSupportedLanguages().map((lang) => (

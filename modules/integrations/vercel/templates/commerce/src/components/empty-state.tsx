@@ -18,7 +18,7 @@ export default function EmptyState() {
 			<h2 className="font-semibold mt-6 text-lg">No products found</h2>
 
 			<p className="max-w-sm mt-2 text-sm">
-				We couldn’t find any products that match your filters. Try
+				We couldn&apos;t find any products that match your filters. Try
 				adjusting your filters or clear them to see all products.
 			</p>
 

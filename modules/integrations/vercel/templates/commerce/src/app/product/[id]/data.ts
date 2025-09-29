@@ -3,9 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getChannelProductByFriendlyUrlPath} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
-
-import {WithLiferay} from '../../../liferay/server';
+import {WithLiferay} from '../../../liferay';
+import {Product} from '../../../types';
 
 export async function getProductDetails({
 	friendlyUrlPath,
@@ -15,14 +14,16 @@ export async function getProductDetails({
 	friendlyUrlPath: string;
 	nestedFields: string;
 }>) {
-	const response = getChannelProductByFriendlyUrlPath({
-		client: liferay.client,
-		path: {
-			channelId: liferay.getChannel().id,
-			friendlyUrlPath,
-		},
-		query: {nestedFields} as unknown as Record<string, string>,
-	});
+	try {
+		const response = await liferay.fetch(
+			`/o/headless-commerce-delivery-catalog/v1.0/channels/${liferay.getChannel().id}/products/by-friendly-url-path/${friendlyUrlPath}?nestedFields=${nestedFields}`
+		);
 
-	return response;
+		return {
+			data: (await response.json()) as Product,
+		};
+	}
+	catch (error) {
+		return {data: null, error};
+	}
 }

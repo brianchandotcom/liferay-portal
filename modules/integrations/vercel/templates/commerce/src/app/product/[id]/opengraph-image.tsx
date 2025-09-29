@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {ImageResponse} from 'next/og';
 
-import {getSkuDetails} from '../../../lib/product';
-import {liferay} from '../../../liferay/server';
+import {liferay} from '../../../liferay';
+import {getSkuDetails} from '../../../utils/product';
 import {getProductDetails} from './data';
 
 export const runtime = 'nodejs';
@@ -18,15 +17,19 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function OGImage({params}: {params: {id: string}}) {
-	const response = await getProductDetails({
+	const {data: product, error} = await getProductDetails({
 		friendlyUrlPath: params.id,
 		liferay,
 		nestedFields: 'skus',
 	});
 
-	const product = response.data as Product;
+	if (error || !product) {
+		console.error(error);
 
-	const {availability, finalPrice} = getSkuDetails(product);
+		return;
+	}
+
+	const {availability, price} = getSkuDetails(product);
 
 	return new ImageResponse(
 		(
@@ -107,7 +110,7 @@ export default async function OGImage({params}: {params: {id: string}}) {
 					}}
 				>
 					<div style={{display: 'flex'}}>
-						💲 {finalPrice?.replace('$', '')}
+						💲 {price?.finalPrice?.replace('$', '')}
 					</div>
 
 					<div style={{display: 'flex'}}>

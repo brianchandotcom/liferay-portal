@@ -6,12 +6,12 @@
 'use client';
 
 import clsx from 'clsx';
-import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {ChevronLeft, ChevronRight} from 'lucide-react';
 import Image from 'next/image';
 import {useState} from 'react';
 
-import {getSkuDetails, handleImageError} from '../../lib/product';
+import {Attachment, Product} from '../../types';
+import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
 import ProductQuickActions from './product-quick-actions';
@@ -25,7 +25,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 		? product.images
 		: [{src: product.urlImage}];
 
-	const productPrice = getSkuDetails(product);
+	const skuDetails = getSkuDetails(product);
 
 	const nextImage = () => {
 		setSelectedImageIndex((prev) => (prev + 1) % images.length);
@@ -45,15 +45,12 @@ const ProductDetail = ({product}: {product: Product}) => {
 						<Card>
 							<div className="relative">
 								<Image
-									alt={product.name as string}
+									alt={product.name}
 									className="aspect-square object-cover rounded-lg w-full"
 									height={500}
 									onError={handleImageError}
 									quality={500}
-									src={
-										images![selectedImageIndex]
-											.src as string
-									}
+									src={images[selectedImageIndex].src}
 									unoptimized
 									width={480}
 								/>
@@ -75,7 +72,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 						</Card>
 
 						<div className="flex gap-2 overflow-x-auto">
-							{images.map((image: any, index: number) => (
+							{images.map((image, index) => (
 								<button
 									className={clsx(
 										'flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2',
@@ -90,12 +87,12 @@ const ProductDetail = ({product}: {product: Product}) => {
 									onClick={() => setSelectedImageIndex(index)}
 								>
 									<Image
-										alt={image.title || ''}
+										alt={(image as Attachment).title || ''}
 										className="h-full object-cover w-full"
 										height={16}
 										onError={handleImageError}
 										quality={100}
-										src={image.src as string}
+										src={image.src}
 										unoptimized
 										width={16}
 									/>
@@ -108,9 +105,9 @@ const ProductDetail = ({product}: {product: Product}) => {
 				<div className="lg:col-span-2 space-y-6">
 					<h1 className="font-bold mb-2 text-2xl">{product.name}</h1>
 
-					{!!productPrice.availability?.stockQuantity && (
+					{!!skuDetails.availability?.stockQuantity && (
 						<div>
-							{productPrice.availability?.stockQuantity <= 10 && (
+							{skuDetails.availability?.stockQuantity <= 10 && (
 								<Badge
 									className="mb-2 mr-2"
 									variant="destructive"
@@ -120,7 +117,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 							)}
 
 							<span className="text-sm">
-								Only {productPrice.availability?.stockQuantity}
+								Only {skuDetails.availability?.stockQuantity}
 								&nbsp; left in stock
 							</span>
 						</div>
@@ -128,21 +125,26 @@ const ProductDetail = ({product}: {product: Product}) => {
 
 					<div className="text-sm">
 						Estimate Incoming Days: &nbsp;
-						<b>{productPrice.availabilityEstimateName}</b>
+						<b>
+							{
+								skuDetails?.productConfiguration
+									?.availabilityEstimateName
+							}
+						</b>
 					</div>
 
 					<div>
-						<p className="mb-1 text-sm">SKU: {productPrice.sku}</p>
+						<p className="mb-1 text-sm">SKU: {skuDetails.sku}</p>
 					</div>
 
 					<div className="space-y-2">
-						{productPrice.gtin && (
-							<p className="text-sm">GTIN: {productPrice.gtin}</p>
+						{skuDetails.gtin && (
+							<p className="text-sm">GTIN: {skuDetails.gtin}</p>
 						)}
 
-						{productPrice.mfrPartNumber && (
+						{skuDetails.manufacturerPartNumber && (
 							<p className="text-sm">
-								MPN: {productPrice.mfrPartNumber}
+								MPN: {skuDetails.manufacturerPartNumber}
 							</p>
 						)}
 					</div>
@@ -153,20 +155,20 @@ const ProductDetail = ({product}: {product: Product}) => {
 						}}
 					/>
 
-					{!!productPrice.skuUnitOfMeasures?.length && (
-						<ProductUOM uom={productPrice?.skuUnitOfMeasures} />
+					{!!skuDetails.skuUnitOfMeasures?.length && (
+						<ProductUOM uom={skuDetails?.skuUnitOfMeasures} />
 					)}
 				</div>
 
 				<div className="lg:col-span-1 space-y-6">
 					<Card className="justify-end p-4">
-						{productPrice.discount && (
+						{skuDetails.discount && (
 							<>
 								<div className="text-right">
 									<div className="text-sm">List Price</div>
 
 									<div className="font-bold text-xl">
-										{productPrice.originalPrice}
+										{skuDetails.originalPrice}
 									</div>
 								</div>
 
@@ -174,16 +176,16 @@ const ProductDetail = ({product}: {product: Product}) => {
 									<div className="text-sm">Promo Price</div>
 
 									<div className="font-bold text-xl">
-										{productPrice.finalPrice}
+										{skuDetails?.price?.finalPrice}
 									</div>
 								</div>
 
-								{productPrice.discount && (
+								{skuDetails.discount && (
 									<div className="text-right">
 										<div className="text-sm">Discount</div>
 
 										<span className="text-discount text-red-600 text-sm">
-											{productPrice.discountPercent}%
+											{skuDetails.discountPercent}%
 										</span>
 									</div>
 								)}
@@ -192,13 +194,13 @@ const ProductDetail = ({product}: {product: Product}) => {
 
 						<div
 							className={clsx('text-right', {
-								'border-t': productPrice.discount,
+								'border-t': skuDetails.discount,
 							})}
 						>
 							<div className="text-sm">Final Price</div>
 
 							<div className="font-bold text-2xl text-price">
-								{productPrice.finalPrice}
+								{skuDetails?.price?.finalPrice}
 							</div>
 						</div>
 					</Card>

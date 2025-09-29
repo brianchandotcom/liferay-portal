@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {getSkuDetails, handleImageError} from '../../lib/product';
+import {Product} from '../../types';
+import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
 
@@ -16,7 +16,7 @@ type ProductListViewProps = {
 };
 
 export default function ProductListView({product}: ProductListViewProps) {
-	const productPrice = getSkuDetails(product);
+	const skuDetails = getSkuDetails(product);
 
 	return (
 		<Card className="bg-product-card border-product-border cursor-pointer duration-300 group hover:shadow-sm overflow-hidden transition-all">
@@ -24,12 +24,12 @@ export default function ProductListView({product}: ProductListViewProps) {
 				<div className="bg-white flex gap-4 items-center p-4">
 					<div className="flex-shrink-0 h-20 relative w-20">
 						<Image
-							alt={product.name as string}
+							alt={product.name}
 							className="h-full object-cover rounded-md w-full"
 							height={48}
 							onError={handleImageError}
 							quality={100}
-							src={product.urlImage as string}
+							src={product.urlImage}
 							unoptimized
 							width={48}
 						/>
@@ -46,7 +46,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 									{product.productConfiguration
 										?.availabilityEstimateName && (
 										<p>
-											Incoming Date:&nbsp;
+											Incoming Date: &nbsp;
 											{
 												product.productConfiguration
 													?.availabilityEstimateName
@@ -67,23 +67,23 @@ export default function ProductListView({product}: ProductListViewProps) {
 
 							<div className="text-right">
 								<div className="font-semibold mb-2 text-foreground text-xl truncate">
-									{productPrice.finalPrice}
+									{skuDetails?.price?.finalPrice}
 								</div>
 							</div>
 						</div>
 
 						<div className="flex items-center justify-between">
 							<div className="space-y-1 text-sm">
-								<div>SKU: {productPrice.sku}</div>
+								<div>SKU: {skuDetails.sku}</div>
 
-								{productPrice.gtin && (
-									<div>GTIN: {productPrice.gtin}</div>
+								{skuDetails.gtin && (
+									<div>GTIN: {skuDetails.gtin}</div>
 								)}
 
-								{productPrice.mfrPartNumber && (
+								{skuDetails.manufacturerPartNumber && (
 									<div>
 										Mfr. Part Number:&nbsp;
-										{productPrice.mfrPartNumber}
+										{skuDetails.manufacturerPartNumber}
 									</div>
 								)}
 							</div>

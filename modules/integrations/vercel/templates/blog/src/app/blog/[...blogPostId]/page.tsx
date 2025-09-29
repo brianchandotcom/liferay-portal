@@ -63,8 +63,6 @@ export default async function BlogPost(pageProps: PageProps) {
 		);
 	}
 
-	const src = liferay.getDocument(data.coverImage.link.href);
-
 	return (
 		<PageTemplate>
 			<article>
@@ -75,7 +73,7 @@ export default async function BlogPost(pageProps: PageProps) {
 							className="aspect-video object-cover w-full"
 							height={90}
 							priority={true}
-							src={src}
+							src={liferay.getDocument(data.coverImage.link.href)}
 							unoptimized={true}
 							width={160}
 						/>

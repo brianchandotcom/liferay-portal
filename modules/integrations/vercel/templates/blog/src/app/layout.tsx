@@ -6,6 +6,7 @@
 import {Geist, Geist_Mono} from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import {PropsWithChildren} from 'react';
 
 import './globals.css';
 
@@ -27,11 +28,7 @@ export const metadata: Metadata = {
 	title: 'Liferay Headless Blog',
 };
 
-export default async function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default async function RootLayout({children}: PropsWithChildren) {
 	return (
 		<html lang="en">
 			<body
@@ -70,7 +67,10 @@ export default async function RootLayout({
 
 				<footer className="layout-footer">
 					<div className="layout-footer__container">
-						<p>&copy; 2025 Liferay Inc. All Rights Reserved</p>
+						<p>
+							&copy; {new Date().getFullYear()} Liferay Inc. All
+							Rights Reserved
+						</p>
 
 						<p>
 							<a

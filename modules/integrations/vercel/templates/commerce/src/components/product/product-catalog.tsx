@@ -5,10 +5,10 @@
 
 'use client';
 
-import {PageProduct} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {Grid, List, Search} from 'lucide-react';
 import {useRouter, useSearchParams} from 'next/navigation';
 
+import {PageProduct} from '../../types';
 import EmptyState from '../empty-state';
 import {PaginationBar} from '../pagination-bar';
 import {Button} from '../ui/button';
@@ -17,11 +17,11 @@ import {ProductCard} from './product-card';
 
 type Props = {
 	keywords: string;
-	pageProduct: Required<PageProduct>;
+	pageProduct: PageProduct;
 	viewMode: 'grid' | 'list';
 };
 
-export async function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
+export function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
 	const {items: products, totalCount} = pageProduct;
 
 	const searchParams = useSearchParams();
@@ -108,7 +108,7 @@ export async function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
 						: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
 				}`}
 			>
-				{products.map((product: PageProduct) => (
+				{products.map((product) => (
 					<ProductCard
 						key={product.id}
 						product={product}

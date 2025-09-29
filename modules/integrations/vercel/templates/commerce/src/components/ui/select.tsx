@@ -7,12 +7,10 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import {Check, ChevronDown, ChevronUp} from 'lucide-react';
 import {forwardRef} from 'react';
 
-import {cn} from '../../lib/utils';
+import {cn} from '../../utils/css-classes';
 
 const Select = SelectPrimitive.Root;
-
 const SelectGroup = SelectPrimitive.Group;
-
 const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger = forwardRef<
@@ -115,6 +113,7 @@ const SelectLabel = forwardRef<
 		{...props}
 	/>
 ));
+
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const SelectItem = forwardRef<
@@ -138,6 +137,7 @@ const SelectItem = forwardRef<
 		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
 	</SelectPrimitive.Item>
 ));
+
 SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 const SelectSeparator = forwardRef<
@@ -150,6 +150,7 @@ const SelectSeparator = forwardRef<
 		{...props}
 	/>
 ));
+
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {

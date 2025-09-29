@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {SkuUnitOfMeasure} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
-
 import {Card} from '../ui/card';
 
-export default function ProductUOM({uom}: {uom: SkuUnitOfMeasure[]}) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function ProductUOM({uom}: {uom: any[]}) {
 	return (
 		<Card className="p-4">
 			<h3 className="font-semibold mb-3">UOM</h3>

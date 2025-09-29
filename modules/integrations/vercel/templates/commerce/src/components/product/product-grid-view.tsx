@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {getSkuDetails, handleImageError} from '../../lib/product';
+import {Product} from '../../types';
+import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';
 
@@ -16,24 +16,24 @@ type ProductGridViewProps = {
 };
 
 export default function ProductGridView({product}: ProductGridViewProps) {
-	const productPrice = getSkuDetails(product);
+	const skuDetails = getSkuDetails(product);
 
 	return (
 		<Card className="bg-product-card bg-white border-product-border cursor-pointer duration-300 group hover:shadow-lg overflow-hidden relative transition-all">
 			<Link href={`/product/${product.urls?.en_US}`}>
 				<div className="relative">
 					<Image
-						alt={product.name as string}
+						alt={product.name}
 						className="duration-300 group-hover:scale-105 h-48 object-cover transition-transform w-full"
 						height={48}
 						onError={handleImageError}
 						quality={100}
-						src={product.urlImage as string}
+						src={product.urlImage}
 						unoptimized
 						width={48}
 					/>
 
-					{productPrice.available && (
+					{skuDetails.available && (
 						<Badge className="absolute bg-slate-500 bg-success left-3 text-white top-3">
 							AVAILABLE
 						</Badge>
@@ -50,19 +50,19 @@ export default function ProductGridView({product}: ProductGridViewProps) {
 					</h3>
 
 					<div className="flex gap-2 items-center">
-						{productPrice.discount && (
+						{skuDetails.discount && (
 							<span className="line-through text-sm">
-								{productPrice.originalPrice}
+								{skuDetails.originalPrice}
 							</span>
 						)}
 
 						<span className="font-semibold text-lg">
-							{productPrice.finalPrice}
+							{skuDetails.price.finalPrice}
 						</span>
 
-						{productPrice.discount && (
+						{skuDetails.price?.discount && (
 							<Badge className="text-xs" variant="destructive">
-								-{productPrice.discountPercent}%
+								-{skuDetails.discountPercent}%
 							</Badge>
 						)}
 					</div>

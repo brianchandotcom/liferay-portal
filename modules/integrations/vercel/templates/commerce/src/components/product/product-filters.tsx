@@ -48,7 +48,7 @@ const baseFilters = {
 
 type FilterCategory = (typeof baseFilters)[keyof typeof baseFilters];
 
-export async function ProductFilters() {
+export function ProductFilters() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const specificationValues = searchParams.getAll('specificationValues');

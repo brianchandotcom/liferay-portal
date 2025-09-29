@@ -270,7 +270,7 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		FragmentRendererContext fragmentRendererContext, String html,
 		HttpServletRequest httpServletRequest, String nonce) {
 
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<div id=\"");
 
@@ -357,7 +357,9 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		sb.append(configuration);
 		sb.append("; const fragmentElement = document.querySelector('#");
 		sb.append(fragmentRendererContext.getFragmentElementId());
-		sb.append("'); const fragmentEntryLinkNamespace = '");
+		sb.append("'); const fragmentElementId = '");
+		sb.append(fragmentRendererContext.getFragmentElementId());
+		sb.append("'; const fragmentEntryLinkNamespace = '");
 		sb.append(fragmentEntryLink.getNamespace());
 		sb.append("'; const fragmentNamespace = '");
 		sb.append(fragmentEntryLink.getNamespace());

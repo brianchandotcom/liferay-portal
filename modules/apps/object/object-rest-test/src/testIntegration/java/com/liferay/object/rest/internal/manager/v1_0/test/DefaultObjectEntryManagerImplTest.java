@@ -4582,6 +4582,35 @@ public class DefaultObjectEntryManagerImplTest
 				objectEntry2.getExternalReferenceCode(), _objectDefinition1,
 				null));
 
+		_user = _addUser();
+
+		Role role = _addRoleUser(
+			new String[] {ActionKeys.VIEW}, _objectDefinition1, _user);
+
+		Assert.assertNotNull(
+			_getLatestApprovedObjectEntry(
+				objectEntry2.getId(), _objectDefinition1));
+
+		_resourcePermissionLocalService.removeResourcePermission(
+			companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY, String.valueOf(companyId),
+			role.getRoleId(), ActionKeys.VIEW);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", _user.getUserId(), " must have VIEW permission for ",
+				_objectDefinition1.getClassName(), StringPool.SPACE,
+				objectEntry2.getId()),
+			() -> _getLatestApprovedObjectEntry(
+				objectEntry2.getId(), _objectDefinition1));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			companyId, _objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(objectEntry2.getId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
 		Assert.assertNotNull(
 			_getLatestApprovedObjectEntry(
 				objectEntry2.getId(), _objectDefinition1));
@@ -9907,7 +9936,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 
 		return _defaultObjectEntryManager.getApprovedObjectEntry(
-			companyId, dtoConverterContext,
+			companyId, _createDTOConverterContext(),
 			serviceBuilderObjectEntry.getExternalReferenceCode(),
 			objectDefinition, null);
 	}

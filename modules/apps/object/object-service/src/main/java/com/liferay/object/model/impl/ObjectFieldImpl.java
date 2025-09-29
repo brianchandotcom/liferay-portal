@@ -75,6 +75,17 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 	}
 
 	@Override
+	public String getReadOnly() {
+		String readOnly = super.getReadOnly();
+
+		if (Validator.isNull(readOnly)) {
+			return ObjectFieldConstants.READ_ONLY_FALSE;
+		}
+
+		return readOnly;
+	}
+
+	@Override
 	public String getSortableDBColumnName() {
 		return getDBColumnName() + Field.SORTABLE_FIELD_SUFFIX;
 	}

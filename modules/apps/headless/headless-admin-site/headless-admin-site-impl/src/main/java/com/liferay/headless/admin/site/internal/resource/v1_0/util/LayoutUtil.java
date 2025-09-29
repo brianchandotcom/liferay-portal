@@ -26,6 +26,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.importer.util.PortletPermissionsImporterUtil;
 import com.liferay.layout.importer.util.PortletPreferencesPortletConfigurationImporterUtil;
@@ -87,6 +88,7 @@ public class LayoutUtil {
 
 	public static Layout addContentLayout(
 			CETManager cetManager, long groupId,
+			InfoItemServiceRegistry infoItemServiceRegistry,
 			PageSpecification[] pageSpecifications, long parentLayoutId,
 			boolean privateLayout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
@@ -266,19 +268,21 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			cetManager, draftLayout, nameMap, titleMap, descriptionMap,
-			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
-			draftContentPageSpecification, draftLayoutStatus, serviceContext);
+			cetManager, infoItemServiceRegistry, draftLayout, nameMap, titleMap,
+			descriptionMap, draftLayout.getRobotsMap(),
+			draftLayout.getFriendlyURLMap(), draftContentPageSpecification,
+			draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, publishedContentPageSpecification, status,
-			serviceContext);
+			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap,
+			descriptionMap, robotsMap, friendlyURLMap,
+			publishedContentPageSpecification, status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
 			CETManager cetManager,
-			ContentPageSpecification contentPageSpecification, Layout layout,
+			ContentPageSpecification contentPageSpecification,
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -305,15 +309,18 @@ public class LayoutUtil {
 		}
 
 		return updateLayout(
-			cetManager, draftLayout, layout.getNameMap(), layout.getTitleMap(),
+			cetManager, infoItemServiceRegistry, draftLayout,
+			layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), draftLayout.getRobotsMap(),
 			draftLayout.getFriendlyURLMap(), contentPageSpecification,
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	public static Layout addPortletLayout(
-			CETManager cetManager, String externalReferenceCode, long groupId,
-			long parentLayoutId, Map<Locale, String> nameMap,
+			CETManager cetManager,
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			String externalReferenceCode, long groupId, long parentLayoutId,
+			Map<Locale, String> nameMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext,
@@ -334,10 +341,10 @@ public class LayoutUtil {
 			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
 
 		layout = updateLayout(
-			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getRobotsMap(),
-			layout.getFriendlyURLMap(), widgetPageSpecification,
-			layout.getStatus(), serviceContext);
+			cetManager, infoItemServiceRegistry, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getRobotsMap(), layout.getFriendlyURLMap(),
+			widgetPageSpecification, layout.getStatus(), serviceContext);
 
 		return updatePortletLayout(
 			cetManager, layout, nameMap, layout.getFriendlyURLMap(),
@@ -466,9 +473,11 @@ public class LayoutUtil {
 	}
 
 	public static Layout updateContentLayout(
-			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			CETManager cetManager,
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -538,20 +547,22 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			cetManager, draftLayout, nameMap, titleMap, descriptionMap,
-			robotsMap, draftLayout.getFriendlyURLMap(),
+			cetManager, infoItemServiceRegistry, draftLayout, nameMap, titleMap,
+			descriptionMap, robotsMap, draftLayout.getFriendlyURLMap(),
 			draftContentPageSpecification, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, publishedContentPageSpecification, status,
-			serviceContext);
+			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap,
+			descriptionMap, robotsMap, friendlyURLMap,
+			publishedContentPageSpecification, status, serviceContext);
 	}
 
 	public static Layout updateLayout(
-			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			CETManager cetManager,
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, int status,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -565,8 +576,8 @@ public class LayoutUtil {
 				(ContentPageSpecification)pageSpecification;
 
 			_updatePageExperiences(
-				layout, contentPageSpecification.getPageExperiences(),
-				serviceContext);
+				infoItemServiceRegistry, layout,
+				contentPageSpecification.getPageExperiences(), serviceContext);
 		}
 
 		if (status == layout.getStatus()) {
@@ -1065,8 +1076,8 @@ public class LayoutUtil {
 	}
 
 	private static void _updatePageExperiences(
-			Layout layout, PageExperience[] pageExperiences,
-			ServiceContext serviceContext)
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
+			PageExperience[] pageExperiences, ServiceContext serviceContext)
 		throws Exception {
 
 		List<SegmentsExperience> segmentsExperiences =
@@ -1097,7 +1108,8 @@ public class LayoutUtil {
 			}
 
 			SegmentsExperienceUtil.updateSegmentsExperience(
-				layout, pageExperience, segmentsExperience, serviceContext);
+				infoItemServiceRegistry, layout, pageExperience,
+				segmentsExperience, serviceContext);
 		}
 	}
 

@@ -2010,8 +2010,6 @@ public interface PropsKeys {
 	public static final String PERMISSIONS_CHECK_GUEST_ENABLED =
 		"permissions.check.guest.enabled";
 
-	public static final String PERMISSIONS_CHECKER = "permissions.checker";
-
 	public static final String
 		PERMISSIONS_CUSTOM_ATTRIBUTE_READ_CHECK_BY_DEFAULT =
 			"permissions.custom.attribute.read.check.by.default";

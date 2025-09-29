@@ -1,14 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.jenkins.results.parser.testray;
 
-import com.liferay.jenkins.results.parser.BuildReport;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.JenkinsConsoleTextLoader;
-import com.liferay.jenkins.results.parser.JenkinsMaster;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.Job;
 import com.liferay.jenkins.results.parser.TopLevelBuildReport;
@@ -34,17 +32,13 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
+public abstract class BaseStandaloneBuildTestrayCaseResult
+	extends BuildTestrayCaseResult {
 
-	public TopLevelBuildTestrayCaseResult(
+	public BaseStandaloneBuildTestrayCaseResult(
 		TestrayBuild testrayBuild, TopLevelBuildReport topLevelBuildReport) {
 
 		super(testrayBuild, topLevelBuildReport);
-	}
-
-	@Override
-	public BuildReport getBuildReport() {
-		return getTopLevelBuildReport();
 	}
 
 	@Override
@@ -52,7 +46,7 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		try {
 			return JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.component", "top-level-build");
+				"testray.case.component", getBatchName());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -65,16 +59,11 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 	}
 
 	@Override
-	public String getName() {
-		return "Top Level Build";
-	}
-
-	@Override
 	public int getPriority() {
 		try {
 			String testrayCasePriority = JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.priority", "top-level-build");
+				"testray.case.priority", getBatchName());
 
 			if ((testrayCasePriority != null) &&
 				testrayCasePriority.matches("\\d+")) {
@@ -94,7 +83,7 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		try {
 			return JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.team", "top-level-build");
+				"testray.case.team", getBatchName());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -121,7 +110,7 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		try {
 			return JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getBuildProperties(),
-				"testray.case.type", "top-level-build");
+				"testray.case.type", getBatchName());
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -137,7 +126,7 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		TestrayBuild testrayBuild = getTestrayBuild();
 
 		TestrayRun testrayRun = TestrayFactory.newTestrayRun(
-			testrayBuild, "top-level-build", job.getJobPropertiesFiles());
+			testrayBuild, getBatchName(), job.getJobPropertiesFiles());
 
 		long start = JenkinsResultsParserUtil.getCurrentTimeMillis();
 
@@ -289,18 +278,9 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 		TestrayServer testrayServer = testrayBuild.getTestrayServer();
 
-		TopLevelBuildReport topLevelBuildReport = getTopLevelBuildReport();
-
-		JenkinsMaster jenkinsMaster = topLevelBuildReport.getJenkinsMaster();
-
 		try {
 			testrayServer.writeCaseResult(
-				JenkinsResultsParserUtil.combine(
-					"TESTS-", jenkinsMaster.getName(), "_",
-					topLevelBuildReport.getJobName(), "_",
-					String.valueOf(topLevelBuildReport.getBuildNumber()),
-					"_top-level-build.xml"),
-				Dom4JUtil.format(rootElement));
+				getFileName(), Dom4JUtil.format(rootElement));
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(ioException);
@@ -311,9 +291,13 @@ public class TopLevelBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Recorded ", String.valueOf(testrayCaseResults.size()),
-				" case results for top-level-build in ",
+				" case results for ", getBatchName(), " in ",
 				JenkinsResultsParserUtil.toDurationString(end - start)));
 	}
+
+	protected abstract String getBatchName();
+
+	protected abstract String getFileName();
 
 	@Override
 	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {

@@ -948,11 +948,15 @@ public class TestrayImporter {
 				testBaseDir = axisTestClassGroup.getTestBaseDir();
 			}
 
-			TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-				TestrayFactory.newTopLevelBuildTestrayCaseResult(
-					getTestrayBuild(testBaseDir), _topLevelBuildReport);
+			TestrayBuild testrayBuild = getTestrayBuild(testBaseDir);
 
-			topLevelBuildTestrayCaseResult.recordTestrayCaseResult(job);
+			TopLevelStandaloneBuildTestrayCaseResult
+				topLevelStandaloneBuildTestrayCaseResult =
+					TestrayFactory.newTopLevelStandaloneBuildTestrayCaseResult(
+						testrayBuild, _topLevelBuildReport);
+
+			topLevelStandaloneBuildTestrayCaseResult.recordTestrayCaseResult(
+				job);
 
 			for (final AxisTestClassGroup axisTestClassGroup :
 					axisTestClassGroups) {

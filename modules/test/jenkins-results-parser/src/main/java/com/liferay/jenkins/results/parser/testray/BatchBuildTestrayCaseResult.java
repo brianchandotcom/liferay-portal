@@ -475,68 +475,72 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 
 	@Override
 	protected TestrayAttachment getTopLevelBuildReportTestrayAttachment() {
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			getTopLevelBuildTestrayCaseResult();
+		TopLevelStandaloneBuildTestrayCaseResult
+			topLevelStandaloneBuildTestrayCaseResult =
+				getTopLevelStandaloneBuildTestrayCaseResult();
 
-		if (topLevelBuildTestrayCaseResult == null) {
+		if (topLevelStandaloneBuildTestrayCaseResult == null) {
 			return null;
 		}
 
-		return topLevelBuildTestrayCaseResult.
+		return topLevelStandaloneBuildTestrayCaseResult.
 			getTopLevelBuildReportTestrayAttachment();
-	}
-
-	protected TopLevelBuildTestrayCaseResult
-		getTopLevelBuildTestrayCaseResult() {
-
-		if (_topLevelBuildTestrayCaseResult != null) {
-			return _topLevelBuildTestrayCaseResult;
-		}
-
-		_topLevelBuildTestrayCaseResult =
-			TestrayFactory.newTopLevelBuildTestrayCaseResult(
-				getTestrayBuild(), getTopLevelBuildReport());
-
-		return _topLevelBuildTestrayCaseResult;
 	}
 
 	@Override
 	protected TestrayAttachment getTopLevelJenkinsConsoleTestrayAttachment() {
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			getTopLevelBuildTestrayCaseResult();
+		TopLevelStandaloneBuildTestrayCaseResult
+			topLevelStandaloneBuildTestrayCaseResult =
+				getTopLevelStandaloneBuildTestrayCaseResult();
 
-		if (topLevelBuildTestrayCaseResult == null) {
+		if (topLevelStandaloneBuildTestrayCaseResult == null) {
 			return null;
 		}
 
-		return topLevelBuildTestrayCaseResult.
+		return topLevelStandaloneBuildTestrayCaseResult.
 			getTopLevelJenkinsConsoleTestrayAttachment();
 	}
 
 	@Override
 	protected TestrayAttachment getTopLevelJenkinsReportTestrayAttachment() {
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			getTopLevelBuildTestrayCaseResult();
+		TopLevelStandaloneBuildTestrayCaseResult
+			topLevelStandaloneBuildTestrayCaseResult =
+				getTopLevelStandaloneBuildTestrayCaseResult();
 
-		if (topLevelBuildTestrayCaseResult == null) {
+		if (topLevelStandaloneBuildTestrayCaseResult == null) {
 			return null;
 		}
 
-		return topLevelBuildTestrayCaseResult.
+		return topLevelStandaloneBuildTestrayCaseResult.
 			getTopLevelJenkinsReportTestrayAttachment();
 	}
 
 	@Override
 	protected TestrayAttachment getTopLevelJobSummaryTestrayAttachment() {
-		TopLevelBuildTestrayCaseResult topLevelBuildTestrayCaseResult =
-			getTopLevelBuildTestrayCaseResult();
+		TopLevelStandaloneBuildTestrayCaseResult
+			topLevelStandaloneBuildTestrayCaseResult =
+				getTopLevelStandaloneBuildTestrayCaseResult();
 
-		if (topLevelBuildTestrayCaseResult == null) {
+		if (topLevelStandaloneBuildTestrayCaseResult == null) {
 			return null;
 		}
 
-		return topLevelBuildTestrayCaseResult.
+		return topLevelStandaloneBuildTestrayCaseResult.
 			getTopLevelJobSummaryTestrayAttachment();
+	}
+
+	protected TopLevelStandaloneBuildTestrayCaseResult
+		getTopLevelStandaloneBuildTestrayCaseResult() {
+
+		if (_topLevelStandaloneBuildTestrayCaseResult != null) {
+			return _topLevelStandaloneBuildTestrayCaseResult;
+		}
+
+		_topLevelStandaloneBuildTestrayCaseResult =
+			TestrayFactory.newTopLevelStandaloneBuildTestrayCaseResult(
+				getTestrayBuild(), getTopLevelBuildReport());
+
+		return _topLevelStandaloneBuildTestrayCaseResult;
 	}
 
 	private List<TestrayAttachment> _getDockerLogsTestrayAttachments() {
@@ -733,6 +737,7 @@ public class BatchBuildTestrayCaseResult extends BuildTestrayCaseResult {
 		"https?://.+/(?<key>jstacks/(?<fileName>[^/]+.log).txt.gz)");
 
 	private final AxisTestClassGroup _axisTestClassGroup;
-	private TopLevelBuildTestrayCaseResult _topLevelBuildTestrayCaseResult;
+	private TopLevelStandaloneBuildTestrayCaseResult
+		_topLevelStandaloneBuildTestrayCaseResult;
 
 }

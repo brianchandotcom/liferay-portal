@@ -1731,7 +1731,7 @@ public class ObjectEntryLocalServiceTest {
 
 	@FeatureFlag("LPD-17564")
 	@Test
-	public void testAddObjectEntryWithEmptyWorkflowDefinition()
+	public void testAddObjectEntryWithDraftWorkflowDefinition()
 		throws Exception {
 
 		WorkflowDefinitionLink workflowDefinitionLink =

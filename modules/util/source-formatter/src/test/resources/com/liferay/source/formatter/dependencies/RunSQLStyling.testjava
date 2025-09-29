@@ -12,11 +12,11 @@ import com.liferay.portal.kernel.upgrade.UpgradeStep;
 /**
  * @author Alan Huang
  */
-public class RunSqlStyling extends UpgradeProcess {
+public class RunSQLStyling extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		runSQL("update CTCollection set shareable = [$FALSE$]");
+		runSQL("update CTCollection set shareable = FALSE;");
 	}
 
 	@Override

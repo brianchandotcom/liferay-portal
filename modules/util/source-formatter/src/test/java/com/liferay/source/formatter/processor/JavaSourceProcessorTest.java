@@ -845,8 +845,8 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
-	public void testRunSqlStyling() throws Exception {
-		test("RunSqlStyling.testjava");
+	public void testRunSQLStyling() throws Exception {
+		test("RunSQLStyling.testjava");
 	}
 
 	@Test

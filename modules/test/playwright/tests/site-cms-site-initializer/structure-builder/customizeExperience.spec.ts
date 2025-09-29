@@ -74,7 +74,7 @@ test(
 
 		await expect(
 			page.getByText(
-				'To customize the experience you need to publish the structure first.'
+				'To customize the experience you need to publish the content structure first.'
 			)
 		).toBeAttached();
 
@@ -121,7 +121,7 @@ test(
 
 		await expect(
 			page.getByText(
-				'To customize the experience you need to publish the structure first. You removed one or more fields from the structure.'
+				'To customize the experience you need to publish the content structure first. You removed one or more fields from the content structure.'
 			)
 		).toBeAttached();
 

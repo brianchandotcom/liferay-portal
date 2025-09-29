@@ -142,14 +142,14 @@ test(
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText(
-				'You removed one or more fields from the structure'
+				'You removed one or more fields from the content structure'
 			),
 			trigger: structureBuilderPage.publishButton,
 		});
 
 		await clickAndExpectToBeHidden({
 			target: page.getByText(
-				'You removed one or more fields from the structure'
+				'You removed one or more fields from the content structure'
 			),
 			trigger: page.locator('.btn-danger'),
 		});
@@ -213,7 +213,7 @@ test(
 
 		await picklistPicker.click();
 
-		await page.locator('body').click();
+		await page.getByText('Content Structure Fields').click();
 
 		await expect(errorMessage).toBeAttached();
 

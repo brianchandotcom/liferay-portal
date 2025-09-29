@@ -46,8 +46,6 @@ public class LayoutModelDocumentContributor
 			Field.DEFAULT_LANGUAGE_ID, layout.getDefaultLanguageId());
 		document.addLocalizedText(Field.NAME, layout.getNameMap());
 		document.addKeyword(Field.STATUS, _getStatus(layout));
-		document.addKeyword(
-			"externalReferenceCode", layout.getExternalReferenceCode());
 
 		_addLayoutContentFields(document, layout);
 

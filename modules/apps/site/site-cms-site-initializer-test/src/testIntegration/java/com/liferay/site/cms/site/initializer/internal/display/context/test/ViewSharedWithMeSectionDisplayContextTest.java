@@ -12,9 +12,15 @@ import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -35,6 +41,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import org.springframework.mock.web.MockHttpServletResponse;
 
@@ -57,13 +66,7 @@ public class ViewSharedWithMeSectionDisplayContextTest
 	@Override
 	@Test
 	public void testGetAdditionalProps() throws Exception {
-
-		/*	HttpServletRequest mockHttpServletRequest = new MockHttpServletResponse();
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)mockHttpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);*/
-
-		Assert.assertEquals(
+		_assertEquals(
 			HashMapBuilder.<String, Object>put(
 				"autocompleteURL",
 				() -> StringBundler.concat(
@@ -95,6 +98,51 @@ public class ViewSharedWithMeSectionDisplayContextTest
 
 					return collaboratorURLs;
 				}
+			).put(
+				"commentsProps",
+				HashMapBuilder.<String, Object>put(
+					"addCommentURL",
+					StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL,
+						"/add_content_item_comment")
+				).put(
+					"deleteCommentURL",
+					StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL,
+						"/delete_content_item_comment")
+				).put(
+					"editCommentURL",
+					StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL,
+						"/edit_content_item_comment")
+				).put(
+					"editorConfig",
+					() -> {
+						EditorConfiguration
+							contentItemCommentEditorConfiguration =
+								EditorConfigurationFactoryUtil.
+									getEditorConfiguration(
+										StringPool.BLANK,
+										"contentItemCommentEditor",
+										StringPool.BLANK,
+										Collections.emptyMap(), themeDisplay,
+										RequestBackedPortletURLFactoryUtil.
+											create(themeDisplay.getRequest()));
+
+						Map<String, Object> data =
+							contentItemCommentEditorConfiguration.getData();
+
+						return data.get("editorConfig");
+					}
+				).put(
+					"getCommentsURL",
+					StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL, "/get_asset_comments")
+				).build()
 			).put(
 				"contentViewURL",
 				StringBundler.concat(
@@ -158,9 +206,28 @@ public class ViewSharedWithMeSectionDisplayContextTest
 		return viewRecycleBinSectionDisplayContext;
 	}
 
+	private void _assertEquals(
+			Map<String, ?> expectedMap, Map<String, ?> actualMap)
+		throws Exception {
+
+		Assert.assertEquals(
+			actualMap.toString(), expectedMap.size(), actualMap.size());
+
+		JSONObject expectedJSONObject = _jsonFactory.createJSONObject(
+			expectedMap);
+		JSONObject actualJSONObject = _jsonFactory.createJSONObject(actualMap);
+
+		JSONAssert.assertEquals(
+			expectedJSONObject.toString(), actualJSONObject.toString(),
+			JSONCompareMode.STRICT);
+	}
+
 	@Inject(
 		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.ViewSharedWithMeJSPSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 }

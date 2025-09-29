@@ -65,18 +65,6 @@ public class ViewRecycleBinSectionDisplayContextTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Override
-	public HashMap<String, Object> getBaseAdditionalProps()
-		throws PortalException {
-
-		HashMap<String, Object> baseAdditionalProps =
-			super.getBaseAdditionalProps();
-
-		baseAdditionalProps.remove("commentsProps");
-
-		return baseAdditionalProps;
-	}
-
 	@Test
 	public void testGetBreadcrumbProps() throws Exception {
 		HttpServletRequest httpServletRequest = getMockHttpServletRequest();

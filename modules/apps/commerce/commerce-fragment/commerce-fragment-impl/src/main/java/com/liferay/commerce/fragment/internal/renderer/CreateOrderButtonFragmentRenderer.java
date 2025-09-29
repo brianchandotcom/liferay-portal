@@ -255,31 +255,25 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _printPortletMessageInfo(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String message) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String message)
+		throws IOException {
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(3);
 
-			sb.append("<div class=\"portlet-msg-info\">");
+		sb.append("<div class=\"portlet-msg-info\">");
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			sb.append(themeDisplay.translate(message));
+		sb.append(themeDisplay.translate(message));
 
-			sb.append("</div>");
+		sb.append("</div>");
 
-			printWriter.write(sb.toString());
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-		}
+		printWriter.write(sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

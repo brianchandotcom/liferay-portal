@@ -764,7 +764,8 @@ public class SingleLogoutProfileImpl
 				new MessageContext(), new MessageContext());
 
 		_configureInOutOperationContext(
-			inOutOperationContext, logoutRequest, messageContext);
+			inOutOperationContext, logoutRequest, messageContext,
+			StatusCode.SUCCESS);
 
 		messageContext.addSubcontext(inOutOperationContext);
 
@@ -831,7 +832,8 @@ public class SingleLogoutProfileImpl
 
 	private void _configureInOutOperationContext(
 			InOutOperationContext<?, LogoutResponse> inOutOperationContext,
-			LogoutRequest logoutRequest, MessageContext<?> messageContext)
+			LogoutRequest logoutRequest, MessageContext<?> messageContext,
+			String statusCodeURI)
 		throws Exception {
 
 		MessageContext<LogoutResponse> outboundMessageContext =
@@ -873,7 +875,7 @@ public class SingleLogoutProfileImpl
 			_buildLogoutResponse(
 				singleLogoutService.getLocation(),
 				samlSelfEntityContext.getEntityId(), logoutRequest.getID(),
-				StatusCode.SUCCESS));
+				statusCodeURI));
 
 		OpenSamlUtil.prepareSecurityParametersContext(
 			getSigningCredential(),
@@ -1344,7 +1346,8 @@ public class SingleLogoutProfileImpl
 		}
 
 		_configureInOutOperationContext(
-			inOutOperationContext, logoutRequest, messageContext);
+			inOutOperationContext, logoutRequest, messageContext,
+			statusCodeURI);
 
 		sendSamlMessage(messageContext, httpServletResponse);
 	}

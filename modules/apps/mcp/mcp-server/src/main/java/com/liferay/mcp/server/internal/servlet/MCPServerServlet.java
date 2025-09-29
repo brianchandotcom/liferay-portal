@@ -5,8 +5,9 @@
 
 package com.liferay.mcp.server.internal.servlet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.mcp.server.internal.constants.MCPServerConstants;
-import com.liferay.mcp.server.internal.io.modelcontextprotocol.server.transport.AuthorizedHttpServletSseServerTransportProvider;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
@@ -27,9 +28,13 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import io.modelcontextprotocol.common.McpTransportContext;
+import io.modelcontextprotocol.json.jackson.JacksonMcpJsonMapper;
 import io.modelcontextprotocol.server.McpServer;
 import io.modelcontextprotocol.server.McpServerFeatures;
 import io.modelcontextprotocol.server.McpSyncServer;
+import io.modelcontextprotocol.server.McpSyncServerExchange;
+import io.modelcontextprotocol.server.transport.HttpServletSseServerTransportProvider;
 import io.modelcontextprotocol.spec.McpSchema;
 
 import jakarta.servlet.GenericServlet;
@@ -106,15 +111,24 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private Servlet _buildServlet(String baseURL, long companyId) {
-		AuthorizedHttpServletSseServerTransportProvider
-			authorizedHttpServletSseServerTransportProvider =
-				new AuthorizedHttpServletSseServerTransportProvider(
-					baseURL + "/mcp");
+		HttpServletSseServerTransportProvider
+			httpServletSseServerTransportProvider =
+				HttpServletSseServerTransportProvider.builder(
+				).baseUrl(
+					baseURL + "/mcp"
+				).contextExtractor(
+					request -> McpTransportContext.create(
+						HashMapBuilder.<String, Object>put(
+							"authorization", request.getHeader("Authorization")
+						).build())
+				).messageEndpoint(
+					"/message"
+				).build();
 
 		JSONObject toolsJSONObject = _getToolsJSONObject(baseURL);
 
 		McpSyncServer mcpSyncServer = McpServer.sync(
-			authorizedHttpServletSseServerTransportProvider
+			httpServletSseServerTransportProvider
 		).capabilities(
 			McpSchema.ServerCapabilities.builder(
 			).tools(
@@ -132,23 +146,19 @@ public class MCPServerServlet extends HttpServlet {
 				}
 
 				return _call(
-					authorizedHttpServletSseServerTransportProvider.
-						getAuthorization(mcpAsyncServerExchange),
+					mcpAsyncServerExchange,
 					String.valueOf(monos.get("payload")), baseURL + path,
 					String.valueOf(monos.get("method")));
 			}
 		).tool(
 			_getTool("get-openapi", toolsJSONObject),
 			(mcpAsyncServerExchange, monos) -> _call(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorization(mcpAsyncServerExchange),
-				null, String.valueOf(monos.get("url")), "GET")
+				mcpAsyncServerExchange, null, String.valueOf(monos.get("url")),
+				"GET")
 		).tool(
 			_getTool("get-openapis", toolsJSONObject),
 			(mcpAsyncServerExchange, monos) -> _call(
-				authorizedHttpServletSseServerTransportProvider.
-					getAuthorization(mcpAsyncServerExchange),
-				null, baseURL + "/openapi", "GET")
+				mcpAsyncServerExchange, null, baseURL + "/openapi", "GET")
 		).prompts(
 			_getSyncPromptSpecifications(companyId)
 		).build();
@@ -166,7 +176,7 @@ public class MCPServerServlet extends HttpServlet {
 					ServletResponse servletResponse)
 				throws IOException, ServletException {
 
-				authorizedHttpServletSseServerTransportProvider.service(
+				httpServletSseServerTransportProvider.service(
 					servletRequest, servletResponse);
 			}
 
@@ -174,7 +184,8 @@ public class MCPServerServlet extends HttpServlet {
 	}
 
 	private McpSchema.CallToolResult _call(
-		String authorization, String body, String location, String method) {
+		McpSyncServerExchange mcpSyncServerExchange, String body,
+		String location, String method) {
 
 		Http.Options options = new Http.Options();
 
@@ -185,7 +196,20 @@ public class MCPServerServlet extends HttpServlet {
 
 		options.setHeaders(
 			HashMapBuilder.put(
-				"Authorization", () -> authorization
+				"Authorization",
+				() -> {
+					McpTransportContext mcpTransportContext =
+						mcpSyncServerExchange.transportContext();
+
+					Object authorization = mcpTransportContext.get(
+						"authorization");
+
+					if (authorization == null) {
+						return null;
+					}
+
+					return String.valueOf(authorization);
+				}
 			).build());
 
 		options.setLocation(location);
@@ -276,11 +300,17 @@ public class MCPServerServlet extends HttpServlet {
 	private McpSchema.Tool _getTool(String name, JSONObject toolsJSONObject) {
 		JSONObject toolJSONObject = toolsJSONObject.getJSONObject(name);
 
-		return new McpSchema.Tool(
-			name, toolJSONObject.getString("description"),
+		return McpSchema.Tool.builder(
+		).name(
+			name
+		).description(
+			toolJSONObject.getString("description")
+		).inputSchema(
+			new JacksonMcpJsonMapper(new ObjectMapper()),
 			toolJSONObject.getJSONObject(
 				"schema"
-			).toString());
+			).toString()
+		).build();
 	}
 
 	private JSONObject _getToolsJSONObject(String baseURL) {

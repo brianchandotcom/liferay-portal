@@ -10,6 +10,7 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.object.client.dto.v1_0.ObjectEntryFolder;
+import com.liferay.headless.object.client.dto.v1_0.Status;
 import com.liferay.headless.object.client.pagination.Page;
 import com.liferay.headless.object.client.pagination.Pagination;
 import com.liferay.headless.object.client.problem.Problem;
@@ -189,6 +190,7 @@ public class ObjectEntryFolderResourceTest
 	public void testPostScopeScopeKeyObjectEntryFolder() throws Exception {
 		super.testPostScopeScopeKeyObjectEntryFolder();
 
+		_testPostScopeScopeKeyObjectEntryFolderStatus();
 		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByExternalReferenceCode();
 		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByObjectEntryFolderId();
 		_testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderDataMismatch();
@@ -232,6 +234,12 @@ public class ObjectEntryFolderResourceTest
 		Assert.assertNotNull(getObjectEntryFolder.getRemovedBy());
 		Assert.assertNotNull(getObjectEntryFolder.getRemovedDate());
 
+		Status status = getObjectEntryFolder.getStatus();
+
+		Assert.assertEquals(
+			Integer.valueOf(WorkflowConstants.STATUS_IN_TRASH),
+			status.getCode());
+
 		postObjectEntryFolder =
 			objectEntryFolderResource.
 				postScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore(
@@ -247,6 +255,12 @@ public class ObjectEntryFolderResourceTest
 
 		Assert.assertNull(postObjectEntryFolder.getRemovedBy());
 		Assert.assertNull(postObjectEntryFolder.getRemovedDate());
+
+		status = postObjectEntryFolder.getStatus();
+
+		Assert.assertEquals(
+			Integer.valueOf(WorkflowConstants.STATUS_APPROVED),
+			status.getCode());
 	}
 
 	@Override
@@ -806,6 +820,24 @@ public class ObjectEntryFolderResourceTest
 
 		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
 		assertValid(getObjectEntryFolder);
+	}
+
+	private void _testPostScopeScopeKeyObjectEntryFolderStatus()
+		throws Exception {
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder postObjectEntryFolder =
+			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
+				randomObjectEntryFolder);
+
+		assertValid(postObjectEntryFolder);
+
+		Status status = postObjectEntryFolder.getStatus();
+
+		Assert.assertEquals(
+			Integer.valueOf(WorkflowConstants.STATUS_APPROVED),
+			status.getCode());
 	}
 
 	private void _testPostScopeScopeKeyObjectEntryFolderWithExistingParentObjectEntryFolderByExternalReferenceCode()

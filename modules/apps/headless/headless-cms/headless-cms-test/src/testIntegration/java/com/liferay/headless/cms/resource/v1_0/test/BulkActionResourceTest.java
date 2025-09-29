@@ -267,7 +267,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		BulkActionItem bulkActionItem, long expectedClassPK,
 		String expectedDeletionType, Long expectedItemsCount,
 		String expectedMimeType, String expectedName, String expectedType,
-		Long usages1) {
+		Long expectedUsages) {
 
 		Map<String, Object> attributes = bulkActionItem.getAttributes();
 
@@ -288,14 +288,14 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertEquals(expectedMimeType, attributes.get("mimeType"));
 		Assert.assertEquals(expectedType, attributes.get("type"));
 
-		Object usages2 = attributes.get("usages");
+		Object usages = attributes.get("usages");
 
-		if (usages1 == null) {
-			Assert.assertNull(usages2);
+		if (expectedUsages == null) {
+			Assert.assertNull(usages);
 		}
 		else {
 			Assert.assertEquals(
-				usages1.longValue(), GetterUtil.getLong(usages2));
+				expectedUsages.longValue(), GetterUtil.getLong(usages));
 		}
 
 		Assert.assertEquals(expectedClassPK, (long)bulkActionItem.getClassPK());

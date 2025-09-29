@@ -10,7 +10,7 @@ export function activateFilter({
 	selectedData,
 }: {
 	filter: any;
-	selectedData: any;
+	selectedData?: any;
 }) {
 	filter.active = true;
 

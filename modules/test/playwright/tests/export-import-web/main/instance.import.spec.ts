@@ -714,6 +714,176 @@ test(
 	}
 );
 
+test('can import many to many entries', async ({
+	apiHelpers,
+	companyExportImportPage,
+}) => {
+	const objectDefinition1 =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition1.id,
+		type: 'objectDefinition',
+	});
+
+	const objectDefinition2 =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition2.id,
+		type: 'objectDefinition',
+	});
+
+	const objectRelationshipAPIClient = await apiHelpers.buildRestClient(
+		ObjectRelationshipAPI
+	);
+
+	const {body: objectRelationship} =
+		await objectRelationshipAPIClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
+			objectDefinition1.externalReferenceCode,
+			{
+				label: {
+					en_US: 'objectRelationshipLabel' + getRandomInt(),
+				},
+				name: 'objectRelationshipName' + Math.floor(Math.random() * 99),
+				objectDefinitionExternalReferenceCode1:
+					objectDefinition1.externalReferenceCode,
+				objectDefinitionExternalReferenceCode2:
+					objectDefinition2.externalReferenceCode,
+				type: 'manyToMany',
+			}
+		);
+
+	apiHelpers.data.push({
+		id: objectRelationship.id,
+		type: 'objectRelationship',
+	});
+
+	const applicationName1 = 'c/' + objectDefinition1.name.toLowerCase() + 's';
+	const applicationName2 = 'c/' + objectDefinition2.name.toLowerCase() + 's';
+
+	const objectDefinition1ObjectEntry1 =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'objectDefinition1ObjectEntry1'},
+			applicationName1
+		);
+
+	const objectDefinition1ObjectEntry2 =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'objectDefinition1ObjectEntry2'},
+			applicationName1
+		);
+
+	const objectDefinition1ObjectEntry3 =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'objectDefinition1ObjectEntry3'},
+			applicationName1
+		);
+
+	const objectDefinition2ObjectEntry1 =
+		await apiHelpers.objectEntry.postObjectEntry(
+			{textField: 'objectDefinition2ObjectEntry1'},
+			applicationName2
+		);
+
+	await test.step('relate objectDefinition1ObjectEntry1 and objectDefinition1ObjectEntry2 to objectDefinition2ObjectEntry1 and assert their persistence', async () => {
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName: applicationName1,
+				currentExternalReferenceCode:
+					objectDefinition1ObjectEntry1.externalReferenceCode,
+				objectRelationshipName: objectRelationship.name,
+				relatedExternalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+			}
+		);
+
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName: applicationName1,
+				currentExternalReferenceCode:
+					objectDefinition1ObjectEntry2.externalReferenceCode,
+				objectRelationshipName: objectRelationship.name,
+				relatedExternalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+			}
+		);
+
+		const objectEntry =
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: applicationName2,
+				externalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+				nestedField: objectRelationship.name,
+			});
+
+		expect(objectEntry[objectRelationship.name].length).toBe(2);
+	});
+
+	const exportFilePath1 = await companyExportImportPage.export(
+		`${objectDefinition1.name} 3 Items`
+	);
+
+	await test.step("relate objectDefinition1ObjectEntry3 to objectDefinition2ObjectEntry1 and assert it's persistence", async () => {
+		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
+			{
+				applicationName: applicationName1,
+				currentExternalReferenceCode:
+					objectDefinition1ObjectEntry3.externalReferenceCode,
+				objectRelationshipName: objectRelationship.name,
+				relatedExternalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+			}
+		);
+
+		const objectEntry =
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: applicationName2,
+				externalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+				nestedField: objectRelationship.name,
+			});
+
+		expect(objectEntry[objectRelationship.name].length).toBe(3);
+	});
+
+	const exportFilePath2 = await companyExportImportPage.export(
+		`${objectDefinition1.name} 3 Items`
+	);
+
+	await test.step("import object entry where objectDefinition1ObjectEntry3 was still unrelated and assert it's persistence", async () => {
+		await companyExportImportPage.import(exportFilePath1);
+
+		const objectEntry =
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: applicationName2,
+				externalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+				nestedField: objectRelationship.name,
+			});
+
+		expect(objectEntry[objectRelationship.name].length).toBe(2);
+	});
+
+	await test.step("import object entry where objectDefinition1ObjectEntry3 was related to objectDefinition2ObjectEntry1 and assert it's persistence", async () => {
+		await companyExportImportPage.import(exportFilePath2);
+
+		const objectEntry =
+			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
+				applicationName: applicationName2,
+				externalReferenceCode:
+					objectDefinition2ObjectEntry1.externalReferenceCode,
+				nestedField: objectRelationship.name,
+			});
+
+		expect(objectEntry[objectRelationship.name].length).toBe(3);
+	});
+});
+
 test('can only import custom object entries when their definitions are already in the system', async ({
 	apiHelpers,
 	companyExportImportPage,

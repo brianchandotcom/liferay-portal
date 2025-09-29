@@ -43,7 +43,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -63,9 +62,6 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
@@ -75,7 +71,8 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 							"/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -117,6 +114,10 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 		}
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/fragment/renderer/add_to_cart/page.jsp");
+
 			CommerceContext commerceContext =
 				(CommerceContext)httpServletRequest.getAttribute(
 					CommerceWebKeys.COMMERCE_CONTEXT);
@@ -166,10 +167,6 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 				"liferay-commerce:add-to-cart:size",
 				_getConfigurationValue(fragmentEntryLink, "size"));
 
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/fragment/renderer/add_to_cart/page.jsp");
-
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
@@ -198,31 +195,16 @@ public class AddToCartFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _printPortletMessageInfo(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String message) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String message)
+		throws IOException {
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("<div class=\"portlet-msg-info\">");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			sb.append(themeDisplay.translate(message));
-
-			sb.append("</div>");
-
-			printWriter.write(sb.toString());
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-		}
+		printWriter.write(
+			StringBundler.concat(
+				"<div class=\"portlet-msg-info\">",
+				_language.get(httpServletRequest, message), "</div>"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

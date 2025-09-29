@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,9 +61,6 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
@@ -73,7 +69,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 							"dependencies/configuration.json")));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
 		}
 		catch (IOException | JSONException exception) {
 			if (_log.isDebugEnabled()) {

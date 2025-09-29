@@ -37,7 +37,6 @@ import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,9 +51,6 @@ public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
@@ -63,7 +59,8 @@ public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 						"/internal/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -81,10 +78,7 @@ public class CategoriesInputFragmentRenderer extends BaseInputFragmentRenderer {
 
 	@Override
 	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		return language.get(resourceBundle, "categories");
+		return language.get(locale, "categories");
 	}
 
 	@Override

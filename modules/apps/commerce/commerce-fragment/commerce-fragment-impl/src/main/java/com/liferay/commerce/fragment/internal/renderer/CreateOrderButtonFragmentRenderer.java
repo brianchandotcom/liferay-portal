@@ -35,12 +35,10 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import jakarta.servlet.ServletContext;
@@ -51,7 +49,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -72,9 +69,6 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 	public JSONObject getConfigurationJSONObject(
 		FragmentRendererContext fragmentRendererContext) {
 
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
 		try {
 			JSONObject jsonObject = _jsonFactory.createJSONObject(
 				StringUtil.read(
@@ -82,7 +76,8 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 					"create_order_button/dependencies/configuration.json"));
 
 			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject, resourceBundle);
+				jsonObject,
+				ResourceBundleUtil.getBundle("content.Language", getClass()));
 		}
 		catch (JSONException jsonException) {
 			if (_log.isDebugEnabled()) {
@@ -115,11 +110,11 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		CommerceContext commerceContext =
-			(CommerceContext)httpServletRequest.getAttribute(
-				CommerceWebKeys.COMMERCE_CONTEXT);
-
 		try {
+			CommerceContext commerceContext =
+				(CommerceContext)httpServletRequest.getAttribute(
+					CommerceWebKeys.COMMERCE_CONTEXT);
+
 			if ((commerceContext == null) ||
 				(commerceContext.getCommerceChannelId() <= 0)) {
 
@@ -256,31 +251,16 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 	}
 
 	private void _printPortletMessageInfo(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse, String message) {
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, String message)
+		throws IOException {
 
-		try {
-			PrintWriter printWriter = httpServletResponse.getWriter();
+		PrintWriter printWriter = httpServletResponse.getWriter();
 
-			StringBundler sb = new StringBundler(3);
-
-			sb.append("<div class=\"portlet-msg-info\">");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			sb.append(themeDisplay.translate(message));
-
-			sb.append("</div>");
-
-			printWriter.write(sb.toString());
-		}
-		catch (IOException ioException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ioException);
-			}
-		}
+		printWriter.write(
+			StringBundler.concat(
+				"<div class=\"portlet-msg-info\">",
+				_language.get(httpServletRequest, message), "</div>"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -225,10 +226,7 @@ public class ActionUtil {
 		Set<String> uniqueInfoFieldIds = new HashSet<>();
 
 		for (InfoField<?> infoField : infoForm.getAllInfoFields()) {
-			if (!Objects.equals(infoField.getName(), "title") &&
-				!Objects.equals(
-					infoField.getName(), "objectEntryFriendlyURL")) {
-
+			if (!ArrayUtil.contains(_HIDDEN_INFO_FIELDS, infoField.getName())) {
 				uniqueInfoFieldIds.add(infoField.getUniqueId());
 			}
 		}
@@ -1364,6 +1362,11 @@ public class ActionUtil {
 
 		return FriendlyURLResolverConstants.URL_SEPARATOR_X_CUSTOM_ASSET;
 	}
+
+	private static final String[] _HIDDEN_INFO_FIELDS = {
+		"displayDate", "expirationDate", "externalReferenceCode",
+		"objectEntryFriendlyURL", "reviewDate", "title"
+	};
 
 	private static final String
 		_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX =

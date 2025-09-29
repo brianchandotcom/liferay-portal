@@ -6,6 +6,7 @@
 package com.liferay.portal.security.sso.openid.connect.web.internal.configuration.admin.display;
 
 import com.liferay.configuration.admin.display.ConfigurationFormRenderer;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -44,6 +45,29 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
 
+		int[] customClaimsIndexes = ParamUtil.getIntegerValues(
+			httpServletRequest, "customClaimsIndexes");
+
+		List<String> customClaims = new ArrayList<>();
+
+		for (int customClaimsIndex : customClaimsIndexes) {
+			String key = ParamUtil.getString(
+				httpServletRequest, "customClaimsKey-" + customClaimsIndex);
+
+			if (key.isEmpty()) {
+				continue;
+			}
+
+			String value = ParamUtil.getString(
+				httpServletRequest, "customClaimsValue-" + customClaimsIndex);
+
+			customClaims.add(key + StringPool.EQUAL + value);
+		}
+
+		if (customClaims.isEmpty()) {
+			customClaims.add(StringPool.BLANK);
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"authorizationEndpoint",
 			ParamUtil.getString(httpServletRequest, "authorizationEndpoint")
@@ -51,6 +75,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			"customAuthorizationRequestParameters",
 			_getStringValues(
 				httpServletRequest, "customAuthorizationRequestParameters")
+		).put(
+			"customClaims", customClaims.toArray(String[]::new)
 		).put(
 			"customTokenRequestParameters",
 			_getStringValues(httpServletRequest, "customTokenRequestParameters")
@@ -112,7 +138,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 				OpenIdConnectWebKeys.
 					OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT,
 				new OpenIdConnectProviderConfigurationDisplayContext(
-					_configurationAdmin,
+					_configurationAdmin, _expandoColumnLocalService,
 					httpServletRequest.getParameter("pid")));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
@@ -152,6 +178,9 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ExpandoColumnLocalService _expandoColumnLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.portal.security.sso.openid.connect.web)"

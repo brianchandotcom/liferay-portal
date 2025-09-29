@@ -120,6 +120,22 @@ export class ObjectEntryApiHelper {
 		);
 	}
 
+	async putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode({
+		applicationName,
+		currentExternalReferenceCode,
+		objectRelationshipName,
+		relatedExternalReferenceCode,
+	}: {
+		applicationName: string;
+		currentExternalReferenceCode: string;
+		objectRelationshipName: string;
+		relatedExternalReferenceCode: string;
+	}): Promise<ObjectEntry> {
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${applicationName}/by-external-reference-code/${currentExternalReferenceCode}/${objectRelationshipName}/${relatedExternalReferenceCode}`
+		);
+	}
+
 	async putObjectEntry(
 		data: DataObject,
 		applicationName: string,

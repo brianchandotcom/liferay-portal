@@ -78,6 +78,16 @@ public interface AssetLibraryResource {
 			String externalReferenceCode)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryByExternalReferenceCodePermissionsPage(
+				String externalReferenceCode, String roleNames)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			getAssetLibraryPermissionsPage(
+				Long assetLibraryId, String roleNames)
+		throws Exception;
+
 	public AssetLibrary patchAssetLibrary(
 			Long assetLibraryId, AssetLibrary assetLibrary)
 		throws Exception;
@@ -103,8 +113,20 @@ public interface AssetLibraryResource {
 			String externalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryByExternalReferenceCodePermissionsPage(
+				String externalReferenceCode,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
 	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
 			String externalReferenceCode)
+		throws Exception;
+
+	public Page<com.liferay.portal.vulcan.permission.Permission>
+			putAssetLibraryPermissionsPage(
+				Long assetLibraryId,
+				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
 	public AssetLibrary putAssetLibraryPin(Long assetLibraryId)

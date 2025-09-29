@@ -522,8 +522,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return new PortletDataHandlerBoolean(
 			getPortletId(), exportImportDescriptor.getItemClassName(),
 			exportImportDescriptor.getLabel(), true, false, null,
-			exportImportDescriptor.getItemClassName(),
-			StagedModelType.REFERRER_CLASS_NAME_ALL);
+			exportImportDescriptor.getItemClassName(), null);
 	}
 
 	private StagedModelType _getStagedModelType(Registration registration) {

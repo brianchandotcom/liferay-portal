@@ -188,6 +188,11 @@ public class ObjectEntryModelResourcePermission
 			objectEntryModelResourcePermissionLogic =
 				_objectEntryModelResourcePermissionLogicSupplier.get();
 
+		if (!objectEntry.isHead()) {
+			objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				objectEntry.getHeadObjectEntryId());
+		}
+
 		if ((!actionId.equals(ActionKeys.VIEW) || objectEntry.isApproved()) &&
 			(objectEntryModelResourcePermissionLogic != null) &&
 			Objects.equals(
@@ -395,11 +400,11 @@ public class ObjectEntryModelResourcePermission
 
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, objectDefinition.getClassName(),
-				objectEntry.getObjectEntryId(), actionId);
+				objectEntry.getHeadObjectEntryId(), actionId);
 		}
 
 		throw new PrincipalException.MustHavePermission(
-			permissionChecker, _modelName, objectEntry.getObjectEntryId(),
+			permissionChecker, _modelName, objectEntry.getHeadObjectEntryId(),
 			actionId);
 	}
 

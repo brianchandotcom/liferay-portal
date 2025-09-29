@@ -626,6 +626,12 @@ test('Reset collection filter using applied filters', async ({
 
 	await page.getByLabel(ANIMALS_COLLECTION_NAME).check();
 
+	await page
+		.getByText(
+			'You will see this fragment on the page only after applying a filter.'
+		)
+		.click();
+
 	// Check Include Clear Filters Option
 
 	await page

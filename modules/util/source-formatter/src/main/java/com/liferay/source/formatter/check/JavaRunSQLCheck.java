@@ -40,7 +40,7 @@ public class JavaRunSQLCheck extends BaseJavaTermCheck {
 			List<String> parameterList = JavaSourceUtil.getParameterList(
 				runSQLMethodCall);
 
-			if (parameterList.isEmpty() || (parameterList.size() != 1)) {
+			if (parameterList.size() != 1) {
 				continue;
 			}
 

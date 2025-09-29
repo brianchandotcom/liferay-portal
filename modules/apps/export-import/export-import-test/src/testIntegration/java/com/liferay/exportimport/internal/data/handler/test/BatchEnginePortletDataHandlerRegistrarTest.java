@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
-import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.petra.function.UnsafeBiConsumer;
@@ -144,12 +143,10 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 							new PortletDataHandlerControl[] {
 								new PortletDataHandlerBoolean(
 									portletId, className1, null, true, false,
-									null, className1,
-									StagedModelType.REFERRER_CLASS_NAME_ALL),
+									null, className1, null),
 								new PortletDataHandlerBoolean(
 									portletId, className2, null, true, false,
-									null, className2,
-									StagedModelType.REFERRER_CLASS_NAME_ALL)
+									null, className2, null)
 							},
 							portletDataHandler.getExportControls()));
 

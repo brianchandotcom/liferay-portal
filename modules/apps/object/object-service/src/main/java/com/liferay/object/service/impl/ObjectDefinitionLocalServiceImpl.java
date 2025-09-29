@@ -184,9 +184,9 @@ import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContr
 import com.liferay.portal.service.impl.LayoutLocalServiceHelper;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionService;
 import com.liferay.sharing.security.permission.resource.SharingModelResourcePermissionConfigurator;
 import com.liferay.sharing.service.SharingEntryLocalService;
 import com.liferay.subscription.service.SubscriptionLocalService;
@@ -1806,10 +1806,21 @@ public class ObjectDefinitionLocalServiceImpl
 					objectDefinition.getCompanyId(), groupId,
 					objectDefinition.getClassName(), 0, 0, true);
 
+			String workflowDefinitionName =
+				workflowDefinitionLink.getWorkflowDefinitionName();
+
 			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionService.getOrAddEmptyKaleoDefinition(
-					workflowDefinitionLink.getWorkflowDefinitionName(),
-					serviceContext);
+				_kaleoDefinitionLocalService.fetchKaleoDefinition(
+					workflowDefinitionName, serviceContext);
+
+			if (kaleoDefinition == null) {
+				kaleoDefinition =
+					_kaleoDefinitionLocalService.addKaleoDefinition(
+						workflowDefinitionName, workflowDefinitionName,
+						workflowDefinitionName, null, null,
+						WorkflowDefinitionConstants.SCOPE_ALL, 0,
+						serviceContext);
+			}
 
 			if (existingWorkflowDefinitionLink == null) {
 				_workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(
@@ -3526,9 +3537,6 @@ public class ObjectDefinitionLocalServiceImpl
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;
-
-	@Reference
-	private KaleoDefinitionService _kaleoDefinitionService;
 
 	@Reference
 	private Language _language;

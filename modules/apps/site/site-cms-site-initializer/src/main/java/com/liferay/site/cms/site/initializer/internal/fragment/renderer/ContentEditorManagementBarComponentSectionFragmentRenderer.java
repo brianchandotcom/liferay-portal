@@ -16,12 +16,14 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.util.InfoItemUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -79,18 +81,47 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
+				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
 		).put(
+			"hasWorkflow",
+			() -> {
+				if (layoutDisplayPageObjectProvider == null) {
+					return StringPool.BLANK;
+				}
+
+				Object displayObject =
+					layoutDisplayPageObjectProvider.getDisplayObject();
+
+				if (!(displayObject instanceof ObjectEntry)) {
+					return StringPool.BLANK;
+				}
+
+				ObjectEntry objectEntry = (ObjectEntry)displayObject;
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.fetchObjectDefinition(
+						objectEntry.getObjectDefinitionId());
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				long assetLibraryId = InfoItemUtil.getGroupId(
+					httpServletRequest);
+
+				return _workflowDefinitionLinkLocalService.
+					hasWorkflowDefinitionLink(
+						themeDisplay.getCompanyId(), assetLibraryId,
+						objectDefinition.getClassName());
+			}
+		).put(
 			"headerTitle",
 			() -> {
-				LayoutDisplayPageObjectProvider<?>
-					layoutDisplayPageObjectProvider =
-						(LayoutDisplayPageObjectProvider<?>)
-							httpServletRequest.getAttribute(
-								LayoutDisplayPageWebKeys.
-									LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
 				if (layoutDisplayPageObjectProvider == null) {
 					return StringPool.BLANK;
 				}
@@ -162,5 +193,9 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 
 }

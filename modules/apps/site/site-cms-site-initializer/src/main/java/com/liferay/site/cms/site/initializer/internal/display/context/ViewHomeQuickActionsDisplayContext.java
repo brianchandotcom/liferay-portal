@@ -16,6 +16,7 @@ import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectEntryFolderLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -123,7 +124,7 @@ public class ViewHomeQuickActionsDisplayContext {
 		return _getDepotEntriesJSONArray(
 			TransformUtil.transform(
 				_depotEntryLocalService.getDepotEntries(
-					_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
 				DepotEntry::getGroupId));
 	}
 

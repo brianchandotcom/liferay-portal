@@ -104,7 +104,7 @@ export default function RecycleBinFDSPropsTransformer({
 				);
 			}
 		},
-		onBulkActionItemClick: ({
+		onBulkActionItemClick: async ({
 			action,
 			selectedData,
 		}: {

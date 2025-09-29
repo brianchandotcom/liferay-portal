@@ -14,7 +14,7 @@ import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 /**
  * Executes the bulk delete action.
  */
-function executeBulkDeleteAction(
+export function executeBulkDeleteAction(
 	apiURL: string,
 	selectedData: IBulkActionFDSData,
 	processClose?: () => void
@@ -70,7 +70,7 @@ async function getEntriesSpaces(
 		.filter((item) => item.embedded.scopeId)
 		.map((item) =>
 			SpaceService.getSpace({
-				spaceId: item.embedded.scopeId,
+				spaceId: item.embedded.scopeId as number,
 			})
 		);
 

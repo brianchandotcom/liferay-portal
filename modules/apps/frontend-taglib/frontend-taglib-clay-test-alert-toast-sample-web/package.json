@@ -1,6 +1,6 @@
 {
 	"dependencies": {
-		"@clayui/alert": "3.144.1",
+		"@clayui/alert": "3.148.0",
 		"@clayui/button": "3.144.1",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

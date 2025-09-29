@@ -81,6 +81,7 @@ public class BulkActionEntityModel implements EntityModel {
 
 					return sortableFieldName.concat(".keyword_lowercase");
 				}),
+			new StringEntityField("type", locale -> "type"),
 			new StringEntityField("usages", locale -> "usages"));
 	}
 

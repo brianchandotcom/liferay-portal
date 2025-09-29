@@ -26,6 +26,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetLookAndFeelConfig;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSection;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageWidgetInstance;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.importer.util.PortletPermissionsImporterUtil;
 import com.liferay.layout.importer.util.PortletPreferencesPortletConfigurationImporterUtil;
@@ -881,7 +882,9 @@ public class LayoutUtil {
 				clientExtension.getExternalReferenceCode());
 
 			if (cet == null) {
-				throw new UnsupportedOperationException();
+				LogUtil.logOptionalReference(
+					ClientExtension.class,
+					clientExtension.getExternalReferenceCode());
 			}
 
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(

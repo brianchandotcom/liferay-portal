@@ -35,6 +35,8 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 			ExpandoColumnLocalService expandoColumnLocalService, String pid)
 		throws InvalidSyntaxException, IOException {
 
+		_expandoColumnLocalService = expandoColumnLocalService;
+
 		Configuration[] configurations = configurationAdmin.listConfigurations(
 			StringBundler.concat(
 				"(&(companyId=", CompanyThreadLocal.getCompanyId(),
@@ -65,8 +67,6 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 				"tokenConnectionTimeout", 1000
 			).build();
 		}
-
-		_expandoColumnLocalService = expandoColumnLocalService;
 	}
 
 	public String getAuthorizationEndpoint() {

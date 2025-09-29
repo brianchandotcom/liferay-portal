@@ -213,7 +213,7 @@ public class OAuthClientEntryCacheModel
 		authRequestParametersJSON = objectInput.readUTF();
 		authServerWellKnownURI = objectInput.readUTF();
 		clientId = objectInput.readUTF();
-		customClaimsJSON = objectInput.readUTF();
+		customClaimsJSON = (String)objectInput.readObject();
 		infoJSON = (String)objectInput.readObject();
 
 		metadataCacheTime = objectInput.readLong();
@@ -263,10 +263,10 @@ public class OAuthClientEntryCacheModel
 		}
 
 		if (customClaimsJSON == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(customClaimsJSON);
+			objectOutput.writeObject(customClaimsJSON);
 		}
 
 		if (infoJSON == null) {

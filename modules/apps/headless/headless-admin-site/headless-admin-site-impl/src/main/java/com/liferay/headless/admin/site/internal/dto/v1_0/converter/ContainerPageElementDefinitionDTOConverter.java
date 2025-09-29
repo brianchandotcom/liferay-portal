@@ -6,6 +6,11 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentImage;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentStyle;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentViewport;
+import com.liferay.headless.admin.site.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
@@ -16,18 +21,26 @@ import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.ContentVisibilityConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,7 +53,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = DTOConverter.class
 )
 public class ContainerPageElementDefinitionDTOConverter
-	extends BaseStyledLayoutStructureItem
 	implements DTOConverter
 		<ContainerStyledLayoutStructureItem, ContainerPageElementDefinition> {
 
@@ -82,10 +94,10 @@ public class ContainerPageElementDefinitionDTOConverter
 								contentVisibility));
 					});
 				setCssClasses(
-					() -> toCssClasses(
+					() -> _toCssClasses(
 						containerStyledLayoutStructureItem.getCssClasses()));
 				setCustomCSS(
-					() -> toCustomCSS(
+					() -> _toCustomCSS(
 						containerStyledLayoutStructureItem.getCustomCSS()));
 				setFragmentLink(
 					() -> FragmentLinkValueUtil.toFragmentLink(
@@ -93,13 +105,13 @@ public class ContainerPageElementDefinitionDTOConverter
 						containerStyledLayoutStructureItem.getLinkJSONObject(),
 						scopeGroupId));
 				setFragmentStyle(
-					() -> toFragmentStyle(
+					() -> _toFragmentStyle(
 						_infoItemServiceRegistry,
 						containerStyledLayoutStructureItem.
 							getStylesJSONObject(),
 						scopeGroupId));
 				setFragmentViewports(
-					() -> toFragmentViewports(
+					() -> _toFragmentViewports(
 						containerStyledLayoutStructureItem.
 							getItemConfigJSONObject()));
 				setHtmlProperties(
@@ -111,6 +123,266 @@ public class ContainerPageElementDefinitionDTOConverter
 				setType(PageElementDefinition.Type.CONTAINER);
 			}
 		};
+	}
+
+	private FragmentViewportStyle _getFragmentViewportStyle(
+		JSONObject styleJSONObject) {
+
+		return new FragmentViewportStyle() {
+			{
+				setBackgroundColor(
+					() -> styleJSONObject.getString("backgroundColor", null));
+				setBorderColor(
+					() -> styleJSONObject.getString("borderColor", null));
+				setBorderRadius(
+					() -> styleJSONObject.getString("borderRadius", null));
+				setBorderWidth(
+					() -> styleJSONObject.getString("borderWidth", null));
+				setFontFamily(
+					() -> styleJSONObject.getString("fontFamily", null));
+				setFontSize(() -> styleJSONObject.getString("fontSize", null));
+				setFontWeight(
+					() -> styleJSONObject.getString("fontWeight", null));
+				setHeight(() -> styleJSONObject.getString("height", null));
+				setHidden(
+					() -> {
+						if (Objects.equals(
+								styleJSONObject.getString("display"),
+								"block")) {
+
+							return false;
+						}
+
+						if (Objects.equals(
+								styleJSONObject.getString("display"), "none")) {
+
+							return true;
+						}
+
+						return null;
+					});
+				setMarginBottom(
+					() -> styleJSONObject.getString("marginBottom", null));
+				setMarginLeft(
+					() -> styleJSONObject.getString("marginLeft", null));
+				setMarginRight(
+					() -> styleJSONObject.getString("marginRight", null));
+				setMarginTop(
+					() -> styleJSONObject.getString("marginTop", null));
+				setMaxHeight(
+					() -> styleJSONObject.getString("maxHeight", null));
+				setMaxWidth(() -> styleJSONObject.getString("maxWidth", null));
+				setMinHeight(
+					() -> styleJSONObject.getString("minHeight", null));
+				setMinWidth(() -> styleJSONObject.getString("minWidth", null));
+				setOpacity(() -> styleJSONObject.getString("opacity", null));
+				setOverflow(() -> styleJSONObject.getString("overflow", null));
+				setPaddingBottom(
+					() -> styleJSONObject.getString("paddingBottom", null));
+				setPaddingLeft(
+					() -> styleJSONObject.getString("paddingLeft", null));
+				setPaddingRight(
+					() -> styleJSONObject.getString("paddingRight", null));
+				setPaddingTop(
+					() -> styleJSONObject.getString("paddingTop", null));
+				setShadow(() -> styleJSONObject.getString("shadow", null));
+				setTextAlign(
+					() -> styleJSONObject.getString("textAlign", null));
+				setTextColor(
+					() -> styleJSONObject.getString("textColor", null));
+				setWidth(() -> styleJSONObject.getString("width", null));
+			}
+		};
+	}
+
+	private FragmentImage _toBackgroundFragmentImage(
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
+
+		if (jsonObject == null) {
+			return null;
+		}
+
+		String urlValue = jsonObject.getString("url");
+
+		return new FragmentImage() {
+			{
+				setTitle(() -> jsonObject.getString("title"));
+				setUrl(
+					() -> {
+						if (FragmentLinkValueUtil.isMappedValue(jsonObject)) {
+							return FragmentLinkValueUtil.
+								toFragmentLinkMappedValue(
+									infoItemServiceRegistry, jsonObject,
+									scopeGroupId);
+						}
+
+						if (Validator.isNull(urlValue)) {
+							return null;
+						}
+
+						return new FragmentInlineValue() {
+							{
+								setUrl(() -> urlValue);
+							}
+						};
+					});
+			}
+		};
+	}
+
+	private String[] _toCssClasses(Set<String> cssClasses) {
+		if (SetUtil.isEmpty(cssClasses)) {
+			return null;
+		}
+
+		return ArrayUtil.toStringArray(cssClasses);
+	}
+
+	private String _toCustomCSS(String customCSS) {
+		if (Validator.isNotNull(customCSS)) {
+			return customCSS;
+		}
+
+		return null;
+	}
+
+	private FragmentStyle _toFragmentStyle(
+		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
+		long scopeGroupId) {
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		return new FragmentStyle() {
+			{
+				setBackgroundColor(
+					() -> jsonObject.getString("backgroundColor", null));
+				setBackgroundFragmentImage(
+					() -> {
+						Object backgroundImage = jsonObject.get(
+							"backgroundImage");
+
+						if (backgroundImage == null) {
+							return null;
+						}
+
+						JSONObject backgroundImageJSONObject =
+							(JSONObject)backgroundImage;
+
+						return _toBackgroundFragmentImage(
+							infoItemServiceRegistry, backgroundImageJSONObject,
+							scopeGroupId);
+					});
+				setBorderColor(() -> jsonObject.getString("borderColor", null));
+				setBorderRadius(
+					() -> jsonObject.getString("borderRadius", null));
+				setBorderWidth(() -> jsonObject.getString("borderWidth", null));
+				setFontFamily(() -> jsonObject.getString("fontFamily", null));
+				setFontSize(() -> jsonObject.getString("fontSize", null));
+				setFontWeight(() -> jsonObject.getString("fontWeight", null));
+				setHeight(() -> jsonObject.getString("height", null));
+				setHidden(
+					() -> {
+						if (Objects.equals(
+								jsonObject.getString("display"), "block")) {
+
+							return false;
+						}
+
+						if (Objects.equals(
+								jsonObject.getString("display"), "none")) {
+
+							return true;
+						}
+
+						return null;
+					});
+				setMarginBottom(
+					() -> jsonObject.getString("marginBottom", null));
+				setMarginLeft(() -> jsonObject.getString("marginLeft", null));
+				setMarginRight(() -> jsonObject.getString("marginRight", null));
+				setMarginTop(() -> jsonObject.getString("marginTop", null));
+				setMaxHeight(() -> jsonObject.getString("maxHeight", null));
+				setMaxWidth(() -> jsonObject.getString("maxWidth", null));
+				setMinHeight(() -> jsonObject.getString("minHeight", null));
+				setMinWidth(() -> jsonObject.getString("minWidth", null));
+				setOpacity(() -> jsonObject.getString("opacity", null));
+				setOverflow(() -> jsonObject.getString("overflow", null));
+				setPaddingBottom(
+					() -> jsonObject.getString("paddingBottom", null));
+				setPaddingLeft(() -> jsonObject.getString("paddingLeft", null));
+				setPaddingRight(
+					() -> jsonObject.getString("paddingRight", null));
+				setPaddingTop(() -> jsonObject.getString("paddingTop", null));
+				setShadow(() -> jsonObject.getString("shadow", null));
+				setTextAlign(() -> jsonObject.getString("textAlign", null));
+				setTextColor(() -> jsonObject.getString("textColor", null));
+				setWidth(() -> jsonObject.getString("width", null));
+			}
+		};
+	}
+
+	private FragmentViewport _toFragmentViewport(
+		JSONObject jsonObject, ViewportSize viewportSize) {
+
+		JSONObject viewportJSONObject = jsonObject.getJSONObject(
+			viewportSize.getViewportSizeId());
+
+		if (JSONUtil.isEmpty(viewportJSONObject) ||
+			(Validator.isNull(
+				viewportJSONObject.getString("customCSS", null)) &&
+			 JSONUtil.isEmpty(viewportJSONObject.getJSONObject("styles")))) {
+
+			return null;
+		}
+
+		return new FragmentViewport() {
+			{
+				setCustomCSS(
+					() -> viewportJSONObject.getString("customCSS", null));
+				setFragmentViewportStyle(
+					() -> _getFragmentViewportStyle(
+						viewportJSONObject.getJSONObject("styles")));
+				setId(viewportSize::getViewportSizeId);
+			}
+		};
+	}
+
+	private FragmentViewport[] _toFragmentViewports(JSONObject jsonObject) {
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		List<FragmentViewport> fragmentViewports = new ArrayList<>();
+
+		FragmentViewport mobileLandscapeFragmentViewport = _toFragmentViewport(
+			jsonObject, ViewportSize.MOBILE_LANDSCAPE);
+
+		if (mobileLandscapeFragmentViewport != null) {
+			fragmentViewports.add(mobileLandscapeFragmentViewport);
+		}
+
+		FragmentViewport portraitMobileFragmentViewport = _toFragmentViewport(
+			jsonObject, ViewportSize.PORTRAIT_MOBILE);
+
+		if (portraitMobileFragmentViewport != null) {
+			fragmentViewports.add(portraitMobileFragmentViewport);
+		}
+
+		FragmentViewport tabletFragmentViewport = _toFragmentViewport(
+			jsonObject, ViewportSize.TABLET);
+
+		if (tabletFragmentViewport != null) {
+			fragmentViewports.add(tabletFragmentViewport);
+		}
+
+		if (ListUtil.isEmpty(fragmentViewports)) {
+			return null;
+		}
+
+		return fragmentViewports.toArray(new FragmentViewport[0]);
 	}
 
 	private HtmlProperties _toHtmlProperties(

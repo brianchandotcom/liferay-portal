@@ -92,7 +92,7 @@ test(
 
 		await expect(
 			page.locator('.label-warning', {
-				hasText: 'Referenced Structure',
+				hasText: 'Referenced Content Structure',
 			})
 		).toBeVisible();
 
@@ -102,19 +102,19 @@ test(
 			await clickAndExpectToBeVisible({
 				target: page.getByRole('menuitem', {
 					exact: true,
-					name: 'Referenced Structure',
+					name: 'Referenced Content Structure',
 				}),
 				trigger: page.getByLabel('Add Field'),
 			});
 
 			await clickAndExpectToBeVisible({
 				target: page.locator('.modal-title', {
-					hasText: 'Referenced Structure',
+					hasText: 'Referenced Content Structure',
 				}),
 				timeout: 2000,
 				trigger: page.getByRole('menuitem', {
 					exact: true,
-					name: 'Referenced Structure',
+					name: 'Referenced Content Structure',
 				}),
 			});
 
@@ -132,7 +132,7 @@ test(
 
 			await page
 				.locator('.modal-title', {
-					hasText: 'Referenced Structure',
+					hasText: 'Referenced Content Structure',
 				})
 				.click({timeout: 500});
 
@@ -147,7 +147,7 @@ test(
 
 			await clickAndExpectToBeHidden({
 				target: page.locator('.modal-title', {
-					hasText: 'Referenced Structure',
+					hasText: 'Referenced Content Structure',
 				}),
 				timeout: 2000,
 				trigger: page.locator('.modal-header .close'),
@@ -170,20 +170,24 @@ test(
 			page.locator('.treeview-link', {hasText: label2})
 		).toBeVisible();
 
-		// Select referenced structures and check correct values are shown
+		// Select Referenced Content Structures and check correct values are shown
 
 		await structureBuilderPage.selectFields([{label: label1}]);
 
-		await expect(page.getByLabel('Structure Name')).toHaveValue(name1);
+		await expect(page.getByLabel('Content Structure Name')).toHaveValue(
+			name1
+		);
 
 		await structureBuilderPage.selectFields([{label: label2}]);
 
-		await expect(page.getByLabel('Structure Name')).toHaveValue(name2);
+		await expect(page.getByLabel('Content Structure Name')).toHaveValue(
+			name2
+		);
 	}
 );
 
 test(
-	'Can edit referenced structure in another tab',
+	'Can edit Referenced Content Structure in another tab',
 	{
 		tag: '@LPD-49645',
 	},
@@ -209,15 +213,15 @@ test(
 
 		await structureBuilderPage.addReferencedStructures([label1]);
 
-		// Check we can't edit referenced structure
+		// Check we can't edit Referenced Content Structure
 
 		await structureBuilderPage.selectFields([{label: label1}]);
 
-		await expect(page.getByLabel('Structure Name')).toBeDisabled();
+		await expect(page.getByLabel('Content Structure Name')).toBeDisabled();
 		await expect(page.getByLabel('ERC')).toBeDisabled();
 		await expect(structureBuilderPage.spaceSelector).toBeDisabled();
 
-		// Check we can't edit referenced structure fields
+		// Check we can't edit Referenced Content Structure fields
 
 		await structureBuilderPage.selectFields([{label: 'Title', nth: 1}]);
 
@@ -233,7 +237,7 @@ test(
 
 		await structureBuilderPage.publishStructure();
 
-		// Edit referenced structure in another tab
+		// Edit Referenced Content Structure in another tab
 
 		const pagePromise = context.waitForEvent('page');
 
@@ -278,7 +282,7 @@ test(
 
 		await expect(dateTreeItem).toBeVisible();
 
-		// Check we can't delete referenced structure fields
+		// Check we can't delete Referenced Content Structure fields
 
 		await structureBuilderPage.selectFields([{label: 'Date'}]);
 
@@ -360,19 +364,19 @@ test(
 		await clickAndExpectToBeVisible({
 			target: page.getByRole('menuitem', {
 				exact: true,
-				name: 'Referenced Structure',
+				name: 'Referenced Content Structure',
 			}),
 			trigger: page.getByLabel('Add Field'),
 		});
 
 		await clickAndExpectToBeVisible({
 			target: page.locator('.modal-title', {
-				hasText: 'Referenced Structure',
+				hasText: 'Referenced Content Structure',
 			}),
 			timeout: 2000,
 			trigger: page.getByRole('menuitem', {
 				exact: true,
-				name: 'Referenced Structure',
+				name: 'Referenced Content Structure',
 			}),
 		});
 

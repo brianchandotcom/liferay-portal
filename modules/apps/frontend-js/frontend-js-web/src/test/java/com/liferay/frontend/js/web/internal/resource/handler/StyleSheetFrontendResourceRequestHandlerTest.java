@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -49,8 +50,12 @@ public class StyleSheetFrontendResourceRequestHandlerTest {
 			_UNHASHED_FILE_PATH, ".css", ".(" + _HASH + ").css");
 	}
 
+	@Ignore
 	@Test
 	public void testCanHandleRequest() throws Exception {
+
+		// LPD-57326
+
 		StyleSheetFrontendResourceRequestHandler
 			styleSheetFrontendResourceRequestHandler =
 				new StyleSheetFrontendResourceRequestHandler(

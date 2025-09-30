@@ -1892,11 +1892,6 @@ components:
             description:
                 Represents settings related with the site navigation of a page.
             properties:
-                queryString:
-                    # @review
-                    description:
-                        The default parameter for a page.
-                    type: string
                 target:
                     # @review
                     description:
@@ -2222,6 +2217,11 @@ components:
                     maximum: 2147483647
                     minimum: 0
                     type: integer
+                queryString:
+                    # @review
+                    description:
+                        The default parameter for a page.
+                    type: string
                 seoSettings:
                     $ref: "#/components/schemas/SEOSettings"
                     # @review

@@ -7,11 +7,13 @@ import ClayButton from '@clayui/button';
 import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import {
 	FrontendDataSet,
 	IInternalRenderer,
 } from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import AssignToModalContent from '../home/modal/AssignToModalContent';
@@ -28,10 +30,12 @@ import WorkflowTaskRenderer from '../props_transformer/cell_renderers/WorkflowTa
 
 export default function ViewWorkflowTasks({
 	id,
+	myRolesWorkflowTasksURL,
 	myWorkflowTasksURL,
 	objectDefinitions,
 }: {
 	id: string;
+	myRolesWorkflowTasksURL: string;
 	myWorkflowTasksURL: string;
 	objectDefinitions: any[];
 }) {
@@ -360,12 +364,32 @@ export default function ViewWorkflowTasks({
 					))}
 				</ClayDropdown>
 
-				<ClayButton
-					borderless
-					onClick={() => window.open(myWorkflowTasksURL, '_blank')}
-				>
-					<ClayIcon symbol="shortcut" />
-				</ClayButton>
+				<ClayTooltipProvider>
+					<ClayButton
+						aria-label={sub(
+							Liferay.Language.get('open-x'),
+							`${Liferay.Language.get('my-workflow-tasks')}: ${selectedItem.label}`
+						)}
+						borderless
+						className="btn btn-secondary btn-sm cms-btn-icon-only cms-btn-secondary ml-2"
+						displayType="secondary"
+						onClick={() =>
+							window.open(
+								selectedItem.value === 'assigned-to-me'
+									? myWorkflowTasksURL
+									: myRolesWorkflowTasksURL,
+								'_blank'
+							)
+						}
+						title={sub(
+							Liferay.Language.get('open-x-in-full-page-view'),
+							`"${selectedItem.label}"`
+						)}
+						type="button"
+					>
+						<ClayIcon symbol="shortcut" />
+					</ClayButton>
+				</ClayTooltipProvider>
 			</div>
 
 			<div className="cms-fds-fluid cms-section home-custom-empty-state">

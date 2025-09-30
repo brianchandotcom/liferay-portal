@@ -53,6 +53,17 @@ public class ViewHomeWorkflowTasksDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"id", CMSSiteInitializerFDSNames.HOME_MY_WORKFLOW_TASKS_SECTION
 		).put(
+			"myRolesWorkflowTasksURL",
+			PortletURLBuilder.create(
+				PortalUtil.getControlPanelPortletURL(
+					_httpServletRequest, PortletKeys.MY_WORKFLOW_TASK,
+					ActionRequest.RENDER_PHASE)
+			).setRedirect(
+				_themeDisplay.getURLCurrent()
+			).setTabs1(
+				"assigned-to-my-roles"
+			).buildString()
+		).put(
 			"myWorkflowTasksURL",
 			PortletURLBuilder.create(
 				PortalUtil.getControlPanelPortletURL(

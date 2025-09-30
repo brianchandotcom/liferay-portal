@@ -805,8 +805,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -874,8 +875,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -945,8 +947,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -1008,8 +1011,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -1057,8 +1061,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -1141,8 +1146,9 @@ public class EditableFragmentEntryProcessorTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+				fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				TestPropsValues.getPlid(), fragmentEntry.getCss(),
@@ -1610,8 +1616,9 @@ public class EditableFragmentEntryProcessorTest {
 		FragmentEntry fragmentEntry = _addFragmentEntry(htmlFileName);
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			fragmentEntry.getFragmentEntryId(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			TestPropsValues.getPlid(), fragmentEntry.getCss(),

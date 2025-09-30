@@ -708,7 +708,7 @@ public class LayoutLocalServiceWrapper
 				FragmentEntryLink targetLayoutFragmentEntryLink =
 					_fragmentEntryLinkLocalService.getFragmentEntryLink(
 						targetLayout.getGroupId(),
-						fragmentEntryLink.getFragmentEntryLinkId(),
+						fragmentEntryLink.getExternalReferenceCode(),
 						targetLayout.getPlid());
 
 				if (targetLayoutFragmentEntryLink != null) {
@@ -970,10 +970,14 @@ public class LayoutLocalServiceWrapper
 
 			FragmentEntryLink newFragmentEntryLink = null;
 
+			FragmentEntryLink originalFragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
 			FragmentEntryLink targetLayoutFragmentEntryLink =
 				_fragmentEntryLinkLocalService.getFragmentEntryLink(
 					targetLayout.getGroupId(),
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
+					originalFragmentEntryLink.getExternalReferenceCode(),
 					targetLayout.getPlid());
 
 			if (targetLayoutFragmentEntryLink != null) {

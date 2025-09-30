@@ -51,7 +51,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	@Override
 	public int getGlobalUsageCount() {
 		return FragmentEntryLinkLocalServiceUtil.
-			getFragmentEntryLinksCountByFragmentEntryId(getFragmentEntryId());
+			getFragmentEntryLinksCountByFragmentEntryERC(
+				getExternalReferenceCode(), getScopeERC());
 	}
 
 	@Override
@@ -136,8 +137,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	@Override
 	public int getUsageCount() {
 		return FragmentEntryLinkLocalServiceUtil.
-			getAllFragmentEntryLinksCountByFragmentEntryId(
-				getGroupId(), getFragmentEntryId());
+			getAllFragmentEntryLinksCountByFragmentEntryERC(
+				getGroupId(), getExternalReferenceCode(), getScopeERC());
 	}
 
 	@Override

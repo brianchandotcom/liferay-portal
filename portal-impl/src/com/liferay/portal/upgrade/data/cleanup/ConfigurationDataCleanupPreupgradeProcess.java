@@ -63,8 +63,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 				if (companyId > 0) {
 					if (!ArrayUtil.contains(companyIds, companyId)) {
 						_deleteConfiguration(
-							configurationId, "companyId", "Company", companyId,
-							preparedStatement2);
+							configurationId, dbInspector, "companyId",
+							"Company", companyId, preparedStatement2);
 					}
 
 					continue;
@@ -74,8 +74,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 
 				if ((groupId != -1) && !ArrayUtil.contains(groupIds, groupId)) {
 					_deleteConfiguration(
-						configurationId, "groupId", "Group_", groupId,
-						preparedStatement2);
+						configurationId, dbInspector, "groupId", "Group_",
+						groupId, preparedStatement2);
 				}
 			}
 
@@ -99,8 +99,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 	}
 
 	private void _deleteConfiguration(
-			String configurationId, String primaryKeyColumnName,
-			String tableName, long primaryKey,
+			String configurationId, DBInspector dbInspector,
+			String primaryKeyColumnName, String tableName, long primaryKey,
 			PreparedStatement preparedStatement)
 		throws Exception {
 
@@ -112,7 +112,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 			StringBundler.concat(
 				configurationId, " has scope ", primaryKeyColumnName,
 				StringPool.SPACE, primaryKey, " that was not found in ",
-				tableName, ".", primaryKeyColumnName));
+				dbInspector.normalizeName(tableName), ".",
+				dbInspector.normalizeName(primaryKeyColumnName)));
 	}
 
 	private long _getPrimaryKey(String dictionary, Pattern pattern) {

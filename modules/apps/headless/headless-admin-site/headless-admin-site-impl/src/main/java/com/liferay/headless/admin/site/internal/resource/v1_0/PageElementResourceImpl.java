@@ -26,9 +26,6 @@ import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.List;
-import java.util.Objects;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -293,7 +290,15 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			layoutPageTemplateStructure.getData(
 				segmentsExperience.getSegmentsExperienceId()));
 
-		return _addPageElement(
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				pageElement.getExternalReferenceCode());
+
+		if (layoutStructureItem != null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _addOrUpdatePageElement(
 			groupId, layout, layoutStructure, pageElement,
 			segmentsExperience.getSegmentsExperienceId());
 	}
@@ -334,50 +339,15 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				fetchLayoutPageTemplateStructure(
 					layout.getGroupId(), layout.getPlid());
 
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(
-				segmentsExperience.getSegmentsExperienceId()));
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				pageElementExternalReferenceCode);
-
-		if (layoutStructureItem == null) {
-			return _addPageElement(
-				groupId, layout, layoutStructure, pageElement,
-				segmentsExperience.getSegmentsExperienceId());
-		}
-
-		LayoutStructureItem parentLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				layoutStructureItem.getParentItemId());
-
-		List<String> childrenItemIds =
-			parentLayoutStructureItem.getChildrenItemIds();
-
-		if (!Objects.equals(
-				layoutStructureItem.getParentItemId(),
-				pageElement.getParentExternalReferenceCode()) ||
-			(childrenItemIds.indexOf(layoutStructureItem.getItemId()) !=
-				pageElement.getPosition())) {
-
-			layoutStructure.moveLayoutStructureItem(
-				layoutStructureItem.getItemId(),
-				LayoutStructureUtil.getParentExternalReferenceCode(
-					pageElement, layoutStructure),
-				pageElement.getPosition());
-
-			_layoutPageTemplateStructureLocalService.
-				updateLayoutPageTemplateStructureData(
-					contextUser.getUserId(), layout.getGroupId(),
-					layout.getPlid(), layoutStructure.toString());
-		}
-
-		return _pageElementDTOConverter.toDTO(
-			_getDTOConverterContext(layoutStructure), layoutStructureItem);
+		return _addOrUpdatePageElement(
+			groupId, layout,
+			LayoutStructure.of(
+				layoutPageTemplateStructure.getData(
+					segmentsExperience.getSegmentsExperienceId())),
+			pageElement, segmentsExperience.getSegmentsExperienceId());
 	}
 
-	private PageElement _addPageElement(
+	private PageElement _addOrUpdatePageElement(
 			long groupId, Layout layout, LayoutStructure layoutStructure,
 			PageElement pageElement, long segmentsExperienceId)
 		throws Exception {

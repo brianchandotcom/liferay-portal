@@ -346,7 +346,9 @@ function MappingSelector({
 	const {selectedMappingTypes} = config;
 
 	const [itemFields, setItemFields] = useState(null);
-	const [selectedItem, setSelectedItem] = useState(mappedItem);
+	const [selectedItem, setSelectedItem] = useState(
+		getHydratedItem(mappedItem, pageContents)
+	);
 
 	const [typeLabel, setTypeLabel] = useState(null);
 	const [subtypeLabel, setSubtypeLabel] = useState(null);
@@ -407,7 +409,9 @@ function MappingSelector({
 	}, [fieldType, relationships, selectedMappingTypes]);
 
 	const onInfoItemSelect = (selectedInfoItem) => {
-		setSelectedItem(selectedInfoItem);
+		const item = getHydratedItem(selectedInfoItem, pageContents);
+
+		setSelectedItem(item);
 
 		if (isMapped(mappedItem)) {
 			onMappingSelect({});
@@ -449,17 +453,6 @@ function MappingSelector({
 		setTypeLabel(type);
 		setSubtypeLabel(subtype);
 	}, [selectedItem, pageContents]);
-
-	useEffect(() => {
-		if (isMappedToInfoItem(mappedItem)) {
-			const pageContent = findPageContent(pageContents, mappedItem);
-
-			setSelectedItem({
-				...pageContent,
-				...mappedItem,
-			});
-		}
-	}, [mappedItem, pageContents, setSelectedItem]);
 
 	useEffect(() => {
 		if (
@@ -647,6 +640,16 @@ function MappingSelector({
 			/>
 		</>
 	);
+}
+
+function getHydratedItem(item, pageContents) {
+	const pageContent = findPageContent(pageContents, item);
+
+	if (pageContent) {
+		return {...pageContent, ...item};
+	}
+
+	return item;
 }
 
 MappingSelector.propTypes = {

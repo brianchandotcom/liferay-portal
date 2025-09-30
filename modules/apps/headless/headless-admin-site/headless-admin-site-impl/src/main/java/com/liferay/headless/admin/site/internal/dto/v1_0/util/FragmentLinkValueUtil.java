@@ -507,12 +507,8 @@ public class FragmentLinkValueUtil {
 		String itemExternalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
 		String itemClassName = _toItemClassName(jsonObject);
-		String itemScopeExternalReferenceCode = jsonObject.getString(
-			"scopeExternalReferenceCode");
 
-		if ((itemClassName == null) || (itemExternalReferenceCode == null) ||
-			(itemScopeExternalReferenceCode == null)) {
-
+		if ((itemClassName == null) || (itemExternalReferenceCode == null)) {
 			return null;
 		}
 
@@ -538,7 +534,9 @@ public class FragmentLinkValueUtil {
 						new ERCInfoItemIdentifier(
 							itemExternalReferenceCode,
 							GroupUtil.getExternalReferenceCode(
-								itemScopeExternalReferenceCode, scopeGroupId)));
+								jsonObject.getString(
+									"scopeExternalReferenceCode"),
+								scopeGroupId)));
 
 				fragmentMappedValueItemExternalReference.setScope(
 					() -> ScopeUtil.getScope(

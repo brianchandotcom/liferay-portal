@@ -64,8 +64,8 @@ public abstract class BaseBulkActionTaskComponentSectionFragmentRenderer
 					bulkActionTaskObjectDefinition.getObjectDefinitionId(),
 					"bulkActionTaskToBulkActionTaskItems"
 				).getObjectRelationshipId(),
-				null, bulkActionTaskObjectEntry.getObjectEntryId(), true, null,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+				null, false, bulkActionTaskObjectEntry.getObjectEntryId(), true,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 			objectEntry ->
 				Objects.equals(
 					GetterUtil.getLong(

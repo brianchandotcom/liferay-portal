@@ -3499,22 +3499,10 @@ components:
                                 The identifier of the layout template.
                             type: string
                         navigationSettings:
+                            $ref: "#/components/schemas/NavigationSettings"
                             # @review
                             description:
                                 The widget page template's site navigation settings.
-                            properties:
-                                target:
-                                    # @review
-                                    description:
-                                        The ID of the target specific frame.
-                                    type: string
-                                targetType:
-                                    # @review
-                                    description:
-                                        The target's type (specific frame or new tab).
-                                    enum: [SpecificFrame, NewTab]
-                                    type: string
-                            type: object
             # @review
             description:
                 The settings of a widget page template.

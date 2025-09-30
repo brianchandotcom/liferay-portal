@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.helper;
 
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
+import com.liferay.portal.search.elasticsearch8.configuration.RESTClientLoggerLevel;
 
 import java.io.IOException;
 

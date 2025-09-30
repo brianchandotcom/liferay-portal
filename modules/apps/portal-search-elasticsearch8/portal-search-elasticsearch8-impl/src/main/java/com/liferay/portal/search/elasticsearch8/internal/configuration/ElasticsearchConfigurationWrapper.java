@@ -10,9 +10,9 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration;
-import com.liferay.portal.search.elasticsearch7.configuration.OperationMode;
-import com.liferay.portal.search.elasticsearch7.configuration.RESTClientLoggerLevel;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch8.configuration.OperationMode;
+import com.liferay.portal.search.elasticsearch8.configuration.RESTClientLoggerLevel;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Bryan Engler
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration",
 	service = ElasticsearchConfigurationWrapper.class
 )
 public class ElasticsearchConfigurationWrapper

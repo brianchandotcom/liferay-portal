@@ -125,7 +125,7 @@ public class Sidecar {
 
 		ProcessChannel<Serializable> processChannel = null;
 		Future<ObjectValuePair<ProcessChannel<Serializable>, byte[]>> future =
-			SearchElasticsearch7ImplBundleActivator.getFuture();
+			SearchElasticsearch8ImplBundleActivator.getFuture();
 
 		if (future != null) {
 			try {
@@ -523,7 +523,7 @@ public class Sidecar {
 
 		// Configure paths
 
-		Path dataParentPath = _sidecarWorkPath.resolve("data/elasticsearch7");
+		Path dataParentPath = _sidecarWorkPath.resolve("data/elasticsearch8");
 
 		settingsHelperImpl.put(
 			"path.data", String.valueOf(dataParentPath.resolve("indices")));

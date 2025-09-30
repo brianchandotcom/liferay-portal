@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
-import com.liferay.headless.delivery.dto.v1_0.SEOSettings;
-import com.liferay.headless.delivery.dto.v1_0.SiteMapSettings;
+import com.liferay.headless.admin.site.dto.v1_0.SEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.log.Log;
@@ -62,14 +62,14 @@ public class SEOSettingsUtil {
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						layout.getKeywordsMap()));
-				setSiteMapSettings(
-					() -> _toSiteMapSettings(
+				setSitemapSettings(
+					() -> _toSitemapSettings(
 						layout.getTypeSettingsProperties()));
 			}
 		};
 	}
 
-	private static SiteMapSettings _toSiteMapSettings(
+	private static SitemapSettings _toSitemapSettings(
 		UnicodeProperties unicodeProperties) {
 
 		String siteMapChangeFreq = unicodeProperties.getProperty(
@@ -87,7 +87,7 @@ public class SEOSettingsUtil {
 			return null;
 		}
 
-		return new SiteMapSettings() {
+		return new SitemapSettings() {
 			{
 				setChangeFrequency(
 					() -> {

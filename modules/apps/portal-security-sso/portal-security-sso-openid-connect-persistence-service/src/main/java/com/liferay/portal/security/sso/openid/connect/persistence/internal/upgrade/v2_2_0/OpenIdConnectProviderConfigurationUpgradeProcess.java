@@ -89,7 +89,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 							dictionary.get("discoveryEndPoint"))
 					).put(
 						"discoveryEndpointCacheInMillis",
-						GetterUtil.getString(
+						GetterUtil.getLong(
 							dictionary.get("discoveryEndPointCacheInMillis"))
 					).put(
 						"tokenEndpoint",
@@ -120,7 +120,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 				_updateOAuthClientEntry(
 					GetterUtil.getLong(dictionary.get("companyId")),
 					GetterUtil.getLong(
-						dictionary.get("discoveryEndpointCacheInMillis")),
+						dictionary.get("discoveryEndPointCacheInMillis")),
 					GetterUtil.getString(
 						dictionary.get("openIdConnectClientId")));
 			}

@@ -37,9 +37,9 @@ public class ServletAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
+				{0, false, false, false}, {1, false, false, true},
 				{2, false, true, false}, {3, false, true, true},
-				{4, false, false, true}
+				{4, true, false, false}
 			});
 	}
 
@@ -79,9 +79,9 @@ public class ServletAbsolutePortalURLBuilderTest
 	public boolean proxy;
 
 	private static final String[] _RESULTS = {
-		"/o/path/to/resource", "/o/path/to/resource",
+		"/o/path/to/resource", "/proxy/o/path/to/resource",
 		"/context/o/path/to/resource", "/proxy/context/o/path/to/resource",
-		"/proxy/o/path/to/resource"
+		"/o/path/to/resource"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;

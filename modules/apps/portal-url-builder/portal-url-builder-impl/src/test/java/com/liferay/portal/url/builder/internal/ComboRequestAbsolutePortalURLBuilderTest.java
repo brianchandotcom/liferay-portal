@@ -44,9 +44,9 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
+				{0, false, false, false}, {1, false, false, true},
 				{2, false, true, false}, {3, false, true, true},
-				{4, false, false, true}
+				{4, true, false, false}
 			});
 	}
 
@@ -136,39 +136,39 @@ public class ComboRequestAbsolutePortalURLBuilderTest
 
 	private static final String[] _RESULTS = {
 		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
-		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
+		"/proxy/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
 		"/context/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
 		"/proxy/context/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
-		"/proxy/combo?minifierType=js&t=0&/file.js&/path/to/file2.js"
+		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js"
 	};
 
 	private static final String[] _RESULTS_ADD_FILE_HONORS_ORDERING = {
 		"/combo?minifierType=js&t=0&/jquery/jquery.min.js&/jquery/init.js" +
 			"&/jquery/ajax.js",
-		"/combo?minifierType=js&t=0&/jquery/jquery.min.js&/jquery/init.js" +
-			"&/jquery/ajax.js",
+		"/proxy/combo?minifierType=js&t=0&/jquery/jquery.min.js" +
+			"&/jquery/init.js&/jquery/ajax.js",
 		"/context/combo?minifierType=js&t=0&/jquery/jquery.min.js" +
 			"&/jquery/init.js&/jquery/ajax.js",
 		"/proxy/context/combo?minifierType=js&t=0&/jquery/jquery.min.js" +
 			"&/jquery/init.js&/jquery/ajax.js",
-		"/proxy/combo?minifierType=js&t=0&/jquery/jquery.min.js" +
-			"&/jquery/init.js&/jquery/ajax.js"
+		"/combo?minifierType=js&t=0&/jquery/jquery.min.js&/jquery/init.js" +
+			"&/jquery/ajax.js"
 	};
 
 	private static final String[] _RESULTS_ADD_FILE_REMOVES_QUERY_STRING = {
 		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
-		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
+		"/proxy/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
 		"/context/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
 		"/proxy/context/combo?minifierType=js&t=0&/file.js&/path/to/file2.js",
-		"/proxy/combo?minifierType=js&t=0&/file.js&/path/to/file2.js"
+		"/combo?minifierType=js&t=0&/file.js&/path/to/file2.js"
 	};
 
 	private static final String[] _RESULTS_TIMESTAMP = {
 		"/combo?minifierType=js&t=13&/file.js&/path/to/file2.js",
-		"/combo?minifierType=js&t=13&/file.js&/path/to/file2.js",
+		"/proxy/combo?minifierType=js&t=13&/file.js&/path/to/file2.js",
 		"/context/combo?minifierType=js&t=13&/file.js&/path/to/file2.js",
 		"/proxy/context/combo?minifierType=js&t=13&/file.js&/path/to/file2.js",
-		"/proxy/combo?minifierType=js&t=13&/file.js&/path/to/file2.js"
+		"/combo?minifierType=js&t=13&/file.js&/path/to/file2.js"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;

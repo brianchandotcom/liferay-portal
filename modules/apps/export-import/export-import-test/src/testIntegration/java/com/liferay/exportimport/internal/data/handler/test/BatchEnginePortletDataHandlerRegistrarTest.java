@@ -129,7 +129,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				TestPropsValues.getCompanyId(), true, "LPD-35914");
 
 			try {
-				_waitForPortletDataHandler(
+				_assertPortletDataHandler(
 					TestPropsValues.getCompanyId(), portletId,
 					portletDataHandler ->
 						StringUtil.contains(
@@ -153,7 +153,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				Assert.assertEquals(
 					1, _getRegisteredPortletDataHandlersCount(portletId));
 
-				_waitForPortletDataHandler(
+				_assertPortletDataHandler(
 					RandomTestUtil.randomLong(), portletId,
 					portletDataHandler -> StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
@@ -161,7 +161,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 
 				safeCloseable2.close();
 
-				_waitForPortletDataHandler(
+				_assertPortletDataHandler(
 					TestPropsValues.getCompanyId(), portletId,
 					portletDataHandler ->
 						StringUtil.contains(
@@ -177,7 +177,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 
 				safeCloseable3.close();
 
-				_waitForPortletDataHandler(
+				_assertPortletDataHandler(
 					TestPropsValues.getCompanyId(), portletId,
 					portletDataHandler -> StringUtil.contains(
 						ClassUtil.getClassName(portletDataHandler),
@@ -188,6 +188,38 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 					TestPropsValues.getCompanyId(), false, "LPD-35914");
 			}
 		}
+	}
+
+	private void _assertPortletDataHandler(
+			long companyId, String portletId,
+			UnsafeFunction<PortletDataHandler, Boolean, Exception>
+				unsafeFunction)
+		throws Exception {
+
+		Assert.assertNotNull(
+			_getPortletDataHandler(companyId, portletId, unsafeFunction));
+	}
+
+	private PortletDataHandler _getPortletDataHandler(
+			long companyId, String portletId,
+			UnsafeFunction<PortletDataHandler, Boolean, Exception>
+				unsafeFunction)
+		throws Exception {
+
+		long startTime = System.currentTimeMillis();
+
+		while ((System.currentTimeMillis() - startTime) < 5000) {
+			PortletDataHandler portletDataHandler =
+				_portletDataHandlerProvider.provide(companyId, portletId);
+
+			if (unsafeFunction.apply(portletDataHandler)) {
+				return portletDataHandler;
+			}
+
+			Thread.sleep(50);
+		}
+
+		return null;
 	}
 
 	private int _getRegisteredPortletDataHandlersCount(String portletId)
@@ -258,28 +290,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			isUnregistered.set(true);
 			serviceRegistration.unregister();
 		};
-	}
-
-	private void _waitForPortletDataHandler(
-			long companyId, String portletId,
-			UnsafeFunction<PortletDataHandler, Boolean, Exception>
-				unsafeFunction)
-		throws Exception {
-
-		long start = System.currentTimeMillis();
-
-		while ((System.currentTimeMillis() - start) < 5000) {
-			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(companyId, portletId);
-
-			if (unsafeFunction.apply(portletDataHandler)) {
-				return;
-			}
-
-			Thread.sleep(50);
-		}
-
-		Assert.assertTrue("Expected portlet data handler not found", false);
 	}
 
 	@Inject

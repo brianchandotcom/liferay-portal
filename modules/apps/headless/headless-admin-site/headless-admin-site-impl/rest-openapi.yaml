@@ -1736,7 +1736,6 @@ components:
                         The fragment viewport's ID.
                     type: string
             required:
-                -   fragmentViewportStyle
                 -   id
             type: object
         FriendlyUrlHistory:

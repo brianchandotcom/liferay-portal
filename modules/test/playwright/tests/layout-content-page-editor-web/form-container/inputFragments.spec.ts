@@ -488,7 +488,7 @@ test.describe('Date Fragment', () => {
 
 			// Edit date
 
-			await page.locator('input[name="date"]').click();
+			await page.locator('input[name="ObjectField_date"]').click();
 
 			await page.keyboard.type('07/11/2020');
 
@@ -607,13 +607,13 @@ test.describe('Date and Time Fragment', () => {
 
 			// Edit date
 
-			await page.locator('input[name="date"]').click();
+			await page.locator('input[name="ObjectField_date"]').click();
 
 			await page.keyboard.type('01/07/2023');
 
 			// Edit date and time
 
-			await page.locator('input[name="dateAndTime"]').click();
+			await page.locator('input[name="ObjectField_dateAndTime"]').click();
 
 			await page.keyboard.type('10/10/2022');
 			await page.keyboard.press('ArrowRight');

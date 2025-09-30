@@ -42,8 +42,10 @@ public class JSUnitModulesTestClass extends ModulesTestClass {
 		_cachedTestClassReport = batchTestClassGroup.getCachedTestClassReport(
 			getName());
 
-		_cachedDownstreamBuildReport =
-			_cachedTestClassReport.getDownstreamBuildReport();
+		if (_cachedTestClassReport != null) {
+			_cachedDownstreamBuildReport =
+				_cachedTestClassReport.getDownstreamBuildReport();
+		}
 
 		_cachedTestClassReportSearched = true;
 

@@ -41,8 +41,10 @@ public class ServiceBuilderAntTargetTestClass extends BaseTestClass {
 		_cachedTestClassReport = batchTestClassGroup.getCachedTestClassReport(
 			getTestClassName());
 
-		_cachedDownstreamBuildReport =
-			_cachedTestClassReport.getDownstreamBuildReport();
+		if (_cachedTestClassReport != null) {
+			_cachedDownstreamBuildReport =
+				_cachedTestClassReport.getDownstreamBuildReport();
+		}
 
 		_cachedTestClassReportSearched = true;
 

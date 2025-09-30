@@ -18,6 +18,7 @@ export async function createCategories({
 	categoryNames,
 	siteId,
 	vocabularyName,
+	vocabularyVisibility,
 }: {
 	apiHelpers: ApiHelpers;
 	assetLibraries?: AssetLibrary[];
@@ -25,17 +26,22 @@ export async function createCategories({
 	categoryNames: TCategory[];
 	siteId?: string;
 	vocabularyName: string;
+	vocabularyVisibility?: boolean;
 }): Promise<({id: number} & TCategory)[]> {
 	const {id: vocabularyId} = siteId
 		? await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary({
 				assetTypes,
 				name: vocabularyName,
 				siteId,
+				visibilityType:
+					vocabularyVisibility === true ? 'INTERNAL' : 'PUBLIC',
 			})
 		: await apiHelpers.headlessAdminTaxonomy.postTaxonomyVocabulary({
 				assetLibraries,
 				assetTypes,
 				name: vocabularyName,
+				visibilityType:
+					vocabularyVisibility === true ? 'INTERNAL' : 'PUBLIC',
 			});
 
 	const categories = [];

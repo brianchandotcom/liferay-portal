@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {createCategories} from '../../../helpers/CreateCategories';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from './fixtures/journalPagesTest';
 import getDataStructureDefinition from './utils/getDataStructureDefinition';
@@ -499,5 +500,49 @@ test(
 		await guestTd.waitFor({state: 'attached', timeout: 10000});
 
 		await expect(guestTd).toBeVisible();
+	}
+);
+
+test(
+	'Web Content Category Filter shows public categories only',
+	{
+		tag: '@LPP-60943',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		for (let i = 1; i <= 2; i++) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: `Web Content ${i}`},
+			});
+		}
+
+		const vocabularyName = 'Private Vocabulary 1';
+		const internalCategoryName = 'Internal Category 1';
+
+		await createCategories({
+			apiHelpers,
+			categoryNames: [{name: internalCategoryName}],
+			siteId: site.id,
+			vocabularyName,
+			vocabularyVisibility: true,
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		await page.getByLabel('Filter', {exact: true}).click();
+
+		await page.getByRole('menuitem', {name: 'Categories'}).click();
+
+		const categoriesFrame = page.frameLocator(
+			'iframe[title*="Filter by Categories"]'
+		);
+
+		await expect(
+			categoriesFrame.locator('text=' + vocabularyName)
+		).toHaveCount(0);
 	}
 );

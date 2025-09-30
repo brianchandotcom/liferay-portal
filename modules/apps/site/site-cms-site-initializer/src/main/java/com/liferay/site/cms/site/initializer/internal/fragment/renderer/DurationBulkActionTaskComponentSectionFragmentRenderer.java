@@ -63,13 +63,13 @@ public class DurationBulkActionTaskComponentSectionFragmentRenderer
 					return null;
 				}
 
-				return _getMinutesBetween(
+				return _getDuration(
 					completionDate, objectEntry.getCreateDate());
 			}
 		).build();
 	}
 
-	private int _getMinutesBetween(Date endDate, Date startDate) {
+	private int _getDuration(Date endDate, Date startDate) {
 		long differenceInMillis = endDate.getTime() - startDate.getTime();
 
 		return (int)TimeUnit.MILLISECONDS.toMinutes(differenceInMillis);

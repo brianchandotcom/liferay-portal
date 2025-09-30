@@ -1,9 +1,24 @@
 [@liferay_aui.style]
 	#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu {
-		max-height: ${configuration.dropdownHeight}px;
-		min-height: ${configuration.dropdownHeight}px;
+		margin: 0;
+		max-height: unset;
+		max-width: unset;
+		min-height: unset;
+		min-width: unset;
+		overflow: unset;
+		padding: 0;
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu .dropdown-divider {
+		margin: 0;
+	}
+
+	#${fragmentEntryLinkNamespace}-account-selector-dropdown-menu .account-selector-dropdown-panel {
+		display: flex;
+		flex-direction: column;
+		max-height: ${configuration.dropdownMaxHeight}px;
 		max-width: ${configuration.dropdownWidth}px;
-		min-width: ${configuration.dropdownWidth}px
+		min-width: ${configuration.dropdownWidth}px;
 	}
 
 	#${fragmentEntryLinkNamespace}-account-selector-panel-slider {
@@ -25,9 +40,9 @@
 		<lfr-drop-zone data-lfr-drop-zone-id="1" data-lfr-priority="1"></lfr-drop-zone>
 	</div>
 
-	<div class="account-selector-dropdown-menu[#if layoutMode != 'edit'] dropdown-menu[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
+	<div class="[#if layoutMode != 'edit']dropdown-menu[/#if]" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-menu">
 		<div class="account-selector-dropdown-panel">
-			<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-active-panel-key="${configuration.defaultPanelKey}" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
+			<div class="align-items-center d-flex dropdown-section item-list-head justify-content-between" data-active-panel-key="${configuration.defaultPanelKey}"[#if layoutMode == 'edit'] data-step="0"[/#if] id="${fragmentEntryLinkNamespace}-account-selector-dropdown-header">
 				<button class="btn btn-monospaced btn-unstyled" id="${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button" type="button">
 					<svg class="lexicon-icon lexicon-icon-angle-left-small" focusable="false" role="presentation">
 						<use href="/o/admin-theme/images/clay/icons.svg#angle-left-small"></use>

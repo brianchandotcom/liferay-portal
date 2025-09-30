@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration;
 import com.liferay.portal.search.elasticsearch8.internal.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch8.internal.connection.constants.ConnectionConstants;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	property = "model.class.name=com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration",
+	property = "model.class.name=com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration",
 	service = ConfigurationModelListener.class
 )
 public class ElasticsearchConnectionConfigurationModelListener

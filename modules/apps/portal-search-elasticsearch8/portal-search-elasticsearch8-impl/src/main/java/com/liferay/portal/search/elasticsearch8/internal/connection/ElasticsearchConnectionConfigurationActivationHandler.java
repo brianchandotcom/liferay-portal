@@ -7,7 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.connection;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration;
+import com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration;
 
 import java.util.Map;
 
@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Bryan Engler
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConnectionConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConnectionConfiguration",
 	service = {}
 )
 public class ElasticsearchConnectionConfigurationActivationHandler {

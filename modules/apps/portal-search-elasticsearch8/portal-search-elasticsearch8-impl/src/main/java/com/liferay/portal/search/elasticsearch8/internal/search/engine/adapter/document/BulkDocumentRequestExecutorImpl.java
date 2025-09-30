@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration",
+	configurationPid = "com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration",
 	service = BulkDocumentRequestExecutor.class
 )
 public class BulkDocumentRequestExecutorImpl

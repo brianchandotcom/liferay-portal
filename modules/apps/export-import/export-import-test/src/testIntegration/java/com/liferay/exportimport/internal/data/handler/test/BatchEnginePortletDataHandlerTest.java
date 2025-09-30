@@ -328,6 +328,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Group group1 = GroupTestUtil.addGroup();
 
 		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group1);
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group1);
 
 		File larFile = _exportLayouts(
 			false, group1.getGroupId(), false,
@@ -337,10 +338,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 		_importLayouts(false, false, larFile, group2.getGroupId());
 
-		Layout layout2 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+		layout1 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			layout1.getExternalReferenceCode(), group2.getGroupId());
 
-		Assert.assertNotNull(layout2);
+		Assert.assertNotNull(layout1);
+
+		layout2 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			layout2.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertNull(layout2);
 	}
 
 	@Test

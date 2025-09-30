@@ -25,6 +25,7 @@ interface IEmptyStateProps extends React.HTMLAttributes<HTMLElement> {
 	admin: boolean;
 	connectedToAnalyticsCloud: boolean;
 	connectedToSpace: boolean;
+	onConnectSites: () => void;
 	siteSyncedToAnalyticsCloud: boolean;
 }
 
@@ -33,6 +34,7 @@ const EmptyStates: React.FC<IEmptyStateProps> = ({
 	children,
 	connectedToAnalyticsCloud,
 	connectedToSpace,
+	onConnectSites,
 	siteSyncedToAnalyticsCloud,
 }) => {
 	if (!connectedToSpace) {
@@ -44,7 +46,7 @@ const EmptyStates: React.FC<IEmptyStateProps> = ({
 					)}
 					title={Liferay.Language.get('no-sites-are-connected-yet')}
 				>
-					<ClayButton small>
+					<ClayButton onClick={onConnectSites} size="sm">
 						{Liferay.Language.get('connect')}
 					</ClayButton>
 				</EmptyState>
@@ -166,15 +168,20 @@ type ConnectionInfoData = {
 };
 
 interface ICheckPermissions extends React.HTMLAttributes<HTMLElement> {
+	onConnectSites: (loadData: () => void) => void;
 	scopeId: string;
 }
 
-const CheckPermissions: React.FC<ICheckPermissions> = ({children, scopeId}) => {
+const CheckPermissions: React.FC<ICheckPermissions> = ({
+	children,
+	onConnectSites,
+	scopeId,
+}) => {
 	const queryString = buildQueryString({
 		depotEntryGroupId: scopeId,
 	});
 
-	const {data, loading} = useFetch<ConnectionInfoData>(
+	const {data, loading, refetch} = useFetch<ConnectionInfoData>(
 		`/o/analytics-cms-rest/v1.0/connection-info${queryString}`
 	);
 
@@ -186,7 +193,11 @@ const CheckPermissions: React.FC<ICheckPermissions> = ({children, scopeId}) => {
 		return null;
 	}
 
-	return <EmptyStates {...data}>{children}</EmptyStates>;
+	return (
+		<EmptyStates {...data} onConnectSites={() => onConnectSites(refetch)}>
+			{children}
+		</EmptyStates>
+	);
 };
 
 export {CheckPermissions};

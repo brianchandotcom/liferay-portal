@@ -17,7 +17,7 @@ import '../../../css/components/AssetTypeInfoPanel.scss';
 import {getBaseAssetInformation} from './util';
 
 const AssetTypeInfoPanelContent = ({
-	additionalProps: {cmsGroupId, commentsProps},
+	additionalProps: {assetLibraries, cmsGroupId, commentsProps},
 	items: objectEntries,
 }: {
 	additionalProps: any;
@@ -28,11 +28,17 @@ const AssetTypeInfoPanelContent = ({
 			? getBaseAssetInformation(objectEntries[0])
 			: {};
 
+	const assetLibrary = assetLibraries.find(
+		({groupId}: {groupId: number}) =>
+			groupId === objectEntries?.[0]?.embedded?.scopeId
+	);
+
 	return (
 		<>
 			<AssetTypeInfoPanelContext.Provider
 				value={
 					{
+						assetLibrary,
 						cmsGroupId,
 						commentsProps,
 						objectEntries,

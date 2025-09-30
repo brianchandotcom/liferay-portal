@@ -6,6 +6,7 @@
 import {CMSPerformance} from '@liferay/analytics-reports-js-components-web';
 import React, {useContext} from 'react';
 
+import manageConnectedSitesAction from '../../props_transformer/actions/manageConnectedSitesAction';
 import {
 	AssetTypeInfoPanelContext,
 	IAssetTypeInfoPanelContext,
@@ -22,6 +23,17 @@ const PerformanceTabContent = () => {
 			externalReferenceCode={embedded?.externalReferenceCode}
 			objectEntryFolderExternalReferenceCode={
 				embedded?.objectEntryFolderExternalReferenceCode
+			}
+			onConnectSites={(loadData) =>
+				manageConnectedSitesAction(
+					{
+						externalReferenceCode:
+							selectedAsset.assetLibrary?.externalReferenceCode ??
+							'',
+						hasConnectSitesPermission: true,
+					},
+					loadData
+				)
 			}
 			scopeId={embedded?.scopeId}
 		/>

@@ -281,7 +281,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 			if (classNames.length == 0) {
 				serviceRegistration.unregister();
+
 				_batchEnginePortletDataHandlers.remove(portletId);
+
 				_serviceRegistrations.remove(portletId);
 			}
 		}

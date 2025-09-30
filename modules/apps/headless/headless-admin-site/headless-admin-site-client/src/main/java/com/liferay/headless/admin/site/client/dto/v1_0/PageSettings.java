@@ -133,6 +133,27 @@ public abstract class PageSettings implements Cloneable, Serializable {
 
 	protected Integer priority;
 
+	public String getQueryString() {
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+	}
+
+	public void setQueryString(
+		UnsafeSupplier<String, Exception> queryStringUnsafeSupplier) {
+
+		try {
+			queryString = queryStringUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String queryString;
+
 	public SEOSettings getSeoSettings() {
 		return seoSettings;
 	}

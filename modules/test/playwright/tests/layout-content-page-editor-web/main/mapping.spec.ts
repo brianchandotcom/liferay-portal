@@ -555,6 +555,16 @@ test(
 			page.locator('.component-image').getByRole('link')
 		).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Cat');
 
+		// Check we can clear mapped item
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		await pageEditorPage.selectEditable(headingId, 'element-text');
+
+		await page.getByRole('tab', {exact: true, name: 'Link'}).click();
+
+		await pageEditorPage.removeMapping();
+
 		// Delete layout
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);

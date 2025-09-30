@@ -1229,6 +1229,18 @@ export class PageEditorPage {
 		});
 	}
 
+	async removeMapping() {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: 'Remove Item'}),
+			trigger: this.page.getByLabel('View Item Options'),
+		});
+
+		await expect(
+			this.page.getByPlaceholder('No Item Selected')
+		).toBeVisible();
+	}
+
 	async removeFragment(fragmentId: string) {
 		await this.selectFragment(fragmentId);
 

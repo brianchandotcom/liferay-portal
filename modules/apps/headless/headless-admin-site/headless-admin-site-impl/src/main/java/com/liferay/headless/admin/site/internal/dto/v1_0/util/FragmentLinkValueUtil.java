@@ -504,11 +504,11 @@ public class FragmentLinkValueUtil {
 				layoutJSONObject, scopeGroupId);
 		}
 
-		String itemExternalReferenceCode = jsonObject.getString(
+		String className = _toItemClassName(jsonObject);
+		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
-		String itemClassName = _toItemClassName(jsonObject);
 
-		if ((itemClassName == null) || (itemExternalReferenceCode == null)) {
+		if ((className == null) || (externalReferenceCode == null)) {
 			return null;
 		}
 
@@ -516,15 +516,14 @@ public class FragmentLinkValueUtil {
 			fragmentMappedValueItemExternalReference =
 				new FragmentMappedValueItemExternalReference();
 
-		fragmentMappedValueItemExternalReference.setClassName(
-			() -> itemClassName);
+		fragmentMappedValueItemExternalReference.setClassName(() -> className);
 
 		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
-			() -> itemExternalReferenceCode);
+			() -> externalReferenceCode);
 
 		InfoItemObjectProvider<Object> infoItemObjectProvider =
 			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, itemClassName,
+				InfoItemObjectProvider.class, className,
 				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
 
 		if (infoItemObjectProvider != null) {
@@ -532,7 +531,7 @@ public class FragmentLinkValueUtil {
 				GroupedModel groupedModel =
 					(GroupedModel)infoItemObjectProvider.getInfoItem(
 						new ERCInfoItemIdentifier(
-							itemExternalReferenceCode,
+							externalReferenceCode,
 							GroupUtil.getExternalReferenceCode(
 								jsonObject.getString(
 									"scopeExternalReferenceCode"),

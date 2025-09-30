@@ -117,24 +117,8 @@ public class FragmentLinkValueUtil {
 				{
 					setFieldKey(() -> _getFieldKey(jsonObject));
 					setItemReference(
-						() -> {
-							if (jsonObject.has("mappedField")) {
-								FragmentMappedValueItemContextReference
-									fragmentMappedValueItemContextReference =
-										new FragmentMappedValueItemContextReference();
-
-								fragmentMappedValueItemContextReference.
-									setContextSource(
-										() ->
-											FragmentMappedValueItemContextReference.ContextSource.DISPLAY_PAGE_ITEM);
-
-								return fragmentMappedValueItemContextReference;
-							}
-
-							return _toFragmentMappedValueItemExternalReference(
-								infoItemServiceRegistry, jsonObject,
-								scopeGroupId);
-						});
+						() -> _getFragmentMappedValueItemReference(
+							infoItemServiceRegistry, jsonObject, scopeGroupId));
 				}
 			});
 
@@ -275,6 +259,28 @@ public class FragmentLinkValueUtil {
 		}
 
 		return null;
+	}
+
+	private static FragmentMappedValueItemReference
+		_getFragmentMappedValueItemReference(
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId) {
+
+		if (!jsonObject.has("mappedField")) {
+			return _toFragmentMappedValueItemExternalReference(
+				infoItemServiceRegistry, jsonObject, scopeGroupId);
+		}
+
+		FragmentMappedValueItemContextReference
+			fragmentMappedValueItemContextReference =
+				new FragmentMappedValueItemContextReference();
+
+		fragmentMappedValueItemContextReference.setContextSource(
+			() ->
+				FragmentMappedValueItemContextReference.ContextSource.
+					DISPLAY_PAGE_ITEM);
+
+		return fragmentMappedValueItemContextReference;
 	}
 
 	private static JSONObject _getFragmentMappedValueJSONObject(

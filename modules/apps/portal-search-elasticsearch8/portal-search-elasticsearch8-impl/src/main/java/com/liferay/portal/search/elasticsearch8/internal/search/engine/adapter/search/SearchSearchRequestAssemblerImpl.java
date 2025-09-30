@@ -15,17 +15,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.collapse.Collapse;
 import com.liferay.portal.search.collapse.InnerCollapse;
 import com.liferay.portal.search.elasticsearch8.internal.groupby.GroupByTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlighterTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.legacy.sort.SortTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
 import com.liferay.portal.search.groupby.GroupByRequest;
 import com.liferay.portal.search.legacy.groupby.GroupByRequestFactory;
 import com.liferay.portal.search.legacy.stats.StatsRequestBuilderFactory;
-import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 import com.liferay.portal.search.stats.StatsRequest;
@@ -37,7 +34,6 @@ import java.util.Map;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.core.TimeValue;
 import org.elasticsearch.index.query.InnerHitBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.collapse.CollapseBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
@@ -222,9 +218,7 @@ public class SearchSearchRequestAssemblerImpl
 		SearchSearchRequest searchSearchRequest) {
 
 		if (searchSearchRequest.getHighlight() != null) {
-			searchSourceBuilder.highlighter(
-				_highlightTranslator.translate(
-					searchSearchRequest.getHighlight(), _queryTranslator));
+			searchSourceBuilder.highlighter(null);
 		}
 		else if (searchSearchRequest.isHighlightEnabled()) {
 			_highlighterTranslator.translate(
@@ -349,10 +343,6 @@ public class SearchSearchRequestAssemblerImpl
 		new GroupByTranslator();
 	private final HighlighterTranslator _highlighterTranslator =
 		new HighlighterTranslator();
-	private final HighlightTranslator _highlightTranslator =
-		new HighlightTranslator();
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
-		new ElasticsearchQueryTranslator();
 	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 	private final SortTranslator _sortTranslator = new SortTranslator();

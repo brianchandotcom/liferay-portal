@@ -58,7 +58,9 @@ const BULK_ACTION_MESSAGES: BulkActionMessage = {
 		info: {
 			all: Liferay.Language.get('delete-action-started-for-all-assets'),
 			plural: Liferay.Language.get('delete-action-started-for-x-assets'),
-			singular: Liferay.Language.get('delete-action-started-for-one-asset'),
+			singular: Liferay.Language.get(
+				'delete-action-started-for-one-asset'
+			),
 		},
 	},
 	[BULK_ACTION_DOWNLOAD]: {

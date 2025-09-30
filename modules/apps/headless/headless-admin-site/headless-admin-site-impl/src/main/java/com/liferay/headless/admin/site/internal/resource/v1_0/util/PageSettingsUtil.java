@@ -45,6 +45,14 @@ public class PageSettingsUtil {
 					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
 						dlAppService, dtoConverterContext,
 						layoutSEOEntryLocalService, layout));
+				setQueryString(
+					() -> {
+						UnicodeProperties unicodeProperties =
+							layout.getTypeSettingsProperties();
+
+						return unicodeProperties.getProperty(
+							LayoutTypePortletConstants.QUERY_STRING);
+					});
 				setSeoSettings(
 					() -> SEOSettingsUtil.getSeoSettings(
 						dtoConverterContext, layoutSEOEntryLocalService,
@@ -92,15 +100,12 @@ public class PageSettingsUtil {
 	private static NavigationSettings _toNavigationSettings(
 		UnicodeProperties unicodeProperties) {
 
-		String queryStringPropertyValue = unicodeProperties.getProperty(
-			LayoutTypePortletConstants.QUERY_STRING);
 		String targetPropertyValue = unicodeProperties.getProperty(
 			LayoutTypePortletConstants.TARGET);
 		String targetTypePropertyValue = unicodeProperties.getProperty(
 			"targetType");
 
-		if ((queryStringPropertyValue == null) &&
-			(targetPropertyValue == null) &&
+		if ((targetPropertyValue == null) &&
 			(targetTypePropertyValue == null)) {
 
 			return null;
@@ -108,7 +113,6 @@ public class PageSettingsUtil {
 
 		return new NavigationSettings() {
 			{
-				setQueryString(() -> queryStringPropertyValue);
 				setTarget(() -> targetPropertyValue);
 				setTargetType(
 					() -> {

@@ -4,42 +4,42 @@
  */
 
 const changeButton = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-change-button`
+	`${fragmentElementId}-drag-and-drop-upload-change-button`
 );
 const dropzone = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-dropzone`
+	`${fragmentElementId}-drag-and-drop-upload-dropzone`
 );
 const dropzoneText = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-dropzone-text`
+	`${fragmentElementId}-drag-and-drop-upload-dropzone-text`
 );
 const defaultDropzone = dropzone.querySelector('.dropzone-default-content');
 const fileInput = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload`
+	`${fragmentElementId}-drag-and-drop-upload`
 );
 const fileNameLabel = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-file-name-label`
+	`${fragmentElementId}-drag-and-drop-upload-file-name-label`
 );
 const helpText = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-help-text`
+	`${fragmentElementId}-drag-and-drop-upload-help-text`
 );
 const hiddenFileInput = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-hidden`
+	`${fragmentElementId}-drag-and-drop-upload-hidden`
 );
 const noPreviewDropzone = dropzone.querySelector('.dropzone-no-preview');
 const previewContainer = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-preview`
+	`${fragmentElementId}-drag-and-drop-upload-preview`
 );
 const previewContent = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-preview-content`
+	`${fragmentElementId}-drag-and-drop-upload-preview-content`
 );
 const removeButton = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-remove-button`
+	`${fragmentElementId}-drag-and-drop-upload-remove-button`
 );
 const selectButton = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-button`
+	`${fragmentElementId}-drag-and-drop-upload-button`
 );
 const previewButtons = document.getElementById(
-	`${fragmentNamespace}-drag-and-drop-upload-preview-buttons`
+	`${fragmentElementId}-drag-and-drop-upload-preview-buttons`
 );
 
 let hasSelectedFile = false;
@@ -245,7 +245,7 @@ else {
 						inputName: input.name,
 						languageId,
 						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 					});
 
 					translationInput.value = value.fileEntryId;
@@ -267,12 +267,12 @@ else {
 					inputElement: fileInput,
 					inputName: input.name,
 					localizationInputsContainer: inputElement.parentNode,
-					namespace: fragmentNamespace,
+					namespace: fragmentElementId,
 					onLocaleChange: ({languageId}) => {
 						currentLanguageId = languageId;
 
 						const translationInput = getFragmentTranslationInput(
-							fragmentNamespace,
+							fragmentElementId,
 							languageId,
 							inputElement.id
 						);
@@ -292,7 +292,7 @@ else {
 								languageId: defaultLanguageId,
 								localizationInputsContainer:
 									inputElement.parentNode,
-								namespace: fragmentNamespace,
+								namespace: fragmentElementId,
 							});
 
 							previewURL = defaultInput?.dataset?.previewURL;
@@ -311,7 +311,7 @@ else {
 					onMarkAsTranslated: () => {
 						const defaultTranslationInput =
 							getFragmentTranslationInput(
-								fragmentNamespace,
+								fragmentElementId,
 								defaultLanguageId,
 								inputElement.id
 							);
@@ -338,13 +338,13 @@ else {
 					onResetTranslation: () => {
 						const defaultTranslationInput =
 							getFragmentTranslationInput(
-								fragmentNamespace,
+								fragmentElementId,
 								defaultLanguageId,
 								inputElement.id
 							);
 
 						const translationInput = getFragmentTranslationInput(
-							fragmentNamespace,
+							fragmentElementId,
 							currentLanguageId,
 							fileInput.id
 						);
@@ -383,7 +383,7 @@ else {
 						inputName: input.name,
 						languageId: currentLanguageId,
 						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 						type: type === 'file' ? 'file' : 'hidden',
 					});
 
@@ -465,7 +465,7 @@ else {
 						inputName: input.name,
 						languageId: currentLanguageId,
 						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 					});
 
 					translationInput.value = '';
@@ -481,7 +481,7 @@ else {
 							languageId: defaultLanguageId,
 							localizationInputsContainer:
 								inputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						if (defaultInput.dataset?.previewURL) {
@@ -577,11 +577,11 @@ else {
 						}
 					},
 					readOnlyInputLabel: document.getElementById(
-						`${fragmentEntryLinkNamespace}-drag-and-drop-upload-read-only`
+						`${fragmentElementId}-drag-and-drop-upload-read-only`
 					),
 					unlocalizedFieldsState,
 					unlocalizedMessageContainer: document.getElementById(
-						`${fragmentNamespace}-unlocalized-info`
+						`${fragmentElementId}-unlocalized-info`
 					),
 				});
 

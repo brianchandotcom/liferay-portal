@@ -15,7 +15,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.ArrayList;
@@ -29,7 +28,7 @@ import java.util.Objects;
 public class PageSettingsUtil {
 
 	public static PageSettings getPageSettings(
-		DLAppService dlAppService, DTOConverterContext dtoConverterContext,
+		DLAppService dlAppService,
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		return new PageSettings() {
@@ -43,8 +42,7 @@ public class PageSettingsUtil {
 						layout.getTypeSettingsProperties()));
 				setOpenGraphSettings(
 					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-						dlAppService, dtoConverterContext,
-						layoutSEOEntryLocalService, layout));
+						dlAppService, layoutSEOEntryLocalService, layout));
 				setQueryString(
 					() -> {
 						UnicodeProperties unicodeProperties =
@@ -55,8 +53,7 @@ public class PageSettingsUtil {
 					});
 				setSeoSettings(
 					() -> SEOSettingsUtil.getSeoSettings(
-						dtoConverterContext, layoutSEOEntryLocalService,
-						layout));
+						layoutSEOEntryLocalService, layout));
 			}
 		};
 	}

@@ -89,7 +89,7 @@ public class ElasticsearchConnectionManagerTest {
 	@Test
 	public void testActivateRemoteModeEnabledWithConnectionId() {
 		Mockito.when(
-			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.productionModeEnabled()
 		).thenReturn(
 			true
 		);
@@ -122,7 +122,7 @@ public class ElasticsearchConnectionManagerTest {
 	@Test
 	public void testActivateRemoteModeEnabledWithoutConnectionId() {
 		Mockito.when(
-			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.productionModeEnabled()
 		).thenReturn(
 			true
 		);
@@ -668,15 +668,9 @@ public class ElasticsearchConnectionManagerTest {
 
 	private void _enableRemoteMode() {
 		Mockito.when(
-			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.productionModeEnabled()
 		).thenReturn(
 			true
-		);
-
-		Mockito.when(
-			_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()
-		).thenReturn(
-			false
 		);
 
 		_elasticsearchConnectionManager.addElasticsearchConnection(
@@ -737,15 +731,9 @@ public class ElasticsearchConnectionManagerTest {
 
 	private void _setUpOperationModeResolver() {
 		Mockito.when(
-			_elasticsearchConfigurationWrapper.isProductionModeEnabled()
+			_elasticsearchConfigurationWrapper.productionModeEnabled()
 		).thenReturn(
 			false
-		);
-
-		Mockito.when(
-			_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()
-		).thenReturn(
-			true
 		);
 	}
 

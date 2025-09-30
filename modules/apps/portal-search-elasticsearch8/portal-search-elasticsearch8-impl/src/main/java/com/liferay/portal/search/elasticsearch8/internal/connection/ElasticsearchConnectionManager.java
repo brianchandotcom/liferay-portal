@@ -357,7 +357,7 @@ public class ElasticsearchConnectionManager
 		SearchLogHelperUtil.setRESTClientLoggerLevel(
 			elasticsearchConfigurationWrapper.restClientLoggerLevel());
 
-		if (elasticsearchConfigurationWrapper.isProductionModeEnabled()) {
+		if (elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			if (Validator.isBlank(
 					elasticsearchConfigurationWrapper.
 						remoteClusterConnectionId())) {
@@ -418,7 +418,7 @@ public class ElasticsearchConnectionManager
 			return getElasticsearchConnection(connectionId);
 		}
 
-		if (elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
+		if (!elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Getting " + ConnectionConstants.SIDECAR_CONNECTION_ID +
@@ -507,7 +507,7 @@ public class ElasticsearchConnectionManager
 
 		return StringBundler.concat(
 			message, " Production Mode Enabled: ",
-			elasticsearchConfigurationWrapper.isProductionModeEnabled(),
+			elasticsearchConfigurationWrapper.productionModeEnabled(),
 			", Connection ID: ", connectionId, ", Prefer Local Cluster: ",
 			preferLocalCluster, ", Cross-Cluster Replication Enabled: ",
 			isCrossClusterReplicationEnabled(), ". Enable INFO logs on ",

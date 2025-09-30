@@ -79,7 +79,7 @@ public class ElasticsearchSearchEngineInformation
 			"(&(service.factoryPid=%s)(active=%s)",
 			ElasticsearchConnectionConfiguration.class.getName(), true);
 
-		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.productionModeEnabled() &&
 			!Validator.isBlank(
 				elasticsearchConfigurationWrapper.
 					remoteClusterConnectionId())) {
@@ -94,7 +94,7 @@ public class ElasticsearchSearchEngineInformation
 		ElasticsearchConnection localClusterElasticsearchConnection =
 			elasticsearchConnectionManager.getElasticsearchConnection(true);
 
-		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.productionModeEnabled() &&
 			elasticsearchConnectionManager.isCrossClusterReplicationEnabled() &&
 			!elasticsearchConnection.equals(
 				localClusterElasticsearchConnection)) {
@@ -148,7 +148,7 @@ public class ElasticsearchSearchEngineInformation
 			String clusterNodesString = _getClusterNodesString(
 				elasticsearchConnectionManager.getElasticsearchClient());
 
-			if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
+			if (elasticsearchConfigurationWrapper.productionModeEnabled() &&
 				elasticsearchConnectionManager.
 					isCrossClusterReplicationEnabled()) {
 
@@ -174,7 +174,7 @@ public class ElasticsearchSearchEngineInformation
 	public String getVendorString() {
 		String vendor = "Elasticsearch";
 
-		if (elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
+		if (!elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			return vendor + " (Sidecar)";
 		}
 
@@ -296,7 +296,7 @@ public class ElasticsearchSearchEngineInformation
 		Set<String> labels = new LinkedHashSet<>(
 			Arrays.asList("read", "write"));
 
-		if (elasticsearchConfigurationWrapper.isProductionModeEnabled() &&
+		if (elasticsearchConfigurationWrapper.productionModeEnabled() &&
 			elasticsearchConnectionManager.isCrossClusterReplicationEnabled() &&
 			!elasticsearchConnection.equals(
 				elasticsearchConnectionManager.getElasticsearchConnection(

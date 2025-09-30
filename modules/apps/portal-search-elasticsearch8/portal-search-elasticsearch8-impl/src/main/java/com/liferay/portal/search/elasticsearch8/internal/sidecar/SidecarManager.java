@@ -66,7 +66,7 @@ public class SidecarManager implements ElasticsearchConfigurationObserver {
 	protected void applyConfigurations() {
 		File processFile = _bundleContext.getDataFile("sidecar.process");
 
-		if (elasticsearchConfigurationWrapper.isProductionModeEnabled()) {
+		if (elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			elasticsearchConnectionManager.removeElasticsearchConnection(
 				ConnectionConstants.SIDECAR_CONNECTION_ID);
 

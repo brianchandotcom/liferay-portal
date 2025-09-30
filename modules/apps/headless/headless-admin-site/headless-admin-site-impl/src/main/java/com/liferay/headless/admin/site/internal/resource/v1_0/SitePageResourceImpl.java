@@ -19,6 +19,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.string.StringBundler;
@@ -131,7 +132,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.addDraftToLayout(
-				_cetManager, contentPageSpecification, layout,
+				_cetManager, contentPageSpecification, _infoItemServiceRegistry,
+				layout,
 				ServiceContextUtil.createServiceContext(
 					layout.getGroupId(), contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -354,7 +356,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.addContentLayout(
-				_cetManager, groupId, sitePage.getPageSpecifications(),
+				_cetManager, groupId, _infoItemServiceRegistry,
+				sitePage.getPageSpecifications(),
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
@@ -370,7 +373,8 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 		else {
 			layout = LayoutUtil.addPortletLayout(
-				_cetManager, sitePage.getExternalReferenceCode(), groupId,
+				_cetManager, _infoItemServiceRegistry,
+				sitePage.getExternalReferenceCode(), groupId,
 				_getParentLayoutId(
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
@@ -529,10 +533,10 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(
-				_cetManager, layout, nameMap, layout.getTitleMap(),
-				layout.getDescriptionMap(), layout.getRobotsMap(),
-				friendlyURLMap, sitePage.getPageSpecifications(),
-				serviceContext);
+				_cetManager, _infoItemServiceRegistry, layout, nameMap,
+				layout.getTitleMap(), layout.getDescriptionMap(),
+				layout.getRobotsMap(), friendlyURLMap,
+				sitePage.getPageSpecifications(), serviceContext);
 		}
 		else {
 			layout = LayoutUtil.updatePortletLayout(
@@ -643,6 +647,9 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructu
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SegmentsExperienceUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
@@ -193,7 +194,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _toPageExperience(
 			SegmentsExperienceUtil.updateSegmentsExperience(
-				layout, pageExperience, segmentsExperience,
+				_infoItemServiceRegistry, layout, pageExperience,
+				segmentsExperience,
 				ServiceContextUtil.createServiceContext(
 					groupId, contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -244,7 +246,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		return _toPageExperience(
 			SegmentsExperienceUtil.addSegmentsExperience(
-				layout, pageExperience,
+				_infoItemServiceRegistry, layout, pageExperience,
 				ServiceContextUtil.createServiceContext(
 					groupId, contextHttpServletRequest,
 					contextUser.getUserId())));
@@ -280,6 +282,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		return _pageExperienceDTOConverter.toDTO(
 			dtoConverterContext, layoutPageTemplateStructureRel);
 	}
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

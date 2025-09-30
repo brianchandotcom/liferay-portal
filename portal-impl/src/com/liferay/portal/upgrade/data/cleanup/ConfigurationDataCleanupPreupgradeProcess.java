@@ -6,6 +6,7 @@
 package com.liferay.portal.upgrade.data.cleanup;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
@@ -109,7 +110,8 @@ public class ConfigurationDataCleanupPreupgradeProcess
 		DataCleanupLoggingUtil.logDelete(
 			_log, 1, "Configuration_",
 			StringBundler.concat(
-				configurationId, " has ", primaryKey, " that was not found in ",
+				configurationId, " has scope ", primaryKeyColumnName,
+				StringPool.SPACE, primaryKey, " that was not found in ",
 				tableName, ".", primaryKeyColumnName));
 	}
 

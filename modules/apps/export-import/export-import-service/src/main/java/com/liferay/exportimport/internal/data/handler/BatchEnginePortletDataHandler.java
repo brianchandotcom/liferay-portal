@@ -83,7 +83,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	public void exportDeletionSystemEvents(
 		PortletDataContext portletDataContext) {
 
-		for (Registration registration : _registrations) {
+		for (Registration registration : _getActiveRegistrations()) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
@@ -111,7 +111,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String[] getClassNames() {
 		return TransformUtil.transformToArray(
-			_registrations, Registration::getClassName, String.class);
+			_getActiveRegistrations(), Registration::getClassName, String.class);
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		for (Registration registration : _registrations) {
+		for (Registration registration : _getActiveRegistrations()) {
 			InputStream inputStream =
 				portletDataContext.getZipEntryAsInputStream(
 					_normalize(
@@ -269,12 +269,14 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
-			for (Registration registration : _registrations) {
+			List<Registration> activeRegistrations = _getActiveRegistrations();
+
+			for (Registration registration : activeRegistrations) {
 				ExportImportVulcanBatchEngineTaskItemDelegate.
 					ExportImportDescriptor exportImportDescriptor =
 						registration.getExportImportDescriptor();
 
-				if ((_registrations.size() > 1) &&
+				if ((activeRegistrations.size() > 1) &&
 					!portletDataContext.getBooleanParameter(
 						getPortletId(),
 						exportImportDescriptor.getItemClassName())) {
@@ -285,6 +287,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				BatchEngineExportTaskExecutor.Result result =
 					_executeExportTask(
 						Integer.MAX_VALUE, portletDataContext, registration);
+
+				if (result == null) {
+					continue;
+				}
 
 				portletDataContext.addZipEntry(
 					_normalize(
@@ -316,12 +322,14 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		for (Registration registration : _registrations) {
+		List<Registration> activeRegistrations = _getActiveRegistrations();
+
+		for (Registration registration : activeRegistrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
 
-			if ((_registrations.size() > 1) &&
+			if ((activeRegistrations.size() > 1) &&
 				!portletDataContext.getBooleanParameter(
 					getPortletId(),
 					exportImportDescriptor.getItemClassName())) {
@@ -403,7 +411,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext,
 		PortletPreferences portletPreferences) {
 
-		for (Registration registration : _registrations) {
+		for (Registration registration : _getActiveRegistrations()) {
 			try (SafeCloseable safeCloseable =
 					PortletDataContextThreadLocal.
 						setPortletDataContextWithSafeCloseable(
@@ -411,6 +419,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				BatchEngineExportTaskExecutor.Result result =
 					_executeExportTask(1, portletDataContext, registration);
+
+				if (result == null) {
+					continue;
+				}
 
 				BatchEngineExportTask batchEngineExportTask =
 					result.getBatchEngineExportTask();
@@ -478,6 +490,22 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+	}
+
+	private List<Registration> _getActiveRegistrations() {
+		List<Registration> activeRegistrations = new ArrayList<>();
+
+		for (Registration registration : _registrations) {
+			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
+				exportImportDescriptor =
+				registration.getExportImportDescriptor();
+
+			if (exportImportDescriptor.isActive()) {
+				activeRegistrations.add(registration);
+			}
+		}
+
+		return activeRegistrations;
 	}
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)

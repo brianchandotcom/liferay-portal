@@ -1,68 +1,73 @@
-const LIFERAY_HOST = process.env.LIFERAY_HOST || "";
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+const LIFERAY_HOST = process.env.LIFERAY_HOST || '';
 const LIFERAY_HEADLESS_BASE_URL = `${LIFERAY_HOST}/o`;
 const LIFERAY_SPACE_ID = process.env.LIFERAY_SPACE_ID || 0;
 
 export const liferay = {
-  fetch: async (
-    resource: string | URL | globalThis.Request,
-    init?: RequestInit
-  ) => {
-    const endpoint =
-      typeof resource === "string" && resource.startsWith("/")
-        ? `${LIFERAY_HEADLESS_BASE_URL}${resource}`
-        : resource;
+	fetch: async (
+		resource: string | URL | globalThis.Request,
+		init?: RequestInit
+	) => {
+		const endpoint =
+			typeof resource === 'string' && resource.startsWith('/')
+				? `${LIFERAY_HEADLESS_BASE_URL}${resource}`
+				: resource;
 
-    const response = await fetch(endpoint, {
-      method: init?.method || "GET",
-      headers: {
-        accept: "*/*",
-        "accept-language": "en-US,en;q=0.5",
-        "content-type": "application/json",
-        ...init?.headers,
-      },
-      next: {
-        revalidate: 3600,
-      },
-    });
+		const response = await fetch(endpoint, {
+			method: init?.method || 'GET',
+			headers: {
+				'accept': '*/*',
+				'accept-language': 'en-US,en;q=0.5',
+				'content-type': 'application/json',
+				...init?.headers,
+			},
+			next: {
+				revalidate: 3600,
+			},
+		});
 
-    return response;
-  },
+		return response;
+	},
 
-  getSpace: () => {
-    return {
-      id: Number(LIFERAY_SPACE_ID),
-    };
-  },
+	getSpace: () => {
+		return {
+			id: Number(LIFERAY_SPACE_ID),
+		};
+	},
 
-  getDocument: (documentPath: string) => {
-    if (documentPath.startsWith("/")) {
-      return `${LIFERAY_HOST}${documentPath}`;
-    }
+	getDocument: (documentPath: string) => {
+		if (documentPath.startsWith('/')) {
+			return `${LIFERAY_HOST}${documentPath}`;
+		}
 
-    return documentPath;
-  },
+		return documentPath;
+	},
 
-  cmsEndpoints: {
-    blogPosts: ({
-      spaceId,
-      page = 1,
-      pageSize,
-      sort,
-    }: {
-      spaceId: number;
-      page: number;
-      pageSize: number;
-      sort: string;
-    }) => {
-      return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&sort=${sort}`;
-    },
+	cmsEndpoints: {
+		blogPosts: ({
+			page = 1,
+			pageSize,
+			sort,
+			spaceId,
+		}: {
+			spaceId: number;
+			page: number;
+			pageSize: number;
+			sort: string;
+		}) => {
+			return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&sort=${sort}`;
+		},
 
-    blogPost: ({ blogId }: { blogId: number }) => {
-      return `/cms/blogs/${blogId}`;
-    },
-  },
+		blogPost: ({blogId}: {blogId: number}) => {
+			return `/cms/blogs/${blogId}`;
+		},
+	},
 };
 
 export type Liferay = typeof liferay;
 
-export type WithLiferay<TParams = unknown> = TParams & { liferay: Liferay };
+export type WithLiferay<TParams = unknown> = TParams & {liferay: Liferay};

@@ -9,6 +9,7 @@ import com.liferay.notification.constants.NotificationRecipientSettingConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
+import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -25,8 +26,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Carolina Barbosa
@@ -57,9 +56,7 @@ public class TermEmailProvider implements EmailProvider {
 		Set<String> emailAddresses = new HashSet<>();
 
 		for (String termName : StringUtil.split(GetterUtil.getString(value))) {
-			Matcher matcher = _termNamePattern.matcher(termName);
-
-			if (!matcher.find()) {
+			if (!NotificationTypeUtil.isTermValue(termName)) {
 				continue;
 			}
 
@@ -76,9 +73,7 @@ public class TermEmailProvider implements EmailProvider {
 					continue;
 				}
 
-				matcher = _emailAddressPattern.matcher(termValue);
-
-				if (matcher.find()) {
+				if (NotificationTypeUtil.isEmailAddress(termValue)) {
 					emailAddresses.add(termValue);
 
 					continue;
@@ -113,12 +108,6 @@ public class TermEmailProvider implements EmailProvider {
 
 		return StringUtil.merge(emailAddresses);
 	}
-
-	private static final Pattern _emailAddressPattern = Pattern.compile(
-		"[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@" +
-			"(?:\\w(?:[\\w-]*\\w)?\\.)+(\\w(?:[\\w-]*\\w))");
-	private static final Pattern _termNamePattern = Pattern.compile(
-		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	private final NotificationTermEvaluatorTracker
 		_notificationTermEvaluatorTracker;

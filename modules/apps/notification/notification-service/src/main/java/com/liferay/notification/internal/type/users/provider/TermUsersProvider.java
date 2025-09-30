@@ -9,6 +9,7 @@ import com.liferay.notification.constants.NotificationRecipientConstants;
 import com.liferay.notification.context.NotificationContext;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
+import com.liferay.notification.type.util.NotificationTypeUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Role;
@@ -24,8 +25,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Feliphe Marinho
@@ -61,9 +60,7 @@ public class TermUsersProvider implements UsersProvider {
 		List<String> terms = new ArrayList<>();
 
 		for (String value : values) {
-			Matcher matcher = _pattern.matcher(value);
-
-			if (matcher.find()) {
+			if (NotificationTypeUtil.isTermValue(value)) {
 				terms.add(value);
 			}
 			else {
@@ -138,9 +135,6 @@ public class TermUsersProvider implements UsersProvider {
 
 		return users;
 	}
-
-	private static final Pattern _pattern = Pattern.compile(
-		"\\[%[^\\[%]+%\\]", Pattern.CASE_INSENSITIVE);
 
 	private final NotificationTermEvaluatorTracker
 		_notificationTermEvaluatorTracker;

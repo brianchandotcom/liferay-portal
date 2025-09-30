@@ -11,8 +11,6 @@ import {
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {generateUrl} from '../utils/urls';
-import {ActionsDropdown} from './ActionsDropdown';
 import {BaseCard} from './BaseCard';
 import {ContentAndFilesCard} from './ContentAndFilesCard';
 
@@ -37,18 +35,7 @@ export function ContentCard() {
 							RangeSelectors.Last90Days,
 							RangeSelectors.CustomRange,
 						]}
-						className="mr-3"
 						onChange={setRangeSelector}
-					/>
-
-					<ActionsDropdown
-						items={[
-							{
-								href: generateUrl('/contents').toString(),
-								label: Liferay.Language.get('view-all-content'),
-								value: 'view-all-content',
-							},
-						]}
 					/>
 				</>
 			}

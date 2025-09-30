@@ -15,7 +15,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -82,9 +81,6 @@ public class PageSettingsUtil {
 				new CustomMetaTag() {
 					{
 						setKey(layoutSEOEntryCustomMetaTag::getProperty);
-						setValue(
-							() -> layoutSEOEntryCustomMetaTag.getContent(
-								LocaleUtil.ROOT));
 						setValue_i18n(
 							() -> LocalizedMapUtil.getI18nMap(
 								layoutSEOEntryCustomMetaTag.getContentMap()));

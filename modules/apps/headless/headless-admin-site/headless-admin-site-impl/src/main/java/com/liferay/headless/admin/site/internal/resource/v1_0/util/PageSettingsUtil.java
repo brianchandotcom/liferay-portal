@@ -5,20 +5,10 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
-import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
-import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.seo.model.LayoutSEOEntry;
-import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
-import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,74 +17,7 @@ import java.util.Objects;
  */
 public class PageSettingsUtil {
 
-	public static PageSettings getPageSettings(
-		DLAppService dlAppService,
-		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
-
-		return new PageSettings() {
-			{
-				setCustomMetaTags(
-					() -> _getCustomMetaTags(
-						layout, layoutSEOEntryLocalService));
-				setHiddenFromNavigation(layout::isHidden);
-				setNavigationSettings(
-					() -> _toNavigationSettings(
-						layout.getTypeSettingsProperties()));
-				setOpenGraphSettings(
-					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-						dlAppService, layoutSEOEntryLocalService, layout));
-				setQueryString(
-					() -> {
-						UnicodeProperties unicodeProperties =
-							layout.getTypeSettingsProperties();
-
-						return unicodeProperties.getProperty(
-							LayoutTypePortletConstants.QUERY_STRING);
-					});
-				setSeoSettings(
-					() -> SEOSettingsUtil.getSeoSettings(
-						layoutSEOEntryLocalService, layout));
-			}
-		};
-	}
-
-	private static CustomMetaTag[] _getCustomMetaTags(
-		Layout layout, LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
-
-		LayoutSEOEntry layoutSEOEntry =
-			layoutSEOEntryLocalService.fetchLayoutSEOEntry(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-
-		if (layoutSEOEntry == null) {
-			return null;
-		}
-
-		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
-			layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
-				layoutSEOEntry.getGroupId(),
-				layoutSEOEntry.getLayoutSEOEntryId());
-
-		List<CustomMetaTag> customMetaTags = new ArrayList<>();
-
-		for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag :
-				layoutSEOEntryCustomMetaTags) {
-
-			customMetaTags.add(
-				new CustomMetaTag() {
-					{
-						setKey(layoutSEOEntryCustomMetaTag::getProperty);
-						setValue_i18n(
-							() -> LocalizedMapUtil.getI18nMap(
-								layoutSEOEntryCustomMetaTag.getContentMap()));
-					}
-				});
-		}
-
-		return customMetaTags.toArray(new CustomMetaTag[0]);
-	}
-
-	private static NavigationSettings _toNavigationSettings(
+	public static NavigationSettings toNavigationSettings(
 		UnicodeProperties unicodeProperties) {
 
 		String targetPropertyValue = unicodeProperties.getProperty(

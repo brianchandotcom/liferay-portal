@@ -5,7 +5,9 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
+import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
+import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
@@ -13,9 +15,15 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.OpenGraphSettingsUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSettingsUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.SEOSettingsUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntry;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
+import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
@@ -112,6 +120,42 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 		};
 	}
 
+	private CustomMetaTag[] _getCustomMetaTags(
+		Layout layout, LayoutSEOEntryLocalService layoutSEOEntryLocalService) {
+
+		LayoutSEOEntry layoutSEOEntry =
+			layoutSEOEntryLocalService.fetchLayoutSEOEntry(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
+
+		if (layoutSEOEntry == null) {
+			return null;
+		}
+
+		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
+			layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+				layoutSEOEntry.getGroupId(),
+				layoutSEOEntry.getLayoutSEOEntryId());
+
+		List<CustomMetaTag> customMetaTags = new ArrayList<>();
+
+		for (LayoutSEOEntryCustomMetaTag layoutSEOEntryCustomMetaTag :
+				layoutSEOEntryCustomMetaTags) {
+
+			customMetaTags.add(
+				new CustomMetaTag() {
+					{
+						setKey(layoutSEOEntryCustomMetaTag::getProperty);
+						setValue_i18n(
+							() -> LocalizedMapUtil.getI18nMap(
+								layoutSEOEntryCustomMetaTag.getContentMap()));
+					}
+				});
+		}
+
+		return customMetaTags.toArray(new CustomMetaTag[0]);
+	}
+
 	private PageSettings _getPageSettings(Layout layout) {
 		SitePage.Type type = SitePageTypeUtil.toExternalType(layout.getType());
 
@@ -125,8 +169,28 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	private PageSettings _toPageSettings(Layout layout) {
 		PageSettings pageSettings = _getPageSettings(layout);
 
+		pageSettings.setCustomMetaTags(
+			() -> _getCustomMetaTags(layout, _layoutSEOEntryLocalService));
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
+		pageSettings.setNavigationSettings(
+			() -> PageSettingsUtil.toNavigationSettings(
+				layout.getTypeSettingsProperties()));
+		pageSettings.setOpenGraphSettings(
+			() -> OpenGraphSettingsUtil.getOpenGraphSettings(
+				_dlAppService, _layoutSEOEntryLocalService, layout));
+		pageSettings.setQueryString(
+			() -> {
+				UnicodeProperties unicodeProperties =
+					layout.getTypeSettingsProperties();
+
+				return unicodeProperties.getProperty(
+					com.liferay.layout.admin.kernel.model.
+						LayoutTypePortletConstants.QUERY_STRING);
+			});
 		pageSettings.setPriority(layout::getPriority);
+		pageSettings.setSeoSettings(
+			() -> SEOSettingsUtil.getSeoSettings(
+				_layoutSEOEntryLocalService, layout));
 
 		return pageSettings;
 	}
@@ -206,6 +270,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 	}
 
 	@Reference
+	private DLAppService _dlAppService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -214,6 +281,9 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 
 	@Reference
 	private LayoutPrototypeLocalService _layoutPrototypeLocalService;
+
+	@Reference
+	private LayoutSEOEntryLocalService _layoutSEOEntryLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

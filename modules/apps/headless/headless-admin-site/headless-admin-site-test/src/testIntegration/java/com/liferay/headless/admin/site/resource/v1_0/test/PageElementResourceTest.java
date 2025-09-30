@@ -403,98 +403,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				segmentsExperience.getExternalReferenceCode(), pageElement);
 	}
 
-	private PageElement _createContainerPageElement(
-			String[] curCssClasses, String curCustomCss,
-			String curFragmentLinkClassName,
-			String curFragmentLinkExternalReferenceCode,
-			String curFragmentLinkFieldKey, boolean curIndexed,
-			Map<String, String> curUrls,
-			String curPageElementExternalReferenceCode)
-		throws Exception {
-
-		return _getPageElement(
-			new ContainerPageElementDefinition() {
-				{
-					setContentVisibility(ContentVisibility.AUTO);
-					setCssClasses(curCssClasses);
-					setCustomCSS(curCustomCss);
-					setFragmentLink(
-						() -> new FragmentLink() {
-							{
-								setTarget(Target.BLANK);
-								setValue(
-									() -> {
-										if (curUrls != null) {
-											return _getFragmentLinkInlineValue(
-												curUrls);
-										}
-
-										return _getFragmentLinkMappedValue(
-											curFragmentLinkClassName,
-											curFragmentLinkExternalReferenceCode,
-											curFragmentLinkFieldKey);
-									});
-							}
-						});
-					setFragmentViewports(_getFragmentViewports());
-					setHtmlProperties(
-						() -> new HtmlProperties() {
-							{
-								setHtmlTag(HtmlTag.DIV);
-							}
-						});
-					setIndexed(curIndexed);
-					setLayout(
-						() ->
-							new com.liferay.headless.admin.site.client.dto.v1_0.
-								Layout() {
-
-								{
-									setAlign(Align.END);
-									setContentDisplay(ContentDisplay.FLEX_ROW);
-									setFlexWrap(FlexWrap.WRAP_REVERSE);
-									setJustify(Justify.CENTER);
-									setWidthType(WidthType.FIXED);
-								}
-							});
-					setType(PageElementDefinition.Type.CONTAINER);
-				}
-			},
-			curPageElementExternalReferenceCode);
-	}
-
-	private PageElement _createContainerPageElementWithMappedField(
-			String fragmentLinkClassName,
-			String fragmentLinkExternalReferenceCode,
-			String fragmentLinkFieldKey,
-			String pageElementExternalReferenceCode)
-		throws Exception {
-
-		return _createContainerPageElement(
-			null, "custom css 1", fragmentLinkClassName,
-			fragmentLinkExternalReferenceCode, fragmentLinkFieldKey, false,
-			null, pageElementExternalReferenceCode);
-	}
-
-	private PageElement _createContainerPageElementWithMappedLayout(
-			Layout layout, String pageElementExternalReferenceCode)
-		throws Exception {
-
-		return _createContainerPageElement(
-			new String[] {"1", "2", "3"}, null, Layout.class.getName(),
-			layout.getExternalReferenceCode(), null, true, null,
-			pageElementExternalReferenceCode);
-	}
-
-	private PageElement _createContainerPageElementWithURLs(
-			String pageElementExternalReferenceCode, Map<String, String> urls)
-		throws Exception {
-
-		return _createContainerPageElement(
-			new String[] {"cssClass1", "cssClass2"}, "custom css 2", null, null,
-			null, false, urls, pageElementExternalReferenceCode);
-	}
-
 	private FragmentLinkInlineValue _getFragmentLinkInlineValue(
 		Map<String, String> urls) {
 
@@ -590,6 +498,100 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return pageElement;
 	}
 
+	private PageElement _getPageElementContainerPageElementDefinition(
+			String[] curCssClasses, String curCustomCss,
+			String curFragmentLinkClassName,
+			String curFragmentLinkExternalReferenceCode,
+			String curFragmentLinkFieldKey, boolean curIndexed,
+			Map<String, String> curUrls,
+			String curPageElementExternalReferenceCode)
+		throws Exception {
+
+		return _getPageElement(
+			new ContainerPageElementDefinition() {
+				{
+					setContentVisibility(ContentVisibility.AUTO);
+					setCssClasses(curCssClasses);
+					setCustomCSS(curCustomCss);
+					setFragmentLink(
+						() -> new FragmentLink() {
+							{
+								setTarget(Target.BLANK);
+								setValue(
+									() -> {
+										if (curUrls != null) {
+											return _getFragmentLinkInlineValue(
+												curUrls);
+										}
+
+										return _getFragmentLinkMappedValue(
+											curFragmentLinkClassName,
+											curFragmentLinkExternalReferenceCode,
+											curFragmentLinkFieldKey);
+									});
+							}
+						});
+					setFragmentViewports(_getFragmentViewports());
+					setHtmlProperties(
+						() -> new HtmlProperties() {
+							{
+								setHtmlTag(HtmlTag.DIV);
+							}
+						});
+					setIndexed(curIndexed);
+					setLayout(
+						() ->
+							new com.liferay.headless.admin.site.client.dto.v1_0.
+								Layout() {
+
+								{
+									setAlign(Align.END);
+									setContentDisplay(ContentDisplay.FLEX_ROW);
+									setFlexWrap(FlexWrap.WRAP_REVERSE);
+									setJustify(Justify.CENTER);
+									setWidthType(WidthType.FIXED);
+								}
+							});
+					setType(PageElementDefinition.Type.CONTAINER);
+				}
+			},
+			curPageElementExternalReferenceCode);
+	}
+
+	private PageElement
+			_getPageElementContainerPageElementDefinitionWithMappedField(
+				String fragmentLinkClassName,
+				String fragmentLinkExternalReferenceCode,
+				String fragmentLinkFieldKey,
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		return _getPageElementContainerPageElementDefinition(
+			null, "custom css 1", fragmentLinkClassName,
+			fragmentLinkExternalReferenceCode, fragmentLinkFieldKey, false,
+			null, pageElementExternalReferenceCode);
+	}
+
+	private PageElement
+			_getPageElementContainerPageElementDefinitionWithMappedLayout(
+				Layout layout, String pageElementExternalReferenceCode)
+		throws Exception {
+
+		return _getPageElementContainerPageElementDefinition(
+			new String[] {"1", "2", "3"}, null, Layout.class.getName(),
+			layout.getExternalReferenceCode(), null, true, null,
+			pageElementExternalReferenceCode);
+	}
+
+	private PageElement _getPageElementContainerPageElementDefinitionWithURLs(
+			String pageElementExternalReferenceCode, Map<String, String> urls)
+		throws Exception {
+
+		return _getPageElementContainerPageElementDefinition(
+			new String[] {"cssClass1", "cssClass2"}, "custom css 2", null, null,
+			null, false, urls, pageElementExternalReferenceCode);
+	}
+
 	private PageElement _randomPageElement(
 			PageElementDefinition pageElementDefinition)
 		throws Exception {
@@ -628,7 +630,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				null, null, "FileEntry_fileName",
 				RandomTestUtil.randomString()));
 	}
@@ -645,7 +647,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				FileEntry.class.getName(), fileEntry.getExternalReferenceCode(),
 				"FileEntry_fileName", RandomTestUtil.randomString()));
 	}
@@ -658,7 +660,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", RandomTestUtil.randomString()));
@@ -668,7 +670,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedLayout(
+			_getPageElementContainerPageElementDefinitionWithMappedLayout(
 				LayoutTestUtil.addTypeContentLayout(testGroup),
 				RandomTestUtil.randomString()));
 	}
@@ -677,7 +679,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithURLs(
+			_getPageElementContainerPageElementDefinitionWithURLs(
 				RandomTestUtil.randomString(),
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
@@ -729,7 +731,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				null, null, "FileEntry_fileName",
 				pageElementExternalReferenceCode));
 	}
@@ -748,7 +750,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				FileEntry.class.getName(), fileEntry.getExternalReferenceCode(),
 				"FileEntry_fileName", pageElementExternalReferenceCode));
 	}
@@ -759,7 +761,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedLayout(
+			_getPageElementContainerPageElementDefinitionWithMappedLayout(
 				LayoutTestUtil.addTypeContentLayout(testGroup),
 				pageElementExternalReferenceCode));
 	}
@@ -770,7 +772,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithURLs(
+			_getPageElementContainerPageElementDefinitionWithURLs(
 				pageElementExternalReferenceCode,
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
@@ -789,7 +791,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_createContainerPageElementWithMappedField(
+			_getPageElementContainerPageElementDefinitionWithMappedField(
 				JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", pageElementExternalReferenceCode));

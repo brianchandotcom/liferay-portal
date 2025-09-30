@@ -10,8 +10,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.jdbc.util.DataSourceWrapper;
 import com.liferay.portal.kernel.configuration.Filter;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jndi.JNDIUtil;
@@ -29,7 +27,6 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.spring.hibernate.DialectDetector;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -47,8 +44,6 @@ import java.nio.file.Paths;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.Arrays;
@@ -160,13 +155,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Created data source " + dataSource.getClass());
-		}
-
-		DBType dbType = DBManagerUtil.getDBType(
-			DialectDetector.getDialect(dataSource));
-
-		if (dbType == DBType.SQLSERVER) {
-			_checkSQLServer(dataSource);
 		}
 
 		return dataSource;
@@ -301,34 +289,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 
 				throw classNotFoundException;
 			}
-		}
-	}
-
-	private void _checkSQLServer(DataSource dataSource) {
-		try (Connection connection = dataSource.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"select name, is_read_committed_snapshot_on from " +
-					"sys.databases where name = db_name()");
-			ResultSet resultSet = preparedStatement.executeQuery()) {
-
-			if (!resultSet.next() ||
-				resultSet.getBoolean("is_read_committed_snapshot_on") ||
-				!_log.isWarnEnabled()) {
-
-				return;
-			}
-
-			String name = resultSet.getString("name");
-
-			_log.warn(
-				StringBundler.concat(
-					"SQL Server may have deadlocks because ",
-					"\"read_committed_snapshot\" is disabled for database \"",
-					name, "\". To enable, execute: alter database ", name,
-					" set read_committed_snapshot on"));
-		}
-		catch (Exception exception) {
-			_log.error("Unable to check SQL Server", exception);
 		}
 	}
 

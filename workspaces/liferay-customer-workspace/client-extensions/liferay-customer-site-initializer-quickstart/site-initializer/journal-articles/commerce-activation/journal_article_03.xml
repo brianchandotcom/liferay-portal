@@ -11,10 +11,10 @@
 		<dynamic-content language-id="ja_JP"><![CDATA[Commerceにはアクティベーションキーが必要です。]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="MoreDetails" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[To request a new or replacement activation key, please&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="es_ES"><![CDATA[Para solicitar un código de activación nuevo, o reemplazar uno existente, por favor&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[Para solicitar uma chave de ativação nova ou substituta, por favor favor&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="ja_JP"><![CDATA[新しいアクティベーションキーまたは交換用のアクティベーション キーをリクエストするには&nbsp;]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[To request a new or replacement activation key, please]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Para solicitar un código de activación nuevo, o reemplazar uno existente, por favor]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Para solicitar uma chave de ativação nova ou substituta, por favor favor]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[新しいアクティベーションキーまたは交換用のアクティベーション キーをリクエストするには]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="CommerceUrl" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[https://liferay.atlassian.net/servicedesk/customer/portals]]></dynamic-content>

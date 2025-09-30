@@ -11,10 +11,10 @@
 		<dynamic-content language-id="ja_JP"><![CDATA[コマースは、ポータルプロパティを使用して有効化されます。]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="kchgqfdb" name="MoreDetails" type="text">
-		<dynamic-content language-id="en_US"><![CDATA[More details:&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="es_ES"><![CDATA[Más detalles:&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="pt_BR"><![CDATA[Mais detalhes:&nbsp;]]></dynamic-content>
-		<dynamic-content language-id="ja_JP"><![CDATA[詳細:&nbsp;]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[More details:]]></dynamic-content>
+		<dynamic-content language-id="es_ES"><![CDATA[Más detalles:]]></dynamic-content>
+		<dynamic-content language-id="pt_BR"><![CDATA[Mais detalhes:]]></dynamic-content>
+		<dynamic-content language-id="ja_JP"><![CDATA[詳細:]]></dynamic-content>
 	</dynamic-element>
 	<dynamic-element index-type="keyword" instance-id="iatlbelj" name="CommerceUrl" type="text">
 		<dynamic-content language-id="en_US"><![CDATA[https://learn.liferay.com/commerce/latest/en/installation-and-upgrades/activating-liferay-commerce-enterprise.html]]></dynamic-content>

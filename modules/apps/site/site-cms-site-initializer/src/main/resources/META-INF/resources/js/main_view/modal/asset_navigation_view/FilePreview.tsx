@@ -43,13 +43,15 @@ export default function FilePreview({
 			) : isVideo ? (
 				<DLVideoIframe videoPreviewURL={previewURL} />
 			) : (
-				<ClayEmptyState
-					description={Liferay.Language.get(
-						'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'
-					)}
-					imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
-					title={Liferay.Language.get('no-preview-available')}
-				/>
+				<div className="bg-light d-flex h-100 justify-content-center w-100">
+					<ClayEmptyState
+						description={Liferay.Language.get(
+							'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'
+						)}
+						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
+						title={Liferay.Language.get('no-preview-available')}
+					/>
+				</div>
 			)}
 		</>
 	);

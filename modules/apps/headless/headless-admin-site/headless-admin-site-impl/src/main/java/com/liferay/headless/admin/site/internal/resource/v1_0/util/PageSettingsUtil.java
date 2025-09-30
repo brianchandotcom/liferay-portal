@@ -7,9 +7,9 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
-import com.liferay.headless.delivery.dto.v1_0.CustomMetaTag;
-import com.liferay.headless.delivery.dto.v1_0.PageSettings;
-import com.liferay.headless.delivery.dto.v1_0.SitePageNavigationMenuSettings;
+import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
+import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTag;
@@ -48,8 +48,8 @@ public class PageSettingsUtil {
 					() -> SEOSettingsUtil.getSeoSettings(
 						dtoConverterContext, layoutSEOEntryLocalService,
 						layout));
-				setSitePageNavigationMenuSettings(
-					() -> _toSitePageNavigationMenuSettings(
+				setNavigationSettings(
+					() -> _toNavigationSettings(
 						layout.getTypeSettingsProperties()));
 			}
 		};
@@ -91,8 +91,8 @@ public class PageSettingsUtil {
 		return customMetaTags.toArray(new CustomMetaTag[0]);
 	}
 
-	private static SitePageNavigationMenuSettings
-		_toSitePageNavigationMenuSettings(UnicodeProperties unicodeProperties) {
+	private static NavigationSettings _toNavigationSettings(
+		UnicodeProperties unicodeProperties) {
 
 		String queryStringPropertyValue = unicodeProperties.getProperty(
 			LayoutTypePortletConstants.QUERY_STRING);
@@ -108,7 +108,7 @@ public class PageSettingsUtil {
 			return null;
 		}
 
-		return new SitePageNavigationMenuSettings() {
+		return new NavigationSettings() {
 			{
 				setQueryString(() -> queryStringPropertyValue);
 				setTarget(() -> targetPropertyValue);

@@ -125,7 +125,7 @@ public class ViewAllSpacesDisplayContext {
 						GroupConstants.CMS_FRIENDLY_URL, "/new-space"));
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
-					_language.get(_httpServletRequest, "new"));
+					_language.get(_httpServletRequest, "add-space"));
 			}
 		).build();
 	}

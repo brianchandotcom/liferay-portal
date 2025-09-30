@@ -46,7 +46,7 @@ describe('NewSpace', () => {
 		render(<NewSpace {...props} />);
 
 		expect(
-			screen.getByRole('heading', {name: 'create-a-space'})
+			screen.getByRole('heading', {name: 'add-space'})
 		).toBeInTheDocument();
 
 		expect(

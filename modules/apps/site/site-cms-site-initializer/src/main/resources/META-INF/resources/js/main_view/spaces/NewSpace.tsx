@@ -101,7 +101,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 					learnResources={learnResources}
 					onSubmit={handleSubmit}
 					step={1}
-					title={Liferay.Language.get('create-a-space')}
+					title={Liferay.Language.get('add-space')}
 				>
 					<BaseFields
 						errors={errors}

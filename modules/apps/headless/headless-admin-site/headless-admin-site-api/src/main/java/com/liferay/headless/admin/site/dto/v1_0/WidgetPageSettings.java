@@ -450,6 +450,22 @@ public class WidgetPageSettings extends PageSettings implements Serializable {
 			sb.append(priority);
 		}
 
+		String queryString = getQueryString();
+
+		if (queryString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(queryString));
+
+			sb.append("\"");
+		}
+
 		SEOSettings seoSettings = getSeoSettings();
 
 		if (seoSettings != null) {

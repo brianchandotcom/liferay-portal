@@ -630,32 +630,37 @@ test(
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 
-		await pageEditorPage.selectEditable(paragraphId, 'element-text');
-
 		const editable = pageEditorPage.getEditable({
 			editableId: 'element-text',
 			fragmentId: paragraphId,
 		});
 
-		// Edit the editable
-
-		await editable.click();
-
-		const editor = editable.locator('[contenteditable="true"]');
-
-		await editor.waitFor();
-
-		await editor.click();
-
-		const paragraphFragment = page.locator('.component-paragraph');
-
-		await expect(paragraphFragment).toHaveText(
-			'List:option1option2option3'
-		);
-
-		// Drag the selected text
+		await editable.waitFor();
 
 		await expect(async () => {
+			await page.keyboard.press('Escape');
+
+			// Edit the editable
+
+			await pageEditorPage.selectEditable(paragraphId, 'element-text');
+
+			await editable.click({timeout: 1000});
+
+			const editor = editable.locator('[contenteditable="true"]');
+
+			await editor.waitFor({timeout: 2000});
+
+			await editor.click({timeout: 1000});
+
+			const paragraphFragment = page.locator('.component-paragraph');
+
+			await expect(paragraphFragment).toHaveText(
+				'List:option1option2option3',
+				{timeout: 1000}
+			);
+
+			// Drag the selected text
+
 			await page.getByText('option1').selectText({timeout: 1000});
 
 			const option1 = page.getByText('option1');

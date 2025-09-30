@@ -5,15 +5,18 @@
 
 package com.liferay.document.library.web.internal.layout.display.page;
 
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -24,7 +27,11 @@ import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,39 +71,18 @@ public class FileEntryLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		try {
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
+		return getLayoutDisplayPageObjectProvider(
+			_getGroupId(), infoItemReference);
+	}
 
-			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-				return null;
-			}
+	@Override
+	public LayoutDisplayPageObjectProvider<FileEntry>
+		getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
 
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			LocalRepository localRepository =
-				_repositoryProvider.fetchFileEntryLocalRepository(
-					classPKInfoItemIdentifier.getClassPK());
-
-			if (localRepository == null) {
-				return null;
-			}
-
-			FileEntry fileEntry = localRepository.getFileEntry(
-				classPKInfoItemIdentifier.getClassPK());
-
-			if (fileEntry.isInTrash()) {
-				return null;
-			}
-
-			return new FileEntryLayoutDisplayPageObjectProvider(
-				fileEntry, _infoItemFriendlyURLProvider, _language);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return _getLayoutDisplayPageObjectProvider(
+			_getGroupId(groupId, infoItemReference.getInfoItemIdentifier()),
+			infoItemReference);
 	}
 
 	@Override
@@ -136,6 +122,129 @@ public class FileEntryLayoutDisplayPageProvider
 			new InfoItemReference(
 				FileEntry.class.getName(), GetterUtil.getLong(urlTitle)));
 	}
+
+	private long _getCompanyId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getCompanyId();
+		}
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId != null) {
+			return companyId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor company thread local " +
+				"are initialized");
+	}
+
+	private long _getGroupId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
+	}
+
+	private long _getGroupId(
+		long groupId, InfoItemIdentifier infoItemIdentifier) {
+
+		try {
+			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+				return groupId;
+			}
+
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			if (Validator.isNull(
+					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
+
+				return groupId;
+			}
+
+			Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+				_getCompanyId());
+
+			return group.getGroupId();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private FileEntryLayoutDisplayPageObjectProvider
+		_getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
+
+		try {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+				!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
+				return null;
+			}
+
+			FileEntry fileEntry = null;
+
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				LocalRepository localRepository =
+					_repositoryProvider.fetchFileEntryLocalRepository(
+						classPKInfoItemIdentifier.getClassPK());
+
+				if (localRepository == null) {
+					return null;
+				}
+
+				fileEntry = localRepository.getFileEntry(
+					classPKInfoItemIdentifier.getClassPK());
+			}
+			else {
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				fileEntry =
+					_dlAppLocalService.fetchFileEntryByExternalReferenceCode(
+						groupId,
+						ercInfoItemIdentifier.getExternalReferenceCode());
+			}
+
+			if ((fileEntry == null) || fileEntry.isInTrash()) {
+				return null;
+			}
+
+			return new FileEntryLayoutDisplayPageObjectProvider(
+				fileEntry, _infoItemFriendlyURLProvider, _language);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
+	}
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private FriendlyURLEntryLocalService _friendlyURLEntryLocalService;

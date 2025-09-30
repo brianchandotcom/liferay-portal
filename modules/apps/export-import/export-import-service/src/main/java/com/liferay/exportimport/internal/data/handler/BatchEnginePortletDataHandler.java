@@ -83,7 +83,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	public void exportDeletionSystemEvents(
 		PortletDataContext portletDataContext) {
 
-		for (Registration registration : _getActiveRegistrations(portletDataContext)) {
+		for (Registration registration :
+				_getActiveRegistrations(portletDataContext)) {
+
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
@@ -223,7 +225,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		for (Registration registration : _getActiveRegistrations(portletDataContext)) {
+		for (Registration registration :
+				_getActiveRegistrations(portletDataContext)) {
+
 			InputStream inputStream =
 				portletDataContext.getZipEntryAsInputStream(
 					_normalize(
@@ -269,7 +273,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					setPortletDataContextWithSafeCloseable(
 						portletDataContext)) {
 
-			List<Registration> activeRegistrations = _getActiveRegistrations(portletDataContext);
+			List<Registration> activeRegistrations = _getActiveRegistrations(
+				portletDataContext);
 
 			for (Registration registration : activeRegistrations) {
 				ExportImportVulcanBatchEngineTaskItemDelegate.
@@ -322,7 +327,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		List<Registration> activeRegistrations = _getActiveRegistrations(portletDataContext);
+		List<Registration> activeRegistrations = _getActiveRegistrations(
+			portletDataContext);
 
 		for (Registration registration : activeRegistrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
@@ -411,7 +417,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext,
 		PortletPreferences portletPreferences) {
 
-		for (Registration registration : _getActiveRegistrations(portletDataContext)) {
+		for (Registration registration :
+				_getActiveRegistrations(portletDataContext)) {
+
 			try (SafeCloseable safeCloseable =
 					PortletDataContextThreadLocal.
 						setPortletDataContextWithSafeCloseable(
@@ -492,13 +500,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			});
 	}
 
-	private List<Registration> _getActiveRegistrations(PortletDataContext portletDataContext) {
+	private List<Registration> _getActiveRegistrations(
+		PortletDataContext portletDataContext) {
+
 		List<Registration> activeRegistrations = new ArrayList<>();
 
 		for (Registration registration : _registrations) {
 			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 				exportImportDescriptor =
-				registration.getExportImportDescriptor();
+					registration.getExportImportDescriptor();
 
 			if (exportImportDescriptor.isActive(portletDataContext)) {
 				activeRegistrations.add(registration);

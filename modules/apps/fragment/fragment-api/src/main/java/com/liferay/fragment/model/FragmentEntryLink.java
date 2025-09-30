@@ -63,6 +63,8 @@ public interface FragmentEntryLink
 	public com.liferay.portal.kernel.json.JSONObject
 		getEditableValuesJSONObject(boolean strict);
 
+	public long getFragmentEntryGroupId();
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
 	 */

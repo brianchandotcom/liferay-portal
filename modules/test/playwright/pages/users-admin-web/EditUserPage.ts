@@ -624,7 +624,7 @@ export class EditUserPage {
 		this.selectRegularRolesFrame = page.frameLocator(
 			'iframe[title="Select Regular Role"]'
 		);
-		this.selectRegularRolesFrameCloseButton = page.getByLabel('close');
+		this.selectRegularRolesFrameCloseButton = page.getByLabel('Close');
 		this.selectRegularRolesSearchInput =
 			this.selectRegularRolesFrame.getByPlaceholder('Search for', {
 				exact: true,

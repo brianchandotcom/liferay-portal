@@ -63,7 +63,7 @@ export class AppManagerPage {
 		this.uploadFrameErrorMessage = this.uploadFrame.getByText(
 			'Please upload a file with a valid extension (JAR, LPKG, or WAR File).'
 		);
-		this.uploadFrameCloseButton = page.getByLabel('close', {exact: true});
+		this.uploadFrameCloseButton = page.getByLabel('Close', {exact: true});
 		this.uploadFrameInstallButton = this.uploadFrame.getByRole('button', {
 			name: 'Install',
 		});

@@ -127,7 +127,7 @@ export class CommerceLayoutsPage {
 			exact: true,
 			name: 'Change Current Theme',
 		});
-		this.closeFrameButton = page.getByLabel('close', {exact: true});
+		this.closeFrameButton = page.getByLabel('Close', {exact: true});
 		this.closeProductMenuButton = page.getByRole('tab', {
 			exact: true,
 			name: 'Close Product Menu',

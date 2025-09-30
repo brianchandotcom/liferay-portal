@@ -105,7 +105,7 @@ export class ViewObjectEntriesPage {
 		this.schedulePublicationButton = page
 			.getByLabel('Schedule Publication')
 			.getByRole('button', {name: 'Schedule'});
-		this.schedulePublicationCloseButton = page.getByLabel('close');
+		this.schedulePublicationCloseButton = page.getByLabel('Close');
 		this.schedulePublicationOption = page.getByRole('menuitem', {
 			name: 'Schedule Publication',
 		});

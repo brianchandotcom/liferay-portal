@@ -573,7 +573,7 @@ export class PagesAdminPage {
 
 		await waitForAlert(permissionsFrame, successMessage);
 
-		await this.page.getByLabel('close', {exact: true}).click();
+		await this.page.getByLabel('Close', {exact: true}).click();
 
 		await this.page.getByLabel('Clear selection').click();
 

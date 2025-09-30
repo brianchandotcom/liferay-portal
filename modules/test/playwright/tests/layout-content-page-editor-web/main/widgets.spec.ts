@@ -88,7 +88,10 @@ test(
 
 		await waitForAlert(permissionsIFrame);
 
-		await page.getByLabel('Close', {exact: true}).click();
+		await page
+			.locator('.modal-header')
+			.getByLabel('Close', {exact: true})
+			.click();
 
 		// Publish
 
@@ -434,7 +437,10 @@ test(
 
 		await waitForAlert(permissionsIFrame);
 
-		await page.getByLabel('Close', {exact: true}).click();
+		await page
+			.locator('.modal-header')
+			.getByLabel('Close', {exact: true})
+			.click();
 
 		// Publish
 
@@ -509,7 +515,10 @@ test(
 
 		await configurationIFrame.getByRole('button', {name: 'Save'}).click();
 
-		await page.getByLabel('Close', {exact: true}).click();
+		await page
+			.locator('.modal-header')
+			.getByLabel('Close', {exact: true})
+			.click();
 
 		await pageEditorPage.publishPage();
 

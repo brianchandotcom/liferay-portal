@@ -70,10 +70,12 @@ export class CalendarWidgetPage {
 		this.calendarWidget = page.locator(
 			'.lfr-layout-structure-item-com-liferay-calendar-web-portlet-calendarportlet'
 		);
-		this.closeConfigurationButton = page.getByRole('button', {
-			exact: true,
-			name: 'close',
-		});
+		this.closeConfigurationButton = page
+			.locator('.modal-header')
+			.getByRole('button', {
+				exact: true,
+				name: 'Close',
+			});
 		this.closeEventModalButton = page.getByRole('button', {name: 'Close'});
 		this.configurationMenuItem = page.getByRole('menuitem', {
 			exact: true,

@@ -578,7 +578,10 @@ test('can handle OnlyAddNewRecords and UpdateChangedRecordFields import strategi
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	await page.getByRole('button', {exact: true, name: 'Close'}).click();
+	await page
+		.locator('.modal-header')
+		.getByRole('button', {exact: true, name: 'Close'})
+		.click();
 
 	await dataMigrationCenterPage.importFile(
 		OBJECT_ENTRY_ENTITY_TYPE,

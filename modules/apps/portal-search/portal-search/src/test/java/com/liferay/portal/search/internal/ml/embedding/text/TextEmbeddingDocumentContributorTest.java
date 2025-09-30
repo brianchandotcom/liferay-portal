@@ -220,11 +220,11 @@ public class TextEmbeddingDocumentContributorTest {
 	private BlogsEntry _getBlogsEntry() {
 		BlogsEntry blogsEntry = Mockito.mock(BlogsEntry.class);
 
-		Mockito.when(
-			blogsEntry.getCompanyId()
-		).thenReturn(
+		Mockito.doReturn(
 			RandomTestUtil.randomLong()
-		);
+		).when(
+			blogsEntry
+		).getCompanyId();
 
 		Mockito.doReturn(
 			BlogsEntry.class
@@ -232,11 +232,11 @@ public class TextEmbeddingDocumentContributorTest {
 			blogsEntry
 		).getModelClass();
 
-		Mockito.when(
-			blogsEntry.getStatus()
-		).thenReturn(
+		Mockito.doReturn(
 			WorkflowConstants.STATUS_APPROVED
-		);
+		).when(
+			blogsEntry
+		).getStatus();
 
 		return blogsEntry;
 	}
@@ -246,11 +246,11 @@ public class TextEmbeddingDocumentContributorTest {
 
 		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
 
-		Mockito.when(
-			objectEntry.getCompanyId()
-		).thenReturn(
+		Mockito.doReturn(
 			RandomTestUtil.randomLong()
-		);
+		).when(
+			objectEntry
+		).getCompanyId();
 
 		Mockito.doReturn(
 			ObjectEntry.class
@@ -258,11 +258,11 @@ public class TextEmbeddingDocumentContributorTest {
 			objectEntry
 		).getModelClass();
 
-		Mockito.when(
-			objectEntry.getModelClassName()
-		).thenReturn(
+		Mockito.doReturn(
 			objectDefinitionClassName
-		);
+		).when(
+			objectEntry
+		).getModelClassName();
 
 		return objectEntry;
 	}

@@ -397,11 +397,13 @@ export function useSpaceMembers(
 
 				openToast({
 					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'failed-to-add-user-x-to-space'
-								: 'failed-to-add-group-x-to-space'
-						),
+						isUser
+							? Liferay.Language.get(
+									'failed-to-add-user-x-to-space'
+								)
+							: Liferay.Language.get(
+									'failed-to-add-group-x-to-space'
+								),
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'danger',
@@ -410,11 +412,13 @@ export function useSpaceMembers(
 			else {
 				openToast({
 					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'user-x-successfully-added-to-space'
-								: 'group-x-successfully-added-to-space'
-						),
+						isUser
+							? Liferay.Language.get(
+									'user-x-successfully-added-to-space'
+								)
+							: Liferay.Language.get(
+									'group-x-successfully-added-to-space'
+								),
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'success',
@@ -451,11 +455,13 @@ export function useSpaceMembers(
 
 				openToast({
 					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'unable-to-remove-user-x-from-space'
-								: 'unable-to-remove-group-x-from-space'
-						),
+						isUser
+							? Liferay.Language.get(
+									'unable-to-remove-user-x-from-space'
+								)
+							: Liferay.Language.get(
+									'unable-to-remove-group-x-from-space'
+								),
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'danger',
@@ -464,11 +470,13 @@ export function useSpaceMembers(
 			else {
 				openToast({
 					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'user-x-successfully-removed-from-space'
-								: 'group-x-successfully-removed-from-space'
-						),
+						isUser
+							? Liferay.Language.get(
+									'user-x-successfully-removed-from-space'
+								)
+							: Liferay.Language.get(
+									'group-x-successfully-removed-from-space'
+								),
 						[`<strong>${item.name}</strong>`]
 					),
 					type: 'success',
@@ -527,11 +535,13 @@ export function useSpaceMembers(
 
 				openToast({
 					message: sub(
-						Liferay.Language.get(
-							isUser
-								? 'unable-to-update-roles-for-user-x'
-								: 'unable-to-update-roles-for-group-x'
-						),
+						isUser
+							? Liferay.Language.get(
+									'unable-to-update-roles-for-user-x'
+								)
+							: Liferay.Language.get(
+									'unable-to-update-roles-for-group-x'
+								),
 						[`<strong>${itemToUpdate.name}</strong>`]
 					),
 					type: 'danger',

@@ -402,10 +402,10 @@ public class LayoutUtil {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		return LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+		return LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
 			pageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode(),
-			layoutSetPrototype.getGroupId(), privateLayout);
+			layoutSetPrototype.getGroupId());
 	}
 
 	public static String getParentSectionId(Layout layout, String portletId) {

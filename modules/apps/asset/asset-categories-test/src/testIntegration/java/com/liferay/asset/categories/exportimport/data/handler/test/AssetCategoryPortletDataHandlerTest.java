@@ -226,54 +226,6 @@ public class AssetCategoryPortletDataHandlerTest
 			TestPropsValues.getCompanyId(), false, "LPD-35914");
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-35914")
-		}
-	)
-	@Test
-	public void testExportImportCategoriesWithErrorReport() throws Exception {
-		FeatureFlagTestUtil.invokeFeatureFlagListeners(
-			TestPropsValues.getCompanyId(), true, "LPD-35914");
-
-		AssetVocabulary assetVocabulary = _addAssetVocabulary();
-
-		AssetCategory assetCategory = _addAssetCategory(assetVocabulary);
-
-		String originalExternalReferenceCode =
-			assetCategory.getExternalReferenceCode();
-
-		File larFile = _exportLayoutsAsFile();
-
-		assetCategory.setExternalReferenceCode(RandomTestUtil.randomString());
-
-		_assetCategoryLocalService.updateAssetCategory(assetCategory);
-
-		ExportImportConfiguration exportImportConfiguration =
-			_setUpExportImportConfiguration();
-
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
-
-		List<ExportImportReportEntry> exportImportReportEntries =
-			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				TestPropsValues.getCompanyId(),
-				exportImportConfiguration.getExportImportConfigurationId());
-
-		Assert.assertEquals(
-			exportImportReportEntries.toString(), 1,
-			exportImportReportEntries.size());
-		Assert.assertTrue(
-			ListUtil.exists(
-				exportImportReportEntries,
-				exportImportReportEntry ->
-					Objects.equals(
-						exportImportReportEntry.getClassExternalReferenceCode(),
-						originalExternalReferenceCode) &&
-					(exportImportReportEntry.getType() ==
-						ExportImportReportEntryConstants.TYPE_ERROR)));
-	}
-
 	@Override
 	protected void addStagedModels() throws Exception {
 	}

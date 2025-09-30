@@ -16,6 +16,18 @@ PendingAccountOrdersDataSetDisplayContext pendingAccountOrdersDataSetDisplayCont
 	apiURL="<%= pendingAccountOrdersDataSetDisplayContext.getAPIURL() %>"
 	fdsActionDropdownItems="<%= pendingAccountOrdersDataSetDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= CommerceFragmentFDSNames.PENDING_ACCOUNT_ORDERS %>"
+	itemsPerPage='<%= (int)pendingAccountOrdersDataSetDisplayContext.getConfigurationValue("pageSize") %>'
 	propsTransformer="{PendingAccountOrdersFDSPropsTransformer} from commerce-fragment-impl"
-	style="<%= pendingAccountOrdersDataSetDisplayContext.getDisplayStyle() %>"
+	showPagination='<%= (boolean)pendingAccountOrdersDataSetDisplayContext.getConfigurationValue("showPagination") %>'
+	showSearch='<%= (boolean)pendingAccountOrdersDataSetDisplayContext.getConfigurationValue("showSearch") %>'
+	style='<%= (String)pendingAccountOrdersDataSetDisplayContext.getConfigurationValue("displayStyle") %>'
 />
+
+<c:if test='<%= (boolean)pendingAccountOrdersDataSetDisplayContext.getConfigurationValue("hideActionsColumn") %>'>
+	<aui:style type="text/css">
+		.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountsdatasetfragmentrenderer table th:last-of-type,
+		.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountsdatasetfragmentrenderer table td:last-of-type {
+			display: none;
+		}
+	</aui:style>
+</c:if>

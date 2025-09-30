@@ -83,7 +83,9 @@ public class CreateOrderButtonFragmentRenderer
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		return HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>putAll(
+			getConfigurationValuesMap(fragmentRendererContext)
+		).put(
 			"addCommerceOrderURL",
 			_commerceOrderHttpHelper.getCommerceCartBaseURL(httpServletRequest)
 		).put(
@@ -114,11 +116,6 @@ public class CreateOrderButtonFragmentRenderer
 		).put(
 			"hasAddCommerceOrderPermission",
 			_hasAddCommerceOrderPermission(commerceContext)
-		).put(
-			"label",
-			language.get(
-				fragmentRendererContext.getLocale(),
-				(String)getConfigurationValue("label", fragmentRendererContext))
 		).build();
 	}
 

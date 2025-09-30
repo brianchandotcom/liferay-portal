@@ -5,7 +5,10 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.fragment.internal.constants.CommerceFragmentFDSNames" %><%@

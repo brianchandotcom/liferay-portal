@@ -73,7 +73,9 @@ public class CreateAccountButtonFragmentRenderer
 			(CommerceContext)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT);
 
-		return HashMapBuilder.<String, Object>put(
+		return HashMapBuilder.<String, Object>putAll(
+			getConfigurationValuesMap(fragmentRendererContext)
+		).put(
 			"accountEntryAllowedTypes",
 			commerceContext.getAccountEntryAllowedTypes()
 		).put(
@@ -88,11 +90,6 @@ public class CreateAccountButtonFragmentRenderer
 			PortalPermissionUtil.contains(
 				PermissionThreadLocal.getPermissionChecker(),
 				AccountActionKeys.ADD_ACCOUNT_ENTRY)
-		).put(
-			"label",
-			language.get(
-				fragmentRendererContext.getLocale(),
-				(String)getConfigurationValue("label", fragmentRendererContext))
 		).build();
 	}
 

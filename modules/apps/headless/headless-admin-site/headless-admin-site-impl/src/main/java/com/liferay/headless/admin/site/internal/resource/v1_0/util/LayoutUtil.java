@@ -217,10 +217,12 @@ public class LayoutUtil {
 			draftContentPageSpecification.getExternalReferenceCode());
 
 		setLayoutPrototypeLayout(
-			groupId, publishedContentPageSpecification, serviceContext,"layoutSetPrototypeLayoutERC");
+			groupId, publishedContentPageSpecification, serviceContext,
+			"layoutSetPrototypeLayoutERC");
 
 		setLayoutPrototypeLayout(
-				groupId, publishedContentPageSpecification, serviceContext,"draftLayoutLayoutSetPrototypeLayoutERC");
+			groupId, publishedContentPageSpecification, serviceContext,
+			"draftLayoutLayoutSetPrototypeLayoutERC");
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),
@@ -334,6 +336,63 @@ public class LayoutUtil {
 			widgetPageSpecification);
 	}
 
+	public static String getParentSectionId(Layout layout, String portletId) {
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		return layoutTypePortlet.getColumn(portletId);
+	}
+
+	public static Integer getPosition(Layout layout, String portletId) {
+		UnicodeProperties typeSettingsUnicodeProperties =
+			layout.getTypeSettingsProperties();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		for (String columnId : layoutTypePortlet.getColumns()) {
+			String columnValue = typeSettingsUnicodeProperties.getProperty(
+				columnId, StringPool.BLANK);
+
+			List<String> portletIds = ListUtil.fromString(
+				columnValue, StringPool.COMMA);
+
+			int position = portletIds.indexOf(portletId);
+
+			if (position >= 0) {
+				return position;
+			}
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Position for portlet cannot be obtained since portlet ",
+					portletId, " cannot be found in layout ",
+					layout.getPlid()));
+		}
+
+		return null;
+	}
+
+	public static boolean isPublished(Layout layout) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
+			return true;
+		}
+
+		if (layout.isDraftLayout()) {
+			return GetterUtil.getBoolean(
+				layout.getTypeSettingsProperty(
+					LayoutTypeSettingsConstants.KEY_PUBLISHED));
+		}
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty(
+				LayoutTypeSettingsConstants.KEY_PUBLISHED));
+	}
+
 	public static void setLayoutPrototypeLayout(
 			long groupId, PageSpecification pageSpecification,
 			ServiceContext serviceContext, String serviceContextAttributeName)
@@ -395,74 +454,20 @@ public class LayoutUtil {
 			pageSpecification.
 				getSiteTemplatePageSpecificationExternalReferenceCode();
 
-		Layout layoutSetPrototypeLayout = LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
-			siteTemplatePageSpecificationExternalReferenceCode,
-			layoutSetPrototype.getGroupId());
+		Layout layoutSetPrototypeLayout =
+			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+				siteTemplatePageSpecificationExternalReferenceCode,
+				layoutSetPrototype.getGroupId());
 
 		if (layoutSetPrototypeLayout == null) {
-			LogUtil.logOptionalReference(Layout.class, siteTemplatePageSpecificationExternalReferenceCode);
+			LogUtil.logOptionalReference(
+				Layout.class,
+				siteTemplatePageSpecificationExternalReferenceCode);
 		}
 
 		serviceContext.setAttribute(
 			serviceContextAttributeName,
 			siteTemplatePageSpecificationExternalReferenceCode);
-	}
-
-	public static String getParentSectionId(Layout layout, String portletId) {
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		return layoutTypePortlet.getColumn(portletId);
-	}
-
-	public static Integer getPosition(Layout layout, String portletId) {
-		UnicodeProperties typeSettingsUnicodeProperties =
-			layout.getTypeSettingsProperties();
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		for (String columnId : layoutTypePortlet.getColumns()) {
-			String columnValue = typeSettingsUnicodeProperties.getProperty(
-				columnId, StringPool.BLANK);
-
-			List<String> portletIds = ListUtil.fromString(
-				columnValue, StringPool.COMMA);
-
-			int position = portletIds.indexOf(portletId);
-
-			if (position >= 0) {
-				return position;
-			}
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				StringBundler.concat(
-					"Position for portlet cannot be obtained since portlet ",
-					portletId, " cannot be found in layout ",
-					layout.getPlid()));
-		}
-
-		return null;
-	}
-
-	public static boolean isPublished(Layout layout) {
-		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
-			return true;
-		}
-
-		if (layout.isDraftLayout()) {
-			return GetterUtil.getBoolean(
-				layout.getTypeSettingsProperty(
-					LayoutTypeSettingsConstants.KEY_PUBLISHED));
-		}
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		return GetterUtil.getBoolean(
-			draftLayout.getTypeSettingsProperty(
-				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
 
 	public static Layout updateContentLayout(

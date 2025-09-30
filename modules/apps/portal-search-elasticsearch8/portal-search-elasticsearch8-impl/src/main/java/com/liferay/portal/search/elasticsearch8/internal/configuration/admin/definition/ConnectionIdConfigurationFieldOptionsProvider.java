@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	property = {
 		"configuration.field.name=remoteClusterConnectionId",
-		"configuration.pid=com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration"
+		"configuration.pid=com.liferay.portal.search.elasticsearch8.configuration.ElasticsearchConfiguration"
 	},
 	service = ConfigurationFieldOptionsProvider.class
 )

@@ -14,7 +14,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(generateUI = false)
 @Meta.OCD(
-	id = "com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration"
+	id = "com.liferay.portal.search.elasticsearch8.internal.search.engine.adapter.document.configuration.BulkDocumentRequestRetryConfiguration"
 )
 public interface BulkDocumentRequestRetryConfiguration {
 

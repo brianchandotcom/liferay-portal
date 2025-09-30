@@ -9,7 +9,7 @@ import com.liferay.petra.process.ProcessChannel;
 import com.liferay.petra.process.ProcessExecutor;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.search.elasticsearch7.internal.sidecar.PersistedProcessUtil;
+import com.liferay.portal.search.elasticsearch8.internal.sidecar.PersistedProcessUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -24,7 +24,7 @@ import org.osgi.framework.ServiceReference;
 /**
  * @author Tina Tian
  */
-public class SearchElasticsearch7ImplBundleActivator
+public class SearchElasticsearch8ImplBundleActivator
 	implements BundleActivator {
 
 	public static Future<ObjectValuePair<ProcessChannel<Serializable>, byte[]>>

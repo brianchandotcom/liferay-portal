@@ -767,6 +767,50 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await expect(saveButton).toBeEnabled();
 	});
+
+	test('cannot publish definition with duplicate friendlyURL prefix', async ({
+		apiHelpers,
+		editObjectDetailsPage,
+		page,
+	}) => {
+		const objectDefinition1 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 0},
+			});
+
+		const objectDefinition2 =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				status: {code: 2},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition1.id,
+			type: 'objectDefinition',
+		});
+
+		apiHelpers.data.push({
+			id: objectDefinition2.id,
+			type: 'objectDefinition',
+		});
+
+		await editObjectDetailsPage.goto(objectDefinition2.label['en_US']);
+
+		await editObjectDetailsPage.friendlyURLSeparator.fill(
+			`c_${objectDefinition1.name}`
+		);
+
+		await editObjectDetailsPage.publishButton.click();
+
+		await expect(editObjectDetailsPage.publishButton).toBeDisabled();
+
+		await expect(
+			page.getByText('Other asset types may use this prefix.', {
+				exact: true,
+			})
+		).toBeVisible();
+
+		await expect(editObjectDetailsPage.publishButton).toBeEnabled();
+	});
 });
 
 test.describe('Manage object definitions through a Page', () => {

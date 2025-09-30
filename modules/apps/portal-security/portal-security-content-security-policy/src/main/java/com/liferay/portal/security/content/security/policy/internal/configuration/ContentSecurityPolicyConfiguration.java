@@ -14,7 +14,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Olivér Kecskeméty
  */
 @ExtendedObjectClassDefinition(
-	category = "content-security-policy", featureFlagKey = "LPS-134060",
+	category = "content-security-policy",
 	scope = ExtendedObjectClassDefinition.Scope.GROUP
 )
 @Meta.OCD(

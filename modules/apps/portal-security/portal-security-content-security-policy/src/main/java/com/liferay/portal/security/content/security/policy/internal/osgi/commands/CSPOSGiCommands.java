@@ -7,14 +7,10 @@ package com.liferay.portal.security.content.security.policy.internal.osgi.comman
 
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.content.security.policy.internal.configuration.ContentSecurityPolicyConfiguration;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -84,16 +80,6 @@ public class CSPOSGiCommands implements OSGiCommands {
 
 		_configurationProvider.deleteSystemConfiguration(
 			ContentSecurityPolicyConfiguration.class);
-	}
-
-	@Activate
-	@Modified
-	protected void activate() throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getNonsystemCompanyId(), "LPS-134060")) {
-
-			throw new UnsupportedOperationException();
-		}
 	}
 
 	@Reference

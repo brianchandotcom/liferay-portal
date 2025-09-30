@@ -85,19 +85,19 @@ public class EditAccountUserMVCActionCommand
 
 		accountUserContact.setPrefixListTypeId(
 			_getListTypeId(
-				accountUser, "prefixListTypeValue", actionRequest,
-				ListTypeConstants.CONTACT_PREFIX));
+				"prefixListTypeValue", actionRequest,
+				ListTypeConstants.CONTACT_PREFIX, accountUser));
 		accountUserContact.setSuffixListTypeId(
 			_getListTypeId(
-				accountUser, "suffixListTypeValue", actionRequest,
-				ListTypeConstants.CONTACT_SUFFIX));
+				"suffixListTypeValue", actionRequest,
+				ListTypeConstants.CONTACT_SUFFIX, accountUser));
 
 		_contactLocalService.updateContact(accountUserContact);
 	}
 
 	private long _getListTypeId(
-			User accountUser, String parameterName,
-			PortletRequest portletRequest, String type)
+			String parameterName, PortletRequest portletRequest, String type,
+			User user)
 		throws Exception {
 
 		String parameterValue = ParamUtil.getString(
@@ -105,7 +105,7 @@ public class EditAccountUserMVCActionCommand
 
 		if (Validator.isNotNull(parameterValue)) {
 			ListType listType = _listTypeLocalService.addListType(
-				accountUser.getCompanyId(), parameterValue, type);
+				user.getCompanyId(), parameterValue, type);
 
 			return listType.getListTypeId();
 		}
@@ -115,9 +115,9 @@ public class EditAccountUserMVCActionCommand
 		if (type.equals(ListTypeConstants.CONTACT_PREFIX)) {
 			if (!UsersAdminUtil.hasUpdateFieldPermission(
 					_permissionCheckerFactory.create(currentUser), currentUser,
-					accountUser, "prefix")) {
+					user, "prefix")) {
 
-				Contact contact = accountUser.getContact();
+				Contact contact = user.getContact();
 
 				return contact.getPrefixListTypeId();
 			}
@@ -125,9 +125,9 @@ public class EditAccountUserMVCActionCommand
 		else {
 			if (!UsersAdminUtil.hasUpdateFieldPermission(
 					_permissionCheckerFactory.create(currentUser), currentUser,
-					accountUser, "suffix")) {
+					user, "suffix")) {
 
-				Contact contact = accountUser.getContact();
+				Contact contact = user.getContact();
 
 				return contact.getSuffixListTypeId();
 			}

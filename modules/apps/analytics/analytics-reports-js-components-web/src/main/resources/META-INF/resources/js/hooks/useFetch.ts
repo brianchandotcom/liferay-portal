@@ -3,50 +3,54 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 import ApiHelper from '../apis/ApiHelper';
 
 interface FetchState<Data> {
 	data: Data | null;
 	loading: boolean;
+	refetch: () => void;
 }
 
 const useFetch = <Data>(endpointUrl: string): FetchState<Data> => {
-	const [state, setState] = useState<FetchState<Data>>({
-		data: null,
-		loading: false,
-	});
+	const [data, setData] = useState<Data | null>(null);
+	const [loading, setLoading] = useState(false);
+	const [reloadFlag, setReloadFlag] = useState(0);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				setState({data: null, loading: true});
+	const fetchData = useCallback(async () => {
+		try {
+			setLoading(true);
+			setData(null);
 
-				const {data, error} = await ApiHelper.get<Data>(endpointUrl);
+			const {data, error} = await ApiHelper.get<Data>(endpointUrl);
 
-				if (error) {
-					throw new Error(error);
-				}
-
-				setState({data, loading: false});
+			if (error) {
+				throw new Error(error);
 			}
-			catch (error: any) {
-				if (process.env.NODE_ENV === 'development') {
-					console.error(error);
-				}
 
-				setState({
-					data: null,
-					loading: false,
-				});
+			setData(data);
+		}
+		catch (error: any) {
+			if (process.env.NODE_ENV === 'development') {
+				console.error(error);
 			}
-		};
-
-		fetchData();
+			setData(null);
+		}
+		finally {
+			setLoading(false);
+		}
 	}, [endpointUrl]);
 
-	return state;
+	useEffect(() => {
+		fetchData();
+	}, [fetchData, reloadFlag]);
+
+	const refetch = () => {
+		setReloadFlag((prev) => prev + 1);
+	};
+
+	return {data, loading, refetch};
 };
 
 export default useFetch;

@@ -12,6 +12,11 @@ import {
 
 export interface IAssetTypeInfoPanelContext
 	extends ISearchAssetTypeInformation {
+	assetLibrary?: {
+		externalReferenceCode: string;
+		groupId: number;
+		name: string;
+	};
 	cmsGroupId?: string | null;
 	commentsProps?: any;
 	objectEntries?: ISearchAssetObjectEntry[];

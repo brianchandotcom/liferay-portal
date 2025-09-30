@@ -18,17 +18,22 @@ import '../css/cms_performance.scss';
 interface ICMSPerformanceProps extends React.HTMLAttributes<HTMLElement> {
 	externalReferenceCode?: string;
 	objectEntryFolderExternalReferenceCode?: string;
+	onConnectSites: (loadData: () => void) => void;
 	scopeId?: number;
 }
 
 const CMSPerformance: React.FC<ICMSPerformanceProps> = ({
 	externalReferenceCode,
 	objectEntryFolderExternalReferenceCode,
+	onConnectSites,
 	scopeId,
 }) => {
 	return (
 		<div className="cms-performance">
-			<CheckPermissions scopeId={String(scopeId)}>
+			<CheckPermissions
+				onConnectSites={onConnectSites}
+				scopeId={String(scopeId)}
+			>
 				<ContextProvider
 					customState={{
 						externalReferenceCode: String(externalReferenceCode),

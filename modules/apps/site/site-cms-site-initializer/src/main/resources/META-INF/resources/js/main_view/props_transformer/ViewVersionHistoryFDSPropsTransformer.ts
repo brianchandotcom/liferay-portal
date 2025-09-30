@@ -10,6 +10,7 @@ import {navigate, sessionStorage, sub} from 'frontend-js-web';
 import formatActionURL from '../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import deleteEntryAction from './actions/deleteEntryAction';
+import AssetVersionRenderer from './cell_renderers/AssetVersionRenderer';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import VersionRenderer from './cell_renderers/VersionRenderer';
 import {executeAsyncItemAction} from './utils/executeAsyncItemAction';
@@ -29,6 +30,11 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 				{
 					component: AuthorRenderer,
 					name: 'authorTableCellRenderer',
+					type: 'internal',
+				} as IInternalRenderer,
+				{
+					component: AssetVersionRenderer,
+					name: 'assetVersionTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{

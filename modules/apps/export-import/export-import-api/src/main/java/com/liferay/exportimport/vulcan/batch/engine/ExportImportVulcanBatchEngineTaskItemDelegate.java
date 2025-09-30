@@ -47,7 +47,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public Scope getScope();
 
-		public default boolean isActive() {
+		public default boolean isActive(PortletDataContext portletDataContext) {
 			return true;
 		}
 

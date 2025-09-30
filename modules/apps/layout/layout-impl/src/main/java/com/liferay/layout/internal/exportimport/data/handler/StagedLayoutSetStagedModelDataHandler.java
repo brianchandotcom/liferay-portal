@@ -232,7 +232,8 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		List<Element> layoutElements = layoutsElement.elements();
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+		if (portletDataContext.isPrivateLayout() ||
+			!FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
 
 			// Delete missing pages
 
@@ -505,7 +506,9 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		portletDataContext.getExportDataGroupElement(Layout.class);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+		if (!portletDataContext.isPrivateLayout() &&
+			FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+
 			return;
 		}
 

@@ -207,8 +207,14 @@ public class SitePageResourceImpl
 			}
 
 			@Override
-			public boolean isActive() {
-				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
+			public boolean isActive(PortletDataContext portletDataContext) {
+				if (!portletDataContext.isPrivateLayout() &&
+					FeatureFlagManagerUtil.isEnabled("LPD-35443")) {
+
+					return true;
+				}
+
+				return false;
 			}
 
 		};

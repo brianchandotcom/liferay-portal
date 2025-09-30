@@ -15,15 +15,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 public class LogUtil {
 
 	public static void logOptionalReference(
-		Class<?> modelClass, String modelExternalReferenceCode) {
+		Class<?> modelClass, String modelExternalReferenceCode, long scopeId) {
 
 		if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("Optional reference generated for missing ");
 			sb.append(modelClass.getSimpleName());
 			sb.append(" with external reference code ");
 			sb.append(modelExternalReferenceCode);
+			sb.append(" and scope ID ");
+			sb.append(scopeId);
+
+			_log.warn(sb.toString());
 		}
 	}
 

@@ -941,7 +941,20 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
-				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+				LayoutStructureRendererConstants.
+					LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+		boolean checkInfoFormName = false;
+
+		if (layoutDisplayPageObjectProvider == null) {
+			layoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					httpServletRequest.getAttribute(
+						LayoutDisplayPageWebKeys.
+							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
+
+			checkInfoFormName = true;
+		}
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return defaultValue;
@@ -950,7 +963,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		String className = _infoSearchClassMapperRegistry.getClassName(
 			layoutDisplayPageObjectProvider.getClassName());
 
-		if (!Objects.equals(className, infoFormName)) {
+		if (checkInfoFormName && !Objects.equals(className, infoFormName)) {
 			return defaultValue;
 		}
 
@@ -974,6 +987,11 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		InfoFieldValue<?> infoFieldValue =
 			infoItemFieldValues.getInfoFieldValue(infoField.getUniqueId());
+
+		if (infoFieldValue == null) {
+			infoFieldValue = infoItemFieldValues.getInfoFieldValue(
+				infoField.getName());
+		}
 
 		if (infoFieldValue == null) {
 			return defaultValue;

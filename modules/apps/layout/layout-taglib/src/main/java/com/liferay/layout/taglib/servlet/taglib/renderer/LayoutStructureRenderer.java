@@ -972,6 +972,13 @@ public class LayoutStructureRenderer {
 					LayoutDisplayPageWebKeys.
 						LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
+		LayoutDisplayPageObjectProvider<?>
+			currentRelatedLayoutDisplayPageObjectProvider =
+				(LayoutDisplayPageObjectProvider<?>)
+					_httpServletRequest.getAttribute(
+						LayoutStructureRendererConstants.
+							LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER);
+
 		String currentParentItemExternalReferenceCode =
 			(String)_httpServletRequest.getAttribute(
 				LayoutStructureRendererConstants.
@@ -1025,6 +1032,10 @@ public class LayoutStructureRenderer {
 							getParentExternalReferenceCode());
 					_httpServletRequest.setAttribute(
 						LayoutStructureRendererConstants.
+							LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER,
+						relatedLayoutDisplayPageObjectProvider);
+					_httpServletRequest.setAttribute(
+						LayoutStructureRendererConstants.
 							LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE,
 						relatedLayoutDisplayPageObjectProvider.
 							getExternalReferenceCode());
@@ -1041,6 +1052,10 @@ public class LayoutStructureRenderer {
 				LayoutStructureRendererConstants.
 					LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE,
 				currentParentItemExternalReferenceCode);
+			_httpServletRequest.setAttribute(
+				LayoutStructureRendererConstants.
+					LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER,
+				currentRelatedLayoutDisplayPageObjectProvider);
 			_httpServletRequest.setAttribute(
 				LayoutStructureRendererConstants.
 					LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE,

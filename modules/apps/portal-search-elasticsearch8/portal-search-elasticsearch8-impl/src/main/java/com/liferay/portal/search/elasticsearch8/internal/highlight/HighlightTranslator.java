@@ -5,205 +5,282 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.highlight;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch.core.search.BoundaryScanner;
+import co.elastic.clients.elasticsearch.core.search.HighlightField;
+import co.elastic.clients.elasticsearch.core.search.HighlighterEncoder;
+import co.elastic.clients.elasticsearch.core.search.HighlighterFragmenter;
+import co.elastic.clients.elasticsearch.core.search.HighlighterOrder;
+import co.elastic.clients.elasticsearch.core.search.HighlighterTagsSchema;
+import co.elastic.clients.elasticsearch.core.search.HighlighterType;
+
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
 import com.liferay.portal.search.highlight.FieldConfig;
 import com.liferay.portal.search.highlight.Highlight;
 import com.liferay.portal.search.query.QueryTranslator;
-
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
 /**
  * @author Michael C. Han
  */
 public class HighlightTranslator {
 
-	public HighlightBuilder translate(
-		Highlight highlight, QueryTranslator<QueryBuilder> queryTranslator) {
+	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
+		Highlight highlight, QueryTranslator<QueryVariant> queryTranslator) {
 
-		HighlightBuilder highlightBuilder = new HighlightBuilder();
+		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder =
+			new co.elastic.clients.elasticsearch.core.search.Highlight.
+				Builder();
 
 		if (ArrayUtil.isNotEmpty(highlight.getBoundaryChars())) {
-			highlightBuilder.boundaryChars(highlight.getBoundaryChars());
+			builder.boundaryChars(String.valueOf(highlight.getBoundaryChars()));
 		}
 
-		if (highlight.getBoundaryMaxScan() != null) {
-			highlightBuilder.boundaryMaxScan(highlight.getBoundaryMaxScan());
-		}
-
-		if (highlight.getBoundaryScannerLocale() != null) {
-			highlightBuilder.boundaryScannerLocale(
-				highlight.getBoundaryScannerLocale());
-		}
+		SetterUtil.setNotNullInteger(
+			builder::boundaryMaxScan, highlight.getBoundaryMaxScan());
 
 		if (highlight.getBoundaryScannerType() != null) {
-			highlightBuilder.boundaryScannerType(
-				highlight.getBoundaryScannerType());
+			builder.boundaryScanner(
+				_translateBoundaryScannerType(
+					highlight.getBoundaryScannerType()));
 		}
 
+		SetterUtil.setNotBlankString(
+			builder::boundaryScannerLocale,
+			highlight.getBoundaryScannerLocale());
+
 		if (highlight.getEncoder() != null) {
-			highlightBuilder.encoder(highlight.getEncoder());
+			builder.encoder(_translateEncoder(highlight.getEncoder()));
 		}
 
 		for (FieldConfig fieldConfig : highlight.getFieldConfigs()) {
-			highlightBuilder.field(_translate(fieldConfig, queryTranslator));
-		}
-
-		if (highlight.getForceSource() != null) {
-			highlightBuilder.forceSource(highlight.getForceSource());
+			builder.fields(
+				fieldConfig.getFieldName(),
+				_translateFieldConfigs(fieldConfig, queryTranslator));
 		}
 
 		if (highlight.getFragmenter() != null) {
-			highlightBuilder.fragmenter(highlight.getFragmenter());
+			builder.fragmenter(_translateFragmenter(highlight.getFragmenter()));
 		}
 
-		if (highlight.getFragmentSize() != null) {
-			highlightBuilder.fragmentSize(highlight.getFragmentSize());
-		}
-
-		if (highlight.getHighlighterType() != null) {
-			highlightBuilder.highlighterType(highlight.getHighlighterType());
-		}
-
-		if (highlight.getHighlightFilter() != null) {
-			highlightBuilder.highlightFilter(highlight.getHighlightFilter());
-		}
+		SetterUtil.setNotNullInteger(
+			builder::fragmentSize, highlight.getFragmentSize());
 
 		if (highlight.getHighlightQuery() != null) {
-			highlightBuilder.highlightQuery(
-				queryTranslator.translate(highlight.getHighlightQuery()));
+			builder.highlightQuery(
+				new Query(
+					queryTranslator.translate(highlight.getHighlightQuery())));
+		}
+
+		SetterUtil.setNotNullInteger(
+			builder::noMatchSize, highlight.getNoMatchSize());
+		SetterUtil.setNotNullInteger(
+			builder::numberOfFragments, highlight.getNumOfFragments());
+
+		if (highlight.getOrder() != null) {
+			builder.order(_translateOrder(highlight.getOrder()));
+		}
+
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::postTags, highlight.getPostTags());
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::preTags, highlight.getPreTags());
+		SetterUtil.setNotNullBoolean(
+			builder::requireFieldMatch, highlight.getRequireFieldMatch());
+
+		if (highlight.getTagsSchema() != null) {
+			builder.tagsSchema(_translateTagsSchema(highlight.getTagsSchema()));
 		}
 
 		if (highlight.getHighlighterType() != null) {
-			highlightBuilder.highlighterType(highlight.getHighlighterType());
+			builder.type(
+				_translateHighlighterType(highlight.getHighlighterType()));
 		}
 
-		if (highlight.getNoMatchSize() != null) {
-			highlightBuilder.noMatchSize(highlight.getNoMatchSize());
-		}
-
-		if (highlight.getNumOfFragments() != null) {
-			highlightBuilder.numOfFragments(highlight.getNumOfFragments());
-		}
-
-		if (highlight.getOrder() != null) {
-			highlightBuilder.order(highlight.getOrder());
-		}
-
-		if (highlight.getPhraseLimit() != null) {
-			highlightBuilder.phraseLimit(highlight.getPhraseLimit());
-		}
-
-		if (ArrayUtil.isNotEmpty(highlight.getPreTags())) {
-			highlightBuilder.preTags(highlight.getPreTags());
-		}
-
-		if (ArrayUtil.isNotEmpty(highlight.getPostTags())) {
-			highlightBuilder.postTags(highlight.getPostTags());
-		}
-
-		if (highlight.getRequireFieldMatch() != null) {
-			highlightBuilder.requireFieldMatch(
-				highlight.getRequireFieldMatch());
-		}
-
-		if (highlight.getTagsSchema() != null) {
-			highlightBuilder.tagsSchema(highlight.getTagsSchema());
-		}
-
-		if (highlight.getUseExplicitFieldOrder() != null) {
-			highlightBuilder.useExplicitFieldOrder(
-				highlight.getUseExplicitFieldOrder());
-		}
-
-		return highlightBuilder;
+		return builder.build();
 	}
 
-	private HighlightBuilder.Field _translate(
-		FieldConfig fieldConfig,
-		QueryTranslator<QueryBuilder> queryTranslator) {
+	public co.elastic.clients.elasticsearch.core.search.Highlight translate(
+		String[] highlightFieldNames, int highlightFragmentSize,
+		boolean highlightRequireFieldMatch, boolean luceneSyntax,
+		int numberOfFragments) {
 
-		HighlightBuilder.Field field = new HighlightBuilder.Field(
-			fieldConfig.getFieldName());
+		if (ArrayUtil.isEmpty(highlightFieldNames)) {
+			return null;
+		}
+
+		co.elastic.clients.elasticsearch.core.search.Highlight.Builder builder =
+			new co.elastic.clients.elasticsearch.core.search.Highlight.
+				Builder();
+
+		for (String highlightFieldName : highlightFieldNames) {
+			builder.fields(
+				highlightFieldName,
+				HighlightField.of(
+					highlightField -> highlightField.fragmentSize(
+						highlightFragmentSize
+					).numberOfFragments(
+						numberOfFragments
+					)));
+		}
+
+		builder.postTags(HighlightUtil.HIGHLIGHT_TAG_CLOSE);
+		builder.preTags(HighlightUtil.HIGHLIGHT_TAG_OPEN);
+
+		if (luceneSyntax) {
+			highlightRequireFieldMatch = false;
+		}
+
+		builder.requireFieldMatch(highlightRequireFieldMatch);
+
+		return builder.build();
+	}
+
+	private BoundaryScanner _translateBoundaryScannerType(
+		String boundaryScannerType) {
+
+		if (boundaryScannerType.equals("chars")) {
+			return BoundaryScanner.Chars;
+		}
+		else if (boundaryScannerType.equals("sentence")) {
+			return BoundaryScanner.Sentence;
+		}
+		else if (boundaryScannerType.equals("word")) {
+			return BoundaryScanner.Word;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid boundary scanner type " + boundaryScannerType);
+	}
+
+	private HighlighterEncoder _translateEncoder(String encoder) {
+		if (encoder.equals("default")) {
+			return HighlighterEncoder.Default;
+		}
+		else if (encoder.equals("html")) {
+			return HighlighterEncoder.Html;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid highlight encoder scanner for " + encoder);
+	}
+
+	private HighlightField _translateFieldConfigs(
+		FieldConfig fieldConfig,
+		QueryTranslator<QueryVariant> queryTranslator) {
+
+		HighlightField.Builder builder = new HighlightField.Builder();
 
 		if (ArrayUtil.isNotEmpty(fieldConfig.getBoundaryChars())) {
-			field.boundaryChars(fieldConfig.getBoundaryChars());
+			builder.boundaryChars(
+				String.valueOf(fieldConfig.getBoundaryChars()));
 		}
 
-		if (fieldConfig.getBoundaryMaxScan() != null) {
-			field.boundaryMaxScan(fieldConfig.getBoundaryMaxScan());
-		}
-
-		if (fieldConfig.getBoundaryScannerLocale() != null) {
-			field.boundaryScannerLocale(fieldConfig.getBoundaryScannerLocale());
-		}
+		SetterUtil.setNotNullInteger(
+			builder::boundaryMaxScan, fieldConfig.getBoundaryMaxScan());
 
 		if (fieldConfig.getBoundaryScannerType() != null) {
-			field.boundaryScannerType(fieldConfig.getBoundaryScannerType());
+			builder.boundaryScanner(
+				_translateBoundaryScannerType(
+					fieldConfig.getBoundaryScannerType()));
 		}
 
-		if (fieldConfig.getForceSource() != null) {
-			field.forceSource(fieldConfig.getForceSource());
-		}
+		SetterUtil.setNotBlankString(
+			builder::boundaryScannerLocale,
+			fieldConfig.getBoundaryScannerLocale());
+
+		SetterUtil.setNotNullBoolean(
+			builder::forceSource, fieldConfig.getForceSource());
 
 		if (fieldConfig.getFragmenter() != null) {
-			field.fragmenter(fieldConfig.getFragmenter());
+			builder.fragmenter(
+				_translateFragmenter(fieldConfig.getFragmenter()));
 		}
 
-		if (fieldConfig.getFragmentOffset() != null) {
-			field.fragmentOffset(fieldConfig.getFragmentOffset());
-		}
-
-		if (fieldConfig.getFragmentSize() != null) {
-			field.fragmentSize(fieldConfig.getFragmentSize());
-		}
-
-		if (fieldConfig.getHighlighterType() != null) {
-			field.highlighterType(fieldConfig.getHighlighterType());
-		}
-
-		if (fieldConfig.getHighlightFilter() != null) {
-			field.highlightFilter(fieldConfig.getHighlightFilter());
-		}
+		SetterUtil.setNotNullInteger(
+			builder::fragmentOffset, fieldConfig.getFragmentOffset());
+		SetterUtil.setNotNullInteger(
+			builder::fragmentSize, fieldConfig.getFragmentSize());
 
 		if (fieldConfig.getHighlightQuery() != null) {
-			field.highlightQuery(
-				queryTranslator.translate(fieldConfig.getHighlightQuery()));
+			builder.highlightQuery(
+				new Query(
+					queryTranslator.translate(
+						fieldConfig.getHighlightQuery())));
 		}
 
-		if (ArrayUtil.isNotEmpty(fieldConfig.getMatchedFields())) {
-			field.matchedFields(fieldConfig.getMatchedFields());
-		}
-
-		if (fieldConfig.getNoMatchSize() != null) {
-			field.noMatchSize(fieldConfig.getNoMatchSize());
-		}
-
-		if (fieldConfig.getNumFragments() != null) {
-			field.numOfFragments(fieldConfig.getNumFragments());
-		}
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::matchedFields, fieldConfig.getMatchedFields());
+		SetterUtil.setNotNullInteger(
+			builder::noMatchSize, fieldConfig.getNoMatchSize());
+		SetterUtil.setNotNullInteger(
+			builder::numberOfFragments, fieldConfig.getNumFragments());
 
 		if (fieldConfig.getOrder() != null) {
-			field.order(fieldConfig.getOrder());
+			builder.order(_translateOrder(fieldConfig.getOrder()));
 		}
 
-		if (fieldConfig.getPhraseLimit() != null) {
-			field.phraseLimit(fieldConfig.getPhraseLimit());
+		SetterUtil.setNotNullInteger(
+			builder::phraseLimit, fieldConfig.getPhraseLimit());
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::postTags, fieldConfig.getPostTags());
+		SetterUtil.setNotNullEmptyStringArrayAsList(
+			builder::preTags, fieldConfig.getPreTags());
+		SetterUtil.setNotNullBoolean(
+			builder::requireFieldMatch, fieldConfig.getRequireFieldMatch());
+
+		if (fieldConfig.getHighlighterType() != null) {
+			builder.type(
+				_translateHighlighterType(fieldConfig.getHighlighterType()));
 		}
 
-		if (ArrayUtil.isNotEmpty(fieldConfig.getPostTags())) {
-			field.postTags(fieldConfig.getPostTags());
+		return builder.build();
+	}
+
+	private HighlighterFragmenter _translateFragmenter(String fragmenter) {
+		if (fragmenter.equals("simple")) {
+			return HighlighterFragmenter.Simple;
+		}
+		else if (fragmenter.equals("span")) {
+			return HighlighterFragmenter.Span;
 		}
 
-		if (ArrayUtil.isNotEmpty(fieldConfig.getPreTags())) {
-			field.preTags(fieldConfig.getPreTags());
+		throw new IllegalArgumentException(
+			"No available highlight fragmenter for " + fragmenter);
+	}
+
+	private HighlighterType _translateHighlighterType(String highlighterType) {
+		if (highlighterType.equals("FastVector")) {
+			return HighlighterType.FastVector;
+		}
+		else if (highlighterType.equals("plain")) {
+			return HighlighterType.Plain;
+		}
+		else if (highlighterType.equals("unified")) {
+			return HighlighterType.Unified;
 		}
 
-		if (fieldConfig.getRequireFieldMatch() != null) {
-			field.requireFieldMatch(fieldConfig.getRequireFieldMatch());
+		throw new IllegalArgumentException(
+			"Invalid highlighter type " + highlighterType);
+	}
+
+	private HighlighterOrder _translateOrder(String order) {
+		if (order.equals("score")) {
+			return HighlighterOrder.Score;
 		}
 
-		return field;
+		throw new IllegalArgumentException(
+			"Invalid highlighter order " + order);
+	}
+
+	private HighlighterTagsSchema _translateTagsSchema(String tagsSchema) {
+		if (tagsSchema.equals("styled")) {
+			return HighlighterTagsSchema.Styled;
+		}
+
+		throw new IllegalArgumentException("Invalid tags schema " + tagsSchema);
 	}
 
 }

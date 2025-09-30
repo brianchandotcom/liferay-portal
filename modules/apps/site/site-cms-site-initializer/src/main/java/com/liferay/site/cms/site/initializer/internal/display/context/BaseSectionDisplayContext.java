@@ -783,6 +783,8 @@ public abstract class BaseSectionDisplayContext {
 		}
 
 		return JSONUtil.put(
+			"externalReferenceCode", group.getExternalReferenceCode()
+		).put(
 			"groupId", group.getGroupId()
 		).put(
 			"name", group.getName(themeDisplay.getLocale())

@@ -34,17 +34,6 @@ public class SEOSettingsUtil {
 
 		return new SEOSettings() {
 			{
-				setCustomCanonicalURL(
-					() -> {
-						if ((layoutSEOEntry == null) ||
-							!layoutSEOEntry.isCanonicalURLEnabled()) {
-
-							return null;
-						}
-
-						return layoutSEOEntry.getCanonicalURL(
-							dtoConverterContext.getLocale());
-					});
 				setCustomCanonicalURL_i18n(
 					() -> {
 						if ((layoutSEOEntry == null) ||
@@ -57,27 +46,18 @@ public class SEOSettingsUtil {
 							dtoConverterContext.isAcceptAllLanguages(),
 							layoutSEOEntry.getCanonicalURLMap());
 					});
-				setDescription(
-					() -> layout.getDescription(
-						dtoConverterContext.getLocale()));
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						layout.getDescriptionMap()));
-				setHtmlTitle(
-					() -> layout.getTitle(dtoConverterContext.getLocale()));
 				setHtmlTitle_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						layout.getTitleMap()));
-				setRobots(
-					() -> layout.getRobots(dtoConverterContext.getLocale()));
 				setRobots_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						layout.getRobotsMap()));
-				setSeoKeywords(
-					() -> layout.getKeywords(dtoConverterContext.getLocale()));
 				setSeoKeywords_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),

@@ -37,9 +37,6 @@ public class OpenGraphSettingsUtil {
 
 		return new OpenGraphSettings() {
 			{
-				setDescription(
-					() -> layoutSEOEntry.getOpenGraphDescription(
-						dtoConverterContext.getLocale()));
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -60,16 +57,10 @@ public class OpenGraphSettingsUtil {
 								openGraphImageFileEntryId),
 							dtoConverterContext.getUriInfo());
 					});
-				setImageAlt(
-					() -> layoutSEOEntry.getOpenGraphImageAlt(
-						dtoConverterContext.getLocale()));
 				setImageAlt_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),
 						layoutSEOEntry.getOpenGraphImageAltMap()));
-				setTitle(
-					() -> layoutSEOEntry.getOpenGraphTitle(
-						dtoConverterContext.getLocale()));
 				setTitle_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
 						dtoConverterContext.isAcceptAllLanguages(),

@@ -47,6 +47,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 		public Scope getScope();
 
+		public default boolean isActive() {
+			return true;
+		}
+
 	}
 
 	public enum Scope {

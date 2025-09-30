@@ -52,8 +52,19 @@ public class DepotEntryLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<DepotEntry>
-		getLayoutDisplayPageObjectProvider(
-			InfoItemReference infoItemReference) {
+		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			GetterUtil.getLong(urlTitle));
+
+		return new DepotEntryLayoutDisplayPageObjectProvider(
+			depotEntry, _infoItemFriendlyURLProvider, _language);
+	}
+
+	@Override
+	protected LayoutDisplayPageObjectProvider<DepotEntry>
+		doGetLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
 
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
@@ -72,17 +83,6 @@ public class DepotEntryLayoutDisplayPageProvider
 		if (depotEntry == null) {
 			return null;
 		}
-
-		return new DepotEntryLayoutDisplayPageObjectProvider(
-			depotEntry, _infoItemFriendlyURLProvider, _language);
-	}
-
-	@Override
-	public LayoutDisplayPageObjectProvider<DepotEntry>
-		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
-
-		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
-			GetterUtil.getLong(urlTitle));
 
 		return new DepotEntryLayoutDisplayPageObjectProvider(
 			depotEntry, _infoItemFriendlyURLProvider, _language);

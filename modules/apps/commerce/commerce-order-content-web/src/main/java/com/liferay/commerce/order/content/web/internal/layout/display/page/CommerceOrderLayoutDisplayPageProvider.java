@@ -59,8 +59,28 @@ public class CommerceOrderLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<CommerceOrder>
-		getLayoutDisplayPageObjectProvider(
-			InfoItemReference infoItemReference) {
+		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
+
+		try {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(Long.valueOf(urlTitle));
+
+			return new CommerceOrderLayoutDisplayPageObjectProvider(
+				commerceOrder, groupId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	protected LayoutDisplayPageObjectProvider<CommerceOrder>
+		doGetLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
 
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
@@ -77,35 +97,6 @@ public class CommerceOrderLayoutDisplayPageProvider
 			CommerceOrder commerceOrder =
 				_commerceOrderService.getCommerceOrder(
 					classPKInfoItemIdentifier.getClassPK());
-
-			long groupId = commerceOrder.getGroupId();
-
-			ServiceContext serviceContext =
-				ServiceContextThreadLocal.getServiceContext();
-
-			if (serviceContext != null) {
-				groupId = serviceContext.getScopeGroupId();
-			}
-
-			return new CommerceOrderLayoutDisplayPageObjectProvider(
-				commerceOrder, groupId);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return null;
-	}
-
-	@Override
-	public LayoutDisplayPageObjectProvider<CommerceOrder>
-		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
-
-		try {
-			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrder(Long.valueOf(urlTitle));
 
 			return new CommerceOrderLayoutDisplayPageObjectProvider(
 				commerceOrder, groupId);

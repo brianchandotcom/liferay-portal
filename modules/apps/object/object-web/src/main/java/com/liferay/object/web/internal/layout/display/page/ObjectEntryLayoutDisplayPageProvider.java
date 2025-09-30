@@ -83,8 +83,45 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 	@Override
 	public LayoutDisplayPageObjectProvider<ObjectEntry>
-		getLayoutDisplayPageObjectProvider(
-			InfoItemReference infoItemReference) {
+		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
+			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+				groupId, _objectDefinition, urlTitle);
+
+			if (objectEntry != null) {
+				return new ObjectEntryLayoutDisplayPageObjectProvider(
+					_assetHelper, _infoItemFriendlyURLProvider,
+					_objectDefinition, objectEntry);
+			}
+		}
+
+		if (!_objectDefinition.isDefaultStorageType()) {
+			return getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					ObjectEntry.class.getName(),
+					new ERCInfoItemIdentifier(urlTitle)));
+		}
+
+		return getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(
+				ObjectEntry.class.getName(),
+				new ClassPKInfoItemIdentifier(GetterUtil.getLong(urlTitle))));
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<ObjectEntry>
+		getLayoutDisplayPageObjectProvider(ObjectEntry objectEntry) {
+
+		return new ObjectEntryLayoutDisplayPageObjectProvider(
+			_assetHelper, _infoItemFriendlyURLProvider, _objectDefinition,
+			objectEntry);
+	}
+
+	@Override
+	protected LayoutDisplayPageObjectProvider<ObjectEntry>
+		doGetLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
 
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
@@ -170,43 +207,6 @@ public class ObjectEntryLayoutDisplayPageProvider
 		}
 
 		return null;
-	}
-
-	@Override
-	public LayoutDisplayPageObjectProvider<ObjectEntry>
-		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				groupId, _objectDefinition, urlTitle);
-
-			if (objectEntry != null) {
-				return new ObjectEntryLayoutDisplayPageObjectProvider(
-					_assetHelper, _infoItemFriendlyURLProvider,
-					_objectDefinition, objectEntry);
-			}
-		}
-
-		if (!_objectDefinition.isDefaultStorageType()) {
-			return getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(
-					ObjectEntry.class.getName(),
-					new ERCInfoItemIdentifier(urlTitle)));
-		}
-
-		return getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(
-				ObjectEntry.class.getName(),
-				new ClassPKInfoItemIdentifier(GetterUtil.getLong(urlTitle))));
-	}
-
-	@Override
-	public LayoutDisplayPageObjectProvider<ObjectEntry>
-		getLayoutDisplayPageObjectProvider(ObjectEntry objectEntry) {
-
-		return new ObjectEntryLayoutDisplayPageObjectProvider(
-			_assetHelper, _infoItemFriendlyURLProvider, _objectDefinition,
-			objectEntry);
 	}
 
 	private JSONObject _getContentJSONObject(

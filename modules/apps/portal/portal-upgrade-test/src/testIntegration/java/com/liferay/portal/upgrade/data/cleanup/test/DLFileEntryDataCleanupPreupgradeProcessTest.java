@@ -63,10 +63,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,22 +88,15 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	public static final PermissionCheckerMethodTestRule
 		permissionCheckerTestRule = PermissionCheckerMethodTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_connection = DataAccess.getConnection();
-
-		_dbInspector = new DBInspector(_connection);
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		DataAccess.cleanUp(_connection);
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		_classNames = _classNameLocalService.getClassNames(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		_connection = DataAccess.getConnection();
+
+		_dbInspector = new DBInspector(_connection);
+
 		_systemEvents = _systemEventLocalService.getSystemEvents(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
@@ -129,6 +120,8 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 		for (SystemEvent systemEvent : systemEvents) {
 			_systemEventLocalService.deleteSystemEvent(systemEvent);
 		}
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test
@@ -259,12 +252,13 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 	}
 
 	private static List<ClassName> _classNames;
-	private static Connection _connection;
-	private static DBInspector _dbInspector;
 	private static List<SystemEvent> _systemEvents;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
+
+	private Connection _connection;
+	private DBInspector _dbInspector;
 
 	@Inject
 	private DDMFieldLocalService _ddmFieldLocalService;

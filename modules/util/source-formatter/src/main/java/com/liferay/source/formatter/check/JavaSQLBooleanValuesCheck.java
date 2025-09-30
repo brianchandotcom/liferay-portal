@@ -90,9 +90,15 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 
 			if (methodName.equals("AutoBatchPreparedStatementUtil.autoBatch") ||
 				methodName.equals(
-					"AutoBatchPreparedStatementUtil.concurrentAutoBatch") ||
-				methodName.equals("connection.prepareStatement")) {
+					"AutoBatchPreparedStatementUtil.concurrentAutoBatch")) {
 
+				if (parameterSize != 2) {
+					return;
+				}
+
+				sqlString = getParameterList.get(1);
+			}
+			else if (methodName.equals("connection.prepareStatement")) {
 				if (parameterSize != 1) {
 					return;
 				}

@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author Jürgen Kappler
  * @author Javier de Arcos
  */
-public class PageSettingsUtil {
+public class NavigationSettingsUtil {
 
 	public static NavigationSettings toNavigationSettings(
 		UnicodeProperties unicodeProperties) {

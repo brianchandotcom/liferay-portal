@@ -4876,6 +4876,14 @@
 	},
 	{
 		"classNames": [
+			"LayoutCopyHelper"
+		],
+		"from": "copyLayout",
+		"issueKey": "LPD-58415",
+		"to": "copyLayoutContent"
+	},
+	{
+		"classNames": [
 			"CompanyThreadLocal"
 		],
 		"from": "setWithSafeCloseable",
@@ -4889,14 +4897,6 @@
 			"com.liferay.site.constants.LegacySitemapIndexPropsKeys"
 		],
 		"to": "LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED"
-	},
-	{
-		"classNames": [
-			"LayoutCopyHelper"
-		],
-		"from": "copyLayout",
-		"issueKey": "LPD-58415",
-		"to": "copyLayoutContent"
 	},
 	{
 		"classNames": [

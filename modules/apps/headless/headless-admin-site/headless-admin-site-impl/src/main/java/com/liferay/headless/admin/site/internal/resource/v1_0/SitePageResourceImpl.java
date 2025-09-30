@@ -198,7 +198,7 @@ public class SitePageResourceImpl
 
 			@Override
 			public String getPortletId() {
-				return LayoutAdminPortletKeys.GROUP_PAGES;
+				return LayoutAdminPortletKeys.LAYOUT_SET_LAYOUTS;
 			}
 
 			@Override

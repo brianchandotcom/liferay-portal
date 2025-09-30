@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -40,7 +39,6 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Jorge García Jiménez
  */
-@FeatureFlag("LPS-134060")
 @RunWith(Arquillian.class)
 public class CSPOSGiCommandsTest {
 

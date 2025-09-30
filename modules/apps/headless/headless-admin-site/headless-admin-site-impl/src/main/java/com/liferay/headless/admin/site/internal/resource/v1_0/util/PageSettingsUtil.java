@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
@@ -30,8 +29,7 @@ import java.util.Objects;
 public class PageSettingsUtil {
 
 	public static PageSettings getPageSettings(
-		DLAppService dlAppService, DLURLHelper dlURLHelper,
-		DTOConverterContext dtoConverterContext,
+		DLAppService dlAppService, DTOConverterContext dtoConverterContext,
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		return new PageSettings() {
@@ -45,7 +43,7 @@ public class PageSettingsUtil {
 						layout.getTypeSettingsProperties()));
 				setOpenGraphSettings(
 					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
-						dlAppService, dlURLHelper, dtoConverterContext,
+						dlAppService, dtoConverterContext,
 						layoutSEOEntryLocalService, layout));
 				setSeoSettings(
 					() -> SEOSettingsUtil.getSeoSettings(

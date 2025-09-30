@@ -40,6 +40,9 @@ public class PageSettingsUtil {
 					() -> _getCustomMetaTags(
 						layout, layoutSEOEntryLocalService));
 				setHiddenFromNavigation(layout::isHidden);
+				setNavigationSettings(
+					() -> _toNavigationSettings(
+						layout.getTypeSettingsProperties()));
 				setOpenGraphSettings(
 					() -> OpenGraphSettingsUtil.getOpenGraphSettings(
 						dlAppService, dlURLHelper, dtoConverterContext,
@@ -48,9 +51,6 @@ public class PageSettingsUtil {
 					() -> SEOSettingsUtil.getSeoSettings(
 						dtoConverterContext, layoutSEOEntryLocalService,
 						layout));
-				setNavigationSettings(
-					() -> _toNavigationSettings(
-						layout.getTypeSettingsProperties()));
 			}
 		};
 	}

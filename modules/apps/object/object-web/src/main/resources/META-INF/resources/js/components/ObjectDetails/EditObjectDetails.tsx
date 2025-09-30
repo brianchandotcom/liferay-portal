@@ -164,8 +164,6 @@ export default function EditObjectDetails({
 
 						setTimeout(() => window.location.reload(), 1000);
 
-						setLoading(false);
-
 						return;
 					}
 				}
@@ -173,6 +171,8 @@ export default function EditObjectDetails({
 					const {detail, title} = error as Error;
 
 					handleErrors({detail, title}, setBackEndErrors);
+
+					setLoading(false);
 
 					return;
 				}

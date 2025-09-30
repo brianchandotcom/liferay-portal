@@ -1,5 +1,5 @@
 {
-	"@generated": "efa255497c09d793a09edc0cc157d605d717b4d8",
+	"@generated": "505f5552d70063d8dc08057ca6fb3198fb8f1a53",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -28,6 +28,9 @@
 			],
 			"@liferay/object-js-components-web": [
 				"../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/index.ts"
+			],
+			"document-library-preview-document": [
+				"../../../../../../../document-library/document-library-preview-document/src/main/resources/META-INF/resources/preview/js/index.tsx"
 			],
 			"document-library-preview-image": [
 				"../../../../../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/preview/js/index.tsx"
@@ -84,6 +87,9 @@
 		},
 		{
 			"path": "../../../../../../../object/object-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../document-library/document-library-preview-document/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/tsconfig.json"

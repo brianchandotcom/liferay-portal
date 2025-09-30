@@ -632,8 +632,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		throws Exception {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-			RandomTestUtil.randomLong(),
+			null, TestPropsValues.getUserId(), _group.getGroupId(), null,
+			RandomTestUtil.randomString(), null,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,

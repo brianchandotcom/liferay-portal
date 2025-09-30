@@ -148,7 +148,7 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 		throws Exception {
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
-			null, TestPropsValues.getUserId(), groupId, 0, 0,
+			null, TestPropsValues.getUserId(), groupId, null, null, null,
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,

@@ -112,8 +112,9 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				fragmentEntry.getFragmentEntryId(),
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, fragmentEntry.getExternalReferenceCode(),
+				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -151,9 +152,11 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		stagedModel = _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentEntryLink.getOriginalFragmentEntryLinkId(),
-			fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getPlid(),
-			"css", "html", "js", fragmentEntryLink.getConfiguration(),
+			fragmentEntryLink.getOriginalFragmentEntryLinkERC(),
+			fragmentEntryLink.getFragmentEntryERC(),
+			fragmentEntryLink.getFragmentEntryScopeERC(),
+			fragmentEntryLink.getPlid(), "css", "html", "js",
+			fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
 			fragmentEntryLink.getNamespace(),
 			fragmentEntryLink.getPosition() + 1, fragmentEntryLink.getType(),
@@ -190,8 +193,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, null, null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -245,8 +248,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, null, null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -312,8 +315,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, null, null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -344,8 +347,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		StagedModel stagedModel =
 			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				0,
+				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+				null, null, null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				stagingGroup.getDefaultPublicPlid(), StringPool.BLANK, "html",
@@ -418,7 +421,8 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 
 		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
 			null, TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
-			0, fragmentEntry.getFragmentEntryId(),
+			null, fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			group.getDefaultPublicPlid(), fragmentEntry.getCss(),

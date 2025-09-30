@@ -1120,9 +1120,9 @@ public class ActionUtil {
 				new DefaultFragmentRendererContext(null);
 
 			return fragmentEntryLinkService.addFragmentEntryLink(
-				null, layout.getGroupId(), 0, 0, segmentsExperienceId,
-				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK,
+				null, layout.getGroupId(), null, null, null,
+				segmentsExperienceId, layout.getPlid(), StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK,
 				JSONFactoryUtil.toString(
 					fragmentRenderer.getConfigurationJSONObject(
 						defaultFragmentRendererContext)),
@@ -1145,11 +1145,13 @@ public class ActionUtil {
 		}
 
 		return fragmentEntryLinkService.addFragmentEntryLink(
-			null, layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
-			segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs(),
-			fragmentEntry.getConfiguration(), editableValues, StringPool.BLANK,
-			0, contributedRendererKey, fragmentEntry.getType(), serviceContext);
+			null, layout.getGroupId(), null,
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntry.getScopeERC(), segmentsExperienceId, layout.getPlid(),
+			fragmentEntry.getCss(), fragmentEntry.getHtml(),
+			fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
+			editableValues, StringPool.BLANK, 0, contributedRendererKey,
+			fragmentEntry.getType(), serviceContext);
 	}
 
 	private static LayoutStructure _addInputFragmentEntryLink(

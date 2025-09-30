@@ -7,6 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.resource.v1_0.exportimport.te
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
+import com.liferay.batch.engine.action.ImportTaskPostAction;
 import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.context.ImportTaskContext;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.FeatureFlagTestUtil;
@@ -630,6 +632,120 @@ public class BatchTestEntityExportImportTest {
 			exportImportReportEntries.get(1));
 	}
 
+	@Test
+	@TestInfo("LPD-65186")
+	public void testExportImportRollbackOnError() throws Exception {
+		BatchTestEntity batchTestEntity1 =
+			_batchTestEntityResource.postBatchTestEntity(
+				new BatchTestEntity() {
+					{
+						externalReferenceCode = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						id = RandomTestUtil.randomLong();
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+					}
+				});
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									"com_liferay_portal_tools_rest_builder_" +
+										"test_portlet_BatchTestEntityPortlet",
+								new String[] {Boolean.TRUE.toString()}
+							).build())));
+
+		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
+			batchTestEntity1.getExternalReferenceCode());
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									"com_liferay_portal_tools_rest_builder_" +
+										"test_portlet_BatchTestEntityPortlet",
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			BatchTestEntityExportImportTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		ServiceRegistration<ImportTaskPreAction> serviceRegistration1 =
+			bundleContext.registerService(
+				ImportTaskPreAction.class,
+				new TestExportImportRollbackOnErrorPreAction(), null);
+
+		String errorMessage = RandomTestUtil.randomString();
+
+		ServiceRegistration<ImportTaskPostAction> serviceRegistration2 =
+			bundleContext.registerService(
+				ImportTaskPostAction.class,
+				new TestExportImportRollbackOnErrorPostAction(errorMessage),
+				null);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.ERROR)) {
+
+			_exportImportLocalService.importLayouts(
+				exportImportConfiguration, larFile);
+		}
+		finally {
+			serviceRegistration1.unregister();
+			serviceRegistration2.unregister();
+		}
+
+		User user = _userLocalService.getUser(TestPropsValues.getUserId());
+
+		Assert.assertEquals(
+			PropsValues.DEFAULT_ADMIN_FIRST_NAME, user.getFirstName());
+
+		List<ExportImportReportEntry> exportImportReportEntries =
+			_exportImportReportEntryLocalService.getExportImportReportEntries(
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
+
+		Assert.assertEquals(
+			exportImportReportEntries.toString(), 1,
+			exportImportReportEntries.size());
+
+		_assertEquals(
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
+				class,
+			errorMessage, batchTestEntity1.getExternalReferenceCode(),
+			ExportImportReportEntryConstants.TYPE_ERROR,
+			exportImportReportEntries.get(0));
+	}
+
 	private void _assertEquals(
 		BatchTestEntity batchTestEntity1, BatchTestEntity batchTestEntity2) {
 
@@ -708,6 +824,50 @@ public class BatchTestEntityExportImportTest {
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	private class TestExportImportRollbackOnErrorPostAction
+		implements ImportTaskPostAction {
+
+		public TestExportImportRollbackOnErrorPostAction(String errorMessage) {
+			_errorMessage = errorMessage;
+		}
+
+		@Override
+		public void run(
+				BatchEngineImportTask batchEngineImportTask,
+				BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+				ImportTaskContext importTaskContext, Object item,
+				Object persistedItem)
+			throws Exception {
+
+			throw new UnsupportedOperationException(_errorMessage);
+		}
+
+		private final String _errorMessage;
+
+	}
+
+	private class TestExportImportRollbackOnErrorPreAction
+		implements ImportTaskPreAction {
+
+		@Override
+		public void run(
+				BatchEngineImportTask batchEngineImportTask,
+				BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+				ImportTaskContext importTaskContext, Object item)
+			throws PortalException {
+
+			User user = _userLocalService.getUser(TestPropsValues.getUserId());
+
+			user.setFirstName(StringUtil.randomString());
+
+			_userLocalService.updateUser(user);
+		}
+
+	}
 
 	private class TestImportTaskPreAction implements ImportTaskPreAction {
 

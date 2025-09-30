@@ -231,6 +231,7 @@ JavaComponentAnnotationsCheck | [Bug Prevention](bug_prevention_checks.md#bug-pr
 JavaConstantsFileCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java | Checks if constants names follow naming conventions. |
 [JavaConstructorParametersCheck](check/java_constructor_parameters_check.md#javaconstructorparameterscheck) | [Styling](styling_checks.md#styling-checks) | .java | Checks that the order of variable assignments matches the order of the parameters in the constructor signature. |
 JavaConstructorSuperCallCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds unnecessary call to no-argument constructor of the superclass. |
+JavaDefaultAdminScreenNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that we do not use `PropsKeys.DEFAULT_ADMIN_SCREEN_NAME` or `PropsValues.DEFAULT_ADMIN_SCREEN_NAME`. |
 JavaDeprecatedJavadocCheck | [Javadoc](javadoc_checks.md#javadoc-checks) | .java | Checks if the `@deprecated` javadoc is pointing to the correct version. |
 JavaDeserializationSecurityCheck | [Security](security_checks.md#security-checks) | .java | Finds Java serialization vulnerabilities. |
 JavaDiamondOperatorCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds cases where Diamond Operator is not used. |
@@ -427,6 +428,7 @@ PrincipalExceptionCheck | [Bug Prevention](bug_prevention_checks.md#bug-preventi
 PropertiesArchivedModulesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .eslintignore, .prettierignore, or .properties | Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`. |
 PropertiesBuildIncludeDirsCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .eslintignore, .prettierignore, or .properties | Verifies property value of `build.include.dirs` in `build.properties`. |
 PropertiesCommentsCheck | [Styling](styling_checks.md#styling-checks) | .eslintignore, .prettierignore, or .properties | Validates comments in `.properties` files. |
+PropertiesDefaultAdminScreenNameCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .eslintignore, .prettierignore, or .properties | Checks that we do not use `default.admin.screen.name`. |
 PropertiesDefinitionKeysCheck | [Styling](styling_checks.md#styling-checks) | .eslintignore, .prettierignore, or .properties | Sorts definition keys in `liferay-plugin-package.properties` file. |
 PropertiesDependenciesFileCheck | [Styling](styling_checks.md#styling-checks) | .eslintignore, .prettierignore, or .properties | Sorts the properties in `dependencies.properties` file. |
 PropertiesDuplicateKeysCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .eslintignore, .prettierignore, or .properties | Checks for duplicate property keys. |

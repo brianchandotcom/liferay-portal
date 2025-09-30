@@ -125,6 +125,11 @@ export interface ICreationActionItem {
 		| string;
 }
 
+export enum EItemActionsType {
+	GROUP = 'group',
+	ITEM = 'item',
+}
+
 export interface IItemsActions {
 	className?: string;
 	data?: IItemActionsData;
@@ -150,12 +155,7 @@ export interface IItemsActions {
 		| 'modal-permissions'
 		| 'sidePanel'
 		| 'event';
-	type?: EItemActionsType;
-}
-
-export enum EItemActionsType {
-	GROUP = 'group',
-	ITEM = 'item',
+	type?: EItemActionsType | `${EItemActionsType}`;
 }
 
 export interface IItemActionsData {

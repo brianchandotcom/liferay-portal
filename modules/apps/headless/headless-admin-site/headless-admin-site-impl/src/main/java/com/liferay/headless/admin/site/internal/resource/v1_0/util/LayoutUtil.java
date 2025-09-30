@@ -462,7 +462,8 @@ public class LayoutUtil {
 		if (layoutSetPrototypeLayout == null) {
 			LogUtil.logOptionalReference(
 				Layout.class,
-				siteTemplatePageSpecificationExternalReferenceCode);
+				siteTemplatePageSpecificationExternalReferenceCode,
+				layoutSetPrototype.getGroupId());
 		}
 
 		serviceContext.setAttribute(
@@ -888,7 +889,8 @@ public class LayoutUtil {
 			if (cet == null) {
 				LogUtil.logOptionalReference(
 					ClientExtension.class,
-					clientExtension.getExternalReferenceCode());
+					clientExtension.getExternalReferenceCode(),
+					layout.getCompanyId());
 			}
 
 			ClientExtensionEntryRelLocalServiceUtil.addClientExtensionEntryRel(

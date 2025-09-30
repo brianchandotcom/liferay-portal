@@ -629,7 +629,7 @@ test(
 			trigger: input,
 		});
 
-		const valueInput = page.locator('[name="selectCountry"]');
+		const valueInput = page.locator('[name="ObjectField_selectCountry"]');
 
 		await expect(valueInput).toHaveValue('italy');
 

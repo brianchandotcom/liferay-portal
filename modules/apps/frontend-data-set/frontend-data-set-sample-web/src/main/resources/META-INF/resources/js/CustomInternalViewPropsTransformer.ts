@@ -4,7 +4,7 @@
  */
 
 import {
-	EStateInURLSettings,
+	EConfigInURLSettings,
 	IInternalRenderer,
 	IItemsActions,
 } from '@liferay/frontend-data-set-web';
@@ -36,6 +36,7 @@ export default function propsTransformer({
 
 	return {
 		...otherProps,
+		configInURLSettings: EConfigInURLSettings.REPLACE,
 		customRenderers: {
 			views: [carouselViewRenderer],
 		},
@@ -51,7 +52,6 @@ export default function propsTransformer({
 				isVisible: (item: any) => item?.color !== 'Green',
 			};
 		}),
-		stateInURLSettings: EStateInURLSettings.REPLACE,
 		views: [
 			{
 				contentRenderer: 'table',

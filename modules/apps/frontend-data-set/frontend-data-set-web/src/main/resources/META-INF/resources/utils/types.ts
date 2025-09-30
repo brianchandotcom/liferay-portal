@@ -77,7 +77,7 @@ export interface IEmptyStateConfiguration extends IEmptyState {
 	};
 }
 
-export enum EStateInURLSettings {
+export enum EConfigInURLSettings {
 	OFF = 'off',
 	PUSH = 'push',
 	REPLACE = 'replace',
@@ -281,6 +281,7 @@ export interface IFrontendDataSetProps {
 	apiURL?: string;
 	appURL?: string;
 	bulkActions?: any[];
+	configInURLSettings?: EConfigInURLSettings;
 	creationMenu?: {
 		loadData?: Function;
 		primaryItems: Array<ICreationActionItem>;
@@ -338,7 +339,6 @@ export interface IFrontendDataSetProps {
 	showSelectAll?: boolean;
 	sidePanelId?: string;
 	sorts?: TSort[];
-	stateInURLSettings?: EStateInURLSettings;
 	style?: 'default' | 'fluid' | 'stacked';
 	uniformActionsDisplay?: boolean;
 	views: IView[];
@@ -408,7 +408,7 @@ export {
 	FDS_NESTED_FIELD_NAME_PARENT_SUFFIX,
 } from '../constants';
 
-export enum EStateInURLKeys {
+export enum EConfigInURLKeys {
 	ACTIVE_FILTERS = 'filters',
 	ACTIVE_SORTS = 'sorts',
 	DELTA = 'delta',
@@ -418,31 +418,31 @@ export enum EStateInURLKeys {
 	VISIBLE_FIELDS = 'vf',
 }
 
-export interface IStateInURL {
-	[EStateInURLKeys.ACTIVE_FILTERS]: Array<any>;
-	[EStateInURLKeys.ACTIVE_SORTS]: Array<TSort>;
-	[EStateInURLKeys.DELTA]: number;
-	[EStateInURLKeys.PAGE_NUMBER]: number;
-	[EStateInURLKeys.SEARCH_PARAM]: string;
-	[EStateInURLKeys.VIEW_NAME]: string;
-	[EStateInURLKeys.VISIBLE_FIELDS]: VisibleFieldNames;
+export interface IConfigInURL {
+	[EConfigInURLKeys.ACTIVE_FILTERS]: Array<any>;
+	[EConfigInURLKeys.ACTIVE_SORTS]: Array<TSort>;
+	[EConfigInURLKeys.DELTA]: number;
+	[EConfigInURLKeys.PAGE_NUMBER]: number;
+	[EConfigInURLKeys.SEARCH_PARAM]: string;
+	[EConfigInURLKeys.VIEW_NAME]: string;
+	[EConfigInURLKeys.VISIBLE_FIELDS]: VisibleFieldNames;
 }
 
-export type IStateInURLUpdaterThunk<K extends keyof IStateInURL> = (
-	value: IStateInURL[K]
+export type IConfigInURLUpdaterThunk<K extends keyof IConfigInURL> = (
+	value: IConfigInURL[K]
 ) => (viewsDispatch: Function) => void;
 
-export type IStateInURLGetter<K extends keyof IStateInURL> = () =>
-	| IStateInURL[K]
+export type IConfigInURLGetter<K extends keyof IConfigInURL> = () =>
+	| IConfigInURL[K]
 	| undefined;
 
-export type IStateReader<K extends keyof IStateInURL> = (
-	value: IStateInURL[K] | undefined
-) => IStateInURL[K] | undefined;
+export type IConfigReader<K extends keyof IConfigInURL> = (
+	value: IConfigInURL[K] | undefined
+) => IConfigInURL[K] | undefined;
 
-export type IStateWriter<K extends keyof IStateInURL> = (
-	value: IStateInURL[K]
-) => IStateInURL[K] | undefined;
+export type IConfigWriter<K extends keyof IConfigInURL> = (
+	value: IConfigInURL[K]
+) => IConfigInURL[K] | undefined;
 
 export type VisibleFieldNames = {
 	[fieldName: string]: boolean;

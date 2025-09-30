@@ -3,79 +3,79 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EStateInURLSettings, IStateInURL} from './types';
+import {EConfigInURLSettings, IConfigInURL} from './types';
 
-function getStateParamName(id: string): string {
-	return `${id}_fdsState`;
+function getConfigParamName(id: string): string {
+	return `${id}_fdsConfig`;
 }
 
-export function readStateFromURL(id: string): Partial<IStateInURL> | null {
+export function readConfigFromURL(id: string): Partial<IConfigInURL> | null {
 	if (!Liferay.FeatureFlags['LPD-22473']) {
 		return null;
 	}
 
 	const params = new URLSearchParams(window.location.search);
 
-	const stateParam = params.get(getStateParamName(id));
+	const configParam = params.get(getConfigParamName(id));
 
-	if (!stateParam) {
+	if (!configParam) {
 		return null;
 	}
 
-	let state = {};
+	let config = {};
 
 	try {
-		state = JSON.parse(stateParam);
+		config = JSON.parse(configParam);
 	}
 	catch (error) {
 		return null;
 	}
 
-	return state;
+	return config;
 }
 
-export function writeStateInURL(
+export function writeConfigInURL(
 	id: string,
-	state: Partial<IStateInURL>,
-	settings: EStateInURLSettings
+	config: Partial<IConfigInURL>,
+	settings: EConfigInURLSettings
 ) {
 	if (
-		!state ||
-		settings === EStateInURLSettings.OFF ||
+		!config ||
+		settings === EConfigInURLSettings.OFF ||
 		!Liferay.FeatureFlags['LPD-22473']
 	) {
 		return;
 	}
 
-	const currentState = readStateFromURL(id);
+	const currentConfig = readConfigFromURL(id);
 
-	Object.keys(state).forEach((key: string) => {
-		const stateKey: keyof IStateInURL = key as keyof IStateInURL;
+	Object.keys(config).forEach((key: string) => {
+		const configKey: keyof IConfigInURL = key as keyof IConfigInURL;
 
-		if (state[stateKey] === undefined) {
-			delete state[stateKey];
+		if (config[configKey] === undefined) {
+			delete config[configKey];
 
-			if (currentState && currentState[stateKey]) {
-				delete currentState[stateKey];
+			if (currentConfig && currentConfig[configKey]) {
+				delete currentConfig[configKey];
 			}
 		}
 	});
 
-	if (contains(state, currentState)) {
+	if (contains(config, currentConfig)) {
 		return;
 	}
 
 	const params = new URLSearchParams(window.location.search);
 
 	params.set(
-		getStateParamName(id),
-		JSON.stringify(sortObjectKeys({...(currentState || {}), ...state}))
+		getConfigParamName(id),
+		JSON.stringify(sortObjectKeys({...(currentConfig || {}), ...config}))
 	);
 
 	const path = `${window.location.pathname}?${params.toString()}`;
 
 	const replaceState =
-		settings === EStateInURLSettings.REPLACE || !currentState;
+		settings === EConfigInURLSettings.REPLACE || !currentConfig;
 
 	if (Liferay.SPA && Liferay.SPA.app) {
 		Liferay.SPA.app.browserPathBeforeNavigate = path;
@@ -112,8 +112,8 @@ export function writeStateInURL(
 }
 
 export function contains(
-	a: Partial<IStateInURL> | null,
-	b: Partial<IStateInURL> | null
+	a: Partial<IConfigInURL> | null,
+	b: Partial<IConfigInURL> | null
 ) {
 	if (a === null || b === null) {
 		return false;

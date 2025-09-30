@@ -51,6 +51,7 @@ import Modal from './modal/Modal';
 
 import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
+import {contains} from './utils/configInURL';
 import EVENTS from './utils/eventsDefinitions';
 import {activateFilter} from './utils/filters/activateFilter';
 import {deactivateFilter} from './utils/filters/deactivateFilter';
@@ -65,16 +66,15 @@ import {loadData} from './utils/loadData';
 
 import {logError} from './utils/logError';
 import {saveViewSettings} from './utils/saveViewSettings';
-import {contains} from './utils/stateInURL';
 import {
-	EStateInURLKeys,
-	EStateInURLSettings,
+	EConfigInURLKeys,
+	EConfigInURLSettings,
+	IConfigInURL,
 	IDataSetData,
 	IField,
 	IFrontendDataSetProps,
 	IModalConfig,
 	IRequestOptions,
-	IStateInURL,
 	ISuccessNotification,
 	ITableSchema,
 	IView,
@@ -82,7 +82,7 @@ import {
 	TSort,
 	VisibleFieldNames,
 } from './utils/types';
-import useStateInURL, {useUpdateState} from './utils/useStateInURL';
+import useConfigInURL, {useUpdateConfig} from './utils/useConfigInURL';
 import ViewsContext from './views/ViewsContext';
 
 // @ts-ignore
@@ -103,6 +103,7 @@ const FrontendDataSetContent = ({
 	apiURL,
 	appURL,
 	bulkActions = [],
+	configInURLSettings = EConfigInURLSettings.OFF,
 	creationMenu: initialCreationMenu,
 	currentURL,
 	customDataRenderers,
@@ -141,7 +142,6 @@ const FrontendDataSetContent = ({
 	showSelectAll = false,
 	sidePanelId,
 	sorts: sortsProp = [],
-	stateInURLSettings = EStateInURLSettings.OFF,
 	style = 'default',
 	uniformActionsDisplay,
 	views,
@@ -149,17 +149,12 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
 
-	const [getActiveSorts, updateActiveSortsThunk] = useStateInURL({
-		id,
-		stateDispatcher: {
-			key: EStateInURLKeys.ACTIVE_SORTS,
-			type: EViewsActionTypes.UPDATE_SORTING,
-		},
-		stateInURLSettings,
-		stateReader: (sorts: Array<TSort> | undefined) => {
+	const [getActiveSorts, updateActiveSortsThunk] = useConfigInURL({
+		configInURLSettings,
+		configReader: (sorts: Array<TSort> | undefined) => {
 			return sorts;
 		},
-		stateWriter: (
+		configWriter: (
 			sorts: Array<TSort> | undefined
 		): Array<TSort> | undefined => {
 			if (sorts?.every((sort: TSort) => !sort.active)) {
@@ -175,19 +170,19 @@ const FrontendDataSetContent = ({
 					};
 				});
 		},
-	});
-
-	const [getActiveFilters, updateActiveFiltersThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
-			key: EStateInURLKeys.ACTIVE_FILTERS,
-			type: EViewsActionTypes.UPDATE_FILTERS,
+			key: EConfigInURLKeys.ACTIVE_SORTS,
+			type: EViewsActionTypes.UPDATE_SORTING,
 		},
-		stateInURLSettings,
-		stateReader: (filters: Array<any> | undefined) => {
+	});
+
+	const [getActiveFilters, updateActiveFiltersThunk] = useConfigInURL({
+		configInURLSettings,
+		configReader: (filters: Array<any> | undefined) => {
 			return filters;
 		},
-		stateWriter: (
+		configWriter: (
 			filters: Array<any> | undefined
 		): Array<any> | undefined => {
 			if (filters?.every((filter) => !filter.active)) {
@@ -223,78 +218,79 @@ const FrontendDataSetContent = ({
 					};
 				});
 		},
+		id,
+		stateDispatcher: {
+			key: EConfigInURLKeys.ACTIVE_FILTERS,
+			type: EViewsActionTypes.UPDATE_FILTERS,
+		},
 	});
 
-	const [getDelta, updateDeltaThunk] = useStateInURL({
+	const [getDelta, updateDeltaThunk] = useConfigInURL({
 		additionalStateDispatchers: [
 			{
-				key: EStateInURLKeys.PAGE_NUMBER,
+				key: EConfigInURLKeys.PAGE_NUMBER,
 				type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
 				value: 1,
 			},
 		],
-		id,
-		stateDispatcher: {
-			key: EStateInURLKeys.DELTA,
-			type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
-		},
-		stateInURLSettings,
-		stateReader: (delta: number | undefined) => {
+		configInURLSettings,
+		configReader: (delta: number | undefined) => {
 			if (!delta || isNaN(delta) || delta < 1) {
 				return undefined;
 			}
 
 			return delta;
 		},
-	});
-
-	const [getPageNumber, updatePageNumberThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
-			key: EStateInURLKeys.PAGE_NUMBER,
-			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
+			key: EConfigInURLKeys.DELTA,
+			type: EViewsActionTypes.UPDATE_PAGINATION_DELTA,
 		},
-		stateInURLSettings,
-		stateReader: (pageNumber: number | undefined) => {
+	});
+
+	const [getPageNumber, updatePageNumberThunk] = useConfigInURL({
+		configInURLSettings,
+		configReader: (pageNumber: number | undefined) => {
 			if (!pageNumber || isNaN(pageNumber) || pageNumber < 1) {
 				return 1;
 			}
 
 			return pageNumber;
 		},
-	});
-
-	const [getSearchParam, updateSearchParamThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
-			key: EStateInURLKeys.SEARCH_PARAM,
-			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
+			key: EConfigInURLKeys.PAGE_NUMBER,
+			type: EViewsActionTypes.UPDATE_PAGE_NUMBER,
 		},
-		stateInURLSettings,
-		stateReader: (searchParam: string | undefined) => {
+	});
+
+	const [getSearchParam, updateSearchParamThunk] = useConfigInURL({
+		configInURLSettings,
+
+		configReader: (searchParam: string | undefined) => {
 			if (!searchParam) {
 				return '';
 			}
 
 			return searchParam;
 		},
-		stateWriter: (searchParam: string | undefined): string | undefined => {
+		configWriter: (searchParam: string | undefined): string | undefined => {
 			if (!searchParam || !searchParam.length) {
 				return undefined;
 			}
 
 			return searchParam;
 		},
-	});
-
-	const [getView, updateViewThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
-			key: EStateInURLKeys.VIEW_NAME,
-			type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
+			key: EConfigInURLKeys.SEARCH_PARAM,
+			type: EViewsActionTypes.UPDATE_SEARCH_PARAM,
 		},
-		stateInURLSettings,
-		stateReader: (viewName: string | undefined) => {
+	});
+
+	const [getView, updateViewThunk] = useConfigInURL({
+		configInURLSettings,
+		configReader: (viewName: string | undefined) => {
 			const view = views.find(({name}) => name === viewName);
 
 			if (view) {
@@ -303,16 +299,16 @@ const FrontendDataSetContent = ({
 
 			return undefined;
 		},
-	});
-
-	const [getVisibleFields, updateVisibleFieldsThunk] = useStateInURL({
 		id,
 		stateDispatcher: {
-			key: EStateInURLKeys.VISIBLE_FIELDS,
-			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
+			key: EConfigInURLKeys.VIEW_NAME,
+			type: EViewsActionTypes.UPDATE_ACTIVE_VIEW,
 		},
-		stateInURLSettings,
-		stateReader: (visibleFieldNames: VisibleFieldNames | undefined) => {
+	});
+
+	const [getVisibleFields, updateVisibleFieldsThunk] = useConfigInURL({
+		configInURLSettings,
+		configReader: (visibleFieldNames: VisibleFieldNames | undefined) => {
 			const view = views.find(
 				({name}) => name && name.toLowerCase().includes('table')
 			);
@@ -341,14 +337,22 @@ const FrontendDataSetContent = ({
 
 			return undefined;
 		},
-		stateWriter: (
+		configWriter: (
 			visibleFields: VisibleFieldNames | undefined
 		): VisibleFieldNames | undefined => {
 			return visibleFields;
 		},
+		id,
+		stateDispatcher: {
+			key: EConfigInURLKeys.VISIBLE_FIELDS,
+			type: EViewsActionTypes.UPDATE_VISIBLE_FIELD_NAMES,
+		},
 	});
 
-	const updateState = useUpdateState({id, stateInURLSettings});
+	const updateConfig = useUpdateConfig({
+		configInURLSettings,
+		id,
+	});
 
 	const [componentLoading, setComponentLoading] = useState(false);
 	const [creationMenu, setCreationMenu] = useState(initialCreationMenu);
@@ -606,14 +610,14 @@ const FrontendDataSetContent = ({
 		// viewsDispatch is not available here, so we can't use state in url
 		// setters at this point. hook does the job
 
-		updateState({
-			[EStateInURLKeys.ACTIVE_FILTERS]: filters,
-			[EStateInURLKeys.ACTIVE_SORTS]: sorts,
-			[EStateInURLKeys.DELTA]: paginationDelta,
-			[EStateInURLKeys.PAGE_NUMBER]: pageNumber,
-			[EStateInURLKeys.SEARCH_PARAM]: searchParam,
-			[EStateInURLKeys.VIEW_NAME]: activeView.name,
-			[EStateInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
+		updateConfig({
+			[EConfigInURLKeys.ACTIVE_FILTERS]: filters,
+			[EConfigInURLKeys.ACTIVE_SORTS]: sorts,
+			[EConfigInURLKeys.DELTA]: paginationDelta,
+			[EConfigInURLKeys.PAGE_NUMBER]: pageNumber,
+			[EConfigInURLKeys.SEARCH_PARAM]: searchParam,
+			[EConfigInURLKeys.VIEW_NAME]: activeView.name,
+			[EConfigInURLKeys.VISIBLE_FIELDS]: initialVisibleFieldNames,
 		});
 
 		if (saveVisibleFieldNames || saveViewName) {
@@ -1000,7 +1004,7 @@ const FrontendDataSetContent = ({
 	const handlePopState = useCallback(() => {
 		const stateUpdates: Array<{
 			type: EViewsActionTypes;
-			value: IStateInURL[keyof IStateInURL];
+			value: IConfigInURL[keyof IConfigInURL];
 		}> = [];
 
 		const activeFilters = getActiveFilters();
@@ -1286,7 +1290,7 @@ const FrontendDataSetContent = ({
 		Liferay.on(EVENTS.UPDATE_DISPLAY, handleRefreshFromTheOutside);
 
 		const registerPopstateEvent =
-			stateInURLSettings === EStateInURLSettings.PUSH &&
+			configInURLSettings === EConfigInURLSettings.PUSH &&
 			(!Liferay.SPA || !Liferay.SPA.app);
 
 		if (registerPopstateEvent) {
@@ -1303,7 +1307,7 @@ const FrontendDataSetContent = ({
 				window.removeEventListener('popstate', handlePopState);
 			}
 		};
-	}, [handlePopState, id, refreshData, stateInURLSettings]);
+	}, [configInURLSettings, handlePopState, id, refreshData]);
 
 	const managementBar = showManagementBar ? (
 		<div className="management-bar-wrapper">

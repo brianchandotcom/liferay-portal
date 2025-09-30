@@ -5,7 +5,7 @@
 
 import {
 	DEFAULT_FETCH_HEADERS,
-	EStateInURLSettings,
+	EConfigInURLSettings,
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {openModal} from 'frontend-js-components-web';
@@ -125,6 +125,7 @@ export default function propsTransformer({
 
 	return {
 		...otherProps,
+		configInURLSettings: EConfigInURLSettings.PUSH,
 		customRenderers: {
 			tableCell: [customAuthorTableCellRenderer],
 		},
@@ -252,7 +253,6 @@ export default function propsTransformer({
 				});
 			}
 		},
-		stateInURLSettings: EStateInURLSettings.PUSH,
 		views,
 	};
 }

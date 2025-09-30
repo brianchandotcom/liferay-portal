@@ -14,7 +14,7 @@ import {EFDSVisualizationMode, waitForFDS} from '../../../../../utils/waitFor';
 import {fdsSamplePageTest} from '../../fixtures/fdsSamplePageTest';
 import {FDSSamplePage} from '../../pages/FDSSamplePage';
 
-interface IStateInURL {
+interface IConfigInURL {
 	delta: number;
 	filters: any[];
 	page: number;
@@ -36,27 +36,30 @@ const test = mergeTests(
 	loginTest()
 );
 
-const getStateFromURL = (url: string, fdsId: string): Partial<IStateInURL> => {
+const getConfigFromURL = (
+	url: string,
+	fdsId: string
+): Partial<IConfigInURL> => {
 	const params = new URLSearchParams(url);
 
-	const stateParam = params.get(
-		`com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-${fdsId}_fdsState`
+	const configParam = params.get(
+		`com_liferay_frontend_data_set_sample_web_internal_portlet_FDSSamplePortlet-${fdsId}_fdsConfig`
 	);
 
-	if (!stateParam) {
+	if (!configParam) {
 		return null;
 	}
 
-	let state = {};
+	let config = {};
 
 	try {
-		state = JSON.parse(stateParam);
+		config = JSON.parse(configParam);
 	}
 	catch (error) {
 		return null;
 	}
 
-	return state;
+	return config;
 };
 
 const assertDelta = async (
@@ -66,9 +69,9 @@ const assertDelta = async (
 	page: Page
 ) => {
 	await expect(() => {
-		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+		const config = getConfigFromURL(new URL(page.url()).search, fdsId);
 
-		expect(state.delta).toBe(delta);
+		expect(config.delta).toBe(delta);
 	}).toPass();
 
 	await expect(fdsSamplePage.paginator.itemsPerPageSelector).toHaveText(
@@ -80,8 +83,8 @@ const assertNoActiveFiltersInURL = async (fdsId: string, page: Page) => {
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 
 	await expect(() => {
-		const state = getStateFromURL(new URL(page.url()).search, fdsId);
-		expect(state.filters.length).toBe(0);
+		const config = getConfigFromURL(new URL(page.url()).search, fdsId);
+		expect(config.filters.length).toBe(0);
 	}).toPass();
 };
 
@@ -94,10 +97,10 @@ const assertActiveFiltersInURL = async (
 	await waitForFDS({page, visualizationMode: EFDSVisualizationMode.TABLE});
 
 	await expect(() => {
-		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+		const config = getConfigFromURL(new URL(page.url()).search, fdsId);
 
 		for (const id of ids) {
-			expect(state.filters.some((filter: any) => filter.id === id)).toBe(
+			expect(config.filters.some((filter: any) => filter.id === id)).toBe(
 				active
 			);
 		}
@@ -199,9 +202,9 @@ const assertView = async (
 	await waitForFDS({page, visualizationMode});
 
 	await expect(() => {
-		const state = getStateFromURL(new URL(page.url()).search, fdsId);
+		const config = getConfigFromURL(new URL(page.url()).search, fdsId);
 
-		expect(state.view).toBe(viewName ? viewName : visualizationMode);
+		expect(config.view).toBe(viewName ? viewName : visualizationMode);
 	}).toPass();
 };
 
@@ -236,7 +239,7 @@ const spaConfigurations = [
 ];
 
 for (const spaConfiguration of spaConfigurations) {
-	test.describe(`State in URL, ${spaConfiguration.name}`, () => {
+	test.describe(`Config in URL, ${spaConfiguration.name}`, () => {
 		test.beforeEach(
 			async ({
 				fdsSamplePage,
@@ -262,7 +265,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, push history, delta',
+			'push history, delta',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const setDelta = (delta) =>
@@ -314,7 +317,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, push history, view name',
+			'push history, view name',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const checkView = (visualizationMode: EFDSVisualizationMode) =>
@@ -386,7 +389,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, push history, filters',
+			'push history, filters',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const checkFilter = (
@@ -555,7 +558,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, replace history',
+			'replace history',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const checkDelta = (delta) =>
@@ -626,7 +629,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, push history, page number',
+			'push history, page number',
 			{tag: '@LPD-20947'},
 			async ({page}) => {
 				const assertPageNumber = async (
@@ -643,12 +646,12 @@ for (const spaConfiguration of spaConfigurations) {
 						.waitFor({state: 'visible'});
 
 					await expect(() => {
-						const state = getStateFromURL(
+						const config = getConfigFromURL(
 							new URL(page.url()).search,
 							fdsId
 						);
 
-						expect(state.page).toBe(pageNumber);
+						expect(config.page).toBe(pageNumber);
 					}).toPass();
 				};
 
@@ -713,131 +716,127 @@ for (const spaConfiguration of spaConfigurations) {
 			}
 		);
 
-		test(
-			'URL in state, push history, sorting',
-			{tag: '@LPD-20947'},
-			async ({page}) => {
-				const assertSort = async (
-					fieldName: string,
-					direction: 'asc' | 'desc'
-				) => {
-					await waitForFDS({
-						page,
-						visualizationMode: EFDSVisualizationMode.TABLE,
-					});
-
-					await expect(() => {
-						const state = getStateFromURL(
-							new URL(page.url()).search,
-							'advanced'
-						);
-
-						expect(state.sorts).toBeDefined();
-						expect(state.sorts).toHaveLength(1);
-						expect(state.sorts[0].key).toBe(fieldName);
-						expect(state.sorts[0].direction).toBe(direction);
-					}).toPass();
-
-					await waitForFDS({
-						page,
-						visualizationMode: EFDSVisualizationMode.TABLE,
-					});
-				};
-
-				const idColumnHeader = page.getByRole('columnheader').nth(1);
-
-				const titleColumnHeader = page.getByRole('columnheader').nth(2);
-
-				const idSortButton = idColumnHeader.getByRole('button');
-
-				const titleSortButton = titleColumnHeader.getByRole('button');
-
-				await test.step('Click on Sortable Content button', async () => {
-					await titleSortButton.click();
-
-					await assertSort('title', 'desc');
+		test('push history, sorting', {tag: '@LPD-20947'}, async ({page}) => {
+			const assertSort = async (
+				fieldName: string,
+				direction: 'asc' | 'desc'
+			) => {
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
 				});
 
-				await test.step('Check sorting in the UI', async () => {
-					const tableBodyRows = await page
-						.locator('.table tbody tr')
-						.all();
-
-					const textsFromSecondColumn = await Promise.all(
-						tableBodyRows.map((row) =>
-							row.locator('td').nth(2).innerText()
-						)
+				await expect(() => {
+					const config = getConfigFromURL(
+						new URL(page.url()).search,
+						'advanced'
 					);
 
-					textsFromSecondColumn.forEach((text, index) => {
-						if (index < textsFromSecondColumn.length - 1) {
-							expect(
-								text > textsFromSecondColumn[index + 1]
-							).toBeTruthy();
-						}
-					});
+					expect(config.sorts).toBeDefined();
+					expect(config.sorts).toHaveLength(1);
+					expect(config.sorts[0].key).toBe(fieldName);
+					expect(config.sorts[0].direction).toBe(direction);
+				}).toPass();
+
+				await waitForFDS({
+					page,
+					visualizationMode: EFDSVisualizationMode.TABLE,
 				});
+			};
 
-				await test.step('Change sort several times', async () => {
-					await idSortButton.click();
-					await assertSort('id', 'asc');
-					await idSortButton.click();
-					await assertSort('id', 'desc');
-					await titleSortButton.click();
-					await assertSort('title', 'asc');
-					await titleSortButton.click();
-					await assertSort('title', 'desc');
+			const idColumnHeader = page.getByRole('columnheader').nth(1);
+
+			const titleColumnHeader = page.getByRole('columnheader').nth(2);
+
+			const idSortButton = idColumnHeader.getByRole('button');
+
+			const titleSortButton = titleColumnHeader.getByRole('button');
+
+			await test.step('Click on Sortable Content button', async () => {
+				await titleSortButton.click();
+
+				await assertSort('title', 'desc');
+			});
+
+			await test.step('Check sorting in the UI', async () => {
+				const tableBodyRows = await page
+					.locator('.table tbody tr')
+					.all();
+
+				const textsFromSecondColumn = await Promise.all(
+					tableBodyRows.map((row) =>
+						row.locator('td').nth(2).innerText()
+					)
+				);
+
+				textsFromSecondColumn.forEach((text, index) => {
+					if (index < textsFromSecondColumn.length - 1) {
+						expect(
+							text > textsFromSecondColumn[index + 1]
+						).toBeTruthy();
+					}
 				});
+			});
 
-				await test.step('Check back navigation', async () => {
-					await page.goBack();
+			await test.step('Change sort several times', async () => {
+				await idSortButton.click();
+				await assertSort('id', 'asc');
+				await idSortButton.click();
+				await assertSort('id', 'desc');
+				await titleSortButton.click();
+				await assertSort('title', 'asc');
+				await titleSortButton.click();
+				await assertSort('title', 'desc');
+			});
 
-					await assertSort('title', 'asc');
-					await page.goBack();
+			await test.step('Check back navigation', async () => {
+				await page.goBack();
 
-					await assertSort('id', 'desc');
+				await assertSort('title', 'asc');
+				await page.goBack();
 
-					await page.goBack();
+				await assertSort('id', 'desc');
 
-					await assertSort('id', 'asc');
-				});
+				await page.goBack();
 
-				await test.step('Check forward navigation', async () => {
-					await page.goForward();
+				await assertSort('id', 'asc');
+			});
 
-					await assertSort('id', 'desc');
-					await page.goForward();
+			await test.step('Check forward navigation', async () => {
+				await page.goForward();
 
-					await assertSort('title', 'asc');
-					await page.goForward();
+				await assertSort('id', 'desc');
+				await page.goForward();
 
-					await assertSort('title', 'desc');
-				});
+				await assertSort('title', 'asc');
+				await page.goForward();
 
-				await test.step('Mix navigation and change via UI', async () => {
-					await page.goBack();
+				await assertSort('title', 'desc');
+			});
 
-					await assertSort('title', 'asc');
+			await test.step('Mix navigation and change via UI', async () => {
+				await page.goBack();
 
-					await idSortButton.click();
+				await assertSort('title', 'asc');
 
-					await assertSort('id', 'asc');
+				await idSortButton.click();
 
-					await page.goBack();
+				await assertSort('id', 'asc');
 
-					await assertSort('title', 'asc');
+				await page.goBack();
 
-					await page.goForward();
+				await assertSort('title', 'asc');
 
-					await assertSort('id', 'asc');
+				await page.goForward();
 
-					expect(await page.goForward()).toBeNull();
-				});
-			}
-		);
+				await assertSort('id', 'asc');
+
+				expect(await page.goForward()).toBeNull();
+			});
+		});
 
 		test(
-			'URL in state, push history, search parameter',
+			'push history, search parameter',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const assertSearchParam = async (
@@ -846,16 +845,16 @@ for (const spaConfiguration of spaConfigurations) {
 					page: Page
 				) => {
 					await expect(() => {
-						const state = getStateFromURL(
+						const config = getConfigFromURL(
 							new URL(page.url()).search,
 							fdsId
 						);
 
 						if (searchParam) {
-							expect(state.q).toBe(searchParam);
+							expect(config.q).toBe(searchParam);
 						}
 						else {
-							expect(state.q).toBeUndefined();
+							expect(config.q).toBeUndefined();
 						}
 					}).toPass();
 
@@ -930,7 +929,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state is turned off by default',
+			'config in URL is turned off by default',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				await test.step('Change to single selection tab', async () => {
@@ -941,9 +940,9 @@ for (const spaConfiguration of spaConfigurations) {
 					});
 				});
 
-				await test.step('Assert there is no state un URL', async () => {
+				await test.step('Assert there is no config in URL', async () => {
 					expect(
-						getStateFromURL(
+						getConfigFromURL(
 							new URL(page.url()).search,
 							'singleSelection'
 						)
@@ -953,7 +952,7 @@ for (const spaConfiguration of spaConfigurations) {
 		);
 
 		test(
-			'URL in state, push history, visible fields',
+			'push history, visible fields',
 			{tag: '@LPD-20947'},
 			async ({fdsSamplePage, page}) => {
 				const tableFields = {
@@ -968,16 +967,16 @@ for (const spaConfiguration of spaConfigurations) {
 					);
 
 					await expect(() => {
-						const state = getStateFromURL(
+						const config = getConfigFromURL(
 							new URL(page.url()).search,
 							'advanced'
 						);
 
-						expect(state.vf).toBeDefined();
+						expect(config.vf).toBeDefined();
 						expect(
-							Object.keys(state.vf).reduce(
+							Object.keys(config.vf).reduce(
 								(acc: boolean, key: string) =>
-									acc && state.vf[key],
+									acc && config.vf[key],
 								true
 							)
 						).toBeTruthy();
@@ -1006,12 +1005,12 @@ for (const spaConfiguration of spaConfigurations) {
 					);
 
 					await expect(() => {
-						const state = getStateFromURL(
+						const config = getConfigFromURL(
 							new URL(page.url()).search,
 							'advanced'
 						);
-						expect(state.vf).toBeDefined();
-						expect(state.vf[tableFields[fieldName]]).toBe(visible);
+						expect(config.vf).toBeDefined();
+						expect(config.vf[tableFields[fieldName]]).toBe(visible);
 					}).toPass();
 				};
 

@@ -8,8 +8,8 @@ import '../../../css/spaces/SpaceMembersInputWithSelect.scss';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
+import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
-import {ItemSelector} from 'frontend-js-item-selector-web';
 import React, {useId, useState} from 'react';
 
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';

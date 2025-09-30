@@ -117,6 +117,11 @@ public class SitePageResourceImpl
 				contextUser.getUserId()));
 	}
 
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
+		return _entityModel;
+	}
+
 	public ExportImportDescriptor getExportImportDescriptor() {
 		return new ExportImportDescriptor() {
 
@@ -729,10 +734,10 @@ public class SitePageResourceImpl
 		}
 	}
 
-	private static final EntityModel _entityModel = new SitePageEntityModel();
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SitePageResourceImpl.class);
+
+	private static final EntityModel _entityModel = new SitePageEntityModel();
 
 	@Reference
 	private CETManager _cetManager;

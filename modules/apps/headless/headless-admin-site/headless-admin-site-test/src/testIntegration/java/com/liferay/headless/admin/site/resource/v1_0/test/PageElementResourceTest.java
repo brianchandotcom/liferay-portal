@@ -6,30 +6,22 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.ColumnPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.RowPageElementDefinition;
 import com.liferay.headless.admin.site.client.problem.Problem;
-import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -206,101 +198,19 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		}
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
-		super.testPostSitePageSpecificationPageExperiencePageElement();
-
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new CollectionPageElementDefinition() {
-					{
-						setType(Type.COLLECTION);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new CollectionItemPageElementDefinition() {
-					{
-						setType(Type.COLLECTION_ITEM);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new ColumnPageElementDefinition() {
-					{
-						setType(Type.COLUMN);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new ContainerPageElementDefinition() {
-					{
-						setContentVisibility(StringPool.BLANK);
-						setHtmlProperties(new HtmlProperties());
-						setIndexed(Boolean.FALSE);
-						setType(Type.CONTAINER);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new DropZonePageElementDefinition() {
-					{
-						setType(Type.DROP_ZONE);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormPageElementDefinition() {
-					{
-						setType(Type.FORM);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormStepPageElementDefinition() {
-					{
-						setType(Type.FORM_STEP);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FormStepContainerPageElementDefinition() {
-					{
-						setType(Type.FORM_STEP_CONTAINER);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FragmentDropZonePageElementDefinition() {
-					{
-						setType(Type.FRAGMENT_DROP_ZONE);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new FragmentInstancePageElementDefinition() {
-					{
-						setFragmentReference(
-							new DefaultFragmentReference() {
-								{
-									setDefaultFragmentKey(
-										() -> "BASIC_COMPONENT-heading");
-								}
-							});
-						setType(Type.FRAGMENT);
-					}
-				}));
-		_assertPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				new RowPageElementDefinition() {
-					{
-						setType(Type.ROW);
-					}
-				}));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getPageElementContainerPageElementDefinition(
+				new String[] {"cssClass1", "cssClass2"}, "customCss", false,
+				StringUtil.randomString()));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getPageElementContainerPageElementDefinition(
+				new String[] {"cssClass1", "cssClass2", "cssClass3"},
+				"customCss 2", false, StringUtil.randomString()));
 	}
 
 	@Ignore
@@ -318,23 +228,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	public void testPutSitePageSpecificationPageExperiencePageElement()
 		throws Exception {
 
-		PageElement pageElement = randomPageElement();
+		String externalReferenceCode = RandomTestUtil.randomString();
 
-		SegmentsExperience segmentsExperience =
-			_segmentsExperienceLocalService.fetchSegmentsExperience(
-				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
-				_layout.getPlid());
-
-		PageElement putPageElement =
-			pageElementResource.
-				putSitePageSpecificationPageExperiencePageElement(
-					testGroup.getExternalReferenceCode(),
-					_draftLayout.getExternalReferenceCode(),
-					segmentsExperience.getExternalReferenceCode(),
-					pageElement.getExternalReferenceCode(), pageElement);
-
-		assertEquals(pageElement, putPageElement);
-		assertValid(putPageElement);
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElementContainerPageElementDefinition(
+				new String[] {"cssClass1", "cssClass2"}, "customCss", true,
+				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElementContainerPageElementDefinition(
+				new String[] {"cssClass1", "cssClass2", "cssClass3"},
+				"customCss 2", false, externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
+			externalReferenceCode);
 	}
 
 	@Override
@@ -350,7 +255,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _randomPageElement(
 			new ContainerPageElementDefinition() {
 				{
-					setContentVisibility(StringPool.BLANK);
+					setContentVisibility(ContentVisibility.AUTO);
 					setHtmlProperties(new HtmlProperties());
 					setIndexed(Boolean.FALSE);
 					setType(Type.CONTAINER);
@@ -477,16 +382,21 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				segmentsExperience.getExternalReferenceCode(), pageElement);
 	}
 
-	private void _assertPostSitePageSpecificationPageExperiencePageElement(
-			PageElement pageElement)
-		throws Exception {
-
-		PageElement postPageElement =
-			testPostSitePageSpecificationPageExperiencePageElement_addPageElement(
-				pageElement);
-
-		assertEquals(pageElement, postPageElement);
-		assertValid(postPageElement);
+	private FragmentViewport[] _getFragmentViewports() {
+		return new FragmentViewport[] {
+			new FragmentViewport() {
+				{
+					setCustomCSS("mobile custom css");
+					setId(ViewportSize.MOBILE_LANDSCAPE::getViewportSizeId);
+				}
+			},
+			new FragmentViewport() {
+				{
+					setCustomCSS("tablet custom css");
+					setId(ViewportSize.TABLET::getViewportSizeId);
+				}
+			}
+		};
 	}
 
 	private LayoutStructure _getLayoutStructure() {
@@ -497,6 +407,57 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
+	private PageElement _getPageElement(
+			PageElementDefinition pageElementDefinition,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		PageElement pageElement = _randomPageElement(pageElementDefinition);
+
+		pageElement.setExternalReferenceCode(pageElementExternalReferenceCode);
+		pageElement.setPosition(0);
+
+		return pageElement;
+	}
+
+	private PageElement _getPageElementContainerPageElementDefinition(
+			String[] curCssClasses, String curCustomCss, boolean curIndexed,
+			String curPageElementExternalReferenceCode)
+		throws Exception {
+
+		return _getPageElement(
+			new ContainerPageElementDefinition() {
+				{
+					setContentVisibility(ContentVisibility.AUTO);
+					setCssClasses(curCssClasses);
+					setCustomCSS(curCustomCss);
+					setFragmentViewports(_getFragmentViewports());
+					setHtmlProperties(
+						() -> new HtmlProperties() {
+							{
+								setHtmlTag(HtmlTag.DIV);
+							}
+						});
+					setIndexed(curIndexed);
+					setLayout(
+						() ->
+							new com.liferay.headless.admin.site.client.dto.v1_0.
+								Layout() {
+
+								{
+									setAlign(Align.END);
+									setContentDisplay(ContentDisplay.FLEX_ROW);
+									setFlexWrap(FlexWrap.WRAP_REVERSE);
+									setJustify(Justify.CENTER);
+									setWidthType(WidthType.FIXED);
+								}
+							});
+					setType(PageElementDefinition.Type.CONTAINER);
+				}
+			},
+			curPageElementExternalReferenceCode);
 	}
 
 	private PageElement _randomPageElement(
@@ -511,6 +472,63 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(_position++);
 
 		return pageElement;
+	}
+
+	private void _testPostSitePageSpecificationPageExperiencePageElement(
+			PageElement pageElement)
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement postPageElement =
+			pageElementResource.
+				postSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(), pageElement);
+
+		assertEquals(pageElement, postPageElement);
+		assertValid(postPageElement);
+	}
+
+	private void _testPutSitePageSpecificationPageExperiencePageElement(
+			PageElement pageElement)
+		throws Exception {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				testGroup.getGroupId(), SegmentsExperienceConstants.KEY_DEFAULT,
+				_layout.getPlid());
+
+		PageElement putPageElement =
+			pageElementResource.
+				putSitePageSpecificationPageExperiencePageElement(
+					testGroup.getExternalReferenceCode(),
+					_draftLayout.getExternalReferenceCode(),
+					segmentsExperience.getExternalReferenceCode(),
+					pageElement.getExternalReferenceCode(), pageElement);
+
+		assertEquals(pageElement, putPageElement);
+		assertValid(putPageElement);
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
+				String pageElementExternalReferenceCode)
+		throws Exception {
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElement(
+				new ContainerPageElementDefinition() {
+					{
+						setIndexed(false);
+						setType(Type.CONTAINER);
+					}
+				},
+				pageElementExternalReferenceCode));
 	}
 
 	private Layout _draftLayout;

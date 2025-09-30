@@ -239,27 +239,33 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 	}
 
 	private boolean _hasPortletDataHandlerControls(
-		PortletDataHandlerControl[] expectedControls,
-		PortletDataHandlerControl[] actualControls) {
+		PortletDataHandlerControl[] expectedPortletDataHandlerControls,
+		PortletDataHandlerControl[] portletDataHandlerControls) {
 
-		if (expectedControls.length != actualControls.length) {
+		if (expectedPortletDataHandlerControls.length !=
+				portletDataHandlerControls.length) {
+
 			return false;
 		}
 
-		if (actualControls.length == 0) {
+		if (portletDataHandlerControls.length == 0) {
 			return true;
 		}
 
-		for (PortletDataHandlerControl expectedControl : expectedControls) {
-			for (PortletDataHandlerControl actualControl : actualControls) {
+		for (PortletDataHandlerControl expectedPortletDataHandlerControl :
+				expectedPortletDataHandlerControls) {
+
+			for (PortletDataHandlerControl portletDataHandlerControl :
+					portletDataHandlerControls) {
+
 				if (Objects.equals(
-						expectedControl.getControlName(),
-						actualControl.getControlName()) &&
+						expectedPortletDataHandlerControl.getControlName(),
+						portletDataHandlerControl.getControlName()) &&
 					Objects.equals(
-						expectedControl.getControlLabel(),
-						actualControl.getControlLabel()) &&
-					(expectedControl.isDisabled() ==
-						actualControl.isDisabled())) {
+						expectedPortletDataHandlerControl.getControlLabel(),
+						portletDataHandlerControl.getControlLabel()) &&
+					(expectedPortletDataHandlerControl.isDisabled() ==
+						portletDataHandlerControl.isDisabled())) {
 
 					return true;
 				}

@@ -130,6 +130,7 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -2258,6 +2259,16 @@ public class ObjectDefinitionLocalServiceTest {
 			_classNameLocalService.fetchByClassNameId(
 				className.getClassNameId()));
 
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
+			objectDefinition.getClassName(), 0, 0, "Single Approver", 1);
+
+		Assert.assertTrue(
+			ListUtil.isNotEmpty(
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					TestPropsValues.getCompanyId(),
+					objectDefinition.getClassName())));
+
 		TreeTestUtil.unbind(
 			objectDefinition.getObjectDefinitionId(),
 			_objectRelationshipLocalService);
@@ -2319,6 +2330,14 @@ public class ObjectDefinitionLocalServiceTest {
 				ObjectDefinition.class.getName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectDefinition.getObjectDefinitionId())));
+
+		// Workflow definition links
+
+		Assert.assertTrue(
+			ListUtil.isEmpty(
+				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					TestPropsValues.getCompanyId(),
+					objectDefinition.getClassName())));
 
 		// Delete modifiable system object definition
 

@@ -3,55 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayEmptyState from '@clayui/empty-state';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClayModal from '@clayui/modal';
-import classNames from 'classnames';
-import {DocumentPreviewer} from 'document-library-preview-document';
-import {ImagePreviewer} from 'document-library-preview-image';
-import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
-export type File = {
-	alternativeText?: string;
-	externalReferenceCode: string;
-	id: number;
-	link: {
-		href: string;
-		label: string;
-	};
-	metadata?: {
-		numberOfPages?: number;
-	};
-	mimeType: string;
-	name: string;
-	previewURL: string;
-	thumbnailURL: string;
-};
+import {IAssetFile} from '../../common/types/AssetType';
+import FilePreview from './asset_navigation_view/FilePreview';
 
 interface FilePreviewerModalContentProps {
-	file: File;
+	file: IAssetFile;
 	headerName?: string;
 }
 
 export default function FilePreviewerModalContent({
-	file: {
-		alternativeText,
-		link,
-		metadata: {numberOfPages} = {},
-		mimeType,
-		name,
-		previewURL,
-		thumbnailURL,
-	},
+	file,
 	headerName,
 }: FilePreviewerModalContentProps) {
-	const params = new URLSearchParams(thumbnailURL);
-	const hasDocumentPreview = numberOfPages && previewURL;
-	const baseDocumentImageURL = new URL(previewURL, window.location.href);
-	const hasImagePreview = params.has('imageThumbnail');
-	const isVideo = mimeType.startsWith('video/') && previewURL;
+	const {link, name} = file;
 
 	return (
 		<>
@@ -80,30 +49,8 @@ export default function FilePreviewerModalContent({
 				</div>
 			</ClayModal.Header>
 
-			<ClayModal.Body
-				className={classNames({
-					'bg-light': !hasImagePreview,
-				})}
-			>
-				{hasDocumentPreview ? (
-					<DocumentPreviewer
-						alt={alternativeText}
-						baseImageURL={baseDocumentImageURL.toString()}
-						totalPages={numberOfPages}
-					/>
-				) : hasImagePreview ? (
-					<ImagePreviewer alt={name} imageURL={link.href} />
-				) : isVideo ? (
-					<DLVideoIframe videoPreviewURL={previewURL} />
-				) : (
-					<ClayEmptyState
-						description={Liferay.Language.get(
-							'hmm-looks-like-this-item-does-not-have-a-preview-we-can-show-you'
-						)}
-						imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/cms_empty_state_preview.svg`}
-						title={Liferay.Language.get('no-preview-available')}
-					/>
-				)}
+			<ClayModal.Body>
+				<FilePreview file={file} />
 			</ClayModal.Body>
 		</>
 	);

@@ -11,12 +11,12 @@ export interface IAssetFile {
 		href: string;
 		label: string;
 	};
-	metadata: {
+	metadata?: {
 		numberOfPages?: number;
 	};
 	mimeType?: string;
 	name: string;
-	previewURL?: string;
+	previewURL: string;
 	thumbnailURL: string;
 }
 

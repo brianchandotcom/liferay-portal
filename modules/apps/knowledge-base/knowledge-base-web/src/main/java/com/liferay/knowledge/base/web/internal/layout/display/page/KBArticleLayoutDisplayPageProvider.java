@@ -7,6 +7,7 @@ package com.liferay.knowledge.base.web.internal.layout.display.page;
 
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.knowledge.base.constants.KBFolderConstants;
@@ -15,10 +16,18 @@ import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
@@ -49,37 +58,8 @@ public class KBArticleLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		try {
-			InfoItemIdentifier infoItemIdentifier =
-				infoItemReference.getInfoItemIdentifier();
-
-			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-				return null;
-			}
-
-			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-				(ClassPKInfoItemIdentifier)
-					infoItemReference.getInfoItemIdentifier();
-
-			KBArticle kbArticle = _kbArticleLocalService.fetchKBArticle(
-				classPKInfoItemIdentifier.getClassPK());
-
-			if (kbArticle == null) {
-				kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
-					classPKInfoItemIdentifier.getClassPK(),
-					WorkflowConstants.STATUS_ANY);
-			}
-
-			if ((kbArticle == null) || kbArticle.isDraft()) {
-				return null;
-			}
-
-			return new KBArticleLayoutDisplayPageObjectProvider(
-				kbArticle, _assetHelper);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return getLayoutDisplayPageObjectProvider(
+			_getGroupId(), infoItemReference);
 	}
 
 	@Override
@@ -101,6 +81,16 @@ public class KBArticleLayoutDisplayPageProvider
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<KBArticle>
+		getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
+
+		return _getLayoutDisplayPageObjectProvider(
+			_getGroupId(groupId, infoItemReference.getInfoItemIdentifier()),
+			infoItemReference);
 	}
 
 	@Override
@@ -139,6 +129,72 @@ public class KBArticleLayoutDisplayPageProvider
 		}
 	}
 
+	private long _getCompanyId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getCompanyId();
+		}
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId != null) {
+			return companyId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor company thread local " +
+				"are initialized");
+	}
+
+	private long _getGroupId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
+	}
+
+	private long _getGroupId(
+		long groupId, InfoItemIdentifier infoItemIdentifier) {
+
+		try {
+			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+				return groupId;
+			}
+
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			if (Validator.isNull(
+					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
+
+				return groupId;
+			}
+
+			Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+				_getCompanyId());
+
+			return group.getGroupId();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
 	private long _getKBFolderId(long groupId, List<String> urlTitleParts) {
 		if (urlTitleParts.size() == 1) {
 			return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -152,6 +208,59 @@ public class KBArticleLayoutDisplayPageProvider
 		}
 
 		return KBFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+	}
+
+	private KBArticleLayoutDisplayPageObjectProvider
+		_getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
+
+		try {
+			InfoItemIdentifier infoItemIdentifier =
+				infoItemReference.getInfoItemIdentifier();
+
+			if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+				!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
+				return null;
+			}
+
+			KBArticle kbArticle = null;
+
+			if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					(ClassPKInfoItemIdentifier)
+						infoItemReference.getInfoItemIdentifier();
+
+				kbArticle = _kbArticleLocalService.fetchKBArticle(
+					classPKInfoItemIdentifier.getClassPK());
+
+				if (kbArticle == null) {
+					kbArticle = _kbArticleLocalService.fetchLatestKBArticle(
+						classPKInfoItemIdentifier.getClassPK(),
+						WorkflowConstants.STATUS_ANY);
+				}
+			}
+			else {
+				ERCInfoItemIdentifier ercInfoItemIdentifier =
+					(ERCInfoItemIdentifier)infoItemIdentifier;
+
+				kbArticle =
+					_kbArticleLocalService.
+						fetchLatestKBArticleByExternalReferenceCode(
+							groupId,
+							ercInfoItemIdentifier.getExternalReferenceCode());
+			}
+
+			if ((kbArticle == null) || kbArticle.isDraft()) {
+				return null;
+			}
+
+			return new KBArticleLayoutDisplayPageObjectProvider(
+				kbArticle, _assetHelper);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	@Reference

@@ -8,6 +8,7 @@ package com.liferay.journal.web.internal.layout.display.page;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.journal.model.JournalArticle;
@@ -15,11 +16,18 @@ import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
@@ -50,37 +58,8 @@ public class JournalArticleLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(
 			InfoItemReference infoItemReference) {
 
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			return null;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-
-		JournalArticle article = journalArticleLocalService.fetchLatestArticle(
-			classPKInfoItemIdentifier.getClassPK());
-
-		if (classPKInfoItemIdentifier.getVersion() != null) {
-			article = journalArticleLocalService.fetchArticle(
-				article.getGroupId(), article.getArticleId(),
-				Double.valueOf(classPKInfoItemIdentifier.getVersion()));
-		}
-
-		if (!_isShow(article)) {
-			return null;
-		}
-
-		try {
-			return new JournalArticleLayoutDisplayPageObjectProvider(
-				article, assetHelper);
-		}
-		catch (PortalException portalException) {
-			throw new RuntimeException(portalException);
-		}
+		return _getLayoutDisplayPageObjectProvider(
+			_getGroupId(), infoItemReference);
 	}
 
 	@Override
@@ -98,6 +77,16 @@ public class JournalArticleLayoutDisplayPageProvider
 		catch (PortalException portalException) {
 			throw new RuntimeException(portalException);
 		}
+	}
+
+	@Override
+	public LayoutDisplayPageObjectProvider<JournalArticle>
+		getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
+
+		return _getLayoutDisplayPageObjectProvider(
+			_getGroupId(groupId, infoItemReference.getInfoItemIdentifier()),
+			infoItemReference);
 	}
 
 	@Override
@@ -173,6 +162,125 @@ public class JournalArticleLayoutDisplayPageProvider
 		}
 
 		return null;
+	}
+
+	private long _getCompanyId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getCompanyId();
+		}
+
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		if (companyId != null) {
+			return companyId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor company thread local " +
+				"are initialized");
+	}
+
+	private long _getGroupId() {
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			return serviceContext.getScopeGroupId();
+		}
+
+		Long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != null) {
+			return groupId;
+		}
+
+		throw new IllegalStateException(
+			"Neither service context thread local nor group thread local are " +
+				"initialized");
+	}
+
+	private long _getGroupId(
+		long groupId, InfoItemIdentifier infoItemIdentifier) {
+
+		try {
+			if (!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+				return groupId;
+			}
+
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			if (Validator.isNull(
+					ercInfoItemIdentifier.getScopeExternalReferenceCode())) {
+
+				return groupId;
+			}
+
+			Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+				_getCompanyId());
+
+			return group.getGroupId();
+		}
+		catch (PortalException portalException) {
+			return ReflectionUtil.throwException(portalException);
+		}
+	}
+
+	private JournalArticleLayoutDisplayPageObjectProvider
+		_getLayoutDisplayPageObjectProvider(
+			long groupId, InfoItemReference infoItemReference) {
+
+		InfoItemIdentifier infoItemIdentifier =
+			infoItemReference.getInfoItemIdentifier();
+
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
+			return null;
+		}
+
+		JournalArticle article = null;
+
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
+
+			article = journalArticleLocalService.fetchLatestArticle(
+				classPKInfoItemIdentifier.getClassPK());
+
+			if (classPKInfoItemIdentifier.getVersion() != null) {
+				article = journalArticleLocalService.fetchArticle(
+					article.getGroupId(), article.getArticleId(),
+					Double.valueOf(classPKInfoItemIdentifier.getVersion()));
+			}
+		}
+		else {
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			article =
+				journalArticleLocalService.
+					fetchLatestArticleByExternalReferenceCode(
+						groupId,
+						ercInfoItemIdentifier.getExternalReferenceCode());
+		}
+
+		if (!_isShow(article)) {
+			return null;
+		}
+
+		try {
+			return new JournalArticleLayoutDisplayPageObjectProvider(
+				article, assetHelper);
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private boolean _isShow(JournalArticle article) {

@@ -44,9 +44,9 @@ public class BrowserModuleAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
+				{0, false, false, false}, {1, false, false, true},
 				{2, false, true, false}, {3, false, true, true},
-				{4, false, false, true}
+				{4, true, false, false}
 			});
 	}
 
@@ -100,10 +100,10 @@ public class BrowserModuleAbsolutePortalURLBuilderTest
 
 	private static final String[] _RESULTS = {
 		"/o/js/resolved-module/frontend-js-web@1.0.0/index",
-		"/o/js/resolved-module/frontend-js-web@1.0.0/index",
+		"/proxy/o/js/resolved-module/frontend-js-web@1.0.0/index",
 		"/context/o/js/resolved-module/frontend-js-web@1.0.0/index",
 		"/proxy/context/o/js/resolved-module/frontend-js-web@1.0.0/index",
-		"/proxy/o/js/resolved-module/frontend-js-web@1.0.0/index"
+		"/o/js/resolved-module/frontend-js-web@1.0.0/index"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;

@@ -37,10 +37,10 @@ public class WebContextScriptAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
-				{2, false, false, true}, {3, true, false, true},
-				{4, false, true, false}, {5, true, true, false},
-				{6, false, true, true}, {7, true, true, true}
+				{0, false, false, false}, {1, false, false, true},
+				{2, false, true, false}, {3, false, true, true},
+				{4, true, false, false}, {5, true, false, true},
+				{6, true, true, false}, {7, true, true, true}
 			});
 	}
 
@@ -110,45 +110,45 @@ public class WebContextScriptAbsolutePortalURLBuilderTest
 
 	private static final String[] _RESULTS = {
 		"/o/classic-theme/js/main.(HASH).js",
-		"http://cdn-host/o/classic-theme/js/main.(HASH).js",
 		"/proxy/o/classic-theme/js/main.(HASH).js",
-		"http://cdn-host/proxy/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js",
-		"http://cdn-host/context/o/classic-theme/js/main.(HASH).js",
 		"/proxy/context/o/classic-theme/js/main.(HASH).js",
+		"http://cdn-host/o/classic-theme/js/main.(HASH).js",
+		"http://cdn-host/proxy/o/classic-theme/js/main.(HASH).js",
+		"http://cdn-host/context/o/classic-theme/js/main.(HASH).js",
 		"http://cdn-host/proxy/context/o/classic-theme/js/main.(HASH).js"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN = {
 		"/o/classic-theme/js/main.(HASH).js",
-		"/o/classic-theme/js/main.(HASH).js",
 		"/proxy/o/classic-theme/js/main.(HASH).js",
-		"/proxy/o/classic-theme/js/main.(HASH).js",
-		"/context/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js",
 		"/proxy/context/o/classic-theme/js/main.(HASH).js",
+		"/o/classic-theme/js/main.(HASH).js",
+		"/proxy/o/classic-theme/js/main.(HASH).js",
+		"/context/o/classic-theme/js/main.(HASH).js",
 		"/proxy/context/o/classic-theme/js/main.(HASH).js"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN_AND_PROXY = {
 		"/o/classic-theme/js/main.(HASH).js",
 		"/o/classic-theme/js/main.(HASH).js",
-		"/o/classic-theme/js/main.(HASH).js",
-		"/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js",
+		"/o/classic-theme/js/main.(HASH).js",
+		"/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js",
 		"/context/o/classic-theme/js/main.(HASH).js"
 	};
 
 	private static final String[] _RESULTS_IGNORE_PROXY = {
 		"/o/classic-theme/js/main.(HASH).js",
-		"http://cdn-host/o/classic-theme/js/main.(HASH).js",
 		"/o/classic-theme/js/main.(HASH).js",
+		"/context/o/classic-theme/js/main.(HASH).js",
+		"/context/o/classic-theme/js/main.(HASH).js",
 		"http://cdn-host/o/classic-theme/js/main.(HASH).js",
-		"/context/o/classic-theme/js/main.(HASH).js",
+		"http://cdn-host/o/classic-theme/js/main.(HASH).js",
 		"http://cdn-host/context/o/classic-theme/js/main.(HASH).js",
-		"/context/o/classic-theme/js/main.(HASH).js",
 		"http://cdn-host/context/o/classic-theme/js/main.(HASH).js"
 	};
 

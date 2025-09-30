@@ -37,10 +37,10 @@ public class BundleScriptAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
-				{2, false, false, true}, {3, true, false, true},
-				{4, false, true, false}, {5, true, true, false},
-				{6, false, true, true}, {7, true, true, true}
+				{0, false, false, false}, {1, false, false, true},
+				{2, false, true, false}, {3, false, true, true},
+				{4, true, false, false}, {5, true, false, true},
+				{6, true, true, false}, {7, true, true, true}
 			});
 	}
 
@@ -109,29 +109,29 @@ public class BundleScriptAbsolutePortalURLBuilderTest
 
 	private static final String[] _RESULTS = {
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"http://cdn-host/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es",
 		"/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"http://cdn-host/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"http://cdn-host/context/o/wcp/index.js?mac=aG9saQ==&" +
-			"browserId=firefox&languageId=es",
 		"/proxy/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es",
+		"http://cdn-host/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es",
+		"http://cdn-host/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es",
+		"http://cdn-host/context/o/wcp/index.js?mac=aG9saQ==&" +
+			"browserId=firefox&languageId=es",
 		"http://cdn-host/proxy/context/o/wcp/index.js?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN = {
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/proxy/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es",
+		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/proxy/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/proxy/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es"
 	};
@@ -139,25 +139,25 @@ public class BundleScriptAbsolutePortalURLBuilderTest
 	private static final String[] _RESULTS_IGNORE_CDN_AND_PROXY = {
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es"
 	};
 
 	private static final String[] _RESULTS_IGNORE_PROXY = {
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
-		"http://cdn-host/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es",
 		"/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"http://cdn-host/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es",
-		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
+		"http://cdn-host/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es",
 		"http://cdn-host/context/o/wcp/index.js?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es",
-		"/context/o/wcp/index.js?mac=aG9saQ==&browserId=firefox&languageId=es",
 		"http://cdn-host/context/o/wcp/index.js?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es"
 	};

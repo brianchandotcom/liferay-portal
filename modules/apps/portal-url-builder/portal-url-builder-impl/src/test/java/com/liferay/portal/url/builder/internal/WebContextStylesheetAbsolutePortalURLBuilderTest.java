@@ -37,10 +37,10 @@ public class WebContextStylesheetAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
-				{2, false, false, true}, {3, true, false, true},
-				{4, false, true, false}, {5, true, true, false},
-				{6, false, true, true}, {7, true, true, true}
+				{0, false, false, false}, {1, false, false, true},
+				{2, false, true, false}, {3, false, true, true},
+				{4, true, false, false}, {5, true, false, true},
+				{6, true, true, false}, {7, true, true, true}
 			});
 	}
 
@@ -111,45 +111,45 @@ public class WebContextStylesheetAbsolutePortalURLBuilderTest
 
 	private static final String[] _RESULTS = {
 		"/o/frontend-css-web/main.(HASH).css",
-		"http://cdn-host/o/frontend-css-web/main.(HASH).css",
 		"/proxy/o/frontend-css-web/main.(HASH).css",
-		"http://cdn-host/proxy/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css",
-		"http://cdn-host/context/o/frontend-css-web/main.(HASH).css",
 		"/proxy/context/o/frontend-css-web/main.(HASH).css",
+		"http://cdn-host/o/frontend-css-web/main.(HASH).css",
+		"http://cdn-host/proxy/o/frontend-css-web/main.(HASH).css",
+		"http://cdn-host/context/o/frontend-css-web/main.(HASH).css",
 		"http://cdn-host/proxy/context/o/frontend-css-web/main.(HASH).css"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN = {
 		"/o/frontend-css-web/main.(HASH).css",
-		"/o/frontend-css-web/main.(HASH).css",
 		"/proxy/o/frontend-css-web/main.(HASH).css",
-		"/proxy/o/frontend-css-web/main.(HASH).css",
-		"/context/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css",
 		"/proxy/context/o/frontend-css-web/main.(HASH).css",
+		"/o/frontend-css-web/main.(HASH).css",
+		"/proxy/o/frontend-css-web/main.(HASH).css",
+		"/context/o/frontend-css-web/main.(HASH).css",
 		"/proxy/context/o/frontend-css-web/main.(HASH).css"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN_AND_PROXY = {
 		"/o/frontend-css-web/main.(HASH).css",
 		"/o/frontend-css-web/main.(HASH).css",
-		"/o/frontend-css-web/main.(HASH).css",
-		"/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css",
+		"/o/frontend-css-web/main.(HASH).css",
+		"/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css",
 		"/context/o/frontend-css-web/main.(HASH).css"
 	};
 
 	private static final String[] _RESULTS_IGNORE_PROXY = {
 		"/o/frontend-css-web/main.(HASH).css",
-		"http://cdn-host/o/frontend-css-web/main.(HASH).css",
 		"/o/frontend-css-web/main.(HASH).css",
+		"/context/o/frontend-css-web/main.(HASH).css",
+		"/context/o/frontend-css-web/main.(HASH).css",
 		"http://cdn-host/o/frontend-css-web/main.(HASH).css",
-		"/context/o/frontend-css-web/main.(HASH).css",
+		"http://cdn-host/o/frontend-css-web/main.(HASH).css",
 		"http://cdn-host/context/o/frontend-css-web/main.(HASH).css",
-		"/context/o/frontend-css-web/main.(HASH).css",
 		"http://cdn-host/context/o/frontend-css-web/main.(HASH).css"
 	};
 

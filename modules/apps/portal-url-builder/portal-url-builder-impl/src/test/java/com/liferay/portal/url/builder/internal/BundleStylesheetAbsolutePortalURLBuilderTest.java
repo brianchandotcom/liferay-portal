@@ -37,10 +37,10 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
-				{2, false, false, true}, {3, true, false, true},
-				{4, false, true, false}, {5, true, true, false},
-				{6, false, true, true}, {7, true, true, true}
+				{0, false, false, false}, {1, false, false, true},
+				{2, false, true, false}, {3, false, true, true},
+				{4, true, false, false}, {5, true, false, true},
+				{6, true, true, false}, {7, true, true, true}
 			});
 	}
 
@@ -111,18 +111,18 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 	private static final String[] _RESULTS = {
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
 		"/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"http://cdn-host/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"/proxy/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"http://cdn-host/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"http://cdn-host/context/o/wcp/main.css?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es&themeId=atheme",
-		"/proxy/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
 		"http://cdn-host/proxy/context/o/wcp/main.css?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es&themeId=atheme"
 	};
@@ -130,17 +130,17 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 	private static final String[] _RESULTS_IGNORE_CDN = {
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
+		"/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
+			"themeId=atheme",
+		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"/proxy/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
 		"/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"/proxy/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
-			"themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
-		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
-		"/proxy/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"/proxy/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme"
@@ -151,14 +151,14 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 			"themeId=atheme",
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
-			"themeId=atheme",
-		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
-			"themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
+		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
+			"themeId=atheme",
+		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
+			"themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
@@ -168,18 +168,18 @@ public class BundleStylesheetAbsolutePortalURLBuilderTest
 	private static final String[] _RESULTS_IGNORE_PROXY = {
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
 		"/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&languageId=es&" +
 			"themeId=atheme",
-		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
+			"languageId=es&themeId=atheme",
+		"http://cdn-host/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
 			"languageId=es&themeId=atheme",
 		"http://cdn-host/context/o/wcp/main.css?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es&themeId=atheme",
-		"/context/o/wcp/main.css?mac=aG9saQ==&browserId=firefox&" +
-			"languageId=es&themeId=atheme",
 		"http://cdn-host/context/o/wcp/main.css?mac=aG9saQ==&" +
 			"browserId=firefox&languageId=es&themeId=atheme"
 	};

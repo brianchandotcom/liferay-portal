@@ -37,9 +37,9 @@ public class PortalImageAbsolutePortalURLBuilderTest
 	public static Collection<Object[]> data() {
 		return Arrays.asList(
 			new Object[][] {
-				{0, false, false, false}, {1, true, false, false},
+				{0, false, false, false}, {1, false, false, true},
 				{2, false, true, false}, {3, false, true, true},
-				{4, false, false, true}
+				{4, true, false, false}
 			});
 	}
 
@@ -88,17 +88,16 @@ public class PortalImageAbsolutePortalURLBuilderTest
 	public boolean proxy;
 
 	private static final String[] _RESULTS = {
-		"/image/path/to/image.png", "http://cdn-host/image/path/to/image.png",
+		"/image/path/to/image.png", "/proxy/image/path/to/image.png",
 		"/context/image/path/to/image.png",
 		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
+		"http://cdn-host/image/path/to/image.png"
 	};
 
 	private static final String[] _RESULTS_IGNORE_CDN = {
-		"/image/path/to/image.png", "/image/path/to/image.png",
+		"/image/path/to/image.png", "/proxy/image/path/to/image.png",
 		"/context/image/path/to/image.png",
-		"/proxy/context/image/path/to/image.png",
-		"/proxy/image/path/to/image.png"
+		"/proxy/context/image/path/to/image.png", "/image/path/to/image.png"
 	};
 
 	private AbsolutePortalURLBuilder _absolutePortalURLBuilder;

@@ -163,17 +163,6 @@ public interface ElasticsearchConfiguration {
 	)
 	public String nodeName();
 
-	/**
-	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
-	 *             #productionModeEnabled()}
-	 */
-	@Deprecated
-	@Meta.AD(
-		deflt = "EMBEDDED", description = "operation-mode-help",
-		name = "operation-mode", required = false
-	)
-	public OperationMode operationMode();
-
 	@Meta.AD(
 		description = "override-type-mappings-help",
 		name = "override-type-mappings", required = false

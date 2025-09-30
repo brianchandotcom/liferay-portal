@@ -390,7 +390,7 @@ public class ElasticsearchSearchEngine
 			}
 		}
 
-		if (_elasticsearchConfigurationWrapper.isDevelopmentModeEnabled()) {
+		if (!_elasticsearchConfigurationWrapper.productionModeEnabled()) {
 			return;
 		}
 

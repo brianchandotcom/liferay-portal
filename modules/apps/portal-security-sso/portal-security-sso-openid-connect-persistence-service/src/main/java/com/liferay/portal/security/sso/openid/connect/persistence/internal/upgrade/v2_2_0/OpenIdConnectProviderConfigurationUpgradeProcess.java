@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
@@ -66,35 +67,47 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 					return;
 				}
 
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
 				Dictionary<String, Object> dictionary =
 					ConfigurationHandler.read(
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
-				dictionary.put(
-					"authorizationEndpoint",
-					GetterUtil.getString(
-						dictionary.remove("authorizationEndPoint")));
-				dictionary.put(
-					"discoveryEndpoint",
-					GetterUtil.getString(
-						dictionary.remove("discoveryEndPoint")));
-				dictionary.put(
-					"discoveryEndpointCacheInMillis",
-					GetterUtil.getLong(
-						dictionary.remove("discoveryEndPointCacheInMillis")));
-				dictionary.put(
-					"tokenEndpoint",
-					GetterUtil.getString(dictionary.remove("tokenEndPoint")));
-				dictionary.put(
-					"userInfoEndpoint",
-					GetterUtil.getString(dictionary.get("userInfoEndPoint")));
-
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream();
-
 				ConfigurationHandler.write(
-					unsyncByteArrayOutputStream, dictionary);
+					unsyncByteArrayOutputStream,
+					HashMapDictionaryBuilder.putAll(
+						dictionary
+					).put(
+						"authorizationEndpoint",
+						GetterUtil.getString(
+							dictionary.get("authorizationEndPoint"))
+					).put(
+						"discoveryEndpoint",
+						GetterUtil.getString(
+							dictionary.get("discoveryEndPoint"))
+					).put(
+						"discoveryEndpointCacheInMillis",
+						GetterUtil.getString(
+							dictionary.get("discoveryEndPointCacheInMillis"))
+					).put(
+						"tokenEndpoint",
+						GetterUtil.getString(dictionary.get("tokenEndPoint"))
+					).put(
+						"userInfoEndpoint",
+						GetterUtil.getString(dictionary.get("userInfoEndPoint"))
+					).remove(
+						"authorizationEndPoint"
+					).remove(
+						"discoveryEndPoint"
+					).remove(
+						"discoveryEndPointCacheInMillis"
+					).remove(
+						"tokenEndPoint"
+					).remove(
+						"userInfoEndPoint"
+					).build());
 
 				preparedStatement.setString(
 					1, unsyncByteArrayOutputStream.toString());

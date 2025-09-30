@@ -77,7 +77,7 @@ export default function Spaces({
 					items={selectedSpaces}
 					locator={{
 						id: 'value',
-						label: 'label',
+						label: 'name',
 						value: 'value',
 					}}
 					multiSelect

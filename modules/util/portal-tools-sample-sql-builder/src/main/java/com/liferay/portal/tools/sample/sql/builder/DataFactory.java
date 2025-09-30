@@ -8275,6 +8275,8 @@ public class DataFactory {
 
 		// Other fields
 
+		objectEntryModel.setHeadObjectEntryId(
+			objectEntryModel.getObjectEntryId());
 		objectEntryModel.setObjectDefinitionId(objectDefinitionId);
 		objectEntryModel.setStatus(WorkflowConstants.STATUS_APPROVED);
 		objectEntryModel.setStatusByUserId(_sampleUserId);

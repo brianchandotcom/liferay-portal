@@ -1813,6 +1813,13 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
+                        gridViewports:
+                            # @review
+                            description:
+                                A list of viewports configuration of the grid page element.
+                            items:
+                                $ref: "#/components/schemas/GridViewport"
+                            type: array
                         gutters:
                             # @review
                             description:
@@ -1843,13 +1850,6 @@ components:
                             description:
                                 A flag that indicates whether the row page element has reverse order.
                             type: boolean
-                        rowViewports:
-                            # @review
-                            description:
-                                A list of viewports of the row page element.
-                            items:
-                                $ref: "#/components/schemas/RowViewport"
-                            type: array
                         verticalAlignment:
                             description:
                                 The vertical alignment property of the row page element.
@@ -1858,6 +1858,37 @@ components:
             # @review
             description:
                 The page element definition of a row.
+            type: object
+        GridViewport:
+            # @review
+            description:
+                A grid viewport.
+            properties:
+                gridViewportDefinition:
+                    # @review
+                    description:
+                        The definition of the grid viewport.
+                    properties:
+                        modulesPerRow:
+                            # @review
+                            description:
+                                The number of modules per grid.
+                            type: integer
+                        verticalAlignment:
+                            # @review
+                            description:
+                                The vertical alignment property of the grid viewport.
+                            enum: [Bottom, Middle, Top]
+                            type: string
+                    type: object
+                id:
+                    # @review
+                    description:
+                        The grid viewport's ID.
+                    type: string
+            required:
+                -   gridViewportDefinition
+                -   id
             type: object
         HtmlProperties:
             properties:
@@ -2573,42 +2604,6 @@ components:
                         -   ContentPageTemplateSettings
                         -   WidgetPageTemplateSettings
                     type: string
-            type: object
-        RowViewport:
-            # @review
-            description:
-                A row viewport.
-            properties:
-                id:
-                    # @review
-                    description:
-                        The row viewport's ID.
-                    type: string
-                rowViewportDefinition:
-                    # @review
-                    description:
-                        The definition of the row viewport.
-                    properties:
-                        modulesPerRow:
-                            # @review
-                            description:
-                                The number of modules per row.
-                            type: integer
-                        reverseOrder:
-                            # @review
-                            description:
-                                A flag that indicates whether the row viewport has reverse order.
-                            type: boolean
-                        verticalAlignment:
-                            # @review
-                            description:
-                                The vertical alignment property of the row viewport.
-                            enum: [Bottom, Middle, Top]
-                            type: string
-                    type: object
-            required:
-                -   id
-                -   rowViewportDefinition
             type: object
         SEOSettings:
             # @review

@@ -297,6 +297,49 @@ public abstract class PageSettings implements Serializable {
 	private Supplier<Integer> _prioritySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The default parameter for a page."
+	)
+	public String getQueryString() {
+		if (_queryStringSupplier != null) {
+			queryString = _queryStringSupplier.get();
+
+			_queryStringSupplier = null;
+		}
+
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+
+		_queryStringSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setQueryString(
+		UnsafeSupplier<String, Exception> queryStringUnsafeSupplier) {
+
+		_queryStringSupplier = () -> {
+			try {
+				return queryStringUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The default parameter for a page.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String queryString;
+
+	@JsonIgnore
+	private Supplier<String> _queryStringSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The page's SEO settings."
 	)
 	@Valid
@@ -487,6 +530,22 @@ public abstract class PageSettings implements Serializable {
 			sb.append("\"priority\": ");
 
 			sb.append(priority);
+		}
+
+		String queryString = getQueryString();
+
+		if (queryString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(queryString));
+
+			sb.append("\"");
 		}
 
 		SEOSettings seoSettings = getSeoSettings();

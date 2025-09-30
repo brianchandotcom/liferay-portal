@@ -9,10 +9,12 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.DateTimeInfoFieldType;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.localized.InfoLocalizedValue;
+import com.liferay.layout.taglib.constants.LayoutStructureRendererConstants;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -51,6 +53,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 
 /**
  * @author Eudaldo Alonso
@@ -163,6 +166,57 @@ public class ObjectEntryUtil {
 	}
 
 	public static Map<String, Object> toProperties(
+		InfoItemFieldValues infoItemFieldValues,
+		ObjectDefinition objectDefinition,
+		Map<String, Serializable> originalValues) {
+
+		Map<String, Map<String, Object>> fieldsMap = new HashMap<>();
+
+		for (InfoFieldValue<Object> infoFieldValue :
+				infoItemFieldValues.getInfoFieldValues()) {
+
+			InfoField<?> infoField = infoFieldValue.getInfoField();
+
+			if (!StringUtil.startsWith(
+					infoField.getUniqueId(),
+					ObjectRelationship.class.getSimpleName() +
+						StringPool.POUND)) {
+
+				Map<String, Object> objectDefinitionProperties =
+					fieldsMap.computeIfAbsent(
+						objectDefinition.getName(), key -> new HashMap<>());
+
+				_addPropertyValue(
+					infoField, infoFieldValue, originalValues,
+					objectDefinitionProperties);
+
+				continue;
+			}
+
+			String[] parts = StringUtil.split(
+				StringUtil.removeLast(
+					infoField.getUniqueId(),
+					StringPool.UNDERLINE + infoField.getName()),
+				StringPool.POUND);
+
+			String objectRelationshipName = parts[2];
+
+			Map<String, Object> relatedProperties = fieldsMap.computeIfAbsent(
+				objectRelationshipName, key -> new HashMap<>());
+
+			_addRelatedPropertyValue(
+				infoField, infoFieldValue, relatedProperties);
+		}
+
+		Map<String, Object> properties = fieldsMap.get(
+			objectDefinition.getName());
+
+		_addRelatedProperties(fieldsMap, objectDefinition, null, properties);
+
+		return properties;
+	}
+
+	public static Map<String, Object> toProperties(
 		long companyId, InfoItemFieldValues infoItemFieldValues,
 		Map<String, Serializable> originalValues) {
 
@@ -266,6 +320,160 @@ public class ObjectEntryUtil {
 		}
 		else {
 			properties.put(infoField.getName(), _parseValue(infoField, value));
+		}
+	}
+
+	private static void _addRelatedProperties(
+		Map<String, Map<String, Object>> fieldsMap,
+		ObjectDefinition objectDefinition, String parentExternalReferenceCode,
+		Map<String, Object> properties) {
+
+		List<ObjectRelationship> objectRelationships =
+			ObjectRelationshipLocalServiceUtil.getObjectRelationships(
+				objectDefinition.getObjectDefinitionId());
+
+		for (ObjectRelationship objectRelationship : objectRelationships) {
+			if (!fieldsMap.containsKey(objectRelationship.getName())) {
+				continue;
+			}
+
+			long objectDefinitionId =
+				objectRelationship.getObjectDefinitionId2();
+
+			ObjectDefinition relatedObjectDefinition =
+				ObjectDefinitionLocalServiceUtil.fetchObjectDefinition(
+					objectDefinitionId);
+
+			if (relatedObjectDefinition == null) {
+				continue;
+			}
+
+			Map<String, Object> objectRelationshipValues = fieldsMap.get(
+				objectRelationship.getName());
+
+			if (objectRelationshipValues == null) {
+				continue;
+			}
+
+			List<Map<String, Object>> relatedProperties =
+				(List<Map<String, Object>>)properties.computeIfAbsent(
+					objectRelationship.getName(), key -> new ArrayList<>());
+
+			if (parentExternalReferenceCode == null) {
+				for (Map.Entry<String, Object> entry :
+						objectRelationshipValues.entrySet()) {
+
+					Map<String, Object> values =
+						(Map<String, Object>)entry.getValue();
+
+					for (Map.Entry<String, Object> childEntry :
+							values.entrySet()) {
+
+						Map<String, Object> childProperties =
+							(Map<String, Object>)childEntry.getValue();
+
+						String externalReferenceCode = GetterUtil.getString(
+							childEntry.getKey());
+
+						if (!childProperties.containsKey(
+								"externalReferenceCode") &&
+							!externalReferenceCode.startsWith(
+								LayoutStructureRendererConstants.
+									LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE)) {
+
+							childProperties.put(
+								"externalReferenceCode", externalReferenceCode);
+						}
+
+						_addRelatedProperties(
+							fieldsMap, relatedObjectDefinition,
+							externalReferenceCode, childProperties);
+
+						relatedProperties.add(childProperties);
+					}
+				}
+			}
+			else {
+				Map<String, Object> propertiesByParentExternalReferenceCode =
+					(Map<String, Object>)objectRelationshipValues.get(
+						parentExternalReferenceCode);
+
+				if (propertiesByParentExternalReferenceCode == null) {
+					continue;
+				}
+
+				for (Map.Entry<String, Object> entry :
+						propertiesByParentExternalReferenceCode.entrySet()) {
+
+					Map<String, Object> childProperties =
+						(Map<String, Object>)entry.getValue();
+
+					String externalReferenceCode = GetterUtil.getString(
+						entry.getKey());
+
+					if (!childProperties.containsKey("externalReferenceCode") &&
+						!externalReferenceCode.startsWith(
+							LayoutStructureRendererConstants.
+								LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE)) {
+
+						childProperties.put(
+							"externalReferenceCode", externalReferenceCode);
+					}
+
+					_addRelatedProperties(
+						fieldsMap, relatedObjectDefinition, entry.getKey(),
+						childProperties);
+
+					relatedProperties.add(childProperties);
+				}
+			}
+		}
+	}
+
+	private static void _addRelatedPropertyValue(
+		InfoField<?> infoField, InfoFieldValue<Object> infoFieldValue,
+		Map<String, Object> properties) {
+
+		Object value = infoFieldValue.getValue();
+
+		if (!(value instanceof RelatedInfoFieldValue<?>)) {
+			return;
+		}
+
+		RelatedInfoFieldValue<?> relatedInfoFieldValue =
+			(RelatedInfoFieldValue<?>)value;
+
+		Map
+			<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
+			 ? extends InfoFieldValue<?>> relatedInfoFieldValues =
+				relatedInfoFieldValue.getRelatedInfoFieldValues();
+
+		for (Map.Entry
+				<RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier,
+				 ? extends InfoFieldValue<?>>
+					relatedInfoFieldValueIdentifierEntry :
+						relatedInfoFieldValues.entrySet()) {
+
+			RelatedInfoFieldValue.RelatedInfoFieldValueIdentifier
+				relatedInfoFieldValueIdentifier =
+					relatedInfoFieldValueIdentifierEntry.getKey();
+
+			Map<String, Map<String, Object>> parentRelatedProperties =
+				(Map<String, Map<String, Object>>)properties.computeIfAbsent(
+					relatedInfoFieldValueIdentifier.
+						getParentExternalReferenceCode(),
+					key -> new TreeMap<>());
+
+			Map<String, Object> childRelatedProperties =
+				parentRelatedProperties.computeIfAbsent(
+					relatedInfoFieldValueIdentifier.getExternalReferenceCode(),
+					key -> new TreeMap<>());
+
+			_addPropertyValue(
+				infoField,
+				(InfoFieldValue<Object>)
+					relatedInfoFieldValueIdentifierEntry.getValue(),
+				null, childRelatedProperties);
 		}
 	}
 

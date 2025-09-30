@@ -15,8 +15,8 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ScopeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.NavigationSettingsUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.OpenGraphSettingsUtil;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSettingsUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.SEOSettingsUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -173,7 +173,7 @@ public class SitePageDTOConverter implements DTOConverter<Layout, SitePage> {
 			() -> _getCustomMetaTags(layout, _layoutSEOEntryLocalService));
 		pageSettings.setHiddenFromNavigation(layout::isHidden);
 		pageSettings.setNavigationSettings(
-			() -> PageSettingsUtil.toNavigationSettings(
+			() -> NavigationSettingsUtil.toNavigationSettings(
 				layout.getTypeSettingsProperties()));
 		pageSettings.setOpenGraphSettings(
 			() -> OpenGraphSettingsUtil.getOpenGraphSettings(

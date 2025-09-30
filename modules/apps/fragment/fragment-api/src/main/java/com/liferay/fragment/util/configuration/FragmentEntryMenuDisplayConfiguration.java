@@ -140,24 +140,28 @@ public class FragmentEntryMenuDisplayConfiguration {
 		long siteNavigationMenuId =
 			siteNavigationMenuSource.getSiteNavigationMenuId();
 
-		if (siteNavigationMenuId <= 0) {
-			String siteNavigationMenuExternalReferenceCode =
-				getSiteNavigationMenuExternalReferenceCode();
-
-			if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
-				SiteNavigationMenu siteNavigationMenu =
-					SiteNavigationMenuLocalServiceUtil.
-						fetchSiteNavigationMenuByExternalReferenceCode(
-							siteNavigationMenuExternalReferenceCode, groupId);
-
-				if (siteNavigationMenu != null) {
-					siteNavigationMenuId =
-						siteNavigationMenu.getSiteNavigationMenuId();
-				}
-			}
+		if (siteNavigationMenuId > 0) {
+			return siteNavigationMenuId;
 		}
 
-		return siteNavigationMenuId;
+		String siteNavigationMenuExternalReferenceCode =
+			siteNavigationMenuSource.
+				getSiteNavigationMenuExternalReferenceCode();
+
+		if (Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
+			return 0;
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			SiteNavigationMenuLocalServiceUtil.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					siteNavigationMenuExternalReferenceCode, groupId);
+
+		if (siteNavigationMenu != null) {
+			return siteNavigationMenu.getSiteNavigationMenuId();
+		}
+
+		return 0;
 	}
 
 	private JSONObject _createJSONObject(String value) {

@@ -70,15 +70,15 @@ export default function Spaces({
 				</label>
 
 				<ItemSelector<Space>
-					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries`}
+					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`}
 					as={ClayInput}
 					disabled={disabled || structureSpaces === 'all'}
 					id={id}
 					items={selectedSpaces}
 					locator={{
-						id: 'value',
-						label: 'label',
-						value: 'value',
+						id: 'id',
+						label: 'name',
+						value: 'externalReferenceCode',
 					}}
 					multiSelect
 					onBlur={() => {

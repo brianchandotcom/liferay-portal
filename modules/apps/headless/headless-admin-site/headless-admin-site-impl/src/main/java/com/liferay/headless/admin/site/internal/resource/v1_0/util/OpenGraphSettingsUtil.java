@@ -6,12 +6,13 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.util.DLURLHelper;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
-import com.liferay.headless.delivery.dto.v1_0.util.ContentDocumentUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ScopeUtil;
 import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -22,8 +23,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 public class OpenGraphSettingsUtil {
 
 	public static OpenGraphSettings getOpenGraphSettings(
-		DLAppService dlAppService, DLURLHelper dlURLHelper,
-		DTOConverterContext dtoConverterContext,
+		DLAppService dlAppService, DTOConverterContext dtoConverterContext,
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -50,12 +50,20 @@ public class OpenGraphSettingsUtil {
 							return null;
 						}
 
-						return ContentDocumentUtil.toContentDocument(
-							dlURLHelper,
-							"openGraphSettings.contentFieldValue.image",
-							dlAppService.getFileEntry(
-								openGraphImageFileEntryId),
-							dtoConverterContext.getUriInfo());
+						FileEntry fileEntry = dlAppService.getFileEntry(
+							openGraphImageFileEntryId);
+
+						return new ItemExternalReference() {
+							{
+								setClassName(FileEntry.class::getName);
+								setExternalReferenceCode(
+									fileEntry::getExternalReferenceCode);
+								setScope(
+									() -> ScopeUtil.getScope(
+										layout.getGroupId(),
+										fileEntry.getGroupId()));
+							}
+						};
 					});
 				setImageAlt_i18n(
 					() -> LocalizedMapUtil.getI18nMap(

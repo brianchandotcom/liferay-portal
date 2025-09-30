@@ -88,8 +88,9 @@ public class BasicComponentFragmentCollectionContributorTest {
 		Document document = Jsoup.parseBodyFragment(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				_fragmentEntryLinkService.addFragmentEntryLink(
-					null, _group.getGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+					null, _group.getGroupId(), null,
+					fragmentEntry.getExternalReferenceCode(),
+					fragmentEntry.getScopeERC(), 0, layout.getPlid(),
 					fragmentEntry.getCss(), fragmentEntry.getHtml(),
 					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 					StringPool.BLANK, StringPool.BLANK, 0, null,
@@ -121,8 +122,9 @@ public class BasicComponentFragmentCollectionContributorTest {
 		Document document = Jsoup.parseBodyFragment(
 			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				_fragmentEntryLinkService.addFragmentEntryLink(
-					null, _group.getGroupId(), 0,
-					fragmentEntry.getFragmentEntryId(), 0, layout.getPlid(),
+					null, _group.getGroupId(), null,
+					fragmentEntry.getExternalReferenceCode(),
+					fragmentEntry.getScopeERC(), 0, layout.getPlid(),
 					fragmentEntry.getCss(), fragmentEntry.getHtml(),
 					fragmentEntry.getJs(), fragmentEntry.getConfiguration(),
 					StringPool.BLANK, StringPool.BLANK, 0, null,

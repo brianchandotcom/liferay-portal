@@ -144,9 +144,9 @@ public abstract class BaseInputFragmentRendererTestCase {
 			JSONFactoryUtil.toString(
 				fragmentRenderer.getConfigurationJSONObject(
 					new DefaultFragmentRendererContext(null))),
-			0, StringPool.BLANK, StringPool.BLANK, draftLayout, getRenderKey(),
-			fragmentRenderer.getType(), jsonObject.getString("addedItemId"), 0,
-			segmentsExperienceId);
+			null, null, StringPool.BLANK, StringPool.BLANK, draftLayout,
+			getRenderKey(), fragmentRenderer.getType(),
+			jsonObject.getString("addedItemId"), 0, segmentsExperienceId);
 	}
 
 	protected abstract ObjectEntry addObjectEntry() throws Exception;

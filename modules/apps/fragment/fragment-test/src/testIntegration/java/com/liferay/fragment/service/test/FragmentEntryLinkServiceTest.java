@@ -81,8 +81,8 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(), null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), css, html, js, configuration,
@@ -103,8 +103,8 @@ public class FragmentEntryLinkServiceTest {
 				UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER));
 
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(), null,
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -142,8 +142,9 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(),
+				_fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -167,8 +168,9 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(),
+				_fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -200,8 +202,9 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(),
+				_fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,
@@ -231,8 +234,9 @@ public class FragmentEntryLinkServiceTest {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkService.addFragmentEntryLink(
-				null, _group.getGroupId(), 0,
-				_fragmentEntry.getFragmentEntryId(),
+				null, _group.getGroupId(), null,
+				_fragmentEntry.getExternalReferenceCode(),
+				_fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				_layout.getPlid(), null, "<div>test</div>", null, null,

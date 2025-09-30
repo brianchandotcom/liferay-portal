@@ -118,24 +118,24 @@ public class FragmentEntryMenuDisplayConfiguration {
 	}
 
 	public String getSiteNavigationMenuExternalReferenceCode() {
-		if (_source instanceof SiteNavigationMenuSource) {
-			SiteNavigationMenuSource siteNavigationMenuSource =
-				(SiteNavigationMenuSource)_source;
+		SiteNavigationMenuSource siteNavigationMenuSource =
+			_getSiteNavigationMenuSource();
 
-			return siteNavigationMenuSource.
-				getSiteNavigationMenuExternalReferenceCode();
+		if (siteNavigationMenuSource == null) {
+			return null;
 		}
 
-		return null;
+		return siteNavigationMenuSource.
+			getSiteNavigationMenuExternalReferenceCode();
 	}
 
 	public long getSiteNavigationMenuId(long groupId) {
-		if (!(_source instanceof SiteNavigationMenuSource)) {
+		SiteNavigationMenuSource siteNavigationMenuSource =
+			_getSiteNavigationMenuSource();
+
+		if (siteNavigationMenuSource == null) {
 			return 0;
 		}
-
-		SiteNavigationMenuSource siteNavigationMenuSource =
-			(SiteNavigationMenuSource)_source;
 
 		long siteNavigationMenuId =
 			siteNavigationMenuSource.getSiteNavigationMenuId();
@@ -171,6 +171,14 @@ public class FragmentEntryMenuDisplayConfiguration {
 
 			return JSONFactoryUtil.createJSONObject();
 		}
+	}
+
+	private SiteNavigationMenuSource _getSiteNavigationMenuSource() {
+		if (_source instanceof SiteNavigationMenuSource) {
+			return (SiteNavigationMenuSource)_source;
+		}
+
+		return null;
 	}
 
 	private static final Source _DEFAULT_SOURCE = new DefaultSource();

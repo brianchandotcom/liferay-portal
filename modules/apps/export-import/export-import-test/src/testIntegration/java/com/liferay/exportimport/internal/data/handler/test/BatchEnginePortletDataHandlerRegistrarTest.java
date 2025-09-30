@@ -286,14 +286,15 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		ServiceRegistration<S> serviceRegistration =
 			bundleContext.registerService(clazz, service, properties);
 
-		AtomicBoolean isUnregistered = new AtomicBoolean(false);
+		AtomicBoolean unregistered = new AtomicBoolean(false);
 
 		return () -> {
-			if (isUnregistered.get()) {
+			if (unregistered.get()) {
 				return;
 			}
 
-			isUnregistered.set(true);
+			unregistered.set(true);
+
 			serviceRegistration.unregister();
 		};
 	}

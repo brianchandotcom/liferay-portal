@@ -8,7 +8,6 @@ package com.liferay.exportimport.internal.data.handler;
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
-import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
@@ -38,8 +37,6 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -75,19 +72,12 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskExecutor batchEngineExportTaskExecutor,
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
-		BatchEngineImportTaskService batchEngineImportTaskService,
-		BatchEngineTaskItemDelegateRegistry batchEngineTaskItemDelegateRegistry,
-		CompanyLocalService companyLocalService,
-		UserLocalService userLocalService) {
+		BatchEngineImportTaskService batchEngineImportTaskService) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
-		_batchEngineTaskItemDelegateRegistry =
-			batchEngineTaskItemDelegateRegistry;
-		_companyLocalService = companyLocalService;
-		_userLocalService = userLocalService;
 	}
 
 	public void exportDeletionSystemEvents(
@@ -273,9 +263,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected String doExportData(
-			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences)
-		throws Exception {
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
 
 		try (SafeCloseable safeCloseable =
 				PortletDataContextThreadLocal.
@@ -413,9 +402,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
+		PortletDataContext portletDataContext,
+		PortletPreferences portletPreferences) {
 
 		for (Registration registration : _registrations) {
 			try (SafeCloseable safeCloseable =
@@ -573,11 +561,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineExportTaskLocalService;
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
-	private final BatchEngineTaskItemDelegateRegistry
-		_batchEngineTaskItemDelegateRegistry;
-	private final CompanyLocalService _companyLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();
-	private final UserLocalService _userLocalService;
 
 	private interface Registration {
 

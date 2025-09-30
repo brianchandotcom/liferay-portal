@@ -7,7 +7,6 @@ package com.liferay.exportimport.internal.data.handler;
 
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
-import com.liferay.batch.engine.BatchEngineTaskItemDelegateRegistry;
 import com.liferay.batch.engine.service.BatchEngineExportTaskLocalService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
@@ -17,8 +16,6 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.service.CompanyLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -143,14 +140,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 	private final Map<String, BatchEnginePortletDataHandler>
 		_batchEnginePortletDataHandlers = new HashMap<>();
-
-	@Reference
-	private BatchEngineTaskItemDelegateRegistry
-		_batchEngineTaskItemDelegateRegistry;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
 	private final List<Long> _enabledCompanyIds = new CopyOnWriteArrayList<>();
 	private volatile ServiceRegistration<FeatureFlagListener>
 		_serviceRegistration;
@@ -159,9 +148,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	private final DCLSingleton
 		<ServiceTrackerList<ServiceRegistration<PortletDataHandler>>>
 			_serviceTrackerListDCLSingleton = new DCLSingleton<>();
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 	private class VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
@@ -204,9 +190,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						_batchEngineExportTaskExecutor,
 						_batchEngineExportTaskLocalService,
 						_batchEngineImportTaskExecutor,
-						_batchEngineImportTaskService,
-						_batchEngineTaskItemDelegateRegistry,
-						_companyLocalService, _userLocalService);
+						_batchEngineImportTaskService);
 
 				batchEnginePortletDataHandler.setPortletId(
 					exportImportDescriptor.getPortletId());

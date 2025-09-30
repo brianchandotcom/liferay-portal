@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -22,12 +23,16 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.ConfigurationDataCleanupPreupgradeProcess;
 
+import java.sql.Connection;
+
 import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,6 +49,18 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
+
+		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -139,7 +156,8 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 						existentConfigurationId, " has scope ",
 						primaryKeyColumnName, StringPool.SPACE,
 						existentPrimaryKey, " that was not found in ",
-						tableName, ".", primaryKeyColumnName)));
+						_dbInspector.normalizeName(tableName), ".",
+						_dbInspector.normalizeName(primaryKeyColumnName))));
 
 			Assert.assertTrue(
 				messages.contains(
@@ -148,7 +166,8 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 						nonexistentConfigurationId, " has scope ",
 						primaryKeyColumnName, StringPool.SPACE,
 						nonexistentPrimaryKey, " that was not found in ",
-						tableName, ".", primaryKeyColumnName)));
+						_dbInspector.normalizeName(tableName), ".",
+						_dbInspector.normalizeName(primaryKeyColumnName))));
 		}
 		finally {
 			ConfigurationTestUtil.deleteConfiguration(existentConfigurationId);
@@ -156,6 +175,9 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 				nonexistentConfigurationId);
 		}
 	}
+
+	private static Connection _connection;
+	private static DBInspector _dbInspector;
 
 	private boolean _originalCacheEnabled;
 

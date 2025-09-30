@@ -267,9 +267,8 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 		throws Exception {
 
 		long start = System.currentTimeMillis();
-		long timeout = 5000;
 
-		while ((System.currentTimeMillis() - start) < timeout) {
+		while ((System.currentTimeMillis() - start) < 5000) {
 			PortletDataHandler portletDataHandler =
 				_portletDataHandlerProvider.provide(companyId, portletId);
 

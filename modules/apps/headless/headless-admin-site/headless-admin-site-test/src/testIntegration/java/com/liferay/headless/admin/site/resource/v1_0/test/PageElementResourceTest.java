@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewportStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
@@ -516,32 +517,33 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						{
 							setFieldKey(() -> itemFieldKey);
 							setItemReference(
-								() -> {
-									if (Validator.isNull(itemClassName)) {
-										return new FragmentMappedValueItemContextReference() {
-											{
-												setContextSource(
-													() ->
-														ContextSource.
-															DISPLAY_PAGE_ITEM);
-												setType(Type.CONTEXT_REFERENCE);
-											}
-										};
-									}
-
-									return new FragmentMappedValueItemExternalReference() {
-										{
-											setClassName(itemClassName);
-											setExternalReferenceCode(
-												itemExternalReferenceCode);
-											setType(
-												Type.ITEM_EXTERNAL_REFERENCE);
-										}
-									};
-								});
+								() -> _getFragmentMappedValueItemReference(
+									itemExternalReferenceCode, itemClassName));
 						}
 					});
 				setType(Type.FRAGMENT_MAPPED_VALUE);
+			}
+		};
+	}
+
+	private FragmentMappedValueItemReference
+		_getFragmentMappedValueItemReference(
+			String itemExternalReferenceCode, String itemClassName) {
+
+		if (Validator.isNull(itemClassName)) {
+			return new FragmentMappedValueItemContextReference() {
+				{
+					setContextSource(() -> ContextSource.DISPLAY_PAGE_ITEM);
+					setType(Type.CONTEXT_REFERENCE);
+				}
+			};
+		}
+
+		return new FragmentMappedValueItemExternalReference() {
+			{
+				setClassName(itemClassName);
+				setExternalReferenceCode(itemExternalReferenceCode);
+				setType(Type.ITEM_EXTERNAL_REFERENCE);
 			}
 		};
 	}

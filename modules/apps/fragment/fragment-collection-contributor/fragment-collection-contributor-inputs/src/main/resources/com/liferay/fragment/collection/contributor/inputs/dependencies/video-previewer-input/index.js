@@ -1,22 +1,22 @@
 const currentLength = document.getElementById(
-	`${fragmentNamespace}-current-length`
+	`${fragmentElementId}-current-length`
 );
 const errorMessage = document.getElementById(
-	`${fragmentNamespace}-video-previewer-error-message`
+	`${fragmentElementId}-video-previewer-error-message`
 );
-const formGroup = document.getElementById(`${fragmentNamespace}-form-group`);
+const formGroup = document.getElementById(`${fragmentElementId}-form-group`);
 const inputElement = document.getElementById(
-	`${fragmentNamespace}-video-previewer-input`
+	`${fragmentElementId}-video-previewer-input`
 );
-const lengthInfo = document.getElementById(`${fragmentNamespace}-length-info`);
+const lengthInfo = document.getElementById(`${fragmentElementId}-length-info`);
 const lengthWarning = document.getElementById(
-	`${fragmentNamespace}-length-warning`
+	`${fragmentElementId}-length-warning`
 );
 const lengthWarningText = document.getElementById(
-	`${fragmentNamespace}-length-warning-text`
+	`${fragmentElementId}-length-warning-text`
 );
 const videoPreview = document.getElementById(
-	`${fragmentNamespace}-video-preview`
+	`${fragmentElementId}-video-preview`
 );
 
 function getFragmentTranslationInput(namespace, languageId, inputId) {
@@ -108,7 +108,7 @@ function main() {
 						inputElement,
 						inputName: input.name,
 						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 						onLocaleChange: ({languageId, value}) => {
 							currentLanguageId = languageId;
 
@@ -117,14 +117,14 @@ function main() {
 						onResetTranslation: () => {
 							const defaultTranslationInput =
 								getFragmentTranslationInput(
-									fragmentNamespace,
+									fragmentElementId,
 									defaultLanguageId,
 									inputElement.id
 								);
 
 							const translationInput =
 								getFragmentTranslationInput(
-									fragmentNamespace,
+									fragmentElementId,
 									currentLanguageId,
 									inputElement.id
 								);
@@ -146,12 +146,12 @@ function main() {
 						defaultLanguageId,
 						inputElement,
 						readOnlyInputLabel: document.getElementById(
-							`${fragmentNamespace}-video-previewer-readonly`
+							`${fragmentElementId}-video-previewer-readonly`
 						),
 						unlocalizedFieldsState:
 							input.attributes.unlocalizedFieldsState,
 						unlocalizedMessageContainer: document.getElementById(
-							`${fragmentNamespace}-unlocalized-info`
+							`${fragmentElementId}-unlocalized-info`
 						),
 					});
 				}

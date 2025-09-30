@@ -1,16 +1,14 @@
 const CKEditorRequiredInput = document.getElementById(
-	`${fragmentEntryLinkNamespace}-ckeditor-required`
+	`${fragmentElementId}-ckeditor-required`
 );
 const editorClass = '.ck-editor';
-const editorName = `${fragmentEntryLinkNamespace}-${input.name}`;
+const editorName = `${fragmentElementId}-${input.name}`;
 const errorMessage = document.getElementById(
-	`${fragmentEntryLinkNamespace}-error-message`
+	`${fragmentElementId}-error-message`
 );
-const errorMessageTextId = `${fragmentEntryLinkNamespace}-error-message-text`;
+const errorMessageTextId = `${fragmentElementId}-error-message-text`;
 const errorMessageText = document.getElementById(errorMessageTextId);
-const wrapper = document.getElementById(
-	`${fragmentEntryLinkNamespace}-wrapper`
-);
+const wrapper = document.getElementById(`${fragmentElementId}-wrapper`);
 
 if (layoutMode === 'edit') {
 	if (Liferay.FeatureFlags['LPD-11235']) {
@@ -84,7 +82,7 @@ else {
 	}
 
 	const inputContainer = document.getElementById(
-		`${fragmentEntryLinkNamespace}-rich-text-input`
+		`${fragmentElementId}-rich-text-input`
 	);
 
 	const defaultLanguageId = themeDisplay.getDefaultLanguageId();
@@ -107,7 +105,7 @@ else {
 					inputElement: wrapper,
 					inputName: input.name,
 					localizationInputsContainer: inputContainer,
-					namespace: fragmentNamespace,
+					namespace: fragmentElementId,
 					onAutoTranslate: ({languageId, value}) => {
 						editorPromise.then((editor) => {
 							changeLanguageDirection(editor, languageId);
@@ -120,7 +118,7 @@ else {
 							inputName: input.name,
 							languageId,
 							localizationInputsContainer: wrapper.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						translationInput.value = value;
@@ -140,7 +138,7 @@ else {
 							inputName: input.name,
 							languageId: defaultLanguageId,
 							localizationInputsContainer: wrapper.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						editorPromise.then((editor) =>
@@ -152,7 +150,7 @@ else {
 							inputName: input.name,
 							languageId: currentLanguageId,
 							localizationInputsContainer: wrapper.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						translationInput.value = defaultLanguageInput.value;
@@ -163,7 +161,7 @@ else {
 							inputName: input.name,
 							languageId: defaultLanguageId,
 							localizationInputsContainer: wrapper.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						editorPromise.then((editor) =>
@@ -175,7 +173,7 @@ else {
 							inputName: input.name,
 							languageId: currentLanguageId,
 							localizationInputsContainer: wrapper.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						translationInput.removeAttribute('value');
@@ -309,7 +307,7 @@ else {
 					unlocalizedFieldsState:
 						input.attributes.unlocalizedFieldsState,
 					unlocalizedMessageContainer: document.getElementById(
-						`${fragmentNamespace}-unlocalized-info`
+						`${fragmentElementId}-unlocalized-info`
 					),
 				});
 

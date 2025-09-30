@@ -7,32 +7,32 @@ const optionListElement = fragmentElement.querySelector('.list-unstyled');
 const chooseOptionElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-choose-option-message`
+	`${fragmentElementId}-choose-option-message`
 );
 const labelInputElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-label-input`
+	`${fragmentElementId}-label-input`
 );
 const loadingResultsElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-loading-results-message`
+	`${fragmentElementId}-loading-results-message`
 );
 const noResultsElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-no-results-message`
+	`${fragmentElementId}-no-results-message`
 );
 const uiInputElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-select-from-list-input`
+	`${fragmentElementId}-select-from-list-input`
 );
 const valueInputElement = document.getElementById(
 
 	// eslint-disable-next-line no-undef
-	`${fragmentEntryLinkNamespace}-value-input`
+	`${fragmentElementId}-value-input`
 );
 
 buttonElement.addEventListener('click', toggleDropdown);
@@ -98,7 +98,7 @@ else {
 							languageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						// Set data-label with the option label for each translation input
@@ -117,7 +117,7 @@ else {
 					inputElement: uiInputElement,
 					inputName: input.name,
 					localizationInputsContainer: uiInputElement.parentNode,
-					namespace: fragmentNamespace,
+					namespace: fragmentElementId,
 					onLocaleChange: ({languageId}) => {
 						currentLanguageId = languageId;
 
@@ -127,7 +127,7 @@ else {
 							languageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						if (translationInput.getAttribute('value') !== null) {
@@ -141,7 +141,7 @@ else {
 								languageId: defaultLanguageId,
 								localizationInputsContainer:
 									uiInputElement.parentNode,
-								namespace: fragmentNamespace,
+								namespace: fragmentElementId,
 							});
 
 							uiInputElement.value =
@@ -155,7 +155,7 @@ else {
 							languageId: defaultLanguageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						const translationInput = getTranslationInput({
@@ -164,7 +164,7 @@ else {
 							languageId: currentLanguageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						translationInput.dataset.label =
@@ -182,7 +182,7 @@ else {
 							languageId: defaultLanguageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						const translationInput = getTranslationInput({
@@ -191,7 +191,7 @@ else {
 							languageId: currentLanguageId,
 							localizationInputsContainer:
 								uiInputElement.parentNode,
-							namespace: fragmentNamespace,
+							namespace: fragmentElementId,
 						});
 
 						translationInput.dataset.label = '';
@@ -208,7 +208,7 @@ else {
 						inputName: input.name,
 						languageId: currentLanguageId,
 						localizationInputsContainer: uiInputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 					});
 
 					if (!uiInputElement.value) {
@@ -222,7 +222,7 @@ else {
 						inputName: input.name,
 						languageId: currentLanguageId,
 						localizationInputsContainer: uiInputElement.parentNode,
-						namespace: fragmentNamespace,
+						namespace: fragmentElementId,
 					});
 
 					handleResultListClick(event, onChange, translationInput);
@@ -259,12 +259,12 @@ else {
 						}
 					},
 					readOnlyInputLabel: document.getElementById(
-						`${fragmentNamespace}-select-from-list-read-only`
+						`${fragmentElementId}-select-from-list-read-only`
 					),
 					unlocalizedFieldsState:
 						input.attributes.unlocalizedFieldsState,
 					unlocalizedMessageContainer: document.getElementById(
-						`${fragmentNamespace}-unlocalized-info`
+						`${fragmentElementId}-unlocalized-info`
 					),
 				});
 
@@ -553,7 +553,7 @@ function createOptionElement(option) {
 	optionElement.dataset.optionValue = option.value;
 
 	// eslint-disable-next-line no-undef
-	optionElement.id = `${fragmentEntryLinkNamespace}-option-${option.value}`;
+	optionElement.id = `${fragmentElementId}-option-${option.value}`;
 	optionElement.textContent = option.textContent;
 
 	optionElement.classList.add('dropdown-item');
@@ -580,7 +580,7 @@ function setSelectedOption(optionElement) {
 	const selectedOption = document.getElementById(
 
 		// eslint-disable-next-line no-undef
-		`${fragmentEntryLinkNamespace}-option-${valueInputElement.value}`
+		`${fragmentElementId}-option-${valueInputElement.value}`
 	);
 
 	if (selectedOption) {

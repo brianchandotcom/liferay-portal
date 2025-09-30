@@ -4,8 +4,8 @@
  */
 
 import {IFrontendDataSetProps} from '@liferay/frontend-data-set-web';
+import {openItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
 import {ButtonView, Command, Plugin} from 'ckeditor5';
-import {openItemSelectorModal} from 'frontend-js-item-selector-web';
 
 import getIcon from '../utils/getIcon';
 

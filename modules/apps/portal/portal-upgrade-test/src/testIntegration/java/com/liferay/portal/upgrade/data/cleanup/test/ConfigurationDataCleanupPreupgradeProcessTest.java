@@ -7,6 +7,7 @@ package com.liferay.portal.upgrade.data.cleanup.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
@@ -135,15 +136,17 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table Configuration_, 1 row deleted because ",
-						existentConfigurationId, " has ", existentPrimaryKey,
-						" that was not found in ", tableName, ".",
-						primaryKeyColumnName)));
+						existentConfigurationId, " has scope ",
+						primaryKeyColumnName, StringPool.SPACE,
+						existentPrimaryKey, " that was not found in ",
+						tableName, ".", primaryKeyColumnName)));
 
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table Configuration_, 1 row deleted because ",
-						nonexistentConfigurationId, " has ",
+						nonexistentConfigurationId, " has scope ",
+						primaryKeyColumnName, StringPool.SPACE,
 						nonexistentPrimaryKey, " that was not found in ",
 						tableName, ".", primaryKeyColumnName)));
 		}

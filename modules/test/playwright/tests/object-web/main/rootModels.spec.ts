@@ -4,6 +4,8 @@
  */
 
 import {
+	ObjectDefinition,
+	ObjectField,
 	ObjectRelationship,
 	ObjectRelationshipAPI,
 } from '@liferay/object-admin-rest-client-js';
@@ -841,7 +843,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 		const objectRelationships: ObjectRelationship[] = [];
 
 		try {
-			const parentObjectDefinition =
+			const parentObjectDefinition: ObjectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
@@ -851,7 +853,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 				type: 'objectDefinition',
 			});
 
-			const childObjectDefinition =
+			const childObjectDefinition: ObjectDefinition =
 				await apiHelpers.objectAdmin.postRandomObjectDefinition({
 					status: {code: 0},
 				});
@@ -918,6 +920,62 @@ test.describe('Manage root models elements through Objects Admin', () => {
 			apiHelpers.data.push({
 				id: inheritanceObjectRelationship.id,
 				type: 'objectRelationship',
+			});
+
+			await test.step('inheritance relationship is omitted in object layout relationship tab', async () => {
+				await objectLayoutsPage.goto(
+					parentObjectDefinition.label['en_US']
+				);
+
+				const objectLayoutName = getRandomString();
+
+				await objectLayoutsPage.createObjectLayout(objectLayoutName);
+
+				await objectLayoutsPage.createObjectLayoutContent({
+					objectLayoutBlockName: getRandomString(),
+					objectLayoutName,
+					objectLayoutTabName: getRandomString(),
+				});
+
+				await objectLayoutsPage.fieldSelect.waitFor({state: 'visible'});
+
+				const customObjectField =
+					parentObjectDefinition.objectFields.find(
+						(objectField: ObjectField) =>
+							objectField.system === false
+					);
+
+				await objectLayoutsPage.addObjectLayoutObjectField(
+					customObjectField.label['en_US']
+				);
+
+				const objectLayoutRelationshipTabName = getRandomString();
+
+				await objectLayoutsPage.openObjectLayoutConfiguration(
+					objectLayoutName
+				);
+
+				await objectLayoutsPage.addTab.click();
+
+				await objectLayoutsPage.labelInput.fill(
+					objectLayoutRelationshipTabName
+				);
+
+				await objectLayoutsPage.relationshipType.click();
+
+				await objectLayoutsPage.fieldList.click();
+
+				await expect(
+					objectLayoutsPage.iframeLocator.getByRole('option', {
+						name: 'objectRelationship',
+					})
+				).toBeVisible();
+
+				await expect(
+					objectLayoutsPage.iframeLocator.getByRole('option', {
+						name: 'inheritanceObjectRelationship',
+					})
+				).toBeHidden();
 			});
 
 			await test.step('inheritance relationship field is omitted in object layout', async () => {

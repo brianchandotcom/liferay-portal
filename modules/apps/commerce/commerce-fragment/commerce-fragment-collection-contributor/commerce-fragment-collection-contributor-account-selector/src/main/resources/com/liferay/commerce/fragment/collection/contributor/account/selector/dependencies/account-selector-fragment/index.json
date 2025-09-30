@@ -10,9 +10,9 @@
 				},
 				{
 					"dataType": "int",
-					"defaultValue": "460",
-					"label": "dropdown-height-px",
-					"name": "dropdownHeight",
+					"defaultValue": "500",
+					"label": "dropdown-max-height-px",
+					"name": "dropdownMaxHeight",
 					"type": "text",
 					"typeOptions": {
 						"validation": {
@@ -62,8 +62,8 @@
 				},
 				{
 					"dataType": "double",
-					"defaultValue": "0.5",
-					"label": "panel-animation-duration",
+					"defaultValue": "0.1",
+					"label": "panel-animation-duration-seconds",
 					"name": "panelAnimationDuration",
 					"type": "text"
 				}

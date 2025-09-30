@@ -13,7 +13,6 @@ import com.liferay.layout.seo.model.LayoutSEOEntry;
 import com.liferay.layout.seo.service.LayoutSEOEntryLocalService;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
@@ -23,7 +22,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 public class OpenGraphSettingsUtil {
 
 	public static OpenGraphSettings getOpenGraphSettings(
-		DLAppService dlAppService, DTOConverterContext dtoConverterContext,
+		DLAppService dlAppService,
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -39,7 +38,6 @@ public class OpenGraphSettingsUtil {
 			{
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
 						layoutSEOEntry.getOpenGraphDescriptionMap()));
 				setImage(
 					() -> {
@@ -67,11 +65,9 @@ public class OpenGraphSettingsUtil {
 					});
 				setImageAlt_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
 						layoutSEOEntry.getOpenGraphImageAltMap()));
 				setTitle_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
 						layoutSEOEntry.getOpenGraphTitleMap()));
 			}
 		};

@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 /**
@@ -24,7 +23,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 public class SEOSettingsUtil {
 
 	public static SEOSettings getSeoSettings(
-		DTOConverterContext dtoConverterContext,
 		LayoutSEOEntryLocalService layoutSEOEntryLocalService, Layout layout) {
 
 		LayoutSEOEntry layoutSEOEntry =
@@ -43,25 +41,17 @@ public class SEOSettingsUtil {
 						}
 
 						return LocalizedMapUtil.getI18nMap(
-							dtoConverterContext.isAcceptAllLanguages(),
 							layoutSEOEntry.getCanonicalURLMap());
 					});
 				setDescription_i18n(
 					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
 						layout.getDescriptionMap()));
 				setHtmlTitle_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
-						layout.getTitleMap()));
+					() -> LocalizedMapUtil.getI18nMap(layout.getTitleMap()));
 				setRobots_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
-						layout.getRobotsMap()));
+					() -> LocalizedMapUtil.getI18nMap(layout.getRobotsMap()));
 				setSeoKeywords_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
-						layout.getKeywordsMap()));
+					() -> LocalizedMapUtil.getI18nMap(layout.getKeywordsMap()));
 				setSitemapSettings(
 					() -> _toSitemapSettings(
 						layout.getTypeSettingsProperties()));

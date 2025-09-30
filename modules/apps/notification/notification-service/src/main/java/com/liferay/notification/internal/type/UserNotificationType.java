@@ -218,7 +218,7 @@ public class UserNotificationType extends BaseNotificationType {
 		_usersProviders.put(
 			NotificationRecipientConstants.TYPE_TERM,
 			new TermUsersProvider(
-				_permissionCheckerFactory, notificationTermEvaluatorTracker,
+				notificationTermEvaluatorTracker, _permissionCheckerFactory,
 				_roleLocalService, roleUsersProvider, userLocalService));
 
 		_usersProviders.put(

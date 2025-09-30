@@ -32,13 +32,13 @@ import java.util.Objects;
 public class TermUsersProvider implements UsersProvider {
 
 	public TermUsersProvider(
-		PermissionCheckerFactory permissionCheckerFactory,
 		NotificationTermEvaluatorTracker notificationTermEvaluatorTracker,
+		PermissionCheckerFactory permissionCheckerFactory,
 		RoleLocalService roleLocalService, RoleUsersProvider roleUsersProvider,
 		UserLocalService userLocalService) {
 
-		_permissionCheckerFactory = permissionCheckerFactory;
 		_notificationTermEvaluatorTracker = notificationTermEvaluatorTracker;
+		_permissionCheckerFactory = permissionCheckerFactory;
 		_roleLocalService = roleLocalService;
 		_roleUsersProvider = roleUsersProvider;
 		_userLocalService = userLocalService;
@@ -57,14 +57,14 @@ public class TermUsersProvider implements UsersProvider {
 		List<User> users = new ArrayList<>();
 
 		List<String> screenNames = new ArrayList<>();
-		List<String> terms = new ArrayList<>();
+		List<String> termNames = new ArrayList<>();
 
 		for (String value : values) {
-			if (NotificationTypeUtil.isTermValue(value)) {
-				terms.add(value);
+			if (!NotificationTypeUtil.isTermValue(value)) {
+				screenNames.add(value);
 			}
 			else {
-				screenNames.add(value);
+				termNames.add(value);
 			}
 		}
 
@@ -94,13 +94,13 @@ public class TermUsersProvider implements UsersProvider {
 
 			users.addAll(
 				TransformUtil.unsafeTransform(
-					terms,
-					term -> {
+					termNames,
+					termName -> {
 						String termValue = notificationTermEvaluator.evaluate(
 							NotificationTermEvaluator.Context.RECIPIENT,
-							notificationContext.getTermValues(), term);
+							notificationContext.getTermValues(), termName);
 
-						if (Objects.equals(term, termValue)) {
+						if (Objects.equals(termName, termValue)) {
 							return null;
 						}
 

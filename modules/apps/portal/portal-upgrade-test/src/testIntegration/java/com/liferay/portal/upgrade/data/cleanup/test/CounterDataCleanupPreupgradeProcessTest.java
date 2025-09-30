@@ -29,10 +29,9 @@ import java.sql.Connection;
 
 import java.util.List;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,21 +49,18 @@ public class CounterDataCleanupPreupgradeProcessTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@Before
+	public void setUp() throws Exception {
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
-	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		DataAccess.cleanUp(_connection);
-	}
-
-	@Before
-	public void setUp() throws Exception {
 		upgrade();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test
@@ -297,7 +293,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 		}
 	}
 
-	private static Connection _connection;
-	private static DBInspector _dbInspector;
+	private Connection _connection;
+	private DBInspector _dbInspector;
 
 }

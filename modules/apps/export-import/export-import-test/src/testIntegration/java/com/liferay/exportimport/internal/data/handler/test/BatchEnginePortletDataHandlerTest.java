@@ -331,12 +331,12 @@ public class BatchEnginePortletDataHandlerTest {
 		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group1);
 
 		File larFile = _exportLayouts(
-			false, group1.getGroupId(), false,
+			false, group1.getGroupId(), true, false,
 			new long[] {layout1.getLayoutId()});
 
 		Group group2 = GroupTestUtil.addGroup();
 
-		_importLayouts(false, false, larFile, group2.getGroupId());
+		_importLayouts(false, false, larFile, group2.getGroupId(), true, false);
 
 		layout1 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
 			layout1.getExternalReferenceCode(), group2.getGroupId());
@@ -445,6 +445,33 @@ public class BatchEnginePortletDataHandlerTest {
 				serviceRegistration.unregister();
 			}
 		}
+	}
+
+	@Test
+	@TestInfo("LPD-64361")
+	public void testExportImportPrivateLayoutsToOtherSite() throws Exception {
+		Group group1 = GroupTestUtil.addGroup();
+
+		Layout layout1 = LayoutTestUtil.addTypePortletLayout(group1, true);
+		Layout layout2 = LayoutTestUtil.addTypePortletLayout(group1, true);
+
+		File larFile = _exportLayouts(
+			false, group1.getGroupId(), false, true,
+			new long[] {layout1.getLayoutId()});
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		_importLayouts(false, false, larFile, group2.getGroupId(), false, true);
+
+		layout1 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			layout1.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertNotNull(layout1);
+
+		layout2 = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			layout2.getExternalReferenceCode(), group2.getGroupId());
+
+		Assert.assertNull(layout2);
 	}
 
 	@Test
@@ -1067,7 +1094,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private File _exportLayouts(
-			boolean deletions, long groupId, boolean privateLayouts,
+			boolean deletions, long groupId,
+			boolean includeLayoutSetLayoutsPortlet, boolean privateLayouts,
 			long[] layoutIds, ObjectDefinition... objectDefinitions)
 		throws Exception {
 
@@ -1081,7 +1109,18 @@ public class BatchEnginePortletDataHandlerTest {
 							TestPropsValues.getUser(), groupId, privateLayouts,
 							layoutIds,
 							_getExportImportParameterMap(
-								deletions, Arrays.asList(objectDefinitions)))));
+								deletions, includeLayoutSetLayoutsPortlet,
+								Arrays.asList(objectDefinitions)))));
+	}
+
+	private File _exportLayouts(
+			boolean deletions, long groupId, boolean privateLayouts,
+			long[] layoutIds, ObjectDefinition... objectDefinitions)
+		throws Exception {
+
+		return _exportLayouts(
+			deletions, groupId, false, privateLayouts, layoutIds,
+			objectDefinitions);
 	}
 
 	private String _getBatchFileNameWithPath(String fileName, long groupId) {
@@ -1124,7 +1163,8 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private Map<String, String[]> _getExportImportParameterMap(
-		boolean deletions, List<ObjectDefinition> objectDefinitions) {
+		boolean deletions, boolean includeLayoutSetLayoutsPortlet,
+		List<ObjectDefinition> objectDefinitions) {
 
 		Map<String, String[]> parameterMap = HashMapBuilder.put(
 			PortletDataHandlerKeys.DELETIONS,
@@ -1153,7 +1193,13 @@ public class BatchEnginePortletDataHandlerTest {
 		).put(
 			"PORTLET_DATA_com_liferay_layout_admin_web_portlet_" +
 				"LayoutSetLayoutsPortlet",
-			new String[] {Boolean.TRUE.toString()}
+			() -> {
+				if (includeLayoutSetLayoutsPortlet) {
+					return new String[] {Boolean.TRUE.toString()};
+				}
+
+				return null;
+			}
 		).build();
 
 		objectDefinitions.forEach(
@@ -1226,6 +1272,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 	private ExportImportConfiguration _importLayouts(
 			boolean deletions, boolean expectError, File file, long groupId,
+			boolean includeLayoutSetLayoutsPortlet, boolean privateLayout,
 			ObjectDefinition... objectDefinitions)
 		throws Exception {
 
@@ -1237,9 +1284,10 @@ public class BatchEnginePortletDataHandlerTest {
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 						ExportImportConfigurationSettingsMapFactoryUtil.
 							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(), groupId, false, null,
+								TestPropsValues.getUser(), groupId,
+								privateLayout, null,
 								_getExportImportParameterMap(
-									deletions,
+									deletions, includeLayoutSetLayoutsPortlet,
 									Arrays.asList(objectDefinitions))));
 
 			if (deletions) {
@@ -1252,6 +1300,16 @@ public class BatchEnginePortletDataHandlerTest {
 
 			return exportImportConfiguration;
 		}
+	}
+
+	private ExportImportConfiguration _importLayouts(
+			boolean deletions, boolean expectError, File file, long groupId,
+			ObjectDefinition... objectDefinitions)
+		throws Exception {
+
+		return _importLayouts(
+			deletions, expectError, file, groupId, false, false,
+			objectDefinitions);
 	}
 
 	private <S> SafeCloseable _registerServiceWithSafeCloseable(

@@ -305,14 +305,14 @@ public class SettingsTestUtil {
 						_getClientExtension(
 							ClientExtensionEntryConstants.TYPE_GLOBAL_CSS),
 						_getClientExtension(
-							ClientExtensionEntryConstants.TYPE_GLOBAL_CSS)
+							ClientExtensionEntryConstants.TYPE_GLOBAL_CSS, true)
 					});
 				setGlobalJSClientExtensions(
 					() -> new ClientExtension[] {
 						_getClientExtension(
 							ClientExtensionEntryConstants.TYPE_GLOBAL_JS),
 						_getClientExtension(
-							ClientExtensionEntryConstants.TYPE_GLOBAL_JS)
+							ClientExtensionEntryConstants.TYPE_GLOBAL_JS, true)
 					});
 				setJavascript(RandomTestUtil::randomString);
 				setMasterPageItemExternalReference(
@@ -575,6 +575,13 @@ public class SettingsTestUtil {
 	private static ClientExtension _getClientExtension(String type)
 		throws Exception {
 
+		return _getClientExtension(type, false);
+	}
+
+	private static ClientExtension _getClientExtension(
+			String type, boolean optionalReference)
+		throws Exception {
+
 		ClientExtension clientExtension = new ClientExtension() {
 			{
 				setClientExtensionConfig(
@@ -585,15 +592,17 @@ public class SettingsTestUtil {
 			}
 		};
 
-		ClientExtensionEntryLocalServiceUtil.addClientExtensionEntry(
-			clientExtension.getExternalReferenceCode(),
-			TestPropsValues.getUserId(), StringPool.BLANK,
-			Collections.singletonMap(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
-			StringPool.BLANK, StringPool.BLANK, type,
-			UnicodePropertiesBuilder.create(
-				clientExtension.getClientExtensionConfig(), true
-			).buildString());
+		if (!optionalReference) {
+			ClientExtensionEntryLocalServiceUtil.addClientExtensionEntry(
+				clientExtension.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), StringPool.BLANK,
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				StringPool.BLANK, StringPool.BLANK, type,
+				UnicodePropertiesBuilder.create(
+					clientExtension.getClientExtensionConfig(), true
+				).buildString());
+		}
 
 		return clientExtension;
 	}

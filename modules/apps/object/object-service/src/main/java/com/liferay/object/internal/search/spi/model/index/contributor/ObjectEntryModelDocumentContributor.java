@@ -52,6 +52,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * @author Marco Leo
@@ -309,6 +312,10 @@ public class ObjectEntryModelDocumentContributor
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId(), false);
 
+		Map<String, StringBundler> contentStringBundlers =
+			_getContentStringBundlerMap(
+				objectEntry, objectDefinition, objectFields);
+
 		StringBundler sb = new StringBundler(objectFields.size() * 4);
 
 		for (ObjectField objectField : objectFields) {
@@ -324,6 +331,8 @@ public class ObjectEntryModelDocumentContributor
 				for (Map.Entry<String, Object> localeMap :
 						localizedValues.entrySet()) {
 
+					int lengthBeforeChanged = sb.length();
+
 					_contribute(
 						document, fieldArray, objectField.getName(),
 						localizedValues.get(localeMap.getKey()),
@@ -331,13 +340,52 @@ public class ObjectEntryModelDocumentContributor
 							localeMap.getKey(), true, false
 						).toString(),
 						objectDefinition, objectEntry, objectField, sb, values);
+
+					if (sb.length() > lengthBeforeChanged) {
+						String contentValue = sb.toString(
+						).substring(
+							lengthBeforeChanged
+						);
+
+						StringBundler contentSB = contentStringBundlers.get(
+							localeMap.getKey());
+
+						if (contentSB != null) {
+							_appendToContent(
+								contentSB, objectField.getName(), contentValue);
+
+							if (contentSB.index() > 0) {
+								contentSB.setIndex(contentSB.index() - 1);
+							}
+						}
+					}
 				}
 			}
 			else {
+				int lengthBeforeChanged = sb.length();
+
 				_contribute(
 					document, fieldArray, objectField.getName(),
 					values.get(objectField.getName()), null, objectDefinition,
 					objectEntry, objectField, sb, values);
+
+				if (sb.length() > lengthBeforeChanged) {
+					String contentValue = sb.toString(
+					).substring(
+						lengthBeforeChanged
+					);
+
+					for (StringBundler contentSB :
+							contentStringBundlers.values()) {
+
+						_appendToContent(
+							contentSB, objectField.getName(), contentValue);
+
+						if (contentSB.index() > 0) {
+							contentSB.setIndex(contentSB.index() - 1);
+						}
+					}
+				}
 			}
 		}
 
@@ -415,6 +463,57 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		return null;
+	}
+
+	private Map<String, StringBundler> _getContentStringBundlerMap(
+		ObjectEntry objectEntry, ObjectDefinition objectDefinition,
+		List<ObjectField> objectFields) {
+
+		String defaultLanguageId = GetterUtil.getString(
+			objectEntry.getDefaultLanguageId(),
+			objectDefinition.getDefaultLanguageId());
+
+		if (Validator.isNull(defaultLanguageId)) {
+			defaultLanguageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getDefault());
+		}
+
+		Set<String> availableLanguageIds = new TreeSet<>();
+
+		if (Validator.isNotNull(defaultLanguageId)) {
+			availableLanguageIds.add(defaultLanguageId);
+		}
+
+		for (ObjectField objectField : objectFields) {
+			if (!objectField.isLocalized()) {
+				continue;
+			}
+
+			Map<String, Object> localizedValues =
+				(Map<String, Object>)objectEntry.getValues(
+				).get(
+					objectField.getI18nObjectFieldName()
+				);
+
+			if (MapUtil.isEmpty(localizedValues)) {
+				continue;
+			}
+
+			availableLanguageIds.addAll(localizedValues.keySet());
+		}
+
+		if (availableLanguageIds.isEmpty()) {
+			availableLanguageIds.add(defaultLanguageId);
+		}
+
+		Map<String, StringBundler> contentStringBundlers = new TreeMap<>();
+
+		for (String languageId : availableLanguageIds) {
+			contentStringBundlers.put(
+				languageId, new StringBundler(objectFields.size() * 4));
+		}
+
+		return contentStringBundlers;
 	}
 
 	private String _getDateString(Object value) {

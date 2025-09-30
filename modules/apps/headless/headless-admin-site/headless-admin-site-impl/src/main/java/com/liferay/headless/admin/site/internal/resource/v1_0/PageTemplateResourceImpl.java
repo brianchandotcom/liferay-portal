@@ -537,15 +537,9 @@ public class PageTemplateResourceImpl
 				throw new UnsupportedOperationException();
 			}
 
-			Layout prototypeLayout = LayoutUtil.getLayoutPrototypeLayout(
+			LayoutUtil.setLayoutPrototypeLayout(
 				serviceContext.getScopeGroupId(), widgetPageSpecification,
-				serviceContext);
-
-			if (prototypeLayout != null) {
-				serviceContext.setAttribute(
-					"layoutSetPrototypeLayoutERC",
-					prototypeLayout.getExternalReferenceCode());
-			}
+				serviceContext, "layoutSetPrototypeLayoutERC");
 		}
 
 		LayoutPrototype layoutPrototype =

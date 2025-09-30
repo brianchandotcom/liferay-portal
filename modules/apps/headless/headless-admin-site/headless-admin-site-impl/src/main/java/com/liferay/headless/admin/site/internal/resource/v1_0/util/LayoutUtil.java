@@ -216,23 +216,11 @@ public class LayoutUtil {
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());
 
-		Layout prototypeLayout = getLayoutPrototypeLayout(
-			groupId, publishedContentPageSpecification, serviceContext);
+		setLayoutPrototypeLayout(
+			groupId, publishedContentPageSpecification, serviceContext,"layoutSetPrototypeLayoutERC");
 
-		if (prototypeLayout != null) {
-			serviceContext.setAttribute(
-				"layoutSetPrototypeLayoutERC",
-				prototypeLayout.getExternalReferenceCode());
-
-			Layout draftPrototypeLayout = getLayoutPrototypeLayout(
-				groupId, draftContentPageSpecification, serviceContext);
-
-			if (draftPrototypeLayout != null) {
-				serviceContext.setAttribute(
-					"draftLayoutLayoutSetPrototypeLayoutERC",
-					draftPrototypeLayout.getExternalReferenceCode());
-			}
-		}
+		setLayoutPrototypeLayout(
+				groupId, publishedContentPageSpecification, serviceContext,"draftLayoutLayoutSetPrototypeLayoutERC");
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),
@@ -346,16 +334,16 @@ public class LayoutUtil {
 			widgetPageSpecification);
 	}
 
-	public static Layout getLayoutPrototypeLayout(
+	public static void setLayoutPrototypeLayout(
 			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext)
+			ServiceContext serviceContext, String serviceContextAttributeName)
 		throws Exception {
 
 		if (Validator.isNull(
 				pageSpecification.
 					getSiteTemplatePageSpecificationExternalReferenceCode())) {
 
-			return null;
+			return;
 		}
 
 		boolean privateLayout = Boolean.FALSE;
@@ -394,7 +382,7 @@ public class LayoutUtil {
 			groupId, privateLayout);
 
 		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-			return null;
+			return;
 		}
 
 		LayoutSetPrototype layoutSetPrototype =
@@ -403,10 +391,21 @@ public class LayoutUtil {
 					layoutSet.getLayoutSetPrototypeUuid(),
 					layoutSet.getCompanyId());
 
-		return LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+		String siteTemplatePageSpecificationExternalReferenceCode =
 			pageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode(),
+				getSiteTemplatePageSpecificationExternalReferenceCode();
+
+		Layout layoutSetPrototypeLayout = LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+			siteTemplatePageSpecificationExternalReferenceCode,
 			layoutSetPrototype.getGroupId());
+
+		if (layoutSetPrototypeLayout == null) {
+			LogUtil.logOptionalReference(Layout.class, siteTemplatePageSpecificationExternalReferenceCode);
+		}
+
+		serviceContext.setAttribute(
+			serviceContextAttributeName,
+			siteTemplatePageSpecificationExternalReferenceCode);
 	}
 
 	public static String getParentSectionId(Layout layout, String portletId) {

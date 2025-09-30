@@ -14,7 +14,6 @@ const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
 	},
-	selectionType: 'single',
 };
 
 const CMS_FILE_VIEWS = [
@@ -75,6 +74,7 @@ const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 		label: 'embedded.title',
 		value: 'embedded.id',
 	},
+	multiSelect: false,
 	views: CMS_FILE_VIEWS,
 };
 

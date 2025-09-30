@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.processor.RawMetadataProcessor;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -131,7 +132,9 @@ public class DLFileEntryDataCleanupPreupgradeProcess
 						DataCleanupLoggingUtil.logDelete(
 							_log, 1, dbInspector.normalizeName("DLFileEntry"),
 							StringBundler.concat(
-								"fileEntryId ", fileEntryId, " name was ",
+								dbInspector.normalizeName("fileEntryId"),
+								StringPool.SPACE, fileEntryId, StringPool.SPACE,
+								dbInspector.normalizeName("name"), " was ",
 								(name == null) ? "null" : "empty"));
 					}
 				}

@@ -217,8 +217,6 @@ public abstract class BaseSectionDisplayContextTestCase
 				"L_BASIC_WEB_CONTENT", "content-icon-basic-content"
 			).put(
 				"L_BLOG", "content-icon-blog"
-			).put(
-				"L_KNOWLEDGE_BASE", "content-icon-knowledge-base"
 			).build()
 		).put(
 			"objectDefinitionIcons",
@@ -228,8 +226,6 @@ public abstract class BaseSectionDisplayContextTestCase
 				"L_BASIC_WEB_CONTENT", "forms"
 			).put(
 				"L_BLOG", "blogs"
-			).put(
-				"L_KNOWLEDGE_BASE", "wiki"
 			).build()
 		).put(
 			"parentObjectEntryFolderExternalReferenceCode",

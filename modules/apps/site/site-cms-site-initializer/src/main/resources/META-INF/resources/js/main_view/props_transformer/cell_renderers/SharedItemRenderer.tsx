@@ -48,10 +48,6 @@ export default function SharedItemRenderer({
 		icon = 'blogs';
 		iconColor = 'content-icon-blog';
 	}
-	else if (assetType?.includes('Knowledge')) {
-		icon = 'wiki';
-		iconColor = 'content-icon-knowledge-base';
-	}
 	else {
 		icon = 'web-content';
 		iconColor = 'content-icon-web-content';

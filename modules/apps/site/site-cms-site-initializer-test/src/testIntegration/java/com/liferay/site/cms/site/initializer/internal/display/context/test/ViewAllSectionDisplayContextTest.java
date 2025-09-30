@@ -69,11 +69,6 @@ public class ViewAllSectionDisplayContextTest
 				"L_BLOG",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
-			"knowledge-base",
-			getRedirect(
-				"L_KNOWLEDGE_BASE",
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
-		).put(
 			"external-video-shortcut",
 			getRedirect(
 				"L_EXTERNAL_VIDEO",

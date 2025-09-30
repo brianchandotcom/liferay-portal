@@ -335,7 +335,9 @@ test.describe('Textarea input field', () => {
 				'Lemon History',
 			]);
 
-			const textareaInput = page.locator('[name="lemonHistory"]');
+			const textareaInput = page.locator(
+				'[name="ObjectField_lemonHistory"]'
+			);
 
 			// Check the role of the input is textbox
 

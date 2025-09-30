@@ -48,6 +48,10 @@ export default function useFormRelationshipFieldSets(
 				item.name !== 'basic-information'
 		) as ObjectFieldSet;
 
+		if (!mainFieldSet) {
+			return [];
+		}
+
 		return mainFieldSet.fields.filter(
 			(fieldSet) => 'relationship' in fieldSet && fieldSet.relationship
 		) as ObjectFieldSet[];

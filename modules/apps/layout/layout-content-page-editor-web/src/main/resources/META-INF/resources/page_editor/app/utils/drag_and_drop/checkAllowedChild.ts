@@ -97,6 +97,7 @@ const LAYOUT_DATA_CHECK_ALLOWED_CHILDREN = {
 			LAYOUT_DATA_ITEM_TYPES.row,
 			LAYOUT_DATA_ITEM_TYPES.fragment,
 			LAYOUT_DATA_ITEM_TYPES.form,
+			LAYOUT_DATA_ITEM_TYPES.formRelationship,
 		].some((type) => type === child.type),
 	[LAYOUT_DATA_ITEM_TYPES.formStepContainer]: (child: LayoutDataItem) =>
 		[LAYOUT_DATA_ITEM_TYPES.formStep].some((type) => type === child.type),

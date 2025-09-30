@@ -1152,7 +1152,7 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			"PORTLET_DATA_com_liferay_layout_admin_web_portlet_" +
-				"GroupPagesPortlet",
+				"LayoutSetLayoutsPortlet",
 			new String[] {Boolean.TRUE.toString()}
 		).build();
 

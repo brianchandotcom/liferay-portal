@@ -206,6 +206,11 @@ public class SitePageResourceImpl
 				return Scope.SITE;
 			}
 
+			@Override
+			public boolean isActive() {
+				return FeatureFlagManagerUtil.isEnabled("LPD-35443");
+			}
+
 		};
 	}
 

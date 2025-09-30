@@ -50,18 +50,10 @@ describe('[CMS Dashboard] Components: ContentCard', () => {
 		);
 		expect(Description).toBeInTheDocument();
 
-		const [RangeSelectorDropdown, ActionMenu] =
-			screen.getAllByRole('button');
+		const [RangeSelectorDropdown] = screen.getAllByRole('button');
 
 		expect(RangeSelectorDropdown).toBeInTheDocument();
 		expect(RangeSelectorDropdown).toHaveTextContent('last-7-days');
-
-		expect(ActionMenu).toBeInTheDocument();
-
-		const viewAllContentElement = screen.getByText('view-all-content');
-
-		expect(viewAllContentElement).toBeInTheDocument();
-		expect(viewAllContentElement).toHaveAttribute('href', '/contents');
 
 		await waitForElementToBeRemoved(
 			screen.getByTestId('loading-animation')

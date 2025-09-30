@@ -8,6 +8,7 @@ package com.liferay.commerce.fragment.internal.renderer;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -27,6 +28,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Reference;
 
@@ -66,16 +70,34 @@ public abstract class BaseFragmentRenderer implements FragmentRenderer {
 		return StringPool.BLANK;
 	}
 
-	protected Object getConfigurationValue(
-		String fieldName, FragmentRendererContext fragmentRendererContext) {
+	protected Map<String, Object> getConfigurationValuesMap(
+		FragmentRendererContext fragmentRendererContext) {
+
+		Map<String, Object> configurationValuesMap = new HashMap<>();
+
+		JSONObject configurationJSONObject = getConfigurationJSONObject(
+			fragmentRendererContext);
+
+		if (configurationJSONObject == null) {
+			return configurationValuesMap;
+		}
 
 		FragmentEntryLink fragmentEntryLink =
 			fragmentRendererContext.getFragmentEntryLink();
 
-		return fragmentEntryConfigurationParser.getFieldValue(
-			getConfigurationJSONObject(fragmentRendererContext),
-			fragmentEntryLink.getEditableValuesJSONObject(),
-			fragmentRendererContext.getLocale(), fieldName);
+		for (FragmentConfigurationField fragmentConfigurationField :
+				fragmentEntryConfigurationParser.getFragmentConfigurationFields(
+					configurationJSONObject)) {
+
+			configurationValuesMap.put(
+				fragmentConfigurationField.getName(),
+				fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getEditableValuesJSONObject(),
+					fragmentConfigurationField,
+					fragmentRendererContext.getLocale()));
+		}
+
+		return configurationValuesMap;
 	}
 
 	protected abstract String getLabelKey();

@@ -42,13 +42,17 @@ public class PendingAccountOrdersDataSetFragmentRenderer
 	}
 
 	@Override
+	protected String getConfigurationPath() {
+		return "account_orders_data_set/dependencies/configuration.json";
+	}
+
+	@Override
 	protected PendingAccountOrdersDataSetDisplayContext getDisplayContext(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
 		return new PendingAccountOrdersDataSetDisplayContext(
-			(String)getConfigurationValue(
-				"displayStyle", fragmentRendererContext),
+			getConfigurationValuesMap(fragmentRendererContext),
 			httpServletRequest, language, _portal, _portletURLFactory);
 	}
 

@@ -54,7 +54,7 @@ public abstract class BaseComponentFragmentRenderer
 
 			ComponentTag componentTag = new ComponentTag();
 
-			componentTag.setModule(getModuleName());
+			componentTag.setModule(getModule());
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
@@ -74,7 +74,7 @@ public abstract class BaseComponentFragmentRenderer
 		}
 	}
 
-	protected abstract String getModuleName();
+	protected abstract String getModule();
 
 	protected abstract Map<String, Object> getProps(
 			FragmentRendererContext fragmentRendererContext,

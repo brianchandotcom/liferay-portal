@@ -31,14 +31,16 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  */
-public class PendingAccountOrdersDataSetDisplayContext {
+public class PendingAccountOrdersDataSetDisplayContext
+	extends BaseDisplayContext {
 
 	public PendingAccountOrdersDataSetDisplayContext(
-		String displayStyle, HttpServletRequest httpServletRequest,
-		Language language, Portal portal, PortletURLFactory portletURLFactory) {
+		Map<String, Object> configurationValues,
+		HttpServletRequest httpServletRequest, Language language, Portal portal,
+		PortletURLFactory portletURLFactory) {
 
-		_displayStyle = displayStyle;
-		_httpServletRequest = httpServletRequest;
+		super(configurationValues, httpServletRequest);
+
 		_language = language;
 		_portal = portal;
 		_portletURLFactory = portletURLFactory;
@@ -49,7 +51,7 @@ public class PendingAccountOrdersDataSetDisplayContext {
 
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
-			"setCurrentOrderURL", () -> _getEditOrderURL(_httpServletRequest)
+			"setCurrentOrderURL", () -> _getEditOrderURL()
 		).build();
 	}
 
@@ -59,30 +61,21 @@ public class PendingAccountOrdersDataSetDisplayContext {
 			_commerceContext.getCommerceChannelId(), "/carts");
 	}
 
-	public String getDisplayStyle() {
-		return _displayStyle;
-	}
-
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return Collections.singletonList(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "view", "view",
-				_language.get(_httpServletRequest, "view"), null, null,
-				"link"));
+				_language.get(httpServletRequest, "view"), null, null, "link"));
 	}
 
-	private String _getEditOrderURL(HttpServletRequest httpServletRequest)
-		throws PortalException {
-
+	private String _getEditOrderURL() throws PortalException {
 		long plid = _portal.getPlidFromPortletId(
 			_portal.getScopeGroupId(httpServletRequest),
 			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if ((plid > 0) || FeatureFlagManagerUtil.isEnabled("LPD-20379")) {
 			return PortletURLBuilder.create(
-				_getPortletURL(
-					httpServletRequest,
-					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
+				_getPortletURL()
 			).setActionName(
 				"/commerce_open_order_content/edit_commerce_order"
 			).setCMD(
@@ -95,26 +88,24 @@ public class PendingAccountOrdersDataSetDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private PortletURL _getPortletURL(
-			HttpServletRequest httpServletRequest, String portletId)
-		throws PortalException {
-
+	private PortletURL _getPortletURL() throws PortalException {
 		long plid = _portal.getPlidFromPortletId(
-			_portal.getScopeGroupId(httpServletRequest), portletId);
+			_portal.getScopeGroupId(httpServletRequest),
+			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
 
 		if (plid > 0) {
 			return _portletURLFactory.create(
-				httpServletRequest, portletId, plid,
+				httpServletRequest,
+				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT, plid,
 				PortletRequest.ACTION_PHASE);
 		}
 
 		return _portletURLFactory.create(
-			httpServletRequest, portletId, PortletRequest.ACTION_PHASE);
+			httpServletRequest, CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
+			PortletRequest.ACTION_PHASE);
 	}
 
 	private final CommerceContext _commerceContext;
-	private final String _displayStyle;
-	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
 	private final PortletURLFactory _portletURLFactory;

@@ -41,13 +41,17 @@ public class AccountsDataSetFragmentRenderer
 	}
 
 	@Override
+	protected String getConfigurationPath() {
+		return "accounts_data_set/dependencies/configuration.json";
+	}
+
+	@Override
 	protected AccountsDataSetDisplayContext getDisplayContext(
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
 		return new AccountsDataSetDisplayContext(
-			(String)getConfigurationValue(
-				"displayStyle", fragmentRendererContext),
+			getConfigurationValuesMap(fragmentRendererContext),
 			httpServletRequest, language, _portal);
 	}
 

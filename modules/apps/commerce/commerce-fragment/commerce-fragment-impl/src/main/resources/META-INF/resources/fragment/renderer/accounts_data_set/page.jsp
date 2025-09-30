@@ -16,6 +16,18 @@ AccountsDataSetDisplayContext accountsDataSetDisplayContext = (AccountsDataSetDi
 	apiURL="<%= accountsDataSetDisplayContext.getAPIURL() %>"
 	fdsActionDropdownItems="<%= accountsDataSetDisplayContext.getFDSActionDropdownItems() %>"
 	id="<%= CommerceFragmentFDSNames.ACCOUNT_ENTRIES %>"
+	itemsPerPage='<%= (int)accountsDataSetDisplayContext.getConfigurationValue("pageSize") %>'
 	propsTransformer="{AccountsFDSPropsTransformer} from commerce-fragment-impl"
-	style="<%= accountsDataSetDisplayContext.getDisplayStyle() %>"
+	showPagination='<%= (boolean)accountsDataSetDisplayContext.getConfigurationValue("showPagination") %>'
+	showSearch='<%= (boolean)accountsDataSetDisplayContext.getConfigurationValue("showSearch") %>'
+	style='<%= (String)accountsDataSetDisplayContext.getConfigurationValue("displayStyle") %>'
 />
+
+<c:if test='<%= (boolean)accountsDataSetDisplayContext.getConfigurationValue("hideActionsColumn") %>'>
+	<aui:style type="text/css">
+		.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountsdatasetfragmentrenderer table th:last-of-type,
+		.lfr-layout-structure-item-com-liferay-commerce-fragment-internal-renderer-accountsdatasetfragmentrenderer table td:last-of-type {
+			display: none;
+		}
+	</aui:style>
+</c:if>

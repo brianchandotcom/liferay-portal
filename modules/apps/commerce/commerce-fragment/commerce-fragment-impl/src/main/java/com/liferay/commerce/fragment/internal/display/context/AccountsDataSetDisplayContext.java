@@ -24,14 +24,15 @@ import java.util.Map;
 /**
  * @author Alessio Antonio Rendina
  */
-public class AccountsDataSetDisplayContext {
+public class AccountsDataSetDisplayContext extends BaseDisplayContext {
 
 	public AccountsDataSetDisplayContext(
-		String displayStyle, HttpServletRequest httpServletRequest,
-		Language language, Portal portal) {
+		Map<String, Object> configurationValues,
+		HttpServletRequest httpServletRequest, Language language,
+		Portal portal) {
 
-		_displayStyle = displayStyle;
-		_httpServletRequest = httpServletRequest;
+		super(configurationValues, httpServletRequest);
+
 		_language = language;
 		_portal = portal;
 
@@ -43,7 +44,7 @@ public class AccountsDataSetDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"setCurrentAccountURL",
 			StringBundler.concat(
-				_portal.getPortalURL(_httpServletRequest),
+				_portal.getPortalURL(httpServletRequest),
 				_portal.getPathContext(), "/o/commerce-ui/set-current-account")
 		).build();
 	}
@@ -54,21 +55,14 @@ public class AccountsDataSetDisplayContext {
 			_commerceContext.getCommerceChannelId(), "/accounts");
 	}
 
-	public String getDisplayStyle() {
-		return _displayStyle;
-	}
-
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return Collections.singletonList(
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "view", "view",
-				_language.get(_httpServletRequest, "view"), null, null,
-				"link"));
+				_language.get(httpServletRequest, "view"), null, null, "link"));
 	}
 
 	private final CommerceContext _commerceContext;
-	private final String _displayStyle;
-	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
 	private final Portal _portal;
 

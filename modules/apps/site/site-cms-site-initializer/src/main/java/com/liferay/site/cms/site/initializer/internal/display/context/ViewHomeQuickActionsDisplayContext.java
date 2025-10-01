@@ -5,22 +5,29 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -41,11 +48,17 @@ public class ViewHomeQuickActionsDisplayContext {
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService,
 		ObjectDefinitionService objectDefinitionService,
+		ObjectEntryFolderLocalService objectEntryFolderLocalService,
+		ModelResourcePermission<ObjectEntryFolder>
+			objectEntryFolderModelResourcePermission,
 		ThemeDisplay themeDisplay) {
 
 		_depotEntryLocalService = depotEntryLocalService;
 		_groupLocalService = groupLocalService;
 		_objectDefinitionService = objectDefinitionService;
+		_objectEntryFolderLocalService = objectEntryFolderLocalService;
+		_objectEntryFolderModelResourcePermission =
+			objectEntryFolderModelResourcePermission;
 		_themeDisplay = themeDisplay;
 	}
 
@@ -53,6 +66,37 @@ public class ViewHomeQuickActionsDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"quickActions", _getQuickActions()
 		).build();
+	}
+
+	public boolean hasAddEntryPermission() {
+		List<Long> depotEntryGrouIds =
+			_depotEntryLocalService.getDepotEntryGroupIds(
+				_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE);
+
+		List<ObjectEntryFolder> objectEntryFolders =
+			_objectEntryFolderLocalService.
+				getObjectEntryFoldersByExternalReferenceCode(
+					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
+					depotEntryGrouIds, _themeDisplay.getCompanyId());
+
+		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
+			try {
+				if (_objectEntryFolderModelResourcePermission.contains(
+						_themeDisplay.getPermissionChecker(),
+						objectEntryFolder.getObjectEntryFolderId(),
+						ActionKeys.ADD_ENTRY)) {
+
+					return true;
+				}
+			}
+			catch (PortalException portalException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(portalException);
+				}
+			}
+		}
+
+		return false;
 	}
 
 	private Map<String, Object> _createQuickAction(
@@ -85,7 +129,7 @@ public class ViewHomeQuickActionsDisplayContext {
 		return _getDepotEntriesJSONArray(
 			TransformUtil.transform(
 				_depotEntryLocalService.getDepotEntries(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
+					_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE),
 				DepotEntry::getGroupId));
 	}
 
@@ -189,9 +233,15 @@ public class ViewHomeQuickActionsDisplayContext {
 		"forms", "blogs", "wiki", "documents-and-media", "vocabulary"
 	};
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ViewHomeQuickActionsDisplayContext.class);
+
 	private final DepotEntryLocalService _depotEntryLocalService;
 	private final GroupLocalService _groupLocalService;
 	private final ObjectDefinitionService _objectDefinitionService;
+	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
+	private final ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 	private final ThemeDisplay _themeDisplay;
 
 }

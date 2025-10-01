@@ -6,8 +6,9 @@
 package com.liferay.commerce.order.content.web.internal.layout.display.page;
 
 import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.service.CommerceOrderService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
@@ -63,7 +64,8 @@ public class CommerceOrderLayoutDisplayPageProvider
 
 		try {
 			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrder(Long.valueOf(urlTitle));
+				_commerceOrderLocalService.getCommerceOrder(
+					Long.valueOf(urlTitle));
 
 			return new CommerceOrderLayoutDisplayPageObjectProvider(
 				commerceOrder, groupId);
@@ -85,35 +87,45 @@ public class CommerceOrderLayoutDisplayPageProvider
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
 			return null;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)
+					infoItemReference.getInfoItemIdentifier();
 
-		try {
 			CommerceOrder commerceOrder =
-				_commerceOrderService.getCommerceOrder(
+				_commerceOrderLocalService.fetchCommerceOrder(
 					classPKInfoItemIdentifier.getClassPK());
 
 			return new CommerceOrderLayoutDisplayPageObjectProvider(
 				commerceOrder, groupId);
 		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
 
-		return null;
+		ERCInfoItemIdentifier ercInfoItemIdentifier =
+			(ERCInfoItemIdentifier)infoItemIdentifier;
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.
+				fetchCommerceOrderByExternalReferenceCode(
+					ercInfoItemIdentifier.getExternalReferenceCode(),
+					serviceContext.getCompanyId());
+
+		return new CommerceOrderLayoutDisplayPageObjectProvider(
+			commerceOrder, commerceOrder.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderLayoutDisplayPageProvider.class);
 
 	@Reference
-	private CommerceOrderService _commerceOrderService;
+	private CommerceOrderLocalService _commerceOrderLocalService;
 
 }

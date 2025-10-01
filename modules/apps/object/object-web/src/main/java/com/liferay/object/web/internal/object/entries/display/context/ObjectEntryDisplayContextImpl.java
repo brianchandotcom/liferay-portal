@@ -783,6 +783,32 @@ public class ObjectEntryDisplayContextImpl
 	}
 
 	@Override
+	public boolean isShowScreenNavigation() throws PortalException {
+		com.liferay.object.model.ObjectEntry objectEntry = getObjectEntry();
+
+		if (objectEntry == null) {
+			return false;
+		}
+
+		ObjectDefinition objectDefinition = getObjectDefinition1();
+
+		if ((getObjectLayoutTab() != null) || objectDefinition.isRootNode()) {
+			return true;
+		}
+
+		objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			objectEntry.getObjectEntryId());
+
+		if ((objectEntry != null) &&
+			(objectEntry.getRootObjectEntryId() != 0)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public String renderDDMForm(PageContext pageContext)
 		throws PortalException {
 

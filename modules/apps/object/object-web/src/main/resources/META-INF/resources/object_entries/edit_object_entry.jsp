@@ -14,7 +14,6 @@ ObjectEntryDisplayContext objectEntryDisplayContext = (ObjectEntryDisplayContext
 
 ObjectDefinition objectDefinition = objectEntryDisplayContext.getObjectDefinition1();
 ObjectEntry objectEntry = objectEntryDisplayContext.getObjectEntry();
-ObjectLayoutTab objectLayoutTab = objectEntryDisplayContext.getObjectLayoutTab();
 ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelationship();
 %>
 
@@ -26,7 +25,7 @@ ObjectRelationship objectRelationship = objectEntryDisplayContext.getObjectRelat
 		/>
 	</c:when>
 	<c:otherwise>
-		<c:if test="<%= (objectEntry != null) && ((objectLayoutTab != null) || (objectDefinition.getRootObjectDefinitionId() > 0)) %>">
+		<c:if test="<%= objectEntryDisplayContext.isShowScreenNavigation() %>">
 			<liferay-frontend:screen-navigation
 				key="<%= objectDefinition.getClassName() %>"
 				navBarCssClass="container-fluid-max-xxxl"

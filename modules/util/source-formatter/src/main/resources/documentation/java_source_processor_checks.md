@@ -50,7 +50,6 @@ EqualClauseIfStatementsCheck | [Styling](styling_checks.md#styling-checks) | Fin
 ExceptionPrintStackTraceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Avoid using printStackTrace. |
 ExceptionVariableNameCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Validates variable names that have type `*Exception`. |
 FactoryCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where `*Factory` should be used when creating new instances of an object. |
-FeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that FeatureFlagManagerUtil.isEnabled(long companyId, String key) is being used instead of FeatureFlagManagerUtil.isEnabled(String key). |
 FilterStringWhitespaceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`. |
 [FrameworkBundleCheck](check/framework_bundle_check.md#frameworkbundlecheck) | [Performance](performance_checks.md#performance-checks) | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used. |
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds cases where a Fully Qualified Name is used instead of importing a class. |
@@ -98,7 +97,7 @@ JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.md#misce
 JavaEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | Finds missing and unnecessary empty lines. |
 JavaEntityFieldsMapOrderCheck | [Styling](styling_checks.md#styling-checks) | Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`. |
 JavaExceptionCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Checks that variable names of exceptions in `catch` statements follow naming conventions. |
-JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used. |
+JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used and incorrect use of it. |
 JavaFeatureFlagsAndTestInfoAnnotationCheck | [Styling](styling_checks.md#styling-checks) | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |
 JavaFinalVariableCheck | [Styling](styling_checks.md#styling-checks) | Finds cases of unneeded `final` modifiers for variables and parameters. |
 [JavaFinderCacheCheck](check/java_finder_cache_check.md#javafindercachecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`. |

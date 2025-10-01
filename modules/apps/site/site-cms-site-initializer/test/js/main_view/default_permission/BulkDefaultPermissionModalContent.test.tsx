@@ -619,6 +619,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 					defaultPermissions:
 						'{"L_CONTENTS":{"admin":["VIEW1"]},"L_FILES":{"admin":["VIEW2"]},"OBJECT_ENTRY_FOLDERS":{"admin":["VIEW3"],"guest":["VIEW3","UPDATE3"]}}',
 				},
+				onCreateError: expect.any(Function),
 				onCreateSuccess: expect.any(Function),
 				selectedData: props.selectedData,
 				type: 'DefaultPermissionBulkAction',

@@ -641,7 +641,7 @@ public class RenderLayoutStructureTagTest {
 
 		String content = mockHttpServletResponse.getContentAsString();
 
-		Assert.assertFalse(content, content.contains("col-"));
+		Assert.assertTrue(content, content.contains("col-"));
 	}
 
 	@Test

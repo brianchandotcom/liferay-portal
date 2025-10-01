@@ -33,6 +33,7 @@ import com.liferay.portal.search.ml.embedding.text.TextEmbeddingRetriever;
 import com.liferay.portal.search.rest.dto.v1_0.EmbeddingProviderConfiguration;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -115,6 +116,18 @@ public class TextEmbeddingDocumentContributorImpl
 
 			_addTextEmbeddingField(document, languageId, textEmbedding);
 		}
+	}
+
+	@Override
+	public <T extends BaseModel<T>> List<String> getLanguageIds(T model) {
+		EmbeddingProviderConfiguration embeddingProviderConfiguration =
+			getEmbeddingProviderConfiguration(model);
+
+		if (embeddingProviderConfiguration == null) {
+			return Collections.emptyList();
+		}
+
+		return Arrays.asList(embeddingProviderConfiguration.getLanguageIds());
 	}
 
 	protected <T extends BaseModel<T>> EmbeddingProviderConfiguration

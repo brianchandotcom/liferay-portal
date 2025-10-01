@@ -37,7 +37,7 @@ import java.util.Locale;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,8 +55,13 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
+	@AfterClass
+	public static void tearDownClass() {
+		_workflowDefinitionManagerUtilMockedStatic.close();
+	}
+
+	@Before
+	public void setUp() throws Exception {
 		_setUpHttpServletRequest();
 		_setUpLanguageUtil();
 		_setUpPortalUtil();
@@ -92,11 +97,6 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		).when(
 			_workflowDefinitionLinkDisplayContext
 		).isControlPanelPortlet();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_workflowDefinitionManagerUtilMockedStatic.close();
 	}
 
 	@Test
@@ -152,7 +152,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 				_workflowHandler));
 	}
 
-	private static void _setUpHttpServletRequest() {
+	private void _setUpHttpServletRequest() {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -174,7 +174,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		);
 	}
 
-	private static void _setUpLanguageUtil() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Language language = Mockito.mock(Language.class);
@@ -188,7 +188,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		languageUtil.setLanguage(language);
 	}
 
-	private static void _setUpPortalUtil() {
+	private void _setUpPortalUtil() {
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = Mockito.mock(Portal.class);
@@ -214,7 +214,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		portalUtil.setPortal(portal);
 	}
 
-	private static void _setUpWorkflowDefinitionLink() {
+	private void _setUpWorkflowDefinitionLink() {
 		Mockito.when(
 			_workflowDefinitionLink.getWorkflowDefinitionName()
 		).thenReturn(
@@ -228,7 +228,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		);
 	}
 
-	private static void _setUpWorkflowDefinitionLinkLocalService() {
+	private void _setUpWorkflowDefinitionLinkLocalService() {
 		Mockito.when(
 			_workflowDefinitionLinkLocalService.
 				fetchDefaultWorkflowDefinitionLink(_COMPANY_ID, _CLASS_NAME)
@@ -237,7 +237,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		);
 	}
 
-	private static void _setUpWorkflowDefinitionManagerUtil() {
+	private void _setUpWorkflowDefinitionManagerUtil() {
 		_workflowDefinitionManagerUtilMockedStatic.when(
 			() -> WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				_COMPANY_ID, _WORKFLOW_DEFINITION_NAME,
@@ -247,7 +247,7 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		);
 	}
 
-	private static void _setUpWorkflowHandler() {
+	private void _setUpWorkflowHandler() {
 		Mockito.when(
 			_workflowHandler.getClassName()
 		).thenReturn(
@@ -268,25 +268,26 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	private static final int _WORKFLOW_DEFINITION_VERSION =
 		RandomTestUtil.randomInt();
 
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
-	private static final RenderRequest _renderRequest = Mockito.mock(
-		RenderRequest.class);
-	private static final RenderResponse _renderResponse = Mockito.mock(
-		RenderResponse.class);
-	private static final WorkflowDefinition _workflowDefinition = Mockito.mock(
-		WorkflowDefinition.class);
-	private static final WorkflowDefinitionLink _workflowDefinitionLink =
-		Mockito.mock(WorkflowDefinitionLink.class);
-	private static WorkflowDefinitionLinkDisplayContext
-		_workflowDefinitionLinkDisplayContext;
-	private static final WorkflowDefinitionLinkLocalService
-		_workflowDefinitionLinkLocalService = Mockito.mock(
-			WorkflowDefinitionLinkLocalService.class);
 	private static final MockedStatic<WorkflowDefinitionManagerUtil>
 		_workflowDefinitionManagerUtilMockedStatic = Mockito.mockStatic(
 			WorkflowDefinitionManagerUtil.class);
-	private static final WorkflowHandler<?> _workflowHandler = Mockito.mock(
+
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
+		HttpServletRequest.class);
+	private final RenderRequest _renderRequest = Mockito.mock(
+		RenderRequest.class);
+	private final RenderResponse _renderResponse = Mockito.mock(
+		RenderResponse.class);
+	private final WorkflowDefinition _workflowDefinition = Mockito.mock(
+		WorkflowDefinition.class);
+	private final WorkflowDefinitionLink _workflowDefinitionLink = Mockito.mock(
+		WorkflowDefinitionLink.class);
+	private WorkflowDefinitionLinkDisplayContext
+		_workflowDefinitionLinkDisplayContext;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService = Mockito.mock(
+			WorkflowDefinitionLinkLocalService.class);
+	private final WorkflowHandler<?> _workflowHandler = Mockito.mock(
 		WorkflowHandler.class);
 
 }

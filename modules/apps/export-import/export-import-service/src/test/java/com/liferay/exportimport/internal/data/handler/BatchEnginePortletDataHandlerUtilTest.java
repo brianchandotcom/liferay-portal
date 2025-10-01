@@ -72,7 +72,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(),
-				_mockPortletDataContext(endDate, null, null));
+				_mockPortletDataContext(endDate, null, null), null);
 
 		Assert.assertEquals(
 			"dateModified le " + _dateFormat.format(endDate),
@@ -87,7 +87,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(),
-				_mockPortletDataContext(endDate, null, startDate));
+				_mockPortletDataContext(endDate, null, startDate), null);
 
 		Assert.assertEquals(
 			StringBundler.concat(
@@ -103,7 +103,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(itemClassName, null, null, null),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
 	}
@@ -115,7 +115,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(null, itemModelName, null, null),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
 	}
@@ -126,7 +126,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(
 					null, null, List.of("nestedField1", "nestedField2"), null),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals(
 			"customFields.attributeType,nestedField1,nestedField2",
@@ -140,7 +140,8 @@ public class BatchEnginePortletDataHandlerUtilTest {
 				HashMapBuilder.put(
 					PortletDataHandlerKeys.PERMISSIONS, new String[] {"true"}
 				).build(),
-				null));
+				null),
+			null);
 
 		Assert.assertEquals(
 			"customFields.attributeType,permissions,nestedField1,nestedField2",
@@ -151,7 +152,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	public void testBuildExportParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockExportImportDescriptor(), _mockPortletDataContext());
+				_mockExportImportDescriptor(), _mockPortletDataContext(), null);
 
 		Assert.assertNull(parameters.get("filter"));
 	}
@@ -167,10 +168,24 @@ public class BatchEnginePortletDataHandlerUtilTest {
 					).put(
 						"param2", "value2"
 					).build()),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals("value1", parameters.get("param1"));
 		Assert.assertEquals("value2", parameters.get("param2"));
+	}
+
+	@Test
+	public void testBuildExportParametersWithSiteExternalReferenceCode() {
+		String siteExternalReferenceCode = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_mockExportImportDescriptor(null, null, null, null),
+				_mockPortletDataContext(), siteExternalReferenceCode);
+
+		Assert.assertEquals(
+			siteExternalReferenceCode,
+			parameters.get("siteExternalReferenceCode"));
 	}
 
 	@Test
@@ -180,7 +195,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
 				_mockExportImportDescriptor(),
-				_mockPortletDataContext(null, null, startDate));
+				_mockPortletDataContext(null, null, startDate), null);
 
 		Assert.assertEquals(
 			"dateModified ge " + _dateFormat.format(startDate),
@@ -194,7 +209,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildImportParameters(
 				_mockExportImportDescriptor(itemClassName, null, null, null),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
 	}
@@ -206,7 +221,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildImportParameters(
 				_mockExportImportDescriptor(null, itemModelName, null, null),
-				_mockPortletDataContext());
+				_mockPortletDataContext(), null);
 
 		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
 	}
@@ -254,7 +269,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		);
 
 		Mockito.when(
-			exportImportDescriptor.getParameters()
+			exportImportDescriptor.getParameters(Mockito.any())
 		).thenReturn(
 			parameters
 		);

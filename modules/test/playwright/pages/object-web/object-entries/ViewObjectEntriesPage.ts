@@ -154,7 +154,10 @@ export class ViewObjectEntriesPage {
 
 	async clickAddObjectEntry(objectName?: string) {
 		objectName
-			? await this.page.getByLabel('Add ' + objectName).click()
+			? await this.page
+					.getByLabel('Add ' + objectName)
+					.first()
+					.click()
 			: await this.addObjectEntryButton.click();
 
 		await this.editObjectEntryForm.waitFor({state: 'visible'});

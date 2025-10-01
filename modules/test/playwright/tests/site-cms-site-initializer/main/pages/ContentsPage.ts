@@ -42,7 +42,7 @@ export class ContentsPage {
 		this.page = page;
 
 		this.apiHelpers = new ApiHelpers(page);
-		this.newButton = page.locator('.nav-item').getByLabel('New');
+		this.newButton = page.getByTestId('fdsCreationActionButton').first();
 		this.publishButton = page
 			.getByText('Publish', {exact: true})
 			.or(page.getByText('Submit for Workflow', {exact: true}));

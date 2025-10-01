@@ -1843,10 +1843,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		await page.getByRole('link', {name: 'Relationship Tab'}).click();
 
-		await page
-			.getByTestId('visualization-mode-table')
-			.getByText('New')
-			.click();
+		await page.getByTestId('fdsCreationActionButton').first().click();
 
 		await page.getByRole('menuitem', {name: 'Select Existing One'}).click();
 

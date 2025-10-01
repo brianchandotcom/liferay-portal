@@ -67,47 +67,47 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 					return;
 				}
 
-				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-					new UnsyncByteArrayOutputStream();
-
 				Dictionary<String, Object> dictionary =
 					ConfigurationHandler.read(
 						new UnsyncByteArrayInputStream(
 							dictionaryString.getBytes(StringPool.UTF8)));
 
+				dictionary = HashMapDictionaryBuilder.putAll(
+					dictionary
+				).put(
+					"authorizationEndpoint",
+					GetterUtil.getString(
+						dictionary.get("authorizationEndPoint"))
+				).put(
+					"discoveryEndpoint",
+					GetterUtil.getString(dictionary.get("discoveryEndPoint"))
+				).put(
+					"discoveryEndpointCacheInMillis",
+					GetterUtil.getLong(
+						dictionary.get("discoveryEndPointCacheInMillis"))
+				).put(
+					"tokenEndpoint",
+					GetterUtil.getString(dictionary.get("tokenEndPoint"))
+				).put(
+					"userInfoEndpoint",
+					GetterUtil.getString(dictionary.get("userInfoEndPoint"))
+				).remove(
+					"authorizationEndPoint"
+				).remove(
+					"discoveryEndPoint"
+				).remove(
+					"discoveryEndPointCacheInMillis"
+				).remove(
+					"tokenEndPoint"
+				).remove(
+					"userInfoEndPoint"
+				).build();
+
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
+					new UnsyncByteArrayOutputStream();
+
 				ConfigurationHandler.write(
-					unsyncByteArrayOutputStream,
-					HashMapDictionaryBuilder.putAll(
-						dictionary
-					).put(
-						"authorizationEndpoint",
-						GetterUtil.getString(
-							dictionary.get("authorizationEndPoint"))
-					).put(
-						"discoveryEndpoint",
-						GetterUtil.getString(
-							dictionary.get("discoveryEndPoint"))
-					).put(
-						"discoveryEndpointCacheInMillis",
-						GetterUtil.getLong(
-							dictionary.get("discoveryEndPointCacheInMillis"))
-					).put(
-						"tokenEndpoint",
-						GetterUtil.getString(dictionary.get("tokenEndPoint"))
-					).put(
-						"userInfoEndpoint",
-						GetterUtil.getString(dictionary.get("userInfoEndPoint"))
-					).remove(
-						"authorizationEndPoint"
-					).remove(
-						"discoveryEndPoint"
-					).remove(
-						"discoveryEndPointCacheInMillis"
-					).remove(
-						"tokenEndPoint"
-					).remove(
-						"userInfoEndPoint"
-					).build());
+					unsyncByteArrayOutputStream, dictionary);
 
 				preparedStatement.setString(
 					1, unsyncByteArrayOutputStream.toString());
@@ -120,7 +120,7 @@ public class OpenIdConnectProviderConfigurationUpgradeProcess
 				_updateOAuthClientEntry(
 					GetterUtil.getLong(dictionary.get("companyId")),
 					GetterUtil.getLong(
-						dictionary.get("discoveryEndPointCacheInMillis")),
+						dictionary.get("discoveryEndpointCacheInMillis")),
 					GetterUtil.getString(
 						dictionary.get("openIdConnectClientId")));
 			}

@@ -238,6 +238,9 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	}
 
 	private void _setUpWorkflowDefinitionManagerUtil() {
+		_workflowDefinitionManagerUtilMockedStatic = Mockito.mockStatic(
+			WorkflowDefinitionManagerUtil.class);
+
 		_workflowDefinitionManagerUtilMockedStatic.when(
 			() -> WorkflowDefinitionManagerUtil.liberalGetWorkflowDefinition(
 				_COMPANY_ID, _WORKFLOW_DEFINITION_NAME,
@@ -268,10 +271,6 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	private static final int _WORKFLOW_DEFINITION_VERSION =
 		RandomTestUtil.randomInt();
 
-	private static final MockedStatic<WorkflowDefinitionManagerUtil>
-		_workflowDefinitionManagerUtilMockedStatic = Mockito.mockStatic(
-			WorkflowDefinitionManagerUtil.class);
-
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private final RenderRequest _renderRequest = Mockito.mock(
@@ -287,6 +286,8 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	private final WorkflowDefinitionLinkLocalService
 		_workflowDefinitionLinkLocalService = Mockito.mock(
 			WorkflowDefinitionLinkLocalService.class);
+	private MockedStatic<WorkflowDefinitionManagerUtil>
+		_workflowDefinitionManagerUtilMockedStatic;
 	private final WorkflowHandler<?> _workflowHandler = Mockito.mock(
 		WorkflowHandler.class);
 

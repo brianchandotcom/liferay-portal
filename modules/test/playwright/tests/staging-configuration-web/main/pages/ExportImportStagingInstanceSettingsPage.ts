@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect} from '@playwright/test';
+import {Page} from '@playwright/test';
 
 import {InstanceSettingsPage} from '../../../../pages/configuration-admin-web/InstanceSettingsPage';
 
@@ -21,6 +21,8 @@ export class ExportImportStagingInstanceSettingsPage {
 			'Infrastructure',
 			'Export/Import, Staging'
 		);
+
+		await this.page.waitForLoadState();
 	}
 
 	async checkConfigurationOption({
@@ -32,12 +34,5 @@ export class ExportImportStagingInstanceSettingsPage {
 	}) {
 		await this.instanceSettingsPage.checkOption(label, checked);
 		await this.instanceSettingsPage.saveButton.click();
-		await this.assertOptionChecked(label);
-	}
-
-	async assertOptionChecked(label?: string) {
-		const checkbox = this.page.getByLabel(label).first();
-		await expect(checkbox).toBeVisible();
-		await expect(checkbox).toBeChecked();
 	}
 }

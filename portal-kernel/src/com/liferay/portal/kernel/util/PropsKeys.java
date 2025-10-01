@@ -341,9 +341,6 @@ public interface PropsKeys {
 	public static final String BLOGS_TRACKBACK_ENABLED =
 		"blogs.trackback.enabled";
 
-	public static final String BROKEN_LINKS_CHECKER_ENABLED =
-		"broken.links.checker.enabled";
-
 	public static final String BROWSER_CACHE_DISABLED =
 		"browser.cache.disabled";
 

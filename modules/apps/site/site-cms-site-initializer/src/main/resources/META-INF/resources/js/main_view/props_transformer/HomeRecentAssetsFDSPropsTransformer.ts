@@ -82,18 +82,13 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			loadData: () => {};
 		}) {
 			if (action?.data?.id === 'delete') {
-				if (additionalProps.brokenLinksCheckerEnabled) {
-					openAssetUsageListModal({
-						itemsData: [itemData],
-						onDelete: async () => {
-							await deleteItemAction(itemData, loadData);
-						},
-						selectAll: false,
-					});
-				}
-				else {
-					await deleteItemAction(itemData, loadData);
-				}
+				openAssetUsageListModal({
+					itemsData: [itemData],
+					onDelete: async () => {
+						await deleteItemAction(itemData, loadData);
+					},
+					selectAll: false,
+				});
 			}
 
 			if (

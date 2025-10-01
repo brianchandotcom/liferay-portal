@@ -71,11 +71,27 @@ public class ContainerPageElementDefinitionDTOConverter
 								contentVisibility));
 					});
 				setCssClasses(
-					() -> _toCssClasses(
-						containerStyledLayoutStructureItem.getCssClasses()));
+					() -> {
+						Set<String> cssClasses =
+							containerStyledLayoutStructureItem.getCssClasses();
+
+						if (SetUtil.isEmpty(cssClasses)) {
+							return null;
+						}
+
+						return ArrayUtil.toStringArray(cssClasses);
+					});
 				setCustomCSS(
-					() -> _toCustomCSS(
-						containerStyledLayoutStructureItem.getCustomCSS()));
+					() -> {
+						String customCSS =
+							containerStyledLayoutStructureItem.getCustomCSS();
+
+						if (Validator.isNotNull(customCSS)) {
+							return customCSS;
+						}
+
+						return null;
+					});
 				setFragmentViewports(
 					() -> FragmentViewportUtil.toFragmentViewports(
 						containerStyledLayoutStructureItem.
@@ -89,22 +105,6 @@ public class ContainerPageElementDefinitionDTOConverter
 				setType(PageElementDefinition.Type.CONTAINER);
 			}
 		};
-	}
-
-	private String[] _toCssClasses(Set<String> cssClasses) {
-		if (SetUtil.isEmpty(cssClasses)) {
-			return null;
-		}
-
-		return ArrayUtil.toStringArray(cssClasses);
-	}
-
-	private String _toCustomCSS(String customCSS) {
-		if (Validator.isNotNull(customCSS)) {
-			return customCSS;
-		}
-
-		return null;
 	}
 
 	private HtmlProperties _toHtmlProperties(

@@ -94,7 +94,7 @@ public class JavaFeatureFlagManagerUtilCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Use \"FeatureFlagManagerUtil.isEnabled(long, String)\" " +
-					"instead of \"FeatureFlagManagerUtil.isEnabled(String)");
+					"instead of \"FeatureFlagManagerUtil.isEnabled(String)\"");
 		}
 	}
 

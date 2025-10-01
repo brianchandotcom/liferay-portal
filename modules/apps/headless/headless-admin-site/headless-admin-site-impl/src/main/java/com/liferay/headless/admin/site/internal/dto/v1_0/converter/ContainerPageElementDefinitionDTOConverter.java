@@ -9,7 +9,9 @@ import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.ContentVisibilityConverter;
@@ -25,12 +27,14 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -50,9 +54,17 @@ public class ContainerPageElementDefinitionDTOConverter
 
 	@Override
 	public ContainerPageElementDefinition toDTO(
+			DTOConverterContext dtoConverterContext,
 			ContainerStyledLayoutStructureItem
 				containerStyledLayoutStructureItem)
 		throws Exception {
+
+		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
+			"scopeGroupId");
+
+		if (scopeGroupId == null) {
+			throw new UnsupportedOperationException();
+		}
 
 		return new ContainerPageElementDefinition() {
 			{
@@ -92,6 +104,11 @@ public class ContainerPageElementDefinitionDTOConverter
 
 						return null;
 					});
+				setFragmentLink(
+					() -> FragmentLinkUtil.toFragmentLink(
+						_infoItemServiceRegistry,
+						containerStyledLayoutStructureItem.getLinkJSONObject(),
+						scopeGroupId));
 				setFragmentViewports(
 					() -> FragmentViewportUtil.toFragmentViewports(
 						containerStyledLayoutStructureItem.
@@ -226,5 +243,8 @@ public class ContainerPageElementDefinitionDTOConverter
 		).put(
 			"section", HtmlProperties.HtmlTag.SECTION
 		).build();
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 }

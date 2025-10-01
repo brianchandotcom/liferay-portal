@@ -8,6 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {LinkOrButton} from '@clayui/shared';
 import classNames from 'classnames';
+import {sub} from 'frontend-js-web';
 import React, {Ref, useContext, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -172,7 +173,14 @@ function CreationButton({
 	) : (
 		<LinkOrButton
 			{...sharedProps}
-			aria-label={firstItem.label}
+			aria-label={
+				opensInNewTab
+					? sub(
+							Liferay.Language.get('x-opens-new-window'),
+							firstItem.label
+						)
+					: firstItem.label
+			}
 			className={classNames('btn btn-primary nav-btn', {
 				['nav-btn-monospaced']: isMobile,
 				['px-3']: !isMobile,

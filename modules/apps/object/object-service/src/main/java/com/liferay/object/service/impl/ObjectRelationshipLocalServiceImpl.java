@@ -570,6 +570,33 @@ public class ObjectRelationshipLocalServiceImpl
 	}
 
 	@Override
+	public ObjectRelationship fetchObjectRelationship(
+			long objectDefinitionId1, String name)
+		throws PortalException {
+
+		try {
+			return ObjectRelationshipUtil.getObjectRelationship(
+				objectRelationshipPersistence.findByODI1_N(
+					objectDefinitionId1, name));
+		}
+		catch (NoSuchObjectRelationshipException
+					noSuchObjectRelationshipException) {
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					new NoSuchObjectRelationshipException(
+						String.format(
+							"No ObjectRelationship exists with the key " +
+								"{objectDefinitionId1=%s, name=%s}",
+							objectDefinitionId1, name),
+						noSuchObjectRelationshipException));
+			}
+		}
+
+		return null;
+	}
+
+	@Override
 	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
 		String externalReferenceCode, long objectDefinitionId1) {
 

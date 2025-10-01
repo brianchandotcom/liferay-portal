@@ -134,7 +134,7 @@ public abstract class BaseSectionDisplayContext {
 		).put(
 			"brokenLinksCheckerEnabled",
 			GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BROKEN_LINKS_CHECKER_ENABLED))
+				PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED))
 		).put(
 			"cmsGroupId",
 			() -> {

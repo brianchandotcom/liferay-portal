@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.util.Dictionary;
 import java.util.HashMap;
@@ -154,6 +155,9 @@ public class BatchEnginePortletDataHandlerRegistrar {
 		<ServiceTrackerList<ServiceRegistration<PortletDataHandler>>>
 			_serviceTrackerListDCLSingleton = new DCLSingleton<>();
 
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
+
 	private class VulcanBatchEngineTaskItemDelegateServiceTrackerCustomizer
 		implements EagerServiceTrackerCustomizer
 			<VulcanBatchEngineTaskItemDelegate,
@@ -195,7 +199,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						_batchEngineExportTaskExecutor,
 						_batchEngineExportTaskLocalService,
 						_batchEngineImportTaskExecutor,
-						_batchEngineImportTaskService, _groupLocalService);
+						_batchEngineImportTaskService, _groupLocalService,
+						_stagingGroupHelper);
 
 				batchEnginePortletDataHandler.setPortletId(
 					exportImportDescriptor.getPortletId());

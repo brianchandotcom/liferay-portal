@@ -48,6 +48,7 @@ import java.math.BigDecimal;
 
 import java.text.Format;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -112,19 +113,30 @@ public class ObjectEntryModelDocumentContributor
 	}
 
 	private void _appendToContent(
-		StringBundler sb, String objectFieldName, String valueString) {
+		ObjectContentHelper objectContentHelper, String locale,
+		String objectFieldName, String valueString) {
+
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(objectFieldName);
 		sb.append(": ");
 		sb.append(valueString);
 		sb.append(StringPool.COMMA_AND_SPACE);
+
+		if (locale != null) {
+			objectContentHelper.contributeToLocale(locale, sb);
+		}
+		else {
+			objectContentHelper.contributeToAll(sb);
+		}
 	}
 
 	private void _contribute(
 		Document document, FieldArray fieldArray, String fieldName,
-		Object fieldValue, String locale, ObjectDefinition objectDefinition,
-		ObjectEntry objectEntry, ObjectField objectField, StringBundler sb,
-		Map<String, Serializable> values) {
+		Object fieldValue, String locale,
+		ObjectContentHelper objectContentHelper,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+		ObjectField objectField, Map<String, Serializable> values) {
 
 		if (!objectField.isIndexed()) {
 			return;
@@ -201,12 +213,14 @@ public class ObjectEntryModelDocumentContributor
 				fieldArray, fieldName, "value_keyword",
 				StringUtil.lowerCase(valueString));
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof BigDecimal) {
 			_addField(fieldArray, fieldName, "value_double", valueString);
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof Boolean) {
 			_addField(fieldArray, fieldName, "value_boolean", valueString);
@@ -214,29 +228,35 @@ public class ObjectEntryModelDocumentContributor
 				fieldArray, fieldName, "value_keyword",
 				_translate((Boolean)fieldValue));
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof Date) {
 			_addField(
 				fieldArray, fieldName, "value_date",
 				_getDateString(fieldValue));
 
-			_appendToContent(sb, fieldName, _getDateString(fieldValue));
+			_appendToContent(
+				objectContentHelper, locale, fieldName,
+				_getDateString(fieldValue));
 		}
 		else if (fieldValue instanceof Double) {
 			_addField(fieldArray, fieldName, "value_double", valueString);
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof Integer) {
 			_addField(fieldArray, fieldName, "value_integer", valueString);
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof Long) {
 			_addField(fieldArray, fieldName, "value_long", valueString);
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof String) {
 			if (Validator.isBlank(objectField.getIndexedLanguageId())) {
@@ -256,7 +276,8 @@ public class ObjectEntryModelDocumentContributor
 				fieldArray, fieldName, "value_keyword_lowercase",
 				_getSortableValue(valueString));
 
-			_appendToContent(sb, fieldName, valueString);
+			_appendToContent(
+				objectContentHelper, locale, fieldName, valueString);
 		}
 		else if (fieldValue instanceof byte[]) {
 			_addField(
@@ -312,11 +333,8 @@ public class ObjectEntryModelDocumentContributor
 			_objectFieldLocalService.getObjectFields(
 				objectEntry.getObjectDefinitionId(), false);
 
-		Map<String, StringBundler> contentStringBundlers =
-			_getContentStringBundlerMap(
-				objectEntry, objectDefinition, objectFields);
-
-		StringBundler sb = new StringBundler(objectFields.size() * 4);
+		ObjectContentHelper objectContentHelper = new ObjectContentHelper(
+			objectEntry, objectDefinition, objectFields);
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isLocalized()) {
@@ -331,69 +349,31 @@ public class ObjectEntryModelDocumentContributor
 				for (Map.Entry<String, Object> localeMap :
 						localizedValues.entrySet()) {
 
-					int lengthBeforeChanged = sb.length();
-
 					_contribute(
 						document, fieldArray, objectField.getName(),
 						localizedValues.get(localeMap.getKey()),
 						LocaleUtil.fromLanguageId(
 							localeMap.getKey(), true, false
 						).toString(),
-						objectDefinition, objectEntry, objectField, sb, values);
-
-					if (sb.length() > lengthBeforeChanged) {
-						String contentValue = sb.toString(
-						).substring(
-							lengthBeforeChanged
-						);
-
-						StringBundler contentSB = contentStringBundlers.get(
-							localeMap.getKey());
-
-						if (contentSB != null) {
-							_appendToContent(
-								contentSB, objectField.getName(), contentValue);
-
-							if (contentSB.index() > 0) {
-								contentSB.setIndex(contentSB.index() - 1);
-							}
-						}
-					}
+						objectContentHelper, objectDefinition, objectEntry,
+						objectField, values);
 				}
 			}
 			else {
-				int lengthBeforeChanged = sb.length();
-
 				_contribute(
 					document, fieldArray, objectField.getName(),
-					values.get(objectField.getName()), null, objectDefinition,
-					objectEntry, objectField, sb, values);
-
-				if (sb.length() > lengthBeforeChanged) {
-					String contentValue = sb.toString(
-					).substring(
-						lengthBeforeChanged
-					);
-
-					for (StringBundler contentSB :
-							contentStringBundlers.values()) {
-
-						_appendToContent(
-							contentSB, objectField.getName(), contentValue);
-
-						if (contentSB.index() > 0) {
-							contentSB.setIndex(contentSB.index() - 1);
-						}
-					}
-				}
+					values.get(objectField.getName()), null,
+					objectContentHelper, objectDefinition, objectEntry,
+					objectField, values);
 			}
 		}
 
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
+		objectContentHelper.trim();
 
-		document.add(new Field("objectEntryContent", sb.toString()));
+		document.add(
+			new Field("objectEntryContent", objectContentHelper.getContent()));
+
+		objectContentHelper.getLocalizedContentMap();
 
 		document.addKeyword("objectEntryId", objectEntry.getObjectEntryId());
 		document.add(
@@ -465,57 +445,6 @@ public class ObjectEntryModelDocumentContributor
 		return null;
 	}
 
-	private Map<String, StringBundler> _getContentStringBundlerMap(
-		ObjectEntry objectEntry, ObjectDefinition objectDefinition,
-		List<ObjectField> objectFields) {
-
-		String defaultLanguageId = GetterUtil.getString(
-			objectEntry.getDefaultLanguageId(),
-			objectDefinition.getDefaultLanguageId());
-
-		if (Validator.isNull(defaultLanguageId)) {
-			defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
-		}
-
-		Set<String> availableLanguageIds = new TreeSet<>();
-
-		if (Validator.isNotNull(defaultLanguageId)) {
-			availableLanguageIds.add(defaultLanguageId);
-		}
-
-		for (ObjectField objectField : objectFields) {
-			if (!objectField.isLocalized()) {
-				continue;
-			}
-
-			Map<String, Object> localizedValues =
-				(Map<String, Object>)objectEntry.getValues(
-				).get(
-					objectField.getI18nObjectFieldName()
-				);
-
-			if (MapUtil.isEmpty(localizedValues)) {
-				continue;
-			}
-
-			availableLanguageIds.addAll(localizedValues.keySet());
-		}
-
-		if (availableLanguageIds.isEmpty()) {
-			availableLanguageIds.add(defaultLanguageId);
-		}
-
-		Map<String, StringBundler> contentStringBundlers = new TreeMap<>();
-
-		for (String languageId : availableLanguageIds) {
-			contentStringBundlers.put(
-				languageId, new StringBundler(objectFields.size() * 4));
-		}
-
-		return contentStringBundlers;
-	}
-
 	private String _getDateString(Object value) {
 		return _format.format(value);
 	}
@@ -578,5 +507,131 @@ public class ObjectEntryModelDocumentContributor
 	private final ObjectEntryLocalService _objectEntryLocalService;
 	private final ObjectFieldLocalService _objectFieldLocalService;
 	private final ObjectFolderLocalService _objectFolderLocalService;
+
+	private static class ObjectContentHelper {
+
+		public void contributeToAll(StringBundler sb) {
+			_contentSB.append(sb);
+
+			for (StringBundler localizedContentSB :
+					_localizedContentSBMap.values()) {
+
+				localizedContentSB.append(sb);
+			}
+		}
+
+		public void contributeToLocale(String locale, StringBundler sb) {
+			_contentSB.append(sb);
+
+			StringBundler localizedContentSB = _localizedContentSBMap.get(
+				locale);
+
+			localizedContentSB.append(sb);
+		}
+
+		public String getContent() {
+			return _contentSB.toString();
+		}
+
+		public Map<String, String> getLocalizedContentMap() {
+			if (_localizedContentSBMap.isEmpty()) {
+				return Collections.emptyMap();
+			}
+
+			Map<String, String> localizedContentMap = new TreeMap<>();
+
+			for (Map.Entry<String, StringBundler> localizedContentEntry :
+					_localizedContentSBMap.entrySet()) {
+
+				StringBundler sb = localizedContentEntry.getValue();
+
+				if (sb.index() > 0) {
+					localizedContentMap.put(
+						localizedContentEntry.getKey(), sb.toString());
+				}
+			}
+
+			return localizedContentMap;
+		}
+
+		public void trim() {
+			if (_contentSB.index() > 0) {
+				_contentSB.setIndex(_contentSB.index() - 1);
+			}
+
+			for (StringBundler localizedContentSB :
+					_localizedContentSBMap.values()) {
+
+				if (localizedContentSB.index() > 0) {
+					localizedContentSB.setIndex(localizedContentSB.index() - 1);
+				}
+			}
+		}
+
+		private ObjectContentHelper(
+			ObjectEntry objectEntry, ObjectDefinition objectDefinition,
+			List<ObjectField> objectFields) {
+
+			_contentSB = new StringBundler(objectFields.size());
+
+			_localizedContentSBMap = _getContentStringBundlerMap(
+				objectEntry, objectDefinition, objectFields);
+		}
+
+		private Map<String, StringBundler> _getContentStringBundlerMap(
+			ObjectEntry objectEntry, ObjectDefinition objectDefinition,
+			List<ObjectField> objectFields) {
+
+			String defaultLanguageId = GetterUtil.getString(
+				objectEntry.getDefaultLanguageId(),
+				objectDefinition.getDefaultLanguageId());
+
+			if (Validator.isNull(defaultLanguageId)) {
+				defaultLanguageId = LocaleUtil.toLanguageId(
+					LocaleUtil.getDefault());
+			}
+
+			Set<String> availableLanguageIds = new TreeSet<>();
+
+			if (Validator.isNotNull(defaultLanguageId)) {
+				availableLanguageIds.add(defaultLanguageId);
+			}
+
+			for (ObjectField objectField : objectFields) {
+				if (!objectField.isLocalized()) {
+					continue;
+				}
+
+				Map<String, Object> localizedValues =
+					(Map<String, Object>)objectEntry.getValues(
+					).get(
+						objectField.getI18nObjectFieldName()
+					);
+
+				if (MapUtil.isEmpty(localizedValues)) {
+					continue;
+				}
+
+				availableLanguageIds.addAll(localizedValues.keySet());
+			}
+
+			if (availableLanguageIds.isEmpty()) {
+				availableLanguageIds.add(defaultLanguageId);
+			}
+
+			Map<String, StringBundler> contentStringBundlers = new TreeMap<>();
+
+			for (String languageId : availableLanguageIds) {
+				contentStringBundlers.put(
+					languageId, new StringBundler(objectFields.size() * 4));
+			}
+
+			return contentStringBundlers;
+		}
+
+		private final StringBundler _contentSB;
+		private final Map<String, StringBundler> _localizedContentSBMap;
+
+	}
 
 }

@@ -537,7 +537,7 @@ public class PageTemplateResourceImpl
 				throw new UnsupportedOperationException();
 			}
 
-			LayoutUtil.setLayoutSetPrototypeLayoutERC(
+			ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
 				serviceContext.getScopeGroupId(), widgetPageSpecification,
 				serviceContext);
 		}

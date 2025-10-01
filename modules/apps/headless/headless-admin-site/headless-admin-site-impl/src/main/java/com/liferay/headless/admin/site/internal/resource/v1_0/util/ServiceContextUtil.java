@@ -7,26 +7,39 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
+import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
+import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutPrototype;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * @author Lourdes Fernández Besada
@@ -115,6 +128,87 @@ public class ServiceContextUtil {
 		serviceContext.setUserId(userId);
 
 		return serviceContext;
+	}
+
+	public static void setLayoutSetPrototypeLayoutERC(
+			long groupId, PageSpecification pageSpecification,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (Validator.isNull(
+				pageSpecification.
+					getSiteTemplatePageSpecificationExternalReferenceCode())) {
+
+			return;
+		}
+
+		boolean draftLayout = Boolean.FALSE;
+		boolean privateLayout = Boolean.FALSE;
+
+		int layoutPageTemplateEntryType = GetterUtil.getInteger(
+			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
+
+		if (Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				layoutPageTemplateEntryType) ||
+			Objects.equals(
+				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+				layoutPageTemplateEntryType)) {
+
+			privateLayout = Boolean.TRUE;
+		}
+		else if (Objects.equals(
+					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+					pageSpecification.getType())) {
+
+			ContentPageSpecification contentPageSpecification =
+				(ContentPageSpecification)pageSpecification;
+
+			if (Validator.isNull(
+					contentPageSpecification.
+						getDraftContentPageSpecificationExternalReferenceCode())) {
+
+				draftLayout = Boolean.TRUE;
+				privateLayout = Boolean.TRUE;
+			}
+		}
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
+			return;
+		}
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				getLayoutSetPrototypeByUuidAndCompanyId(
+					layoutSet.getLayoutSetPrototypeUuid(),
+					layoutSet.getCompanyId());
+
+		String siteTemplatePageSpecificationExternalReferenceCode =
+			pageSpecification.
+				getSiteTemplatePageSpecificationExternalReferenceCode();
+
+		Layout layoutSetPrototypeLayout =
+			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+				siteTemplatePageSpecificationExternalReferenceCode,
+				layoutSetPrototype.getGroupId());
+
+		if (layoutSetPrototypeLayout == null) {
+			LogUtil.logOptionalReference(
+				Layout.class,
+				siteTemplatePageSpecificationExternalReferenceCode,
+				layoutSetPrototype.getGroupId());
+		}
+
+		serviceContext.setAttribute(
+			draftLayout ? "draftLayoutLayoutSetPrototypeLayoutERC" :
+				"layoutSetPrototypeLayoutERC",
+			siteTemplatePageSpecificationExternalReferenceCode);
 	}
 
 	private static long[] _getAssetCategoryIds(

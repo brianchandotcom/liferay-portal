@@ -43,15 +43,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -216,10 +212,10 @@ public class LayoutUtil {
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());
 
-		setLayoutSetPrototypeLayoutERC(
+		ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
 			groupId, publishedContentPageSpecification, serviceContext);
 
-		setLayoutSetPrototypeLayoutERC(
+		ServiceContextUtil.setLayoutSetPrototypeLayoutERC(
 			groupId, draftContentPageSpecification, serviceContext);
 
 		if (Objects.equals(
@@ -389,87 +385,6 @@ public class LayoutUtil {
 		return GetterUtil.getBoolean(
 			draftLayout.getTypeSettingsProperty(
 				LayoutTypeSettingsConstants.KEY_PUBLISHED));
-	}
-
-	public static void setLayoutSetPrototypeLayoutERC(
-			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		if (Validator.isNull(
-				pageSpecification.
-					getSiteTemplatePageSpecificationExternalReferenceCode())) {
-
-			return;
-		}
-
-		boolean draftLayout = Boolean.FALSE;
-		boolean privateLayout = Boolean.FALSE;
-
-		int layoutPageTemplateEntryType = GetterUtil.getInteger(
-			serviceContext.getAttribute("layout.page.template.entry.type"), -1);
-
-		if (Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.BASIC,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				layoutPageTemplateEntryType) ||
-			Objects.equals(
-				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
-				layoutPageTemplateEntryType)) {
-
-			privateLayout = Boolean.TRUE;
-		}
-		else if (Objects.equals(
-					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-					pageSpecification.getType())) {
-
-			ContentPageSpecification contentPageSpecification =
-				(ContentPageSpecification)pageSpecification;
-
-			if (Validator.isNull(
-					contentPageSpecification.
-						getDraftContentPageSpecificationExternalReferenceCode())) {
-
-				draftLayout = Boolean.TRUE;
-				privateLayout = Boolean.TRUE;
-			}
-		}
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		if (!layoutSet.isLayoutSetPrototypeLinkActive()) {
-			return;
-		}
-
-		LayoutSetPrototype layoutSetPrototype =
-			LayoutSetPrototypeLocalServiceUtil.
-				getLayoutSetPrototypeByUuidAndCompanyId(
-					layoutSet.getLayoutSetPrototypeUuid(),
-					layoutSet.getCompanyId());
-
-		String siteTemplatePageSpecificationExternalReferenceCode =
-			pageSpecification.
-				getSiteTemplatePageSpecificationExternalReferenceCode();
-
-		Layout layoutSetPrototypeLayout =
-			LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
-				siteTemplatePageSpecificationExternalReferenceCode,
-				layoutSetPrototype.getGroupId());
-
-		if (layoutSetPrototypeLayout == null) {
-			LogUtil.logOptionalReference(
-				Layout.class,
-				siteTemplatePageSpecificationExternalReferenceCode,
-				layoutSetPrototype.getGroupId());
-		}
-
-		serviceContext.setAttribute(
-			draftLayout ? "draftLayoutLayoutSetPrototypeLayoutERC" :
-				"layoutSetPrototypeLayoutERC",
-			siteTemplatePageSpecificationExternalReferenceCode);
 	}
 
 	public static Layout updateContentLayout(

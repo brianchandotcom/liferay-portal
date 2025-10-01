@@ -186,7 +186,7 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName)>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName) && (freeMarkerTool.hasParameter(javaMethodSignature, "id") || freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id"))>
 			<#assign patchBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName)>
 			<#if parentSchemaName?has_content>

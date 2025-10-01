@@ -75,8 +75,9 @@ test('can export and import custom object entries at instance level', async ({
 		'c/tests'
 	);
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+	const exportFilePath = await companyExportImportPage.export([
+		'Tests 1 Items',
+	]);
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -165,9 +166,9 @@ test('can import account restricted entry when account does and does not exist i
 		applicationName
 	);
 
-	const exportFilePath = await companyExportImportPage.export(
-		`${objectDefinition.name} 1 Items`
-	);
+	const exportFilePath = await companyExportImportPage.export([
+		`${objectDefinition.name} 1 Items`,
+	]);
 
 	await test.step('assert entry is imported with account relationship properties when it exists', async () => {
 		await apiHelpers.delete(
@@ -259,7 +260,7 @@ test('can import custom object entries at instance level with or without permiss
 	// Export with permissions
 
 	const exportFilePath = await companyExportImportPage.export(
-		'Tests 1 Items',
+		['Tests 1 Items'],
 		true
 	);
 
@@ -402,9 +403,9 @@ test(
 			.locator('table tr:first-child td:first-child')
 			.innerText();
 
-		const exportFilePath = await companyExportImportPage.export(
-			`${objectDefinition.name} 2 Items`
-		);
+		const exportFilePath = await companyExportImportPage.export([
+			`${objectDefinition.name} 2 Items`,
+		]);
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
@@ -502,9 +503,9 @@ test(
 			.locator('table tr:first-child td:first-child')
 			.innerText();
 
-		const exportFilePath = await companyExportImportPage.export(
-			`${objectDefinition.name} 2 Items`
-		);
+		const exportFilePath = await companyExportImportPage.export([
+			`${objectDefinition.name} 2 Items`,
+		]);
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
@@ -606,9 +607,9 @@ test(
 			.locator('table tr:first-child td:first-child')
 			.innerText();
 
-		const exportFilePath = await companyExportImportPage.export(
-			`${objectDefinition.name} 2 Items`
-		);
+		const exportFilePath = await companyExportImportPage.export([
+			`${objectDefinition.name} 2 Items`,
+		]);
 
 		const applicationName =
 			'c/' + objectDefinition.name.toLowerCase() + 's';
@@ -676,7 +677,7 @@ test(
 		);
 
 		const exportFilePath = await companyExportImportPage.export(
-			`Tests 1 Items`,
+			[`Tests 1 Items`],
 			true
 		);
 
@@ -824,9 +825,9 @@ test('can import many to many entries', async ({
 		expect(objectEntry[objectRelationship.name].length).toBe(2);
 	});
 
-	const exportFilePath1 = await companyExportImportPage.export(
-		`${objectDefinition1.name} 3 Items`
-	);
+	const exportFilePath1 = await companyExportImportPage.export([
+		`${objectDefinition1.name} 3 Items`,
+	]);
 
 	await test.step("relate objectDefinition1ObjectEntry3 to objectDefinition2ObjectEntry1 and assert it's persistence", async () => {
 		await apiHelpers.objectEntry.putByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode(
@@ -851,9 +852,9 @@ test('can import many to many entries', async ({
 		expect(objectEntry[objectRelationship.name].length).toBe(3);
 	});
 
-	const exportFilePath2 = await companyExportImportPage.export(
-		`${objectDefinition1.name} 3 Items`
-	);
+	const exportFilePath2 = await companyExportImportPage.export([
+		`${objectDefinition1.name} 3 Items`,
+	]);
 
 	await test.step("import object entry where objectDefinition1ObjectEntry3 was still unrelated and assert it's persistence", async () => {
 		await companyExportImportPage.import(exportFilePath1);
@@ -921,8 +922,9 @@ test('can only import custom object entries when their definitions are already i
 		'c/tests'
 	);
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+	const exportFilePath = await companyExportImportPage.export([
+		'Tests 1 Items',
+	]);
 
 	objectActionAPIClient.deleteObjectDefinition(objectDefinition.id);
 
@@ -972,8 +974,9 @@ test('can see corresponding elements at instance level', async ({
 		'c/tests'
 	);
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+	const exportFilePath = await companyExportImportPage.export([
+		'Tests 1 Items',
+	]);
 
 	await companyExportImportPage.page.goto('/');
 

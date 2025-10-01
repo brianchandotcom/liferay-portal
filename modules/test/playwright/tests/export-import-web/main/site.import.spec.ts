@@ -232,8 +232,9 @@ testWithExportImportAtInstanceLevelFF(
 
 		const homePage = new HomePage(page);
 
-		const exportFilePath =
-			await companyExportImportPage.export('Tests 1 Items');
+		const exportFilePath = await companyExportImportPage.export([
+			'Tests 1 Items',
+		]);
 
 		await homePage.goto();
 

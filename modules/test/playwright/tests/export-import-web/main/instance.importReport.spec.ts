@@ -47,7 +47,7 @@ test('Can see error report and details', async ({
 	);
 
 	const exportFilePath = await companyExportImportPage.export(
-		'Tests 1 Items',
+		['Tests 1 Items'],
 		false
 	);
 

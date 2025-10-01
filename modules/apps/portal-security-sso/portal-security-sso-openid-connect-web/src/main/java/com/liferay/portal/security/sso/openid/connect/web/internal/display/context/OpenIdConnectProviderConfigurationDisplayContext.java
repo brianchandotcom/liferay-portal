@@ -5,6 +5,7 @@
 
 package com.liferay.portal.security.sso.openid.connect.web.internal.display.context;
 
+import com.liferay.configuration.admin.constants.ConfigurationAdminPortletKeys;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.oauth.client.persistence.constants.OAuthClientEntryConstants;
@@ -15,11 +16,15 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
 import java.util.Dictionary;
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.cm.Configuration;
@@ -32,15 +37,29 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 
 	public OpenIdConnectProviderConfigurationDisplayContext(
 			ConfigurationAdmin configurationAdmin,
-			ExpandoColumnLocalService expandoColumnLocalService, String pid)
+			ExpandoColumnLocalService expandoColumnLocalService,
+			HttpServletRequest httpServletRequest)
 		throws InvalidSyntaxException, IOException {
 
 		_expandoColumnLocalService = expandoColumnLocalService;
 
+		String filterString = null;
+
+		if (Objects.equals(
+				PortalUtil.getPortletId(httpServletRequest),
+				ConfigurationAdminPortletKeys.INSTANCE_SETTINGS)) {
+
+			filterString = StringBundler.concat(
+				"(&(companyId=", PortalUtil.getCompanyId(httpServletRequest),
+				")(service.pid=", httpServletRequest.getParameter("pid"), "))");
+		}
+		else {
+			filterString =
+				"(service.pid=" + httpServletRequest.getParameter("pid") + ")";
+		}
+
 		Configuration[] configurations = configurationAdmin.listConfigurations(
-			StringBundler.concat(
-				"(&(companyId=", CompanyThreadLocal.getCompanyId(),
-				")(service.pid=", pid, "))"));
+			filterString);
 
 		if (configurations != null) {
 			_properties = configurations[0].getProperties();

@@ -121,7 +121,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 					OPEN_ID_CONNECT_PROVIDER_CONFIGURATION_DISPLAY_CONTEXT,
 				new OpenIdConnectProviderConfigurationDisplayContext(
 					_configurationAdmin, _expandoColumnLocalService,
-					httpServletRequest.getParameter("pid")));
+					httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

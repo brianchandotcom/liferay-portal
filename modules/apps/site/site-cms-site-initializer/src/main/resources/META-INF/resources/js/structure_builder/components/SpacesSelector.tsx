@@ -22,7 +22,7 @@ type Item = {
 	value: string;
 };
 
-export default function Spaces({
+export default function SpacesSelector({
 	disabled,
 	structure,
 }: {

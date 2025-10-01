@@ -17,7 +17,7 @@ import {ReferencedStructure} from '../../types/Structure';
 import Breadcrumb from '../Breadcrumb';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
-import Spaces from '../Spaces';
+import SpacesSelector from '../SpacesSelector';
 import WorkflowTab from './WorkflowTab';
 
 export default function ReferencedStructureSettings({
@@ -115,7 +115,7 @@ function GeneralTab({
 
 			<ERCInput disabled onValueChange={() => {}} value={erc} />
 
-			<Spaces disabled structure={referencedStructure} />
+			<SpacesSelector disabled structure={referencedStructure} />
 		</div>
 	);
 }

@@ -22,7 +22,7 @@ import selectStructureUuid from '../../selectors/selectStructureUuid';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import {LocalizedInput} from '../LocalizedInput';
-import Spaces from '../Spaces';
+import SpacesSelector from '../SpacesSelector';
 import WorkflowTab from './WorkflowTab';
 
 export default function StructureSettings() {
@@ -126,7 +126,7 @@ function GeneralTab() {
 				value={erc}
 			/>
 
-			<Spaces structure={state.structure} />
+			<SpacesSelector structure={state.structure} />
 		</div>
 	);
 }

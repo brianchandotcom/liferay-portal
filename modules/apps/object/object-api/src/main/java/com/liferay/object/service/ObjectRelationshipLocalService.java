@@ -248,6 +248,11 @@ public interface ObjectRelationshipLocalService
 		long objectRelationshipId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ObjectRelationship fetchObjectRelationship(
+			long objectDefinitionId1, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ObjectRelationship fetchObjectRelationshipByExternalReferenceCode(
 		String externalReferenceCode, long objectDefinitionId1);
 

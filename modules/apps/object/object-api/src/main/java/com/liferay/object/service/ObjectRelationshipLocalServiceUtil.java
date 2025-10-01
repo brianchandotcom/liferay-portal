@@ -286,6 +286,13 @@ public class ObjectRelationshipLocalServiceUtil {
 		return getService().fetchObjectRelationship(objectRelationshipId);
 	}
 
+	public static ObjectRelationship fetchObjectRelationship(
+			long objectDefinitionId1, String name)
+		throws PortalException {
+
+		return getService().fetchObjectRelationship(objectDefinitionId1, name);
+	}
+
 	public static ObjectRelationship
 		fetchObjectRelationshipByExternalReferenceCode(
 			String externalReferenceCode, long objectDefinitionId1) {

@@ -325,6 +325,15 @@ public class ObjectRelationshipLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectRelationship fetchObjectRelationship(
+			long objectDefinitionId1, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectRelationshipLocalService.fetchObjectRelationship(
+			objectDefinitionId1, name);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectRelationship
 		fetchObjectRelationshipByExternalReferenceCode(
 			String externalReferenceCode, long objectDefinitionId1) {

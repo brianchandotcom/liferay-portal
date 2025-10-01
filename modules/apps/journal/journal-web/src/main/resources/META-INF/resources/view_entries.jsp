@@ -229,11 +229,11 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:if>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand-smallest table-cell-minw-200"
-							name="path"
-						>
-							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curArticle.getFolder()) %>">
+						<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curArticle.getFolder()) %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-200"
+								name="path"
+							>
 								<c:choose>
 									<c:when test="<%= curArticle.getFolderId() != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">
 										<liferay-site-navigation:breadcrumb
@@ -248,8 +248,8 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 										/>
 									</c:otherwise>
 								</c:choose>
-							</c:if>
-						</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-100"
@@ -464,17 +464,17 @@ Map<String, Object> componentContext = journalDisplayContext.getComponentContext
 							/>
 						</c:if>
 
-						<liferay-ui:search-container-column-text
-							cssClass="table-cell-expand-smallest table-cell-minw-200"
-							name="path"
-						>
-							<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curFolder.getParentFolder()) %>">
+						<c:if test="<%= journalDisplayContext.isShowBreadcrumb(curFolder.getParentFolder()) %>">
+							<liferay-ui:search-container-column-text
+								cssClass="table-cell-expand-smallest table-cell-minw-200"
+								name="path"
+							>
 								<liferay-site-navigation:breadcrumb
 									breadcrumbEntries="<%= JournalPortletUtil.getPortletBreadcrumbEntries(curFolder.getParentFolder(), request, true, liferayPortletResponse) %>"
 									cssClass="c-pl-0 c-pt-0"
 								/>
-							</c:if>
-						</liferay-ui:search-container-column-text>
+							</liferay-ui:search-container-column-text>
+						</c:if>
 
 						<liferay-ui:search-container-column-text
 							cssClass="table-cell-expand-smallest table-cell-minw-150"

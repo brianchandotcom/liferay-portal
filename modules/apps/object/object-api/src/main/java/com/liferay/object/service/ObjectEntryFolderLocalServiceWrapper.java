@@ -382,6 +382,17 @@ public class ObjectEntryFolderLocalServiceWrapper
 			groupId, companyId, parentObjectEntryFolderId, start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntryFolder>
+		getObjectEntryFoldersByExternalReferenceCode(
+			String externalReferenceCode, java.util.List<Long> groupIds,
+			long companyId) {
+
+		return _objectEntryFolderLocalService.
+			getObjectEntryFoldersByExternalReferenceCode(
+				externalReferenceCode, groupIds, companyId);
+	}
+
 	/**
 	 * Returns all the object entry folders matching the UUID and company.
 	 *

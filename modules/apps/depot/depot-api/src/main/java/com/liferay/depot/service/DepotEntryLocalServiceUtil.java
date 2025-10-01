@@ -337,6 +337,10 @@ public class DepotEntryLocalServiceUtil {
 		return getService().getDepotEntryByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static List<Long> getDepotEntryGroupIds(long companyId, int type) {
+		return getService().getDepotEntryGroupIds(companyId, type);
+	}
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */

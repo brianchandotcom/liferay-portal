@@ -307,6 +307,9 @@ public interface DepotEntryLocalService
 	public DepotEntry getDepotEntryByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Long> getDepotEntryGroupIds(long companyId, int type);
+
 	/**
 	 * @deprecated As of Cavanaugh (7.4.x)
 	 */

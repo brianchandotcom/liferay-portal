@@ -286,6 +286,10 @@ public interface ObjectEntryFolderLocalService
 		long groupId, long companyId, long parentObjectEntryFolderId, int start,
 		int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntryFolder> getObjectEntryFoldersByExternalReferenceCode(
+		String externalReferenceCode, List<Long> groupIds, long companyId);
+
 	/**
 	 * Returns all the object entry folders matching the UUID and company.
 	 *

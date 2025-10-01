@@ -12,6 +12,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -193,6 +194,66 @@ public class FDSAPIURLBuilderTest {
 		_testBuild(
 			"/o/app/12345/bar/54321/endpoint", "/app",
 			"/{siteId}/{foo}/{userId}/endpoint", "schema");
+
+		serviceRegistration1.unregister();
+
+		// Resolved tokens, no resolvers
+
+		Assert.assertEquals(
+			"/o/app/bar/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema1"
+			).setTokenResolutions(
+				JSONUtil.put("foo", "bar")
+			).build());
+
+		// Resolved tokens and resolvers
+
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app/baz/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("foo", "baz")
+			).build());
+
+		Assert.assertEquals(
+			"/o/app/bar/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{foo}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("other", "baz")
+			).build());
+
+		serviceRegistration1.unregister();
+
+		// Resolved tokens, resolvers and default tokens
+
+		serviceRegistration1 = _registerFDSAPIURLResolver(
+			"/app", "schema", new String[] {"{siteId}"},
+			new String[] {"99999"});
+
+		Assert.assertEquals(
+			"/o/app/00000/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/endpoint", "schema"
+			).setTokenResolutions(
+				JSONUtil.put("siteId", "00000")
+			).build());
+
+		Assert.assertEquals(
+			"/o/app/99999/endpoint",
+			new FDSAPIURLBuilder(
+				_fdsAPIURLResolverRegistry, _httpServletRequest, "/app",
+				"/{siteId}/endpoint", "schema"
+			).build());
 
 		serviceRegistration1.unregister();
 

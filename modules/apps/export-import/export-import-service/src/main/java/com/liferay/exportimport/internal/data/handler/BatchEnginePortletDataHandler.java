@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.staging.StagingGroupHelper;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -76,13 +77,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
 		BatchEngineImportTaskService batchEngineImportTaskService,
-		GroupLocalService groupLocalService) {
+		GroupLocalService groupLocalService,
+		StagingGroupHelper stagingGroupHelper) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
 		_groupLocalService = groupLocalService;
+		_stagingGroupHelper = stagingGroupHelper;
 	}
 
 	public void exportDeletionSystemEvents(
@@ -486,7 +489,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			Group group = _groupLocalService.fetchGroup(
 				portletDataContext.getScopeGroupId());
 
-			if (group != null) {
+			if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
 				map.put(
 					"siteExternalReferenceCode",
 					new String[] {group.getExternalReferenceCode()});
@@ -623,6 +626,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
 	private final GroupLocalService _groupLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();
+	private final StagingGroupHelper _stagingGroupHelper;
 
 	private interface Registration {
 

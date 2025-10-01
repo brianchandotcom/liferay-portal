@@ -462,10 +462,22 @@ public class DefaultWorkflowEngineImpl
 		try {
 			Definition definition = _getDefinition(bytes);
 
-			return _workflowDeployer.save(
-				externalReferenceCode, title,
-				_getDefinitionName(definition, name, serviceContext), scope,
-				definition, serviceContext);
+			String definitionName = _getDefinitionName(
+				definition, name, serviceContext);
+
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionLocalService.fetchKaleoDefinition(
+					definitionName, serviceContext);
+
+			WorkflowDefinition workflowDefinition = _workflowDeployer.save(
+				externalReferenceCode, title, definitionName, scope, definition,
+				serviceContext);
+
+			_updateWorkflowDefinitionLinks(
+				serviceContext.getCompanyId(), kaleoDefinition,
+				workflowDefinition);
+
+			return workflowDefinition;
 		}
 		catch (WorkflowException workflowException) {
 			throw workflowException;
@@ -980,21 +992,23 @@ public class DefaultWorkflowEngineImpl
 			WorkflowDefinition workflowDefinition)
 		throws PortalException {
 
-		if (kaleoDefinition != null) {
-			List<WorkflowDefinitionLink> workflowDefinitionLinks =
-				workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
-					companyId, kaleoDefinition.getName(),
-					kaleoDefinition.getVersion());
+		if (kaleoDefinition == null) {
+			return;
+		}
 
-			for (WorkflowDefinitionLink workflowDefinitionLink :
-					workflowDefinitionLinks) {
+		List<WorkflowDefinitionLink> workflowDefinitionLinks =
+			workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+				companyId, kaleoDefinition.getName(),
+				kaleoDefinition.getVersion());
 
-				workflowDefinitionLink.setWorkflowDefinitionVersion(
-					workflowDefinition.getVersion());
+		for (WorkflowDefinitionLink workflowDefinitionLink :
+				workflowDefinitionLinks) {
 
-				workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
-					workflowDefinitionLink);
-			}
+			workflowDefinitionLink.setWorkflowDefinitionVersion(
+				workflowDefinition.getVersion());
+
+			workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+				workflowDefinitionLink);
 		}
 	}
 

@@ -6,31 +6,26 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.ContentDisplayConverter;
 import com.liferay.layout.converter.ContentVisibilityConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
-import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -82,7 +77,7 @@ public class ContainerPageElementDefinitionDTOConverter
 					() -> _toCustomCSS(
 						containerStyledLayoutStructureItem.getCustomCSS()));
 				setFragmentViewports(
-					() -> _toFragmentViewports(
+					() -> FragmentViewportUtil.toFragmentViewports(
 						containerStyledLayoutStructureItem.
 							getItemConfigJSONObject()));
 				setHtmlProperties(
@@ -110,64 +105,6 @@ public class ContainerPageElementDefinitionDTOConverter
 		}
 
 		return null;
-	}
-
-	private FragmentViewport _toFragmentViewport(
-		JSONObject jsonObject, ViewportSize viewportSize) {
-
-		JSONObject viewportJSONObject = jsonObject.getJSONObject(
-			viewportSize.getViewportSizeId());
-
-		if (JSONUtil.isEmpty(viewportJSONObject) ||
-			(Validator.isNull(
-				viewportJSONObject.getString("customCSS", null)) &&
-			 JSONUtil.isEmpty(viewportJSONObject.getJSONObject("styles")))) {
-
-			return null;
-		}
-
-		return new FragmentViewport() {
-			{
-				setCustomCSS(
-					() -> viewportJSONObject.getString("customCSS", null));
-				setId(viewportSize::getViewportSizeId);
-			}
-		};
-	}
-
-	private FragmentViewport[] _toFragmentViewports(JSONObject jsonObject) {
-		if (JSONUtil.isEmpty(jsonObject)) {
-			return null;
-		}
-
-		List<FragmentViewport> fragmentViewports = new ArrayList<>();
-
-		FragmentViewport mobileLandscapeFragmentViewport = _toFragmentViewport(
-			jsonObject, ViewportSize.MOBILE_LANDSCAPE);
-
-		if (mobileLandscapeFragmentViewport != null) {
-			fragmentViewports.add(mobileLandscapeFragmentViewport);
-		}
-
-		FragmentViewport portraitMobileFragmentViewport = _toFragmentViewport(
-			jsonObject, ViewportSize.PORTRAIT_MOBILE);
-
-		if (portraitMobileFragmentViewport != null) {
-			fragmentViewports.add(portraitMobileFragmentViewport);
-		}
-
-		FragmentViewport tabletFragmentViewport = _toFragmentViewport(
-			jsonObject, ViewportSize.TABLET);
-
-		if (tabletFragmentViewport != null) {
-			fragmentViewports.add(tabletFragmentViewport);
-		}
-
-		if (ListUtil.isEmpty(fragmentViewports)) {
-			return null;
-		}
-
-		return fragmentViewports.toArray(new FragmentViewport[0]);
 	}
 
 	private HtmlProperties _toHtmlProperties(

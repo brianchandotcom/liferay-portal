@@ -228,9 +228,44 @@ public class ObjectEntryDisplayContextTest {
 
 	@Test
 	public void testIsShowScreenNavigation() throws Exception {
-		_testIsShowScreenNavigation();
-		_testIsShowScreenNavigationWithRootObjectEntry();
-		_testIsShowScreenNavigationWithRootDescendantObjectEntry();
+		com.liferay.object.model.ObjectEntry objectEntry =
+			ObjectEntryTestUtil.addObjectEntry(_companyObjectDefinitionAA);
+
+		ObjectEntryDisplayContext objectEntryDisplayContext =
+			_objectEntryDisplayContextFactory.create(
+				_getMockHttpServletRequest(
+					objectEntry.getExternalReferenceCode(),
+					_companyObjectDefinitionAA, 0L, null));
+
+		Assert.assertFalse(objectEntryDisplayContext.isShowScreenNavigation());
+	}
+
+	@Test
+	public void testIsShowScreenNavigationWithRootDescendantObjectEntry()
+		throws Exception {
+
+		ObjectEntryDisplayContext objectEntryDisplayContext =
+			_objectEntryDisplayContextFactory.create(
+				_getMockHttpServletRequest(
+					_companyObjectEntryAA.getExternalReferenceCode(),
+					_companyObjectDefinitionAA,
+					_companyObjectRelationshipA_AA.getObjectRelationshipId(),
+					_companyObjectEntryA.getExternalReferenceCode()));
+
+		Assert.assertTrue(objectEntryDisplayContext.isShowScreenNavigation());
+	}
+
+	@Test
+	public void testIsShowScreenNavigationWithRootObjectEntry()
+		throws Exception {
+
+		ObjectEntryDisplayContext objectEntryDisplayContext =
+			_objectEntryDisplayContextFactory.create(
+				_getMockHttpServletRequest(
+					_companyObjectEntryA.getExternalReferenceCode(),
+					_companyObjectDefinitionA, 0L, null));
+
+		Assert.assertTrue(objectEntryDisplayContext.isShowScreenNavigation());
 	}
 
 	private static ObjectDefinition _addObjectDefinition(String scope)
@@ -385,45 +420,6 @@ public class ObjectEntryDisplayContextTest {
 						objectRelationship.getObjectDefinitionId2()),
 					objectRelationship.getObjectRelationshipId(),
 					parentObjectEntry.getExternalReferenceCode())));
-	}
-
-	private void _testIsShowScreenNavigation() throws Exception {
-		com.liferay.object.model.ObjectEntry objectEntry =
-			ObjectEntryTestUtil.addObjectEntry(_companyObjectDefinitionAA);
-
-		ObjectEntryDisplayContext objectEntryDisplayContext =
-			_objectEntryDisplayContextFactory.create(
-				_getMockHttpServletRequest(
-					objectEntry.getExternalReferenceCode(),
-					_companyObjectDefinitionAA, 0L, null));
-
-		Assert.assertFalse(objectEntryDisplayContext.isShowScreenNavigation());
-	}
-
-	private void _testIsShowScreenNavigationWithRootDescendantObjectEntry()
-		throws Exception {
-
-		ObjectEntryDisplayContext objectEntryDisplayContext =
-			_objectEntryDisplayContextFactory.create(
-				_getMockHttpServletRequest(
-					_companyObjectEntryAA.getExternalReferenceCode(),
-					_companyObjectDefinitionAA,
-					_companyObjectRelationshipA_AA.getObjectRelationshipId(),
-					_companyObjectEntryA.getExternalReferenceCode()));
-
-		Assert.assertTrue(objectEntryDisplayContext.isShowScreenNavigation());
-	}
-
-	private void _testIsShowScreenNavigationWithRootObjectEntry()
-		throws Exception {
-
-		ObjectEntryDisplayContext objectEntryDisplayContext =
-			_objectEntryDisplayContextFactory.create(
-				_getMockHttpServletRequest(
-					_companyObjectEntryA.getExternalReferenceCode(),
-					_companyObjectDefinitionA, 0L, null));
-
-		Assert.assertTrue(objectEntryDisplayContext.isShowScreenNavigation());
 	}
 
 	private static ObjectDefinition _companyObjectDefinitionA;

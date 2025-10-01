@@ -72,6 +72,8 @@ public interface ObjectEntryDisplayContext {
 
 	public boolean isShowObjectEntryForm() throws PortalException;
 
+	public boolean isShowScreenNavigation() throws PortalException;
+
 	public String renderDDMForm(PageContext pageContext) throws PortalException;
 
 }

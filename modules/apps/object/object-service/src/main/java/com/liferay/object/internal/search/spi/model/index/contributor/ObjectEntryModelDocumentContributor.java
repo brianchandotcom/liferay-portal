@@ -335,7 +335,8 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getObjectDefinitionId(), false);
 
 		ObjectContentHelper objectContentHelper = new ObjectContentHelper(
-			objectEntry, objectFields, _textEmbeddingDocumentContributor);
+			objectDefinition.isEnableLocalization(), objectEntry, objectFields,
+			_textEmbeddingDocumentContributor);
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isLocalized()) {
@@ -393,6 +394,13 @@ public class ObjectEntryModelDocumentContributor
 			_contributeObjectEntryFolder(
 				document, objectEntry.getObjectEntryFolderId());
 		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPS-122920")) {
+
+			_contributeTextEmbeddings(
+				document, objectContentHelper, objectDefinition, objectEntry);
+		}
 	}
 
 	private void _contributeObjectEntryFolder(
@@ -428,6 +436,29 @@ public class ObjectEntryModelDocumentContributor
 			rootObjectEntryFolder.getObjectEntryFolderId() ==
 				objectEntryFolderId);
 		document.addKeyword("cms_section", cmsSection);
+	}
+
+	private void _contributeTextEmbeddings(
+		Document document, ObjectContentHelper objectContentHelper,
+		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
+
+		if (!objectDefinition.isEnableLocalization()) {
+			_textEmbeddingDocumentContributor.contribute(
+				document, objectEntry, objectContentHelper.getContent());
+
+			return;
+		}
+
+		Map<String, String> localizedContentMap =
+			objectContentHelper.getLocalizedContentMap();
+
+		for (Map.Entry<String, String> localizedContent :
+				localizedContentMap.entrySet()) {
+
+			_textEmbeddingDocumentContributor.contribute(
+				document, localizedContent.getKey(), objectEntry,
+				localizedContent.getValue());
+		}
 	}
 
 	private String _getCMSSection(String externalReferenceCode) {
@@ -574,10 +605,18 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		private ObjectContentHelper(
-			ObjectEntry objectEntry, List<ObjectField> objectFields,
+			boolean localizationEnabled, ObjectEntry objectEntry,
+			List<ObjectField> objectFields,
 			TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 			_contentSB = new StringBundler(objectFields.size());
+
+			if (!localizationEnabled ||
+				!FeatureFlagManagerUtil.isEnabled(
+					objectEntry.getCompanyId(), "LPS-122920")) {
+
+				return;
+			}
 
 			for (String languageId :
 					textEmbeddingDocumentContributor.getLanguageIds(
@@ -591,6 +630,7 @@ public class ObjectEntryModelDocumentContributor
 		private final StringBundler _contentSB;
 		private final Map<String, StringBundler> _localizedContentSBMap =
 			new TreeMap<>();
+
 	}
 
 }

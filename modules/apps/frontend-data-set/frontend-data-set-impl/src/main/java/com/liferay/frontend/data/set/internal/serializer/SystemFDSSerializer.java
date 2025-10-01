@@ -72,7 +72,8 @@ public class SystemFDSSerializer
 
 	@Override
 	public String serializeAdditionalAPIURLParameters(
-		String fdsName, HttpServletRequest httpServletRequest) {
+		String fdsName, HttpServletRequest httpServletRequest,
+		JSONObject tokenResolutionsJSONObject) {
 
 		SystemFDSEntry systemFDSEntry =
 			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
@@ -86,12 +87,15 @@ public class SystemFDSSerializer
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
 		).addQueryString(
 			systemFDSEntry.getAdditionalAPIURLParameters()
+		).setTokenResolutions(
+			tokenResolutionsJSONObject
 		).buildQueryString();
 	}
 
 	@Override
 	public String serializeAPIURL(
-		String fdsName, HttpServletRequest httpServletRequest) {
+		String fdsName, HttpServletRequest httpServletRequest,
+		JSONObject tokenResolutionsJSONObject) {
 
 		SystemFDSEntry systemFDSEntry =
 			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
@@ -103,6 +107,8 @@ public class SystemFDSSerializer
 		return createFDSAPIURLBuilder(
 			httpServletRequest, systemFDSEntry.getRESTApplication(),
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
+		).setTokenResolutions(
+			tokenResolutionsJSONObject
 		).build();
 	}
 

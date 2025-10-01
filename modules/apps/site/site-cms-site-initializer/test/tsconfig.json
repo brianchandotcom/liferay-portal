@@ -1,5 +1,5 @@
 {
-	"@generated": "4e17462a368735ab3dc45e4f407cda6d8fc4f3df",
+	"@generated": "652fad263df3eaf0db0f752a3b06a3003dac2a3f",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -36,7 +36,7 @@
 				"../../../document-library/document-library-preview-image/src/main/resources/META-INF/resources/preview/js/index.tsx"
 			],
 			"document-library-video": [
-				"../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.d.ts"
+				"../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-editor-ckeditor-web": [
 				"../../../frontend-editor/frontend-editor-ckeditor-web/src/main/resources/META-INF/resources/js/index.ts"

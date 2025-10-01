@@ -1,5 +1,5 @@
 {
-	"@generated": "191b6e3f1b4edfbf4cba8df725791ae4dce40866",
+	"@generated": "89004fbbec41ccd2355d9a453791e11466949f46",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -18,7 +18,7 @@
 				"../../../../../../../layout/layout-js-components-web/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"document-library-video": [
-				"../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.d.ts"
+				"../../../../../../../document-library/document-library-video/src/main/resources/META-INF/resources/js/index.ts"
 			],
 			"frontend-js-components-web": [
 				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"

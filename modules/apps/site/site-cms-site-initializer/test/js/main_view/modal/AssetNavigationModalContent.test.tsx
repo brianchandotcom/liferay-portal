@@ -111,6 +111,7 @@ const item3 = {
 
 const DEFAULT_PROPS = {
 	additionalProps: {
+		assetLibraries: [{groupId: 35393, name: 'Default'}],
 		cmsGroupId: 123,
 		commentsProps: {
 			addCommentURL: '',

@@ -250,6 +250,9 @@ public abstract class Base${schemaName}ResourceImpl
 										Page<Permission> permissionsPage =
 											<#if getPermissionsPageJavaMethodSignature?has_content>
 												${getPermissionsPageJavaMethodSignature.methodName}(
+												<#if freeMarkerTool.hasPathParameter(getPermissionsPageJavaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+													${schemaVarName}.getExternalReferenceCode()
+												<#else>
 													<#if properties?keys?seq_contains("id")>
 														${schemaVarName}.getId()
 													<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -257,6 +260,7 @@ public abstract class Base${schemaName}ResourceImpl
 													<#else>
 														${schemaVarName}Id
 													</#if>
+												</#if>
 											<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 												${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${schemaVarName}.getExternalReferenceCode()
 											</#if>
@@ -278,6 +282,9 @@ public abstract class Base${schemaName}ResourceImpl
 									Page<Permission> permissionsPage =
 										<#if getPermissionsPageJavaMethodSignature?has_content>
 											${getPermissionsPageJavaMethodSignature.methodName}(
+											<#if freeMarkerTool.hasPathParameter(getPermissionsPageJavaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+												${httpMethod}${schemaName}.getExternalReferenceCode()
+											<#else>
 												<#if properties?keys?seq_contains("id")>
 													${httpMethod}${schemaName}.getId()
 												<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -285,6 +292,7 @@ public abstract class Base${schemaName}ResourceImpl
 												<#else>
 													${schemaVarName}Id
 												</#if>
+											</#if>
 										<#elseif getParentPermissionsPageJavaMethodSignature?has_content>
 											${getParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 										</#if>
@@ -317,6 +325,9 @@ public abstract class Base${schemaName}ResourceImpl
 						Page<Permission> permissionsPage =
 							<#if putPermissionsPageJavaMethodSignature?has_content>
 								${putPermissionsPageJavaMethodSignature.methodName}(
+								<#if freeMarkerTool.hasPathParameter(putPermissionsPageJavaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+									${httpMethod}${schemaName}.getExternalReferenceCode()
+								<#else>
 									<#if properties?keys?seq_contains("id")>
 										${httpMethod}${schemaName}.getId()
 									<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
@@ -324,6 +335,8 @@ public abstract class Base${schemaName}ResourceImpl
 									<#else>
 										${schemaVarName}Id
 									</#if>
+								</#if>
+
 							<#elseif putParentPermissionsPageJavaMethodSignature?has_content>
 								${putParentPermissionsPageJavaMethodSignature.methodName}(${parentSchemaName?uncap_first}ExternalReferenceCode, ${httpMethod}${schemaName}.getExternalReferenceCode()
 							</#if>

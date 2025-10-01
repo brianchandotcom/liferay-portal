@@ -216,13 +216,11 @@ public class LayoutUtil {
 			"draftLayoutExternalReferenceCode",
 			draftContentPageSpecification.getExternalReferenceCode());
 
-		setLayoutPrototypeLayout(
-			groupId, publishedContentPageSpecification, serviceContext,
-			"layoutSetPrototypeLayoutERC");
+		setLayoutSetPrototypeLayoutERC(
+			groupId, publishedContentPageSpecification, serviceContext);
 
-		setLayoutPrototypeLayout(
-			groupId, publishedContentPageSpecification, serviceContext,
-			"draftLayoutLayoutSetPrototypeLayoutERC");
+		setLayoutSetPrototypeLayoutERC(
+			groupId, publishedContentPageSpecification, serviceContext);
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),
@@ -393,9 +391,9 @@ public class LayoutUtil {
 				LayoutTypeSettingsConstants.KEY_PUBLISHED));
 	}
 
-	public static void setLayoutPrototypeLayout(
+	public static void setLayoutSetPrototypeLayoutERC(
 			long groupId, PageSpecification pageSpecification,
-			ServiceContext serviceContext, String serviceContextAttributeName)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (Validator.isNull(
@@ -405,6 +403,7 @@ public class LayoutUtil {
 			return;
 		}
 
+		boolean draftLayout = Boolean.FALSE;
 		boolean privateLayout = Boolean.FALSE;
 
 		int layoutPageTemplateEntryType = GetterUtil.getInteger(
@@ -433,6 +432,7 @@ public class LayoutUtil {
 					contentPageSpecification.
 						getDraftContentPageSpecificationExternalReferenceCode())) {
 
+				draftLayout = Boolean.TRUE;
 				privateLayout = Boolean.TRUE;
 			}
 		}
@@ -467,7 +467,8 @@ public class LayoutUtil {
 		}
 
 		serviceContext.setAttribute(
-			serviceContextAttributeName,
+			draftLayout ? "draftLayoutLayoutSetPrototypeLayoutERC" :
+				"layoutSetPrototypeLayoutERC",
 			siteTemplatePageSpecificationExternalReferenceCode);
 	}
 

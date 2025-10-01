@@ -220,7 +220,7 @@ public class LayoutUtil {
 			groupId, publishedContentPageSpecification, serviceContext);
 
 		setLayoutSetPrototypeLayoutERC(
-			groupId, publishedContentPageSpecification, serviceContext);
+			groupId, draftContentPageSpecification, serviceContext);
 
 		if (Objects.equals(
 				publishedContentPageSpecification.getStatus(),

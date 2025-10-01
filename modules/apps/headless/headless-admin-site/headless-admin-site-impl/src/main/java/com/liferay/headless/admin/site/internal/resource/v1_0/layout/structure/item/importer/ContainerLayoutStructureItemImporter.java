@@ -9,6 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentLinkUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentViewportUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
@@ -22,7 +23,9 @@ import com.liferay.layout.converter.WidthTypeConverter;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
@@ -147,6 +150,20 @@ public class ContainerLayoutStructureItemImporter
 		if (fragmentViewportsJSONObject != null) {
 			containerStyledLayoutStructureItem.updateItemConfig(
 				fragmentViewportsJSONObject);
+		}
+
+		JSONObject fragmentLinkJSONObject = FragmentLinkUtil.toJSONObject(
+			containerPageElementDefinition.getFragmentLink(),
+			layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+			layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentLinkJSONObject != null) {
+			containerStyledLayoutStructureItem.updateItemConfig(
+				fragmentLinkJSONObject);
+		}
+		else {
+			containerStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put("link", JSONFactoryUtil.createJSONObject()));
 		}
 
 		return containerStyledLayoutStructureItem;

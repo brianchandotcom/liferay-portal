@@ -121,15 +121,15 @@ public interface OpenIdConnectProviderConfiguration {
 	public String[] customAuthorizationRequestParameters();
 
 	@Meta.AD(
-		deflt = "", description = "custom-token-request-parameters-help",
-		name = "custom-token-request-parameters", required = false
-	)
-	public String[] customTokenRequestParameters();
-
-	@Meta.AD(
 		deflt = "", description = "custom-claims-help", name = "custom-claims",
 		required = false
 	)
 	public String[] customClaims();
+
+	@Meta.AD(
+		deflt = "", description = "custom-token-request-parameters-help",
+		name = "custom-token-request-parameters", required = false
+	)
+	public String[] customTokenRequestParameters();
 
 }

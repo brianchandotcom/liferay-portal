@@ -267,10 +267,6 @@ public class PropsValues {
 	public static final boolean BLOGS_TRACKBACK_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.BLOGS_TRACKBACK_ENABLED));
 
-	public static final boolean BROKEN_LINKS_CHECKER_ENABLED =
-		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.BROKEN_LINKS_CHECKER_ENABLED));
-
 	public static final boolean BROWSER_CACHE_DISABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.BROWSER_CACHE_DISABLED));
 
@@ -329,6 +325,10 @@ public class PropsValues {
 
 	public static final boolean CLUSTER_LINK_ENABLED = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.CLUSTER_LINK_ENABLED));
+
+	public static final boolean CMS_BROKEN_LINKS_CHECKER_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.CMS_BROKEN_LINKS_CHECKER_ENABLED));
 
 	public static final String[] COMBO_ALLOWED_FILE_EXTENSIONS =
 		PropsUtil.getArray(PropsKeys.COMBO_ALLOWED_FILE_EXTENSIONS);

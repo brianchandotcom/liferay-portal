@@ -46,13 +46,12 @@ public class FrontendServicePreAction extends Action {
 			return;
 		}
 
-		Theme theme = themeDisplay.getTheme();
-
-		boolean rtl = _portal.isRightToLeft(httpServletRequest);
-
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
 				httpServletRequest);
+
+		Theme theme = themeDisplay.getTheme();
+		boolean rtl = _portal.isRightToLeft(httpServletRequest);
 
 		WebContextStylesheetAbsolutePortalURLBuilder
 			webContextStylesheetAbsolutePortalURLBuilder =

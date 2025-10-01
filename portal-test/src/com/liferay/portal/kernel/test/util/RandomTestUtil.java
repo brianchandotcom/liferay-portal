@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import java.sql.Timestamp;
 
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -45,20 +44,6 @@ public class RandomTestUtil {
 
 	public static Timestamp nextTimestamp() {
 		return new Timestamp(nextDate().getTime());
-	}
-
-	public static String randomBase64BySize(int sizeInBytes) {
-		byte[] data = new byte[sizeInBytes];
-
-		new Random(
-		).nextBytes(
-			data
-		);
-
-		return Base64.getEncoder(
-		).encodeToString(
-			data
-		);
 	}
 
 	public static boolean randomBoolean() {

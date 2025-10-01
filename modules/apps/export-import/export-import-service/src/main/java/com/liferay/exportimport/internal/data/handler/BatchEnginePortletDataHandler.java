@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -293,10 +294,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					_executeExportTask(
 						Integer.MAX_VALUE, portletDataContext, registration);
 
-				if (result == null) {
-					continue;
-				}
-
 				portletDataContext.addZipEntry(
 					_normalize(
 						registration.getFileName(),
@@ -503,19 +500,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private List<Registration> _getActiveRegistrations(
 		PortletDataContext portletDataContext) {
 
-		List<Registration> activeRegistrations = new ArrayList<>();
+		return ListUtil.filter(
+			_registrations,
+			registration -> {
+				ExportImportVulcanBatchEngineTaskItemDelegate.
+					ExportImportDescriptor exportImportDescriptor =
+						registration.getExportImportDescriptor();
 
-		for (Registration registration : _registrations) {
-			ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-				exportImportDescriptor =
-					registration.getExportImportDescriptor();
-
-			if (exportImportDescriptor.isActive(portletDataContext)) {
-				activeRegistrations.add(registration);
-			}
-		}
-
-		return activeRegistrations;
+				return exportImportDescriptor.isActive(portletDataContext);
+			});
 	}
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)

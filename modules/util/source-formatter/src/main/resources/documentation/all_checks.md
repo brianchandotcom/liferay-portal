@@ -98,7 +98,6 @@ FTLTagAttributesCheck | [Styling](styling_checks.md#styling-checks) | .ftl | Sor
 FTLTagCheck | [Styling](styling_checks.md#styling-checks) | .ftl | Finds cases where consecutive `#assign` can be combined. |
 FTLWhitespaceCheck | [Styling](styling_checks.md#styling-checks) | .ftl | Finds missing and unnecessary whitespace in `.ftl` files. |
 FactoryCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java, .jsp, .jspf, .jspx, .tag, .tpl, or .vm | Finds cases where `*Factory` should be used when creating new instances of an object. |
-FeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that FeatureFlagManagerUtil.isEnabled(long companyId, String key) is being used instead of FeatureFlagManagerUtil.isEnabled(String key). |
 FilterStringWhitespaceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds missing and unnecessary whitespace in the value of the filter string in `ServiceTrackerFactory.open` or `WaiterUtil.waitForFilter`. |
 [FrameworkBundleCheck](check/framework_bundle_check.md#frameworkbundlecheck) | [Performance](performance_checks.md#performance-checks) | .java | Checks that `org.osgi.framework.Bundle.getHeaders()` is not used. |
 FullyQualifiedNameCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds cases where a Fully Qualified Name is used instead of importing a class. |
@@ -242,7 +241,7 @@ JavaEmptyLineAfterSuperCallCheck | [Miscellaneous](miscellaneous_checks.md#misce
 JavaEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds missing and unnecessary empty lines. |
 JavaEntityFieldsMapOrderCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts entity fields when calling `EntityFieldsMapFactory.create` and `EntityModel.toEntityFieldsMap`. |
 JavaExceptionCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | .java | Checks that variable names of exceptions in `catch` statements follow naming conventions. |
-JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used. |
+JavaFeatureFlagManagerUtilCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds cases where `FeatureFlagManagerUtil.isEnabled` should be used and incorrect use of it. |
 JavaFeatureFlagsAndTestInfoAnnotationCheck | [Styling](styling_checks.md#styling-checks) | .java | Sorts the values in `@FeatureFlags` and `@TestInfo` annotation. |
 JavaFinalVariableCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds cases of unneeded `final` modifiers for variables and parameters. |
 [JavaFinderCacheCheck](check/java_finder_cache_check.md#javafindercachecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that the method `BasePersistenceImpl.fetchByPrimaryKey` is overridden, when using `FinderPath`. |

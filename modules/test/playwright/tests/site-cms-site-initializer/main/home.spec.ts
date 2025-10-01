@@ -183,6 +183,23 @@ test(
 					String(objectEntry3.id)
 				);
 			}
+
+			// Teardown for created web content workflow
+
+			await processBuilderPage.goto('/test');
+			await configurationTabPage.configurationTabLink.waitFor({
+				state: 'visible',
+			});
+			await configurationTabPage.configurationTabLink.click({
+				force: true,
+			});
+			await configurationTabPage.page.waitForURL((url) =>
+				url.href.includes('=configuration')
+			);
+
+			await configurationTabPage.unassignWorkflowFromAssetType(
+				'Basic Web Content'
+			);
 		}
 	}
 );
@@ -252,6 +269,27 @@ test(
 					String(objectEntry.id)
 				);
 			}
+
+			// Teardown for created web content workflow
+
+			await processBuilderPage.goto('/test');
+			await configurationTabPage.configurationTabLink.waitFor({
+				state: 'visible',
+			});
+			await configurationTabPage.configurationTabLink.click({
+				force: true,
+			});
+			await configurationTabPage.page.waitForURL((url) =>
+				url.href.includes('=configuration')
+			);
+
+			await configurationTabPage.unassignWorkflowFromAssetType(
+				'Basic Web Content'
+			);
+
+			await page.reload();
+
+			await configurationTabPage.unassignWorkflowFromAssetType('Account');
 		}
 	}
 );

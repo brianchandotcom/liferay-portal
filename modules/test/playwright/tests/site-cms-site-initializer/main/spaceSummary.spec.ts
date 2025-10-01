@@ -123,7 +123,7 @@ test(
 	'Can view added content in the space summary page',
 	{tag: '@LPD-62706'},
 	async ({apiHelpers, page, spaceSummaryPage}) => {
-		const applicationName = 'cms/knowledge-bases';
+		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 
 		const file1Title = `title ${getRandomString()}`;
@@ -184,7 +184,7 @@ test(
 	'Can view Share modal for added content',
 	{tag: '@LPD-62554'},
 	async ({apiHelpers, assetsPage, page, spaceSummaryPage}) => {
-		const applicationName = 'cms/knowledge-bases';
+		const applicationName = 'cms/basic-web-contents';
 		const file1Title = `Title ${getRandomString()}`;
 		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;

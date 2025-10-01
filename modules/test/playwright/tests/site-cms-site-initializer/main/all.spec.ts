@@ -229,7 +229,7 @@ test(
 	'Can view Share modal for added content',
 	{tag: '@LPD-62554'},
 	async ({apiHelpers, assetsPage}) => {
-		const applicationName = 'cms/knowledge-bases';
+		const applicationName = 'cms/basic-web-contents';
 		const file1Title = `Title ${getRandomString()}`;
 		const spaceName = `Space ${getRandomString()}`;
 		let objectEntry1;

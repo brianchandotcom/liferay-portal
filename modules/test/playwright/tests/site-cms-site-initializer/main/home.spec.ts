@@ -260,7 +260,7 @@ test(
 	'Can see Recent Assets',
 	{tag: '@LPD-58792'},
 	async ({apiHelpers, homePage, page}) => {
-		const applicationName = 'cms/knowledge-bases';
+		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 		let objectEntry1;
 		let objectEntry2;
@@ -344,18 +344,6 @@ test(
 			await expect(page.getByPlaceholder('New Blog')).toBeVisible();
 		});
 
-		await test.step('Check redirection after clicking Knowledge Base button', async () => {
-			await homePage.goto();
-
-			await homePage.knowledgeBaseButton.click();
-
-			await homePage.selectSpace('Default');
-
-			await expect(
-				page.getByPlaceholder('New Knowledge Base')
-			).toBeVisible();
-		});
-
 		await test.step('Check redirection after clicking Basic Document button', async () => {
 			await homePage.goto();
 
@@ -382,7 +370,7 @@ test(
 	'Can use Search Bar to search for content',
 	{tag: '@LPD-61220'},
 	async ({apiHelpers, assetsPage, homePage, page}) => {
-		const applicationName = 'cms/knowledge-bases';
+		const applicationName = 'cms/basic-web-contents';
 		const spaceName = 'Default';
 		let objectEntry1;
 		let objectEntry2;

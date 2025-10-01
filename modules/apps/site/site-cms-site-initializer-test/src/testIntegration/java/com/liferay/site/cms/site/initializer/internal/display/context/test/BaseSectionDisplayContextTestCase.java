@@ -815,6 +815,9 @@ public abstract class BaseSectionDisplayContextTestCase
 			if (group != null) {
 				jsonArray.put(
 					JSONUtil.put(
+						"externalReferenceCode",
+						group.getExternalReferenceCode()
+					).put(
 						"groupId", group.getGroupId()
 					).put(
 						"name", group.getName(LocaleUtil.getDefault())
@@ -833,6 +836,8 @@ public abstract class BaseSectionDisplayContextTestCase
 		}
 
 		return JSONUtil.put(
+			"externalReferenceCode", group.getExternalReferenceCode()
+		).put(
 			"groupId", group.getGroupId()
 		).put(
 			"name", group.getName(LocaleUtil.getDefault())

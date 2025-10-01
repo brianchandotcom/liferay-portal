@@ -372,45 +372,24 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 						</ClayInput.Group>
 					</ClayForm>
 
-					{!!search && !(data?.totalCount ?? 0) && (
-						<ClayForm
-							onSubmit={(event) => {
-								event.preventDefault();
-
-								handleClearSearch();
-							}}
+					{!(data?.totalCount ?? 0) && (
+						<ClayEmptyState
+							className="mb-6 mt-0"
+							description={Liferay.Language.get(
+								'review-your-search-and-try-again'
+							)}
+							imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
+							imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state_reduced_motion.svg`}
+							title={Liferay.Language.get('no-results-found')}
 						>
-							<ClayEmptyState
-								className="mb-6 mt-0"
-								description={Liferay.Language.get(
-									'review-your-search-and-try-again'
-								)}
-								imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state.svg`}
-								imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/search_state_reduced_motion.svg`}
-								title={Liferay.Language.get('no-results-found')}
+							<ClayButton
+								displayType="secondary"
+								onClick={handleClearSearch}
 							>
-								<ClayButton
-									displayType="secondary"
-									type="submit"
-								>
-									{Liferay.Language.get('clear-search')}
-								</ClayButton>
-							</ClayEmptyState>
-						</ClayForm>
+								{Liferay.Language.get('clear-search')}
+							</ClayButton>
+						</ClayEmptyState>
 					)}
-
-					{!search &&
-						!cachedData[cachedData.length - 1].data.totalCount && (
-							<ClayEmptyState
-								className="mb-6 mt-0"
-								description={Liferay.Language.get(
-									'there-is-no-content-to-be-displayed'
-								)}
-								imgSrc={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state.svg`}
-								imgSrcReducedMotion={`${Liferay.ThemeDisplay.getPathThemeImages()}/states/empty_state_reduced_motion.svg`}
-								title={Liferay.Language.get('no-content-yet')}
-							/>
-						)}
 
 					<ClayList>
 						{data?.items.map((item) => (

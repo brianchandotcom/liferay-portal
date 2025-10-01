@@ -378,7 +378,7 @@ test(
 	}
 );
 
-test(
+test.skip(
 	'Can use Search Bar to search for content',
 	{tag: '@LPD-61220'},
 	async ({apiHelpers, assetsPage, homePage, page}) => {

@@ -231,8 +231,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		_addSiteExternalReferenceCodeParameter(portletDataContext);
-
 		if (portletDataContext.getZipReader() == null) {
 			return portletPreferences;
 		}

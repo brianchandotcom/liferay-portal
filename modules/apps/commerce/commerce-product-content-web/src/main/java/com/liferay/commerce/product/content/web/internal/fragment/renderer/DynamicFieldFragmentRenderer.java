@@ -131,7 +131,8 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 				_language.get(
 					themeDisplay.getLocale(),
 					_getConfigurationValue(
-						fragmentRendererContext.getFragmentEntryLink(), "label")));
+						fragmentRendererContext.getFragmentEntryLink(),
+						"label")));
 
 			httpServletRequest.setAttribute(
 				"liferay-commerce:dynamic-field:labelElementType",

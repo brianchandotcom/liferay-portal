@@ -1808,7 +1808,7 @@ public class ObjectDefinitionLocalServiceImpl
 					_kaleoDefinitionLocalService.addKaleoDefinition(
 						workflowDefinitionName, workflowDefinitionName,
 						workflowDefinitionName, null, null,
-						WorkflowDefinitionConstants.SCOPE_ALL, 0,
+						WorkflowDefinitionConstants.SCOPE_ALL, 1,
 						serviceContext);
 			}
 

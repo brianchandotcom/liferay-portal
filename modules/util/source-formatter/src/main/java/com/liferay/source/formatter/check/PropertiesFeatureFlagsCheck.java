@@ -337,7 +337,7 @@ public class PropertiesFeatureFlagsCheck extends BaseFileCheck {
 				return featureFlagKeys;
 			}
 
-			if (ToolsUtil.isInsideQuotes(content, x)) {
+			if (javaSource && ToolsUtil.isInsideQuotes(content, x)) {
 				continue;
 			}
 

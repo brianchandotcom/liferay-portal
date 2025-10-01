@@ -213,7 +213,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		return batchName;
 	}
 
-	public DownstreamBuildReport getCachedDownstreamBuildReport(
+	public List<DownstreamBuildReport> getCachedDownstreamBuildReports(
 		String axisName) {
 
 		if (!isBuildCachingEnabled() ||
@@ -1511,8 +1511,12 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 						getBatchName(), new JSONObject(buildReportFileContent),
 						null);
 
-				_cachedDownstreamBuildReportsMap.put(
-					downstreamBuildReport.getAxisName(), downstreamBuildReport);
+				List<DownstreamBuildReport> cachedDownstreamBuildReports =
+					_cachedDownstreamBuildReportsMap.computeIfAbsent(
+						downstreamBuildReport.getAxisName(),
+						k -> new ArrayList<>());
+
+				cachedDownstreamBuildReports.add(downstreamBuildReport);
 
 				for (TestReport testReport :
 						downstreamBuildReport.getTestReports()) {
@@ -1749,7 +1753,7 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	private final Map<String, Long> _averageTestOverheadDurations =
 		new HashMap<>();
 	private BatchHistory _batchHistory;
-	private final Map<String, DownstreamBuildReport>
+	private final Map<String, List<DownstreamBuildReport>>
 		_cachedDownstreamBuildReportsMap = new TreeMap<>();
 	private boolean _cachedReportsInitialized;
 	private final Map<String, TestClassReport> _cachedTestClassReportsMap =

@@ -132,7 +132,7 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		}
 	}
 
-	private String _getKeyValueParam(
+	private String _getKeyValueParameterValue(
 		HttpServletRequest httpServletRequest, int index, String paramName) {
 
 		String key = ParamUtil.getString(
@@ -165,7 +165,8 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 			String value = null;
 
 			if (keyValueParam) {
-				value = _getKeyValueParam(httpServletRequest, index, paramName);
+				value = _getKeyValueParameterValue(
+					httpServletRequest, index, paramName);
 			}
 			else {
 				value = ParamUtil.getString(

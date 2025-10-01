@@ -423,41 +423,41 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getPageElementContainerPageElementDefinition(
-			String[] curCssClasses, String curCustomCss, boolean curIndexed,
-			String curPageElementExternalReferenceCode)
+			String[] cssClasses, String customCss, boolean indexed,
+			String pageElementExternalReferenceCode)
 		throws Exception {
 
-		return _getPageElement(
-			new ContainerPageElementDefinition() {
-				{
-					setContentVisibility(ContentVisibility.AUTO);
-					setCssClasses(curCssClasses);
-					setCustomCSS(curCustomCss);
-					setFragmentViewports(_getFragmentViewports());
-					setHtmlProperties(
-						() -> new HtmlProperties() {
-							{
-								setHtmlTag(HtmlTag.DIV);
-							}
-						});
-					setIndexed(curIndexed);
-					setLayout(
-						() ->
-							new com.liferay.headless.admin.site.client.dto.v1_0.
-								Layout() {
+		ContainerPageElementDefinition containerPageElementDefinition =
+			new ContainerPageElementDefinition();
 
-								{
-									setAlign(Align.END);
-									setContentDisplay(ContentDisplay.FLEX_ROW);
-									setFlexWrap(FlexWrap.WRAP_REVERSE);
-									setJustify(Justify.CENTER);
-									setWidthType(WidthType.FIXED);
-								}
-							});
-					setType(PageElementDefinition.Type.CONTAINER);
+		containerPageElementDefinition.setContentVisibility(
+			ContainerPageElementDefinition.ContentVisibility.AUTO);
+		containerPageElementDefinition.setCssClasses(cssClasses);
+		containerPageElementDefinition.setCustomCSS(customCss);
+		containerPageElementDefinition.setFragmentViewports(
+			_getFragmentViewports());
+		containerPageElementDefinition.setHtmlProperties(
+			() -> new HtmlProperties() {
+				{
+					setHtmlTag(HtmlTag.DIV);
 				}
-			},
-			curPageElementExternalReferenceCode);
+			});
+		containerPageElementDefinition.setIndexed(indexed);
+		containerPageElementDefinition.setLayout(
+			() -> new com.liferay.headless.admin.site.client.dto.v1_0.Layout() {
+				{
+					setAlign(Align.END);
+					setContentDisplay(ContentDisplay.FLEX_ROW);
+					setFlexWrap(FlexWrap.WRAP_REVERSE);
+					setJustify(Justify.CENTER);
+					setWidthType(WidthType.FIXED);
+				}
+			});
+		containerPageElementDefinition.setType(
+			PageElementDefinition.Type.CONTAINER);
+
+		return _getPageElement(
+			containerPageElementDefinition, pageElementExternalReferenceCode);
 	}
 
 	private PageElement _randomPageElement(

@@ -23,7 +23,8 @@ export class DefaultPermissionsPage {
 	}
 
 	async checkPermissionsAndSave(
-		permissions: Array<{action: string; role: string}>
+		permissions: Array<{action: string; role: string}>,
+		bulk = false
 	) {
 		await expect(this.permissionsModal).toBeVisible();
 
@@ -37,7 +38,16 @@ export class DefaultPermissionsPage {
 
 		await this.permissionsModalSaveButton.click();
 
-		await waitForAlert(this.page);
+		if (bulk) {
+			await waitForAlert(
+				this.page,
+				'Info:Default permissions update action started for 2 assets. Check the Task Report for details.',
+				{type: 'info'}
+			);
+		}
+		else {
+			await waitForAlert(this.page);
+		}
 	}
 
 	async verifyPermissions(

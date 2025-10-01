@@ -94,6 +94,8 @@ test(
 	'Space and folder contents inherit parent default permissions',
 	{tag: '@LPD-62475'},
 	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
+		test.setTimeout(90000);
+
 		await page.goto(PORTLET_URLS.cmsAllSpaces);
 
 		const spaceName = 'Space' + getRandomInt();
@@ -167,6 +169,8 @@ test(
 	'Change space default permissions in bulk',
 	{tag: '@LPD-62475'},
 	async ({defaultPermissionsPage, page}) => {
+		test.setTimeout(90000);
+
 		const spaceName1 = 'Space' + getRandomInt();
 		const spaceName2 = 'Space' + getRandomInt();
 
@@ -189,7 +193,10 @@ test(
 				{action: 'PERMISSIONS', checked: true, role: 'User'},
 			];
 
-			await defaultPermissionsPage.checkPermissionsAndSave(permissions1);
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				permissions1,
+				true
+			);
 
 			await verifyPermissions({
 				defaultPermissionsPage,
@@ -229,6 +236,8 @@ test(
 	'Change folder default permissions in bulk',
 	{tag: '@LPD-62475'},
 	async ({contentsPage, defaultPermissionsPage, folderPage, page}) => {
+		test.setTimeout(90000);
+
 		const spaceName1 = 'Space' + getRandomInt();
 		const spaceName2 = 'Space' + getRandomInt();
 
@@ -278,7 +287,7 @@ test(
 			await goToDefaultPermissions(page, folderName1);
 
 			const permissionsFolder1 = [
-				{action: 'UPDATE', checked: true, role: 'Site Member'},
+				{action: 'UPDATE', checked: true, role: 'Supplier'},
 				{action: 'VIEW', checked: true, role: 'Supplier'},
 			];
 

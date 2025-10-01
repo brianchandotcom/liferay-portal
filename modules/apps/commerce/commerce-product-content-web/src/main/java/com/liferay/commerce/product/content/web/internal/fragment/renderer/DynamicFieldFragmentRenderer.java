@@ -111,38 +111,38 @@ public class DynamicFieldFragmentRenderer implements FragmentRenderer {
 			HttpServletResponse httpServletResponse)
 		throws IOException {
 
-		String field = _getConfigurationValue(
-			fragmentRendererContext.getFragmentEntryLink(), "field");
-
-		httpServletRequest.setAttribute(
-			"liferay-commerce:dynamic-field:field", field);
-
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		httpServletRequest.setAttribute(
-			"liferay-commerce:dynamic-field:label",
-			_language.get(
-				themeDisplay.getLocale(),
-				_getConfigurationValue(
-					fragmentRendererContext.getFragmentEntryLink(), "label")));
-
-		httpServletRequest.setAttribute(
-			"liferay-commerce:dynamic-field:labelElementType",
-			_getConfigurationValue(
-				fragmentRendererContext.getFragmentEntryLink(),
-				"labelElementType"));
-		httpServletRequest.setAttribute(
-			"liferay-commerce:dynamic-field:valueElementType",
-			_getConfigurationValue(
-				fragmentRendererContext.getFragmentEntryLink(),
-				"valueElementType"));
-
 		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/fragment/renderer/dynamic_field/page.jsp");
+
+			String field = _getConfigurationValue(
+				fragmentRendererContext.getFragmentEntryLink(), "field");
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:dynamic-field:field", field);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:dynamic-field:label",
+				_language.get(
+					themeDisplay.getLocale(),
+					_getConfigurationValue(
+						fragmentRendererContext.getFragmentEntryLink(), "label")));
+
+			httpServletRequest.setAttribute(
+				"liferay-commerce:dynamic-field:labelElementType",
+				_getConfigurationValue(
+					fragmentRendererContext.getFragmentEntryLink(),
+					"labelElementType"));
+			httpServletRequest.setAttribute(
+				"liferay-commerce:dynamic-field:valueElementType",
+				_getConfigurationValue(
+					fragmentRendererContext.getFragmentEntryLink(),
+					"valueElementType"));
 
 			Object infoItem = httpServletRequest.getAttribute(
 				InfoDisplayWebKeys.INFO_ITEM);

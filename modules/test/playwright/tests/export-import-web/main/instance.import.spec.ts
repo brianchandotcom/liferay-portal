@@ -250,22 +250,28 @@ test('can import custom and system objects entries at instance level using date 
 		'c/tests'
 	);
 
-	const cookiesObjectEntries = await apiHelpers.get(
+	const {
+		items: cookiesObjectEntries,
+		totalCount: cookiesObjectEntriesTotalCount,
+	} = await apiHelpers.get(
 		`${apiHelpers.baseUrl}functional-cookies-entries/`
 	);
 
 	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
 
-	const objectEntryCreationDate = cookiesObjectEntries.items[0].dateCreated;
+	const {
+		dateCreated: cookiesObjectEntryCreationDate,
+		id: cookiesObjectEntryId,
+	} = cookiesObjectEntries[0];
 
 	await test.step('export functional cookie entries using date reange filter', async () => {
 		await companyExportImportPage.applicationsMenuPage.goToExport();
 
-		const startDate = new Date(objectEntryCreationDate);
+		const startDate = new Date(cookiesObjectEntryCreationDate);
 
 		startDate.setUTCDate(startDate.getUTCDate() - 1);
 
-		const endDate = new Date(objectEntryCreationDate);
+		const endDate = new Date(cookiesObjectEntryCreationDate);
 
 		endDate.setUTCMinutes(endDate.getUTCMinutes() + 1);
 
@@ -275,7 +281,10 @@ test('can import custom and system objects entries at instance level using date 
 
 		const functionalCookieEntriesExportFilePath =
 			await companyExportImportPage.export(
-				['Functional Cookie Entries 20 Items', 'Tests 1 Items'],
+				[
+					`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
+					'Tests 1 Items',
+				],
 				false,
 				{
 					endDate: toDateRangeDate(endDate),
@@ -290,24 +299,26 @@ test('can import custom and system objects entries at instance level using date 
 		);
 
 		await apiHelpers.delete(
-			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntries.items[0].id}`
+			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntryId}`
 		);
 
 		await companyExportImportPage.import(
 			functionalCookieEntriesExportFilePath
 		);
 
-		const importedCookiesObjectEntries = await apiHelpers.get(
-			`${apiHelpers.baseUrl}functional-cookies-entries/`
+		const {totalCount: importedCookiesObjectEntriesTotalCount} =
+			await apiHelpers.get(
+				`${apiHelpers.baseUrl}functional-cookies-entries/`
+			);
+
+		const {totalCount: importedCustomObjectEntriesTotalCount} =
+			await apiHelpers.get(`${apiHelpers.baseUrl}c/tests/`);
+
+		expect(importedCookiesObjectEntriesTotalCount).toBe(
+			cookiesObjectEntriesTotalCount
 		);
 
-		const importedCustomObjectEntries = await apiHelpers.get(
-			`${apiHelpers.baseUrl}c/tests/`
-		);
-
-		expect(importedCookiesObjectEntries.items.length).toBe(20);
-
-		expect(importedCustomObjectEntries.items.length).toBe(0);
+		expect(importedCustomObjectEntriesTotalCount).toBe(0);
 	});
 
 	await test.step('export all entries using last 12 hours filter', async () => {
@@ -317,7 +328,10 @@ test('can import custom and system objects entries at instance level using date 
 		);
 
 		const allEntriesExportFilePath = await companyExportImportPage.export(
-			['Functional Cookie Entries 20 Items', 'Tests 1 Items'],
+			[
+				`Functional Cookie Entries ${cookiesObjectEntriesTotalCount} Items`,
+				'Tests 1 Items',
+			],
 			false,
 			{
 				rangeLast: '12 Hours',
@@ -325,7 +339,7 @@ test('can import custom and system objects entries at instance level using date 
 		);
 
 		await apiHelpers.delete(
-			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntries.items[0].id}`
+			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntryId}`
 		);
 
 		await apiHelpers.delete(
@@ -333,17 +347,19 @@ test('can import custom and system objects entries at instance level using date 
 		);
 		await companyExportImportPage.import(allEntriesExportFilePath);
 
-		const importedCookiesObjectEntries = await apiHelpers.get(
-			`${apiHelpers.baseUrl}functional-cookies-entries/`
+		const {totalCount: importedCookiesObjectEntriesTotalCount} =
+			await apiHelpers.get(
+				`${apiHelpers.baseUrl}functional-cookies-entries/`
+			);
+
+		const {totalCount: importedCustomObjectEntriesTotalCount} =
+			await apiHelpers.get(`${apiHelpers.baseUrl}c/tests/`);
+
+		expect(importedCookiesObjectEntriesTotalCount).toBe(
+			cookiesObjectEntriesTotalCount
 		);
 
-		const importedCustomObjectEntries = await apiHelpers.get(
-			`${apiHelpers.baseUrl}c/tests/`
-		);
-
-		expect(importedCookiesObjectEntries.items.length).toBe(20);
-
-		expect(importedCustomObjectEntries.items.length).toBe(1);
+		expect(importedCustomObjectEntriesTotalCount).toBe(1);
 	});
 });
 

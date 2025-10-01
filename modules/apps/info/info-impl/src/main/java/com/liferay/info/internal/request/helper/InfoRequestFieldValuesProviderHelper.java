@@ -330,12 +330,12 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		Set<String> inputNames = new HashSet<>();
 
-		Set<String> allParameters = new HashSet<>(
+		Set<String> allParameterNames = new HashSet<>(
 			multipartParameterNames.keySet());
 
-		allParameters.addAll(regularParameterNames.keySet());
+		allParameterNames.addAll(regularParameterNames.keySet());
 
-		for (String parameterName : allParameters) {
+		for (String parameterName : allParameterNames) {
 			if (parameterName.startsWith(infoField.getUniqueId())) {
 				if (!infoField.isLocalizable()) {
 					inputNames.add(parameterName);

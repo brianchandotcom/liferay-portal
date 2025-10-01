@@ -18,6 +18,12 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import java.net.HttpURLConnection;
+import java.net.URI;
+
+import java.time.OffsetDateTime;
+import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -31,6 +37,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -55,20 +62,22 @@ public class LearnRestController extends BaseRestController {
 	@ResponseBody
 	public ResponseEntity<Object> getLessonAudioBase64(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable long lessonId,
-		@RequestParam String languageCode, @RequestParam String voiceName) {
+		@RequestParam String folderId, @RequestParam String voiceName,
+		@RequestParam String languageCode, @RequestParam String voiceType) {
 
 		try {
-			JSONObject jsonObject = new JSONObject(
+			JSONObject lessonJSONObject = new JSONObject(
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromPath(
 						"/o/c/lessons/" + lessonId
 					).queryParam(
-						"fields", "contentRawText"
+						"fields", "contentRawText,dateModified"
 					).build(
 					).toUri()));
 
-			String contentRawText = jsonObject.getString("contentRawText");
+			String contentRawText = lessonJSONObject.getString(
+				"contentRawText");
 
 			if (Validator.isNull(contentRawText)) {
 				return ResponseEntity.status(
@@ -78,58 +87,139 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			ByteArrayOutputStream byteArrayOutputStream =
-				new ByteArrayOutputStream();
-
-			List<String> ssmls = _splitSsml(
-				contentRawText.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
-
-			for (String ssml : ssmls) {
-				String response = post(
-					_getGoogleAccessToken(),
-					new JSONObject(
-						HashMapBuilder.<String, Object>put(
-							"audioConfig",
-							HashMapBuilder.<String, Object>put(
-								"audioEncoding", "MP3"
-							).build()
-						).put(
-							"input",
-							HashMapBuilder.<String, Object>put(
-								"text", ssml
-							).build()
-						).put(
-							"voice",
-							HashMapBuilder.<String, Object>put(
-								"languageCode", languageCode
-							).put(
-								"name", voiceName
-							).build()
-						).build()
-					).toString(),
-					UriComponentsBuilder.fromUriString(
-						"https://texttospeech.googleapis.com/v1beta1/text:" +
-							"synthesize"
-					).build(
-					).toUri());
-
-				byteArrayOutputStream.write(
-					Base64.getDecoder(
-					).decode(
-						new JSONObject(
-							response
-						).getString(
-							"audioContent"
-						)
-					));
-			}
-
-			String audioContentBase64 = Base64.getEncoder(
-			).encodeToString(
-				byteArrayOutputStream.toByteArray()
+			OffsetDateTime lessonDateModified = OffsetDateTime.parse(
+				lessonJSONObject.getString("dateModified")
+			).truncatedTo(
+				ChronoUnit.MINUTES
 			);
 
-			return ResponseEntity.ok(audioContentBase64);
+			String fileName = StringBundler.concat(
+				"title eq 'lesson-", lessonId, "-", voiceType, ".mp3'");
+
+			URI uri = UriComponentsBuilder.fromHttpUrl(
+				_protocol + "://" + _mainDomain
+			).path(
+				"/o/headless-delivery/v1.0/document-folders/" + folderId +
+					"/documents"
+			).queryParam(
+				"filter", fileName
+			).build(
+			).toUri();
+
+			HttpURLConnection connection = (HttpURLConnection)uri.toURL(
+			).openConnection();
+
+			connection.setRequestMethod("GET");
+
+			connection.setRequestProperty("Accept", "application/json");
+
+			JSONObject documentJSONObject = new JSONObject(
+				new String(
+					connection.getInputStream(
+					).readAllBytes()));
+
+			JSONArray itemsJSONArray = documentJSONObject.optJSONArray("items");
+
+			JSONObject documentItemJSONObject =
+				((itemsJSONArray != null) && (itemsJSONArray.length() > 0)) ?
+					itemsJSONArray.optJSONObject(0) : null;
+
+			OffsetDateTime audioDateModified = null;
+
+			if ((itemsJSONArray != null) && !itemsJSONArray.isEmpty()) {
+				JSONObject audioFileItemJSONObject =
+					itemsJSONArray.getJSONObject(0);
+
+				audioDateModified = OffsetDateTime.parse(
+					audioFileItemJSONObject.getString("dateModified")
+				).truncatedTo(
+					ChronoUnit.MINUTES
+				);
+			}
+
+			if ((itemsJSONArray == null) || itemsJSONArray.isEmpty() ||
+				lessonDateModified.isAfter(audioDateModified)) {
+
+				ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream();
+
+				List<String> ssmls = _splitSsml(
+					contentRawText.replaceAll("\\bLiferay\\b", "Life-ray"),
+					5000);
+
+				for (String ssml : ssmls) {
+					String response = post(
+						_getGoogleAccessToken(),
+						new JSONObject(
+							HashMapBuilder.<String, Object>put(
+								"audioConfig",
+								HashMapBuilder.<String, Object>put(
+									"audioEncoding", "MP3"
+								).build()
+							).put(
+								"input",
+								HashMapBuilder.<String, Object>put(
+									"text", ssml
+								).build()
+							).put(
+								"voice",
+								HashMapBuilder.<String, Object>put(
+									"languageCode", languageCode
+								).put(
+									"name", voiceName
+								).build()
+							).build()
+						).toString(),
+						UriComponentsBuilder.fromUriString(
+							"https://texttospeech.googleapis.com/v1beta1" +
+								"/text:synthesize"
+						).build(
+						).toUri());
+
+					byteArrayOutputStream.write(
+						Base64.getDecoder(
+						).decode(
+							new JSONObject(
+								response
+							).getString(
+								"audioContent"
+							)
+						));
+				}
+
+				String audioContentBase64 = Base64.getEncoder(
+				).encodeToString(
+					byteArrayOutputStream.toByteArray()
+				);
+
+				JSONObject responseBodyJSONObject = new JSONObject();
+
+				if ((audioDateModified != null) &&
+					lessonDateModified.isAfter(audioDateModified)) {
+
+					responseBodyJSONObject.put(
+						"id", documentItemJSONObject.optString("id", null));
+				}
+
+				responseBodyJSONObject.put(
+					"audioContentBase64", audioContentBase64);
+
+				return ResponseEntity.ok(responseBodyJSONObject.toString());
+			}
+
+			String documentContentUrl = documentItemJSONObject.optString(
+				"contentUrl", null);
+
+			JSONObject responseBodyJSONObject = new JSONObject();
+
+			responseBodyJSONObject.put("contentUrl", documentContentUrl);
+
+			return ResponseEntity.ok(
+			).contentType(
+				MediaType.APPLICATION_JSON
+			).body(
+				responseBodyJSONObject.toString(2)
+			);
 		}
 		catch (Exception exception) {
 			return ResponseEntity.status(
@@ -519,5 +609,11 @@ public class LearnRestController extends BaseRestController {
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
+
+	@Value("${com.liferay.lxc.dxp.mainDomain}")
+	private String _mainDomain;
+
+	@Value("${com.liferay.lxc.dxp.server.protocol}")
+	private String _protocol;
 
 }

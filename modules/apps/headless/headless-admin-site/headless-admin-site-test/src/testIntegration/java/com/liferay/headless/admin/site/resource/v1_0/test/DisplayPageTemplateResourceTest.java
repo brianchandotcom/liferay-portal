@@ -1299,7 +1299,11 @@ public class DisplayPageTemplateResourceTest
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.client.extension.type.internal.manager." +
+					"CETManagerImpl",
+				LoggerTestUtil.WARN);
+			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.headless.admin.site.internal.util.LogUtil",
 				LoggerTestUtil.WARN)) {
 
@@ -1309,7 +1313,7 @@ public class DisplayPageTemplateResourceTest
 				draftContentPageSpecification,
 				publishedContentPageSpecification);
 
-			List<LogEntry> logEntries = logCapture.getLogEntries();
+			List<LogEntry> logEntries = logCapture2.getLogEntries();
 
 			Assert.assertEquals(logEntries.toString(), 4, logEntries.size());
 

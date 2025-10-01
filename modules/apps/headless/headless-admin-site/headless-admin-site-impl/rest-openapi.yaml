@@ -704,7 +704,7 @@ components:
                         type: permission
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/ItemExternalReference"
+                    $ref: "#/components/schemas/URLReference"
                     # @review
                     description:
                         The display page template's thumbnail.
@@ -2179,7 +2179,7 @@ components:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/ItemExternalReference"
+                    $ref: "#/components/schemas/URLReference"
                     # @review
                     description:
                         The master page's thumbnail.
@@ -3829,6 +3829,18 @@ components:
                     enum: [Href, SitePage]
                     type: string
             type: object
+        URLReference:
+          # @review
+          description:
+            A unique reference to a URL which remains constant across environments.
+          properties:
+            externalReferenceCode:
+              type: string
+            url:
+              type: string
+          required:
+            - url
+          type: object
         UtilityPage:
             description:
                 The definition of a Utility Page.
@@ -3899,7 +3911,7 @@ components:
                         type: permission
                     type: array
                 thumbnail:
-                    $ref: "#/components/schemas/ItemExternalReference"
+                    $ref: "#/components/schemas/URLReference"
                     # @review
                     description:
                         The utility page's thumbnail.

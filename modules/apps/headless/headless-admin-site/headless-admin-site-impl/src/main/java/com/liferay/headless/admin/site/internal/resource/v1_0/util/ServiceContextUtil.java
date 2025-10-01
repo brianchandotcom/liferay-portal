@@ -142,7 +142,6 @@ public class ServiceContextUtil {
 			return;
 		}
 
-		boolean draftLayout = Boolean.FALSE;
 		boolean privateLayout = Boolean.FALSE;
 
 		int layoutPageTemplateEntryType = GetterUtil.getInteger(
@@ -160,9 +159,12 @@ public class ServiceContextUtil {
 
 			privateLayout = Boolean.TRUE;
 		}
-		else if (Objects.equals(
-					PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-					pageSpecification.getType())) {
+
+		boolean draftLayout = Boolean.FALSE;
+
+		if (Objects.equals(
+				PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
+				pageSpecification.getType())) {
 
 			ContentPageSpecification contentPageSpecification =
 				(ContentPageSpecification)pageSpecification;

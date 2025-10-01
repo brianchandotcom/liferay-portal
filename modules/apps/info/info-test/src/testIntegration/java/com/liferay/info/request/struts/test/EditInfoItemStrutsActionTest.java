@@ -176,7 +176,7 @@ public class EditInfoItemStrutsActionTest {
 		_layout = _addLayout();
 
 		ObjectEntry objectEntry = _testAddInfoItem(
-			RandomTestUtil.randomString(), null, null, null, null, null, null,
+			null, null, null, null, null, null, null,
 			StringUtil.toLowerCase(
 				StringUtil.removeSubstring(
 					RandomTestUtil.randomString(
@@ -235,7 +235,7 @@ public class EditInfoItemStrutsActionTest {
 			invalidExpirationDate =
 				(InfoFormValidationException.InvalidExpirationDate)_execute(
 					HashMapBuilder.<String, List<String>>put(
-						"expirationDate",
+						"ObjectEntry_expirationDate",
 						Collections.singletonList("2020-03-01T11:11")
 					).build());
 
@@ -247,14 +247,17 @@ public class EditInfoItemStrutsActionTest {
 
 		_execute(
 			HashMapBuilder.<String, List<String>>put(
-				"displayDate", Collections.singletonList("2020-03-01T11:11")
+				"ObjectEntry_displayDate",
+				Collections.singletonList("2020-03-01T11:11")
 			).put(
-				"expirationDate", Collections.singletonList("2999-03-01T11:11")
+				"ObjectEntry_expirationDate",
+				Collections.singletonList("2999-03-01T11:11")
 			).put(
-				"externalReferenceCode",
+				"ObjectEntry_externalReferenceCode",
 				Collections.singletonList(externalReferenceCode)
 			).put(
-				"reviewDate", Collections.singletonList("2021-03-01T11:11")
+				"ObjectEntry_reviewDate",
+				Collections.singletonList("2021-03-01T11:11")
 			).build());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
@@ -282,14 +285,17 @@ public class EditInfoItemStrutsActionTest {
 				Collections.singletonList(
 					String.valueOf(objectEntry.getObjectEntryId()))
 			).put(
-				"displayDate", Collections.singletonList("2022-03-01T11:11")
+				"ObjectEntry_displayDate",
+				Collections.singletonList("2022-03-01T11:11")
 			).put(
-				"expirationDate", Collections.singletonList("3000-03-01T11:11")
+				"ObjectEntry_expirationDate",
+				Collections.singletonList("3000-03-01T11:11")
 			).put(
-				"externalReferenceCode",
+				"ObjectEntry_externalReferenceCode",
 				Collections.singletonList(externalReferenceCode)
 			).put(
-				"reviewDate", Collections.singletonList("2023-03-01T11:11")
+				"ObjectEntry_reviewDate",
+				Collections.singletonList("2023-03-01T11:11")
 			).build());
 
 		objectEntry = _objectEntryLocalService.fetchObjectEntry(
@@ -1233,11 +1239,12 @@ public class EditInfoItemStrutsActionTest {
 			byte[] bytes = attachmentValue.getBytes(StandardCharsets.UTF_8);
 
 			fileParameters = HashMapBuilder.put(
-				"myAttachment", new FileItem[] {_createFileItem(bytes)}
+				"ObjectField_myAttachment",
+				new FileItem[] {_createFileItem(bytes)}
 			).build();
 
 			mockMultipartHttpServletRequest = _getMultipartHttpServletRequest(
-				bytes, "myAttachment");
+				bytes, "ObjectField_myAttachment");
 		}
 
 		mockMultipartHttpServletRequest.addHeader(
@@ -1279,15 +1286,25 @@ public class EditInfoItemStrutsActionTest {
 						return null;
 					}
 				).put(
-					"expirationDate", Collections.singletonList(expirationDate)
-				).put(
 					"formItemId", Collections.singletonList(_formItemId)
 				).put(
 					"groupId",
 					Collections.singletonList(
 						String.valueOf(_group.getGroupId()))
 				).put(
-					"myBoolean",
+					"ObjectEntry_expirationDate",
+					Collections.singletonList(expirationDate)
+				).put(
+					"ObjectEntry_objectEntryFriendlyURL",
+					() -> {
+						if (friendlyURL == null) {
+							return null;
+						}
+
+						return Collections.singletonList(friendlyURL);
+					}
+				).put(
+					"ObjectField_myBoolean",
 					() -> {
 						if (booleanValueInput == null) {
 							return null;
@@ -1296,7 +1313,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(booleanValueInput);
 					}
 				).put(
-					"myDate",
+					"ObjectField_myDate",
 					() -> {
 						if (dateValueInput != null) {
 							return Collections.singletonList(dateValueInput);
@@ -1305,7 +1322,7 @@ public class EditInfoItemStrutsActionTest {
 						return null;
 					}
 				).put(
-					"myDateTime",
+					"ObjectField_myDateTime",
 					() -> {
 						if (dateTimeValueInput == null) {
 							return null;
@@ -1314,7 +1331,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(dateTimeValueInput);
 					}
 				).put(
-					"myDecimal",
+					"ObjectField_myDecimal",
 					() -> {
 						if (doubleValueInput == null) {
 							return null;
@@ -1323,7 +1340,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(doubleValueInput);
 					}
 				).put(
-					"myInteger",
+					"ObjectField_myInteger",
 					() -> {
 						if (integerValueInput == null) {
 							return null;
@@ -1332,7 +1349,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(integerValueInput);
 					}
 				).put(
-					"myLongInteger",
+					"ObjectField_myLongInteger",
 					() -> {
 						if (longValueInput == null) {
 							return null;
@@ -1341,7 +1358,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(longValueInput);
 					}
 				).put(
-					"myMultiselectPicklist",
+					"ObjectField_myMultiselectPicklist",
 					() -> {
 						if (multiselectPicklistValueInput == null) {
 							return null;
@@ -1350,7 +1367,7 @@ public class EditInfoItemStrutsActionTest {
 						return multiselectPicklistValueInput;
 					}
 				).put(
-					"myPicklist",
+					"ObjectField_myPicklist",
 					() -> {
 						if (picklistValueInput == null) {
 							return null;
@@ -1359,7 +1376,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(picklistValueInput);
 					}
 				).put(
-					"myPrecisionDecimal",
+					"ObjectField_myPrecisionDecimal",
 					() -> {
 						if (bigDecimalValueInput == null) {
 							return null;
@@ -1368,7 +1385,7 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(bigDecimalValueInput);
 					}
 				).put(
-					"myRichText",
+					"ObjectField_myRichText",
 					() -> {
 						if (richTextValueInput == null) {
 							return null;
@@ -1377,18 +1394,9 @@ public class EditInfoItemStrutsActionTest {
 						return Collections.singletonList(richTextValueInput);
 					}
 				).put(
-					"myText", Collections.singletonList(stringValue)
+					"ObjectField_myText", Collections.singletonList(stringValue)
 				).put(
-					"objectEntryFriendlyURL",
-					() -> {
-						if (friendlyURL == null) {
-							return null;
-						}
-
-						return Collections.singletonList(friendlyURL);
-					}
-				).put(
-					"objectEntryFriendlyURL_" +
+					"ObjectEntry_objectEntryFriendlyURL_" +
 						_objectDefinition.getDefaultLanguageId(),
 					() -> {
 						if (friendlyURL == null) {
@@ -1397,6 +1405,9 @@ public class EditInfoItemStrutsActionTest {
 
 						return Collections.singletonList(friendlyURL);
 					}
+				).put(
+					"ObjectEntry_reviewDate",
+					Collections.singletonList(reviewDate)
 				).put(
 					"p_l_id",
 					Collections.singletonList(String.valueOf(_layout.getPlid()))
@@ -1414,8 +1425,6 @@ public class EditInfoItemStrutsActionTest {
 
 						return null;
 					}
-				).put(
-					"reviewDate", Collections.singletonList(reviewDate)
 				).put(
 					"segmentsExperienceId",
 					Collections.singletonList(

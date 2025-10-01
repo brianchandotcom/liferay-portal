@@ -55,8 +55,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -127,10 +125,6 @@ public abstract class BaseSectionDisplayContext {
 			"baseAssetLibraryViewURL", ActionUtil.getBaseSpaceURL(themeDisplay)
 		).put(
 			"baseFolderViewURL", ActionUtil.getBaseViewFolderURL(themeDisplay)
-		).put(
-			"brokenLinksCheckerEnabled",
-			GetterUtil.getBoolean(
-				PropsUtil.get(PropsKeys.BROKEN_LINKS_CHECKER_ENABLED))
 		).put(
 			"cmsGroupId",
 			() -> {

@@ -30,7 +30,7 @@ const AssetTypeInfoPanelContent = ({
 
 	const assetLibrary = assetLibraries.find(
 		({groupId}: {groupId: number}) =>
-			groupId === objectEntries?.[0]?.embedded?.scopeId
+			Number(groupId) === Number(objectEntries?.[0]?.embedded?.scopeId)
 	);
 
 	return (

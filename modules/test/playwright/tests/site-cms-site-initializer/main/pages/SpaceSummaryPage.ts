@@ -6,6 +6,7 @@
 import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../../utils/portletUrls';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 type UserOrUserGroupType = 'groups' | 'users';
 
@@ -66,6 +67,13 @@ export class SpaceSummaryPage {
 			.click();
 		await this.page.getByRole('option', {name}).click();
 
+		await waitForAlert(
+			this.page,
+			type.includes('group')
+				? `Success:Group ${name} successfully added to space.`
+				: `Success:User ${name} successfully added to space.`
+		);
+
 		await this.closeButton.click();
 	}
 
@@ -82,6 +90,13 @@ export class SpaceSummaryPage {
 			.filter({hasText: name})
 			.getByLabel('Remove Group')
 			.click();
+
+		await waitForAlert(
+			this.page,
+			type.includes('group')
+				? `Success:Group ${name} successfully removed from space.`
+				: `Success:User ${name} successfully removed from space.`
+		);
 
 		await this.closeButton.click();
 	}

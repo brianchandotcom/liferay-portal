@@ -13,6 +13,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayInputStream;
@@ -30,6 +31,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,14 +75,13 @@ public class LearnRestController extends BaseRestController {
 					UriComponentsBuilder.fromPath(
 						"/o/c/lessons/" + lessonId
 					).queryParam(
-						"fields", "contentRawText,dateModified"
+						"fields", "content,dateModified"
 					).build(
 					).toUri()));
 
-			String contentRawText = lessonJSONObject.getString(
-				"contentRawText");
+			String content = lessonJSONObject.getString("content");
 
-			if (Validator.isNull(contentRawText)) {
+			if (Validator.isNull(content)) {
 				return ResponseEntity.status(
 					HttpStatus.NOT_FOUND
 				).body(
@@ -144,8 +146,7 @@ public class LearnRestController extends BaseRestController {
 					new ByteArrayOutputStream();
 
 				List<String> ssmls = _splitSsml(
-					contentRawText.replaceAll("\\bLiferay\\b", "Life-ray"),
-					5000);
+					content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
 
 				for (String ssml : ssmls) {
 					String response = post(
@@ -334,6 +335,206 @@ public class LearnRestController extends BaseRestController {
 		}
 
 		return ResponseEntity.ok(quizResultMap);
+	}
+
+	private String _convertHtmlListToTextInline(String html) {
+		html = _convertHtmlTableToTextInline(html);
+
+		Matcher matcher = _liPattern.matcher(html);
+
+		StringBuffer stringBuffer = new StringBuffer();
+
+		while (matcher.find()) {
+			String openTag = matcher.group(1);
+			String tagContent = matcher.group(
+				2
+			).trim();
+			String closeTag = matcher.group(3);
+
+			String visibleText = tagContent.replaceAll(
+				"(?s)<[^>]+>", " "
+			).replaceAll(
+				"\\s+", " "
+			).trim();
+
+			if (!visibleText.matches(".*[.!?;:]$")) {
+				int lastCloseTagIndex = tagContent.lastIndexOf("</");
+
+				if (lastCloseTagIndex != -1) {
+					String contentBeforeClosingTag = tagContent.substring(
+						0, lastCloseTagIndex
+					).replaceAll(
+						"\\s+$", ""
+					);
+					String closingTagAndContentAfter = tagContent.substring(
+						lastCloseTagIndex);
+
+					tagContent = StringBundler.concat(
+						contentBeforeClosingTag, ".",
+						closingTagAndContentAfter);
+				}
+				else {
+					tagContent = tagContent + ".";
+				}
+			}
+
+			matcher.appendReplacement(
+				stringBuffer,
+				Matcher.quoteReplacement(
+					StringBundler.concat(openTag, tagContent, closeTag)));
+		}
+
+		matcher.appendTail(stringBuffer);
+
+		html = stringBuffer.toString();
+
+		String textContent = html.replaceAll("(?s)<[^>]+>", " ");
+
+		return textContent.replaceAll(
+			"\\s+", " "
+		).trim();
+	}
+
+	private String _convertHtmlTableToTextInline(String html) {
+		if (html == null) {
+			return "";
+		}
+
+		Matcher tableMatcher = _tablePattern.matcher(html);
+		StringBuffer stringBuffer = new StringBuffer();
+
+		while (tableMatcher.find()) {
+			String tableHtml = tableMatcher.group(1);
+
+			List<String> headers = new ArrayList<>();
+			Matcher theadMatcher = _theadPattern.matcher(tableHtml);
+
+			if (theadMatcher.find()) {
+				Matcher headTrMatcher = _trPattern.matcher(
+					theadMatcher.group(1));
+
+				if (headTrMatcher.find()) {
+					Matcher headCellsMatcher = _cellPattern.matcher(
+						headTrMatcher.group(1));
+
+					while (headCellsMatcher.find()) {
+						headers.add(
+							_decodeBasicHtmlEntities(
+								headCellsMatcher.group(1)
+							).trim());
+					}
+				}
+			}
+
+			String bodyHtml = tableHtml;
+			Matcher tbodyMatcher = _tbodyPattern.matcher(tableHtml);
+
+			if (tbodyMatcher.find()) {
+				bodyHtml = tbodyMatcher.group(1);
+			}
+
+			Matcher trMatcher = _trPattern.matcher(bodyHtml);
+
+			StringBuilder tableDescription = new StringBuilder("Table: ");
+
+			if (!headers.isEmpty()) {
+				StringBundler sb = new StringBundler();
+
+				sb.append("Column headings: ");
+
+				for (int i = 0; i < headers.size(); i++) {
+					sb.append(headers.get(i));
+
+					if (i < (headers.size() - 1)) {
+						sb.append("; ");
+					}
+					else {
+						sb.append(". ");
+					}
+				}
+
+				tableDescription.append(sb.toString());
+			}
+
+			int row = 0;
+
+			while (trMatcher.find()) {
+				row++;
+
+				String tr = trMatcher.group(1);
+
+				Matcher cellMatcher = _cellPattern.matcher(tr);
+
+				List<String> cells = new ArrayList<>();
+
+				while (cellMatcher.find()) {
+					String raw = _decodeBasicHtmlEntities(
+						cellMatcher.group(1)
+					).trim();
+
+					if (Objects.equals(raw, "✔") || Objects.equals(raw, "✓")) {
+						raw = "supported";
+					}
+					else if (raw.isEmpty() || Objects.equals(raw, "&nbsp;")) {
+						raw = "not supported";
+					}
+
+					cells.add(raw);
+				}
+
+				if (!cells.isEmpty()) {
+					tableDescription.append(
+						"Row "
+					).append(
+						row
+					).append(
+						". "
+					);
+
+					for (int c = 0; c < cells.size(); c++) {
+						String colName =
+							(c < headers.size()) ? headers.get(c) :
+								("Column " + (c + 1));
+
+						tableDescription.append(
+							colName
+						).append(
+							": "
+						).append(
+							cells.get(c)
+						).append(
+							". "
+						);
+					}
+				}
+			}
+
+			String trimmedTableDescriptionText = tableDescription.toString(
+			).trim();
+
+			String replacement = trimmedTableDescriptionText + " ";
+
+			tableMatcher.appendReplacement(
+				stringBuffer, Matcher.quoteReplacement(replacement));
+		}
+
+		tableMatcher.appendTail(stringBuffer);
+
+		return stringBuffer.toString();
+	}
+
+	private String _decodeBasicHtmlEntities(String string) {
+		if (string == null) {
+			return "";
+		}
+
+		return StringUtil.replace(
+			string,
+			new String[] {
+				"&nbsp;", "&NBSP;", "\u00A0", "&amp;", "&lt;", "&gt;", "&quot;",
+				"&#39;"
+			},
+			new String[] {" ", " ", " ", "&", "<", ">", "\"", "'"});
 	}
 
 	private String _getAuthorization() {
@@ -549,7 +750,6 @@ public class LearnRestController extends BaseRestController {
 
 	private List<String> _splitSsml(String ssml, int maxLength) {
 		List<String> parts = new ArrayList<>();
-
 		StringBundler sb = new StringBundler();
 
 		String ssmlContent = ssml.replaceFirst(
@@ -557,6 +757,10 @@ public class LearnRestController extends BaseRestController {
 		).replaceFirst(
 			"</speak>$", ""
 		).trim();
+
+		ssmlContent = _decodeBasicHtmlEntities(ssmlContent);
+
+		ssmlContent = _convertHtmlListToTextInline(ssmlContent);
 
 		String[] sentences = ssmlContent.split("(?<=[.!?])\\s+");
 
@@ -603,6 +807,19 @@ public class LearnRestController extends BaseRestController {
 			"title", objectDefinitionMap.get("pluralLabel")
 		).build();
 	}
+
+	private static final Pattern _cellPattern = Pattern.compile(
+		"(?is)<t(?:h|d)[^>]*>(.*?)</t(?:h|d)>");
+	private static final Pattern _liPattern = Pattern.compile(
+		"(?i)(<li[^>]*>)(.*?)(</li>)", Pattern.DOTALL);
+	private static final Pattern _tablePattern = Pattern.compile(
+		"(?is)<table[^>]*>(.*?)</table>");
+	private static final Pattern _tbodyPattern = Pattern.compile(
+		"(?is)<tbody[^>]*>(.*?)</tbody>");
+	private static final Pattern _theadPattern = Pattern.compile(
+		"(?is)<thead[^>]*>(.*?)</thead>");
+	private static final Pattern _trPattern = Pattern.compile(
+		"(?is)<tr[^>]*>(.*?)</tr>");
 
 	@Value("${liferay.learn.google.credentials}")
 	private String _googleCredentials;

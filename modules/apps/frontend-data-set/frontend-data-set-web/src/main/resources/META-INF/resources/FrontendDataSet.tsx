@@ -67,8 +67,8 @@ import {loadData} from './utils/loadData';
 import {logError} from './utils/logError';
 import {saveViewSettings} from './utils/saveViewSettings';
 import {
+	EConfigInURLBehavior,
 	EConfigInURLKeys,
-	EConfigInURLSettings,
 	IConfigInURL,
 	IDataSetData,
 	IField,
@@ -103,7 +103,7 @@ const FrontendDataSetContent = ({
 	apiURL,
 	appURL,
 	bulkActions = [],
-	configInURLSettings = EConfigInURLSettings.OFF,
+	configInURLSettings = EConfigInURLBehavior.OFF,
 	creationMenu: initialCreationMenu,
 	currentURL,
 	customDataRenderers,
@@ -1290,7 +1290,7 @@ const FrontendDataSetContent = ({
 		Liferay.on(EVENTS.UPDATE_DISPLAY, handleRefreshFromTheOutside);
 
 		const registerPopstateEvent =
-			configInURLSettings === EConfigInURLSettings.PUSH &&
+			configInURLSettings === EConfigInURLBehavior.PUSH &&
 			(!Liferay.SPA || !Liferay.SPA.app);
 
 		if (registerPopstateEvent) {

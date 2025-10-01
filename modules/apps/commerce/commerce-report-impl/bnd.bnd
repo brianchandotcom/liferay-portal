@@ -96,3 +96,4 @@ Import-Package:\
 	org.bouncycastle.*;resolution:=optional,\
 	\
 	*
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore

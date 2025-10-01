@@ -14,6 +14,9 @@ import React from 'react';
 // @ts-ignore
 
 import {showErrorNotification} from '../../../utilities/notifications.js';
+
+// @ts-ignore
+
 import {selectAccount} from '../../account_selector/util/index.js';
 import AccountCreationModal from './AccountCreationModal';
 

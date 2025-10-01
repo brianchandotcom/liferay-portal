@@ -168,7 +168,7 @@ type ConnectionInfoData = {
 };
 
 interface ICheckPermissions extends React.HTMLAttributes<HTMLElement> {
-	onConnectSites: (loadData: () => void) => void;
+	onConnectSites?: (loadData: () => void) => void;
 	scopeId: string;
 }
 
@@ -194,7 +194,12 @@ const CheckPermissions: React.FC<ICheckPermissions> = ({
 	}
 
 	return (
-		<EmptyStates {...data} onConnectSites={() => onConnectSites(refetch)}>
+		<EmptyStates
+			{...data}
+			onConnectSites={() =>
+				onConnectSites ? onConnectSites(refetch) : null
+			}
+		>
 			{children}
 		</EmptyStates>
 	);

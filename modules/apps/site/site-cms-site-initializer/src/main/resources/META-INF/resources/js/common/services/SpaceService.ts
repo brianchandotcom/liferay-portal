@@ -30,12 +30,10 @@ async function addSpace({
 async function getSpace({
 	externalReferenceCode,
 	spaceId,
-}:
-	| {externalReferenceCode: string; spaceId?: undefined}
-	| {
-			externalReferenceCode?: undefined;
-			spaceId: number | string;
-	  }): Promise<Space> {
+}: {
+	externalReferenceCode?: string;
+	spaceId?: number | string;
+}): Promise<Space> {
 	let url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`;
 
 	if (spaceId) {

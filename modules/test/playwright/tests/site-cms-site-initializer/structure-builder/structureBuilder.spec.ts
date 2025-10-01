@@ -440,13 +440,11 @@ test(
 
 		// Add another field and check order is correct
 
-		await structureBuilderPage.addField('Long Text');
+		await structureBuilderPage.addField('Date');
 
 		await expect(page.locator('.treeview-link').nth(2)).toHaveText('Text');
 
-		await expect(page.locator('.treeview-link').nth(3)).toHaveText(
-			'Long Text'
-		);
+		await expect(page.locator('.treeview-link').nth(3)).toHaveText('Date');
 
 		await expect(page.locator('.treeview-link').nth(4)).toHaveText(label1);
 
@@ -462,9 +460,7 @@ test(
 
 		await expect(page.locator('.treeview-link').nth(2)).toHaveText('Text');
 
-		await expect(page.locator('.treeview-link').nth(3)).toHaveText(
-			'Long Text'
-		);
+		await expect(page.locator('.treeview-link').nth(3)).toHaveText('Date');
 
 		await expect(page.locator('.treeview-link').nth(4)).toHaveText(label1);
 

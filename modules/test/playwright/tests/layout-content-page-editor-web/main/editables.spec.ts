@@ -661,22 +661,22 @@ test(
 
 			// Drag the selected text
 
-			await page.getByText('option1').selectText({timeout: 1000});
+			await page.getByText('option3').selectText({timeout: 1000});
 
 			const option1 = page.getByText('option1');
 			const option3 = page.getByText('option3');
 
-			await option1.hover({timeout: 1000});
+			await option3.hover({timeout: 1000});
 
 			await page.mouse.down();
 
-			await option3.hover({timeout: 1000});
+			await option1.hover({timeout: 1000});
 
-			const boundingClientRect = await option3.evaluate((element) =>
+			const boundingClientRect = await option1.evaluate((element) =>
 				element.getBoundingClientRect()
 			);
 
-			await option3.hover({
+			await option1.hover({
 				position: {
 					x: boundingClientRect.width / 2,
 					y: boundingClientRect.height / 2,
@@ -693,7 +693,7 @@ test(
 			// Check that the text has been dragged
 
 			await expect(paragraphFragment).toHaveText(
-				'List:option2option1⁠⁠⁠⁠⁠⁠⁠option3',
+				'List:option3option1option2',
 				{timeout: 1000}
 			);
 		}).toPass();

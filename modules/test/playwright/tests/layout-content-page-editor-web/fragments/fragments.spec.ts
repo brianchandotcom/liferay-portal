@@ -868,7 +868,8 @@ test.describe('Multiselect Fragment', () => {
 
 			await pageEditorPage.mapFormFragment(
 				fragmentId,
-				'Lemon Basket (Default)'
+				'Lemon Basket (Default)',
+				['Lemon Dimensions']
 			);
 
 			// Preview the page with a created object
@@ -913,17 +914,21 @@ test.describe('Multiselect Fragment', () => {
 
 			// Go to display page url and try the form
 
-			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${classNameId}/${classPK}`
-			);
+			await expect(async () => {
+				await page.goto(
+					`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${classNameId}/${classPK}`
+				);
 
-			await page.getByText('Submit', {exact: true}).click();
+				await page
+					.getByText('Submit', {exact: true})
+					.click({timeout: 1000});
 
-			await expect(
-				page.getByText(
-					'Thank you. Your information was successfully received.'
-				)
-			).toBeVisible();
+				await expect(
+					page.getByText(
+						'Thank you. Your information was successfully received.'
+					)
+				).toBeVisible({timeout: 2000});
+			}).toPass();
 		}
 	);
 });

@@ -223,7 +223,6 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 			await page.waitForURL('**/home');
 
 			await performLoginViaApi({
-				apiHelpers,
 				page,
 				screenName: user.alternateName,
 			});
@@ -242,7 +241,6 @@ test('Can search assignees and steps in Performance by Assignee and Step views',
 		await page.getByRole('menuitem', {name: 'Sign Out'}).click();
 
 		await performLoginViaApi({
-			apiHelpers,
 			page,
 			screenName: 'test',
 		});

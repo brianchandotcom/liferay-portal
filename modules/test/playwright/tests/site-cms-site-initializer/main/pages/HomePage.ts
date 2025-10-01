@@ -45,7 +45,7 @@ export class HomePage {
 			name: 'Vocabulary',
 		});
 		this.workflowTaskFilterButton = page.getByRole('button', {
-			name: 'Assigned to',
+			name: /^Assigned to/,
 		});
 	}
 

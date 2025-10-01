@@ -141,11 +141,17 @@ public abstract class BaseSourceProcessorTestCase {
 					modifiedFileNames);
 			}
 
-			_checkExpectedMessages(
-				expectedMessages, newFile,
-				ListUtil.sort(
+			List<String> checkCategoryNames =
+				sourceFormatterArgs.getCheckCategoryNames();
+
+			if (checkCategoryNames.contains("Upgrade")) {
+				sourceFormatterMessages = ListUtil.sort(
 					sourceFormatterMessages,
-					Comparator.comparing(SourceFormatterMessage::getMessage)),
+					Comparator.comparing(SourceFormatterMessage::getMessage));
+			}
+
+			_checkExpectedMessages(
+				expectedMessages, newFile, sourceFormatterMessages,
 				sourceProcessorTestParameters);
 		}
 		else {

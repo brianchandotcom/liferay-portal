@@ -44,6 +44,7 @@ const ACTIONS = {
 export type AdditionalProps = {
 	autocompleteURL: string;
 	baseFolderViewURL: string;
+	brokenLinksCheckerEnabled: boolean;
 	cmsGroupId?: number;
 	collaboratorURLs: Record<string, string>;
 	contentViewURL: string;
@@ -213,13 +214,18 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				openAssetUsageListModal({
-					itemsData: [itemData],
-					onDelete: async () => {
-						await deleteItemAction(itemData, loadData);
-					},
-					selectAll: false,
-				});
+				if (additionalProps.brokenLinksCheckerEnabled) {
+					openAssetUsageListModal({
+						itemsData: [itemData],
+						onDelete: async () => {
+							await deleteItemAction(itemData, loadData);
+						},
+						selectAll: false,
+					});
+				}
+				else {
+					await deleteItemAction(itemData, loadData);
+				}
 			}
 			else if (
 				action?.data?.id === 'export-for-translation' ||
@@ -291,29 +297,37 @@ export default function AssetsFDSPropsTransformer({
 				});
 			}
 			else if (action?.data?.id === 'delete') {
-				openAssetUsageListModal({
-					apiURL: otherProps.apiURL,
-					itemsData: selectedData.items,
-					onDelete: async () => {
-						executeBulkDeleteAction(
-							otherProps.apiURL as string,
-							selectedData
-						);
-					},
+				if (additionalProps.brokenLinksCheckerEnabled) {
+					openAssetUsageListModal({
+						apiURL: otherProps.apiURL,
+						itemsData: selectedData.items,
+						onDelete: async () => {
+							executeBulkDeleteAction(
+								otherProps.apiURL as string,
+								selectedData
+							);
+						},
 
-					// Callback triggered after the request returns all assets
-					// with no usages, will skip the asset usage list modal.
-					// Instead, the default delete asset entries bulk action modal
-					// will be displayed.
+						// Callback triggered after the request returns all assets
+						// with no usages, will skip the asset usage list modal.
+						// Instead, the default delete asset entries bulk action modal
+						// will be displayed.
 
-					onSkip: async () => {
-						deleteAssetEntriesBulkAction({
-							apiURL: otherProps.apiURL,
-							selectedData,
-						});
-					},
-					selectAll: selectedData.selectAll,
-				});
+						onSkip: async () => {
+							deleteAssetEntriesBulkAction({
+								apiURL: otherProps.apiURL,
+								selectedData,
+							});
+						},
+						selectAll: selectedData.selectAll,
+					});
+				}
+				else {
+					deleteAssetEntriesBulkAction({
+						apiURL: otherProps.apiURL,
+						selectedData,
+					});
+				}
 			}
 			else if (action?.data?.id === 'download') {
 				triggerAssetBulkAction({

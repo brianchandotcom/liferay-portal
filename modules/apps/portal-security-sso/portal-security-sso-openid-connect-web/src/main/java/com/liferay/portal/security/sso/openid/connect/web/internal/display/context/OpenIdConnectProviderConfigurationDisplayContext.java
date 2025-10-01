@@ -73,11 +73,6 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 		return GetterUtil.getString(_properties.get("authorizationEndpoint"));
 	}
 
-	public List<ExpandoColumn> getAvailableCustomFields() {
-		return _expandoColumnLocalService.getDefaultTableColumns(
-			CompanyThreadLocal.getCompanyId(), User.class.getName());
-	}
-
 	public String[] getCustomAuthorizationRequestParameters() {
 		return GetterUtil.getStringValues(
 			_properties.get("customAuthorizationRequestParameters"));
@@ -146,6 +141,11 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 	public long getDiscoveryEndpointCacheInMillis() {
 		return GetterUtil.getLong(
 			_properties.get("discoveryEndpointCacheInMillis"));
+	}
+
+	public List<ExpandoColumn> getExpandoColumns() {
+		return _expandoColumnLocalService.getDefaultTableColumns(
+			CompanyThreadLocal.getCompanyId(), User.class.getName());
 	}
 
 	public String[] getIdTokenSigningAlgValues() {

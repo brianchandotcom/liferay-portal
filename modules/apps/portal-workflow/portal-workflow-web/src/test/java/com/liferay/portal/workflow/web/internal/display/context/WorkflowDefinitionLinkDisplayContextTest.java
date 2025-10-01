@@ -35,7 +35,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.Locale;
 
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -54,11 +54,6 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
-
-	@AfterClass
-	public static void tearDownClass() {
-		_workflowDefinitionManagerUtilMockedStatic.close();
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -97,6 +92,11 @@ public class WorkflowDefinitionLinkDisplayContextTest {
 		).when(
 			_workflowDefinitionLinkDisplayContext
 		).isControlPanelPortlet();
+	}
+
+	@After
+	public void tearDown() {
+		_workflowDefinitionManagerUtilMockedStatic.close();
 	}
 
 	@Test

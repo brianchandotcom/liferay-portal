@@ -101,6 +101,22 @@ public class BatchEnginePortletDataHandlerUtil {
 		).put(
 			"itemModelName", exportImportDescriptor.getItemModelName()
 		).put(
+			"siteExternalReferenceCode",
+			() -> {
+				Map<String, String[]> map =
+					portletDataContext.getParameterMap();
+
+				String[] siteExternalReferenceCodes =
+					GetterUtil.getStringValues(
+						map.get("siteExternalReferenceCode"));
+
+				if (ArrayUtil.isNotEmpty(siteExternalReferenceCodes)) {
+					return siteExternalReferenceCodes[0];
+				}
+
+				return null;
+			}
+		).put(
 			"siteId",
 			() -> {
 				Map<String, String[]> map =
@@ -157,6 +173,22 @@ public class BatchEnginePortletDataHandlerUtil {
 			"itemClassName", exportImportDescriptor.getItemClassName()
 		).put(
 			"itemModelName", exportImportDescriptor.getItemModelName()
+		).put(
+			"siteExternalReferenceCode",
+			() -> {
+				Map<String, String[]> map =
+					portletDataContext.getParameterMap();
+
+				String[] siteExternalReferenceCodes =
+					GetterUtil.getStringValues(
+						map.get("siteExternalReferenceCode"));
+
+				if (ArrayUtil.isNotEmpty(siteExternalReferenceCodes)) {
+					return siteExternalReferenceCodes[0];
+				}
+
+				return null;
+			}
 		).put(
 			"siteId", portletDataContext.getScopeGroupId()
 		).putAll(

@@ -16,6 +16,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
@@ -141,6 +142,10 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	private final Map<String, BatchEnginePortletDataHandler>
 		_batchEnginePortletDataHandlers = new HashMap<>();
 	private final List<Long> _enabledCompanyIds = new CopyOnWriteArrayList<>();
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
 	private volatile ServiceRegistration<FeatureFlagListener>
 		_serviceRegistration;
 	private final Map<String, ServiceRegistration<PortletDataHandler>>
@@ -190,7 +195,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						_batchEngineExportTaskExecutor,
 						_batchEngineExportTaskLocalService,
 						_batchEngineImportTaskExecutor,
-						_batchEngineImportTaskService);
+						_batchEngineImportTaskService, _groupLocalService);
 
 				batchEnginePortletDataHandler.setPortletId(
 					exportImportDescriptor.getPortletId());

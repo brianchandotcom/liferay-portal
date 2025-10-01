@@ -35,8 +35,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
@@ -73,16 +75,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		BatchEngineExportTaskExecutor batchEngineExportTaskExecutor,
 		BatchEngineExportTaskLocalService batchEngineExportTaskLocalService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,
-		BatchEngineImportTaskService batchEngineImportTaskService) {
+		BatchEngineImportTaskService batchEngineImportTaskService,
+		GroupLocalService groupLocalService) {
 
 		_batchEngineExportTaskExecutor = batchEngineExportTaskExecutor;
 		_batchEngineExportTaskLocalService = batchEngineExportTaskLocalService;
 		_batchEngineImportTaskExecutor = batchEngineImportTaskExecutor;
 		_batchEngineImportTaskService = batchEngineImportTaskService;
+		_groupLocalService = groupLocalService;
 	}
 
 	public void exportDeletionSystemEvents(
 		PortletDataContext portletDataContext) {
+
+		_addSiteExternalReferenceCodeParameter(portletDataContext);
 
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
@@ -222,6 +228,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
+		_addSiteExternalReferenceCodeParameter(portletDataContext);
+
 		if (portletDataContext.getZipReader() == null) {
 			return portletPreferences;
 		}
@@ -268,6 +276,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	protected String doExportData(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
+
+		_addSiteExternalReferenceCodeParameter(portletDataContext);
 
 		try (SafeCloseable safeCloseable =
 				PortletDataContextThreadLocal.
@@ -323,6 +333,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
+
+		_addSiteExternalReferenceCodeParameter(portletDataContext);
 
 		List<Registration> activeRegistrations = _getActiveRegistrations(
 			portletDataContext);
@@ -414,6 +426,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext,
 		PortletPreferences portletPreferences) {
 
+		_addSiteExternalReferenceCodeParameter(portletDataContext);
+
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
 
@@ -462,6 +476,23 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	protected static final TransactionConfig transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
+
+	private void _addSiteExternalReferenceCodeParameter(
+		PortletDataContext portletDataContext) {
+
+		Map<String, String[]> map = portletDataContext.getParameterMap();
+
+		if (!map.containsKey("siteExternalReferenceCode")) {
+			Group group = _groupLocalService.fetchGroup(
+				portletDataContext.getScopeGroupId());
+
+			if (group != null) {
+				map.put(
+					"siteExternalReferenceCode",
+					new String[] {group.getExternalReferenceCode()});
+			}
+		}
+	}
 
 	private BatchEngineExportTaskExecutor.Result _executeExportTask(
 		int maxItems, PortletDataContext portletDataContext,
@@ -590,6 +621,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		_batchEngineExportTaskLocalService;
 	private final BatchEngineImportTaskExecutor _batchEngineImportTaskExecutor;
 	private final BatchEngineImportTaskService _batchEngineImportTaskService;
+	private final GroupLocalService _groupLocalService;
 	private final List<Registration> _registrations = new ArrayList<>();
 
 	private interface Registration {

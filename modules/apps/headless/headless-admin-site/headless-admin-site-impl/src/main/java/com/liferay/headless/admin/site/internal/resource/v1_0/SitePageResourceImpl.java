@@ -185,14 +185,6 @@ public class SitePageResourceImpl
 
 						return sb.toString();
 					}
-				).put(
-					"siteExternalReferenceCode",
-					() -> {
-						Group group = _groupLocalService.fetchGroup(
-							portletDataContext.getScopeGroupId());
-
-						return group.getExternalReferenceCode();
-					}
 				).build();
 			}
 

@@ -939,21 +939,19 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return defaultValue;
 		}
 
+		boolean checkInfoFormName = false;
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutStructureRendererConstants.
 					LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER);
 
-		boolean checkInfoFormName = false;
-
 		if (layoutDisplayPageObjectProvider == null) {
+			checkInfoFormName = true;
 			layoutDisplayPageObjectProvider =
 				(LayoutDisplayPageObjectProvider<?>)
 					httpServletRequest.getAttribute(
 						LayoutDisplayPageWebKeys.
 							LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
-
-			checkInfoFormName = true;
 		}
 
 		if (layoutDisplayPageObjectProvider == null) {

@@ -14,7 +14,7 @@ export class FormBuilderSidePanelPage {
 	readonly addSingleSelectionButton: Locator;
 	readonly addTextButton: Locator;
 	readonly advancedTab: Locator;
-	readonly allowGuestUsers: Locator;
+	readonly allowGuestUsersToggle: Locator;
 	readonly backButton: Locator;
 	readonly collapsibleToggleSwitch: Locator;
 	readonly helpText: Locator;
@@ -48,7 +48,9 @@ export class FormBuilderSidePanelPage {
 		this.advancedTab = page.getByRole('tab', {
 			name: 'Advanced',
 		});
-		this.allowGuestUsers = page.getByLabel('Allow Guest Users to Send');
+		this.allowGuestUsersToggle = page.getByLabel(
+			'Allow Guest Users to Send Files'
+		);
 		this.backButton = page.getByRole('button', {name: 'Back'});
 		this.collapsibleToggleSwitch = page.getByRole('switch', {
 			name: 'Collapsible',

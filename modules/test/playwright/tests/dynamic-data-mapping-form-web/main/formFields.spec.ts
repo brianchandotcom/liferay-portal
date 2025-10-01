@@ -266,7 +266,7 @@ test.describe('Manage fields through Form Preview page', () => {
 
 		await formBuilderSidePanelPage.addFieldByDoubleClick('Upload');
 
-		await formBuilderSidePanelPage.allowGuestUsers.click();
+		await formBuilderSidePanelPage.allowGuestUsersToggle.click();
 
 		await formBuilderPage.clickPublishFormButton();
 

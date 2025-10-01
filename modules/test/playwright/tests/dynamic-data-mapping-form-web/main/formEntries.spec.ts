@@ -5,15 +5,26 @@
 
 import {Page, expect, mergeTests} from '@playwright/test';
 
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {formsPagesTest} from '../../../fixtures/formsPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {FormFieldsPage} from '../../../pages/dynamic-data-mapping-form-web/FormFieldsPage';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import {generateObjectFields} from '../../object-web/main/utils/generateObjectFields';
 import {deleteItems} from './utils/deleteItems';
 
-export const test = mergeTests(loginTest(), formsPagesTest);
+export const test = mergeTests(
+	dataApiHelpersTest,
+	formsPagesTest,
+	isolatedSiteTest,
+	loginTest(),
+	rolesPagesTest
+);
 
 let formPreviewPage: Page;
 
@@ -242,6 +253,160 @@ test('can add image to repeated Rich Text field', async ({
 	await expect(
 		textBox.locator('img[src="/documents/d/guest/planet-png"]')
 	).toBeVisible();
+});
+
+test('can submit txt file as guest user in a mapped form', async ({
+	apiHelpers,
+	formBuilderPage,
+	formBuilderSidePanelPage,
+	formSettingsModalPage,
+	formViewPage,
+	page,
+	roleDefinePermissionsPage,
+	rolePage,
+	rolesPage,
+	site,
+}) => {
+	const objectFields = generateObjectFields({
+		objectFieldBusinessTypes: [
+			{
+				businessType: 'Attachment',
+				objectFieldSettings: [
+					{
+						name: 'acceptedFileExtensions',
+						value: 'jpeg, jpg, pdf, png, txt',
+					},
+					{
+						name: 'fileSource',
+						value: 'userComputer',
+					},
+					{
+						name: 'maximumFileSize',
+						value: 0,
+					},
+				],
+			},
+		],
+	});
+
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			objectFields,
+			status: {code: 0},
+		});
+
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
+	});
+
+	await test.step('define permissions to add and view object entry for guest user', async () => {
+		await rolesPage.goto();
+
+		await rolesPage.rolesTable.search('Guest');
+
+		await page.getByRole('link', {name: 'Guest'}).click();
+
+		await rolePage.definePermissionsLink.click();
+
+		await roleDefinePermissionsPage.searchInput.fill(objectDefinition.name);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(objectDefinition.name)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(objectDefinition.name).click();
+
+		await roleDefinePermissionsPage
+			.selectAllCheckbox('Application Permissions')
+			.click();
+
+		await roleDefinePermissionsPage
+			.selectAllCheckbox(objectDefinition.name)
+			.first()
+			.click();
+
+		await roleDefinePermissionsPage
+			.selectAllCheckbox(objectDefinition.name)
+			.nth(1)
+			.click();
+
+		await roleDefinePermissionsPage.saveButton.click();
+
+		await waitForAlert(page, 'Success:The role permissions were updated.');
+	});
+
+	let formSubmissionURL: string;
+	let formTitle: string;
+
+	await test.step('create new form with object definition as storage type and mapped to attachment field', async () => {
+		await formBuilderPage.goToNew(site.friendlyUrlPath);
+
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
+
+		formTitle = 'Form' + getRandomInt();
+
+		await formBuilderPage.fillFormTitle(formTitle);
+
+		await formBuilderPage.formSettingsButton.click();
+
+		await formSettingsModalPage.selectStorageType('Object');
+
+		await formSettingsModalPage.selectObject(
+			objectDefinition.label['en_US']
+		);
+
+		await formSettingsModalPage.clickDoneButton();
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Upload');
+
+		await formBuilderSidePanelPage.allowGuestUsersToggle.check();
+
+		await formBuilderSidePanelPage.clickAdvancedTab();
+
+		await formBuilderSidePanelPage.selectObjectField(objectFields[0].name);
+
+		await formBuilderPage.clickPublishFormButton();
+
+		formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
+	});
+
+	await test.step('logout and assert that it is possible to add txt file and that object entry was created', async () => {
+		await performLogout(page);
+
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
+
+		await formViewPage.uploadFile(page, __dirname, 'sampleFile.txt');
+
+		await expect(
+			page.getByText('Please enter a file with a valid extension')
+		).not.toBeVisible();
+
+		await expect(page.getByLabel('Upload')).toHaveValue('sampleFile.txt');
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page.getByText(
+				'Your information was successfully received. Thank you for filling out the form.'
+			)
+		).toBeVisible();
+
+		const {items} =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'c/' + objectDefinition.name.toLowerCase() + 's'
+			);
+
+		const item = items[0];
+
+		const attachmentField = Object.keys(item).find((key) =>
+			key.startsWith('attachment')
+		);
+
+		expect(item[attachmentField]?.name).toEqual('sampleFile.txt');
+	});
+
+	await performLogin(page, 'test');
 });
 
 test(

@@ -335,7 +335,7 @@ public class CollaboratorResourceTest {
 	}
 
 	private void _assertDeleteObjectEntryCollaborator(
-			String endPoint, User user)
+			String endpoint, User user)
 		throws Exception {
 
 		JSONObject jsonObject1 = _getUserCollaboratorJSONObject(user);
@@ -343,12 +343,12 @@ public class CollaboratorResourceTest {
 		_assertEquals(
 			jsonObject1,
 			HTTPTestUtil.invokeToJSONObject(
-				jsonObject1.toString(), endPoint, Http.Method.PUT));
+				jsonObject1.toString(), endpoint, Http.Method.PUT));
 
-		HTTPTestUtil.invokeToJSONObject(null, endPoint, Http.Method.DELETE);
+		HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.DELETE);
 
 		JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-			null, endPoint, Http.Method.GET);
+			null, endpoint, Http.Method.GET);
 
 		Assert.assertEquals("NOT_FOUND", jsonObject2.getString("status"));
 	}
@@ -384,17 +384,17 @@ public class CollaboratorResourceTest {
 	}
 
 	private void _assertPutObjectEntryCollaborator(
-			String endPoint, UserGroup userGroup)
+			String endpoint, UserGroup userGroup)
 		throws Exception {
 
 		JSONObject jsonObject = _getUserGroupCollaboratorJSONObject(userGroup);
 
 		HTTPTestUtil.invokeToJSONObject(
-			jsonObject.toString(), endPoint, Http.Method.PUT);
+			jsonObject.toString(), endpoint, Http.Method.PUT);
 
 		_assertEquals(
 			jsonObject,
-			HTTPTestUtil.invokeToJSONObject(null, endPoint, Http.Method.GET));
+			HTTPTestUtil.invokeToJSONObject(null, endpoint, Http.Method.GET));
 	}
 
 	private boolean _equals(JSONObject jsonObject1, JSONObject jsonObject2) {

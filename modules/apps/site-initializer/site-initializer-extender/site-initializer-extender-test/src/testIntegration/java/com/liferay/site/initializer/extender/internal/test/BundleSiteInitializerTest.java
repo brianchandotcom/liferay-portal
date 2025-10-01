@@ -3873,8 +3873,8 @@ public class BundleSiteInitializerTest {
 
 		String typeSettings = siteNavigationMenuItem1.getTypeSettings();
 
-		Assert.assertFalse(typeSettings.contains("useCustomName"));
 		Assert.assertTrue(typeSettings.contains("displayIcon=home"));
+		Assert.assertFalse(typeSettings.contains("useCustomName"));
 
 		SiteNavigationMenuItem siteNavigationMenuItem2 =
 			siteNavigationMenuItems.get(1);

@@ -77,7 +77,7 @@ export interface IEmptyStateConfiguration extends IEmptyState {
 	};
 }
 
-export enum EConfigInURLSettings {
+export enum EConfigInURLBehavior {
 	OFF = 'off',
 	PUSH = 'push',
 	REPLACE = 'replace',
@@ -281,7 +281,7 @@ export interface IFrontendDataSetProps {
 	apiURL?: string;
 	appURL?: string;
 	bulkActions?: any[];
-	configInURLSettings?: EConfigInURLSettings;
+	configInURLSettings?: EConfigInURLBehavior;
 	creationMenu?: {
 		loadData?: Function;
 		primaryItems: Array<ICreationActionItem>;

@@ -14,7 +14,7 @@ import {
 import {EViewsActionTypes} from '../views/viewsReducer';
 import {readConfigFromURL, writeConfigInURL} from './configInURL';
 import {
-	EConfigInURLSettings,
+	EConfigInURLBehavior,
 	IConfigInURL,
 	IConfigInURLGetter,
 	IConfigInURLUpdaterThunk,
@@ -58,7 +58,7 @@ function updateConfig({
 	id,
 }: {
 	config: Partial<IConfigInURL>;
-	configInURLSettings: EConfigInURLSettings;
+	configInURLSettings: EConfigInURLBehavior;
 	id: string;
 }) {
 	const updatedConfig: Partial<IConfigInURL> = {};
@@ -83,7 +83,7 @@ export function useUpdateConfig({
 	configInURLSettings,
 	id,
 }: {
-	configInURLSettings: EConfigInURLSettings;
+	configInURLSettings: EConfigInURLBehavior;
 
 	id: string;
 }): Function {
@@ -107,7 +107,7 @@ function useConfigInURL<K extends keyof IConfigInURL>({
 		type: EViewsActionTypes;
 		value: any;
 	}[];
-	configInURLSettings: EConfigInURLSettings;
+	configInURLSettings: EConfigInURLBehavior;
 	configReader: IConfigReader<K>;
 	configWriter?: IConfigWriter<K>;
 	id: string;
@@ -170,7 +170,7 @@ function useUpdaterThunk<K extends keyof IConfigInURL>({
 		value: any;
 	}[];
 
-	configInURLSettings: EConfigInURLSettings;
+	configInURLSettings: EConfigInURLBehavior;
 	configWriter?: IConfigWriter<K>;
 	id: string;
 	key: K;

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EConfigInURLSettings, IConfigInURL} from './types';
+import {EConfigInURLBehavior, IConfigInURL} from './types';
 
 function getConfigParamName(id: string): string {
 	return `${id}_fdsConfig`;
@@ -37,11 +37,11 @@ export function readConfigFromURL(id: string): Partial<IConfigInURL> | null {
 export function writeConfigInURL(
 	id: string,
 	config: Partial<IConfigInURL>,
-	settings: EConfigInURLSettings
+	settings: EConfigInURLBehavior
 ) {
 	if (
 		!config ||
-		settings === EConfigInURLSettings.OFF ||
+		settings === EConfigInURLBehavior.OFF ||
 		!Liferay.FeatureFlags['LPD-22473']
 	) {
 		return;
@@ -75,7 +75,7 @@ export function writeConfigInURL(
 	const path = `${window.location.pathname}?${params.toString()}`;
 
 	const replaceState =
-		settings === EConfigInURLSettings.REPLACE || !currentConfig;
+		settings === EConfigInURLBehavior.REPLACE || !currentConfig;
 
 	if (Liferay.SPA && Liferay.SPA.app) {
 		Liferay.SPA.app.browserPathBeforeNavigate = path;

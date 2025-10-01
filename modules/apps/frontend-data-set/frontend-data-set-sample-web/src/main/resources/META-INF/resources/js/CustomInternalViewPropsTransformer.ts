@@ -4,7 +4,7 @@
  */
 
 import {
-	EConfigInURLSettings,
+	EConfigInURLBehavior,
 	IInternalRenderer,
 	IItemsActions,
 } from '@liferay/frontend-data-set-web';
@@ -36,7 +36,7 @@ export default function propsTransformer({
 
 	return {
 		...otherProps,
-		configInURLSettings: EConfigInURLSettings.REPLACE,
+		configInURLSettings: EConfigInURLBehavior.REPLACE,
 		customRenderers: {
 			views: [carouselViewRenderer],
 		},

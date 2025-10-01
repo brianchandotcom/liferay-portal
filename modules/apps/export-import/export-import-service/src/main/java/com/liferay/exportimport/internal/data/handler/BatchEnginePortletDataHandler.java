@@ -440,10 +440,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				BatchEngineExportTaskExecutor.Result result =
 					_executeExportTask(1, portletDataContext, registration);
 
-				if (result == null) {
-					continue;
-				}
-
 				BatchEngineExportTask batchEngineExportTask =
 					result.getBatchEngineExportTask();
 

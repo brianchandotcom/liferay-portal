@@ -34,6 +34,7 @@ import {generateObjectFields} from '../../object-web/main/utils/generateObjectFi
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 
 export const test = mergeTests(
@@ -226,6 +227,123 @@ test('can import account restricted entry when account does and does not exist i
 			[accountEntryERC]: importedAccount.externalReferenceCode,
 			[accountEntryId]: importedAccount.id,
 		});
+	});
+});
+
+test('can import custom and system objects entries at instance level using date filter', async ({
+	apiHelpers,
+	companyExportImportPage,
+	page,
+}) => {
+	const objectActionAPIClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
+
+	const {body: objectDefinition} =
+		await objectActionAPIClient.postObjectDefinition(
+			objectDefitionRequestData()
+		);
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	const cookiesObjectEntries = await apiHelpers.get(
+		`${apiHelpers.baseUrl}functional-cookies-entries/`
+	);
+
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+
+	const objectEntryCreationDate = cookiesObjectEntries.items[0].dateCreated;
+
+	await test.step('export functional cookie entries using date reange filter', async () => {
+		await companyExportImportPage.applicationsMenuPage.goToExport();
+
+		const startDate = new Date(objectEntryCreationDate);
+
+		startDate.setUTCDate(startDate.getUTCDate() - 1);
+
+		const endDate = new Date(objectEntryCreationDate);
+
+		endDate.setUTCMinutes(endDate.getUTCMinutes() + 1);
+
+		await page.getByTestId('creationMenuNewButton').nth(1).click();
+
+		await page.getByLabel('Export Individual Deletions:').check();
+
+		const functionalCookieEntriesExportFilePath =
+			await companyExportImportPage.export(
+				['Functional Cookie Entries 20 Items', 'Tests 1 Items'],
+				false,
+				{
+					endDate: toDateRangeDate(endDate),
+					endTime: toDateRangeTime(endDate),
+					startDate: toDateRangeDate(startDate),
+					startTime: toDateRangeTime(startDate),
+				}
+			);
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntry.id}`
+		);
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntries.items[0].id}`
+		);
+
+		await companyExportImportPage.import(
+			functionalCookieEntriesExportFilePath
+		);
+
+		const importedCookiesObjectEntries = await apiHelpers.get(
+			`${apiHelpers.baseUrl}functional-cookies-entries/`
+		);
+
+		const importedCustomObjectEntries = await apiHelpers.get(
+			`${apiHelpers.baseUrl}c/tests/`
+		);
+
+		expect(importedCookiesObjectEntries.items.length).toBe(20);
+
+		expect(importedCustomObjectEntries.items.length).toBe(0);
+	});
+
+	await test.step('export all entries using last 12 hours filter', async () => {
+		await apiHelpers.objectEntry.postObjectEntry(
+			{externalReferenceCode: '', name: 'test'},
+			'c/tests'
+		);
+
+		const allEntriesExportFilePath = await companyExportImportPage.export(
+			['Functional Cookie Entries 20 Items', 'Tests 1 Items'],
+			false,
+			{
+				rangeLast: '12 Hours',
+			}
+		);
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}functional-cookies-entries/${cookiesObjectEntries.items[0].id}`
+		);
+
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntry.id}`
+		);
+		await companyExportImportPage.import(allEntriesExportFilePath);
+
+		const importedCookiesObjectEntries = await apiHelpers.get(
+			`${apiHelpers.baseUrl}functional-cookies-entries/`
+		);
+
+		const importedCustomObjectEntries = await apiHelpers.get(
+			`${apiHelpers.baseUrl}c/tests/`
+		);
+
+		expect(importedCookiesObjectEntries.items.length).toBe(20);
+
+		expect(importedCustomObjectEntries.items.length).toBe(1);
 	});
 });
 

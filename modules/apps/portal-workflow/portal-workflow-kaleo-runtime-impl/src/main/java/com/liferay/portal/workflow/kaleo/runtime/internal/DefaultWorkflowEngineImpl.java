@@ -173,24 +173,9 @@ public class DefaultWorkflowEngineImpl
 				externalReferenceCode, title, definitionName, scope, definition,
 				serviceContext);
 
-			if (kaleoDefinition != null) {
-				List<WorkflowDefinitionLink> workflowDefinitionLinks =
-					workflowDefinitionLinkLocalService.
-						getWorkflowDefinitionLinks(
-							serviceContext.getCompanyId(),
-							kaleoDefinition.getName(),
-							kaleoDefinition.getVersion());
-
-				for (WorkflowDefinitionLink workflowDefinitionLink :
-						workflowDefinitionLinks) {
-
-					workflowDefinitionLink.setWorkflowDefinitionVersion(
-						workflowDefinition.getVersion());
-
-					workflowDefinitionLinkLocalService.
-						updateWorkflowDefinitionLink(workflowDefinitionLink);
-				}
-			}
+			_updateWorkflowDefinitionLinks(
+				serviceContext.getCompanyId(), kaleoDefinition,
+				workflowDefinition);
 
 			return workflowDefinition;
 		}
@@ -988,6 +973,29 @@ public class DefaultWorkflowEngineImpl
 
 		return kaleoInstanceLocalService.updateKaleoInstance(
 			workflowInstanceId, workflowContext);
+	}
+
+	private void _updateWorkflowDefinitionLinks(
+			long companyId, KaleoDefinition kaleoDefinition,
+			WorkflowDefinition workflowDefinition)
+		throws PortalException {
+
+		if (kaleoDefinition != null) {
+			List<WorkflowDefinitionLink> workflowDefinitionLinks =
+				workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(
+					companyId, kaleoDefinition.getName(),
+					kaleoDefinition.getVersion());
+
+			for (WorkflowDefinitionLink workflowDefinitionLink :
+					workflowDefinitionLinks) {
+
+				workflowDefinitionLink.setWorkflowDefinitionVersion(
+					workflowDefinition.getVersion());
+
+				workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
+					workflowDefinitionLink);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

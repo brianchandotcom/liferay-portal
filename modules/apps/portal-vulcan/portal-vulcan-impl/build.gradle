@@ -25,7 +25,6 @@ dependencies {
 	compileInclude group: "io.swagger.core.v3", name: "swagger-integration-jakarta", version: "2.2.28"
 	compileInclude group: "io.swagger.core.v3", name: "swagger-jaxrs2-jakarta", version: "2.2.28"
 	compileInclude group: "org.javassist", name: "javassist", version: "3.23.1-GA"
-	compileInclude group: "org.reflections", name: "reflections", version: "0.10.2"
 	compileInclude group: "org.yaml", name: "snakeyaml", version: "2.3"
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	compileOnly group: "com.fasterxml", name: "classmate", version: "1.5.1"

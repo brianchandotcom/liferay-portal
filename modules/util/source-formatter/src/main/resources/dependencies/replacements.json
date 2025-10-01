@@ -2988,6 +2988,19 @@
 	},
 	{
 		"classNames": [
+			"UserLocalServiceWrapper"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-28357",
+		"methodsToFormat": [
+			{
+				"from": "regex:@Override\\s+public void (?<methodName>addGroupUser|addGroupUsers)(?<methodDeclaration>[^{]+?)\\{(?<methodContent>[\\s\\S]*?)(?<methodReturn>(?<!return\\s)super\\.\\1\\s*\\([^)]*\\);)",
+				"to": "@Override\n\tpublic boolean ${methodName}${methodDeclaration}{${methodContent}return ${methodReturn}"
+			}
+		]
+	},
+	{
+		"classNames": [
 			"StrutsAction"
 		],
 		"classStructurePattern": true,

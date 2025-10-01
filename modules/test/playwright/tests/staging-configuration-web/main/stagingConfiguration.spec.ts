@@ -247,13 +247,10 @@ test(
 		await journalPage.goto(site.friendlyUrlPath);
 
 		await expect(
-			page.getByRole('link', {
-				exact: true,
-				name: webContentName,
-			})
+			page.getByText(webContentName, {exact: true})
 		).toBeVisible();
 
-		await page.getByRole('link', {name: webContentName}).click();
+		await page.getByText(webContentName).click();
 
 		await expect(
 			page.getByLabel('Friendly URL', {exact: true})

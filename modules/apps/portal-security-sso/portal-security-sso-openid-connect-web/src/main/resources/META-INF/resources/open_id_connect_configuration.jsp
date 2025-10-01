@@ -152,7 +152,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 				<aui:select fieldParam="<%= claimColumnId %>" id="<%= claimColumnId %>" inlineField="<%= true %>" label="user-custom-fields" name="<%= claimColumnId %>" showEmptyOption="<%= true %>">
 
 					<%
-					for (ExpandoColumn expandoColumn : openIdConnectProviderConfigurationDisplayContext.getAvailableCustomFields()) {
+					for (ExpandoColumn expandoColumn : openIdConnectProviderConfigurationDisplayContext.getExpandoColumns()) {
 					%>
 
 						<aui:option label="<%= expandoColumn.getName() %>" selected="<%= Objects.equals(expandoColumn.getName(), customClaimsKeys[i]) %>" value="<%= expandoColumn.getName() %>"></aui:option>

@@ -5,6 +5,7 @@
 
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayMultiSelect from '@clayui/multi-select';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
@@ -45,6 +46,8 @@ export default function SpacesSelector({
 
 	const selectedSpaces = getSelection(structureSpaces, spaces);
 
+	const isDisabled = disabled || structureSpaces === 'all';
+
 	return (
 		<div className="mt-5">
 			<span className="border-bottom d-block mb-3 panel-title text-secondary">
@@ -69,50 +72,64 @@ export default function SpacesSelector({
 					/>
 				</label>
 
-				<ItemSelector<Space>
-					apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`}
-					as={ClayInput}
-					disabled={disabled || structureSpaces === 'all'}
-					id={id}
-					items={selectedSpaces}
-					locator={{
-						id: 'id',
-						label: 'name',
-						value: 'externalReferenceCode',
-					}}
-					multiSelect
-					onBlur={() => {
-						if (!structureSpaces.length) {
-							dispatch({
-								error: 'no-space',
-								type: 'add-validation-error',
-								uuid: structureUuid,
-							});
+				{isDisabled ? (
+					<ClayMultiSelect
+						disabled={true}
+						id={id}
+						items={selectedSpaces.map((space) => ({
+							label: space.name,
+							value: space.id,
+						}))}
+						value={
+							structureSpaces === 'all'
+								? Liferay.Language.get('all-spaces')
+								: ''
 						}
-					}}
-					onChange={setValue}
-					onItemsChange={(items: Array<Item | Space>) => {
-						dispatch({
-							spaces: items.map(
-								(item) =>
-									(item as Space).externalReferenceCode ||
-									(item as Item).value
-							),
-							type: 'update-structure',
-						});
-					}}
-					value={
-						structureSpaces === 'all'
-							? Liferay.Language.get('all-spaces')
-							: value
-					}
-				>
-					{(item: Space) => (
-						<ItemSelector.Item key={item.id} textValue={item.name}>
-							<SpaceSticker name={item.name} />
-						</ItemSelector.Item>
-					)}
-				</ItemSelector>
+					/>
+				) : (
+					<ItemSelector<Space>
+						apiURL={`${location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`}
+						as={ClayInput}
+						id={id}
+						items={selectedSpaces}
+						locator={{
+							id: 'id',
+							label: 'name',
+							value: 'externalReferenceCode',
+						}}
+						multiSelect
+						onBlur={() => {
+							if (!structureSpaces.length) {
+								dispatch({
+									error: 'no-space',
+									type: 'add-validation-error',
+									uuid: structureUuid,
+								});
+							}
+						}}
+						onChange={setValue}
+						onItemsChange={(items: Array<Item | Space>) => {
+							dispatch({
+								spaces: items.map(
+									(item) =>
+										(item as Space).externalReferenceCode ||
+										(item as Item).value
+								),
+								type: 'update-structure',
+							});
+						}}
+						value={value}
+					>
+						{(item: Space) => (
+							<ItemSelector.Item
+								key={item.id}
+								textValue={item.name}
+							>
+								<SpaceSticker name={item.name} />
+							</ItemSelector.Item>
+						)}
+					</ItemSelector>
+				)}
 
 				{hasError ? (
 					<FieldFeedback

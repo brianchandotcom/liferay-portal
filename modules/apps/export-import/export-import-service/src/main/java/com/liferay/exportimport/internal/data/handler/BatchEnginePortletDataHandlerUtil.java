@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -39,7 +40,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildExportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext,
+		String siteExternalReferenceCode) {
 
 		return HashMapBuilder.<String, Serializable>put(
 			"batchNestedFields",
@@ -103,15 +105,8 @@ public class BatchEnginePortletDataHandlerUtil {
 		).put(
 			"siteExternalReferenceCode",
 			() -> {
-				Map<String, String[]> map =
-					portletDataContext.getParameterMap();
-
-				String[] siteExternalReferenceCodes =
-					GetterUtil.getStringValues(
-						map.get("siteExternalReferenceCode"));
-
-				if (ArrayUtil.isNotEmpty(siteExternalReferenceCodes)) {
-					return siteExternalReferenceCodes[0];
+				if (Validator.isNotNull(siteExternalReferenceCode)) {
+					return siteExternalReferenceCode;
 				}
 
 				return null;
@@ -139,7 +134,8 @@ public class BatchEnginePortletDataHandlerUtil {
 	public static Map<String, Serializable> buildImportParameters(
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
-		PortletDataContext portletDataContext) {
+		PortletDataContext portletDataContext,
+		String siteExternalReferenceCode) {
 
 		return HashMapBuilder.<String, Serializable>put(
 			"batchRestrictFields",
@@ -176,15 +172,8 @@ public class BatchEnginePortletDataHandlerUtil {
 		).put(
 			"siteExternalReferenceCode",
 			() -> {
-				Map<String, String[]> map =
-					portletDataContext.getParameterMap();
-
-				String[] siteExternalReferenceCodes =
-					GetterUtil.getStringValues(
-						map.get("siteExternalReferenceCode"));
-
-				if (ArrayUtil.isNotEmpty(siteExternalReferenceCodes)) {
-					return siteExternalReferenceCodes[0];
+				if (Validator.isNotNull(siteExternalReferenceCode)) {
+					return siteExternalReferenceCode;
 				}
 
 				return null;

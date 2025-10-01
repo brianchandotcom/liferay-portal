@@ -91,8 +91,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	public void exportDeletionSystemEvents(
 		PortletDataContext portletDataContext) {
 
-		_addSiteExternalReferenceCodeParameter(portletDataContext);
-
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
 
@@ -278,8 +276,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences) {
 
-		_addSiteExternalReferenceCodeParameter(portletDataContext);
-
 		try (SafeCloseable safeCloseable =
 				PortletDataContextThreadLocal.
 					setPortletDataContextWithSafeCloseable(
@@ -335,8 +331,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		_addSiteExternalReferenceCodeParameter(portletDataContext);
-
 		List<Registration> activeRegistrations = _getActiveRegistrations(
 			portletDataContext);
 
@@ -376,7 +370,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					BatchEngineTaskOperation.CREATE.name(),
 					BatchEnginePortletDataHandlerUtil.buildImportParameters(
 						registration.getExportImportDescriptor(),
-						portletDataContext),
+						portletDataContext,
+						_getSiteExternalReferenceCode(portletDataContext)),
 					registration.getTaskItemDelegateName());
 
 			try {
@@ -427,8 +422,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		PortletDataContext portletDataContext,
 		PortletPreferences portletPreferences) {
 
-		_addSiteExternalReferenceCodeParameter(portletDataContext);
-
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
 
@@ -474,23 +467,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRES_NEW, new Class<?>[] {Exception.class});
 
-	private void _addSiteExternalReferenceCodeParameter(
-		PortletDataContext portletDataContext) {
-
-		Map<String, String[]> map = portletDataContext.getParameterMap();
-
-		if (!map.containsKey("siteExternalReferenceCode")) {
-			Group group = _groupLocalService.fetchGroup(
-				portletDataContext.getScopeGroupId());
-
-			if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
-				map.put(
-					"siteExternalReferenceCode",
-					new String[] {group.getExternalReferenceCode()});
-			}
-		}
-	}
-
 	private BatchEngineExportTaskExecutor.Result _executeExportTask(
 		int maxItems, PortletDataContext portletDataContext,
 		Registration registration) {
@@ -503,7 +479,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				Collections.emptyList(),
 				BatchEnginePortletDataHandlerUtil.buildExportParameters(
 					registration.getExportImportDescriptor(),
-					portletDataContext),
+					portletDataContext,
+					_getSiteExternalReferenceCode(portletDataContext)),
 				registration.getTaskItemDelegateName()),
 			new BatchEngineExportTaskExecutor.Settings() {
 
@@ -568,6 +545,19 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			getPortletId(), exportImportDescriptor.getItemClassName(),
 			exportImportDescriptor.getLabel(), true, false, null,
 			exportImportDescriptor.getItemClassName(), null);
+	}
+
+	private String _getSiteExternalReferenceCode(
+		PortletDataContext portletDataContext) {
+
+		Group group = _groupLocalService.fetchGroup(
+			portletDataContext.getScopeGroupId());
+
+		if ((group != null) && !_stagingGroupHelper.isCompanyGroup(group)) {
+			return group.getExternalReferenceCode();
+		}
+
+		return null;
 	}
 
 	private StagedModelType _getStagedModelType(Registration registration) {

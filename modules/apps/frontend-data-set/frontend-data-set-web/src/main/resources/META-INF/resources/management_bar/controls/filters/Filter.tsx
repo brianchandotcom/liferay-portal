@@ -63,9 +63,7 @@ const Filter = ({
 	type,
 	...otherProps
 }: FilterComponentArgs) => {
-	const {setSearching, updateActiveFiltersThunk} = useContext(
-		FrontendDataSetContext
-	);
+	const {setSearching, updateFilters} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const filterImplementation = FILTER_IMPLEMENTATIONS[type];
@@ -107,7 +105,7 @@ const Filter = ({
 		setSearching(true);
 
 		viewsDispatch(
-			updateActiveFiltersThunk(
+			updateFilters(
 				filters.map((filter: FilterConfiguration) =>
 					filter.id === filterId ? newFilter : filter
 				)

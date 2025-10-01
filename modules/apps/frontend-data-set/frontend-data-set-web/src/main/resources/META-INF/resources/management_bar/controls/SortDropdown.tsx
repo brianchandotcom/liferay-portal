@@ -13,7 +13,7 @@ import {TSort} from '../../utils/types';
 import ViewsContext from '../../views/ViewsContext';
 
 function SortDropdown() {
-	const {updateActiveSortsThunk} = useContext(FrontendDataSetContext);
+	const {updateActiveSorts} = useContext(FrontendDataSetContext);
 	const [{sorts}, viewsDispatch]: [{sorts: TSort[]}, Function] =
 		useContext(ViewsContext);
 
@@ -82,7 +82,7 @@ function SortDropdown() {
 									setSelectedKey(sort.key);
 
 									viewsDispatch(
-										updateActiveSortsThunk(
+										updateActiveSorts(
 											sorts.map((sortItem) =>
 												sort.key === sortItem.key
 													? {
@@ -118,7 +118,7 @@ function SortDropdown() {
 						setSelectedDirection('asc');
 
 						viewsDispatch(
-							updateActiveSortsThunk(
+							updateActiveSorts(
 								sorts.map((sortItem) => ({
 									...sortItem,
 									direction: 'asc',
@@ -137,7 +137,7 @@ function SortDropdown() {
 						setSelectedDirection('desc');
 
 						viewsDispatch(
-							updateActiveSortsThunk(
+							updateActiveSorts(
 								sorts.map((sortItem) => ({
 									...sortItem,
 									direction: 'desc',

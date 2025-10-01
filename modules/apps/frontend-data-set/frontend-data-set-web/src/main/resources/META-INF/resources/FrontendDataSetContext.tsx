@@ -84,8 +84,7 @@ export interface IFrontendDataSetContext {
 	style?: string;
 	toggleItemInlineEdit: Function;
 	uniformActionsDisplay?: boolean;
-	updateActiveFiltersThunk: IConfigInURLUpdaterThunk<EConfigInURLKeys.ACTIVE_FILTERS>;
-	updateActiveSortsThunk: IConfigInURLUpdaterThunk<EConfigInURLKeys.ACTIVE_SORTS>;
+	updateActiveSorts: IConfigInURLUpdaterThunk<EConfigInURLKeys.ACTIVE_SORTS>;
 	updateDataSetItems: ({
 		items,
 		lastPage,
@@ -93,9 +92,10 @@ export interface IFrontendDataSetContext {
 		pageSize,
 		totalCount,
 	}: IDataSetData) => void;
+	updateFilters: IConfigInURLUpdaterThunk<EConfigInURLKeys.ACTIVE_FILTERS>;
 	updateItem: Function;
-	updateViewThunk: IConfigInURLUpdaterThunk<EConfigInURLKeys.VIEW_NAME>;
-	updateVisibleFieldsThunk: IConfigInURLUpdaterThunk<EConfigInURLKeys.VISIBLE_FIELDS>;
+	updateView: IConfigInURLUpdaterThunk<EConfigInURLKeys.VIEW_NAME>;
+	updateVisibleFields: IConfigInURLUpdaterThunk<EConfigInURLKeys.VISIBLE_FIELDS>;
 }
 
 const FrontendDataSetContext = React.createContext({

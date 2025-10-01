@@ -15,13 +15,8 @@ import FilterResume from './FilterResume';
 import SearchResume from './SearchResume';
 
 function ActiveFiltersBar({dataLoading, disabled, total}) {
-	const {
-		onSearch,
-		searchParam,
-		searching,
-		setSearching,
-		updateActiveFiltersThunk,
-	} = useContext(FrontendDataSetContext);
+	const {onSearch, searchParam, searching, setSearching, updateFilters} =
+		useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const searchActive = Boolean(searchParam?.trim());
@@ -30,9 +25,7 @@ function ActiveFiltersBar({dataLoading, disabled, total}) {
 		setSearching(true);
 
 		viewsDispatch(
-			updateActiveFiltersThunk(
-				filters.map((filter) => deactivateFilter(filter))
-			)
+			updateFilters(filters.map((filter) => deactivateFilter(filter)))
 		);
 
 		onSearch({query: ''});

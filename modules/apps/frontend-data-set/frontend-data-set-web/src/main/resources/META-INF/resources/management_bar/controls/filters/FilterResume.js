@@ -16,9 +16,7 @@ import ViewsContext from '../../../views/ViewsContext';
 import Filter from './Filter';
 
 function FilterResume(props) {
-	const {setSearching, updateActiveFiltersThunk} = useContext(
-		FrontendDataSetContext
-	);
+	const {setSearching, updateFilters} = useContext(FrontendDataSetContext);
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
 	const [open, setOpen] = useState(false);
@@ -69,7 +67,7 @@ function FilterResume(props) {
 					setSearching(true);
 
 					viewsDispatch(
-						updateActiveFiltersThunk(
+						updateFilters(
 							filters.map((filter) => ({
 								...filter,
 								...(filter.id === props.id

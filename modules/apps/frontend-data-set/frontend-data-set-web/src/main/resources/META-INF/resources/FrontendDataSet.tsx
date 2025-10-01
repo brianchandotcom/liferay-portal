@@ -149,7 +149,7 @@ const FrontendDataSetContent = ({
 	const fdsRef = useRef(null);
 	const dataSetWrapperRef: RefObject<HTMLDivElement> = useRef(null);
 
-	const [getActiveSorts, updateActiveSortsThunk] = useConfigInURL({
+	const [getActiveSorts, updateActiveSorts] = useConfigInURL({
 		configInURLSettings,
 		configReader: (sorts: Array<TSort> | undefined) => {
 			return sorts;
@@ -177,7 +177,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getActiveFilters, updateActiveFiltersThunk] = useConfigInURL({
+	const [getFilters, updateFilters] = useConfigInURL({
 		configInURLSettings,
 		configReader: (filters: Array<any> | undefined) => {
 			return filters;
@@ -225,7 +225,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getDelta, updateDeltaThunk] = useConfigInURL({
+	const [getDelta, updateDelta] = useConfigInURL({
 		additionalStateDispatchers: [
 			{
 				key: EConfigInURLKeys.PAGE_NUMBER,
@@ -248,7 +248,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getPageNumber, updatePageNumberThunk] = useConfigInURL({
+	const [getPageNumber, updatePageNumber] = useConfigInURL({
 		configInURLSettings,
 		configReader: (pageNumber: number | undefined) => {
 			if (!pageNumber || isNaN(pageNumber) || pageNumber < 1) {
@@ -264,7 +264,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getSearchParam, updateSearchParamThunk] = useConfigInURL({
+	const [getSearchParam, updateSearchParam] = useConfigInURL({
 		configInURLSettings,
 
 		configReader: (searchParam: string | undefined) => {
@@ -288,7 +288,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getView, updateViewThunk] = useConfigInURL({
+	const [getView, updateView] = useConfigInURL({
 		configInURLSettings,
 		configReader: (viewName: string | undefined) => {
 			const view = views.find(({name}) => name === viewName);
@@ -306,7 +306,7 @@ const FrontendDataSetContent = ({
 		},
 	});
 
-	const [getVisibleFields, updateVisibleFieldsThunk] = useConfigInURL({
+	const [getVisibleFields, updateVisibleFields] = useConfigInURL({
 		configInURLSettings,
 		configReader: (visibleFieldNames: VisibleFieldNames | undefined) => {
 			const view = views.find(
@@ -573,7 +573,7 @@ const FrontendDataSetContent = ({
 
 		const filters = initialFilters
 			? updateFilterActivation({
-					newFilters: getActiveFilters(),
+					newFilters: getFilters(),
 					oldFilters: initialFilters.map((filter) => {
 						const preloadedData = filter.preloadedData;
 
@@ -671,9 +671,9 @@ const FrontendDataSetContent = ({
 
 	const handleDeltaChange = useCallback(
 		(delta: number) => {
-			viewsDispatch(updateDeltaThunk(delta));
+			viewsDispatch(updateDelta(delta));
 		},
-		[updateDeltaThunk, viewsDispatch]
+		[updateDelta, viewsDispatch]
 	);
 
 	const {
@@ -730,7 +730,7 @@ const FrontendDataSetContent = ({
 			if (apiURL || appURL) {
 				setSearching(true);
 
-				viewsDispatch(updateSearchParamThunk(query));
+				viewsDispatch(updateSearchParam(query));
 			}
 			else {
 				setItems(
@@ -744,20 +744,20 @@ const FrontendDataSetContent = ({
 				);
 			}
 		},
-		[apiURL, appURL, itemsProp, updateSearchParamThunk, viewsDispatch]
+		[apiURL, appURL, itemsProp, updateSearchParam, viewsDispatch]
 	);
 
 	const onClearFilters = useCallback(() => {
 		setSearching(true);
 
 		viewsDispatch(
-			updateActiveFiltersThunk(
+			updateFilters(
 				filters.map((filter: any) => deactivateFilter(filter))
 			)
 		);
 
 		onSearch({query: ''});
-	}, [filters, onSearch, updateActiveFiltersThunk, viewsDispatch]);
+	}, [filters, onSearch, updateFilters, viewsDispatch]);
 
 	const updateDataSetItems = useCallback(
 		(dataSetData: IDataSetData) => {
@@ -782,10 +782,10 @@ const FrontendDataSetContent = ({
 			setTotal(dataSetData.totalCount);
 
 			if (!dataSetData.items.length && dataSetData.totalCount > 0) {
-				viewsDispatch(updatePageNumberThunk(dataSetData.lastPage));
+				viewsDispatch(updatePageNumber(dataSetData.lastPage));
 			}
 		},
-		[updatePageNumberThunk, viewsDispatch]
+		[updatePageNumber, viewsDispatch]
 	);
 
 	useEffect(() => {
@@ -828,7 +828,7 @@ const FrontendDataSetContent = ({
 						return filter;
 					});
 
-					viewsDispatch(updateActiveFiltersThunk(newFilters || []));
+					viewsDispatch(updateFilters(newFilters || []));
 				},
 			},
 			{
@@ -895,7 +895,7 @@ const FrontendDataSetContent = ({
 				},
 			},
 		]);
-	}, [initialFilters, views, updateActiveFiltersThunk, viewsDispatch]);
+	}, [initialFilters, views, updateFilters, viewsDispatch]);
 
 	useEffect(() => {
 		if (itemsProp) {
@@ -1007,7 +1007,7 @@ const FrontendDataSetContent = ({
 			value: IConfigInURL[keyof IConfigInURL];
 		}> = [];
 
-		const activeFilters = getActiveFilters();
+		const activeFilters = getFilters();
 
 		if (activeFilters) {
 			stateUpdates.push({
@@ -1095,7 +1095,7 @@ const FrontendDataSetContent = ({
 	}, [
 		appURL,
 		filters,
-		getActiveFilters,
+		getFilters,
 		getActiveSorts,
 		getDelta,
 		getPageNumber,
@@ -1432,7 +1432,7 @@ const FrontendDataSetContent = ({
 						selectPerPageItems: Liferay.Language.get('x-items'),
 					}}
 					onActiveChange={(page: number) =>
-						viewsDispatch(updatePageNumberThunk(page))
+						viewsDispatch(updatePageNumber(page))
 					}
 					onDeltaChange={handleDeltaChange}
 					totalItems={total}
@@ -1745,12 +1745,12 @@ const FrontendDataSetContent = ({
 				style,
 				toggleItemInlineEdit,
 				uniformActionsDisplay,
-				updateActiveFiltersThunk,
-				updateActiveSortsThunk,
+				updateActiveSorts,
 				updateDataSetItems,
+				updateFilters,
 				updateItem,
-				updateViewThunk,
-				updateVisibleFieldsThunk,
+				updateView,
+				updateVisibleFields,
 			}}
 		>
 			<ViewsContext.Provider value={[viewsState, viewsDispatch]}>

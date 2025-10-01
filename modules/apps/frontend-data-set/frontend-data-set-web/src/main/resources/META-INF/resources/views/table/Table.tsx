@@ -738,8 +738,8 @@ const Table = ({
 		portletId,
 		selectable,
 		selectionType,
-		updateActiveSortsThunk,
-		updateVisibleFieldsThunk,
+		updateActiveSorts,
+		updateVisibleFields,
 	} = useContext(FrontendDataSetContext);
 
 	const [{sorts, visibleFieldNames}, viewsDispatch] =
@@ -812,7 +812,7 @@ const Table = ({
 			});
 		}
 
-		viewsDispatch(updateActiveSortsThunk(updatedSorts));
+		viewsDispatch(updateActiveSorts(updatedSorts));
 	};
 
 	return (
@@ -853,7 +853,7 @@ const Table = ({
 						visibleFieldNames[key] = true;
 					});
 
-					viewsDispatch(updateVisibleFieldsThunk(visibleFieldNames));
+					viewsDispatch(updateVisibleFields(visibleFieldNames));
 
 					saveViewSettings({
 						appURL,

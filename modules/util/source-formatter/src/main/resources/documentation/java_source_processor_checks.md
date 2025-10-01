@@ -265,6 +265,7 @@ ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevent
 ResourceImplCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes). |
 ResourcePermissionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Performs several checks on `*ResourcePermission` classes. |
 [ResourcePermissionFactoryCheck](check/resource_permission_factory_check.md#resourcepermissionfactorycheck) | [Performance](performance_checks.md#performance-checks) | Checks usage of `*ResourcePermissionFactory` classes. |
+ResourceTestInjectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that if any `*ResourceTest` class injects another resource that is not a `client`. |
 ReturnVariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | Finds cases where a variable declaration should be moved. |
 SealedAndNonsealedModifierCheck | [Performance](performance_checks.md#performance-checks) | Finds usage of `sealed` and `non-sealed`. |
 SelfReferenceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases of unnecessary reference to its own class. |

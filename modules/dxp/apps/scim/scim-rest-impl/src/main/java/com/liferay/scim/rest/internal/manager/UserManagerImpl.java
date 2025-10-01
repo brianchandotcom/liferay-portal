@@ -17,6 +17,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -288,67 +289,30 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		if ((count != null) && (count < 0)) {
-			count = 0;
-		}
-
-		startIndex--;
-
-		_validate(node, "displayName");
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ExpandoColumn expandoColumn = null;
-
-		try {
-			expandoColumn = _getOrAddExpandoColumn(
-				ClassNameLocalServiceUtil.getClassNameId(
-					UserGroup.class.getName()),
-				serviceContext.getCompanyId(), "scimClientId", false, true);
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
-
-		Predicate wherePredicate = _buildWherePredicate(
-			UserGroupTable.INSTANCE, expandoColumn.getColumnId(), node,
-			serviceContext);
-
-		int totalGroups = _countAll(
-			UserGroupTable.INSTANCE, UserGroupTable.INSTANCE.userGroupId,
-			_userGroupLocalService, wherePredicate);
-
-		if (count == null) {
-			count = totalGroups;
-		}
-
-		List<UserGroup> userGroups = _fetch(
-			UserGroupTable.INSTANCE, UserGroupTable.INSTANCE.userGroupId,
-			_userGroupLocalService, wherePredicate, startIndex, count);
-
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(
 				_userLocalService.fetchUser(PrincipalThreadLocal.getUserId()));
 
+		ScimUtil.GetResponseWrapper<Group> scimGetResponse = _listModel(
+			UserGroupTable.INSTANCE, UserGroup.class, count,
+			UserGroupTable.INSTANCE.userGroupId, new String[] {"displayName"},
+			node, _userGroupLocalService, startIndex,
+			userGroup -> {
+				if (!UserGroupPermissionUtil.contains(
+						permissionChecker, userGroup.getUserGroupId(),
+						ActionKeys.VIEW)) {
+
+					return null;
+				}
+
+				return ScimUtil.toGroup(
+					_getScimUsers(
+						userGroup.getCompanyId(), userGroup.getUserGroupId()),
+					userGroup);
+			});
+
 		return new GroupsGetResponse(
-			totalGroups,
-			TransformUtil.transform(
-				userGroups,
-				userGroup -> {
-					if (!UserGroupPermissionUtil.contains(
-							permissionChecker, userGroup.getUserGroupId(),
-							ActionKeys.VIEW)) {
-
-						return null;
-					}
-
-					return ScimUtil.toGroup(
-						_getScimUsers(
-							userGroup.getCompanyId(),
-							userGroup.getUserGroupId()),
-						userGroup);
-				}));
+			scimGetResponse.getTotal(), scimGetResponse.getModels());
 	}
 
 	@Override
@@ -367,74 +331,32 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		if ((count != null) && (count < 0)) {
-			count = 0;
-		}
-
-		startIndex--;
-
-		_validate(node, "externalId", "userName");
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		ExpandoColumn expandoColumn = null;
-
-		try {
-			expandoColumn = _getOrAddExpandoColumn(
-				ClassNameLocalServiceUtil.getClassNameId(
-					com.liferay.portal.kernel.model.User.class.getName()),
-				serviceContext.getCompanyId(), "scimClientId", false, true);
-		}
-		catch (Exception exception) {
-			ReflectionUtil.throwException(exception);
-		}
-
-		Predicate wherePredicate = _buildWherePredicate(
-			UserTable.INSTANCE, expandoColumn.getColumnId(), node,
-			serviceContext
-		).and(
-			UserTable.INSTANCE.status.in(
-				new Integer[] {
-					WorkflowConstants.STATUS_APPROVED,
-					WorkflowConstants.STATUS_INACTIVE
-				})
-		);
-
-		int totalUsers = _countAll(
-			UserTable.INSTANCE, UserTable.INSTANCE.userId, _userLocalService,
-			wherePredicate);
-
-		if (count == null) {
-			count = totalUsers;
-		}
-
-		List<com.liferay.portal.kernel.model.User> users = _fetch(
-			UserTable.INSTANCE, UserTable.INSTANCE.userId, _userLocalService,
-			wherePredicate, startIndex, count);
+		com.liferay.portal.kernel.model.User contextUser =
+			_userLocalService.fetchUser(PrincipalThreadLocal.getUserId());
 
 		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(
-				_userLocalService.fetchUser(PrincipalThreadLocal.getUserId()));
+			PermissionCheckerFactoryUtil.create(contextUser);
+
+		ScimUtil.GetResponseWrapper<User> scimGetResponse = _listModel(
+			UserTable.INSTANCE, com.liferay.portal.kernel.model.User.class,
+			count, UserTable.INSTANCE.userId,
+			new String[] {"externalId", "userName"}, node, _userLocalService,
+			startIndex,
+			user -> {
+				if (!UserPermissionUtil.contains(
+						permissionChecker, user.getUserId(), ActionKeys.VIEW)) {
+
+					return null;
+				}
+
+				return ScimUtil.toUser(
+					_getGroups(contextUser.getCompanyId(), user.getUserId()),
+					ScimUtil.toScimUser(
+						_userService.getUserById(user.getUserId())));
+			});
 
 		return new UsersGetResponse(
-			totalUsers,
-			TransformUtil.transform(
-				users,
-				user -> {
-					if (!UserPermissionUtil.contains(
-							permissionChecker, user.getUserId(),
-							ActionKeys.VIEW)) {
-
-						return null;
-					}
-
-					return ScimUtil.toUser(
-						_getGroups(
-							serviceContext.getCompanyId(), user.getUserId()),
-						ScimUtil.toScimUser(
-							_userService.getUserById(user.getUserId())));
-				}));
+			scimGetResponse.getTotal(), scimGetResponse.getModels());
 	}
 
 	@Override
@@ -857,11 +779,22 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	private <T extends BaseTable<T>> Predicate _buildWherePredicate(
-		BaseTable<T> baseTable, long columnId, Node node,
+		BaseTable<T> baseTable, Node node, String className,
 		ServiceContext serviceContext) {
 
+		ExpandoColumn expandoColumn = null;
+
+		try {
+			expandoColumn = _getOrAddExpandoColumn(
+				ClassNameLocalServiceUtil.getClassNameId(className),
+				serviceContext.getCompanyId(), "scimClientId", false, true);
+		}
+		catch (Exception exception) {
+			ReflectionUtil.throwException(exception);
+		}
+
 		Predicate basePredicate = ExpandoValueTable.INSTANCE.columnId.eq(
-			columnId
+			expandoColumn.getColumnId()
 		).and(
 			DSLFunctionFactoryUtil.castClobText(
 				ExpandoValueTable.INSTANCE.data
@@ -897,43 +830,6 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return basePredicate;
-	}
-
-	private <T extends BaseTable<T>> int _countAll(
-		BaseTable<T> baseTable, Expression<Long> expression,
-		PersistedModelLocalService persistedModelLocalService,
-		Predicate wherePredicate) {
-
-		return persistedModelLocalService.dslQueryCount(
-			DSLQueryFactoryUtil.count(
-			).from(
-				baseTable
-			).innerJoinON(
-				ExpandoValueTable.INSTANCE,
-				ExpandoValueTable.INSTANCE.classPK.eq(expression)
-			).where(
-				wherePredicate
-			));
-	}
-
-	private <T extends BaseTable<T>, U> List<U> _fetch(
-		BaseTable<T> baseTable, Expression<Long> expression,
-		PersistedModelLocalService persistedModelLocalService,
-		Predicate wherePredicate, int start, Integer count) {
-
-		return persistedModelLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				baseTable
-			).from(
-				baseTable
-			).innerJoinON(
-				ExpandoValueTable.INSTANCE,
-				ExpandoValueTable.INSTANCE.classPK.eq(expression)
-			).where(
-				wherePredicate
-			).limit(
-				start, start + count
-			));
 	}
 
 	private com.liferay.portal.kernel.model.User _fetchPortalUser(
@@ -1191,6 +1087,61 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return userGroup;
+	}
+
+	private <T extends BaseTable<T>, U, E extends Throwable, R>
+		ScimUtil.GetResponseWrapper<R> _listModel(
+				BaseTable<T> baseTable, Class<U> clazz, Integer count,
+				Expression<Long> expression, String[] fieldNames, Node node,
+				PersistedModelLocalService persistedModelLocalService,
+				Integer startIndex, UnsafeFunction<U, R, E> unsafeFunction)
+			throws BadRequestException {
+
+		if ((count != null) && (count < 0)) {
+			count = 0;
+		}
+
+		startIndex--;
+
+		_validate(node, fieldNames);
+
+		Predicate wherePredicate = _buildWherePredicate(
+			baseTable, node, clazz.getName(),
+			ServiceContextThreadLocal.getServiceContext());
+
+		int total = persistedModelLocalService.dslQueryCount(
+			DSLQueryFactoryUtil.count(
+			).from(
+				baseTable
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(expression)
+			).where(
+				wherePredicate
+			));
+
+		if (count == null) {
+			count = total;
+		}
+
+		List<U> models = persistedModelLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				baseTable
+			).from(
+				baseTable
+			).innerJoinON(
+				ExpandoValueTable.INSTANCE,
+				ExpandoValueTable.INSTANCE.classPK.eq(expression)
+			).where(
+				wherePredicate
+			).limit(
+				startIndex, startIndex + count
+			));
+
+		return new ScimUtil.GetResponseWrapper(
+			total,
+			TransformUtil.transform(
+				models, model -> unsafeFunction.apply(model)));
 	}
 
 	private void _saveScimClientId(

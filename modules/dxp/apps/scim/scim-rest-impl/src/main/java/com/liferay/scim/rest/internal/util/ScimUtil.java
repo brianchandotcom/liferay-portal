@@ -536,6 +536,26 @@ public class ScimUtil {
 		).toString();
 	}
 
+	public static class GetResponseWrapper<T> {
+
+		public GetResponseWrapper(int total, List<T> models) {
+			_total = total;
+			_models = models;
+		}
+
+		public List<T> getModels() {
+			return _models;
+		}
+
+		public int getTotal() {
+			return _total;
+		}
+
+		private final List<T> _models;
+		private final int _total;
+
+	}
+
 	private static AttributeSchema _createAttributeSchema() {
 		SCIMUserSchemaExtensionBuilder scimUserSchemaExtensionBuilder =
 			SCIMUserSchemaExtensionBuilder.getInstance();

@@ -175,7 +175,7 @@ test(
 
 		await checkAccessibility({
 			page: editVocabularyPage.page,
-			selectors: ['.vertical-nav-content-wrapper'],
+			selectors: ['.categorization-section'],
 			selectorsToExclude: ['.control-menu-container'],
 		});
 

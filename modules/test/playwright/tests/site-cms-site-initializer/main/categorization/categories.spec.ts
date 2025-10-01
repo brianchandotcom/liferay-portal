@@ -271,7 +271,7 @@ test.describe("Category tests that don't focus on creation", () => {
 
 			await checkAccessibility({
 				page: editCategoryPage.page,
-				selectors: ['.vertical-nav-content-wrapper'],
+				selectors: ['.categorization-section'],
 				selectorsToExclude: ['.control-menu-container'],
 			});
 

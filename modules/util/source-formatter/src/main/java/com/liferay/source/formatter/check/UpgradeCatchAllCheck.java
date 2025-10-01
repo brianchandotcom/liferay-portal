@@ -114,6 +114,18 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		throws Exception {
 
 		if (_testMode && fileName.endsWith(".java")) {
+			UpgradeCatchAllJavaLongLinesCheck longLinesCheck =
+				new UpgradeCatchAllJavaLongLinesCheck();
+
+			if (!StringUtil.equals(
+					content,
+					longLinesCheck.doProcess(
+						fileName + "-before", absolutePath, content))) {
+
+				throw new UpgradeCatchAllException(
+					fileName + " missing 80 max line length rule");
+			}
+
 			UpgradeCatchAllJavaTermOrderCheck termOrderCheck =
 				new UpgradeCatchAllJavaTermOrderCheck();
 

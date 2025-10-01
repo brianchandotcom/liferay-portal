@@ -28,6 +28,8 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:fieldset helpMessage="id-token-signing-alg-values-help" id='<%= liferayPortletResponse.getNamespace() + "idTokenSigningAlgValuesContentBox" %>' label="id-token-signing-alg-values">
 
 	<%
+	String[] idTokenSigningAlgValues = openIdConnectProviderConfigurationDisplayContext.getIdTokenSigningAlgValues();
+
 	int[] idTokenSigningAlgValuesIndexes = openIdConnectProviderConfigurationDisplayContext.getIdTokenSigningAlgValuesIndexes();
 
 	for (int i = 0; i < idTokenSigningAlgValuesIndexes.length; i++) {
@@ -38,7 +40,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="id-token-signing-alg-value" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getIdTokenSigningAlgValues()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="id-token-signing-alg-value" name="<%= fieldId %>" type="text" value="<%= idTokenSigningAlgValues[i] %>" />
 			</div>
 		</div>
 
@@ -52,6 +54,8 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:fieldset helpMessage="subject-types-help" id='<%= liferayPortletResponse.getNamespace() + "subjectTypesContentBox" %>' label="subject-types">
 
 	<%
+	String[] subjectTypes = openIdConnectProviderConfigurationDisplayContext.getSubjectTypes();
+
 	int[] subjectTypesIndexes = openIdConnectProviderConfigurationDisplayContext.getSubjectTypesIndexes();
 
 	for (int i = 0; i < subjectTypesIndexes.length; i++) {
@@ -62,7 +66,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="subject-type" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getSubjectTypes()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="subject-type" name="<%= fieldId %>" type="text" value="<%= subjectTypes[i] %>" />
 			</div>
 		</div>
 
@@ -88,6 +92,8 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:fieldset helpMessage="custom-authorization-request-parameters-help" id='<%= liferayPortletResponse.getNamespace() + "customAuthorizationRequestParametersContentBox" %>' label="custom-authorization-request-parameters">
 
 	<%
+	String[] customAuthorizationRequestParameters = openIdConnectProviderConfigurationDisplayContext.getCustomAuthorizationRequestParameters();
+
 	int[] customAuthorizationRequestParametersIndexes = openIdConnectProviderConfigurationDisplayContext.getCustomAuthorizationRequestParametersIndexes();
 
 	for (int i = 0; i < customAuthorizationRequestParametersIndexes.length; i++) {
@@ -98,7 +104,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-authorization-request-parameter" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomAuthorizationRequestParameters()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-authorization-request-parameter" name="<%= fieldId %>" type="text" value="<%= customAuthorizationRequestParameters[i] %>" />
 			</div>
 		</div>
 
@@ -112,6 +118,8 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 <aui:fieldset helpMessage="custom-token-request-parameters-help" id='<%= liferayPortletResponse.getNamespace() + "customTokenRequestParametersContentBox" %>' label="custom-token-request-parameters">
 
 	<%
+	String[] customTokenRequestParameters = openIdConnectProviderConfigurationDisplayContext.getCustomTokenRequestParameters();
+
 	int[] customTokenRequestParametersIndexes = openIdConnectProviderConfigurationDisplayContext.getCustomTokenRequestParametersIndexes();
 
 	for (int i = 0; i < customTokenRequestParametersIndexes.length; i++) {
@@ -122,7 +130,7 @@ OpenIdConnectProviderConfigurationDisplayContext openIdConnectProviderConfigurat
 
 		<div class="form-group-autofit lfr-form-row user-attribute-mapping-row">
 			<div class="form-group-item">
-				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-token-request-parameter" name="<%= fieldId %>" type="text" value="<%= openIdConnectProviderConfigurationDisplayContext.getCustomTokenRequestParameters()[i] %>" />
+				<aui:input fieldParam="<%= fieldId %>" id="<%= fieldId %>" label="custom-token-request-parameter" name="<%= fieldId %>" type="text" value="<%= customTokenRequestParameters[i] %>" />
 			</div>
 		</div>
 

@@ -800,6 +800,11 @@
 			<property name="enabled" value="false" />
 			<message key="deprecated.get.instance.usage" value="Do not use &quot;{0}&quot;. Use @Reference instead" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ResourceTestInjectionCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Checks that if any `*ResourceTest` class injects another resource that is not a `client`." />
+			<message key="resource.injection.incorrect" value="Incorrect injection for &quot;{0}&quot;. Do not inject another resource that is not a &quot;client&quot;" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.RESTDTOSetCallCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Ensures using set calls with `UnsafeSupplier` parameter for REST DTO." />

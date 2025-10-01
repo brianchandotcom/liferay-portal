@@ -23,6 +23,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -433,6 +434,8 @@ public class FragmentEntryLinkModelListenerTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutTypePortlet(
+			(LayoutTypePortlet)layout.getLayoutType());
 		themeDisplay.setLookAndFeel(layout.getTheme(), layout.getColorScheme());
 		themeDisplay.setMainCSSURL("http://test.com");
 		themeDisplay.setMainJSURL("http://test.com");

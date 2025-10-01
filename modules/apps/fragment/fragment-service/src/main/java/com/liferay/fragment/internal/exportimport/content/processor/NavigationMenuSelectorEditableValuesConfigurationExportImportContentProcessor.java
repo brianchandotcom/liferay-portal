@@ -10,9 +10,12 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -56,18 +59,52 @@ public class
 
 		long siteNavigationMenuId = configurationValueJSONObject.getLong(
 			"siteNavigationMenuId");
+		String siteNavigationMenuERC = configurationValueJSONObject.getString(
+			"siteNavigationMenuERC");
 
 		StagedModel stagedModel = null;
 
-		if (siteNavigationMenuId > 0) {
-			stagedModel =
-				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-					siteNavigationMenuId);
-		}
-		else {
+		if ((siteNavigationMenuId == 0) &&
+			Validator.isNull(siteNavigationMenuERC)) {
+
 			stagedModel = _layoutLocalService.fetchLayout(
 				configurationValueJSONObject.getLong(
 					"parentSiteNavigationMenuItemId"));
+		}
+		else {
+			if (siteNavigationMenuId > 0) {
+				stagedModel =
+					_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+						siteNavigationMenuId);
+			}
+
+			if ((stagedModel == null) &&
+				Validator.isNotNull(siteNavigationMenuERC)) {
+
+				String siteNavigationMenuScopeERC =
+					configurationValueJSONObject.getString(
+						"siteNavigationMenuScopeERC");
+
+				Group scopeGroup;
+
+				if (Validator.isNotNull(siteNavigationMenuScopeERC)) {
+					scopeGroup =
+						_groupLocalService.fetchGroupByExternalReferenceCode(
+							siteNavigationMenuScopeERC,
+							portletDataContext.getCompanyId());
+				}
+				else {
+					scopeGroup = _groupLocalService.fetchGroup(
+						portletDataContext.getScopeGroupId());
+				}
+
+				if (scopeGroup != null) {
+					stagedModel =
+						_siteNavigationMenuLocalService.
+							fetchSiteNavigationMenuByExternalReferenceCode(
+								siteNavigationMenuERC, scopeGroup.getGroupId());
+				}
+			}
 		}
 
 		if (stagedModel == null) {
@@ -134,6 +171,9 @@ public class
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

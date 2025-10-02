@@ -136,7 +136,8 @@ public class PendingCommerceOrderFDSAPIURLResolverTest {
 	@Mock
 	private CommerceOrder _commerceOrder;
 
-	private MockHttpServletRequest _mockHttpServletRequest = new MockHttpServletRequest();;
+	private final MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
 
 	@InjectMocks
 	private PendingCommerceOrderFDSAPIURLResolver

@@ -478,9 +478,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		StringBundler htmlSB = new StringBundler();
 
-		htmlSB.append("<div class='p-2' ");
+		htmlSB.append("<div class=\"p-2\" ");
 		htmlSB.append("data-fragment-namespace=");
-		htmlSB.append("'${fragmentEntryLinkNamespace}'>");
+		htmlSB.append("\"${fragmentEntryLinkNamespace}\">");
 
 		for (String tokenName :
 				_getTokenNames(externalReferenceCode, httpServletRequest)) {
@@ -497,7 +497,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			}
 
 			htmlSB.append(": </strong></span>");
-			htmlSB.append("<span class='navbar-text-truncate'");
+			htmlSB.append("<span class=\"navbar-text-truncate\"");
 			htmlSB.append("data-lfr-editable-id=\"");
 			htmlSB.append(tokenName);
 			htmlSB.append("\" data-lfr-editable-type=\"text\">\n\t{");
@@ -506,16 +506,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 			htmlSB.append("</div>");
 		}
 
-		htmlSB.append("<span class='workflow-status'><strong class='label ");
+		htmlSB.append("<span class=\"workflow-status\"><strong class=\"label ");
 
 		if (_isResolved(
 				defaultFragmentEntryProcessorContext, externalReferenceCode,
 				fragmentEntryLink, httpServletRequest)) {
 
-			htmlSB.append("label-success'>Resolved");
+			htmlSB.append("label-success\">Resolved");
 		}
 		else {
-			htmlSB.append("label-info'>Unresolved");
+			htmlSB.append("label-info\">Unresolved");
 		}
 
 		htmlSB.append("</strong></span> Data Set API URL: ");

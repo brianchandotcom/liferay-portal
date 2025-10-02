@@ -51,6 +51,7 @@ export type ProductPurchaseOutletContext = {
 		cart?: Cart | undefined,
 		cartOptions?: any
 	) => Promise<void>;
+	isSingleAccount: boolean;
 	marketplaceDeliveryProduct: MarketplaceDeliveryProduct;
 	product: DeliveryProduct;
 	productPurchaseCart: ReturnType<typeof useProductPurchaseCart>;
@@ -151,6 +152,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 	};
 
 	const isTinyDisplay = metadata?.tinyStepsDisplay;
+	const isSingleAccount = accounts.length === 1;
 
 	const context = {
 		accounts,
@@ -159,6 +161,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			previousStep: () => stepNavigate(-1),
 		},
 		handlePurchase,
+		isSingleAccount,
 		marketplaceDeliveryProduct,
 		product,
 		productPurchaseCart,

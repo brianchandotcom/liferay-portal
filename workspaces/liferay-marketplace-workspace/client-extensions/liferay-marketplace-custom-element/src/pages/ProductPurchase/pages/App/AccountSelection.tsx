@@ -15,14 +15,13 @@ const AccountSelection = () => {
 	const {
 		accounts,
 		actions: {nextStep},
+		isSingleAccount,
 		product,
 		selectedAccount,
 		setSelectedAccount,
 	} = useProductPurchaseOutletContext();
 
 	const navigate = useNavigate();
-
-	const isSingleAccount = accounts.length === 1;
 
 	useEffect(() => {
 		const {isFreeApp} = getProductPriceModel(product);

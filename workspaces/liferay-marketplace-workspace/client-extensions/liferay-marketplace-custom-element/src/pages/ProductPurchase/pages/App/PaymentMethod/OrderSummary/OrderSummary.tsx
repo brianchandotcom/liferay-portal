@@ -67,9 +67,9 @@ const OrderSummary = () => {
 	const navigate = useNavigate();
 
 	const {
-		accounts,
 		actions: {previousStep},
 		handlePurchase,
+		isSingleAccount,
 		marketplaceDeliveryProduct,
 		product,
 		productPurchaseCart,
@@ -123,8 +123,6 @@ const OrderSummary = () => {
 
 		return value;
 	};
-
-	const isSingleAccount = accounts.length === 1;
 
 	return (
 		<ProductPurchase.Shell

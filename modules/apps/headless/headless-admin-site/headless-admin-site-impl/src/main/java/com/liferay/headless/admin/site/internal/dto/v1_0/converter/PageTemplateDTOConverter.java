@@ -7,12 +7,12 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageTemplateSettings;
-import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.NavigationSettingsUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -32,8 +32,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -225,27 +223,9 @@ public class PageTemplateDTOConverter
 						unicodeProperties.getProperty(
 							LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID),
 						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID));
-
 				setNavigationSettings(
-					() -> new NavigationSettings() {
-						{
-							setTarget(
-								() -> unicodeProperties.getProperty("target"));
-							setTargetType(
-								() -> {
-									if (Objects.equals(
-											unicodeProperties.getProperty(
-												"targetType"),
-											"useNewTab")) {
-
-										return TargetType.NEW_TAB;
-									}
-
-									return TargetType.SPECIFIC_FRAME;
-								});
-						}
-					});
-
+					() -> NavigationSettingsUtil.toNavigationSettings(
+						unicodeProperties));
 				setType(Type.WIDGET_PAGE_TEMPLATE_SETTINGS);
 			}
 		};

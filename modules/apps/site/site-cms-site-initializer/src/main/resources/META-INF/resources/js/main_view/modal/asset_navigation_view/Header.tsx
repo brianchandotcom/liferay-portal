@@ -24,6 +24,7 @@ export default function Header({
 	const headerName = item.embedded?.title || item.embedded.file?.name;
 
 	const file = item.embedded.file;
+	const link = file?.link;
 
 	return (
 		<div className="autofit-row autofit-row-center">
@@ -50,12 +51,12 @@ export default function Header({
 					/>
 				)}
 
-				{file && (
+				{link?.href && (
 					<div className="autofit-col pr-3">
 						<ClayLink
 							button
 							displayType="primary"
-							href={file.link.href}
+							href={link.href}
 							small
 						>
 							<span className="inline-item inline-item-before">

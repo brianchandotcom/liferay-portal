@@ -283,3 +283,116 @@ test(
 		}
 	}
 );
+
+test(
+	'Can navigate through items in the Files section',
+	{tag: '@LPD-59866'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-documents';
+
+		const image1 = `Image ${getRandomString()}`;
+		const image2 = `Image ${getRandomString()}`;
+		const folder = `Folder ${getRandomString()}`;
+
+		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: image1,
+			},
+			applicationName,
+			'Default'
+		);
+
+		const objectEntry2 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: image2,
+			},
+			applicationName,
+			'Default'
+		);
+
+		const folderData =
+			await apiHelpers.objectFolder.createObjectEntryFolder({
+				scopeKey: 'Default',
+				title: folder,
+			});
+
+		try {
+			apiHelpers.data.push({
+				id: objectEntry1.file.id,
+				type: 'document',
+			});
+
+			apiHelpers.data.push({
+				id: objectEntry2.file.id,
+				type: 'document',
+			});
+
+			await assetsPage.gotoFiles();
+
+			await assetsPage.execItemAction({
+				action: 'View',
+				filter: image2,
+			});
+
+			await test.step('folders are excluded from the navigation list', async () => {
+				await expect(page.getByText('2 of 2')).toBeVisible();
+			});
+
+			await test.step('Can navigate to the next item', async () => {
+				await expect(
+					page.locator('.modal-title').getByText(image2)
+				).toBeVisible();
+				await page.getByLabel('Next').click();
+				await expect(
+					page.locator('.modal-title').getByText(image1)
+				).toBeVisible();
+				await expect(page.getByText('1 of 2')).toBeVisible();
+			});
+
+			await test.step('Can open the info panel', async () => {
+				await page.getByLabel('Show Details').click();
+				await expect(
+					page.getByRole('tab', {name: 'More'})
+				).toBeInViewport();
+				await expect(page.getByText('Metadata')).toBeVisible();
+			});
+
+			await test.step('Can add a comment', async () => {
+				await page.getByLabel('Show Comments').click();
+
+				await expect(
+					page.getByRole('tab', {name: 'Details'})
+				).not.toBeVisible();
+
+				const commentText = getRandomString();
+				await page.getByRole('paragraph').fill(commentText);
+				await page.getByRole('button', {name: 'Save'}).click();
+
+				await expect(page.getByText(commentText)).toBeVisible();
+			});
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry2.id)
+			);
+			await apiHelpers.objectFolder.deleteObjectEntryFolder(
+				folderData.id
+			);
+		}
+	}
+);

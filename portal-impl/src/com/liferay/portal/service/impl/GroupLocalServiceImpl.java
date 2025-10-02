@@ -303,6 +303,40 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
+		return addGroup(
+			null, userId, parentGroupId, className, classPK, liveGroupId,
+			nameMap, descriptionMap, type, null, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
+	}
+
+	@Override
+	public Group addGroup(
+			long userId, long parentGroupId, String className, long classPK,
+			long liveGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean site, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addGroup(
+			userId, parentGroupId, className, classPK, liveGroupId, nameMap,
+			descriptionMap, type, manualMembership, membershipRestriction,
+			friendlyURL, site, false, active, serviceContext);
+	}
+
+	@Override
+	public Group addGroup(
+			String externalReferenceCode, long userId, long parentGroupId,
+			String className, long classPK, long liveGroupId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int type, String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean site,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		// Group
 
 		User user = _userPersistence.findByPrimaryKey(userId);
@@ -489,6 +523,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.setUuid(serviceContext.getUuid());
 		}
 
+		group.setExternalReferenceCode(externalReferenceCode);
 		group.setCompanyId(user.getCompanyId());
 		group.setCreatorUserId(userId);
 		group.setClassNameId(classNameId);
@@ -553,23 +588,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		addPortletDefaultData(group);
 
+		if (Validator.isNotNull(typeSettings)) {
+			group = updateGroup(group.getGroupId(), typeSettings);
+		}
+
 		return group;
-	}
-
-	@Override
-	public Group addGroup(
-			long userId, long parentGroupId, String className, long classPK,
-			long liveGroupId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, int type,
-			boolean manualMembership, int membershipRestriction,
-			String friendlyURL, boolean site, boolean active,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addGroup(
-			userId, parentGroupId, className, classPK, liveGroupId, nameMap,
-			descriptionMap, type, manualMembership, membershipRestriction,
-			friendlyURL, site, false, active, serviceContext);
 	}
 
 	/**
@@ -3815,6 +3838,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, null,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, String typeSettings,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		List<String> names = new ArrayList<>(nameMap.values());
 
 		if (ListUtil.isNull(names)) {
@@ -3950,6 +3988,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		updateAsset(
 			user.getUserId(), group, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames());
+
+		if (Validator.isNotNull(typeSettings)) {
+			group = updateGroup(group.getGroupId(), typeSettings);
+		}
 
 		return group;
 	}

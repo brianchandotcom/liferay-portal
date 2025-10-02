@@ -63,7 +63,7 @@ public class ServiceImplAccessModifierCheck extends BaseCheck {
 
 				log(
 					methodDefinitionDetailAST, _MSG_INCORRECT_ACCESS_MODIFIER,
-					getName(methodDefinitionDetailAST));
+					methodName);
 			}
 		}
 	}

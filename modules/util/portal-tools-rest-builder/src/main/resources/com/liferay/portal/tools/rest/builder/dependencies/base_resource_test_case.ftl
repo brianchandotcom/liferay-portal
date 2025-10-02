@@ -39,9 +39,13 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 <#assign
 	generatePermissionsJavaMethodSignatures = []
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
+	generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
+	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
+	useDeleteAssetLibrary = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
 	useDeleteByExternalReferenceCode = false
 	useDeleteById = false
+	useDeleteSite = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
 />
 
 <#list javaMethodSignatures as javaMethodSignature>
@@ -62,13 +66,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 <#assign
 	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
-
 	generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
-	generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
-	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
-	useDeleteAssetLibrary = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteAssetLibrary" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
-	useDeleteSite = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteSite" + schemaName) && properties?keys?seq_contains("externalReferenceCode")
-
 	generateWaitForFinishMethod = freeMarkerTool.isVersionCompatible(configYAML, 8) && generateBatch && (useDeleteAssetLibrary || useDeleteByExternalReferenceCode || useDeleteById || useDeleteSite)
 />
 

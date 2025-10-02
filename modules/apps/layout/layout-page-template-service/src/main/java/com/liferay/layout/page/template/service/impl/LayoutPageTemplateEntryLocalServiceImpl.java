@@ -435,8 +435,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			long layoutPageTemplateEntryId)
 		throws PortalException {
 
-		return deleteLayoutPageTemplateEntry(
-			getLayoutPageTemplateEntry(layoutPageTemplateEntryId));
+		return layoutPageTemplateEntryLocalService.
+			deleteLayoutPageTemplateEntry(
+				getLayoutPageTemplateEntry(layoutPageTemplateEntryId));
 	}
 
 	@Override

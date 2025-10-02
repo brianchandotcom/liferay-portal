@@ -9,16 +9,6 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.fragment.internal.constants.CommerceFragmentFDSNames" %><%@
-page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %>
-
-<%@ page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="com.liferay.commerce.fragment.internal.display.context.PendingAccountOrdersDataSetDisplayContext" %>
 
 <liferay-theme:defineObjects />
-
-<%
-Map<String, Object> additionalProps = (Map<String, Object>)request.getAttribute("liferay-commerce:account-orders-data-set:additionalProps");
-String apiURL = (String)request.getAttribute("liferay-commerce:account-orders-data-set:apiURL");
-String displayStyle = (String)request.getAttribute("liferay-commerce:account-orders-data-set:displayStyle");
-List<FDSActionDropdownItem> fdsActionDropdownItems = (List<FDSActionDropdownItem>)request.getAttribute("liferay-commerce:account-orders-data-set:fdsActionDropdownItems");
-%>

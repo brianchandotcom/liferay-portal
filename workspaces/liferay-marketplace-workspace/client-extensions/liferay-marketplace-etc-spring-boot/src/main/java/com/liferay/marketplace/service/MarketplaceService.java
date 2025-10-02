@@ -205,6 +205,12 @@ public class MarketplaceService extends BaseService {
 		return productResource.getProduct(id);
 	}
 
+	public Product getProductBySkuId(long skuId) throws Exception {
+		Sku sku = getSku(skuId);
+
+		return getProduct(sku.getProductId());
+	}
+
 	public ProductResource getProductResource() throws Exception {
 		return ProductResource.builder(
 		).header(
@@ -247,9 +253,7 @@ public class MarketplaceService extends BaseService {
 		String version = "1.0.0";
 
 		try {
-			SkuResource skuResource = getSkuResource();
-
-			Sku sku = skuResource.getSku(skuId);
+			Sku sku = getSku(skuId);
 
 			for (CustomField customField : sku.getCustomFields()) {
 				if (Objects.equals(customField.getName(), "Version")) {
@@ -267,6 +271,12 @@ public class MarketplaceService extends BaseService {
 		}
 
 		return version;
+	}
+
+	public Sku getSku(long id) throws Exception {
+		SkuResource skuResource = getSkuResource();
+
+		return skuResource.getSku(id);
 	}
 
 	public String getSkuOptionValue(String key, SkuOption[] skuOptions) {

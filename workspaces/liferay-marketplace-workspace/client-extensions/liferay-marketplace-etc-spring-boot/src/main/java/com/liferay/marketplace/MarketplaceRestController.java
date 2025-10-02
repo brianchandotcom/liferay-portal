@@ -10,8 +10,6 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
-import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
-import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
@@ -459,11 +457,9 @@ public class MarketplaceRestController extends BaseRestController {
 			Jwt jwt, Order order, Page<OrderItem> orderItemPage)
 		throws Exception {
 
-		SkuResource skuResource = _marketplaceService.getSkuResource();
-
 		Map<String, String> productSpecificationsMap =
 			_marketplaceService.getProductSpecificationsMap(
-				skuResource.getSku(
+				_marketplaceService.getSku(
 					orderItemPage.fetchFirstItem(
 					).getSkuId()
 				).getProductId());

@@ -1572,7 +1572,7 @@ public class CompanyLocalServiceTest {
 
 		try (SafeCloseable safeCloseable1 =
 				PropsValuesTestUtil.swapWithSafeCloseable(
-					"MAIL_MX_UPDATE", mailMxUpdate);
+					"COMPANY_MX_UPDATE", mailMxUpdate);
 			SafeCloseable safeCloseable2 =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {

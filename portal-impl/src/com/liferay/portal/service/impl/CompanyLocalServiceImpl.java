@@ -1146,7 +1146,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		validateVirtualHost(company.getWebId(), virtualHostname);
 
-		if (PropsValues.MAIL_MX_UPDATE) {
+		if (PropsValues.COMPANY_MX_UPDATE) {
 			validateMx(companyId, mx);
 
 			company.setMx(mx);
@@ -1205,13 +1205,13 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		validateVirtualHost(company.getWebId(), virtualHostname);
 
-		if (PropsValues.MAIL_MX_UPDATE) {
+		if (PropsValues.COMPANY_MX_UPDATE) {
 			validateMx(companyId, mx);
 		}
 
 		validateName(companyId, name);
 
-		if (PropsValues.MAIL_MX_UPDATE) {
+		if (PropsValues.COMPANY_MX_UPDATE) {
 			company.setMx(mx);
 		}
 

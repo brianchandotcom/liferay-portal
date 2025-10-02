@@ -78,7 +78,7 @@ public abstract class BaseLayoutDisplayPageProvider<T>
 		}
 
 		throw new IllegalStateException(
-			"Neither service context thread local nor company thread local " +
+			"Neither company thread local nor service context thread local " +
 				"are initialized");
 	}
 

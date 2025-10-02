@@ -69,7 +69,7 @@ public class ViewHomeQuickActionsDisplayContext {
 	}
 
 	public boolean hasAddEntryPermission() {
-		List<Long> depotEntryGrouIds =
+		List<Long> depotEntryGroupIds =
 			_depotEntryLocalService.getDepotEntryGroupIds(
 				_themeDisplay.getCompanyId(), DepotConstants.TYPE_SPACE);
 
@@ -77,7 +77,7 @@ public class ViewHomeQuickActionsDisplayContext {
 			_objectEntryFolderLocalService.
 				getObjectEntryFoldersByExternalReferenceCode(
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-					depotEntryGrouIds, _themeDisplay.getCompanyId());
+					depotEntryGroupIds, _themeDisplay.getCompanyId());
 
 		for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
 			try {

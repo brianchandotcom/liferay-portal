@@ -65,7 +65,7 @@ export function composeCreateTaskDTO(
 					externalReferenceCode: embeddedExternalReferenceCode,
 					id: classPK,
 					title: name,
-				} = {},
+				} = {} as any,
 				entryClassName,
 				externalReferenceCode,
 			}: any) =>

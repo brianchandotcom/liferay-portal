@@ -991,7 +991,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				Group group = _groupLocalService.fetchGroup(
 					serviceContext.getCompanyId(),
-                        depotEntrySettingsJSONObject.getJSONObject(
+					depotEntrySettingsJSONObject.getJSONObject(
 						"name_i18n"
 					).getString(
 						LocaleUtil.getSiteDefault(

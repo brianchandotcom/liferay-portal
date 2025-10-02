@@ -81,6 +81,24 @@ public class GroupLocalServiceUtil {
 			friendlyURL, site, active, serviceContext);
 	}
 
+	public static Group addGroup(
+			String externalReferenceCode, long userId, long parentGroupId,
+			String className, long classPK, long liveGroupId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, int type,
+			String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean site,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().addGroup(
+			externalReferenceCode, userId, parentGroupId, className, classPK,
+			liveGroupId, nameMap, descriptionMap, type, typeSettings,
+			manualMembership, membershipRestriction, friendlyURL, site,
+			inheritContent, active, serviceContext);
+	}
+
 	public static boolean addOrganizationGroup(
 		long organizationId, Group group) {
 
@@ -2583,6 +2601,22 @@ public class GroupLocalServiceUtil {
 
 		return getService().updateGroup(
 			groupId, parentGroupId, nameMap, descriptionMap, type,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
+	public static Group updateGroup(
+			long groupId, long parentGroupId,
+			Map<java.util.Locale, String> nameMap,
+			Map<java.util.Locale, String> descriptionMap, int type,
+			String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, typeSettings,
 			manualMembership, membershipRestriction, friendlyURL,
 			inheritContent, active, serviceContext);
 	}

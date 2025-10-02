@@ -1,118 +1,131 @@
 <div style="align-items: flex-start; background-color: #e7efff; display: flex; height: 1600px; justify-content: center; padding-top: 40px; width: 100%;">
 	<div style="background-color: #ffffff; border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; max-height: 1513px; width: 640px;">
-	  
-	  <header style="align-items: center; display: flex; height: 132px; justify-content: center;">
-		<h2 style="align-items: center; display: flex; margin: 0; max-height: 32px;">
-		  <img style="margin-right: 5px;" alt="Liferay Logo" src="http://localhost:8080/documents/d/marketplace/logo-svg"/>Marketplace
-		</h2>              
-	  </header>
-  
-	  <hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 0 48px; width: 544px;" />
-  
-	  <div style="padding: 48px; padding-bottom: 48px;">
-		<h1 style="color: #282934; margin-bottom: 24px;">New Order Placed</h1>
-  
-		<p style="color: #6c6c75; font-size: 16px; margin-bottom: 24px;">
-		  A new order has been successfully placed by the <b>[%ACCOUNT_NAME%]</b>. Below you can find the order and account details for Finance review and processing.
-		</p>
-  
-		<b style="color: #3f404b; margin-bottom: 8px;">Order Detail</b>
-		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
-  
-		<p style="color: #282934; margin: 0;">Order ID: <b>[%ORDER_ID%]</b></p>
-		<p style="color: #282934; margin: 0;">Order Date: <b>[%ORDER_DATE%]</b></p>
-		<p style="color: #282934; margin: 0;">Order Payment Method: <b>[%ORDER_PAYMENT_METHOD%]</b></p>
-		<p style="color: #282934; margin: 0 0 16px 0;">Order Status: <b>[%ORDER_STATUS%]</b></p>
-  
-		<div style="align-items: center; display: flex; padding: 8px 0 16px;">
-		  <img 
-			alt="App Logo" 
-			src="[%PRODUCT_THUMBNAIL%]" 
-			height="56" 
-			style="border-radius: 8px; margin-right: 12px; width: auto;" 
-		  />
-		  <div style="display: flex; flex-direction: column; justify-content: center;">
-			<h2 style="color: #282934; margin: 0;">[%APP_NAME%]</h2>
-			<div style="align-items: center; display: flex; flex-wrap: wrap; gap: 16px;">
-			  <p style="color: #6c6c75; margin: 0;">[%CATALOG_NAME%]</p>
-			  <span style="border: 1px solid #2E5AAC; border-radius: 4px; color: #2E5AAC; display: inline-block; padding: 2px 8px;">[%APP_TYPE%]</span>
+		<header style="align-items: center; display: flex; height: 132px; justify-content: center;">
+			<h2 style="align-items: center; display: flex; margin: 0; max-height: 32px;">
+				<img alt="Liferay Logo" src="http://localhost:8080/documents/d/marketplace/logo-svg" style="margin-right: 5px;" />
+				Marketplace
+			</h2>
+		</header>
+
+		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 0 48px; width: 544px;" />
+
+		<div style="padding: 48px; padding-bottom: 48px;">
+			<h1 style="color: #282934; margin-bottom: 24px;">New Order Placed</h1>
+
+			<p style="color: #6c6c75; font-size: 16px; margin-bottom: 24px;">
+				A new order has been successfully placed by the <b>[%ACCOUNT_NAME%]</b>. Below you can find the order and account details for Finance review and processing.
+			</p>
+
+			<b style="color: #3f404b; margin-bottom: 8px;">Order Detail</b>
+
+			<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
+
+			<p style="color: #282934; margin: 0;">Order ID: <b>[%ORDER_ID%]</b></p>
+			<p style="color: #282934; margin: 0;">Order Date: <b>[%ORDER_DATE%]</b></p>
+			<p style="color: #282934; margin: 0;">Order Payment Method: <b>[%ORDER_PAYMENT_METHOD%]</b></p>
+			<p style="color: #282934; margin: 0 0 16px 0;">Order Status: <b>[%ORDER_STATUS%]</b></p>
+
+			<div style="align-items: center; display: flex; padding: 8px 0 16px;">
+				<img alt="App Logo" height="56" src="[%PRODUCT_THUMBNAIL%]" style="border-radius: 8px; margin-right: 12px; width: auto;" />
+
+				<div style="display: flex; flex-direction: column; justify-content: center;">
+					<h2 style="color: #282934; margin: 0;">[%APP_NAME%]</h2>
+
+					<div style="align-items: center; display: flex; flex-wrap: wrap; gap: 16px;">
+						<p style="color: #6c6c75; margin: 0;">[%CATALOG_NAME%]</p>
+
+						<span style="border: 1px solid #2E5AAC; border-radius: 4px; color: #2E5AAC; display: inline-block; padding: 2px 8px;">[%APP_TYPE%]</span>
+					</div>
+				</div>
 			</div>
-		  </div>
-		</div>
-			
-		<b style="color: #3f404b;">Order Summary</b>
-		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
-		
-		<div style="color: #282934; display: flex; flex-direction: column; gap: 4px; padding-bottom: 72px; width: 170px;">
-		  <div style="display: flex; justify-content: space-between; white-space: nowrap;">
-			<p style="margin: 0;">Net Price:</p>
-			<b>[%NET_PRICE_FORMATTED%]</b>
-		  </div>
-		  <div style="display: flex; justify-content: space-between; white-space: nowrap;">
-			<p style="margin: 0;">VAT:</p>
-			<b>[%VAT_FORMATTED%]</b>
-		  </div>
-		  <div>
-			<div style="display: flex; justify-content: space-between; white-space: nowrap;">
-			  <div style="display: flex; justify-content: space-between; min-width: 100%;">
-				<p style="margin: 0;">Total:</p>
-				<b>[%TOTAL_FORMATTED%]</b>
-			  </div>
-			  <span style="align-items: center; background-color: #E6EBF5; border-radius: 4px; color: #1C3667; display: flex; font-size: 11px; margin-left: 8px; padding: 2px 8px;">[%LICENSE_TYPE%]</span>
+
+			<b style="color: #3f404b;">Order Summary</b>
+
+			<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
+
+			<div style="color: #282934; display: flex; flex-direction: column; gap: 4px; padding-bottom: 72px; width: 170px;">
+				<div style="display: flex; justify-content: space-between; white-space: nowrap;">
+					<p style="margin: 0;">Net Price:</p>
+
+					<b>[%NET_PRICE_FORMATTED%]</b>
+				</div>
+
+				<div style="display: flex; justify-content: space-between; white-space: nowrap;">
+					<p style="margin: 0;">VAT:</p>
+
+					<b>[%VAT_FORMATTED%]</b>
+				</div>
+
+				<div>
+					<div style="display: flex; justify-content: space-between; white-space: nowrap;">
+						<div style="display: flex; justify-content: space-between; min-width: 100%;">
+							<p style="margin: 0;">Total:</p>
+
+							<b>[%TOTAL_FORMATTED%]</b>
+						</div>
+
+						<span style="align-items: center; background-color: #E6EBF5; border-radius: 4px; color: #1C3667; display: flex; font-size: 11px; margin-left: 8px; padding: 2px 8px;">[%LICENSE_TYPE%]</span>
+					</div>
+				</div>
 			</div>
-		  </div>
+
+			<b style="color: #3f404b;">Account Details</b>
+
+			<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
+
+			<p style="color: #282934; margin: 0;">Account Name: <b>[%ACCOUNT_NAME%]</b></p>
+			<p style="color: #282934; margin: 0;">Account ID: <b>[%ACCOUNT_ID%]</b></p>
+			<p style="color: #282934; margin: 0;">Tax/VAT ID: <b>[%VAT_NUMBER%]</b></p>
+			<p style="color: #282934; margin: 0 0 16px 0;">Payment Terms: <b>[%PAYMENT_TERMS%]</b></p>
+
+			<b style="color: #3f404b;">Billing Address</b>
+
+			<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
+
+			<b style="color: #3f404b;">[%BILLING_ADDRESS_NAME%]</b>
+
+			<p style="color: #54555F; margin: 0 0 16px 0;">[%BILLING_ADDRESS_FORMATTED%]</p>
+
+			<b style="color: #3f404b;">Billing Contact</b>
+
+			<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
+
+			<p style="color: #282934; margin: 0;">Contact Person: <b>[%BILLING_ADDRESS_NAME%]</b></p>
+			<p style="color: #282934; margin: 0;">E-mail: <b>[%EMAIL_ADDRESS%]</b></p>
+			<p style="color: #282934; margin: 0 0 16px 0;">Phone Number: <b>[%BILLING_ADDRESS_PHONE%]</b></p>
 		</div>
-		  
-		<b style="color: #3f404b;">Account Details</b>
-		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
-		<p style="color: #282934; margin: 0;">Account Name: <b>[%ACCOUNT_NAME%]</b></p>
-		<p style="color: #282934; margin: 0;">Account ID: <b>[%ACCOUNT_ID%]</b></p>
-		<p style="color: #282934; margin: 0;">Tax/VAT ID: <b>[%VAT_NUMBER%]</b></p>
-		<p style="color: #282934; margin-bottom: 0 0 16px 0;">Payment Terms: <b>[%PAYMENT_TERMS%]</b></p>
-  
-		<b style="color: #3f404b;">Billing Address</b>
-		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
-		<b style="color: #3f404b;">[%BILLING_ADDRESS_NAME%]</b>
-		<p style="color: #54555F; margin: 0 0 16px 0;">[%BILLING_ADDRESS_FORMATTED%]</p>
-  
-		<b style="color: #3f404b;">Billing Contact</b>
-		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 8px 0 16px; width: 544px;" />
-		<p style="color: #282934; margin: 0;">Contact Person: <b>[%BILLING_ADDRESS_NAME%]</b></p>
-		<p style="color: #282934; margin: 0;">E-mail: <b>[%EMAIL_ADDRESS%]</b></p>
-		<p style="color: #282934; margin: 0 0 16px 0;">Phone Number: <b>[%BILLING_ADDRESS_PHONE%]</b></p>
-	  </div>
-	  
-  
-	  <hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 0 48px; width: 544px;" />
-	  
-	  <footer>
-		<div style="align-items: center; color: #6B6C7E; display: flex; flex-direction: column; gap: 16px; padding: 32px 0;">
-		  <p style="margin: 0;">This email was sent by <a href="https://marketplace.liferay.com" target="_blank">Liferay Marketplace</a></p>
-		  <b style="align-items: center; display: flex; gap: 4px;">
-			<svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg">
-			  <rect x="0" y="0" width="21" height="21" rx="2" fill="#8C8C96"/>
-			  <rect x="3" y="3" width="3" height="3" fill="white"/>
-			  <rect x="7" y="3" width="3" height="3" fill="white"/>
-			  <rect x="11" y="3" width="3" height="3" fill="white"/>
-			  <rect x="3" y="7" width="3" height="3" fill="white"/>
-			  <rect x="7" y="7" width="3" height="3" fill="white"/>
-			  <rect x="15" y="7" width="3" height="3" fill="white"/>
-			  <rect x="3" y="11" width="3" height="3" fill="white"/>
-			  <rect x="11" y="11" width="3" height="3" fill="white"/>
-			  <rect x="15" y="11" width="3" height="3" fill="white"/>
-			  <rect x="7" y="15" width="3" height="3" fill="white"/>
-			  <rect x="11" y="15" width="3" height="3" fill="white"/>
-			  <rect x="15" y="15" width="3" height="3" fill="white"/>
-			</svg>
-			Marketplace
-		  </b>
-		  <div style="align-items: center; display: flex; flex-direction: column;">
-			<p style="margin: 0;">Copyright © 2022 Liferay, Inc.</p>
-			<p style="margin: 0;">1400 Montefino Ave</p>
-			<p style="margin: 0;">Diamond Bar, CA 91765</p>
-		  </div>
-		</div>
-	  </footer>
+
+		<hr style="background-color: #e2e2e4; border: none; height: 1px; margin: 0 48px; width: 544px;" />
+
+		<footer>
+			<div style="align-items: center; color: #6B6C7E; display: flex; flex-direction: column; gap: 16px; padding: 32px 0;">
+				<p style="margin: 0;">This email was sent by <a href="https://marketplace.liferay.com" target="_blank">Liferay Marketplace</a></p>
+
+				<b style="align-items: center; display: flex; gap: 4px;">
+					<svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg">
+						<rect fill="#8C8C96" height="21" rx="2" width="21" x="0" y="0" />
+						<rect fill="white" height="3" width="3" x="3" y="3" />
+						<rect fill="white" height="3" width="3" x="7" y="3" />
+						<rect fill="white" height="3" width="3" x="11" y="3" />
+						<rect fill="white" height="3" width="3" x="3" y="7" />
+						<rect fill="white" height="3" width="3" x="7" y="7" />
+						<rect fill="white" height="3" width="3" x="15" y="7" />
+						<rect fill="white" height="3" width="3" x="3" y="11" />
+						<rect fill="white" height="3" width="3" x="11" y="11" />
+						<rect fill="white" height="3" width="3" x="15" y="11" />
+						<rect fill="white" height="3" width="3" x="7" y="15" />
+						<rect fill="white" height="3" width="3" x="11" y="15" />
+						<rect fill="white" height="3" width="3" x="15" y="15" />
+					</svg>
+					Marketplace
+				</b>
+
+				<div style="align-items: center; display: flex; flex-direction: column;">
+					<p style="margin: 0;">Copyright © 2025 Liferay, Inc.</p>
+					<p style="margin: 0;">1400 Montefino Ave</p>
+					<p style="margin: 0;">Diamond Bar, CA 91765</p>
+				</div>
+			</div>
+		</footer>
 	</div>
-  </div>
-  
+</div>

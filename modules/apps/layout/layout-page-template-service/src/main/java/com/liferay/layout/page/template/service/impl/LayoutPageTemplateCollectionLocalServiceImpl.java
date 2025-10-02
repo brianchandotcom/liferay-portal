@@ -255,8 +255,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			long layoutPageTemplateCollectionId)
 		throws PortalException {
 
-		return deleteLayoutPageTemplateCollection(
-			getLayoutPageTemplateCollection(layoutPageTemplateCollectionId));
+		return layoutPageTemplateCollectionLocalService.
+			deleteLayoutPageTemplateCollection(
+				getLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId));
 	}
 
 	@Override
@@ -264,9 +266,10 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			String externalReferenceCode, long groupId)
 		throws PortalException {
 
-		return deleteLayoutPageTemplateCollection(
-			getLayoutPageTemplateCollectionByExternalReferenceCode(
-				externalReferenceCode, groupId));
+		return layoutPageTemplateCollectionLocalService.
+			deleteLayoutPageTemplateCollection(
+				getLayoutPageTemplateCollectionByExternalReferenceCode(
+					externalReferenceCode, groupId));
 	}
 
 	@Override

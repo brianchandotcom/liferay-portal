@@ -417,10 +417,6 @@ public class DisplayPageTemplateResourceImpl
 		UnicodeProperties typeSettingsUnicodeProperties = _getUnicodeProperties(
 			displayPageTemplate.getDisplayPageTemplateSettings());
 
-		layout = _layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
-
 		layout = LayoutUtil.updateContentLayout(
 			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(),

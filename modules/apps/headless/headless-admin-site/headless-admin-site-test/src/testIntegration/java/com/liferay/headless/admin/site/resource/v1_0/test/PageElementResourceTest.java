@@ -205,7 +205,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.COLLECTION));
+			_randomPageElement(
+				PageElementDefinition.Type.COLLECTION,
+				_randomPageElement(
+					PageElementDefinition.Type.COLLECTION_ITEM)));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(PageElementDefinition.Type.COLLECTION_ITEM));
 		_testPostSitePageSpecificationPageExperiencePageElement(
@@ -477,7 +480,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _randomPageElement(
-			PageElementDefinition.Type pageElementDefinitionType)
+			PageElementDefinition.Type pageElementDefinitionType,
+			PageElement... pageElements)
 		throws Exception {
 
 		PageElement pageElement = super.randomPageElement();
@@ -485,7 +489,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPageElementDefinition(
 			() -> PageElementsTestUtil.getPageElementDefinition(
 				pageElementDefinitionType));
-		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setPageElements(pageElements);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
 		pageElement.setPosition(_position++);
 

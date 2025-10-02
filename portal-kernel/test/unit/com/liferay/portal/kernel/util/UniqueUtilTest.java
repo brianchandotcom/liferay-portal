@@ -27,16 +27,16 @@ public class UniqueUtilTest {
 
 	@Test
 	public void testGetCopyName() throws PortalException {
-		Language mockLanguage = Mockito.mock(Language.class);
+		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			mockLanguage.get(Mockito.any(Locale.class), Mockito.eq("copy"))
+			language.get(Mockito.any(Locale.class), Mockito.eq("copy"))
 		).thenReturn(
 			"Copy"
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			LanguageUtil.class, "_language", mockLanguage);
+			LanguageUtil.class, "_language", language);
 
 		String name1 = RandomTestUtil.randomString();
 

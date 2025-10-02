@@ -256,9 +256,10 @@ public class UtilityPageResourceImpl
 
 		LayoutUtil.updateContentLayout(
 			_cetManager, layout, layout.getNameMap(), titleMap, descriptionMap,
-			layout.getRobotsMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(),
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
+			layout.getTypeSettingsProperties(),
 			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 
@@ -389,8 +390,8 @@ public class UtilityPageResourceImpl
 		Layout layout = LayoutUtil.addContentLayout(
 			_cetManager, groupId, utilityPage.getPageSpecifications(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, nameMap, titleMap,
-			descriptionMap, null, LayoutConstants.TYPE_UTILITY, null, true,
-			true,
+			descriptionMap, null, null, LayoutConstants.TYPE_UTILITY, null,
+			true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);

@@ -419,10 +419,11 @@ public class DisplayPageTemplateResourceImpl
 
 		layout = LayoutUtil.updateContentLayout(
 			_cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(),
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			_getRobotsMap(displayPageTemplate.getDisplayPageTemplateSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
+			typeSettingsUnicodeProperties,
 			displayPageTemplate.getPageSpecifications(),
 			_getServiceContext(displayPageTemplate, groupId));
 

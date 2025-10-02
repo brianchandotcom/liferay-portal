@@ -1,5 +1,19 @@
 @import 'atlas-variables';
 
+.asset-navigation-container {
+	--asset-sidebar-layout-width: 472px;
+
+	@include media-breakpoint-up(sm) {
+		&.c-slideout-push-end {
+			padding-right: var(--asset-sidebar-layout-width);
+		}
+
+		.sidebar {
+			width: var(--asset-sidebar-layout-width);
+		}
+	}
+}
+
 .sidebar-layout {
 	--fds-sidebar-layout-width: 472px;
 
@@ -16,19 +30,6 @@
 	}
 }
 
-.asset-navigation-container {
-	--asset-sidebar-layout-width: 472px;
-
-	@include media-breakpoint-up(sm) {
-		.sidebar {
-			width: var(--asset-sidebar-layout-width);
-		}
-
-		&.c-slideout-push-end {
-			padding-right: var(--asset-sidebar-layout-width);
-		}
-	}
-}
 .c-slideout .sidebar {
 	.asset-metadata-section {
 		margin-top: 1rem;

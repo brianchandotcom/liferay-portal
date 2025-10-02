@@ -85,11 +85,11 @@ export class CustomDataSetsPage {
 			restApplicationOptions: page
 				.locator('.fds-entries-dropdown-menu')
 				.first(),
-			restEndpointField: page.getByLabel('REST EndpointRequired'),
+			restEndpointField: page.getByLabel('EndpointRequired'),
 			restEndpointOptions: page
 				.locator('.fds-entries-dropdown-menu')
 				.locator('nth=2'),
-			restSchemaField: page.getByLabel('REST SchemaRequired'),
+			restSchemaField: page.getByLabel('SchemaRequired'),
 			restSchemaOptions: page
 				.locator('.fds-entries-dropdown-menu')
 				.locator('nth=1'),
@@ -132,9 +132,19 @@ export class CustomDataSetsPage {
 
 		await modal.restApplicationField.click();
 
+		await this.page
+			.getByRole('textbox', {name: 'Search'})
+			.fill(restApplication);
+
 		await modal.restApplicationOptions
 			.getByRole('option', {name: restApplication})
 			.click();
+
+		await this.page.waitForResponse(
+			(response) =>
+				response.url().includes(restApplication) &&
+				response.status() === 200
+		);
 
 		await modal.restSchemaField.click();
 
@@ -144,12 +154,6 @@ export class CustomDataSetsPage {
 			.getByRole('option', {exact: true, name: restSchema})
 			.click();
 
-		await this.page
-			.locator('div')
-			.filter({hasText: /^SaveCancel$/})
-			.first()
-			.click();
-
 		await modal.restEndpointField.click();
 
 		await this.page
@@ -157,10 +161,12 @@ export class CustomDataSetsPage {
 			.fill(restEndpoint);
 
 		await modal.restEndpointOptions
-			.getByRole('option', {name: restEndpoint})
+			.getByRole('option', {exact: true, name: restEndpoint})
 			.click();
 
 		await modal.restEndpointField.click();
+
+		await modal.nameInput.click();
 
 		await modal.saveButton.click();
 

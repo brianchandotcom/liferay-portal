@@ -200,7 +200,7 @@ test('Create parameterized data set', async ({customDataSetsPage}) => {
 test(
 	'Assert endpoint with resolved paramater is available as an option',
 	{tag: '@LPD-31177'},
-	async ({customDataSetsPage}) => {
+	async ({customDataSetsPage, page}) => {
 		const cartDataSetConfig = {
 			name: 'Carts',
 			restApplication: '/headless-commerce-delivery-cart/v1.0',
@@ -217,6 +217,9 @@ test(
 			await customDataSetsPage.newDataSetButton.click();
 
 			await expect(modal.nameInput).toBeVisible();
+			await expect(modal.restApplicationField).toBeVisible();
+			await expect(modal.restSchemaField).toBeVisible();
+			await expect(modal.restEndpointField).toBeVisible();
 		});
 
 		await test.step('Assert endpoint with resolved paramater is available', async () => {
@@ -227,6 +230,14 @@ test(
 				.click();
 
 			await expect(modal.restSchemaField).toBeVisible();
+
+			await page.waitForResponse(
+				(response) =>
+					response
+						.url()
+						.includes(cartDataSetConfig.restApplication) &&
+					response.status() === 200
+			);
 
 			await modal.restSchemaField.click();
 

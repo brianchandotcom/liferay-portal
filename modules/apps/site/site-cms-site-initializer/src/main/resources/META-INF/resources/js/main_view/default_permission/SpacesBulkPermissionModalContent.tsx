@@ -7,11 +7,10 @@ import '../../../css/components/DefaultPermission.scss';
 
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
-import {openModal, openToast} from 'frontend-js-components-web';
+import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
-import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {DEPOT_CLASS_NAME} from './BulkDefaultPermissionModalContent';
 import DefaultPermissionForm from './DefaultPermissionForm';
@@ -51,7 +50,6 @@ export function permissionsBulkAction({
 export default function SpacesBulkPermissionModalContent({
 	actions,
 	apiURL,
-	className,
 	closeModal,
 	roles,
 	selectedData,
@@ -117,14 +115,7 @@ export default function SpacesBulkPermissionModalContent({
 			},
 			type: 'PermissionBulkAction',
 		});
-	}, [
-		apiURL,
-		className,
-		closeModal,
-		currentValues,
-		selectedData.items,
-		selectedData.selectAll,
-	]);
+	}, [apiURL, closeModal, currentValues, selectedData]);
 
 	const onChangeHandler = useCallback(
 		(checkedRoleActions: CheckedRoleActions) => {

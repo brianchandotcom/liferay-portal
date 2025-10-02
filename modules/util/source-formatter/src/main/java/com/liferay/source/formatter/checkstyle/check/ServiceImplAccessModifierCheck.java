@@ -46,9 +46,6 @@ public class ServiceImplAccessModifierCheck extends BaseCheck {
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 
-			DetailAST modifiersDetailAST =
-				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
-
 			String methodName = getName(methodDefinitionDetailAST);
 
 			if (methodName.startsWith("remove") ||
@@ -56,6 +53,9 @@ public class ServiceImplAccessModifierCheck extends BaseCheck {
 
 				continue;
 			}
+
+			DetailAST modifiersDetailAST =
+				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
 			if (!modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) &&
 				modifiersDetailAST.branchContains(

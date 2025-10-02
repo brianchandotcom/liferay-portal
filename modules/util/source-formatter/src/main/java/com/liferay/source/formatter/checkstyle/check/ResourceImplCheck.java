@@ -39,11 +39,6 @@ public class ResourceImplCheck extends BaseCheck {
 			return;
 		}
 
-		_checkDoGetMethodModifier(detailAST);
-		_checkMethodParameterAnnotations(detailAST);
-	}
-
-	private void _checkDoGetMethodModifier(DetailAST detailAST) {
 		DetailAST parentDetailAST = detailAST.getParent();
 
 		if (parentDetailAST != null) {
@@ -55,6 +50,13 @@ public class ResourceImplCheck extends BaseCheck {
 
 		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+		_checkDoGetMethodModifier(methodDefinitionDetailASTList);
+		_checkMethodParameterAnnotations(methodDefinitionDetailASTList);
+	}
+
+	private void _checkDoGetMethodModifier(
+		List<DetailAST> methodDefinitionDetailASTList) {
 
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
@@ -81,14 +83,13 @@ public class ResourceImplCheck extends BaseCheck {
 	}
 
 	private void _checkMethodParameterAnnotations(
-		DetailAST classDefinitionDetailAST) {
+		List<DetailAST> methodDefinitionDetailASTList) {
 
 		List<String> allowedParameterAnnotationNames = getAttributeValues(
 			_ALLOWED_PARAMETER_ANNOTATION_NAMES_KEY);
 
 		for (DetailAST methodDefinitionDetailAST :
-				getAllChildTokens(
-					classDefinitionDetailAST, true, TokenTypes.METHOD_DEF)) {
+				methodDefinitionDetailASTList) {
 
 			String methodName = getName(methodDefinitionDetailAST);
 

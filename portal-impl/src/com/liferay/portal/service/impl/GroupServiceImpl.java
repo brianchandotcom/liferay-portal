@@ -91,26 +91,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
-			PortalPermissionUtil.check(
-				getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
-		}
-		else {
-			GroupPermissionUtil.check(
-				getPermissionChecker(), parentGroupId,
-				ActionKeys.ADD_COMMUNITY);
-		}
-
-		Group group = groupLocalService.addGroup(
-			getUserId(), parentGroupId, null, 0, liveGroupId, nameMap,
-			descriptionMap, type, manualMembership, membershipRestriction,
-			friendlyURL, site, inheritContent, active, serviceContext);
-
-		if (site) {
-			SiteMembershipPolicyUtil.verifyPolicy(group);
-		}
-
-		return group;
+		return addGroup(
+			null, parentGroupId, liveGroupId, nameMap, descriptionMap, type,
+			null, manualMembership, membershipRestriction, friendlyURL, site,
+			inheritContent, active, serviceContext);
 	}
 
 	@Override
@@ -126,6 +110,39 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			parentGroupId, liveGroupId, nameMap, descriptionMap, type,
 			manualMembership, membershipRestriction, friendlyURL, site, false,
 			active, serviceContext);
+	}
+
+	@Override
+	public Group addGroup(
+			String externalReferenceCode, long parentGroupId, long liveGroupId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int type, String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean site,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			PortalPermissionUtil.check(
+				getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
+		}
+		else {
+			GroupPermissionUtil.check(
+				getPermissionChecker(), parentGroupId,
+				ActionKeys.ADD_COMMUNITY);
+		}
+
+		Group group = groupLocalService.addGroup(
+			externalReferenceCode, getUserId(), parentGroupId, null, 0,
+			liveGroupId, nameMap, descriptionMap, type, typeSettings,
+			manualMembership, membershipRestriction, friendlyURL, site,
+			inheritContent, active, serviceContext);
+
+		if (site) {
+			SiteMembershipPolicyUtil.verifyPolicy(group);
+		}
+
+		return group;
 	}
 
 	@Override
@@ -1050,6 +1067,21 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		return updateGroup(
+			groupId, parentGroupId, nameMap, descriptionMap, type, null,
+			manualMembership, membershipRestriction, friendlyURL,
+			inheritContent, active, serviceContext);
+	}
+
+	@Override
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, String typeSettings,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException {
+
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		GroupPermissionUtil.check(
@@ -1084,8 +1116,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			group = groupLocalService.updateGroup(
 				groupId, parentGroupId, nameMap, descriptionMap, type,
-				manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
+				typeSettings, manualMembership, membershipRestriction,
+				friendlyURL, inheritContent, active, serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, oldAssetCategories, oldAssetTags,
@@ -1095,7 +1127,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return groupLocalService.updateGroup(
-			groupId, parentGroupId, nameMap, descriptionMap, type,
+			groupId, parentGroupId, nameMap, descriptionMap, type, typeSettings,
 			manualMembership, membershipRestriction, friendlyURL,
 			inheritContent, active, serviceContext);
 	}

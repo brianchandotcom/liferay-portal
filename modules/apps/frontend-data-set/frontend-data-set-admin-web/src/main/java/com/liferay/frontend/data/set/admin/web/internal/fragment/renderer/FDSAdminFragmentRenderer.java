@@ -219,7 +219,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						fragmentRendererContext));
 			}
 
-			if (_allTokensResolved(
+			if (_isResolved(
 					defaultFragmentEntryProcessorContext, externalReferenceCode,
 					fragmentEntryLink, httpServletRequest)) {
 
@@ -259,22 +259,6 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		finally {
 			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
-	}
-
-	private boolean _allTokensResolved(
-		DefaultFragmentEntryProcessorContext
-			defaultFragmentEntryProcessorContext,
-		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest) {
-
-		Matcher matcher = _pattern.matcher(
-			_fdsRenderer.getFDSAPIURL(
-				externalReferenceCode, httpServletRequest, true,
-				_getTokenResolutionsJSONObject(
-					defaultFragmentEntryProcessorContext, externalReferenceCode,
-					fragmentEntryLink, httpServletRequest)));
-
-		return !matcher.find();
 	}
 
 	private DefaultFragmentEntryProcessorContext
@@ -443,6 +427,22 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return matcher.find();
 	}
 
+	private boolean _isResolved(
+		DefaultFragmentEntryProcessorContext
+			defaultFragmentEntryProcessorContext,
+		String externalReferenceCode, FragmentEntryLink fragmentEntryLink,
+		HttpServletRequest httpServletRequest) {
+
+		Matcher matcher = _pattern.matcher(
+			_fdsRenderer.getFDSAPIURL(
+				externalReferenceCode, httpServletRequest, true,
+				_getTokenResolutionsJSONObject(
+					defaultFragmentEntryProcessorContext, externalReferenceCode,
+					fragmentEntryLink, httpServletRequest)));
+
+		return !matcher.find();
+	}
+
 	private boolean _isResolvedToken(String url, String tokenName) {
 		return !url.contains(
 			StringPool.OPEN_CURLY_BRACE + tokenName +
@@ -508,7 +508,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		htmlSB.append("<span class='workflow-status'><strong class='label ");
 
-		if (_allTokensResolved(
+		if (_isResolved(
 				defaultFragmentEntryProcessorContext, externalReferenceCode,
 				fragmentEntryLink, httpServletRequest)) {
 

@@ -14,7 +14,8 @@ public class LPS_196611 {
 
 	public void method(long companyId, String externalReferenceCode) {
 		CommercePriceListLocalServiceUtil.fetchCommercePriceListByExternalReferenceCode(externalReferenceCode, companyId);
-		_commercePriceListLocalService.fetchByExternalReferenceCode(123, "test123");
+		_commercePriceListLocalService.fetchByExternalReferenceCode(
+			123, "test123");
 		_commercePriceListLocalService.fetchCommercePriceListByExternalReferenceCode(externalReferenceCode, companyId);
 	}
 

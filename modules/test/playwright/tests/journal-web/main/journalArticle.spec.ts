@@ -1868,17 +1868,24 @@ ckeditor4Test(
 			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
 		});
 
-		await ckeditor4Page.insertHTML(
-			'<img src="/documents/d/guest/moon-png" />'
-		);
+		await ckeditor4Page.page.getByLabel('Image', {exact: true}).click();
+
+		await ckeditor4Page.selectImageWithItemSelector({
+			cardTitle: 'moon.png',
+		});
 
 		const editableFrame = journalEditArticlePage.page
 			.locator('.edit-article-panel')
 			.frameLocator('iframe[title="editor"]');
 
-		await editableFrame
-			.locator('img[src="/documents/d/guest/moon-png"]')
-			.dblclick();
+		const moonImage = editableFrame.locator(
+			'img[src="/documents/d/guest/moon-png"]'
+		);
+
+		await expect(moonImage).toBeVisible();
+		await expect(moonImage).toHaveAttribute('data-fileentryid');
+
+		await moonImage.dblclick();
 
 		await ckeditor4Page.contextMenu.getByText('Browse Server').click();
 
@@ -1892,9 +1899,12 @@ ckeditor4Test(
 
 		await ckeditor4Page.contextMenu.getByText('OK').click();
 
-		await expect(
-			editableFrame.locator('img[src="/documents/d/guest/satellite-png"]')
-		).toBeVisible();
+		const satelliteImage = editableFrame.locator(
+			'img[src="/documents/d/guest/satellite-png"]'
+		);
+
+		await expect(satelliteImage).toBeVisible();
+		await expect(satelliteImage).toHaveAttribute('data-fileentryid');
 	}
 );
 

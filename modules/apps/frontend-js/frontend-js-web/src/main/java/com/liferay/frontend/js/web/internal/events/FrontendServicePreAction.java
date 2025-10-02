@@ -70,13 +70,6 @@ public class FrontendServicePreAction extends Action {
 		themeDisplay.setDefaultMainCSSURL(
 			webContextStylesheetAbsolutePortalURLBuilder.build());
 
-		absolutePortalURLBuilder.forWebContextStylesheet(
-			theme.getServletContextName(),
-			rtl ? "/css/main_rtl.css" : "/css/main.css");
-
-		themeDisplay.setDefaultMainCSSURL(
-			webContextStylesheetAbsolutePortalURLBuilder.build());
-
 		WebContextScriptAbsolutePortalURLBuilder
 			webContextScriptAbsolutePortalURLBuilder =
 				absolutePortalURLBuilder.forWebContextScript(

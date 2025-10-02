@@ -8,7 +8,9 @@ package com.liferay.marketplace;
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Catalog;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
+import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Sku;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
@@ -35,9 +37,11 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.Locale; 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -152,6 +156,22 @@ public class MarketplaceRestController extends BaseRestController {
 
 		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
 
+		Order order = _marketplaceService.getOrder(
+			commerceOrderJSONObject.getLong("id"));
+
+		if ((Objects.equals(
+				commerceOrderJSONObject.getString("paymentMethod"),
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
+			 (paymentStatus ==
+				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING))) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Sending Purchased Order Notification...");
+			}
+
+			_sendOrderPurchasedNotification(order);
+		}
+
 		if ((paymentStatus !=
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED) &&
 			(paymentStatus !=
@@ -166,9 +186,6 @@ public class MarketplaceRestController extends BaseRestController {
 
 			return;
 		}
-
-		Order order = _marketplaceService.getOrder(
-			commerceOrderJSONObject.getLong("id"));
 
 		_marketplaceService.updateOrder(
 			null, order.getId(), MarketplaceConstants.ORDER_STATUS_PROCESSING);
@@ -318,6 +335,110 @@ public class MarketplaceRestController extends BaseRestController {
 					setTotal(() -> finalTotal);
 				}
 			});
+	}
+
+	private void _sendOrderPurchasedNotification(Order order) throws Exception {
+		OrderItem orderItem = order.getOrderItems()[0];
+
+		if (orderItem == null) {
+			return;
+		}
+
+		Sku sku = _marketplaceService.getSkuResource(
+		).getSku(
+			orderItem.getSkuId()
+		);
+
+		BillingAddress billingAddress = _marketplaceService.getBillingAddress(
+			order.getId());
+
+		Product product = _marketplaceService.getProduct(sku.getProductId());
+
+		Locale locale = new Locale("", billingAddress.getCountryISOCode());
+
+		Catalog catalog = _marketplaceService.getCatalog(
+			product.getCatalogId());
+
+		Map<String, String> productSpecificationsMap =
+			_marketplaceService.getProductSpecificationsMap(
+				product.getProductId());
+
+
+		_marketplaceService.postNotificationQueueEntry(
+			"accounts-receivables-intl@liferay.com", "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
+			new HashMapBuilder<String, Object>().put(
+				"[%ACCOUNT_ID%]",
+				order.getAccountId(
+				).toString()
+			).put(
+				"[%ACCOUNT_NAME%]",
+				order.getAccount(
+				).getName()
+			).put(
+				"[%PRODUCT_THUMBNAIL%]",
+				new URL(
+					"http://" + lxcDXPMainDomain + product.getThumbnail()
+				).toString(
+				).replaceAll(
+					"(?<=accounts/)-?\\d+(?=/images)", "-1"
+				)
+			).put(
+				"[%APP_NAME%]",
+				product.getName(
+				).get(
+					"en_US"
+				)
+			).put(
+				"[%APP_TYPE%]", productSpecificationsMap.get("type")
+			).put(
+				"[%BILLING_ADDRESS_FORMATTED%]",
+				StringBundler.concat(
+					billingAddress.getStreet1(), ", ", billingAddress.getCity(), ", ",
+					billingAddress.getRegionISOCode(), ", ",
+					locale.getDisplayCountry(Locale.ENGLISH))
+			).put(
+				"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
+			).put(
+				"[%BILLING_ADDRESS_PHONE%]", billingAddress.getPhoneNumber()
+			).put(
+				"[%CATALOG_NAME%]", catalog.getName()
+			).put(
+				"[%EMAIL_ADDRESS%]", order.getCreatorEmailAddress()
+			).put(
+				"[%LICENSE_TYPE%]", productSpecificationsMap.get("license-type")
+			).put(
+				"[%NET_PRICE_FORMATTED%]", order.getSubtotalFormatted()
+			).put(
+				"[%ORDER_DATE%]",
+				ZonedDateTime.ofInstant(
+					order.getCreateDate(
+					).toInstant(),
+					ZoneOffset.UTC
+				).format(
+					DateTimeFormatter.ofPattern("MMMM d, yyyy")
+				)
+			).put(
+				"[%ORDER_ID%]",
+				order.getId(
+				).toString()
+			).put(
+				"[%ORDER_PAYMENT_METHOD%]",
+				MarketplaceConstants.getOrderPaymentMethodLabel(
+					order.getPaymentMethod())
+			).put(
+				"[%ORDER_STATUS%]",
+				MarketplaceConstants.getOrderStatusLabel(order.getOrderStatus())
+			).put(
+				"[%PAYMENT_TERMS%]", order.getPaymentTermDescription()
+			).put(
+				"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
+			).put(
+				"[%VAT_FORMATTED%]", order.getTaxAmountFormatted()
+			).put(
+				"[%VAT_NUMBER%]",
+				order.getAccount(
+				).getTaxId()
+			).build());
 	}
 
 	private void _setUpCloudProductPurchase(

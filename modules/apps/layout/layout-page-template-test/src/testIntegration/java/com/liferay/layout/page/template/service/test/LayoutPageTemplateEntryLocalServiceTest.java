@@ -346,6 +346,14 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				SystemEventConstants.TYPE_DELETE));
 
+		long layoutClassNameId = _portal.getClassNameId(Layout.class);
+
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutClassNameId,
+				layoutPageTemplateEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
+
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getExternalReferenceCode(),
 			layoutPageTemplateEntry.getGroupId());
@@ -357,6 +365,11 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 			_systemEventLocalService.fetchSystemEvent(
 				_group.getGroupId(), classNameId,
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				SystemEventConstants.TYPE_DELETE));
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutClassNameId,
+				layoutPageTemplateEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 	}
 

@@ -600,18 +600,38 @@ public class DefaultAttributeResolver implements AttributeResolver {
 		try {
 			String name = null;
 			String nameFormat = null;
+			String oldName = null;
 
 			if (namespaceEnabled) {
 				name = "urn:liferay:membership:userGroups";
 				nameFormat = Attribute.URI_REFERENCE;
+				oldName = "urn:liferay:userGroups";
 			}
 			else {
 				name = "membership:userGroups";
 				nameFormat = Attribute.UNSPECIFIED;
+				oldName = "userGroups";
+			}
+
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("Publishing userGroups attribute with and without ");
+				sb.append("membership namespace. If using a non-Liferay SP, ");
+				sb.append("please reconfigure the SP IdP connection to use ");
+				sb.append("the new format of 'membership:userGroups', as the ");
+				sb.append("previous format is deprecated and will be removed.");
+
+				_log.warn(sb.toString());
 			}
 
 			attributePublisher.publish(
 				name, nameFormat,
+				TransformUtil.transformToArray(
+					user.getUserGroups(), UserGroup::getName, String.class));
+
+			attributePublisher.publish(
+				oldName, nameFormat,
 				TransformUtil.transformToArray(
 					user.getUserGroups(), UserGroup::getName, String.class));
 		}

@@ -8291,11 +8291,11 @@ public class JournalArticleLocalServiceImpl
 			long groupId, String articleId, String urlTitle)
 		throws PortalException {
 
-		return UniqueUtil.getCopyName(
+		return UniqueUtil.getCopyValue(
 			urlTitle,
-			copyName -> {
+			copyValue -> {
 				JournalArticle article = fetchArticleByUrlTitle(
-					groupId, copyName);
+					groupId, copyValue);
 
 				if ((article == null) ||
 					Objects.equals(articleId, article.getArticleId())) {

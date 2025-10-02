@@ -26,7 +26,7 @@ import org.mockito.Mockito;
 public class UniqueUtilTest {
 
 	@Test
-	public void testGetCopyName() throws PortalException {
+	public void testGetCopyValue() throws PortalException {
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
@@ -38,16 +38,18 @@ public class UniqueUtilTest {
 		ReflectionTestUtil.setFieldValue(
 			LanguageUtil.class, "_language", language);
 
-		String name = RandomTestUtil.randomString();
+		String value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			name + " (Copy)", UniqueUtil.getCopyName(name, copyName -> true));
+			value + " (Copy)",
+			UniqueUtil.getCopyValue(value, copyValue -> true));
 
-		name = RandomTestUtil.randomString();
+		value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			name + " (Copy 3)",
-			UniqueUtil.getCopyName(name, copyName -> copyName.endsWith("3)")));
+			value + " (Copy 3)",
+			UniqueUtil.getCopyValue(
+				value, copyValue -> copyValue.endsWith("3)")));
 	}
 
 }

@@ -191,13 +191,13 @@ public class FragmentEntryLocalServiceImpl
 				publishedFragmentEntry.fetchDraftFragmentEntry();
 		}
 
-		String name = UniqueUtil.getCopyName(
+		String name = UniqueUtil.getCopyValue(
 			sourceFragmentEntry.getName(),
-			copyName -> {
+			copyValue -> {
 				FragmentEntry existingFragmentEntry =
 					fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
 						sourceFragmentEntry.getGroupId(),
-						sourceFragmentEntry.getFragmentCollectionId(), copyName,
+						sourceFragmentEntry.getFragmentCollectionId(), copyValue,
 						null);
 
 				if (existingFragmentEntry == null) {

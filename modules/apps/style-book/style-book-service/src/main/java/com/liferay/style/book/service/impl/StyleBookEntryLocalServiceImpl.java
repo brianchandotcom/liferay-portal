@@ -133,12 +133,12 @@ public class StyleBookEntryLocalServiceImpl
 		StyleBookEntry sourceStyleBookEntry = getStyleBookEntry(
 			sourceStyleBookEntryId);
 
-		String name = UniqueUtil.getCopyName(
+		String name = UniqueUtil.getCopyValue(
 			sourceStyleBookEntry.getName(),
-			copyName -> {
+			copyValue -> {
 				StyleBookEntry existingStyleBookEntry =
 					styleBookEntryPersistence.fetchByG_LikeN_First(
-						sourceStyleBookEntry.getGroupId(), copyName, null);
+						sourceStyleBookEntry.getGroupId(), copyValue, null);
 
 				if (existingStyleBookEntry == null) {
 					return true;

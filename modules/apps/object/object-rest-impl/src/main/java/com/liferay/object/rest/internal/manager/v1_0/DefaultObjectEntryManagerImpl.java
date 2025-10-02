@@ -2196,14 +2196,14 @@ public class DefaultObjectEntryManagerImpl
 		Column<?, String> objectFieldColumn =
 			(Column<?, String>)table.getColumn(objectField.getDBColumnName());
 
-		return UniqueUtil.getCopyName(
+		return UniqueUtil.getCopyValue(
 			value,
-			copyName -> {
+			copyValue -> {
 				long count = objectEntryLocalService.getValuesListCount(
 					new Long[] {groupId}, objectDefinition.getCompanyId(),
 					objectDefinition.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
-					objectFieldColumn.eq(copyName), false, null);
+					objectFieldColumn.eq(copyValue), false, null);
 
 				if (count == 0) {
 					return true;

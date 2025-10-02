@@ -12,15 +12,20 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCol
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionGroupIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -200,6 +205,12 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				RandomTestUtil.randomString());
+
 		long classNameId = _portal.getClassNameId(
 			LayoutPageTemplateCollection.class);
 
@@ -210,6 +221,23 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 					getLayoutPageTemplateCollectionId(),
 				SystemEventConstants.TYPE_DELETE));
 
+		long layoutClassNameId = _portal.getClassNameId(Layout.class);
+
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutClassNameId,
+				layoutPageTemplateEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
+
+		long layoutPageTemplateEntryClassNameId = _portal.getClassNameId(
+			LayoutPageTemplateEntry.class);
+
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutPageTemplateEntryClassNameId,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				SystemEventConstants.TYPE_DELETE));
+
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(
 				externalReferenceCode, _group.getGroupId());
@@ -218,11 +246,26 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
 				_group.getGroupId(), classNameId,
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
+				SystemEventConstants.TYPE_DELETE));
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutClassNameId,
+				layoutPageTemplateEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), layoutPageTemplateEntryClassNameId,
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				SystemEventConstants.TYPE_DELETE));
 	}
 
@@ -260,8 +303,15 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 	private GroupLocalService _groupLocalService;
 
 	@Inject
+	private LayoutLocalService _layoutLocalService;
+
+	@Inject
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@Inject
 	private Portal _portal;

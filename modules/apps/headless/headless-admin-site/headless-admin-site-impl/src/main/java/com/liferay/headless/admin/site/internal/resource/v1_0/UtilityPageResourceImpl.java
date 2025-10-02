@@ -268,10 +268,11 @@ public class UtilityPageResourceImpl
 		}
 
 		LayoutUtil.updateContentLayout(
-			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
-			titleMap, descriptionMap, layout.getRobotsMap(),
+			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), titleMap, descriptionMap,
+			layout.getKeywordsMap(), layout.getRobotsMap(),
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
+			layout.getTypeSettingsProperties(),
 			utilityPage.getPageSpecifications(),
 			_getServiceContext(groupId, utilityPage));
 
@@ -403,8 +404,8 @@ public class UtilityPageResourceImpl
 			_cetManager, groupId, _infoItemServiceRegistry,
 			utilityPage.getPageSpecifications(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, nameMap, titleMap,
-			descriptionMap, null, LayoutConstants.TYPE_UTILITY, null, true,
-			true,
+			descriptionMap, null, null, LayoutConstants.TYPE_UTILITY, null,
+			true, true,
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);

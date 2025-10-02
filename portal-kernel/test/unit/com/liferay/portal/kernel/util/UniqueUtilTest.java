@@ -46,23 +46,18 @@ public class UniqueUtilTest {
 	}
 
 	private void _testGetCopyName() throws PortalException {
-		UnsafeFunction<String, Boolean, PortalException> unsafeFunction =
-			name -> true;
-
-		String name = RandomTestUtil.randomString();
+		String name1 = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			name + " (Copy)", UniqueUtil.getCopyName(name, unsafeFunction));
+			name1 + " (Copy)", UniqueUtil.getCopyName(name1, name2 -> true));
 	}
 
 	private void _testGetCopyNameWithMultipleAttempts() throws PortalException {
-		UnsafeFunction<String, Boolean, PortalException> unsafeFunction =
-			name -> name.endsWith("3)");
-
-		String name = RandomTestUtil.randomString();
+		String name1 = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			name + " (Copy 3)", UniqueUtil.getCopyName(name, unsafeFunction));
+			name1 + " (Copy 3)",
+			UniqueUtil.getCopyName(name1, name2 -> name2.endsWith("3)")));
 	}
 
 }

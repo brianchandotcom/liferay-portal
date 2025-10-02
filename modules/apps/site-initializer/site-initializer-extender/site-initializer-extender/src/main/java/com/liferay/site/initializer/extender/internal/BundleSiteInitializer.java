@@ -983,7 +983,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			long groupId = 0;
 
 			if (StringUtil.equals(replaceKey, "ASSET_LIBRARY")) {
-				JSONObject depotEntrySettingsJsonObject =
+				JSONObject depotEntrySettingsJSONObject =
 					_jsonFactory.createJSONObject(
 						SiteInitializerUtil.read(
 							resourcePath + "/depot-entry-settings.json",
@@ -991,7 +991,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				Group group = _groupLocalService.fetchGroup(
 					serviceContext.getCompanyId(),
-                        depotEntrySettingsJsonObject.getJSONObject(
+                        depotEntrySettingsJSONObject.getJSONObject(
 						"name_i18n"
 					).getString(
 						LocaleUtil.getSiteDefault(
@@ -5520,22 +5520,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		return map;
-	}
-
-	private int _getDepotEntryType(String assetLibraryTypeString) {
-		if (Validator.isNull(assetLibraryTypeString) ||
-			StringUtil.equalsIgnoreCase(
-				assetLibraryTypeString, "AssetLibrary")) {
-
-			return DepotConstants.TYPE_ASSET_LIBRARY;
-		}
-		else if (StringUtil.equalsIgnoreCase(assetLibraryTypeString, "Space")) {
-			return DepotConstants.TYPE_SPACE;
-		}
-
-		throw new IllegalArgumentException(
-			"Asset library type " + assetLibraryTypeString +
-				" must be \"AssetLibrary\" or \"Space\"");
 	}
 
 	private Serializable _getExpandoAttributeValue(JSONObject jsonObject)

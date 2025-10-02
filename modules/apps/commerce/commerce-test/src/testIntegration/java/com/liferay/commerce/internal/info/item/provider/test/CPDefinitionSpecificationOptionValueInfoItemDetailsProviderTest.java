@@ -11,7 +11,7 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.info.item.ERCInfoItemIdentifier;
@@ -56,7 +56,7 @@ public class CPDefinitionSpecificationOptionValueInfoItemDetailsProviderTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		CommerceCatalog commerceCatalog =
-			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				LocaleUtil.US.getDisplayLanguage(), serviceContext);
@@ -136,6 +136,9 @@ public class CPDefinitionSpecificationOptionValueInfoItemDetailsProviderTest {
 					group.getExternalReferenceCode())),
 			infoItemDetails.getInfoItemReference());
 	}
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CPDefinitionSpecificationOptionValue
 		_cpDefinitionSpecificationOptionValue;

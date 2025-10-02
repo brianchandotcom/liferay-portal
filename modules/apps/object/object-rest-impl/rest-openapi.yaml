@@ -215,8 +215,6 @@ components:
                 reviewDate:
                     format: date
                     type: string
-                scope:
-                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Scope
                 scopeId:
                     format: int64
                     readOnly: true
@@ -261,6 +259,8 @@ components:
             properties:
                 objectDefinitionBrief:
                     $ref: "#/components/schemas/ObjectDefinitionBrief"
+                scope:
+                    $ref: ../../headless/headless-object/headless-object-impl/rest-openapi.yaml#Scope
                 version:
                     $ref: "#/components/schemas/Version"
             type: object

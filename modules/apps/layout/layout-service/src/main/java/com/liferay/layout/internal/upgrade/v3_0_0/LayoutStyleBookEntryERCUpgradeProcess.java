@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.upgrade.v7_4_x;
+package com.liferay.layout.internal.upgrade.v3_0_0;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -45,13 +45,4 @@ public class LayoutStyleBookEntryERCUpgradeProcess extends UpgradeProcess {
 			UpgradeProcessFactory.dropColumns("Layout", "styleBookEntryId")
 		};
 	}
-
-	@Override
-	protected UpgradeStep[] getPreUpgradeSteps() {
-		return new UpgradeStep[] {
-			UpgradeProcessFactory.addColumns(
-				"Layout", "styleBookEntryERC VARCHAR(75) null")
-		};
-	}
-
 }

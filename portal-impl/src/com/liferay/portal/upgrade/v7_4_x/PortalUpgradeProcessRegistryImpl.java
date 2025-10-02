@@ -686,7 +686,8 @@ public class PortalUpgradeProcessRegistryImpl
 				new String[] {"com.liferay.mail.settings.impl"}, null));
 
 		upgradeVersionTreeMap.put(
-			new Version(36, 0, 0), new LayoutStyleBookEntryERCUpgradeProcess());
+			new Version(35, 1, 0), UpgradeProcessFactory.addColumns(
+				"Layout", "styleBookEntryERC VARCHAR(75) null"));
 	}
 
 }

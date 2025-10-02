@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Alan Huang
  */
-public class AccessModifierCheck extends BaseCheck {
+public class ServiceImplAccessModifierCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

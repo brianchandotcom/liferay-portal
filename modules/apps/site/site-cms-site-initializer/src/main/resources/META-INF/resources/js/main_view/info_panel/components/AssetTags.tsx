@@ -1,19 +1,22 @@
 /**
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-nameentifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Autocomplete from '@clayui/autocomplete';
-import {useResource} from '@clayui/data-provider';
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
-import {fetch, sub} from 'frontend-js-web';
-import React, {useCallback, useEffect, useState} from 'react';
+import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
+import {sub} from 'frontend-js-web';
+import React, {useCallback, useState} from 'react';
 
 import TagService from '../../../common/services/TagService';
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import {Categorization} from '../services/ObjectEntryService';
 import {CategorizationInputSize} from './AssetCategorization';
+
+type TKeyword = {
+	name: string;
+};
 
 const AssetTags = ({
 	cmsGroupId,
@@ -26,23 +29,19 @@ const AssetTags = ({
 	objectEntry: IAssetObjectEntry;
 	updateObjectEntry: (object: Categorization) => Promise<void>;
 }) => {
-	const [keywords, setKeywords] = useState([] as string[]);
-	const [networkStatus, setNetworkStatus] = useState(4);
 	const [value, setValue] = useState('');
 
-	const {refetch, resource} = useResource({
-		fetch,
-		link: `${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
-		onNetworkStatusChange: setNetworkStatus,
-	});
-
-	const [items, setItems] = useState([] as {[key: string]: any}[]);
+	const [keywords, setKeywords] = useState<string[]>(
+		objectEntry.keywords || []
+	);
 
 	const addKeyword = useCallback(
-		async (keyword: any) => {
+		async (keyword: TKeyword) => {
 			if (keywords.includes(keyword.name)) {
 				return;
 			}
+
+			setKeywords((prevItems) => [...prevItems, keyword.name]);
 
 			await updateObjectEntry({
 				keywords: [...keywords, keyword.name],
@@ -51,70 +50,36 @@ const AssetTags = ({
 		[keywords, updateObjectEntry]
 	);
 
-	const createAndAddKeyword = useCallback(
-		async (event: any) => {
-			event.preventDefault();
+	const createAndAddKeyword = useCallback(async () => {
+		const {data, error} = await TagService.createTag({
+			groupId: cmsGroupId,
+			name: value,
+		});
 
-			const {data, error} = await TagService.createTag({
-				groupId: cmsGroupId,
-				name: value,
-			});
+		if (data) {
+			await addKeyword(data);
 
-			if (data) {
-				refetch();
-
-				await addKeyword(data);
-			}
-			else if (error) {
-				console.error('Failed to create new keyword.', error);
-			}
-		},
-		[addKeyword, cmsGroupId, refetch, value]
-	);
+			setValue('');
+		}
+		else if (error) {
+			console.error('Failed to create new keyword.', error);
+		}
+	}, [addKeyword, cmsGroupId, value]);
 
 	const removeKeyword = useCallback(
 		async (keyword: string) => {
-			const index = keywords.findIndex((value) => value === keyword);
+			const newKeywords = keywords.filter((value) => value !== keyword);
 
-			if (index === -1) {
-				return;
+			if (newKeywords.length < keywords.length) {
+				setKeywords(newKeywords);
+
+				await updateObjectEntry({
+					keywords: newKeywords,
+				});
 			}
-
-			const curKeywords = [...keywords];
-
-			curKeywords.splice(index, 1);
-
-			await updateObjectEntry({
-				keywords: curKeywords,
-			});
 		},
 		[keywords, updateObjectEntry]
 	);
-
-	const updateKeywords = useCallback(
-		(keywords: string[] = []) => {
-			setValue('');
-
-			setKeywords(keywords);
-		},
-		[setValue, setKeywords]
-	);
-
-	useEffect(() => {
-		setItems((currentItems) => {
-			if (value.length) {
-				return [
-					...currentItems.filter(({name}) => name.includes(value)),
-				];
-			}
-
-			return [...(resource?.items || [])];
-		});
-	}, [value, resource, setItems]);
-
-	useEffect(() => {
-		updateKeywords(objectEntry.keywords);
-	}, [objectEntry, updateKeywords]);
 
 	return (
 		<ClayPanel
@@ -129,47 +94,51 @@ const AssetTags = ({
 			showCollapseIcon={true}
 		>
 			<ClayPanel.Body>
-				<Autocomplete
-					filterKey="name"
-					id="asset-tags-autocomplete"
-					items={items}
-					loadingState={networkStatus}
-					menuTrigger="focus"
+				<ItemSelector<TKeyword>
+					apiURL={`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
+					locator={{
+						id: 'id',
+						label: 'name',
+						value: 'externalReferenceCode',
+					}}
 					onChange={setValue}
+					onItemsChange={(newItems: TKeyword[]) => {
+						if (newItems[0]) {
+							addKeyword(newItems[0]);
+
+							// The reason for this timeout is because of react's
+							// batch rendering. Clay internals set the value of
+							// the input, but we need to wait for the next 'tick' to set the value.
+
+							setTimeout(() => setValue(''));
+						}
+					}}
 					placeholder={sub(Liferay.Language.get('add-x'), 'tag')}
+					primaryAction={
+						!!value.length &&
+						!keywords.includes(value) && {
+							label: sub(
+								Liferay.Language.get('create-new-tag-x'),
+								value
+							),
+							onClick: createAndAddKeyword,
+						}
+					}
 					sizing={inputSize}
 					value={value}
 				>
-					{!items.length ? (
-						<Autocomplete.Item
-							className="text-info"
-							key="createNewKeyword"
-							onClick={createAndAddKeyword}
-							textValue={sub(
-								Liferay.Language.get('create-new-tag-x'),
-								value
-							)}
-						/>
-					) : (
-						items.map((item) => {
-							return (
-								<Autocomplete.Item
-									key={item.id}
-									onClick={async (event) => {
-										event.preventDefault();
-
-										await addKeyword(item);
-									}}
-								>
-									{item.name}
-								</Autocomplete.Item>
-							);
-						})
+					{(item) => (
+						<ItemSelector.Item
+							key={item.name}
+							textValue={item.name}
+						>
+							{item.name}
+						</ItemSelector.Item>
 					)}
-				</Autocomplete>
+				</ItemSelector>
 
 				<div className="asset-tags mt-3">
-					{keywords.map((keyword: string, index: number) => {
+					{keywords.map((keyword, index) => {
 						return (
 							<Label
 								className="mr-2 mt-2"

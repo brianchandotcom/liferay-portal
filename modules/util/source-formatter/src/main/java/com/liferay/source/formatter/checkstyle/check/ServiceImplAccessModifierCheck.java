@@ -57,14 +57,16 @@ public class ServiceImplAccessModifierCheck extends BaseCheck {
 			DetailAST modifiersDetailAST =
 				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
 
-			if (!modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) &&
-				modifiersDetailAST.branchContains(
+			if (modifiersDetailAST.branchContains(TokenTypes.ANNOTATION) ||
+				!modifiersDetailAST.branchContains(
 					TokenTypes.LITERAL_PROTECTED)) {
 
-				log(
-					methodDefinitionDetailAST, _MSG_INCORRECT_ACCESS_MODIFIER,
-					methodName);
+				continue;
 			}
+
+			log(
+				methodDefinitionDetailAST, _MSG_INCORRECT_ACCESS_MODIFIER,
+				methodName);
 		}
 	}
 

@@ -211,11 +211,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(PageElementDefinition.Type.COLUMN));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getPageElementContainerPageElementDefinition(
+			_getContainerPageElement(
 				new String[] {"cssClass1", "cssClass2"}, "customCss", false,
 				StringUtil.randomString()));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getPageElementContainerPageElementDefinition(
+			_getContainerPageElement(
 				new String[] {"cssClass1", "cssClass2", "cssClass3"},
 				"customCss 2", false, StringUtil.randomString()));
 		_testPostSitePageSpecificationPageExperiencePageElement(
@@ -252,11 +252,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getPageElementContainerPageElementDefinition(
+			_getContainerPageElement(
 				new String[] {"cssClass1", "cssClass2"}, "customCss", true,
 				externalReferenceCode));
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getPageElementContainerPageElementDefinition(
+			_getContainerPageElement(
 				new String[] {"cssClass1", "cssClass2", "cssClass3"},
 				"customCss 2", false, externalReferenceCode));
 		_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
@@ -438,7 +438,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return pageElement;
 	}
 
-	private PageElement _getPageElementContainerPageElementDefinition(
+	private PageElement _getContainerPageElement(
 			String[] cssClasses, String customCss, boolean indexed,
 			String pageElementExternalReferenceCode)
 		throws Exception {

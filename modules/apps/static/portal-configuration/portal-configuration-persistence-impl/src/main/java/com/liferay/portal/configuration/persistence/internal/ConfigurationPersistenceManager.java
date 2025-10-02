@@ -10,6 +10,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.persistence.ConfigurationOverridePropertiesUtil;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
@@ -464,6 +465,18 @@ public class ConfigurationPersistenceManager
 							_verifyDictionary(pid, resultSet.getString(2));
 
 						if (dictionary != null) {
+							if (PropsValues.DATABASE_PARTITION_ENABLED) {
+								Long scopeCompanyId = (Long)dictionary.get(
+									ExtendedObjectClassDefinition.Scope.COMPANY.
+										getPropertyKey());
+
+								if ((scopeCompanyId != null) &&
+									!scopeCompanyId.equals(companyId)) {
+
+									continue;
+								}
+							}
+
 							overridePropertiesMap.remove(pid);
 
 							_dictionaries.put(

@@ -13,6 +13,7 @@
 		<suppress checks="VariableDeclarationAsUsedCheck" files="layout-impl/src/main/java/com/liferay/layout/internal/struts/UpdateLayoutStrutsAction\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="IllegalImportsCheck" files="layout-taglib/src/main/java/com/liferay/layout/taglib/internal/struts/RenderFormRelationshipLayoutStructureItemStrutsAction\.java" />
 		<suppress checks="JavaLocalServiceImplUserIdUsageCheck" files="layout-page-template-service/src/main/java/com/liferay/layout/page/template/service/impl/LayoutPageTemplateEntryLocalServiceImpl\.java" />
 	</source-check>
 </suppressions>

@@ -174,7 +174,7 @@ public abstract class Base${schemaName}ResourceImpl
 			</#if>
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteAssetLibrary" + schemaName)>
 			<#assign deleteAssetLibraryBatchJavaMethodSignature = javaMethodSignature />
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && (freeMarkerTool.hasParameter(javaMethodSignature, "id") || freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id"))>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && !freeMarkerTool.isExternalReferenceCodeMethod("delete", javaMethodSignature)>
 			<#assign deleteByIdBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "deleteSite" + schemaName)>
 			<#assign deleteSiteBatchJavaMethodSignature = javaMethodSignature />
@@ -186,7 +186,7 @@ public abstract class Base${schemaName}ResourceImpl
 			<#else>
 				<#assign getBatchJavaMethodSignature = javaMethodSignature />
 			</#if>
-		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName) && (freeMarkerTool.hasParameter(javaMethodSignature, "id") || freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id"))>
+		<#elseif stringUtil.equals(javaMethodSignature.methodName, "patch" + schemaName) && !freeMarkerTool.isExternalReferenceCodeMethod("patch", javaMethodSignature)>
 			<#assign patchBatchJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "post" + parentSchemaName + schemaName)>
 			<#if parentSchemaName?has_content>

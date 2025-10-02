@@ -105,11 +105,7 @@ function ItemSelectorModalTrigger<T extends Record<string, any>>({
 	);
 }
 
-export interface IItemSelectorProps<T>
-	extends Omit<
-		React.InputHTMLAttributes<HTMLInputElement>,
-		'onChange' | 'children'
-	> {
+export interface IBaseItemSelectorProps<T> {
 
 	/**
 	 * The URL that will be fetched to return the items.
@@ -188,6 +184,26 @@ export interface IItemSelectorProps<T>
 	 */
 	value?: string;
 }
+
+interface IMultiSelect<T>
+	extends IBaseItemSelectorProps<T>,
+		Omit<
+			React.ComponentProps<typeof ClayMultiSelect>,
+			keyof IBaseItemSelectorProps<T>
+		> {
+	multiSelect: true;
+}
+
+interface IAutocomplete<T>
+	extends IBaseItemSelectorProps<T>,
+		Omit<
+			React.ComponentProps<typeof ClayAutocomplete>,
+			keyof IBaseItemSelectorProps<T>
+		> {
+	multiSelect?: false;
+}
+
+type IItemSelectorProps<T> = IMultiSelect<T> | IAutocomplete<T>;
 
 function ItemSelector<T extends Record<string, any>>({
 	apiURL,

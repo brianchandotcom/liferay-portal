@@ -752,10 +752,10 @@ public class SitePageResourceImpl
 			openGraphImageAltMap, openGraphImageFileEntryId,
 			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
 
-		CustomMetaTag[] customMetaTags = pageSettings.getCustomMetaTags();
+		CustomMetaTag[] customMetaTags = new CustomMetaTag[0];
 
-		if (ArrayUtil.isEmpty(customMetaTags)) {
-			return;
+		if (pageSettings != null) {
+			customMetaTags = pageSettings.getCustomMetaTags();
 		}
 
 		_layoutSEOEntryService.updateCustomMetaTags(

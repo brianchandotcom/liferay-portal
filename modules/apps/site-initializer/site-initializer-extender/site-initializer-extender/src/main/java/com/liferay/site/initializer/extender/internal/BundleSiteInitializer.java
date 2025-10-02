@@ -950,7 +950,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 		_addKeywords(
-			"SITE", "/site-initializer/keywords/group", serviceContext,
+			"SITE", "/site-initializer", serviceContext,
 			stringUtilReplaceValues);
 	}
 
@@ -982,9 +982,18 @@ public class BundleSiteInitializer implements SiteInitializer {
 			long groupId = 0;
 
 			if (StringUtil.equals(replaceKey, "ASSET_LIBRARY")) {
+                JSONObject depotEntrySettingsJson = _jsonFactory.createJSONObject(
+                        SiteInitializerUtil.read(resourcePath + "/depot-entry-settings.json", _servletContext)
+                );
+
 				Group group = _groupLocalService.fetchGroup(
 					serviceContext.getCompanyId(),
-					jsonObject.getString("assetLibraryName"));
+                        depotEntrySettingsJson.
+                                getJSONObject("name_i18n")
+                                .getString(
+                                        LocaleUtil.getSiteDefault().toString()
+                                )
+                );
 
 				if (group == null) {
 					_log.error(

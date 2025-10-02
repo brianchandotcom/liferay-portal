@@ -350,6 +350,11 @@ public class BundleSiteInitializerTest {
 		}
 	}
 
+    @Test
+    public void momen() throws Exception{
+        _log.info("Hello momen");
+    }
+
 	@Test
 	public void testInitializeFromBundle() throws Exception {
 		Bundle bundle1 = _getBundle(
@@ -432,6 +437,9 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertAccountGroups1() throws Exception {
+
+        _log.info("Momen momen momen momen");
+
 		AdminAccountGroupResource.Builder accountGroupResourceBuilder =
 			_adminAccountGroupResourcefactory.create();
 

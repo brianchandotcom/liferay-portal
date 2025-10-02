@@ -1,0 +1,40 @@
+{
+  "depotAppCustomization": {
+    "com_liferay_asset_list_web_portlet_AssetListPortlet": false,
+    "com_liferay_document_library_web_portlet_DLAdminPortlet": true,
+    "com_liferay_journal_web_portlet_JournalPortlet": true,
+    "com_liferay_translation_web_internal_portlet_TranslationPortlet": false
+  },
+  "description_i18n": {
+    "en_US": "Test Description 2"
+  },
+  "name_i18n": {
+    "en_US": "Test Depot Entry 2"
+  },
+  "typeSettings": [
+    {
+      "key": "assetAutoTaggingEnabled",
+      "value": "true"
+    },
+    {
+      "key": "locales",
+      "value": "en_US,ar_SA,ca_ES,zh_CN,nl_NL,fi_FI,fr_FR,de_DE,hu_HU,ja_JP,pt_BR,es_ES,sv_SE"
+    },
+    {
+      "key": "directoryIndexingEnabled",
+      "value": "false"
+    },
+    {
+      "key": "sharingEnabled",
+      "value": "true"
+    },
+    {
+      "key": "trashEnabled",
+      "value": "false"
+    },
+    {
+      "key": "trashEntriesMaxAge",
+      "value": "43200"
+    }
+  ]
+}

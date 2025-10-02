@@ -35,9 +35,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -406,7 +406,7 @@ public class MarketplaceRestController extends BaseRestController {
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);
 
-	private final List<String> _europeanCountriesISOCode = List.of(
+	private final Set<String> _europeanCountriesISOCode = Set.of(
 		"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",
 		"HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO",
 		"SE", "SI", "SK");

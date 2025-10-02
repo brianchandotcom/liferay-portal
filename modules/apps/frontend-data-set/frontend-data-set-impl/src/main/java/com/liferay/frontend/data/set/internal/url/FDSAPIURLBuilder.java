@@ -170,9 +170,9 @@ public class FDSAPIURLBuilder {
 				WebKeys.THEME_DISPLAY);
 
 		text = StringUtil.replace(
-			text, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
-		text = StringUtil.replace(
 			text, "{scopeKey}", String.valueOf(themeDisplay.getScopeGroupId()));
+		text = StringUtil.replace(
+			text, "{siteId}", String.valueOf(themeDisplay.getScopeGroupId()));
 		text = StringUtil.replace(
 			text, "{userId}", String.valueOf(themeDisplay.getUserId()));
 

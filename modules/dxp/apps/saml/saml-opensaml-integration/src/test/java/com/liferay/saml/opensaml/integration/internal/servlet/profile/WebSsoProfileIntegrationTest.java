@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LRUMap;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -46,6 +47,8 @@ import com.liferay.saml.runtime.exception.SubjectException;
 
 import jakarta.servlet.http.HttpSession;
 
+import java.io.ByteArrayOutputStream;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -53,6 +56,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.zip.Deflater;
+import java.util.zip.DeflaterOutputStream;
 
 import net.shibboleth.utilities.java.support.resolver.CriteriaSet;
 import net.shibboleth.utilities.java.support.security.IdentifierGenerationStrategy;
@@ -750,7 +755,7 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			getMockHttpServletRequest(
 				StringBundler.concat(
-					SSO_URL, "?SAMLRequest=", _SAML_REQUEST_ENCODED));
+					SSO_URL, "?SAMLRequest=", _buildEncodedSamlRequest()));
 
 		mockHttpServletRequest.setAttribute(
 			SamlWebKeys.SAML_SP_IDP_CONNECTION, samlSpIdpConnection);
@@ -1315,6 +1320,35 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			samlSsoRequestContexts.size());
 	}
 
+	private String _buildEncodedSamlRequest() throws Exception {
+		AuthnRequest authnRequest = OpenSamlUtil.buildAuthnRequest(
+			SP_ENTITY_ID,
+			OpenSamlUtil.buildAssertionConsumerService(
+				SAMLConstants.SAML2_POST_BINDING_URI, -1, false, ACS_URL),
+			OpenSamlUtil.buildSingleSignOnService(
+				SAMLConstants.SAML2_POST_BINDING_URI, SSO_URL),
+			OpenSamlUtil.buildNameIdPolicy());
+
+		authnRequest.setIsPassive(true);
+
+		String authnRequestXML = OpenSamlUtil.marshall(authnRequest);
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+		Deflater deflater = new Deflater(Deflater.DEFLATED, true);
+
+		try (DeflaterOutputStream deflaterOutputStream =
+				new DeflaterOutputStream(byteArrayOutputStream, deflater)) {
+
+			deflaterOutputStream.write(authnRequestXML.getBytes("UTF-8"));
+		}
+		finally {
+			deflater.end();
+		}
+
+		return Base64.encodeToURL(byteArrayOutputStream.toByteArray());
+	}
+
 	private <T extends BaseContext> T _getMessageContextSubcontext(
 		SamlSsoRequestContext samlSsoRequestContext, Class<T> subcontextClass) {
 
@@ -1383,35 +1417,6 @@ public class WebSsoProfileIntegrationTest extends BaseSamlTestCase {
 			assertion.getSignature(), messageContext,
 			_webSsoProfileImpl.getSignatureTrustEngine());
 	}
-
-	/**
-	 * Encoded value of below SAMLRequest
-	 * <pre>
-	 * {@code
-	 *
-	 * samlp:AuthnRequest xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
-	 *                     AssertionConsumerServiceURL="http://localhost:8080/c/portal/saml/acs"
-	 *                     Destination="http://localhost:8080/c/portal/saml/sso"
-	 *                     ID="_ab1c2d3e4f5g6h7i8j9k0l"
-	 *                     IsPassive="true"
-	 *                     IssueInstant="2025-09-25T12:00:00Z"
-	 *                     ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-	 *                     Version="2.0">
-	 *     saml:Issuer xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion">testsp /saml:Issuer>
-	 *     samlp:NameIDPolicy AllowCreate="true" Format="urn:oasis:names:tc:SAML:2.0:nameid-format:transient"/>
-	 * /samlp:AuthnRequest>
-	 * }
-	 * </pre>
-	 */
-	private static final String _SAML_REQUEST_ENCODED = StringBundler.concat(
-		"jVJdT8IwFH33Vyx9ny1TFBqGQQhxiR8LDB98MaVUV%2B3a2XuH%2B",
-		"u8dQxISB7HpU3vuOfeecwdXX4UJ1sqDdjYmnVNGAmWlW2n7GpNFNg175Gp4MgBRmJ",
-		"KPKsztTH1UCjCoCy3w5iMmlbfcCdDArSgUcJR8Prq75dEp46V36KQz5CRoOSMA5bF",
-		"WHzsLVaH8XPm1lmoxu41JjlhySo2TwuQOkPdYj1FJS%2BdRGLoRp0JCO%2FOk7",
-		"lJbgc1k%2F2ECcO1MySQmz2LZkdHqTJ2%2FdF8v8kvde%2Bu%2FswNDJZAKAL1WMU",
-		"FfqUMgqFRiAYXFmEQs6oasH0bdrBNxxur71F6X%2Fvp5re02pmPmL7cg4DdZlobpw",
-		"zxrJ33crUBdRIYNpAmdN136vbSP64ldnGSItf9QDugezR5xye%2Fr4mSSOqPldzAy",
-		"xn2OvRK48yyYOl8IPC63edGr8KWBcvTCglYWCa13lv5d2uEP");
 
 	private static final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();

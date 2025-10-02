@@ -1568,7 +1568,8 @@ public class BundleSiteInitializerTest {
 		}
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			groupId,DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Table of Contents.md");
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Table of Contents.md");
 
 		String string = new String(
 			StreamUtil.toByteArray(

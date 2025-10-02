@@ -393,8 +393,8 @@ public class MasterPageResourceImpl
 
 		Layout layout = LayoutUtil.addContentLayout(
 			_cetManager, groupId, masterPage.getPageSpecifications(),
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, nameMap, nameMap,
-			nameMap, null, LayoutConstants.TYPE_CONTENT, null, true, true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, nameMap, null, null,
+			null, null, LayoutConstants.TYPE_CONTENT, null, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
 			serviceContext);
 

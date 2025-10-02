@@ -486,12 +486,12 @@ public abstract class BaseSectionDisplayContext {
 					LiferayWindowState.POP_UP
 				).buildString(),
 				"password-policies", "permissions",
-				language.get(httpServletRequest, "permissions"), "get", null,
-				"modal-permissions"),
+				language.get(httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "default-permissions",
 				LanguageUtil.get(httpServletRequest, "default-permissions"),
-				null, null, null),
+				null, "permissions", null),
 			new FDSActionDropdownItem(
 				null, "trash", "delete",
 				language.get(httpServletRequest, "delete"), null, "delete",

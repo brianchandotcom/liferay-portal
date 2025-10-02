@@ -561,6 +561,11 @@ public class ObjectEntryFolderResourceImpl
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
 						"getObjectEntryFolder")
 				).put(
+					"permissions",
+					addAction(
+						ActionKeys.PERMISSIONS, serviceBuilderObjectEntryFolder,
+						"getObjectEntryFolderPermissionsPage")
+				).put(
 					"restore",
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||

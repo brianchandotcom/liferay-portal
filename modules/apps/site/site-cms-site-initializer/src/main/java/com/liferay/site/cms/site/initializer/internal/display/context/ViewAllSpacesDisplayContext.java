@@ -211,12 +211,12 @@ public class ViewAllSpacesDisplayContext {
 					LiferayWindowState.POP_UP
 				).buildString(),
 				"password-policies", "permissions",
-				_language.get(_httpServletRequest, "permissions"), "get", null,
-				"modal-permissions"),
+				_language.get(_httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"),
 			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "default-permissions",
 				LanguageUtil.get(_httpServletRequest, "default-permissions"),
-				null, null, null),
+				null, "permissions", null),
 			new FDSActionDropdownItem(
 				"{actions.delete.href}", "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), "delete",

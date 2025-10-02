@@ -203,4 +203,9 @@ public class LayoutServiceUpgradeStepRegistrator
 	@Reference
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
 
+	@Reference(
+		target = "(&(release.bundle.symbolic.name=com.liferay.style.book.service)(release.schema.version>=1.5.0))"
+	)
+	private Release _styleBookEntryServiceRelease;
+
 }

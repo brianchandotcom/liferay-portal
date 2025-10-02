@@ -696,6 +696,8 @@ public class ObjectEntryFolderResourceTest
 		).put(
 			"get", _getActionValue(href, "GET")
 		).put(
+			"permissions", _getActionValue(href + "/permissions", "GET")
+		).put(
 			"share",
 			() -> {
 				if (sharingEnabled) {

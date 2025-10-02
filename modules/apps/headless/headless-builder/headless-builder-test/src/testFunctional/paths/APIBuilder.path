@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>EXCLUDE_TOGGLE</td>
-	<td>//button[@class='dropdown-item' and text()='Status']</td>
+	<td>//div[@class='dropdown-menu show']//*[@type="checkbox" and @id='autocomplete-exclude-applicationStatus']</td>
 	<td></td>
 </tr>
 <tr>

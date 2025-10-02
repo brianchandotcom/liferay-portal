@@ -9,10 +9,12 @@ import ClayModal from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
-import AssetCategories from '../info_panel/components/AssetCategories';
-import AssetTags from '../info_panel/components/AssetTags';
-import {EntryCategorizationDTO} from '../info_panel/services/ObjectEntryService';
-import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
+import {IBulkActionTaskStarterDTO} from '../../../common/types/BulkActionTask';
+import {displayErrorToast} from '../../../common/utils/toastUtil';
+import AssetCategories from '../../info_panel/components/AssetCategories';
+import AssetTags from '../../info_panel/components/AssetTags';
+import {EntryCategorizationDTO} from '../../info_panel/services/ObjectEntryService';
+import {triggerAssetBulkAction} from '../../props_transformer/actions/triggerAssetBulkAction';
 
 export default function CategoriesAndTagsModalContent({
 	apiURL,
@@ -20,7 +22,7 @@ export default function CategoriesAndTagsModalContent({
 	cmsGroupId,
 	selectedData,
 }: {
-	apiURL: string;
+	apiURL?: string;
 	closeModal: () => void;
 	cmsGroupId: number;
 	selectedData: any;
@@ -28,29 +30,77 @@ export default function CategoriesAndTagsModalContent({
 	const [categorizationDTO, setCategorizationDTO] =
 		useState<EntryCategorizationDTO>({
 			keywords: [],
-			taxonomyCategoryIds: [],
 			taxonomyCategoryBriefs: [],
+			taxonomyCategoryIds: [],
 		});
+	const [submitDisabled, setSubmitDisabled] = useState<boolean>(false);
 
 	const doBulkSubmit = useCallback(async () => {
-		closeModal();
+		setSubmitDisabled(true);
 
-		triggerAssetBulkAction({
-			apiURL,
-			keyValues: {
-				taxonomyCategoryIds: categorizationDTO.taxonomyCategoryIds,
-			},
-			selectedData,
-			type: 'TaxonomyCategoryBulkAction',
-		});
+		const tasks: Promise<any>[] = [];
 
-		triggerAssetBulkAction({
+		const tasksTemplate: Partial<IBulkActionTaskStarterDTO<any>> = {
 			apiURL,
-			keyValues: {keywords: categorizationDTO.keywords},
+			overrideDefaultErrorToast: true,
+			overrideDefaultSuccessToast: true,
 			selectedData,
-			type: 'KeywordBulkAction',
-		});
-	}, [categorizationDTO, selectedData]);
+		};
+
+		if (categorizationDTO?.taxonomyCategoryIds?.length) {
+			tasks.push(
+				new Promise((resolve, reject) => {
+					triggerAssetBulkAction({
+						...tasksTemplate,
+						keyValues: {
+							taxonomyCategoryIds:
+								categorizationDTO.taxonomyCategoryIds,
+						},
+						onCreateError: ({error}) => reject(error),
+						onCreateSuccess: (response) =>
+							response.error
+								? reject(response.error)
+								: resolve(response),
+						type: 'TaxonomyCategoryBulkAction',
+					} as IBulkActionTaskStarterDTO<'TaxonomyCategoryBulkAction'>);
+				})
+			);
+		}
+
+		if (categorizationDTO?.keywords?.length) {
+			tasks.push(
+				new Promise((resolve, reject) => {
+					triggerAssetBulkAction({
+						...tasksTemplate,
+						keyValues: {keywords: categorizationDTO.keywords},
+						onCreateError: ({error}) => reject(error),
+						onCreateSuccess: (response) =>
+							response.error
+								? reject(response.error)
+								: resolve(response),
+						type: 'KeywordBulkAction',
+					} as IBulkActionTaskStarterDTO<'KeywordBulkAction'>);
+				})
+			);
+		}
+
+		try {
+			await Promise.all(tasks);
+
+			closeModal();
+		}
+		catch (error) {
+			setSubmitDisabled(false);
+
+			displayErrorToast(error as string);
+		}
+	}, [
+		apiURL,
+		categorizationDTO,
+		closeModal,
+		selectedData,
+		setSubmitDisabled,
+	]);
 
 	const updateLocalObjectEntry = useCallback(
 		({
@@ -123,9 +173,10 @@ export default function CategoriesAndTagsModalContent({
 						<ClayButton
 							disabled={
 								!(
-									categorizationDTO.keywords ||
+									categorizationDTO.keywords?.length ||
 									categorizationDTO.taxonomyCategoryIds
-								)
+										?.length
+								) || submitDisabled
 							}
 							displayType="primary"
 							onClick={doBulkSubmit}

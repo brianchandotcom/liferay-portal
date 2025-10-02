@@ -3,13 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 const cookieHeadingNames = [
 	'Functional Cookies',
@@ -91,11 +92,75 @@ test.beforeEach(async ({systemSettingsPage}) => {
 
 		if (!isChecked) {
 			await enabledButton.click();
+
+			await systemSettingsPage.page
+				.getByRole('button', {name: 'Save'})
+				.click();
+
+			await waitForAlert(systemSettingsPage.page);
 		}
 
 		await expect(enabledButton).toBeChecked();
 	});
 });
+
+test(
+	'Verify Cookie Banner Consent Panel buttons',
+	{tag: '@LPD-67119'},
+	async ({page}) => {
+		await test.step('Open the Cookie Banner Consent Panel', async () => {
+			await page.goto('/');
+
+			const cookiesBanner = await page.locator(
+				'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
+			);
+
+			await cookiesBanner.waitFor();
+
+			await cookiesBanner
+				.getByRole('button', {name: 'Configuration'})
+				.click();
+		});
+
+		await test.step('Verify all button names and ordering', async () => {
+			const consentPanelFooter = await page.locator(
+				'[class="modal-footer"]'
+			);
+
+			await expectCookieConsentPanelButtons(await consentPanelFooter);
+		});
+	}
+);
+
+test(
+	'Verify Cookie Manager buttons',
+	{tag: '@LPD-67119'},
+	async ({accountSettingsPage}) => {
+		await test.step('Go to Cookie Manager Account Settings page', async () => {
+			await accountSettingsPage.goToDataAndPrivacy();
+
+			await accountSettingsPage.page
+				.getByText('Cookie Manager')
+				.first()
+				.waitFor();
+
+			if (await accountSettingsPage.cookieManagerMenuItem.isVisible()) {
+				await accountSettingsPage.cookieManagerMenuItem.click();
+			}
+		});
+
+		await test.step('Verify all button names and ordering', async () => {
+			const cookiesManagerConsentPanel =
+				await accountSettingsPage.page.locator(
+					'[id="_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm"]'
+				);
+
+			await expectCookieConsentPanelButtons(
+				await cookiesManagerConsentPanel
+			);
+		});
+	}
+);
 
 test(
 	'Verify Cookie Manager can be accessed from the Data And Privacy Account Settings tab',
@@ -180,3 +245,14 @@ test(
 		});
 	}
 );
+
+async function expectCookieConsentPanelButtons(locator: Locator) {
+	await locator.waitFor();
+
+	const buttons = await locator.getByRole('button').all();
+
+	expect(buttons).toHaveLength(3);
+	await expect(await buttons[0]).toContainText('Use Necessary Cookies Only');
+	await expect(await buttons[1]).toContainText('Accept Selected');
+	await expect(await buttons[2]).toContainText('Accept All');
+}

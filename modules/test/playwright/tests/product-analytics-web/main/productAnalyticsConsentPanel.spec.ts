@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {accountSettingsPagesTest} from '../../../fixtures/accountSettingsPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -54,6 +54,53 @@ test.afterEach(async ({page}) => {
 		await clearProductAnalyticsCookies(page);
 	});
 });
+
+test(
+	'Verify Product Analytics Consent Panel buttons and order from Account Settings',
+	{tag: '@LPD-67119'},
+	async ({
+		accountSettingsPage,
+		productAnalyticsBannerPage,
+		productAnalyticsConsentPanelPage,
+	}) => {
+		await productAnalyticsBannerPage.acceptAllButton.click();
+
+		await test.step('Go to Product Analytics Account Settings', async () => {
+			await accountSettingsPage.goToDataAndPrivacy();
+
+			await accountSettingsPage.productAnalyticsMenuItem.waitFor();
+
+			await accountSettingsPage.productAnalyticsMenuItem.click();
+		});
+
+		await test.step('Verify Customize button displays Consent Panel', async () => {
+			await expectProductAnalyticsConsentPanelButtons(
+				await productAnalyticsConsentPanelPage.consentPanelFormLocator
+			);
+		});
+	}
+);
+
+test(
+	'Verify Product Analytics Consent Panel buttons and order from Product Analytics Banner',
+	{tag: '@LPD-67119'},
+	async ({productAnalyticsBannerPage, productAnalyticsConsentPanelPage}) => {
+		await test.step('Verify Customize button displays Consent Panel', async () => {
+			await productAnalyticsBannerPage.customizeButton.click();
+
+			await productAnalyticsConsentPanelPage.useNecessaryCookiesOnlyButton.waitFor();
+
+			const productAnalyticsConsentPanelFooter =
+				await productAnalyticsConsentPanelPage.page.locator(
+					'[class="modal-footer"]'
+				);
+
+			await expectProductAnalyticsConsentPanelButtons(
+				productAnalyticsConsentPanelFooter
+			);
+		});
+	}
+);
 
 test(
 	'Verify Product Analytics Consent Panel is present after clicking the Customize button on the Product Analytics Banner',
@@ -293,4 +340,15 @@ async function expectProductAnalyticsAccountSettingsVisibility(
 			await accountSettingsPage.productAnalyticsMenuItem
 		).not.toBeVisible();
 	}
+}
+
+async function expectProductAnalyticsConsentPanelButtons(locator: Locator) {
+	await locator.waitFor();
+
+	const buttons = await locator.getByRole('button').all();
+
+	expect(buttons).toHaveLength(3);
+	await expect(await buttons[0]).toContainText('Use Necessary Cookies Only');
+	await expect(await buttons[1]).toContainText('Accept Selected');
+	await expect(await buttons[2]).toContainText('Accept All');
 }

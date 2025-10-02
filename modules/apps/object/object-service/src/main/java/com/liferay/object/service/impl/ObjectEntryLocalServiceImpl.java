@@ -2341,6 +2341,10 @@ public class ObjectEntryLocalServiceImpl
 				"friendlyUrlMap");
 		}
 
+		if (friendlyUrlMap == null) {
+			friendlyUrlMap = new HashMap<>();
+		}
+
 		long groupId = objectEntry.getNonzeroGroupId();
 		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinition.getTitleObjectFieldId());

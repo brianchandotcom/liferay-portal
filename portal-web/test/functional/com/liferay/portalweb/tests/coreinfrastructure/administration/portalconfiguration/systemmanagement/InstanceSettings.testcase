@@ -1168,7 +1168,7 @@ definition {
 			menuItem = "Edit",
 			rowEntry = "Google");
 
-		FormFields.editTextMultiline(
+		FormFields.editText(
 			fieldName = "providerName",
 			fieldValue = "Edit Google");
 

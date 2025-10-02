@@ -454,6 +454,28 @@ public class SitePageResourceImpl
 		Map<Locale, String> nameMap = LocalizedMapUtil.getLocalizedMap(
 			sitePage.getName_i18n());
 
+		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> keywordsMap = new HashMap<>();
+		Map<Locale, String> robotsMap = new HashMap<>();
+
+		if (sitePage.getPageSettings() != null) {
+			PageSettings pageSettings = sitePage.getPageSettings();
+
+			if (pageSettings.getSeoSettings() != null) {
+				SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+				titleMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getHtmlTitle_i18n());
+				descriptionMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getDescription_i18n());
+				keywordsMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getSeoKeywords_i18n());
+				robotsMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getRobots_i18n());
+			}
+		}
+
 		UnicodeProperties typeSettingsUnicodeProperties =
 			_getTypeSettingsUnicodeProperties(sitePage);
 
@@ -467,8 +489,8 @@ public class SitePageResourceImpl
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
 					serviceContext),
-				false, nameMap, null, null, null,
-				SitePageTypeUtil.toInternalType(sitePage.getType()),
+				false, nameMap, titleMap, descriptionMap, keywordsMap,
+				robotsMap, SitePageTypeUtil.toInternalType(sitePage.getType()),
 				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				false,
@@ -484,7 +506,8 @@ public class SitePageResourceImpl
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, groupId,
 					sitePage.getParentSitePageExternalReferenceCode(),
 					serviceContext),
-				nameMap, typeSettingsUnicodeProperties,
+				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+				typeSettingsUnicodeProperties,
 				_isHiddenFromNavigation(false, sitePage.getPageSettings()),
 				LocalizedMapUtil.getLocalizedMap(
 					sitePage.getFriendlyUrlPath_i18n()),
@@ -640,6 +663,28 @@ public class SitePageResourceImpl
 			nameMap = LocalizedMapUtil.getLocalizedMap(sitePage.getName_i18n());
 		}
 
+		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> keywordsMap = new HashMap<>();
+		Map<Locale, String> robotsMap = new HashMap<>();
+
+		if (sitePage.getPageSettings() != null) {
+			PageSettings pageSettings = sitePage.getPageSettings();
+
+			if (pageSettings.getSeoSettings() != null) {
+				SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+				titleMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getHtmlTitle_i18n());
+				descriptionMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getDescription_i18n());
+				keywordsMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getSeoKeywords_i18n());
+				robotsMap = LocalizedMapUtil.getLocalizedMap(
+					seoSettings.getRobots_i18n());
+			}
+		}
+
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
 		if (sitePage.getFriendlyUrlPath_i18n() != null) {
@@ -668,14 +713,15 @@ public class SitePageResourceImpl
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(
-				_cetManager, _infoItemServiceRegistry, layout, nameMap,
-				layout.getTitleMap(), layout.getDescriptionMap(),
-				layout.getRobotsMap(), friendlyURLMap,
+				_cetManager, _infoItemServiceRegistry, layout, nameMap, titleMap, descriptionMap,
+				keywordsMap, robotsMap, friendlyURLMap,
+				_getTypeSettingsUnicodeProperties(sitePage),
 				sitePage.getPageSpecifications(), serviceContext);
 		}
 		else {
 			layout = LayoutUtil.updatePortletLayout(
-				_cetManager, layout, nameMap, friendlyURLMap,
+				_cetManager, layout, nameMap, titleMap, descriptionMap,
+				keywordsMap, robotsMap, friendlyURLMap,
 				_getTypeSettingsUnicodeProperties(sitePage), serviceContext,
 				PageSpecificationUtil.getWidgetPageSpecification(
 					sitePage.getPageSpecifications()));

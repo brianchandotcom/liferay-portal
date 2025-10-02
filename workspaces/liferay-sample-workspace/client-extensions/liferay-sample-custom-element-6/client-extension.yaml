@@ -1,0 +1,17 @@
+assemble:
+    -   from: build/vite
+        into: static
+liferay-sample-custom-element:
+    cssURLs:
+        -   "**/index*.css"
+    friendlyURLMapping: liferay-sample-custom-element
+    htmlElementName: liferay-sample-custom-element
+    instanceable: false
+    name: Liferay Sample Custom Element
+    portletCategoryName: category.client-extensions
+    properties:
+        foo: bar
+    type: customElement
+    urls:
+        -   "main.js"
+    useESM: true

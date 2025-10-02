@@ -1510,7 +1510,10 @@ public class BundleSiteInitializerTest {
 				0
 			).getEnabled());
 
-        _assertDLFileEntry1(depotEntries.get(0).getGroupId());
+		_assertDLFileEntry1(
+			depotEntries.get(
+				0
+			).getGroupId());
 	}
 
 	private void _assertDepotEntries2() throws Exception {
@@ -1553,16 +1556,16 @@ public class BundleSiteInitializerTest {
 				0
 			).getEnabled());
 
-        _assertDLFileEntry2(
-                depotEntries.get(0)
-                        .getGroupId()
-        );
+		_assertDLFileEntry2(
+			depotEntries.get(
+				0
+			).getGroupId());
 	}
 
 	private void _assertDLFileEntry1(long groupId) throws Exception {
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			groupId == 0 ?_group.getGroupId() : groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Table of Contents.md");
+                (groupId == 0 ? _group.getGroupId() : groupId),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Table of Contents.md");
 
 		String string = new String(
 			StreamUtil.toByteArray(
@@ -1576,12 +1579,12 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertDLFileEntry2(long groupId) throws Exception {
-        if (groupId == 0){
-            groupId = _group.getGroupId();
-        }
+		if (groupId == 0) {
+			groupId = _group.getGroupId();
+		}
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-                groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Table of Contents.md");
 
 		String string = new String(
@@ -1597,13 +1600,13 @@ public class BundleSiteInitializerTest {
 		Assert.assertTrue(string.contains("1. Test Update"));
 
 		DLFolder dlFolder = _dlFolderLocalService.fetchFolder(
-                groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"Old Testament");
 
 		Assert.assertNotNull(dlFolder);
 
 		dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-                groupId, dlFolder.getFolderId(), "Genesis.txt");
+			groupId, dlFolder.getFolderId(), "Genesis.txt");
 
 		Assert.assertNotNull(dlFileEntry);
 

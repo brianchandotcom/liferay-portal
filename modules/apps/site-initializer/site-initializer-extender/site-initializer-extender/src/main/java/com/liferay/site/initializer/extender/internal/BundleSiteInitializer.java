@@ -949,6 +949,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
+
 		_addKeywords(
 			"SITE", "/site-initializer", serviceContext,
 			stringUtilReplaceValues);
@@ -982,18 +983,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 			long groupId = 0;
 
 			if (StringUtil.equals(replaceKey, "ASSET_LIBRARY")) {
-                JSONObject depotEntrySettingsJson = _jsonFactory.createJSONObject(
-                        SiteInitializerUtil.read(resourcePath + "/depot-entry-settings.json", _servletContext)
-                );
+				JSONObject depotEntrySettingsJsonObject =
+					_jsonFactory.createJSONObject(
+						SiteInitializerUtil.read(
+							resourcePath + "/depot-entry-settings.json",
+							_servletContext));
 
 				Group group = _groupLocalService.fetchGroup(
 					serviceContext.getCompanyId(),
-                        depotEntrySettingsJson.
-                                getJSONObject("name_i18n")
-                                .getString(
-                                        LocaleUtil.getSiteDefault().toString()
-                                )
-                );
+                        depotEntrySettingsJsonObject.getJSONObject(
+						"name_i18n"
+					).getString(
+						LocaleUtil.getSiteDefault(
+						).toString()
+					));
 
 				if (group == null) {
 					_log.error(
@@ -1923,10 +1926,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 	}
 
-	private void _addOrUpdateDepotEntries(ServiceContext serviceContext,
-				  SiteNavigationMenuItemSettingsBuilder
-					  siteNavigationMenuItemSettingsBuilder,
-				  Map<String, String> stringUtilReplaceValues)
+	private void _addOrUpdateDepotEntries(
+			ServiceContext serviceContext,
+			SiteNavigationMenuItemSettingsBuilder
+				siteNavigationMenuItemSettingsBuilder,
+			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
 		Set<String> resourcePaths = _servletContext.getResourcePaths(
@@ -1967,8 +1971,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 						DepotConstants.TYPE_ASSET_LIBRARY, serviceContext);
 				}
 
-				UnicodeProperties unicodeProperties =
-					new UnicodeProperties(true);
+				UnicodeProperties unicodeProperties = new UnicodeProperties(
+					true);
 
 				JSONArray typeSettingsJSONArray = jsonObject.getJSONArray(
 					"typeSettings");
@@ -1985,11 +1989,11 @@ public class BundleSiteInitializer implements SiteInitializer {
 				}
 
 				JSONObject depotAppCustomizationJSONObject =
-					jsonObject.getJSONObject(
-						"depotAppCustomization");
+					jsonObject.getJSONObject("depotAppCustomization");
 
 				_depotEntryLocalService.updateDepotEntry(
-					(group != null) ? group.getClassPK() : depotEntry.getDepotEntryId(),
+					(group != null) ? group.getClassPK() :
+						depotEntry.getDepotEntryId(),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					SiteInitializerUtil.toMap(
@@ -2028,14 +2032,15 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 				_addOrUpdateDocuments(
 					null,
-					(group != null) ? group.getGroupId() : depotEntry.getGroupId(),
+					(group != null) ? group.getGroupId() :
+						depotEntry.getGroupId(),
 					resourcePath + "documents", serviceContext,
 					siteNavigationMenuItemSettingsBuilder,
 					stringUtilReplaceValues);
 
 				_addKeywords(
-					"ASSET_LIBRARY", resourcePath,
-					serviceContext, stringUtilReplaceValues);
+					"ASSET_LIBRARY", resourcePath, serviceContext,
+					stringUtilReplaceValues);
 
 				Group scopeGroup = serviceContext.getScopeGroup();
 
@@ -5174,7 +5179,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext, stringUtilReplaceValues));
 		R addOrUpdateDepotEntriesR = new R(
 			"addOrUpdateDepotEntries",
-			() -> _addOrUpdateDepotEntries(serviceContext, siteNavigationMenuItemSettingsBuilder, stringUtilReplaceValues));
+			() -> _addOrUpdateDepotEntries(
+				serviceContext, siteNavigationMenuItemSettingsBuilder,
+				stringUtilReplaceValues));
 		R addOrUpdateDocumentsR = new R(
 			"addOrUpdateDocuments",
 			() -> _addOrUpdateDocuments(

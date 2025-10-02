@@ -1,12 +1,12 @@
 [
-  {
-    "keywords": [
-      {
-        "name": "Test Asset Library Keyword 3"
-      },
-      {
-        "name": "Test Asset Library Keyword 4"
-      }
-    ]
-  }
+	{
+		"keywords": [
+			{
+				"name": "Test Asset Library Keyword 3"
+			},
+			{
+				"name": "Test Asset Library Keyword 4"
+			}
+		]
+	}
 ]

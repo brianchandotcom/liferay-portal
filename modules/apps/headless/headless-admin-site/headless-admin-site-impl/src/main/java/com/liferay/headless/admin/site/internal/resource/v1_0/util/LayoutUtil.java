@@ -252,9 +252,11 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			cetManager, draftLayout, nameMap, titleMap, descriptionMap,
-			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
-			draftContentPageSpecification, draftLayoutStatus, serviceContext);
+			cetManager, draftLayout, draftLayout.getNameMap(),
+			draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
+			draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
+			draftLayout.getFriendlyURLMap(), draftContentPageSpecification,
+			draftLayoutStatus, serviceContext);
 
 		return updateLayout(
 			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
@@ -397,9 +399,9 @@ public class LayoutUtil {
 	public static Layout updateContentLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			Map<Locale, String> friendlyURLMap,
+			UnicodeProperties typeSettingsUnicodeProperties,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {

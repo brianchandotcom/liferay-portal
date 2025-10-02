@@ -141,8 +141,7 @@ public class LayoutServiceUpgradeStepRegistrator
 				"classExternalReferenceCode VARCHAR(75) null"));
 
 		registry.register(
-			"2.0.0", "3.0.0",
-			new LayoutStyleBookEntryERCUpgradeProcess());
+			"2.0.0", "3.0.0", new LayoutStyleBookEntryERCUpgradeProcess());
 	}
 
 	@Reference

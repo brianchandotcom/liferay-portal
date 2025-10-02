@@ -782,7 +782,7 @@
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ResourceImplCheck">
 			<property name="category" value="Bug Prevention" />
-			<property name="description" value="Performs several checks on `*ResourceImpl` classes (except `Base*ResourceImpl` classes)." />
+			<property name="description" value="Performs several checks on `*ResourceImpl` classes." />
 			<message key="access.modifier.incorrect" value="Incorrect modifier of method &quot;{0}&quot;. All the &quot;doGet*&quot; methods in &quot;*ResourceImpl.java&quot; should be &quot;protected&quot;" />
 			<message key="method.parameter.annotation.invalid" value="Remove annotation &quot;{0}&quot; from method parameter &quot;{1}&quot;" />
 		</module>

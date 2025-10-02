@@ -11,7 +11,7 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
-import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.info.exception.NoSuchInfoItemException;
@@ -60,7 +60,7 @@ public class CPDefinitionInfoItemObjectProviderTest {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		CommerceCatalog commerceCatalog =
-			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				LocaleUtil.US.getDisplayLanguage(), serviceContext);
@@ -109,6 +109,9 @@ public class CPDefinitionInfoItemObjectProviderTest {
 					productExternalReferenceCode,
 					_group.getExternalReferenceCode())));
 	}
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CPDefinition _cpDefinition;
 

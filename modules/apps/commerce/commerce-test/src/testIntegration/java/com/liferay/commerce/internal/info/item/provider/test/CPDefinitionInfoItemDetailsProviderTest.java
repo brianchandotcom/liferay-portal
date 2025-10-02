@@ -9,7 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
-import com.liferay.commerce.product.service.CommerceCatalogLocalServiceUtil;
+import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.info.item.ERCInfoItemIdentifier;
@@ -50,7 +50,7 @@ public class CPDefinitionInfoItemDetailsProviderTest {
 		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 
 		CommerceCatalog commerceCatalog =
-			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+			_commerceCatalogLocalService.addCommerceCatalog(
 				null, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(),
 				LocaleUtil.US.getDisplayLanguage(),
@@ -108,6 +108,9 @@ public class CPDefinitionInfoItemDetailsProviderTest {
 					group.getExternalReferenceCode())),
 			infoItemDetails.getInfoItemReference());
 	}
+
+	@Inject
+	private CommerceCatalogLocalService _commerceCatalogLocalService;
 
 	private CPDefinition _cpDefinition;
 	private Group _group;

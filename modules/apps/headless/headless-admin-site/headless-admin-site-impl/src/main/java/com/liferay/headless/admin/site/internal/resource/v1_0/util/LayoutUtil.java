@@ -87,10 +87,10 @@ public class LayoutUtil {
 			PageSpecification[] pageSpecifications, long parentLayoutId,
 			boolean privateLayout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, String type,
-			UnicodeProperties typeSettingsUnicodeProperties, boolean hidden,
-			boolean system, Map<Locale, String> friendlyURLMap, int status,
-			ServiceContext serviceContext)
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			String type, UnicodeProperties typeSettingsUnicodeProperties,
+			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
+			int status, ServiceContext serviceContext)
 		throws Exception {
 
 		if (typeSettingsUnicodeProperties == null) {
@@ -103,9 +103,10 @@ public class LayoutUtil {
 					serviceContext.getAttribute("layoutExternalReferenceCode"),
 					null),
 				serviceContext.getUserId(), groupId, privateLayout,
-				parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap, null,
-				robotsMap, type, typeSettingsUnicodeProperties.toString(),
-				hidden, system, friendlyURLMap, 0L, serviceContext);
+				parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap,
+				keywordsMap, robotsMap, type,
+				typeSettingsUnicodeProperties.toString(), hidden, system,
+				friendlyURLMap, 0L, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,
@@ -235,8 +236,8 @@ public class LayoutUtil {
 		Layout layout = LayoutLocalServiceUtil.addLayout(
 			publishedContentPageSpecification.getExternalReferenceCode(),
 			serviceContext.getUserId(), groupId, privateLayout, parentLayoutId,
-			0, 0, nameMap, titleMap, descriptionMap, null, robotsMap, type,
-			typeSettingsUnicodeProperties.toString(), hidden, system,
+			0, 0, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			type, typeSettingsUnicodeProperties.toString(), hidden, system,
 			friendlyURLMap, masterLayoutPlid, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -256,9 +257,9 @@ public class LayoutUtil {
 			draftContentPageSpecification, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, publishedContentPageSpecification, status,
-			serviceContext);
+			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, friendlyURLMap, publishedContentPageSpecification,
+			status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
@@ -291,14 +292,17 @@ public class LayoutUtil {
 
 		return updateLayout(
 			cetManager, draftLayout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), draftLayout.getRobotsMap(),
-			draftLayout.getFriendlyURLMap(), contentPageSpecification,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			layout.getDescriptionMap(), draftLayout.getKeywordsMap(),
+			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
+			contentPageSpecification, WorkflowConstants.STATUS_DRAFT,
+			serviceContext);
 	}
 
 	public static Layout addPortletLayout(
 			CETManager cetManager, String externalReferenceCode, long groupId,
 			long parentLayoutId, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			boolean hiddenFromNavigation, Map<Locale, String> friendlyURLMap,
 			ServiceContext serviceContext,
@@ -315,17 +319,20 @@ public class LayoutUtil {
 
 		Layout layout = LayoutServiceUtil.addLayout(
 			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
-			null, null, null, null, LayoutConstants.TYPE_PORTLET, typeSettings,
-			hiddenFromNavigation, friendlyURLMap, 0, serviceContext);
+			titleMap, descriptionMap, keywordsMap, robotsMap,
+			LayoutConstants.TYPE_PORTLET, typeSettings, hiddenFromNavigation,
+			friendlyURLMap, 0, serviceContext);
 
 		layout = updateLayout(
 			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getRobotsMap(),
-			layout.getFriendlyURLMap(), widgetPageSpecification,
-			layout.getStatus(), serviceContext);
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getFriendlyURLMap(),
+			widgetPageSpecification, layout.getStatus(), serviceContext);
 
 		return updatePortletLayout(
-			cetManager, layout, nameMap, layout.getFriendlyURLMap(),
+			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
+			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			layout.getRobotsMap(), layout.getFriendlyURLMap(),
 			typeSettingsUnicodeProperties, serviceContext,
 			widgetPageSpecification);
 	}
@@ -391,15 +398,18 @@ public class LayoutUtil {
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		if (pageSpecifications == null) {
 			return _updateLayout(
-				layout, nameMap, titleMap, descriptionMap, robotsMap,
-				layout.getStyleBookEntryId(), layout.getFaviconFileEntryId(),
-				layout.getMasterLayoutPlid(), friendlyURLMap, serviceContext);
+				layout, nameMap, titleMap, descriptionMap, keywordsMap,
+				robotsMap, layout.getStyleBookEntryId(),
+				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+				friendlyURLMap, serviceContext);
 		}
 
 		if (pageSpecifications.length != 2) {
@@ -461,26 +471,27 @@ public class LayoutUtil {
 
 		updateLayout(
 			cetManager, draftLayout, nameMap, titleMap, descriptionMap,
-			robotsMap, draftLayout.getFriendlyURLMap(),
+			keywordsMap, robotsMap, draftLayout.getFriendlyURLMap(),
 			draftContentPageSpecification, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, publishedContentPageSpecification, status,
-			serviceContext);
+			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, friendlyURLMap, publishedContentPageSpecification,
+			status, serviceContext);
 	}
 
 	public static Layout updateLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, int status,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		layout = _updateLayout(
-			cetManager, layout, nameMap, titleMap, descriptionMap, robotsMap,
-			friendlyURLMap, pageSpecification, serviceContext);
+			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, friendlyURLMap, pageSpecification, serviceContext);
 
 		if (pageSpecification instanceof ContentPageSpecification) {
 			ContentPageSpecification contentPageSpecification =
@@ -502,6 +513,8 @@ public class LayoutUtil {
 
 	public static Layout updatePortletLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			Map<Locale, String> friendlyURLMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			ServiceContext serviceContext,
@@ -509,9 +522,8 @@ public class LayoutUtil {
 		throws Exception {
 
 		layout = _updateLayout(
-			cetManager, layout, nameMap, layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getRobotsMap(), friendlyURLMap,
-			widgetPageSpecification, serviceContext);
+			cetManager, layout, nameMap, titleMap, descriptionMap, keywordsMap,
+			robotsMap, friendlyURLMap, widgetPageSpecification, serviceContext);
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.create(
 			true
@@ -893,7 +905,8 @@ public class LayoutUtil {
 	private static Layout _updateLayout(
 			CETManager cetManager, Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, ServiceContext serviceContext)
 		throws Exception {
 
@@ -910,7 +923,7 @@ public class LayoutUtil {
 		_setExpandoBridgeAttributes(pageSpecification, serviceContext);
 
 		return _updateLayout(
-			layout, nameMap, titleMap, descriptionMap, robotsMap,
+			layout, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 			_getStyleBookEntryId(serviceContext.getScopeGroupId(), settings),
 			_getFaviconFileEntryId(settings, serviceContext),
 			_getMasterLayoutPlid(
@@ -921,9 +934,10 @@ public class LayoutUtil {
 	private static Layout _updateLayout(
 			Layout layout, Map<Locale, String> nameMap,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> robotsMap, long styleBookEntryId,
-			long faviconFileEntryId, long masterLayoutPlid,
-			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
+			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
+			long styleBookEntryId, long faviconFileEntryId,
+			long masterLayoutPlid, Map<Locale, String> friendlyURLMap,
+			ServiceContext serviceContext)
 		throws Exception {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
@@ -936,8 +950,8 @@ public class LayoutUtil {
 			GetterUtil.getLong(
 				serviceContext.getAttribute("parentLayoutId"),
 				layout.getParentLayoutId()),
-			nameMap, titleMap, descriptionMap, layout.getKeywordsMap(),
-			robotsMap, layout.getType(),
+			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
+			layout.getType(),
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("hidden"), layout.isHidden()),
 			friendlyURLMap, layout.getIconImage(), null, styleBookEntryId,

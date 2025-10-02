@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {fetch, runScriptsInElement} from 'frontend-js-web';
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 
 export default function FormRelationshipAddButton({
 	contentId,
@@ -102,7 +102,7 @@ function getNumberOfChildren(formRelationshipElement: HTMLElement) {
 }
 
 const onRemoveButtonClick = (event: Event) => {
-	const removeButton = event.target as HTMLElement;
+	const removeButton = event.currentTarget as HTMLElement;
 
 	const formRelationshipContentElement = removeButton.closest(
 		'[data-form-relationship-structure-item-content-id]'
@@ -110,11 +110,66 @@ const onRemoveButtonClick = (event: Event) => {
 
 	const formRelationshipElement =
 		formRelationshipContentElement.parentElement as HTMLElement;
+	if (
+		removeButton.dataset.classname &&
+		removeButton.dataset.externalReferenceCode
+	) {
+		updateDeletedExternalReferenceCodes(
+			removeButton.dataset.classname,
+			removeButton.dataset.externalReferenceCode,
+			formRelationshipElement
+		);
+	}
 
 	formRelationshipContentElement.remove();
 
 	updateRemoveButtonVisibility(formRelationshipElement);
 };
+
+function updateDeletedExternalReferenceCodes(
+	className: string,
+	externalReferenceCode: string,
+	formRelationshipElement: HTMLElement
+) {
+	const form = formRelationshipElement.closest('form');
+
+	if (!form) {
+		return;
+	}
+
+	const input = getOrCreateDeletedExternalReferenceCodeInput(
+		form
+	) as HTMLInputElement;
+
+	let currentValue: string[] = [];
+
+	if (input.value) {
+		currentValue = input.value.split(',');
+	}
+
+	currentValue.push(`${className}_${externalReferenceCode}`);
+
+	input.value = currentValue.join(',');
+}
+
+function getOrCreateDeletedExternalReferenceCodeInput(form: HTMLFormElement) {
+	const deletedExternalReferenceCodeInput = form.querySelector(
+		'[name="deletedItemIdentifiers"]'
+	);
+
+	if (deletedExternalReferenceCodeInput) {
+		return deletedExternalReferenceCodeInput;
+	}
+
+	const input = document.createElement('input');
+
+	input.type = 'hidden';
+	input.name = 'deletedItemIdentifiers';
+
+	form.appendChild(input);
+
+	return input;
+}
 
 function updateRemoveButtonVisibility(formRelationshipElement: HTMLElement) {
 	const removeButtons = formRelationshipElement.querySelectorAll(

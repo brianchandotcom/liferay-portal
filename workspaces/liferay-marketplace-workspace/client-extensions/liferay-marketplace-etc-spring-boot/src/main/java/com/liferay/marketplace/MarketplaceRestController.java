@@ -37,11 +37,9 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-import java.util.Locale; 
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -159,11 +157,11 @@ public class MarketplaceRestController extends BaseRestController {
 		Order order = _marketplaceService.getOrder(
 			commerceOrderJSONObject.getLong("id"));
 
-		if ((Objects.equals(
+		if (Objects.equals(
 				commerceOrderJSONObject.getString("paymentMethod"),
 				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
-			 (paymentStatus ==
-				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING))) {
+			(paymentStatus ==
+				MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) {
 
 			if (_log.isInfoEnabled()) {
 				_log.info("Sending Purchased Order Notification...");
@@ -354,8 +352,6 @@ public class MarketplaceRestController extends BaseRestController {
 
 		Product product = _marketplaceService.getProduct(sku.getProductId());
 
-		Locale locale = new Locale("", billingAddress.getCountryISOCode());
-
 		Catalog catalog = _marketplaceService.getCatalog(
 			product.getCatalogId());
 
@@ -363,9 +359,9 @@ public class MarketplaceRestController extends BaseRestController {
 			_marketplaceService.getProductSpecificationsMap(
 				product.getProductId());
 
-
 		_marketplaceService.postNotificationQueueEntry(
-			"accounts-receivables-intl@liferay.com", "MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
+			"accounts-receivables-intl@liferay.com",
+			"MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
 			new HashMapBuilder<String, Object>().put(
 				"[%ACCOUNT_ID%]",
 				order.getAccountId(
@@ -393,9 +389,9 @@ public class MarketplaceRestController extends BaseRestController {
 			).put(
 				"[%BILLING_ADDRESS_FORMATTED%]",
 				StringBundler.concat(
-					billingAddress.getStreet1(), ", ", billingAddress.getCity(), ", ",
-					billingAddress.getRegionISOCode(), ", ",
-					locale.getDisplayCountry(Locale.ENGLISH))
+					billingAddress.getStreet1(), ", ", billingAddress.getCity(),
+					", ", billingAddress.getRegionISOCode(), ", ",
+					billingAddress.getCountryISOCode())
 			).put(
 				"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
 			).put(

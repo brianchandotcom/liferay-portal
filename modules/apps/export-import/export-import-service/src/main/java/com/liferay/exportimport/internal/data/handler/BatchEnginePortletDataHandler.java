@@ -301,6 +301,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					_executeExportTask(
 						Integer.MAX_VALUE, portletDataContext, registration);
 
+				if (result == null) {
+					continue;
+				}
+
 				portletDataContext.addZipEntry(
 					_normalize(
 						registration.getFileName(),
@@ -432,6 +436,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				BatchEngineExportTaskExecutor.Result result =
 					_executeExportTask(1, portletDataContext, registration);
+
+				if (result == null) {
+					continue;
+				}
 
 				BatchEngineExportTask batchEngineExportTask =
 					result.getBatchEngineExportTask();

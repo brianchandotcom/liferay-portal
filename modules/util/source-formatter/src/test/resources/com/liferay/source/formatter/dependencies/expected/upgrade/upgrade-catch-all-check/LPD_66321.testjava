@@ -12,11 +12,10 @@ package com.liferay.source.formatter.dependencies.upgrade;
 public class LPD_66321 {
 
 	public void method() {
-		Configuration configuration;
-
-		configuration = new ConfigurationImpl(classLoader, "captcha");
-		configuration = new ConfigurationImpl(classLoader, "content-types");
-		configuration = new ConfigurationImpl(classLoader, "portal");
+		new ConfigurationImpl(classLoader, "captcha");
+		new ConfigurationImpl(
+			classLoader, "content-types");
+		new ConfigurationImpl(classLoader, "portal");
 	}
 
 }

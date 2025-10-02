@@ -513,8 +513,8 @@ public class ActionUtil {
 
 		return StringBundler.concat(
 			themeDisplay.getPathFriendlyURLPublic(),
-			GroupConstants.CMS_FRIENDLY_URL, "/e/bulk-action-task",
-			PortalUtil.getClassNameId(className), StringPool.SLASH);
+			GroupConstants.CMS_FRIENDLY_URL, "/e/bulk-action-task/",
+			PortalUtil.getClassNameId(className));
 	}
 
 	public static String getBaseSpaceSettingsURL(ThemeDisplay themeDisplay) {

@@ -134,6 +134,55 @@ public class GroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.model.Group addGroup(
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long parentGroupId, long liveGroupId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap, int type,
+			String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean site,
+			boolean inheritContent, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "addGroup", _addGroupParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, externalReferenceCode, parentGroupId, liveGroupId,
+				nameMap, descriptionMap, type, typeSettings, manualMembership,
+				membershipRestriction, friendlyURL, site, inheritContent,
+				active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Group)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Group addOrUpdateGroup(
 			HttpPrincipal httpPrincipal, String externalReferenceCode,
 			long parentGroupId, long liveGroupId,
@@ -148,7 +197,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "addOrUpdateGroup",
-				_addOrUpdateGroupParameterTypes2);
+				_addOrUpdateGroupParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, parentGroupId, liveGroupId,
@@ -188,7 +237,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "addRoleGroups",
-				_addRoleGroupsParameterTypes3);
+				_addRoleGroupsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, roleId, groupIds);
@@ -224,7 +273,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "checkRemoteStagingGroup",
-				_checkRemoteStagingGroupParameterTypes4);
+				_checkRemoteStagingGroupParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -258,7 +307,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "deleteGroup",
-				_deleteGroupParameterTypes5);
+				_deleteGroupParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -292,7 +341,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "disableStaging",
-				_disableStagingParameterTypes6);
+				_disableStagingParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -326,7 +375,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "enableStaging",
-				_enableStagingParameterTypes7);
+				_enableStagingParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -363,7 +412,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "fetchGroupByExternalReferenceCode",
-				_fetchGroupByExternalReferenceCodeParameterTypes8);
+				_fetchGroupByExternalReferenceCodeParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, companyId);
@@ -403,7 +452,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getCompanyGroup",
-				_getCompanyGroupParameterTypes9);
+				_getCompanyGroupParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId);
@@ -442,7 +491,7 @@ public class GroupServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "getGroup", _getGroupParameterTypes10);
+				GroupServiceUtil.class, "getGroup", _getGroupParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -480,7 +529,7 @@ public class GroupServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "getGroup", _getGroupParameterTypes11);
+				GroupServiceUtil.class, "getGroup", _getGroupParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, groupKey);
@@ -521,7 +570,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroupDisplayURL",
-				_getGroupDisplayURLParameterTypes12);
+				_getGroupDisplayURLParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, privateLayout, secureConnection);
@@ -563,7 +612,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroups",
-				_getGroupsParameterTypes13);
+				_getGroupsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, parentGroupId, site);
@@ -606,7 +655,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroups",
-				_getGroupsParameterTypes14);
+				_getGroupsParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, parentGroupId, site, start, end);
@@ -649,7 +698,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroups",
-				_getGroupsParameterTypes15);
+				_getGroupsParameterTypes16);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, parentGroupId, name, site, start, end);
@@ -691,7 +740,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroupsCount",
-				_getGroupsCountParameterTypes16);
+				_getGroupsCountParameterTypes17);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, parentGroupId, site);
@@ -732,7 +781,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroupsCount",
-				_getGroupsCountParameterTypes17);
+				_getGroupsCountParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, parentGroupId, name, site);
@@ -773,7 +822,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGroupsCount",
-				_getGroupsCountParameterTypes18);
+				_getGroupsCountParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, className, parentGroupId);
@@ -815,7 +864,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getGtGroups",
-				_getGtGroupsParameterTypes19);
+				_getGtGroupsParameterTypes20);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, gtGroupId, companyId, parentGroupId, site, size);
@@ -860,7 +909,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getManageableSiteGroups",
-				_getManageableSiteGroupsParameterTypes20);
+				_getManageableSiteGroupsParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, portlets, max);
@@ -904,7 +953,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getOrganizationsGroups",
-				_getOrganizationsGroupsParameterTypes21);
+				_getOrganizationsGroupsParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, organizations);
@@ -945,7 +994,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserGroup",
-				_getUserGroupParameterTypes22);
+				_getUserGroupParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, userId);
@@ -988,7 +1037,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserGroupsGroups",
-				_getUserGroupsGroupsParameterTypes23);
+				_getUserGroupsGroupsParameterTypes24);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userGroups);
@@ -1030,7 +1079,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserOrganizationsGroups",
-				_getUserOrganizationsGroupsParameterTypes24);
+				_getUserOrganizationsGroupsParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, start, end);
@@ -1071,7 +1120,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserSitesGroups",
-				_getUserSitesGroupsParameterTypes25);
+				_getUserSitesGroupsParameterTypes26);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -1112,7 +1161,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserSitesGroups",
-				_getUserSitesGroupsParameterTypes26);
+				_getUserSitesGroupsParameterTypes27);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, start, end);
@@ -1155,7 +1204,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserSitesGroups",
-				_getUserSitesGroupsParameterTypes27);
+				_getUserSitesGroupsParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, classNames, max);
@@ -1197,7 +1246,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserSitesGroups",
-				_getUserSitesGroupsParameterTypes28);
+				_getUserSitesGroupsParameterTypes29);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, classNames, max);
@@ -1237,7 +1286,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "getUserSitesGroupsCount",
-				_getUserSitesGroupsCountParameterTypes29);
+				_getUserSitesGroupsCountParameterTypes30);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -1276,7 +1325,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "hasUserGroup",
-				_hasUserGroupParameterTypes30);
+				_hasUserGroupParameterTypes31);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, userId, groupId);
@@ -1319,7 +1368,7 @@ public class GroupServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "search", _searchParameterTypes31);
+				GroupServiceUtil.class, "search", _searchParameterTypes32);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, classNameIds, keywords, params, start,
@@ -1365,7 +1414,7 @@ public class GroupServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "search", _searchParameterTypes32);
+				GroupServiceUtil.class, "search", _searchParameterTypes33);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, classNameIds, name, description, params,
@@ -1407,7 +1456,7 @@ public class GroupServiceHttp {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				GroupServiceUtil.class, "search", _searchParameterTypes33);
+				GroupServiceUtil.class, "search", _searchParameterTypes34);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, name, description, params, start, end);
@@ -1448,7 +1497,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "searchCount",
-				_searchCountParameterTypes34);
+				_searchCountParameterTypes35);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, classNameIds, keywords, params);
@@ -1481,7 +1530,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "searchCount",
-				_searchCountParameterTypes35);
+				_searchCountParameterTypes36);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, companyId, name, description, params);
@@ -1514,7 +1563,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "setRoleGroups",
-				_setRoleGroupsParameterTypes36);
+				_setRoleGroupsParameterTypes37);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, roleId, groupIds);
@@ -1550,7 +1599,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "unsetRoleGroups",
-				_unsetRoleGroupsParameterTypes37);
+				_unsetRoleGroupsParameterTypes38);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, roleId, groupIds);
@@ -1586,7 +1635,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "updateFriendlyURL",
-				_updateFriendlyURLParameterTypes38);
+				_updateFriendlyURLParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, friendlyURL);
@@ -1631,12 +1680,60 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "updateGroup",
-				_updateGroupParameterTypes39);
+				_updateGroupParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, parentGroupId, nameMap, descriptionMap,
 				type, manualMembership, membershipRestriction, friendlyURL,
 				inheritContent, active, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.portal.kernel.model.Group)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.Group updateGroup(
+			HttpPrincipal httpPrincipal, long groupId, long parentGroupId,
+			java.util.Map<java.util.Locale, String> nameMap,
+			java.util.Map<java.util.Locale, String> descriptionMap, int type,
+			String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL,
+			boolean inheritContent, boolean active,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				GroupServiceUtil.class, "updateGroup",
+				_updateGroupParameterTypes41);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, parentGroupId, nameMap, descriptionMap,
+				type, typeSettings, manualMembership, membershipRestriction,
+				friendlyURL, inheritContent, active, serviceContext);
 
 			Object returnObj = null;
 
@@ -1673,7 +1770,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "updateGroup",
-				_updateGroupParameterTypes40);
+				_updateGroupParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, typeSettings);
@@ -1714,7 +1811,7 @@ public class GroupServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				GroupServiceUtil.class, "updateStagedPortlets",
-				_updateStagedPortletsParameterTypes41);
+				_updateStagedPortletsParameterTypes43);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, groupId, stagedPortletIds);
@@ -1756,116 +1853,128 @@ public class GroupServiceHttp {
 		int.class, boolean.class, int.class, String.class, boolean.class,
 		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _addOrUpdateGroupParameterTypes2 =
+	private static final Class<?>[] _addGroupParameterTypes2 = new Class[] {
+		String.class, long.class, long.class, java.util.Map.class,
+		java.util.Map.class, int.class, String.class, boolean.class, int.class,
+		String.class, boolean.class, boolean.class, boolean.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _addOrUpdateGroupParameterTypes3 =
 		new Class[] {
 			String.class, long.class, long.class, java.util.Map.class,
 			java.util.Map.class, int.class, boolean.class, int.class,
 			String.class, boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _addRoleGroupsParameterTypes3 =
+	private static final Class<?>[] _addRoleGroupsParameterTypes4 =
 		new Class[] {long.class, long[].class};
-	private static final Class<?>[] _checkRemoteStagingGroupParameterTypes4 =
+	private static final Class<?>[] _checkRemoteStagingGroupParameterTypes5 =
 		new Class[] {long.class};
-	private static final Class<?>[] _deleteGroupParameterTypes5 = new Class[] {
+	private static final Class<?>[] _deleteGroupParameterTypes6 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _disableStagingParameterTypes6 =
+	private static final Class<?>[] _disableStagingParameterTypes7 =
 		new Class[] {long.class};
-	private static final Class<?>[] _enableStagingParameterTypes7 =
+	private static final Class<?>[] _enableStagingParameterTypes8 =
 		new Class[] {long.class};
 	private static final Class<?>[]
-		_fetchGroupByExternalReferenceCodeParameterTypes8 = new Class[] {
+		_fetchGroupByExternalReferenceCodeParameterTypes9 = new Class[] {
 			String.class, long.class
 		};
-	private static final Class<?>[] _getCompanyGroupParameterTypes9 =
+	private static final Class<?>[] _getCompanyGroupParameterTypes10 =
 		new Class[] {long.class};
-	private static final Class<?>[] _getGroupParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getGroupParameterTypes11 = new Class[] {
 		long.class
 	};
-	private static final Class<?>[] _getGroupParameterTypes11 = new Class[] {
+	private static final Class<?>[] _getGroupParameterTypes12 = new Class[] {
 		long.class, String.class
 	};
-	private static final Class<?>[] _getGroupDisplayURLParameterTypes12 =
+	private static final Class<?>[] _getGroupDisplayURLParameterTypes13 =
 		new Class[] {long.class, boolean.class, boolean.class};
-	private static final Class<?>[] _getGroupsParameterTypes13 = new Class[] {
+	private static final Class<?>[] _getGroupsParameterTypes14 = new Class[] {
 		long.class, long.class, boolean.class
 	};
-	private static final Class<?>[] _getGroupsParameterTypes14 = new Class[] {
+	private static final Class<?>[] _getGroupsParameterTypes15 = new Class[] {
 		long.class, long.class, boolean.class, int.class, int.class
 	};
-	private static final Class<?>[] _getGroupsParameterTypes15 = new Class[] {
+	private static final Class<?>[] _getGroupsParameterTypes16 = new Class[] {
 		long.class, long.class, String.class, boolean.class, int.class,
 		int.class
 	};
-	private static final Class<?>[] _getGroupsCountParameterTypes16 =
-		new Class[] {long.class, long.class, boolean.class};
 	private static final Class<?>[] _getGroupsCountParameterTypes17 =
-		new Class[] {long.class, long.class, String.class, boolean.class};
+		new Class[] {long.class, long.class, boolean.class};
 	private static final Class<?>[] _getGroupsCountParameterTypes18 =
+		new Class[] {long.class, long.class, String.class, boolean.class};
+	private static final Class<?>[] _getGroupsCountParameterTypes19 =
 		new Class[] {long.class, String.class, long.class};
-	private static final Class<?>[] _getGtGroupsParameterTypes19 = new Class[] {
+	private static final Class<?>[] _getGtGroupsParameterTypes20 = new Class[] {
 		long.class, long.class, long.class, boolean.class, int.class
 	};
-	private static final Class<?>[] _getManageableSiteGroupsParameterTypes20 =
+	private static final Class<?>[] _getManageableSiteGroupsParameterTypes21 =
 		new Class[] {java.util.Collection.class, int.class};
-	private static final Class<?>[] _getOrganizationsGroupsParameterTypes21 =
+	private static final Class<?>[] _getOrganizationsGroupsParameterTypes22 =
 		new Class[] {java.util.List.class};
-	private static final Class<?>[] _getUserGroupParameterTypes22 =
+	private static final Class<?>[] _getUserGroupParameterTypes23 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _getUserGroupsGroupsParameterTypes23 =
+	private static final Class<?>[] _getUserGroupsGroupsParameterTypes24 =
 		new Class[] {java.util.List.class};
 	private static final Class<?>[]
-		_getUserOrganizationsGroupsParameterTypes24 = new Class[] {
+		_getUserOrganizationsGroupsParameterTypes25 = new Class[] {
 			long.class, int.class, int.class
 		};
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes25 =
-		new Class[] {};
 	private static final Class<?>[] _getUserSitesGroupsParameterTypes26 =
-		new Class[] {long.class, int.class, int.class};
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes27 =
-		new Class[] {long.class, String[].class, int.class};
-	private static final Class<?>[] _getUserSitesGroupsParameterTypes28 =
-		new Class[] {String[].class, int.class};
-	private static final Class<?>[] _getUserSitesGroupsCountParameterTypes29 =
 		new Class[] {};
-	private static final Class<?>[] _hasUserGroupParameterTypes30 =
+	private static final Class<?>[] _getUserSitesGroupsParameterTypes27 =
+		new Class[] {long.class, int.class, int.class};
+	private static final Class<?>[] _getUserSitesGroupsParameterTypes28 =
+		new Class[] {long.class, String[].class, int.class};
+	private static final Class<?>[] _getUserSitesGroupsParameterTypes29 =
+		new Class[] {String[].class, int.class};
+	private static final Class<?>[] _getUserSitesGroupsCountParameterTypes30 =
+		new Class[] {};
+	private static final Class<?>[] _hasUserGroupParameterTypes31 =
 		new Class[] {long.class, long.class};
-	private static final Class<?>[] _searchParameterTypes31 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes32 = new Class[] {
 		long.class, long[].class, String.class, java.util.LinkedHashMap.class,
 		int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchParameterTypes32 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes33 = new Class[] {
 		long.class, long[].class, String.class, String.class,
 		java.util.LinkedHashMap.class, boolean.class, int.class, int.class,
 		com.liferay.portal.kernel.util.OrderByComparator.class
 	};
-	private static final Class<?>[] _searchParameterTypes33 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes34 = new Class[] {
 		long.class, String.class, String.class, String[].class, int.class,
 		int.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes34 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes35 = new Class[] {
 		long.class, long[].class, String.class, java.util.LinkedHashMap.class
 	};
-	private static final Class<?>[] _searchCountParameterTypes35 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes36 = new Class[] {
 		long.class, String.class, String.class, String[].class
 	};
-	private static final Class<?>[] _setRoleGroupsParameterTypes36 =
+	private static final Class<?>[] _setRoleGroupsParameterTypes37 =
 		new Class[] {long.class, long[].class};
-	private static final Class<?>[] _unsetRoleGroupsParameterTypes37 =
+	private static final Class<?>[] _unsetRoleGroupsParameterTypes38 =
 		new Class[] {long.class, long[].class};
-	private static final Class<?>[] _updateFriendlyURLParameterTypes38 =
+	private static final Class<?>[] _updateFriendlyURLParameterTypes39 =
 		new Class[] {long.class, String.class};
-	private static final Class<?>[] _updateGroupParameterTypes39 = new Class[] {
+	private static final Class<?>[] _updateGroupParameterTypes40 = new Class[] {
 		long.class, long.class, java.util.Map.class, java.util.Map.class,
 		int.class, boolean.class, int.class, String.class, boolean.class,
 		boolean.class, com.liferay.portal.kernel.service.ServiceContext.class
 	};
-	private static final Class<?>[] _updateGroupParameterTypes40 = new Class[] {
+	private static final Class<?>[] _updateGroupParameterTypes41 = new Class[] {
+		long.class, long.class, java.util.Map.class, java.util.Map.class,
+		int.class, String.class, boolean.class, int.class, String.class,
+		boolean.class, boolean.class,
+		com.liferay.portal.kernel.service.ServiceContext.class
+	};
+	private static final Class<?>[] _updateGroupParameterTypes42 = new Class[] {
 		long.class, String.class
 	};
-	private static final Class<?>[] _updateStagedPortletsParameterTypes41 =
+	private static final Class<?>[] _updateStagedPortletsParameterTypes43 =
 		new Class[] {long.class, java.util.Map.class};
 
 }

@@ -67,6 +67,15 @@ public interface GroupService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public Group addGroup(
+			String externalReferenceCode, long parentGroupId, long liveGroupId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			int type, String typeSettings, boolean manualMembership,
+			int membershipRestriction, String friendlyURL, boolean site,
+			boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	public Group addOrUpdateGroup(
 			String externalReferenceCode, long parentGroupId, long liveGroupId,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
@@ -549,6 +558,14 @@ public interface GroupService extends BaseService {
 	public Group updateGroup(
 			long groupId, long parentGroupId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, int type,
+			boolean manualMembership, int membershipRestriction,
+			String friendlyURL, boolean inheritContent, boolean active,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public Group updateGroup(
+			long groupId, long parentGroupId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, int type, String typeSettings,
 			boolean manualMembership, int membershipRestriction,
 			String friendlyURL, boolean inheritContent, boolean active,
 			ServiceContext serviceContext)

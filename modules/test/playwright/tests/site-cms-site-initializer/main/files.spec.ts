@@ -99,7 +99,7 @@ test(
 
 		await test.step('Check the Space name in the Basic Document creation page', async () => {
 			await page
-				.getByRole('heading', {name: 'New Basic Document'})
+				.getByRole('heading', {name: 'Edit Basic Document'})
 				.waitFor();
 
 			const spaceSpan = page.locator(
@@ -159,7 +159,7 @@ test(
 
 		await test.step('Check the Space name in the Basic Document creation page', async () => {
 			await page
-				.getByRole('heading', {name: 'New Basic Document'})
+				.getByRole('heading', {name: 'Edit Basic Document'})
 				.waitFor();
 
 			const spaceSpan = page.locator(
@@ -233,7 +233,7 @@ test(
 
 		await test.step('Check the Space name in the Basic Document creation page', async () => {
 			await page
-				.getByRole('heading', {name: 'New Basic Document'})
+				.getByRole('heading', {name: 'Edit Basic Document'})
 				.waitFor();
 
 			const spaceSpan = page.locator(

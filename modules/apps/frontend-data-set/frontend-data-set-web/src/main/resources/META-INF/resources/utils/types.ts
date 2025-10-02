@@ -295,6 +295,7 @@ export interface IFrontendDataSetProps {
 	};
 	customViews?: string;
 	customViewsEnabled?: boolean;
+	defaultSelectedItems?: any[];
 	emptyState?: IEmptyStateConfiguration;
 	enableInlineAddModeSetting?: {
 		defaultBodyContent?: object;

@@ -110,6 +110,7 @@ const FrontendDataSetContent = ({
 	customRenderers,
 	customViews = '{}',
 	customViewsEnabled,
+	defaultSelectedItems,
 	emptyState,
 	filters: initialFilters,
 	formId,
@@ -373,13 +374,13 @@ const FrontendDataSetContent = ({
 
 	const [allItemsSelectedActive, setAllItemsSelectedActive] = useState(false);
 
-	const [selectedItems, setSelectedItems] = useControlledState({
+	const [selectedItems = [], setSelectedItems] = useControlledState({
 		defaultName: 'selectedItems',
-		defaultValue: externalSelectedItems ?? [],
+		defaultValue: defaultSelectedItems ?? undefined,
 		handleName: 'onSelectedItemsChange',
 		name: 'selectedItems',
 		onChange: onSelectedItemsChange,
-		value: externalSelectedItems ?? undefined,
+		value: externalSelectedItems,
 	});
 
 	let selectedItemsValue = selectedItems.map((item) =>

@@ -31,6 +31,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecifica
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.ServiceContextUtil;
 import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CustomizedPages;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
-import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
@@ -581,31 +581,111 @@ public class SitePageResourceImpl
 			return null;
 		}
 
-		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
-			if (!(pageSettings instanceof ContentPageSettings)) {
-				throw new UnsupportedOperationException();
-			}
+		if ((sitePage.getType() == SitePage.Type.CONTENT_PAGE) &&
+			!(pageSettings instanceof ContentPageSettings)) {
 
-			return null;
+			throw new UnsupportedOperationException();
 		}
 
-		if ((sitePage.getType() != SitePage.Type.WIDGET_PAGE) ||
+		if ((sitePage.getType() == SitePage.Type.WIDGET_PAGE) &&
 			!(pageSettings instanceof WidgetPageSettings)) {
 
 			throw new UnsupportedOperationException();
 		}
 
+		UnicodePropertiesBuilder.UnicodePropertiesWrapper
+			unicodePropertiesWrapper = UnicodePropertiesBuilder.create(true);
+
+		NavigationSettings navigationSettings =
+			pageSettings.getNavigationSettings();
+
+		if (navigationSettings != null) {
+			String target = navigationSettings.getTarget();
+			NavigationSettings.TargetType targetType =
+				navigationSettings.getTargetType();
+
+			if (Validator.isNotNull(target)) {
+				unicodePropertiesWrapper.setProperty(
+					LayoutTypePortletConstants.TARGET, target);
+			}
+
+			if (targetType == NavigationSettings.TargetType.NEW_TAB) {
+				unicodePropertiesWrapper.setProperty("targetType", "useNewTab");
+			}
+		}
+
+		String queryString = pageSettings.getQueryString();
+
+		if (Validator.isNotNull(queryString)) {
+			unicodePropertiesWrapper.setProperty(
+				LayoutTypePortletConstants.QUERY_STRING, queryString);
+		}
+
+		SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+		if (seoSettings != null) {
+			SitemapSettings sitemapSettings = seoSettings.getSitemapSettings();
+
+			if (sitemapSettings != null) {
+				SitemapSettings.ChangeFrequency changeFrequency =
+					sitemapSettings.getChangeFrequency();
+
+				if (changeFrequency != null) {
+					unicodePropertiesWrapper.setProperty(
+						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+						StringUtil.toLowerCase(changeFrequency.getValue()));
+				}
+
+				Boolean include = sitemapSettings.getInclude();
+
+				if (include != null) {
+					String siteMapInclude = "0";
+
+					if (include) {
+						siteMapInclude = "1";
+					}
+
+					unicodePropertiesWrapper.setProperty(
+						LayoutTypePortletConstants.SITEMAP_INCLUDE,
+						siteMapInclude);
+				}
+
+				Boolean includeChildSitePages =
+					sitemapSettings.getIncludeChildSitePages();
+
+				if (includeChildSitePages != null) {
+					String siteMapIncludeChildLayouts = "false";
+
+					if (includeChildSitePages) {
+						siteMapIncludeChildLayouts = "true";
+					}
+
+					unicodePropertiesWrapper.setProperty(
+						"sitemap-include-child-layouts",
+						siteMapIncludeChildLayouts);
+				}
+
+				Double pagePriority = sitemapSettings.getPagePriority();
+
+				if (pagePriority != null) {
+					unicodePropertiesWrapper.setProperty(
+						LayoutTypePortletConstants.SITEMAP_PRIORITY,
+						String.valueOf(pagePriority));
+				}
+			}
+		}
+
+		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
+			return unicodePropertiesWrapper.build();
+		}
+
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)pageSettings;
 
-		UnicodePropertiesBuilder.UnicodePropertiesWrapper
-			unicodePropertiesWrapper = UnicodePropertiesBuilder.create(
-				true
-			).setProperty(
-				LayoutConstants.CUSTOMIZABLE_LAYOUT,
-				String.valueOf(
-					GetterUtil.getBoolean(widgetPageSettings.getCustomizable()))
-			);
+		unicodePropertiesWrapper.setProperty(
+			LayoutConstants.CUSTOMIZABLE_LAYOUT,
+			String.valueOf(
+				GetterUtil.getBoolean(widgetPageSettings.getCustomizable())));
 
 		if (widgetPageSettings.getLayoutTemplateId() != null) {
 			unicodePropertiesWrapper.setProperty(

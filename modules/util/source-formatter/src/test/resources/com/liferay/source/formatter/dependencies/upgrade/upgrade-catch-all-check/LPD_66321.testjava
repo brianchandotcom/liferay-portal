@@ -13,11 +13,10 @@ import com.liferay.portal.util.PropsFiles;
 public class LPD_66321 {
 
 	public void method() {
-		Configuration configuration;
-
-		configuration = new ConfigurationImpl(classLoader, PropsFiles.CAPTCHA);
-		configuration = new ConfigurationImpl(classLoader, PropsFiles.CONTENT_TYPES);
-		configuration = new ConfigurationImpl(classLoader, PropsFiles.PORTAL);
+		new ConfigurationImpl(classLoader, PropsFiles.CAPTCHA);
+		new ConfigurationImpl(
+			classLoader, PropsFiles.CONTENT_TYPES);
+		new ConfigurationImpl(classLoader, PropsFiles.PORTAL);
 	}
 
 }

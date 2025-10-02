@@ -1100,6 +1100,20 @@ public abstract class BaseERCAssetLibraryTestEntityResourceTestCase {
 					ercAssetLibraryTestEntity1.
 						getAssetLibraryExternalReferenceCode(),
 					ercAssetLibraryTestEntity1.getExternalReferenceCode()));
+
+		ercAssetLibraryTestEntity1 =
+			testBatchEngineDeleteImportTask_addERCAssetLibraryTestEntity();
+
+		testBatchEngineDeleteImportTask_deleteERCAssetLibraryTestEntity(
+			200, ercAssetLibraryTestEntity1.getExternalReferenceCode());
+	}
+
+	protected ERCAssetLibraryTestEntity
+			testBatchEngineDeleteImportTask_addERCAssetLibraryTestEntity()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected ERCAssetLibraryTestEntity

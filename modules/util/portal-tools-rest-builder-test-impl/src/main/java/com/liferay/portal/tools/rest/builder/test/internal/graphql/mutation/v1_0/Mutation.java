@@ -637,6 +637,23 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createERCScopedTestEntitiesPageExportBatch(
+			@GraphQLName("roleNames") String roleNames,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercScopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercScopedTestEntityResource ->
+				ercScopedTestEntityResource.
+					postERCScopedTestEntitiesPageExportBatch(
+						roleNames, callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
 	public Response createSiteERCScopedTestEntitiesPageExportBatch(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
@@ -708,6 +725,57 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateAssetLibraryERCScopedTestEntityPermissionsPage(
+				@GraphQLName("assetLibraryExternalReferenceCode") @NotEmpty
+					String assetLibraryExternalReferenceCode,
+				@GraphQLName("ercScopedTestEntityExternalReferenceCode") String
+					ercScopedTestEntityExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercScopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercScopedTestEntityResource -> {
+				Page paginationPage =
+					ercScopedTestEntityResource.
+						putAssetLibraryERCScopedTestEntityPermissionsPage(
+							assetLibraryExternalReferenceCode,
+							ercScopedTestEntityExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateERCScopedTestEntityPermissionsPage(
+				@GraphQLName("ercScopedTestEntityExternalReferenceCode") String
+					ercScopedTestEntityExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercScopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercScopedTestEntityResource -> {
+				Page paginationPage =
+					ercScopedTestEntityResource.
+						putERCScopedTestEntityPermissionsPage(
+							ercScopedTestEntityExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
+	}
+
+	@GraphQLField
 	public ERCScopedTestEntity updateSiteERCScopedTestEntity(
 			@GraphQLName("siteExternalReferenceCode") @NotEmpty String
 				siteExternalReferenceCode,
@@ -725,6 +793,33 @@ public class Mutation {
 					siteExternalReferenceCode,
 					ercScopedTestEntityExternalReferenceCode,
 					ercScopedTestEntity));
+	}
+
+	@GraphQLField
+	public java.util.Collection<com.liferay.portal.vulcan.permission.Permission>
+			updateSiteERCScopedTestEntityPermissionsPage(
+				@GraphQLName("siteExternalReferenceCode") @NotEmpty String
+					siteExternalReferenceCode,
+				@GraphQLName("ercScopedTestEntityExternalReferenceCode") String
+					ercScopedTestEntityExternalReferenceCode,
+				@GraphQLName("permissions")
+					com.liferay.portal.vulcan.permission.Permission[]
+						permissions)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_ercScopedTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			ercScopedTestEntityResource -> {
+				Page paginationPage =
+					ercScopedTestEntityResource.
+						putSiteERCScopedTestEntityPermissionsPage(
+							siteExternalReferenceCode,
+							ercScopedTestEntityExternalReferenceCode,
+							permissions);
+
+				return paginationPage.getItems();
+			});
 	}
 
 	@GraphQLField

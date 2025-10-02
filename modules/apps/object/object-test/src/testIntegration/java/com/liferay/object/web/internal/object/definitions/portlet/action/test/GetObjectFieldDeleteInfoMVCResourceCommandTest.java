@@ -6,7 +6,6 @@
 package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -19,22 +18,14 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.validation.rule.setting.builder.ObjectValidationRuleSettingBuilder;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.io.ByteArrayOutputStream;
 
 import java.util.Arrays;
 
@@ -48,7 +39,8 @@ import org.junit.runner.RunWith;
  * @author Pedro Leite
  */
 @RunWith(Arquillian.class)
-public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
+public class GetObjectFieldDeleteInfoMVCResourceCommandTest
+	extends BaseMVCResourceCommandTestCase {
 
 	@ClassRule
 	@Rule
@@ -56,7 +48,7 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testGetObjectField() throws Exception {
+	public void testGetObjectFieldDeleteInfo() throws Exception {
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				ObjectDefinitionTestUtil.getRandomName());
@@ -96,29 +88,34 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
 					String.valueOf(objectField2.getObjectFieldId())
 				).build()));
 
-		JSONObject jsonObject = _getObjectFieldDeleteInfoJSONObject(
-			objectField1.getObjectFieldId());
+		JSONObject jsonObject = getJSONObject(
+			"objectFieldId", String.valueOf(objectField1.getObjectFieldId()));
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(
 			jsonObject.getBoolean(
 				"deleteObjectFieldObjectValidationRuleSetting"));
 
-		jsonObject = _getObjectFieldDeleteInfoJSONObject(
-			objectField2.getObjectFieldId());
+		jsonObject = getJSONObject(
+			"objectFieldId", String.valueOf(objectField2.getObjectFieldId()));
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertFalse(
 			jsonObject.getBoolean(
 				"deleteObjectFieldObjectValidationRuleSetting"));
 
-		jsonObject = _getObjectFieldDeleteInfoJSONObject(
-			objectField3.getObjectFieldId());
+		jsonObject = getJSONObject(
+			"objectFieldId", String.valueOf(objectField3.getObjectFieldId()));
 
 		Assert.assertNotNull(jsonObject);
 		Assert.assertTrue(
 			jsonObject.getBoolean(
 				"deleteObjectFieldObjectValidationRuleSetting"));
+	}
+
+	@Override
+	protected MVCResourceCommand getMVCResourceCommand() {
+		return _mvcResourceCommand;
 	}
 
 	private ObjectField _addCustomObjectField(long objectDefinitionId)
@@ -137,35 +134,6 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
 			).build());
 	}
 
-	private JSONObject _getObjectFieldDeleteInfoJSONObject(long objectFieldId)
-		throws Exception {
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		mockLiferayResourceRequest.addParameter(
-			"objectFieldId", String.valueOf(objectFieldId));
-		mockLiferayResourceRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(
-				_portletLocalService.getPortletById(
-					ObjectPortletKeys.OBJECT_DEFINITIONS),
-				null));
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		return JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
-	}
-
 	@Inject
 	private JSONFactory _jsonFactory;
 
@@ -179,8 +147,5 @@ public class GetObjectFieldDeleteInfoMVCResourceCommandTest {
 
 	@Inject
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
 
 }

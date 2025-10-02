@@ -7,7 +7,6 @@ package com.liferay.object.web.internal.object.definitions.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectFieldConstants;
-import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
@@ -18,25 +17,17 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.service.PortletLocalService;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
-import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.io.ByteArrayOutputStream;
 
 import java.util.Arrays;
 
@@ -52,14 +43,18 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
  * @author Carolina Barbosa
  */
 @RunWith(Arquillian.class)
-public class GetObjectFieldInfoMVCResourceCommandTest {
+public class GetObjectFieldInfoMVCResourceCommandTest
+	extends BaseMVCResourceCommandTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
+
+	@ClassRule
+	public static final PermissionCheckerMethodTestRule
+		permissionCheckerMethodTestRule =
+			PermissionCheckerMethodTestRule.INSTANCE;
 
 	@Test
 	public void testGetFormulaObjectFieldInfo() throws Exception {
@@ -100,8 +95,8 @@ public class GetObjectFieldInfoMVCResourceCommandTest {
 				TestPropsValues.getUserId()
 			).build());
 
-		JSONObject jsonObject = _getObjectFieldInfoJSONObject(
-			objectField.getObjectFieldId());
+		JSONObject jsonObject = getJSONObject(
+			"objectFieldId", String.valueOf(objectField.getObjectFieldId()));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -145,33 +140,9 @@ public class GetObjectFieldInfoMVCResourceCommandTest {
 			JSONCompareMode.LENIENT);
 	}
 
-	private JSONObject _getObjectFieldInfoJSONObject(long objectFieldId)
-		throws Exception {
-
-		MockLiferayResourceRequest mockLiferayResourceRequest =
-			new MockLiferayResourceRequest();
-
-		mockLiferayResourceRequest.addParameter(
-			"objectFieldId", String.valueOf(objectFieldId));
-		mockLiferayResourceRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_CONFIG,
-			PortletConfigFactoryUtil.create(
-				_portletLocalService.getPortletById(
-					ObjectPortletKeys.OBJECT_DEFINITIONS),
-				null));
-
-		MockLiferayResourceResponse mockLiferayResourceResponse =
-			new MockLiferayResourceResponse();
-
-		_mvcResourceCommand.serveResource(
-			mockLiferayResourceRequest, mockLiferayResourceResponse);
-
-		ByteArrayOutputStream byteArrayOutputStream =
-			(ByteArrayOutputStream)
-				mockLiferayResourceResponse.getPortletOutputStream();
-
-		return JSONFactoryUtil.createJSONObject(
-			byteArrayOutputStream.toString());
+	@Override
+	protected MVCResourceCommand getMVCResourceCommand() {
+		return _mvcResourceCommand;
 	}
 
 	@Inject(
@@ -184,8 +155,5 @@ public class GetObjectFieldInfoMVCResourceCommandTest {
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
-
-	@Inject
-	private PortletLocalService _portletLocalService;
 
 }

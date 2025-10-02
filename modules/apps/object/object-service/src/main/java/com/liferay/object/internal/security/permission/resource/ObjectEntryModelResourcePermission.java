@@ -343,7 +343,7 @@ public class ObjectEntryModelResourcePermission
 		long classPK = GetterUtil.getLong(assigneeMap.get("classPK"));
 
 		if (StringUtil.equals(className, Role.class.getName())) {
-			UserBag userBag = UserBagFactoryUtil.create(user.getUserId());
+			UserBag userBag = UserBagFactoryUtil.create(user);
 
 			for (long roleId : userBag.getRoleIds()) {
 				if (roleId == classPK) {

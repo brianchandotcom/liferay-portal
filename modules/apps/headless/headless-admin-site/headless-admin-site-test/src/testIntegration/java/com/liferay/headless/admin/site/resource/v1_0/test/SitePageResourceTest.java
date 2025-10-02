@@ -6,17 +6,23 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.headless.admin.site.client.custom.field.CustomField;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.SEOSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.client.dto.v1_0.SitePage;
+import com.liferay.headless.admin.site.client.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
@@ -45,6 +51,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -743,22 +750,142 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	}
 
 	private PageSettings _getPageSettings(SitePage.Type type) throws Exception {
+		PageSettings pageSettings = null;
+
 		if (type == SitePage.Type.CONTENT_PAGE) {
-			return new ContentPageSettings() {
+			pageSettings = new ContentPageSettings() {
 				{
 					setType(Type.CONTENT_PAGE_SETTINGS);
 				}
 			};
 		}
+		else {
+			pageSettings = new WidgetPageSettings() {
+				{
+					setCustomizable(false);
+					setCustomizableSectionIds(new String[0]);
+					setLayoutTemplateId("1_column");
+					setType(Type.WIDGET_PAGE_SETTINGS);
+				}
+			};
+		}
 
-		return new WidgetPageSettings() {
-			{
-				setCustomizable(false);
-				setCustomizableSectionIds(new String[0]);
-				setLayoutTemplateId("1_column");
-				setType(Type.WIDGET_PAGE_SETTINGS);
-			}
-		};
+		pageSettings.setCustomMetaTags(
+			() -> new CustomMetaTag[] {
+				new CustomMetaTag() {
+					{
+						setKey(RandomTestUtil::randomString);
+						setValue_i18n(
+							() -> HashMapBuilder.put(
+								"en-US", RandomTestUtil.randomString()
+							).put(
+								"es-ES", RandomTestUtil.randomString()
+							).build());
+					}
+				},
+				new CustomMetaTag() {
+					{
+						setKey(RandomTestUtil::randomString);
+						setValue_i18n(
+							() -> HashMapBuilder.put(
+								"en-US", RandomTestUtil.randomString()
+							).put(
+								"es-ES", RandomTestUtil.randomString()
+							).build());
+					}
+				}
+			});
+		pageSettings.setOpenGraphSettings(
+			() -> new OpenGraphSettings() {
+				{
+					setDescription_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setImage(
+						() -> new ItemExternalReference() {
+							{
+								setClassName(FileEntry.class::getName);
+								setExternalReferenceCode(
+									() -> {
+										DLFolder dlFolder =
+											DLTestUtil.addDLFolder(
+												testGroup.getGroupId());
+
+										DLFileEntry dlFileEntry =
+											DLTestUtil.addDLFileEntry(
+												dlFolder.getFolderId());
+
+										return dlFileEntry.
+											getExternalReferenceCode();
+									});
+							}
+						});
+					setImageAlt_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setTitle_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+				}
+			});
+		pageSettings.setSeoSettings(
+			() -> new SEOSettings() {
+				{
+					setCustomCanonicalURL_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setDescription_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setHtmlTitle_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setRobots_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setSeoKeywords_i18n(
+						() -> HashMapBuilder.put(
+							"en-US", RandomTestUtil.randomString()
+						).put(
+							"es-ES", RandomTestUtil.randomString()
+						).build());
+					setSitemapSettings(
+						() -> new SitemapSettings() {
+							{
+								setChangeFrequency(
+									() -> RandomTestUtil.randomEnum(
+										SitemapSettings.ChangeFrequency.class));
+								setInclude(RandomTestUtil::randomBoolean);
+								setIncludeChildSitePages(
+									RandomTestUtil::randomBoolean);
+								setPagePriority(RandomTestUtil::randomDouble);
+							}
+						});
+				}
+			});
+
+		return pageSettings;
 	}
 
 	private SitePage _getRandomSitePage(

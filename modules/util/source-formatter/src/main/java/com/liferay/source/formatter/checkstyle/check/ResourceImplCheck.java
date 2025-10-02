@@ -36,10 +36,12 @@ public class ResourceImplCheck extends BaseCheck {
 			return;
 		}
 
-		_checkMethodDefinitions(detailAST);
+		_checkMethodParameterAnnotations(detailAST);
 	}
 
-	private void _checkMethodDefinitions(DetailAST classDefinitionDetailAST) {
+	private void _checkMethodParameterAnnotations(
+		DetailAST classDefinitionDetailAST) {
+
 		for (DetailAST methodDefinitionDetailAST :
 				getAllChildTokens(
 					classDefinitionDetailAST, true, TokenTypes.METHOD_DEF)) {

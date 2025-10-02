@@ -33,7 +33,6 @@ const Arrow = ({
 			aria-label={ariaLabel}
 			displayType="secondary"
 			onClick={handleClick}
-			outline
 			rounded
 			symbol={`angle-${{next: 'right', previous: 'left'}[control]}`}
 		/>

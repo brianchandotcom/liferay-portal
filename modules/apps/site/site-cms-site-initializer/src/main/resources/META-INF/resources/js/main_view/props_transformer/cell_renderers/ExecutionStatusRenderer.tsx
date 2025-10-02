@@ -6,17 +6,17 @@
 import cx from 'classnames';
 import React from 'react';
 
-const ExecutionStatusRenderer = ({value}: {value: string}) => {
+const ExecutionStatusRenderer = ({value}: {value: {key: string}}) => {
 	return (
 		<span
 			className={cx(
 				'label',
-				value === 'completed' && 'label-success',
-				value === 'failed' && 'label-danger'
+				value.key === 'completed' && 'label-success',
+				value.key === 'failed' && 'label-danger'
 			)}
 		>
 			<span className="label-item label-item-expand">
-				{Liferay.Language.get(value)}
+				{Liferay.Language.get(value.key)}
 			</span>
 		</span>
 	);

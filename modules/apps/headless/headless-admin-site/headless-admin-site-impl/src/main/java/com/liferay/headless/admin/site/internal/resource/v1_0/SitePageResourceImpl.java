@@ -489,6 +489,21 @@ public class SitePageResourceImpl
 		return layout;
 	}
 
+	private long _getFileEntryId(long contentDocumentId) {
+		try {
+			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
+
+			return fileEntry.getFileEntryId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+		}
+
+		return 0;
+	}
+
 	private long _getParentLayoutId(
 			long defaultParentLayoutId, long groupId,
 			String parentSitePageExternalReferenceCode,
@@ -652,6 +667,101 @@ public class SitePageResourceImpl
 		return _layoutService.updatePriority(layout.getPlid(), priority);
 	}
 
+	private void _updateSEOEntry(long groupId, long layoutId, com.liferay.headless.delivery.dto.v1_0.SitePage sitePage)
+		throws Exception {
+
+		PageSettings pageSettings = sitePage.getPageSettings();
+
+		if (pageSettings == null) {
+			return;
+		}
+
+		SEOSettings seoSettings = pageSettings.getSeoSettings();
+
+		boolean canonicalURLEnabled = false;
+		Map<Locale, String> canonicalURLMap = new HashMap<>();
+
+		if (seoSettings != null) {
+			canonicalURLMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				seoSettings.getCustomCanonicalURL(),
+				seoSettings.getCustomCanonicalURL_i18n());
+
+			if (MapUtil.isNotEmpty(canonicalURLMap)) {
+				canonicalURLEnabled = true;
+			}
+		}
+
+		boolean openGraphDescriptionEnabled = false;
+		Map<Locale, String> openGraphDescriptionMap = new HashMap<>();
+		Map<Locale, String> openGraphImageAltMap = new HashMap<>();
+		long openGraphImageFileEntryId = 0;
+		boolean openGraphTitleEnabled = false;
+		Map<Locale, String> openGraphTitleMap = new HashMap<>();
+
+		OpenGraphSettings openGraphSettings =
+			pageSettings.getOpenGraphSettings();
+
+		if (openGraphSettings != null) {
+			openGraphDescriptionMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getDescription(),
+				openGraphSettings.getDescription_i18n());
+
+			if (MapUtil.isNotEmpty(openGraphDescriptionMap)) {
+				openGraphDescriptionEnabled = true;
+			}
+
+			openGraphImageAltMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getImageAlt(),
+				openGraphSettings.getImageAlt_i18n());
+
+			ContentDocument contentDocument = openGraphSettings.getImage();
+
+			if (contentDocument != null) {
+				openGraphImageFileEntryId = _getFileEntryId(
+					contentDocument.getId());
+			}
+
+			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
+				contextAcceptLanguage.getPreferredLocale(),
+				openGraphSettings.getTitle(),
+				openGraphSettings.getTitle_i18n());
+
+			if (MapUtil.isNotEmpty(openGraphTitleMap)) {
+				openGraphTitleEnabled = true;
+			}
+		}
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			groupId, contextHttpServletRequest, null
+		).build();
+
+		_layoutSEOEntryService.updateLayoutSEOEntry(
+			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
+			openGraphDescriptionEnabled, openGraphDescriptionMap,
+			openGraphImageAltMap, openGraphImageFileEntryId,
+			openGraphTitleEnabled, openGraphTitleMap, serviceContext);
+
+		CustomMetaTag[] customMetaTags = pageSettings.getCustomMetaTags();
+
+		if (ArrayUtil.isEmpty(customMetaTags)) {
+			return;
+		}
+
+		_layoutSEOEntryService.updateCustomMetaTags(
+			groupId, false, layoutId,
+			transformToList(
+				customMetaTags,
+				customMetaTag -> new LayoutSEOEntryCustomMetaTagProperty(
+					LocalizedMapUtil.getLocalizedMap(
+						contextAcceptLanguage.getPreferredLocale(),
+						customMetaTag.getValue(),
+						customMetaTag.getValue_i18n()),
+					customMetaTag.getKey())),
+			serviceContext);
+	}
 	private void _validatePageSpecificationExternalReferenceCode(
 		ServiceContext serviceContext, SitePage sitePage) {
 

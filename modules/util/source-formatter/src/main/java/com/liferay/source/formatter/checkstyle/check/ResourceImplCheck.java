@@ -33,9 +33,7 @@ public class ResourceImplCheck extends BaseCheck {
 
 		String className = getName(detailAST);
 
-		if (!className.endsWith("ResourceImpl") ||
-			className.startsWith("Base")) {
-
+		if (!className.endsWith("ResourceImpl")) {
 			return;
 		}
 
@@ -52,7 +50,10 @@ public class ResourceImplCheck extends BaseCheck {
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
 		_checkDoGetMethodModifier(methodDefinitionDetailASTList);
-		_checkMethodParameterAnnotations(methodDefinitionDetailASTList);
+
+		if (!className.startsWith("Base")) {
+			_checkMethodParameterAnnotations(methodDefinitionDetailASTList);
+		}
 	}
 
 	private void _checkDoGetMethodModifier(

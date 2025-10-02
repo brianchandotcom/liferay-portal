@@ -20,7 +20,7 @@ public class MarketplaceConstants {
 	public static final String ORDER_PAYMENT_METHOD_PAYPAL =
 		"paypal-integration";
 
-	public static final String ORDER_PAYMENT_METHOD_PAYPAL_LABEL = "Paypal";
+	public static final String ORDER_PAYMENT_METHOD_PAYPAL_LABEL = "PayPal";
 
 	public static final int ORDER_PAYMENT_STATUS_COMPLETED = 0;
 

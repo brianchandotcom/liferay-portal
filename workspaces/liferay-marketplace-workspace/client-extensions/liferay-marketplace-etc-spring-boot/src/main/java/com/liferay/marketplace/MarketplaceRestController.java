@@ -161,10 +161,6 @@ public class MarketplaceRestController extends BaseRestController {
 			(paymentStatus ==
 				MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) {
 
-			if (_log.isInfoEnabled()) {
-				_log.info("Sending Purchased Order Notification...");
-			}
-
 			_sendOrderPurchasedNotification(order);
 		}
 
@@ -334,21 +330,26 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	private void _sendOrderPurchasedNotification(Order order) throws Exception {
-		OrderItem orderItem = order.getOrderItems()[0];
+		OrderItem[] orderItems = order.getOrderItems();
+
+		OrderItem orderItem = orderItems[0];
 
 		if (orderItem == null) {
 			return;
 		}
 
-		Sku sku = _marketplaceService.getSkuResource(
-		).getSku(
-			orderItem.getSkuId()
-		);
+		if (_log.isInfoEnabled()) {
+			_log.info("Sending Purchased Order Notification " + order.getId());
+		}
+
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
 
 		BillingAddress billingAddress = _marketplaceService.getBillingAddress(
 			order.getId());
 
-		Product product = _marketplaceService.getProduct(sku.getProductId());
+		Product product = _marketplaceService.getProductBySkuId(
+			orderItem.getSkuId());
 
 		Catalog catalog = _marketplaceService.getCatalog(
 			product.getCatalogId());
@@ -358,24 +359,11 @@ public class MarketplaceRestController extends BaseRestController {
 				product.getProductId());
 
 		_marketplaceService.postNotificationQueueEntry(
-			"accounts-receivables-intl@liferay.com",
-			"MARKETPLACE-INVOICE-ORDER-SUBMIT-TEMPLATE",
-			new HashMapBuilder<String, Object>().put(
-				"[%ACCOUNT_ID%]",
-				order.getAccountId(
-				).toString()
+			null, "MARKETPLACE-ORDER-PURCHASED-NOTIFICATION",
+			new HashMapBuilder<String, String>().put(
+				"[%ACCOUNT_ID%]", String.valueOf(account.getId())
 			).put(
-				"[%ACCOUNT_NAME%]",
-				order.getAccount(
-				).getName()
-			).put(
-				"[%PRODUCT_THUMBNAIL%]",
-				new URL(
-					"http://" + lxcDXPMainDomain + product.getThumbnail()
-				).toString(
-				).replaceAll(
-					"(?<=accounts/)-?\\d+(?=/images)", "-1"
-				)
+				"[%ACCOUNT_NAME%]", account.getName()
 			).put(
 				"[%APP_NAME%]",
 				product.getName(
@@ -386,9 +374,9 @@ public class MarketplaceRestController extends BaseRestController {
 				"[%APP_TYPE%]", productSpecificationsMap.get("type")
 			).put(
 				"[%BILLING_ADDRESS_FORMATTED%]",
-				StringBundler.concat(
-					billingAddress.getStreet1(), ", ", billingAddress.getCity(),
-					", ", billingAddress.getRegionISOCode(), ", ",
+				String.join(
+					", ", billingAddress.getStreet1(), billingAddress.getCity(),
+					billingAddress.getRegionISOCode(),
 					billingAddress.getCountryISOCode())
 			).put(
 				"[%BILLING_ADDRESS_NAME%]", billingAddress.getName()
@@ -412,9 +400,7 @@ public class MarketplaceRestController extends BaseRestController {
 					DateTimeFormatter.ofPattern("MMMM d, yyyy")
 				)
 			).put(
-				"[%ORDER_ID%]",
-				order.getId(
-				).toString()
+				"[%ORDER_ID%]", String.valueOf(order.getId())
 			).put(
 				"[%ORDER_PAYMENT_METHOD%]",
 				MarketplaceConstants.getOrderPaymentMethodLabel(
@@ -425,13 +411,21 @@ public class MarketplaceRestController extends BaseRestController {
 			).put(
 				"[%PAYMENT_TERMS%]", order.getPaymentTermDescription()
 			).put(
+				"[%PRODUCT_THUMBNAIL%]",
+				new URL(
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						product.getThumbnail())
+				).toString(
+				).replaceAll(
+					"(?<=accounts/)-?\\d+(?=/images)", "-1"
+				)
+			).put(
 				"[%TOTAL_FORMATTED%]", order.getTotalFormatted()
 			).put(
 				"[%VAT_FORMATTED%]", order.getTaxAmountFormatted()
 			).put(
-				"[%VAT_NUMBER%]",
-				order.getAccount(
-				).getTaxId()
+				"[%VAT_NUMBER%]", account.getTaxId()
 			).build());
 	}
 

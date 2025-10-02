@@ -45,4 +45,5 @@ public class LayoutStyleBookEntryERCUpgradeProcess extends UpgradeProcess {
 			UpgradeProcessFactory.dropColumns("Layout", "styleBookEntryId")
 		};
 	}
+
 }

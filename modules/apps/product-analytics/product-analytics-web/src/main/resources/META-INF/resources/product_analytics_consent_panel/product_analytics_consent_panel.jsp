@@ -125,7 +125,7 @@ ProductAnalyticsConsentPanelDisplayContext productAnalyticsConsentPanelDisplayCo
 			<clay:content-col>
 				<clay:button
 					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
+					id='<%= liferayPortletResponse.getNamespace() + "useNecessaryCookiesOnlyButton" %>'
 					label='<%= LanguageUtil.get(request, "use-necessary-cookies-only") %>'
 					small="<%= true %>"
 				/>
@@ -134,7 +134,7 @@ ProductAnalyticsConsentPanelDisplayContext productAnalyticsConsentPanelDisplayCo
 			<clay:content-col>
 				<clay:button
 					displayType="secondary"
-					id='<%= liferayPortletResponse.getNamespace() + "confirmButton" %>'
+					id='<%= liferayPortletResponse.getNamespace() + "acceptSelectedButton" %>'
 					label='<%= LanguageUtil.get(request, "accept-selected") %>'
 					small="<%= true %>"
 				/>

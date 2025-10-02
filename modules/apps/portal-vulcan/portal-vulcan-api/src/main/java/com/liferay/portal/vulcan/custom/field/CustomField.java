@@ -48,7 +48,7 @@ public class CustomField implements Serializable {
 
 	@Schema(description = "The field's attribute type.")
 	public AttributeType getAttributeType() {
-		if (_dataTypeSupplier != null) {
+		if (_attributeTypeSupplier != null) {
 			attributeType = _attributeTypeSupplier.get();
 
 			_attributeTypeSupplier = null;

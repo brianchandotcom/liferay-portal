@@ -93,7 +93,7 @@ export interface IBulkActionTaskType {
 	DeleteBulkAction: {};
 	DownloadBulkAction: {};
 	KeywordBulkAction: {
-		keywords: number[];
+		keywords: string[];
 	};
 	MoveBulkAction: {
 		objectEntryFolderId: number;

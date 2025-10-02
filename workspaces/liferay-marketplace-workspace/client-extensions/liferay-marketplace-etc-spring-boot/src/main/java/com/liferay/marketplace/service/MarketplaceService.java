@@ -22,7 +22,9 @@ import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.CatalogR
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.ProductSpecificationResource;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.BillingAddressResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
@@ -123,6 +125,24 @@ public class MarketplaceService extends BaseService {
 
 	public AccountResource getAccountResource() throws Exception {
 		return AccountResource.builder(
+		).header(
+			HttpHeaders.AUTHORIZATION,
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oahs")
+		).endpoint(
+			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
+		).build();
+	}
+
+	public BillingAddress getBillingAddress(Long id) throws Exception {
+		BillingAddressResource billingAddressResource =
+			getBillingAddressResource();
+
+		return billingAddressResource.getOrderIdBillingAddress(id);
+	}
+
+	public BillingAddressResource getBillingAddressResource() throws Exception {
+		return BillingAddressResource.builder(
 		).header(
 			HttpHeaders.AUTHORIZATION,
 			_liferayOAuth2AccessTokenManager.getAuthorization(

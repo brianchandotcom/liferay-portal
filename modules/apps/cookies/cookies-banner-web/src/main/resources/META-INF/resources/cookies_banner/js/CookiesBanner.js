@@ -105,7 +105,7 @@ export default function ({
 				buttons: [
 					{
 						displayType: 'secondary',
-						label: Liferay.Language.get('confirm'),
+						label: Liferay.Language.get('accept-selected'),
 						onClick() {
 							Object.entries(cookiePreferences).forEach(
 								([key, value]) => {
@@ -148,7 +148,9 @@ export default function ({
 					{
 						className: includeDeclineAllButton ? '' : 'd-none',
 						displayType: 'secondary',
-						label: Liferay.Language.get('decline-all'),
+						label: Liferay.Language.get(
+							'use-necessary-cookies-only'
+						),
 						onClick() {
 							declineAllCookies(
 								optionalConsentCookieTypeNames,

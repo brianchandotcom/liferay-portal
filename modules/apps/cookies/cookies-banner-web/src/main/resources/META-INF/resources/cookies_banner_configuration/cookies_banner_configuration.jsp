@@ -129,7 +129,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:button
 					displayType="secondary"
 					id='<%= liferayPortletResponse.getNamespace() + "confirmButton" %>'
-					label='<%= LanguageUtil.get(request, "confirm") %>'
+					label='<%= LanguageUtil.get(request, "accept-selected") %>'
 					small="<%= true %>"
 				/>
 			</clay:content-col>
@@ -148,7 +148,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 					<clay:button
 						displayType="secondary"
 						id='<%= liferayPortletResponse.getNamespace() + "declineAllButton" %>'
-						label='<%= LanguageUtil.get(request, "decline-all") %>'
+						label='<%= LanguageUtil.get(request, "use-necessary-cookies-only") %>'
 						small="<%= true %>"
 					/>
 				</clay:content-col>

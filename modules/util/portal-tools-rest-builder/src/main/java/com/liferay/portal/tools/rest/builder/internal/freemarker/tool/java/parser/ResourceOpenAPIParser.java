@@ -1614,6 +1614,7 @@ public class ResourceOpenAPIParser {
 			StringUtil.equals(name, "pagination") ||
 			StringUtil.equals(name, "restrictFields") ||
 			StringUtil.equals(name, schemaVarName) ||
+			StringUtil.equals(name, schemaVarName + "ExternalReferenceCode") ||
 			StringUtil.equals(name, schemaVarName + "Id")) {
 
 			return false;

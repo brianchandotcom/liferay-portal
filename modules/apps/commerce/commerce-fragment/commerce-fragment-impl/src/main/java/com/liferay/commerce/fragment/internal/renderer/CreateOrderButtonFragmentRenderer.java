@@ -14,41 +14,23 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.fragment.internal.constants.CommerceFragmentCollectionKeys;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommerceContextThreadLocal;
-import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,36 +38,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Francesco Acciaro
  * @author Michele Vigilante
+ * @author Alessio Antonio Rendina
  */
 @Component(service = FragmentRenderer.class)
-public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
+public class CreateOrderButtonFragmentRenderer
+	extends BaseComponentFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS";
-	}
-
-	@Override
-	public JSONObject getConfigurationJSONObject(
-		FragmentRendererContext fragmentRendererContext) {
-
-		try {
-			JSONObject jsonObject = _jsonFactory.createJSONObject(
-				StringUtil.read(
-					getClass(),
-					"create_order_button/dependencies/configuration.json"));
-
-			return _fragmentEntryConfigurationParser.translateConfiguration(
-				jsonObject,
-				ResourceBundleUtil.getBundle("content.Language", getClass()));
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
+		return CommerceFragmentCollectionKeys.
+			COMMERCE_ACCOUNT_SELECTOR_FRAGMENTS;
 	}
 
 	@Override
@@ -94,110 +56,77 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 	}
 
 	@Override
-	public String getLabel(Locale locale) {
-		return _language.get(locale, "create-order-button");
-	}
-
-	@Override
 	public boolean isSelectable(HttpServletRequest httpServletRequest) {
 		return FeatureFlagManagerUtil.isEnabled("LPD-58472");
 	}
 
 	@Override
-	public void render(
+	protected String getConfigurationPath() {
+		return "create_order_button/dependencies/configuration.json";
+	}
+
+	@Override
+	protected String getLabelKey() {
+		return "create-order-button";
+	}
+
+	@Override
+	protected String getModuleName() {
+		return "{CreateOrder} from commerce-frontend-js";
+	}
+
+	@Override
+	protected Map<String, Object> getProps(
 			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
-		try {
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
 
-			if ((commerceContext == null) ||
-				(commerceContext.getCommerceChannelId() <= 0)) {
+		return HashMapBuilder.<String, Object>put(
+			"addCommerceOrderURL",
+			_commerceOrderHttpHelper.getCommerceCartBaseURL(httpServletRequest)
+		).put(
+			"commerceChannelId", commerceContext.getCommerceChannelId()
+		).put(
+			"currencyCode",
+			() -> {
+				CommerceCurrency commerceCurrency =
+					commerceContext.getCommerceCurrency();
 
-				_printPortletMessageInfo(
-					httpServletRequest, httpServletResponse,
-					"this-site-does-not-have-a-channel");
+				if (commerceCurrency == null) {
+					return null;
+				}
 
-				return;
+				return commerceCurrency.getCode();
 			}
+		).put(
+			"currentCommerceAccountId",
+			() -> {
+				AccountEntry accountEntry = commerceContext.getAccountEntry();
 
-			ComponentTag componentTag = new ComponentTag();
+				if (accountEntry == null) {
+					return null;
+				}
 
-			componentTag.setModule("{CreateOrder} from commerce-frontend-js");
-			componentTag.setPageContext(
-				PageContextFactoryUtil.create(
-					httpServletRequest, httpServletResponse));
-			componentTag.setProps(
-				HashMapBuilder.<String, Object>put(
-					"addCommerceOrderURL",
-					_commerceOrderHttpHelper.getCommerceCartBaseURL(
-						httpServletRequest)
-				).put(
-					"commerceChannelId", commerceContext.getCommerceChannelId()
-				).put(
-					"currencyCode",
-					() -> {
-						CommerceCurrency commerceCurrency =
-							commerceContext.getCommerceCurrency();
-
-						if (commerceCurrency == null) {
-							return null;
-						}
-
-						return commerceCurrency.getCode();
-					}
-				).put(
-					"currentCommerceAccountId",
-					() -> {
-						AccountEntry accountEntry =
-							commerceContext.getAccountEntry();
-
-						if (accountEntry == null) {
-							return null;
-						}
-
-						return accountEntry.getAccountEntryId();
-					}
-				).put(
-					"hasAddCommerceOrderPermission",
-					_hasAddCommerceOrderPermission()
-				).put(
-					"label",
-					_language.get(
-						fragmentRendererContext.getLocale(),
-						_getConfigurationValue(
-							"label", fragmentRendererContext))
-				).build());
-			componentTag.setServletContext(_servletContext);
-
-			componentTag.doStartTag();
-
-			componentTag.doEndTag();
-		}
-		catch (Exception exception) {
-			throw new IOException(exception);
-		}
+				return accountEntry.getAccountEntryId();
+			}
+		).put(
+			"hasAddCommerceOrderPermission",
+			_hasAddCommerceOrderPermission(commerceContext)
+		).put(
+			"label",
+			language.get(
+				fragmentRendererContext.getLocale(),
+				(String)getConfigurationValue("label", fragmentRendererContext))
+		).build();
 	}
 
-	private String _getConfigurationValue(
-		String fieldName, FragmentRendererContext fragmentRendererContext) {
-
-		FragmentEntryLink fragmentEntryLink =
-			fragmentRendererContext.getFragmentEntryLink();
-
-		return GetterUtil.getString(
-			_fragmentEntryConfigurationParser.getFieldValue(
-				getConfigurationJSONObject(fragmentRendererContext),
-				fragmentEntryLink.getEditableValuesJSONObject(),
-				fragmentRendererContext.getLocale(), fieldName));
-	}
-
-	private boolean _hasAddCommerceOrderPermission() throws PortalException {
-		CommerceContext commerceContext = CommerceContextThreadLocal.get();
+	private boolean _hasAddCommerceOrderPermission(
+			CommerceContext commerceContext)
+		throws Exception {
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
@@ -240,27 +169,14 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 				return true;
 			}
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
+		catch (Exception exception) {
+			_log.error(exception);
 		}
 
 		return _commerceOrderPortletResourcePermission.contains(
 			PermissionThreadLocal.getPermissionChecker(),
 			accountEntry.getAccountEntryGroupId(),
 			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
-	}
-
-	private void _printPortletMessageInfo(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, String message)
-		throws IOException {
-
-		PrintWriter printWriter = httpServletResponse.getWriter();
-
-		printWriter.write(
-			StringBundler.concat(
-				"<div class=\"portlet-msg-info\">",
-				_language.get(httpServletRequest, message), "</div>"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -279,19 +195,5 @@ public class CreateOrderButtonFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.fragment.impl)"
-	)
-	private ServletContext _servletContext;
 
 }

@@ -12,11 +12,8 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
-import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationSettingsMapFactoryUtil;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
-import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
-import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
@@ -91,14 +88,12 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReader;
-import com.liferay.portal.kernel.zip.ZipReaderFactory;
 import com.liferay.portal.odata.entity.DateTimeEntityField;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -135,7 +130,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Function;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -366,98 +360,6 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 		_testExportImportObjectEntriesWithErrorReport(
 			GroupTestUtil.addGroup(), ObjectDefinitionConstants.SCOPE_SITE);
-	}
-
-	@Test
-	@TestInfo("LPD-LPD-63419")
-	public void testExportImportObjectEntriesWithManyToManyRelationship()
-		throws Exception {
-
-		Group group = GroupTestUtil.addGroup();
-
-		ObjectDefinition objectDefinition1 = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		ObjectEntry objectEntry1 = _addObjectEntry(
-			_getObjectEntryGroupId(
-				group.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE),
-			objectDefinition1, RandomTestUtil.randomString());
-
-		ObjectDefinition objectDefinition2 = _addObjectDefinition(
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		ObjectEntry objectEntry2 = _addObjectEntry(
-			_getObjectEntryGroupId(
-				group.getGroupId(), ObjectDefinitionConstants.SCOPE_SITE),
-			objectDefinition2, RandomTestUtil.randomString());
-
-		ObjectRelationship objectRelationship =
-			ObjectRelationshipTestUtil.addObjectRelationship(
-				_objectRelationshipLocalService, objectDefinition1,
-				objectDefinition2,
-				ObjectRelationshipConstants.DELETION_TYPE_CASCADE,
-				StringUtil.randomId(),
-				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
-		ObjectRelationshipTestUtil.relateObjectEntries(
-			objectEntry1.getPrimaryKey(), objectEntry2.getPrimaryKey(),
-			objectRelationship, TestPropsValues.getUserId());
-
-		File larFile = _exportLayouts(
-			false, group.getGroupId(), false, new long[0], objectDefinition1,
-			objectDefinition2);
-
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
-
-		String userIdStrategyString = MapUtil.getString(
-			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
-
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				group.getCompanyId(), group.getGroupId(), parameterMap,
-				ExportImportHelperUtil.getUserIdStrategy(
-					TestPropsValues.getUserId(), userIdStrategyString),
-				_zipReaderFactory.getZipReader(larFile));
-
-		String objectDefinition1Path = StringPool.FORWARD_SLASH.concat(
-			objectDefinition1.getName(
-			).concat(
-				".json"
-			));
-
-		String objectEntry1Path = ExportImportPathUtil.getRootPath(
-			portletDataContext
-		).concat(
-			objectDefinition1Path
-		);
-
-		String objectDefinition2Path = StringPool.FORWARD_SLASH.concat(
-			objectDefinition2.getName(
-			).concat(
-				".json"
-			));
-
-		String objectEntry2Path = ExportImportPathUtil.getRootPath(
-			portletDataContext
-		).concat(
-			objectDefinition2Path
-		);
-
-		JSONArray objectEntry1jsonArray = JSONFactoryUtil.createJSONArray(
-			portletDataContext.getZipEntryAsString(objectEntry1Path));
-
-		_assertJSONIncludesOnlyScopeAndERCForRelationships(
-			group, objectRelationship.getName(),
-			objectEntry2.getExternalReferenceCode(), objectEntry1jsonArray);
-
-		JSONArray objectEntry2jsonArray = JSONFactoryUtil.createJSONArray(
-			portletDataContext.getZipEntryAsString(objectEntry2Path));
-
-		_assertJSONIncludesOnlyScopeAndERCForRelationships(
-			group, objectRelationship.getName(),
-			objectEntry1.getExternalReferenceCode(), objectEntry2jsonArray);
 	}
 
 	@Ignore("LPD-40798")
@@ -1108,36 +1010,6 @@ public class BatchEnginePortletDataHandlerTest {
 			ContentTypes.TEXT_PLAIN);
 	}
 
-	private void _assertJSONIncludesOnlyScopeAndERCForRelationships(
-		Group group, String relFieldName, String externalReferenceCode,
-		JSONArray jsonArray) {
-
-		for (Object entryObject : jsonArray) {
-			JSONObject entryJSONObject = (JSONObject)entryObject;
-
-			JSONArray relJSONArray = entryJSONObject.getJSONArray(relFieldName);
-
-			JSONObject relItemJSONObject = relJSONArray.getJSONObject(0);
-
-			Set<String> keys = relItemJSONObject.keySet();
-
-			Assert.assertEquals(
-				SetUtil.fromArray(
-					"scopeId", "scopeKey", "externalReferenceCode"),
-				keys);
-
-			Assert.assertEquals(
-				group.getGroupId(), relItemJSONObject.getLong("scopeId"));
-
-			Assert.assertEquals(
-				group.getGroupKey(), relItemJSONObject.getString("scopeKey"));
-
-			Assert.assertEquals(
-				externalReferenceCode,
-				relItemJSONObject.getString("externalReferenceCode"));
-		}
-	}
-
 	private void _assertNull(
 		long objectDefinitionId, ObjectEntry... objectEntries) {
 
@@ -1290,6 +1162,39 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private String _getExpectedNestedRelationshipJSON(
+		Group group, ObjectEntry[] relatedObjectEntries, String scope) {
+
+		JSONArray relationshipsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
+			JSONArray relationshipJSONArray = JSONUtil.put(
+				JSONUtil.put(
+					"externalReferenceCode",
+					relatedObjectEntry.getExternalReferenceCode()
+				).put(
+					"scopeId",
+					(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
+				).put(
+					"scopeKey",
+					() -> {
+						if (Objects.equals(
+								ObjectDefinitionConstants.SCOPE_COMPANY,
+								scope)) {
+
+							return null;
+						}
+
+						return group.getGroupKey();
+					}
+				));
+
+			relationshipsJSONArray.put(relationshipJSONArray);
+		}
+
+		return relationshipsJSONArray.toString();
+	}
+
 	private Map<String, String[]> _getExportImportParameterMap(
 		boolean deletions, boolean includeLayoutSetLayoutsPortlet,
 		List<ObjectDefinition> objectDefinitions) {
@@ -1388,6 +1293,44 @@ public class BatchEnginePortletDataHandlerTest {
 		portletDataHandler.prepareManifestSummary(portletDataContext);
 
 		return portletDataContext.getManifestSummary();
+	}
+
+	private String _getNestedRelationshipJSON(
+			String className, File file, long groupId, String relationshipName)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				_getBatchFileNameWithPath(className + ".json", groupId));
+
+			if (zipEntry == null) {
+				throw new FileNotFoundException();
+			}
+
+			JSONArray nestedRelationshipsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+
+			JSONArray objectEntriesJSONArray = JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+
+			for (int i = 0; i < objectEntriesJSONArray.length(); i++) {
+				JSONObject objectEntryJSONObject =
+					objectEntriesJSONArray.getJSONObject(i);
+
+				Object nestedObject = objectEntryJSONObject.get(
+					relationshipName);
+
+				if (nestedObject instanceof JSONObject) {
+					nestedRelationshipsJSONArray.put(
+						JSONUtil.put(nestedObject));
+				}
+				else {
+					nestedRelationshipsJSONArray.put(nestedObject);
+				}
+			}
+
+			return nestedRelationshipsJSONArray.toString();
+		}
 	}
 
 	private long _getObjectEntryGroupId(long groupId, String scope) {
@@ -1563,6 +1506,25 @@ public class BatchEnginePortletDataHandlerTest {
 		File larFile = _exportLayouts(
 			false, group.getGroupId(), false, new long[0], objectDefinition1,
 			objectDefinition2);
+
+		JSONAssert.assertEquals(
+			_getExpectedNestedRelationshipJSON(group, objectEntries1, scope),
+			_getNestedRelationshipJSON(
+				objectDefinition2.getName(), larFile, group.getGroupId(),
+				objectRelationship.getName()),
+			JSONCompareMode.STRICT);
+
+		if (Objects.equals(
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
+
+			JSONAssert.assertEquals(
+				_getExpectedNestedRelationshipJSON(
+					group, objectEntries2, scope),
+				_getNestedRelationshipJSON(
+					objectDefinition1.getName(), larFile, group.getGroupId(),
+					objectRelationship.getName()),
+				JSONCompareMode.STRICT);
+		}
 
 		_deleteObjectEntries(objectEntries1);
 		_deleteObjectEntries(objectEntries2);
@@ -1757,9 +1719,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Inject
 	private StagingLocalService _stagingLocalService;
-
-	@Inject
-	private ZipReaderFactory _zipReaderFactory;
 
 	private static class TestExportImportVulcanBatchEngineTaskItemDelegate
 		implements EntityModelResource,

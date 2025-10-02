@@ -25,6 +25,7 @@ import com.liferay.info.field.type.TextInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.item.updater.InfoItemFieldValuesUpdater;
 import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -102,6 +103,8 @@ public class InfoRequestFieldValuesProviderHelper {
 			ParamUtil.getLong(uploadServletRequest, "classNameId"));
 		String classTypeId = ParamUtil.getString(
 			uploadServletRequest, "classTypeId");
+		String[] deletedItemIdentifiers = ParamUtil.getStringValues(
+			uploadServletRequest, "deletedItemIdentifiers");
 		long groupId = ParamUtil.getLong(uploadServletRequest, "groupId");
 
 		Map<String, FileItem[]> multipartParameterMap =
@@ -211,6 +214,19 @@ public class InfoRequestFieldValuesProviderHelper {
 				}
 			}
 		}
+
+		InfoField<MultiselectInfoFieldType> infoField = InfoField.builder(
+		).infoFieldType(
+			MultiselectInfoFieldType.INSTANCE
+		).namespace(
+			InfoItemFieldValuesUpdater.class.getSimpleName()
+		).name(
+			"deletedItemIdentifiers"
+		).build();
+
+		infoFieldValues.put(
+			infoField.getUniqueId(),
+			new InfoFieldValue<>(infoField, deletedItemIdentifiers));
 
 		return _computeInfoFieldValues(infoFieldValues);
 	}

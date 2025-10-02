@@ -60,7 +60,8 @@ public class PlacedCommerceOrderFDSAPIURLResolver implements FDSAPIURLResolver {
 		AccountEntry accountEntry = commerceContext.getAccountEntry();
 
 		if (accountEntry != null) {
-			accountExternalReferenceCode = accountEntry.getExternalReferenceCode();
+			accountExternalReferenceCode =
+				accountEntry.getExternalReferenceCode();
 			accountId = accountEntry.getAccountEntryId();
 		}
 

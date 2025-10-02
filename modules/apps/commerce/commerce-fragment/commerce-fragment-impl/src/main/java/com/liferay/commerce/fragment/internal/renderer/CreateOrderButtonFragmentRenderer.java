@@ -21,8 +21,6 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
@@ -134,43 +132,36 @@ public class CreateOrderButtonFragmentRenderer
 			return false;
 		}
 
-		try {
-			CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceOrderFieldsConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceContext.getCommerceChannelGroupId(),
-						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+		CommerceOrderFieldsConfiguration commerceOrderFieldsConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderFieldsConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceContext.getCommerceChannelGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
 
-			int commerceOrdersCount =
-				(int)_commerceOrderService.getPendingCommerceOrdersCount(
-					accountEntry.getCompanyId(),
-					commerceContext.getCommerceChannelGroupId());
+		int commerceOrdersCount =
+			(int)_commerceOrderService.getPendingCommerceOrdersCount(
+				accountEntry.getCompanyId(),
+				commerceContext.getCommerceChannelGroupId());
 
-			if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() >
-					0) &&
-				(commerceOrdersCount >=
-					commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
+		if ((commerceOrderFieldsConfiguration.accountCartMaxAllowed() > 0) &&
+			(commerceOrdersCount >=
+				commerceOrderFieldsConfiguration.accountCartMaxAllowed())) {
 
-				return false;
-			}
-
-			CommerceOrderCheckoutConfiguration
-				commerceOrderCheckoutConfiguration =
-					_configurationProvider.getConfiguration(
-						CommerceOrderCheckoutConfiguration.class,
-						new GroupServiceSettingsLocator(
-							commerceContext.getCommerceChannelGroupId(),
-							CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
-
-			if (accountEntry.isGuestAccount() &&
-				commerceOrderCheckoutConfiguration.guestCheckoutEnabled()) {
-
-				return true;
-			}
+			return false;
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+
+		CommerceOrderCheckoutConfiguration commerceOrderCheckoutConfiguration =
+			_configurationProvider.getConfiguration(
+				CommerceOrderCheckoutConfiguration.class,
+				new GroupServiceSettingsLocator(
+					commerceContext.getCommerceChannelGroupId(),
+					CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		if (accountEntry.isGuestAccount() &&
+			commerceOrderCheckoutConfiguration.guestCheckoutEnabled()) {
+
+			return true;
 		}
 
 		return _commerceOrderPortletResourcePermission.contains(
@@ -178,9 +169,6 @@ public class CreateOrderButtonFragmentRenderer
 			accountEntry.getAccountEntryGroupId(),
 			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CreateOrderButtonFragmentRenderer.class);
 
 	@Reference
 	private CommerceOrderHttpHelper _commerceOrderHttpHelper;

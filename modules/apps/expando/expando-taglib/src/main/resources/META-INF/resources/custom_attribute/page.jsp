@@ -644,8 +644,13 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:when test="<%= propertyHeight > 0 %>">
 									<aui:style type="text/css">
 										#<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>  {
-											height: <%= propertyHeight %>px;
-											width: <%= propertyWidth %>px;
+											<c:if test="<%= propertyHeight > 0 %>">
+												height: <%= propertyHeight %>px;
+											</c:if>
+
+											<c:if test="<%= propertyWidth > 0 %>">
+												width: <%= propertyWidth %>px;
+											</c:if>
 										}
 									</aui:style>
 
@@ -658,7 +663,9 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 								<c:otherwise>
 									<aui:style type="text/css">
 										#<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %> {
-											width: <%= propertyWidth %>px;
+											<c:if test="<%= propertyWidth > 0 %>">
+												width: <%= propertyWidth %>px;
+											</c:if>
 										}
 									</aui:style>
 

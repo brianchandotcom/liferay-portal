@@ -164,7 +164,7 @@ public class MarketplaceService extends BaseService {
 		).endpoint(
 			new URL(lxcDXPServerProtocol + "://" + lxcDXPMainDomain)
 		).parameters(
-			"nestedFields", "account,orderItems"
+			"nestedFields", "account,orderItems, billingAddress"
 		).build();
 	}
 

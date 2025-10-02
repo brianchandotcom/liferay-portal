@@ -26,12 +26,15 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import java.math.BigDecimal;
+
 import java.net.URL;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -49,6 +52,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,6 +66,11 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @RequestMapping("/marketplace")
 @RestController
 public class MarketplaceRestController extends BaseRestController {
+
+	@GetMapping("/orders")
+	public String get() {
+		return "READY";
+	}
 
 	@GetMapping("orders/export")
 	public ResponseEntity<StreamingResponseBody> getOrdersExport(
@@ -261,6 +270,80 @@ public class MarketplaceRestController extends BaseRestController {
 				String.valueOf(
 					modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
 			).build());
+	}
+
+	@PostMapping("/tax-calculate/{orderId}")
+	public void postTaxCalculate(
+			@AuthenticationPrincipal Jwt jwt, @PathVariable long orderId)
+		throws Exception {
+
+		if (_log.isInfoEnabled()) {
+			_log.info("POST tax calculate for orderId: " + orderId);
+		}
+
+		Order order = _marketplaceService.getOrder(orderId);
+
+		String accountType = _marketplaceService.getAccountResource(
+		).getAccount(
+			order.getAccountId()
+		).getTypeAsString();
+
+		String countryISOCode;
+
+		if (order.getBillingAddress() != null) {
+			countryISOCode = order.getBillingAddress(
+			).getCountryISOCode();
+		}
+		else {
+			countryISOCode = "";
+		}
+
+		BigDecimal taxRate = BigDecimal.ZERO;
+
+		BigDecimal originalTotal = BigDecimal.valueOf(
+			order.getSubtotalAmount());
+
+		BigDecimal taxAmount = BigDecimal.ZERO;
+
+		BigDecimal totalWithTax = originalTotal.add(taxAmount);
+
+		if (Objects.equals(accountType, "person") &&
+			Objects.equals(countryISOCode, "IE")) {
+
+			taxRate = BigDecimal.valueOf(0.23);
+
+			taxAmount = originalTotal.multiply(taxRate);
+
+			totalWithTax = originalTotal.add(taxAmount);
+		}
+
+		List<String> europeanCountryISOCodes = List.of(
+			"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR",
+			"GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL",
+			"PT", "RO", "SE", "SI", "SK");
+
+		if (Objects.equals(accountType, "business") &&
+			europeanCountryISOCodes.contains(countryISOCode)) {
+
+			taxRate = BigDecimal.valueOf(0.23);
+
+			taxAmount = originalTotal.multiply(taxRate);
+
+			totalWithTax = originalTotal.add(taxAmount);
+		}
+
+		Order orderWithTax = new Order();
+
+		BigDecimal finalTaxAmount = taxAmount;
+		BigDecimal finalTotalWithTax = totalWithTax;
+
+		orderWithTax.setTaxAmount(() -> finalTaxAmount);
+		orderWithTax.setTotal(() -> finalTotalWithTax);
+
+		_marketplaceService.getOrderResource(
+		).patchOrder(
+			orderId, orderWithTax
+		);
 	}
 
 	private void _setUpCloudProductPurchase(

@@ -1029,7 +1029,7 @@ public class LayoutStructureRenderer {
 				_renderFormRelationshipStyledLayoutStructureItemContent(
 					formRelationshipStyledLayoutStructureItem,
 					formRelationshipStyledLayoutStructureItemContentId,
-					infoForm);
+					infoForm, null);
 			}
 			else {
 				List<? extends LayoutDisplayPageObjectProvider<?>>
@@ -1054,7 +1054,7 @@ public class LayoutStructureRenderer {
 					_renderFormRelationshipStyledLayoutStructureItemContent(
 						formRelationshipStyledLayoutStructureItem,
 						formRelationshipStyledLayoutStructureItemContentId,
-						infoForm);
+						infoForm, null);
 				}
 				else {
 					for (LayoutDisplayPageObjectProvider<?>
@@ -1079,7 +1079,7 @@ public class LayoutStructureRenderer {
 						_renderFormRelationshipStyledLayoutStructureItemContent(
 							formRelationshipStyledLayoutStructureItem,
 							formRelationshipStyledLayoutStructureItemContentId,
-							infoForm);
+							infoForm, relatedLayoutDisplayPageObjectProvider);
 					}
 				}
 			}
@@ -1134,7 +1134,9 @@ public class LayoutStructureRenderer {
 			FormRelationshipStyledLayoutStructureItem
 				formRelationshipStyledLayoutStructureItem,
 			String formRelationshipStyledLayoutStructureItemContentId,
-			InfoForm infoForm)
+			InfoForm infoForm,
+			LayoutDisplayPageObjectProvider<?>
+				relatedLayoutDisplayPageObjectProvider)
 		throws Exception {
 
 		JspWriter jspWriter = _pageContext.getOut();
@@ -1152,9 +1154,22 @@ public class LayoutStructureRenderer {
 		removeButtonTag.setBorderless(true);
 		removeButtonTag.setCssClass("d-none lfr-portal-tooltip mt-2");
 		removeButtonTag.setDisplayType("secondary");
+
+		if (relatedLayoutDisplayPageObjectProvider != null) {
+			removeButtonTag.setDynamicAttribute(
+				StringPool.BLANK, "data-classname",
+				relatedLayoutDisplayPageObjectProvider.getClassName());
+
+			removeButtonTag.setDynamicAttribute(
+				StringPool.BLANK, "data-external-reference-code",
+				relatedLayoutDisplayPageObjectProvider.
+					getExternalReferenceCode());
+		}
+
 		removeButtonTag.setDynamicAttribute(
 			StringPool.BLANK, "title",
 			LanguageUtil.get(_httpServletRequest, "remove"));
+
 		removeButtonTag.setIcon("times-circle");
 		removeButtonTag.setSmall(true);
 

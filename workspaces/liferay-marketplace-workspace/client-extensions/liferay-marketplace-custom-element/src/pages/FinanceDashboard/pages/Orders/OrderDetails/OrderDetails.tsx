@@ -211,7 +211,10 @@ const OrderDetails = () => {
 							key: 'options',
 							render: (options) => {
 								const [skuOption] = safeJSONParse(options, [
-									{skuOptionValueKey: 'Standard'},
+									{
+										skuOptionValueKey: 'Standard',
+										skuOptionValueName: 'Standard',
+									},
 								]);
 
 								return (
@@ -230,9 +233,8 @@ const OrderDetails = () => {
 												</strong>
 
 												<p className="finance-dashboard-secondary-text mb-0 pb-0 text-capitalize">
-													{
-														skuOption?.skuOptionValueKey
-													}
+													{skuOption?.skuOptionValueKey ||
+														skuOption?.skuOptionValueName}
 												</p>
 											</span>
 										</div>

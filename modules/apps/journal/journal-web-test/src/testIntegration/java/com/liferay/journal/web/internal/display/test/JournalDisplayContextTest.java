@@ -120,23 +120,6 @@ public class JournalDisplayContextTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithDDMStructureAndRecentNavigation()
-		throws Exception {
-
-		JournalArticle journalArticleExample =
-			_createDataForRecentNavigationTests();
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			StringPool.BLANK, "all", true,
-			journalArticleExample.getDDMStructureId(),
-			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
-
-		List<Object> results = searchContainer.getResults();
-
-		Assert.assertEquals(results.toString(), 1, results.size());
-	}
-
-	@Test
 	public void testGetSearchContainerWithJournalFolderFixture()
 		throws Exception {
 
@@ -173,40 +156,11 @@ public class JournalDisplayContextTest {
 	}
 
 	@Test
-	public void testGetSearchContainerWithNavigationStructureAndDDMStructureAndRecentNavigation()
-		throws Exception {
-
+	public void testGetSearchContainerWithParameters() throws Exception {
 		JournalArticle journalArticleExample =
 			_createDataForRecentNavigationTests();
 
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			StringPool.BLANK, "structure", true,
-			journalArticleExample.getDDMStructureId(),
-			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
-
-		List<Object> results = searchContainer.getResults();
-
-		Assert.assertEquals(results.toString(), 1, results.size());
-	}
-
-	@Test
-	public void testGetSearchContainerWithoutRecentNavigation()
-		throws Exception {
-
-		_createDataForRecentNavigationTests();
-
-		SearchContainer<Object> searchContainer = _getSearchContainer(
-			StringPool.BLANK, "all", false, 0, SearchContainer.DEFAULT_CUR,
-			SearchContainer.DEFAULT_DELTA);
-
-		List<Object> results = searchContainer.getResults();
-
-		Assert.assertEquals(results.toString(), 3, results.size());
-	}
-
-	@Test
-	public void testGetSearchContainerWithRecentNavigation() throws Exception {
-		_createDataForRecentNavigationTests();
+		// case with RecentNavigation set to true
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
 			StringPool.BLANK, "all", true, 0, SearchContainer.DEFAULT_CUR,
@@ -215,6 +169,40 @@ public class JournalDisplayContextTest {
 		List<Object> results = searchContainer.getResults();
 
 		Assert.assertEquals(results.toString(), 2, results.size());
+
+		// case with RecentNavigation set to false
+
+		searchContainer = _getSearchContainer(
+			StringPool.BLANK, "all", false, 0, SearchContainer.DEFAULT_CUR,
+			SearchContainer.DEFAULT_DELTA);
+
+		results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 3, results.size());
+
+		// case with article from DDM Structure and
+		// RecentNavigation flag se to true
+
+		searchContainer = _getSearchContainer(
+			StringPool.BLANK, "all", true,
+			journalArticleExample.getDDMStructureId(),
+			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
+
+		results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
+
+		// case with navigation set to structure and
+		// articles from DDM Structure and RecentNavigation set to true
+
+		searchContainer = _getSearchContainer(
+			StringPool.BLANK, "structure", true,
+			journalArticleExample.getDDMStructureId(),
+			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
+
+		results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
 	}
 
 	@Test

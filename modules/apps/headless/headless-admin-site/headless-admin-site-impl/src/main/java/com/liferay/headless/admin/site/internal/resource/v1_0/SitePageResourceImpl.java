@@ -19,7 +19,6 @@ import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.SEOSettings;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
@@ -533,7 +532,8 @@ public class SitePageResourceImpl
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		Scope scope = itemExternalReference.getScope();
+		com.liferay.headless.admin.site.dto.v1_0.Scope scope =
+			itemExternalReference.getScope();
 
 		if (scope != null) {
 			groupId = GroupUtil.getGroupId(

@@ -14,11 +14,11 @@ const accountSelectorDropdownNextButton = fragmentElement.querySelector(
 const accountSelectorDropdownPrevButton = fragmentElement.querySelector(
 	`#${fragmentEntryLinkNamespace}-account-selector-dropdown-prev-button`
 );
-const accountSelectorPanelTitle = fragmentElement.querySelector(
-	`#${fragmentEntryLinkNamespace}-account-selector-panel-title`
-);
 const accountSelectorPanelSlider = fragmentElement.querySelector(
 	`#${fragmentEntryLinkNamespace}-account-selector-panel-slider`
+);
+const accountSelectorPanelTitle = fragmentElement.querySelector(
+	`#${fragmentEntryLinkNamespace}-account-selector-panel-title`
 );
 const panels = Array.from(
 	fragmentElement.querySelectorAll('.account-selector-panel-content')
@@ -31,71 +31,12 @@ const panels = Array.from(
 	};
 });
 
-if (layoutMode === 'edit') {
-	handleEditNav(0);
-}
-else {
-	Liferay.on('current-account-updated', () => window.location.reload());
-
-	const activePanel = panels.find(
-		(panel) =>
-			panel.key === accountSelectorDropdownHeader.dataset.activePanelKey
-	);
-
-	if (Liferay.CommerceContext.account && activePanel) {
-		handleNav(panels[activePanel.index].key);
-	}
-	else {
-		handleNav(panels[0].key);
-	}
-}
-
-accountSelectorDropdownNextButton.addEventListener('click', () => {
-	if (layoutMode === 'edit') {
-		const step = Number(accountSelectorDropdownHeader.dataset.step);
-
-		handleEditNav(step + 1);
-	}
-	else {
-		const activePanel = panels.find(
-			(panel) =>
-				panel.key ===
-				accountSelectorDropdownHeader.dataset.activePanelKey
-		);
-
-		if (!activePanel || activePanel.index + 1 > panels.length) {
-			return;
-		}
-
-		handleNav(panels[activePanel.index + 1].key);
-	}
-});
-
-accountSelectorDropdownPrevButton.addEventListener('click', () => {
-	if (layoutMode === 'edit') {
-		const step = Number(accountSelectorDropdownHeader.dataset.step);
-
-		handleEditNav(step - 1);
-	}
-	else {
-		const activePanel = panels.find(
-			(panel) =>
-				panel.key ===
-				accountSelectorDropdownHeader.dataset.activePanelKey
-		);
-
-		if (!activePanel || activePanel.index - 1 < 0) {
-			return;
-		}
-
-		handleNav(panels[activePanel.index - 1].key);
-	}
-});
-
 function handleEditNav(nextStep) {
 	if (nextStep < 0 || nextStep > panels.length - 1) {
 		return;
 	}
+
+	accountSelectorDropdownHeader.dataset.step = nextStep;
 
 	const panel = panels[nextStep];
 
@@ -107,8 +48,6 @@ function handleEditNav(nextStep) {
 		'invisible',
 		panel.index === 0
 	);
-
-	accountSelectorDropdownHeader.dataset.step = nextStep;
 
 	accountSelectorPanelSlider.style.transform = `translate(-${nextStep * configuration.dropdownWidth}px, 0)`;
 
@@ -122,6 +61,8 @@ function handleNav(nextPanelKey) {
 		return;
 	}
 
+	accountSelectorDropdownHeader.dataset.activePanelKey = nextPanelKey;
+
 	accountSelectorDropdownNextButton.classList.toggle(
 		'invisible',
 		nextPanel.index === panels.length - 1
@@ -130,8 +71,6 @@ function handleNav(nextPanelKey) {
 		'invisible',
 		nextPanel.index === 0
 	);
-
-	accountSelectorDropdownHeader.dataset.activePanelKey = nextPanelKey;
 
 	accountSelectorPanelSlider.style.transform = `translate(-${nextPanel.index * configuration.dropdownWidth}px, 0)`;
 
@@ -147,3 +86,69 @@ function handleTitleChange(panel) {
 		accountSelectorPanelTitle.innerHTML = currentPanelTitle;
 	}
 }
+
+function main() {
+	if (layoutMode === 'edit') {
+		handleEditNav(0);
+	}
+	else {
+		Liferay.on('current-account-updated', () => window.location.reload());
+
+		const activePanel = panels.find(
+			(panel) =>
+				panel.key ===
+				accountSelectorDropdownHeader.dataset.activePanelKey
+		);
+
+		if (Liferay.CommerceContext.account && activePanel) {
+			handleNav(panels[activePanel.index].key);
+		}
+		else {
+			handleNav(panels[0].key);
+		}
+	}
+
+	accountSelectorDropdownNextButton.addEventListener('click', () => {
+		if (layoutMode === 'edit') {
+			const step = Number(accountSelectorDropdownHeader.dataset.step);
+
+			handleEditNav(step + 1);
+		}
+		else {
+			const activePanel = panels.find(
+				(panel) =>
+					panel.key ===
+					accountSelectorDropdownHeader.dataset.activePanelKey
+			);
+
+			if (!activePanel || activePanel.index + 1 > panels.length) {
+				return;
+			}
+
+			handleNav(panels[activePanel.index + 1].key);
+		}
+	});
+
+	accountSelectorDropdownPrevButton.addEventListener('click', () => {
+		if (layoutMode === 'edit') {
+			const step = Number(accountSelectorDropdownHeader.dataset.step);
+
+			handleEditNav(step - 1);
+		}
+		else {
+			const activePanel = panels.find(
+				(panel) =>
+					panel.key ===
+					accountSelectorDropdownHeader.dataset.activePanelKey
+			);
+
+			if (!activePanel || activePanel.index - 1 < 0) {
+				return;
+			}
+
+			handleNav(panels[activePanel.index - 1].key);
+		}
+	});
+}
+
+main();

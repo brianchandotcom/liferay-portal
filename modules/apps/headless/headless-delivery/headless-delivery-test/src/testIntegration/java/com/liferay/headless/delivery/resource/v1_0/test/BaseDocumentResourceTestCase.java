@@ -545,10 +545,35 @@ public abstract class BaseDocumentResourceTestCase {
 	public void testDeleteDocumentBatch() throws Exception {
 		Document document1 = testDeleteDocumentBatch_addDocument();
 
+		testDeleteDocumentBatch_deleteDocument(
+			202, document1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+
+		document1 = testDeleteDocumentBatch_addDocument();
+
 		testDeleteDocumentBatch_deleteDocument(202, null, document1.getId());
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document1.getId()));
+
+		document1 = testDeleteDocumentBatch_addDocument();
+		Document document2 = testDeleteDocumentBatch_addDocument();
+
+		testDeleteDocumentBatch_deleteDocument(
+			202, document2.getExternalReferenceCode(), document1.getId());
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+		assertHttpResponseStatusCode(
+			200, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		testDeleteDocumentBatch_deleteDocument(
+			202, document2.getExternalReferenceCode(), document1.getId());
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document2.getId()));
 	}
 
 	protected Document testDeleteDocumentBatch_addDocument() throws Exception {
@@ -3941,10 +3966,35 @@ public abstract class BaseDocumentResourceTestCase {
 		Document document1 = testBatchEngineDeleteImportTask_addDocument();
 
 		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+
+		document1 = testBatchEngineDeleteImportTask_addDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
 			200, null, document1.getId());
 
 		assertHttpResponseStatusCode(
 			404, documentResource.getDocumentHttpResponse(document1.getId()));
+
+		document1 = testBatchEngineDeleteImportTask_addDocument();
+		Document document2 = testBatchEngineDeleteImportTask_addDocument();
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId());
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document1.getId()));
+		assertHttpResponseStatusCode(
+			200, documentResource.getDocumentHttpResponse(document2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteDocument(
+			200, document2.getExternalReferenceCode(), document1.getId());
+
+		assertHttpResponseStatusCode(
+			404, documentResource.getDocumentHttpResponse(document2.getId()));
 	}
 
 	protected Document testBatchEngineDeleteImportTask_addDocument()

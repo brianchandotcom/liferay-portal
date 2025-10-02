@@ -714,12 +714,50 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
 
 		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
+			202, taxonomyVocabulary1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+
+		taxonomyVocabulary1 =
+			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
+
+		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
 			202, null, taxonomyVocabulary1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
 				taxonomyVocabulary1.getId()));
+
+		taxonomyVocabulary1 =
+			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testDeleteTaxonomyVocabularyBatch_addTaxonomyVocabulary();
+
+		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
+			202, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		testDeleteTaxonomyVocabularyBatch_deleteTaxonomyVocabulary(
+			202, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
 	}
 
 	protected TaxonomyVocabulary
@@ -3326,12 +3364,50 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
 
 		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
 			200, null, taxonomyVocabulary1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
 				taxonomyVocabulary1.getId()));
+
+		taxonomyVocabulary1 =
+			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
+		TaxonomyVocabulary taxonomyVocabulary2 =
+			testBatchEngineDeleteImportTask_addTaxonomyVocabulary();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyVocabulary(
+			200, taxonomyVocabulary2.getExternalReferenceCode(),
+			taxonomyVocabulary1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyVocabularyResource.getTaxonomyVocabularyHttpResponse(
+				taxonomyVocabulary2.getId()));
 	}
 
 	protected TaxonomyVocabulary

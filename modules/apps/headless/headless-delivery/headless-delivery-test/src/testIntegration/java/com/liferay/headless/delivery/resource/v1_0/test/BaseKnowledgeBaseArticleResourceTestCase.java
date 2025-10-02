@@ -364,12 +364,50 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle();
 
 		testDeleteKnowledgeBaseArticleBatch_deleteKnowledgeBaseArticle(
+			202, knowledgeBaseArticle1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle1.getId()));
+
+		knowledgeBaseArticle1 =
+			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle();
+
+		testDeleteKnowledgeBaseArticleBatch_deleteKnowledgeBaseArticle(
 			202, null, knowledgeBaseArticle1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
 				knowledgeBaseArticle1.getId()));
+
+		knowledgeBaseArticle1 =
+			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testDeleteKnowledgeBaseArticleBatch_addKnowledgeBaseArticle();
+
+		testDeleteKnowledgeBaseArticleBatch_deleteKnowledgeBaseArticle(
+			202, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
+
+		testDeleteKnowledgeBaseArticleBatch_deleteKnowledgeBaseArticle(
+			202, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
 	}
 
 	protected KnowledgeBaseArticle
@@ -3479,12 +3517,50 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 			testBatchEngineDeleteImportTask_addKnowledgeBaseArticle();
 
 		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle1.getId()));
+
+		knowledgeBaseArticle1 =
+			testBatchEngineDeleteImportTask_addKnowledgeBaseArticle();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
 			200, null, knowledgeBaseArticle1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
 				knowledgeBaseArticle1.getId()));
+
+		knowledgeBaseArticle1 =
+			testBatchEngineDeleteImportTask_addKnowledgeBaseArticle();
+		KnowledgeBaseArticle knowledgeBaseArticle2 =
+			testBatchEngineDeleteImportTask_addKnowledgeBaseArticle();
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteKnowledgeBaseArticle(
+			200, knowledgeBaseArticle2.getExternalReferenceCode(),
+			knowledgeBaseArticle1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			knowledgeBaseArticleResource.getKnowledgeBaseArticleHttpResponse(
+				knowledgeBaseArticle2.getId()));
 	}
 
 	protected KnowledgeBaseArticle

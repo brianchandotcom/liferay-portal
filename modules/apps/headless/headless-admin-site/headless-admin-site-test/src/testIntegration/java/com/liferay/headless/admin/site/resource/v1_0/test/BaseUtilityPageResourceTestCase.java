@@ -921,7 +921,12 @@ public abstract class BaseUtilityPageResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		UtilityPage utilityPage1 =
-			testBatchEngineDeleteImportTask_addSiteUtilityPage();
+			testBatchEngineDeleteImportTask_addUtilityPage();
+
+		testBatchEngineDeleteImportTask_deleteUtilityPage(
+			200, utilityPage1.getExternalReferenceCode());
+
+		utilityPage1 = testBatchEngineDeleteImportTask_addSiteUtilityPage();
 
 		testBatchEngineDeleteImportTask_deleteUtilityPage(
 			200, utilityPage1.getExternalReferenceCode(),
@@ -932,6 +937,13 @@ public abstract class BaseUtilityPageResourceTestCase {
 			utilityPageResource.getSiteUtilityPageHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				utilityPage1.getExternalReferenceCode()));
+	}
+
+	protected UtilityPage testBatchEngineDeleteImportTask_addUtilityPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected UtilityPage testBatchEngineDeleteImportTask_addSiteUtilityPage()

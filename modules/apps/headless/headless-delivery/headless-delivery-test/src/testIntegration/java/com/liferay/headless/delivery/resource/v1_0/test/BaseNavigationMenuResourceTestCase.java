@@ -344,12 +344,48 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testDeleteNavigationMenuBatch_addNavigationMenu();
 
 		testDeleteNavigationMenuBatch_deleteNavigationMenu(
+			202, navigationMenu1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+
+		navigationMenu1 = testDeleteNavigationMenuBatch_addNavigationMenu();
+
+		testDeleteNavigationMenuBatch_deleteNavigationMenu(
 			202, null, navigationMenu1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			navigationMenuResource.getNavigationMenuHttpResponse(
 				navigationMenu1.getId()));
+
+		navigationMenu1 = testDeleteNavigationMenuBatch_addNavigationMenu();
+		NavigationMenu navigationMenu2 =
+			testDeleteNavigationMenuBatch_addNavigationMenu();
+
+		testDeleteNavigationMenuBatch_deleteNavigationMenu(
+			202, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
+
+		testDeleteNavigationMenuBatch_deleteNavigationMenu(
+			202, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
 	}
 
 	protected NavigationMenu testDeleteNavigationMenuBatch_addNavigationMenu()
@@ -1832,12 +1868,48 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testBatchEngineDeleteImportTask_addNavigationMenu();
 
 		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+
+		navigationMenu1 = testBatchEngineDeleteImportTask_addNavigationMenu();
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
 			200, null, navigationMenu1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			navigationMenuResource.getNavigationMenuHttpResponse(
 				navigationMenu1.getId()));
+
+		navigationMenu1 = testBatchEngineDeleteImportTask_addNavigationMenu();
+		NavigationMenu navigationMenu2 =
+			testBatchEngineDeleteImportTask_addNavigationMenu();
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteNavigationMenu(
+			200, navigationMenu2.getExternalReferenceCode(),
+			navigationMenu1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.getNavigationMenuHttpResponse(
+				navigationMenu2.getId()));
 	}
 
 	protected NavigationMenu testBatchEngineDeleteImportTask_addNavigationMenu()

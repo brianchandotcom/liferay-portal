@@ -687,12 +687,50 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
 
 		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			202, taxonomyCategory1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+
+		taxonomyCategory1 =
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
+
+		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
 			202, null, taxonomyCategory1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory1.getId()));
+
+		taxonomyCategory1 =
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 =
+			testDeleteTaxonomyCategoryBatch_addTaxonomyCategory();
+
+		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			202, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		testDeleteTaxonomyCategoryBatch_deleteTaxonomyCategory(
+			202, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
 	}
 
 	protected TaxonomyCategory
@@ -4806,12 +4844,50 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			testBatchEngineDeleteImportTask_addTaxonomyCategory();
 
 		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
 			200, null, taxonomyCategory1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
 				taxonomyCategory1.getId()));
+
+		taxonomyCategory1 =
+			testBatchEngineDeleteImportTask_addTaxonomyCategory();
+		TaxonomyCategory taxonomyCategory2 =
+			testBatchEngineDeleteImportTask_addTaxonomyCategory();
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteTaxonomyCategory(
+			200, taxonomyCategory2.getExternalReferenceCode(),
+			taxonomyCategory1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			taxonomyCategoryResource.getTaxonomyCategoryHttpResponse(
+				taxonomyCategory2.getId()));
 	}
 
 	protected TaxonomyCategory

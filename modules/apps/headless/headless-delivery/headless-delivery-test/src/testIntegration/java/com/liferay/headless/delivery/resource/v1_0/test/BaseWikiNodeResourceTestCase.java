@@ -467,10 +467,35 @@ public abstract class BaseWikiNodeResourceTestCase {
 	public void testDeleteWikiNodeBatch() throws Exception {
 		WikiNode wikiNode1 = testDeleteWikiNodeBatch_addWikiNode();
 
+		testDeleteWikiNodeBatch_deleteWikiNode(
+			202, wikiNode1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+
+		wikiNode1 = testDeleteWikiNodeBatch_addWikiNode();
+
 		testDeleteWikiNodeBatch_deleteWikiNode(202, null, wikiNode1.getId());
 
 		assertHttpResponseStatusCode(
 			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+
+		wikiNode1 = testDeleteWikiNodeBatch_addWikiNode();
+		WikiNode wikiNode2 = testDeleteWikiNodeBatch_addWikiNode();
+
+		testDeleteWikiNodeBatch_deleteWikiNode(
+			202, wikiNode2.getExternalReferenceCode(), wikiNode1.getId());
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+		assertHttpResponseStatusCode(
+			200, wikiNodeResource.getWikiNodeHttpResponse(wikiNode2.getId()));
+
+		testDeleteWikiNodeBatch_deleteWikiNode(
+			202, wikiNode2.getExternalReferenceCode(), wikiNode1.getId());
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode2.getId()));
 	}
 
 	protected WikiNode testDeleteWikiNodeBatch_addWikiNode() throws Exception {
@@ -1722,10 +1747,35 @@ public abstract class BaseWikiNodeResourceTestCase {
 		WikiNode wikiNode1 = testBatchEngineDeleteImportTask_addWikiNode();
 
 		testBatchEngineDeleteImportTask_deleteWikiNode(
+			200, wikiNode1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+
+		wikiNode1 = testBatchEngineDeleteImportTask_addWikiNode();
+
+		testBatchEngineDeleteImportTask_deleteWikiNode(
 			200, null, wikiNode1.getId());
 
 		assertHttpResponseStatusCode(
 			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+
+		wikiNode1 = testBatchEngineDeleteImportTask_addWikiNode();
+		WikiNode wikiNode2 = testBatchEngineDeleteImportTask_addWikiNode();
+
+		testBatchEngineDeleteImportTask_deleteWikiNode(
+			200, wikiNode2.getExternalReferenceCode(), wikiNode1.getId());
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode1.getId()));
+		assertHttpResponseStatusCode(
+			200, wikiNodeResource.getWikiNodeHttpResponse(wikiNode2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteWikiNode(
+			200, wikiNode2.getExternalReferenceCode(), wikiNode1.getId());
+
+		assertHttpResponseStatusCode(
+			404, wikiNodeResource.getWikiNodeHttpResponse(wikiNode2.getId()));
 	}
 
 	protected WikiNode testBatchEngineDeleteImportTask_addWikiNode()

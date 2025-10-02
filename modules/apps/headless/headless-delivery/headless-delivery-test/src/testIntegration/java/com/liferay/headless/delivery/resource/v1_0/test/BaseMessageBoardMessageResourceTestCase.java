@@ -360,12 +360,50 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testDeleteMessageBoardMessageBatch_addMessageBoardMessage();
 
 		testDeleteMessageBoardMessageBatch_deleteMessageBoardMessage(
+			202, messageBoardMessage1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage1.getId()));
+
+		messageBoardMessage1 =
+			testDeleteMessageBoardMessageBatch_addMessageBoardMessage();
+
+		testDeleteMessageBoardMessageBatch_deleteMessageBoardMessage(
 			202, null, messageBoardMessage1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
 				messageBoardMessage1.getId()));
+
+		messageBoardMessage1 =
+			testDeleteMessageBoardMessageBatch_addMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 =
+			testDeleteMessageBoardMessageBatch_addMessageBoardMessage();
+
+		testDeleteMessageBoardMessageBatch_deleteMessageBoardMessage(
+			202, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
+
+		testDeleteMessageBoardMessageBatch_deleteMessageBoardMessage(
+			202, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
 	}
 
 	protected MessageBoardMessage
@@ -3543,12 +3581,50 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			testBatchEngineDeleteImportTask_addMessageBoardMessage();
 
 		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage1.getExternalReferenceCode(), null);
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage1.getId()));
+
+		messageBoardMessage1 =
+			testBatchEngineDeleteImportTask_addMessageBoardMessage();
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
 			200, null, messageBoardMessage1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
 				messageBoardMessage1.getId()));
+
+		messageBoardMessage1 =
+			testBatchEngineDeleteImportTask_addMessageBoardMessage();
+		MessageBoardMessage messageBoardMessage2 =
+			testBatchEngineDeleteImportTask_addMessageBoardMessage();
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage1.getId()));
+		assertHttpResponseStatusCode(
+			200,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
+
+		testBatchEngineDeleteImportTask_deleteMessageBoardMessage(
+			200, messageBoardMessage2.getExternalReferenceCode(),
+			messageBoardMessage1.getId());
+
+		assertHttpResponseStatusCode(
+			404,
+			messageBoardMessageResource.getMessageBoardMessageHttpResponse(
+				messageBoardMessage2.getId()));
 	}
 
 	protected MessageBoardMessage

@@ -903,7 +903,12 @@ public abstract class BaseMasterPageResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		MasterPage masterPage1 =
-			testBatchEngineDeleteImportTask_addSiteMasterPage();
+			testBatchEngineDeleteImportTask_addMasterPage();
+
+		testBatchEngineDeleteImportTask_deleteMasterPage(
+			200, masterPage1.getExternalReferenceCode());
+
+		masterPage1 = testBatchEngineDeleteImportTask_addSiteMasterPage();
 
 		testBatchEngineDeleteImportTask_deleteMasterPage(
 			200, masterPage1.getExternalReferenceCode(),
@@ -914,6 +919,13 @@ public abstract class BaseMasterPageResourceTestCase {
 			masterPageResource.getSiteMasterPageHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				masterPage1.getExternalReferenceCode()));
+	}
+
+	protected MasterPage testBatchEngineDeleteImportTask_addMasterPage()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected MasterPage testBatchEngineDeleteImportTask_addSiteMasterPage()

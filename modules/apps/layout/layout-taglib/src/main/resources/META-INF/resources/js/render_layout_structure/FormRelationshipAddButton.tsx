@@ -6,23 +6,76 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React from 'react';
+import {fetch, runScriptsInElement} from 'frontend-js-web';
+import React, {useMemo, useState} from 'react';
 
 export default function FormRelationshipAddButton({
+	contentId,
 	label,
+	renderURL,
 }: {
+	contentId: string;
 	label: Record<Liferay.Language.Locale, string>;
+	renderURL: string;
 }) {
 	const value =
 		label?.[Liferay.ThemeDisplay.getLanguageId()] ??
 		label?.[Liferay.ThemeDisplay.getDefaultLanguageId()] ??
 		Liferay.Language.get('add-new');
 
+	const [disabled, setDisabled] = useState(false);
+
+	const formRelationshipElement = useMemo(
+		() =>
+			document.querySelector(
+				`[data-form-relationship-structure-item-content-id="${contentId}"]`
+			)!.parentElement!,
+		[contentId]
+	);
+
+	const onClick = () => {
+		setDisabled(true);
+
+		const numberOfChildren = getNumberOfChildren(formRelationshipElement);
+
+		const url = new URL(renderURL);
+
+		url.searchParams.set(
+			'relatedItemExternalReferenceCode',
+			'LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE' +
+				String(numberOfChildren).padStart(4, '0')
+		);
+
+		fetch(url.toString())
+			.then((response) => response.text())
+			.then((html) => {
+				setDisabled(false);
+
+				const div = document.createElement('div');
+
+				div.innerHTML = html;
+
+				if (formRelationshipElement) {
+					const lastChild = formRelationshipElement.lastElementChild;
+
+					const firstChild = div.firstElementChild as Node;
+
+					formRelationshipElement.insertBefore(firstChild, lastChild);
+
+					runScriptsInElement(firstChild as HTMLElement);
+
+					updateRemoveButtonVisibility(formRelationshipElement);
+				}
+			});
+	};
+
 	return (
 		<ClayButton
 			aria-label={value ? '' : Liferay.Language.get('add-new')}
 			borderless
+			disabled={disabled}
 			displayType="primary"
+			onClick={onClick}
 			size="sm"
 		>
 			<ClayIcon
@@ -36,4 +89,45 @@ export default function FormRelationshipAddButton({
 			{value}
 		</ClayButton>
 	);
+}
+
+function getNumberOfChildren(formRelationshipElement: HTMLElement) {
+	return formRelationshipElement.querySelectorAll(
+		':scope > [data-form-relationship-structure-item-content-id]'
+	).length;
+}
+
+const onRemoveButtonClick = (event: Event) => {
+	const removeButton = event.target as HTMLElement;
+
+	const formRelationshipContentElement = removeButton.closest(
+		'[data-form-relationship-structure-item-content-id]'
+	) as HTMLElement;
+
+	const formRelationshipElement =
+		formRelationshipContentElement.parentElement as HTMLElement;
+
+	formRelationshipContentElement.remove();
+
+	updateRemoveButtonVisibility(formRelationshipElement);
+};
+
+function updateRemoveButtonVisibility(formRelationshipElement: HTMLElement) {
+	const removeButtons = formRelationshipElement.querySelectorAll(
+		':scope > [data-form-relationship-structure-item-content-id] > .lfr-form-relationship-remove-button button'
+	);
+
+	if (getNumberOfChildren(formRelationshipElement) > 1) {
+		removeButtons.forEach((button) => {
+			button.classList.remove('d-none');
+
+			button.addEventListener('click', onRemoveButtonClick);
+		});
+	}
+	else {
+		removeButtons.forEach((button) => {
+			button.classList.add('d-none');
+			button.removeEventListener('click', onRemoveButtonClick);
+		});
+	}
 }

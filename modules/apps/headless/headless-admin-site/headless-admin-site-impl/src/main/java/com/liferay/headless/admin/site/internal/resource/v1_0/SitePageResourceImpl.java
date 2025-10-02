@@ -6,13 +6,22 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.CustomMetaTag;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
+import com.liferay.headless.admin.site.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.SEOSettings;
+import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
+import com.liferay.headless.admin.site.dto.v1_0.SitemapSettings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.SitePageTypeUtil;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.SitePageEntityModel;
@@ -24,6 +33,8 @@ import com.liferay.headless.admin.site.resource.v1_0.SitePageResource;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.seo.model.LayoutSEOEntryCustomMetaTagProperty;
+import com.liferay.layout.seo.service.LayoutSEOEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,6 +58,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,6 +80,7 @@ import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Map;
@@ -485,19 +499,30 @@ public class SitePageResourceImpl
 		return layout;
 	}
 
-	private long _getFileEntryId(long contentDocumentId) {
-		try {
-			FileEntry fileEntry = _dlAppService.getFileEntry(contentDocumentId);
+	private long _getFileEntryId(
+			ItemExternalReference itemExternalReference,
+			ServiceContext serviceContext)
+		throws Exception {
 
-			return fileEntry.getFileEntryId();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
+		long groupId = serviceContext.getScopeGroupId();
+
+		Scope scope = itemExternalReference.getScope();
+
+		if (scope != null) {
+			groupId = GroupUtil.getGroupId(
+				true, true, serviceContext.getCompanyId(),
+				scope.getExternalReferenceCode());
 		}
 
-		return 0;
+		DLFileEntry dlFileEntry =
+			_dlFileEntryService.fetchFileEntryByExternalReferenceCode(
+				groupId, itemExternalReference.getExternalReferenceCode());
+
+		if (dlFileEntry == null) {
+			throw new UnsupportedOperationException();
+		}
+
+		return dlFileEntry.getFileEntryId();
 	}
 
 	private long _getParentLayoutId(
@@ -663,24 +688,18 @@ public class SitePageResourceImpl
 		return _layoutService.updatePriority(layout.getPlid(), priority);
 	}
 
-	private void _updateSEOEntry(long groupId, long layoutId, com.liferay.headless.delivery.dto.v1_0.SitePage sitePage)
+	private void _updateSEOEntry(
+			long groupId, long layoutId, PageSettings pageSettings,
+			ServiceContext serviceContext)
 		throws Exception {
-
-		PageSettings pageSettings = sitePage.getPageSettings();
-
-		if (pageSettings == null) {
-			return;
-		}
-
-		SEOSettings seoSettings = pageSettings.getSeoSettings();
 
 		boolean canonicalURLEnabled = false;
 		Map<Locale, String> canonicalURLMap = new HashMap<>();
 
-		if (seoSettings != null) {
+		if ((pageSettings != null) && (pageSettings.getSeoSettings() != null)) {
+			SEOSettings seoSettings = pageSettings.getSeoSettings();
+
 			canonicalURLMap = LocalizedMapUtil.getLocalizedMap(
-				contextAcceptLanguage.getPreferredLocale(),
-				seoSettings.getCustomCanonicalURL(),
 				seoSettings.getCustomCanonicalURL_i18n());
 
 			if (MapUtil.isNotEmpty(canonicalURLMap)) {
@@ -695,13 +714,13 @@ public class SitePageResourceImpl
 		boolean openGraphTitleEnabled = false;
 		Map<Locale, String> openGraphTitleMap = new HashMap<>();
 
-		OpenGraphSettings openGraphSettings =
-			pageSettings.getOpenGraphSettings();
+		if ((pageSettings != null) &&
+			(pageSettings.getOpenGraphSettings() != null)) {
 
-		if (openGraphSettings != null) {
+			OpenGraphSettings openGraphSettings =
+				pageSettings.getOpenGraphSettings();
+
 			openGraphDescriptionMap = LocalizedMapUtil.getLocalizedMap(
-				contextAcceptLanguage.getPreferredLocale(),
-				openGraphSettings.getDescription(),
 				openGraphSettings.getDescription_i18n());
 
 			if (MapUtil.isNotEmpty(openGraphDescriptionMap)) {
@@ -709,30 +728,23 @@ public class SitePageResourceImpl
 			}
 
 			openGraphImageAltMap = LocalizedMapUtil.getLocalizedMap(
-				contextAcceptLanguage.getPreferredLocale(),
-				openGraphSettings.getImageAlt(),
 				openGraphSettings.getImageAlt_i18n());
 
-			ContentDocument contentDocument = openGraphSettings.getImage();
+			ItemExternalReference itemExternalReference =
+				openGraphSettings.getImage();
 
-			if (contentDocument != null) {
+			if (itemExternalReference != null) {
 				openGraphImageFileEntryId = _getFileEntryId(
-					contentDocument.getId());
+					itemExternalReference, serviceContext);
 			}
 
 			openGraphTitleMap = LocalizedMapUtil.getLocalizedMap(
-				contextAcceptLanguage.getPreferredLocale(),
-				openGraphSettings.getTitle(),
 				openGraphSettings.getTitle_i18n());
 
 			if (MapUtil.isNotEmpty(openGraphTitleMap)) {
 				openGraphTitleEnabled = true;
 			}
 		}
-
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			groupId, contextHttpServletRequest, null
-		).build();
 
 		_layoutSEOEntryService.updateLayoutSEOEntry(
 			groupId, false, layoutId, canonicalURLEnabled, canonicalURLMap,
@@ -752,12 +764,11 @@ public class SitePageResourceImpl
 				customMetaTags,
 				customMetaTag -> new LayoutSEOEntryCustomMetaTagProperty(
 					LocalizedMapUtil.getLocalizedMap(
-						contextAcceptLanguage.getPreferredLocale(),
-						customMetaTag.getValue(),
 						customMetaTag.getValue_i18n()),
 					customMetaTag.getKey())),
 			serviceContext);
 	}
+
 	private void _validatePageSpecificationExternalReferenceCode(
 		ServiceContext serviceContext, SitePage sitePage) {
 
@@ -843,6 +854,9 @@ public class SitePageResourceImpl
 	private CETManager _cetManager;
 
 	@Reference
+	private DLFileEntryService _dlFileEntryService;
+
+	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
 	@Reference
@@ -851,6 +865,9 @@ public class SitePageResourceImpl
 	@Reference
 	private LayoutPageTemplateEntryLocalService
 		_layoutPageTemplateEntryLocalService;
+
+	@Reference
+	private LayoutSEOEntryService _layoutSEOEntryService;
 
 	@Reference
 	private LayoutService _layoutService;

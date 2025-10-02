@@ -54,46 +54,45 @@ function getModalProps({
 	selectAll: boolean;
 }) {
 	const root = cachedData[0];
-	const isSingleCache = cachedData.length === 1;
-	const hasMultipleTotal = root?.data.totalCount > 1;
-
-	const base = {
-		deleteButtonLabel: Liferay.Language.get(
-			hasMultipleTotal || selectAll
-				? Liferay.Language.get('delete')
-				: Liferay.Language.get('delete-entry')
-		),
-	};
-
-	const multipleItemsDescription = Liferay.Language.get(
-		'some-items-are-being-used-in-other-assets-or-pages.-deleting-them-will-break-those-references-and-cause-broken-links-or-missing-content.-this-action-cannot-be-undone.-are-you-sure-you-want-to-continue'
-	);
-	const singleItemDescription = Liferay.Language.get(
-		'this-item-is-being-used-in-other-assets-or-pages-deleting-it-will-break-those-references-and-cause-broken-links-or-missing-content-this-action-cannot-be-undone-are-you-sure-you-want-to-continue'
-	);
-
-	if (selectAll) {
-		return {
-			...base,
-			title: Liferay.Language.get('delete-all-entries'),
-			...(isSingleCache && {description: multipleItemsDescription}),
-		};
-	}
-
-	if (hasMultipleTotal) {
-		return {
-			...base,
-			title: Liferay.Language.get('delete-entries'),
-			...(isSingleCache && {description: multipleItemsDescription}),
-		};
-	}
-
+	const rootHasSingleItem = root?.data.totalCount === 1;
+	const rootHasSingleFolder =
+		typeof root?.data.items[0].attributes.itemsCount === 'number';
 	const itemName = root?.data.items[0].name;
 
+	if (rootHasSingleFolder) {
+		return {
+			deleteButtonLabel: Liferay.Language.get('delete-folder'),
+			description: Liferay.Language.get(
+				'the-contents-of-this-folder-may-be-used-in-other-assets-or-pages.-deleting-it-will-permanently-remove-all-files-and-subfolders.-do-you-want-to-continue?'
+			),
+			title: sub(Liferay.Language.get('delete-x'), `"${itemName}"`),
+		};
+	}
+	else if (rootHasSingleItem) {
+		return {
+			deleteButtonLabel: Liferay.Language.get('delete-entry'),
+			description: Liferay.Language.get(
+				'this-item-is-being-used-in-other-assets-or-pages-deleting-it-will-break-those-references-and-cause-broken-links-or-missing-content-this-action-cannot-be-undone-are-you-sure-you-want-to-continue'
+			),
+			title: sub(Liferay.Language.get('delete-x'), `"${itemName}"`),
+		};
+	}
+	else if (selectAll) {
+		return {
+			deleteButtonLabel: Liferay.Language.get('delete'),
+			description: Liferay.Language.get(
+				'some-items-are-being-used-in-other-assets-or-pages.-deleting-them-will-break-those-references-and-cause-broken-links-or-missing-content.-this-action-cannot-be-undone.-are-you-sure-you-want-to-continue'
+			),
+			title: Liferay.Language.get('delete-all-entries'),
+		};
+	}
+
 	return {
-		...base,
-		title: sub(Liferay.Language.get('delete-x'), `"${itemName}"`),
-		...(isSingleCache && {description: singleItemDescription}),
+		deleteButtonLabel: Liferay.Language.get('delete'),
+		description: Liferay.Language.get(
+			'some-items-are-being-used-in-other-assets-or-pages.-deleting-them-will-break-those-references-and-cause-broken-links-or-missing-content.-this-action-cannot-be-undone.-are-you-sure-you-want-to-continue'
+		),
+		title: Liferay.Language.get('delete-entries'),
 	};
 }
 
@@ -277,13 +276,17 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 		selectAll: apiParams.selectAll,
 	});
 
+	const ableToPaginateAndSearch =
+		cachedData.length > 1 ||
+		(cachedData.length === 1 && cachedData[0].data.totalCount > 1);
+
 	return (
 		<ClayTooltipProvider>
 			<div className="cms-asset-usage-list-modal">
 				<ClayModal.Header>{modalProps.title}</ClayModal.Header>
 
 				<ClayModal.Body>
-					{modalProps.description && (
+					{cachedData.length === 1 && (
 						<div className="mb-4">
 							<Text size={3}>{modalProps.description}</Text>
 						</div>
@@ -315,62 +318,68 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 						/>
 					)}
 
-					<ClayForm
-						onSubmit={async (event) => {
-							event.preventDefault();
+					{ableToPaginateAndSearch && (
+						<ClayForm
+							onSubmit={async (event) => {
+								event.preventDefault();
 
-							const data = await updateData({
-								page: 1,
-								pageSize: 20,
-								search,
-							});
+								const data = await updateData({
+									page: 1,
+									pageSize: 20,
+									search,
+								});
 
-							setData(data);
-							setPage(1);
-							setPageSize(20);
-							setSearch(search);
-						}}
-					>
-						<ClayInput.Group className="mb-4">
-							<ClayInput.GroupItem>
-								<ClayInput
-									aria-label={Liferay.Language.get('search')}
-									className="form-control input-group-inset input-group-inset-after"
-									name="search"
-									onChange={(event) => {
-										setSearch(event.target.value);
-									}}
-									placeholder={Liferay.Language.get('search')}
-									ref={inputSearchRef}
-									sizing="lg"
-									type="text"
-									value={search}
-								/>
-
-								<ClayInput.GroupInsetItem after tag="span">
-									{!!search && (
-										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'clear'
-											)}
-											displayType="unstyled"
-											onClick={handleClearSearch}
-											symbol="times-small"
-										/>
-									)}
-
-									<ClayButtonWithIcon
+								setData(data);
+								setPage(1);
+								setPageSize(20);
+								setSearch(search);
+							}}
+						>
+							<ClayInput.Group className="mb-4">
+								<ClayInput.GroupItem>
+									<ClayInput
 										aria-label={Liferay.Language.get(
 											'search'
 										)}
-										displayType="unstyled"
-										symbol="search"
-										type="submit"
+										className="form-control input-group-inset input-group-inset-after"
+										name="search"
+										onChange={(event) => {
+											setSearch(event.target.value);
+										}}
+										placeholder={Liferay.Language.get(
+											'search'
+										)}
+										ref={inputSearchRef}
+										sizing="lg"
+										type="text"
+										value={search}
 									/>
-								</ClayInput.GroupInsetItem>
-							</ClayInput.GroupItem>
-						</ClayInput.Group>
-					</ClayForm>
+
+									<ClayInput.GroupInsetItem after tag="span">
+										{!!search && (
+											<ClayButtonWithIcon
+												aria-label={Liferay.Language.get(
+													'clear'
+												)}
+												displayType="unstyled"
+												onClick={handleClearSearch}
+												symbol="times-small"
+											/>
+										)}
+
+										<ClayButtonWithIcon
+											aria-label={Liferay.Language.get(
+												'search'
+											)}
+											displayType="unstyled"
+											symbol="search"
+											type="submit"
+										/>
+									</ClayInput.GroupInsetItem>
+								</ClayInput.GroupItem>
+							</ClayInput.Group>
+						</ClayForm>
+					)}
 
 					{!(data?.totalCount ?? 0) && (
 						<ClayEmptyState
@@ -448,9 +457,15 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 								{item.attributes.type === 'FOLDER' && (
 									<ClayList.ItemField>
 										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'view-asset-list'
-											)}
+											aria-label={
+												item.attributes.itemsCount
+													? Liferay.Language.get(
+															'view-asset-list'
+														)
+													: Liferay.Language.get(
+															'empty-folder'
+														)
+											}
 											className="border-0"
 											disabled={
 												!item.attributes.itemsCount
@@ -460,9 +475,15 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 												handleOpenFolder(item);
 											}}
 											symbol="forms"
-											title={Liferay.Language.get(
-												'view-asset-list'
-											)}
+											title={
+												item.attributes.itemsCount
+													? Liferay.Language.get(
+															'view-asset-list'
+														)
+													: Liferay.Language.get(
+															'empty-folder'
+														)
+											}
 										/>
 									</ClayList.ItemField>
 								)}
@@ -470,9 +491,15 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 								{item.attributes.type === 'ASSET' && (
 									<ClayList.ItemField>
 										<ClayButtonWithIcon
-											aria-label={Liferay.Language.get(
-												'view-usages'
-											)}
+											aria-label={
+												item.attributes.usages
+													? Liferay.Language.get(
+															'view-usages'
+														)
+													: Liferay.Language.get(
+															'no-usages'
+														)
+											}
 											className="border-0"
 											disabled={!item.attributes.usages}
 											displayType="secondary"
@@ -482,9 +509,15 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 												)
 											}
 											symbol="list-ul"
-											title={Liferay.Language.get(
-												'view-usages'
-											)}
+											title={
+												item.attributes.usages
+													? Liferay.Language.get(
+															'view-usages'
+														)
+													: Liferay.Language.get(
+															'no-usages'
+														)
+											}
 										/>
 									</ClayList.ItemField>
 								)}
@@ -492,47 +525,49 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 						))}
 					</ClayList>
 
-					<ClayPaginationBarWithBasicItems
-						active={page}
-						activeDelta={pageSize}
-						deltas={[20, 40, 60].map((size) => ({label: size}))}
-						disableEllipsis={
-							(data?.totalCount ?? 0) / pageSize - 5 > 999
-						}
-						ellipsisBuffer={3}
-						onActiveChange={async (newPage: number) => {
-							if (
-								data &&
-								newPage >= 1 &&
-								newPage <= data.lastPage
-							) {
+					{ableToPaginateAndSearch && (
+						<ClayPaginationBarWithBasicItems
+							active={page}
+							activeDelta={pageSize}
+							deltas={[20, 40, 60].map((size) => ({label: size}))}
+							disableEllipsis={
+								(data?.totalCount ?? 0) / pageSize - 5 > 999
+							}
+							ellipsisBuffer={3}
+							onActiveChange={async (newPage: number) => {
+								if (
+									data &&
+									newPage >= 1 &&
+									newPage <= data.lastPage
+								) {
+									const data = await updateData({
+										page: newPage,
+										pageSize,
+										search,
+									});
+
+									setData(data);
+									setPage(newPage);
+									setPageSize(pageSize);
+									setSearch(search);
+								}
+							}}
+							onDeltaChange={async (pageSize) => {
 								const data = await updateData({
-									page: newPage,
+									page: 1,
 									pageSize,
 									search,
 								});
 
 								setData(data);
-								setPage(newPage);
+								setPage(1);
 								setPageSize(pageSize);
 								setSearch(search);
-							}
-						}}
-						onDeltaChange={async (pageSize) => {
-							const data = await updateData({
-								page: 1,
-								pageSize,
-								search,
-							});
-
-							setData(data);
-							setPage(1);
-							setPageSize(pageSize);
-							setSearch(search);
-						}}
-						showDeltasDropDown
-						totalItems={data?.totalCount ?? 0}
-					/>
+							}}
+							showDeltasDropDown
+							totalItems={data?.totalCount ?? 0}
+						/>
+					)}
 				</ClayModal.Body>
 
 				<ClayModal.Footer

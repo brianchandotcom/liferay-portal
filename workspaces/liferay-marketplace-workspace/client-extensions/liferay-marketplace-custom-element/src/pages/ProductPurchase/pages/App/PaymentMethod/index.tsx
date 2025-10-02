@@ -12,7 +12,9 @@ import ProductPurchase from '../../../../../components/ProductPurchase';
 import useAccountAddresses from '../../../../../hooks/useAccountAddresses';
 import i18n from '../../../../../i18n';
 import zodSchema from '../../../../../schema/zod';
+import marketplaceOAuth2 from '../../../../../services/oauth/Marketplace';
 import HeadlessAdminUser from '../../../../../services/rest/HeadlessAdminUser';
+import HeadlessCommerceDeliveryCart from '../../../../../services/rest/HeadlessCommerceDeliveryCart';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../services/ProductPurchaseApp';
 import {cartStore} from '../../../store';
@@ -103,10 +105,13 @@ export default function PaymentMethod() {
 			});
 		}
 
-		const updatedCart = await productPurchaseCart.updateCart(
-			productPurchaseCart.cart.id,
-			{billingAddress: payment.billingAddress}
-		);
+		await productPurchaseCart.updateCart(productPurchaseCart.cart.id, {
+			billingAddress: payment.billingAddress,
+		});
+
+		if (licenseType === 'PAID') {
+			await marketplaceOAuth2.taxCalculate(productPurchaseCart.cart.id);
+		}
 
 		if (payment.taxId && !selectedAccount.taxId) {
 			await HeadlessAdminUser.updateAccount(selectedAccount.id, {
@@ -114,7 +119,12 @@ export default function PaymentMethod() {
 			});
 		}
 
-		cartStore.send({cart: updatedCart, type: 'setCart'});
+		cartStore.send({
+			cart: await HeadlessCommerceDeliveryCart.getCart(
+				productPurchaseCart.cart.id
+			),
+			type: 'setCart',
+		});
 
 		nextStep();
 	};

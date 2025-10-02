@@ -34,6 +34,7 @@ const isContinueButtonDisabled = () => {
 
 	if (
 		cartSnaptshot.context.cart.id &&
+		cartSnaptshot.context.cartItems.length &&
 		snapshot.context.licenseType === 'PAID'
 	) {
 		return false;

@@ -190,6 +190,9 @@ const BillingAddressForm: React.FC<BillingAddressProps> = ({
 					disabled={!states.length}
 					label="State"
 					name="regionISOCode"
+					onChange={({target: {value}}) =>
+						setValue('regionISOCode', value)
+					}
 					options={states.map((state) => ({
 						key: state.regionCode,
 						name: state.name,

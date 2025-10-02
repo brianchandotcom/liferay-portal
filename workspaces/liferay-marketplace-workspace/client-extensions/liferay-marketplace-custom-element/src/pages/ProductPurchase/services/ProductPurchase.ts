@@ -20,7 +20,7 @@ export default class ProductPurchase {
 
 	protected getCart() {
 		return {
-			accountId: this.account.id,
+			accountId: this.account?.id,
 			cartItems: this.getCartItems(),
 			currencyCode: Liferay.CommerceContext.currency.currencyCode,
 			orderTypeExternalReferenceCode: this.orderTypeExternalReferenceCode,

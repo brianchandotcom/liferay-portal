@@ -30,6 +30,16 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 
 		await downloadFile('orders.csv', response);
 	}
+
+	async taxCalculate(orderId: number): Promise<Order> {
+		const order = await this.post<Order>(
+			`/tax-calculate/${orderId}`,
+			{},
+			{earlyReturn: true}
+		);
+
+		return order;
+	}
 }
 
 const marketplaceOAuth2 = new MarketplaceOAuth2('/marketplace');

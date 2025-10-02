@@ -68,7 +68,7 @@ export default class ProductPurchaseApp extends ProductPurchase {
 
 			// Only requests with cart are processed with payment
 
-			return {...baseCart, paymentMethod: 'paypal-integration'};
+			return baseCart;
 		}
 
 		const skuOptionValue = cartOptions?.isTrialSKU

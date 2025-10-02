@@ -4,6 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
+import {useSelector} from '@xstate/store/react';
 import classNames from 'classnames';
 import {useEffect, useMemo, useState} from 'react';
 import {
@@ -20,6 +21,7 @@ import {SolutionTypes} from '../../enums/Product';
 import useProductPurchaseCart from '../../hooks/useProductPurchaseCart';
 import i18n from '../../i18n';
 import {Liferay} from '../../liferay/liferay';
+import marketplaceOAuth2 from '../../services/oauth/Marketplace';
 import {scrollToMiddleOfPage} from '../../utils/browser';
 import ProductPurchasePrice from './ProductPurchasePrice';
 import {productTypeRoutes} from './ProductPurchaseRouter';
@@ -76,6 +78,11 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 		ProductPurchaseApp.getOrderTypeExternalReferenceCode(product)
 	);
 
+	const licenseType = useSelector(
+		productPurchaseStore,
+		(state) => state.context.licenseType
+	);
+
 	const marketplaceDeliveryProduct = useMemo(() => {
 		return new MarketplaceDeliveryProduct(product);
 	}, [product]);
@@ -120,6 +127,10 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 			const order = await _productPurchase.createOrder(cart, cartOptions);
 
 			const link = await _productPurchase.getNextStepsLink(order);
+
+			if (licenseType === 'PAID') {
+				await marketplaceOAuth2.taxCalculate(cart?.id);
+			}
 
 			if (link.startsWith('http')) {
 				return sendRedirect(link);
@@ -217,7 +228,6 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 				{isTinyDisplay && (
 					<ProductPurchase.CircleSteps
 						className="my-5 px-8"
-						onClickIndicator={(step) => navigate(step.key)}
 						steps={steps}
 					/>
 				)}

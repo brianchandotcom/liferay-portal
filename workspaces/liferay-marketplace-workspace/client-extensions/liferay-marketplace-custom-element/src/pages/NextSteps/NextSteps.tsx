@@ -75,7 +75,11 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 				}
 				icon={
 					<span className="d-flex justify-content-center">
-						<img alt="payment pending icon" src={timesCircleIcon} />
+						<img
+							alt="payment pending icon"
+							draggable="false"
+							src={timesCircleIcon}
+						/>
 					</span>
 				}
 				title={
@@ -113,7 +117,11 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 				}
 				icon={
 					<span className="d-flex justify-content-center">
-						<img alt="check circle icon" src={checkCircleIcon} />
+						<img
+							alt="check circle icon"
+							draggable="false"
+							src={checkCircleIcon}
+						/>
 					</span>
 				}
 				title={
@@ -147,6 +155,7 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 					<span className="d-flex justify-content-center">
 						<img
 							alt="payment pending icon"
+							draggable="false"
 							src={paymentPendingIcon}
 						/>
 					</span>

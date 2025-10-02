@@ -33,7 +33,7 @@ const OrderDetails = () => {
 	const {order, payments, product} = data || {};
 
 	const koroneikiProjects = safeJSONParse(
-		order!.customFields![OrderCustomFields.KORONEIKI_PROJECT],
+		order?.customFields![OrderCustomFields.KORONEIKI_PROJECT] || '[]',
 		[]
 	);
 

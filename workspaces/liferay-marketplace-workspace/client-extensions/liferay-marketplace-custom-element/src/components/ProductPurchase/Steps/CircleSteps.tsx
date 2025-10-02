@@ -18,15 +18,10 @@ type Step = {
 
 type CircleStepsProps = {
 	className?: string;
-	onClickIndicator?: (step: Step) => void;
 	steps: Step[];
 };
 
-const CircleSteps: React.FC<CircleStepsProps> = ({
-	className,
-	onClickIndicator = () => null,
-	steps,
-}) => {
+const CircleSteps: React.FC<CircleStepsProps> = ({className, steps}) => {
 	const activeStepIndex = steps.findIndex(({active}) => active);
 
 	const stepIcon = (step: any, index: number) => {
@@ -55,7 +50,6 @@ const CircleSteps: React.FC<CircleStepsProps> = ({
 						selected: step.active,
 					})}
 					key={index}
-					onClick={() => onClickIndicator(step)}
 				>
 					<ClayIcon
 						className={classNames('mr-2 step', {

@@ -83,6 +83,6 @@ public class ResourceImplCheck extends BaseCheck {
 	};
 
 	private static final String _MSG_INVALID_METHOD_PARAMETER_ANNOTATION =
-		"invalid.method.parameter.annotation";
+		"method.parameter.annotation.invalid";
 
 }

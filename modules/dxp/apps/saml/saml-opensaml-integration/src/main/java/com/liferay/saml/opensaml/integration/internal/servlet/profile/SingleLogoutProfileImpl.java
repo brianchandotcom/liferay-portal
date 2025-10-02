@@ -725,7 +725,6 @@ public class SingleLogoutProfileImpl
 				true, messageContext, SAMLConstants.SAML2_POST_BINDING_URI,
 				outboundMessageContext.getSubcontext(
 					SecurityParametersContext.class, true)));
-
 		outboundMessageContext.addSubcontext(
 			messageContext.getSubcontext(SAMLSelfEntityContext.class));
 
@@ -836,7 +835,7 @@ public class SingleLogoutProfileImpl
 			samlPeerEntityContext.getSubcontext(
 				SAMLEndpointContext.class, true);
 
-		SAMLMetadataContext samlPeerMetadataContext =
+		SAMLMetadataContext samlMetadataContext =
 			samlPeerEntityContext.getSubcontext(
 				SAMLMetadataContext.class,
 				samlPeerEntityContext.isAutoCreateSubcontexts() ||
@@ -844,11 +843,11 @@ public class SingleLogoutProfileImpl
 
 		samlPeerEndpointSubcontext.setEndpoint(
 			SamlUtil.resolveSingleLogoutService(
-				samlPeerMetadataContext.getRoleDescriptor(), preferredBinding));
+				samlMetadataContext.getRoleDescriptor(), preferredBinding));
 
 		OpenSamlUtil.prepareSecurityParametersContext(
 			getSigningCredential(), securityParametersContext,
-			samlPeerMetadataContext.getRoleDescriptor());
+			samlMetadataContext.getRoleDescriptor());
 
 		return samlPeerEntityContext;
 	}
@@ -1298,7 +1297,6 @@ public class SingleLogoutProfileImpl
 
 		SAMLPeerEntityContext samlPeerEntityContext =
 			messageContext.getSubcontext(SAMLPeerEntityContext.class);
-
 		List<String> sessionIndexes = TransformUtil.transform(
 			logoutRequest.getSessionIndexes(), SessionIndex::getSessionIndex);
 

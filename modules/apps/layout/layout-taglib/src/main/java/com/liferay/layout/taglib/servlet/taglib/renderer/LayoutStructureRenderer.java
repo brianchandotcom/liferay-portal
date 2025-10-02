@@ -79,6 +79,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -86,6 +87,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.layoutconfiguration.util.RuntimePageUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -953,7 +955,11 @@ public class LayoutStructureRenderer {
 		jspWriter.write(
 			formRelationshipStyledLayoutStructureItem.getCssClass());
 		jspWriter.write("\" data-layout-structure-item-id=\"");
-		jspWriter.write(formRelationshipStyledLayoutStructureItem.getItemId());
+
+		String itemId = formRelationshipStyledLayoutStructureItem.getItemId();
+
+		jspWriter.write(itemId);
+
 		jspWriter.write("\"");
 
 		String style = _renderLayoutStructureDisplayContext.getStyle(
@@ -989,63 +995,119 @@ public class LayoutStructureRenderer {
 					LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE);
 
 		try {
+			int iterationNumber = 0;
+
+			String parentItemExternalReferenceCode = GetterUtil.getString(
+				GetterUtil.getString(
+					_httpServletRequest.getAttribute(
+						LayoutStructureRendererConstants.
+							LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE +
+								itemId),
+					currentRelatedItemExternalReferenceCode),
+				LayoutStructureRendererConstants.
+					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + iterationNumber);
+			String relatedItemExternalReferenceCode = GetterUtil.getString(
+				_httpServletRequest.getAttribute(
+					LayoutStructureRendererConstants.
+						LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE + itemId),
+				LayoutStructureRendererConstants.
+					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + iterationNumber);
+
 			_httpServletRequest.setAttribute(
 				LayoutStructureRendererConstants.
 					LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE,
-				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
+				parentItemExternalReferenceCode);
 			_httpServletRequest.setAttribute(
 				LayoutStructureRendererConstants.
 					LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE,
-				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
+				relatedItemExternalReferenceCode);
+
+			String formRelationshipStyledLayoutStructureItemContentId =
+				PortalUUIDUtil.generate();
 
 			if (layoutDisplayPageObjectProvider == null) {
-				_renderFormRelationshipStyledLayoutStructureItem(
-					infoForm, formRelationshipStyledLayoutStructureItem);
+				_renderFormRelationshipStyledLayoutStructureItemContent(
+					formRelationshipStyledLayoutStructureItem,
+					formRelationshipStyledLayoutStructureItemContentId,
+					infoForm);
 			}
 			else {
 				List<? extends LayoutDisplayPageObjectProvider<?>>
+					relatedLayoutDisplayPageObjectProviders = null;
+
+				if (currentRelatedLayoutDisplayPageObjectProvider != null) {
+					relatedLayoutDisplayPageObjectProviders =
+						currentRelatedLayoutDisplayPageObjectProvider.
+							getRelatedLayoutDisplayPageObjectProviders(
+								formRelationshipStyledLayoutStructureItem.
+									getContentType());
+				}
+				else {
 					relatedLayoutDisplayPageObjectProviders =
 						layoutDisplayPageObjectProvider.
 							getRelatedLayoutDisplayPageObjectProviders(
 								formRelationshipStyledLayoutStructureItem.
 									getContentType());
+				}
 
 				if (ListUtil.isEmpty(relatedLayoutDisplayPageObjectProviders)) {
-					_renderLayoutStructure(
-						formRelationshipStyledLayoutStructureItem.
-							getChildrenItemIds(),
+					_renderFormRelationshipStyledLayoutStructureItemContent(
+						formRelationshipStyledLayoutStructureItem,
+						formRelationshipStyledLayoutStructureItemContentId,
 						infoForm);
-
-					return;
 				}
+				else {
+					for (LayoutDisplayPageObjectProvider<?>
+							relatedLayoutDisplayPageObjectProvider :
+								relatedLayoutDisplayPageObjectProviders) {
 
-				for (LayoutDisplayPageObjectProvider<?>
-						relatedLayoutDisplayPageObjectProvider :
-							relatedLayoutDisplayPageObjectProviders) {
+						_httpServletRequest.setAttribute(
+							LayoutStructureRendererConstants.
+								LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE,
+							relatedLayoutDisplayPageObjectProvider.
+								getParentExternalReferenceCode());
+						_httpServletRequest.setAttribute(
+							LayoutStructureRendererConstants.
+								LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER,
+							relatedLayoutDisplayPageObjectProvider);
+						_httpServletRequest.setAttribute(
+							LayoutStructureRendererConstants.
+								LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE,
+							relatedLayoutDisplayPageObjectProvider.
+								getExternalReferenceCode());
 
-					_httpServletRequest.setAttribute(
-						LayoutStructureRendererConstants.
-							LAYOUT_PARENT_ITEM_EXTERNAL_REFERENCE_CODE,
-						relatedLayoutDisplayPageObjectProvider.
-							getParentExternalReferenceCode());
-					_httpServletRequest.setAttribute(
-						LayoutStructureRendererConstants.
-							LAYOUT_RELATED_ITEM_DISPLAY_PAGE_OBJECT_PROVIDER,
-						relatedLayoutDisplayPageObjectProvider);
-					_httpServletRequest.setAttribute(
-						LayoutStructureRendererConstants.
-							LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE,
-						relatedLayoutDisplayPageObjectProvider.
-							getExternalReferenceCode());
-
-					_renderLayoutStructure(
-						formRelationshipStyledLayoutStructureItem.
-							getChildrenItemIds(),
-						infoForm);
+						_renderFormRelationshipStyledLayoutStructureItemContent(
+							formRelationshipStyledLayoutStructureItem,
+							formRelationshipStyledLayoutStructureItemContentId,
+							infoForm);
+					}
 				}
 			}
+
+			_renderReactComponent(
+				"{FormRelationshipAddButton} from layout-taglib/render",
+				HashMapBuilder.<String, Object>put(
+					"contentId",
+					formRelationshipStyledLayoutStructureItemContentId
+				).put(
+					"label",
+					formRelationshipStyledLayoutStructureItem.
+						getButtonLabelJSONObject()
+				).put(
+					"renderURL",
+					HttpComponentsUtil.addParameters(
+						StringBundler.concat(
+							_themeDisplay.getPortalURL(),
+							_themeDisplay.getPathMain(), "/portal",
+							"/render_form_relationship_layout_structure_item"),
+						"formRelationshipLayoutStructureItemId",
+						formRelationshipStyledLayoutStructureItem.getItemId(),
+						"p_l_id", _themeDisplay.getPlid(),
+						"parentItemExternalReferenceCode",
+						parentItemExternalReferenceCode, "segmentsExperienceId",
+						SegmentsExperienceUtil.getSegmentsExperienceId(
+							_httpServletRequest))
+				).build());
 		}
 		finally {
 			_httpServletRequest.setAttribute(
@@ -1062,13 +1124,44 @@ public class LayoutStructureRenderer {
 				currentRelatedItemExternalReferenceCode);
 		}
 
-		_renderReactComponent(
-			"{FormRelationshipAddButton} from layout-taglib/render",
-			HashMapBuilder.<String, Object>put(
-				"label",
-				formRelationshipStyledLayoutStructureItem.
-					getButtonLabelJSONObject()
-			).build());
+		jspWriter.write("</div>");
+	}
+
+	private void _renderFormRelationshipStyledLayoutStructureItemContent(
+			FormRelationshipStyledLayoutStructureItem
+				formRelationshipStyledLayoutStructureItem,
+			String formRelationshipStyledLayoutStructureItemContentId,
+			InfoForm infoForm)
+		throws Exception {
+
+		JspWriter jspWriter = _pageContext.getOut();
+
+		jspWriter.write("<div data-form-relationship-");
+		jspWriter.write("structure-item-content-id=\"");
+		jspWriter.write(formRelationshipStyledLayoutStructureItemContentId);
+		jspWriter.write("\">");
+
+		jspWriter.write("<div class=\"d-flex justify-content-end ");
+		jspWriter.write("lfr-form-relationship-remove-button \">");
+
+		ButtonTag removeButtonTag = new ButtonTag();
+
+		removeButtonTag.setBorderless(true);
+		removeButtonTag.setCssClass("d-none lfr-portal-tooltip mt-2");
+		removeButtonTag.setDisplayType("secondary");
+		removeButtonTag.setDynamicAttribute(
+			StringPool.BLANK, "title",
+			LanguageUtil.get(_httpServletRequest, "remove"));
+		removeButtonTag.setIcon("times-circle");
+		removeButtonTag.setSmall(true);
+
+		removeButtonTag.doTag(_pageContext);
+
+		jspWriter.write("</div>");
+
+		_renderLayoutStructure(
+			formRelationshipStyledLayoutStructureItem.getChildrenItemIds(),
+			infoForm);
 
 		jspWriter.write("</div>");
 	}

@@ -35,25 +35,26 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
-		if (scopeGroup.isCMS()) {
-			jsonObject.put(
-				"toolbar",
-				JSONUtil.put(
-					"items",
-					new String[] {
-						"undo", "redo", "|", "style", "|", "heading", "|",
-						"bold", "italic", "underline", "strikethrough", "|",
-						"fontColor", "fontBackgroundColor", "|", "removeFormat",
-						"|", "numberedList", "bulletedList", "|", "indent",
-						"outdent", "|", "blockQuote", "|", "link",
-						"insertTable", "headlessImageSelector",
-						"headlessVideoSelector", "|", "alignment", "|",
-						"aiCreator", "|", "sourceEditing"
-					}
-				).put(
-					"shouldNotGroupWhenFull", true
-				));
+		if (!scopeGroup.isCMS()) {
+			return;
 		}
+
+		jsonObject.put(
+			"toolbar",
+			JSONUtil.put(
+				"items",
+				new String[] {
+					"undo", "redo", "|", "style", "|", "heading", "|", "bold",
+					"italic", "underline", "strikethrough", "|", "fontColor",
+					"fontBackgroundColor", "|", "removeFormat", "|",
+					"numberedList", "bulletedList", "|", "indent", "outdent",
+					"|", "blockQuote", "|", "link", "insertTable",
+					"headlessImageSelector", "headlessVideoSelector", "|",
+					"alignment", "|", "aiCreator", "|", "sourceEditing"
+				}
+			).put(
+				"shouldNotGroupWhenFull", true
+			));
 	}
 
 }

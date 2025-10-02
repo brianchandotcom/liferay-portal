@@ -1563,9 +1563,12 @@ public class BundleSiteInitializerTest {
 	}
 
 	private void _assertDLFileEntry1(long groupId) throws Exception {
+		if (groupId == 0) {
+			groupId = _group.getGroupId();
+		}
+
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.getFileEntry(
-			(groupId == 0 ? _group.getGroupId() : groupId),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Table of Contents.md");
+			groupId,DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Table of Contents.md");
 
 		String string = new String(
 			StreamUtil.toByteArray(

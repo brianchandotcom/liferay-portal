@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -206,13 +207,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
-				PageElementDefinition.Type.COLLECTION,
+				PageElementDefinition.Type.COLLECTION, StringPool.BLANK,
 				_randomPageElement(
-					PageElementDefinition.Type.COLLECTION_ITEM)));
+					PageElementDefinition.Type.COLLECTION_ITEM,
+					StringPool.BLANK)));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.COLLECTION_ITEM));
+			_randomPageElement(
+				PageElementDefinition.Type.COLLECTION_ITEM, StringPool.BLANK));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.COLUMN));
+			_randomPageElement(
+				PageElementDefinition.Type.COLUMN, StringPool.BLANK));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				new String[] {"cssClass1", "cssClass2"}, "customCss", false,
@@ -222,19 +226,41 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				new String[] {"cssClass1", "cssClass2", "cssClass3"},
 				"customCss 2", false, StringUtil.randomString()));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.DROP_ZONE));
+			_randomPageElement(
+				PageElementDefinition.Type.DROP_ZONE, StringPool.BLANK));
+
+		PageElement formPageElement = _randomPageElement(
+			PageElementDefinition.Type.FORM, StringPool.BLANK);
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.FORM));
+			formPageElement);
+
+		PageElement formStepContainerPageElement = _randomPageElement(
+			PageElementDefinition.Type.FORM_STEP_CONTAINER,
+			formPageElement.getExternalReferenceCode());
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.FORM_STEP));
+			formStepContainerPageElement);
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.FORM_STEP_CONTAINER));
+			_randomPageElement(
+				PageElementDefinition.Type.FORM_STEP,
+				formStepContainerPageElement.getExternalReferenceCode()));
+
+		PageElement fragmentPageElement = _randomPageElement(
+			PageElementDefinition.Type.FRAGMENT, StringPool.BLANK);
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.FRAGMENT_DROP_ZONE));
+			fragmentPageElement);
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.FRAGMENT));
+			_randomPageElement(
+				PageElementDefinition.Type.FRAGMENT_DROP_ZONE,
+				fragmentPageElement.getExternalReferenceCode()));
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(PageElementDefinition.Type.ROW));
+			_randomPageElement(
+				PageElementDefinition.Type.ROW, StringPool.BLANK));
 	}
 
 	@Ignore
@@ -276,7 +302,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Override
 	protected PageElement randomPageElement() throws Exception {
-		return _randomPageElement(PageElementDefinition.Type.CONTAINER);
+		return _randomPageElement(
+			PageElementDefinition.Type.CONTAINER, StringPool.BLANK);
 	}
 
 	@Override
@@ -481,7 +508,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	private PageElement _randomPageElement(
 			PageElementDefinition.Type pageElementDefinitionType,
-			PageElement... pageElements)
+			String parentExternalReferenceCode, PageElement... pageElements)
 		throws Exception {
 
 		PageElement pageElement = super.randomPageElement();
@@ -490,8 +517,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			() -> PageElementsTestUtil.getPageElementDefinition(
 				pageElementDefinitionType));
 		pageElement.setPageElements(pageElements);
-		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
-		pageElement.setPosition(_position++);
+		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
+
+		int position = 0;
+
+		if (Validator.isNull(parentExternalReferenceCode)) {
+			position = _position++;
+		}
+
+		pageElement.setPosition(position);
 
 		return pageElement;
 	}

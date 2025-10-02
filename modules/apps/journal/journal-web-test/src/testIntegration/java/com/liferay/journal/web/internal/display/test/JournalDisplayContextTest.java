@@ -131,12 +131,9 @@ public class JournalDisplayContextTest {
 			journalArticleExample.getDDMStructureId(),
 			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
 
-		Assert.assertEquals(
-			searchContainer.getResults(
-			).toString(),
-			1,
-			searchContainer.getResults(
-			).size());
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
 	}
 
 	@Test
@@ -187,12 +184,9 @@ public class JournalDisplayContextTest {
 			journalArticleExample.getDDMStructureId(),
 			SearchContainer.DEFAULT_CUR, SearchContainer.DEFAULT_DELTA);
 
-		Assert.assertEquals(
-			searchContainer.getResults(
-			).toString(),
-			1,
-			searchContainer.getResults(
-			).size());
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 1, results.size());
 	}
 
 	@Test
@@ -205,12 +199,9 @@ public class JournalDisplayContextTest {
 			StringPool.BLANK, "all", false, 0, SearchContainer.DEFAULT_CUR,
 			SearchContainer.DEFAULT_DELTA);
 
-		Assert.assertEquals(
-			searchContainer.getResults(
-			).toString(),
-			3,
-			searchContainer.getResults(
-			).size());
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 3, results.size());
 	}
 
 	@Test
@@ -221,12 +212,9 @@ public class JournalDisplayContextTest {
 			StringPool.BLANK, "all", true, 0, SearchContainer.DEFAULT_CUR,
 			SearchContainer.DEFAULT_DELTA);
 
-		Assert.assertEquals(
-			searchContainer.getResults(
-			).toString(),
-			2,
-			searchContainer.getResults(
-			).size());
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), 2, results.size());
 	}
 
 	@Test

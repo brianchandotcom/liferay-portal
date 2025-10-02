@@ -406,6 +406,15 @@ public class LayoutUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
+		if (!Objects.equals(
+				typeSettingsUnicodeProperties,
+				layout.getTypeSettingsProperties())) {
+
+			layout = LayoutServiceUtil.updateLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+		}
+
 		if (pageSpecifications == null) {
 			return _updateLayout(
 				layout, nameMap, titleMap, descriptionMap, keywordsMap,

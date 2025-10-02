@@ -395,6 +395,44 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				segmentsExperience.getExternalReferenceCode(), pageElement);
 	}
 
+	private PageElement _getContainerPageElement(
+			String[] cssClasses, String customCss, boolean indexed,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		ContainerPageElementDefinition containerPageElementDefinition =
+			new ContainerPageElementDefinition();
+
+		containerPageElementDefinition.setContentVisibility(
+			ContainerPageElementDefinition.ContentVisibility.AUTO);
+		containerPageElementDefinition.setCssClasses(cssClasses);
+		containerPageElementDefinition.setCustomCSS(customCss);
+		containerPageElementDefinition.setFragmentViewports(
+			_getFragmentViewports());
+		containerPageElementDefinition.setHtmlProperties(
+			() -> new HtmlProperties() {
+				{
+					setHtmlTag(HtmlTag.DIV);
+				}
+			});
+		containerPageElementDefinition.setIndexed(indexed);
+		containerPageElementDefinition.setLayout(
+			() -> new com.liferay.headless.admin.site.client.dto.v1_0.Layout() {
+				{
+					setAlign(Align.END);
+					setContentDisplay(ContentDisplay.FLEX_ROW);
+					setFlexWrap(FlexWrap.WRAP_REVERSE);
+					setJustify(Justify.CENTER);
+					setWidthType(WidthType.FIXED);
+				}
+			});
+		containerPageElementDefinition.setType(
+			PageElementDefinition.Type.CONTAINER);
+
+		return _getPageElement(
+			containerPageElementDefinition, pageElementExternalReferenceCode);
+	}
+
 	private FragmentViewport[] _getFragmentViewports() {
 		return new FragmentViewport[] {
 			new FragmentViewport() {
@@ -436,44 +474,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(0);
 
 		return pageElement;
-	}
-
-	private PageElement _getContainerPageElement(
-			String[] cssClasses, String customCss, boolean indexed,
-			String pageElementExternalReferenceCode)
-		throws Exception {
-
-		ContainerPageElementDefinition containerPageElementDefinition =
-			new ContainerPageElementDefinition();
-
-		containerPageElementDefinition.setContentVisibility(
-			ContainerPageElementDefinition.ContentVisibility.AUTO);
-		containerPageElementDefinition.setCssClasses(cssClasses);
-		containerPageElementDefinition.setCustomCSS(customCss);
-		containerPageElementDefinition.setFragmentViewports(
-			_getFragmentViewports());
-		containerPageElementDefinition.setHtmlProperties(
-			() -> new HtmlProperties() {
-				{
-					setHtmlTag(HtmlTag.DIV);
-				}
-			});
-		containerPageElementDefinition.setIndexed(indexed);
-		containerPageElementDefinition.setLayout(
-			() -> new com.liferay.headless.admin.site.client.dto.v1_0.Layout() {
-				{
-					setAlign(Align.END);
-					setContentDisplay(ContentDisplay.FLEX_ROW);
-					setFlexWrap(FlexWrap.WRAP_REVERSE);
-					setJustify(Justify.CENTER);
-					setWidthType(WidthType.FIXED);
-				}
-			});
-		containerPageElementDefinition.setType(
-			PageElementDefinition.Type.CONTAINER);
-
-		return _getPageElement(
-			containerPageElementDefinition, pageElementExternalReferenceCode);
 	}
 
 	private PageElement _randomPageElement(

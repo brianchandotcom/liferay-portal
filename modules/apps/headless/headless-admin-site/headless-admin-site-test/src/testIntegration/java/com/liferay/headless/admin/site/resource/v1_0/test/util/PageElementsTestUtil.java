@@ -22,6 +22,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.RowPageElementDefinition;
+import com.liferay.layout.util.constants.StyledLayoutStructureConstants;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Arrays;
@@ -39,6 +40,13 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.COLLECTION)) {
 			return new CollectionPageElementDefinition() {
 				{
+					setDisplayAllItems(Boolean.FALSE);
+					setDisplayAllPages(Boolean.TRUE);
+					setNumberOfColumns(1);
+					setNumberOfItems(5);
+					setNumberOfItemsPerPage(5);
+					setNumberOfPages(20);
+					setPaginationType(PaginationType.NONE);
 					setType(Type.COLLECTION);
 				}
 			};
@@ -55,6 +63,7 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.COLUMN)) {
 			return new ColumnPageElementDefinition() {
 				{
+					setSize(1);
 					setType(Type.COLUMN);
 				}
 			};
@@ -82,6 +91,7 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.FORM)) {
 			return new FormPageElementDefinition() {
 				{
+					setIndexed(Boolean.TRUE);
 					setType(Type.FORM);
 				}
 			};
@@ -158,7 +168,14 @@ public class PageElementsTestUtil {
 		if (Objects.equals(type, PageElementDefinition.Type.ROW)) {
 			return new RowPageElementDefinition() {
 				{
+					setGutters(Boolean.TRUE);
+					setIndexed(Boolean.TRUE);
+					setModulesPerRow(0);
+					setNumberOfColumns(0);
+					setReverseOrder(Boolean.FALSE);
 					setType(Type.ROW);
+					setVerticalAlignment(
+						StyledLayoutStructureConstants.VERTICAL_ALIGNMENT_TOP);
 				}
 			};
 		}

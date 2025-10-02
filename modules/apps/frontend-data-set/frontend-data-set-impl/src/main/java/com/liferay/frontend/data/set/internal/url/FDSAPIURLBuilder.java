@@ -138,7 +138,7 @@ public class FDSAPIURLBuilder {
 
 	private String _interpolateTokens(String text) {
 
-		// first, interpolate token resolutions
+		// interpolate using provided resolved tokens
 
 		if (_tokenResolutionsJSONObject != null) {
 			for (String key : _tokenResolutionsJSONObject.keySet()) {
@@ -148,7 +148,7 @@ public class FDSAPIURLBuilder {
 			}
 		}
 
-		// then, registered resolvers
+		// interpolate using registered resolvers
 
 		FDSAPIURLResolver fdsAPIURLResolver =
 			_fdsAPIURLResolverRegistry.getFDSAPIURLResolver(
@@ -163,7 +163,7 @@ public class FDSAPIURLBuilder {
 			}
 		}
 
-		// last, interpolate default tokens
+		// interpolate default tokens
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(

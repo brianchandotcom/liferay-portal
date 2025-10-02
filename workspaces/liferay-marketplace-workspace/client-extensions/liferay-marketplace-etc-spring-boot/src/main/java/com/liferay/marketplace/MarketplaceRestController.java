@@ -10,6 +10,7 @@ import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountResource;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Product;
 import com.liferay.headless.commerce.admin.catalog.client.resource.v1_0.SkuResource;
+import com.liferay.headless.commerce.admin.order.client.dto.v1_0.BillingAddress;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -66,11 +67,6 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 @RequestMapping("/marketplace")
 @RestController
 public class MarketplaceRestController extends BaseRestController {
-
-	@GetMapping("/orders")
-	public String get() {
-		return "READY";
-	}
 
 	@GetMapping("orders/export")
 	public ResponseEntity<StreamingResponseBody> getOrdersExport(
@@ -273,76 +269,53 @@ public class MarketplaceRestController extends BaseRestController {
 	}
 
 	@PostMapping("/tax-calculate/{orderId}")
-	public void postTaxCalculate(
-			@AuthenticationPrincipal Jwt jwt, @PathVariable long orderId)
-		throws Exception {
-
+	public void postTaxCalculate(@PathVariable long orderId) throws Exception {
 		if (_log.isInfoEnabled()) {
-			_log.info("POST tax calculate for orderId: " + orderId);
+			_log.info("POST tax calculate for order " + orderId);
 		}
 
 		Order order = _marketplaceService.getOrder(orderId);
 
-		String accountType = _marketplaceService.getAccountResource(
-		).getAccount(
-			order.getAccountId()
-		).getTypeAsString();
+		BillingAddress billingAddress = _marketplaceService.getBillingAddress(
+			orderId);
 
-		String countryISOCode;
-
-		if (order.getBillingAddress() != null) {
-			countryISOCode = order.getBillingAddress(
-			).getCountryISOCode();
-		}
-		else {
-			countryISOCode = "";
+		if (billingAddress == null) {
+			return;
 		}
 
-		BigDecimal taxRate = BigDecimal.ZERO;
+		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
+			account = order.getAccount();
 
-		BigDecimal originalTotal = BigDecimal.valueOf(
+		BigDecimal subtotalAmount = BigDecimal.valueOf(
 			order.getSubtotalAmount());
 
 		BigDecimal taxAmount = BigDecimal.ZERO;
 
-		BigDecimal totalWithTax = originalTotal.add(taxAmount);
+		BigDecimal total = subtotalAmount.add(taxAmount);
 
-		if (Objects.equals(accountType, "person") &&
-			Objects.equals(countryISOCode, "IE")) {
+		if ((Objects.equals(account.getType(), _ACCOUNT_TYPE_BUSINESS) &&
+			 _europeanCountriesISOCode.contains(
+				 billingAddress.getCountryISOCode())) ||
+			(Objects.equals(account.getType(), _ACCOUNT_TYPE_PERSON) &&
+			 Objects.equals(billingAddress.getCountryISOCode(), "IE"))) {
 
-			taxRate = BigDecimal.valueOf(0.23);
+			taxAmount = subtotalAmount.multiply(
+				BigDecimal.valueOf(_MARKETPLACE_TAX_PERCENTAGE));
 
-			taxAmount = originalTotal.multiply(taxRate);
-
-			totalWithTax = originalTotal.add(taxAmount);
+			total = subtotalAmount.add(taxAmount);
 		}
-
-		List<String> europeanCountryISOCodes = List.of(
-			"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR",
-			"GR", "HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL",
-			"PT", "RO", "SE", "SI", "SK");
-
-		if (Objects.equals(accountType, "business") &&
-			europeanCountryISOCodes.contains(countryISOCode)) {
-
-			taxRate = BigDecimal.valueOf(0.23);
-
-			taxAmount = originalTotal.multiply(taxRate);
-
-			totalWithTax = originalTotal.add(taxAmount);
-		}
-
-		Order orderWithTax = new Order();
 
 		BigDecimal finalTaxAmount = taxAmount;
-		BigDecimal finalTotalWithTax = totalWithTax;
+		BigDecimal finalTotal = total;
 
-		orderWithTax.setTaxAmount(() -> finalTaxAmount);
-		orderWithTax.setTotal(() -> finalTotalWithTax);
+		Order updatedOrder = new Order();
+
+		updatedOrder.setTaxAmount(() -> finalTaxAmount);
+		updatedOrder.setTotal(() -> finalTotal);
 
 		_marketplaceService.getOrderResource(
 		).patchOrder(
-			orderId, orderWithTax
+			orderId, updatedOrder
 		);
 	}
 
@@ -423,8 +396,19 @@ public class MarketplaceRestController extends BaseRestController {
 		}
 	}
 
+	private static final int _ACCOUNT_TYPE_BUSINESS = 2;
+
+	private static final int _ACCOUNT_TYPE_PERSON = 1;
+
+	private static final double _MARKETPLACE_TAX_PERCENTAGE = 0.23;
+
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);
+
+	private final List<String> _europeanCountriesISOCode = List.of(
+		"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",
+		"HR", "HU", "IE", "IT", "LT", "LU", "LV", "MT", "NL", "PL", "PT", "RO",
+		"SE", "SI", "SK");
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

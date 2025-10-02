@@ -37,7 +37,7 @@ public class UserBagFactoryUtil {
 		UserBag userBag = PermissionCacheUtil.getUserBag(userId);
 
 		if ((userBag != null) &&
-			(user.getMvccVersion() == userBag.getUserMvccVersion())) {
+			(user.getMvccVersion() == userBag.getUserMVCCVersion())) {
 
 			return userBag;
 		}

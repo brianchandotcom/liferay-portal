@@ -99,7 +99,7 @@ public class UserBagImpl implements UserBag {
 	}
 
 	@Override
-	public long getUserMvccVersion() {
+	public long getUserMVCCVersion() {
 		return _userMvccVersion;
 	}
 

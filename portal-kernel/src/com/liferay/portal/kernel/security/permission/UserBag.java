@@ -35,7 +35,7 @@ public interface UserBag extends Serializable {
 
 	public long getUserId();
 
-	public long getUserMvccVersion();
+	public long getUserMVCCVersion();
 
 	public long[] getUserOrgGroupIds();
 

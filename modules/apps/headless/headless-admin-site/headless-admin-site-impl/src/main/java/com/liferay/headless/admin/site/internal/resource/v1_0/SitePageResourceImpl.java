@@ -491,6 +491,10 @@ public class SitePageResourceImpl
 
 		PageSettings pageSettings = sitePage.getPageSettings();
 
+		_updateSEOEntry(
+			layout.getGroupId(), layout.getLayoutId(), pageSettings,
+			serviceContext);
+
 		if ((pageSettings != null) && (pageSettings.getPriority() != null)) {
 			layout = _layoutService.updatePriority(
 				layout.getPlid(), pageSettings.getPriority());
@@ -673,9 +677,13 @@ public class SitePageResourceImpl
 					sitePage.getPageSpecifications()));
 		}
 
-		int priority = Integer.MAX_VALUE;
-
 		PageSettings pageSettings = sitePage.getPageSettings();
+
+		_updateSEOEntry(
+			layout.getGroupId(), layout.getLayoutId(), pageSettings,
+			serviceContext);
+
+		int priority = Integer.MAX_VALUE;
 
 		if ((pageSettings != null) && (pageSettings.getPriority() != null)) {
 			priority = pageSettings.getPriority();

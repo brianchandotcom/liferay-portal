@@ -143,7 +143,7 @@ export default function BulkDefaultPermissionModalContent({
 						},
 			type: 'DefaultPermissionBulkAction',
 		});
-	}, [apiURL, closeModal, currentValues, selectedData]);
+	}, [apiURL, className, closeModal, currentValues, selectedData]);
 
 	const onChangeHandler = useCallback((data: any) => {
 		setCurrentValues(data);

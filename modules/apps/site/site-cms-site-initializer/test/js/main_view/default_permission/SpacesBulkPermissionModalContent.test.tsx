@@ -7,12 +7,7 @@ import '@testing-library/jest-dom/extend-expect';
 import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import CMSDefaultPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSDefaultPermissionService';
-import BulkDefaultPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/BulkDefaultPermissionModalContent';
-import {
-	BulkDefaultPermissionModalContentProps,
-	SpacesBulkPermissionModalContentProps,
-} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
+import {SpacesBulkPermissionModalContentProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
 import SpacesBulkPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/SpacesBulkPermissionModalContent';
 import * as BulkActionTrigger from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/triggerAssetBulkAction';
 

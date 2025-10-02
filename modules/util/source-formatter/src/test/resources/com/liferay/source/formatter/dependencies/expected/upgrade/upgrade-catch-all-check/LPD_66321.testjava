@@ -13,8 +13,7 @@ public class LPD_66321 {
 
 	public void method() {
 		new ConfigurationImpl(classLoader, "captcha");
-		new ConfigurationImpl(
-			classLoader, "content-types");
+		new ConfigurationImpl(classLoader, "content-types");
 		new ConfigurationImpl(classLoader, "portal");
 	}
 

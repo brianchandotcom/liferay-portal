@@ -14,8 +14,7 @@ public class LPD_66321 {
 
 	public void method() {
 		new ConfigurationImpl(classLoader, PropsFiles.CAPTCHA);
-		new ConfigurationImpl(
-			classLoader, PropsFiles.CONTENT_TYPES);
+		new ConfigurationImpl(classLoader, PropsFiles.CONTENT_TYPES);
 		new ConfigurationImpl(classLoader, PropsFiles.PORTAL);
 	}
 

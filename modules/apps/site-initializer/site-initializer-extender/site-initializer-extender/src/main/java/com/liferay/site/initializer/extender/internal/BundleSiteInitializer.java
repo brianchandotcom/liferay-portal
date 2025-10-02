@@ -2037,19 +2037,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 					resourcePath + "documents", serviceContext,
 					siteNavigationMenuItemSettingsBuilder,
 					stringUtilReplaceValues);
-
 				_addKeywords(
 					"ASSET_LIBRARY", resourcePath, serviceContext,
 					stringUtilReplaceValues);
-
-				Group scopeGroup = serviceContext.getScopeGroup();
-
-				if (scopeGroup.isSite()) {
-					_depotEntryGroupRelLocalService.addDepotEntryGroupRel(
-						(group != null) ? group.getClassPK() :
-							depotEntry.getDepotEntryId(),
-						serviceContext.getScopeGroupId());
-				}
 			}
 		}
 	}

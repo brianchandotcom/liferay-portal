@@ -19,14 +19,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -174,25 +178,37 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67157")
 	public void testDeleteLayoutPageTemplateCollectionByExternalReferenceCode()
 		throws Exception {
 
 		String externalReferenceCode = StringUtil.randomString();
 
-		_layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				externalReferenceCode, TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				LayoutPageTemplateConstants.
-					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				null, RandomTestUtil.randomString(), null,
-				LayoutPageTemplateCollectionTypeConstants.BASIC,
-				_serviceContext);
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			_layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					externalReferenceCode, TestPropsValues.getUserId(),
+					_group.getGroupId(),
+					LayoutPageTemplateConstants.
+						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+					null, RandomTestUtil.randomString(), null,
+					LayoutPageTemplateCollectionTypeConstants.BASIC,
+					_serviceContext);
 
 		Assert.assertNotNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
+
+		long classNameId = _portal.getClassNameId(
+			LayoutPageTemplateCollection.class);
+
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), classNameId,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				SystemEventConstants.TYPE_DELETE));
 
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(
@@ -202,6 +218,12 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
+		Assert.assertNotNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), classNameId,
+				layoutPageTemplateCollection.
+					getLayoutPageTemplateCollectionId(),
+				SystemEventConstants.TYPE_DELETE));
 	}
 
 	private void
@@ -241,6 +263,12 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 	private LayoutPageTemplateCollectionLocalService
 		_layoutPageTemplateCollectionLocalService;
 
+	@Inject
+	private Portal _portal;
+
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 }

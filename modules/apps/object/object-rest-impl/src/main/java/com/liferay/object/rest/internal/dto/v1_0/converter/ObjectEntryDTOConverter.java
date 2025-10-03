@@ -258,6 +258,12 @@ public class ObjectEntryDTOConverter
 			contentObjectEntry, objectDefinition, objectEntryVersion,
 			serviceBuilderObjectEntry);
 
+		if (GetterUtil.getBoolean(
+				dtoConverterContext.getAttribute("simplifiedObjectEntry"))) {
+
+			return objectEntry;
+		}
+
 		TrashEntry trashEntry = null;
 
 		if (serviceBuilderObjectEntry.getStatus() ==
@@ -586,21 +592,13 @@ public class ObjectEntryDTOConverter
 										primaryKey);
 						}
 
-						if (ExportImportThreadLocal.isExportInProcess()) {
-							relatedObjectEntryAtomicReference.set(
-								_toSimplifiedDTO(
-									null, objectDefinition, null,
-									serviceBuilderObjectEntry));
-						}
-						else {
-							relatedObjectEntryAtomicReference.set(
-								toDTO(
-									_getDTOConverterContext(
-										dtoConverterContext,
-										serviceBuilderObjectEntry.
-											getObjectEntryId()),
-									serviceBuilderObjectEntry));
-						}
+						relatedObjectEntryAtomicReference.set(
+							toDTO(
+								_getDTOConverterContext(
+									dtoConverterContext,
+									serviceBuilderObjectEntry.
+										getObjectEntryId()),
+								serviceBuilderObjectEntry));
 					}
 
 					return relatedObjectEntryAtomicReference.get();
@@ -727,6 +725,11 @@ public class ObjectEntryDTOConverter
 			"preferApproved",
 			GetterUtil.getBoolean(
 				dtoConverterContext.getAttribute("preferApproved")));
+
+		if (ExportImportThreadLocal.isExportInProcess()) {
+			defaultDTOConverterContext.setAttribute(
+				"simplifiedObjectEntry", Boolean.TRUE);
+		}
 
 		return defaultDTOConverterContext;
 	}
@@ -1021,20 +1024,11 @@ public class ObjectEntryDTOConverter
 						Object.class);
 				}
 
-				boolean exportInProcess =
-					ExportImportThreadLocal.isExportInProcess();
-
 				return () -> TransformUtil.transformToArray(
 					relatedModels,
 					relatedModel -> {
 						com.liferay.object.model.ObjectEntry objectEntry =
 							(com.liferay.object.model.ObjectEntry)relatedModel;
-
-						if (exportInProcess) {
-							return _toSimplifiedDTO(
-								null, relatedObjectDefinition, null,
-								objectEntry);
-						}
 
 						return toDTO(
 							_getDTOConverterContext(

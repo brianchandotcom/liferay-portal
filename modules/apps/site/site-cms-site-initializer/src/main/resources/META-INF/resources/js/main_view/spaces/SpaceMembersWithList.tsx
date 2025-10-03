@@ -84,10 +84,19 @@ export function SpaceMembersWithList({
 		return groups.items.length;
 	}, [selectedOption, users.items, groups.items]);
 
+	const excludeMembers = useMemo(() => {
+		if (selectedOption === SelectOptions.USERS) {
+			return users.items;
+		}
+
+		return groups.items;
+	}, [selectedOption, users.items, groups.items]);
+
 	return (
 		<div className={classNames('space-members-with-list', className)}>
 			<SpaceMembersInputWithSelect
 				disabled={!hasAssignMembersPermission}
+				excludeMembers={excludeMembers}
 				onAutocompleteItemSelected={(item) =>
 					addMember(item, selectedOption)
 				}

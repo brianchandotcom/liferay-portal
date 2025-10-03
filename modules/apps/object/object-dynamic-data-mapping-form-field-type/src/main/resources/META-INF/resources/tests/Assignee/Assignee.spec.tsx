@@ -50,6 +50,17 @@ jest.mock('@clayui/data-provider', () => {
 	};
 });
 
+jest.mock('data-engine-js-components-web', () => {
+	const originalModule = jest.requireActual('data-engine-js-components-web');
+
+	return {
+		...originalModule,
+		useConfig: () => ({
+			portletNamespace: 'portletNamespace_',
+		}),
+	};
+});
+
 beforeAll(() => {
 	delete (window as any).ResizeObserver;
 
@@ -73,6 +84,7 @@ describe('Assignee object field', () => {
 				label="Assignee"
 				name="assignee"
 				onChange={() => {}}
+				searchURL=""
 				value={{
 					externalReferenceCode: '123',
 					name: 'Test Test',
@@ -122,7 +134,7 @@ describe('Assignee object field', () => {
 		const onChange = jest.fn();
 
 		const {getByRole} = render(
-			<Assignee label="" name="" onChange={onChange} />
+			<Assignee label="" name="" onChange={onChange} searchURL="" />
 		);
 
 		const input = getByRole('combobox');
@@ -148,8 +160,9 @@ describe('Assignee object field', () => {
 
 	it('calls the API with the correct search term', async () => {
 		(useResource as jest.Mock).mockReturnValue({resource: null});
+
 		const {getByRole} = render(
-			<Assignee label="" name="" onChange={() => {}} />
+			<Assignee label="" name="" onChange={() => {}} searchURL="" />
 		);
 
 		const input = getByRole('combobox');
@@ -159,7 +172,7 @@ describe('Assignee object field', () => {
 		await waitFor(() => {
 			expect(useResource).toHaveBeenCalledWith(
 				expect.objectContaining({
-					variables: {search: 'Test'},
+					variables: {['portletNamespace_search']: 'Test'},
 				})
 			);
 		});
@@ -171,7 +184,7 @@ describe('Assignee object field', () => {
 		});
 
 		const {getByRole} = render(
-			<Assignee label="" name="" onChange={() => {}} />
+			<Assignee label="" name="" onChange={() => {}} searchURL="" />
 		);
 
 		const input = getByRole('combobox');
@@ -192,7 +205,7 @@ describe('Assignee object field', () => {
 		});
 
 		const {getByRole, getByText} = render(
-			<Assignee label="" name="" onChange={() => {}} />
+			<Assignee label="" name="" onChange={() => {}} searchURL="" />
 		);
 
 		const input = getByRole('combobox');

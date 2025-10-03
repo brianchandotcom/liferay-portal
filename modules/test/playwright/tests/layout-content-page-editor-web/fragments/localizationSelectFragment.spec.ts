@@ -471,8 +471,8 @@ test(
 			await route.fulfill({
 				body: JSON.stringify({
 					fields: {
-						longtext: 'Naranja',
-						title: 'Naranja',
+						ObjectField_longtext: 'Naranja',
+						ObjectField_title: 'Naranja',
 					},
 				}),
 				contentType: 'application/json',

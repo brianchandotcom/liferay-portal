@@ -254,6 +254,10 @@ public class ObjectEntryDTOConverter
 		ObjectEntry contentObjectEntry = (objectEntryVersion == null) ? null :
 			ObjectEntry.unsafeToDTO(objectEntryVersion.getContent());
 
+		ObjectEntry objectEntry = _toSimplifiedDTO(
+			contentObjectEntry, objectDefinition, objectEntryVersion,
+			serviceBuilderObjectEntry);
+
 		TrashEntry trashEntry = null;
 
 		if (serviceBuilderObjectEntry.getStatus() ==
@@ -266,211 +270,174 @@ public class ObjectEntryDTOConverter
 
 		TrashEntry finalTrashEntry = trashEntry;
 
-		return new ObjectEntry() {
-			{
-				setActions(dtoConverterContext::getActions);
-				setAuditEvents(
-					() -> _toAuditEvents(
+		objectEntry.setActions(dtoConverterContext::getActions);
+		objectEntry.setAuditEvents(
+			() -> _toAuditEvents(
+				dtoConverterContext, objectDefinition,
+				serviceBuilderObjectEntry));
+		objectEntry.setCreator(
+			() -> {
+				long userId = _getAttribute(
+					objectEntryVersion, ObjectEntryVersionModel::getUserId,
+					serviceBuilderObjectEntry, ObjectEntryModel::getUserId);
+
+				return CreatorUtil.toCreator(
+					_portal, dtoConverterContext.getUriInfo(),
+					_userLocalService.fetchUser(userId));
+			});
+		objectEntry.setDateCreated(
+			() -> _getAttribute(
+				objectEntryVersion, ObjectEntryVersionModel::getCreateDate,
+				serviceBuilderObjectEntry, ObjectEntryModel::getCreateDate));
+		objectEntry.setDateModified(
+			() -> _getAttribute(
+				objectEntryVersion, ObjectEntryVersionModel::getModifiedDate,
+				serviceBuilderObjectEntry, ObjectEntryModel::getModifiedDate));
+		objectEntry.setDefaultLanguageId(
+			() -> {
+				if (FeatureFlagManagerUtil.isEnabled(
+						objectDefinition.getCompanyId(), "LPD-32050")) {
+
+					return serviceBuilderObjectEntry.getDefaultLanguageId();
+				}
+
+				return null;
+			});
+		objectEntry.setDisplayDate(
+			() -> _getAttribute(
+				objectEntryVersion, ObjectEntryVersionModel::getDisplayDate,
+				serviceBuilderObjectEntry, ObjectEntryModel::getDisplayDate));
+		objectEntry.setExpirationDate(
+			() -> _getAttribute(
+				objectEntryVersion, ObjectEntryVersionModel::getExpirationDate,
+				serviceBuilderObjectEntry,
+				ObjectEntryModel::getExpirationDate));
+		objectEntry.setFriendlyUrlPath(
+			() -> serviceBuilderObjectEntry.getURLTitle(
+				dtoConverterContext.getLocale()));
+		objectEntry.setFriendlyUrlPath_i18n(
+			serviceBuilderObjectEntry::getURLTitleMap);
+		objectEntry.setId(serviceBuilderObjectEntry::getObjectEntryId);
+		objectEntry.setKeywords(
+			() -> {
+				if (objectEntryVersion != null) {
+					return contentObjectEntry.getKeywords();
+				}
+				else if (!objectDefinition.isEnableCategorization()) {
+					return null;
+				}
+
+				return ListUtil.toArray(
+					_assetTagLocalService.getTags(
+						objectDefinition.getClassName(),
+						serviceBuilderObjectEntry.getObjectEntryId()),
+					AssetTag.NAME_ACCESSOR);
+			});
+		objectEntry.setObjectEntryFolderExternalReferenceCode(
+			() -> {
+				ObjectEntryFolder objectEntryFolder =
+					_objectEntryFolderLocalService.fetchObjectEntryFolder(
+						serviceBuilderObjectEntry.getObjectEntryFolderId());
+
+				if (objectEntryFolder != null) {
+					return objectEntryFolder.getExternalReferenceCode();
+				}
+
+				return StringPool.BLANK;
+			});
+		objectEntry.setObjectEntryFolderId(
+			serviceBuilderObjectEntry::getObjectEntryFolderId);
+		objectEntry.setPermissions(
+			() -> _toPermissions(objectDefinition, serviceBuilderObjectEntry));
+		objectEntry.setProperties(
+			() -> {
+				if (objectEntryVersion == null) {
+					return _toProperties(
 						dtoConverterContext, objectDefinition,
-						serviceBuilderObjectEntry));
-				setCreator(
-					() -> _getAttribute(
-						objectEntryVersion,
-						objectEntryVersion -> CreatorUtil.toCreator(
-							_portal, dtoConverterContext.getUriInfo(),
-							_userLocalService.fetchUser(
-								objectEntryVersion.getUserId())),
-						serviceBuilderObjectEntry,
-						serviceBuilderObjectEntry -> CreatorUtil.toCreator(
-							_portal, dtoConverterContext.getUriInfo(),
-							_userLocalService.fetchUser(
-								serviceBuilderObjectEntry.getUserId()))));
-				setDateCreated(
-					() -> _getAttribute(
-						objectEntryVersion,
-						ObjectEntryVersionModel::getCreateDate,
-						serviceBuilderObjectEntry,
-						ObjectEntryModel::getCreateDate));
-				setDateModified(
-					() -> _getAttribute(
-						objectEntryVersion,
-						ObjectEntryVersionModel::getModifiedDate,
-						serviceBuilderObjectEntry,
-						ObjectEntryModel::getModifiedDate));
-				setDefaultLanguageId(
-					() -> {
-						if (FeatureFlagManagerUtil.isEnabled(
-								objectDefinition.getCompanyId(), "LPD-32050")) {
+						serviceBuilderObjectEntry);
+				}
 
-							return serviceBuilderObjectEntry.
-								getDefaultLanguageId();
-						}
+				Map<String, Object> properties =
+					contentObjectEntry.getProperties();
 
-						return null;
-					});
-				setDisplayDate(
-					() -> _getAttribute(
-						objectEntryVersion,
-						ObjectEntryVersionModel::getDisplayDate,
-						serviceBuilderObjectEntry,
-						ObjectEntryModel::getDisplayDate));
-				setExpirationDate(
-					() -> _getAttribute(
-						objectEntryVersion,
-						ObjectEntryVersionModel::getExpirationDate,
-						serviceBuilderObjectEntry,
-						ObjectEntryModel::getExpirationDate));
-				setExternalReferenceCode(
-					() -> {
-						if (objectEntryVersion != null) {
-							return contentObjectEntry.
-								getExternalReferenceCode();
-						}
+				com.liferay.object.model.ObjectEntry
+					clonedServiceBuilderObjectEntry =
+						(com.liferay.object.model.ObjectEntry)
+							serviceBuilderObjectEntry.clone();
 
-						return serviceBuilderObjectEntry.
-							getExternalReferenceCode();
-					});
-				setFriendlyUrlPath(
-					() -> serviceBuilderObjectEntry.getURLTitle(
-						dtoConverterContext.getLocale()));
-				setFriendlyUrlPath_i18n(
-					serviceBuilderObjectEntry::getURLTitleMap);
-				setId(serviceBuilderObjectEntry::getObjectEntryId);
-				setKeywords(
-					() -> {
-						if (objectEntryVersion != null) {
-							return contentObjectEntry.getKeywords();
-						}
-						else if (!objectDefinition.isEnableCategorization()) {
-							return null;
-						}
+				clonedServiceBuilderObjectEntry.setValues(
+					(Map<String, Serializable>)properties.get("properties"));
 
-						return ListUtil.toArray(
-							_assetTagLocalService.getTags(
-								objectDefinition.getClassName(),
-								serviceBuilderObjectEntry.getObjectEntryId()),
-							AssetTag.NAME_ACCESSOR);
-					});
-				setObjectEntryFolderExternalReferenceCode(
-					() -> {
-						ObjectEntryFolder objectEntryFolder =
-							_objectEntryFolderLocalService.
-								fetchObjectEntryFolder(
-									serviceBuilderObjectEntry.
-										getObjectEntryFolderId());
+				return _toProperties(
+					dtoConverterContext,
+					_objectDefinitionLocalService.getObjectDefinition(
+						clonedServiceBuilderObjectEntry.
+							getObjectDefinitionId()),
+					clonedServiceBuilderObjectEntry);
+			});
+		objectEntry.setRemovedBy(
+			() -> {
+				if (finalTrashEntry != null) {
+					return CreatorUtil.toCreator(
+						_portal, dtoConverterContext.getUriInfo(),
+						_userLocalService.fetchUser(
+							finalTrashEntry.getUserId()));
+				}
 
-						if (objectEntryFolder != null) {
-							return objectEntryFolder.getExternalReferenceCode();
-						}
+				return null;
+			});
+		objectEntry.setRemovedDate(
+			() -> {
+				if (finalTrashEntry != null) {
+					return finalTrashEntry.getCreateDate();
+				}
 
-						return StringPool.BLANK;
-					});
-				setObjectEntryFolderId(
-					serviceBuilderObjectEntry::getObjectEntryFolderId);
-				setPermissions(
-					() -> _toPermissions(
-						objectDefinition, serviceBuilderObjectEntry));
-				setProperties(
-					() -> {
-						if (objectEntryVersion == null) {
-							return _toProperties(
-								dtoConverterContext, objectDefinition,
-								serviceBuilderObjectEntry);
-						}
+				return null;
+			});
+		objectEntry.setReviewDate(
+			() -> _getAttribute(
+				objectEntryVersion, ObjectEntryVersionModel::getReviewDate,
+				serviceBuilderObjectEntry, ObjectEntryModel::getReviewDate));
+		objectEntry.setStatus(
+			() -> {
+				int status = _getAttribute(
+					objectEntryVersion, ObjectEntryVersionModel::getStatus,
+					serviceBuilderObjectEntry, ObjectEntryModel::getStatus);
 
-						Map<String, Object> properties =
-							contentObjectEntry.getProperties();
+				return _toStatus(dtoConverterContext.getLocale(), status);
+			});
+		objectEntry.setSystemProperties(
+			() -> {
+				if (objectEntryVersion != null) {
+					return _toSystemProperties(
+						dtoConverterContext.getLocale(), objectDefinition,
+						objectEntryVersion.getVersion());
+				}
 
-						com.liferay.object.model.ObjectEntry
-							clonedServiceBuilderObjectEntry =
-								(com.liferay.object.model.ObjectEntry)
-									serviceBuilderObjectEntry.clone();
+				return _toSystemProperties(
+					dtoConverterContext.getLocale(), objectDefinition,
+					serviceBuilderObjectEntry.getVersion());
+			});
+		objectEntry.setTaxonomyCategoryBriefs(
+			() -> {
+				if (objectEntryVersion != null) {
+					return contentObjectEntry.getTaxonomyCategoryBriefs();
+				}
+				else if (!objectDefinition.isEnableCategorization()) {
+					return null;
+				}
 
-						clonedServiceBuilderObjectEntry.setValues(
-							(Map<String, Serializable>)properties.get(
-								"properties"));
+				return TransformUtil.transformToArray(
+					_assetCategoryLocalService.getCategories(
+						objectDefinition.getClassName(),
+						serviceBuilderObjectEntry.getObjectEntryId()),
+					assetCategory ->
+						TaxonomyCategoryBriefUtil.toTaxonomyCategoryBrief(
+							assetCategory, dtoConverterContext),
+					TaxonomyCategoryBrief.class);
+			});
 
-						return _toProperties(
-							dtoConverterContext,
-							_objectDefinitionLocalService.getObjectDefinition(
-								clonedServiceBuilderObjectEntry.
-									getObjectDefinitionId()),
-							clonedServiceBuilderObjectEntry);
-					});
-				setRemovedBy(
-					() -> {
-						if (finalTrashEntry != null) {
-							return CreatorUtil.toCreator(
-								_portal, dtoConverterContext.getUriInfo(),
-								_userLocalService.fetchUser(
-									finalTrashEntry.getUserId()));
-						}
-
-						return null;
-					});
-				setRemovedDate(
-					() -> {
-						if (finalTrashEntry != null) {
-							return finalTrashEntry.getCreateDate();
-						}
-
-						return null;
-					});
-				setReviewDate(
-					() -> _getAttribute(
-						objectEntryVersion,
-						ObjectEntryVersionModel::getReviewDate,
-						serviceBuilderObjectEntry,
-						ObjectEntryModel::getReviewDate));
-				setScopeId(serviceBuilderObjectEntry::getGroupId);
-				setScopeKey(
-					() -> _getScopeKey(
-						objectDefinition, serviceBuilderObjectEntry));
-				setStatus(
-					() -> _getAttribute(
-						objectEntryVersion,
-						objectEntryVersion -> _toStatus(
-							dtoConverterContext.getLocale(),
-							objectEntryVersion.getStatus()),
-						serviceBuilderObjectEntry,
-						serviceBuilderObjectEntry -> _toStatus(
-							dtoConverterContext.getLocale(),
-							serviceBuilderObjectEntry.getStatus())));
-				setSystemProperties(
-					() -> {
-						if (objectEntryVersion != null) {
-							return _toSystemProperties(
-								dtoConverterContext.getLocale(),
-								objectDefinition,
-								objectEntryVersion.getVersion());
-						}
-
-						return _toSystemProperties(
-							dtoConverterContext.getLocale(), objectDefinition,
-							serviceBuilderObjectEntry.getVersion());
-					});
-				setTaxonomyCategoryBriefs(
-					() -> {
-						if (objectEntryVersion != null) {
-							return contentObjectEntry.
-								getTaxonomyCategoryBriefs();
-						}
-						else if (!objectDefinition.isEnableCategorization()) {
-							return null;
-						}
-
-						return TransformUtil.transformToArray(
-							_assetCategoryLocalService.getCategories(
-								objectDefinition.getClassName(),
-								serviceBuilderObjectEntry.getObjectEntryId()),
-							assetCategory ->
-								TaxonomyCategoryBriefUtil.
-									toTaxonomyCategoryBrief(
-										assetCategory, dtoConverterContext),
-							TaxonomyCategoryBrief.class);
-					});
-			}
-		};
+		return objectEntry;
 	}
 
 	private void _addManyToOneObjectRelationshipNames(
@@ -621,11 +588,8 @@ public class ObjectEntryDTOConverter
 
 						if (ExportImportThreadLocal.isExportInProcess()) {
 							relatedObjectEntryAtomicReference.set(
-								(Serializable)_toERCAndScope(
-									_objectDefinitionLocalService.
-										getObjectDefinition(
-											objectRelationship.
-												getObjectDefinitionId1()),
+								_toSimplifiedDTO(
+									null, objectDefinition, null,
 									serviceBuilderObjectEntry));
 						}
 						else {
@@ -1049,22 +1013,8 @@ public class ObjectEntryDTOConverter
 						Object.class);
 				}
 
-				if (!ExportImportThreadLocal.isExportInProcess()) {
-					return () -> TransformUtil.transformToArray(
-						relatedModels,
-						relatedModel -> {
-							com.liferay.object.model.ObjectEntry objectEntry =
-								(com.liferay.object.model.ObjectEntry)
-									relatedModel;
-
-							return toDTO(
-								_getDTOConverterContext(
-									dtoConverterContext,
-									objectEntry.getObjectEntryId()),
-								objectEntry);
-						},
-						ObjectEntry.class);
-				}
+				boolean exportInProcess =
+					ExportImportThreadLocal.isExportInProcess();
 
 				return () -> TransformUtil.transformToArray(
 					relatedModels,
@@ -1072,10 +1022,19 @@ public class ObjectEntryDTOConverter
 						com.liferay.object.model.ObjectEntry objectEntry =
 							(com.liferay.object.model.ObjectEntry)relatedModel;
 
-						return _toERCAndScope(
-							relatedObjectDefinition, objectEntry);
+						if (exportInProcess) {
+							return _toSimplifiedDTO(
+								null, relatedObjectDefinition, null,
+								objectEntry);
+						}
+
+						return toDTO(
+							_getDTOConverterContext(
+								dtoConverterContext,
+								objectEntry.getObjectEntryId()),
+							objectEntry);
 					},
-					Object.class);
+					ObjectEntry.class);
 			});
 	}
 
@@ -1358,21 +1317,6 @@ public class ObjectEntryDTOConverter
 			AuditFieldChange.class);
 	}
 
-	private Map<String, Object> _toERCAndScope(
-		ObjectDefinition relatedObjectDefinition,
-		com.liferay.object.model.ObjectEntry relatedObjectEntry) {
-
-		return HashMapBuilder.<String, Object>put(
-			"externalReferenceCode",
-			relatedObjectEntry.getExternalReferenceCode()
-		).put(
-			"scopeId", relatedObjectEntry.getGroupId()
-		).put(
-			"scopeKey",
-			_getScopeKey(relatedObjectDefinition, relatedObjectEntry)
-		).build();
-	}
-
 	private ExtendedEntity _toExtendedEntity(
 			BaseModel<?> baseModel, DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
@@ -1569,6 +1513,31 @@ public class ObjectEntryDTOConverter
 		}
 
 		return (Map<String, Object>)(Map)unsafeSuppliers;
+	}
+
+	private ObjectEntry _toSimplifiedDTO(
+		ObjectEntry contentObjectEntry, ObjectDefinition objectDefinition,
+		ObjectEntryVersion objectEntryVersion,
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry) {
+
+		return new ObjectEntry() {
+			{
+				setExternalReferenceCode(
+					() -> {
+						if (objectEntryVersion != null) {
+							return contentObjectEntry.
+								getExternalReferenceCode();
+						}
+
+						return serviceBuilderObjectEntry.
+							getExternalReferenceCode();
+					});
+				setScopeId(serviceBuilderObjectEntry::getGroupId);
+				setScopeKey(
+					() -> _getScopeKey(
+						objectDefinition, serviceBuilderObjectEntry));
+			}
+		};
 	}
 
 	private Status _toStatus(Locale locale, int status) {

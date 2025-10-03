@@ -58,9 +58,7 @@ public class DepotEntryLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testGetLayoutDisplayPageObjectProvider()
-		throws PortalException {
-
+	public void testGetLayoutDisplayPageObjectProvider() throws Exception {
 		Assert.assertNotNull(
 			_depotEntryLayoutDisplayPageProvider.
 				getLayoutDisplayPageObjectProvider(

@@ -1290,6 +1290,18 @@ public class BatchEnginePortletDataHandlerTest {
 		return group.getGroupKey();
 	}
 
+	private JSONObject _getSimplifiedObjectEntryJSONObject(
+		Group group, ObjectEntry objectEntry, String scope) {
+
+		return JSONUtil.put(
+			"externalReferenceCode", objectEntry.getExternalReferenceCode()
+		).put(
+			"scopeId", (Long)_getObjectEntryGroupId(group.getGroupId(), scope)
+		).put(
+			"scopeKey", _getObjectEntryScopeKey(group, scope)
+		);
+	}
+
 	private ExportImportConfiguration _importLayouts(
 			boolean deletions, boolean expectError, File file, long groupId,
 			boolean includeLayoutSetLayoutsPortlet, boolean privateLayout,
@@ -1468,16 +1480,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 				JSONAssert.assertEquals(
 					JSONUtil.put(
-						JSONUtil.put(
-							"externalReferenceCode",
-							objectEntry.getExternalReferenceCode()
-						).put(
-							"scopeId",
-							(Long)_getObjectEntryGroupId(
-								group.getGroupId(), scope)
-						).put(
-							"scopeKey", _getObjectEntryScopeKey(group, scope)
-						)
+						_getSimplifiedObjectEntryJSONObject(
+							group, objectEntry, scope)
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i
@@ -1495,16 +1499,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 				JSONAssert.assertEquals(
 					JSONUtil.put(
-						JSONUtil.put(
-							"externalReferenceCode",
-							objectEntry.getExternalReferenceCode()
-						).put(
-							"scopeId",
-							(Long)_getObjectEntryGroupId(
-								group.getGroupId(), scope)
-						).put(
-							"scopeKey", _getObjectEntryScopeKey(group, scope)
-						)
+						_getSimplifiedObjectEntryJSONObject(
+							group, objectEntry, scope)
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i
@@ -1519,14 +1515,8 @@ public class BatchEnginePortletDataHandlerTest {
 				ObjectEntry objectEntry = objectEntries1[i];
 
 				JSONAssert.assertEquals(
-					JSONUtil.put(
-						"externalReferenceCode",
-						objectEntry.getExternalReferenceCode()
-					).put(
-						"scopeId",
-						(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
-					).put(
-						"scopeKey", _getObjectEntryScopeKey(group, scope)
+					_getSimplifiedObjectEntryJSONObject(
+						group, objectEntry, scope
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i

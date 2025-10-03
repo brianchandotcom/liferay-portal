@@ -5,7 +5,6 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -15,7 +14,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import java.util.Locale;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import org.mockito.Mockito;

@@ -139,8 +139,8 @@ public class BooleanQueryParserUtil {
 	}
 
 	private static Map<String, Map<?, ?>> _getClauseMap(String filterString) {
-		Map<String, SimpleClause> simpleClauses = new HashMap<>();
 		Map<String, DateRangeClause> dateRangeClauses = new HashMap<>();
+		Map<String, SimpleClause> simpleClauses = new HashMap<>();
 
 		String[] clauses = StringUtil.split(
 			StringUtil.trim(

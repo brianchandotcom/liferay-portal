@@ -254,7 +254,7 @@ public class ObjectEntryDTOConverter
 		ObjectEntry contentObjectEntry = (objectEntryVersion == null) ? null :
 			ObjectEntry.unsafeToDTO(objectEntryVersion.getContent());
 
-		ObjectEntry objectEntry = _toSimplifiedDTO(
+		ObjectEntry objectEntry = _toSimplifiedObjectEntry(
 			contentObjectEntry, objectDefinition, objectEntryVersion,
 			serviceBuilderObjectEntry);
 
@@ -1517,7 +1517,7 @@ public class ObjectEntryDTOConverter
 		return (Map<String, Object>)(Map)unsafeSuppliers;
 	}
 
-	private ObjectEntry _toSimplifiedDTO(
+	private ObjectEntry _toSimplifiedObjectEntry(
 		ObjectEntry contentObjectEntry, ObjectDefinition objectDefinition,
 		ObjectEntryVersion objectEntryVersion,
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry) {

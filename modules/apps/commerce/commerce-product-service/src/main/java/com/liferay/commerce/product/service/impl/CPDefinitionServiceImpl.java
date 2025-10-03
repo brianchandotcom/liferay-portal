@@ -71,10 +71,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
-			int deliverySubscriptionLength, String deliverySubscriptionType,
-			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, int status,
+			long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -92,10 +90,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, deliverySubscriptionEnabled,
-			deliverySubscriptionLength, deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, status, serviceContext);
+			maxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	@Override
@@ -120,8 +116,12 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, int status,
-			ServiceContext serviceContext)
+			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
+			int deliverySubscriptionLength, String deliverySubscriptionType,
+			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
+			long deliveryMaxSubscriptionCycles,
+			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
@@ -138,7 +138,11 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, status, serviceContext);
+			maxSubscriptionCycles, deliverySubscriptionEnabled,
+			deliverySubscriptionLength, deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	@Override
@@ -166,8 +170,9 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			UnicodeProperties deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, int status,
-			ServiceContext serviceContext)
+			long deliveryMaxSubscriptionCycles,
+			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_checkCommerceCatalog(groupId, ActionKeys.UPDATE);
@@ -187,7 +192,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, status, serviceContext);
+			deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	@Override
@@ -212,7 +218,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			boolean neverExpire, String defaultSku, boolean subscriptionEnabled,
 			int subscriptionLength, String subscriptionType,
 			UnicodeProperties subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, int status,
+			long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -230,7 +237,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			expirationDateYear, expirationDateHour, expirationDateMinute,
 			neverExpire, defaultSku, subscriptionEnabled, subscriptionLength,
 			subscriptionType, subscriptionTypeSettingsUnicodeProperties,
-			maxSubscriptionCycles, status, serviceContext);
+			maxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	@Override
@@ -470,6 +478,7 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			int displayDateMinute, int expirationDateMonth,
 			int expirationDateDay, int expirationDateYear,
 			int expirationDateHour, int expirationDateMinute,
+			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -482,8 +491,8 @@ public class CPDefinitionServiceImpl extends CPDefinitionServiceBaseImpl {
 			ignoreSKUCombinations, ddmStructureKey, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			expirationDateHour, expirationDateMinute, accountGroupFilterEnabled,
+			channelFilterEnabled, neverExpire, serviceContext);
 	}
 
 	@Override

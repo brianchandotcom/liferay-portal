@@ -37,9 +37,9 @@ const DownloadTable: React.FC<DownloadTableProps> = ({
 		<Table
 			columns={[
 				{
-					key: 'productVersion',
-					render: (productVersion) => productVersion,
-					title: i18n.translate('version'),
+					key: 'version',
+					render: (version) => version,
+					title: i18n.translate('supported-version'),
 				},
 				{
 					align: 'right',

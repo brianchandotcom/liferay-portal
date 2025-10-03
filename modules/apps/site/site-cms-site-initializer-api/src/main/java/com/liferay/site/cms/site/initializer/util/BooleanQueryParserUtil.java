@@ -147,9 +147,9 @@ public class BooleanQueryParserUtil {
 				filterString.replaceAll(
 					"\\s*AND\\s*", " AND "
 				).replaceAll(
-					"\\s*and\\s*", " AND "
-				).replaceAll(
 					"\\s*OR\\s*", " OR "
+				).replaceAll(
+					"\\s*and\\s*", " AND "
 				).replaceAll(
 					"\\s*or\\s*", " OR "
 				)),

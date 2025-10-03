@@ -13,10 +13,10 @@ interface ProductCardProps {
 	viewMode?: string;
 }
 
-export const ProductCard = ({product, viewMode = 'grid'}: ProductCardProps) => {
+export function ProductCard({product, viewMode = 'grid'}: ProductCardProps) {
 	if (viewMode === 'list') {
 		return <ProductListView product={product} />;
 	}
 
 	return <ProductGridView product={product} />;
-};
+}

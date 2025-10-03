@@ -5,27 +5,26 @@
 
 import {Geist, Geist_Mono} from 'next/font/google';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import './globals.css';
-
-import Link from 'next/link';
 
 import type {Metadata} from 'next';
 
 const geistSans = Geist({
-	variable: '--font-geist-sans',
 	subsets: ['latin'],
+	variable: '--font-geist-sans',
 });
 
 const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
 	subsets: ['latin'],
+	variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
-	title: 'Liferay Headless Blog',
 	description:
 		'A SSR generated blog example using Next.js and Liferay Headless API',
+	title: 'Liferay Headless Blog',
 };
 
 export default async function RootLayout({

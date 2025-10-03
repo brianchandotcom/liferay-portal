@@ -8,6 +8,12 @@ const LIFERAY_CONTENT_PATH = process.env.LIFERAY_CONTENT_PATH || '';
 const LIFERAY_LANGUAGES = process.env.LIFERAY_LANGUAGES || '';
 
 export const liferay = {
+	contentEndpoints: {
+		getContentURL: () => {
+			return `${LIFERAY_HOST}${LIFERAY_CONTENT_PATH}`;
+		},
+	},
+
 	fetch: async (
 		resource: string | URL | globalThis.Request,
 		{lang}: {lang: string},
@@ -20,24 +26,21 @@ export const liferay = {
 
 		const formattedLang = lang.replace('_', '-');
 
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(endpoint, {
-			method: init?.method || 'GET',
 			headers: {
 				'accept': '*/*',
 				'accept-language': `${formattedLang};q=0.5`,
 				'content-type': 'application/json',
 				...init?.headers,
 			},
+			method: init?.method || 'GET',
 			next: {
 				revalidate: 3600,
 			},
 		});
 
 		return response;
-	},
-
-	getSupportedLanguages: () => {
-		return LIFERAY_LANGUAGES.split(',');
 	},
 
 	getDocument: (documentPath: string) => {
@@ -48,10 +51,8 @@ export const liferay = {
 		return documentPath;
 	},
 
-	contentEndpoints: {
-		getContentURL: () => {
-			return `${LIFERAY_HOST}${LIFERAY_CONTENT_PATH}`;
-		},
+	getSupportedLanguages: () => {
+		return LIFERAY_LANGUAGES.split(',');
 	},
 };
 

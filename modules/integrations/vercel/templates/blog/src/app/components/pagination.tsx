@@ -5,13 +5,13 @@
 
 import {Button} from './button';
 
-export const Pagination = ({
+export function Pagination({
 	currentPage,
 	lastPage,
 }: {
 	currentPage: number;
 	lastPage: number;
-}) => {
+}) {
 	const pages = Array.from(Array(lastPage).keys()).map((x) => x + 1);
 
 	return (
@@ -27,4 +27,4 @@ export const Pagination = ({
 			))}
 		</nav>
 	);
-};
+}

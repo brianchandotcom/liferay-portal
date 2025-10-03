@@ -40,8 +40,8 @@ export default function ProductSpecifications({product}: {product: Product}) {
 									</td>
 								</tr>
 
-								{productSpecifications?.map((spec, idx) => (
-									<tr key={idx}>
+								{productSpecifications?.map((spec, index) => (
+									<tr key={index}>
 										<td
 											className="font-bold px-4 py-2 text-black"
 											width={250}

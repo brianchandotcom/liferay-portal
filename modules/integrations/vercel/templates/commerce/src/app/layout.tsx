@@ -4,28 +4,27 @@
  */
 
 import {Geist, Geist_Mono} from 'next/font/google';
-
-import './globals.css';
-
 import Image from 'next/image';
 import Link from 'next/link';
+
+import './globals.css';
 
 import type {Metadata} from 'next';
 
 const geistSans = Geist({
-	variable: '--font-geist-sans',
 	subsets: ['latin'],
+	variable: '--font-geist-sans',
 });
 
 const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
 	subsets: ['latin'],
+	variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
-	title: 'Liferay Headless Commerce',
 	description:
 		'A SSR generated commerce example using Next.js and Liferay Headless API',
+	title: 'Liferay Headless Commerce',
 };
 
 export default function RootLayout({

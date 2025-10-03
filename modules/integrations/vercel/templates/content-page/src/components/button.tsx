@@ -6,13 +6,19 @@
 import Link from 'next/link';
 import {PropsWithChildren} from 'react';
 
-export const Button = (
+export function Button(
 	props: PropsWithChildren<
 		{
 			active?: boolean;
-		} & ({onClick: () => void} | {href: string; external?: boolean})
+		} & (
+			| {onClick: () => void}
+			| {
+					external?: boolean;
+					href: string;
+			  }
+		)
 	>
-) => {
+) {
 	const {active, children} = props;
 	const className = `button ${active ? 'button--active' : ''}`;
 
@@ -33,4 +39,4 @@ export const Button = (
 			{children}
 		</button>
 	);
-};
+}

@@ -8,6 +8,26 @@ const LIFERAY_HEADLESS_BASE_URL = `${LIFERAY_HOST}/o`;
 const LIFERAY_SPACE_ID = process.env.LIFERAY_SPACE_ID || 0;
 
 export const liferay = {
+	cmsEndpoints: {
+		blogPost: ({blogId}: {blogId: number}) => {
+			return `/cms/blogs/${blogId}`;
+		},
+
+		blogPosts: ({
+			page = 1,
+			pageSize,
+			sort,
+			spaceId,
+		}: {
+			page: number;
+			pageSize: number;
+			sort: string;
+			spaceId: number;
+		}) => {
+			return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&sort=${sort}`;
+		},
+	},
+
 	fetch: async (
 		resource: string | URL | globalThis.Request,
 		init?: RequestInit
@@ -17,26 +37,21 @@ export const liferay = {
 				? `${LIFERAY_HEADLESS_BASE_URL}${resource}`
 				: resource;
 
+		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(endpoint, {
-			method: init?.method || 'GET',
 			headers: {
 				'accept': '*/*',
 				'accept-language': 'en-US,en;q=0.5',
 				'content-type': 'application/json',
 				...init?.headers,
 			},
+			method: init?.method || 'GET',
 			next: {
 				revalidate: 3600,
 			},
 		});
 
 		return response;
-	},
-
-	getSpace: () => {
-		return {
-			id: Number(LIFERAY_SPACE_ID),
-		};
 	},
 
 	getDocument: (documentPath: string) => {
@@ -47,24 +62,10 @@ export const liferay = {
 		return documentPath;
 	},
 
-	cmsEndpoints: {
-		blogPosts: ({
-			page = 1,
-			pageSize,
-			sort,
-			spaceId,
-		}: {
-			spaceId: number;
-			page: number;
-			pageSize: number;
-			sort: string;
-		}) => {
-			return `/cms/blogs/scopes/${spaceId}?page=${page}&pageSize=${pageSize}&sort=${sort}`;
-		},
-
-		blogPost: ({blogId}: {blogId: number}) => {
-			return `/cms/blogs/${blogId}`;
-		},
+	getSpace: () => {
+		return {
+			id: Number(LIFERAY_SPACE_ID),
+		};
 	},
 };
 

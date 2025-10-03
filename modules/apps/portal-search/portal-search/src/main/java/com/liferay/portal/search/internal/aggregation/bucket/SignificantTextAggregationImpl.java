@@ -6,7 +6,6 @@
 package com.liferay.portal.search.internal.aggregation.bucket;
 
 import com.liferay.portal.search.aggregation.AggregationVisitor;
-import com.liferay.portal.search.aggregation.bucket.BucketCountThresholds;
 import com.liferay.portal.search.aggregation.bucket.IncludeExcludeClause;
 import com.liferay.portal.search.aggregation.bucket.SignificantTextAggregation;
 import com.liferay.portal.search.internal.aggregation.BaseFieldAggregation;
@@ -39,11 +38,6 @@ public class SignificantTextAggregationImpl
 	@Override
 	public Query getBackgroundFilterQuery() {
 		return _backgroundFilterQuery;
-	}
-
-	@Override
-	public BucketCountThresholds getBucketCountThresholds() {
-		return _bucketCountThresholds;
 	}
 
 	@Override
@@ -97,13 +91,6 @@ public class SignificantTextAggregationImpl
 	}
 
 	@Override
-	public void setBucketCountThresholds(
-		BucketCountThresholds bucketCountThresholds) {
-
-		_bucketCountThresholds = bucketCountThresholds;
-	}
-
-	@Override
 	public void setExecutionHint(String executionHint) {
 		_executionHint = executionHint;
 	}
@@ -148,7 +135,6 @@ public class SignificantTextAggregationImpl
 	}
 
 	private Query _backgroundFilterQuery;
-	private BucketCountThresholds _bucketCountThresholds;
 	private String _executionHint;
 	private Boolean _filterDuplicateText;
 	private IncludeExcludeClause _includeExcludeClause;

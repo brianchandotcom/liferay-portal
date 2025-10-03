@@ -9,59 +9,71 @@ import {ButtonView, Command, Plugin} from 'ckeditor5';
 
 import getIcon from '../utils/getIcon';
 
-const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
+const FDS_PROPS: IFrontendDataSetProps = {
+	filters: [
+		{
+			apiURL: '/o/headless-asset-library/v1.0/asset-libraries',
+			entityFieldType: 'collection',
+			id: 'groupIds',
+			itemKey: 'siteId',
+			itemLabel: 'name',
+			label: Liferay.Language.get('space'),
+			multiple: true,
+			type: 'selection',
+		},
+	],
+	id: '',
 	pagination: {
 		deltas: [{label: 20}, {label: 40}, {label: 60}],
 		initialDelta: 20,
 	},
-};
+	views: [
+		{
+			contentRenderer: 'cards',
+			label: Liferay.Language.get('cards'),
+			name: 'cards',
+			schema: {
+				description: 'description',
+				symbol: '',
+				title: 'title',
+			},
 
-const CMS_FILE_VIEWS = [
-	{
-		contentRenderer: 'cards',
-		label: Liferay.Language.get('cards'),
-		name: 'cards',
-		schema: {
-			description: 'description',
-			symbol: '',
-			title: 'title',
-		},
+			setItemComponentProps: ({
+				item,
+				props,
+			}: {
+				item: {
+					embedded:
+						| {coverImage: {link: {href: string}}}
+						| {file: {thumbnailURL: string}};
+				};
+				props: object;
+			}) => {
+				const stickerProps = {
+					stickerProps: {
+						className: 'file-icon-color-5',
+						displayType: 'unstyled',
+					},
+				};
 
-		setItemComponentProps: ({
-			item,
-			props,
-		}: {
-			item: {
-				embedded:
-					| {coverImage: {link: {href: string}}}
-					| {file: {thumbnailURL: string}};
-			};
-			props: object;
-		}) => {
-			const stickerProps = {
-				stickerProps: {
-					className: 'file-icon-color-5',
-					displayType: 'unstyled',
-				},
-			};
+				if ('file' in item.embedded) {
+					return {
+						...props,
+						imgProps: {src: item.embedded.file.thumbnailURL},
+						...stickerProps,
+					};
+				}
 
-			if ('file' in item.embedded) {
 				return {
 					...props,
-					imgProps: {src: item.embedded.file.thumbnailURL},
 					...stickerProps,
 				};
-			}
+			},
 
-			return {
-				...props,
-				...stickerProps,
-			};
+			thumbnail: 'cards2',
 		},
-
-		thumbnail: 'cards2',
-	},
-];
+	],
+};
 
 const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 	apiURL: `${location.origin}/o/search/v1.0/search?${[
@@ -69,13 +81,13 @@ const CMS_FILE_ITEM_SELECTOR_CONFIG = {
 		'nestedFields=embedded,file.thumbnailURL',
 		"filter=(cmsKind eq 'object') and (cmsSection eq 'files') and (status in (0, 2, 3))",
 	].join('&')}`,
+	items: [],
 	locator: {
 		id: 'embedded.id',
 		label: 'embedded.title',
 		value: 'embedded.id',
 	},
 	multiSelect: false,
-	views: CMS_FILE_VIEWS,
 };
 
 function getRandomId(): string {
@@ -123,12 +135,10 @@ class HeadlessItemSelector extends Plugin {
 				openItemSelectorModal({
 					...CMS_FILE_ITEM_SELECTOR_CONFIG,
 					fdsProps: {
-						...FDS_DEFAULT_PROPS,
+						...FDS_PROPS,
 						id: `ImageHeadlessItemSelectorFDS_${getRandomId()}`,
-						views: CMS_FILE_VIEWS,
 					},
 					itemTypeLabel: Liferay.Language.get('image'),
-					items: [],
 					onItemsChange: (items: Array<IImageSelectedItem>) => {
 						const item = items[0];
 
@@ -165,12 +175,10 @@ class HeadlessItemSelector extends Plugin {
 				openItemSelectorModal({
 					...CMS_FILE_ITEM_SELECTOR_CONFIG,
 					fdsProps: {
-						...FDS_DEFAULT_PROPS,
+						...FDS_PROPS,
 						id: `VideoHeadlessItemSelectorFDS_${getRandomId()}`,
-						views: CMS_FILE_VIEWS,
 					},
 					itemTypeLabel: Liferay.Language.get('video'),
-					items: [],
 					onItemsChange: (items: Array<IVideoSelectedItem>) => {
 						const item = items[0];
 

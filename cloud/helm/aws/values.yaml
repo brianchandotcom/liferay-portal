@@ -20,6 +20,14 @@ liferay-default:
                 s3PathStyle=B"false"
                 s3Region="$[env:S3_BUCKET_REGION]"
                 secretKey=""
+    customEnv:
+        x-liferay-aws:
+            -   name: LIFERAY_NETWORK_HOST_ADDRESSES
+                value: https://$(OPENSEARCH_ENDPOINT):443
+            -   name: LIFERAY_OPENSEARCH_ENABLED
+                value: "true"
+            -   name: LIFERAY_OPENSEARCH_PASSWORD
+                value: $(OPENSEARCH_PASSWORD)
     customEnvFrom:
         x-liferay-aws:
             -   secretRef:

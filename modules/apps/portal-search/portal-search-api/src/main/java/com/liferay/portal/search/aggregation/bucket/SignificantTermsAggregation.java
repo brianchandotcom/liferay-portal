@@ -19,8 +19,6 @@ public interface SignificantTermsAggregation extends FieldAggregation {
 
 	public Query getBackgroundFilterQuery();
 
-	public BucketCountThresholds getBucketCountThresholds();
-
 	public String getExecutionHint();
 
 	public IncludeExcludeClause getIncludeExcludeClause();
@@ -36,9 +34,6 @@ public interface SignificantTermsAggregation extends FieldAggregation {
 	public Integer getSize();
 
 	public void setBackgroundFilterQuery(Query backgroundFilterQuery);
-
-	public void setBucketCountThresholds(
-		BucketCountThresholds bucketCountThresholds);
 
 	public void setExecutionHint(String executionHint);
 

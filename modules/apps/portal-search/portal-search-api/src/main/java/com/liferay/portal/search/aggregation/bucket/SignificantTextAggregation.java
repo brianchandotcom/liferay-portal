@@ -21,8 +21,6 @@ public interface SignificantTextAggregation extends FieldAggregation {
 
 	public Query getBackgroundFilterQuery();
 
-	public BucketCountThresholds getBucketCountThresholds();
-
 	public String getExecutionHint();
 
 	public Boolean getFilterDuplicateText();
@@ -42,9 +40,6 @@ public interface SignificantTextAggregation extends FieldAggregation {
 	public List<String> getSourceFields();
 
 	public void setBackgroundFilterQuery(Query backgroundFilterQuery);
-
-	public void setBucketCountThresholds(
-		BucketCountThresholds bucketCountThresholds);
 
 	public void setExecutionHint(String executionHint);
 

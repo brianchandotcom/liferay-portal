@@ -29,12 +29,6 @@ public class SignificantTermsAggregationTranslator {
 		significantTermsAggregationBuilder.field(
 			significantTermsAggregation.getField());
 
-		if (significantTermsAggregation.getBucketCountThresholds() != null) {
-			significantTermsAggregationBuilder.bucketCountThresholds(
-				_bucketCountThresholdsTranslator.translate(
-					significantTermsAggregation.getBucketCountThresholds()));
-		}
-
 		if (significantTermsAggregation.getBackgroundFilterQuery() != null) {
 			significantTermsAggregationBuilder.backgroundFilter(
 				_queryTranslator.translate(
@@ -67,6 +61,11 @@ public class SignificantTermsAggregationTranslator {
 				significantTermsAggregation.getShardSize());
 		}
 
+		if (significantTermsAggregation.getSize() != null) {
+			significantTermsAggregationBuilder.size(
+				significantTermsAggregation.getSize());
+		}
+
 		if (significantTermsAggregation.getSignificanceHeuristic() != null) {
 			significantTermsAggregationBuilder.significanceHeuristic(
 				_significanceHeuristicTranslator.translate(
@@ -76,9 +75,6 @@ public class SignificantTermsAggregationTranslator {
 		return significantTermsAggregationBuilder;
 	}
 
-	private final BucketCountThresholdsTranslator
-		_bucketCountThresholdsTranslator =
-			new BucketCountThresholdsTranslator();
 	private final IncludeExcludeTranslator _includeExcludeTranslator =
 		new IncludeExcludeTranslator();
 	private final QueryTranslator<QueryBuilder> _queryTranslator =

@@ -182,19 +182,6 @@ public class LayoutStructureRenderer {
 
 	}
 
-	private String _getRowCssClass(CollectionStyledLayoutStructureItem item) {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("align-items-");
-		sb.append(item.getVerticalAlignment());
-
-		if (!item.isGutters()) {
-			sb.append(" no-gutters");
-		}
-
-		return sb.toString();
-	}
-
 	private LayoutTypePortlet _getLayoutTypePortlet(
 		Layout layout, LayoutTypePortlet layoutTypePortlet, String themeId) {
 
@@ -216,6 +203,19 @@ public class LayoutStructureRenderer {
 			layout.getUserId(), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 		return layoutTypePortlet;
+	}
+
+	private String _getRowCssClass(CollectionStyledLayoutStructureItem item) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("align-items-");
+		sb.append(item.getVerticalAlignment());
+
+		if (!item.isGutters()) {
+			sb.append(" no-gutters");
+		}
+
+		return sb.toString();
 	}
 
 	private boolean _hasAddPermission(String className) {
@@ -281,7 +281,6 @@ public class LayoutStructureRenderer {
 
 		colTag.setCssClass(
 			ResponsiveLayoutStructureUtil.getColumnCssClass(item, colIndex));
-
 		colTag.setPageContext(_pageContext);
 
 		colTag.doStartTag();
@@ -606,6 +605,7 @@ public class LayoutStructureRenderer {
 				rowTag.setCssClass(
 					_getRowCssClass(collectionStyledLayoutStructureItem));
 				rowTag.setPageContext(_pageContext);
+
 				rowTag.doStartTag();
 
 				for (int i = 0;
@@ -631,6 +631,7 @@ public class LayoutStructureRenderer {
 					rowTag.setCssClass(
 						_getRowCssClass(collectionStyledLayoutStructureItem));
 					rowTag.setPageContext(_pageContext);
+
 					rowTag.doStartTag();
 
 					for (int j = 0; j < numberOfColumns; j++) {

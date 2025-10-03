@@ -593,87 +593,74 @@ public class SitePageResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		UnicodePropertiesBuilder.UnicodePropertiesWrapper
-			unicodePropertiesWrapper = UnicodePropertiesBuilder.create(true);
-
+		String target = StringPool.BLANK;
+		String targetTypeString = StringPool.BLANK;
 		NavigationSettings navigationSettings =
 			pageSettings.getNavigationSettings();
 
 		if (navigationSettings != null) {
-			String target = navigationSettings.getTarget();
+			target = navigationSettings.getTarget();
+
 			NavigationSettings.TargetType targetType =
 				navigationSettings.getTargetType();
 
-			if (Validator.isNotNull(target)) {
-				unicodePropertiesWrapper.setProperty(
-					LayoutTypePortletConstants.TARGET, target);
-			}
-
 			if (targetType == NavigationSettings.TargetType.NEW_TAB) {
-				unicodePropertiesWrapper.setProperty("targetType", "useNewTab");
+				targetTypeString = "useNewTab";
 			}
 		}
 
-		String queryString = pageSettings.getQueryString();
-
-		if (Validator.isNotNull(queryString)) {
-			unicodePropertiesWrapper.setProperty(
-				LayoutTypePortletConstants.QUERY_STRING, queryString);
-		}
-
+		SitemapSettings.ChangeFrequency changeFrequency =
+			SitemapSettings.ChangeFrequency.DAILY;
+		String siteMapInclude = "1";
+		String siteMapIncludeChildLayouts = "true";
+		String siteMapPagePriority = "0.0";
 		SEOSettings seoSettings = pageSettings.getSeoSettings();
 
 		if (seoSettings != null) {
 			SitemapSettings sitemapSettings = seoSettings.getSitemapSettings();
 
 			if (sitemapSettings != null) {
-				SitemapSettings.ChangeFrequency changeFrequency =
-					sitemapSettings.getChangeFrequency();
-
-				if (changeFrequency != null) {
-					unicodePropertiesWrapper.setProperty(
-						LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
-						StringUtil.toLowerCase(changeFrequency.getValue()));
+				if (sitemapSettings.getChangeFrequency() != null) {
+					changeFrequency = sitemapSettings.getChangeFrequency();
 				}
 
-				Boolean include = sitemapSettings.getInclude();
-
-				if (include != null) {
-					String siteMapInclude = "0";
-
-					if (include) {
-						siteMapInclude = "1";
-					}
-
-					unicodePropertiesWrapper.setProperty(
-						LayoutTypePortletConstants.SITEMAP_INCLUDE,
-						siteMapInclude);
+				if (Boolean.FALSE.equals(sitemapSettings.getInclude())) {
+					siteMapInclude = "0";
 				}
 
-				Boolean includeChildSitePages =
-					sitemapSettings.getIncludeChildSitePages();
+				if (Boolean.FALSE.equals(
+						sitemapSettings.getIncludeChildSitePages())) {
 
-				if (includeChildSitePages != null) {
-					String siteMapIncludeChildLayouts = "false";
-
-					if (includeChildSitePages) {
-						siteMapIncludeChildLayouts = "true";
-					}
-
-					unicodePropertiesWrapper.setProperty(
-						"sitemap-include-child-layouts",
-						siteMapIncludeChildLayouts);
+					siteMapIncludeChildLayouts = "false";
 				}
 
-				Double pagePriority = sitemapSettings.getPagePriority();
-
-				if (pagePriority != null) {
-					unicodePropertiesWrapper.setProperty(
-						LayoutTypePortletConstants.SITEMAP_PRIORITY,
-						String.valueOf(pagePriority));
+				if (sitemapSettings.getPagePriority() != null) {
+					siteMapPagePriority = String.valueOf(
+						sitemapSettings.getPagePriority());
 				}
 			}
 		}
+
+		UnicodePropertiesBuilder.UnicodePropertiesWrapper
+			unicodePropertiesWrapper = UnicodePropertiesBuilder.create(
+				true
+			).setProperty(
+				LayoutTypePortletConstants.QUERY_STRING,
+				GetterUtil.getString(pageSettings.getQueryString())
+			).setProperty(
+				LayoutTypePortletConstants.SITEMAP_CHANGEFREQ,
+				StringUtil.toLowerCase(changeFrequency.getValue())
+			).setProperty(
+				LayoutTypePortletConstants.SITEMAP_INCLUDE, siteMapInclude
+			).setProperty(
+				LayoutTypePortletConstants.SITEMAP_PRIORITY, siteMapPagePriority
+			).setProperty(
+				LayoutTypePortletConstants.TARGET, target
+			).setProperty(
+				"sitemap-include-child-layouts", siteMapIncludeChildLayouts
+			).setProperty(
+				"targetType", targetTypeString
+			);
 
 		if (sitePage.getType() == SitePage.Type.CONTENT_PAGE) {
 			return unicodePropertiesWrapper.build();

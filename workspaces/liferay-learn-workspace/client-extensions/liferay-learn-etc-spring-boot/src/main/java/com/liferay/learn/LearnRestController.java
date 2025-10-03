@@ -95,16 +95,15 @@ public class LearnRestController extends BaseRestController {
 				ChronoUnit.MINUTES
 			);
 
-			String fileName = StringBundler.concat(
-				"title eq 'lesson-", lessonId, "-", voiceType, ".mp3'");
-
 			URI uri = UriComponentsBuilder.fromHttpUrl(
 				_protocol + "://" + _mainDomain
 			).path(
 				"/o/headless-delivery/v1.0/document-folders/" + folderId +
 					"/documents"
 			).queryParam(
-				"filter", fileName
+				"filter",
+				StringBundler.concat(
+					"title eq 'lesson-", lessonId, "-", voiceType, ".mp3'")
 			).build(
 			).toUri();
 

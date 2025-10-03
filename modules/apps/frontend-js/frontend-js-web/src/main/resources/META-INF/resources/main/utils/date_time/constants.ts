@@ -24,6 +24,7 @@ export const FIRST_DAY_OF_WEEK_MAP = {
 	'ar-SY': 6,
 	'ar-YE': 6,
 	'au-AU': 0,
+	'ca-ES': 1,
 	'cn-HK': 0,
 	'cs-CZ': 1,
 	'da-DK': 1,

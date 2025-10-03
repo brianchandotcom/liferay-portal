@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanProperties;
 import com.liferay.portal.kernel.configuration.Filter;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -613,25 +614,29 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				oldName = "userGroups";
 			}
 
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
+			if (FeatureFlagManagerUtil.isEnabled("LPD-66611")) {
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(6);
 
-				sb.append("Publishing userGroups attribute with and without ");
-				sb.append("membership namespace. If using a non-Liferay SP, ");
-				sb.append("please reconfigure the SP IdP connection to use ");
-				sb.append("the new format of 'membership:userGroups', as the ");
-				sb.append("previous format is deprecated and will be removed.");
+					sb.append("Publishing userGroups attribute with and ");
+					sb.append("without membership namespace. If using a ");
+					sb.append("non-Liferay SP, please reconfigure the SP IdP ");
+					sb.append("connection to use the new format of ");
+					sb.append("'membership:userGroups', as the previous ");
+					sb.append("format is deprecated and will be removed.");
 
-				_log.warn(sb.toString());
+					_log.warn(sb.toString());
+				}
+
+				attributePublisher.publish(
+					oldName, nameFormat,
+					TransformUtil.transformToArray(
+						user.getUserGroups(), UserGroup::getName,
+						String.class));
 			}
 
 			attributePublisher.publish(
 				name, nameFormat,
-				TransformUtil.transformToArray(
-					user.getUserGroups(), UserGroup::getName, String.class));
-
-			attributePublisher.publish(
-				oldName, nameFormat,
 				TransformUtil.transformToArray(
 					user.getUserGroups(), UserGroup::getName, String.class));
 		}

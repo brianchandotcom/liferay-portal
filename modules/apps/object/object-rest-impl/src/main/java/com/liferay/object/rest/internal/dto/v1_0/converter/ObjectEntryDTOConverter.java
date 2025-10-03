@@ -1517,6 +1517,10 @@ public class ObjectEntryDTOConverter
 		return (Map<String, Object>)(Map)unsafeSuppliers;
 	}
 
+	/**
+	 * @see com.liferay.exportimport.internal.data.handler.test.BatchEnginePortletDataHandlerTest#_toSimplifiedObjectEntryJSONObject(
+	 *      Group, com.liferay.object.model.ObjectEntry, String)
+	 */
 	private ObjectEntry _toSimplifiedObjectEntry(
 		ObjectEntry contentObjectEntry, ObjectDefinition objectDefinition,
 		ObjectEntryVersion objectEntryVersion,

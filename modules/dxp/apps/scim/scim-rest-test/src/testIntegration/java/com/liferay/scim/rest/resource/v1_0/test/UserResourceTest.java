@@ -197,8 +197,17 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			ScimClientUtil.generateScimClientId(
 				"scim-client-test" + RandomTestUtil.randomString()));
 
+		_assertListResponse(userResource.getV2Users(-1, 1, null), 2, 0);
+		_assertListResponse(userResource.getV2Users(1, 2, null), 2, 1, user2);
+		_assertListResponse(
+			userResource.getV2Users(1, null, null), 2, 1, user1);
 		_assertListResponse(
 			userResource.getV2Users(5, 0, null), 2, 2, user1, user2);
+		_assertListResponse(
+			userResource.getV2Users(10000, null, null), 2, 2, user1, user2);
+		_assertListResponse(
+			userResource.getV2Users(null, 2, null), 2, 1, user2);
+		_assertListResponse(userResource.getV2Users(null, 10000, null), 2, 0);
 		_assertListResponse(
 			userResource.getV2Users(
 				5, 0,
@@ -222,21 +231,6 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 			userResource.getV2Users(
 				5, 0, "userName eq \"" + user1.getUserName() + "\""),
 			1, 1, user1);
-
-		_assertListResponse(
-			userResource.getV2Users(1, null, null), 2, 1, user1);
-
-		_assertListResponse(userResource.getV2Users(1, 2, null), 2, 1, user2);
-
-		_assertListResponse(
-			userResource.getV2Users(10000, null, null), 2, 2, user1, user2);
-
-		_assertListResponse(
-			userResource.getV2Users(null, 2, null), 2, 1, user2);
-
-		_assertListResponse(userResource.getV2Users(-1, 1, null), 2, 0);
-
-		_assertListResponse(userResource.getV2Users(null, 10000, null), 2, 0);
 
 		assertHttpResponseStatusCode(
 			400,

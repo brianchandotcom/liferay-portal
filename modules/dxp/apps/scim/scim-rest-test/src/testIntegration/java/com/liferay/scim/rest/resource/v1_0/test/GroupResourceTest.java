@@ -219,8 +219,21 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		Group group3 = testDeleteV2Group_addGroup();
 
+		_assertListResponse(groupResource.getV2Groups(-1, null, 1, null), 3, 0);
+		_assertListResponse(
+			groupResource.getV2Groups(1, null, 2, null), 3, 1, group2);
+		_assertListResponse(
+			groupResource.getV2Groups(1, null, null, null), 3, 1, group1);
 		_assertListResponse(
 			groupResource.getV2Groups(5, null, 3, null), 3, 1, group3);
+		_assertListResponse(
+			groupResource.getV2Groups(10000, null, null, null), 3, 3, group1,
+			group2, group3);
+		_assertListResponse(
+			groupResource.getV2Groups(null, null, 10000, null), 3, 0);
+		_assertListResponse(
+			groupResource.getV2Groups(null, null, 2, null), 3, 2, group2,
+			group3);
 
 		_assertListResponse(
 			groupResource.getV2Groups(
@@ -236,25 +249,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				5, null, 0,
 				"displayName eq \"" + group1.getDisplayName() + "\""),
 			1, 1, group1);
-
-		_assertListResponse(
-			groupResource.getV2Groups(1, null, null, null), 3, 1, group1);
-
-		_assertListResponse(
-			groupResource.getV2Groups(1, null, 2, null), 3, 1, group2);
-
-		_assertListResponse(
-			groupResource.getV2Groups(10000, null, null, null), 3, 3, group1,
-			group2, group3);
-
-		_assertListResponse(
-			groupResource.getV2Groups(null, null, 2, null), 3, 2, group2,
-			group3);
-
-		_assertListResponse(groupResource.getV2Groups(-1, null, 1, null), 3, 0);
-
-		_assertListResponse(
-			groupResource.getV2Groups(null, null, 10000, null), 3, 0);
 
 		assertHttpResponseStatusCode(
 			400,

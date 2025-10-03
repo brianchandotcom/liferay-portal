@@ -995,8 +995,6 @@ public class LayoutStructureRenderer {
 					LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE);
 
 		try {
-			int iterationNumber = 0;
-
 			String parentItemExternalReferenceCode = GetterUtil.getString(
 				GetterUtil.getString(
 					_httpServletRequest.getAttribute(
@@ -1005,13 +1003,13 @@ public class LayoutStructureRenderer {
 								itemId),
 					currentRelatedItemExternalReferenceCode),
 				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + iterationNumber);
+					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
 			String relatedItemExternalReferenceCode = GetterUtil.getString(
 				_httpServletRequest.getAttribute(
 					LayoutStructureRendererConstants.
 						LAYOUT_RELATED_ITEM_EXTERNAL_REFERENCE_CODE + itemId),
 				LayoutStructureRendererConstants.
-					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + iterationNumber);
+					LAYOUT_DEFAULT_EXTERNAL_REFERENCE_CODE + 0);
 
 			_httpServletRequest.setAttribute(
 				LayoutStructureRendererConstants.

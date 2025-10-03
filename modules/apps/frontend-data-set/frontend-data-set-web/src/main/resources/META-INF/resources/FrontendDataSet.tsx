@@ -137,6 +137,7 @@ const FrontendDataSetContent = ({
 	showBulkActionsManagementBar = true,
 	showBulkActionsManagementBarActions = true,
 	showManagementBar = true,
+	showManagementBarInEmptyState = true,
 	showNavBarWhenSelected = false,
 	showPagination = true,
 	showSearch = true,
@@ -1314,7 +1315,11 @@ const FrontendDataSetContent = ({
 	const hasActiveFilters = filters.some((filter: any) => filter.active);
 
 	const showManagementToolbar =
-		showManagementBar && (!!items.length || hasSearch || hasActiveFilters);
+		showManagementBar &&
+		(!!items.length ||
+			hasSearch ||
+			hasActiveFilters ||
+			showManagementBarInEmptyState);
 
 	const managementBar = showManagementToolbar ? (
 		<div className="management-bar-wrapper">
@@ -1747,6 +1752,7 @@ const FrontendDataSetContent = ({
 				showBulkActionsManagementBar,
 				showBulkActionsManagementBarActions,
 				showInfoPanel: infoPanelComponent ? true : false,
+				showManagementBarInEmptyState,
 				sidePanelId: dataSetSupportSidePanelIdRef.current,
 				sorts,
 				style,

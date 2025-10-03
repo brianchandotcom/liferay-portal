@@ -160,6 +160,7 @@ export class UsersAndOrganizationsPage {
 	readonly tableOrderMenuItem: (option: string) => Locator;
 	readonly userIdInput: Locator;
 	readonly usersCheckbox: (userName: string) => Promise<Locator>;
+	readonly usersDataTable: DataTablePage;
 	readonly usersSearchBar: Locator;
 	readonly usersSearchBarButton: Locator;
 	readonly usersTableRow: (
@@ -512,6 +513,12 @@ export class UsersAndOrganizationsPage {
 				return usersTableRow.row.getByRole('checkbox');
 			}
 		};
+		this.usersDataTable = new DataTablePage(
+			page,
+			page.locator(
+				'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_usersSearchContainer'
+			)
+		);
 		this.usersSearchBar = page.getByPlaceholder('Search for');
 		this.usersSearchBarButton = page.getByRole('button', {
 			name: 'Search for',

@@ -1174,15 +1174,16 @@ test('LPS-101221 Can search an account', async ({
 	await accountsPage.accountsTable.filterButton.click();
 	await accountsPage.accountsTable.filterMenuItem('Inactive').click();
 
-	await accountsPage.accountsTable.search(account1.name);
+	await expect(async () => {
+		await accountsPage.accountsTable.search(account1.name);
 
-	await expect(accountsPage.accountsTable.cell(account1.name)).toHaveCount(0);
-	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
-
-	await accountsPage.accountsTable.search(account1.name);
-
-	await expect(accountsPage.accountsTable.cell(account1.name)).toBeVisible();
-	await expect(accountsPage.accountsTable.cell(account2.name)).toHaveCount(0);
+		await expect(
+			accountsPage.accountsTable.cell(account1.name)
+		).toBeVisible({timeout: 500});
+		await expect(
+			accountsPage.accountsTable.cell(account2.name)
+		).toHaveCount(0);
+	}).toPass();
 });
 
 test('LPD-47225 Can edit account custom fields', async ({

@@ -795,25 +795,25 @@ public class UserManagerImpl implements UserManager {
 	private <T extends BaseTable<T>, U, E extends Throwable, R> void
 			_buildGetResponse(
 				BaseTable<T> baseTable, BiConsumer<Integer, List<R>> biConsumer,
-				Class<U> clazz, Integer count, Expression<Long> expression,
+				Class<U> clazz, Integer pageSize, Expression<Long> expression,
 				String[] fieldNames, Node node,
 				PersistedModelLocalService persistedModelLocalService,
 				Integer startIndex, UnsafeFunction<U, R, E> unsafeFunction)
 		throws BadRequestException {
 
-		if ((count != null) && (count < 0)) {
-			count = 0;
+		if ((pageSize != null) && (pageSize < 0)) {
+			pageSize = 0;
 		}
 
 		startIndex--;
 
 		_validate(node, fieldNames);
 
-		Predicate wherePredicate = _buildWherePredicate(
+		Predicate predicate = _buildWherePredicate(
 			baseTable, node, clazz.getName(),
 			ServiceContextThreadLocal.getServiceContext());
 
-		int total = persistedModelLocalService.dslQueryCount(
+		int count = persistedModelLocalService.dslQueryCount(
 			DSLQueryFactoryUtil.count(
 			).from(
 				baseTable
@@ -821,31 +821,29 @@ public class UserManagerImpl implements UserManager {
 				ExpandoValueTable.INSTANCE,
 				ExpandoValueTable.INSTANCE.classPK.eq(expression)
 			).where(
-				wherePredicate
+				predicate
 			));
 
-		if (count == null) {
-			count = total;
+		if (pageSize == null) {
+			pageSize = count;
 		}
 
-		List<U> models = persistedModelLocalService.dslQuery(
-			DSLQueryFactoryUtil.select(
-				baseTable
-			).from(
-				baseTable
-			).innerJoinON(
-				ExpandoValueTable.INSTANCE,
-				ExpandoValueTable.INSTANCE.classPK.eq(expression)
-			).where(
-				wherePredicate
-			).limit(
-				startIndex, startIndex + count
-			));
-
 		biConsumer.accept(
-			total,
+			count,
 			TransformUtil.transform(
-				models, model -> unsafeFunction.apply(model)));
+				(List<U>)persistedModelLocalService.dslQuery(
+					DSLQueryFactoryUtil.select(
+						baseTable
+					).from(
+						baseTable
+					).innerJoinON(
+						ExpandoValueTable.INSTANCE,
+						ExpandoValueTable.INSTANCE.classPK.eq(expression)
+					).where(
+						predicate
+					).limit(
+						startIndex, startIndex + pageSize
+					)), model -> unsafeFunction.apply(model)));
 	}
 
 	private <T extends BaseTable<T>> Predicate _buildWherePredicate(
@@ -863,7 +861,7 @@ public class UserManagerImpl implements UserManager {
 			ReflectionUtil.throwException(exception);
 		}
 
-		Predicate basePredicate = ExpandoValueTable.INSTANCE.columnId.eq(
+		Predicate predicate = ExpandoValueTable.INSTANCE.columnId.eq(
 			expandoColumn.getColumnId()
 		).and(
 			DSLFunctionFactoryUtil.castClobText(
@@ -879,7 +877,7 @@ public class UserManagerImpl implements UserManager {
 		ExpressionNode expressionNode = (ExpressionNode)node;
 
 		if (expressionNode == null) {
-			return basePredicate;
+			return predicate;
 		}
 
 		for (Map.Entry<String, String> entry : _filterMapping.entrySet()) {
@@ -887,15 +885,15 @@ public class UserManagerImpl implements UserManager {
 					expressionNode.getAttributeValue(), entry.getKey(),
 					StringPool.COLON)) {
 
-				Expression<String> filterExpression =
+				Expression<String> expression =
 					(Expression<String>)baseTable.getColumn(entry.getValue());
 
-				basePredicate = basePredicate.and(
-					filterExpression.eq(expressionNode.getValue()));
+				predicate = predicate.and(
+					expression.eq(expressionNode.getValue()));
 			}
 		}
 
-		return basePredicate;
+		return predicate;
 	}
 
 	private com.liferay.portal.kernel.model.User _fetchPortalUser(

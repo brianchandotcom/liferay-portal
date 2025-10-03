@@ -61,11 +61,10 @@ public class FormManagerImpl implements FormManager {
 
 	public FragmentStyledLayoutStructureItem
 			addFragmentEntryLinksLayoutStructureItem(
-				FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-				String fragmentEntryKey, String infoFieldUniqueId,
-				Layout layout, LayoutStructure layoutStructure,
-				boolean readOnly, long segmentsExperienceId,
-				ServiceContext serviceContext)
+				String fragmentEntryKey, InfoField<?> infoField, Layout layout,
+				LayoutStructure layoutStructure,
+				LayoutStructureItem layoutStructureItem, boolean readOnly,
+				long segmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
 		FragmentEntry fragmentEntry =
@@ -73,13 +72,25 @@ public class FormManagerImpl implements FormManager {
 				fragmentEntryKey);
 
 		if (fragmentEntry == null) {
+			JSONObject defaultInputFragmentEntryKeysJSONObject =
+				_defaultInputFragmentEntryConfigurationProvider.
+					getDefaultInputFragmentEntryKeysJSONObject(
+						layout.getGroupId());
+
+			InfoFieldType infoFieldType = infoField.getInfoFieldType();
+
+			fragmentEntry = _getFragmentEntry(
+				layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
+				infoFieldType.getName());
+		}
+
+		if (fragmentEntry == null) {
 			return null;
 		}
 
 		return _addFragmentEntryLink(
-			formStyledLayoutStructureItem, fragmentEntry, infoFieldUniqueId,
-			layout, layoutStructure, readOnly, segmentsExperienceId,
-			serviceContext);
+			layoutStructureItem, fragmentEntry, infoField.getUniqueId(), layout,
+			layoutStructure, readOnly, segmentsExperienceId, serviceContext);
 	}
 
 	@Override
@@ -204,7 +215,7 @@ public class FormManagerImpl implements FormManager {
 	}
 
 	private FragmentStyledLayoutStructureItem _addFragmentEntryLink(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			LayoutStructureItem layoutStructureItem,
 			FragmentEntry fragmentEntry, String infoFieldUniqueId,
 			Layout layout, LayoutStructure layoutStructure, boolean readOnly,
 			long segmentsExperienceId, ServiceContext serviceContext)
@@ -249,21 +260,26 @@ public class FormManagerImpl implements FormManager {
 					editableValuesJSONObject.toString());
 		}
 
-		LayoutStructureItem layoutStructureItem =
-			_formItemManager.findFormStepContainerStyledLayoutStructureItem(
-				formStyledLayoutStructureItem, layoutStructure);
+		if (layoutStructureItem instanceof FormStyledLayoutStructureItem) {
+			LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+				_formItemManager.findFormStepContainerStyledLayoutStructureItem(
+					(FormStyledLayoutStructureItem)layoutStructureItem,
+					layoutStructure);
 
-		if (layoutStructureItem == null) {
-			return (FragmentStyledLayoutStructureItem)
-				layoutStructure.addFragmentStyledLayoutStructureItem(
-					fragmentEntryLink.getFragmentEntryLinkId(),
-					formStyledLayoutStructureItem.getItemId(), -1);
+			if (formStepContainerStyledLayoutStructureItem != null) {
+				return (FragmentStyledLayoutStructureItem)
+					layoutStructure.addFragmentStyledLayoutStructureItem(
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						formStepContainerStyledLayoutStructureItem.
+							getChildrenItemId(0),
+						-1);
+			}
 		}
 
 		return (FragmentStyledLayoutStructureItem)
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
-				layoutStructureItem.getChildrenItemId(0), -1);
+				layoutStructureItem.getItemId(), -1);
 	}
 
 	private FragmentStyledLayoutStructureItem

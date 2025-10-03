@@ -10,7 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClaySticker from '@clayui/sticker';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
 import classNames from 'classnames';
-import React, {useId, useState} from 'react';
+import React, {useId, useMemo, useState} from 'react';
 
 import {UserAccount, UserGroup} from '../../common/types/UserAccount';
 
@@ -38,9 +38,10 @@ interface AdminUserGroup {
 export interface SpaceMembersInputWithSelectProps {
 	className?: string;
 	disabled: boolean;
+	excludeMembers?: (UserAccount | UserGroup)[];
 	onAutocompleteItemSelected?: (item: UserAccount | UserGroup) => void;
 	onSelectChange?: (value: SelectOptions) => void;
-	selectValue?: SelectOptions;
+	selectValue: SelectOptions;
 }
 
 const endpoints = {
@@ -51,12 +52,27 @@ const endpoints = {
 export function SpaceMembersInputWithSelect({
 	className,
 	disabled,
+	excludeMembers,
 	onAutocompleteItemSelected,
 	onSelectChange,
 	selectValue,
 }: SpaceMembersInputWithSelectProps) {
 	const selectId = useId();
 	const [value, setValue] = useState('');
+
+	const apiURL = useMemo(() => {
+		const endpoint = endpoints[selectValue as SelectOptions];
+		const filterKey =
+			selectValue === SelectOptions.USERS ? 'id' : 'userGroupId';
+
+		if (excludeMembers?.length) {
+			const excludeIds = excludeMembers.map((member) => `'${member.id}'`);
+
+			return `${endpoint}?filter=${filterKey} ne ${excludeIds.join(` and ${filterKey} ne `)}`;
+		}
+
+		return endpoint;
+	}, [excludeMembers, selectValue]);
 
 	const renderUserAccountItem = (item: AdminUserAccount) => {
 		return (
@@ -173,9 +189,9 @@ export function SpaceMembersInputWithSelect({
 						/>
 					) : selectValue === SelectOptions.USERS ? (
 						<ItemSelector<AdminUserAccount>
-							apiURL={endpoints[SelectOptions.USERS]}
+							apiURL={apiURL}
 							id="autocomplete"
-							key="select-user"
+							key={apiURL}
 							locator={{
 								id: 'id',
 								label: 'name',
@@ -191,9 +207,9 @@ export function SpaceMembersInputWithSelect({
 						</ItemSelector>
 					) : (
 						<ItemSelector<AdminUserGroup>
-							apiURL={endpoints[SelectOptions.GROUPS]}
+							apiURL={apiURL}
 							id="autocomplete"
-							key="select-group"
+							key={apiURL}
 							locator={{
 								id: 'id',
 								label: 'name',

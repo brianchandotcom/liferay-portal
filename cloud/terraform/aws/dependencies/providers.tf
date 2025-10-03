@@ -7,10 +7,6 @@ provider "aws" {
 	region=var.region
 }
 provider "kubernetes" {
-	config_paths=[
-		var.kube_config_path,
-		"/tmp/this-kubeconfig-file-does-not-exist",
-	]
 }
 terraform {
 	required_providers {

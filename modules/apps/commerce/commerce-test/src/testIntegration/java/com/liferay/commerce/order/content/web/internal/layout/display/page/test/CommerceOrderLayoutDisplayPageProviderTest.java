@@ -90,9 +90,7 @@ public class CommerceOrderLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testGetCommerceOrderLayoutDisplayPageObjectProvider()
-		throws PortalException {
-
+	public void testGetLayoutDisplayPageObjectProvider() throws Exception {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(

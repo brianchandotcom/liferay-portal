@@ -76,9 +76,7 @@ public class CPDefinitionLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testGetCPDefinitionLayoutDisplayPageObjectProvider()
-		throws PortalException {
-
+	public void testGetLayoutDisplayPageObjectProvider() throws Exception {
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			_layoutDisplayPageProviderRegistry.
 				getLayoutDisplayPageProviderByClassName(

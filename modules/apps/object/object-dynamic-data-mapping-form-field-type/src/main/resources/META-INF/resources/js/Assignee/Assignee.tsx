@@ -5,31 +5,13 @@
 
 import Autocomplete from '@clayui/autocomplete';
 import {FetchPolicy, useResource} from '@clayui/data-provider';
+import {useConfig} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type/api';
 import React, {useState} from 'react';
 
 import Option from './Option';
 
 import './Assignee.scss';
-
-const searchURL = new URL(`${window.location.origin}/o/search/v1.0/search`);
-
-const searchParams = {
-	emptySearch: 'true',
-	entryClassNames: [
-		'com.liferay.portal.kernel.model.User',
-		'com.liferay.portal.kernel.model.Role',
-	].join(','),
-	fields: [
-		'entryClassName',
-		'embedded.externalReferenceCode',
-		'embedded.image',
-		'embedded.name',
-	].join(','),
-	nestedFields: 'embedded',
-};
-
-searchURL.search = new URLSearchParams(searchParams).toString();
 
 interface AssigneeValue {
 	externalReferenceCode: string;
@@ -42,6 +24,7 @@ interface Assignee {
 	name: string;
 	onChange: (event: {target: {value: any}}) => void;
 	readOnly?: boolean;
+	searchURL: string;
 	value?: AssigneeValue;
 }
 
@@ -50,11 +33,14 @@ export default function Assignee({
 	name,
 	onChange,
 	readOnly,
+	searchURL,
 	value,
 	...otherProps
 }: Assignee) {
-	const [search, setSearch] = useState(value?.name ?? '');
+	const {portletNamespace} = useConfig();
+
 	const [networkStatus, setNetworkStatus] = useState(4);
+	const [search, setSearch] = useState(value?.name ?? '');
 
 	const {
 		resource,
@@ -76,9 +62,11 @@ export default function Assignee({
 			method: 'GET',
 		},
 		fetchPolicy: FetchPolicy.CacheFirst,
-		link: searchURL.href,
+		link: searchURL,
 		onNetworkStatusChange: setNetworkStatus,
-		variables: {search},
+		variables: {
+			[`${portletNamespace}search`]: search,
+		},
 	});
 
 	return (

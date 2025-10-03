@@ -270,7 +270,7 @@ public class LayoutStructureRenderer {
 	private void _renderCol(
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem,
-			int colIndex, InfoForm infoForm, InfoItemDetails infoItemDetails)
+			int index, InfoForm infoForm, InfoItemDetails infoItemDetails)
 		throws Exception {
 
 		_httpServletRequest.setAttribute(
@@ -281,7 +281,7 @@ public class LayoutStructureRenderer {
 
 		colTag.setCssClass(
 			ResponsiveLayoutStructureUtil.getColumnCssClass(
-				collectionStyledLayoutStructureItem, colIndex));
+				collectionStyledLayoutStructureItem, index));
 		colTag.setPageContext(_pageContext);
 
 		colTag.doStartTag();

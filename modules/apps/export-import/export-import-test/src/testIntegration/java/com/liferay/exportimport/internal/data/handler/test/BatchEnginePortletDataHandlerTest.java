@@ -806,19 +806,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	}
 
-	protected LogCapture getLogCapture(boolean expectError) {
-		LogCapture logCapture = null;
-
-		if (expectError) {
-			logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.exportimport.internal.lifecycle." +
-					"LoggerExportImportLifecycleListener",
-				LoggerTestUtil.ERROR);
-		}
-
-		return logCapture;
-	}
-
 	private DLFileEntry _addDLFileEntry(String content, long groupId)
 		throws Exception {
 
@@ -1249,6 +1236,19 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private LogCapture _getLogCapture(boolean expectError) {
+		LogCapture logCapture = null;
+
+		if (expectError) {
+			logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.ERROR);
+		}
+
+		return logCapture;
+	}
+
 	private ManifestSummary _getManifestSummary(
 			PortletDataContext portletDataContext,
 			PortletDataHandler portletDataHandler)
@@ -1343,7 +1343,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinition... objectDefinitions)
 		throws Exception {
 
-		try (LogCapture logCapture = getLogCapture(expectError)) {
+		try (LogCapture logCapture = _getLogCapture(expectError)) {
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.
 					addDraftExportImportConfiguration(

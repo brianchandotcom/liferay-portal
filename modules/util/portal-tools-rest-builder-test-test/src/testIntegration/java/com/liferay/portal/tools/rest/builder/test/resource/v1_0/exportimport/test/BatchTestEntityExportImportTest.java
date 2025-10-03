@@ -575,7 +575,7 @@ public class BatchTestEntityExportImportTest {
 		ServiceRegistration<ImportTaskPreAction> serviceRegistration =
 			bundleContext.registerService(
 				ImportTaskPreAction.class,
-				new TestImportTaskPreAction(
+				new TestExportImportErrorRelatedEntityPreAction(
 					errorMessage, externalReferenceCode2),
 				null);
 
@@ -828,6 +828,40 @@ public class BatchTestEntityExportImportTest {
 	@Inject
 	private UserLocalService _userLocalService;
 
+	private class TestExportImportErrorRelatedEntityPreAction
+		implements ImportTaskPreAction {
+
+		public TestExportImportErrorRelatedEntityPreAction(
+			String errorMessage, String externalReferenceCode) {
+
+			_errorMessage = errorMessage;
+			_externalReferenceCode = externalReferenceCode;
+		}
+
+		@Override
+		public void run(
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+			ImportTaskContext importTaskContext, Object item) {
+
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity
+				batchTestEntity =
+					(com.liferay.portal.tools.rest.builder.test.dto.v1_0.
+						BatchTestEntity)item;
+
+			if (StringUtil.equals(
+					batchTestEntity.getExternalReferenceCode(),
+					_externalReferenceCode)) {
+
+				throw new UnsupportedOperationException(_errorMessage);
+			}
+		}
+
+		private final String _errorMessage;
+		private final String _externalReferenceCode;
+
+	}
+
 	private class TestExportImportRollbackOnErrorPostAction
 		implements ImportTaskPostAction {
 
@@ -866,39 +900,6 @@ public class BatchTestEntityExportImportTest {
 
 			_userLocalService.updateUser(user);
 		}
-
-	}
-
-	private class TestImportTaskPreAction implements ImportTaskPreAction {
-
-		public TestImportTaskPreAction(
-			String errorMessage, String externalReferenceCode) {
-
-			_errorMessage = errorMessage;
-			_externalReferenceCode = externalReferenceCode;
-		}
-
-		@Override
-		public void run(
-			BatchEngineImportTask batchEngineImportTask,
-			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
-			ImportTaskContext importTaskContext, Object item) {
-
-			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity
-				batchTestEntity =
-					(com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-						BatchTestEntity)item;
-
-			if (StringUtil.equals(
-					batchTestEntity.getExternalReferenceCode(),
-					_externalReferenceCode)) {
-
-				throw new UnsupportedOperationException(_errorMessage);
-			}
-		}
-
-		private final String _errorMessage;
-		private final String _externalReferenceCode;
 
 	}
 

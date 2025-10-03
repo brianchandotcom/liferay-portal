@@ -182,7 +182,7 @@ public class LayoutStructureRenderer {
 
 	}
 
-	private String _buildRowCssClass(CollectionStyledLayoutStructureItem item) {
+	private String _getRowCssClass(CollectionStyledLayoutStructureItem item) {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("align-items-");
@@ -604,7 +604,7 @@ public class LayoutStructureRenderer {
 				RowTag rowTag = new RowTag();
 
 				rowTag.setCssClass(
-					_buildRowCssClass(collectionStyledLayoutStructureItem));
+					_getRowCssClass(collectionStyledLayoutStructureItem));
 				rowTag.setPageContext(_pageContext);
 				rowTag.doStartTag();
 
@@ -629,7 +629,7 @@ public class LayoutStructureRenderer {
 					RowTag rowTag = new RowTag();
 
 					rowTag.setCssClass(
-						_buildRowCssClass(collectionStyledLayoutStructureItem));
+						_getRowCssClass(collectionStyledLayoutStructureItem));
 					rowTag.setPageContext(_pageContext);
 					rowTag.doStartTag();
 

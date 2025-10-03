@@ -355,50 +355,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testDeleteBlogPostingImageBatch_addBlogPostingImage();
 
 		testDeleteBlogPostingImageBatch_deleteBlogPostingImage(
-			202, blogPostingImage1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage1.getId()));
-
-		blogPostingImage1 =
-			testDeleteBlogPostingImageBatch_addBlogPostingImage();
-
-		testDeleteBlogPostingImageBatch_deleteBlogPostingImage(
 			202, null, blogPostingImage1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingImageResource.getBlogPostingImageHttpResponse(
 				blogPostingImage1.getId()));
-
-		blogPostingImage1 =
-			testDeleteBlogPostingImageBatch_addBlogPostingImage();
-		BlogPostingImage blogPostingImage2 =
-			testDeleteBlogPostingImageBatch_addBlogPostingImage();
-
-		testDeleteBlogPostingImageBatch_deleteBlogPostingImage(
-			202, blogPostingImage2.getExternalReferenceCode(),
-			blogPostingImage1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage2.getId()));
-
-		testDeleteBlogPostingImageBatch_deleteBlogPostingImage(
-			202, blogPostingImage2.getExternalReferenceCode(),
-			blogPostingImage1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage2.getId()));
 	}
 
 	protected BlogPostingImage
@@ -1642,50 +1604,12 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 			testBatchEngineDeleteImportTask_addBlogPostingImage();
 
 		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
-			200, blogPostingImage1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage1.getId()));
-
-		blogPostingImage1 =
-			testBatchEngineDeleteImportTask_addBlogPostingImage();
-
-		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
 			200, null, blogPostingImage1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingImageResource.getBlogPostingImageHttpResponse(
 				blogPostingImage1.getId()));
-
-		blogPostingImage1 =
-			testBatchEngineDeleteImportTask_addBlogPostingImage();
-		BlogPostingImage blogPostingImage2 =
-			testBatchEngineDeleteImportTask_addBlogPostingImage();
-
-		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
-			200, blogPostingImage2.getExternalReferenceCode(),
-			blogPostingImage1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteBlogPostingImage(
-			200, blogPostingImage2.getExternalReferenceCode(),
-			blogPostingImage1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingImageResource.getBlogPostingImageHttpResponse(
-				blogPostingImage2.getId()));
 	}
 
 	protected BlogPostingImage

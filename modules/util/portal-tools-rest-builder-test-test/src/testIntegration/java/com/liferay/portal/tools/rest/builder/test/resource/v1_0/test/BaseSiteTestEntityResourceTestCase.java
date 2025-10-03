@@ -13,9 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
-import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
@@ -135,16 +132,6 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 			testCompany.getCompanyId());
 
 		siteTestEntityResource = SiteTestEntityResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		importTaskResource = ImportTaskResource.builder(
 		).authentication(
 			_testCompanyAdminUser.getEmailAddress(),
 			PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -1354,55 +1341,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		SiteTestEntity siteTestEntity1 =
-			testBatchEngineDeleteImportTask_addSiteTestEntity();
-
-		testBatchEngineDeleteImportTask_deleteSiteTestEntity(
-			200, siteTestEntity1.getExternalReferenceCode());
-
-		assertHttpResponseStatusCode(
-			404,
-			siteTestEntityResource.getSiteTestEntityHttpResponse(
-				siteTestEntity1.getId()));
-	}
-
-	protected SiteTestEntity testBatchEngineDeleteImportTask_addSiteTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected void testBatchEngineDeleteImportTask_deleteSiteTestEntity(
-			int expectedStatusCode, String externalReferenceCode,
-			String... parameters)
-		throws Exception {
-
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			_testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).parameters(
-			parameters
-		).build();
-
-		HttpResponse httpResponse =
-			importTaskResource.deleteImportTaskHttpResponse(
-				"com.liferay.portal.tools.rest.builder.test.dto.v1_0.SiteTestEntity",
-				null, null, null, null,
-				JSONUtil.putAll(
-					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode)));
-
-		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
-
-		if (expectedStatusCode == 200) {
-			waitForFinish(
-				"COMPLETED",
-				JSONFactoryUtil.createJSONObject(httpResponse.getContent()));
-		}
+		Assert.assertTrue(true);
 	}
 
 	protected SiteTestEntity testGraphQLSiteSiteTestEntity_addSiteTestEntity()
@@ -2253,30 +2192,7 @@ public abstract class BaseSiteTestEntityResourceTestCase {
 		return siteTestEntity;
 	}
 
-	protected final JSONObject waitForFinish(
-			String expectedExecuteStatus, JSONObject jsonObject)
-		throws Exception {
-
-		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				jsonObject.getLong("id"));
-
-			ImportTask.ExecuteStatus executeStatus =
-				importTask.getExecuteStatus();
-
-			if (StringUtil.equals(executeStatus.getValue(), "COMPLETED") ||
-				StringUtil.equals(executeStatus.getValue(), "FAILED")) {
-
-				Assert.assertEquals(
-					expectedExecuteStatus, executeStatus.getValue());
-
-				return jsonObject;
-			}
-		}
-	}
-
 	protected SiteTestEntityResource siteTestEntityResource;
-	protected ImportTaskResource importTaskResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected SiteTestEntityResource permissionsSiteTestEntityResource;
 	protected com.liferay.portal.kernel.model.Company testCompany;

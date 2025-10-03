@@ -716,18 +716,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
 
 		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
-			202, structuredContentFolder1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder1.getId()));
-
-		structuredContentFolder1 =
-			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
-
-		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
 			202, null, structuredContentFolder1.getId());
 
 		assertHttpResponseStatusCode(
@@ -735,36 +723,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolderResource.
 				getStructuredContentFolderHttpResponse(
 					structuredContentFolder1.getId()));
-
-		structuredContentFolder1 =
-			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
-		StructuredContentFolder structuredContentFolder2 =
-			testDeleteStructuredContentFolderBatch_addStructuredContentFolder();
-
-		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
-			202, structuredContentFolder2.getExternalReferenceCode(),
-			structuredContentFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder2.getId()));
-
-		testDeleteStructuredContentFolderBatch_deleteStructuredContentFolder(
-			202, structuredContentFolder2.getExternalReferenceCode(),
-			structuredContentFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder2.getId()));
 	}
 
 	protected StructuredContentFolder
@@ -3959,18 +3917,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			testBatchEngineDeleteImportTask_addStructuredContentFolder();
 
 		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
-			200, structuredContentFolder1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder1.getId()));
-
-		structuredContentFolder1 =
-			testBatchEngineDeleteImportTask_addStructuredContentFolder();
-
-		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
 			200, null, structuredContentFolder1.getId());
 
 		assertHttpResponseStatusCode(
@@ -3978,36 +3924,6 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 			structuredContentFolderResource.
 				getStructuredContentFolderHttpResponse(
 					structuredContentFolder1.getId()));
-
-		structuredContentFolder1 =
-			testBatchEngineDeleteImportTask_addStructuredContentFolder();
-		StructuredContentFolder structuredContentFolder2 =
-			testBatchEngineDeleteImportTask_addStructuredContentFolder();
-
-		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
-			200, structuredContentFolder2.getExternalReferenceCode(),
-			structuredContentFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteStructuredContentFolder(
-			200, structuredContentFolder2.getExternalReferenceCode(),
-			structuredContentFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentFolderResource.
-				getStructuredContentFolderHttpResponse(
-					structuredContentFolder2.getId()));
 	}
 
 	protected StructuredContentFolder

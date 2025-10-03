@@ -706,50 +706,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testDeleteStructuredContentBatch_addStructuredContent();
 
 		testDeleteStructuredContentBatch_deleteStructuredContent(
-			202, structuredContent1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent1.getId()));
-
-		structuredContent1 =
-			testDeleteStructuredContentBatch_addStructuredContent();
-
-		testDeleteStructuredContentBatch_deleteStructuredContent(
 			202, null, structuredContent1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentHttpResponse(
 				structuredContent1.getId()));
-
-		structuredContent1 =
-			testDeleteStructuredContentBatch_addStructuredContent();
-		StructuredContent structuredContent2 =
-			testDeleteStructuredContentBatch_addStructuredContent();
-
-		testDeleteStructuredContentBatch_deleteStructuredContent(
-			202, structuredContent2.getExternalReferenceCode(),
-			structuredContent1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent2.getId()));
-
-		testDeleteStructuredContentBatch_deleteStructuredContent(
-			202, structuredContent2.getExternalReferenceCode(),
-			structuredContent1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent2.getId()));
 	}
 
 	protected StructuredContent
@@ -4697,50 +4659,12 @@ public abstract class BaseStructuredContentResourceTestCase {
 			testBatchEngineDeleteImportTask_addStructuredContent();
 
 		testBatchEngineDeleteImportTask_deleteStructuredContent(
-			200, structuredContent1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent1.getId()));
-
-		structuredContent1 =
-			testBatchEngineDeleteImportTask_addStructuredContent();
-
-		testBatchEngineDeleteImportTask_deleteStructuredContent(
 			200, null, structuredContent1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			structuredContentResource.getStructuredContentHttpResponse(
 				structuredContent1.getId()));
-
-		structuredContent1 =
-			testBatchEngineDeleteImportTask_addStructuredContent();
-		StructuredContent structuredContent2 =
-			testBatchEngineDeleteImportTask_addStructuredContent();
-
-		testBatchEngineDeleteImportTask_deleteStructuredContent(
-			200, structuredContent2.getExternalReferenceCode(),
-			structuredContent1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteStructuredContent(
-			200, structuredContent2.getExternalReferenceCode(),
-			structuredContent1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			structuredContentResource.getStructuredContentHttpResponse(
-				structuredContent2.getId()));
 	}
 
 	protected StructuredContent

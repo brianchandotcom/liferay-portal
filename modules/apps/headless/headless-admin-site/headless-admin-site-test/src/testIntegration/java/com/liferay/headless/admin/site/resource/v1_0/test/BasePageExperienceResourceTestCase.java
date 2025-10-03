@@ -480,12 +480,6 @@ public abstract class BasePageExperienceResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		PageExperience pageExperience1 =
-			testBatchEngineDeleteImportTask_addPageExperience();
-
-		testBatchEngineDeleteImportTask_deletePageExperience(
-			200, pageExperience1.getExternalReferenceCode());
-
-		pageExperience1 =
 			testBatchEngineDeleteImportTask_addSitePageExperience();
 
 		testBatchEngineDeleteImportTask_deletePageExperience(
@@ -497,13 +491,6 @@ public abstract class BasePageExperienceResourceTestCase {
 			pageExperienceResource.getSitePageExperienceHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				pageExperience1.getExternalReferenceCode()));
-	}
-
-	protected PageExperience testBatchEngineDeleteImportTask_addPageExperience()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PageExperience

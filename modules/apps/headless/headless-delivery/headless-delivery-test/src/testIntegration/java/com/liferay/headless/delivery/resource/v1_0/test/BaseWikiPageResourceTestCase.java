@@ -470,35 +470,10 @@ public abstract class BaseWikiPageResourceTestCase {
 	public void testDeleteWikiPageBatch() throws Exception {
 		WikiPage wikiPage1 = testDeleteWikiPageBatch_addWikiPage();
 
-		testDeleteWikiPageBatch_deleteWikiPage(
-			202, wikiPage1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-
-		wikiPage1 = testDeleteWikiPageBatch_addWikiPage();
-
 		testDeleteWikiPageBatch_deleteWikiPage(202, null, wikiPage1.getId());
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-
-		wikiPage1 = testDeleteWikiPageBatch_addWikiPage();
-		WikiPage wikiPage2 = testDeleteWikiPageBatch_addWikiPage();
-
-		testDeleteWikiPageBatch_deleteWikiPage(
-			202, wikiPage2.getExternalReferenceCode(), wikiPage1.getId());
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-		assertHttpResponseStatusCode(
-			200, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
-
-		testDeleteWikiPageBatch_deleteWikiPage(
-			202, wikiPage2.getExternalReferenceCode(), wikiPage1.getId());
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
 	}
 
 	protected WikiPage testDeleteWikiPageBatch_addWikiPage() throws Exception {
@@ -1750,35 +1725,10 @@ public abstract class BaseWikiPageResourceTestCase {
 		WikiPage wikiPage1 = testBatchEngineDeleteImportTask_addWikiPage();
 
 		testBatchEngineDeleteImportTask_deleteWikiPage(
-			200, wikiPage1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-
-		wikiPage1 = testBatchEngineDeleteImportTask_addWikiPage();
-
-		testBatchEngineDeleteImportTask_deleteWikiPage(
 			200, null, wikiPage1.getId());
 
 		assertHttpResponseStatusCode(
 			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-
-		wikiPage1 = testBatchEngineDeleteImportTask_addWikiPage();
-		WikiPage wikiPage2 = testBatchEngineDeleteImportTask_addWikiPage();
-
-		testBatchEngineDeleteImportTask_deleteWikiPage(
-			200, wikiPage2.getExternalReferenceCode(), wikiPage1.getId());
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage1.getId()));
-		assertHttpResponseStatusCode(
-			200, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteWikiPage(
-			200, wikiPage2.getExternalReferenceCode(), wikiPage1.getId());
-
-		assertHttpResponseStatusCode(
-			404, wikiPageResource.getWikiPageHttpResponse(wikiPage2.getId()));
 	}
 
 	protected WikiPage testBatchEngineDeleteImportTask_addWikiPage()

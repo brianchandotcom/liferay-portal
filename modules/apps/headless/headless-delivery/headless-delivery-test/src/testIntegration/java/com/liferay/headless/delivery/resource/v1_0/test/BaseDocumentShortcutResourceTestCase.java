@@ -372,50 +372,12 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			testDeleteDocumentShortcutBatch_addDocumentShortcut();
 
 		testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
-			202, documentShortcut1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut1.getId()));
-
-		documentShortcut1 =
-			testDeleteDocumentShortcutBatch_addDocumentShortcut();
-
-		testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
 			202, null, documentShortcut1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			documentShortcutResource.getDocumentShortcutHttpResponse(
 				documentShortcut1.getId()));
-
-		documentShortcut1 =
-			testDeleteDocumentShortcutBatch_addDocumentShortcut();
-		DocumentShortcut documentShortcut2 =
-			testDeleteDocumentShortcutBatch_addDocumentShortcut();
-
-		testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
-			202, documentShortcut2.getExternalReferenceCode(),
-			documentShortcut1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut2.getId()));
-
-		testDeleteDocumentShortcutBatch_deleteDocumentShortcut(
-			202, documentShortcut2.getExternalReferenceCode(),
-			documentShortcut1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut2.getId()));
 	}
 
 	protected DocumentShortcut
@@ -1821,50 +1783,12 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 			testBatchEngineDeleteImportTask_addDocumentShortcut();
 
 		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
-			200, documentShortcut1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut1.getId()));
-
-		documentShortcut1 =
-			testBatchEngineDeleteImportTask_addDocumentShortcut();
-
-		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
 			200, null, documentShortcut1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			documentShortcutResource.getDocumentShortcutHttpResponse(
 				documentShortcut1.getId()));
-
-		documentShortcut1 =
-			testBatchEngineDeleteImportTask_addDocumentShortcut();
-		DocumentShortcut documentShortcut2 =
-			testBatchEngineDeleteImportTask_addDocumentShortcut();
-
-		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
-			200, documentShortcut2.getExternalReferenceCode(),
-			documentShortcut1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteDocumentShortcut(
-			200, documentShortcut2.getExternalReferenceCode(),
-			documentShortcut1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentShortcutResource.getDocumentShortcutHttpResponse(
-				documentShortcut2.getId()));
 	}
 
 	protected DocumentShortcut

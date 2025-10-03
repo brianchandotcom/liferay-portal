@@ -876,12 +876,7 @@ public abstract class BaseSitePageResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		SitePage sitePage1 = testBatchEngineDeleteImportTask_addSitePage();
-
-		testBatchEngineDeleteImportTask_deleteSitePage(
-			200, sitePage1.getExternalReferenceCode());
-
-		sitePage1 = testBatchEngineDeleteImportTask_addSiteSitePage();
+		SitePage sitePage1 = testBatchEngineDeleteImportTask_addSiteSitePage();
 
 		testBatchEngineDeleteImportTask_deleteSitePage(
 			200, sitePage1.getExternalReferenceCode(),
@@ -892,13 +887,6 @@ public abstract class BaseSitePageResourceTestCase {
 			sitePageResource.getSiteSitePageHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				sitePage1.getExternalReferenceCode()));
-	}
-
-	protected SitePage testBatchEngineDeleteImportTask_addSitePage()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected SitePage testBatchEngineDeleteImportTask_addSiteSitePage()

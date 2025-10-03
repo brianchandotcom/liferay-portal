@@ -351,50 +351,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder();
 
 		testDeleteKnowledgeBaseFolderBatch_deleteKnowledgeBaseFolder(
-			202, knowledgeBaseFolder1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder1.getId()));
-
-		knowledgeBaseFolder1 =
-			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder();
-
-		testDeleteKnowledgeBaseFolderBatch_deleteKnowledgeBaseFolder(
 			202, null, knowledgeBaseFolder1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
 				knowledgeBaseFolder1.getId()));
-
-		knowledgeBaseFolder1 =
-			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder();
-		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			testDeleteKnowledgeBaseFolderBatch_addKnowledgeBaseFolder();
-
-		testDeleteKnowledgeBaseFolderBatch_deleteKnowledgeBaseFolder(
-			202, knowledgeBaseFolder2.getExternalReferenceCode(),
-			knowledgeBaseFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder2.getId()));
-
-		testDeleteKnowledgeBaseFolderBatch_deleteKnowledgeBaseFolder(
-			202, knowledgeBaseFolder2.getExternalReferenceCode(),
-			knowledgeBaseFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder2.getId()));
 	}
 
 	protected KnowledgeBaseFolder
@@ -2078,50 +2040,12 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 			testBatchEngineDeleteImportTask_addKnowledgeBaseFolder();
 
 		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
-			200, knowledgeBaseFolder1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder1.getId()));
-
-		knowledgeBaseFolder1 =
-			testBatchEngineDeleteImportTask_addKnowledgeBaseFolder();
-
-		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
 			200, null, knowledgeBaseFolder1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
 				knowledgeBaseFolder1.getId()));
-
-		knowledgeBaseFolder1 =
-			testBatchEngineDeleteImportTask_addKnowledgeBaseFolder();
-		KnowledgeBaseFolder knowledgeBaseFolder2 =
-			testBatchEngineDeleteImportTask_addKnowledgeBaseFolder();
-
-		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
-			200, knowledgeBaseFolder2.getExternalReferenceCode(),
-			knowledgeBaseFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteKnowledgeBaseFolder(
-			200, knowledgeBaseFolder2.getExternalReferenceCode(),
-			knowledgeBaseFolder1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			knowledgeBaseFolderResource.getKnowledgeBaseFolderHttpResponse(
-				knowledgeBaseFolder2.getId()));
 	}
 
 	protected KnowledgeBaseFolder

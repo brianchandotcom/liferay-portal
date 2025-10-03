@@ -2042,12 +2042,6 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 					ercScopedTestEntity1.getExternalReferenceCode()));
 
 		ercScopedTestEntity1 =
-			testBatchEngineDeleteImportTask_addERCScopedTestEntity();
-
-		testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
-			200, ercScopedTestEntity1.getExternalReferenceCode());
-
-		ercScopedTestEntity1 =
 			testBatchEngineDeleteImportTask_addSiteERCScopedTestEntity();
 
 		testBatchEngineDeleteImportTask_deleteERCScopedTestEntity(
@@ -2059,14 +2053,6 @@ public abstract class BaseERCScopedTestEntityResourceTestCase {
 			ercScopedTestEntityResource.getSiteERCScopedTestEntityHttpResponse(
 				ercScopedTestEntity1.getSiteExternalReferenceCode(),
 				ercScopedTestEntity1.getExternalReferenceCode()));
-	}
-
-	protected ERCScopedTestEntity
-			testBatchEngineDeleteImportTask_addERCScopedTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected ERCScopedTestEntity

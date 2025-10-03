@@ -439,12 +439,7 @@ public abstract class BasePageRuleResourceTestCase {
 
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
-		PageRule pageRule1 = testBatchEngineDeleteImportTask_addPageRule();
-
-		testBatchEngineDeleteImportTask_deletePageRule(
-			200, pageRule1.getExternalReferenceCode());
-
-		pageRule1 = testBatchEngineDeleteImportTask_addSitePageRule();
+		PageRule pageRule1 = testBatchEngineDeleteImportTask_addSitePageRule();
 
 		testBatchEngineDeleteImportTask_deletePageRule(
 			200, pageRule1.getExternalReferenceCode(),
@@ -455,13 +450,6 @@ public abstract class BasePageRuleResourceTestCase {
 			pageRuleResource.getSitePageRuleHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				pageRule1.getExternalReferenceCode()));
-	}
-
-	protected PageRule testBatchEngineDeleteImportTask_addPageRule()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PageRule testBatchEngineDeleteImportTask_addSitePageRule()

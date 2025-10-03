@@ -1103,12 +1103,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		DisplayPageTemplateFolder displayPageTemplateFolder1 =
-			testBatchEngineDeleteImportTask_addDisplayPageTemplateFolder();
-
-		testBatchEngineDeleteImportTask_deleteDisplayPageTemplateFolder(
-			200, displayPageTemplateFolder1.getExternalReferenceCode());
-
-		displayPageTemplateFolder1 =
 			testBatchEngineDeleteImportTask_addSiteDisplayPageTemplateFolder();
 
 		testBatchEngineDeleteImportTask_deleteDisplayPageTemplateFolder(
@@ -1121,14 +1115,6 @@ public abstract class BaseDisplayPageTemplateFolderResourceTestCase {
 				getSiteDisplayPageTemplateFolderHttpResponse(
 					testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 					displayPageTemplateFolder1.getExternalReferenceCode()));
-	}
-
-	protected DisplayPageTemplateFolder
-			testBatchEngineDeleteImportTask_addDisplayPageTemplateFolder()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected DisplayPageTemplateFolder

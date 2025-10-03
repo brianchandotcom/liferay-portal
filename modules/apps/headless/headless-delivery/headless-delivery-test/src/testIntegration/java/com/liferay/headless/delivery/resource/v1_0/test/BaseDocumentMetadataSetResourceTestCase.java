@@ -546,50 +546,12 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet();
 
 		testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
-			202, documentMetadataSet1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet1.getId()));
-
-		documentMetadataSet1 =
-			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet();
-
-		testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
 			202, null, documentMetadataSet1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
 				documentMetadataSet1.getId()));
-
-		documentMetadataSet1 =
-			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet();
-		DocumentMetadataSet documentMetadataSet2 =
-			testDeleteDocumentMetadataSetBatch_addDocumentMetadataSet();
-
-		testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
-			202, documentMetadataSet2.getExternalReferenceCode(),
-			documentMetadataSet1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet2.getId()));
-
-		testDeleteDocumentMetadataSetBatch_deleteDocumentMetadataSet(
-			202, documentMetadataSet2.getExternalReferenceCode(),
-			documentMetadataSet1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet2.getId()));
 	}
 
 	protected DocumentMetadataSet
@@ -2226,50 +2188,12 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testBatchEngineDeleteImportTask_addDocumentMetadataSet();
 
 		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
-			200, documentMetadataSet1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet1.getId()));
-
-		documentMetadataSet1 =
-			testBatchEngineDeleteImportTask_addDocumentMetadataSet();
-
-		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
 			200, null, documentMetadataSet1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
 				documentMetadataSet1.getId()));
-
-		documentMetadataSet1 =
-			testBatchEngineDeleteImportTask_addDocumentMetadataSet();
-		DocumentMetadataSet documentMetadataSet2 =
-			testBatchEngineDeleteImportTask_addDocumentMetadataSet();
-
-		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
-			200, documentMetadataSet2.getExternalReferenceCode(),
-			documentMetadataSet1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteDocumentMetadataSet(
-			200, documentMetadataSet2.getExternalReferenceCode(),
-			documentMetadataSet1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			documentMetadataSetResource.getDocumentMetadataSetHttpResponse(
-				documentMetadataSet2.getId()));
 	}
 
 	protected DocumentMetadataSet

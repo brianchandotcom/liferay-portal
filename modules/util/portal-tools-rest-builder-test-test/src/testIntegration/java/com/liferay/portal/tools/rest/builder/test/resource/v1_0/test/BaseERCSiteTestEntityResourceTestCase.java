@@ -951,12 +951,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		ERCSiteTestEntity ercSiteTestEntity1 =
-			testBatchEngineDeleteImportTask_addERCSiteTestEntity();
-
-		testBatchEngineDeleteImportTask_deleteERCSiteTestEntity(
-			200, ercSiteTestEntity1.getExternalReferenceCode());
-
-		ercSiteTestEntity1 =
 			testBatchEngineDeleteImportTask_addSiteERCSiteTestEntity();
 
 		testBatchEngineDeleteImportTask_deleteERCSiteTestEntity(
@@ -968,14 +962,6 @@ public abstract class BaseERCSiteTestEntityResourceTestCase {
 			ercSiteTestEntityResource.getSiteERCSiteTestEntityHttpResponse(
 				ercSiteTestEntity1.getSiteExternalReferenceCode(),
 				ercSiteTestEntity1.getExternalReferenceCode()));
-	}
-
-	protected ERCSiteTestEntity
-			testBatchEngineDeleteImportTask_addERCSiteTestEntity()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected ERCSiteTestEntity

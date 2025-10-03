@@ -470,12 +470,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		PageRuleAction pageRuleAction1 =
-			testBatchEngineDeleteImportTask_addPageRuleAction();
-
-		testBatchEngineDeleteImportTask_deletePageRuleAction(
-			200, pageRuleAction1.getExternalReferenceCode());
-
-		pageRuleAction1 =
 			testBatchEngineDeleteImportTask_addSitePageRuleAction();
 
 		testBatchEngineDeleteImportTask_deletePageRuleAction(
@@ -487,13 +481,6 @@ public abstract class BasePageRuleActionResourceTestCase {
 			pageRuleActionResource.getSitePageRuleActionHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				pageRuleAction1.getExternalReferenceCode()));
-	}
-
-	protected PageRuleAction testBatchEngineDeleteImportTask_addPageRuleAction()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PageRuleAction

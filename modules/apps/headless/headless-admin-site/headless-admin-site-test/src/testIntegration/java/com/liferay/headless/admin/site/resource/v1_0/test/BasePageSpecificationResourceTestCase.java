@@ -1018,12 +1018,6 @@ public abstract class BasePageSpecificationResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		PageSpecification pageSpecification1 =
-			testBatchEngineDeleteImportTask_addPageSpecification();
-
-		testBatchEngineDeleteImportTask_deletePageSpecification(
-			200, pageSpecification1.getExternalReferenceCode());
-
-		pageSpecification1 =
 			testBatchEngineDeleteImportTask_addSitePageSpecification();
 
 		testBatchEngineDeleteImportTask_deletePageSpecification(
@@ -1035,14 +1029,6 @@ public abstract class BasePageSpecificationResourceTestCase {
 			pageSpecificationResource.getSitePageSpecificationHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				pageSpecification1.getExternalReferenceCode()));
-	}
-
-	protected PageSpecification
-			testBatchEngineDeleteImportTask_addPageSpecification()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PageSpecification

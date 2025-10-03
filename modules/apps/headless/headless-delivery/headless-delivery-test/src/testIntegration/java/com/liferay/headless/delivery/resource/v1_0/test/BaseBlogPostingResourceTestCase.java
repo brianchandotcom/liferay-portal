@@ -347,45 +347,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 		BlogPosting blogPosting1 = testDeleteBlogPostingBatch_addBlogPosting();
 
 		testDeleteBlogPostingBatch_deleteBlogPosting(
-			202, blogPosting1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting1.getId()));
-
-		blogPosting1 = testDeleteBlogPostingBatch_addBlogPosting();
-
-		testDeleteBlogPostingBatch_deleteBlogPosting(
 			202, null, blogPosting1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.getBlogPostingHttpResponse(
 				blogPosting1.getId()));
-
-		blogPosting1 = testDeleteBlogPostingBatch_addBlogPosting();
-		BlogPosting blogPosting2 = testDeleteBlogPostingBatch_addBlogPosting();
-
-		testDeleteBlogPostingBatch_deleteBlogPosting(
-			202, blogPosting2.getExternalReferenceCode(), blogPosting1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting2.getId()));
-
-		testDeleteBlogPostingBatch_deleteBlogPosting(
-			202, blogPosting2.getExternalReferenceCode(), blogPosting1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting2.getId()));
 	}
 
 	protected BlogPosting testDeleteBlogPostingBatch_addBlogPosting()
@@ -1994,46 +1961,12 @@ public abstract class BaseBlogPostingResourceTestCase {
 			testBatchEngineDeleteImportTask_addBlogPosting();
 
 		testBatchEngineDeleteImportTask_deleteBlogPosting(
-			200, blogPosting1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting1.getId()));
-
-		blogPosting1 = testBatchEngineDeleteImportTask_addBlogPosting();
-
-		testBatchEngineDeleteImportTask_deleteBlogPosting(
 			200, null, blogPosting1.getId());
 
 		assertHttpResponseStatusCode(
 			404,
 			blogPostingResource.getBlogPostingHttpResponse(
 				blogPosting1.getId()));
-
-		blogPosting1 = testBatchEngineDeleteImportTask_addBlogPosting();
-		BlogPosting blogPosting2 =
-			testBatchEngineDeleteImportTask_addBlogPosting();
-
-		testBatchEngineDeleteImportTask_deleteBlogPosting(
-			200, blogPosting2.getExternalReferenceCode(), blogPosting1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting1.getId()));
-		assertHttpResponseStatusCode(
-			200,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteBlogPosting(
-			200, blogPosting2.getExternalReferenceCode(), blogPosting1.getId());
-
-		assertHttpResponseStatusCode(
-			404,
-			blogPostingResource.getBlogPostingHttpResponse(
-				blogPosting2.getId()));
 	}
 
 	protected BlogPosting testBatchEngineDeleteImportTask_addBlogPosting()

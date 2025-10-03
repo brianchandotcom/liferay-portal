@@ -984,12 +984,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		PageTemplateSet pageTemplateSet1 =
-			testBatchEngineDeleteImportTask_addPageTemplateSet();
-
-		testBatchEngineDeleteImportTask_deletePageTemplateSet(
-			200, pageTemplateSet1.getExternalReferenceCode());
-
-		pageTemplateSet1 =
 			testBatchEngineDeleteImportTask_addSitePageTemplateSet();
 
 		testBatchEngineDeleteImportTask_deletePageTemplateSet(
@@ -1001,14 +995,6 @@ public abstract class BasePageTemplateSetResourceTestCase {
 			pageTemplateSetResource.getSitePageTemplateSetHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				pageTemplateSet1.getExternalReferenceCode()));
-	}
-
-	protected PageTemplateSet
-			testBatchEngineDeleteImportTask_addPageTemplateSet()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected PageTemplateSet

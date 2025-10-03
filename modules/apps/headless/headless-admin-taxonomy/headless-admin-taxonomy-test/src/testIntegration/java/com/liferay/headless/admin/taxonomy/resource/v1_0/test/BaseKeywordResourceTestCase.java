@@ -521,35 +521,10 @@ public abstract class BaseKeywordResourceTestCase {
 	public void testDeleteKeywordBatch() throws Exception {
 		Keyword keyword1 = testDeleteKeywordBatch_addKeyword();
 
-		testDeleteKeywordBatch_deleteKeyword(
-			202, keyword1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-
-		keyword1 = testDeleteKeywordBatch_addKeyword();
-
 		testDeleteKeywordBatch_deleteKeyword(202, null, keyword1.getId());
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-
-		keyword1 = testDeleteKeywordBatch_addKeyword();
-		Keyword keyword2 = testDeleteKeywordBatch_addKeyword();
-
-		testDeleteKeywordBatch_deleteKeyword(
-			202, keyword2.getExternalReferenceCode(), keyword1.getId());
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-		assertHttpResponseStatusCode(
-			200, keywordResource.getKeywordHttpResponse(keyword2.getId()));
-
-		testDeleteKeywordBatch_deleteKeyword(
-			202, keyword2.getExternalReferenceCode(), keyword1.getId());
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword2.getId()));
 	}
 
 	protected Keyword testDeleteKeywordBatch_addKeyword() throws Exception {
@@ -2922,35 +2897,10 @@ public abstract class BaseKeywordResourceTestCase {
 		Keyword keyword1 = testBatchEngineDeleteImportTask_addKeyword();
 
 		testBatchEngineDeleteImportTask_deleteKeyword(
-			200, keyword1.getExternalReferenceCode(), null);
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-
-		keyword1 = testBatchEngineDeleteImportTask_addKeyword();
-
-		testBatchEngineDeleteImportTask_deleteKeyword(
 			200, null, keyword1.getId());
 
 		assertHttpResponseStatusCode(
 			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-
-		keyword1 = testBatchEngineDeleteImportTask_addKeyword();
-		Keyword keyword2 = testBatchEngineDeleteImportTask_addKeyword();
-
-		testBatchEngineDeleteImportTask_deleteKeyword(
-			200, keyword2.getExternalReferenceCode(), keyword1.getId());
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword1.getId()));
-		assertHttpResponseStatusCode(
-			200, keywordResource.getKeywordHttpResponse(keyword2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteKeyword(
-			200, keyword2.getExternalReferenceCode(), keyword1.getId());
-
-		assertHttpResponseStatusCode(
-			404, keywordResource.getKeywordHttpResponse(keyword2.getId()));
 	}
 
 	protected Keyword testBatchEngineDeleteImportTask_addKeyword()

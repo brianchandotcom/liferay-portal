@@ -853,12 +853,6 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		FragmentComposition fragmentComposition1 =
-			testBatchEngineDeleteImportTask_addFragmentComposition();
-
-		testBatchEngineDeleteImportTask_deleteFragmentComposition(
-			200, fragmentComposition1.getExternalReferenceCode());
-
-		fragmentComposition1 =
 			testBatchEngineDeleteImportTask_addSiteFragmentComposition();
 
 		testBatchEngineDeleteImportTask_deleteFragmentComposition(
@@ -870,14 +864,6 @@ public abstract class BaseFragmentCompositionResourceTestCase {
 			fragmentCompositionResource.getSiteFragmentCompositionHttpResponse(
 				testBatchEngineDeleteImportTask_getSiteExternalReferenceCode(),
 				fragmentComposition1.getExternalReferenceCode()));
-	}
-
-	protected FragmentComposition
-			testBatchEngineDeleteImportTask_addFragmentComposition()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
 	}
 
 	protected FragmentComposition

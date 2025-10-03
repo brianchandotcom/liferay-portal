@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CustomMetaTag;
 import com.liferay.headless.admin.site.client.dto.v1_0.FavIcon;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.NavigationSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.OpenGraphSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
@@ -795,6 +796,15 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 								"es-ES", RandomTestUtil.randomString()
 							).build());
 					}
+				}
+			});
+		pageSettings.setNavigationSettings(
+			() -> new NavigationSettings() {
+				{
+					setTarget(RandomTestUtil::randomString);
+					setTargetType(
+						() -> RandomTestUtil.randomEnum(
+							NavigationSettings.TargetType.class));
 				}
 			});
 		pageSettings.setOpenGraphSettings(

@@ -181,6 +181,11 @@ public class BaseNotificationTypeTest {
 		).put(
 			"longIntegerObjectField", "123456789"
 		).put(
+			"multipleRecipientsLongTextObjectField",
+			StringUtil.merge(
+				new long[] {user1.getUserId(), user2.getUserId()},
+				StringPool.COMMA)
+		).put(
 			"multiselectPicklistObjectField",
 			Arrays.asList(
 				new ListEntry() {
@@ -204,14 +209,9 @@ public class BaseNotificationTypeTest {
 				}
 			}
 		).put(
-			"textObjectField", "textObjectFieldValue"
-		).put(
 			"singleRecipientTextObjectField", String.valueOf(user2.getUserId())
 		).put(
-			"multipleRecipientsLongTextObjectField",
-			StringUtil.merge(
-				new long[] {user1.getUserId(), user2.getUserId()},
-				StringPool.COMMA)
+			"textObjectField", "textObjectFieldValue"
 		).build();
 
 		group = GroupTestUtil.addGroup();
@@ -236,6 +236,11 @@ public class BaseNotificationTypeTest {
 				return simpleDateFormat.format(RandomTestUtil.nextDate());
 			}
 		).put(
+			"multipleRecipientsLongTextObjectField",
+			StringUtil.merge(
+				new long[] {user1.getUserId(), user2.getUserId()},
+				StringPool.COMMA)
+		).put(
 			"multiselectPicklistObjectField",
 			Arrays.asList(
 				new ListEntry() {
@@ -259,16 +264,11 @@ public class BaseNotificationTypeTest {
 				}
 			}
 		).put(
+			"singleRecipientTextObjectField", String.valueOf(user2.getUserId())
+		).put(
 			"systemObjectField", RandomTestUtil.randomString()
 		).put(
 			"textObjectField", RandomTestUtil.randomString()
-		).put(
-			"singleRecipientTextObjectField", String.valueOf(user2.getUserId())
-		).put(
-			"multipleRecipientsLongTextObjectField",
-			StringUtil.merge(
-				new long[] {user1.getUserId(), user2.getUserId()},
-				StringPool.COMMA)
 		).build();
 	}
 
@@ -357,6 +357,13 @@ public class BaseNotificationTypeTest {
 					).name(
 						"longIntegerObjectField"
 					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"multipleRecipientsLongTextObjectField"
+					).build(),
 					new MultiselectPicklistObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
@@ -396,21 +403,14 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"textObjectField"
+						"singleRecipientTextObjectField"
 					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"singleRecipientTextObjectField"
-					).build(),
-					new LongTextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"multipleRecipientsLongTextObjectField"
+						"textObjectField"
 					).build()),
 				Collections.emptyList());
 
@@ -453,6 +453,13 @@ public class BaseNotificationTypeTest {
 									VALUE_USE_INPUT_AS_ENTERED
 							).build())
 					).build(),
+					new LongTextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"multipleRecipientsLongTextObjectField"
+					).build(),
 					new MultiselectPicklistObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
@@ -487,23 +494,16 @@ public class BaseNotificationTypeTest {
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"textObjectField"
-					).objectFieldSettings(
-						Collections.emptyList()
+						"singleRecipientTextObjectField"
 					).build(),
 					new TextObjectFieldBuilder(
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
 					).name(
-						"singleRecipientTextObjectField"
-					).build(),
-					new LongTextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						"multipleRecipientsLongTextObjectField"
+						"textObjectField"
+					).objectFieldSettings(
+						Collections.emptyList()
 					).build()),
 				Collections.emptyList());
 
@@ -773,19 +773,19 @@ public class BaseNotificationTypeTest {
 				getTermName("integerObjectField"),
 				getTermName("localizedTextObjectField"),
 				getTermName("longIntegerObjectField"),
+				getTermName("multipleRecipientsLongTextObjectField"),
 				getTermName("multiselectPicklistObjectField"),
 				getTermName("picklistObjectField"),
-				getTermName("textObjectField"),
 				getTermName("singleRecipientTextObjectField"),
-				getTermName("multipleRecipientsLongTextObjectField"),
+				getTermName("textObjectField"),
 				getTermName(true, "dateObjectField"),
 				getTermName(true, "dateTimeObjectField"),
+				getTermName(true, "multipleRecipientsLongTextObjectField"),
 				getTermName(true, "multiselectPicklistObjectField"),
 				getTermName(true, "picklistObjectField"),
-				getTermName(true, "systemObjectField"),
-				getTermName(true, "textObjectField"),
 				getTermName(true, "singleRecipientTextObjectField"),
-				getTermName(true, "multipleRecipientsLongTextObjectField")));
+				getTermName(true, "systemObjectField"),
+				getTermName(true, "textObjectField")));
 	}
 
 	protected List<String> getTermValues() {

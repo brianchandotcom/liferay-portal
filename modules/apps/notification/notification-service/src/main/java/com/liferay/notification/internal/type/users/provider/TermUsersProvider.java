@@ -79,7 +79,7 @@ public class TermUsersProvider implements UsersProvider {
 				continue;
 			}
 
-			if (_containsViewPermission(user, notificationContext)) {
+			if (_hasViewPermission(user, notificationContext)) {
 				users.put(user.getUserId(), user);
 			}
 		}
@@ -123,7 +123,7 @@ public class TermUsersProvider implements UsersProvider {
 
 					User user = _userLocalService.getUser(id);
 
-					if (_containsViewPermission(user, notificationContext)) {
+					if (_hasViewPermission(user, notificationContext)) {
 						users.put(id, user);
 					}
 				}
@@ -133,7 +133,7 @@ public class TermUsersProvider implements UsersProvider {
 		return new ArrayList<>(users.values());
 	}
 
-	private boolean _containsViewPermission(
+	private boolean _hasViewPermission(
 		User user, NotificationContext notificationContext) {
 
 		return ModelResourcePermissionUtil.contains(

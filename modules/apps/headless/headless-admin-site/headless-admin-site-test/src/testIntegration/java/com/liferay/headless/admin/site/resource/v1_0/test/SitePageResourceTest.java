@@ -1495,7 +1495,43 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		widgetPageSettings.setCustomizable(true);
 		widgetPageSettings.setCustomizableSectionIds(
 			new String[] {"column-1", "column-3"});
+		widgetPageSettings.setCustomMetaTags(new CustomMetaTag[0]);
 		widgetPageSettings.setLayoutTemplateId("1_2_columns_i");
+		widgetPageSettings.setNavigationSettings(
+			new NavigationSettings() {
+				{
+					setTarget(() -> null);
+					setTargetType(TargetType.SPECIFIC_FRAME);
+				}
+			});
+		widgetPageSettings.setOpenGraphSettings(
+			new OpenGraphSettings() {
+				{
+					setDescription_i18n(new HashMap<>());
+					setImageAlt_i18n(new HashMap<>());
+					setTitle_i18n(new HashMap<>());
+				}
+			});
+		widgetPageSettings.setQueryString(() -> null);
+		widgetPageSettings.setSeoSettings(
+			new SEOSettings() {
+				{
+					setCustomCanonicalURL_i18n(new HashMap<>());
+					setDescription_i18n(new HashMap<>());
+					setHtmlTitle_i18n(new HashMap<>());
+					setRobots_i18n(new HashMap<>());
+					setSeoKeywords_i18n(new HashMap<>());
+					setSitemapSettings(
+						new SitemapSettings() {
+							{
+								setChangeFrequency(ChangeFrequency.DAILY);
+								setInclude(true);
+								setIncludeChildSitePages(true);
+								setPagePriority(0.0);
+							}
+						});
+				}
+			});
 
 		String sitePageExternalReferenceCode =
 			sitePage.getExternalReferenceCode();
@@ -1577,8 +1613,44 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		WidgetPageSettings widgetPageSettings =
 			(WidgetPageSettings)sitePage.getPageSettings();
 
+		widgetPageSettings.setCustomMetaTags(new CustomMetaTag[0]);
 		widgetPageSettings.setInheritChanges(false);
 		widgetPageSettings.setLayoutTemplateId("2_columns_ii");
+		widgetPageSettings.setNavigationSettings(
+			new NavigationSettings() {
+				{
+					setTarget(() -> null);
+					setTargetType(TargetType.SPECIFIC_FRAME);
+				}
+			});
+		widgetPageSettings.setOpenGraphSettings(
+			new OpenGraphSettings() {
+				{
+					setDescription_i18n(new HashMap<>());
+					setImageAlt_i18n(new HashMap<>());
+					setTitle_i18n(new HashMap<>());
+				}
+			});
+		widgetPageSettings.setQueryString(() -> null);
+		widgetPageSettings.setSeoSettings(
+			new SEOSettings() {
+				{
+					setCustomCanonicalURL_i18n(new HashMap<>());
+					setDescription_i18n(new HashMap<>());
+					setHtmlTitle_i18n(new HashMap<>());
+					setRobots_i18n(new HashMap<>());
+					setSeoKeywords_i18n(new HashMap<>());
+					setSitemapSettings(
+						new SitemapSettings() {
+							{
+								setChangeFrequency(ChangeFrequency.DAILY);
+								setInclude(true);
+								setIncludeChildSitePages(true);
+								setPagePriority(0.0);
+							}
+						});
+				}
+			});
 
 		_testPatchSiteSitePage(
 			sitePage,

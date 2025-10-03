@@ -17,6 +17,7 @@ import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
@@ -49,6 +50,8 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+
+import jakarta.validation.ValidationException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -317,9 +320,31 @@ public class BatchEngineImportTaskExecutorImpl
 	}
 
 	private void _handleException(
-			BatchEngineImportTask batchEngineImportTask, Exception exception,
-			int processedItemsCount)
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
+			Exception exception1, int processedItemsCount)
 		throws Exception {
+
+		if (exception1 instanceof
+				BatchEngineImportTaskItemConversionException) {
+
+			BatchEngineImportTaskItemConversionException
+				batchEngineImportTaskItemConversionException =
+					(BatchEngineImportTaskItemConversionException)exception1;
+
+			Object item =
+				batchEngineImportTaskItemConversionException.getItem();
+
+			Exception exception2 =
+				_unwrapBatchEngineImportTaskItemConversionException(
+					batchEngineImportTaskItemConversionException);
+
+			_batchEngineImportTaskExceptionHandlers.forEach(
+				batchEngineImportTaskExceptionHandler ->
+					batchEngineImportTaskExceptionHandler.handle(
+						batchEngineImportTask, batchEngineTaskItemDelegate,
+						exception2, item));
+		}
 
 		_batchEngineImportTaskErrorLocalService.addBatchEngineImportTaskError(
 			batchEngineImportTask.getCompanyId(),
@@ -327,19 +352,19 @@ public class BatchEngineImportTaskExecutorImpl
 			batchEngineImportTask.getBatchEngineImportTaskId(), null,
 			processedItemsCount,
 			ErrorMessageUtil.getErrorMessage(
-				exception, batchEngineImportTask.getUserId()));
+				exception1, batchEngineImportTask.getUserId()));
 
 		if (batchEngineImportTask.getImportStrategy() ==
 				BatchEngineImportTaskConstants.
 					IMPORT_STRATEGY_ON_ERROR_CONTINUE) {
 
-			_log.error(exception);
+			_log.error(exception1);
 		}
 		else if (batchEngineImportTask.getImportStrategy() ==
 					BatchEngineImportTaskConstants.
 						IMPORT_STRATEGY_ON_ERROR_FAIL) {
 
-			throw exception;
+			throw exception1;
 		}
 	}
 
@@ -398,7 +423,8 @@ public class BatchEngineImportTaskExecutorImpl
 					processedItemsCount++;
 
 					_handleException(
-						batchEngineImportTask, exception, processedItemsCount);
+						batchEngineImportTask, batchEngineTaskItemDelegate,
+						exception, processedItemsCount);
 				}
 
 				if (items.size() == batchEngineImportTask.getBatchSize()) {
@@ -441,6 +467,30 @@ public class BatchEngineImportTaskExecutorImpl
 			BatchEngineImportTaskItemReaderUtil.mapFieldNames(
 				fieldNameMapping, fieldNameValueMap),
 			_itemReaderPostActions.toList());
+	}
+
+	private Exception _unwrapBatchEngineImportTaskItemConversionException(
+		BatchEngineImportTaskItemConversionException
+			batchEngineImportTaskItemConversionException) {
+
+		Throwable throwable1 =
+			batchEngineImportTaskItemConversionException.getCause();
+
+		if (!(throwable1 instanceof ReflectiveOperationException)) {
+			if (throwable1 instanceof Exception) {
+				return (Exception)throwable1;
+			}
+
+			return batchEngineImportTaskItemConversionException;
+		}
+
+		Throwable throwable2 = throwable1.getCause();
+
+		if (throwable2 instanceof ValidationException) {
+			return (ValidationException)throwable2;
+		}
+
+		return (ReflectiveOperationException)throwable1;
 	}
 
 	private void _updateBatchEngineImportTask(

@@ -42,11 +42,6 @@ const DownloadTable: React.FC<DownloadTableProps> = ({
 					title: i18n.translate('version'),
 				},
 				{
-					key: 'version',
-					render: (version) => version,
-					title: i18n.translate('supported-version'),
-				},
-				{
 					align: 'right',
 					key: 'version',
 					render: (_, item) => (

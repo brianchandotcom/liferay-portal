@@ -7,6 +7,7 @@ package com.liferay.data.cleanup.internal.upgrade.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -97,14 +98,18 @@ public class DLFileEntryDataCleanupPreupgradeProcessTest
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DLFileEntry"),
-						", 1 row deleted because fileEntryId ", fileEntryId1,
-						" name was null")));
+						", 1 row deleted because ",
+						_dbInspector.normalizeName("fileEntryId"),
+						StringPool.SPACE, fileEntryId1, StringPool.SPACE,
+						_dbInspector.normalizeName("name"), " was null")));
 			Assert.assertTrue(
 				messages.contains(
 					StringBundler.concat(
 						"Table ", _dbInspector.normalizeName("DLFileEntry"),
-						", 1 row deleted because fileEntryId ", fileEntryId2,
-						" name was ",
+						", 1 row deleted because ",
+						_dbInspector.normalizeName("fileEntryId"),
+						StringPool.SPACE, fileEntryId2, StringPool.SPACE,
+						_dbInspector.normalizeName("name"), " was ",
 						(DBManagerUtil.getDBType() == DBType.ORACLE) ? "null" :
 							"empty")));
 		}

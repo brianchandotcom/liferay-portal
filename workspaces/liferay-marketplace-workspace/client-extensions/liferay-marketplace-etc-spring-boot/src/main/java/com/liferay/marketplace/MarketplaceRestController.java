@@ -155,11 +155,15 @@ public class MarketplaceRestController extends BaseRestController {
 		Order order = _marketplaceService.getOrder(
 			commerceOrderJSONObject.getLong("id"));
 
-		if (Objects.equals(
+		if ((Objects.equals(
 				commerceOrderJSONObject.getString("paymentMethod"),
 				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
-			(paymentStatus ==
-				MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) {
+			 (paymentStatus ==
+				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) ||
+			(Objects.equals(
+				commerceOrderJSONObject.getString("paymentMethod"),
+				MarketplaceConstants.ORDER_PAYMENT_METHOD_PAYPAL) &&
+			 (paymentStatus == MarketplaceConstants.ORDER_STATUS_COMPLETED))) {
 
 			_sendOrderPurchasedNotification(order);
 		}

@@ -89,7 +89,7 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			OffsetDateTime lessonDateModified = OffsetDateTime.parse(
+			OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
 				lessonJSONObject.getString("dateModified")
 			).truncatedTo(
 				ChronoUnit.MINUTES
@@ -126,13 +126,13 @@ public class LearnRestController extends BaseRestController {
 				((itemsJSONArray != null) && (itemsJSONArray.length() > 0)) ?
 					itemsJSONArray.optJSONObject(0) : null;
 
-			OffsetDateTime audioDateModified = null;
+			OffsetDateTime offsetDateTime2 = null;
 
 			if ((itemsJSONArray != null) && !itemsJSONArray.isEmpty()) {
 				JSONObject audioFileItemJSONObject =
 					itemsJSONArray.getJSONObject(0);
 
-				audioDateModified = OffsetDateTime.parse(
+				offsetDateTime2 = OffsetDateTime.parse(
 					audioFileItemJSONObject.getString("dateModified")
 				).truncatedTo(
 					ChronoUnit.MINUTES
@@ -140,7 +140,7 @@ public class LearnRestController extends BaseRestController {
 			}
 
 			if ((itemsJSONArray == null) || itemsJSONArray.isEmpty() ||
-				lessonDateModified.isAfter(audioDateModified)) {
+				offsetDateTime1.isAfter(offsetDateTime2)) {
 
 				ByteArrayOutputStream byteArrayOutputStream =
 					new ByteArrayOutputStream();
@@ -195,8 +195,8 @@ public class LearnRestController extends BaseRestController {
 
 				JSONObject responseBodyJSONObject = new JSONObject();
 
-				if ((audioDateModified != null) &&
-					lessonDateModified.isAfter(audioDateModified)) {
+				if ((offsetDateTime2 != null) &&
+					offsetDateTime1.isAfter(offsetDateTime2)) {
 
 					responseBodyJSONObject.put(
 						"id", documentItemJSONObject.optString("id", null));

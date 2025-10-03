@@ -731,10 +731,10 @@ public class PortletRenderUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortletRenderUtil.class);
 
-	private static final Map<String, Boolean> _tokenized =
-		new ConcurrentHashMap<>();
 	private static final Set<String> _specialPrefixes = SetUtil.fromArray(
 		"module:", "nocombo:");
+	private static final Map<String, Boolean> _tokenized =
+		new ConcurrentHashMap<>();
 
 	private enum URLType {
 

@@ -440,7 +440,8 @@ public class PortletRenderUtilTest {
 		);
 	}
 
-	private String _hash = RandomTestUtil.randomString(8);
+	private static final String _hash = RandomTestUtil.randomString(8);
+
 	private final MockedStatic<HashedFilesRegistryUtil>
 		_hashedFilesRegistryUtilMockedStatic = Mockito.mockStatic(
 			HashedFilesRegistryUtil.class);

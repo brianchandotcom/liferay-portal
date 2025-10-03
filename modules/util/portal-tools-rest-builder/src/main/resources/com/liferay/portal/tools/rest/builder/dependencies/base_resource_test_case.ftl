@@ -57,7 +57,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 		<#assign generatePermissionsJavaMethodSignatures = generatePermissionsJavaMethodSignatures + [javaMethodSignature] />
 	</#if>
-	<#if freeMarkerTool.isExternalReferenceCodeMethod("delete", javaMethodSignature) && properties?keys?seq_contains("externalReferenceCode") && !parentSchemaName?has_content>
+	<#if freeMarkerTool.isExternalReferenceCodeMethod("delete", javaMethodSignature) && properties?keys?seq_contains("externalReferenceCode") && !javaMethodSignature.parentSchemaName?has_content>
 		<#assign useDeleteByExternalReferenceCode = true />
 	<#elseif stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && (freeMarkerTool.hasPathParameter(javaMethodSignature, "id") || freeMarkerTool.hasPathParameter(javaMethodSignature, schemaVarName + "Id")) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
 		<#assign useDeleteById = true />

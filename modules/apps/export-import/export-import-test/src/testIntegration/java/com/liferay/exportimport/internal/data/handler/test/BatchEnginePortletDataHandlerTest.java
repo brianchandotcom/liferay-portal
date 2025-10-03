@@ -1468,16 +1468,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 				JSONAssert.assertEquals(
 					JSONUtil.put(
-						JSONUtil.put(
-							"externalReferenceCode",
-							objectEntry.getExternalReferenceCode()
-						).put(
-							"scopeId",
-							(Long)_getObjectEntryGroupId(
-								group.getGroupId(), scope)
-						).put(
-							"scopeKey", _getObjectEntryScopeKey(group, scope)
-						)
+						_toSimplifiedObjectEntryJSONObject(
+							group, objectEntry, scope)
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i
@@ -1495,16 +1487,8 @@ public class BatchEnginePortletDataHandlerTest {
 
 				JSONAssert.assertEquals(
 					JSONUtil.put(
-						JSONUtil.put(
-							"externalReferenceCode",
-							objectEntry.getExternalReferenceCode()
-						).put(
-							"scopeId",
-							(Long)_getObjectEntryGroupId(
-								group.getGroupId(), scope)
-						).put(
-							"scopeKey", _getObjectEntryScopeKey(group, scope)
-						)
+						_toSimplifiedObjectEntryJSONObject(
+							group, objectEntry, scope)
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i
@@ -1519,14 +1503,8 @@ public class BatchEnginePortletDataHandlerTest {
 				ObjectEntry objectEntry = objectEntries1[i];
 
 				JSONAssert.assertEquals(
-					JSONUtil.put(
-						"externalReferenceCode",
-						objectEntry.getExternalReferenceCode()
-					).put(
-						"scopeId",
-						(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
-					).put(
-						"scopeKey", _getObjectEntryScopeKey(group, scope)
+					_toSimplifiedObjectEntryJSONObject(
+						group, objectEntry, scope
 					).toString(),
 					exportedObjectEntriesJSONArray.getJSONObject(
 						i
@@ -1655,6 +1633,23 @@ public class BatchEnginePortletDataHandlerTest {
 							new Date(System.currentTimeMillis() - 10000),
 							new Date(System.currentTimeMillis() - 5000), null),
 					portletDataHandler)));
+	}
+
+	/**
+	 * @see com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter#_toSimplifiedObjectEntry(
+	 *      com.liferay.object.rest.dto.v1_0.ObjectEntry, ObjectDefinition,
+	 *      ObjectEntryVersion, ObjectEntry)
+	 */
+	private JSONObject _toSimplifiedObjectEntryJSONObject(
+		Group group, ObjectEntry objectEntry, String scope) {
+
+		return JSONUtil.put(
+			"externalReferenceCode", objectEntry.getExternalReferenceCode()
+		).put(
+			"scopeId", (Long)_getObjectEntryGroupId(group.getGroupId(), scope)
+		).put(
+			"scopeKey", _getObjectEntryScopeKey(group, scope)
+		);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA =

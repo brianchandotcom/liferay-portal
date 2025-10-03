@@ -90,7 +90,6 @@ public class SEOSettingsUtil {
 						return ChangeFrequency.create(
 							StringUtil.upperCaseFirstLetter(sitemapChangeFreq));
 					});
-
 				setInclude(
 					() -> {
 						if (sitemapInclude == null) {
@@ -107,7 +106,6 @@ public class SEOSettingsUtil {
 
 						return null;
 					});
-
 				setIncludeChildSitePages(
 					() -> {
 						if (sitemapIncludeChildLayouts == null) {
@@ -124,7 +122,6 @@ public class SEOSettingsUtil {
 
 						return null;
 					});
-
 				setPagePriority(
 					() -> {
 						if (sitemapPriority == null) {

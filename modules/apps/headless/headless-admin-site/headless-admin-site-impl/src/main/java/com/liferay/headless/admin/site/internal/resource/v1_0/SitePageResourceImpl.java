@@ -819,6 +819,7 @@ public class SitePageResourceImpl
 		throws Exception {
 
 		boolean canonicalURLEnabled = false;
+
 		Map<Locale, String> canonicalURLMap = new HashMap<>();
 
 		if ((pageSettings != null) && (pageSettings.getSeoSettings() != null)) {

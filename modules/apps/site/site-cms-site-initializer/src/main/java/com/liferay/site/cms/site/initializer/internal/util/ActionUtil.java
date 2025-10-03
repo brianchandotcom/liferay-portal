@@ -192,9 +192,9 @@ public class ActionUtil {
 					LanguageUtil.format(
 						serviceContext.getLocale(), "new-x",
 						infoForm.getLabel(serviceContext.getLocale())))),
-			formStyledLayoutStructureItem, formManager,
-			"INPUTS-inline-text-input", layout, layoutStructure,
-			infoForm.getInfoField("title"), false, segmentsExperienceId,
+			formManager, "INPUTS-inline-text-input",
+			infoForm.getInfoField("title"), layout, layoutStructure,
+			formStyledLayoutStructureItem, false, segmentsExperienceId,
 			serviceContext,
 			JSONUtil.put(
 				"marginBottom", "5"
@@ -221,9 +221,10 @@ public class ActionUtil {
 		}
 
 		_addInputFragmentEntryLink(
-			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
-			formManager, "INPUTS-friendly-url-input", layout, layoutStructure,
-			infoForm.getInfoField("objectEntryFriendlyURL"), false,
+			addedFragmentEntryLinks, null, formManager,
+			"INPUTS-friendly-url-input",
+			infoForm.getInfoField("objectEntryFriendlyURL"), layout,
+			layoutStructure, formStyledLayoutStructureItem, false,
 			segmentsExperienceId, serviceContext,
 			JSONUtil.put("marginBottom", "5"));
 
@@ -322,9 +323,9 @@ public class ActionUtil {
 				layout.getPlid());
 
 		_addInputFragmentEntryLink(
-			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
-			formManager, "INPUTS-text-input", layout, layoutStructure,
-			infoForm.getInfoField("objectEntryFriendlyURL"), true,
+			addedFragmentEntryLinks, null, formManager, "INPUTS-text-input",
+			infoForm.getInfoField("objectEntryFriendlyURL"), layout,
+			layoutStructure, formStyledLayoutStructureItem, true,
 			segmentsExperienceId, serviceContext,
 			JSONUtil.put("marginBottom", "24px"));
 
@@ -389,9 +390,9 @@ public class ActionUtil {
 				"cssClasses", JSONUtil.put("lfr-main-form-container")));
 
 		_addInputFragmentEntryLink(
-			addedFragmentEntryLinks, null, formStyledLayoutStructureItem,
-			formManager, "INPUTS-text-input", layout, layoutStructure,
-			infoForm.getInfoField("objectEntryFriendlyURL"), false,
+			addedFragmentEntryLinks, null, formManager, "INPUTS-text-input",
+			infoForm.getInfoField("objectEntryFriendlyURL"), layout,
+			layoutStructure, formStyledLayoutStructureItem, false,
 			segmentsExperienceId, serviceContext,
 			JSONUtil.put("marginBottom", "24px"));
 
@@ -1128,12 +1129,12 @@ public class ActionUtil {
 
 	private static void _addInputFragmentEntryLink(
 			List<FragmentEntryLink> addedFragmentEntryLinks,
-			JSONObject configurationJSONObject,
-			LayoutStructureItem layoutStructureItem, FormManager formManager,
-			String fragmentEntryKey, Layout layout,
-			LayoutStructure layoutStructure, InfoField<?> infoField,
-			boolean readOnly, long segmentsExperienceId,
-			ServiceContext serviceContext, JSONObject stylesJSONObject)
+			JSONObject configurationJSONObject, FormManager formManager,
+			String fragmentEntryKey, InfoField<?> infoField, Layout layout,
+			LayoutStructure layoutStructure,
+			LayoutStructureItem layoutStructureItem, boolean readOnly,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			JSONObject stylesJSONObject)
 		throws Exception {
 
 		if (infoField == null) {
@@ -1223,10 +1224,10 @@ public class ActionUtil {
 			}
 			else {
 				_addInputFragmentEntryLink(
-					addedFragmentEntryLinks, null, layoutStructureItem,
-					formManager, null, layout, layoutStructure,
-					(InfoField<?>)infoFieldSetEntry, false,
-					segmentsExperienceId, serviceContext,
+					addedFragmentEntryLinks, null, formManager, null,
+					(InfoField<?>)infoFieldSetEntry, layout, layoutStructure,
+					layoutStructureItem, false, segmentsExperienceId,
+					serviceContext,
 					JSONUtil.put(
 						"styles", JSONUtil.put("marginBottom", "16px")));
 			}

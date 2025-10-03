@@ -89,8 +89,9 @@ public class FormManagerImpl implements FormManager {
 		}
 
 		return _addFragmentEntryLink(
-			layoutStructureItem, fragmentEntry, infoField.getUniqueId(), layout,
-			layoutStructure, readOnly, segmentsExperienceId, serviceContext);
+			fragmentEntry, infoField.getUniqueId(), layout, layoutStructure,
+			layoutStructureItem, readOnly, segmentsExperienceId,
+			serviceContext);
 	}
 
 	@Override
@@ -215,9 +216,9 @@ public class FormManagerImpl implements FormManager {
 	}
 
 	private FragmentStyledLayoutStructureItem _addFragmentEntryLink(
-			LayoutStructureItem layoutStructureItem,
 			FragmentEntry fragmentEntry, String infoFieldUniqueId,
-			Layout layout, LayoutStructure layoutStructure, boolean readOnly,
+			Layout layout, LayoutStructure layoutStructure,
+			LayoutStructureItem layoutStructureItem, boolean readOnly,
 			long segmentsExperienceId, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -300,8 +301,8 @@ public class FormManagerImpl implements FormManager {
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			_addFragmentEntryLink(
-				formStyledLayoutStructureItem, fragmentEntry, uniqueId, layout,
-				layoutStructure, readOnly, segmentsExperienceId,
+				fragmentEntry, uniqueId, layout, layoutStructure,
+				formStyledLayoutStructureItem, readOnly, segmentsExperienceId,
 				serviceContext);
 
 		FragmentEntryLink fragmentEntryLink =

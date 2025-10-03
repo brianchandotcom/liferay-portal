@@ -1422,6 +1422,20 @@ public class DefaultObjectEntryManagerImplTest
 			Assert.assertEquals(name, role.getName());
 		}
 
+		Role guestRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.GUEST);
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.InvalidValue.class,
+			"The value is invalid for object field \"assignee\"",
+			() -> _addObjectEntryWithAssigneeObjectField(
+				HashMapBuilder.put(
+					"externalReferenceCode",
+					guestRole.getExternalReferenceCode()
+				).put(
+					"type", "Role"
+				).build()));
+
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.InvalidValue.class,
 			"The value is invalid for object field \"assignee\"",

@@ -48,11 +48,11 @@ public class BooleanQueryParserUtil {
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		Map<String, SimpleClause> simpleClauseMap = (Map)clauseMap.get(
+		Map<String, SimpleClause> simpleClauses = (Map)clauseMap.get(
 			"simple");
 
 		for (Map.Entry<String, SimpleClause> entry :
-				simpleClauseMap.entrySet()) {
+				simpleClauses.entrySet()) {
 
 			SimpleClause simpleClause = entry.getValue();
 

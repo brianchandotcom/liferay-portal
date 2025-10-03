@@ -367,7 +367,8 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 				layoutStructure.toString());
 
 		return _pageElementDTOConverter.toDTO(
-			_getDTOConverterContext(layoutStructure,groupId), layoutStructureItem);
+			_getDTOConverterContext(layoutStructure, groupId),
+			layoutStructureItem);
 	}
 
 	private DTOConverterContext _getDTOConverterContext(

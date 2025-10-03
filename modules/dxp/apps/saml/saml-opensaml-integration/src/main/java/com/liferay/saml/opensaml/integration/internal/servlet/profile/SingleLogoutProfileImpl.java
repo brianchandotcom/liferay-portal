@@ -617,8 +617,8 @@ public class SingleLogoutProfileImpl
 
 			_samlIbSloMessageLocalService.addSamlIbSloMessage(
 				samlSpSession.getCompanyId(),
-				OpenSamlUtil.marshall(logoutRequest),
 				samlPeerBinding.getSamlPeerEntityId(),
+				OpenSamlUtil.marshall(logoutRequest),
 				samlSpSession.getSessionIndex());
 
 			List<SamlIdpSpSession> samlIdpSpSessions = _getSamlIdpSpSessions(
@@ -1317,8 +1317,8 @@ public class SingleLogoutProfileImpl
 
 			_samlIbSloMessageLocalService.addSamlIbSloMessage(
 				samlIdpSpSession.getCompanyId(),
-				OpenSamlUtil.marshall(logoutRequest),
-				samlPeerEntityContext.getEntityId(), sessionIndexes.get(0));
+				samlPeerEntityContext.getEntityId(),
+				OpenSamlUtil.marshall(logoutRequest), sessionIndexes.get(0));
 
 			_sendIbLogoutRequest(
 				httpServletRequest, httpServletResponse, samlIdpSpSession,

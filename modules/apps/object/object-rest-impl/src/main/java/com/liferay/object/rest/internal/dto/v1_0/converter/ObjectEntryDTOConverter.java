@@ -715,12 +715,20 @@ public class ObjectEntryDTOConverter
 
 		UriInfo uriInfo = dtoConverterContext.getUriInfo();
 
-		return new DefaultDTOConverterContext(
-			dtoConverterContext.isAcceptAllLanguages(), null,
-			dtoConverterContext.getDTOConverterRegistry(),
-			dtoConverterContext.getHttpServletRequest(), objectEntryId,
-			dtoConverterContext.getLocale(), uriInfo,
-			dtoConverterContext.getUser());
+		DTOConverterContext defaultDTOConverterContext =
+			new DefaultDTOConverterContext(
+				dtoConverterContext.isAcceptAllLanguages(), null,
+				dtoConverterContext.getDTOConverterRegistry(),
+				dtoConverterContext.getHttpServletRequest(), objectEntryId,
+				dtoConverterContext.getLocale(), uriInfo,
+				dtoConverterContext.getUser());
+
+		defaultDTOConverterContext.setAttribute(
+			"preferApproved",
+			GetterUtil.getBoolean(
+				dtoConverterContext.getAttribute("preferApproved")));
+
+		return defaultDTOConverterContext;
 	}
 
 	private FileEntry _getFileEntry(

@@ -65,14 +65,14 @@ public class PortletRenderUtilTest {
 
 		_assertEquals(
 			Arrays.asList(
-				"/header-portal.(" + _hash + ").css",
-				"/header-portal.tokenized.(" + _hash +
+				"/header-portal.(" + _HASH + ").css",
+				"/header-portal.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/nocombo-header-portal.(" + _hash + ").css",
-				"/o/portlet-web/header-portlet.(" + _hash + ").css",
-				"/o/portlet-web/header-portlet.tokenized.(" + _hash +
+				"/nocombo-header-portal.(" + _HASH + ").css",
+				"/o/portlet-web/header-portlet.(" + _HASH + ").css",
+				"/o/portlet-web/header-portlet.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/o/portlet-web/nocombo-header-portlet.(" + _hash + ").css",
+				"/o/portlet-web/nocombo-header-portlet.(" + _HASH + ").css",
 				"http://example.com/header-portal.css",
 				"http://example.com/header-portlet.css"),
 			portletRenderParts.getHeaderCssPaths());
@@ -102,14 +102,14 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getFooterJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/footer-portal.(" + _hash + ").css",
-				"/footer-portal.tokenized.(" + _hash +
+				"/footer-portal.(" + _HASH + ").css",
+				"/footer-portal.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/nocombo-footer-portal.(" + _hash + ").css",
-				"/o/portlet-web/footer-portlet.(" + _hash + ").css",
-				"/o/portlet-web/footer-portlet.tokenized.(" + _hash +
+				"/nocombo-footer-portal.(" + _HASH + ").css",
+				"/o/portlet-web/footer-portlet.(" + _HASH + ").css",
+				"/o/portlet-web/footer-portlet.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/o/portlet-web/nocombo-footer-portlet.(" + _hash + ").css",
+				"/o/portlet-web/nocombo-footer-portlet.(" + _HASH + ").css",
 				"http://example.com/footer-portal.css",
 				"http://example.com/footer-portlet.css"),
 			portletRenderParts.getFooterCssPaths());
@@ -130,14 +130,14 @@ public class PortletRenderUtilTest {
 
 		_assertEquals(
 			Arrays.asList(
-				"/portal/header-portal.(" + _hash + ").css",
-				"/portal/header-portal.tokenized.(" + _hash +
+				"/portal/header-portal.(" + _HASH + ").css",
+				"/portal/header-portal.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/portal/nocombo-header-portal.(" + _hash + ").css",
-				"/portal/o/portlet-web/header-portlet.(" + _hash + ").css",
-				"/portal/o/portlet-web/header-portlet.tokenized.(" + _hash +
+				"/portal/nocombo-header-portal.(" + _HASH + ").css",
+				"/portal/o/portlet-web/header-portlet.(" + _HASH + ").css",
+				"/portal/o/portlet-web/header-portlet.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/portal/o/portlet-web/nocombo-header-portlet.(" + _hash +
+				"/portal/o/portlet-web/nocombo-header-portlet.(" + _HASH +
 					").css",
 				"http://example.com/header-portal.css",
 				"http://example.com/header-portlet.css"),
@@ -157,14 +157,14 @@ public class PortletRenderUtilTest {
 			portletRenderParts.getHeaderJavaScriptPaths());
 		_assertEquals(
 			Arrays.asList(
-				"/portal/footer-portal.(" + _hash + ").css",
-				"/portal/footer-portal.tokenized.(" + _hash +
+				"/portal/footer-portal.(" + _HASH + ").css",
+				"/portal/footer-portal.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/portal/nocombo-footer-portal.(" + _hash + ").css",
-				"/portal/o/portlet-web/footer-portlet.(" + _hash + ").css",
-				"/portal/o/portlet-web/footer-portlet.tokenized.(" + _hash +
+				"/portal/nocombo-footer-portal.(" + _HASH + ").css",
+				"/portal/o/portlet-web/footer-portlet.(" + _HASH + ").css",
+				"/portal/o/portlet-web/footer-portlet.tokenized.(" + _HASH +
 					").css?themeId=classic_WAR_classictheme&tokenize=true",
-				"/portal/o/portlet-web/nocombo-footer-portlet.(" + _hash +
+				"/portal/o/portlet-web/nocombo-footer-portlet.(" + _HASH +
 					").css",
 				"http://example.com/footer-portal.css",
 				"http://example.com/footer-portlet.css"),
@@ -210,7 +210,7 @@ public class PortletRenderUtilTest {
 			() -> HashedFilesRegistryUtil.getHashedFileURI(Mockito.anyString())
 		).thenAnswer(
 			invocationOnMock -> HashedFilesUtil.addHash(
-				invocationOnMock.getArgument(0), _hash)
+				invocationOnMock.getArgument(0), _HASH)
 		);
 
 		_hashedFilesRegistryUtilMockedStatic.when(
@@ -440,7 +440,7 @@ public class PortletRenderUtilTest {
 		);
 	}
 
-	private static final String _hash = RandomTestUtil.randomString(8);
+	private static final String _HASH = RandomTestUtil.randomString(8);
 
 	private final MockedStatic<HashedFilesRegistryUtil>
 		_hashedFilesRegistryUtilMockedStatic = Mockito.mockStatic(

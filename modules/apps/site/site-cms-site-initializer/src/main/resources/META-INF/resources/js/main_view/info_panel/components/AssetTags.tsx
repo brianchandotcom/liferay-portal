@@ -115,7 +115,7 @@ const AssetTags = ({
 							setTimeout(() => setValue(''));
 						}
 					}}
-					placeholder={sub(Liferay.Language.get('add-x'), 'tag')}
+					placeholder={Liferay.Language.get('add-')}
 					primaryAction={
 						!!value.length &&
 						!keywords.includes(value) && {

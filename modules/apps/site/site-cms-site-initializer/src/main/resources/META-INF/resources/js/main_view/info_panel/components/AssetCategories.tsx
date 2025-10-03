@@ -6,7 +6,6 @@
 import Label from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import {ItemSelector} from '@liferay/frontend-js-item-selector-web';
-import {sub} from 'frontend-js-web';
 import React, {useCallback, useState} from 'react';
 
 import {
@@ -136,7 +135,7 @@ const AssetCategories = ({
 							setTimeout(() => setValue(''));
 						}
 					}}
-					placeholder={sub(Liferay.Language.get('add-x'), 'category')}
+					placeholder={Liferay.Language.get('add-category')}
 					sizing={inputSize}
 					value={value}
 				>

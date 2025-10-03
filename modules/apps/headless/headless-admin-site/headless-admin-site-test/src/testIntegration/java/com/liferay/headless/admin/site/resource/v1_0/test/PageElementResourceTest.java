@@ -6,13 +6,26 @@
 package com.liferay.headless.admin.site.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemContextReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
+import com.liferay.journal.constants.JournalFolderConstants;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.responsive.ViewportSize;
@@ -20,15 +33,23 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -219,12 +240,51 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementDefinition.Type.COLUMN, StringPool.BLANK));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "customCss", false,
-				StringUtil.randomString()));
+				null, "custom css 1", null, null, "FileEntry_fileName", null,
+				false, RandomTestUtil.randomString()));
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2", "cssClass3"},
-				"customCss 2", false, StringUtil.randomString()));
+				null, "custom css 1", FileEntry.class.getName(),
+				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
+				null, false, RandomTestUtil.randomString()));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				null, "custom css 1", JournalArticle.class.getName(),
+				journalArticle.getExternalReferenceCode(),
+				"JournalArticle_title", null, false,
+				RandomTestUtil.randomString()));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		_getContainerPageElement(
+			new String[] {"1", "2", "3"}, null, Layout.class.getName(),
+			layout.getExternalReferenceCode(), null, null, true,
+			RandomTestUtil.randomString());
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				new String[] {"cssClass1", "cssClass2"}, "custom css 2", null,
+				null, null,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+				).put(
+					LocaleUtil.US.toString(), "https://www.liferay.com"
+				).build(),
+				false, RandomTestUtil.randomString()));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
 				PageElementDefinition.Type.DROP_ZONE, StringPool.BLANK));
@@ -282,14 +342,61 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "customCss", true,
-				externalReferenceCode));
+				null, "custom css 1", null, null, "FileEntry_fileName", null,
+				false, externalReferenceCode));
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2", "cssClass3"},
-				"customCss 2", false, externalReferenceCode));
-		_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
-			externalReferenceCode);
+				null, "custom css 1", FileEntry.class.getName(),
+				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
+				null, false, externalReferenceCode));
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			testGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				null, "custom css 1", JournalArticle.class.getName(),
+				journalArticle.getExternalReferenceCode(),
+				"JournalArticle_title", null, false, externalReferenceCode));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				new String[] {"1", "2", "3"}, null, Layout.class.getName(),
+				layout.getExternalReferenceCode(), null, null, true,
+				externalReferenceCode));
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				new String[] {"cssClass1", "cssClass2"}, "custom css 2", null,
+				null, null,
+				HashMapBuilder.put(
+					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
+				).put(
+					LocaleUtil.US.toString(), "https://www.liferay.com"
+				).build(),
+				false, externalReferenceCode));
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElement(
+				new ContainerPageElementDefinition() {
+					{
+						setIndexed(false);
+						setType(Type.CONTAINER);
+					}
+				},
+				externalReferenceCode));
 	}
 
 	@Override
@@ -426,7 +533,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getContainerPageElement(
-			String[] cssClasses, String customCss, boolean indexed,
+			String[] cssClasses, String customCss, String fragmentLinkClassName,
+			String fragmentLinkExternalReferenceCode,
+			String fragmentLinkFieldKey,
+			Map<String, String> fragmentLinkLocalizedValues, boolean indexed,
 			String pageElementExternalReferenceCode)
 		throws Exception {
 
@@ -437,6 +547,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			ContainerPageElementDefinition.ContentVisibility.AUTO);
 		containerPageElementDefinition.setCssClasses(cssClasses);
 		containerPageElementDefinition.setCustomCSS(customCss);
+		containerPageElementDefinition.setFragmentLink(
+			() -> _getFragmentLink(
+				fragmentLinkClassName, fragmentLinkExternalReferenceCode,
+				fragmentLinkFieldKey, fragmentLinkLocalizedValues));
 		containerPageElementDefinition.setFragmentViewports(
 			_getFragmentViewports());
 		containerPageElementDefinition.setHtmlProperties(
@@ -461,6 +575,84 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getPageElement(
 			containerPageElementDefinition, pageElementExternalReferenceCode);
+	}
+
+	private FragmentLink _getFragmentLink(
+		String className, String externalReferenceCode, String fieldKey,
+		Map<String, String> localizedValues) {
+
+		return new FragmentLink() {
+			{
+				setTarget(Target.BLANK);
+				setValue(
+					() -> {
+						if (localizedValues != null) {
+							return _getFragmentLinkInlineValue(localizedValues);
+						}
+
+						return _getFragmentLinkMappedValue(
+							className, externalReferenceCode, fieldKey);
+					});
+			}
+		};
+	}
+
+	private FragmentLinkInlineValue _getFragmentLinkInlineValue(
+		Map<String, String> localizedValues) {
+
+		return new FragmentLinkInlineValue() {
+			{
+				setType(Type.FRAGMENT_INLINE_VALUE);
+				setValue_i18n(localizedValues);
+			}
+		};
+	}
+
+	private FragmentLinkMappedValue _getFragmentLinkMappedValue(
+		String className, String externalReferenceCode, String fieldKey) {
+
+		FragmentLinkMappedValue fragmentLinkMappedValue =
+			new FragmentLinkMappedValue();
+
+		Mapping mapping = new Mapping();
+
+		mapping.setFieldKey(() -> fieldKey);
+		mapping.setItemReference(
+			() -> _getFragmentMappedValueItemReference(
+				className, externalReferenceCode));
+
+		fragmentLinkMappedValue.setMapping(mapping);
+
+		fragmentLinkMappedValue.setType(
+			FragmentLinkValue.Type.FRAGMENT_MAPPED_VALUE);
+
+		return fragmentLinkMappedValue;
+	}
+
+	private FragmentMappedValueItemReference
+		_getFragmentMappedValueItemReference(
+			String className, String externalReferenceCode) {
+
+		if (Validator.isNull(className)) {
+			return new FragmentMappedValueItemContextReference() {
+				{
+					setContextSource(() -> ContextSource.DISPLAY_PAGE_ITEM);
+					setType(Type.CONTEXT_REFERENCE);
+				}
+			};
+		}
+
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				new FragmentMappedValueItemExternalReference();
+
+		fragmentMappedValueItemExternalReference.setClassName(className);
+		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
+			externalReferenceCode);
+		fragmentMappedValueItemExternalReference.setType(
+			FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE);
+
+		return fragmentMappedValueItemExternalReference;
 	}
 
 	private FragmentViewport[] _getFragmentViewports() {
@@ -569,22 +761,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		assertEquals(pageElement, putPageElement);
 		assertValid(putPageElement);
-	}
-
-	private void
-			_testPutSitePageSpecificationPageExperiencePageElementContainerDefaultValues(
-				String pageElementExternalReferenceCode)
-		throws Exception {
-
-		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getPageElement(
-				new ContainerPageElementDefinition() {
-					{
-						setIndexed(false);
-						setType(Type.CONTAINER);
-					}
-				},
-				pageElementExternalReferenceCode));
 	}
 
 	private Layout _draftLayout;

@@ -196,8 +196,8 @@ public class FragmentEntryLocalServiceImpl
 				FragmentEntry existingFragmentEntry =
 					fragmentEntryPersistence.fetchByG_FCI_LikeN_First(
 						sourceFragmentEntry.getGroupId(),
-						sourceFragmentEntry.getFragmentCollectionId(), copyValue,
-						null);
+						sourceFragmentEntry.getFragmentCollectionId(),
+						copyValue, null);
 
 				if (existingFragmentEntry == null) {
 					return true;

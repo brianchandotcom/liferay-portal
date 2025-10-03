@@ -478,8 +478,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 		StringBundler htmlSB = new StringBundler();
 
-		htmlSB.append("<div class=\"p-2\" ");
-		htmlSB.append("data-fragment-namespace=");
+		htmlSB.append("<div class=\"p-2\" data-fragment-namespace=");
 		htmlSB.append("\"${fragmentEntryLinkNamespace}\">");
 
 		for (String tokenName :

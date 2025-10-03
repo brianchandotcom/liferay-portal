@@ -99,7 +99,6 @@ public class FDSAPIURLBuilderTest {
 			).build(
 				false
 			));
-
 		Assert.assertEquals(
 			"/o/app/{siteId}/{foo}/{bob}/endpoint",
 			new FDSAPIURLBuilder(
@@ -248,7 +247,6 @@ public class FDSAPIURLBuilderTest {
 			).setTokenResolutions(
 				JSONUtil.put("foo", "baz")
 			).build());
-
 		Assert.assertEquals(
 			"/o/app/bar/endpoint",
 			new FDSAPIURLBuilder(
@@ -257,7 +255,6 @@ public class FDSAPIURLBuilderTest {
 			).setTokenResolutions(
 				JSONUtil.put("other", "baz")
 			).build());
-
 		Assert.assertEquals(
 			"/o/app/12345/bar/alice/endpoint",
 			new FDSAPIURLBuilder(
@@ -283,7 +280,6 @@ public class FDSAPIURLBuilderTest {
 			).setTokenResolutions(
 				JSONUtil.put("siteId", "00000")
 			).build());
-
 		Assert.assertEquals(
 			"/o/app/99999/endpoint",
 			new FDSAPIURLBuilder(

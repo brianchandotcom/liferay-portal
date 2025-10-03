@@ -17,6 +17,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -52,105 +53,118 @@ public class BatchEngineImportTaskItemReaderUtil {
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
 			Map<String, Object> fieldNameValueMap,
 			List<ItemReaderPostAction> itemReaderPostActions)
-		throws ReflectiveOperationException {
+		throws BatchEngineImportTaskItemConversionException {
 
-		Map<String, Serializable> extendedProperties = new HashMap<>();
+		T item = null;
 
-		JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(JsonTypeInfo.class);
+		try {
+			Map<String, Serializable> extendedProperties = new HashMap<>();
 
-		Class<? extends T> resolvedClass = itemClass;
+			JsonTypeInfo jsonTypeInfo = itemClass.getAnnotation(
+				JsonTypeInfo.class);
 
-		if (jsonTypeInfo != null) {
-			String property = jsonTypeInfo.property();
-
-			ObjectMapper objectMapper =
-				ObjectMapperProviderUtil.getBatchEngineObjectMapper();
-
-			T value = objectMapper.convertValue(
-				HashMapBuilder.put(
-					property, fieldNameValueMap.get(property)
-				).build(),
-				itemClass);
-
-			resolvedClass = (Class<? extends T>)value.getClass();
-		}
-
-		T item = resolvedClass.getDeclaredConstructor(
-		).newInstance();
-
-		Set<String> batchRestrictFields = _getBatchRestrictFields(
-			batchEngineImportTask);
-
-		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
-			String name = entry.getKey();
-
-			if (batchRestrictFields.contains(name)) {
-				continue;
-			}
-
-			Field field = null;
-
-			Field[] declaredFields = itemClass.getDeclaredFields();
+			Class<? extends T> resolvedClass = itemClass;
 
 			if (jsonTypeInfo != null) {
-				declaredFields = ArrayUtil.append(
-					declaredFields, resolvedClass.getDeclaredFields());
+				String property = jsonTypeInfo.property();
+
+				ObjectMapper objectMapper =
+					ObjectMapperProviderUtil.getBatchEngineObjectMapper();
+
+				T value = objectMapper.convertValue(
+					HashMapBuilder.put(
+						property, fieldNameValueMap.get(property)
+					).build(),
+					itemClass);
+
+				resolvedClass = (Class<? extends T>)value.getClass();
 			}
 
-			for (Field declaredField : declaredFields) {
-				if (name.equals(declaredField.getName()) ||
-					Objects.equals(
-						StringPool.UNDERLINE + name, declaredField.getName())) {
+			item = resolvedClass.getDeclaredConstructor(
+			).newInstance();
 
-					field = declaredField;
+			Set<String> batchRestrictFields = _getBatchRestrictFields(
+				batchEngineImportTask);
 
-					break;
+			for (Map.Entry<String, Object> entry :
+					fieldNameValueMap.entrySet()) {
+
+				String name = entry.getKey();
+
+				if (batchRestrictFields.contains(name)) {
+					continue;
+				}
+
+				Field field = null;
+
+				Field[] declaredFields = itemClass.getDeclaredFields();
+
+				if (jsonTypeInfo != null) {
+					declaredFields = ArrayUtil.append(
+						declaredFields, resolvedClass.getDeclaredFields());
+				}
+
+				for (Field declaredField : declaredFields) {
+					if (name.equals(declaredField.getName()) ||
+						Objects.equals(
+							StringPool.UNDERLINE + name,
+							declaredField.getName())) {
+
+						field = declaredField;
+
+						break;
+					}
+				}
+
+				if (field != null) {
+					field.setAccessible(true);
+
+					Object value = entry.getValue();
+
+					ObjectMapper objectMapper = _getObjectMapper(
+						batchEngineImportTask, field, value);
+
+					field.set(
+						item,
+						objectMapper.convertValue(value, field.getType()));
+
+					continue;
+				}
+
+				for (Field declaredField : declaredFields) {
+					JsonAnySetter[] jsonAnySetters =
+						declaredField.getAnnotationsByType(JsonAnySetter.class);
+
+					if (jsonAnySetters.length > 0) {
+						field = declaredField;
+
+						break;
+					}
+				}
+
+				if (field == null) {
+					extendedProperties.put(
+						entry.getKey(), (Serializable)entry.getValue());
+				}
+				else {
+					field.setAccessible(true);
+
+					Map<String, Object> map = (Map)field.get(item);
+
+					map.put(entry.getKey(), entry.getValue());
 				}
 			}
 
-			if (field != null) {
-				field.setAccessible(true);
+			for (ItemReaderPostAction itemReaderPostAction :
+					itemReaderPostActions) {
 
-				Object value = entry.getValue();
-
-				ObjectMapper objectMapper = _getObjectMapper(
-					batchEngineImportTask, field, value);
-
-				field.set(
-					item, objectMapper.convertValue(value, field.getType()));
-
-				continue;
-			}
-
-			for (Field declaredField : declaredFields) {
-				JsonAnySetter[] jsonAnySetters =
-					declaredField.getAnnotationsByType(JsonAnySetter.class);
-
-				if (jsonAnySetters.length > 0) {
-					field = declaredField;
-
-					break;
-				}
-			}
-
-			if (field == null) {
-				extendedProperties.put(
-					entry.getKey(), (Serializable)entry.getValue());
-			}
-			else {
-				field.setAccessible(true);
-
-				Map<String, Object> map = (Map)field.get(item);
-
-				map.put(entry.getKey(), entry.getValue());
+				itemReaderPostAction.run(
+					batchEngineImportTask, extendedProperties, item);
 			}
 		}
-
-		for (ItemReaderPostAction itemReaderPostAction :
-				itemReaderPostActions) {
-
-			itemReaderPostAction.run(
-				batchEngineImportTask, extendedProperties, item);
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			throw new BatchEngineImportTaskItemConversionException(
+				item, reflectiveOperationException);
 		}
 
 		return item;

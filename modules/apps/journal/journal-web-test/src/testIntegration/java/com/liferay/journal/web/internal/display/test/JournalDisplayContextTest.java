@@ -88,6 +88,8 @@ public class JournalDisplayContextTest {
 			_group.getGroupId());
 
 		_user = UserTestUtil.addUser();
+
+		_serviceContext.setUserId(_user.getUserId());
 	}
 
 	@Test
@@ -148,9 +150,31 @@ public class JournalDisplayContextTest {
 		}
 
 		SearchContainer<Object> searchContainer = _getSearchContainer(
-			"Example", 1, 4);
+			"Example", null, null, 0, 1, 4);
 
 		Assert.assertEquals(count, searchContainer.getTotal());
+	}
+
+	@Test
+	public void testGetSearchContainerWithParameters() throws Exception {
+		new JournalFolderFixture(
+			_journalFolderLocalService
+		).addFolder(
+			_group.getGroupId(), "Journal Folder Example"
+		);
+
+		_addJournalArticle("Journal Article Example 1");
+
+		JournalArticle journalArticle = _addJournalArticle(
+			"Journal Article Example 2");
+
+		_assertSearchContainer(
+			1, "all", true, journalArticle.getDDMStructureId());
+		_assertSearchContainer(
+			1, "structure", true, journalArticle.getDDMStructureId());
+
+		_assertSearchContainer(2, "all", true, 0);
+		_assertSearchContainer(3, "all", false, 0);
 	}
 
 	@Test
@@ -199,14 +223,29 @@ public class JournalDisplayContextTest {
 		Assert.assertTrue(_isShowComments(journalFolder, "test"));
 	}
 
-	private void _addJournalArticle(String title) throws Exception {
-		JournalTestUtil.addArticle(
+	private JournalArticle _addJournalArticle(String title) throws Exception {
+		return JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASS_NAME_ID_DEFAULT, StringPool.BLANK,
 			true, _getLocaleStringMap(title),
 			_getLocaleStringMap("description"), _getLocaleStringMap("content"),
 			null, LocaleUtil.getDefault(), null, false, false, _serviceContext);
+	}
+
+	private void _assertSearchContainer(
+			int expectedSize, String navigation, Boolean navigationRecent,
+			long highlightedDDMStructureId)
+		throws Exception {
+
+		SearchContainer<Object> searchContainer = _getSearchContainer(
+			StringPool.BLANK, navigation, navigationRecent,
+			highlightedDDMStructureId, SearchContainer.DEFAULT_CUR,
+			SearchContainer.DEFAULT_DELTA);
+
+		List<Object> results = searchContainer.getResults();
+
+		Assert.assertEquals(results.toString(), expectedSize, results.size());
 	}
 
 	private Map<Locale, String> _getLocaleStringMap(String value) {
@@ -262,12 +301,13 @@ public class JournalDisplayContextTest {
 
 	private SearchContainer<Object> _getSearchContainer() throws Exception {
 		return _getSearchContainer(
-			StringPool.BLANK, SearchContainer.DEFAULT_CUR,
+			StringPool.BLANK, null, null, 0, SearchContainer.DEFAULT_CUR,
 			SearchContainer.DEFAULT_DELTA);
 	}
 
 	private SearchContainer<Object> _getSearchContainer(
-			String keywords, int cur, int delta)
+			String keywords, String navigation, Boolean navigationRecent,
+			long highlightedDDMStructureId, int cur, int delta)
 		throws Exception {
 
 		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
@@ -280,6 +320,20 @@ public class JournalDisplayContextTest {
 
 		mockLiferayPortletRenderRequest.setParameter(
 			Field.STATUS, String.valueOf(WorkflowConstants.STATUS_APPROVED));
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"highlightedDDMStructureId",
+			String.valueOf(highlightedDDMStructureId));
+
+		if (Validator.isNotNull(navigation)) {
+			mockLiferayPortletRenderRequest.setParameter(
+				"navigation", navigation);
+		}
+
+		if (navigationRecent != null) {
+			mockLiferayPortletRenderRequest.setParameter(
+				"navigationRecent", String.valueOf(navigationRecent));
+		}
 
 		if (Validator.isNotNull(keywords)) {
 			mockLiferayPortletRenderRequest.setParameter("keywords", keywords);

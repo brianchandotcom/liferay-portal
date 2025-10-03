@@ -5,6 +5,7 @@
 
 package com.liferay.portal.dao.jdbc.util;
 
+import com.liferay.portal.kernel.dao.jdbc.DataSourceWrapper;
 import com.liferay.portal.kernel.util.PropsValues;
 
 import java.sql.Connection;

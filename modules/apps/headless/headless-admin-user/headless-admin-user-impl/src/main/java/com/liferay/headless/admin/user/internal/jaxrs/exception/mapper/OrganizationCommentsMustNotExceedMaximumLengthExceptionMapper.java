@@ -36,7 +36,7 @@ public class OrganizationCommentsMustNotExceedMaximumLengthExceptionMapper
 
 		return new Problem(
 			Response.Status.BAD_REQUEST,
-			"The organization comments is invalid");
+			"The organization comments are invalid");
 	}
 
 }

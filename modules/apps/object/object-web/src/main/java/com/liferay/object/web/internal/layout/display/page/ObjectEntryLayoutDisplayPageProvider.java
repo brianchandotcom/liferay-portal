@@ -95,9 +95,9 @@ public class ObjectEntryLayoutDisplayPageProvider
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(
 					_assetHelper, _infoItemFriendlyURLProvider,
-					_objectDefinition,
-					_objectDefinitionLocalService, objectEntry,
-					_objectEntryLocalService, _objectRelationshipLocalService);
+					_objectDefinition, _objectDefinitionLocalService,
+					objectEntry, _objectEntryLocalService,
+					_objectRelationshipLocalService);
 			}
 		}
 

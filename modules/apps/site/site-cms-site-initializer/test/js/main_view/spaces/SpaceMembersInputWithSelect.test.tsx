@@ -288,7 +288,7 @@ describe('SpaceMembersInputWithSelect', () => {
 		await waitFor(() => {
 			expect(
 				screen.getByPlaceholderText('enter-name-or-email')
-			).toHaveValue('');
+			).toHaveValue('John Doe');
 		});
 	});
 
@@ -331,7 +331,7 @@ describe('SpaceMembersInputWithSelect', () => {
 			roles: [],
 		});
 
-		await waitFor(() => expect(input).toHaveValue(''));
+		await waitFor(() => expect(input).toHaveValue('Group 1'));
 	});
 
 	it('renders a disabled input when disabled is true', async () => {

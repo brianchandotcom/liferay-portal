@@ -73,7 +73,6 @@ export function SpaceMembersInputWithSelect({
 						name: item.name,
 						roles: [],
 					});
-					setTimeout(() => setValue(''), 0);
 				}}
 				textValue={item.name}
 			>
@@ -107,7 +106,6 @@ export function SpaceMembersInputWithSelect({
 						numberOfUserAccounts: String(groupCount),
 						roles: [],
 					});
-					setTimeout(() => setValue(''), 0);
 				}}
 				textValue={item.name}
 			>

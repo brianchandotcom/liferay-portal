@@ -11,7 +11,6 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -19,9 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-
-import java.net.HttpURLConnection;
-import java.net.URI;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -90,136 +86,112 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
-				lessonJSONObject.getString("dateModified")
-			).truncatedTo(
-				ChronoUnit.MINUTES
-			);
+			JSONObject documentsJSONObject = new JSONObject(
+				get(
+					"",
+					UriComponentsBuilder.fromPath(
+						"/o/headless-delivery/v1.0/document-folders/" +
+							folderId + "/documents"
+					).queryParam(
+						"filter",
+						StringBundler.concat(
+							"title eq 'lesson-", lessonId, "-", voiceType,
+							".mp3'")
+					).build(
+					).toUri()));
 
-			URI uri = UriComponentsBuilder.fromHttpUrl(
-				_protocol + "://" + _mainDomain
-			).path(
-				"/o/headless-delivery/v1.0/document-folders/" + folderId +
-					"/documents"
-			).queryParam(
-				"filter",
-				StringBundler.concat(
-					"title eq 'lesson-", lessonId, "-", voiceType, ".mp3'")
-			).build(
-			).toUri();
+			JSONObject documentJSONObject = null;
 
-			HttpURLConnection connection = (HttpURLConnection)uri.toURL(
-			).openConnection();
+			JSONArray jsonArray = documentsJSONObject.optJSONArray("items");
 
-			connection.setRequestMethod("GET");
-
-			connection.setRequestProperty("Accept", "application/json");
-
-			JSONObject documentJSONObject = new JSONObject(
-				new String(
-					connection.getInputStream(
-					).readAllBytes()));
-
-			JSONArray itemsJSONArray = documentJSONObject.optJSONArray("items");
-
-			JSONObject documentItemJSONObject =
-				((itemsJSONArray != null) && (itemsJSONArray.length() > 0)) ?
-					itemsJSONArray.optJSONObject(0) : null;
-
-			OffsetDateTime offsetDateTime2 = null;
-
-			if (!JSONUtil.isEmpty(itemsJSONArray)) {
-				JSONObject audioFileItemJSONObject =
-					itemsJSONArray.getJSONObject(0);
-
-				offsetDateTime2 = OffsetDateTime.parse(
-					audioFileItemJSONObject.getString("dateModified")
+			if (!jsonArray.isEmpty()) {
+				OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
+					lessonJSONObject.getString("dateModified")
 				).truncatedTo(
 					ChronoUnit.MINUTES
 				);
-			}
 
-			if ((itemsJSONArray == null) || itemsJSONArray.isEmpty() ||
-				offsetDateTime1.isAfter(offsetDateTime2)) {
+				documentJSONObject = jsonArray.optJSONObject(0);
 
-				ByteArrayOutputStream byteArrayOutputStream =
-					new ByteArrayOutputStream();
-
-				List<String> ssmls = _splitSsml(
-					content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
-
-				for (String ssml : ssmls) {
-					String response = post(
-						_getGoogleAccessToken(),
-						new JSONObject(
-							HashMapBuilder.<String, Object>put(
-								"audioConfig",
-								HashMapBuilder.<String, Object>put(
-									"audioEncoding", "MP3"
-								).build()
-							).put(
-								"input",
-								HashMapBuilder.<String, Object>put(
-									"text", ssml
-								).build()
-							).put(
-								"voice",
-								HashMapBuilder.<String, Object>put(
-									"languageCode", languageCode
-								).put(
-									"name", voiceName
-								).build()
-							).build()
-						).toString(),
-						UriComponentsBuilder.fromUriString(
-							"https://texttospeech.googleapis.com/v1beta1" +
-								"/text:synthesize"
-						).build(
-						).toUri());
-
-					byteArrayOutputStream.write(
-						Base64.getDecoder(
-						).decode(
-							new JSONObject(
-								response
-							).getString(
-								"audioContent"
-							)
-						));
-				}
-
-				String audioContentBase64 = Base64.getEncoder(
-				).encodeToString(
-					byteArrayOutputStream.toByteArray()
+				OffsetDateTime offsetDateTime2 = OffsetDateTime.parse(
+					documentJSONObject.getString("dateModified")
+				).truncatedTo(
+					ChronoUnit.MINUTES
 				);
 
-				JSONObject responseBodyJSONObject = new JSONObject();
+				if (offsetDateTime1.isAfter(offsetDateTime2)) {
+					ByteArrayOutputStream byteArrayOutputStream =
+						new ByteArrayOutputStream();
 
-				if ((offsetDateTime2 != null) &&
-					offsetDateTime1.isAfter(offsetDateTime2)) {
+					List<String> ssmls = _splitSsml(
+						content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
 
-					responseBodyJSONObject.put(
-						"id", documentItemJSONObject.optString("id", null));
+					for (String ssml : ssmls) {
+						String response = post(
+							_getGoogleAccessToken(),
+							new JSONObject(
+								HashMapBuilder.<String, Object>put(
+									"audioConfig",
+									HashMapBuilder.<String, Object>put(
+										"audioEncoding", "MP3"
+									).build()
+								).put(
+									"input",
+									HashMapBuilder.<String, Object>put(
+										"text", ssml
+									).build()
+								).put(
+									"voice",
+									HashMapBuilder.<String, Object>put(
+										"languageCode", languageCode
+									).put(
+										"name", voiceName
+									).build()
+								).build()
+							).toString(),
+							UriComponentsBuilder.fromUriString(
+								"https://texttospeech.googleapis.com/v1beta1" +
+									"/text:synthesize"
+							).build(
+							).toUri());
+
+						byteArrayOutputStream.write(
+							Base64.getDecoder(
+							).decode(
+								new JSONObject(
+									response
+								).getString(
+									"audioContent"
+								)
+							));
+					}
+
+					String audioContentBase64 = Base64.getEncoder(
+					).encodeToString(
+						byteArrayOutputStream.toByteArray()
+					);
+
+					return ResponseEntity.ok(
+						new JSONObject(
+						).put(
+							"audioContentBase64", audioContentBase64
+						).put(
+							"id", documentJSONObject.optString("id", null)
+						).toString());
 				}
-
-				responseBodyJSONObject.put(
-					"audioContentBase64", audioContentBase64);
-
-				return ResponseEntity.ok(responseBodyJSONObject.toString());
 			}
-
-			String documentContentUrl = documentItemJSONObject.optString(
-				"contentUrl", null);
-
-			JSONObject responseBodyJSONObject = new JSONObject();
-
-			responseBodyJSONObject.put("contentUrl", documentContentUrl);
 
 			return ResponseEntity.ok(
 			).contentType(
 				MediaType.APPLICATION_JSON
 			).body(
-				responseBodyJSONObject.toString(2)
+				new JSONObject(
+				).put(
+					"contentUrl",
+					documentJSONObject.optString("contentUrl", null)
+				).toString(
+					2
+				)
 			);
 		}
 		catch (Exception exception) {
@@ -345,52 +317,53 @@ public class LearnRestController extends BaseRestController {
 		StringBuffer stringBuffer = new StringBuffer();
 
 		while (matcher.find()) {
-			String openTag = matcher.group(1);
-			String tagContent = matcher.group(
+			String openingTag = matcher.group(1);
+			String innerContent = matcher.group(
 				2
 			).trim();
-			String closeTag = matcher.group(3);
+			String closingTag = matcher.group(3);
 
-			String visibleText = tagContent.replaceAll(
+			String text = innerContent.replaceAll(
 				"(?s)<[^>]+>", " "
 			).replaceAll(
 				"\\s+", " "
 			).trim();
 
-			if (!visibleText.matches(".*[.!?;:]$")) {
-				int lastCloseTagIndex = tagContent.lastIndexOf("</");
+			if (!text.matches(".*[.!?;:]$")) {
+				int lastCloseTagIndex = innerContent.lastIndexOf("</");
 
 				if (lastCloseTagIndex != -1) {
-					String contentBeforeClosingTag = tagContent.substring(
+					String contentBeforeClosingTag = innerContent.substring(
 						0, lastCloseTagIndex
 					).replaceAll(
 						"\\s+$", ""
 					);
-					String closingTagAndContentAfter = tagContent.substring(
+					String closingTagAndContentAfter = innerContent.substring(
 						lastCloseTagIndex);
 
-					tagContent = StringBundler.concat(
+					innerContent = StringBundler.concat(
 						contentBeforeClosingTag, ".",
 						closingTagAndContentAfter);
 				}
 				else {
-					tagContent = tagContent + ".";
+					innerContent = innerContent + ".";
 				}
 			}
 
 			matcher.appendReplacement(
 				stringBuffer,
 				Matcher.quoteReplacement(
-					StringBundler.concat(openTag, tagContent, closeTag)));
+					StringBundler.concat(
+						openingTag, innerContent, closingTag)));
 		}
 
 		matcher.appendTail(stringBuffer);
 
 		html = stringBuffer.toString();
 
-		String textContent = html.replaceAll("(?s)<[^>]+>", " ");
-
-		return textContent.replaceAll(
+		return html.replaceAll(
+			"(?s)<[^>]+>", " "
+		).replaceAll(
 			"\\s+", " "
 		).trim();
 	}

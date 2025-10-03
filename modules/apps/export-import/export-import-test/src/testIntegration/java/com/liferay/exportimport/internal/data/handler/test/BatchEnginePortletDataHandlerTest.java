@@ -1148,6 +1148,19 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 	}
 
+	private JSONArray _getExportedObjectEntriesJSONArray(
+			String className, File file, long groupId)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(file)) {
+			ZipEntry zipEntry = zipFile.getEntry(
+				_getBatchFileNameWithPath(className + ".json", groupId));
+
+			return JSONFactoryUtil.createJSONArray(
+				StringUtil.read(zipFile.getInputStream(zipEntry)));
+		}
+	}
+
 	private Map<String, String[]> _getExportImportParameterMap(
 		boolean deletions, boolean includeLayoutSetLayoutsPortlet,
 		List<ObjectDefinition> objectDefinitions) {
@@ -1261,44 +1274,6 @@ public class BatchEnginePortletDataHandlerTest {
 		return portletDataContext.getManifestSummary();
 	}
 
-	private JSONArray _getNestedRelationshipJSONArray(
-			String className, File file, long groupId, String relationshipName)
-		throws Exception {
-
-		try (ZipFile zipFile = new ZipFile(file)) {
-			ZipEntry zipEntry = zipFile.getEntry(
-				_getBatchFileNameWithPath(className + ".json", groupId));
-
-			if (zipEntry == null) {
-				throw new FileNotFoundException();
-			}
-
-			JSONArray nestedRelationshipsJSONArray =
-				JSONFactoryUtil.createJSONArray();
-
-			JSONArray objectEntriesJSONArray = JSONFactoryUtil.createJSONArray(
-				StringUtil.read(zipFile.getInputStream(zipEntry)));
-
-			for (int i = 0; i < objectEntriesJSONArray.length(); i++) {
-				JSONObject objectEntryJSONObject =
-					objectEntriesJSONArray.getJSONObject(i);
-
-				Object nestedObject = objectEntryJSONObject.get(
-					relationshipName);
-
-				if (nestedObject instanceof JSONObject) {
-					nestedRelationshipsJSONArray.put(
-						JSONUtil.put(nestedObject));
-				}
-				else {
-					nestedRelationshipsJSONArray.put(nestedObject);
-				}
-			}
-
-			return nestedRelationshipsJSONArray;
-		}
-	}
-
 	private long _getObjectEntryGroupId(long groupId, String scope) {
 		if (Objects.equals(ObjectDefinitionConstants.SCOPE_COMPANY, scope)) {
 			return GroupConstants.DEFAULT_PARENT_GROUP_ID;
@@ -1307,34 +1282,12 @@ public class BatchEnginePortletDataHandlerTest {
 		return groupId;
 	}
 
-	private JSONArray _getSimplifiedObjectEntriesJSONArray(
-		Group group, ObjectEntry[] objectEntries, String scope) {
+	private String _getObjectEntryScopeKey(Group group, String scope) {
+		if (Objects.equals(ObjectDefinitionConstants.SCOPE_COMPANY, scope)) {
+			return null;
+		}
 
-		return JSONUtil.toJSONArray(
-			objectEntries,
-			objectEntry -> JSONUtil.put(
-				JSONUtil.put(
-					"externalReferenceCode",
-					objectEntry.getExternalReferenceCode()
-				).put(
-					"scopeId",
-					(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
-				).put(
-					"scopeKey",
-					() -> {
-						if (Objects.equals(
-								ObjectDefinitionConstants.SCOPE_COMPANY,
-								scope)) {
-
-							return null;
-						}
-
-						return group.getGroupKey();
-					}
-				)),
-			exception -> {
-				throw new RuntimeException(exception);
-			});
+		return group.getGroupKey();
 	}
 
 	private ExportImportConfiguration _importLayouts(
@@ -1503,30 +1456,85 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group.getGroupId(), false, new long[0], objectDefinition1,
 			objectDefinition2);
 
-		// Assert the related object entries are a simplified version
-
-		JSONAssert.assertEquals(
-			_getSimplifiedObjectEntriesJSONArray(
-				group, objectEntries1, scope
-			).toString(),
-			_getNestedRelationshipJSONArray(
-				objectDefinition2.getName(), larFile, group.getGroupId(),
-				objectRelationship.getName()
-			).toString(),
-			JSONCompareMode.STRICT);
+		JSONArray exportedObjectEntriesJSONArray =
+			_getExportedObjectEntriesJSONArray(
+				objectDefinition2.getName(), larFile, group.getGroupId());
 
 		if (Objects.equals(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
 
-			JSONAssert.assertEquals(
-				_getSimplifiedObjectEntriesJSONArray(
-					group, objectEntries2, scope
-				).toString(),
-				_getNestedRelationshipJSONArray(
-					objectDefinition1.getName(), larFile, group.getGroupId(),
-					objectRelationship.getName()
-				).toString(),
-				JSONCompareMode.STRICT);
+			for (int i = 0; i < objectEntries1.length; i++) {
+				ObjectEntry objectEntry = objectEntries1[i];
+
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						JSONUtil.put(
+							"externalReferenceCode",
+							objectEntry.getExternalReferenceCode()
+						).put(
+							"scopeId",
+							(Long)_getObjectEntryGroupId(
+								group.getGroupId(), scope)
+						).put(
+							"scopeKey", _getObjectEntryScopeKey(group, scope)
+						)
+					).toString(),
+					exportedObjectEntriesJSONArray.getJSONObject(
+						i
+					).getJSONArray(
+						objectRelationship.getName()
+					).toString(),
+					JSONCompareMode.STRICT);
+			}
+
+			exportedObjectEntriesJSONArray = _getExportedObjectEntriesJSONArray(
+				objectDefinition1.getName(), larFile, group.getGroupId());
+
+			for (int i = 0; i < objectEntries2.length; i++) {
+				ObjectEntry objectEntry = objectEntries2[i];
+
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						JSONUtil.put(
+							"externalReferenceCode",
+							objectEntry.getExternalReferenceCode()
+						).put(
+							"scopeId",
+							(Long)_getObjectEntryGroupId(
+								group.getGroupId(), scope)
+						).put(
+							"scopeKey", _getObjectEntryScopeKey(group, scope)
+						)
+					).toString(),
+					exportedObjectEntriesJSONArray.getJSONObject(
+						i
+					).getJSONArray(
+						objectRelationship.getName()
+					).toString(),
+					JSONCompareMode.STRICT);
+			}
+		}
+		else {
+			for (int i = 0; i < objectEntries1.length; i++) {
+				ObjectEntry objectEntry = objectEntries1[i];
+
+				JSONAssert.assertEquals(
+					JSONUtil.put(
+						"externalReferenceCode",
+						objectEntry.getExternalReferenceCode()
+					).put(
+						"scopeId",
+						(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
+					).put(
+						"scopeKey", _getObjectEntryScopeKey(group, scope)
+					).toString(),
+					exportedObjectEntriesJSONArray.getJSONObject(
+						i
+					).getJSONObject(
+						objectRelationship.getName()
+					).toString(),
+					JSONCompareMode.STRICT);
+			}
 		}
 
 		_deleteObjectEntries(objectEntries1);

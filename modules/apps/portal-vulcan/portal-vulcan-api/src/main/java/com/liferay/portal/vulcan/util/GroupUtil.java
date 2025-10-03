@@ -47,10 +47,6 @@ public class GroupUtil {
 		Group group = groupLocalService.fetchGroup(companyId, siteKey);
 
 		if (group == null) {
-			group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
-		}
-
-		if (group == null) {
 			group = groupLocalService.fetchGroupByExternalReferenceCode(
 				siteKey, companyId);
 		}

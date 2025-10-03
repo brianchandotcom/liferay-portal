@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.NavigationSettings;
-import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Objects;
@@ -20,28 +19,14 @@ public class NavigationSettingsUtil {
 	public static NavigationSettings toNavigationSettings(
 		UnicodeProperties unicodeProperties) {
 
-		String targetPropertyValue = unicodeProperties.getProperty(
-			LayoutTypePortletConstants.TARGET);
-		String targetTypePropertyValue = unicodeProperties.getProperty(
-			"targetType");
-
-		if ((targetPropertyValue == null) &&
-			(targetTypePropertyValue == null)) {
-
-			return null;
-		}
-
 		return new NavigationSettings() {
 			{
-				setTarget(() -> targetPropertyValue);
+				setTarget(() -> unicodeProperties.getProperty("target"));
 				setTargetType(
 					() -> {
-						if (targetTypePropertyValue == null) {
-							return null;
-						}
-
 						if (Objects.equals(
-								targetTypePropertyValue, "useNewTab")) {
+								unicodeProperties.getProperty("targetType"),
+								"useNewTab")) {
 
 							return TargetType.NEW_TAB;
 						}

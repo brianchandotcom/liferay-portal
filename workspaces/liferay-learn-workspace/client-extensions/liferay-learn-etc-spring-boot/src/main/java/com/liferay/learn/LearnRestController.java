@@ -11,6 +11,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -127,7 +128,7 @@ public class LearnRestController extends BaseRestController {
 
 			OffsetDateTime offsetDateTime2 = null;
 
-			if ((itemsJSONArray != null) && !itemsJSONArray.isEmpty()) {
+			if (!JSONUtil.isEmpty(itemsJSONArray)) {
 				JSONObject audioFileItemJSONObject =
 					itemsJSONArray.getJSONObject(0);
 

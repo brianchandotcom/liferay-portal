@@ -9,12 +9,15 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -55,7 +58,9 @@ public class DepotEntryLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testGetLayoutDisplayPageObjectProvider() {
+	public void testGetLayoutDisplayPageObjectProvider()
+		throws PortalException {
+
 		Assert.assertNotNull(
 			_depotEntryLayoutDisplayPageProvider.
 				getLayoutDisplayPageObjectProvider(
@@ -67,6 +72,25 @@ public class DepotEntryLayoutDisplayPageProviderTest {
 				getLayoutDisplayPageObjectProvider(
 					new InfoItemReference(
 						DepotEntry.class.getName(), _depotEntry.getGroupId())));
+
+		Group group = _depotEntry.getGroup();
+
+		Assert.assertNotNull(
+			_depotEntryLayoutDisplayPageProvider.
+				getLayoutDisplayPageObjectProvider(
+					group.getGroupId(),
+					new InfoItemReference(
+						DepotEntry.class.getName(),
+						new ERCInfoItemIdentifier(
+							group.getExternalReferenceCode()))));
+		Assert.assertNotNull(
+			_depotEntryLayoutDisplayPageProvider.
+				getLayoutDisplayPageObjectProvider(
+					TestPropsValues.getGroupId(),
+					new InfoItemReference(
+						DepotEntry.class.getName(),
+						new ERCInfoItemIdentifier(
+							group.getExternalReferenceCode()))));
 	}
 
 	@DeleteAfterTestRun

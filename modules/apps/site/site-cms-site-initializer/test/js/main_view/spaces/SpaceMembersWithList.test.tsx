@@ -19,6 +19,7 @@ import {
 	SpaceMembersWithListProps,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersWithList';
 import {useSpaceMembers} from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/hooks/useSpaceMembers';
+import {createMockFetchMembersImplementation} from '../../__mocks__/createMockFetchMembersImplementation';
 import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 jest.mock(
@@ -92,6 +93,29 @@ describe('SpaceMembersWithList', () => {
 		},
 	] as UserGroup[];
 
+	const allAvailableUsers = [
+		...testUsers,
+		{
+			emailAddress: 'new@user.com',
+			externalReferenceCode: 'ERC_3',
+			id: '3',
+			image: '/image/profile.jpg',
+			imageId: '3.image.profile',
+			name: 'New User',
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
+		},
+	] as UserAccount[];
+
+	const allAvailableGrups = [
+		...testUserGroups,
+		{
+			externalReferenceCode: 'ERC_3',
+			id: '3',
+			name: 'New Group',
+			roles: [{id: 100, name: SPACE_MEMBER_ROLE_NAME}],
+		},
+	] as UserGroup[];
+
 	const props: SpaceMembersWithListProps = {
 		assetLibraryCreatorUserId: testUsers[0].id,
 		externalReferenceCode: testSpace.externalReferenceCode,
@@ -109,6 +133,11 @@ describe('SpaceMembersWithList', () => {
 	let intersectionObserverMock: jest.Mock;
 
 	beforeEach(() => {
+		mockFetch.mockClear();
+		createMockFetchMembersImplementation({
+			groups: allAvailableGrups,
+			users: allAvailableUsers,
+		});
 		mockUseSpaceMembers.mockReturnValue({
 			addMember: mockAddMember,
 			loadMore: mockLoadMore,
@@ -243,22 +272,69 @@ describe('SpaceMembersWithList', () => {
 		).toBeInTheDocument();
 	});
 
+	it('excludes added user members from the autocomplete list', async () => {
+		render(<SpaceMembersWithList {...props} />);
+
+		const input = screen.getByPlaceholderText('enter-name-or-email');
+
+		await userEvent.click(input);
+
+		await waitFor(() => {
+			expect(mockFetch).toHaveBeenCalledWith(
+				expect.stringContaining(`id+ne+%271%27+and+id+ne+%272%27`)
+			);
+		});
+
+		await waitFor(() => {
+			expect(
+				screen.queryByRole('option', {name: /John Doe/})
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('option', {name: /Jane Smith/})
+			).not.toBeInTheDocument();
+			expect(
+				screen.getByRole('option', {name: /New User/})
+			).toBeInTheDocument();
+		});
+	});
+
+	it('excludes added group members from the autocomplete list', async () => {
+		render(<SpaceMembersWithList {...props} />);
+
+		await userEvent.selectOptions(
+			screen.getByRole('combobox', {
+				name: 'add-people-to-collaborate',
+			}),
+			SelectOptions.GROUPS
+		);
+
+		const input = screen.getByPlaceholderText('enter-name-or-email');
+
+		await userEvent.click(input);
+
+		await waitFor(() => {
+			expect(mockFetch).toHaveBeenCalledWith(
+				expect.stringContaining(
+					`userGroupId+ne+%271%27+and+userGroupId+ne+%272%27`
+				)
+			);
+		});
+
+		await waitFor(() => {
+			expect(
+				screen.queryByRole('option', {name: /Group 1/})
+			).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('option', {name: /Group 2/})
+			).not.toBeInTheDocument();
+			expect(
+				screen.getByRole('option', {name: /New Group/})
+			).toBeInTheDocument();
+		});
+	});
+
 	describe('Interactions', () => {
 		it('calls addMember when an item is selected from autocomplete', async () => {
-			const newUser = {
-				emailAddress: 'new@user.com',
-				externalReferenceCode: 'ERC_3',
-				id: '3',
-				image: '/image/profile.jpg',
-				imageId: '3.image.profile',
-				name: 'New User',
-			};
-
-			mockFetch.mockResolvedValue({
-				headers: new Headers([['Content-Type', 'application/json']]),
-				json: async () => ({items: [newUser]}),
-			} as Response);
-
 			render(<SpaceMembersWithList {...props} />);
 
 			const input = screen.getByPlaceholderText('enter-name-or-email');
@@ -276,9 +352,10 @@ describe('SpaceMembersWithList', () => {
 			);
 
 			await waitFor(() => {
-				const {_key, ...expectedValue} = newUser as typeof newUser & {
-					_key: string;
-				};
+				const {_key, ...expectedValue} =
+					allAvailableUsers[2] as (typeof allAvailableUsers)[2] & {
+						_key: string;
+					};
 
 				expect(mockAddMember).toHaveBeenCalledWith(
 					{...expectedValue, roles: []},

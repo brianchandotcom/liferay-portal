@@ -21,7 +21,7 @@ export function createMockFetchMembersImplementation(data: {
 		const filterParam = parsedUrl.searchParams.get('filter');
 		const searchParam = parsedUrl.searchParams.get('search');
 
-		let itemsToReturn: UserGroup[] | UserAccount[] = [];
+		let itemsToReturn: (UserGroup | UserAccount)[] = [];
 		let filterKey = '';
 
 		if (path.includes('/user-accounts') && data.users) {

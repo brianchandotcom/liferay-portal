@@ -6,60 +6,65 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {fetch} from 'frontend-js-web';
 import React from 'react';
 
+import {
+	UserAccount,
+	UserGroup,
+} from '../../../../src/main/resources/META-INF/resources/js/common/types/UserAccount';
 import {
 	SelectOptions,
 	SpaceMembersInputWithSelect,
 } from '../../../../src/main/resources/META-INF/resources/js/main_view/spaces/SpaceMembersInputWithSelect';
-
-jest.mock('frontend-js-web');
-
-const mockFetch = fetch as jest.Mock<Promise<Response>>;
+import {createMockFetchMembersImplementation} from '../../__mocks__/createMockFetchMembersImplementation';
+import {mockFetch} from '../../__mocks__/frontend-js-web';
 
 describe('SpaceMembersInputWithSelect', () => {
 	const {ResizeObserver: ResizeObserverOriginal} = window;
 
-	const mockUserApiResponse = {
-		items: [
-			{
-				emailAddress: 'john.doe@example.com',
-				externalReferenceCode: 'john.doe',
-				id: '1',
-				image: '/image/user_portrait',
-				imageId: 'john.doe.image',
-				name: 'John Doe',
-			},
-			{
-				emailAddress: 'jane.smith@example.com',
-				externalReferenceCode: 'jane.smith',
-				id: '2',
-				image: '/image/user_portrait',
-				imageId: 'jane.smith.image',
-				name: 'Jane Smith',
-			},
-		],
-	};
+	const allUsers = [
+		{
+			emailAddress: 'john.doe@example.com',
+			externalReferenceCode: 'john.doe',
+			id: '1',
+			image: '/image/user_portrait',
+			imageId: 'john.doe.image',
+			name: 'John Doe',
+		},
+		{
+			emailAddress: 'jane.smith@example.com',
+			externalReferenceCode: 'jane.smith',
+			id: '2',
+			image: '/image/user_portrait',
+			imageId: 'jane.smith.image',
+			name: 'Jane Smith',
+		},
+		{
+			emailAddress: 'excluded.user@example.com',
+			externalReferenceCode: 'excluded.user',
+			id: '123',
+			image: '/image/user_portrait',
+			imageId: 'excluded.user.image',
+			name: 'Excluded User',
+		},
+	] as UserAccount[];
 
-	const mockGroupApiResponse = {
-		items: [
-			{
-				externalReferenceCode: 'group.1',
-				id: '1',
-				name: 'Group 1',
-				roles: [],
-				usersCount: 5,
-			},
-			{
-				externalReferenceCode: 'group.2',
-				id: '2',
-				name: 'Group 2',
-				roles: [],
-				usersCount: 10,
-			},
-		],
-	};
+	const allGroups = [
+		{
+			externalReferenceCode: 'group.1',
+			id: '1',
+			name: 'Group 1',
+			roles: [],
+			usersCount: 5,
+		},
+		{
+			externalReferenceCode: 'group.2',
+			id: '2',
+			name: 'Group 2',
+			roles: [],
+			usersCount: 10,
+		},
+	];
 
 	beforeAll(() => {
 		window.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -69,9 +74,16 @@ describe('SpaceMembersInputWithSelect', () => {
 		}));
 	});
 
+	beforeEach(() => {
+		mockFetch.mockClear();
+		createMockFetchMembersImplementation({
+			groups: allGroups,
+			users: allUsers,
+		});
+	});
+
 	afterEach(() => {
 		jest.clearAllMocks();
-		mockFetch.mockClear();
 	});
 
 	afterAll(() => {
@@ -87,6 +99,7 @@ describe('SpaceMembersInputWithSelect', () => {
 			<SpaceMembersInputWithSelect
 				className={customClass}
 				disabled={false}
+				selectValue={SelectOptions.USERS}
 			/>
 		);
 
@@ -94,7 +107,7 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('renders with initial value for select', () => {
-		const selectValue = SelectOptions.USERS;
+		const selectValue = SelectOptions.GROUPS;
 
 		render(
 			<SpaceMembersInputWithSelect
@@ -117,6 +130,7 @@ describe('SpaceMembersInputWithSelect', () => {
 			<SpaceMembersInputWithSelect
 				disabled={false}
 				onSelectChange={onSelectChange}
+				selectValue={SelectOptions.USERS}
 			/>
 		);
 
@@ -132,11 +146,6 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('displays a list of users when the select value is "users"', async () => {
-		mockFetch.mockResolvedValue({
-			headers: new Headers([['Content-Type', 'application/json']]),
-			json: async () => mockUserApiResponse,
-		} as Response);
-
 		render(
 			<SpaceMembersInputWithSelect
 				disabled={false}
@@ -149,7 +158,7 @@ describe('SpaceMembersInputWithSelect', () => {
 		);
 
 		await waitFor(() => {
-			expect(screen.getAllByRole('option')).toHaveLength(2);
+			expect(screen.getAllByRole('option')).toHaveLength(allUsers.length);
 		});
 
 		expect(
@@ -162,11 +171,6 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('displays a list of groups when the select value is "groups"', async () => {
-		mockFetch.mockResolvedValue({
-			headers: new Headers([['Content-Type', 'application/json']]),
-			json: async () => mockGroupApiResponse,
-		} as Response);
-
 		render(
 			<SpaceMembersInputWithSelect
 				disabled={false}
@@ -179,7 +183,9 @@ describe('SpaceMembersInputWithSelect', () => {
 		);
 
 		await waitFor(() => {
-			expect(screen.getAllByRole('option')).toHaveLength(2);
+			expect(screen.getAllByRole('option')).toHaveLength(
+				allGroups.length
+			);
 		});
 
 		const group1 = screen.getByRole('option', {name: /Group 1/});
@@ -220,11 +226,6 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('displays "no results found" message when search returns no items', async () => {
-		mockFetch.mockResolvedValue({
-			headers: new Headers([['Content-Type', 'application/json']]),
-			json: async () => ({items: []}),
-		} as Response);
-
 		render(
 			<SpaceMembersInputWithSelect
 				disabled={false}
@@ -242,11 +243,6 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('calls "onAutocompleteItemSelected" callback when a user is selected', async () => {
-		mockFetch.mockResolvedValue({
-			headers: new Headers([['Content-Type', 'application/json']]),
-			json: async () => mockUserApiResponse,
-		} as Response);
-
 		const onAutocompleteItemSelected = jest.fn();
 
 		render(
@@ -293,11 +289,6 @@ describe('SpaceMembersInputWithSelect', () => {
 	});
 
 	it('calls "onAutocompleteItemSelected" callback when a group is selected', async () => {
-		mockFetch.mockResolvedValue({
-			headers: new Headers([['Content-Type', 'application/json']]),
-			json: async () => mockGroupApiResponse,
-		} as Response);
-
 		const onAutocompleteItemSelected = jest.fn();
 
 		render(
@@ -347,5 +338,77 @@ describe('SpaceMembersInputWithSelect', () => {
 		expect(input).toBeDisabled();
 
 		await waitFor(() => expect(mockFetch).not.toHaveBeenCalled());
+	});
+
+	it('builds the apiURL with excludeMembers for users and exclude from UI', async () => {
+		const excludeMembers = [
+			{id: '123', name: 'Excluded User'},
+		] as UserAccount[];
+
+		render(
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				excludeMembers={excludeMembers}
+				selectValue={SelectOptions.USERS}
+			/>
+		);
+
+		await userEvent.click(
+			screen.getByPlaceholderText('enter-name-or-email')
+		);
+
+		expect(
+			await screen.findByRole('option', {
+				name: /John Doe/,
+			})
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByRole('option', {name: /Jane Smith/})
+		).toBeInTheDocument();
+
+		expect(
+			screen.queryByRole('option', {name: /Excluded User/})
+		).not.toBeInTheDocument();
+
+		expect(mockFetch).toHaveBeenCalledWith(
+			expect.stringContaining(`id+ne+%27123%27`)
+		);
+	});
+
+	it('builds the apiURL with excludeMembers for groups and exclude from UI', async () => {
+		const excludeMembers = [
+			{id: '123', name: 'Excluded Group'},
+		] as UserGroup[];
+
+		render(
+			<SpaceMembersInputWithSelect
+				disabled={false}
+				excludeMembers={excludeMembers}
+				selectValue={SelectOptions.GROUPS}
+			/>
+		);
+
+		await userEvent.click(
+			screen.getByPlaceholderText('enter-name-or-email')
+		);
+
+		expect(
+			await screen.findByRole('option', {
+				name: /Group 1/,
+			})
+		).toBeInTheDocument();
+
+		expect(
+			screen.getByRole('option', {name: /Group 2/})
+		).toBeInTheDocument();
+
+		expect(
+			screen.queryByRole('option', {name: /Excluded Group/})
+		).not.toBeInTheDocument();
+
+		expect(mockFetch).toHaveBeenCalledWith(
+			expect.stringContaining(`userGroupId+ne+%27123%27`)
+		);
 	});
 });

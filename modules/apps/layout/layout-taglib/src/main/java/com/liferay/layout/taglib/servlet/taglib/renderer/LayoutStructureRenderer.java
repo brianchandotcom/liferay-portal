@@ -205,13 +205,16 @@ public class LayoutStructureRenderer {
 		return layoutTypePortlet;
 	}
 
-	private String _getRowCssClass(CollectionStyledLayoutStructureItem item) {
+	private String _getRowCssClass(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("align-items-");
-		sb.append(item.getVerticalAlignment());
+		sb.append(collectionStyledLayoutStructureItem.getVerticalAlignment());
 
-		if (!item.isGutters()) {
+		if (!collectionStyledLayoutStructureItem.isGutters()) {
 			sb.append(" no-gutters");
 		}
 
@@ -265,9 +268,10 @@ public class LayoutStructureRenderer {
 	}
 
 	private void _renderCol(
-			CollectionStyledLayoutStructureItem item, int colIndex,
-			InfoForm infoForm, InfoItemDetailsProvider infoItemDetailsProvider,
-			Object element)
+			CollectionStyledLayoutStructureItem
+				collectionStyledLayoutStructureItem,
+			int colIndex, InfoForm infoForm,
+			InfoItemDetailsProvider infoItemDetailsProvider, Object element)
 		throws Exception {
 
 		InfoItemDetails infoItemDetails =
@@ -280,12 +284,14 @@ public class LayoutStructureRenderer {
 		ColTag colTag = new ColTag();
 
 		colTag.setCssClass(
-			ResponsiveLayoutStructureUtil.getColumnCssClass(item, colIndex));
+			ResponsiveLayoutStructureUtil.getColumnCssClass(
+				collectionStyledLayoutStructureItem, colIndex));
 		colTag.setPageContext(_pageContext);
 
 		colTag.doStartTag();
 
-		_renderLayoutStructure(item.getChildrenItemIds(), infoForm);
+		_renderLayoutStructure(
+			collectionStyledLayoutStructureItem.getChildrenItemIds(), infoForm);
 
 		colTag.doEndTag();
 	}

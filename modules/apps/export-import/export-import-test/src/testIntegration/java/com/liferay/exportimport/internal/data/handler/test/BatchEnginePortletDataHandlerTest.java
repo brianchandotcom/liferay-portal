@@ -596,8 +596,9 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_getExternalReferenceCodes(objectEntries)
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				objectDefinition1.getName(), file, group.getGroupId()),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition1.getName(), file, group.getGroupId()
+			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -614,8 +615,9 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				objectEntry.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				objectDefinition2.getName(), file, group.getGroupId()),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition2.getName(), file, group.getGroupId()
+			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -633,15 +635,17 @@ public class BatchEnginePortletDataHandlerTest {
 			JSONUtil.putAll(
 				_getExternalReferenceCodes(objectEntries)
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				objectDefinition1.getName(), file, group.getGroupId()),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition1.getName(), file, group.getGroupId()
+			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				objectEntry.getExternalReferenceCode()
 			).toString(),
-			_getExternalReferenceCodesJSON(
-				objectDefinition2.getName(), file, group.getGroupId()),
+			_getExternalReferenceCodesJSONArray(
+				objectDefinition2.getName(), file, group.getGroupId()
+			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -1146,53 +1150,15 @@ public class BatchEnginePortletDataHandlerTest {
 
 			Element rootElement = document.getRootElement();
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			for (Element deletionSystemEventElement :
-					rootElement.elements("deletion-system-event")) {
-
-				String classExternalReferenceCode =
+			return JSONUtil.toJSONArray(
+				rootElement.elements("deletion-system-event"),
+				deletionSystemEventElement ->
 					deletionSystemEventElement.attributeValue(
-						"class-external-reference-code");
-
-				jsonArray.put(classExternalReferenceCode);
-			}
-
-			return jsonArray;
+						"class-external-reference-code"),
+				exception -> {
+					throw new RuntimeException(exception);
+				});
 		}
-	}
-
-	private String _getExpectedNestedRelationshipJSON(
-		Group group, ObjectEntry[] relatedObjectEntries, String scope) {
-
-		JSONArray relationshipsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		for (ObjectEntry relatedObjectEntry : relatedObjectEntries) {
-			JSONArray relationshipJSONArray = JSONUtil.put(
-				JSONUtil.put(
-					"externalReferenceCode",
-					relatedObjectEntry.getExternalReferenceCode()
-				).put(
-					"scopeId",
-					(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
-				).put(
-					"scopeKey",
-					() -> {
-						if (Objects.equals(
-								ObjectDefinitionConstants.SCOPE_COMPANY,
-								scope)) {
-
-							return null;
-						}
-
-						return group.getGroupKey();
-					}
-				));
-
-			relationshipsJSONArray.put(relationshipJSONArray);
-		}
-
-		return relationshipsJSONArray.toString();
 	}
 
 	private Map<String, String[]> _getExportImportParameterMap(
@@ -1255,7 +1221,7 @@ public class BatchEnginePortletDataHandlerTest {
 		return externalReferenceCodes;
 	}
 
-	private String _getExternalReferenceCodesJSON(
+	private JSONArray _getExternalReferenceCodesJSONArray(
 			String className, File file, long groupId)
 		throws Exception {
 
@@ -1279,7 +1245,7 @@ public class BatchEnginePortletDataHandlerTest {
 				jsonArray1.put(jsonObject.getString("externalReferenceCode"));
 			}
 
-			return jsonArray1.toString();
+			return jsonArray1;
 		}
 	}
 
@@ -1295,7 +1261,7 @@ public class BatchEnginePortletDataHandlerTest {
 		return portletDataContext.getManifestSummary();
 	}
 
-	private String _getNestedRelationshipJSON(
+	private JSONArray _getNestedRelationshipJSONArray(
 			String className, File file, long groupId, String relationshipName)
 		throws Exception {
 
@@ -1329,7 +1295,7 @@ public class BatchEnginePortletDataHandlerTest {
 				}
 			}
 
-			return nestedRelationshipsJSONArray.toString();
+			return nestedRelationshipsJSONArray;
 		}
 	}
 
@@ -1339,6 +1305,36 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 
 		return groupId;
+	}
+
+	private JSONArray _getSimplifiedObjectEntriesJSONArray(
+		Group group, ObjectEntry[] objectEntries, String scope) {
+
+		return JSONUtil.toJSONArray(
+			objectEntries,
+			objectEntry -> JSONUtil.put(
+				JSONUtil.put(
+					"externalReferenceCode",
+					objectEntry.getExternalReferenceCode()
+				).put(
+					"scopeId",
+					(Long)_getObjectEntryGroupId(group.getGroupId(), scope)
+				).put(
+					"scopeKey",
+					() -> {
+						if (Objects.equals(
+								ObjectDefinitionConstants.SCOPE_COMPANY,
+								scope)) {
+
+							return null;
+						}
+
+						return group.getGroupKey();
+					}
+				)),
+			exception -> {
+				throw new RuntimeException(exception);
+			});
 	}
 
 	private ExportImportConfiguration _importLayouts(
@@ -1507,22 +1503,29 @@ public class BatchEnginePortletDataHandlerTest {
 			false, group.getGroupId(), false, new long[0], objectDefinition1,
 			objectDefinition2);
 
+		// Assert the related object entries are a simplified version
+
 		JSONAssert.assertEquals(
-			_getExpectedNestedRelationshipJSON(group, objectEntries1, scope),
-			_getNestedRelationshipJSON(
+			_getSimplifiedObjectEntriesJSONArray(
+				group, objectEntries1, scope
+			).toString(),
+			_getNestedRelationshipJSONArray(
 				objectDefinition2.getName(), larFile, group.getGroupId(),
-				objectRelationship.getName()),
+				objectRelationship.getName()
+			).toString(),
 			JSONCompareMode.STRICT);
 
 		if (Objects.equals(
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY, type)) {
 
 			JSONAssert.assertEquals(
-				_getExpectedNestedRelationshipJSON(
-					group, objectEntries2, scope),
-				_getNestedRelationshipJSON(
+				_getSimplifiedObjectEntriesJSONArray(
+					group, objectEntries2, scope
+				).toString(),
+				_getNestedRelationshipJSONArray(
 					objectDefinition1.getName(), larFile, group.getGroupId(),
-					objectRelationship.getName()),
+					objectRelationship.getName()
+				).toString(),
 				JSONCompareMode.STRICT);
 		}
 

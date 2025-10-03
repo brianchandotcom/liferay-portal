@@ -270,12 +270,8 @@ public class LayoutStructureRenderer {
 	private void _renderCol(
 			CollectionStyledLayoutStructureItem
 				collectionStyledLayoutStructureItem,
-			int colIndex, InfoForm infoForm,
-			InfoItemDetailsProvider infoItemDetailsProvider, Object element)
+			int colIndex, InfoForm infoForm, InfoItemDetails infoItemDetails)
 		throws Exception {
-
-		InfoItemDetails infoItemDetails =
-			infoItemDetailsProvider.getInfoItemDetails(element);
 
 		_httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM_REFERENCE,
@@ -620,8 +616,9 @@ public class LayoutStructureRenderer {
 
 					_renderCol(
 						collectionStyledLayoutStructureItem,
-						i % numberOfColumns, infoForm, infoItemDetailsProvider,
-						collection.get(i));
+						i % numberOfColumns, infoForm,
+						infoItemDetailsProvider.getInfoItemDetails(
+							collection.get(i)));
 				}
 
 				rowTag.doEndTag();
@@ -651,7 +648,8 @@ public class LayoutStructureRenderer {
 
 						_renderCol(
 							collectionStyledLayoutStructureItem, j, infoForm,
-							infoItemDetailsProvider, collection.get(index));
+							infoItemDetailsProvider.getInfoItemDetails(
+								collection.get(index)));
 					}
 
 					rowTag.doEndTag();

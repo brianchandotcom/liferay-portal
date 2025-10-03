@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
+import java.util.HashMap;
+
 /**
  * @author Jürgen Kappler
  * @author Javier de Arcos
@@ -37,7 +39,7 @@ public class SEOSettingsUtil {
 						if ((layoutSEOEntry == null) ||
 							!layoutSEOEntry.isCanonicalURLEnabled()) {
 
-							return null;
+							return new HashMap<>();
 						}
 
 						return LocalizedMapUtil.getI18nMap(

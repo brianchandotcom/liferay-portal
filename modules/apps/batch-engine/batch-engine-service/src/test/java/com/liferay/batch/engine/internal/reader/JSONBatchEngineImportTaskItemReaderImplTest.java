@@ -5,6 +5,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
+import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -235,7 +236,8 @@ public class JSONBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (NoSuchFieldException noSuchFieldException) {
+			catch (BatchEngineImportTaskItemConversionException
+						batchEngineImportTaskItemConversionException) {
 			}
 		}
 	}

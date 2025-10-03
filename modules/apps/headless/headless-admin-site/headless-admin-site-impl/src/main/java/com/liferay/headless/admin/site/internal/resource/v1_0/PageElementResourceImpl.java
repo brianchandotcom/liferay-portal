@@ -10,6 +10,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.i
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageElementResource;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -357,8 +358,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 			LayoutStructureUtil.addLayoutStructureItem(
 				layoutStructure,
 				new LayoutStructureItemImporterContext(
-					contextCompany.getCompanyId(), groupId, layout,
-					segmentsExperienceId, contextUser.getUserId()),
+					contextCompany.getCompanyId(), groupId,
+					_infoItemServiceRegistry, layout, segmentsExperienceId,
+					contextUser.getUserId()),
 				pageElement);
 
 		_layoutPageTemplateStructureLocalService.
@@ -384,6 +386,9 @@ public class PageElementResourceImpl extends BasePageElementResourceImpl {
 
 		return dtoConverterContext;
 	}
+
+	@Reference
+	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

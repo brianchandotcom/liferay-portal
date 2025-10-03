@@ -65,8 +65,8 @@ public class LearnRestController extends BaseRestController {
 	@ResponseBody
 	public ResponseEntity<Object> getLessonAudioBase64(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable long lessonId,
-		@RequestParam String folderId, @RequestParam String voiceName,
-		@RequestParam String languageCode, @RequestParam String voiceType) {
+		@RequestParam String folderId, @RequestParam String languageCode,
+		@RequestParam String voiceName, @RequestParam String voiceType) {
 
 		try {
 			JSONObject lessonJSONObject = new JSONObject(

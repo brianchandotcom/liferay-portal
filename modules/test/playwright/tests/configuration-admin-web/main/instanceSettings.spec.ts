@@ -22,6 +22,60 @@ export const test = mergeTests(
 	siteSettingsPagesTest
 );
 
+test.describe('Factory Configuration Tests', () => {
+	test('Asserts that a user can create multiple factory configurations', async ({
+		instanceSettingsPage,
+		page,
+	}) => {
+		let providerName = getRandomString();
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'SSO',
+			'OpenID Connect Provider Connection'
+		);
+
+		await page.getByRole('link', {name: 'Add'}).click();
+
+		await page.getByLabel('Provider Name').fill(providerName);
+
+		await page
+			.getByLabel('OpenID Connect Client ID')
+			.fill(getRandomString());
+
+		await page
+			.getByLabel('OpenID Connect Client Secret')
+			.fill(getRandomString());
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
+
+		await expect(page.getByText(providerName)).toBeVisible();
+
+		providerName = getRandomString();
+
+		await page.getByRole('link', {name: 'Add'}).click();
+
+		await page.getByLabel('Provider Name').fill(providerName);
+
+		await page
+			.getByLabel('OpenID Connect Client ID')
+			.fill(getRandomString());
+
+		await page
+			.getByLabel('OpenID Connect Client Secret')
+			.fill(getRandomString());
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
+
+		await expect(page.getByText(providerName)).toBeVisible();
+	});
+});
+
 test('Asserts that a user can export a configuration', async ({
 	instanceSettingsPage,
 	page,

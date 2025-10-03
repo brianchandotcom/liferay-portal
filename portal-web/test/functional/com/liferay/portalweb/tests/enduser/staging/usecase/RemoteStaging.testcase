@@ -178,7 +178,8 @@ definition {
 			remoteStaging = "true");
 	}
 
-	@description = "This is a use case for LPS-83187. Add a publish template to the staging site then verify the title of the scheduled publication after it is finished."
+	@description = "Ignored due to LPD-66917 | This is a use case for LPS-83187. Add a publish template to the staging site then verify the title of the scheduled publication after it is finished."
+	@ignore = "true"
 	@priority = 3
 	test AssertTemplatesTitleOfScheduledStagingPublishes {
 		property test.liferay.virtual.instance = "false";

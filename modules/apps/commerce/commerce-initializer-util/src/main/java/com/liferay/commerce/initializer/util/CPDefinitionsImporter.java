@@ -253,7 +253,7 @@ public class CPDefinitionsImporter {
 			expirationDateHour, expirationDateMinute, true, sku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			WorkflowConstants.STATUS_DRAFT, serviceContext);
+			false, false, WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
 
 	private void _addWarehouseQuantities(
@@ -1069,7 +1069,8 @@ public class CPDefinitionsImporter {
 			cpDefinition.isTaxExempt(), cpDefinition.isTelcoOrElectronics(),
 			cpDefinition.getDDMStructureKey(), cpDefinition.isPublished(),
 			month, day, year, hour, minute, month, day, year, hour, minute,
-			true, serviceContext);
+			cpDefinition.isAccountGroupFilterEnabled(),
+			cpDefinition.isChannelFilterEnabled(), true, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

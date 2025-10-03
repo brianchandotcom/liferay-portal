@@ -780,9 +780,9 @@ public class SitePageResourceImpl
 
 		if (Objects.equals(sitePage.getType(), SitePage.Type.CONTENT_PAGE)) {
 			layout = LayoutUtil.updateContentLayout(
-				_cetManager, _infoItemServiceRegistry, layout, nameMap, titleMap, descriptionMap,
-				keywordsMap, robotsMap, friendlyURLMap,
-				_getTypeSettingsUnicodeProperties(sitePage),
+				_cetManager, _infoItemServiceRegistry, layout, nameMap,
+				titleMap, descriptionMap, keywordsMap, robotsMap,
+				friendlyURLMap, _getTypeSettingsUnicodeProperties(sitePage),
 				sitePage.getPageSpecifications(), serviceContext);
 		}
 		else {

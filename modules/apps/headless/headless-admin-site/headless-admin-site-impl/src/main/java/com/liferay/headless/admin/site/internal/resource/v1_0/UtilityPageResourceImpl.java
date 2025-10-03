@@ -268,8 +268,9 @@ public class UtilityPageResourceImpl
 		}
 
 		LayoutUtil.updateContentLayout(
-			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), titleMap, descriptionMap,
-			layout.getKeywordsMap(), layout.getRobotsMap(),
+			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
+			titleMap, descriptionMap, layout.getKeywordsMap(),
+			layout.getRobotsMap(),
 			LocalizedMapUtil.getLocalizedMap(
 				utilityPage.getFriendlyUrlPath_i18n()),
 			layout.getTypeSettingsProperties(),

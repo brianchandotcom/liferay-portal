@@ -313,11 +313,11 @@ public class PageSpecificationResourceImpl
 
 			return _pageSpecificationDTOConverter.toDTO(
 				LayoutUtil.updateLayout(
-					_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
-					layout.getTitleMap(), layout.getDescriptionMap(),
-					layout.getKeywordsMap(), layout.getRobotsMap(),
-					layout.getFriendlyURLMap(), pageSpecification,
-					layout.getStatus(), serviceContext));
+					_cetManager, _infoItemServiceRegistry, layout,
+					layout.getNameMap(), layout.getTitleMap(),
+					layout.getDescriptionMap(), layout.getKeywordsMap(),
+					layout.getRobotsMap(), layout.getFriendlyURLMap(),
+					pageSpecification, layout.getStatus(), serviceContext));
 		}
 
 		if (!Objects.equals(
@@ -333,7 +333,8 @@ public class PageSpecificationResourceImpl
 
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
-				_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), layout.getTitleMap(),
+				_cetManager, _infoItemServiceRegistry, layout,
+				layout.getNameMap(), layout.getTitleMap(),
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), layout.getFriendlyURLMap(),
 				pageSpecification, WorkflowConstants.STATUS_DRAFT,

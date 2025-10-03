@@ -254,16 +254,16 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			cetManager, infoItemServiceRegistry, draftLayout, draftLayout.getNameMap(),
-			draftLayout.getTitleMap(), draftLayout.getDescriptionMap(),
-			draftLayout.getKeywordsMap(), draftLayout.getRobotsMap(),
-			draftLayout.getFriendlyURLMap(), draftContentPageSpecification,
-			draftLayoutStatus, serviceContext);
+			cetManager, infoItemServiceRegistry, draftLayout,
+			draftLayout.getNameMap(), draftLayout.getTitleMap(),
+			draftLayout.getDescriptionMap(), draftLayout.getKeywordsMap(),
+			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
+			draftContentPageSpecification, draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap, descriptionMap, keywordsMap,
-			robotsMap, friendlyURLMap, publishedContentPageSpecification,
-			status, serviceContext);
+			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, friendlyURLMap,
+			publishedContentPageSpecification, status, serviceContext);
 	}
 
 	public static Layout addDraftToLayout(
@@ -296,7 +296,8 @@ public class LayoutUtil {
 		}
 
 		return updateLayout(
-			cetManager, infoItemServiceRegistry, draftLayout, layout.getNameMap(), layout.getTitleMap(),
+			cetManager, infoItemServiceRegistry, draftLayout,
+			layout.getNameMap(), layout.getTitleMap(),
 			layout.getDescriptionMap(), draftLayout.getKeywordsMap(),
 			draftLayout.getRobotsMap(), draftLayout.getFriendlyURLMap(),
 			contentPageSpecification, WorkflowConstants.STATUS_DRAFT,
@@ -330,10 +331,11 @@ public class LayoutUtil {
 			friendlyURLMap, 0, serviceContext);
 
 		layout = updateLayout(
-			cetManager, infoItemServiceRegistry, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getFriendlyURLMap(),
-			widgetPageSpecification, layout.getStatus(), serviceContext);
+			cetManager, infoItemServiceRegistry, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(), widgetPageSpecification,
+			layout.getStatus(), serviceContext);
 
 		return updatePortletLayout(
 			cetManager, layout, layout.getNameMap(), layout.getTitleMap(),
@@ -402,11 +404,10 @@ public class LayoutUtil {
 
 	public static Layout updateContentLayout(
 			CETManager cetManager,
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			Layout layout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			Map<Locale, String> friendlyURLMap,
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			UnicodeProperties typeSettingsUnicodeProperties,
 			PageSpecification[] pageSpecifications,
 			ServiceContext serviceContext)
@@ -487,21 +488,23 @@ public class LayoutUtil {
 		}
 
 		updateLayout(
-			cetManager, infoItemServiceRegistry, draftLayout, nameMap, titleMap, descriptionMap,
-			keywordsMap, robotsMap, draftLayout.getFriendlyURLMap(),
-			draftContentPageSpecification, draftLayoutStatus, serviceContext);
+			cetManager, infoItemServiceRegistry, draftLayout, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap,
+			draftLayout.getFriendlyURLMap(), draftContentPageSpecification,
+			draftLayoutStatus, serviceContext);
 
 		return updateLayout(
-			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap, descriptionMap, keywordsMap,
-			robotsMap, friendlyURLMap, publishedContentPageSpecification,
-			status, serviceContext);
+			cetManager, infoItemServiceRegistry, layout, nameMap, titleMap,
+			descriptionMap, keywordsMap, robotsMap, friendlyURLMap,
+			publishedContentPageSpecification, status, serviceContext);
 	}
 
 	public static Layout updateLayout(
-			CETManager cetManager, InfoItemServiceRegistry infoItemServiceRegistry, Layout layout, Map<Locale, String> nameMap,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
-			Map<Locale, String> friendlyURLMap,
+			CETManager cetManager,
+			InfoItemServiceRegistry infoItemServiceRegistry, Layout layout,
+			Map<Locale, String> nameMap, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
+			Map<Locale, String> robotsMap, Map<Locale, String> friendlyURLMap,
 			PageSpecification pageSpecification, int status,
 			ServiceContext serviceContext)
 		throws Exception {

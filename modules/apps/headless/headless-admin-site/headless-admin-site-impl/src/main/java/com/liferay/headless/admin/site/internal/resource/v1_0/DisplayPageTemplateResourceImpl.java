@@ -430,8 +430,9 @@ public class DisplayPageTemplateResourceImpl
 			displayPageTemplate.getDisplayPageTemplateSettings());
 
 		layout = LayoutUtil.updateContentLayout(
-			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
+			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(),
 			_getRobotsMap(displayPageTemplate.getDisplayPageTemplateSettings()),
 			LocalizedMapUtil.getLocalizedMap(
 				displayPageTemplate.getFriendlyUrlPath_i18n()),
@@ -541,7 +542,8 @@ public class DisplayPageTemplateResourceImpl
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, _infoItemServiceRegistry, displayPageTemplate.getPageSpecifications(),
+			_cetManager, groupId, _infoItemServiceRegistry,
+			displayPageTemplate.getPageSpecifications(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, false, nameMap, null,
 			null, null, _getRobotsMap(displayPageTemplateSettings),
 			LayoutConstants.TYPE_ASSET_DISPLAY,

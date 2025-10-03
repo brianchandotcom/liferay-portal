@@ -634,7 +634,8 @@ public class PageTemplateResourceImpl
 			LayoutPageTemplateEntryTypeConstants.BASIC);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, _infoItemServiceRegistry, contentPageTemplate.getPageSpecifications(),
+			_cetManager, groupId, _infoItemServiceRegistry,
+			contentPageTemplate.getPageSpecifications(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, nameMap, null, null,
 			null, null, LayoutConstants.TYPE_CONTENT, null, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,
@@ -795,10 +796,10 @@ public class PageTemplateResourceImpl
 			layoutPageTemplateEntry.getGroupId(), contentPageTemplate);
 
 		layout = LayoutUtil.updateContentLayout(
-			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getFriendlyURLMap(),
-			layout.getTypeSettingsProperties(),
+			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(), layout.getTypeSettingsProperties(),
 			contentPageTemplate.getPageSpecifications(), serviceContext);
 
 		if (layout.isPublished() && !layoutPageTemplateEntry.isApproved()) {

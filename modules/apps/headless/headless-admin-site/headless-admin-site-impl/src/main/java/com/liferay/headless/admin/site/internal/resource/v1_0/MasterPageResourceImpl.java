@@ -283,10 +283,10 @@ public class MasterPageResourceImpl
 		ServiceContext serviceContext = _getServiceContext(groupId, masterPage);
 
 		layout = LayoutUtil.updateContentLayout(
-			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(), layout.getTitleMap(),
-			layout.getDescriptionMap(), layout.getKeywordsMap(),
-			layout.getRobotsMap(), layout.getFriendlyURLMap(),
-			layout.getTypeSettingsProperties(),
+			_cetManager, _infoItemServiceRegistry, layout, layout.getNameMap(),
+			layout.getTitleMap(), layout.getDescriptionMap(),
+			layout.getKeywordsMap(), layout.getRobotsMap(),
+			layout.getFriendlyURLMap(), layout.getTypeSettingsProperties(),
 			masterPage.getPageSpecifications(), serviceContext);
 
 		if (!layoutPageTemplateEntry.isApproved() && layout.isPublished()) {
@@ -405,7 +405,8 @@ public class MasterPageResourceImpl
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT);
 
 		Layout layout = LayoutUtil.addContentLayout(
-			_cetManager, groupId, _infoItemServiceRegistry, masterPage.getPageSpecifications(),
+			_cetManager, groupId, _infoItemServiceRegistry,
+			masterPage.getPageSpecifications(),
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, true, nameMap, null, null,
 			null, null, LayoutConstants.TYPE_CONTENT, null, true, true,
 			Collections.emptyMap(), WorkflowConstants.STATUS_APPROVED,

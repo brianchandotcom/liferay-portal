@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.util;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -39,17 +40,20 @@ public class BooleanQueryParserUtil {
 			return null;
 		}
 
-		Map<String, Map<?, ?>> clauses = _getClauseMap(filterString);
+		Map<String, Map<?, ?>> clauseMap = _getClauseMap(filterString);
 
-		if (MapUtil.isEmpty(clauses)) {
+		if (MapUtil.isEmpty(clauseMap)) {
 			return null;
 		}
 
 		BooleanQuery booleanQuery = queries.booleanQuery();
 
-		Map<String, SimpleClause> simpleClauses = (Map)clauses.get("simple");
+		Map<String, SimpleClause> simpleClauseMap = (Map)clauseMap.get(
+			"simple");
 
-		for (Map.Entry<String, SimpleClause> entry : simpleClauses.entrySet()) {
+		for (Map.Entry<String, SimpleClause> entry :
+				simpleClauseMap.entrySet()) {
+
 			SimpleClause simpleClause = entry.getValue();
 
 			String operator = simpleClause.getOperator();
@@ -92,10 +96,10 @@ public class BooleanQueryParserUtil {
 
 				ListUtil.isNotEmptyForEach(
 					(List)simpleClause.getValue(),
-					orClause -> values.add(
+					object -> values.add(
 						queries.term(
 							_fieldMapping.get(simpleClause.getField()),
-							orClause)));
+							object)));
 
 				orBooleanQuery.addShouldQueryClauses(
 					values.toArray(new Query[0]));
@@ -110,11 +114,11 @@ public class BooleanQueryParserUtil {
 			ZoneId.of("UTC")
 		);
 
-		Map<String, DateRangeClause> dateRangeClauses = (Map)clauses.get(
+		Map<String, DateRangeClause> dateRangeClauseMap = (Map)clauseMap.get(
 			"dateRange");
 
 		for (Map.Entry<String, DateRangeClause> entry :
-				dateRangeClauses.entrySet()) {
+				dateRangeClauseMap.entrySet()) {
 
 			DateRangeClause dateRangeClause = entry.getValue();
 
@@ -197,20 +201,20 @@ public class BooleanQueryParserUtil {
 				if (clause.contains(" OR ")) {
 					String[] orParts = clause.split(" OR ");
 					List<String> values = new ArrayList<>();
-					String commonField = null;
+					String field = null;
 
 					for (String orPart : orParts) {
 						Matcher matcher = _clausesPattern.matcher(orPart);
 
 						if (matcher.find()) {
-							String field = matcher.group(1);
+							String leftOperand = matcher.group(1);
 							String operator = matcher.group(2);
 
 							if (operator.equals("eq")) {
-								if (commonField == null) {
-									commonField = field;
+								if (field == null) {
+									field = leftOperand;
 								}
-								else if (!commonField.equals(field)) {
+								else if (!field.equals(leftOperand)) {
 									continue;
 								}
 
@@ -219,9 +223,9 @@ public class BooleanQueryParserUtil {
 						}
 					}
 
-					if ((commonField != null) && !values.isEmpty()) {
+					if ((field != null) && !values.isEmpty()) {
 						simpleClauses.put(
-							commonField, SimpleClause.add(commonField, values));
+							field, SimpleClause.add(field, values));
 
 						continue;
 					}
@@ -334,11 +338,8 @@ public class BooleanQueryParserUtil {
 	private static class SimpleClause {
 
 		public static SimpleClause add(String field, List<String> values) {
-			List<String> cleanedValues = new ArrayList<>();
-
-			for (String value : values) {
-				cleanedValues.add(value.replaceAll("^'|'$", ""));
-			}
+			List<String> cleanedValues = TransformUtil.transform(
+				values, value -> value.replaceAll("^'|'$", ""));
 
 			return new SimpleClause(field, "or", cleanedValues);
 		}

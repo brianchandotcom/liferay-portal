@@ -41,11 +41,11 @@ public class BooleanQueryParserUtilTest {
 
 	@Test
 	public void testParseFilterWithClauseIn() throws Exception {
-		String filter =
+		String filterString =
 			"cmsRoot eq true and cmsSection eq 'files' and status in (0, 2, 3)";
 
 		BooleanQuery booleanQuery = BooleanQueryParserUtil.parse(
-			_queries, filter);
+			_queries, filterString);
 
 		List<Query> filterQueryClauses = booleanQuery.getFilterQueryClauses();
 
@@ -96,12 +96,12 @@ public class BooleanQueryParserUtilTest {
 
 	@Test
 	public void testParseFilterWithClauseOr() throws Exception {
-		String filter =
+		String filterString =
 			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
 				"eq 'files') and status in (0,2,3)";
 
 		BooleanQuery booleanQuery1 = BooleanQueryParserUtil.parse(
-			_queries, filter);
+			_queries, filterString);
 
 		List<Query> filterQueryClauses = booleanQuery1.getFilterQueryClauses();
 
@@ -167,13 +167,13 @@ public class BooleanQueryParserUtilTest {
 
 	@Test
 	public void testParseFilterWithDataRangeClause() {
-		String filter = StringBundler.concat(
+		String filterString = StringBundler.concat(
 			"cmsRoot eq true and cmsSection eq 'files' and status in (0, 2, ",
 			"3) and (dateCreated ge 2025-09-28T00:00:00.000Z) and ",
 			"(dateCreated le 2025-10-02T23:59:59.999Z)");
 
 		BooleanQuery booleanQuery = BooleanQueryParserUtil.parse(
-			_queries, filter);
+			_queries, filterString);
 
 		List<Query> filterQueryClauses = booleanQuery.getFilterQueryClauses();
 

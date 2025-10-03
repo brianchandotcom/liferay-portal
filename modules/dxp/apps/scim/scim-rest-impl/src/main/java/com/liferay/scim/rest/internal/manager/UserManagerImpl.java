@@ -841,7 +841,8 @@ public class UserManagerImpl implements UserManager {
 						predicate
 					).limit(
 						startIndex, startIndex + pageSize
-					)), model -> unsafeFunction.apply(model)));
+					)),
+				model -> unsafeFunction.apply(model)));
 	}
 
 	private <T extends BaseTable<T>> Predicate _buildWherePredicate(

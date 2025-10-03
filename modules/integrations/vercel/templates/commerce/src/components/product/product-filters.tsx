@@ -1,13 +1,18 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 'use client';
 
-import {useState} from 'react';
 import {ChevronDown, ChevronUp} from 'lucide-react';
-
-import {Card} from '@/components/ui/card';
-import {Checkbox} from '@/components/ui/checkbox';
-import {Button} from '@/components/ui/button';
-import {Label} from '@/components/ui/label';
 import {useRouter, useSearchParams} from 'next/navigation';
+import {useState} from 'react';
+
+import {Button} from '../ui/button';
+import {Card} from '../ui/card';
+import {Checkbox} from '../ui/checkbox';
+import {Label} from '../ui/label';
 
 const baseFilters = {
 	material: {
@@ -26,24 +31,24 @@ const baseFilters = {
 
 	warranty: {
 		key: 'specificationValues',
-		title: 'Warranty',
 		options: [
 			{
-				value: '1',
 				label: '1 Year Unlimited Mileage Warranty',
+				value: '1',
 			},
 			{
-				value: '3',
 				label: '3 Year Unlimited Mileage Warranty',
+				value: '3',
 			},
 			'Limited Lifetime',
 		],
+		title: 'Warranty',
 	},
 } as const;
 
 type FilterCategory = (typeof baseFilters)[keyof typeof baseFilters];
 
-export const ProductFilters = () => {
+export async function ProductFilters() {
 	const searchParams = useSearchParams();
 	const router = useRouter();
 	const specificationValues = searchParams.getAll('specificationValues');
@@ -52,8 +57,8 @@ export const ProductFilters = () => {
 		Record<string, boolean>
 	>({
 		category: true,
-		priceRange: true,
 		lastModified: true,
+		priceRange: true,
 	});
 
 	const toggleSection = (section: string) => {
@@ -119,7 +124,7 @@ export const ProductFilters = () => {
 				return (
 					<Card key={index}>
 						<div className="p-4">
-							<div className="flex items-center justify-between w-full text-left">
+							<div className="flex items-center justify-between text-left w-full">
 								<div>
 									<h3 className="font-semibold">
 										{filterCategory.title}
@@ -127,21 +132,21 @@ export const ProductFilters = () => {
 
 									<div className="flex gap-2 mt-1">
 										<Button
-											variant="outline"
-											size="sm"
 											onClick={() =>
 												selectAllFilters(filterCategory)
 											}
+											size="sm"
+											variant="outline"
 										>
 											Select All
 										</Button>
 
 										<Button
-											variant="outline"
-											size="sm"
 											onClick={() =>
 												clearAllFilters(filterCategory)
 											}
+											size="sm"
+											variant="outline"
 										>
 											Clear
 										</Button>
@@ -149,8 +154,8 @@ export const ProductFilters = () => {
 								</div>
 
 								<ToggleButton
+									className="cursor-pointer h-4 w-4"
 									onClick={() => toggleSection(key)}
-									className="h-4 w-4 cursor-pointer"
 								/>
 							</div>
 
@@ -170,26 +175,27 @@ export const ProductFilters = () => {
 
 											return (
 												<div
-													key={optionIndex}
 													className="flex items-center space-x-2"
+													key={optionIndex}
 												>
 													<Checkbox
-														id={optionValue}
 														checked={specificationValues.includes(
 															optionValue
 														)}
+														id={optionValue}
 														onCheckedChange={(
-															checked
+															checked: boolean
 														) =>
 															handleCategoryChange(
-																checked as boolean,
+																checked,
 																option
 															)
 														}
 													/>
+
 													<Label
+														className="cursor-pointer font-normal text-sm"
 														htmlFor={optionValue}
-														className="text-sm font-normal cursor-pointer"
 													>
 														{optionLabel}
 													</Label>
@@ -205,4 +211,4 @@ export const ProductFilters = () => {
 			})}
 		</div>
 	);
-};
+}

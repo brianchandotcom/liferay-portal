@@ -1,11 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Metadata} from 'next';
 import Image from 'next/image';
 import {PropsWithChildren} from 'react';
 
-import {liferay} from '@/app/liferay/server';
-
+import {Button} from '../../components/button';
+import {liferay} from '../../liferay/server';
 import {getCMSBlogPosting} from './data';
-import {Button} from '@/app/components/button';
 
 interface PageProps {
 	params: Promise<{blogPostId: [string, string]}>;
@@ -29,13 +33,13 @@ export async function generateMetadata(
 	} = await pageProps.params;
 
 	const {data} = await getCMSBlogPosting({
-		liferay,
 		blogId: Number(blogId),
+		liferay,
 	});
 
 	return {
-		title: data?.title,
 		description: data?.subtitle,
+		title: data?.title,
 	};
 }
 
@@ -45,8 +49,8 @@ export default async function BlogPost(pageProps: PageProps) {
 	} = await pageProps.params;
 
 	const {data, error} = await getCMSBlogPosting({
-		liferay,
 		blogId: Number(blogId),
+		liferay,
 	});
 
 	if (error || !data) {
@@ -64,11 +68,11 @@ export default async function BlogPost(pageProps: PageProps) {
 	return (
 		<PageTemplate>
 			<article>
-				<header className="my-4 flex flex-col gap-8">
+				<header className="flex flex-col gap-8 my-4">
 					<div className="card">
 						<Image
 							alt={data.coverImage.link.label}
-							className="w-full aspect-video object-cover"
+							className="aspect-video object-cover w-full"
 							height={90}
 							priority={true}
 							src={src}
@@ -78,9 +82,10 @@ export default async function BlogPost(pageProps: PageProps) {
 					</div>
 
 					<div>
-						<h1 className="text-3xl sm:text-4xl font-bold">
+						<h1 className="font-bold sm:text-4xl text-3xl">
 							{data.title}
 						</h1>
+
 						<p className="mt-4">{data.subtitle}</p>
 					</div>
 
@@ -89,7 +94,9 @@ export default async function BlogPost(pageProps: PageProps) {
 							<span>
 								By <strong>{data.creator.name}</strong>
 							</span>
+
 							<span>-</span>
+
 							<span>
 								{new Date(
 									data.dateCreated
@@ -101,13 +108,14 @@ export default async function BlogPost(pageProps: PageProps) {
 
 				<section>
 					<div
-						className="flex gap-4 flex-col text-justify"
+						className="flex flex-col gap-4 text-justify"
 						dangerouslySetInnerHTML={{__html: data.content}}
 					/>
 
 					<footer className="my-12">
 						<div className="flex gap-2">
 							<span>Tags:</span>
+
 							{data.keywords.map((tag) => (
 								<strong key={tag}>{tag}</strong>
 							))}

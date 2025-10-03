@@ -1,10 +1,15 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import Image from 'next/image';
-
-import {Card} from '@/components/ui/card';
-import {Badge} from '@/components/ui/badge';
-import {getSkuDetails, handleImageError} from '@/lib/product';
 import Link from 'next/link';
+
+import {getSkuDetails, handleImageError} from '../../lib/product';
+import {Badge} from '../ui/badge';
+import {Card} from '../ui/card';
 
 type ProductListViewProps = {
 	product: Product;
@@ -14,34 +19,34 @@ export default function ProductListView({product}: ProductListViewProps) {
 	const productPrice = getSkuDetails(product);
 
 	return (
-		<Card className="group overflow-hidden cursor-pointer transition-all duration-300 hover:shadow-sm bg-product-card border-product-border">
+		<Card className="bg-product-card border-product-border cursor-pointer duration-300 group hover:shadow-sm overflow-hidden transition-all">
 			<Link href={`/product/${product.urls?.en_US}`}>
-				<div className="bg-white flex items-center p-4 gap-4">
-					<div className="relative w-20 h-20 flex-shrink-0">
+				<div className="bg-white flex gap-4 items-center p-4">
+					<div className="flex-shrink-0 h-20 relative w-20">
 						<Image
 							alt={product.name as string}
-							className="w-full h-full object-cover rounded-md"
+							className="h-full object-cover rounded-md w-full"
 							height={48}
+							onError={handleImageError}
 							quality={100}
 							src={product.urlImage as string}
 							unoptimized
 							width={48}
-							onError={handleImageError}
 						/>
 					</div>
 
 					<div className="flex-1 space-y-2">
 						<div className="flex items-start justify-between">
 							<div className="space-y-1">
-								<div className="text-sm flex gap-2 items-center">
-									<Badge className="bg-success bg-slate-500 text-white">
+								<div className="flex gap-2 items-center text-sm">
+									<Badge className="bg-slate-500 bg-success text-white">
 										AVAILABLE
 									</Badge>
 
 									{product.productConfiguration
 										?.availabilityEstimateName && (
 										<p>
-											Incoming Date:{' '}
+											Incoming Date:&nbsp;
 											{
 												product.productConfiguration
 													?.availabilityEstimateName
@@ -50,7 +55,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 									)}
 								</div>
 
-								<h3 className="font-medium text-foreground group-hover:text-primary transition-colors">
+								<h3 className="font-medium group-hover:text-primary text-foreground transition-colors">
 									{product.name}
 								</h3>
 
@@ -61,7 +66,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 							</div>
 
 							<div className="text-right">
-								<div className="text-xl font-semibold text-foreground mb-2 truncate">
+								<div className="font-semibold mb-2 text-foreground text-xl truncate">
 									{productPrice.finalPrice}
 								</div>
 							</div>
@@ -77,7 +82,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 
 								{productPrice.mfrPartNumber && (
 									<div>
-										Mfr. Part Number:{' '}
+										Mfr. Part Number:&nbsp;
 										{productPrice.mfrPartNumber}
 									</div>
 								)}

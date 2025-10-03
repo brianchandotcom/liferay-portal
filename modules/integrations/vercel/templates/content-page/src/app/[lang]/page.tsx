@@ -1,24 +1,27 @@
-import {PropsWithChildren} from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Image from 'next/image';
+import {PropsWithChildren} from 'react';
 
-import {liferay} from '@/liferay/server';
-
-import {Button} from '@/components/button';
-
+import {Button} from '../../components/button';
+import {LocalizedField} from '../../liferay';
+import {liferay} from '../../liferay/server';
 import {getContentData} from './data';
-import {LocalizedField} from '@/liferay';
 
 const getLocalizedFieldValue = ({
+	lang,
 	value,
 	value_i18n,
-	lang,
 }: {lang: string} & LocalizedField<'value'>) => {
 	return value_i18n[lang] ?? value;
 };
 
 const PageTemplate = ({children}: PropsWithChildren) => {
 	return (
-		<div className="container mx-auto md:max-w-4xl flex flex-col gap-12 md:gap-16">
+		<div className="container flex flex-col gap-12 md:gap-16 md:max-w-4xl mx-auto">
 			{children}
 		</div>
 	);
@@ -30,12 +33,15 @@ export default async function Home({
 	params: Promise<{lang: string}>;
 }>) {
 	const {lang} = await params;
-	const {data, error} = await getContentData({liferay, lang});
+	const {data, error} = await getContentData({
+		lang,
+		liferay,
+	});
 
 	if (error || !data) {
 		return (
 			<PageTemplate>
-				<details className="rounded-md p-4 border">
+				<details className="border p-4 rounded-md">
 					<summary>Error: not able to load content</summary>
 
 					<pre className="font-mono">
@@ -48,9 +54,9 @@ export default async function Home({
 
 	return (
 		<PageTemplate>
-			<header className="flex flex-col-reverse md:flex-row gap-4">
-				<div className="basis-1 grow-1 flex flex-col gap-4 justify-end">
-					<h1 className="text-3xl sm:text-4xl font-bold">
+			<header className="flex flex-col-reverse gap-4 md:flex-row">
+				<div className="basis-1 flex flex-col gap-4 grow-1 justify-end">
+					<h1 className="font-bold sm:text-4xl text-3xl">
 						{getLocalizedFieldValue({
 							lang,
 							value: data.title,
@@ -69,7 +75,7 @@ export default async function Home({
 					</div>
 
 					<div>
-						<Button href={data.registrationLink} external={true}>
+						<Button external={true} href={data.registrationLink}>
 							<span className="uppercase">Register here</span>
 						</Button>
 					</div>
@@ -79,7 +85,7 @@ export default async function Home({
 					<div className="card">
 						<Image
 							alt={data.image.link.label}
-							className="w-full aspect-video object-cover"
+							className="aspect-video object-cover w-full"
 							height={90}
 							priority={true}
 							src={liferay.getDocument(data.image.link.href)}
@@ -92,7 +98,7 @@ export default async function Home({
 
 			<section>
 				<div
-					className="flex gap-4 flex-col"
+					className="flex flex-col gap-4"
 					dangerouslySetInnerHTML={{
 						__html: getLocalizedFieldValue({
 							lang,
@@ -104,29 +110,31 @@ export default async function Home({
 			</section>
 
 			<section>
-				<div className="flex flex-col md:flex-row gap-4">
+				<div className="flex flex-col gap-4 md:flex-row">
 					<div className="grow-1">
 						<iframe
-							className="w-full"
-							src={data.locationMapUrl}
-							width="1000"
-							height="350"
 							allowFullScreen={false}
+							className="w-full"
+							height="350"
 							loading="lazy"
 							referrerPolicy="no-referrer-when-downgrade"
+							src={data.locationMapUrl}
+							width="1000"
 						/>
 					</div>
 
-					<div className="grow-1 flex flex-col gap-4">
+					<div className="flex flex-col gap-4 grow-1">
 						<h3 className="font-bold">Plan your visit</h3>
 
 						<p>
 							<strong className="block">Location</strong>
+
 							<span className="block">{data.locationName}</span>
 						</p>
 
 						<p>
 							<strong className="block">Date and Time</strong>
+
 							<span className="block">
 								{new Date(data.dateTime).toLocaleString()}
 							</span>
@@ -134,8 +142,8 @@ export default async function Home({
 
 						<div>
 							<Button
-								href={data.registrationLink}
 								external={true}
+								href={data.registrationLink}
 							>
 								<span className="uppercase">Register here</span>
 							</Button>

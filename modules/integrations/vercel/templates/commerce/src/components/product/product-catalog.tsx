@@ -1,13 +1,19 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 'use client';
 
 import {PageProduct} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {Grid, List, Search} from 'lucide-react';
-import {Button} from '@/components/ui/button';
-import {ProductCard} from '@/components/product/product-card';
 import {useRouter, useSearchParams} from 'next/navigation';
-import {PaginationBar} from '../pagination-bar';
+
 import EmptyState from '../empty-state';
+import {PaginationBar} from '../pagination-bar';
+import {Button} from '../ui/button';
 import {Input} from '../ui/input';
+import {ProductCard} from './product-card';
 
 type Props = {
 	keywords: string;
@@ -15,8 +21,8 @@ type Props = {
 	viewMode: 'grid' | 'list';
 };
 
-export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
-	const {totalCount, items: products} = pageProduct;
+export async function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
+	const {items: products, totalCount} = pageProduct;
 
 	const searchParams = useSearchParams();
 	const router = useRouter();
@@ -39,13 +45,12 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 
 	return (
 		<main className="flex-1">
-			<div className="relative flex-1 max-w-m mb-4">
-				<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 bg-white" />
+			<div className="flex-1 max-w-m mb-4 relative">
+				<Search className="-translate-y-1/2 absolute bg-white h-4 left-3 top-1/2 transform w-4" />
 
 				<Input
-					placeholder="Search products..."
+					className="bg-white pl-10"
 					defaultValue={keywords}
-					className="pl-10 bg-white"
 					onKeyDown={(event) => {
 						if (event.key !== 'Enter') {
 							return;
@@ -60,12 +65,14 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 
 						router.push(`/?${_searchParams.toString()}`);
 					}}
+					placeholder="Search products..."
 				/>
 			</div>
 
 			<div className="flex items-center justify-between mb-6">
 				<div className="text-sm">
-					{totalCount} Products Available{' '}
+					{totalCount}
+					Products Available &nbsp;
 					{keywords && (
 						<span>
 							for <b>{keywords}</b>
@@ -75,19 +82,19 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 
 				<div className="flex items-center rounded-md">
 					<Button
-						variant={viewMode === 'grid' ? 'default' : 'outline'}
-						size="sm"
-						onClick={() => setViewMode('grid')}
 						className="rounded-r-none"
+						onClick={() => setViewMode('grid')}
+						size="sm"
+						variant={viewMode === 'grid' ? 'default' : 'outline'}
 					>
 						<Grid className="h-4 w-4" />
 					</Button>
 
 					<Button
-						variant={viewMode === 'list' ? 'default' : 'outline'}
-						size="sm"
-						onClick={() => setViewMode('list')}
 						className="rounded-l-none"
+						onClick={() => setViewMode('list')}
+						size="sm"
+						variant={viewMode === 'list' ? 'default' : 'outline'}
 					>
 						<List className="h-4 w-4" />
 					</Button>
@@ -101,7 +108,7 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 						: 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
 				}`}
 			>
-				{products.map((product) => (
+				{products.map((product: PageProduct) => (
 					<ProductCard
 						key={product.id}
 						product={product}
@@ -115,18 +122,18 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 				onPageChange={(page) =>
 					router.push(
 						`/?${new URLSearchParams({
+							keywords: keywords ?? '',
 							page: String(page),
 							pageSize: String(pageProduct.pageSize),
-							keywords: keywords ?? '',
 						})}`
 					)
 				}
 				onPageSizeChange={(pageSize) => {
 					router.push(
 						`/?${new URLSearchParams({
+							keywords: keywords ?? '',
 							page: String(pageProduct.page),
 							pageSize: String(pageSize),
-							keywords: keywords ?? '',
 						})}`
 					);
 				}}
@@ -135,4 +142,4 @@ export const ProductCatalog = ({keywords, pageProduct, viewMode}: Props) => {
 			/>
 		</main>
 	);
-};
+}

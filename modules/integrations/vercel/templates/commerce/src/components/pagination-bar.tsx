@@ -1,3 +1,9 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {cn} from '../lib/utils';
 import {
 	Pagination,
 	PaginationContent,
@@ -6,15 +12,14 @@ import {
 	PaginationLink,
 	PaginationNext,
 	PaginationPrevious,
-} from '@/components/ui/pagination';
+} from './ui/pagination';
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
-import {cn} from '@/lib/utils';
+} from './ui/select';
 
 interface AdvancedPaginationProps {
 	currentPage: number;
@@ -54,20 +59,24 @@ export function PaginationBar({
 				range.push('...');
 			}
 		}
+
 		return range;
 	};
 
 	return (
-		<div className="w-full border-t border-gray-200 pt-4 my-6">
-			<div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-				<div className="flex items-center gap-4 text-sm">
+		<div className="border-gray-200 border-t my-6 pt-4 w-full">
+			<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+				<div className="flex gap-4 items-center text-sm">
 					<Select
+						onValueChange={(val: string) =>
+							onPageSizeChange(Number(val))
+						}
 						value={String(pageSize)}
-						onValueChange={(val) => onPageSizeChange(Number(val))}
 					>
 						<SelectTrigger className="w-[120px]">
 							<SelectValue placeholder="Entries" />
 						</SelectTrigger>
+
 						<SelectContent>
 							{pageSizeOptions.map((size) => (
 								<SelectItem key={size} value={String(size)}>
@@ -78,45 +87,48 @@ export function PaginationBar({
 					</Select>
 
 					<span>
-						Showing <span className="font-medium">{start}</span> to{' '}
-						<span className="font-medium">{end}</span> of{' '}
-						<span className="font-medium">{totalCount}</span>{' '}
-						entries
+						Showing <span className="font-medium">{start}</span> to
+						&nbsp;
+						<span className="font-medium">{end}</span>
+						&nbsp; of &nbsp;
+						<span className="font-medium">{totalCount}</span>
+						&nbsp; entries
 					</span>
 				</div>
 
 				<div>
 					<Pagination>
-						<PaginationContent className="flex flex-wrap justify-center md:justify-end gap-1">
+						<PaginationContent className="flex flex-wrap gap-1 justify-center md:justify-end">
 							<PaginationItem>
 								<PaginationPrevious
-									size="sm"
-									onClick={(e) => {
-										e.preventDefault();
-										if (currentPage > 1)
-											onPageChange(currentPage - 1);
-									}}
 									className={cn(
 										currentPage === 1 &&
 											'pointer-events-none opacity-50'
 									)}
+									onClick={(event) => {
+										event.preventDefault();
+										if (currentPage > 1) {
+											onPageChange(currentPage - 1);
+										}
+									}}
+									size="sm"
 								/>
 							</PaginationItem>
 
-							{getPageNumbers().map((page, idx) =>
+							{getPageNumbers().map((page, index) =>
 								page === '...' ? (
-									<PaginationItem key={idx}>
+									<PaginationItem key={index}>
 										<PaginationEllipsis />
 									</PaginationItem>
 								) : (
-									<PaginationItem key={idx}>
+									<PaginationItem key={index}>
 										<PaginationLink
-											size="sm"
-											onClick={(e) => {
-												e.preventDefault();
+											isActive={page === currentPage}
+											onClick={(event) => {
+												event.preventDefault();
 												onPageChange(page as number);
 											}}
-											isActive={page === currentPage}
+											size="sm"
 										>
 											{page}
 										</PaginationLink>
@@ -126,16 +138,17 @@ export function PaginationBar({
 
 							<PaginationItem>
 								<PaginationNext
-									size="sm"
-									onClick={(e) => {
-										e.preventDefault();
-										if (currentPage < totalPages)
-											onPageChange(currentPage + 1);
-									}}
 									className={cn(
 										currentPage === totalPages &&
 											'pointer-events-none opacity-50'
 									)}
+									onClick={(event) => {
+										event.preventDefault();
+										if (currentPage < totalPages) {
+											onPageChange(currentPage + 1);
+										}
+									}}
+									size="sm"
 								/>
 							</PaginationItem>
 						</PaginationContent>

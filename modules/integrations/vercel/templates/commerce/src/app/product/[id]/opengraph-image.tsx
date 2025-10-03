@@ -1,12 +1,20 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Product} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
 import {ImageResponse} from 'next/og';
 
-import {getSkuDetails} from '@/lib/product';
+import {getSkuDetails} from '../../../lib/product';
+import {liferay} from '../../../liferay/server';
 import {getProductDetails} from './data';
-import {liferay} from '@/liferay/server';
 
 export const runtime = 'nodejs';
-export const size = {width: 1200, height: 630};
+export const size = {
+	height: 630,
+	width: 1200,
+};
 export const contentType = 'image/png';
 
 export default async function OGImage({params}: {params: {id: string}}) {
@@ -64,6 +72,7 @@ export default async function OGImage({params}: {params: {id: string}}) {
 						>
 							{product.name}
 						</span>
+
 						<span
 							style={{
 								color: '#4B5563',

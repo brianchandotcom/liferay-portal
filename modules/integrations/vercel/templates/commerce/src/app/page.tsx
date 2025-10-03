@@ -1,16 +1,21 @@
-import {Metadata} from 'next';
-import {PageProduct} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
 
-import {ProductCatalog} from '@/components/product/product-catalog';
-import {getServerURL} from '@/lib/server';
+import {PageProduct} from 'liferay-headless-rest-client/headless-commerce-delivery-catalog-v1.0';
+import {Metadata} from 'next';
+
+import {ProductCatalog} from '../components/product/product-catalog';
+import {ProductFilters} from '../components/product/product-filters';
+import {getServerURL} from '../lib/server';
+import {liferay} from '../liferay/server';
 import {getProductsPage} from './data';
-import {liferay} from '@/liferay/server';
-import {ProductFilters} from '@/components/product/product-filters';
 
 const defaultMetadata = {
-	title: `${liferay.getChannel().siteName} | Products`,
 	description:
 		'Browse our product catalog using Liferay DXP as a Commerce Platform',
+	title: `${liferay.getChannel().siteName} | Products`,
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -24,7 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 			locale: 'en_US',
 			siteName: liferay.getChannel().siteName,
 			type: 'website',
-			url: url,
+			url,
 		},
 	};
 }
@@ -63,7 +68,13 @@ const getNormalizedSearchParams = async ({
 
 	const specificationValues = getArrayValue(params.specificationValues, []);
 
-	return {page, pageSize, keywords, specificationValues, viewMode};
+	return {
+		keywords,
+		page,
+		pageSize,
+		specificationValues,
+		viewMode,
+	};
 };
 
 export default async function ProductCatalogPage(props: PageProps<'/'>) {
@@ -85,15 +96,15 @@ export default async function ProductCatalogPage(props: PageProps<'/'>) {
 	}
 
 	return (
-		<div className="flex flex-col md:flex-row gap-4">
+		<div className="flex flex-col gap-4 md:flex-row">
 			<aside>
 				<ProductFilters />
 			</aside>
 
 			<ProductCatalog
-				viewMode={viewMode}
 				keywords={keywords || ''}
 				pageProduct={data as Required<PageProduct>}
+				viewMode={viewMode}
 			/>
 		</div>
 	);

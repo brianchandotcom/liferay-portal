@@ -1,24 +1,31 @@
-import Image from 'next/image';
-import type {Metadata} from 'next';
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import {Geist, Geist_Mono} from 'next/font/google';
-import './globals.css';
+import Image from 'next/image';
 import Link from 'next/link';
-import {liferay} from '@/liferay/server';
+
+import './globals.css';
+import {liferay} from '../../liferay/server';
+
+import type {Metadata} from 'next';
 
 const geistSans = Geist({
-	variable: '--font-geist-sans',
 	subsets: ['latin'],
+	variable: '--font-geist-sans',
 });
 
 const geistMono = Geist_Mono({
-	variable: '--font-geist-mono',
 	subsets: ['latin'],
+	variable: '--font-geist-mono',
 });
 
 export const metadata: Metadata = {
-	title: 'Liferay Headless Content Page Display',
 	description:
 		'A SSR generated content page display example using Next.js and Liferay Headless API',
+	title: 'Liferay Headless Content Page Display',
 };
 
 export default async function RootLayout({
@@ -39,11 +46,11 @@ export default async function RootLayout({
 					<div className="layout-header__container">
 						<Link href="/" title="go to home page">
 							<Image
-								src="/images/liferay.svg"
 								alt="Liferay lofo"
-								width={125}
 								height={39}
 								priority
+								src="/images/liferay.svg"
+								width={125}
 							/>
 						</Link>
 
@@ -54,11 +61,11 @@ export default async function RootLayout({
 							title="See code on GitHub"
 						>
 							<Image
-								src="/images/github.svg"
 								alt="Github logo"
-								width={24}
 								height={24}
 								priority
+								src="/images/github.svg"
+								width={24}
 							/>
 						</a>
 					</div>
@@ -72,7 +79,7 @@ export default async function RootLayout({
 
 						<nav className="flex gap-4">
 							{liferay.getSupportedLanguages().map((lang) => (
-								<Link key={lang} href={`/${lang}`}>
+								<Link href={`/${lang}`} key={lang}>
 									{lang}
 								</Link>
 							))}

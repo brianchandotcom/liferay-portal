@@ -1,20 +1,14 @@
-import type {WithLiferay} from '@/app/liferay';
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import type {WithLiferay} from '../app/liferay';
 
 export interface CMSBlogPosting {
-	id: number;
 	content: string;
 	contentRawText: string;
-	title: string;
-	subtitle: string;
-	keywords: string[];
-	dateCreated: string;
-	coverImage: {
-		id: number;
-		link: {
-			href: string;
-			label: string;
-		};
-	};
+	coverImage: {id: number; link: {href: string; label: string}};
 	creator: {
 		additionalName: string;
 		contentType: string;
@@ -24,13 +18,18 @@ export interface CMSBlogPosting {
 		id: number;
 		name: string;
 	};
+	dateCreated: string;
 	friendlyUrlPath: string;
+	id: number;
+	keywords: string[];
+	subtitle: string;
+	title: string;
 }
 
-export const getCMSBlogPosting = async ({
+export async function getCMSBlogPosting({
 	blogId,
 	liferay,
-}: WithLiferay<{blogId: number}>) => {
+}: WithLiferay<{blogId: number}>) {
 	try {
 		const response = await liferay.fetch(
 			liferay.cmsEndpoints.blogPost({blogId})
@@ -39,6 +38,9 @@ export const getCMSBlogPosting = async ({
 		return {data: (await response.json()) as CMSBlogPosting};
 	}
 	catch (error) {
-		return {error, data: null};
+		return {
+			data: null,
+			error,
+		};
 	}
-};
+}

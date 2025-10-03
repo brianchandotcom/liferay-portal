@@ -1,11 +1,15 @@
-import {PropsWithChildren} from 'react';
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 import Image from 'next/image';
+import {PropsWithChildren} from 'react';
 
-import {liferay} from '@/app/liferay/server';
-
-import {getCMSBlogPostings} from './data';
+import {liferay} from '../app/liferay/server';
 import {Button} from './components/button';
 import {Pagination} from './components/pagination';
+import {getCMSBlogPostings} from './data';
 
 const PageTemplate = ({children}: PropsWithChildren) => {
 	return <div className="container mx-auto sm:max-w-4xl">{children}</div>;
@@ -24,7 +28,7 @@ export default async function Home({
 	if (error || !data) {
 		return (
 			<PageTemplate>
-				<details className="rounded-md p-4 border">
+				<details className="border p-4 rounded-md">
 					<summary>Error: not able to load blog posts</summary>
 
 					<pre className="font-mono">
@@ -37,20 +41,20 @@ export default async function Home({
 
 	return (
 		<PageTemplate>
-			<ol className="text-sm/6 text-left grid grid-rows-1 sm:grid-cols-2 gap-4 mb-4">
+			<ol className="gap-4 grid grid-rows-1 mb-4 sm:grid-cols-2 text-left text-sm/6">
 				{data.items.map((blog, index) => {
 					const src = liferay.getDocument(blog.coverImage.link.href);
 
 					return (
 						<li
+							className="first:sm:col-span-2 tracking-[-.01em]"
 							key={blog.id}
-							className="tracking-[-.01em] first:sm:col-span-2"
 						>
 							<article className="card">
 								<div className="border-b-1 border-blue-200">
 									<Image
 										alt={blog.coverImage.link.label}
-										className="w-full aspect-video object-cover"
+										className="aspect-video object-cover w-full"
 										height={90}
 										priority={index < 5}
 										src={src}
@@ -60,7 +64,7 @@ export default async function Home({
 								</div>
 
 								<div className="flex flex-col gap-4 p-5">
-									<h2 className="text-xl font-bold">
+									<h2 className="font-bold text-xl">
 										{blog.title}
 									</h2>
 
@@ -74,10 +78,12 @@ export default async function Home({
 
 									<div className="flex gap-2">
 										<span>
-											By{' '}
+											By
 											<strong>{blog.creator.name}</strong>
 										</span>
+
 										<span>-</span>
+
 										<span>
 											{new Date(
 												blog.dateCreated
@@ -97,7 +103,7 @@ export default async function Home({
 				})}
 			</ol>
 
-			<Pagination lastPage={data.lastPage} currentPage={page} />
+			<Pagination currentPage={page} lastPage={data.lastPage} />
 		</PageTemplate>
 	);
 }

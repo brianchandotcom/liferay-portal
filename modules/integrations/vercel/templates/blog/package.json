@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "add-blogs-to-liferay": "NODE_OPTIONS='--disable-warning=ExperimentalWarning --experimental-transform-types' node --env-file=.env.local addCMSBlogs.ts",
     "build": "next build",
     "dev": "next dev --turbopack",
     "lint": "next lint",

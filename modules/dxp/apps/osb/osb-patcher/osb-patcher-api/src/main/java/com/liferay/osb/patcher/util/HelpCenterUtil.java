@@ -74,9 +74,8 @@ public class HelpCenterUtil {
 
 		long fileSize = blob.getSize();
 
-		try {
-			InputStream fileInputStream = Channels.newInputStream(
-				blob.reader());
+		try (InputStream fileInputStream = Channels.newInputStream(
+				blob.reader())) {
 
 			uploadAttachment(
 				patcherBuild.getCompanyId(), fileInputStream, fileName,

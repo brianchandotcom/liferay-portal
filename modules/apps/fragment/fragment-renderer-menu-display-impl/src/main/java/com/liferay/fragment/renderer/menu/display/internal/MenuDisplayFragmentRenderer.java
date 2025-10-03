@@ -164,7 +164,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 		FragmentEntryMenuDisplayConfiguration
 			fragmentEntryMenuDisplayConfiguration =
-				new FragmentEntryMenuDisplayConfiguration(source);
+				new FragmentEntryMenuDisplayConfiguration(groupId, source);
 
 		navigationMenuTag.setNavigationMenuMode(
 			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode());
@@ -175,8 +175,7 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 		navigationMenuTag.setRootItemType(
 			fragmentEntryMenuDisplayConfiguration.getRootItemType());
 		navigationMenuTag.setSiteNavigationMenuId(
-			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId(
-				groupId));
+			fragmentEntryMenuDisplayConfiguration.getSiteNavigationMenuId());
 
 		return navigationMenuTag;
 	}

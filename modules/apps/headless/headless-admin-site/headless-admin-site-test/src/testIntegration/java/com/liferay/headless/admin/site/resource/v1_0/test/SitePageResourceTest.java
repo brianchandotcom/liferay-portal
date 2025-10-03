@@ -898,6 +898,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 						});
 				}
 			});
+		pageSettings.setQueryString(RandomTestUtil::randomString);
 
 		return pageSettings;
 	}

@@ -67,8 +67,8 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 						</p>
 						<p className="d-flex justify-content-center m-0 next-step-page-text-bold">
 							Need help?&nbsp;{' '}
-							<a href="mailto:support@liferay.com">
-								support@liferay.com
+							<a href="mailto:marketplace-admin@liferay.com">
+								marketplace-admin@liferay.com
 							</a>
 						</p>
 					</span>
@@ -145,8 +145,8 @@ export function NextStepsBody(props: NextStepsBodyProps) {
 						</p>
 						<p className="d-flex justify-content-center m-0 next-step-page-text-bold">
 							Need help?&nbsp;{' '}
-							<a href="mailto:support@liferay.com">
-								support@liferay.com
+							<a href="mailto:marketplace-admin@liferay.com">
+								marketplace-admin@liferay.com
 							</a>
 						</p>
 					</span>

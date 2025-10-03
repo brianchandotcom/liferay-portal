@@ -128,7 +128,7 @@ const Orders = () => {
 							),
 						},
 						{
-							id: 'totalWithTaxAmountFormatted',
+							id: 'totalFormatted',
 							name: i18n.translate('total'),
 						},
 					],

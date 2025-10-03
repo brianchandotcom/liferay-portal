@@ -235,7 +235,7 @@ public class FDSAPIURLBuilderTest {
 				JSONUtil.put("foo", "bar")
 			).build());
 
-		// Resolved tokens and resolvers
+		// Resolved tokens, resolver
 
 		serviceRegistration1 = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
@@ -269,7 +269,7 @@ public class FDSAPIURLBuilderTest {
 
 		serviceRegistration1.unregister();
 
-		// Resolved tokens, resolvers and default tokens
+		// Resolved tokens, resolver, default tokens
 
 		serviceRegistration1 = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{siteId}"},

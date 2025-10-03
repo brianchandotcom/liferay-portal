@@ -9,13 +9,16 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.layout.display.page.BaseLayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.constants.FriendlyURLResolverConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,16 +72,28 @@ public class DepotEntryLayoutDisplayPageProvider
 		InfoItemIdentifier infoItemIdentifier =
 			infoItemReference.getInfoItemIdentifier();
 
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
+		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier) &&
+			!(infoItemIdentifier instanceof ERCInfoItemIdentifier)) {
+
 			return null;
 		}
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
+		DepotEntry depotEntry = null;
 
-		DepotEntry depotEntry = _fetchDepotEntry(
-			classPKInfoItemIdentifier.getClassPK());
+		if (infoItemIdentifier instanceof ClassPKInfoItemIdentifier) {
+			ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+				(ClassPKInfoItemIdentifier)infoItemIdentifier;
+
+			depotEntry = _fetchDepotEntry(
+				classPKInfoItemIdentifier.getClassPK());
+		}
+		else {
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				(ERCInfoItemIdentifier)infoItemIdentifier;
+
+			depotEntry = _fetchDepotEntry(
+				ercInfoItemIdentifier.getExternalReferenceCode(), groupId);
+		}
 
 		if (depotEntry == null) {
 			return null;
@@ -99,8 +114,31 @@ public class DepotEntryLayoutDisplayPageProvider
 		return _depotEntryLocalService.fetchGroupDepotEntry(classPK);
 	}
 
+	private DepotEntry _fetchDepotEntry(
+		String externalReferenceCode, long groupId) {
+
+		Group scopeGroup = _groupLocalService.fetchGroup(groupId);
+
+		if (scopeGroup == null) {
+			return null;
+		}
+
+		Group depotGroup = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, scopeGroup.getCompanyId());
+
+		if (depotGroup == null) {
+			return null;
+		}
+
+		return _depotEntryLocalService.fetchGroupDepotEntry(
+			depotGroup.getGroupId());
+	}
+
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference(target = "(item.class.name=com.liferay.depot.model.DepotEntry)")
 	private InfoItemFriendlyURLProvider<DepotEntry>

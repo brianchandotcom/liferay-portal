@@ -36,6 +36,7 @@ import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateRe
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
 
@@ -394,18 +395,15 @@ public class MarketplaceService extends BaseService {
 
 		JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-		String resolvedEmailAddress;
-
-		if ((emailAddress == null) || emailAddress.isEmpty()) {
-			resolvedEmailAddress = jsonObject.getJSONObject(
+		if (Validator.isNull(emailAddress)) {
+			emailAddress = jsonObject.getJSONObject(
 				"to"
 			).getString(
 				"en_US"
 			);
 		}
-		else {
-			resolvedEmailAddress = emailAddress;
-		}
+
+		String finalEmailAddress = emailAddress;
 
 		notificationQueueEntry.setRecipients(
 			() -> new Object[] {
@@ -423,7 +421,7 @@ public class MarketplaceService extends BaseService {
 						"en_US"
 					)
 				).put(
-					"to", resolvedEmailAddress
+					"to", finalEmailAddress
 				).build()
 			});
 

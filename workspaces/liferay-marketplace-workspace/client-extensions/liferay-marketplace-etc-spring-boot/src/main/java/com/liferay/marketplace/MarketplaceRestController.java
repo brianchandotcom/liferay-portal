@@ -150,20 +150,24 @@ public class MarketplaceRestController extends BaseRestController {
 		JSONObject commerceOrderJSONObject = jsonObject.getJSONObject(
 			"commerceOrder");
 
+		String paymentMethod = commerceOrderJSONObject.getString(
+			"paymentMethod");
+
 		int paymentStatus = commerceOrderJSONObject.getInt("paymentStatus");
 
 		Order order = _marketplaceService.getOrder(
 			commerceOrderJSONObject.getLong("id"));
 
 		if ((Objects.equals(
-				commerceOrderJSONObject.getString("paymentMethod"),
+				paymentMethod,
 				MarketplaceConstants.ORDER_PAYMENT_METHOD_MONEY_ORDER) &&
 			 (paymentStatus ==
 				 MarketplaceConstants.ORDER_PAYMENT_STATUS_PENDING)) ||
 			(Objects.equals(
-				commerceOrderJSONObject.getString("paymentMethod"),
+				paymentMethod,
 				MarketplaceConstants.ORDER_PAYMENT_METHOD_PAYPAL) &&
-			 (paymentStatus == MarketplaceConstants.ORDER_STATUS_COMPLETED))) {
+			 (paymentStatus ==
+				 MarketplaceConstants.ORDER_PAYMENT_STATUS_COMPLETED))) {
 
 			_sendOrderPurchasedNotification(order);
 		}
@@ -239,8 +243,7 @@ public class MarketplaceRestController extends BaseRestController {
 			modelCPDefinitionJSONObject.getLong("CProductId"));
 
 		_marketplaceService.postNotificationQueueEntry(
-			"marketplace-admin@liferay.com",
-			"MARKETPLACE-PRODUCT-SUBMIT-TEMPLATE",
+			null, "MARKETPLACE-PRODUCT-SUBMIT-TEMPLATE",
 			new HashMapBuilder<String, Object>().put(
 				"[%CPDEFINITION_NAME%]",
 				product.getName(
@@ -377,7 +380,12 @@ public class MarketplaceRestController extends BaseRestController {
 					"en_US"
 				)
 			).put(
-				"[%APP_TYPE%]", productSpecificationsMap.get("type")
+				"[%APP_TYPE%]",
+				productSpecificationsMap.get(
+					"type"
+				).replace(
+					"-", " "
+				)
 			).put(
 				"[%BILLING_ADDRESS_FORMATTED%]",
 				String.join(

@@ -770,7 +770,6 @@ public class DefaultAttributeResolverTest extends BaseSamlTestCase {
 		assertEquals(
 			attributePublisherImpl.getAttributes(), "membership:userGroups",
 			new String[] {"Test 1", "Test 2"});
-
 		assertEquals(
 			attributePublisherImpl.getAttributes(), "userGroups",
 			new String[] {"Test 1", "Test 2"});

@@ -618,11 +618,11 @@ public class DefaultAttributeResolver implements AttributeResolver {
 				if (_log.isWarnEnabled()) {
 					StringBundler sb = new StringBundler(6);
 
-					sb.append("Publishing userGroups attribute with and ");
-					sb.append("without membership namespace. If using a ");
+					sb.append("Publishing the attribute \"userGroups\" with ");
+					sb.append("and without membership namespace. If using a ");
 					sb.append("non-Liferay SP, please reconfigure the SP IdP ");
 					sb.append("connection to use the new format of ");
-					sb.append("'membership:userGroups', as the previous ");
+					sb.append("\"membership:userGroups\", as the previous ");
 					sb.append("format is deprecated and will be removed.");
 
 					_log.warn(sb.toString());

@@ -953,7 +953,7 @@ public class JournalTransformerTest {
 	private ThemeLocalService _themeLocalService;
 
 	@Inject(
-		filter = "component.name=com.liferay.journal.internal.transformer.RegexTransformerListener"
+		filter = "component.name=com.liferay.journal.internal.template.parser.RegexTransformerListener"
 	)
 	private TransformerListener _transformerListener;
 

@@ -879,7 +879,7 @@ public class UserManagerImpl implements UserManager {
 			return predicate;
 		}
 
-		for (Map.Entry<String, String> entry : _filterMapping.entrySet()) {
+		for (Map.Entry<String, String> entry : _columnNames.entrySet()) {
 			if (StringUtil.contains(
 					expressionNode.getAttributeValue(), entry.getKey(),
 					StringPool.COLON)) {
@@ -1283,7 +1283,7 @@ public class UserManagerImpl implements UserManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserManagerImpl.class);
 
-	private static final Map<String, String> _filterMapping = Map.of(
+	private static final Map<String, String> _columnNames = Map.of(
 		"displayName", "name", "externalId", "externalReferenceCode",
 		"userName", "screenName");
 	private static final TransactionConfig _transactionConfig =

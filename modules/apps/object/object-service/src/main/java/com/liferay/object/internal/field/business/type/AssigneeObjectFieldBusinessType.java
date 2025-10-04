@@ -126,18 +126,16 @@ public class AssigneeObjectFieldBusinessType
 				Assignee assignee = (Assignee)value;
 
 				return _getValue(
-					objectField.getCompanyId(),
 					assignee.getExternalReferenceCode(), assignee.getName(),
-					assignee.getTypeAsString());
+					objectField, assignee.getTypeAsString());
 			}
 			else if (value instanceof Map) {
 				Map<String, Serializable> valueMap =
 					(Map<String, Serializable>)value;
 
 				return _getValue(
-					objectField.getCompanyId(),
 					MapUtil.getString(valueMap, "externalReferenceCode"),
-					MapUtil.getString(valueMap, "name"),
+					MapUtil.getString(valueMap, "name"), objectField,
 					MapUtil.getString(valueMap, "type"));
 			}
 		}
@@ -165,7 +163,7 @@ public class AssigneeObjectFieldBusinessType
 	}
 
 	private Object _getValue(
-			long companyId, String externalReferenceCode, String name,
+			String externalReferenceCode, String name, ObjectField objectField,
 			String type)
 		throws Exception {
 
@@ -184,7 +182,14 @@ public class AssigneeObjectFieldBusinessType
 					}
 					else {
 						role = _roleLocalService.getRoleByExternalReferenceCode(
-							externalReferenceCode, companyId);
+							externalReferenceCode, objectField.getCompanyId());
+					}
+
+					if (StringUtil.equals(
+							role.getName(), RoleConstants.GUEST)) {
+
+						throw new ObjectEntryValuesException.InvalidValue(
+							objectField.getName());
 					}
 
 					return role.getRoleId();
@@ -199,7 +204,7 @@ public class AssigneeObjectFieldBusinessType
 				() -> {
 					User user =
 						_userLocalService.getUserByExternalReferenceCode(
-							externalReferenceCode, companyId);
+							externalReferenceCode, objectField.getCompanyId());
 
 					return user.getUserId();
 				}

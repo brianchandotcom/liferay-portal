@@ -28,7 +28,6 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Supplier;
 
 /**
  * @author Cristina González
@@ -57,9 +56,13 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		return _hasPermission(
-			name, primKey, actionId,
-			() -> super.hasPermission(group, name, primKey, actionId));
+		Boolean hasPermission = _hasPermission(name, primKey, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission;
+		}
+
+		return super.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -70,9 +73,14 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		return _hasPermission(
-			name, GetterUtil.getLong(primKey), actionId,
-			() -> super.hasPermission(group, name, primKey, actionId));
+		Boolean hasPermission = _hasPermission(
+			name, GetterUtil.getLong(primKey), actionId);
+
+		if (hasPermission != null) {
+			return hasPermission;
+		}
+
+		return super.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -83,9 +91,13 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		return _hasPermission(
-			name, primKey, actionId,
-			() -> super.hasPermission(groupId, name, primKey, actionId));
+		Boolean hasPermission = _hasPermission(name, primKey, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission;
+		}
+
+		return super.hasPermission(groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -96,9 +108,14 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return true;
 		}
 
-		return _hasPermission(
-			name, GetterUtil.getLong(primKey), actionId,
-			() -> super.hasPermission(groupId, name, primKey, actionId));
+		Boolean hasPermission = _hasPermission(
+			name, GetterUtil.getLong(primKey), actionId);
+
+		if (hasPermission != null) {
+			return hasPermission;
+		}
+
+		return super.hasPermission(groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -191,10 +208,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 	}
 
-	private boolean _hasPermission(
-		String name, long primKey, String actionId,
-		Supplier<Boolean> hasPermissionSupplier) {
-
+	private Boolean _hasPermission(String name, long primKey, String actionId) {
 		if (StringUtil.equals(name, Group.class.getName())) {
 			Group group = _groupLocalService.fetchGroup(primKey);
 
@@ -219,7 +233,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			}
 		}
 
-		return hasPermissionSupplier.get();
+		return null;
 	}
 
 	private boolean _hasRole(long companyId, long[] roleIds, String roleName)

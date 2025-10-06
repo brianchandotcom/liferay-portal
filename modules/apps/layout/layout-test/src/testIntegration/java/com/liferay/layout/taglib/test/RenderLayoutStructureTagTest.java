@@ -417,10 +417,9 @@ public class RenderLayoutStructureTagTest {
 				continue;
 			}
 
-			String expectedContent = StringBundler.concat(
-				"id=\"", fragmentEntryLink.getNamespace(),
-				"-text-input\" name=\"text\" placeholder=\"\" type=\"text\" ",
-				"value=\"");
+			String expectedContent =
+				"name=\"ObjectField_text\" placeholder=\"\" type=\"text\" " +
+					"value=\"";
 
 			JSONObject editableValueJSONObject =
 				fragmentEntryLink.getEditableValuesJSONObject();
@@ -440,10 +439,9 @@ public class RenderLayoutStructureTagTest {
 						"inputFieldId"),
 					"ObjectEntry_externalReferenceCode")) {
 
-				expectedContent = StringBundler.concat(
-					"id=\"", fragmentEntryLink.getNamespace(),
-					"-text-input\" name=\"externalReferenceCode\" ",
-					"placeholder=\"\" type=\"text\" value=\"");
+				expectedContent =
+					"name=\"ObjectEntry_externalReferenceCode\" " +
+						"placeholder=\"\" type=\"text\" value=\"";
 
 				expectedList.add(
 					expectedContent + externalReferenceCode + StringPool.QUOTE);
@@ -453,10 +451,9 @@ public class RenderLayoutStructureTagTest {
 							"inputFieldId"),
 						"ObjectEntry_objectEntryFriendlyURL")) {
 
-				expectedContent = StringBundler.concat(
-					"id=\"", fragmentEntryLink.getNamespace(),
-					"-friendly-url-input\" name=\"objectEntryFriendlyURL\" ",
-					"type=\"text\" value=\"");
+				expectedContent =
+					"name=\"ObjectEntry_objectEntryFriendlyURL\" " +
+						"type=\"text\" value=\"";
 
 				expectedList.add(
 					expectedContent + friendlyURLValue + StringPool.QUOTE);
@@ -470,10 +467,8 @@ public class RenderLayoutStructureTagTest {
 							"_objectEntryFriendlyURL"))) {
 
 				expectedContent = StringBundler.concat(
-					"id=\"", fragmentEntryLink.getNamespace(),
-					"-friendly-url-input\" name=\"",
-					objectRelationship.getName(),
-					"_objectEntryFriendlyURL\"\" type=\"text\" value=\"");
+					"name=\"", objectRelationship.getName(),
+					"_objectEntryFriendlyURL\" type=\"text\" value=\"");
 
 				expectedList.add(
 					expectedContent + relationshipFriendlyURLValue +
@@ -3254,7 +3249,7 @@ public class RenderLayoutStructureTagTest {
 		InfoField<TextInfoFieldType> infoField, String content) {
 
 		String expectedInfoFieldInput =
-			"<p>InputName:" + infoField.getName() + "</p>";
+			"<p>InputName:" + infoField.getUniqueId() + "</p>";
 
 		Assert.assertTrue(content.contains(expectedInfoFieldInput));
 	}

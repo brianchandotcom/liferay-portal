@@ -17,8 +17,14 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemCo
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
+import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -316,11 +322,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				fragmentPageElement.getExternalReferenceCode()));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.MODULE, StringPool.BLANK));
+			_getGridPageElement(
+				new String[] {"cssClass1", "cssClass2"}, "custom css 1", false,
+				false, 2, 6,
+				GridPageElementDefinition.VerticalAlignment.MIDDLE));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.GRID, StringPool.BLANK));
+			_getGridPageElement(
+				null, "custom css 2", true, true, 1, 3,
+				GridPageElementDefinition.VerticalAlignment.TOP));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElement(
+				new String[] {"cssClass3", "cssClass4"}, null, false, false, 6,
+				12, GridPageElementDefinition.VerticalAlignment.BOTTOM));
 	}
 
 	@Ignore
@@ -396,6 +409,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					}
 				},
 				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElement(
+				new String[] {"cssClass1", "cssClass2"}, "custom css 1", false,
+				false, 2, 6, GridPageElementDefinition.VerticalAlignment.MIDDLE,
+				externalReferenceCode,
+				_getModulePageElements(externalReferenceCode, 6)));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElement(
+				null, "custom css 2", true, true, 1, 3,
+				GridPageElementDefinition.VerticalAlignment.TOP,
+				externalReferenceCode,
+				_getModulePageElements(externalReferenceCode, 3)));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElement(
+				new String[] {"cssClass3", "cssClass4"}, null, false, false, 6,
+				12, GridPageElementDefinition.VerticalAlignment.BOTTOM,
+				externalReferenceCode,
+				_getModulePageElements(externalReferenceCode, 12)));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getGridPageElementDefaultValues(externalReferenceCode));
 	}
 
 	@Override
@@ -671,6 +704,148 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		};
 	}
 
+	private PageElement _getGridPageElement(
+			String[] cssClasses, String customCss, boolean gutters,
+			boolean indexed, Integer modulesPerRow, Integer numberOfModules,
+			GridPageElementDefinition.VerticalAlignment verticalAlignment)
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		return _getGridPageElement(
+			cssClasses, customCss, gutters, indexed, modulesPerRow,
+			numberOfModules, verticalAlignment, externalReferenceCode,
+			_getModulePageElements(externalReferenceCode, numberOfModules));
+	}
+
+	private PageElement _getGridPageElement(
+			String[] cssClasses, String customCss, boolean gutters,
+			boolean indexed, Integer modulesPerRow, Integer numberOfModules,
+			GridPageElementDefinition.VerticalAlignment verticalAlignment,
+			String pageElementExternalReferenceCode, PageElement[] pageElements)
+		throws Exception {
+
+		GridPageElementDefinition gridPageElementDefinition =
+			new GridPageElementDefinition();
+
+		gridPageElementDefinition.setCssClasses(cssClasses);
+		gridPageElementDefinition.setCustomCSS(customCss);
+		gridPageElementDefinition.setGridViewports(this::_getGridViewports);
+		gridPageElementDefinition.setGutters(gutters);
+		gridPageElementDefinition.setIndexed(indexed);
+		gridPageElementDefinition.setModulesPerRow(modulesPerRow);
+		gridPageElementDefinition.setName(RandomTestUtil.randomString());
+		gridPageElementDefinition.setNumberOfModules(numberOfModules);
+		gridPageElementDefinition.setReverseOrder(Boolean.FALSE);
+		gridPageElementDefinition.setType(PageElementDefinition.Type.GRID);
+		gridPageElementDefinition.setVerticalAlignment(verticalAlignment);
+
+		return _getPageElement(
+			gridPageElementDefinition, pageElementExternalReferenceCode,
+			pageElements);
+	}
+
+	private PageElement _getGridPageElementDefaultValues(
+			String externalReferenceCode)
+		throws Exception {
+
+		return _getPageElement(
+			new GridPageElementDefinition() {
+				{
+					setGridViewports(_getGridViewportsDefaultValues());
+					setGutters(Boolean.TRUE);
+					setIndexed(Boolean.TRUE);
+					setModulesPerRow(1);
+					setNumberOfModules(1);
+					setReverseOrder(Boolean.FALSE);
+					setType(Type.GRID);
+				}
+			},
+			externalReferenceCode,
+			new PageElement[] {
+				_getPageElement(
+					new ModulePageElementDefinition() {
+						{
+							setModuleViewports(
+								_getModuleViewportsDefaultValues());
+							setSize(1);
+							setType(Type.MODULE);
+						}
+					},
+					externalReferenceCode)
+			});
+	}
+
+	private GridViewport[] _getGridViewports() {
+		return new GridViewport[] {
+			new GridViewport() {
+				{
+					setCustomCSS("landscape mobile custom css");
+					setGridViewportDefinition(
+						() -> new GridViewportDefinition() {
+							{
+								setModulesPerRow(1);
+								setVerticalAlignment(
+									GridViewportDefinition.VerticalAlignment.
+										TOP);
+							}
+						});
+					setId(Id.LANDSCAPE_MOBILE);
+				}
+			},
+			new GridViewport() {
+				{
+					setCustomCSS("portrait mobile custom css");
+					setGridViewportDefinition(
+						() -> new GridViewportDefinition() {
+							{
+								setModulesPerRow(2);
+								setVerticalAlignment(
+									GridViewportDefinition.VerticalAlignment.
+										TOP);
+							}
+						});
+					setId(Id.PORTRAIT_MOBILE);
+				}
+			},
+			new GridViewport() {
+				{
+					setCustomCSS("tablet custom css");
+					setGridViewportDefinition(
+						() -> new GridViewportDefinition() {
+							{
+								setModulesPerRow(3);
+								setVerticalAlignment(
+									GridViewportDefinition.VerticalAlignment.
+										TOP);
+							}
+						});
+					setId(Id.TABLET);
+				}
+			}
+		};
+	}
+
+	private GridViewport[] _getGridViewportsDefaultValues() {
+		return new GridViewport[] {
+			new GridViewport() {
+				{
+					setCustomCSS("landscape mobile custom css");
+					setGridViewportDefinition(
+						() -> new GridViewportDefinition() {
+							{
+								setModulesPerRow(1);
+								setVerticalAlignment(
+									GridViewportDefinition.VerticalAlignment.
+										TOP);
+							}
+						});
+					setId(Id.LANDSCAPE_MOBILE);
+				}
+			}
+		};
+	}
+
 	private LayoutStructure _getLayoutStructure() {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -679,6 +854,91 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
+	}
+
+	private PageElement _getModulePageElement(
+			String externalReferenceCode, int numberOfModules,
+			String parentExternalReferenceCode, int position)
+		throws Exception {
+
+		return _getPageElement(
+			new ModulePageElementDefinition() {
+				{
+					setModuleViewports(_getModuleViewports());
+					setSize(12 / numberOfModules);
+					setType(Type.MODULE);
+				}
+			},
+			externalReferenceCode, parentExternalReferenceCode, position);
+	}
+
+	private PageElement[] _getModulePageElements(
+			String externalReferenceCode, int numberOfModules)
+		throws Exception {
+
+		PageElement[] pageElements = new PageElement[numberOfModules];
+
+		for (int i = 0; i < numberOfModules; i++) {
+			pageElements[i] = _getModulePageElement(
+				externalReferenceCode + i, numberOfModules,
+				externalReferenceCode, i);
+		}
+
+		return pageElements;
+	}
+
+	private ModuleViewport[] _getModuleViewports() {
+		return new ModuleViewport[] {
+			new ModuleViewport() {
+				{
+					setId(Id.LANDSCAPE_MOBILE);
+					setModuleViewportDefinition(
+						() -> new ModuleViewportDefinition() {
+							{
+								setSize(RandomTestUtil.randomInt(1, 12));
+							}
+						});
+				}
+			},
+			new ModuleViewport() {
+				{
+					setId(Id.PORTRAIT_MOBILE);
+					setModuleViewportDefinition(
+						() -> new ModuleViewportDefinition() {
+							{
+								setSize(RandomTestUtil.randomInt(1, 12));
+							}
+						});
+				}
+			},
+			new ModuleViewport() {
+				{
+					setId(Id.TABLET);
+					setModuleViewportDefinition(
+						() -> new ModuleViewportDefinition() {
+							{
+								setSize(RandomTestUtil.randomInt(1, 12));
+							}
+						});
+				}
+			}
+		};
+	}
+
+	private ModuleViewport[] _getModuleViewportsDefaultValues() {
+		return new ModuleViewport[] {
+			new ModuleViewport() {
+				{
+					setId(Id.LANDSCAPE_MOBILE);
+					setModuleViewportDefinition(
+						() -> new ModuleViewportDefinition() {
+							{
+								setSize(12);
+							}
+						});
+				}
+			}
+		};
 	}
 
 	private PageElement _getPageElement(
@@ -693,6 +953,34 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPageElements(new PageElement[0]);
 		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
 		pageElement.setPosition(0);
+
+		return pageElement;
+	}
+
+	private PageElement _getPageElement(
+			PageElementDefinition pageElementDefinition,
+			String pageElementExternalReferenceCode, PageElement[] pageElements)
+		throws Exception {
+
+		PageElement pageElement = _getPageElement(
+			pageElementDefinition, pageElementExternalReferenceCode);
+
+		pageElement.setPageElements(pageElements);
+
+		return pageElement;
+	}
+
+	private PageElement _getPageElement(
+			PageElementDefinition pageElementDefinition,
+			String pageElementExternalReferenceCode,
+			String parentExternalReferenceCode, int position)
+		throws Exception {
+
+		PageElement pageElement = _getPageElement(
+			pageElementDefinition, pageElementExternalReferenceCode);
+
+		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
+		pageElement.setPosition(position);
 
 		return pageElement;
 	}

@@ -1459,7 +1459,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			objectEntryFolder1.getObjectEntryFolderId());
 	}
 
-	@FeatureFlag("LPD-50091")
 	@Test
 	public void testSendNotificationToUserGroups() throws Exception {
 		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();

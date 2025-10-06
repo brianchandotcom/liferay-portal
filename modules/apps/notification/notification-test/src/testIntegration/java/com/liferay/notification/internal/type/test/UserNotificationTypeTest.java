@@ -461,7 +461,6 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			NotificationRecipientConstants.TYPE_USER);
 	}
 
-	@FeatureFlag("LPD-50091")
 	@Test
 	public void testSendNotificationRecipientTypeUserGroup() throws Exception {
 		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();

@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.site.initializer.SiteInitializer;
 
@@ -77,6 +78,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Rubén Pulido
  */
+@FeatureFlag("LPD-41306")
 @RunWith(Arquillian.class)
 public class SiteResourceTest extends BaseSiteResourceTestCase {
 

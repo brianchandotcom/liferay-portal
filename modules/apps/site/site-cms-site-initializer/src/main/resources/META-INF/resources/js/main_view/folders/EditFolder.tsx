@@ -189,11 +189,11 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 
 					<FieldSelect
 						aria-readonly
+						defaultValue={values.folderSpace}
 						items={spaceItems}
 						label={Liferay.Language.get('space')}
 						name="folderSpace"
 						required
-						value={values.folderSpace}
 					/>
 
 					<FieldText

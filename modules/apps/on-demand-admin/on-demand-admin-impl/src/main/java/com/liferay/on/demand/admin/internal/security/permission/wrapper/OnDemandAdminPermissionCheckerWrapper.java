@@ -72,14 +72,14 @@ public class OnDemandAdminPermissionCheckerWrapper
 	private boolean _hasPermission(
 		String name, long primKey, Supplier<Boolean> hasPermissionSupplier) {
 
-		if (!StringUtil.equals(name, User.class.getName())) {
-			return hasPermissionSupplier.get();
-		}
+		if (StringUtil.equals(name, User.class.getName())) {
+			User user = _userLocalService.fetchUser(primKey);
 
-		User user = _userLocalService.fetchUser(primKey);
+			if ((user != null) &&
+				_onDemandAdminManager.isOnDemandAdminUser(user)) {
 
-		if ((user != null) && _onDemandAdminManager.isOnDemandAdminUser(user)) {
-			return false;
+				return false;
+			}
 		}
 
 		return hasPermissionSupplier.get();

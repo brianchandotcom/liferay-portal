@@ -14,11 +14,14 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -191,7 +194,8 @@ public class ObjectEntryItemDescriptorTest {
 		);
 
 		Mockito.when(
-			_objectEntry.getTitleValue()
+			_objectEntry.getTitleValue(
+				String.valueOf(LocaleUtil.getDefault()), true)
 		).thenReturn(
 			title
 		);
@@ -210,6 +214,14 @@ public class ObjectEntryItemDescriptorTest {
 			_themeDisplay.getScopeGroupId()
 		).thenReturn(
 			groupId
+		);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		Mockito.when(
+			_themeDisplay.getLocale()
+		).thenReturn(
+			locale
 		);
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);

@@ -639,11 +639,11 @@ public class RenderLayoutStructureTagTest {
 		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
 			layout, _getMockHttpServletRequest(layout));
 
-		String content = mockHttpServletResponse.getContentAsString();
-
-		String rowContent = StringUtil.extractLast(content, "row ");
+		String rowContent = StringUtil.extractLast(
+			mockHttpServletResponse.getContentAsString(), "row ");
 
 		Assert.assertNotNull(rowContent);
+
 		Assert.assertTrue(rowContent, rowContent.contains("col "));
 	}
 

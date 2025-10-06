@@ -127,7 +127,8 @@ test.afterEach(async ({apiHelpers, page, pagesAdminPage, templatesPage}) => {
 });
 
 assigneeTest(
-	'can add and update an entry with assignee object field',
+	'can create, read, update and delete an entry with assignee object field',
+	{tag: ['@LPD-64955', '@LPD-66725', '@LPD-66525']},
 	async ({apiHelpers, page, viewObjectEntriesPage}) => {
 		const objectFields = generateObjectFields({
 			objectFieldBusinessTypes: ['Assignee'],
@@ -161,64 +162,102 @@ assigneeTest(
 			type: 'objectDefinition',
 		});
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+		await test.step('create', async () => {
+			await viewObjectEntriesPage.goto(objectDefinition.className);
 
-		await viewObjectEntriesPage.clickAddObjectEntry(
-			objectDefinition.label['en_US']
-		);
+			await viewObjectEntriesPage.clickAddObjectEntry(
+				objectDefinition.label['en_US']
+			);
 
-		const {objectEntry} = await generateObjectEntryValues({
-			objectEntryFormat: 'UI',
-			objectFields,
-			role: 'Asset Library Owner',
-		});
-
-		const objectFieldObjectEntryValues =
-			await viewObjectEntriesPage.fillObjectFields({
-				objectEntry,
-				objectFields,
-			});
-
-		await viewObjectEntriesPage.saveObjectEntryButton.click();
-
-		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
-
-		await viewObjectEntriesPage.backButton.click();
-
-		for (const {entry} of objectFieldObjectEntryValues) {
-			await expect(
-				page.locator('td').getByText(entry, {exact: true})
-			).toBeVisible();
-		}
-
-		const {objectEntry: newObjectEntryValues} =
-			await generateObjectEntryValues({
+			const {objectEntry} = await generateObjectEntryValues({
 				objectEntryFormat: 'UI',
 				objectFields,
-				role: 'Site Owner',
+				role: 'Asset Library Owner',
 			});
 
-		await viewObjectEntriesPage.goto(objectDefinition.className);
+			const objectFieldObjectEntryValues =
+				await viewObjectEntriesPage.fillObjectFields({
+					objectEntry,
+					objectFields,
+				});
 
-		await viewObjectEntriesPage.frontendDatasetItems.first().click();
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
 
-		const newObjectFieldObjectEntryValues =
-			await viewObjectEntriesPage.fillObjectFields({
-				objectEntry: newObjectEntryValues,
-				objectFields,
-			});
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-		await viewObjectEntriesPage.saveObjectEntryButton.click();
+			await viewObjectEntriesPage.backButton.click();
 
-		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+			for (const {entry} of objectFieldObjectEntryValues) {
+				await expect(
+					page.locator('td').getByText(entry, {exact: true})
+				).toBeVisible();
+			}
+		});
 
-		await viewObjectEntriesPage.backButton.click();
+		const objectFieldLabel = objectFields[0].label['en_US'];
 
-		for (const {entry} of newObjectFieldObjectEntryValues) {
+		const assigneeLocator = page.getByRole('combobox', {
+			name: objectFieldLabel,
+		});
+
+		await test.step('read', async () => {
+			await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+			await assigneeLocator.click();
+
+			await assigneeLocator.blur();
+
+			expect(assigneeLocator).toHaveValue('Asset Library Owner');
+
+			await viewObjectEntriesPage.backButton.click();
+		});
+
+		await test.step('update', async () => {
+			const {objectEntry: newObjectEntryValues} =
+				await generateObjectEntryValues({
+					objectEntryFormat: 'UI',
+					objectFields,
+					role: 'Site Owner',
+				});
+
+			await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+			const newObjectFieldObjectEntryValues =
+				await viewObjectEntriesPage.fillObjectFields({
+					objectEntry: newObjectEntryValues,
+					objectFields,
+				});
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			await viewObjectEntriesPage.backButton.click();
+
+			for (const {entry} of newObjectFieldObjectEntryValues) {
+				await expect(
+					page.locator('td').getByText(entry, {exact: true})
+				).toBeVisible();
+			}
+		});
+
+		await test.step('delete', async () => {
+			await viewObjectEntriesPage.frontendDatasetItems.first().click();
+
+			await assigneeLocator.fill('');
+
+			await page.keyboard.press('Escape');
+
+			await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+
+			await viewObjectEntriesPage.backButton.click();
+
 			await expect(
-				page.locator('td').getByText(entry, {exact: true})
+				page.locator('td').getByText('', {exact: true}).first()
 			).toBeVisible();
-		}
+		});
 	}
 );
 

@@ -92,9 +92,17 @@ export default function Assignee({
 				aria-label={label}
 				defaultValue={value?.name ?? ''}
 				disabled={readOnly}
+				filterKey="name"
 				items={
 					resource
-						? resource.items.filter((item: any) => !!item.embedded)
+						? resource.items
+								.filter((item) => !!item.embedded)
+								.map((item) => {
+									return {
+										...item.embedded,
+										entryClassName: item.entryClassName,
+									};
+								})
 						: []
 				}
 				loadingState={networkStatus}

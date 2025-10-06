@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionAPI} from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect} from '@playwright/test';
 
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
+import {DataApiHelpers} from '../../../../helpers/ApiHelpers';
 import {clickAndExpectToBeHidden} from '../../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../../utils/getRandomInt';
@@ -37,6 +36,8 @@ type StructureType = 'content' | 'file';
 export class StructureBuilderPage {
 	readonly page: Page;
 
+	readonly dataApiHelpers: DataApiHelpers;
+
 	private readonly clearAllSpacesButton: Locator;
 	private readonly customizeExperienceButton: Locator;
 	private readonly labelInput: Locator;
@@ -47,8 +48,10 @@ export class StructureBuilderPage {
 	readonly saveButton: Locator;
 	readonly spaceSelector: Locator;
 
-	constructor(page: Page) {
+	constructor(page: Page, dataApiHelpers: DataApiHelpers) {
 		this.page = page;
+
+		this.dataApiHelpers = dataApiHelpers;
 
 		this.clearAllSpacesButton = this.page.getByLabel('Clear All');
 		this.customizeExperienceButton = this.page.getByRole('button', {
@@ -328,14 +331,12 @@ export class StructureBuilderPage {
 		name = `StructureName${getRandomInt()}`,
 		page,
 		publish = true,
-		structureIds,
 	}: {
 		erc?: string;
 		label: string;
 		name?: string;
 		page: StructureBuilderPage;
 		publish?: boolean;
-		structureIds?: string[];
 	}) {
 		await page.goToCreateStructure();
 
@@ -347,17 +348,11 @@ export class StructureBuilderPage {
 			name,
 		});
 
-		const {externalReferenceCode, id} = await page.saveStructure();
+		await page.saveStructure();
 
 		if (publish) {
 			await page.publishStructure();
 		}
-
-		if (structureIds) {
-			structureIds.push(id);
-		}
-
-		return externalReferenceCode;
 	}
 
 	async customizeExperience() {
@@ -411,18 +406,6 @@ export class StructureBuilderPage {
 				trigger: this.page.getByLabel('Selection Options'),
 			});
 		}
-	}
-
-	async deleteStructure(id: number) {
-		const apiHelpers = new ApiHelpers(this.page);
-
-		const APIClient = await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-		const {
-			response: {status},
-		} = await APIClient.deleteObjectDefinition(id);
-
-		expect(status).toBe(204);
 	}
 
 	async editStructure(erc: string) {
@@ -499,7 +482,14 @@ export class StructureBuilderPage {
 			await save(),
 		]);
 
-		return await response.json();
+		const {id} = await response.json();
+
+		// Add ids to ApiHelpers data so structures are cleaned after each test
+
+		this.dataApiHelpers.data.push({
+			id,
+			type: 'objectDefinition',
+		});
 	}
 
 	async selectFields(fields: Field[]) {

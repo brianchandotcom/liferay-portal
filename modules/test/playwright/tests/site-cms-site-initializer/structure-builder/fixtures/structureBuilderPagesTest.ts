@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {test} from '@playwright/test';
-
+import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {StructureBuilderPage} from '../pages/StructureBuilderPage';
 
-const structureBuilderPagesTest = test.extend<{
+const structureBuilderPagesTest = dataApiHelpersTest.extend<{
 	structureBuilderPage: StructureBuilderPage;
 }>({
-	structureBuilderPage: async ({page}, use) => {
-		await use(new StructureBuilderPage(page));
+	structureBuilderPage: async ({apiHelpers, page}, use) => {
+		await use(new StructureBuilderPage(page, apiHelpers));
 	},
 });
 

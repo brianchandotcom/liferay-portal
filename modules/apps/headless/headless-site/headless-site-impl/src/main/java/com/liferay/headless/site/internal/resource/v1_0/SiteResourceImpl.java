@@ -16,7 +16,6 @@ import com.liferay.portal.events.ThemeServicePreAction;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
@@ -59,7 +58,6 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.SiteInitializerRegistry;
-import com.liferay.site.initializer.SiteInitializerSerializer;
 import com.liferay.sites.kernel.util.Sites;
 
 import jakarta.ws.rs.core.Response;
@@ -77,12 +75,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Rubén Pulido
+ * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/site.properties",
 	scope = ServiceScope.PROTOTYPE, service = SiteResource.class
 )
 @CTAware
+@Deprecated
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
@@ -128,29 +128,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-19870")) {
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
-
-		File file = _siteInitializerSerializer.serialize(group.getGroupId());
-
-		try {
-			return Response.ok(
-				file
-			).header(
-				"Content-Disposition",
-				"attachment; filename=\"" + file.getName() + "\""
-			).build();
-		}
-		finally {
-
-			// TODO LPD-19870
-
-			//file.delete();
-		}
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -772,9 +750,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private SiteInitializerRegistry _siteInitializerRegistry;
-
-	@Reference
-	private SiteInitializerSerializer _siteInitializerSerializer;
 
 	@Reference
 	private Sites _sites;

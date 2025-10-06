@@ -162,9 +162,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 					batchEngineImportTask, extendedProperties, item);
 			}
 		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
+		catch (Exception exception) {
 			throw new BatchEngineImportTaskItemConversionException(
-				item, reflectiveOperationException);
+				item, exception);
 		}
 
 		return item;

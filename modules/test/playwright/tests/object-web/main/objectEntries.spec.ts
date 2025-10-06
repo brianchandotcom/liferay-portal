@@ -11,7 +11,7 @@ import {
 	ObjectRelationshipAPI,
 	ObjectValidationRuleAPI,
 } from '@liferay/object-admin-rest-client-js';
-import {Locator, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
 
@@ -294,9 +294,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 		const objectFieldValue = getRandomString();
 
 		await test.step('Create object entry with friendly URL', async () => {
-			const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
-
-			await friendlyUrl.fill('Test URL');
+			await viewObjectEntriesPage.friendlyUrlInput.fill('Test URL');
 
 			await page.getByTestId('visibleChangeInput').fill(objectFieldValue);
 
@@ -304,7 +302,9 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 			await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-			await expect(friendlyUrl).toHaveValue('test-url');
+			await expect(viewObjectEntriesPage.friendlyUrlInput).toHaveValue(
+				'test-url'
+			);
 		});
 
 		await test.step('Create display page template', async () => {
@@ -424,9 +424,9 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await page.getByRole('link', {name: String(objectEntry.id)}).click();
 
-		const friendlyUrl = page.getByLabel('Friendly URL').nth(1);
-
-		await expect(friendlyUrl).toHaveValue('second-url');
+		await expect(viewObjectEntriesPage.friendlyUrlInput).toHaveValue(
+			'second-url'
+		);
 
 		// Open the history modal
 
@@ -447,7 +447,9 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
 
-		await expect(friendlyUrl).toHaveValue('first-url');
+		await expect(viewObjectEntriesPage.friendlyUrlInput).toHaveValue(
+			'first-url'
+		);
 	});
 
 	test('friendly URL input is disabled when viewed inside workflow task detail', async ({
@@ -459,8 +461,6 @@ test.describe('Manage object entries through Friendly URL', () => {
 		workflowTaskDetailsPage,
 		workflowTasksPage,
 	}) => {
-		let friendlyUrlInput: Locator;
-
 		await test.step('Assign the single approver workflow to the object created', async () => {
 			await applicationsMenuPage.goToProcessBuilder();
 
@@ -481,13 +481,13 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 			await viewObjectEntriesPage.clickAddObjectEntry();
 
-			friendlyUrlInput = page.getByLabel('Friendly URL', {exact: true});
-
-			await expect(friendlyUrlInput).not.toBeDisabled();
+			await expect(
+				viewObjectEntriesPage.friendlyUrlInput
+			).not.toBeDisabled();
 		});
 
 		await test.step('Add an object entry', async () => {
-			await friendlyUrlInput.fill('test-url');
+			await viewObjectEntriesPage.friendlyUrlInput.fill('test-url');
 
 			await page.getByTestId('visibleChangeInput').fill('test entry');
 
@@ -503,15 +503,16 @@ test.describe('Manage object entries through Friendly URL', () => {
 				_objectDefinition.label['en_US']
 			);
 
-			await expect(friendlyUrlInput).toBeDisabled();
+			await expect(viewObjectEntriesPage.friendlyUrlInput).toBeDisabled();
 		});
 	});
 
 	test('verify that friendly URL field is not visible when customization is disabled', async ({
 		apiHelpers,
 		page,
+		viewObjectEntriesPage,
 	}) => {
-		await expect(page.getByLabel('Friendly URL').nth(1)).toBeVisible();
+		await expect(viewObjectEntriesPage.friendlyUrlInput).toBeVisible();
 		await expect(
 			page.getByText(
 				'The friendly URL is automatically generated based on the entry title field.'
@@ -533,7 +534,7 @@ test.describe('Manage object entries through Friendly URL', () => {
 
 		await page.reload();
 
-		await expect(page.getByLabel('Friendly URL').nth(1)).not.toBeVisible();
+		await expect(viewObjectEntriesPage.friendlyUrlInput).not.toBeVisible();
 		await expect(
 			page.getByText(
 				'The friendly URL is automatically generated based on the entry title field.'

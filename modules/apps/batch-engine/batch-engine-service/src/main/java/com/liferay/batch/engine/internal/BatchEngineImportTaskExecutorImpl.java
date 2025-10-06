@@ -51,8 +51,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import jakarta.validation.ValidationException;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -326,11 +324,8 @@ public class BatchEngineImportTaskExecutorImpl
 		throws Exception {
 
 		if (exception1 instanceof
-				BatchEngineImportTaskItemConversionException) {
-
-			BatchEngineImportTaskItemConversionException
-				batchEngineImportTaskItemConversionException =
-					(BatchEngineImportTaskItemConversionException)exception1;
+				BatchEngineImportTaskItemConversionException
+					batchEngineImportTaskItemConversionException) {
 
 			Exception exception2 =
 				_unwrapBatchEngineImportTaskItemConversionException(
@@ -476,10 +471,7 @@ public class BatchEngineImportTaskExecutorImpl
 		Throwable throwable =
 			batchEngineImportTaskItemConversionException.getCause();
 
-		if (throwable instanceof ValidationException) {
-			return (ValidationException)throwable;
-		}
-		else if (throwable instanceof Exception) {
+		if (throwable instanceof Exception) {
 			return (Exception)throwable;
 		}
 

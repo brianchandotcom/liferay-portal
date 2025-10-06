@@ -23,6 +23,7 @@ export class ViewObjectEntriesPage {
 	readonly editObjectEntryForm: Locator;
 	readonly expirationDateInput: Locator;
 	readonly frameSelect: FrameLocator;
+	readonly friendlyUrlInput: Locator;
 	readonly frontendDatasetActions: Locator;
 	readonly frontendDatasetDeleteAction: Locator;
 	readonly frontendDatasetItems: Locator;
@@ -77,6 +78,7 @@ export class ViewObjectEntriesPage {
 		this.frameSelect = page
 			.locator('iframe[title="Select"]')
 			.contentFrame();
+		this.friendlyUrlInput = page.locator('[name$="friendlyURL"]');
 		this.frontendDatasetActions = page.getByRole('button', {
 			name: 'Actions',
 		});

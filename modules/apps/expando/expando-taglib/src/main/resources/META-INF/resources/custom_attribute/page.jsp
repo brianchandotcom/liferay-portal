@@ -640,17 +640,19 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							value = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--", String.valueOf(value));
 							%>
 
-							<aui:style type="text/css">
-								#<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %> {
-									<c:if test="<%= propertyHeight > 0 %>">
-										height: <%= propertyHeight %>px;
-									</c:if>
+							<c:if test="<%= (propertyHeight > 0) || (propertyWidth > 0) %>">
+								<aui:style type="text/css">
+									#<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %> {
+										<c:if test="<%= propertyHeight > 0 %>">
+											height: <%= propertyHeight %>px;
+										</c:if>
 
-									<c:if test="<%= propertyWidth > 0 %>">
-										width: <%= propertyWidth %>px;
-									</c:if>
-								}
-							</aui:style>
+										<c:if test="<%= propertyWidth > 0 %>">
+											width: <%= propertyWidth %>px;
+										</c:if>
+									}
+								</aui:style>
+							</c:if>
 
 							<c:choose>
 								<c:when test="<%= propertyHeight > 0 %>">

@@ -5,7 +5,7 @@
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
+import {navigate, sub} from 'frontend-js-web';
 
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
@@ -139,7 +139,9 @@ export default function AllSpacesFDSPropsTransformer({
 						'delete-space-confirmation-body'
 					),
 					deleteAction: itemData.actions.delete,
-					loadData: () => window.location.reload(),
+					loadData: () => {
+						navigate(window.location.href);
+					},
 					successMessage: sub(
 						Liferay.Language.get('x-was-successfully-deleted'),
 						itemData.name

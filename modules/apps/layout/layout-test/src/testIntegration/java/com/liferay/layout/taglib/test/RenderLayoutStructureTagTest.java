@@ -89,7 +89,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureRule;
@@ -2081,11 +2080,11 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPS-169924")
-	public void testRenderEditionFormWithAddPermissionAndWithoutViewPermission()
+	public void testRenderEditionFormWithAddPermissionAndWithViewPermission()
 		throws Exception {
 
 		MockObject mockObject = new MockObject(
-			true, RandomTestUtil.randomLong(), false, false);
+			true, RandomTestUtil.randomLong(), false, true);
 
 		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
 

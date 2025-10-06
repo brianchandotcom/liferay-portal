@@ -26,18 +26,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Can configure workflows and they are persisted',
 	{
@@ -60,10 +48,12 @@ test(
 
 		const structureLabel = `StructureName${getRandomInt()}`;
 
-		const erc = await structureBuilderPage.createStructureFromData({
+		const erc = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc,
 			label: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Select spaces specifically

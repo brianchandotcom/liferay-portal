@@ -179,21 +179,6 @@ const test = mergeTests(
 	isolatedLayoutTest({publish: false})
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	for (const id of structureIds) {
-		await objectDefinitionAPIClient.deleteObjectDefinition(id);
-	}
-});
-
 test(
 	'Can use and configure a Form Relationship fragment',
 	{tag: '@LPD-54414'},
@@ -214,7 +199,7 @@ test(
 					objectDefition
 				);
 
-			structureIds.push(body.id);
+			apiHelpers.data.push({id: body.id, type: 'objectDefinition'});
 		}
 
 		// Create a page and go to edit mode

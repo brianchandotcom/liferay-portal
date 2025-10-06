@@ -32,18 +32,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Custom structure takes title as name field',
 	{tag: '@LPD-62896'},
@@ -59,7 +47,6 @@ test(
 			label: structureLabel,
 			name: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Go to CMS Contents
@@ -110,7 +97,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add a Single Select field and Multiselect fields

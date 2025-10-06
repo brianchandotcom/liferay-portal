@@ -134,21 +134,6 @@ const test = mergeTests(
 	loginTest()
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({apiHelpers}) => {
-	const objectDefinitionAPIClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
-
-	for (const id of structureIds) {
-		await objectDefinitionAPIClient.deleteObjectDefinition(id);
-	}
-});
-
 test(
 	'Can translate a content with side by side view',
 	{tag: '@LPD-52073'},
@@ -168,7 +153,7 @@ test(
 			sampleStructureDefinition
 		);
 
-		structureIds.push(structureId);
+		apiHelpers.data.push({id: structureId, type: 'objectDefinition'});
 
 		// Create a content
 

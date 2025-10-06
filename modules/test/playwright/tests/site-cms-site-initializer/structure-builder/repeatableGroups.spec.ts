@@ -26,18 +26,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Groups can be created, persisted and ungrouped',
 	{
@@ -47,12 +35,14 @@ test(
 
 		// Create structure
 
-		const erc = await structureBuilderPage.createStructureFromData({
+		const erc = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc,
 			label: getRandomString(),
 			name: `StructureName${getRandomInt()}`,
 			page: structureBuilderPage,
 			publish: false,
-			structureIds,
 		});
 
 		// Add fields
@@ -142,12 +132,14 @@ test(
 
 		// Create structure
 
-		const erc = await structureBuilderPage.createStructureFromData({
+		const erc = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc,
 			label: getRandomString(),
 			name: `StructureName${getRandomInt()}`,
 			page: structureBuilderPage,
 			publish: false,
-			structureIds,
 		});
 
 		// Add fields

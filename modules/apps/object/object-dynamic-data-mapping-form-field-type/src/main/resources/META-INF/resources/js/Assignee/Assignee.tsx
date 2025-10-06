@@ -104,6 +104,14 @@ export default function Assignee({
 					notFound: Liferay.Language.get('no-results-found'),
 				}}
 				onChange={(item: string) => {
+					if (!item) {
+						onChange({
+							target: {
+								value: null,
+							},
+						});
+					}
+
 					setSearch(item);
 				}}
 				onItemsChange={() => {}}

@@ -18,7 +18,7 @@ import java.util.Map;
 public class PermissionCheckerWrapper implements PermissionChecker {
 
 	public PermissionCheckerWrapper(PermissionChecker permissionChecker) {
-		_permissionChecker = permissionChecker;
+		this.permissionChecker = permissionChecker;
 	}
 
 	@Override
@@ -28,42 +28,42 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 
 	@Override
 	public long getCompanyId() {
-		return _permissionChecker.getCompanyId();
+		return permissionChecker.getCompanyId();
 	}
 
 	@Override
 	public long[] getGuestUserRoleIds() {
-		return _permissionChecker.getGuestUserRoleIds();
+		return permissionChecker.getGuestUserRoleIds();
 	}
 
 	@Override
 	public long getOwnerRoleId() {
-		return _permissionChecker.getOwnerRoleId();
+		return permissionChecker.getOwnerRoleId();
 	}
 
 	@Override
 	public Map<Object, Object> getPermissionChecksMap() {
-		return _permissionChecker.getPermissionChecksMap();
+		return permissionChecker.getPermissionChecksMap();
 	}
 
 	@Override
 	public long[] getRoleIds(long userId, long groupId) {
-		return _permissionChecker.getRoleIds(userId, groupId);
+		return permissionChecker.getRoleIds(userId, groupId);
 	}
 
 	@Override
 	public User getUser() {
-		return _permissionChecker.getUser();
+		return permissionChecker.getUser();
 	}
 
 	@Override
 	public UserBag getUserBag() throws Exception {
-		return _permissionChecker.getUserBag();
+		return permissionChecker.getUserBag();
 	}
 
 	@Override
 	public long getUserId() {
-		return _permissionChecker.getUserId();
+		return permissionChecker.getUserId();
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 		long companyId, String name, long primKey, long ownerId,
 		String actionId) {
 
-		return _permissionChecker.hasOwnerPermission(
+		return permissionChecker.hasOwnerPermission(
 			companyId, name, primKey, ownerId, actionId);
 	}
 
@@ -80,7 +80,7 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 		long companyId, String name, String primKey, long ownerId,
 		String actionId) {
 
-		return _permissionChecker.hasOwnerPermission(
+		return permissionChecker.hasOwnerPermission(
 			companyId, name, primKey, ownerId, actionId);
 	}
 
@@ -88,21 +88,21 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 	public boolean hasPermission(
 		Group group, String name, long primKey, String actionId) {
 
-		return _permissionChecker.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
 	public boolean hasPermission(
 		Group group, String name, String primKey, String actionId) {
 
-		return _permissionChecker.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		return _permissionChecker.hasPermission(
+		return permissionChecker.hasPermission(
 			groupId, name, primKey, actionId);
 	}
 
@@ -110,7 +110,7 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, String primKey, String actionId) {
 
-		return _permissionChecker.hasPermission(
+		return permissionChecker.hasPermission(
 			groupId, name, primKey, actionId);
 	}
 
@@ -121,59 +121,59 @@ public class PermissionCheckerWrapper implements PermissionChecker {
 
 	@Override
 	public boolean isCheckGuest() {
-		return _permissionChecker.isCheckGuest();
+		return permissionChecker.isCheckGuest();
 	}
 
 	@Override
 	public boolean isCompanyAdmin() {
-		return _permissionChecker.isCompanyAdmin();
+		return permissionChecker.isCompanyAdmin();
 	}
 
 	@Override
 	public boolean isCompanyAdmin(long companyId) {
-		return _permissionChecker.isCompanyAdmin(companyId);
+		return permissionChecker.isCompanyAdmin(companyId);
 	}
 
 	@Override
 	public boolean isContentReviewer(long companyId, long groupId) {
-		return _permissionChecker.isContentReviewer(companyId, groupId);
+		return permissionChecker.isContentReviewer(companyId, groupId);
 	}
 
 	@Override
 	public boolean isGroupAdmin(long groupId) {
-		return _permissionChecker.isGroupAdmin(groupId);
+		return permissionChecker.isGroupAdmin(groupId);
 	}
 
 	@Override
 	public boolean isGroupMember(long groupId) {
-		return _permissionChecker.isGroupMember(groupId);
+		return permissionChecker.isGroupMember(groupId);
 	}
 
 	@Override
 	public boolean isGroupOwner(long groupId) {
-		return _permissionChecker.isGroupOwner(groupId);
+		return permissionChecker.isGroupOwner(groupId);
 	}
 
 	@Override
 	public boolean isOmniadmin() {
-		return _permissionChecker.isOmniadmin();
+		return permissionChecker.isOmniadmin();
 	}
 
 	@Override
 	public boolean isOrganizationAdmin(long organizationId) {
-		return _permissionChecker.isOrganizationAdmin(organizationId);
+		return permissionChecker.isOrganizationAdmin(organizationId);
 	}
 
 	@Override
 	public boolean isOrganizationOwner(long organizationId) {
-		return _permissionChecker.isOrganizationOwner(organizationId);
+		return permissionChecker.isOrganizationOwner(organizationId);
 	}
 
 	@Override
 	public boolean isSignedIn() {
-		return _permissionChecker.isSignedIn();
+		return permissionChecker.isSignedIn();
 	}
 
-	private final PermissionChecker _permissionChecker;
+	protected final PermissionChecker permissionChecker;
 
 }

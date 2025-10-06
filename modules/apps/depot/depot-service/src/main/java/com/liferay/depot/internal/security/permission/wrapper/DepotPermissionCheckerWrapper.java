@@ -62,7 +62,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return hasPermission;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return hasPermission;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -97,7 +97,8 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return hasPermission;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -115,7 +116,8 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			return hasPermission;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -125,7 +127,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (super.isContentReviewer(companyId, groupId) ||
+			if (permissionChecker.isContentReviewer(companyId, groupId) ||
 				isGroupAdmin(groupId)) {
 
 				return true;
@@ -150,7 +152,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (super.isGroupAdmin(groupId)) {
+			if (permissionChecker.isGroupAdmin(groupId)) {
 				return true;
 			}
 
@@ -173,7 +175,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (super.isGroupMember(groupId)) {
+			if (permissionChecker.isGroupMember(groupId)) {
 				return true;
 			}
 
@@ -193,7 +195,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return false;
 			}
 
-			if (super.isGroupOwner(groupId)) {
+			if (permissionChecker.isGroupOwner(groupId)) {
 				return true;
 			}
 
@@ -292,7 +294,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		while (!parentGroup.isRoot()) {
 			parentGroup = parentGroup.getParentGroup();
 
-			if (super.hasPermission(
+			if (permissionChecker.hasPermission(
 					parentGroup, Group.class.getName(),
 					String.valueOf(parentGroup.getGroupId()),
 					ActionKeys.MANAGE_SUBGROUPS)) {

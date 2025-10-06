@@ -48,7 +48,7 @@ public class CTOnDemandUserPermissionCheckerWrapper
 			return true;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class CTOnDemandUserPermissionCheckerWrapper
 			return true;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -70,7 +70,8 @@ public class CTOnDemandUserPermissionCheckerWrapper
 			return true;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -81,7 +82,8 @@ public class CTOnDemandUserPermissionCheckerWrapper
 			return true;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	private long _getCTCollectionId() {

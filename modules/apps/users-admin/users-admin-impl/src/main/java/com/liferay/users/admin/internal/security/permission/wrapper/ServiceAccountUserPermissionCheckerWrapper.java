@@ -37,7 +37,7 @@ public class ServiceAccountUserPermissionCheckerWrapper
 			return false;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ServiceAccountUserPermissionCheckerWrapper
 			return false;
 		}
 
-		return super.hasPermission(group, name, primKey, actionId);
+		return permissionChecker.hasPermission(group, name, primKey, actionId);
 	}
 
 	@Override
@@ -59,7 +59,8 @@ public class ServiceAccountUserPermissionCheckerWrapper
 			return false;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	@Override
@@ -70,7 +71,8 @@ public class ServiceAccountUserPermissionCheckerWrapper
 			return false;
 		}
 
-		return super.hasPermission(groupId, name, primKey, actionId);
+		return permissionChecker.hasPermission(
+			groupId, name, primKey, actionId);
 	}
 
 	private boolean _hasPermission(String name, long primKey) {

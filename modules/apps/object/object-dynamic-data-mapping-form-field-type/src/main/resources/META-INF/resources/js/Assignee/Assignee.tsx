@@ -56,7 +56,20 @@ export default function Assignee({
 	const [search, setSearch] = useState(value?.name ?? '');
 	const [networkStatus, setNetworkStatus] = useState(4);
 
-	const {resource} = useResource({
+	const {
+		resource,
+	}: {
+		resource: {
+			items: {
+				embedded: {
+					externalReferenceCode: string;
+					image?: string;
+					name: string;
+				};
+				entryClassName: string;
+			}[];
+		};
+	} = useResource({
 		fetchOptions: {
 			credentials: 'include',
 			headers: new Headers({'x-csrf-token': Liferay.authToken}),

@@ -111,6 +111,8 @@ public class OpenAPIResourceImpl {
 
 			add(PageTemplateSetResourceImpl.class);
 
+			add(SiteResourceImpl.class);
+
 			add(SitePageResourceImpl.class);
 
 			add(UtilityPageResourceImpl.class);

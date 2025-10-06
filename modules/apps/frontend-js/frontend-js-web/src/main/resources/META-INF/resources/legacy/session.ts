@@ -231,10 +231,13 @@ export class Session {
 	}
 
 	private _getTimestamp() {
-		return parseInt(Liferay.Util.LocalStorage.getItem(
-			this._timestampKey,
-			Liferay.Util.LocalStorage.TYPES.NECESSARY
-		)!, 10);
+		return parseInt(
+			Liferay.Util.LocalStorage.getItem(
+				this._timestampKey,
+				Liferay.Util.LocalStorage.TYPES.NECESSARY
+			)!,
+			10
+		);
 	}
 
 	private _setTimestamp() {
@@ -248,9 +251,7 @@ export class Session {
 	private _startTimer() {
 		this._intervalId = setInterval(() => {
 			const elapsed =
-				Math.floor(
-					(Date.now() - this._getTimestamp()) / 1000
-				) * 1000;
+				Math.floor((Date.now() - this._getTimestamp()) / 1000) * 1000;
 
 			const shouldExpire = elapsed >= this.sessionLength;
 			const shouldWarn =

@@ -11,8 +11,6 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.List;
 
-import java.util.List;
-
 /**
  * @author Kevin Lee
  */

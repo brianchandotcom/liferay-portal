@@ -157,11 +157,11 @@ public class JournalDisplayContextTest {
 
 	@Test
 	public void testGetSearchContainerWithParameters() throws Exception {
-		new JournalFolderFixture(
-			_journalFolderLocalService
-		).addFolder(
-			_group.getGroupId(), "Journal Folder Example"
-		);
+		JournalFolderFixture journalFolderFixture = new JournalFolderFixture(
+			_journalFolderLocalService);
+
+		journalFolderFixture.addFolder(
+			_group.getGroupId(), "Journal Folder Example");
 
 		_addJournalArticle("Journal Article Example 1");
 

@@ -176,7 +176,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 			}
 
 			return ObjectEntryUtil.toObjectEntry(
-				objectEntry.getObjectDefinitionId(), dtoObjectEntry);
+				_objectDefinition, dtoObjectEntry);
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(

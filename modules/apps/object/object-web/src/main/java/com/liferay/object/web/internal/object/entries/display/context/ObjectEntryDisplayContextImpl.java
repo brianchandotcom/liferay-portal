@@ -1691,10 +1691,8 @@ public class ObjectEntryDisplayContextImpl
 			return null;
 		}
 
-		ObjectDefinition objectDefinition = getObjectDefinition1();
-
 		return ObjectEntryUtil.toObjectEntry(
-			objectDefinition.getObjectDefinitionId(), objectEntry);
+			getObjectDefinition1(), objectEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

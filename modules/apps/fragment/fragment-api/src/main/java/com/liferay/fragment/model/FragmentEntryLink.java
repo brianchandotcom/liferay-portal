@@ -65,18 +65,6 @@ public interface FragmentEntryLink
 
 	public long getFragmentEntryGroupId();
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public long getFragmentEntryId();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public long getOriginalFragmentEntryLinkId();
-
 	public boolean isCacheable();
 
 	public boolean isLatestVersion()
@@ -94,18 +82,5 @@ public interface FragmentEntryLink
 	public boolean isTypeReact();
 
 	public boolean isTypeSection();
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setFragmentEntryId(long fragmentEntryId);
-
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), with no direct replacement
-	 */
-	@Deprecated
-	public void setOriginalFragmentEntryLinkId(
-		long originalFragmentEntryLinkId);
 
 }

@@ -38,6 +38,7 @@ export const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
 		'LPD-20379': {enabled: true},
+		'LPD-58472': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
@@ -2147,8 +2148,8 @@ test(
 			await dialog.accept();
 		});
 
-		await (await commerceThemeClassicOrdersPage.tableRow(11, 'Actions')).row
-			.getByRole('button')
+		await (await commerceThemeClassicOrdersPage.tableRow(1, cart.id)).row
+			.getByRole('button', {name: 'Actions'})
 			.click();
 		await commerceThemeClassicOrdersPage
 			.orderTableMenuItem('Delete')

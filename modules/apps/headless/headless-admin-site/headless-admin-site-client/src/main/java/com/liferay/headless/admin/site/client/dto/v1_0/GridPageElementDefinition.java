@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.RowPageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.GridPageElementDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class RowPageElementDefinition
+public class GridPageElementDefinition
 	extends PageElementDefinition implements Cloneable, Serializable {
 
-	public static RowPageElementDefinition toDTO(String json) {
-		return RowPageElementDefinitionSerDes.toDTO(json);
+	public static GridPageElementDefinition toDTO(String json) {
+		return GridPageElementDefinitionSerDes.toDTO(json);
 	}
 
 	public String[] getCssClasses() {
@@ -68,28 +68,6 @@ public class RowPageElementDefinition
 
 	protected String customCSS;
 
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		return customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
-
-		try {
-			customCSSViewports = customCSSViewportsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected CustomCSSViewport[] customCSSViewports;
-
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
 	}
@@ -111,27 +89,26 @@ public class RowPageElementDefinition
 
 	protected FragmentStyle fragmentStyle;
 
-	public FragmentViewport[] getFragmentViewports() {
-		return fragmentViewports;
+	public GridViewport[] getGridViewports() {
+		return gridViewports;
 	}
 
-	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
-		this.fragmentViewports = fragmentViewports;
+	public void setGridViewports(GridViewport[] gridViewports) {
+		this.gridViewports = gridViewports;
 	}
 
-	public void setFragmentViewports(
-		UnsafeSupplier<FragmentViewport[], Exception>
-			fragmentViewportsUnsafeSupplier) {
+	public void setGridViewports(
+		UnsafeSupplier<GridViewport[], Exception> gridViewportsUnsafeSupplier) {
 
 		try {
-			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
+			gridViewports = gridViewportsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentViewport[] fragmentViewports;
+	protected GridViewport[] gridViewports;
 
 	public Boolean getGutters() {
 		return gutters;
@@ -215,26 +192,26 @@ public class RowPageElementDefinition
 
 	protected String name;
 
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
+	public Integer getNumberOfModules() {
+		return numberOfModules;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setNumberOfModules(Integer numberOfModules) {
+		this.numberOfModules = numberOfModules;
 	}
 
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setNumberOfModules(
+		UnsafeSupplier<Integer, Exception> numberOfModulesUnsafeSupplier) {
 
 		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
+			numberOfModules = numberOfModulesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Integer numberOfColumns;
+	protected Integer numberOfModules;
 
 	public Boolean getReverseOrder() {
 		return reverseOrder;
@@ -257,37 +234,25 @@ public class RowPageElementDefinition
 
 	protected Boolean reverseOrder;
 
-	public RowViewport[] getRowViewports() {
-		return rowViewports;
-	}
-
-	public void setRowViewports(RowViewport[] rowViewports) {
-		this.rowViewports = rowViewports;
-	}
-
-	public void setRowViewports(
-		UnsafeSupplier<RowViewport[], Exception> rowViewportsUnsafeSupplier) {
-
-		try {
-			rowViewports = rowViewportsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected RowViewport[] rowViewports;
-
-	public String getVerticalAlignment() {
+	public VerticalAlignment getVerticalAlignment() {
 		return verticalAlignment;
 	}
 
-	public void setVerticalAlignment(String verticalAlignment) {
+	public String getVerticalAlignmentAsString() {
+		if (verticalAlignment == null) {
+			return null;
+		}
+
+		return verticalAlignment.toString();
+	}
+
+	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 	}
 
 	public void setVerticalAlignment(
-		UnsafeSupplier<String, Exception> verticalAlignmentUnsafeSupplier) {
+		UnsafeSupplier<VerticalAlignment, Exception>
+			verticalAlignmentUnsafeSupplier) {
 
 		try {
 			verticalAlignment = verticalAlignmentUnsafeSupplier.get();
@@ -297,11 +262,11 @@ public class RowPageElementDefinition
 		}
 	}
 
-	protected String verticalAlignment;
+	protected VerticalAlignment verticalAlignment;
 
 	@Override
-	public RowPageElementDefinition clone() throws CloneNotSupportedException {
-		return (RowPageElementDefinition)super.clone();
+	public GridPageElementDefinition clone() throws CloneNotSupportedException {
+		return (GridPageElementDefinition)super.clone();
 	}
 
 	@Override
@@ -310,14 +275,14 @@ public class RowPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof RowPageElementDefinition)) {
+		if (!(object instanceof GridPageElementDefinition)) {
 			return false;
 		}
 
-		RowPageElementDefinition rowPageElementDefinition =
-			(RowPageElementDefinition)object;
+		GridPageElementDefinition gridPageElementDefinition =
+			(GridPageElementDefinition)object;
 
-		return Objects.equals(toString(), rowPageElementDefinition.toString());
+		return Objects.equals(toString(), gridPageElementDefinition.toString());
 	}
 
 	@Override
@@ -328,7 +293,40 @@ public class RowPageElementDefinition
 	}
 
 	public String toString() {
-		return RowPageElementDefinitionSerDes.toJSON(this);
+		return GridPageElementDefinitionSerDes.toJSON(this);
+	}
+
+	public static enum VerticalAlignment {
+
+		BOTTOM("Bottom"), MIDDLE("Middle"), TOP("Top");
+
+		public static VerticalAlignment create(String value) {
+			for (VerticalAlignment verticalAlignment : values()) {
+				if (Objects.equals(verticalAlignment.getValue(), value) ||
+					Objects.equals(verticalAlignment.name(), value)) {
+
+					return verticalAlignment;
+				}
+			}
+
+			return null;
+		}
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private VerticalAlignment(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
 	}
 
 }

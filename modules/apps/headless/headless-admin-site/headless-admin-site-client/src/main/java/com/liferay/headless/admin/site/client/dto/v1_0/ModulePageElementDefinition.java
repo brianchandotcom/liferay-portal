@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ColumnPageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ModulePageElementDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,34 +19,34 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ColumnPageElementDefinition
+public class ModulePageElementDefinition
 	extends PageElementDefinition implements Cloneable, Serializable {
 
-	public static ColumnPageElementDefinition toDTO(String json) {
-		return ColumnPageElementDefinitionSerDes.toDTO(json);
+	public static ModulePageElementDefinition toDTO(String json) {
+		return ModulePageElementDefinitionSerDes.toDTO(json);
 	}
 
-	public ColumnViewport[] getColumnViewports() {
-		return columnViewports;
+	public ModuleViewport[] getModuleViewports() {
+		return moduleViewports;
 	}
 
-	public void setColumnViewports(ColumnViewport[] columnViewports) {
-		this.columnViewports = columnViewports;
+	public void setModuleViewports(ModuleViewport[] moduleViewports) {
+		this.moduleViewports = moduleViewports;
 	}
 
-	public void setColumnViewports(
-		UnsafeSupplier<ColumnViewport[], Exception>
-			columnViewportsUnsafeSupplier) {
+	public void setModuleViewports(
+		UnsafeSupplier<ModuleViewport[], Exception>
+			moduleViewportsUnsafeSupplier) {
 
 		try {
-			columnViewports = columnViewportsUnsafeSupplier.get();
+			moduleViewports = moduleViewportsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected ColumnViewport[] columnViewports;
+	protected ModuleViewport[] moduleViewports;
 
 	public Integer getSize() {
 		return size;
@@ -68,10 +68,10 @@ public class ColumnPageElementDefinition
 	protected Integer size;
 
 	@Override
-	public ColumnPageElementDefinition clone()
+	public ModulePageElementDefinition clone()
 		throws CloneNotSupportedException {
 
-		return (ColumnPageElementDefinition)super.clone();
+		return (ModulePageElementDefinition)super.clone();
 	}
 
 	@Override
@@ -80,15 +80,15 @@ public class ColumnPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof ColumnPageElementDefinition)) {
+		if (!(object instanceof ModulePageElementDefinition)) {
 			return false;
 		}
 
-		ColumnPageElementDefinition columnPageElementDefinition =
-			(ColumnPageElementDefinition)object;
+		ModulePageElementDefinition modulePageElementDefinition =
+			(ModulePageElementDefinition)object;
 
 		return Objects.equals(
-			toString(), columnPageElementDefinition.toString());
+			toString(), modulePageElementDefinition.toString());
 	}
 
 	@Override
@@ -99,7 +99,7 @@ public class ColumnPageElementDefinition
 	}
 
 	public String toString() {
-		return ColumnPageElementDefinitionSerDes.toJSON(this);
+		return ModulePageElementDefinitionSerDes.toJSON(this);
 	}
 
 }

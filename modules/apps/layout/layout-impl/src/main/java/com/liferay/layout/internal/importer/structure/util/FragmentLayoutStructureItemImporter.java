@@ -454,15 +454,15 @@ public class FragmentLayoutStructureItemImporter
 				KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR);
 
 		if (editableJSONObject != null) {
-			List<String> keysToReplace = new ArrayList<>();
+			List<String> namespaceKeys = new ArrayList<>();
 
 			for (String key : editableJSONObject.keySet()) {
 				if (key.contains(_NAMESPACE_PLACEHOLDER)) {
-					keysToReplace.add(key);
+					namespaceKeys.add(key);
 				}
 			}
 
-			for (String key : keysToReplace) {
+			for (String key : namespaceKeys) {
 				editableJSONObject.put(
 					StringUtil.replace(key, _NAMESPACE_PLACEHOLDER, namespace),
 					editableJSONObject.get(key));

@@ -473,24 +473,17 @@ public class BatchEngineImportTaskExecutorImpl
 		BatchEngineImportTaskItemConversionException
 			batchEngineImportTaskItemConversionException) {
 
-		Throwable throwable1 =
+		Throwable throwable =
 			batchEngineImportTaskItemConversionException.getCause();
 
-		if (!(throwable1 instanceof ReflectiveOperationException)) {
-			if (throwable1 instanceof Exception) {
-				return (Exception)throwable1;
-			}
-
-			return batchEngineImportTaskItemConversionException;
+		if (throwable instanceof ValidationException) {
+			return (ValidationException)throwable;
+		}
+		else if (throwable instanceof Exception) {
+			return (Exception)throwable;
 		}
 
-		Throwable throwable2 = throwable1.getCause();
-
-		if (throwable2 instanceof ValidationException) {
-			return (ValidationException)throwable2;
-		}
-
-		return (ReflectiveOperationException)throwable1;
+		return batchEngineImportTaskItemConversionException;
 	}
 
 	private void _updateBatchEngineImportTask(

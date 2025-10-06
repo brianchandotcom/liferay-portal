@@ -740,41 +740,6 @@ definition {
 		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
 	}
 
-	@priority = 4
-	test FactoryConfigurationCanBeEdited {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
-		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider Connection",
-			configurationScope = "Virtual Instance Scope");
-
-		OpenIDConnect.addProvider(
-			openIdConnectClientId = ${openIdConnectClientId},
-			openIdConnectClientSecret = ${openIdConnectClientSecret},
-			providerName = "Google");
-
-		LexiconEntry.viewEntryName(rowEntry = "Google");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = "Google");
-
-		FormFields.editText(
-			fieldName = "providerName",
-			fieldValue = "Edit Google");
-
-		PortletEntry.update();
-
-		LexiconEntry.viewNoEntry(rowEntry = "Google");
-
-		LexiconEntry.viewEntryName(rowEntry = "Edit Google");
-	}
-
 	@description = "This test asserts that a user can reset the value of a single configuration."
 	@priority = 4
 	test SingleConfigurationCanBeDeleted {

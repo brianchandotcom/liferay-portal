@@ -111,6 +111,41 @@ test.describe('Factory Configuration Tests', () => {
 			await page.locator('tbody tr:first-of-type').innerText()
 		).not.toBe(providerName);
 	});
+
+	test('Asserts that a user can edit a factory configuration', async ({
+		instanceSettingsPage,
+		page,
+	}) => {
+		await instanceSettingsPage.goToInstanceSetting(
+			'SSO',
+			'OpenID Connect Provider Connection'
+		);
+		const firstRow = page.locator('tbody tr:first-of-type');
+
+		const providerName = await firstRow.innerText();
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText('Edit').first(),
+			trigger: firstRow.getByRole('button'),
+		});
+
+		const editedProviderName = getRandomString();
+
+		await page.getByLabel('Provider Name').fill(editedProviderName);
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
+
+		await expect(
+			await page.locator('tbody tr:first-of-type').innerText()
+		).not.toBe(providerName);
+		await expect(
+			(await page.locator('tbody tr:first-of-type').innerText()).trim()
+		).toBe(editedProviderName);
+	});
 });
 
 test('Asserts that a user can export a configuration', async ({

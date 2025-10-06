@@ -8,6 +8,7 @@ package com.liferay.portal.security.permission;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupGroupRole;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -74,9 +74,15 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class AdvancedPermissionChecker extends BasePermissionChecker {
 
+	public AdvancedPermissionChecker(
+		ServiceTrackerList<RoleContributor> roleContributors) {
+
+		_roleContributors = roleContributors;
+	}
+
 	@Override
 	public AdvancedPermissionChecker clone() {
-		return new AdvancedPermissionChecker();
+		return new AdvancedPermissionChecker(_roleContributors);
 	}
 
 	@Override
@@ -268,13 +274,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 			groupId, name, primKey, roleIds, actionId, value);
 
 		return value;
-	}
-
-	@Override
-	public void init(User user, RoleContributor[] roleContributors) {
-		init(user);
-
-		_roleContributors = roleContributors;
 	}
 
 	@Override
@@ -1170,7 +1169,7 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 	}
 
 	private long[] _applyRoleContributors(long[] roleIds, long groupId) {
-		if (_roleContributors.length == 0) {
+		if (_roleContributors.size() == 0) {
 			return roleIds;
 		}
 
@@ -1186,9 +1185,9 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 						new RoleCollectionImpl(
 							user, getUserBag(), roleIds, groupId, this);
 
-					for (RoleContributor roleContributor : _roleContributors) {
-						roleContributor.contribute(roleCollectionImpl);
-					}
+					_roleContributors.forEach(
+						roleContributor -> roleContributor.contribute(
+							roleCollectionImpl));
 
 					return roleCollectionImpl.getRoleIds();
 				}
@@ -1441,6 +1440,6 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 		AdvancedPermissionChecker.class);
 
 	private Map<Long, long[]> _contributedRoleIds;
-	private RoleContributor[] _roleContributors;
+	private final ServiceTrackerList<RoleContributor> _roleContributors;
 
 }

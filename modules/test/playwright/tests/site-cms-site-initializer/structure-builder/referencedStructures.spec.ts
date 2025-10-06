@@ -28,18 +28,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Can reference several structures and they are persisted',
 	{
@@ -60,31 +48,29 @@ test(
 			label: label1,
 			name: name1,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.createStructureFromData({
 			label: label2,
 			name: name2,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.createStructureFromData({
 			label: label3,
 			page: structureBuilderPage,
 			publish: false,
-			structureIds,
 		});
 
 		// Create another one and reference the first two
 
-		const externalReferenceCode4 =
-			await structureBuilderPage.createStructureFromData({
-				label: label4,
-				page: structureBuilderPage,
-				structureIds,
-			});
+		const externalReferenceCode4 = getRandomString();
+
+		await structureBuilderPage.createStructureFromData({
+			erc: externalReferenceCode4,
+			label: label4,
+			page: structureBuilderPage,
+		});
 
 		await structureBuilderPage.addReferencedStructures([label1, label2]);
 
@@ -191,7 +177,7 @@ test(
 	{
 		tag: '@LPD-49645',
 	},
-	async ({context, page, structureBuilderPage}) => {
+	async ({apiHelpers, context, page, structureBuilderPage}) => {
 		const label1 = getRandomString();
 		const label2 = getRandomString();
 
@@ -200,7 +186,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label: label1,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Create another one and reference the first one
@@ -208,7 +193,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label: label2,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.addReferencedStructures([label1]);
@@ -247,7 +231,10 @@ test(
 
 		const newPage = await pagePromise;
 
-		const newStructureBuilderPage = new StructureBuilderPage(newPage);
+		const newStructureBuilderPage = new StructureBuilderPage(
+			newPage,
+			apiHelpers
+		);
 
 		await newPage.locator('.component-tbar').getByText(label1).waitFor();
 
@@ -319,28 +306,24 @@ test(
 			erc: labelA,
 			label: labelA,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.createStructureFromData({
 			erc: labelB,
 			label: labelB,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.createStructureFromData({
 			erc: labelC,
 			label: labelC,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		await structureBuilderPage.createStructureFromData({
 			erc: labelD,
 			label: labelD,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// C will reference A and D will reference C

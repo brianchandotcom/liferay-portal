@@ -32,18 +32,6 @@ const test = mergeTests(
 	systemSettingsPageTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Can mark a language as translated',
 	{
@@ -66,7 +54,6 @@ test(
 			erc: structureERC,
 			label: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add all supported type of fields (Text is already added for Title)
@@ -210,7 +197,6 @@ test(
 			erc: structureERC,
 			label: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add all supported type of fields (Text is already added for Title)
@@ -383,7 +369,6 @@ test(
 			erc: structureERC,
 			label: structureLabel,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add a Long Text field

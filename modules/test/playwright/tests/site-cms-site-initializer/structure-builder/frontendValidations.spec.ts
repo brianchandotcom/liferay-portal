@@ -26,18 +26,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Validations when saving the structure',
 	{tag: '@LPD-36752'},
@@ -128,9 +116,7 @@ test(
 
 		// Save
 
-		const {id} = await structureBuilderPage.saveStructure();
-
-		structureIds.push(id);
+		await structureBuilderPage.saveStructure();
 
 		// Publish structure
 

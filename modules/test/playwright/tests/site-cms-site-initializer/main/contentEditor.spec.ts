@@ -158,7 +158,7 @@ test(
 
 		// Publish the structure
 
-		const {id} = await structureBuilderPage.saveStructure();
+		await structureBuilderPage.saveStructure();
 
 		await structureBuilderPage.publishStructure();
 
@@ -183,10 +183,6 @@ test(
 		).toBeVisible();
 
 		await expect(fragment.filter({hasText: 'Default'})).toBeVisible();
-
-		// Delete structure
-
-		await structureBuilderPage.deleteStructure(id);
 	}
 );
 
@@ -724,8 +720,6 @@ const testWithRepeatableFF = mergeTests(
 	})
 );
 
-const structureIds = [];
-
 testWithRepeatableFF(
 	'Create item with repeatable groups',
 	{
@@ -742,7 +736,6 @@ testWithRepeatableFF(
 			name: `StructureName${getRandomInt()}`,
 			page: structureBuilderPage,
 			publish: false,
-			structureIds,
 		});
 
 		// Add fields
@@ -846,9 +839,3 @@ testWithRepeatableFF(
 		});
 	}
 );
-
-testWithRepeatableFF.afterEach(async ({structureBuilderPage}) => {
-	structureIds.forEach(async (id) => {
-		await structureBuilderPage.deleteStructure(Number(id));
-	});
-});

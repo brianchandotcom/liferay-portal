@@ -25,18 +25,6 @@ const test = mergeTests(
 	structureBuilderPagesTest
 );
 
-let structureIds = [];
-
-test.beforeEach(() => {
-	structureIds = [];
-});
-
-test.afterEach(async ({structureBuilderPage}) => {
-	for (const id of structureIds) {
-		await structureBuilderPage.deleteStructure(Number(id));
-	}
-});
-
 test(
 	'Alerts are displayed when trying to customize the experience without publishing the structure',
 	{
@@ -49,7 +37,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label: `StructureName${getRandomInt()}`,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add two Text fields
@@ -160,7 +147,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Add two Text fields
@@ -231,7 +217,6 @@ test(
 		await structureBuilderPage.createStructureFromData({
 			label: `StructureName${getRandomInt()}`,
 			page: structureBuilderPage,
-			structureIds,
 		});
 
 		// Customize the experience and add a fragment

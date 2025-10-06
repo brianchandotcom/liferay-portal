@@ -164,7 +164,8 @@ public class JSONBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (IllegalArgumentException illegalArgumentException) {
+			catch (BatchEngineImportTaskItemConversionException
+						batchEngineImportTaskItemConversionException) {
 			}
 		}
 	}

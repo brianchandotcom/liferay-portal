@@ -586,8 +586,9 @@ public class TaxonomyCategoryResourceImpl
 			taxonomyCategory.getExternalReferenceCode(),
 			assetVocabulary.getGroupId(),
 			assetVocabulary.getDefaultLanguageId(),
-			AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, taxonomyCategory,
-			assetVocabulary.getVocabularyId());
+			_getParentTaxonomyCategoryId(
+				assetVocabulary.getGroupId(), taxonomyCategory),
+			taxonomyCategory, assetVocabulary.getVocabularyId());
 	}
 
 	@Override

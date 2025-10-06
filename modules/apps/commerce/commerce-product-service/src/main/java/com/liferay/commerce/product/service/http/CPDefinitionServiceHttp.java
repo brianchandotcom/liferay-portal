@@ -66,11 +66,8 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
-				int deliverySubscriptionLength, String deliverySubscriptionType,
-				com.liferay.portal.kernel.util.UnicodeProperties
-					deliverySubscriptionTypeSettingsUnicodeProperties,
-				long deliveryMaxSubscriptionCycles, int status,
+				long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+				boolean channelFilterEnabled, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -92,10 +89,8 @@ public class CPDefinitionServiceHttp {
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, deliverySubscriptionEnabled,
-				deliverySubscriptionLength, deliverySubscriptionType,
-				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, status, serviceContext);
+				maxSubscriptionCycles, accountGroupFilterEnabled,
+				channelFilterEnabled, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -150,7 +145,13 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, int status,
+				long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
+				int deliverySubscriptionLength, String deliverySubscriptionType,
+				com.liferay.portal.kernel.util.UnicodeProperties
+					deliverySubscriptionTypeSettingsUnicodeProperties,
+				long deliveryMaxSubscriptionCycles,
+				boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+				int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -172,7 +173,11 @@ public class CPDefinitionServiceHttp {
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, status, serviceContext);
+				maxSubscriptionCycles, deliverySubscriptionEnabled,
+				deliverySubscriptionLength, deliverySubscriptionType,
+				deliverySubscriptionTypeSettingsUnicodeProperties,
+				deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+				channelFilterEnabled, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -232,7 +237,9 @@ public class CPDefinitionServiceHttp {
 				int deliverySubscriptionLength, String deliverySubscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					deliverySubscriptionTypeSettingsUnicodeProperties,
-				long deliveryMaxSubscriptionCycles, int status,
+				long deliveryMaxSubscriptionCycles,
+				boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+				int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -257,7 +264,8 @@ public class CPDefinitionServiceHttp {
 				maxSubscriptionCycles, deliverySubscriptionEnabled,
 				deliverySubscriptionLength, deliverySubscriptionType,
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-				deliveryMaxSubscriptionCycles, status, serviceContext);
+				deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+				channelFilterEnabled, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -312,7 +320,8 @@ public class CPDefinitionServiceHttp {
 				String subscriptionType,
 				com.liferay.portal.kernel.util.UnicodeProperties
 					subscriptionTypeSettingsUnicodeProperties,
-				long maxSubscriptionCycles, int status,
+				long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+				boolean channelFilterEnabled, int status,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -334,7 +343,8 @@ public class CPDefinitionServiceHttp {
 				expirationDateMinute, neverExpire, defaultSku,
 				subscriptionEnabled, subscriptionLength, subscriptionType,
 				subscriptionTypeSettingsUnicodeProperties,
-				maxSubscriptionCycles, status, serviceContext);
+				maxSubscriptionCycles, accountGroupFilterEnabled,
+				channelFilterEnabled, status, serviceContext);
 
 			Object returnObj = null;
 
@@ -1133,7 +1143,8 @@ public class CPDefinitionServiceHttp {
 				int displayDateYear, int displayDateHour, int displayDateMinute,
 				int expirationDateMonth, int expirationDateDay,
 				int expirationDateYear, int expirationDateHour,
-				int expirationDateMinute, boolean neverExpire,
+				int expirationDateMinute, boolean accountGroupFilterEnabled,
+				boolean channelFilterEnabled, boolean neverExpire,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -1149,7 +1160,8 @@ public class CPDefinitionServiceHttp {
 				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				expirationDateMinute, accountGroupFilterEnabled,
+				channelFilterEnabled, neverExpire, serviceContext);
 
 			Object returnObj = null;
 
@@ -1556,9 +1568,8 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class, String.class, boolean.class, int.class,
 			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			boolean.class, int.class, String.class,
-			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, boolean.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 =
 		new Class[] {
@@ -1573,7 +1584,10 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class, String.class, boolean.class, int.class,
 			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, int.class, String.class,
+			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
+			boolean.class, boolean.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes2 =
 		new Class[] {
@@ -1590,7 +1604,8 @@ public class CPDefinitionServiceHttp {
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
 			boolean.class, int.class, String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, boolean.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateCPDefinitionParameterTypes3 =
 		new Class[] {
@@ -1605,7 +1620,8 @@ public class CPDefinitionServiceHttp {
 			int.class, boolean.class, String.class, boolean.class, int.class,
 			String.class,
 			com.liferay.portal.kernel.util.UnicodeProperties.class, long.class,
-			int.class, com.liferay.portal.kernel.service.ServiceContext.class
+			boolean.class, boolean.class, int.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _cloneCPDefinitionParameterTypes4 =
 		new Class[] {
@@ -1673,7 +1689,7 @@ public class CPDefinitionServiceHttp {
 			java.util.Map.class, java.util.Map.class, boolean.class,
 			String.class, boolean.class, int.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, boolean.class,
+			int.class, boolean.class, boolean.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]

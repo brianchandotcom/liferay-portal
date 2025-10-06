@@ -57,11 +57,8 @@ public class CPDefinitionServiceUtil {
 			int subscriptionLength, String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
-			int deliverySubscriptionLength, String deliverySubscriptionType,
-			com.liferay.portal.kernel.util.UnicodeProperties
-				deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, int status,
+			long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -77,10 +74,8 @@ public class CPDefinitionServiceUtil {
 			expirationDateHour, expirationDateMinute, neverExpire, defaultSku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			deliverySubscriptionEnabled, deliverySubscriptionLength,
-			deliverySubscriptionType,
-			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, status, serviceContext);
+			accountGroupFilterEnabled, channelFilterEnabled, status,
+			serviceContext);
 	}
 
 	public static CPDefinition addCPDefinition(
@@ -106,7 +101,13 @@ public class CPDefinitionServiceUtil {
 			int subscriptionLength, String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, int status,
+			long maxSubscriptionCycles, boolean deliverySubscriptionEnabled,
+			int deliverySubscriptionLength, String deliverySubscriptionType,
+			com.liferay.portal.kernel.util.UnicodeProperties
+				deliverySubscriptionTypeSettingsUnicodeProperties,
+			long deliveryMaxSubscriptionCycles,
+			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+			int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -122,7 +123,11 @@ public class CPDefinitionServiceUtil {
 			expirationDateHour, expirationDateMinute, neverExpire, defaultSku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			status, serviceContext);
+			deliverySubscriptionEnabled, deliverySubscriptionLength,
+			deliverySubscriptionType,
+			deliverySubscriptionTypeSettingsUnicodeProperties,
+			deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	public static CPDefinition addOrUpdateCPDefinition(
@@ -152,7 +157,9 @@ public class CPDefinitionServiceUtil {
 			int deliverySubscriptionLength, String deliverySubscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				deliverySubscriptionTypeSettingsUnicodeProperties,
-			long deliveryMaxSubscriptionCycles, int status,
+			long deliveryMaxSubscriptionCycles,
+			boolean accountGroupFilterEnabled, boolean channelFilterEnabled,
+			int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -171,7 +178,8 @@ public class CPDefinitionServiceUtil {
 			maxSubscriptionCycles, deliverySubscriptionEnabled,
 			deliverySubscriptionLength, deliverySubscriptionType,
 			deliverySubscriptionTypeSettingsUnicodeProperties,
-			deliveryMaxSubscriptionCycles, status, serviceContext);
+			deliveryMaxSubscriptionCycles, accountGroupFilterEnabled,
+			channelFilterEnabled, status, serviceContext);
 	}
 
 	public static CPDefinition addOrUpdateCPDefinition(
@@ -197,7 +205,8 @@ public class CPDefinitionServiceUtil {
 			int subscriptionLength, String subscriptionType,
 			com.liferay.portal.kernel.util.UnicodeProperties
 				subscriptionTypeSettingsUnicodeProperties,
-			long maxSubscriptionCycles, int status,
+			long maxSubscriptionCycles, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -213,7 +222,8 @@ public class CPDefinitionServiceUtil {
 			expirationDateHour, expirationDateMinute, neverExpire, defaultSku,
 			subscriptionEnabled, subscriptionLength, subscriptionType,
 			subscriptionTypeSettingsUnicodeProperties, maxSubscriptionCycles,
-			status, serviceContext);
+			accountGroupFilterEnabled, channelFilterEnabled, status,
+			serviceContext);
 	}
 
 	public static CPDefinition cloneCPDefinition(
@@ -382,7 +392,8 @@ public class CPDefinitionServiceUtil {
 			int displayDateYear, int displayDateHour, int displayDateMinute,
 			int expirationDateMonth, int expirationDateDay,
 			int expirationDateYear, int expirationDateHour,
-			int expirationDateMinute, boolean neverExpire,
+			int expirationDateMinute, boolean accountGroupFilterEnabled,
+			boolean channelFilterEnabled, boolean neverExpire,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
@@ -392,8 +403,8 @@ public class CPDefinitionServiceUtil {
 			ignoreSKUCombinations, ddmStructureKey, published, displayDateMonth,
 			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			expirationDateHour, expirationDateMinute, accountGroupFilterEnabled,
+			channelFilterEnabled, neverExpire, serviceContext);
 	}
 
 	public static CPDefinition updateCPDefinitionAccountGroupFilter(

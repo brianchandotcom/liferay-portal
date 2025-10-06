@@ -87,12 +87,24 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public void deleteSite(Long siteId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		_groupService.deleteGroup(siteId);
 	}
 
 	@Override
 	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
@@ -108,6 +120,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site getSite(Long siteId) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		Group group = _groupLocalService.fetchGroup(siteId);
 
 		return _toSite(group);
@@ -116,6 +134,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	@Override
 	public Site getSiteByExternalReferenceCode(String externalReferenceCode)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());
@@ -128,7 +152,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-19870")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306") ||
+			!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-19870")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -157,6 +185,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Page<Site> getSitesPage(
 			Boolean active, String search, Pagination pagination)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		long[] classNameIds = {
 			_portal.getClassNameId(Company.class.getName()),
@@ -205,6 +239,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site postSite(Site site) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		Group group = _addGroup(site.getExternalReferenceCode(), site);
 
 		return _toSite(group);
@@ -214,6 +254,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Site postSiteSiteInitializer(MultipartBody multipartBody)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		Site site = multipartBody.getValueAsInstance("site", Site.class);
 
 		return putSiteByExternalReferenceCode(
@@ -222,6 +268,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
 	public Site putSite(Site site) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		String externalReferenceCode = site.getExternalReferenceCode();
 
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
@@ -241,6 +293,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	public Site putSiteByExternalReferenceCode(
 			String externalReferenceCode, MultipartBody multipartBody)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-41306")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, contextCompany.getCompanyId());

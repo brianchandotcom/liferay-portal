@@ -193,11 +193,6 @@ test(
 
 				await page
 					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Status'})
-					.click();
-
-				await page
-					.locator('.dropdown-menu')
 					.getByRole('checkbox', {name: 'Pending'})
 					.check();
 
@@ -370,11 +365,6 @@ test(
 			await test.step('Apply the status "Pending" filter while search is active', async () => {
 				await fdsSamplePage.managementToolbar.container
 					.getByRole('button', {name: 'Filter'})
-					.click();
-
-				await page
-					.locator('.dropdown-menu')
-					.getByRole('menuitem', {name: 'Status'})
 					.click();
 
 				await page

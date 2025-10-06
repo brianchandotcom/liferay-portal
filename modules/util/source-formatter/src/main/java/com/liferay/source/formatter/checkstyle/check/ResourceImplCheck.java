@@ -5,10 +5,10 @@
 
 package com.liferay.source.formatter.checkstyle.check;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import java.util.List;
 
 /**
  * @author Kevin Lee
@@ -42,6 +42,9 @@ public class ResourceImplCheck extends BaseCheck {
 	private void _checkMethodParameterAnnotations(
 		DetailAST classDefinitionDetailAST) {
 
+		List<String> allowedParameterAnnotationNames = getAttributeValues(
+			_ALLOWED_PARAMETER_ANNOTATION_NAMES_KEY);
+
 		for (DetailAST methodDefinitionDetailAST :
 				getAllChildTokens(
 					classDefinitionDetailAST, true, TokenTypes.METHOD_DEF)) {
@@ -63,8 +66,8 @@ public class ResourceImplCheck extends BaseCheck {
 
 					String annotationName = getName(annotationDetailAST);
 
-					if (ArrayUtil.contains(
-							_ALLOWED_ANNOTATIONS, annotationName)) {
+					if (allowedParameterAnnotationNames.contains(
+							annotationName)) {
 
 						continue;
 					}
@@ -78,9 +81,8 @@ public class ResourceImplCheck extends BaseCheck {
 		}
 	}
 
-	private static final String[] _ALLOWED_ANNOTATIONS = {
-		"NestedFieldId", "PathParam"
-	};
+	private static final String _ALLOWED_PARAMETER_ANNOTATION_NAMES_KEY =
+		"allowedParameterAnnotationNames";
 
 	private static final String _MSG_INVALID_METHOD_PARAMETER_ANNOTATION =
 		"method.parameter.annotation.invalid";

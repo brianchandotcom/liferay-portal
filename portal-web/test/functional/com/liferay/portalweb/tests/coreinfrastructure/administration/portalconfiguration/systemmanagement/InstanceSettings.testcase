@@ -741,46 +741,6 @@ definition {
 	}
 
 	@priority = 4
-	test FactoryConfigurationCanBeDeleted {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		var openIdConnectClientId = PropsUtil.get("google.client.id.1");
-		var openIdConnectClientSecret = PropsUtil.get("google.client.secret.1");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider Connection",
-			configurationScope = "Virtual Instance Scope");
-
-		OpenIDConnect.addProvider(
-			openIdConnectClientId = ${openIdConnectClientId},
-			openIdConnectClientSecret = ${openIdConnectClientSecret},
-			providerName = "Google");
-
-		LexiconEntry.viewEntryName(rowEntry = "Google");
-
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Delete",
-			rowEntry = "Google");
-
-		Alert.viewSuccessMessage();
-
-		LexiconEntry.viewNoEntry(rowEntry = "Google");
-
-		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
-
-		PortalSettings.gotoConfiguration(
-			configurationCategory = "SSO",
-			configurationName = "OpenID Connect Provider Connection",
-			configurationScope = "Virtual Instance Scope");
-
-		LexiconEntry.viewNoEntry(rowEntry = "Google");
-
-		AssertElementPresent(locator1 = "Message#EMPTY_INFO_TAGLIB");
-	}
-
-	@priority = 4
 	test FactoryConfigurationCanBeEdited {
 		property test.liferay.virtual.instance = "false";
 		property test.run.type = "single";

@@ -736,47 +736,15 @@ public class RenderLayoutStructureTagTest {
 
 		String content = _getRenderLayoutHTML(layout);
 
-		LayoutStructure layoutStructure =
-			_layoutStructureProvider.getLayoutStructure(
-				layout.getPlid(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(layout.getPlid()));
-
-		FragmentStyledLayoutStructureItem
-			submitButtonFragmentStyledLayoutStructureItem =
-				(FragmentStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(
-						inputTypesMap.get(
-							DefaultInputFragmentEntryConfigurationProvider.
-								FORM_INPUT_SUBMIT_BUTTON));
-
-		FragmentEntryLink submitButtonFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				submitButtonFragmentStyledLayoutStructureItem.
-					getFragmentEntryLinkId());
-
-		String submitButtonIdAttribute =
-			"id=\"fragment-" + submitButtonFragmentEntryLink.getNamespace() +
-				"-submit-button\"";
+		String submitButtonAttributes =
+			"data-lfr-editable-id=\"submit-button-text\" " +
+				"data-lfr-editable-type=\"text\"";
 
 		Assert.assertTrue(
-			content, content.contains("disabled " + submitButtonIdAttribute));
-
-		FragmentStyledLayoutStructureItem
-			textInputFragmentStyledLayoutStructureItem =
-				(FragmentStyledLayoutStructureItem)
-					layoutStructure.getLayoutStructureItem(
-						inputTypesMap.get(
-							TextInfoFieldType.INSTANCE.getName()));
-
-		FragmentEntryLink textInputFragmentEntryLink =
-			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				textInputFragmentStyledLayoutStructureItem.
-					getFragmentEntryLinkId());
+			content, content.contains(submitButtonAttributes + " disabled"));
 
 		String textInputIdAttribute =
-			"id=\"" + textInputFragmentEntryLink.getNamespace() +
-				"-text-input\"";
+			"class=\"lfr-layout-structure-item-inputs-text-input";
 
 		Assert.assertFalse(content, content.contains(textInputIdAttribute));
 
@@ -786,8 +754,8 @@ public class RenderLayoutStructureTagTest {
 				_companyLocalService.getCompany(_group.getCompanyId())));
 
 		Assert.assertFalse(
-			content, content.contains("disabled " + submitButtonIdAttribute));
-		Assert.assertTrue(content, content.contains(submitButtonIdAttribute));
+			content, content.contains(submitButtonAttributes + " disabled"));
+		Assert.assertTrue(content, content.contains(submitButtonAttributes));
 		Assert.assertTrue(content, content.contains(textInputIdAttribute));
 	}
 

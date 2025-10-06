@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.ColumnViewportDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.ModuleViewportDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class ColumnViewportDefinition implements Cloneable, Serializable {
+public class ModuleViewportDefinition implements Cloneable, Serializable {
 
-	public static ColumnViewportDefinition toDTO(String json) {
-		return ColumnViewportDefinitionSerDes.toDTO(json);
+	public static ModuleViewportDefinition toDTO(String json) {
+		return ModuleViewportDefinitionSerDes.toDTO(json);
 	}
 
 	public Integer getSize() {
@@ -45,8 +45,8 @@ public class ColumnViewportDefinition implements Cloneable, Serializable {
 	protected Integer size;
 
 	@Override
-	public ColumnViewportDefinition clone() throws CloneNotSupportedException {
-		return (ColumnViewportDefinition)super.clone();
+	public ModuleViewportDefinition clone() throws CloneNotSupportedException {
+		return (ModuleViewportDefinition)super.clone();
 	}
 
 	@Override
@@ -55,14 +55,14 @@ public class ColumnViewportDefinition implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ColumnViewportDefinition)) {
+		if (!(object instanceof ModuleViewportDefinition)) {
 			return false;
 		}
 
-		ColumnViewportDefinition columnViewportDefinition =
-			(ColumnViewportDefinition)object;
+		ModuleViewportDefinition moduleViewportDefinition =
+			(ModuleViewportDefinition)object;
 
-		return Objects.equals(toString(), columnViewportDefinition.toString());
+		return Objects.equals(toString(), moduleViewportDefinition.toString());
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ColumnViewportDefinition implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return ColumnViewportDefinitionSerDes.toJSON(this);
+		return ModuleViewportDefinitionSerDes.toJSON(this);
 	}
 
 }

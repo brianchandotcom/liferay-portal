@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -37,20 +40,21 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "The page element definition of a row.",
-	value = "RowPageElementDefinition"
+	value = "GridPageElementDefinition"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "RowPageElementDefinition")
-public class RowPageElementDefinition
+@XmlRootElement(name = "GridPageElementDefinition")
+public class GridPageElementDefinition
 	extends PageElementDefinition implements Serializable {
 
-	public static RowPageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowPageElementDefinition.class, json);
+	public static GridPageElementDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			GridPageElementDefinition.class, json);
 	}
 
-	public static RowPageElementDefinition unsafeToDTO(String json) {
+	public static GridPageElementDefinition unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			RowPageElementDefinition.class, json);
+			GridPageElementDefinition.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -144,53 +148,6 @@ public class RowPageElementDefinition
 	private Supplier<String> _customCSSSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the row page element."
-	)
-	@Valid
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		if (_customCSSViewportsSupplier != null) {
-			customCSSViewports = _customCSSViewportsSupplier.get();
-
-			_customCSSViewportsSupplier = null;
-		}
-
-		return customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
-
-		_customCSSViewportsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
-
-		_customCSSViewportsSupplier = () -> {
-			try {
-				return customCSSViewportsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(
-		description = "The custom CSS viewports of the row page element."
-	)
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected CustomCSSViewport[] customCSSViewports;
-
-	@JsonIgnore
-	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The fragment style of the row page element."
 	)
 	@Valid
@@ -235,33 +192,32 @@ public class RowPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of a row page element."
+		description = "A list of viewports configuration of the grid page element."
 	)
 	@Valid
-	public FragmentViewport[] getFragmentViewports() {
-		if (_fragmentViewportsSupplier != null) {
-			fragmentViewports = _fragmentViewportsSupplier.get();
+	public GridViewport[] getGridViewports() {
+		if (_gridViewportsSupplier != null) {
+			gridViewports = _gridViewportsSupplier.get();
 
-			_fragmentViewportsSupplier = null;
+			_gridViewportsSupplier = null;
 		}
 
-		return fragmentViewports;
+		return gridViewports;
 	}
 
-	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
-		this.fragmentViewports = fragmentViewports;
+	public void setGridViewports(GridViewport[] gridViewports) {
+		this.gridViewports = gridViewports;
 
-		_fragmentViewportsSupplier = null;
+		_gridViewportsSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFragmentViewports(
-		UnsafeSupplier<FragmentViewport[], Exception>
-			fragmentViewportsUnsafeSupplier) {
+	public void setGridViewports(
+		UnsafeSupplier<GridViewport[], Exception> gridViewportsUnsafeSupplier) {
 
-		_fragmentViewportsSupplier = () -> {
+		_gridViewportsSupplier = () -> {
 			try {
-				return fragmentViewportsUnsafeSupplier.get();
+				return gridViewportsUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -273,13 +229,13 @@ public class RowPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of a row page element."
+		description = "A list of viewports configuration of the grid page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentViewport[] fragmentViewports;
+	protected GridViewport[] gridViewports;
 
 	@JsonIgnore
-	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
+	private Supplier<GridViewport[]> _gridViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the row page element has gutters."
@@ -456,31 +412,31 @@ public class RowPageElementDefinition
 	private Supplier<String> _nameSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The row page element's number of columns."
+		description = "The row page element's number of modules."
 	)
-	public Integer getNumberOfColumns() {
-		if (_numberOfColumnsSupplier != null) {
-			numberOfColumns = _numberOfColumnsSupplier.get();
+	public Integer getNumberOfModules() {
+		if (_numberOfModulesSupplier != null) {
+			numberOfModules = _numberOfModulesSupplier.get();
 
-			_numberOfColumnsSupplier = null;
+			_numberOfModulesSupplier = null;
 		}
 
-		return numberOfColumns;
+		return numberOfModules;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setNumberOfModules(Integer numberOfModules) {
+		this.numberOfModules = numberOfModules;
 
-		_numberOfColumnsSupplier = null;
+		_numberOfModulesSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setNumberOfModules(
+		UnsafeSupplier<Integer, Exception> numberOfModulesUnsafeSupplier) {
 
-		_numberOfColumnsSupplier = () -> {
+		_numberOfModulesSupplier = () -> {
 			try {
-				return numberOfColumnsUnsafeSupplier.get();
+				return numberOfModulesUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -491,12 +447,12 @@ public class RowPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The row page element's number of columns.")
+	@GraphQLField(description = "The row page element's number of modules.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
+	protected Integer numberOfModules;
 
 	@JsonIgnore
-	private Supplier<Integer> _numberOfColumnsSupplier;
+	private Supplier<Integer> _numberOfModulesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "A flag that indicates whether the row page element has reverse order."
@@ -544,53 +500,11 @@ public class RowPageElementDefinition
 	private Supplier<Boolean> _reverseOrderSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of viewports of the row page element."
-	)
-	@Valid
-	public RowViewport[] getRowViewports() {
-		if (_rowViewportsSupplier != null) {
-			rowViewports = _rowViewportsSupplier.get();
-
-			_rowViewportsSupplier = null;
-		}
-
-		return rowViewports;
-	}
-
-	public void setRowViewports(RowViewport[] rowViewports) {
-		this.rowViewports = rowViewports;
-
-		_rowViewportsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setRowViewports(
-		UnsafeSupplier<RowViewport[], Exception> rowViewportsUnsafeSupplier) {
-
-		_rowViewportsSupplier = () -> {
-			try {
-				return rowViewportsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "A list of viewports of the row page element.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected RowViewport[] rowViewports;
-
-	@JsonIgnore
-	private Supplier<RowViewport[]> _rowViewportsSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The vertical alignment property of the row page element."
 	)
-	public String getVerticalAlignment() {
+	@JsonGetter("verticalAlignment")
+	@Valid
+	public VerticalAlignment getVerticalAlignment() {
 		if (_verticalAlignmentSupplier != null) {
 			verticalAlignment = _verticalAlignmentSupplier.get();
 
@@ -600,7 +514,18 @@ public class RowPageElementDefinition
 		return verticalAlignment;
 	}
 
-	public void setVerticalAlignment(String verticalAlignment) {
+	@JsonIgnore
+	public String getVerticalAlignmentAsString() {
+		VerticalAlignment verticalAlignment = getVerticalAlignment();
+
+		if (verticalAlignment == null) {
+			return null;
+		}
+
+		return verticalAlignment.toString();
+	}
+
+	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
 		this.verticalAlignment = verticalAlignment;
 
 		_verticalAlignmentSupplier = null;
@@ -608,7 +533,8 @@ public class RowPageElementDefinition
 
 	@JsonIgnore
 	public void setVerticalAlignment(
-		UnsafeSupplier<String, Exception> verticalAlignmentUnsafeSupplier) {
+		UnsafeSupplier<VerticalAlignment, Exception>
+			verticalAlignmentUnsafeSupplier) {
 
 		_verticalAlignmentSupplier = () -> {
 			try {
@@ -627,10 +553,10 @@ public class RowPageElementDefinition
 		description = "The vertical alignment property of the row page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String verticalAlignment;
+	protected VerticalAlignment verticalAlignment;
 
 	@JsonIgnore
-	private Supplier<String> _verticalAlignmentSupplier;
+	private Supplier<VerticalAlignment> _verticalAlignmentSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -638,14 +564,14 @@ public class RowPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof RowPageElementDefinition)) {
+		if (!(object instanceof GridPageElementDefinition)) {
 			return false;
 		}
 
-		RowPageElementDefinition rowPageElementDefinition =
-			(RowPageElementDefinition)object;
+		GridPageElementDefinition gridPageElementDefinition =
+			(GridPageElementDefinition)object;
 
-		return Objects.equals(toString(), rowPageElementDefinition.toString());
+		return Objects.equals(toString(), gridPageElementDefinition.toString());
 	}
 
 	@Override
@@ -702,28 +628,6 @@ public class RowPageElementDefinition
 			sb.append("\"");
 		}
 
-		CustomCSSViewport[] customCSSViewports = getCustomCSSViewports();
-
-		if (customCSSViewports != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"customCSSViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < customCSSViewports.length; i++) {
-				sb.append(String.valueOf(customCSSViewports[i]));
-
-				if ((i + 1) < customCSSViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
 		FragmentStyle fragmentStyle = getFragmentStyle();
 
 		if (fragmentStyle != null) {
@@ -736,21 +640,21 @@ public class RowPageElementDefinition
 			sb.append(String.valueOf(fragmentStyle));
 		}
 
-		FragmentViewport[] fragmentViewports = getFragmentViewports();
+		GridViewport[] gridViewports = getGridViewports();
 
-		if (fragmentViewports != null) {
+		if (gridViewports != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentViewports\": ");
+			sb.append("\"gridViewports\": ");
 
 			sb.append("[");
 
-			for (int i = 0; i < fragmentViewports.length; i++) {
-				sb.append(String.valueOf(fragmentViewports[i]));
+			for (int i = 0; i < gridViewports.length; i++) {
+				sb.append(String.valueOf(gridViewports[i]));
 
-				if ((i + 1) < fragmentViewports.length) {
+				if ((i + 1) < gridViewports.length) {
 					sb.append(", ");
 				}
 			}
@@ -810,16 +714,16 @@ public class RowPageElementDefinition
 			sb.append("\"");
 		}
 
-		Integer numberOfColumns = getNumberOfColumns();
+		Integer numberOfModules = getNumberOfModules();
 
-		if (numberOfColumns != null) {
+		if (numberOfModules != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfColumns\": ");
+			sb.append("\"numberOfModules\": ");
 
-			sb.append(numberOfColumns);
+			sb.append(numberOfModules);
 		}
 
 		Boolean reverseOrder = getReverseOrder();
@@ -834,29 +738,7 @@ public class RowPageElementDefinition
 			sb.append(reverseOrder);
 		}
 
-		RowViewport[] rowViewports = getRowViewports();
-
-		if (rowViewports != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"rowViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < rowViewports.length; i++) {
-				sb.append(String.valueOf(rowViewports[i]));
-
-				if ((i + 1) < rowViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		String verticalAlignment = getVerticalAlignment();
+		VerticalAlignment verticalAlignment = getVerticalAlignment();
 
 		if (verticalAlignment != null) {
 			if (sb.length() > 1) {
@@ -867,7 +749,7 @@ public class RowPageElementDefinition
 
 			sb.append("\"");
 
-			sb.append(_escape(verticalAlignment));
+			sb.append(verticalAlignment);
 
 			sb.append("\"");
 		}
@@ -895,10 +777,48 @@ public class RowPageElementDefinition
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.RowPageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("VerticalAlignment")
+	public static enum VerticalAlignment {
+
+		BOTTOM("Bottom"), MIDDLE("Middle"), TOP("Top");
+
+		@JsonCreator
+		public static VerticalAlignment create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (VerticalAlignment verticalAlignment : values()) {
+				if (Objects.equals(verticalAlignment.getValue(), value)) {
+					return verticalAlignment;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private VerticalAlignment(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

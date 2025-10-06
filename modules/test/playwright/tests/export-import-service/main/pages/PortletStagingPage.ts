@@ -44,7 +44,7 @@ export class PortletStagingPage {
 	}
 
 	async closeIframe() {
-		await this.page.getByLabel('close', {exact: true}).click();
+		await this.page.getByRole('dialog').getByLabel('close').click();
 	}
 
 	async publishToLive() {

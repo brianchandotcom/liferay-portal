@@ -89,6 +89,31 @@ describe('Assignee object field', () => {
 		);
 	});
 
+	it('calls onChange with null value when input field is empty', () => {
+		(useResource as jest.Mock).mockReturnValue({resource: null});
+
+		const onChange = jest.fn();
+
+		const {getByRole} = render(
+			<Assignee
+				label="Assignee"
+				name="assignee"
+				onChange={onChange}
+				value={{
+					externalReferenceCode: '123',
+					name: 'Test Test',
+					type: 'User',
+				}}
+			/>
+		);
+
+		const input = getByRole('combobox');
+
+		fireEvent.change(input, {target: {value: ''}});
+
+		expect(onChange).toHaveBeenLastCalledWith({target: {value: null}});
+	});
+
 	it('calls onChange with the correct value when an item is selected', async () => {
 		(useResource as jest.Mock).mockReturnValue({
 			resource: mockResourceWithImage,

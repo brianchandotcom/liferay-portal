@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Product} from '../../types';
+import {Product} from '../../types/product';
 import ProductGridView from './product-grid-view';
 import ProductListView from './product-list-view';
 

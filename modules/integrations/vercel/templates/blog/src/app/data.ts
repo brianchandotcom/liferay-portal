@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import type {Page, WithLiferay} from '../app/liferay';
+import type {Page, WithLiferay} from '../app/liferay/index';
 
 export interface CMSBlogPosting {
 	content: string;

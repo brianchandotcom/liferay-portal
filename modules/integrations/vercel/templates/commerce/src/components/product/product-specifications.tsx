@@ -5,7 +5,7 @@
 
 import {Fragment} from 'react';
 
-import {Product} from '../../types';
+import {Product} from '../../types/product';
 
 function getKeys(product: Product) {
 	try {

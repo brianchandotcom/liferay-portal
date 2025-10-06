@@ -5,7 +5,7 @@
 
 import {ImageResponse} from 'next/og';
 
-import {liferay} from '../../../liferay';
+import {liferay} from '../../../liferay/index';
 import {getSkuDetails} from '../../../utils/product';
 import {getProductDetails} from './data';
 

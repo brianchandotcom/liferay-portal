@@ -8,7 +8,7 @@
 import {Grid, List, Search} from 'lucide-react';
 import {useRouter, useSearchParams} from 'next/navigation';
 
-import {PageProduct} from '../../types';
+import {PageProduct} from '../../types/product';
 import EmptyState from '../empty-state';
 import {PaginationBar} from '../pagination-bar';
 import {Button} from '../ui/button';
@@ -72,7 +72,7 @@ export function ProductCatalog({keywords, pageProduct, viewMode}: Props) {
 			<div className="flex items-center justify-between mb-6">
 				<div className="text-sm">
 					{totalCount}
-					Products Available &nbsp;
+					&nbsp; Products Available &nbsp;
 					{keywords && (
 						<span>
 							for <b>{keywords}</b>

@@ -6,8 +6,8 @@
 import {Metadata} from 'next';
 
 import ProductDetail from '../../../components/product/product-detail';
-import {liferay} from '../../../liferay';
-import {Product} from '../../../types';
+import {liferay} from '../../../liferay/index';
+import {Product} from '../../../types/product';
 import {getServerURL} from '../../../utils/server';
 import {getProductDetails} from './data';
 

@@ -7,7 +7,7 @@ import {Metadata} from 'next';
 
 import {ProductCatalog} from '../components/product/product-catalog';
 import {ProductFilters} from '../components/product/product-filters';
-import {liferay} from '../liferay';
+import {liferay} from '../liferay/index';
 import {getServerURL} from '../utils/server';
 import {getProductsPage} from './data';
 

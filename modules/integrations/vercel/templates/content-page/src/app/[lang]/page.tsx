@@ -7,7 +7,7 @@ import Image from 'next/image';
 import {PropsWithChildren} from 'react';
 
 import {Button} from '../../components/button';
-import {LocalizedField} from '../../liferay';
+import {LocalizedField} from '../../liferay/index';
 import {liferay} from '../../liferay/server';
 import {getContentData} from './data';
 

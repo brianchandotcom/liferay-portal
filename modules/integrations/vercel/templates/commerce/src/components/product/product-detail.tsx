@@ -10,7 +10,7 @@ import {ChevronLeft, ChevronRight} from 'lucide-react';
 import Image from 'next/image';
 import {useState} from 'react';
 
-import {Attachment, Product} from '../../types';
+import {Attachment, Product} from '../../types/product';
 import {getSkuDetails, handleImageError} from '../../utils/product';
 import {Badge} from '../ui/badge';
 import {Card} from '../ui/card';

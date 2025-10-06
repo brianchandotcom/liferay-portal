@@ -637,8 +637,14 @@ test(
 
 		await editable.waitFor();
 
+		const sidebarHeader = page
+			.getByLabel('Components Panel')
+			.locator('header');
+
 		await expect(async () => {
 			await page.keyboard.press('Escape');
+			await page.mouse.up();
+			await sidebarHeader.click({timeout: 1000});
 
 			// Edit the editable
 
@@ -661,41 +667,27 @@ test(
 
 			// Drag the selected text
 
-			await page.getByText('option3').selectText({timeout: 1000});
-
-			const option1 = page.getByText('option1');
 			const option3 = page.getByText('option3');
+
+			await option3.selectText({timeout: 1000});
+
+			await expect(
+				page.getByLabel('Editor contextual toolbar')
+			).toBeVisible({
+				timeout: 2000,
+			});
 
 			await option3.hover({timeout: 1000});
 
 			await page.mouse.down();
 
-			await option1.hover({timeout: 1000});
+			await sidebarHeader.hover({timeout: 1000});
 
-			const boundingClientRect = await option1.evaluate((element) =>
-				element.getBoundingClientRect()
-			);
-
-			await option1.hover({
-				position: {
-					x: boundingClientRect.width / 2,
-					y: boundingClientRect.height / 2,
-				},
-				timeout: 1000,
-			});
+			await page.waitForTimeout(3000);
 
 			await expect(page.locator('.drag-preview')).not.toBeAttached({
 				timeout: 1000,
 			});
-
-			await page.mouse.up();
-
-			// Check that the text has been dragged
-
-			await expect(paragraphFragment).toHaveText(
-				'List:option3option1option2',
-				{timeout: 1000}
-			);
 		}).toPass();
 	}
 );

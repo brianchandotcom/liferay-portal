@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,6 +18,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 
@@ -36,23 +37,77 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("ColumnViewportDefinition")
+@GraphQLName(
+	description = "The page element definition of a Column.",
+	value = "ModulePageElementDefinition"
+)
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnViewportDefinition")
-public class ColumnViewportDefinition implements Serializable {
+@XmlRootElement(name = "ModulePageElementDefinition")
+public class ModulePageElementDefinition
+	extends PageElementDefinition implements Serializable {
 
-	public static ColumnViewportDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(ColumnViewportDefinition.class, json);
+	public static ModulePageElementDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			ModulePageElementDefinition.class, json);
 	}
 
-	public static ColumnViewportDefinition unsafeToDTO(String json) {
+	public static ModulePageElementDefinition unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			ColumnViewportDefinition.class, json);
+			ModulePageElementDefinition.class, json);
 	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "A list of module viewports of the module page element."
+	)
+	@Valid
+	public ModuleViewport[] getModuleViewports() {
+		if (_moduleViewportsSupplier != null) {
+			moduleViewports = _moduleViewportsSupplier.get();
+
+			_moduleViewportsSupplier = null;
+		}
+
+		return moduleViewports;
+	}
+
+	public void setModuleViewports(ModuleViewport[] moduleViewports) {
+		this.moduleViewports = moduleViewports;
+
+		_moduleViewportsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setModuleViewports(
+		UnsafeSupplier<ModuleViewport[], Exception>
+			moduleViewportsUnsafeSupplier) {
+
+		_moduleViewportsSupplier = () -> {
+			try {
+				return moduleViewportsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "A list of module viewports of the module page element."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected ModuleViewport[] moduleViewports;
+
+	@JsonIgnore
+	private Supplier<ModuleViewport[]> _moduleViewportsSupplier;
 
 	@DecimalMax("12")
 	@DecimalMin("1")
-	@io.swagger.v3.oas.annotations.media.Schema
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The module's size."
+	)
 	public Integer getSize() {
 		if (_sizeSupplier != null) {
 			size = _sizeSupplier.get();
@@ -84,7 +139,7 @@ public class ColumnViewportDefinition implements Serializable {
 		};
 	}
 
-	@GraphQLField
+	@GraphQLField(description = "The module's size.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer size;
 
@@ -97,14 +152,15 @@ public class ColumnViewportDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ColumnViewportDefinition)) {
+		if (!(object instanceof ModulePageElementDefinition)) {
 			return false;
 		}
 
-		ColumnViewportDefinition columnViewportDefinition =
-			(ColumnViewportDefinition)object;
+		ModulePageElementDefinition modulePageElementDefinition =
+			(ModulePageElementDefinition)object;
 
-		return Objects.equals(toString(), columnViewportDefinition.toString());
+		return Objects.equals(
+			toString(), modulePageElementDefinition.toString());
 	}
 
 	@Override
@@ -119,6 +175,28 @@ public class ColumnViewportDefinition implements Serializable {
 
 		sb.append("{");
 
+		ModuleViewport[] moduleViewports = getModuleViewports();
+
+		if (moduleViewports != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"moduleViewports\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < moduleViewports.length; i++) {
+				sb.append(String.valueOf(moduleViewports[i]));
+
+				if ((i + 1) < moduleViewports.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Integer size = getSize();
 
 		if (size != null) {
@@ -131,6 +209,22 @@ public class ColumnViewportDefinition implements Serializable {
 			sb.append(size);
 		}
 
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -138,7 +232,7 @@ public class ColumnViewportDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ColumnViewportDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

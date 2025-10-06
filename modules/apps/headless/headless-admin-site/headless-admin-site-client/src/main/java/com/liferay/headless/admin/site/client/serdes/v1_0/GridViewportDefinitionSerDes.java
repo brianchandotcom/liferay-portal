@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.RowViewportDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class RowViewportDefinitionSerDes {
+public class GridViewportDefinitionSerDes {
 
-	public static RowViewportDefinition toDTO(String json) {
-		RowViewportDefinitionJSONParser rowViewportDefinitionJSONParser =
-			new RowViewportDefinitionJSONParser();
+	public static GridViewportDefinition toDTO(String json) {
+		GridViewportDefinitionJSONParser gridViewportDefinitionJSONParser =
+			new GridViewportDefinitionJSONParser();
 
-		return rowViewportDefinitionJSONParser.parseToDTO(json);
+		return gridViewportDefinitionJSONParser.parseToDTO(json);
 	}
 
-	public static RowViewportDefinition[] toDTOs(String json) {
-		RowViewportDefinitionJSONParser rowViewportDefinitionJSONParser =
-			new RowViewportDefinitionJSONParser();
+	public static GridViewportDefinition[] toDTOs(String json) {
+		GridViewportDefinitionJSONParser gridViewportDefinitionJSONParser =
+			new GridViewportDefinitionJSONParser();
 
-		return rowViewportDefinitionJSONParser.parseToDTOs(json);
+		return gridViewportDefinitionJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(RowViewportDefinition rowViewportDefinition) {
-		if (rowViewportDefinition == null) {
+	public static String toJSON(GridViewportDefinition gridViewportDefinition) {
+		if (gridViewportDefinition == null) {
 			return "null";
 		}
 
@@ -46,27 +46,17 @@ public class RowViewportDefinitionSerDes {
 
 		sb.append("{");
 
-		if (rowViewportDefinition.getModulesPerRow() != null) {
+		if (gridViewportDefinition.getModulesPerRow() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"modulesPerRow\": ");
 
-			sb.append(rowViewportDefinition.getModulesPerRow());
+			sb.append(gridViewportDefinition.getModulesPerRow());
 		}
 
-		if (rowViewportDefinition.getReverseOrder() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"reverseOrder\": ");
-
-			sb.append(rowViewportDefinition.getReverseOrder());
-		}
-
-		if (rowViewportDefinition.getVerticalAlignment() != null) {
+		if (gridViewportDefinition.getVerticalAlignment() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -75,7 +65,7 @@ public class RowViewportDefinitionSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(rowViewportDefinition.getVerticalAlignment()));
+			sb.append(gridViewportDefinition.getVerticalAlignment());
 
 			sb.append("\"");
 		}
@@ -86,70 +76,58 @@ public class RowViewportDefinitionSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RowViewportDefinitionJSONParser rowViewportDefinitionJSONParser =
-			new RowViewportDefinitionJSONParser();
+		GridViewportDefinitionJSONParser gridViewportDefinitionJSONParser =
+			new GridViewportDefinitionJSONParser();
 
-		return rowViewportDefinitionJSONParser.parseToMap(json);
+		return gridViewportDefinitionJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		RowViewportDefinition rowViewportDefinition) {
+		GridViewportDefinition gridViewportDefinition) {
 
-		if (rowViewportDefinition == null) {
+		if (gridViewportDefinition == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (rowViewportDefinition.getModulesPerRow() == null) {
+		if (gridViewportDefinition.getModulesPerRow() == null) {
 			map.put("modulesPerRow", null);
 		}
 		else {
 			map.put(
 				"modulesPerRow",
-				String.valueOf(rowViewportDefinition.getModulesPerRow()));
+				String.valueOf(gridViewportDefinition.getModulesPerRow()));
 		}
 
-		if (rowViewportDefinition.getReverseOrder() == null) {
-			map.put("reverseOrder", null);
-		}
-		else {
-			map.put(
-				"reverseOrder",
-				String.valueOf(rowViewportDefinition.getReverseOrder()));
-		}
-
-		if (rowViewportDefinition.getVerticalAlignment() == null) {
+		if (gridViewportDefinition.getVerticalAlignment() == null) {
 			map.put("verticalAlignment", null);
 		}
 		else {
 			map.put(
 				"verticalAlignment",
-				String.valueOf(rowViewportDefinition.getVerticalAlignment()));
+				String.valueOf(gridViewportDefinition.getVerticalAlignment()));
 		}
 
 		return map;
 	}
 
-	public static class RowViewportDefinitionJSONParser
-		extends BaseJSONParser<RowViewportDefinition> {
+	public static class GridViewportDefinitionJSONParser
+		extends BaseJSONParser<GridViewportDefinition> {
 
 		@Override
-		protected RowViewportDefinition createDTO() {
-			return new RowViewportDefinition();
+		protected GridViewportDefinition createDTO() {
+			return new GridViewportDefinition();
 		}
 
 		@Override
-		protected RowViewportDefinition[] createDTOArray(int size) {
-			return new RowViewportDefinition[size];
+		protected GridViewportDefinition[] createDTOArray(int size) {
+			return new GridViewportDefinition[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
@@ -161,25 +139,20 @@ public class RowViewportDefinitionSerDes {
 
 		@Override
 		protected void setField(
-			RowViewportDefinition rowViewportDefinition,
+			GridViewportDefinition gridViewportDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "modulesPerRow")) {
 				if (jsonParserFieldValue != null) {
-					rowViewportDefinition.setModulesPerRow(
+					gridViewportDefinition.setModulesPerRow(
 						Integer.valueOf((String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "reverseOrder")) {
-				if (jsonParserFieldValue != null) {
-					rowViewportDefinition.setReverseOrder(
-						(Boolean)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "verticalAlignment")) {
 				if (jsonParserFieldValue != null) {
-					rowViewportDefinition.setVerticalAlignment(
-						(String)jsonParserFieldValue);
+					gridViewportDefinition.setVerticalAlignment(
+						GridViewportDefinition.VerticalAlignment.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

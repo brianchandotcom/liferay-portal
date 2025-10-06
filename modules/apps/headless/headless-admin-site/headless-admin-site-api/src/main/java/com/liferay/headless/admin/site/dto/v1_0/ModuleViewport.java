@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -19,8 +22,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.DecimalMax;
-import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -37,53 +39,58 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "The page element definition of a Column.",
-	value = "ColumnPageElementDefinition"
+@GraphQLName(description = "A module in a viewport.", value = "ModuleViewport")
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A module in a viewport.",
+	requiredProperties = {"id", "moduleViewportDefinition"}
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnPageElementDefinition")
-public class ColumnPageElementDefinition
-	extends PageElementDefinition implements Serializable {
+@XmlRootElement(name = "ModuleViewport")
+public class ModuleViewport implements Serializable {
 
-	public static ColumnPageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			ColumnPageElementDefinition.class, json);
+	public static ModuleViewport toDTO(String json) {
+		return ObjectMapperUtil.readValue(ModuleViewport.class, json);
 	}
 
-	public static ColumnPageElementDefinition unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			ColumnPageElementDefinition.class, json);
+	public static ModuleViewport unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(ModuleViewport.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of column viewports of the column page element."
-	)
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("id")
 	@Valid
-	public ColumnViewport[] getColumnViewports() {
-		if (_columnViewportsSupplier != null) {
-			columnViewports = _columnViewportsSupplier.get();
+	public Id getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
 
-			_columnViewportsSupplier = null;
+			_idSupplier = null;
 		}
 
-		return columnViewports;
-	}
-
-	public void setColumnViewports(ColumnViewport[] columnViewports) {
-		this.columnViewports = columnViewports;
-
-		_columnViewportsSupplier = null;
+		return id;
 	}
 
 	@JsonIgnore
-	public void setColumnViewports(
-		UnsafeSupplier<ColumnViewport[], Exception>
-			columnViewportsUnsafeSupplier) {
+	public String getIdAsString() {
+		Id id = getId();
 
-		_columnViewportsSupplier = () -> {
+		if (id == null) {
+			return null;
+		}
+
+		return id.toString();
+	}
+
+	public void setId(Id id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Id, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
 			try {
-				return columnViewportsUnsafeSupplier.get();
+				return idUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -94,41 +101,42 @@ public class ColumnPageElementDefinition
 		};
 	}
 
-	@GraphQLField(
-		description = "A list of column viewports of the column page element."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ColumnViewport[] columnViewports;
+	@NotNull
+	protected Id id;
 
 	@JsonIgnore
-	private Supplier<ColumnViewport[]> _columnViewportsSupplier;
+	private Supplier<Id> _idSupplier;
 
-	@DecimalMax("12")
-	@DecimalMin("1")
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page column's size."
-	)
-	public Integer getSize() {
-		if (_sizeSupplier != null) {
-			size = _sizeSupplier.get();
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public ModuleViewportDefinition getModuleViewportDefinition() {
+		if (_moduleViewportDefinitionSupplier != null) {
+			moduleViewportDefinition = _moduleViewportDefinitionSupplier.get();
 
-			_sizeSupplier = null;
+			_moduleViewportDefinitionSupplier = null;
 		}
 
-		return size;
+		return moduleViewportDefinition;
 	}
 
-	public void setSize(Integer size) {
-		this.size = size;
+	public void setModuleViewportDefinition(
+		ModuleViewportDefinition moduleViewportDefinition) {
 
-		_sizeSupplier = null;
+		this.moduleViewportDefinition = moduleViewportDefinition;
+
+		_moduleViewportDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
-		_sizeSupplier = () -> {
+	public void setModuleViewportDefinition(
+		UnsafeSupplier<ModuleViewportDefinition, Exception>
+			moduleViewportDefinitionUnsafeSupplier) {
+
+		_moduleViewportDefinitionSupplier = () -> {
 			try {
-				return sizeUnsafeSupplier.get();
+				return moduleViewportDefinitionUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -139,12 +147,14 @@ public class ColumnPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The page column's size.")
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer size;
+	@NotNull
+	protected ModuleViewportDefinition moduleViewportDefinition;
 
 	@JsonIgnore
-	private Supplier<Integer> _sizeSupplier;
+	private Supplier<ModuleViewportDefinition>
+		_moduleViewportDefinitionSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -152,15 +162,13 @@ public class ColumnPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof ColumnPageElementDefinition)) {
+		if (!(object instanceof ModuleViewport)) {
 			return false;
 		}
 
-		ColumnPageElementDefinition columnPageElementDefinition =
-			(ColumnPageElementDefinition)object;
+		ModuleViewport moduleViewport = (ModuleViewport)object;
 
-		return Objects.equals(
-			toString(), columnPageElementDefinition.toString());
+		return Objects.equals(toString(), moduleViewport.toString());
 	}
 
 	@Override
@@ -175,54 +183,33 @@ public class ColumnPageElementDefinition
 
 		sb.append("{");
 
-		ColumnViewport[] columnViewports = getColumnViewports();
+		Id id = getId();
 
-		if (columnViewports != null) {
+		if (id != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"columnViewports\": ");
-
-			sb.append("[");
-
-			for (int i = 0; i < columnViewports.length; i++) {
-				sb.append(String.valueOf(columnViewports[i]));
-
-				if ((i + 1) < columnViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		Integer size = getSize();
-
-		if (size != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"size\": ");
-
-			sb.append(size);
-		}
-
-		Type type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
+			sb.append("\"id\": ");
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(id);
 
 			sb.append("\"");
+		}
+
+		ModuleViewportDefinition moduleViewportDefinition =
+			getModuleViewportDefinition();
+
+		if (moduleViewportDefinition != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"moduleViewportDefinition\": ");
+
+			sb.append(String.valueOf(moduleViewportDefinition));
 		}
 
 		sb.append("}");
@@ -232,10 +219,49 @@ public class ColumnPageElementDefinition
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ColumnPageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ModuleViewport",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Id")
+	public static enum Id {
+
+		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
+		TABLET("Tablet");
+
+		@JsonCreator
+		public static Id create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Id id : values()) {
+				if (Objects.equals(id.getValue(), value)) {
+					return id;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Id(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

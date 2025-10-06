@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,9 +18,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -37,51 +36,44 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "A column in a viewport.", value = "ColumnViewport")
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "A column in a viewport.",
-	requiredProperties = {"columnViewportDefinition", "id"}
-)
+@GraphQLName("ModuleViewportDefinition")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "ColumnViewport")
-public class ColumnViewport implements Serializable {
+@XmlRootElement(name = "ModuleViewportDefinition")
+public class ModuleViewportDefinition implements Serializable {
 
-	public static ColumnViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(ColumnViewport.class, json);
+	public static ModuleViewportDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(ModuleViewportDefinition.class, json);
 	}
 
-	public static ColumnViewport unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(ColumnViewport.class, json);
+	public static ModuleViewportDefinition unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			ModuleViewportDefinition.class, json);
 	}
 
+	@DecimalMax("12")
+	@DecimalMin("1")
 	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public ColumnViewportDefinition getColumnViewportDefinition() {
-		if (_columnViewportDefinitionSupplier != null) {
-			columnViewportDefinition = _columnViewportDefinitionSupplier.get();
+	public Integer getSize() {
+		if (_sizeSupplier != null) {
+			size = _sizeSupplier.get();
 
-			_columnViewportDefinitionSupplier = null;
+			_sizeSupplier = null;
 		}
 
-		return columnViewportDefinition;
+		return size;
 	}
 
-	public void setColumnViewportDefinition(
-		ColumnViewportDefinition columnViewportDefinition) {
+	public void setSize(Integer size) {
+		this.size = size;
 
-		this.columnViewportDefinition = columnViewportDefinition;
-
-		_columnViewportDefinitionSupplier = null;
+		_sizeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setColumnViewportDefinition(
-		UnsafeSupplier<ColumnViewportDefinition, Exception>
-			columnViewportDefinitionUnsafeSupplier) {
-
-		_columnViewportDefinitionSupplier = () -> {
+	public void setSize(UnsafeSupplier<Integer, Exception> sizeUnsafeSupplier) {
+		_sizeSupplier = () -> {
 			try {
-				return columnViewportDefinitionUnsafeSupplier.get();
+				return sizeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -94,52 +86,10 @@ public class ColumnViewport implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected ColumnViewportDefinition columnViewportDefinition;
+	protected Integer size;
 
 	@JsonIgnore
-	private Supplier<ColumnViewportDefinition>
-		_columnViewportDefinitionSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
-
-			_idSupplier = null;
-		}
-
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-
-		_idSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
-			try {
-				return idUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
-
-	@JsonIgnore
-	private Supplier<String> _idSupplier;
+	private Supplier<Integer> _sizeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -147,13 +97,14 @@ public class ColumnViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof ColumnViewport)) {
+		if (!(object instanceof ModuleViewportDefinition)) {
 			return false;
 		}
 
-		ColumnViewport columnViewport = (ColumnViewport)object;
+		ModuleViewportDefinition moduleViewportDefinition =
+			(ModuleViewportDefinition)object;
 
-		return Objects.equals(toString(), columnViewport.toString());
+		return Objects.equals(toString(), moduleViewportDefinition.toString());
 	}
 
 	@Override
@@ -168,33 +119,16 @@ public class ColumnViewport implements Serializable {
 
 		sb.append("{");
 
-		ColumnViewportDefinition columnViewportDefinition =
-			getColumnViewportDefinition();
+		Integer size = getSize();
 
-		if (columnViewportDefinition != null) {
+		if (size != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"columnViewportDefinition\": ");
+			sb.append("\"size\": ");
 
-			sb.append(String.valueOf(columnViewportDefinition));
-		}
-
-		String id = getId();
-
-		if (id != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"id\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
+			sb.append(size);
 		}
 
 		sb.append("}");
@@ -204,7 +138,7 @@ public class ColumnViewport implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ColumnViewport",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.ModuleViewportDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

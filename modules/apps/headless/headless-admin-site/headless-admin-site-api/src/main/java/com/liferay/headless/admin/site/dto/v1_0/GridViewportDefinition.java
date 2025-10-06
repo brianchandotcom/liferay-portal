@@ -1,13 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -19,8 +22,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -37,47 +38,49 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(description = "A row viewport.", value = "RowViewport")
-@io.swagger.v3.oas.annotations.media.Schema(
-	description = "A row viewport.",
-	requiredProperties = {"id", "rowViewportDefinition"}
+@GraphQLName(
+	description = "The definition of the grid viewport.",
+	value = "GridViewportDefinition"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "RowViewport")
-public class RowViewport implements Serializable {
+@XmlRootElement(name = "GridViewportDefinition")
+public class GridViewportDefinition implements Serializable {
 
-	public static RowViewport toDTO(String json) {
-		return ObjectMapperUtil.readValue(RowViewport.class, json);
+	public static GridViewportDefinition toDTO(String json) {
+		return ObjectMapperUtil.readValue(GridViewportDefinition.class, json);
 	}
 
-	public static RowViewport unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(RowViewport.class, json);
+	public static GridViewportDefinition unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			GridViewportDefinition.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The row viewport's ID."
+		description = "The number of modules per grid."
 	)
-	public String getId() {
-		if (_idSupplier != null) {
-			id = _idSupplier.get();
+	public Integer getModulesPerRow() {
+		if (_modulesPerRowSupplier != null) {
+			modulesPerRow = _modulesPerRowSupplier.get();
 
-			_idSupplier = null;
+			_modulesPerRowSupplier = null;
 		}
 
-		return id;
+		return modulesPerRow;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setModulesPerRow(Integer modulesPerRow) {
+		this.modulesPerRow = modulesPerRow;
 
-		_idSupplier = null;
+		_modulesPerRowSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setId(UnsafeSupplier<String, Exception> idUnsafeSupplier) {
-		_idSupplier = () -> {
+	public void setModulesPerRow(
+		UnsafeSupplier<Integer, Exception> modulesPerRowUnsafeSupplier) {
+
+		_modulesPerRowSupplier = () -> {
 			try {
-				return idUnsafeSupplier.get();
+				return modulesPerRowUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -88,44 +91,53 @@ public class RowViewport implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The row viewport's ID.")
+	@GraphQLField(description = "The number of modules per grid.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotEmpty
-	protected String id;
+	protected Integer modulesPerRow;
 
 	@JsonIgnore
-	private Supplier<String> _idSupplier;
+	private Supplier<Integer> _modulesPerRowSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The definition of the row viewport."
+		description = "The vertical alignment property of the grid viewport."
 	)
+	@JsonGetter("verticalAlignment")
 	@Valid
-	public RowViewportDefinition getRowViewportDefinition() {
-		if (_rowViewportDefinitionSupplier != null) {
-			rowViewportDefinition = _rowViewportDefinitionSupplier.get();
+	public VerticalAlignment getVerticalAlignment() {
+		if (_verticalAlignmentSupplier != null) {
+			verticalAlignment = _verticalAlignmentSupplier.get();
 
-			_rowViewportDefinitionSupplier = null;
+			_verticalAlignmentSupplier = null;
 		}
 
-		return rowViewportDefinition;
-	}
-
-	public void setRowViewportDefinition(
-		RowViewportDefinition rowViewportDefinition) {
-
-		this.rowViewportDefinition = rowViewportDefinition;
-
-		_rowViewportDefinitionSupplier = null;
+		return verticalAlignment;
 	}
 
 	@JsonIgnore
-	public void setRowViewportDefinition(
-		UnsafeSupplier<RowViewportDefinition, Exception>
-			rowViewportDefinitionUnsafeSupplier) {
+	public String getVerticalAlignmentAsString() {
+		VerticalAlignment verticalAlignment = getVerticalAlignment();
 
-		_rowViewportDefinitionSupplier = () -> {
+		if (verticalAlignment == null) {
+			return null;
+		}
+
+		return verticalAlignment.toString();
+	}
+
+	public void setVerticalAlignment(VerticalAlignment verticalAlignment) {
+		this.verticalAlignment = verticalAlignment;
+
+		_verticalAlignmentSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setVerticalAlignment(
+		UnsafeSupplier<VerticalAlignment, Exception>
+			verticalAlignmentUnsafeSupplier) {
+
+		_verticalAlignmentSupplier = () -> {
 			try {
-				return rowViewportDefinitionUnsafeSupplier.get();
+				return verticalAlignmentUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -136,13 +148,14 @@ public class RowViewport implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The definition of the row viewport.")
+	@GraphQLField(
+		description = "The vertical alignment property of the grid viewport."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	@NotNull
-	protected RowViewportDefinition rowViewportDefinition;
+	protected VerticalAlignment verticalAlignment;
 
 	@JsonIgnore
-	private Supplier<RowViewportDefinition> _rowViewportDefinitionSupplier;
+	private Supplier<VerticalAlignment> _verticalAlignmentSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -150,13 +163,14 @@ public class RowViewport implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof RowViewport)) {
+		if (!(object instanceof GridViewportDefinition)) {
 			return false;
 		}
 
-		RowViewport rowViewport = (RowViewport)object;
+		GridViewportDefinition gridViewportDefinition =
+			(GridViewportDefinition)object;
 
-		return Objects.equals(toString(), rowViewport.toString());
+		return Objects.equals(toString(), gridViewportDefinition.toString());
 	}
 
 	@Override
@@ -171,33 +185,32 @@ public class RowViewport implements Serializable {
 
 		sb.append("{");
 
-		String id = getId();
+		Integer modulesPerRow = getModulesPerRow();
 
-		if (id != null) {
+		if (modulesPerRow != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"id\": ");
+			sb.append("\"modulesPerRow\": ");
 
-			sb.append("\"");
-
-			sb.append(_escape(id));
-
-			sb.append("\"");
+			sb.append(modulesPerRow);
 		}
 
-		RowViewportDefinition rowViewportDefinition =
-			getRowViewportDefinition();
+		VerticalAlignment verticalAlignment = getVerticalAlignment();
 
-		if (rowViewportDefinition != null) {
+		if (verticalAlignment != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"rowViewportDefinition\": ");
+			sb.append("\"verticalAlignment\": ");
 
-			sb.append(String.valueOf(rowViewportDefinition));
+			sb.append("\"");
+
+			sb.append(verticalAlignment);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -207,10 +220,48 @@ public class RowViewport implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.RowViewport",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("VerticalAlignment")
+	public static enum VerticalAlignment {
+
+		BOTTOM("Bottom"), MIDDLE("Middle"), TOP("Top");
+
+		@JsonCreator
+		public static VerticalAlignment create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (VerticalAlignment verticalAlignment : values()) {
+				if (Objects.equals(verticalAlignment.getValue(), value)) {
+					return verticalAlignment;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private VerticalAlignment(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

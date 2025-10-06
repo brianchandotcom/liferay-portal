@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.RowViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class RowViewportSerDes {
+public class ModuleViewportSerDes {
 
-	public static RowViewport toDTO(String json) {
-		RowViewportJSONParser rowViewportJSONParser =
-			new RowViewportJSONParser();
+	public static ModuleViewport toDTO(String json) {
+		ModuleViewportJSONParser moduleViewportJSONParser =
+			new ModuleViewportJSONParser();
 
-		return rowViewportJSONParser.parseToDTO(json);
+		return moduleViewportJSONParser.parseToDTO(json);
 	}
 
-	public static RowViewport[] toDTOs(String json) {
-		RowViewportJSONParser rowViewportJSONParser =
-			new RowViewportJSONParser();
+	public static ModuleViewport[] toDTOs(String json) {
+		ModuleViewportJSONParser moduleViewportJSONParser =
+			new ModuleViewportJSONParser();
 
-		return rowViewportJSONParser.parseToDTOs(json);
+		return moduleViewportJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(RowViewport rowViewport) {
-		if (rowViewport == null) {
+	public static String toJSON(ModuleViewport moduleViewport) {
+		if (moduleViewport == null) {
 			return "null";
 		}
 
@@ -46,7 +46,7 @@ public class RowViewportSerDes {
 
 		sb.append("{");
 
-		if (rowViewport.getId() != null) {
+		if (moduleViewport.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -55,19 +55,20 @@ public class RowViewportSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(rowViewport.getId()));
+			sb.append(moduleViewport.getId());
 
 			sb.append("\"");
 		}
 
-		if (rowViewport.getRowViewportDefinition() != null) {
+		if (moduleViewport.getModuleViewportDefinition() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"rowViewportDefinition\": ");
+			sb.append("\"moduleViewportDefinition\": ");
 
-			sb.append(String.valueOf(rowViewport.getRowViewportDefinition()));
+			sb.append(
+				String.valueOf(moduleViewport.getModuleViewportDefinition()));
 		}
 
 		sb.append("}");
@@ -76,49 +77,49 @@ public class RowViewportSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		RowViewportJSONParser rowViewportJSONParser =
-			new RowViewportJSONParser();
+		ModuleViewportJSONParser moduleViewportJSONParser =
+			new ModuleViewportJSONParser();
 
-		return rowViewportJSONParser.parseToMap(json);
+		return moduleViewportJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(RowViewport rowViewport) {
-		if (rowViewport == null) {
+	public static Map<String, String> toMap(ModuleViewport moduleViewport) {
+		if (moduleViewport == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (rowViewport.getId() == null) {
+		if (moduleViewport.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(rowViewport.getId()));
+			map.put("id", String.valueOf(moduleViewport.getId()));
 		}
 
-		if (rowViewport.getRowViewportDefinition() == null) {
-			map.put("rowViewportDefinition", null);
+		if (moduleViewport.getModuleViewportDefinition() == null) {
+			map.put("moduleViewportDefinition", null);
 		}
 		else {
 			map.put(
-				"rowViewportDefinition",
-				String.valueOf(rowViewport.getRowViewportDefinition()));
+				"moduleViewportDefinition",
+				String.valueOf(moduleViewport.getModuleViewportDefinition()));
 		}
 
 		return map;
 	}
 
-	public static class RowViewportJSONParser
-		extends BaseJSONParser<RowViewport> {
+	public static class ModuleViewportJSONParser
+		extends BaseJSONParser<ModuleViewport> {
 
 		@Override
-		protected RowViewport createDTO() {
-			return new RowViewport();
+		protected ModuleViewport createDTO() {
+			return new ModuleViewport();
 		}
 
 		@Override
-		protected RowViewport[] createDTOArray(int size) {
-			return new RowViewport[size];
+		protected ModuleViewport[] createDTOArray(int size) {
+			return new ModuleViewport[size];
 		}
 
 		@Override
@@ -127,7 +128,7 @@ public class RowViewportSerDes {
 				return false;
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "rowViewportDefinition")) {
+						jsonParserFieldName, "moduleViewportDefinition")) {
 
 				return false;
 			}
@@ -137,20 +138,21 @@ public class RowViewportSerDes {
 
 		@Override
 		protected void setField(
-			RowViewport rowViewport, String jsonParserFieldName,
+			ModuleViewport moduleViewport, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					rowViewport.setId((String)jsonParserFieldValue);
+					moduleViewport.setId(
+						ModuleViewport.Id.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(
-						jsonParserFieldName, "rowViewportDefinition")) {
+						jsonParserFieldName, "moduleViewportDefinition")) {
 
 				if (jsonParserFieldValue != null) {
-					rowViewport.setRowViewportDefinition(
-						RowViewportDefinitionSerDes.toDTO(
+					moduleViewport.setModuleViewportDefinition(
+						ModuleViewportDefinitionSerDes.toDTO(
 							(String)jsonParserFieldValue));
 				}
 			}

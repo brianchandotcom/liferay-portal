@@ -17,7 +17,7 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class SiteNavigationSiteMapExportImportTest
+public class SiteNavigationSitemapExportImportTest
 	extends BaseExportImportTestCase {
 
 	@Override

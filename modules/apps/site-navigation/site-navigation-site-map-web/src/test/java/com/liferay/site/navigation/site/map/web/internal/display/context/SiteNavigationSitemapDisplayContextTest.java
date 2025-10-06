@@ -28,7 +28,7 @@ import org.mockito.Mockito;
 /**
  * @author Eudaldo Alonso
  */
-public class SiteNavigationSiteMapDisplayContextTest {
+public class SiteNavigationSitemapDisplayContextTest {
 
 	@ClassRule
 	public static LiferayUnitTestRule liferayUnitTestRule =
@@ -57,7 +57,7 @@ public class SiteNavigationSiteMapDisplayContextTest {
 
 		Group group = _getGroup();
 
-		_assertSiteNavigationSiteMapDisplayContext(
+		_assertSiteNavigationSitemapDisplayContext(
 			_mockHttpServletRequest(group), group);
 
 		_groupLocalServiceUtilMockedStatic.verifyNoInteractions();
@@ -71,7 +71,7 @@ public class SiteNavigationSiteMapDisplayContextTest {
 			group.getExternalReferenceCode());
 		_setUpGroupLocalServiceUtil(group);
 
-		_assertSiteNavigationSiteMapDisplayContext(
+		_assertSiteNavigationSitemapDisplayContext(
 			_mockHttpServletRequest(_getGroup()), group);
 
 		_groupLocalServiceUtilMockedStatic.verify(
@@ -80,7 +80,7 @@ public class SiteNavigationSiteMapDisplayContextTest {
 			Mockito.times(2));
 	}
 
-	private void _assertSiteNavigationSiteMapDisplayContext(
+	private void _assertSiteNavigationSitemapDisplayContext(
 			HttpServletRequest httpServletRequest, Group group)
 		throws Exception {
 

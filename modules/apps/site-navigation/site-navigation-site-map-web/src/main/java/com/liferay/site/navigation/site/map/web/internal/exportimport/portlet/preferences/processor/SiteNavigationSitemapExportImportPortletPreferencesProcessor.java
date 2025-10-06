@@ -10,7 +10,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
 import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortletPreferencesProcessor;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSitemapPortletKeys;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(
-	property = "jakarta.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP,
+	property = "jakarta.portlet.name=" + SiteNavigationSitemapPortletKeys.SITE_NAVIGATION_SITEMAP,
 	service = ExportImportPortletPreferencesProcessor.class
 )
-public class SiteNavigationSiteMapExportImportPortletPreferencesProcessor
+public class SiteNavigationSitemapExportImportPortletPreferencesProcessor
 	implements ExportImportPortletPreferencesProcessor {
 
 	@Override

@@ -8,7 +8,7 @@ package com.liferay.site.navigation.site.map.web.internal.upgrade.registry;
 import com.liferay.portal.kernel.upgrade.BasePortletIdUpgradeProcess;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
-import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSitemapPortletKeys;
 
 import jakarta.portlet.PortletPreferences;
 
@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(service = UpgradeStepRegistrator.class)
-public class SiteNavigationSiteMapWebUpgradeStepRegistrator
+public class SiteNavigationSitemapWebUpgradeStepRegistrator
 	implements UpgradeStepRegistrator {
 
 	@Override
@@ -34,8 +34,8 @@ public class SiteNavigationSiteMapWebUpgradeStepRegistrator
 					return new String[][] {
 						{
 							"85",
-							SiteNavigationSiteMapPortletKeys.
-								SITE_NAVIGATION_SITE_MAP
+							SiteNavigationSitemapPortletKeys.
+								SITE_NAVIGATION_SITEMAP
 						}
 					};
 				}
@@ -49,8 +49,8 @@ public class SiteNavigationSiteMapWebUpgradeStepRegistrator
 				@Override
 				protected String[] getPortletIds() {
 					return new String[] {
-						SiteNavigationSiteMapPortletKeys.
-							SITE_NAVIGATION_SITE_MAP + "_INSTANCE_%"
+						SiteNavigationSitemapPortletKeys.
+							SITE_NAVIGATION_SITEMAP + "_INSTANCE_%"
 					};
 				}
 

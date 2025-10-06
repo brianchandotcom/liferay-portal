@@ -13,7 +13,7 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.display.template.BasePortletDisplayTemplateHandler;
 import com.liferay.portlet.display.template.constants.PortletDisplayTemplateConstants;
-import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSitemapPortletKeys;
 import com.liferay.site.navigation.site.map.web.internal.display.context.SiteNavigationSiteMapDisplayContext;
 
 import java.util.List;
@@ -27,10 +27,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Juan Fernández
  */
 @Component(
-	property = "jakarta.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP,
+	property = "jakarta.portlet.name=" + SiteNavigationSitemapPortletKeys.SITE_NAVIGATION_SITEMAP,
 	service = TemplateHandler.class
 )
-public class SiteNavigationSiteMapPortletDisplayTemplateHandler
+public class SiteNavigationSitemapPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -41,14 +41,14 @@ public class SiteNavigationSiteMapPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = _portal.getPortletTitle(
-			SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP, locale);
+			SiteNavigationSitemapPortletKeys.SITE_NAVIGATION_SITEMAP, locale);
 
 		return _language.format(locale, "x-template", portletTitle, false);
 	}
 
 	@Override
 	public String getResourceName() {
-		return SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP;
+		return SiteNavigationSitemapPortletKeys.SITE_NAVIGATION_SITEMAP;
 	}
 
 	@Override

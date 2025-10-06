@@ -8,7 +8,7 @@ package com.liferay.site.navigation.site.map.web.internal.portlet.action;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portlet.display.template.portlet.action.BaseConfigurationAction;
-import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.internal.constants.SiteNavigationSitemapPortletKeys;
 
 import jakarta.portlet.PortletConfig;
 
@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = "jakarta.portlet.name=" + SiteNavigationSiteMapPortletKeys.SITE_NAVIGATION_SITE_MAP,
+	property = "jakarta.portlet.name=" + SiteNavigationSitemapPortletKeys.SITE_NAVIGATION_SITEMAP,
 	service = ConfigurationAction.class
 )
-public class SiteNavigationSiteMapConfigurationAction
+public class SiteNavigationSitemapConfigurationAction
 	extends BaseConfigurationAction {
 
 	@Override

@@ -67,6 +67,8 @@ import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -721,7 +723,9 @@ public class LayoutUtil {
 		return layoutPageTemplateEntry.getPlid();
 	}
 
-	private static String _getStyleBookEntryERC(Settings settings) {
+	private static String _getStyleBookEntryERC(
+		long companyId, long groupId, Settings settings) {
+
 		if (settings == null) {
 			return null;
 		}
@@ -734,6 +738,17 @@ public class LayoutUtil {
 				itemExternalReference.getExternalReferenceCode())) {
 
 			return null;
+		}
+
+		StyleBookEntry styleBookEntry =
+			StyleBookEntryLocalServiceUtil.
+				fetchStyleBookEntryByExternalReferenceCode(
+					itemExternalReference.getExternalReferenceCode(), groupId);
+
+		if (styleBookEntry == null) {
+			LogUtil.logOptionalReference(
+				StyleBookEntry.class,
+				itemExternalReference.getExternalReferenceCode(), companyId);
 		}
 
 		return itemExternalReference.getExternalReferenceCode();
@@ -936,7 +951,8 @@ public class LayoutUtil {
 
 		return _updateLayout(
 			layout, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
-			_getStyleBookEntryERC(settings),
+			_getStyleBookEntryERC(
+				layout.getCompanyId(), layout.getGroupId(), settings),
 			_getFaviconFileEntryId(settings, serviceContext),
 			_getMasterLayoutPlid(
 				serviceContext.getScopeGroupId(), layout, settings),

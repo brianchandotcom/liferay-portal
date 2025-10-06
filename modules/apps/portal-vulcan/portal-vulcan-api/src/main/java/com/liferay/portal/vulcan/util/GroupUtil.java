@@ -48,6 +48,10 @@ public class GroupUtil {
 
 		if (group == null) {
 			group = groupLocalService.fetchGroup(GetterUtil.getLong(siteKey));
+
+			if (group.getCompanyId() != companyId) {
+				group = null;
+			}
 		}
 
 		if (group == null) {

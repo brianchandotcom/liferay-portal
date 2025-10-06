@@ -97,14 +97,7 @@ public class SiteParamConverterProvider
 			return null;
 		}
 
-		Long groupId = GroupUtil.getGroupId(
-			companyId, siteKey, _groupLocalService);
-
-		if (groupId == null) {
-			return null;
-		}
-
-		return groupId;
+		return GroupUtil.getGroupId(companyId, siteKey, _groupLocalService);
 	}
 
 	@Override
@@ -133,21 +126,7 @@ public class SiteParamConverterProvider
 		}
 
 		if (_contains("siteId", multivaluedMap, parameterValue)) {
-			Long groupId = getGroupId(_company.getCompanyId(), parameterValue);
-
-			if (groupId == null) {
-				return null;
-			}
-
-			long groupCompanyId = _groupLocalService.fetchGroup(
-				groupId
-			).getCompanyId();
-
-			if (groupCompanyId != _company.getCompanyId()) {
-				return null;
-			}
-
-			return groupId;
+			return getGroupId(_company.getCompanyId(), parameterValue);
 		}
 
 		return null;

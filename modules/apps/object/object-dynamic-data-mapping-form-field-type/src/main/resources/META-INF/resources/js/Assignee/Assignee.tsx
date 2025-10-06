@@ -109,36 +109,25 @@ export default function Assignee({
 				onItemsChange={() => {}}
 				value={search}
 			>
-				{(item: {
-					embedded: {
-						externalReferenceCode: string;
-						image?: string;
-						name: string;
-					};
-					entryClassName: string;
-				}) => (
+				{({entryClassName, externalReferenceCode, image, name}) => (
 					<Autocomplete.Item
-						key={item.embedded.name}
+						key={name}
 						onClick={() => {
+							const newValue = {
+								externalReferenceCode,
+								name,
+								type: entryClassName.split('.').pop(),
+							};
+
 							onChange({
 								target: {
-									value: {
-										externalReferenceCode:
-											item.embedded.externalReferenceCode,
-										name: item.embedded.name,
-										type: item.entryClassName
-											.split('.')
-											.pop(),
-									},
+									value: newValue,
 								},
 							});
 						}}
-						textValue={item.embedded.name}
+						textValue={name}
 					>
-						<Option
-							image={item.embedded.image}
-							name={item.embedded.name}
-						/>
+						<Option image={image} name={name} />
 					</Autocomplete.Item>
 				)}
 			</Autocomplete>

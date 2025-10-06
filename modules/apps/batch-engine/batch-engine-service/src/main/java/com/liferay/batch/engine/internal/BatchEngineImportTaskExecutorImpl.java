@@ -332,12 +332,12 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineImportTaskItemConversionException =
 					(BatchEngineImportTaskItemConversionException)exception1;
 
-			Object item =
-				batchEngineImportTaskItemConversionException.getItem();
-
 			Exception exception2 =
 				_unwrapBatchEngineImportTaskItemConversionException(
 					batchEngineImportTaskItemConversionException);
+
+			Object item =
+				batchEngineImportTaskItemConversionException.getItem();
 
 			_batchEngineImportTaskExceptionHandlers.forEach(
 				batchEngineImportTaskExceptionHandler ->

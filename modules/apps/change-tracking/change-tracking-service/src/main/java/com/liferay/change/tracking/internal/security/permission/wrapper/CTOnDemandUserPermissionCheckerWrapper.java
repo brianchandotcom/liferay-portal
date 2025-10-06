@@ -99,20 +99,19 @@ public class CTOnDemandUserPermissionCheckerWrapper
 		String name, long primKey, String actionId,
 		Supplier<Boolean> hasPermissionSupplier) {
 
-		if (!StringUtil.equals(name, Layout.class.getName()) ||
-			!StringUtil.equals(actionId, ActionKeys.VIEW)) {
+		if (StringUtil.equals(name, Layout.class.getName()) &&
+			StringUtil.equals(actionId, ActionKeys.VIEW)) {
 
-			return hasPermissionSupplier.get();
-		}
+			long ctCollectionId = _getCTCollectionId();
 
-		long ctCollectionId = _getCTCollectionId();
+			if ((ctCollectionId > 0) &&
+				_ctEntryLocalService.hasCTEntry(
+					ctCollectionId,
+					_classNameLocalService.getClassNameId(Layout.class),
+					primKey)) {
 
-		if ((ctCollectionId > 0) &&
-			_ctEntryLocalService.hasCTEntry(
-				ctCollectionId,
-				_classNameLocalService.getClassNameId(Layout.class), primKey)) {
-
-			return true;
+				return true;
+			}
 		}
 
 		return hasPermissionSupplier.get();

@@ -70,16 +70,14 @@ public class ServiceAccountUserPermissionCheckerWrapper
 	private boolean _hasPermission(
 		String name, long primKey, Supplier<Boolean> hasPermissionSupplier) {
 
-		if (!StringUtil.equals(name, User.class.getName())) {
-			return hasPermissionSupplier.get();
-		}
+		if (StringUtil.equals(name, User.class.getName())) {
+			User user = _userLocalService.fetchUser(primKey);
 
-		User user = _userLocalService.fetchUser(primKey);
+			if ((user != null) && user.isServiceAccountUser() &&
+				!_permissionChecker.isCompanyAdmin()) {
 
-		if ((user != null) && user.isServiceAccountUser() &&
-			!_permissionChecker.isCompanyAdmin()) {
-
-			return false;
+				return false;
+			}
 		}
 
 		return hasPermissionSupplier.get();

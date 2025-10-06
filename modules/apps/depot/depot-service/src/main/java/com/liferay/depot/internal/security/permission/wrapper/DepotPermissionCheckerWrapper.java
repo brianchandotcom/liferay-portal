@@ -195,33 +195,31 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		String name, long primKey, String actionId,
 		Supplier<Boolean> hasPermissionSupplier) {
 
-		try {
-			if (!StringUtil.equals(name, Group.class.getName())) {
-				return hasPermissionSupplier.get();
-			}
-
+		if (StringUtil.equals(name, Group.class.getName())) {
 			Group group = _groupLocalService.fetchGroup(primKey);
 
-			if ((group == null) || !group.isDepot()) {
-				return hasPermissionSupplier.get();
-			}
+			if ((group != null) && group.isDepot()) {
+				try {
+					if (!_supportedActionIds.contains(actionId)) {
+						return false;
+					}
 
-			if (!_supportedActionIds.contains(actionId)) {
-				return false;
-			}
+					if (_isGroupAdmin(group)) {
+						return true;
+					}
 
-			if (_isGroupAdmin(group)) {
-				return true;
-			}
+					return _depotEntryModelResourcePermission.contains(
+						this, group.getClassPK(), actionId);
+				}
+				catch (PortalException portalException) {
+					_log.error(portalException);
 
-			return _depotEntryModelResourcePermission.contains(
-				this, group.getClassPK(), actionId);
+					return false;
+				}
+			}
 		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
 
-			return false;
-		}
+		return hasPermissionSupplier.get();
 	}
 
 	private boolean _hasRole(long companyId, long[] roleIds, String roleName)

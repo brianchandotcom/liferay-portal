@@ -15,6 +15,7 @@ import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemResource;
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.service.KoroneikiService;
@@ -298,6 +299,8 @@ public class MarketplaceRestController extends BaseRestController {
 			return;
 		}
 
+		OrderItemResource orderItemResource =
+			_marketplaceService.getOrderItemResource();
 		OrderResource orderResource = _marketplaceService.getOrderResource();
 
 		com.liferay.headless.commerce.admin.order.client.dto.v1_0.Account
@@ -310,10 +313,10 @@ public class MarketplaceRestController extends BaseRestController {
 
 		BigDecimal total = subtotalAmount.add(taxAmount);
 
-		if ((Objects.equals(account.getType(), _ACCOUNT_TYPE_BUSINESS) &&
+		if ((Objects.equals(account.getType(), _ACCOUNT_TYPE_PERSON) &&
 			 _europeanCountriesISOCode.contains(
 				 billingAddress.getCountryISOCode())) ||
-			(Objects.equals(account.getType(), _ACCOUNT_TYPE_PERSON) &&
+			(Objects.equals(account.getType(), _ACCOUNT_TYPE_BUSINESS) &&
 			 Objects.equals(billingAddress.getCountryISOCode(), "IE"))) {
 
 			taxAmount = subtotalAmount.multiply(
@@ -324,6 +327,26 @@ public class MarketplaceRestController extends BaseRestController {
 
 		BigDecimal finalTaxAmount = taxAmount;
 		BigDecimal finalTotal = total;
+
+		for (OrderItem orderItem : order.getOrderItems()) {
+			orderItemResource.patchOrderItem(
+				orderItem.getId(),
+				new OrderItem() {
+					{
+						setFinalPrice(orderItem::getFinalPrice);
+						setFinalPriceWithTaxAmount(
+							() -> orderItem.getFinalPrice(
+							).add(
+								orderItem.getFinalPrice(
+								).multiply(
+									BigDecimal.valueOf(
+										_MARKETPLACE_TAX_PERCENTAGE)
+								)
+							));
+						setPriceManuallyAdjusted(() -> true);
+					}
+				});
+		}
 
 		orderResource.patchOrder(
 			orderId,

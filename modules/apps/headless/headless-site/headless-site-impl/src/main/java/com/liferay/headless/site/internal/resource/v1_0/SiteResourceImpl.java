@@ -77,12 +77,15 @@ import org.osgi.service.component.annotations.ServiceScope;
 
 /**
  * @author Rubén Pulido
+ * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
+ * com.liferay.headless.admin.site.internal.resource.v1_0.SiteResourceImpl}
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/site.properties",
 	scope = ServiceScope.PROTOTYPE, service = SiteResource.class
 )
 @CTAware
+@Deprecated
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override

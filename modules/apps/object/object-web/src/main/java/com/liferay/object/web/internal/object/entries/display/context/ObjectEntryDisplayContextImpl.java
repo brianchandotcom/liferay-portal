@@ -1589,7 +1589,10 @@ public class ObjectEntryDisplayContextImpl
 		Status status = objectEntry.getStatus();
 
 		if (status != null) {
-			values.put("status", status.getLabel());
+			values.put(
+				"status",
+				LanguageUtil.get(
+					_objectRequestHelper.getRequest(), status.getLabel()));
 		}
 
 		return values;

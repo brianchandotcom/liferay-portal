@@ -8,6 +8,11 @@ import React from 'react';
 
 import FieldWrapper from './FieldWrapper';
 
+type ClaySelectProps = {
+	shrink?: boolean;
+	sizing?: 'lg' | 'sm';
+} & React.SelectHTMLAttributes<HTMLSelectElement>;
+
 const FieldSelect = ({
 	disabled,
 	errorMessage,
@@ -29,7 +34,7 @@ const FieldSelect = ({
 	name: string;
 	placeholder?: string;
 	required?: boolean;
-} & Omit<React.ComponentProps<typeof ClaySelect>, 'children'>) => {
+} & ClaySelectProps) => {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
 

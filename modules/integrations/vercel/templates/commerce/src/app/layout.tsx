@@ -50,7 +50,7 @@ export default function RootLayout({
 						</Link>
 
 						<a
-							href="#"
+							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/templates/commerce/"
 							rel="noopener noreferrer"
 							target="_blank"
 							title="See code on GitHub"
@@ -72,7 +72,10 @@ export default function RootLayout({
 
 				<footer className="layout-footer">
 					<div className="layout-footer__container">
-						<p>&copy; 2025 Liferay Inc. All Rights Reserved</p>
+						<p>
+							&copy; {new Date().getFullYear()} Liferay Inc. All
+							Rights Reserved
+						</p>
 
 						<p>
 							<a

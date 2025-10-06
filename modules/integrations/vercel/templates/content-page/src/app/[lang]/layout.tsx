@@ -55,7 +55,7 @@ export default async function RootLayout({
 						</Link>
 
 						<a
-							href="#"
+							href="https://github.com/liferay/liferay-portal/tree/master/modules/integrations/vercel/templates/content-page/"
 							rel="noopener noreferrer"
 							target="_blank"
 							title="See code on GitHub"

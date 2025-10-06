@@ -21,8 +21,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -194,8 +192,7 @@ public class ObjectEntryItemDescriptorTest {
 		);
 
 		Mockito.when(
-			_objectEntry.getTitleValue(
-				String.valueOf(LocaleUtil.getDefault()), true)
+			_objectEntry.getTitleValue("en_US", true)
 		).thenReturn(
 			title
 		);
@@ -211,17 +208,15 @@ public class ObjectEntryItemDescriptorTest {
 
 	private void _setUpThemeDisplay(long groupId) throws Exception {
 		Mockito.when(
+			_themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		Mockito.when(
 			_themeDisplay.getScopeGroupId()
 		).thenReturn(
 			groupId
-		);
-
-		Locale locale = LocaleUtil.getDefault();
-
-		Mockito.when(
-			_themeDisplay.getLocale()
-		).thenReturn(
-			locale
 		);
 
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);

@@ -139,7 +139,7 @@ export default function AllSpacesFDSPropsTransformer({
 						'delete-space-confirmation-body'
 					),
 					deleteAction: itemData.actions.delete,
-					loadData,
+					loadData: () => window.location.reload(),
 					successMessage: sub(
 						Liferay.Language.get('x-was-successfully-deleted'),
 						itemData.name

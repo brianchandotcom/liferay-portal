@@ -8,6 +8,7 @@ package com.liferay.client.extension.web.internal.portlet;
 import com.liferay.client.extension.web.internal.type.deployer.Registrable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
@@ -72,10 +73,17 @@ public class CETPortletFriendlyURLMapper
 	}
 
 	@Override
-	public void setRouter(Router router) {
+	public void init(Portlet portlet) {
+		_portlet = portlet;
+	}
+
+	@Override
+	public boolean isPortletInstanceable() {
+		return _portlet.isInstanceable();
 	}
 
 	private final String _mapping;
+	private Portlet _portlet;
 	private final String _portletId;
 
 }

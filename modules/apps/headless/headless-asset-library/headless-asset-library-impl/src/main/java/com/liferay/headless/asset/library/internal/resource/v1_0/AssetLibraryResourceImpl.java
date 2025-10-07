@@ -568,14 +568,14 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	private Map<Locale, String> _getLocalizedMap(
-		String value, Map<String, String> i18nMap) {
+		String defaultValue, Map<String, String> i18nMap) {
 
 		Map<Locale, String> localizedMap = LocalizedMapUtil.getLocalizedMap(
-			contextAcceptLanguage.getPreferredLocale(), value, i18nMap);
+			contextAcceptLanguage.getPreferredLocale(), defaultValue, i18nMap);
 
 		if (!localizedMap.containsKey(LocaleUtil.getDefault())) {
 			localizedMap = LocalizedMapUtil.patchLocalizedMap(
-				localizedMap, LocaleUtil.getDefault(), value, i18nMap);
+				localizedMap, LocaleUtil.getDefault(), defaultValue, i18nMap);
 		}
 
 		return localizedMap;

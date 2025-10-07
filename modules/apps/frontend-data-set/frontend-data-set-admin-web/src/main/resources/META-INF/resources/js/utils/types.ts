@@ -70,6 +70,7 @@ export interface IDataSet {
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;
+	showManagementBarInEmptyState?: boolean;
 	sortsOrder?: string;
 	tableSectionsOrder?: string;
 }

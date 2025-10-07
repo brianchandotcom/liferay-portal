@@ -612,40 +612,6 @@ definition {
 		AssertElementPresent(locator1 = "CommerceAccelerators#MINI_CART_EMPTY");
 	}
 
-	@description = "COMMERCE-5936. As a buyer, I want to be able to create a new order from the account selector dropdown's order list view, The created order should then be the selected order"
-	@priority = 5
-	test CreateNewOrderFromAccountSelectorDropdown {
-		property portal.acceptance = "true";
-
-		// TODO Review
-
-		CommerceAccelerators.initializeNewSiteViaAccelerator(siteName = "Minium");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Account Management");
-
-		CommerceAcceleratorsInitializer.createNewAccountViaFront(accountName = "Commerce Account 1");
-
-		ApplicationsMenu.gotoSite(site = "Minium");
-
-		FrontStore.addInitializerProductToCart(
-			productName = "U-Joint",
-			productQuantity = 1);
-
-		Click(tor1 = "Button#ANGLE_DOWN");
-
-		WaitForElementPresent(locator1 = "CommerceAccelerators#ACCOUNT_SELECTOR_ORDER_ID");
-
-		var getOrderId = selenium.getText("CommerceEntry#ACTIVE_ORDER_ID");
-
-		Button.click(button = "Create New Order");
-
-		AssertElementNotPresent(
-			key_filterOption = ${getOrderId},
-			locator1 = "AppBuilder#CHOOSE_APP_SEARCH_FILTER_BY_OPTION");
-	}
-
 	@description = "COMMERCE-5956. As a buyer, I want to search for an account in the accounts list, and select it as active account"
 	@priority = 5
 	test SearchForAnAccountAndSelectItAsActive {

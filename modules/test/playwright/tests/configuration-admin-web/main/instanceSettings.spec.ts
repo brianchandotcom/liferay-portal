@@ -30,7 +30,7 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 
 	// Assert multiple factory configurations can be created
 
-	let providerName = getRandomString();
+	const providerName1 = getRandomString();
 
 	await instanceSettingsPage.goToInstanceSetting(
 		'SSO',
@@ -39,7 +39,7 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 
 	await page.getByRole('link', {name: 'Add'}).click();
 
-	await page.getByLabel('Provider Name').fill(providerName);
+	await page.getByLabel('Provider Name').fill(providerName1);
 
 	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
 
@@ -52,13 +52,11 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		type: 'success',
 	});
 
-	await expect(page.getByText(providerName)).toBeVisible();
-
-	providerName = getRandomString();
+	const providerName2 = getRandomString();
 
 	await page.getByRole('link', {name: 'Add'}).click();
 
-	await page.getByLabel('Provider Name').fill(providerName);
+	await page.getByLabel('Provider Name').fill(providerName2);
 
 	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
 
@@ -71,7 +69,11 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		type: 'success',
 	});
 
-	await expect(page.getByText(providerName)).toBeVisible();
+	await expect(
+		await page.locator('td.lfr-provider-name-column').count()
+	).toBe(2);
+	await expect(page.getByText(providerName1)).toBeVisible();
+	await expect(page.getByText(providerName2)).toBeVisible();
 
 	// Assert a factory configuration can be edited
 
@@ -81,7 +83,7 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 	);
 	const firstRow = page.locator('tbody tr').first();
 
-	providerName = await firstRow.innerText();
+	const oldProviderName = await firstRow.innerText();
 
 	await clickAndExpectToBeVisible({
 		autoClick: true,
@@ -89,9 +91,9 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		trigger: firstRow.getByRole('button'),
 	});
 
-	const editedProviderName = getRandomString();
+	const newProviderName = getRandomString();
 
-	await page.getByLabel('Provider Name').fill(editedProviderName);
+	await page.getByLabel('Provider Name').fill(newProviderName);
 
 	await instanceSettingsPage.saveAndWaitForAlert({
 		autoClose: true,
@@ -99,11 +101,11 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 	});
 
 	await expect(await page.locator('tbody tr').first().innerText()).not.toBe(
-		providerName
+		oldProviderName
 	);
 	await expect(
 		(await page.locator('tbody tr').first().innerText()).trim()
-	).toBe(editedProviderName);
+	).toBe(newProviderName);
 
 	// Assert a factory configuration can be deleted
 

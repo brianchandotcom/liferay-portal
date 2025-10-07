@@ -46,7 +46,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslator;
@@ -56,12 +55,17 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.Term
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.common.geo.GeoDistance;
+import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -78,6 +82,7 @@ import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
@@ -336,8 +341,47 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		GeoDistanceAggregation geoDistanceAggregation) {
 
-		return _geoDistanceAggregationTranslator.translate(
-			geoDistanceAggregation, this, _pipelineAggregationTranslator);
+		GeoPoint geoPoint = GeoLocationPointTranslator.translate(
+			geoDistanceAggregation.getGeoLocationPoint());
+
+		GeoDistanceAggregationBuilder geoDistanceAggregationBuilder =
+			_baseFieldAggregationTranslator.translate(
+				baseMetricsAggregation -> AggregationBuilders.geoDistance(
+					baseMetricsAggregation.getName(), geoPoint),
+				geoDistanceAggregation, this, _pipelineAggregationTranslator);
+
+		if (geoDistanceAggregation.getDistanceUnit() != null) {
+			geoDistanceAggregationBuilder.unit(
+				_distanceUnitTranslator.translate(
+					geoDistanceAggregation.getDistanceUnit()));
+		}
+
+		if (geoDistanceAggregation.getGeoDistanceType() != null) {
+			GeoDistance geoDistance = _geoDistanceTypeTranslator.translate(
+				geoDistanceAggregation.getGeoDistanceType());
+
+			geoDistanceAggregationBuilder.distanceType(geoDistance);
+		}
+
+		if (geoDistanceAggregation.getKeyed() != null) {
+			geoDistanceAggregationBuilder.keyed(
+				geoDistanceAggregation.getKeyed());
+		}
+
+		List<Range> rangeAggregationRanges = geoDistanceAggregation.getRanges();
+
+		rangeAggregationRanges.forEach(
+			rangeAggregationRange -> {
+				GeoDistanceAggregationBuilder.Range range =
+					new GeoDistanceAggregationBuilder.Range(
+						rangeAggregationRange.getKey(),
+						rangeAggregationRange.getFrom(),
+						rangeAggregationRange.getTo());
+
+				geoDistanceAggregationBuilder.addRange(range);
+			});
+
+		return geoDistanceAggregationBuilder;
 	}
 
 	@Override
@@ -665,9 +709,10 @@ public class ElasticsearchAggregationTranslator
 		new BaseAggregationTranslator();
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
-	private final GeoDistanceAggregationTranslator
-		_geoDistanceAggregationTranslator =
-			new GeoDistanceAggregationTranslator();
+	private final DistanceUnitTranslator _distanceUnitTranslator =
+		new DistanceUnitTranslator();
+	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
+		new GeoDistanceTypeTranslator();
 	private final HistogramAggregationTranslator
 		_histogramAggregationTranslator = new HistogramAggregationTranslator();
 	private final OrderTranslator _orderTranslator = new OrderTranslator();

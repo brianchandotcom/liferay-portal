@@ -40,7 +40,7 @@ const SSADashboardOutlet = () => {
 		accountId: ssaAccount?.id as number,
 		filter: new SearchBuilder()
 			.eq(authorFilter, authorFilterValue, {
-				unquote: isFilterByAuthorIdEnabled ? true : false,
+				unquote: isFilterByAuthorIdEnabled,
 			})
 			.and()
 			.eq('orderTypeExternalReferenceCode', OrderTypes.SSA_SAAS)

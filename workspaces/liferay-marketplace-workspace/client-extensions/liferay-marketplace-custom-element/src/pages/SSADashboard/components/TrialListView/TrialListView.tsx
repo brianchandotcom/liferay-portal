@@ -85,7 +85,7 @@ export default function TrialListView({
 
 		if (authorOnlyTrials) {
 			searchBuilder.and().eq(authorFilter, authorFilterValue, {
-				unquote: isFilterByAuthorIdEnabled ? true : false,
+				unquote: isFilterByAuthorIdEnabled,
 			});
 		}
 

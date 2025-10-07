@@ -23,6 +23,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.Creator;
 import com.liferay.headless.delivery.client.dto.v1_0.Document;
 import com.liferay.headless.delivery.client.dto.v1_0.DocumentType;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.DocumentResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.DocumentSerDes;
 import com.liferay.petra.string.StringPool;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -236,8 +238,33 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 	public void testPostDocumentFolderDocument() throws Exception {
 		super.testPostDocumentFolderDocument();
 
+		_testPostDocumentFolderDocumentWithPermission();
 		_testPostDocumentFolderDocumentWithDLFileEntryType();
 		_testPostDocumentFolderDocumentWithExternalVideoShortcutDLFileEntryType();
+	}
+
+	private void _testPostDocumentFolderDocumentWithPermission()
+		throws Exception {
+
+		DLFileEntryType dlFileEntryType = _addFileEntryType(testGroup);
+
+		Map<String, File> multipartFiles = getMultipartFiles();
+
+		Document postDocument = _getDLFileEntryTypePostDocument(
+			dlFileEntryType, testGroup, multipartFiles,true);
+
+		Role role = _roleLocalService.getRole(TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+		ResourcePermission resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(postDocument.getId()), role.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
+
 	}
 
 	@Override
@@ -517,7 +544,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 
 	private Document _getDLFileEntryTypePostDocument(
 			DLFileEntryType dlFileEntryType, Group group,
-			Map<String, File> multipartFiles)
+			Map<String, File> multipartFiles, Boolean permission)
 		throws Exception {
 
 		DLFolder dlFolder = _dlFolderLocalService.addFolder(
@@ -528,6 +555,26 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		Document randomDocument = randomDocument();
+
+		if(permission) {
+			Role role = _roleLocalService.getRole(TestPropsValues.getCompanyId(), RoleConstants.USER);
+
+			randomDocument.setPermissions(
+				new Permission[] {
+					new Permission() {
+						{
+							setActionIds(
+								new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+							setRoleExternalReferenceCode(
+								role.getExternalReferenceCode());
+							setRoleName(role.getName());
+							setRoleType(role.getTypeLabel());
+						}
+					}
+				});
+
+			randomDocument.setViewableBy(Document.ViewableBy.OWNER);
+		}
 
 		randomDocument.setDocumentType(
 			new DocumentType() {
@@ -629,14 +676,14 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 		Map<String, File> multipartFiles = getMultipartFiles();
 
 		Document postDocument = _getDLFileEntryTypePostDocument(
-			dlFileEntryType, testGroup, multipartFiles);
+			dlFileEntryType, testGroup, multipartFiles,false);
 
 		_assertDocumentType(dlFileEntryType, postDocument);
 
 		Group childGroup = GroupTestUtil.addGroup(testGroup.getGroupId());
 
 		postDocument = _getDLFileEntryTypePostDocument(
-			dlFileEntryType, childGroup, multipartFiles);
+			dlFileEntryType, childGroup, multipartFiles,false);
 
 		_assertDocumentType(dlFileEntryType, postDocument);
 
@@ -651,7 +698,7 @@ public class DocumentResourceTest extends BaseDocumentResourceTestCase {
 				testCompany.getGroupId(), "DL_VIDEO_EXTERNAL_SHORTCUT");
 
 		Document postDocument = _getDLFileEntryTypePostDocument(
-			dlFileEntryType, testGroup, new HashMap<>());
+			dlFileEntryType, testGroup, new HashMap<>(), false);
 
 		Assert.assertEquals(
 			ContentTypes.APPLICATION_VND_LIFERAY_VIDEO_EXTERNAL_SHORTCUT_HTML,

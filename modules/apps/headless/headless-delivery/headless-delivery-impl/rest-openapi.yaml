@@ -1653,6 +1653,11 @@ components:
                         The ID of the folder's parent, if it exists.
                     format: int64
                     type: integer
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                    writeOnly: true
                 siteId:
                     description:
                         The ID of the site to which this folder is scoped.

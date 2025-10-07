@@ -18,8 +18,7 @@ import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBu
 /**
  * @author Michael C. Han
  */
-public class DateRangeAggregationTranslator
-	extends RangeAggregationTranslatorImpl {
+public class DateRangeAggregationTranslator extends RangeAggregationTranslator {
 
 	public DateRangeAggregationBuilder translate(
 		DateRangeAggregation dateRangeAggregation,

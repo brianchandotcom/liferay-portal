@@ -547,8 +547,8 @@ public class ElasticsearchAggregationTranslator
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;
 
-	@Reference
-	private RangeAggregationTranslator _rangeAggregationTranslator;
+	private final RangeAggregationTranslator _rangeAggregationTranslator =
+		new RangeAggregationTranslator();
 
 	@Reference
 	private ScriptedMetricAggregationTranslator

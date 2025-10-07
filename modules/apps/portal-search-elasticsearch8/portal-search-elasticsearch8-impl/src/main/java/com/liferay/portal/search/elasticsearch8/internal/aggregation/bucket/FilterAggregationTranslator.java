@@ -18,16 +18,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = FilterAggregationTranslator.class)
-public class FilterAggregationTranslatorImpl
-	implements FilterAggregationTranslator {
+public class FilterAggregationTranslator {
 
-	@Override
 	public FilterAggregationBuilder translate(
 		FilterAggregation filterAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

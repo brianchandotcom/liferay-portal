@@ -533,9 +533,8 @@ public class ElasticsearchAggregationTranslator
 			new DateHistogramAggregationTranslator();
 	private final DateRangeAggregationTranslator
 		_dateRangeAggregationTranslator = new DateRangeAggregationTranslator();
-
-	@Reference
-	private FilterAggregationTranslator _filterAggregationTranslator;
+	private final FilterAggregationTranslator _filterAggregationTranslator =
+		new FilterAggregationTranslator();
 
 	@Reference
 	private FiltersAggregationTranslator _filtersAggregationTranslator;

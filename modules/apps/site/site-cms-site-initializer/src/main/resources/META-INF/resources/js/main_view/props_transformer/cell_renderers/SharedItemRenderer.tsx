@@ -33,7 +33,9 @@ export default function SharedItemRenderer({
 }) {
 	const {assetType, fileTypeIcon, fileTypeIconColor, siteName} = itemData;
 	const title =
-		value && value !== '' ? value : Liferay.Language.get('untitled-asset');
+		value && value !== '' && value !== 'null'
+			? value
+			: Liferay.Language.get('untitled-asset');
 
 	let icon;
 	let iconColor;

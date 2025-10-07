@@ -128,7 +128,8 @@ public class DisplayPageTemplateResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of("friendlyUrlHistory", "pageSpecifications");
+				return List.of(
+					"friendlyUrlHistory", "pageSpecifications");
 			}
 
 			@Override
@@ -419,7 +420,8 @@ public class DisplayPageTemplateResourceImpl
 		}
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
-			groupId, displayPageTemplate.getThumbnail());
+			groupId, getResourceName(), _getServiceContext(displayPageTemplate, groupId), displayPageTemplate.getThumbnail(),
+			contextUser);
 
 		if (previewFileEntryId !=
 				layoutPageTemplateEntry.getPreviewFileEntryId()) {
@@ -570,7 +572,8 @@ public class DisplayPageTemplateResourceImpl
 				displayPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				FileEntryUtil.getPreviewFileEntryId(
-					groupId, displayPageTemplate.getThumbnail()),
+					groupId, getResourceName(), _getServiceContext(displayPageTemplate, groupId), displayPageTemplate.getThumbnail(),
+					contextUser),
 				false, 0L, layout.getPlid(), 0L,
 				PageSpecificationUtil.getPublishedStatus(
 					displayPageTemplate.getPageSpecifications()),

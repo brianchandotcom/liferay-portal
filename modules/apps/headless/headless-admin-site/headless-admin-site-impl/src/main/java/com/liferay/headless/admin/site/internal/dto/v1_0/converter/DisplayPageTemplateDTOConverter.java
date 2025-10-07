@@ -131,7 +131,7 @@ public class DisplayPageTemplateDTOConverter
 					});
 				setThumbnail(
 					() ->
-						ThumbnailUtil.getPortletFileEntryItemExternalReference(
+						ThumbnailUtil.getPortletFileEntryURLReference(
 							layoutPageTemplateEntry.getPreviewFileEntryId()));
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}

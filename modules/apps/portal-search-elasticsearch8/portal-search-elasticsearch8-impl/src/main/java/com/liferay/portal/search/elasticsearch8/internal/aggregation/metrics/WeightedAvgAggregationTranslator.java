@@ -19,16 +19,11 @@ import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.MultiValuesSourceFieldConfig;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = WeightedAvgAggregationTranslator.class)
-public class WeightedAvgAggregationTranslatorImpl
-	implements WeightedAvgAggregationTranslator {
+public class WeightedAvgAggregationTranslator {
 
-	@Override
 	public WeightedAvgAggregationBuilder translate(
 		WeightedAvgAggregation weightedAvgAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

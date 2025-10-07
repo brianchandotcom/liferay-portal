@@ -104,7 +104,7 @@ public class DeletionSystemEventImporterImpl
 			}
 
 			PortletDataHandler portletDataHandler =
-				_portletDataHandlerProvider.provide(portletId);
+				_portletDataHandlerProvider.provide(portlet);
 
 			if (portletDataHandler instanceof BatchEnginePortletDataHandler) {
 				portletDataHandler.deleteData(

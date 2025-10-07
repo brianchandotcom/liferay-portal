@@ -33,7 +33,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -88,7 +87,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void exportDeletionSystemEvents(
-		PortletDataContext portletDataContext) {
+			PortletDataContext portletDataContext)
+		throws Exception {
 
 		for (Registration registration :
 				_getActiveRegistrations(portletDataContext)) {
@@ -97,17 +97,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				exportImportDescriptor =
 					registration.getExportImportDescriptor();
 
-			Map<String, String> map =
+			Map<String, String> newPrimaryKeysMap =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
 					exportImportDescriptor.getDeletionSystemEventClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+			List<String> externalReferenceCodes =
+				exportImportDescriptor.getApplicableExternalReferenceCodes(
+					TransformUtil.transform(
+						newPrimaryKeysMap.keySet(), String::valueOf));
 
-			for (String key : map.keySet()) {
-				jsonArray.put(
-					JSONUtil.put("externalReferenceCode", String.valueOf(key)));
-			}
+			JSONArray jsonArray = JSONUtil.toJSONArray(
+				externalReferenceCodes,
+				externalReferenceCode -> JSONUtil.put(
+					"externalReferenceCode", externalReferenceCode));
 
 			portletDataContext.addZipEntry(
 				_normalize(

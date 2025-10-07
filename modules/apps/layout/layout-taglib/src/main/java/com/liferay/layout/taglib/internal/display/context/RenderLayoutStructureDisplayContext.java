@@ -791,42 +791,11 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			long classNameId = jsonObject.getLong("classNameId");
-			long classPK = jsonObject.getLong("classPK");
-			String className = jsonObject.getString("className");
-			String externalReferenceCode = jsonObject.getString(
-				"externalReferenceCode");
+			InfoItemReference infoItemReference = _getInfoItemReference(
+				jsonObject);
 
-			if ((classNameId > 0) && (classPK > 0)) {
-				InfoItemReference infoItemReference = new InfoItemReference(
-					PortalUtil.getClassName(classNameId),
-					new ClassPKInfoItemIdentifier(classPK));
-
-				String value = _getValue(fieldId, infoItemReference);
-
-				if (Validator.isNotNull(value)) {
-					return value;
-				}
-			} else if (Validator.isNotNull(className) &&
-				Validator.isNotNull(externalReferenceCode)) {
-
-				String scopeExternalReferenceCode = null;
-
-				if (jsonObject.has("scopeExternalReferenceCode")) {
-					scopeExternalReferenceCode = jsonObject.getString(
-						"scopeExternalReferenceCode");
-				}
-
-				InfoItemReference infoItemReference = new InfoItemReference(
-					className,
-					new ERCInfoItemIdentifier(
-						externalReferenceCode, scopeExternalReferenceCode));
-
-				String value = _getValue(fieldId, infoItemReference);
-
-				if (Validator.isNotNull(value)) {
-					return value;
-				}
+			if (infoItemReference != null) {
+				return _getValue(fieldId, infoItemReference);
 			}
 		}
 
@@ -838,39 +807,15 @@ public class RenderLayoutStructureDisplayContext {
 			return jsonObject.getLong("fileEntryId");
 		}
 
-		if (jsonObject.has("classNameId") && jsonObject.has("classPK") &&
-			jsonObject.has("fieldId")) {
+		InfoItemReference infoItemReference = _getInfoItemReference(jsonObject);
 
+		if ((infoItemReference != null) && jsonObject.has("fieldId")) {
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
 
 			return fragmentEntryProcessorHelper.getFileEntryId(
-				jsonObject.getLong("classNameId"),
-				jsonObject.getLong("classPK"), jsonObject.getString("fieldId"),
+				infoItemReference, jsonObject.getString("fieldId"),
 				_themeDisplay.getLocale());
-		}
-
-		if (jsonObject.has("className") &&
-			jsonObject.has("externalReferenceCode") &&
-			jsonObject.has("fieldId")) {
-
-			String scopeExternalReferenceCode = null;
-
-			if (jsonObject.has("scopeExternalReferenceCode")) {
-				scopeExternalReferenceCode = jsonObject.getString(
-					"scopeExternalReferenceCode");
-			}
-
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			return fragmentEntryProcessorHelper.getFileEntryId(
-				new InfoItemReference(
-					jsonObject.getString("className"),
-					new ERCInfoItemIdentifier(
-						jsonObject.getString("externalReferenceCode"),
-						scopeExternalReferenceCode)),
-				jsonObject.getString("fieldId"), _themeDisplay.getLocale());
 		}
 
 		if (jsonObject.has("collectionFieldId")) {
@@ -1058,6 +1003,39 @@ public class RenderLayoutStructureDisplayContext {
 			if (_log.isDebugEnabled()) {
 				_log.debug(noSuchInfoItemException);
 			}
+		}
+
+		return null;
+	}
+
+	private InfoItemReference _getInfoItemReference(JSONObject jsonObject) {
+		long classNameId = jsonObject.getLong("classNameId");
+		long classPK = jsonObject.getLong("classPK");
+
+		if ((classNameId > 0) && (classPK > 0)) {
+			return new InfoItemReference(
+				PortalUtil.getClassName(classNameId),
+				new ClassPKInfoItemIdentifier(classPK));
+		}
+
+		String className = jsonObject.getString("className");
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		if (Validator.isNotNull(className) &&
+			Validator.isNotNull(externalReferenceCode)) {
+
+			String scopeExternalReferenceCode = null;
+
+			if (jsonObject.has("scopeExternalReferenceCode")) {
+				scopeExternalReferenceCode = jsonObject.getString(
+					"scopeExternalReferenceCode");
+			}
+
+			return new InfoItemReference(
+				className,
+				new ERCInfoItemIdentifier(
+					externalReferenceCode, scopeExternalReferenceCode));
 		}
 
 		return null;

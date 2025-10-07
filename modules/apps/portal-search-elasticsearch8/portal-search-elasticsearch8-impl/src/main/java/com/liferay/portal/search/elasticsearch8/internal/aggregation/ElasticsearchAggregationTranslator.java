@@ -537,9 +537,9 @@ public class ElasticsearchAggregationTranslator
 		new FilterAggregationTranslator();
 	private final FiltersAggregationTranslator _filtersAggregationTranslator =
 		new FiltersAggregationTranslator();
-
-	@Reference
-	private GeoDistanceAggregationTranslator _geoDistanceAggregationTranslator;
+	private final GeoDistanceAggregationTranslator
+		_geoDistanceAggregationTranslator =
+			new GeoDistanceAggregationTranslator();
 
 	@Reference
 	private HistogramAggregationTranslator _histogramAggregationTranslator;

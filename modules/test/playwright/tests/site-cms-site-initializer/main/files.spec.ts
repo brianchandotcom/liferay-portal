@@ -365,6 +365,9 @@ test(
 					page.getByRole('tab', {name: 'More'})
 				).toBeInViewport();
 				await expect(page.getByText('Metadata')).toBeVisible();
+				await expect(page.getByLabel('Show Details')).toHaveClass(
+					/active/
+				);
 			});
 
 			await test.step('Can add a comment', async () => {
@@ -373,6 +376,14 @@ test(
 				await expect(
 					page.getByRole('tab', {name: 'Details'})
 				).not.toBeVisible();
+
+				await expect(page.getByLabel('Show Details')).not.toHaveClass(
+					/active/
+				);
+
+				await expect(page.getByLabel('Show Comments')).toHaveClass(
+					/active/
+				);
 
 				const commentText = getRandomString();
 				await page.getByRole('paragraph').fill(commentText);

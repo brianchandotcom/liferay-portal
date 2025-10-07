@@ -22,6 +22,7 @@ import com.liferay.portal.search.aggregation.bucket.GlobalAggregation;
 import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.MissingAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
+import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregation;
 import com.liferay.portal.search.aggregation.bucket.SamplerAggregation;
@@ -45,7 +46,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateRangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
@@ -71,6 +71,9 @@ import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggre
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
@@ -181,8 +184,16 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(DateRangeAggregation dateRangeAggregation) {
-		return _dateRangeAggregationTranslator.translate(
-			dateRangeAggregation, this, _pipelineAggregationTranslator);
+		DateRangeAggregationBuilder dateRangeAggregationBuilder =
+			_baseFieldAggregationTranslator.translate(
+				baseMetricsAggregation -> AggregationBuilders.dateRange(
+					baseMetricsAggregation.getName()),
+				dateRangeAggregation, this, _pipelineAggregationTranslator);
+
+		populateRangeAggregationBuilder(
+			dateRangeAggregation, dateRangeAggregationBuilder);
+
+		return dateRangeAggregationBuilder;
 	}
 
 	@Override
@@ -542,6 +553,33 @@ public class ElasticsearchAggregationTranslator
 			weightedAvgAggregation, this, _pipelineAggregationTranslator);
 	}
 
+	protected void populateRangeAggregationBuilder(
+		RangeAggregation rangeAggregation,
+		AbstractRangeBuilder abstractRangeBuilder) {
+
+		if (rangeAggregation.getFormat() != null) {
+			abstractRangeBuilder.format(rangeAggregation.getFormat());
+		}
+
+		if (rangeAggregation.getKeyed() != null) {
+			abstractRangeBuilder.keyed(rangeAggregation.getKeyed());
+		}
+
+		List<Range> rangeAggregationRanges = rangeAggregation.getRanges();
+
+		rangeAggregationRanges.forEach(
+			rangeAggregationRange -> {
+				RangeAggregator.Range range = new RangeAggregator.Range(
+					rangeAggregationRange.getKey(),
+					rangeAggregationRange.getFrom(),
+					rangeAggregationRange.getFromAsString(),
+					rangeAggregationRange.getTo(),
+					rangeAggregationRange.getToAsString());
+
+				abstractRangeBuilder.addRange(range);
+			});
+	}
+
 	private <AB extends AggregationBuilder> AB _assemble(
 		AB aggregationBuilder, Aggregation aggregation) {
 
@@ -575,8 +613,6 @@ public class ElasticsearchAggregationTranslator
 
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
-	private final DateRangeAggregationTranslator
-		_dateRangeAggregationTranslator = new DateRangeAggregationTranslator();
 	private final FilterAggregationTranslator _filterAggregationTranslator =
 		new FilterAggregationTranslator();
 	private final FiltersAggregationTranslator _filtersAggregationTranslator =

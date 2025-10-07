@@ -23,6 +23,12 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
+		public default List<String> getApplicableExternalReferenceCodes(
+			List<String> externalReferenceCodes) {
+
+			return externalReferenceCodes;
+		}
+
 		public String getDeletionSystemEventClassName();
 
 		public default String getItemModelName() {

@@ -31,16 +31,11 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = TopHitsAggregationTranslator.class)
-public class TopHitsAggregationTranslatorImpl
-	implements TopHitsAggregationTranslator {
+public class TopHitsAggregationTranslator {
 
-	@Override
 	public TopHitsAggregationBuilder translate(
 		TopHitsAggregation topHitsAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

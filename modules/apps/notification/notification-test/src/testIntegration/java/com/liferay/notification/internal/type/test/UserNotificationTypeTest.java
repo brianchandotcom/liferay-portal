@@ -605,7 +605,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			userFullName, notificationRecipientSetting.getValue());
 	}
 
-	private void _assertNotificationRecipientSettings(User... recipients) {
+	private void _assertNotificationRecipientSettings(User... users) {
 		NotificationRecipient notificationRecipient =
 			notificationQueueEntry.getNotificationRecipient();
 
@@ -613,13 +613,13 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			notificationRecipient.getNotificationRecipientSettings();
 
 		Assert.assertEquals(
-			notificationRecipientSettings.toString(), recipients.length,
+			notificationRecipientSettings.toString(), users.length,
 			notificationRecipientSettings.size());
 
-		Map<String, User> userMap = new HashMap<>();
+		Map<String, User> usersMap = new HashMap<>();
 
-		for (User recipient : recipients) {
-			userMap.put(recipient.getFullName(), recipient);
+		for (User user : users) {
+			usersMap.put(user.getFullName(), user);
 		}
 
 		for (NotificationRecipientSetting notificationRecipientSetting :
@@ -630,7 +630,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 			String value = notificationRecipientSetting.getValue();
 
-			User user = userMap.get(value);
+			User user = usersMap.get(value);
 
 			Assert.assertNotNull(value, user);
 			Assert.assertEquals(
@@ -774,7 +774,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 
 	private void _testSendNotificationRecipientTypeTerm(
 			List<NotificationRecipientSetting> notificationRecipientSettings,
-			User... recipients)
+			User... users)
 		throws Exception {
 
 		List<NotificationQueueEntry> notificationQueueEntries =
@@ -812,7 +812,7 @@ public class UserNotificationTypeTest extends BaseNotificationTypeTest {
 			ListUtil.fromString(
 				notificationQueueEntry.getSubject(), StringPool.SEMICOLON));
 
-		_assertNotificationRecipientSettings(recipients);
+		_assertNotificationRecipientSettings(users);
 	}
 
 	@Inject

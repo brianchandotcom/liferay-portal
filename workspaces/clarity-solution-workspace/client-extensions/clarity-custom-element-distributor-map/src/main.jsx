@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom/client';
 import Map from './components/Map'
 import './index.css'
 
-const Main = ({promoCodeStore}) => (
+const Main = ({ promoCodeStore }) => (
 	<StrictMode>
-		<Map promoCodeStore={promoCodeStore}/>
+		<Map promoCodeStore={promoCodeStore} />
 	</StrictMode>
 );
 
@@ -16,7 +16,7 @@ class WebComponent extends HTMLElement {
 		const promoCodeStore = this.getAttribute('promoStore');
 		const root = ReactDOM.createRoot(mountPoint);
 
-    	this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
+		this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
 		root.render(<Main promoCodeStore={promoCodeStore} />);
 	}
 }

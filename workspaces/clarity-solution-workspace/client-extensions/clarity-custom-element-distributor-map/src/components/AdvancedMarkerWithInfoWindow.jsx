@@ -1,4 +1,4 @@
-import {AdvancedMarker, Pin, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, Pin, useAdvancedMarkerRef, InfoWindow } from '@vis.gl/react-google-maps';
 
 
 const AdvancedMarkerWithInfoWindow = (

@@ -29,11 +29,6 @@ body {
 	min-width: 320px;
 }
 
-h1 {
-	font-size: 3.2em;
-	line-height: 1.1;
-}
-
 button {
 	background-color: #1a1a1a;
 	border: 1px solid transparent;
@@ -53,6 +48,11 @@ button {
 	&:focus-visible {
 		outline: 4px auto -webkit-focus-ring-color;
 	}
+}
+
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
 }
 
 @media (prefers-color-scheme: light) {

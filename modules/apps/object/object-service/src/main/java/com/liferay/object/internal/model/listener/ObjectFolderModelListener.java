@@ -103,17 +103,16 @@ public class ObjectFolderModelListener extends BaseModelListener<ObjectFolder> {
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
 		throws Exception {
 
-		String name = RoleConstants.CMS_ADMINISTRATOR;
-
-		Role role = _roleLocalService.fetchRole(companyId, name);
+		Role role = _roleLocalService.fetchRole(
+			companyId, RoleConstants.CMS_ADMINISTRATOR);
 
 		if (role != null) {
 			return role;
 		}
 
 		return _roleLocalService.addRole(
-			null, userId, null, 0, name, null, null, RoleConstants.TYPE_REGULAR,
-			null, null);
+			null, userId, null, 0, RoleConstants.CMS_ADMINISTRATOR, null, null,
+			RoleConstants.TYPE_REGULAR, null, null);
 	}
 
 	private void _onAfterCreate(ObjectFolder objectFolder) throws Exception {

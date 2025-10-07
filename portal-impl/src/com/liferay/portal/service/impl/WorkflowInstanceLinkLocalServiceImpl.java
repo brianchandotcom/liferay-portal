@@ -122,8 +122,7 @@ public class WorkflowInstanceLinkLocalServiceImpl
 			return;
 		}
 
-		workflowInstanceLinkPersistence.removeByWorkflowInstanceId(
-			workflowInstanceId);
+		workflowInstanceLinkPersistence.remove(workflowInstanceLink);
 	}
 
 	@Override

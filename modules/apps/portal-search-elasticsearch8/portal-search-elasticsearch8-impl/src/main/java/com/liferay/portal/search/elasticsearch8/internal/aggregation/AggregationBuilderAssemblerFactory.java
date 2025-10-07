@@ -11,17 +11,18 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author André de Oliveira
  */
-@Component(service = AggregationBuilderAssemblerFactory.class)
-public class AggregationBuilderAssemblerFactoryImpl
-	implements AggregationBuilderAssemblerFactory {
+public class AggregationBuilderAssemblerFactory {
 
-	@Override
+	public AggregationBuilderAssemblerFactory(
+		PipelineAggregationTranslator<PipelineAggregationBuilder>
+			pipelineAggregationTranslator) {
+
+		_pipelineAggregationTranslator = pipelineAggregationTranslator;
+	}
+
 	public AggregationBuilderAssemblerImpl getAggregationBuilderAssembler(
 		AggregationTranslator<AggregationBuilder> aggregationTranslator) {
 
@@ -29,8 +30,7 @@ public class AggregationBuilderAssemblerFactoryImpl
 			aggregationTranslator, _pipelineAggregationTranslator);
 	}
 
-	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private PipelineAggregationTranslator<PipelineAggregationBuilder>
+	private final PipelineAggregationTranslator<PipelineAggregationBuilder>
 		_pipelineAggregationTranslator;
 
 }

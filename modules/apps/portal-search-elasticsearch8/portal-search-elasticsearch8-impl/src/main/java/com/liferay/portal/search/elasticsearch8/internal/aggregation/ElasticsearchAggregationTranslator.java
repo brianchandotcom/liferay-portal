@@ -498,8 +498,12 @@ public class ElasticsearchAggregationTranslator
 	private <AB extends AggregationBuilder> AB _assemble(
 		AB aggregationBuilder, Aggregation aggregation) {
 
+		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
+			new AggregationBuilderAssemblerFactory(
+				_pipelineAggregationTranslator);
+
 		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
+			aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
 				this);
 
 		return aggregationBuilderAssemblerImpl.assembleAggregation(
@@ -510,17 +514,17 @@ public class ElasticsearchAggregationTranslator
 		VSAB valuesSourceAggregationBuilder,
 		FieldAggregation fieldAggregation) {
 
+		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
+			new AggregationBuilderAssemblerFactory(
+				_pipelineAggregationTranslator);
+
 		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			_aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
+			aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
 				this);
 
 		return aggregationBuilderAssemblerImpl.assembleFieldAggregation(
 			valuesSourceAggregationBuilder, fieldAggregation);
 	}
-
-	@Reference
-	private AggregationBuilderAssemblerFactory
-		_aggregationBuilderAssemblerFactory;
 
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();

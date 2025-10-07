@@ -50,11 +50,8 @@ public class ElasticsearchAggregationTranslatorFixture {
 					getElasticsearchPipelineAggregationTranslator();
 
 		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactoryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			aggregationBuilderAssemblerFactory,
-			"_pipelineAggregationTranslator", pipelineAggregationTranslator);
+			new AggregationBuilderAssemblerFactory(
+				pipelineAggregationTranslator);
 
 		ElasticsearchAggregationTranslator elasticsearchAggregationTranslator =
 			new ElasticsearchAggregationTranslator();

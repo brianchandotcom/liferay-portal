@@ -83,7 +83,7 @@ export class EditVocabularyPage {
 	}
 
 	async createVocabulary() {
-		this.goto();
+		await this.goto();
 
 		const name = `Vocabulary${getRandomInt()}`;
 
@@ -95,7 +95,7 @@ export class EditVocabularyPage {
 	}
 
 	async selectAssetTypes(assetType: string) {
-		if (this.assetTypeCheckbox.isChecked()) {
+		if (await this.assetTypeCheckbox.isChecked()) {
 			await this.assetTypeCheckbox.click();
 
 			await expect(this.assetTypeCheckbox).not.toBeChecked();
@@ -107,7 +107,7 @@ export class EditVocabularyPage {
 	}
 
 	async selectSpaces(spaceName: string) {
-		if (this.spaceCheckbox.isChecked()) {
+		if (await this.spaceCheckbox.isChecked()) {
 			await this.spaceCheckbox.click();
 
 			await expect(this.spaceCheckbox).not.toBeChecked();

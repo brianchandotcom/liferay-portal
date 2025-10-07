@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.AggregationVisitor;
@@ -44,12 +45,12 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateHistogramAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateRangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTextAggregationTranslator;
@@ -58,11 +59,17 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.Scr
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 
+import java.util.List;
+
 import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
@@ -126,10 +133,50 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		DateHistogramAggregation dateHistogramAggregation) {
 
+		DateHistogramAggregationBuilder dateHistogramAggregationBuilder =
+			AggregationBuilders.dateHistogram(
+				dateHistogramAggregation.getName());
+
+		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
+			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+				dateHistogramAggregation.getOrders());
+
+			dateHistogramAggregationBuilder.order(bucketOrders);
+		}
+
+		if ((dateHistogramAggregation.getMaxBound() != null) &&
+			(dateHistogramAggregation.getMinBound() != null)) {
+
+			LongBounds longBounds = new LongBounds(
+				dateHistogramAggregation.getMinBound(),
+				dateHistogramAggregation.getMaxBound());
+
+			dateHistogramAggregationBuilder.extendedBounds(longBounds);
+		}
+
+		if (dateHistogramAggregation.getMinDocCount() != null) {
+			dateHistogramAggregationBuilder.minDocCount(
+				dateHistogramAggregation.getMinDocCount());
+		}
+
+		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
+			dateHistogramAggregationBuilder.dateHistogramInterval(
+				new DateHistogramInterval(
+					dateHistogramAggregation.getDateHistogramInterval()));
+		}
+
+		if (dateHistogramAggregation.getInterval() != null) {
+			dateHistogramAggregationBuilder.interval(
+				dateHistogramAggregation.getInterval());
+		}
+
+		if (dateHistogramAggregation.getOffset() != null) {
+			dateHistogramAggregationBuilder.offset(
+				dateHistogramAggregation.getOffset());
+		}
+
 		return _assemble(
-			_dateHistogramAggregationTranslator.translate(
-				dateHistogramAggregation),
-			dateHistogramAggregation);
+			dateHistogramAggregationBuilder, dateHistogramAggregation);
 	}
 
 	@Override
@@ -528,9 +575,6 @@ public class ElasticsearchAggregationTranslator
 
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
-	private final DateHistogramAggregationTranslator
-		_dateHistogramAggregationTranslator =
-			new DateHistogramAggregationTranslator();
 	private final DateRangeAggregationTranslator
 		_dateRangeAggregationTranslator = new DateRangeAggregationTranslator();
 	private final FilterAggregationTranslator _filterAggregationTranslator =
@@ -542,6 +586,7 @@ public class ElasticsearchAggregationTranslator
 			new GeoDistanceAggregationTranslator();
 	private final HistogramAggregationTranslator
 		_histogramAggregationTranslator = new HistogramAggregationTranslator();
+	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>

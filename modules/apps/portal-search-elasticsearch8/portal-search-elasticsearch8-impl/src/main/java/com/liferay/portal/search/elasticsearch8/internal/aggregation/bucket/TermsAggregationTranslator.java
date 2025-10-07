@@ -16,16 +16,11 @@ import org.elasticsearch.search.aggregations.Aggregator;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = TermsAggregationTranslator.class)
-public class TermsAggregationTranslatorImpl
-	implements TermsAggregationTranslator {
+public class TermsAggregationTranslator {
 
-	@Override
 	public TermsAggregationBuilder translate(
 		TermsAggregation termsAggregation) {
 

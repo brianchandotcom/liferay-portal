@@ -81,7 +81,7 @@ public class UtilityPageDTOConverter
 				setName(layoutUtilityPageEntry::getName);
 				setThumbnail(
 					() ->
-						ThumbnailUtil.getPortletFileEntryItemExternalReference(
+						ThumbnailUtil.getPortletFileEntryURLReference(
 							layoutUtilityPageEntry.getPreviewFileEntryId()));
 				setType(() -> _getType(layoutUtilityPageEntry.getType()));
 				setUtilityPageSettings(

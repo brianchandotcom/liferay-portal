@@ -121,6 +121,18 @@ describe('SimpleActionLinkRenderer. Render the link.', () => {
 			screen.getByRole('link', {name: testFolderProps.value})
 		).toHaveAttribute('href', testActionFolder.href);
 	});
+
+	it('empty title string', () => {
+		render(<SimpleActionLinkRenderer {...testBaseProps} value="" />);
+
+		expect(screen.queryByRole('link')).toBeInTheDocument();
+
+		expect(
+			screen.getByRole('link', {
+				name: 'untitled-asset',
+			})
+		).toHaveAttribute('aria-label', 'untitled-asset');
+	});
 });
 
 describe('SimpleActionLinkRenderer. Show type icon.', () => {

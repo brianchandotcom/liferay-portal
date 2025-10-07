@@ -10,11 +10,14 @@ import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
@@ -113,6 +116,29 @@ public class GroupUtilTest {
 			if (userGroup != null) {
 				_userGroupLocalService.deleteUserGroup(userGroup);
 			}
+		}
+	}
+
+	@Test
+	public void testGetGroupIdWithDifferentCompanyId() throws Exception {
+		String virtualHostname =
+			RandomTestUtil.randomString() + ".localtest.me";
+
+		Company company = CompanyLocalServiceUtil.addCompany(
+			null, virtualHostname, virtualHostname, virtualHostname, 0, true,
+			true, null, null, null, null, null, null);
+
+		try {
+			Group group = _groupLocalService.getGroup(
+				TestPropsValues.getGroupId());
+
+			Assert.assertNull(
+				GroupUtil.getGroupId(
+					group.getCompanyId(), String.valueOf(company.getGroupId()),
+					_groupLocalService));
+		}
+		finally {
+			CompanyLocalServiceUtil.deleteCompany(company);
 		}
 	}
 

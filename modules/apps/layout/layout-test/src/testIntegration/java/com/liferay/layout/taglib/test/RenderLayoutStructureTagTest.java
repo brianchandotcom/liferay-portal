@@ -1983,6 +1983,8 @@ public class RenderLayoutStructureTagTest {
 	public void testRenderContainerWithBackgroundImageMappedByERC()
 		throws Exception {
 
+		long classNameId = _portal.getClassNameId(FileEntry.class);
+
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();
@@ -1996,6 +1998,10 @@ public class RenderLayoutStructureTagTest {
 
 		FileEntry depotFileEntry = _addFileEntry(depotGroup);
 
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
 		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
 				"styles",
@@ -2004,7 +2010,7 @@ public class RenderLayoutStructureTagTest {
 					JSONUtil.put(
 						"className", FileEntry.class.getName()
 					).put(
-						"classNameId", _portal.getClassNameId(FileEntry.class)
+						"classNameId", classNameId
 					).put(
 						"externalReferenceCode",
 						depotFileEntry.getExternalReferenceCode()
@@ -2016,9 +2022,7 @@ public class RenderLayoutStructureTagTest {
 					))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+			_layoutStructureProvider, segmentsExperienceId);
 
 		FileEntry fileEntry = _addFileEntry();
 
@@ -2030,7 +2034,7 @@ public class RenderLayoutStructureTagTest {
 					JSONUtil.put(
 						"className", FileEntry.class.getName()
 					).put(
-						"classNameId", _portal.getClassNameId(FileEntry.class)
+						"classNameId", classNameId
 					).put(
 						"externalReferenceCode",
 						fileEntry.getExternalReferenceCode()
@@ -2039,9 +2043,7 @@ public class RenderLayoutStructureTagTest {
 					))
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
+			_layoutStructureProvider, segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 

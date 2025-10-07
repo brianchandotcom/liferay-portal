@@ -30,7 +30,6 @@ CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)re
 				creationMenu="<%= cpInstanceDisplayContext.getCreationMenu() %>"
 				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_INSTANCES %>"
 				id="<%= CommerceProductFDSNames.PRODUCT_INSTANCES %>"
-				itemsPerPage="<%= 10 %>"
 				selectedItemsKey="cpinstanceId"
 				style="stacked"
 			/>

@@ -21,6 +21,5 @@ CommerceCatalog commerceCatalog = commerceCatalogDisplayContext.getCommerceCatal
 	%>'
 	dataProviderKey="<%= CommerceCatalogFDSNames.CATALOG_CHANNELS %>"
 	id="<%= CommerceCatalogFDSNames.CATALOG_CHANNELS %>"
-	itemsPerPage="<%= 10 %>"
 	style="stacked"
 />

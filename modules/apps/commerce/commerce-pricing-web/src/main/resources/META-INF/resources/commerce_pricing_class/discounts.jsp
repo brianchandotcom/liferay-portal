@@ -30,7 +30,6 @@ CommercePricingClass commercePricingClass = commercePricingClassDiscountDisplayC
 				%>'
 				dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
 				id="<%= CommercePricingFDSNames.PRICING_CLASSES_DISCOUNTS %>"
-				itemsPerPage="<%= 10 %>"
 				style="stacked"
 			/>
 		</div>

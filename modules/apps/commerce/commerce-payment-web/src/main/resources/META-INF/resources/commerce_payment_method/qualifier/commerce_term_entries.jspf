@@ -32,7 +32,6 @@
 			fdsActionDropdownItems="<%= commercePaymentMethodGroupRelQualifiersDisplayContext.getCommerceTermEntryFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommercePaymentMethodGroupRelFDSNames.TERM_ENTRIES %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

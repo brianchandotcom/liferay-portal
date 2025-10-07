@@ -28,7 +28,6 @@ long cpConfigurationListId = cpConfigurationListDisplayContext.getCPConfiguratio
 			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationEntryFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATIONS %>"
-			itemsPerPage="<%= 10 %>"
 			propsTransformer="{CPConfigurationEntryFDSPropsTransformer} from commerce-product-definitions-web"
 			selectedItemsKey="id"
 			selectionType="multiple"

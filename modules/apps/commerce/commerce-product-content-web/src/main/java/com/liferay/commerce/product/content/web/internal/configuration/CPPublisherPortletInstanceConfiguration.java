@@ -48,7 +48,7 @@ public interface CPPublisherPortletInstanceConfiguration {
 	@Meta.AD(deflt = StringPool.TRUE, name = "paginate", required = false)
 	public boolean paginate();
 
-	@Meta.AD(deflt = "15", name = "pagination-delta", required = false)
+	@Meta.AD(deflt = "20", name = "pagination-delta", required = false)
 	public int paginationDelta();
 
 }

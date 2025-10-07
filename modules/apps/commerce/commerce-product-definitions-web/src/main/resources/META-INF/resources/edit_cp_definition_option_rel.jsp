@@ -178,7 +178,6 @@ String defaultLanguageId = cpDefinitionOptionRelDisplayContext.getCatalogDefault
 					creationMenu="<%= cpDefinitionOptionRel.isDefinedExternally() ? null : cpDefinitionOptionRelDisplayContext.getCreationMenu() %>"
 					dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_OPTION_VALUES %>"
 					id="<%= dataSetDisplayId %>"
-					itemsPerPage="<%= 10 %>"
 					selectedItemsKey="cpdefinitionOptionValueRelId"
 				/>
 			</commerce-ui:panel>

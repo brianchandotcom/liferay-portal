@@ -53,7 +53,6 @@ CPDefinition cpDefinition = cpDefinitionOptionRelDisplayContext.getCPDefinition(
 					%>'
 					dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>"
 					id="<%= CommerceProductFDSNames.PRODUCT_OPTIONS %>"
-					itemsPerPage="<%= 10 %>"
 					selectedItemsKey="cpdefinitionOptionRelId"
 				/>
 			</aui:form>

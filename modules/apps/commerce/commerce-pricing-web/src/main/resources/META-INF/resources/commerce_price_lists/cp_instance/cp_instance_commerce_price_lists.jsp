@@ -43,7 +43,6 @@ long cpInstanceId = cpInstanceCommercePriceEntryDisplayContext.getCPInstanceId()
 			dataProviderKey="<%= CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.INSTANCE_PRICE_ENTRIES %>"
-			itemsPerPage="<%= 10 %>"
 			style="stacked"
 		/>
 	</aui:form>

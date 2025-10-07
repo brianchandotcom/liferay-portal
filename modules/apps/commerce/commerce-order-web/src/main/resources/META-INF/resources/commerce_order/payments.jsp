@@ -121,7 +121,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.PAYMENTS %>"
 				id="<%= CommerceOrderFDSNames.PAYMENTS %>"
-				itemsPerPage="<%= 10 %>"
 			/>
 		</commerce-ui:panel>
 	</div>
@@ -140,7 +139,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.REFUNDS %>"
 				id="<%= CommerceOrderFDSNames.REFUNDS %>"
-				itemsPerPage="<%= 10 %>"
 				showSearch="<%= false %>"
 			/>
 		</commerce-ui:panel>

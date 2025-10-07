@@ -16,6 +16,5 @@ CommerceChannelDisplayContext commerceChannelDisplayContext = (CommerceChannelDi
 	creationMenu="<%= commerceChannelDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommerceChannelFDSNames.CHANNEL %>"
 	id="<%= CommerceChannelFDSNames.CHANNEL %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

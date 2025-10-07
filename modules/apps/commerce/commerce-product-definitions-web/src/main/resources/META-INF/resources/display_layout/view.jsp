@@ -95,6 +95,5 @@ if (selLayout != null) {
 		creationMenu="<%= cpDefinitionDisplayLayoutDisplayContext.getCreationMenu() %>"
 		dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DISPLAY_PAGES %>"
 		id="<%= CommerceProductFDSNames.PRODUCT_DISPLAY_PAGES %>"
-		itemsPerPage="<%= 10 %>"
 	/>
 </commerce-ui:panel>

@@ -48,7 +48,6 @@ String typeSettings = unicodeProperties.getProperty(commerceDiscountRule.getType
 			dataProviderKey="<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.DISCOUNT_RULE_PRODUCT_DEFINITIONS %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </div>

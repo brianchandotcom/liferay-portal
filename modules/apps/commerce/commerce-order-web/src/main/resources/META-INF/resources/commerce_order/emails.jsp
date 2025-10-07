@@ -23,7 +23,6 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 		%>'
 		dataProviderKey="<%= CommerceOrderFDSNames.NOTIFICATIONS %>"
 		id="<%= CommerceOrderFDSNames.NOTIFICATIONS %>"
-		itemsPerPage="<%= 10 %>"
 		showManagementBar="<%= false %>"
 	/>
 </commerce-ui:panel>

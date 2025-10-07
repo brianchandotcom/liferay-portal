@@ -40,7 +40,6 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			creationMenu="<%= commerceChannelAccountEntryRelDisplayContext.getCreationMenu(CommerceChannelAccountEntryRelConstants.TYPE_BILLING_ADDRESS) %>"
 			dataProviderKey="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES %>"
 			id="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_BILLING_ADDRESSES %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>
@@ -70,7 +69,6 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			creationMenu="<%= commerceChannelAccountEntryRelDisplayContext.getCreationMenu(CommerceChannelAccountEntryRelConstants.TYPE_SHIPPING_ADDRESS) %>"
 			dataProviderKey="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES %>"
 			id="<%= CommerceAddressFDSNames.ACCOUNT_ENTRY_SHIPPING_ADDRESSES %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>

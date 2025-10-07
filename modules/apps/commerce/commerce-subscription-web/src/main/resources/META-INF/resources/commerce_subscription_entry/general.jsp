@@ -377,7 +377,6 @@ if (deliveryMaxSubscriptionCycles > 0) {
 	contextParams="<%= contextParams %>"
 	dataProviderKey="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS %>"
 	id="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ORDER_ITEMS %>"
-	itemsPerPage="<%= 10 %>"
 	style="stacked"
 />
 </commerce-ui:panel>

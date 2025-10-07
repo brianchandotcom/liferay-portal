@@ -24,7 +24,6 @@ CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDis
 			creationMenu="<%= commerceShippingFixedOptionRelsDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTION_SETTINGS %>"
 			id="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTION_SETTINGS %>"
-			itemsPerPage="<%= 10 %>"
 			showManagementBar="<%= true %>"
 		/>
 	</c:when>

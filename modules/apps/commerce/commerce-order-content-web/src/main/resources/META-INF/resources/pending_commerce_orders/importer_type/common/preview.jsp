@@ -43,7 +43,6 @@ CommerceOrderImporterType commerceOrderImporterType = commerceOrderContentDispla
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
 				id="<%= CommerceOrderFDSNames.PREVIEW_ORDER_ITEMS %>"
-				itemsPerPage="<%= 10 %>"
 				showManagementBar="<%= false %>"
 				showSearch="<%= false %>"
 				style="fluid"

@@ -34,7 +34,6 @@
 			fdsActionDropdownItems="<%= cIWarehouseQualifiersDisplayContext.getWarehouseAccountFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceInventoryWarehouseFDSNames.COMMERCE_INVENTORY_WAREHOUSE_QUALIFIER_ACCOUNTS %>"
-			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletCommerceInventoryWarehouseURL %>"

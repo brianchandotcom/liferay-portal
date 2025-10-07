@@ -21,7 +21,6 @@ CPConfigurationListDisplayContext cpConfigurationListDisplayContext = (CPConfigu
 			fdsActionDropdownItems="<%= cpConfigurationListDisplayContext.getCPConfigurationListFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LISTS %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

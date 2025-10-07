@@ -25,7 +25,6 @@ CommerceSubscriptionEntryDisplayContext commerceSubscriptionEntryDisplayContext 
 				%>'
 				dataProviderKey="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_SHIPMENTS %>"
 				id="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_SHIPMENTS %>"
-				itemsPerPage="<%= 10 %>"
 				showManagementBar="<%= false %>"
 				style="stacked"
 			/>

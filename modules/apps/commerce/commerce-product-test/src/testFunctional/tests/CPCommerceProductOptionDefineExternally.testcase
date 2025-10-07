@@ -778,9 +778,7 @@ definition {
 		}
 
 		task ("Then can verify the products of that category are listed as values (i.e: 11 products for Engine)") {
-			Pagination.viewResults(results = "Showing 1 to 10 of 11 entries.");
-
-			Pagination.changePagination(itemsPerPage = "20 Items");
+			Pagination.viewResults(results = "Showing 1 to 11 of 11 entries.");
 
 			for (var productEntry : list "Bearings,Cams,Engine Mount,Oil Filter,Oil Pump,Piston,Pulley Kit,Seal,Timing Chain,Timing Chain Tensioner,Valve Cover Grommets") {
 				AssertElementPresent(
@@ -803,7 +801,7 @@ definition {
 		}
 
 		task ("Then can verify all the products in the catalog are listed as values") {
-			Pagination.viewResults(results = "Showing 1 to 10 of 53 entries.");
+			Pagination.viewResults(results = "Showing 1 to 20 of 53 entries.");
 
 			Pagination.changePagination(itemsPerPage = "60 Items");
 

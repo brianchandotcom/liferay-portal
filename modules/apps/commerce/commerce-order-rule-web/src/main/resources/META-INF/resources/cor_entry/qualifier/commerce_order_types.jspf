@@ -32,7 +32,6 @@
 			fdsActionDropdownItems="<%= corEntryQualifiersDisplayContext.getCommerceOrderTypeFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= COREntryFDSNames.COR_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

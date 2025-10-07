@@ -35,7 +35,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			%>'
 			dataProviderKey="<%= CommerceProductFDSNames.ALL_PRODUCT_INSTANCES %>"
 			id="<%= CommerceProductFDSNames.ALL_PRODUCT_INSTANCES %>"
-			itemsPerPage="<%= 10 %>"
 			style="stacked"
 		/>
 	</aui:form>

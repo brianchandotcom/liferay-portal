@@ -15,6 +15,5 @@ CommercePricingClassDisplayContext commercePricingClassDisplayContext = (Commerc
 	creationMenu="<%= commercePricingClassDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
 	id="<%= CommercePricingFDSNames.PRICING_CLASSES %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

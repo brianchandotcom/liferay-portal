@@ -58,7 +58,6 @@ boolean override = BeanParamUtil.getBoolean(cpDefinitionVirtualSetting, request,
 						dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
 						formName="fm"
 						id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
-						itemsPerPage="<%= 10 %>"
 						selectedItemsKey="cpDefinitionVirtualSettingFileId"
 					/>
 				</aui:fieldset>

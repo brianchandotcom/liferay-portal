@@ -22,7 +22,6 @@ CommerceTermEntryDisplayContext commerceTermEntryDisplayContext = (CommerceTermE
 		fdsActionDropdownItems="<%= commerceTermEntryDisplayContext.getCommerceTermEntryFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CommerceTermEntryFDSNames.TERM_ENTRIES %>"
-		itemsPerPage="<%= 10 %>"
 		style="fluid"
 	/>
 </aui:form>

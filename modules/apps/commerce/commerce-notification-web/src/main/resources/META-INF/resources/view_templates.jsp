@@ -20,6 +20,5 @@ CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesD
 	creationMenu="<%= commerceNotificationQueueEntriesDisplayContext.getNotificationTemplateCreationMenu() %>"
 	dataProviderKey="<%= CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES %>"
 	id="<%= CommerceNotificationFDSNames.NOTIFICATION_TEMPLATES %>"
-	itemsPerPage="<%= 10 %>"
 	showSearch="<%= false %>"
 />

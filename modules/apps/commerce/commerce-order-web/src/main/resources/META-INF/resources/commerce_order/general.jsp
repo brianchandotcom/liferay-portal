@@ -502,7 +502,6 @@ boolean hasPermission = commerceOrderEditDisplayContext.hasModelPermission(comme
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.ORDER_ITEMS %>"
 				id="<%= CommerceOrderFDSNames.ORDER_ITEMS %>"
-				itemsPerPage="<%= 10 %>"
 				nestedItemsKey="orderItemId"
 				nestedItemsReferenceKey="orderItems"
 				propsTransformer="{CommerceOrderItemsFDSPropsTransformer} from commerce-order-web"

@@ -283,7 +283,6 @@ CommerceOrder commerceOrder = commerceOrderContentDisplayContext.getCommerceOrde
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>"
 				id="<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>"
-				itemsPerPage="<%= 10 %>"
 				nestedItemsKey="orderItemId"
 				nestedItemsReferenceKey="orderItems"
 			/>

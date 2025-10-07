@@ -477,7 +477,6 @@ boolean hasPermission = commerceOrderContentDisplayContext.hasModelPermission(co
 				%>'
 				dataProviderKey="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
 				id="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
-				itemsPerPage="<%= 10 %>"
 				nestedItemsKey="orderItemId"
 				nestedItemsReferenceKey="orderItems"
 			/>

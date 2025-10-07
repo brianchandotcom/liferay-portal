@@ -33,6 +33,5 @@
 		fdsActionDropdownItems="<%= accountAddressQualifiersDisplayContext.getAccountAddressChannelFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CommerceAccountFDSNames.ACCOUNT_ADDRESS_QUALIFIER_CHANNELS %>"
-		itemsPerPage="<%= 10 %>"
 	/>
 </commerce-ui:panel>

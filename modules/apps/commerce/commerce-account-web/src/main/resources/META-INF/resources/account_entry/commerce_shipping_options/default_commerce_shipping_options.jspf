@@ -31,7 +31,6 @@
 					%>'
 					dataProviderKey="<%= CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS %>"
 					id="<%= CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_SHIPPING_OPTIONS %>"
-					itemsPerPage="<%= 10 %>"
 					showSearch="<%= false %>"
 					style="fluid"
 				/>

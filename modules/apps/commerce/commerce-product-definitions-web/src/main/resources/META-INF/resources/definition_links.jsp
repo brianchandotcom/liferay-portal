@@ -45,7 +45,6 @@ long cpDefinitionId = cpDefinitionLinkDisplayContext.getCPDefinitionId();
 				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_LINKS %>"
 				formName="fm"
 				id="<%= CommerceProductFDSNames.PRODUCT_LINKS %>"
-				itemsPerPage="<%= 10 %>"
 				selectedItemsKey="cpdefinitionLinkId"
 				selectionType="multiple"
 				style="stacked"

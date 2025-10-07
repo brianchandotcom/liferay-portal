@@ -22,7 +22,6 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 		fdsActionDropdownItems="<%= commercePriceListDisplayContext.getPriceListFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CommercePricingFDSNames.PRICE_LISTS %>"
-		itemsPerPage="<%= 10 %>"
 		style="fluid"
 	/>
 </aui:form>

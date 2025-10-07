@@ -55,7 +55,6 @@ if (CommercePriceListConstants.TYPE_PROMOTION.equals(commercePriceEntryDisplayCo
 					fdsActionDropdownItems="<%= commercePriceEntryDisplayContext.getPriceEntriesFDSActionDropdownItems() %>"
 					formName="fm"
 					id="<%= dataSetId %>"
-					itemsPerPage="<%= 10 %>"
 					selectedItemsKey="priceEntryId"
 				/>
 			</commerce-ui:panel>

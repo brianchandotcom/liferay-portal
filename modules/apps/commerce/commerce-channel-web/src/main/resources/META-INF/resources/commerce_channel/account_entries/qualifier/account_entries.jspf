@@ -39,6 +39,5 @@ int commerceSiteType = commerceChannelAccountEntryQualifiersDisplayContext.getCo
 		fdsActionDropdownItems="<%= commerceChannelAccountEntryQualifiersDisplayContext.getCommerceChannelAccountEntryFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CommerceChannelFDSNames.CHANNEL_QUALIFIER_ACCOUNTS %>"
-		itemsPerPage="<%= 10 %>"
 	/>
 </commerce-ui:panel>

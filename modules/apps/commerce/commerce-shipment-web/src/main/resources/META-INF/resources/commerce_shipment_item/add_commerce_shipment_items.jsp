@@ -37,7 +37,6 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 			dataProviderKey="<%= CommerceShipmentFDSNames.SHIPPABLE_ORDER_ITEMS %>"
 			formName="fm"
 			id="<%= CommerceShipmentFDSNames.SHIPPABLE_ORDER_ITEMS %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="orderItemId"
 			selectionType="multiple"
 			showManagementBar="<%= false %>"

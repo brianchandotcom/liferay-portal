@@ -17,7 +17,6 @@ CommerceShipmentDisplayContext commerceShipmentDisplayContext = (CommerceShipmen
 			<frontend-data-set:classic-display
 				dataProviderKey="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
 				id="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
-				itemsPerPage="<%= 10 %>"
 				style="fluid"
 			/>
 		</div>

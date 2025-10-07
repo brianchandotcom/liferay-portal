@@ -76,7 +76,6 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 		creationMenu="<%= cpSpecificationOptionDisplayContext.getCreationMenu(cpSpecificationOption) %>"
 		dataProviderKey="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
 		id="<%= CommerceSpecificationOptionFDSNames.LIST_TYPE_DEFINITIONS %>"
-		itemsPerPage="<%= 10 %>"
 		propsTransformer="{CPSpecificationOptionListTypeDefinitionPropsTransformer} from commerce-product-options-web"
 		style="stacked"
 	/>

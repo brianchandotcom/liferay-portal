@@ -34,7 +34,6 @@ CommerceChannelCommerceCurrencyDisplayContext commerceChannelCommerceCurrenciesD
 	creationMenu="<%= commerceChannelCommerceCurrenciesDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommerceChannelFDSNames.COMMERCE_CURRENCIES %>"
 	id="<%= CommerceChannelFDSNames.COMMERCE_CURRENCIES %>"
-	itemsPerPage="<%= 10 %>"
 	selectedItemsKey="currencyId"
 />
 

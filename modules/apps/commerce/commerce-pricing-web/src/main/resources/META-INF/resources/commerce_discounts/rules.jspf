@@ -33,7 +33,6 @@
 					fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountRulesFDSActionDropdownItem() %>"
 					formName="fm"
 					id="<%= CommercePricingFDSNames.DISCOUNT_RULES %>"
-					itemsPerPage="<%= 10 %>"
 				/>
 			</commerce-ui:panel>
 		</div>

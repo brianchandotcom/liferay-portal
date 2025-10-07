@@ -24,7 +24,6 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		%>'
 		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_AUDIT %>"
 		id="<%= CommerceInventoryFDSNames.INVENTORY_AUDIT %>"
-		itemsPerPage="<%= 10 %>"
 		showManagementBar="<%= false %>"
 	/>
 </commerce-ui:panel>

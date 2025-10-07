@@ -24,7 +24,6 @@ PortletURL portletURL = commerceDiscountDisplayContext.getPortletURL();
 		fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= CommercePricingFDSNames.DISCOUNTS %>"
-		itemsPerPage="<%= 10 %>"
 		style="fluid"
 	/>
 </aui:form>

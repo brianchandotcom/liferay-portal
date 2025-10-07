@@ -33,6 +33,5 @@ if (cpDefinitionVirtualSetting != null) {
 	dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
 	formName="fm"
 	id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_SETTING_FILES %>"
-	itemsPerPage="<%= 10 %>"
 	selectedItemsKey="cpDefinitionVirtualSettingFileId"
 />

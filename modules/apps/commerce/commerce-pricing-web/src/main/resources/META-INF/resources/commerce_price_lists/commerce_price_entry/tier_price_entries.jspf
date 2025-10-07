@@ -29,7 +29,6 @@
 			dataProviderKey="<%= CommercePricingFDSNames.TIER_PRICE_ENTRIES %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.TIER_PRICE_ENTRIES %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="tierPriceEntryId"
 			showManagementBar="<%= true %>"
 			showSearch="<%= true %>"

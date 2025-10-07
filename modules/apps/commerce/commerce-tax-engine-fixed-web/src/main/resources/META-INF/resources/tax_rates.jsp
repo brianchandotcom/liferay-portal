@@ -25,7 +25,6 @@ CommerceTaxFixedRatesDisplayContext commerceTaxFixedRatesDisplayContext = (Comme
 		creationMenu="<%= commerceTaxFixedRatesDisplayContext.getCreationMenu() %>"
 		dataProviderKey="<%= CommerceTaxRateSettingFDSNames.TAX_RATES %>"
 		id="<%= CommerceTaxRateSettingFDSNames.TAX_RATES %>"
-		itemsPerPage="<%= 10 %>"
 		showSearch="<%= false %>"
 	/>
 </commerce-ui:panel>

@@ -40,7 +40,6 @@
 					fdsActionDropdownItems="<%= commercePriceListQualifiersDisplayContext.getPriceListChannelFDSActionDropdownItems() %>"
 					formName="fm"
 					id="<%= CommercePricingFDSNames.PRICE_LIST_QUALIFIER_CHANNELS %>"
-					itemsPerPage="<%= 10 %>"
 				/>
 			</commerce-ui:panel>
 		</div>

@@ -34,7 +34,6 @@
 			fdsActionDropdownItems="<%= cpConfigurationListQualifiersDisplayContext.getCPConfigurationListAccountGroupFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CPConfigurationFDSNames.PRODUCT_CONFIGURATION_LIST_QUALIFIER_ACCOUNT_GROUPS %>"
-			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= cpConfigurationListQualifiersDisplayContext.getPortletCPConfigurationListURL() %>"

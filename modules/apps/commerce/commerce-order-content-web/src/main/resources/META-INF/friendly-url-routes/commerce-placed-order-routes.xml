@@ -4,7 +4,6 @@
 <routes>
 	<route>
 		<pattern>/{commerceOrderId:\d+}</pattern>
-		<implicit-parameter name="itemsPerPage">10</implicit-parameter>
 		<implicit-parameter name="mvcRenderCommandName">/commerce_order_content/view_commerce_order_details</implicit-parameter>
 		<implicit-parameter name="p_p_id">com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet</implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>

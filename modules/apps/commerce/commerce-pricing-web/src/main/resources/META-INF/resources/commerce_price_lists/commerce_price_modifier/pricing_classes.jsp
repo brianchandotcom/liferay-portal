@@ -45,7 +45,6 @@ long commercePriceModifierId = commercePriceListDisplayContext.getCommercePriceM
 			fdsActionDropdownItems="<%= commercePriceListDisplayContext.getPriceModifierPricingClassFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.PRICE_MODIFIER_PRICING_CLASSES %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

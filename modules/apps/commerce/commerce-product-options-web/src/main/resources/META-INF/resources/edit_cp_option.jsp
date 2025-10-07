@@ -109,7 +109,6 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 					creationMenu="<%= cpOptionDisplayContext.getOptionValueCreationMenu(cpOptionId) %>"
 					fdsActionDropdownItems="<%= cpOptionDisplayContext.getOptionValueFDSActionDropdownItems() %>"
 					id="<%= CommerceOptionFDSNames.OPTION_VALUES %>"
-					itemsPerPage="<%= 10 %>"
 					style="stacked"
 				/>
 			</commerce-ui:panel>

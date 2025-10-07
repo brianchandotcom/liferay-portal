@@ -24,7 +24,6 @@ PortletURL portletURL = commerceInventoryWarehousesDisplayContext.getPortletURL(
 			fdsActionDropdownItems="<%= commerceInventoryWarehousesDisplayContext.getWarehouseFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceInventoryWarehouseFDSNames.WAREHOUSES %>"
-			itemsPerPage="<%= 10 %>"
 			namespace="<%= liferayPortletResponse.getNamespace() %>"
 			pageNumber="<%= 1 %>"
 			portletURL="<%= portletURL %>"

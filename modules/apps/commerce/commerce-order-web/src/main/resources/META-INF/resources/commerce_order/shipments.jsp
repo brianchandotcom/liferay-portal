@@ -28,7 +28,6 @@ CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder()
 	%>'
 	dataProviderKey="<%= CommerceShipmentFDSNames.SHIPMENTS %>"
 	id="<%= CommerceShipmentFDSNames.ORDER_SHIPMENTS %>"
-	itemsPerPage="<%= 10 %>"
 	showManagementBar="<%= false %>"
 	style="stacked"
 />

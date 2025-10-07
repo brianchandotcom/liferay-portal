@@ -28,7 +28,6 @@ long commerceChannelId = commerceShippingMethodsDisplayContext.getCommerceChanne
 		dataProviderKey="<%= CommerceShippingFDSNames.SHIPPING_RESTRICTIONS %>"
 		formName="fm"
 		id="<%= CommerceShippingFDSNames.SHIPPING_RESTRICTIONS %>"
-		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="countryId"
 	/>
 </aui:form>

@@ -36,7 +36,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_IMAGES %>"
 				formName="fm"
 				id="<%= CommerceProductFDSNames.PRODUCT_IMAGES %>"
-				itemsPerPage="<%= 10 %>"
 				selectedItemsKey="cpattachmentFileEntryId"
 			/>
 		</commerce-ui:panel>
@@ -51,7 +50,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 				dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_ATTACHMENTS %>"
 				formName="fm"
 				id="<%= CommerceProductFDSNames.PRODUCT_ATTACHMENTS %>"
-				itemsPerPage="<%= 10 %>"
 				selectedItemsKey="cpattachmentFileEntryId"
 			/>
 		</commerce-ui:panel>

@@ -29,7 +29,6 @@ long cpInstanceId = cpInstanceUnitOfMeasureDisplayContext.getCPInstanceId();
 			fdsActionDropdownItems="<%= cpInstanceUnitOfMeasureDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceProductFDSNames.PRODUCT_UNITS_OF_MEASURE %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="stacked"

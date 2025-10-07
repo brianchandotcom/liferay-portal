@@ -569,7 +569,7 @@ definition {
 		task ("Then when the admin goes back to the products admin page and the product is displayed properly") {
 			CommerceProducts.openProductsAdmin();
 
-			Pagination.viewResults(results = "Showing 1 to 10 of 50 entries.");
+			Pagination.viewResults(results = "Showing 1 to 20 of 50 entries.");
 
 			for (var entryName : list "ABS Sensor,Calipers,Hoses") {
 				AssertElementPresent(

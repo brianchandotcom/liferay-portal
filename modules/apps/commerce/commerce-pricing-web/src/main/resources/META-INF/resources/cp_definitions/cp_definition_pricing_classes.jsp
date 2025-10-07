@@ -55,7 +55,6 @@ CProduct cProduct = cpDefinition.getCProduct();
 					%>'
 					dataProviderKey="<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>"
 					id="<%= CommercePricingFDSNames.PRODUCT_PRICING_CLASSES %>"
-					itemsPerPage="<%= 10 %>"
 					selectedItemsKey="pricingClassId"
 				/>
 			</commerce-ui:panel>

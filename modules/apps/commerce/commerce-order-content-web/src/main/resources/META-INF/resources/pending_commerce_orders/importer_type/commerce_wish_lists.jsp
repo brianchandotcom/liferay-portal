@@ -17,6 +17,5 @@
 	%>'
 	dataProviderKey="<%= CommerceOrderFDSNames.WISH_LISTS %>"
 	id="<%= CommerceOrderFDSNames.WISH_LISTS %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

@@ -16,7 +16,6 @@
 		dataProviderKey="<%= CommercePricingFDSNames.INSTANCE_TIER_PRICE_ENTRIES %>"
 		formName="fm"
 		id="<%= CommercePricingFDSNames.INSTANCE_TIER_PRICE_ENTRIES %>"
-		itemsPerPage="<%= 10 %>"
 		style="stacked"
 	/>
 </aui:fieldset>

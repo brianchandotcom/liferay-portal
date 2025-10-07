@@ -210,7 +210,6 @@ if ((cpDefinition != null) && (cpDefinition.getExpirationDate() != null)) {
 						dataProviderKey="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
 						formName="fm"
 						id="<%= CommerceProductFDSNames.PRODUCT_DEFINITION_SPECIFICATIONS %>"
-						itemsPerPage="<%= 10 %>"
 						selectedItemsKey="cpdefinitionSpecificationOptionValueId"
 						showManagementBar="<%= true %>"
 						showSearch="<%= true %>"

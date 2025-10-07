@@ -24,7 +24,6 @@ PortletURL portletURL = corEntryDisplayContext.getPortletURL();
 		fdsActionDropdownItems="<%= corEntryDisplayContext.getCOREntryFDSActionDropdownItems() %>"
 		formName="fm"
 		id="<%= COREntryFDSNames.COR_ENTRIES %>"
-		itemsPerPage="<%= 10 %>"
 		style="fluid"
 	/>
 </aui:form>

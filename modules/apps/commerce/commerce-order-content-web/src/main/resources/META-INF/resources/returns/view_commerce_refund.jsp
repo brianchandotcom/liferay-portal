@@ -20,7 +20,6 @@
 		%>'
 		dataProviderKey="<%= CommerceOrderFDSNames.REFUND_ITEMS %>"
 		id="<%= CommerceOrderFDSNames.REFUND_ITEMS %>"
-		itemsPerPage="<%= 10 %>"
 		showManagementBar="<%= false %>"
 		showSearch="<%= false %>"
 		style="fluid"

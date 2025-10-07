@@ -295,7 +295,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK %>"
 			id="<%= CommerceChannelFDSNames.CHANNEL_HEALTH_CHECK %>"
-			itemsPerPage="<%= 10 %>"
 			showManagementBar="<%= false %>"
 		/>
 	</commerce-ui:panel>
@@ -330,7 +329,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
 			id="<%= CommerceChannelFDSNames.PAYMENT_METHOD %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="key"
 			showManagementBar="<%= false %>"
 		/>
@@ -345,7 +343,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		contextParams="<%= contextParams %>"
 		dataProviderKey="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
 		id="<%= CommerceChannelFDSNames.SHIPPING_METHOD %>"
-		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="key"
 		showManagementBar="<%= false %>"
 	/>
@@ -359,7 +356,6 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 		contextParams="<%= contextParams %>"
 		dataProviderKey="<%= CommerceChannelFDSNames.TAX_METHOD %>"
 		id="<%= CommerceChannelFDSNames.TAX_METHOD %>"
-		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="key"
 		showManagementBar="<%= false %>"
 	/>

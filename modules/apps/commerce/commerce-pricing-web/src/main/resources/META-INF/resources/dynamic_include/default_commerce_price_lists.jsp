@@ -40,7 +40,6 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			creationMenu="<%= commerceChannelAccountEntryRelDisplayContext.getCreationMenu(CommerceChannelAccountEntryRelConstants.TYPE_PRICE_LIST) %>"
 			dataProviderKey="<%= CommercePricingFDSNames.ACCOUNT_ENTRY_PRICE_LISTS %>"
 			id="<%= CommercePricingFDSNames.ACCOUNT_ENTRY_PRICE_LISTS %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>

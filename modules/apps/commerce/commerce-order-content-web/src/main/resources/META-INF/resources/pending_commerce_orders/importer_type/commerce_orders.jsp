@@ -17,6 +17,5 @@
 	%>'
 	dataProviderKey="<%= CommerceOrderFDSNames.IMPORT_ORDERS %>"
 	id="<%= CommerceOrderFDSNames.IMPORT_ORDERS %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

@@ -25,6 +25,5 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		%>'
 		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_BOOKED %>"
 		id="<%= CommerceInventoryFDSNames.INVENTORY_BOOKED %>"
-		itemsPerPage="<%= 10 %>"
 	/>
 </commerce-ui:panel>

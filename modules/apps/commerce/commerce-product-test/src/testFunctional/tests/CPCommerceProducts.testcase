@@ -2777,9 +2777,9 @@ definition {
 
 		AssertTextEquals(
 			locator1 = "CP2ActivationKeys#PAGINATION_BUTTON",
-			value1 = "10 items");
+			value1 = "20 items");
 
-		Pagination.viewResults(results = "Showing 11 to 20 of 50 entries.");
+		Pagination.viewResults(results = "Showing 21 to 40 of 50 entries.");
 
 		CommerceProducts.searchProduct(search = "U-Joint");
 
@@ -2803,7 +2803,7 @@ definition {
 
 		Click(locator1 = "ACUtils#NEXT_PAGES");
 
-		CommerceEntry.viewPaginationResults(results = "Showing 11 to 20 of 54 entries.");
+		CommerceEntry.viewPaginationResults(results = "Showing 21 to 40 of 54 entries.");
 
 		CommerceProducts.searchProduct(search = "MIN55861");
 

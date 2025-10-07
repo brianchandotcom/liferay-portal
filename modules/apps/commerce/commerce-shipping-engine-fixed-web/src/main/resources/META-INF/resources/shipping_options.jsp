@@ -24,7 +24,6 @@ CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayCo
 		dataProviderKey="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS %>"
 		fdsSortItemList="<%= commerceShippingFixedOptionsDisplayContext.getFDSSortItemList() %>"
 		id="<%= CommerceShippingFixedOptionFDSNames.SHIPPING_FIXED_OPTIONS %>"
-		itemsPerPage="<%= 10 %>"
 		selectedItemsKey="shippingFixedOptionId"
 		showManagementBar="<%= true %>"
 		style="fluid"

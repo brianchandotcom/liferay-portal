@@ -67,7 +67,6 @@ portletDisplay.setURLBack(String.valueOf(renderResponse.createRenderURL()));
 				dataProviderKey="<%= CommerceShipmentFDSNames.INVENTORY_WAREHOUSE_ITEM %>"
 				formId="fm"
 				id="<%= CommerceShipmentFDSNames.INVENTORY_WAREHOUSE_ITEM %>"
-				itemsPerPage="<%= 10 %>"
 				showManagementBar="<%= false %>"
 			/>
 		</commerce-ui:panel>

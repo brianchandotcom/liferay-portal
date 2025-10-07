@@ -21,7 +21,6 @@
 	<frontend-data-set:classic-display
 		dataProviderKey="<%= CommerceOrderFDSNames.PLACED_ORDERS %>"
 		id="<%= CommerceOrderFDSNames.PLACED_ORDERS %>"
-		itemsPerPage="<%= 10 %>"
 		style="stacked"
 	/>
 </liferay-ddm:template-renderer>

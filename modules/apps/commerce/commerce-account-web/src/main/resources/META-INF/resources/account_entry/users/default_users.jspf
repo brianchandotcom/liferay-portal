@@ -32,7 +32,6 @@
 			creationMenu="<%= commerceAccountDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_USERS %>"
 			id="<%= CommerceAccountFDSNames.ACCOUNT_ENTRY_DEFAULT_USERS %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>

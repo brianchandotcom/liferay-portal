@@ -40,7 +40,6 @@ AccountEntry accountEntry = commerceChannelAccountEntryRelDisplayContext.getAcco
 			creationMenu="<%= commerceChannelAccountEntryRelDisplayContext.getCreationMenu() %>"
 			dataProviderKey="<%= CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES %>"
 			id="<%= CommerceCurrencyFDSNames.ACCOUNT_ENTRY_CURRENCIES %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 			style="fluid"
 		/>

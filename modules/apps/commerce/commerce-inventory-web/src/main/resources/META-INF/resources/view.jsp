@@ -15,6 +15,5 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 	creationMenu="<%= commerceInventoryDisplayContext.getInventoryItemCreationMenu() %>"
 	dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_ITEMS %>"
 	id="<%= CommerceInventoryFDSNames.INVENTORY_ITEMS %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

@@ -39,7 +39,6 @@
 			%>'
 			dataProviderKey="<%= FunctionCommerceShippingEngineFDSNames.FUNCTION_COMMERCE_SHIPPING_ENGINE_OPTIONS %>"
 			id="<%= FunctionCommerceShippingEngineFDSNames.FUNCTION_COMMERCE_SHIPPING_ENGINE_OPTIONS %>"
-			itemsPerPage="<%= 10 %>"
 			showManagementBar="<%= false %>"
 			style="fluid"
 		/>

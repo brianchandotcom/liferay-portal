@@ -19,6 +19,5 @@ CommerceNotificationQueueEntriesDisplayContext commerceNotificationQueueEntriesD
 	%>'
 	dataProviderKey="<%= CommerceNotificationFDSNames.NOTIFICATION_ENTRIES %>"
 	id="<%= CommerceNotificationFDSNames.NOTIFICATION_ENTRIES %>"
-	itemsPerPage="<%= 10 %>"
 	showManagementBar="<%= false %>"
 />

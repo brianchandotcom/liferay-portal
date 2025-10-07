@@ -30,7 +30,6 @@
 			fdsActionDropdownItems="<%= commercePaymentMethodGroupRelQualifiersDisplayContext.getCommerceOrderTypeFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommercePaymentMethodGroupRelFDSNames.ORDER_TYPES %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

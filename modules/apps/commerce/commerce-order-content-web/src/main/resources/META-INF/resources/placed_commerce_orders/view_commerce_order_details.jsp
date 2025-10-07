@@ -388,7 +388,6 @@ if (commerceOrder != null) {
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>"
 			id="<%= CommerceOrderFDSNames.PLACED_ORDER_ITEMS %>"
-			itemsPerPage="<%= 10 %>"
 			nestedItemsKey="orderItemId"
 			nestedItemsReferenceKey="orderItems"
 			propsTransformer="{PlacedOrderItemClassicFDSPropsTransformer} from commerce-order-content-web"

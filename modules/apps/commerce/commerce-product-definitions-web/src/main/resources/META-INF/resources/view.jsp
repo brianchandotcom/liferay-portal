@@ -30,7 +30,6 @@ request.setAttribute("view.jsp-portletURL", cpDefinitionsDisplayContext.getPortl
 			fdsActionDropdownItems="<%= cpDefinitionsDisplayContext.getFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceProductFDSNames.PRODUCT_DEFINITIONS %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="id"
 			selectionType="multiple"
 			style="fluid"

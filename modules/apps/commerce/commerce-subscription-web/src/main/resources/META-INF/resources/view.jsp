@@ -24,7 +24,6 @@ contextParams.put("companyId", String.valueOf(themeDisplay.getCompanyId()));
 				contextParams="<%= contextParams %>"
 				dataProviderKey="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ENTRIES %>"
 				id="<%= CommerceSubscriptionFDSNames.SUBSCRIPTION_ENTRIES %>"
-				itemsPerPage="<%= 10 %>"
 				style="fluid"
 			/>
 		</c:if>

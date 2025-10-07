@@ -32,7 +32,6 @@
 			fdsActionDropdownItems="<%= commerceTermEntryQualifiersDisplayContext.getCommerceOrderTypeFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceTermEntryFDSNames.TERM_ENTRY_QUALIFIER_COMMERCE_ORDER_TYPES %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

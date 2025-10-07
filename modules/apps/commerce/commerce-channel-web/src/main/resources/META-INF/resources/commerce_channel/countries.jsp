@@ -29,7 +29,6 @@ CommerceChannelCountryDisplayContext commerceChannelCountriesDisplayContext = (C
 	creationMenu="<%= commerceChannelCountriesDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommerceChannelFDSNames.CHANNEL_COUNTRIES %>"
 	id="<%= CommerceChannelFDSNames.CHANNEL_COUNTRIES %>"
-	itemsPerPage="<%= 10 %>"
 	selectedItemsKey="countryId"
 />
 

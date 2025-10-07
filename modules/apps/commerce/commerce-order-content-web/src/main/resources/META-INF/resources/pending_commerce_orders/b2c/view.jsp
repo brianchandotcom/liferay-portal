@@ -23,7 +23,6 @@
 			<frontend-data-set:classic-display
 				dataProviderKey="<%= CommerceOrderFDSNames.PENDING_ORDERS %>"
 				id="<%= CommerceOrderFDSNames.PENDING_ORDERS %>"
-				itemsPerPage="<%= 10 %>"
 				style="stacked"
 			/>
 		</div>

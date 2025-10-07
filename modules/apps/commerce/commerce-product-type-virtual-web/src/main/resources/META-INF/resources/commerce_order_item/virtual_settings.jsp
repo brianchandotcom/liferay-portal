@@ -60,7 +60,6 @@ if ((commerceVirtualOrderItem != null) && (commerceVirtualOrderItem.getDuration(
 			dataProviderKey="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_ORDER_FILES %>"
 			formName="fm"
 			id="<%= CPDefinitionVirtualSettingFDSNames.VIRTUAL_ORDER_FILES %>"
-			itemsPerPage="<%= 10 %>"
 			selectedItemsKey="id"
 		/>
 	</commerce-ui:panel>

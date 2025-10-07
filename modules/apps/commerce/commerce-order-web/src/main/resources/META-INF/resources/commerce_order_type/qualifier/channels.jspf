@@ -34,7 +34,6 @@
 			fdsActionDropdownItems="<%= commerceOrderTypeQualifiersDisplayContext.getCommerceOrderTypeChannelFDSActionDropdownItems() %>"
 			formName="fm"
 			id="<%= CommerceOrderFDSNames.ORDER_TYPE_QUALIFIER_CHANNELS %>"
-			itemsPerPage="<%= 10 %>"
 		/>
 	</commerce-ui:panel>
 </c:if>

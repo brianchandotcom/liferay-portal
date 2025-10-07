@@ -26,7 +26,6 @@ CommerceInventoryDisplayContext commerceInventoryDisplayContext = (CommerceInven
 		creationMenu="<%= commerceInventoryDisplayContext.getReplenishmentCreationMenu() %>"
 		dataProviderKey="<%= CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT %>"
 		id="<%= CommerceInventoryFDSNames.INVENTORY_REPLENISHMENT %>"
-		itemsPerPage="<%= 10 %>"
 		showSearch="<%= false %>"
 	/>
 </commerce-ui:panel>

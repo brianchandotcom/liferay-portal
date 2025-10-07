@@ -40,7 +40,6 @@
 					fdsActionDropdownItems="<%= commerceDiscountDisplayContext.getDiscountCPDefinitionFDSActionDropdownItems() %>"
 					formName="fm"
 					id="<%= CommercePricingFDSNames.DISCOUNT_PRODUCT_DEFINITIONS %>"
-					itemsPerPage="<%= 10 %>"
 				/>
 			</commerce-ui:panel>
 		</div>

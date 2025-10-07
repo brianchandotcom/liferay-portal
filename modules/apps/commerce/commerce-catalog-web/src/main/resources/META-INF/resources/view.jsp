@@ -17,6 +17,5 @@ CommerceCatalogDisplayContext commerceCatalogDisplayContext = (CommerceCatalogDi
 	creationMenu="<%= commerceCatalogDisplayContext.getCreationMenu() %>"
 	dataProviderKey="<%= CommerceCatalogFDSNames.CATALOGS %>"
 	id="<%= CommerceCatalogFDSNames.CATALOGS %>"
-	itemsPerPage="<%= 10 %>"
 	style="fluid"
 />

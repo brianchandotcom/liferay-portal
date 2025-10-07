@@ -59,7 +59,6 @@ boolean hasPermission = commercePricingClassCPDefinitionDisplayContext.hasPermis
 						dataProviderKey="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
 						formName="fm"
 						id="<%= CommercePricingFDSNames.PRICING_CLASSES_PRODUCT_DEFINITIONS %>"
-						itemsPerPage="<%= 10 %>"
 					/>
 				</commerce-ui:panel>
 			</div>

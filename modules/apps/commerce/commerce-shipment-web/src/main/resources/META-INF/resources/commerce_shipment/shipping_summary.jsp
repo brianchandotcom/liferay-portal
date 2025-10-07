@@ -277,7 +277,6 @@ CommerceShipment commerceShipment = commerceShipmentDisplayContext.getCommerceSh
 			creationMenu="<%= commerceShipmentDisplayContext.getShipmentItemCreationMenu() %>"
 			dataProviderKey="<%= CommerceShipmentFDSNames.SHIPMENT_ITEMS %>"
 			id="<%= commerceShipmentDisplayContext.getFDSName() %>"
-			itemsPerPage="<%= 10 %>"
 			showSearch="<%= false %>"
 		/>
 	</commerce-ui:panel>

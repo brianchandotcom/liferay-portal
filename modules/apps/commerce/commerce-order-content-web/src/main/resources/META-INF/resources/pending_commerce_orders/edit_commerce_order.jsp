@@ -499,7 +499,6 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 			contextParams="<%= contextParams %>"
 			dataProviderKey="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
 			id="<%= CommerceOrderFDSNames.PENDING_ORDER_ITEMS %>"
-			itemsPerPage="<%= 10 %>"
 			nestedItemsKey="orderItemId"
 			nestedItemsReferenceKey="orderItems"
 			propsTransformer="{PendingOrderItemClassicFDSPropsTransformer} from commerce-order-content-web"

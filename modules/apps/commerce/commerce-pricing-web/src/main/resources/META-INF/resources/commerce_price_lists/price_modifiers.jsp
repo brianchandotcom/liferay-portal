@@ -25,7 +25,6 @@ long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListI
 			dataProviderKey="<%= CommercePricingFDSNames.PRICE_MODIFIERS %>"
 			formName="fm"
 			id="<%= CommercePricingFDSNames.PRICE_MODIFIERS %>"
-			itemsPerPage="<%= 10 %>"
 			style="stacked"
 		/>
 	</div>

@@ -1257,8 +1257,11 @@ public class PageTemplatesImporterTest {
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
 		Assert.assertEquals(
-			fragmentEntry.getFragmentEntryId(),
-			fragmentEntryLink.getFragmentEntryId());
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntryLink.getFragmentEntryERC());
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(),
+			fragmentEntryLink.getFragmentEntryGroupId());
 
 		List<String> childrenItemIds =
 			fragmentStyledLayoutStructureItem.getChildrenItemIds();

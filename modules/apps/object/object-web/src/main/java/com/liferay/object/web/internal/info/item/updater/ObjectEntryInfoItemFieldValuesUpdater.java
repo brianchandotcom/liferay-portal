@@ -195,6 +195,10 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		InfoFieldValue<Object> deletedItemIdentifiersInfoFieldValue =
 			infoItemFieldValues.getInfoFieldValue("deletedItemIdentifiers");
 
+		if (deletedItemIdentifiersInfoFieldValue == null) {
+			return;
+		}
+
 		String[] deletedItemIdentifiers = GetterUtil.getStringValues(
 			deletedItemIdentifiersInfoFieldValue.getValue());
 

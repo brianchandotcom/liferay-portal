@@ -1987,6 +1987,39 @@ public class RenderLayoutStructureTagTest {
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
+
+		Group depotGroup = depotEntry.getGroup();
+
+		FileEntry depotFileEntry = _addFileEntry(depotGroup);
+
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"externalReferenceCode",
+						depotFileEntry.getExternalReferenceCode()
+					).put(
+						"fieldId", "FileEntry_title"
+					).put(
+						"scopeExternalReferenceCode",
+						depotGroup.getExternalReferenceCode()
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()));
+
 		FileEntry fileEntry = _addFileEntry();
 
 		ContentLayoutTestUtil.addItemToLayout(
@@ -2015,56 +2048,7 @@ public class RenderLayoutStructureTagTest {
 		String content = _getRenderLayoutHTML(layout);
 
 		Assert.assertTrue(content.contains("--lfr-background-image"));
-		Assert.assertTrue(content.contains(fileEntry.getTitle()));
-	}
-
-	@Test
-	@TestInfo("LPD-55927")
-	public void testRenderContainerWithBackgroundImageMappedByERCAndScope()
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(),
-			DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
-
-		Group depotGroup = depotEntry.getGroup();
-
-		FileEntry fileEntry = _addFileEntry(depotGroup);
-
-		ContentLayoutTestUtil.addItemToLayout(
-			JSONUtil.put(
-				"styles",
-				JSONUtil.put(
-					"backgroundImage",
-					JSONUtil.put(
-						"className", FileEntry.class.getName()
-					).put(
-						"classNameId", _portal.getClassNameId(FileEntry.class)
-					).put(
-						"externalReferenceCode",
-						fileEntry.getExternalReferenceCode()
-					).put(
-						"fieldId", "FileEntry_title"
-					).put(
-						"scopeExternalReferenceCode",
-						depotGroup.getExternalReferenceCode()
-					))
-			).toString(),
-			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
-			_layoutStructureProvider,
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				draftLayout.getPlid()));
-
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		String content = _getRenderLayoutHTML(layout);
-
-		Assert.assertTrue(content.contains("--lfr-background-image"));
+		Assert.assertTrue(content.contains(depotFileEntry.getTitle()));
 		Assert.assertTrue(content.contains(fileEntry.getTitle()));
 	}
 

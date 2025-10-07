@@ -61,9 +61,9 @@ export class StructureBuilderPage {
 		this.nameInput = this.page.getByLabel('Content Structure Name');
 		this.publishButton = this.page.getByRole('button', {name: 'Publish'});
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
-		this.spaceCheckbox = this.page.getByRole('checkbox', {
-			name: 'Make this content structure available in all spaces',
-		});
+		this.spaceCheckbox = this.page.getByLabel(
+			'Make this content structure'
+		);
 		this.spaceSelector = this.page.getByLabel('Spaces', {exact: true});
 	}
 
@@ -545,6 +545,22 @@ export class StructureBuilderPage {
 				).toBeVisible();
 			}).toPass();
 		}
+	}
+
+	async selectStructure() {
+		const treeItem = this.page.getByRole('treeitem').first();
+
+		await expect(async () => {
+			await treeItem.click({
+				timeout: 500,
+			});
+
+			await expect(treeItem).toHaveClass(/active/, {timeout: 500});
+
+			await expect(
+				this.page.getByLabel('Content Structure Name')
+			).toBeVisible();
+		}).toPass();
 	}
 
 	async setWorkflows(workflows: {space: string; workflow: string}[]) {

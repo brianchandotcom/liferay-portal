@@ -8,9 +8,11 @@ import path from 'path';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {fragmentsPagesTest} from '../../../fixtures/fragmentPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {createCategories} from '../../../helpers/CreateCategories';
+import {clickAndExpectToBeHidden} from '../../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../../utils/fillAndClickOutside';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -28,6 +30,7 @@ const test = mergeTests(
 		'LPD-17564': {enabled: true},
 		'LPS-179669': {enabled: true},
 	}),
+	fragmentsPagesTest,
 	loginTest(),
 	pageEditorPagesTest,
 	structureBuilderPagesTest
@@ -73,7 +76,7 @@ test(
 test(
 	'Default structures take Content Editor Master and fragments work',
 	{tag: '@LPD-50371'},
-	async ({contentsPage, page}) => {
+	async ({contentsPage, localizationSelectPage, page}) => {
 
 		// Go to CMS Contents
 
@@ -81,7 +84,7 @@ test(
 
 		// Create new Knowledge Base content
 
-		await contentsPage.createContent('Knowledge Base');
+		await contentsPage.createContent('Basic Content');
 
 		// Fill data
 
@@ -99,10 +102,22 @@ test(
 			friendlyUrl
 		);
 
+		await localizationSelectPage.switchLanguage('es-ES');
+
+		// Check localization management is activated by default
+
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option').filter({hasText: 'es-ES'}),
-			trigger: page.getByLabel('Select a language, current language:'),
+			target: page.getByRole('menuitem', {
+				name: 'Mark as Translated',
+			}),
+			trigger: localizationSelectPage.actionsDropdownTrigger,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: page.getByRole('menuitem', {
+				name: 'Mark as Translated',
+			}),
+			trigger: localizationSelectPage.actionsDropdownTrigger,
 		});
 
 		await fillAndClickOutside(page, page.getByLabel('Title'), titleSpanish);
@@ -122,11 +137,7 @@ test(
 		await expect(page.getByLabel('Title')).toHaveValue(titleEnglish);
 		await expect(page.getByLabel('Friendly URL')).toHaveValue(friendlyUrl);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('option').filter({hasText: 'es-ES'}),
-			trigger: page.getByLabel('Select a language, current language:'),
-		});
+		await localizationSelectPage.switchLanguage('es-ES');
 
 		await expect(page.getByLabel('Title')).toHaveValue(titleSpanish);
 

@@ -6,6 +6,8 @@
 package com.liferay.exportimport.internal.attachment;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.internal.lar.PortletDataContextThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -18,6 +20,7 @@ import java.net.URLConnection;
 import java.net.URLStreamHandler;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -34,7 +37,9 @@ public class ExportImportAttachmentManagerImpl
 		if ((portletDataContext == null) ||
 			(portletDataContext.getZipWriter() == null)) {
 
-			return null;
+			return _dlurlHelper.getThumbnailSrc(
+				_dlAppLocalService.getFileEntry(dlFileEntry.getFileEntryId()),
+				null);
 		}
 
 		try (InputStream inputStream = dlFileEntry.getContentStream()) {
@@ -82,5 +87,11 @@ public class ExportImportAttachmentManagerImpl
 	}
 
 	private static final String _PROTOCOL = "lar";
+
+	@Reference
+	private DLAppLocalService _dlAppLocalService;
+
+	@Reference
+	private DLURLHelper _dlurlHelper;
 
 }

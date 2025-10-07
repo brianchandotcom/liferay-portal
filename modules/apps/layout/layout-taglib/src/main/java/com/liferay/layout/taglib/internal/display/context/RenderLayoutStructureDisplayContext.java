@@ -593,11 +593,9 @@ public class RenderLayoutStructureDisplayContext {
 		if (backgroundImageJSONObject.has("fileEntryId")) {
 			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
 		}
-
-		if ((fileEntryId == 0) &&
-			backgroundImageJSONObject.has("classNameId") &&
-			backgroundImageJSONObject.has("classPK") &&
-			backgroundImageJSONObject.has("fieldId")) {
+		else if (backgroundImageJSONObject.has("classNameId") &&
+				 backgroundImageJSONObject.has("classPK") &&
+				 backgroundImageJSONObject.has("fieldId")) {
 
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
@@ -608,8 +606,7 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
-		else if ((fileEntryId == 0) &&
-				 backgroundImageJSONObject.has("className") &&
+		else if (backgroundImageJSONObject.has("className") &&
 				 backgroundImageJSONObject.has("externalReferenceCode") &&
 				 backgroundImageJSONObject.has("fieldId")) {
 
@@ -634,10 +631,7 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
-
-		if ((fileEntryId == 0) &&
-			backgroundImageJSONObject.has("collectionFieldId")) {
-
+		else if (backgroundImageJSONObject.has("collectionFieldId")) {
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 				ServletContextUtil.getFragmentEntryProcessorHelper();
 
@@ -647,10 +641,7 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("collectionFieldId"),
 				_themeDisplay.getLocale());
 		}
-
-		if ((fileEntryId == 0) &&
-			backgroundImageJSONObject.has("mappedField")) {
-
+		else if (backgroundImageJSONObject.has("mappedField")) {
 			fileEntryId = _getFileEntryId(
 				backgroundImageJSONObject.getString("mappedField"));
 		}

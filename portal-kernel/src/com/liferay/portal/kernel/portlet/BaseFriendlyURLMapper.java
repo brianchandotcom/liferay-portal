@@ -54,34 +54,47 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 
 	@Override
 	public void init(Portlet portlet) {
-		try {
-			_mapping = portlet.getFriendlyURLMapping(false);
-			_portletId = portlet.getPortletId();
-			_portletInstanceable = portlet.isInstanceable();
-
-			String friendlyURLRoutes = _friendlyURLRoutes;
-
-			if (Validator.isNotNull(portlet.getFriendlyURLRoutes())) {
-				friendlyURLRoutes = portlet.getFriendlyURLRoutes();
-			}
-
-			String xml = null;
-
-			if (Validator.isNotNull(friendlyURLRoutes)) {
-				Class<?> clazz = getClass();
-
-				xml = _getContent(clazz.getClassLoader(), friendlyURLRoutes);
-
-				if (_textReplacerBiFunction != null) {
-					xml = _textReplacerBiFunction.apply(
-						clazz.getName() + "#" + friendlyURLRoutes, xml);
-				}
-			}
-
-			router = _newFriendlyURLRouter(xml);
+		if (_initialized) {
+			return;
 		}
-		catch (Exception exception) {
-			_log.error(exception);
+
+		synchronized (this) {
+			if (_initialized) {
+				return;
+			}
+
+			try {
+				_mapping = portlet.getFriendlyURLMapping(false);
+				_portletId = portlet.getPortletId();
+				_portletInstanceable = portlet.isInstanceable();
+
+				String friendlyURLRoutes = _friendlyURLRoutes;
+
+				if (Validator.isNotNull(portlet.getFriendlyURLRoutes())) {
+					friendlyURLRoutes = portlet.getFriendlyURLRoutes();
+				}
+
+				String xml = null;
+
+				if (Validator.isNotNull(friendlyURLRoutes)) {
+					Class<?> clazz = getClass();
+
+					xml = _getContent(
+						clazz.getClassLoader(), friendlyURLRoutes);
+
+					if (_textReplacerBiFunction != null) {
+						xml = _textReplacerBiFunction.apply(
+							clazz.getName() + "#" + friendlyURLRoutes, xml);
+					}
+				}
+
+				router = _newFriendlyURLRouter(xml);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+			}
+
+			_initialized = true;
 		}
 	}
 
@@ -376,6 +389,7 @@ public abstract class BaseFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	private String _friendlyURLRoutes;
+	private volatile boolean _initialized;
 	private String _mapping;
 	private String _portletId;
 	private boolean _portletInstanceable;

@@ -549,11 +549,9 @@ public class ElasticsearchAggregationTranslator
 
 	private final RangeAggregationTranslator _rangeAggregationTranslator =
 		new RangeAggregationTranslator();
-
-	@Reference
-	private ScriptedMetricAggregationTranslator
-		_scriptedMetricAggregationTranslator;
-
+	private final ScriptedMetricAggregationTranslator
+		_scriptedMetricAggregationTranslator =
+			new ScriptedMetricAggregationTranslator();
 	private final SignificantTermsAggregationTranslator
 		_significantTermsAggregationTranslator =
 			new SignificantTermsAggregationTranslator();

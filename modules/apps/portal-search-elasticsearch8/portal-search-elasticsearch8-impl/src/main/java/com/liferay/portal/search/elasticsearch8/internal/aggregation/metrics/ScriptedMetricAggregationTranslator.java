@@ -17,16 +17,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = ScriptedMetricAggregationTranslator.class)
-public class ScriptedMetricAggregationTranslatorImpl
-	implements ScriptedMetricAggregationTranslator {
+public class ScriptedMetricAggregationTranslator {
 
-	@Override
 	public ScriptedMetricAggregationBuilder translate(
 		ScriptedMetricAggregation scriptedMetricAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

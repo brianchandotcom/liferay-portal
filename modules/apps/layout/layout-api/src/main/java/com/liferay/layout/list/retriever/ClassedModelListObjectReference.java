@@ -55,7 +55,11 @@ public class ClassedModelListObjectReference implements ListObjectReference {
 		).put(
 			"classPK", _classPK
 		).put(
+			"externalReferenceCode", _externalReferenceCode
+		).put(
 			"itemType", _itemType
+		).put(
+			"scopeExternalReferenceCode", _scopeExternalReferenceCode
 		).put(
 			"title", _title
 		).toString();

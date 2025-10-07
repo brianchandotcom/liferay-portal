@@ -111,6 +111,7 @@ describe('Assignee object field', () => {
 				label="Assignee"
 				name="assignee"
 				onChange={onChange}
+				searchURL=""
 				value={{
 					externalReferenceCode: '123',
 					name: 'Test Test',

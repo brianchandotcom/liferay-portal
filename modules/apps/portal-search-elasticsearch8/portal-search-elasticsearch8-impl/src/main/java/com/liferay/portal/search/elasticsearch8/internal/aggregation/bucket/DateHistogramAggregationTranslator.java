@@ -16,16 +16,11 @@ import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggre
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = DateHistogramAggregationTranslator.class)
-public class DateHistogramAggregationTranslatorImpl
-	implements DateHistogramAggregationTranslator {
+public class DateHistogramAggregationTranslator {
 
-	@Override
 	public DateHistogramAggregationBuilder translate(
 		DateHistogramAggregation dateHistogramAggregation) {
 

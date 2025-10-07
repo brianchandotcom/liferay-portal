@@ -791,12 +791,7 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			InfoItemReference infoItemReference = _getInfoItemReference(
-				jsonObject);
-
-			if (infoItemReference != null) {
-				return _getValue(fieldId, infoItemReference);
-			}
+			return _getValue(fieldId, _getInfoItemReference(jsonObject));
 		}
 
 		return StringPool.BLANK;
@@ -1136,6 +1131,10 @@ public class RenderLayoutStructureDisplayContext {
 
 	private String _getValue(
 		String fieldId, InfoItemReference infoItemReference) {
+
+		if (infoItemReference == null) {
+			return StringPool.BLANK;
+		}
 
 		String className = InfoSearchClassMapperRegistryUtil.getClassName(
 			infoItemReference.getClassName());

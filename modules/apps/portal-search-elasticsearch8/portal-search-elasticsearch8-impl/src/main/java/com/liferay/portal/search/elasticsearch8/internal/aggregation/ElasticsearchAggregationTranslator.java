@@ -554,9 +554,9 @@ public class ElasticsearchAggregationTranslator
 	private ScriptedMetricAggregationTranslator
 		_scriptedMetricAggregationTranslator;
 
-	@Reference
-	private SignificantTermsAggregationTranslator
-		_significantTermsAggregationTranslator;
+	private final SignificantTermsAggregationTranslator
+		_significantTermsAggregationTranslator =
+			new SignificantTermsAggregationTranslator();
 
 	@Reference
 	private SignificantTextAggregationTranslator

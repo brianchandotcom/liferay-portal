@@ -485,8 +485,9 @@ public class LayoutsImporterTest {
 			layoutPageTemplateEntry);
 
 		FragmentEntry fragmentEntry = _addFragmentEntry(
-			_fragmentEntryLocalService.getFragmentEntry(
-				fragmentEntryLink.getFragmentEntryId()),
+			_fragmentEntryLocalService.getFragmentEntryByExternalReferenceCode(
+				fragmentEntryLink.getFragmentEntryERC(),
+				fragmentEntryLink.getFragmentEntryGroupId()),
 			_serviceContext2);
 
 		File file = _layoutsExporter.exportLayoutPageTemplateEntries(
@@ -1661,8 +1662,11 @@ public class LayoutsImporterTest {
 		FragmentEntryLink curFragmentEntryLink = fragmentEntryLinks.get(0);
 
 		Assert.assertEquals(
-			fragmentEntry.getFragmentEntryId(),
-			curFragmentEntryLink.getFragmentEntryId());
+			fragmentEntry.getExternalReferenceCode(),
+			curFragmentEntryLink.getFragmentEntryERC());
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(),
+			curFragmentEntryLink.getFragmentEntryGroupId());
 
 		Assert.assertTrue(
 			curFragmentEntryLink.getEditableValues(),
@@ -1694,8 +1698,11 @@ public class LayoutsImporterTest {
 		FragmentEntryLink fragmentEntryLink = fragmentEntryLinks.get(0);
 
 		Assert.assertEquals(
-			fragmentEntry.getFragmentEntryId(),
-			fragmentEntryLink.getFragmentEntryId());
+			fragmentEntry.getExternalReferenceCode(),
+			fragmentEntryLink.getFragmentEntryERC());
+		Assert.assertEquals(
+			fragmentEntry.getGroupId(),
+			fragmentEntryLink.getFragmentEntryGroupId());
 		Assert.assertTrue(
 			fragmentEntryLink.getConfiguration(),
 			JSONUtil.equals(

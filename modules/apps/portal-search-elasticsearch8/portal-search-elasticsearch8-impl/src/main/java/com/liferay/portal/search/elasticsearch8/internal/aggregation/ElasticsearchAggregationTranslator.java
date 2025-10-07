@@ -46,7 +46,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
@@ -60,6 +59,7 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.Wei
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilder;
@@ -69,6 +69,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
@@ -265,8 +267,43 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(FiltersAggregation filtersAggregation) {
-		return _filtersAggregationTranslator.translate(
-			filtersAggregation, this, _pipelineAggregationTranslator);
+		List<FiltersAggregation.KeyedQuery> keyedQueries =
+			filtersAggregation.getKeyedQueries();
+
+		List<FiltersAggregator.KeyedFilter> keyedFilters = new ArrayList<>(
+			keyedQueries.size());
+
+		keyedQueries.forEach(
+			keyedQuery -> {
+				QueryBuilder filterQueryBuilder = _queryTranslator.translate(
+					keyedQuery.getQuery());
+
+				keyedFilters.add(
+					new FiltersAggregator.KeyedFilter(
+						keyedQuery.getKey(), filterQueryBuilder));
+			});
+
+		FiltersAggregationBuilder filtersAggregationBuilder =
+			AggregationBuilders.filters(
+				filtersAggregation.getName(),
+				keyedFilters.toArray(
+					new FiltersAggregator.KeyedFilter[keyedQueries.size()]));
+
+		if (filtersAggregation.getOtherBucket() != null) {
+			filtersAggregationBuilder.otherBucket(
+				filtersAggregation.getOtherBucket());
+		}
+
+		if (filtersAggregation.getOtherBucketKey() != null) {
+			filtersAggregationBuilder.otherBucketKey(
+				filtersAggregation.getOtherBucketKey());
+		}
+
+		_baseAggregationTranslator.translate(
+			filtersAggregationBuilder, filtersAggregation, this,
+			_pipelineAggregationTranslator);
+
+		return filtersAggregationBuilder;
 	}
 
 	@Override
@@ -628,8 +665,6 @@ public class ElasticsearchAggregationTranslator
 		new BaseAggregationTranslator();
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
-	private final FiltersAggregationTranslator _filtersAggregationTranslator =
-		new FiltersAggregationTranslator();
 	private final GeoDistanceAggregationTranslator
 		_geoDistanceAggregationTranslator =
 			new GeoDistanceAggregationTranslator();

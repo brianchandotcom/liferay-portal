@@ -213,7 +213,7 @@ public class AssetCategoriesDisplayContext {
 					catch (RuntimeException runtimeException) {
 						if (_log.isDebugEnabled()) {
 							_log.debug(
-								"Unable to get class type with classNameId " +
+								"Unable to get class type with class name ID " +
 									classNameId,
 								runtimeException);
 						}

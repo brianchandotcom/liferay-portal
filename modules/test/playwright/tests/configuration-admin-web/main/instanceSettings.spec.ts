@@ -105,7 +105,7 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 
 	// Assert a factory configuration can be deleted
 
-	while ((await page.locator('tbody tr').count()) > 0) {
+	while ((await page.locator('td.lfr-provider-name-column').count()) > 0) {
 		const row = page.locator('tbody tr').first();
 		await clickAndExpectToBeVisible({
 			autoClick: true,

@@ -11,7 +11,6 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.Date
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateRangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslatorImpl;
@@ -123,7 +122,7 @@ public class ElasticsearchAggregationTranslatorFixture {
 			filterAggregationTranslator);
 
 		FiltersAggregationTranslator filtersAggregationTranslator =
-			new FiltersAggregationTranslatorImpl();
+			new FiltersAggregationTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			filtersAggregationTranslator, "_queryTranslator",

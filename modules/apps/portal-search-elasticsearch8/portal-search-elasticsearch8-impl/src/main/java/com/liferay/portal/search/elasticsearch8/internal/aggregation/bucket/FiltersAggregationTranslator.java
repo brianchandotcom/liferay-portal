@@ -22,16 +22,11 @@ import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = FiltersAggregationTranslator.class)
-public class FiltersAggregationTranslatorImpl
-	implements FiltersAggregationTranslator {
+public class FiltersAggregationTranslator {
 
-	@Override
 	public FiltersAggregationBuilder translate(
 		FiltersAggregation filtersAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

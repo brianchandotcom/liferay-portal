@@ -161,7 +161,11 @@ public class ActionUtil {
 					JSONUtil.put(
 						FragmentEntryProcessorConstants.
 							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-						JSONUtil.put("size", "small"))),
+						JSONUtil.put(
+							"allowLocalizationManagement", "true"
+						).put(
+							"size", "small"
+						))),
 				fragmentEntryLinkService, fragmentRendererRegistry,
 				"localization-select", layout, segmentsExperienceId,
 				serviceContext);

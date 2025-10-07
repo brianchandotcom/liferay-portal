@@ -7,27 +7,14 @@ package com.liferay.portlet.internal;
 
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperTracker;
-import com.liferay.portal.kernel.portlet.Route;
-import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -86,44 +73,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		}
 	}
 
-	/**
-	 * @see PortletBagFactory#getContent(String)
-	 */
-	protected String getContent(ClassLoader classLoader, String fileName)
-		throws Exception {
-
-		String queryString = HttpComponentsUtil.getQueryString(fileName);
-
-		if (Validator.isNull(queryString)) {
-			return StringUtil.read(classLoader, fileName);
-		}
-
-		int pos = fileName.indexOf(StringPool.QUESTION);
-
-		String xml = StringUtil.read(classLoader, fileName.substring(0, pos));
-
-		Map<String, String[]> parameterMap = HttpComponentsUtil.getParameterMap(
-			queryString);
-
-		if (parameterMap == null) {
-			return xml;
-		}
-
-		for (Map.Entry<String, String[]> entry : parameterMap.entrySet()) {
-			String[] values = entry.getValue();
-
-			if (values.length == 0) {
-				continue;
-			}
-
-			String value = values[0];
-
-			xml = StringUtil.replace(xml, "@" + entry.getKey() + "@", value);
-		}
-
-		return xml;
-	}
-
 	private ServiceTracker<FriendlyURLMapper, FriendlyURLMapper>
 		_openServiceTracker() {
 
@@ -153,36 +102,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 		return serviceTracker;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		FriendlyURLMapperTrackerImpl.class);
-
-	private static final BiFunction<String, String, String>
-		_textReplacerBiFunction;
-
-	static {
-		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-
-		Object instance = null;
-
-		try {
-			Class<?> clazz = classLoader.loadClass(
-				"com.liferay.portal.tools.jakarta.ee.transformer.function." +
-					"TextReplacerBiFunction");
-
-			instance = clazz.newInstance();
-		}
-		catch (ReflectiveOperationException reflectiveOperationException) {
-			if (!(reflectiveOperationException instanceof
-					ClassNotFoundException)) {
-
-				throw new ExceptionInInitializerError(
-					reflectiveOperationException);
-			}
-		}
-
-		_textReplacerBiFunction = (BiFunction<String, String, String>)instance;
-	}
-
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private final Portlet _portlet;
@@ -203,40 +122,11 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			FriendlyURLMapper friendlyURLMapper = _bundleContext.getService(
 				serviceReference);
 
-			try {
-				friendlyURLMapper.setMapping(
-					_portlet.getFriendlyURLMapping(false));
-				friendlyURLMapper.setPortletId(_portlet.getPortletId());
-				friendlyURLMapper.setPortletInstanceable(
-					_portlet.isInstanceable());
+			friendlyURLMapper.setFriendlyURLRoutes(
+				(String)serviceReference.getProperty(
+					"com.liferay.portlet.friendly-url-routes"));
 
-				String friendlyURLRoutes = (String)serviceReference.getProperty(
-					"com.liferay.portlet.friendly-url-routes");
-
-				if (Validator.isNotNull(_portlet.getFriendlyURLRoutes())) {
-					friendlyURLRoutes = _portlet.getFriendlyURLRoutes();
-				}
-
-				String xml = null;
-
-				if (Validator.isNotNull(friendlyURLRoutes)) {
-					Class<?> clazz = friendlyURLMapper.getClass();
-
-					xml = getContent(clazz.getClassLoader(), friendlyURLRoutes);
-
-					if (_textReplacerBiFunction != null) {
-						xml = _textReplacerBiFunction.apply(
-							clazz.getName() + "#" + friendlyURLRoutes, xml);
-					}
-				}
-
-				friendlyURLMapper.setRouter(newFriendlyURLRouter(xml));
-			}
-			catch (Exception exception) {
-				_log.error(exception);
-
-				return null;
-			}
+			friendlyURLMapper.init(_portlet);
 
 			return friendlyURLMapper;
 		}
@@ -253,67 +143,6 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 			FriendlyURLMapper friendlyURLMapper) {
 
 			_bundleContext.ungetService(serviceReference);
-		}
-
-		protected Router newFriendlyURLRouter(String xml) throws Exception {
-			if (Validator.isNull(xml)) {
-				return null;
-			}
-
-			Document document = UnsecureSAXReaderUtil.read(xml, true);
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> routeElements = rootElement.elements("route");
-
-			Router router = new Router(routeElements.size());
-
-			for (Element routeElement : routeElements) {
-				String pattern = routeElement.elementText("pattern");
-
-				Route route = router.addRoute(pattern);
-
-				for (Element generatedParameterElement :
-						routeElement.elements("generated-parameter")) {
-
-					String name = generatedParameterElement.attributeValue(
-						"name");
-					String value = generatedParameterElement.getText();
-
-					route.addGeneratedParameter(name, value);
-				}
-
-				for (Element ignoredParameterElement :
-						routeElement.elements("ignored-parameter")) {
-
-					String name = ignoredParameterElement.attributeValue(
-						"name");
-
-					route.addIgnoredParameter(name);
-				}
-
-				for (Element implicitParameterElement :
-						routeElement.elements("implicit-parameter")) {
-
-					String name = implicitParameterElement.attributeValue(
-						"name");
-					String value = implicitParameterElement.getText();
-
-					route.addImplicitParameter(name, value);
-				}
-
-				for (Element overriddenParameterElement :
-						routeElement.elements("overridden-parameter")) {
-
-					String name = overriddenParameterElement.attributeValue(
-						"name");
-					String value = overriddenParameterElement.getText();
-
-					route.addOverriddenParameter(name, value);
-				}
-			}
-
-			return router;
 		}
 
 	}

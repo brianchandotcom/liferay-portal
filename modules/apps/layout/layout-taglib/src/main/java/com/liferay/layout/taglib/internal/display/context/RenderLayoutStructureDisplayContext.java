@@ -841,22 +841,11 @@ public class RenderLayoutStructureDisplayContext {
 			return 0;
 		}
 
-		InfoItemIdentifier infoItemIdentifier =
-			infoItemReference.getInfoItemIdentifier();
-
-		if (!(infoItemIdentifier instanceof ClassPKInfoItemIdentifier)) {
-			return 0;
-		}
-
 		FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
 			ServletContextUtil.getFragmentEntryProcessorHelper();
 
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			(ClassPKInfoItemIdentifier)infoItemIdentifier;
-
 		return fragmentEntryProcessorHelper.getFileEntryId(
-			PortalUtil.getClassNameId(infoItemReference.getClassName()),
-			classPKInfoItemIdentifier.getClassPK(), fieldId,
+			infoItemReference, fieldId,
 			_themeDisplay.getLocale());
 	}
 

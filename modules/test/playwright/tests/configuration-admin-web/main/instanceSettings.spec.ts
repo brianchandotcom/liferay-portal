@@ -23,122 +23,116 @@ export const test = mergeTests(
 	siteSettingsPagesTest
 );
 
-test.describe('Factory Configuration Tests', () => {
-	test('Asserts that a user can create/update/delete factory configurations', async ({
-		instanceSettingsPage,
-		page,
-	}) => {
+test('Asserts that a user can create/update/delete factory configurations', async ({
+	instanceSettingsPage,
+	page,
+}) => {
 
-		// Assert multiple factory configurations can be created
+	// Assert multiple factory configurations can be created
 
-		let providerName = getRandomString();
+	let providerName = getRandomString();
 
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
+	await instanceSettingsPage.goToInstanceSetting(
+		'SSO',
+		'OpenID Connect Provider Connection'
+	);
 
-		await page.getByRole('link', {name: 'Add'}).click();
+	await page.getByRole('link', {name: 'Add'}).click();
 
-		await page.getByLabel('Provider Name').fill(providerName);
+	await page.getByLabel('Provider Name').fill(providerName);
 
-		await page
-			.getByLabel('OpenID Connect Client ID')
-			.fill(getRandomString());
+	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
 
-		await page
-			.getByLabel('OpenID Connect Client Secret')
-			.fill(getRandomString());
+	await page
+		.getByLabel('OpenID Connect Client Secret')
+		.fill(getRandomString());
 
-		await instanceSettingsPage.saveAndWaitForAlert({
-			autoClose: true,
-			type: 'success',
-		});
+	await instanceSettingsPage.saveAndWaitForAlert({
+		autoClose: true,
+		type: 'success',
+	});
 
-		await expect(page.getByText(providerName)).toBeVisible();
+	await expect(page.getByText(providerName)).toBeVisible();
 
-		providerName = getRandomString();
+	providerName = getRandomString();
 
-		await page.getByRole('link', {name: 'Add'}).click();
+	await page.getByRole('link', {name: 'Add'}).click();
 
-		await page.getByLabel('Provider Name').fill(providerName);
+	await page.getByLabel('Provider Name').fill(providerName);
 
-		await page
-			.getByLabel('OpenID Connect Client ID')
-			.fill(getRandomString());
+	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
 
-		await page
-			.getByLabel('OpenID Connect Client Secret')
-			.fill(getRandomString());
+	await page
+		.getByLabel('OpenID Connect Client Secret')
+		.fill(getRandomString());
 
-		await instanceSettingsPage.saveAndWaitForAlert({
-			autoClose: true,
-			type: 'success',
-		});
+	await instanceSettingsPage.saveAndWaitForAlert({
+		autoClose: true,
+		type: 'success',
+	});
 
-		await expect(page.getByText(providerName)).toBeVisible();
+	await expect(page.getByText(providerName)).toBeVisible();
 
-		// Assert a factory configuration can be edited
+	// Assert a factory configuration can be edited
 
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
-		const firstRow = page.locator('tbody tr').first();
+	await instanceSettingsPage.goToInstanceSetting(
+		'SSO',
+		'OpenID Connect Provider Connection'
+	);
+	const firstRow = page.locator('tbody tr').first();
 
-		providerName = await firstRow.innerText();
+	providerName = await firstRow.innerText();
 
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: page.getByText('Edit').first(),
+		trigger: firstRow.getByRole('button'),
+	});
+
+	const editedProviderName = getRandomString();
+
+	await page.getByLabel('Provider Name').fill(editedProviderName);
+
+	await instanceSettingsPage.saveAndWaitForAlert({
+		autoClose: true,
+		type: 'success',
+	});
+
+	await expect(await page.locator('tbody tr').first().innerText()).not.toBe(
+		providerName
+	);
+	await expect(
+		(await page.locator('tbody tr').first().innerText()).trim()
+	).toBe(editedProviderName);
+
+	// Assert a factory configuration can be deleted
+
+	await instanceSettingsPage.goToInstanceSetting(
+		'SSO',
+		'OpenID Connect Provider Connection'
+	);
+
+	while ((await page.locator('tbody tr').count()) > 0) {
+		const row = page.locator('tbody tr').first();
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByText('Edit').first(),
-			trigger: firstRow.getByRole('button'),
-		});
-
-		const editedProviderName = getRandomString();
-
-		await page.getByLabel('Provider Name').fill(editedProviderName);
-
-		await instanceSettingsPage.saveAndWaitForAlert({
-			autoClose: true,
-			type: 'success',
+			target: page.getByText('Delete').first(),
+			trigger: row.getByRole('button'),
 		});
 
 		await expect(
-			await page.locator('tbody tr').first().innerText()
-		).not.toBe(providerName);
-		await expect(
-			(await page.locator('tbody tr').first().innerText()).trim()
-		).toBe(editedProviderName);
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
 
-		// Assert a factory configuration can be deleted
+		await page.reload();
+	}
 
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
+	await instanceSettingsPage.goToInstanceSetting(
+		'SSO',
+		'OpenID Connect Provider Connection'
+	);
 
-		while ((await page.locator('tbody tr').count()) > 0) {
-			const row = page.locator('tbody tr').first();
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByText('Delete').first(),
-				trigger: row.getByRole('button'),
-			});
-
-			await expect(
-				page.getByText('Success:Your request completed successfully.')
-			).toBeVisible();
-
-			await page.reload();
-		}
-
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
-
-		await expect(await page.locator('tbody tr').count()).toBe(0);
-	});
+	await expect(await page.locator('tbody tr').count()).toBe(0);
 });
 
 test('Asserts that a user can export a configuration', async ({

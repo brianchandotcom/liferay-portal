@@ -588,63 +588,7 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
 
-		long fileEntryId = 0;
-
-		if (backgroundImageJSONObject.has("fileEntryId")) {
-			fileEntryId = backgroundImageJSONObject.getLong("fileEntryId");
-		}
-		else if (backgroundImageJSONObject.has("classNameId") &&
-				 backgroundImageJSONObject.has("classPK") &&
-				 backgroundImageJSONObject.has("fieldId")) {
-
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				backgroundImageJSONObject.getLong("classNameId"),
-				backgroundImageJSONObject.getLong("classPK"),
-				backgroundImageJSONObject.getString("fieldId"),
-				_themeDisplay.getLocale());
-		}
-		else if (backgroundImageJSONObject.has("className") &&
-				 backgroundImageJSONObject.has("externalReferenceCode") &&
-				 backgroundImageJSONObject.has("fieldId")) {
-
-			String scopeExternalReferenceCode = null;
-
-			if (backgroundImageJSONObject.has("scopeExternalReferenceCode")) {
-				scopeExternalReferenceCode =
-					backgroundImageJSONObject.getString(
-						"scopeExternalReferenceCode");
-			}
-
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				new InfoItemReference(
-					backgroundImageJSONObject.getString("className"),
-					new ERCInfoItemIdentifier(
-						backgroundImageJSONObject.getString(
-							"externalReferenceCode"),
-						scopeExternalReferenceCode)),
-				backgroundImageJSONObject.getString("fieldId"),
-				_themeDisplay.getLocale());
-		}
-		else if (backgroundImageJSONObject.has("collectionFieldId")) {
-			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
-				ServletContextUtil.getFragmentEntryProcessorHelper();
-
-			fileEntryId = fragmentEntryProcessorHelper.getFileEntryId(
-				(InfoItemReference)_httpServletRequest.getAttribute(
-					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
-				backgroundImageJSONObject.getString("collectionFieldId"),
-				_themeDisplay.getLocale());
-		}
-		else if (backgroundImageJSONObject.has("mappedField")) {
-			fileEntryId = _getFileEntryId(
-				backgroundImageJSONObject.getString("mappedField"));
-		}
+		long fileEntryId = _getFileEntryId(backgroundImageJSONObject);
 
 		if (fileEntryId != 0) {
 			sb.append("--background-image-file-entry-id:");
@@ -887,6 +831,64 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private long _getFileEntryId(JSONObject jsonObject) throws Exception {
+		if (jsonObject.has("fileEntryId")) {
+			return jsonObject.getLong("fileEntryId");
+		}
+
+		if (jsonObject.has("classNameId") && jsonObject.has("classPK") &&
+			jsonObject.has("fieldId")) {
+
+			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
+				ServletContextUtil.getFragmentEntryProcessorHelper();
+
+			return fragmentEntryProcessorHelper.getFileEntryId(
+				jsonObject.getLong("classNameId"),
+				jsonObject.getLong("classPK"), jsonObject.getString("fieldId"),
+				_themeDisplay.getLocale());
+		}
+
+		if (jsonObject.has("className") &&
+			jsonObject.has("externalReferenceCode") &&
+			jsonObject.has("fieldId")) {
+
+			String scopeExternalReferenceCode = null;
+
+			if (jsonObject.has("scopeExternalReferenceCode")) {
+				scopeExternalReferenceCode = jsonObject.getString(
+					"scopeExternalReferenceCode");
+			}
+
+			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
+				ServletContextUtil.getFragmentEntryProcessorHelper();
+
+			return fragmentEntryProcessorHelper.getFileEntryId(
+				new InfoItemReference(
+					jsonObject.getString("className"),
+					new ERCInfoItemIdentifier(
+						jsonObject.getString("externalReferenceCode"),
+						scopeExternalReferenceCode)),
+				jsonObject.getString("fieldId"), _themeDisplay.getLocale());
+		}
+
+		if (jsonObject.has("collectionFieldId")) {
+			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
+				ServletContextUtil.getFragmentEntryProcessorHelper();
+
+			return fragmentEntryProcessorHelper.getFileEntryId(
+				(InfoItemReference)_httpServletRequest.getAttribute(
+					InfoDisplayWebKeys.INFO_ITEM_REFERENCE),
+				jsonObject.getString("collectionFieldId"),
+				_themeDisplay.getLocale());
+		}
+
+		if (jsonObject.has("mappedField")) {
+			return _getFileEntryId(jsonObject.getString("mappedField"));
+		}
+
+		return 0;
 	}
 
 	private long _getFileEntryId(String fieldId) throws Exception {

@@ -7,7 +7,6 @@ package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
@@ -96,17 +95,6 @@ public class ElasticsearchAggregationTranslatorFixture {
 	private void _injectQueryAggregationTranslators(
 		ElasticsearchAggregationTranslator elasticsearchAggregationTranslator,
 		ElasticsearchQueryTranslator elasticsearchQueryTranslator) {
-
-		FilterAggregationTranslator filterAggregationTranslator =
-			new FilterAggregationTranslator();
-
-		ReflectionTestUtil.setFieldValue(
-			filterAggregationTranslator, "_queryTranslator",
-			elasticsearchQueryTranslator);
-
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchAggregationTranslator, "_filterAggregationTranslator",
-			filterAggregationTranslator);
 
 		FiltersAggregationTranslator filtersAggregationTranslator =
 			new FiltersAggregationTranslator();

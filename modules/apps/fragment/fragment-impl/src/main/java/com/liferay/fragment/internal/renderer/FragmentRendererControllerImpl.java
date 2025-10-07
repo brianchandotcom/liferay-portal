@@ -98,7 +98,9 @@ public class FragmentRendererControllerImpl
 				_log.debug(
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
-						fragmentEntryLink.getFragmentEntryId(),
+						fragmentEntryLink.getFragmentEntryERC(),
+						" on group with ID ",
+						fragmentEntryLink.getFragmentEntryGroupId(),
 						" with fragment entry link ",
 						fragmentEntryLink.getFragmentEntryLinkId(),
 						" and PLID ", fragmentEntryLink.getPlid(), ": ",

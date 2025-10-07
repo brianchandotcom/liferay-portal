@@ -51,7 +51,6 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.LayoutServiceContextHelper;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -100,7 +99,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -124,6 +122,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -427,8 +426,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), targetLayout.getPlid());
 
-		long[] firstCopyFragmentEntryLinkIds =
-			_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
+		String[] firstCopyFragmentEntryLinkERCGroupIds =
+			_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkERCGroupIds(
 				firstCopyFragmentEntryLinks,
 				ListUtil.fromArray(
 					fragmentEntryLink1, fragmentEntryLink2, fragmentEntryLink3,
@@ -484,8 +483,8 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			_fragmentEntryLinkLocalService.getFragmentEntryLinksByPlid(
 				_group.getGroupId(), targetLayout.getPlid());
 
-		long[] secondCopyFragmentEntryLinkIds =
-			_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
+		String[] secondCopyFragmentEntryLinkERCGroupIds =
+			_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkERCGroupIds(
 				secondCopyFragmentEntryLinks,
 				ListUtil.fromArray(
 					fragmentEntryLink2, fragmentEntryLink3, fragmentEntryLink5,
@@ -493,35 +492,44 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 
 		Assert.assertFalse(
 			ArrayUtil.contains(
-				secondCopyFragmentEntryLinkIds,
+				secondCopyFragmentEntryLinkERCGroupIds,
 				fragmentEntryLink1.getFragmentEntryLinkId()));
 		Assert.assertFalse(
 			ArrayUtil.contains(
-				secondCopyFragmentEntryLinkIds,
+				secondCopyFragmentEntryLinkERCGroupIds,
 				fragmentEntryLink4.getFragmentEntryLinkId()));
 
-		Set<Long> updatedFragmentEntryLinkIds = SetUtil.intersect(
-			firstCopyFragmentEntryLinkIds, secondCopyFragmentEntryLinkIds);
+		Set<String> updatedFragmentEntryLinkERCGroupIds = new HashSet<>(
+			List.of(firstCopyFragmentEntryLinkERCGroupIds));
+
+		updatedFragmentEntryLinkERCGroupIds.retainAll(
+			List.of(secondCopyFragmentEntryLinkERCGroupIds));
 
 		Assert.assertEquals(
-			updatedFragmentEntryLinkIds.toString(), 2,
-			updatedFragmentEntryLinkIds.size());
+			updatedFragmentEntryLinkERCGroupIds.toString(), 2,
+			updatedFragmentEntryLinkERCGroupIds.size());
 
-		List<String> originalFragmentEntryLinkERCs = new ArrayList<>();
+		List<String> originalFragmentEntryLinkERCGroupIds = new ArrayList<>();
 
 		for (FragmentEntryLink originalFragmentEntryLink :
 				secondCopyFragmentEntryLinks) {
 
-			originalFragmentEntryLinkERCs.add(
-				originalFragmentEntryLink.getOriginalFragmentEntryLinkERC());
+			originalFragmentEntryLinkERCGroupIds.add(
+				_getCombinedERCGroupId(
+					originalFragmentEntryLink.getOriginalFragmentEntryLinkERC(),
+					originalFragmentEntryLink.getGroupId()));
 		}
 
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
-				originalFragmentEntryLinkERCs.toArray(new String[0]),
+				originalFragmentEntryLinkERCGroupIds.toArray(new String[0]),
 				new String[] {
-					fragmentEntryLink2.getExternalReferenceCode(),
-					fragmentEntryLink3.getExternalReferenceCode()
+					_getCombinedERCGroupId(
+						fragmentEntryLink2.getExternalReferenceCode(),
+						fragmentEntryLink2.getGroupId()),
+					_getCombinedERCGroupId(
+						fragmentEntryLink3.getExternalReferenceCode(),
+						fragmentEntryLink3.getGroupId())
 				}));
 	}
 
@@ -1346,44 +1354,58 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			fragmentEntryLink.getLastPropagationDate());
 	}
 
-	private long[] _assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
-		List<FragmentEntryLink> copiedFragmentEntryLinks,
-		List<FragmentEntryLink> sourceFragmentEntryLinks) {
+	private String[]
+		_assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkERCGroupIds(
+			List<FragmentEntryLink> copiedFragmentEntryLinks,
+			List<FragmentEntryLink> sourceFragmentEntryLinks) {
 
-		Map<Long, FragmentEntryLink> originalFragmentEntryLinkIdMap =
-			new HashMap<Long, FragmentEntryLink>() {
+		Map<String, FragmentEntryLink> originalFragmentEntryLinkERCGroupIdsMap =
+			new HashMap<String, FragmentEntryLink>() {
 				{
 					for (FragmentEntryLink fragmentEntryLink :
 							copiedFragmentEntryLinks) {
 
 						put(
-							fragmentEntryLink.getOriginalFragmentEntryLinkId(),
+							_getCombinedERCGroupId(
+								fragmentEntryLink.
+									getOriginalFragmentEntryLinkERC(),
+								fragmentEntryLink.getGroupId()),
 							fragmentEntryLink);
 					}
 				}
 			};
 
-		long[] originalFragmentEntryLinkIds = ArrayUtil.toLongArray(
-			originalFragmentEntryLinkIdMap.keySet());
+		String[] originalFragmentEntryLinkERCGroupIds = ArrayUtil.toStringArray(
+			originalFragmentEntryLinkERCGroupIdsMap.keySet());
 
 		Assert.assertEquals(
-			Arrays.toString(originalFragmentEntryLinkIds),
+			Arrays.toString(originalFragmentEntryLinkERCGroupIds),
 			sourceFragmentEntryLinks.size(),
-			originalFragmentEntryLinkIds.length);
+			originalFragmentEntryLinkERCGroupIds.length);
+
+		List<String> fragmentEntryLinkERCGroupIdsList = new ArrayList<>();
+
+		for (FragmentEntryLink fragmentEntryLink : sourceFragmentEntryLinks) {
+			String combinedERC = _getCombinedERCGroupId(
+				fragmentEntryLink.getExternalReferenceCode(),
+				fragmentEntryLink.getGroupId());
+
+			fragmentEntryLinkERCGroupIdsList.add(combinedERC);
+		}
+
 		Assert.assertTrue(
 			ArrayUtil.containsAll(
-				originalFragmentEntryLinkIds,
-				TransformUtil.transformToLongArray(
-					sourceFragmentEntryLinks,
-					fragmentEntryLink ->
-						fragmentEntryLink.getFragmentEntryLinkId())));
+				originalFragmentEntryLinkERCGroupIds,
+				fragmentEntryLinkERCGroupIdsList.toArray(new String[0])));
 
 		for (FragmentEntryLink sourceFragmentEntryLink :
 				sourceFragmentEntryLinks) {
 
 			FragmentEntryLink copiedFragmentEntryLink =
-				originalFragmentEntryLinkIdMap.get(
-					sourceFragmentEntryLink.getFragmentEntryLinkId());
+				originalFragmentEntryLinkERCGroupIdsMap.get(
+					_getCombinedERCGroupId(
+						sourceFragmentEntryLink.getExternalReferenceCode(),
+						sourceFragmentEntryLink.getGroupId()));
 
 			Assert.assertNotNull(copiedFragmentEntryLink);
 
@@ -1391,7 +1413,7 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				sourceFragmentEntryLink, copiedFragmentEntryLink);
 		}
 
-		return originalFragmentEntryLinkIds;
+		return originalFragmentEntryLinkERCGroupIds;
 	}
 
 	private void _assertLayoutContent(
@@ -1486,6 +1508,12 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 				targetSegmentsExperience.getPriority(),
 				sourceSegmentsExperience.getPriority());
 		}
+	}
+
+	private String _getCombinedERCGroupId(
+		String externalReferenceCode, long groupId) {
+
+		return externalReferenceCode + "_" + groupId;
 	}
 
 	private String _getLayoutContent(Layout layout, Locale locale)

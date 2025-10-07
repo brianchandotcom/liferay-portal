@@ -280,6 +280,9 @@ public class FragmentLayoutStructureItemImporter
 				fragmentInstancePageElementDefinition,
 				layoutStructureItemImporterContext));
 
+		fragmentEntryLink.setFragmentEntryERC(
+			fragmentEntry.getExternalReferenceCode());
+		fragmentEntryLink.setFragmentEntryScopeERC(fragmentEntry.getScopeERC());
 		fragmentEntryLink.setCss(
 			GetterUtil.getString(
 				fragmentInstancePageElementDefinition.getCss()));

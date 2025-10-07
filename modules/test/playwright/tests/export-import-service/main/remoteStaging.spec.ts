@@ -154,20 +154,23 @@ test(
 		},
 		testInfo
 	) => {
+		const vocabularyName = `Vocabulary: ${getRandomString()}`;
+		let globalSiteId;
+		let vocabularyId;
+
+		await test.step('Setup remote staging', async () => {
+			globalSiteId = await getGlobalSiteId(apiHelpers);
+			const remoteGlobalSiteId = await getGlobalSiteId(remoteApiHelpers);
+
+			await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
+				groupId: globalSiteId,
+				remoteGroupId: remoteGlobalSiteId,
+				remotePort,
+			});
+		});
+
 		try {
-			const vocabularyName = getRandomString();
-			let vocabularyId;
-
-			await test.step('Setup remote staging and create vocabulary', async () => {
-				const globalSiteId = await getGlobalSiteId(apiHelpers);
-				const remoteGlobalSiteId =
-					await getGlobalSiteId(remoteApiHelpers);
-				await apiHelpers.jsonWebServicesStaging.enableRemoteStaging({
-					groupId: globalSiteId,
-					remoteGroupId: remoteGlobalSiteId,
-					remotePort,
-				});
-
+			await test.step('Create vocabulary', async () => {
 				const {id} =
 					await apiHelpers.headlessAdminTaxonomy.postSiteTaxonomyVocabulary(
 						{

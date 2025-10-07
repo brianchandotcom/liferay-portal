@@ -23,18 +23,20 @@ export class ConfigStagingPage {
 	async disableStaging(siteUrl?: Site['friendlyUrlPath']) {
 		await this.goto(siteUrl);
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.page.getByRole('menuitem', {
-				name: 'Staging Configuration',
-			}),
-			trigger: this.page.getByLabel('Options', {exact: true}),
-		});
+		if (this.page.getByLabel('Options', {exact: true}).isVisible) {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {
+					name: 'Staging Configuration',
+				}),
+				trigger: this.page.getByLabel('Options', {exact: true}),
+			});
 
-		await this.page.getByLabel('None').check();
-		this.page.once('dialog', async (dialog) => {
-			await dialog.accept();
-		});
-		await this.page.getByRole('button', {name: 'Save'}).click();
+			await this.page.getByLabel('None').check();
+			this.page.once('dialog', async (dialog) => {
+				await dialog.accept();
+			});
+			await this.page.getByRole('button', {name: 'Save'}).click();
+		}
 	}
 }

@@ -48,11 +48,14 @@ public class UpgradeAssetDisplayPageEntry
 					"select distinct DLFileEntry.ctCollectionId, ",
 					"DLFileEntry.groupId, DLFileEntry.companyId, ",
 					"DLFileEntry.userId, DLFileEntry.userName, ",
-					"DLFileEntry.fileEntryId from DLFileEntry where ",
-					"DLFileEntry.fileEntryId not in (select classPK from ",
-					"AssetDisplayPageEntry where classNameId in (",
+					"DLFileEntry.fileEntryId from DLFileEntry left join ",
+					"AssetDisplayPageEntry on AssetDisplayPageEntry.classPK = ",
+					"DLFileEntry.fileEntryId and ",
+					"AssetDisplayPageEntry.classNameId in (",
 					dlFileEntryClassNameId, ", ", fileEntryClassNameId,
-					")) and ctCollectionId = DLFileEntry.ctCollectionId"));
+					") and AssetDisplayPageEntry.ctCollectionId = ",
+					"DLFileEntry.ctCollectionId where ",
+					"AssetDisplayPageEntry.classPK is null"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

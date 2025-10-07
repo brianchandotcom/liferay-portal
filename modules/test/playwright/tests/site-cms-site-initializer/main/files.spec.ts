@@ -396,3 +396,50 @@ test(
 		}
 	}
 );
+
+test(
+	'Can click on title in Cards View',
+	{tag: '@LPD-67612'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-documents';
+		const fileTitle = `title ${getRandomString()}`;
+
+		const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				file: {
+					fileBase64: 'R0lGODlhAQABAAAAACw=',
+					name: `file_${getRandomString()}.png`,
+				},
+				objectEntryFolderExternalReferenceCode: 'L_FILES',
+				title: fileTitle,
+			},
+			applicationName,
+			'Default'
+		);
+
+		try {
+			apiHelpers.data.push({
+				id: objectEntry.file.id,
+				type: 'document',
+			});
+
+			await assetsPage.gotoFiles();
+			await assetsPage.changeVisualizationMode('Cards');
+
+			await page.getByRole('link', {name: fileTitle}).click();
+
+			await expect(
+				page.getByRole('heading', {name: `Edit ${fileTitle}`})
+			).toBeVisible();
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+
+			await page.getByLabel('Back').click();
+			await assetsPage.changeVisualizationMode('Table');
+		}
+	}
+);

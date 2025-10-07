@@ -1406,11 +1406,8 @@ public class RenderLayoutStructureTagTest {
 				StringPool.BLANK, 0, fragmentEntry.getFragmentEntryKey(),
 				fragmentEntry.getType(), _serviceContext));
 
-		MockHttpServletRequest mockHttpServletRequest =
-			_getMockHttpServletRequest(layout);
-
 		String content = _getContent(
-			layout, mockHttpServletRequest, segmentsExperienceId);
+			layout, _getMockHttpServletRequest(layout), segmentsExperienceId);
 
 		Assert.assertFalse(content, content.contains(">Heading Example</h1>"));
 		Assert.assertTrue(content, content.contains(">" + title + "</h1>"));

@@ -608,10 +608,10 @@ public class RenderLayoutStructureDisplayContext {
 				backgroundImageJSONObject.getString("fieldId"),
 				_themeDisplay.getLocale());
 		}
-
-		if ((fileEntryId == 0) && backgroundImageJSONObject.has("className") &&
-			backgroundImageJSONObject.has("externalReferenceCode") &&
-			backgroundImageJSONObject.has("fieldId")) {
+		else if ((fileEntryId == 0) &&
+				 backgroundImageJSONObject.has("className") &&
+				 backgroundImageJSONObject.has("externalReferenceCode") &&
+				 backgroundImageJSONObject.has("fieldId")) {
 
 			String scopeExternalReferenceCode = null;
 
@@ -858,6 +858,9 @@ public class RenderLayoutStructureDisplayContext {
 		if (Validator.isNotNull(fieldId)) {
 			long classNameId = jsonObject.getLong("classNameId");
 			long classPK = jsonObject.getLong("classPK");
+			String className = jsonObject.getString("className");
+			String externalReferenceCode = jsonObject.getString(
+				"externalReferenceCode");
 
 			if ((classNameId > 0) && (classPK > 0)) {
 				InfoItemReference infoItemReference = new InfoItemReference(
@@ -869,13 +872,7 @@ public class RenderLayoutStructureDisplayContext {
 				if (Validator.isNotNull(value)) {
 					return value;
 				}
-			}
-
-			String className = jsonObject.getString("className");
-			String externalReferenceCode = jsonObject.getString(
-				"externalReferenceCode");
-
-			if (Validator.isNotNull(className) &&
+			} else if (Validator.isNotNull(className) &&
 				Validator.isNotNull(externalReferenceCode)) {
 
 				String scopeExternalReferenceCode = null;

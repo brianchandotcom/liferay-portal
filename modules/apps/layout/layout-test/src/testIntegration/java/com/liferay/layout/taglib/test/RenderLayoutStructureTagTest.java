@@ -1320,7 +1320,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-64102")
-	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryReferencedByERC()
+	public void testRenderCollectionStyledLayoutStructureItemWithAssetListEntryReferencedByExternalReferenceCode()
 		throws Exception {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(

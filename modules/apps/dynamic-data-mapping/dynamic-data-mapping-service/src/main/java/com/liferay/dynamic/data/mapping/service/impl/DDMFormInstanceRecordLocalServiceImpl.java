@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.dynamic.data.mapping.constants.DDMFormInstanceReportConstants;
+import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
 import com.liferay.dynamic.data.mapping.exception.FormInstanceRecordGroupIdException;
 import com.liferay.dynamic.data.mapping.exception.NoSuchFormInstanceRecordException;
 import com.liferay.dynamic.data.mapping.exception.StorageException;
@@ -43,6 +44,7 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,6 +72,7 @@ import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -78,6 +81,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
@@ -219,11 +223,22 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		if (serviceContext.getWorkflowAction() ==
 				WorkflowConstants.ACTION_PUBLISH) {
 
+			Map<String, Serializable> workflowContext =
+				HashMapBuilder.<String, Serializable>put(
+					WorkflowConstants.CONTEXT_URL,
+					_getEntryURL(ddmFormInstanceRecord, serviceContext)
+				).put(
+					"entryTitle",
+					ddmFormInstance.getName(serviceContext.getLocale())
+				).put(
+					"entryTitleXML", ddmFormInstance.getName()
+				).build();
+
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
 				DDMFormInstanceRecord.class.getName(),
 				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
-				ddmFormInstanceRecordVersion, serviceContext);
+				ddmFormInstanceRecordVersion, serviceContext, workflowContext);
 
 			if (_isEmailNotificationEnabled(ddmFormInstance)) {
 				_ddmFormEmailNotificationSender.sendEmailNotification(
@@ -789,6 +804,32 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	private DDMStorageAdapter _getDDMStorageAdapter(String type) {
 		return _ddmStorageAdapterRegistry.getDDMStorageAdapter(
 			GetterUtil.getString(type, StorageType.DEFAULT.toString()));
+	}
+
+	private String _getEntryURL(
+		DDMFormInstanceRecord ddmFormInstanceRecord,
+		ServiceContext serviceContext) {
+
+		HttpServletRequest httpServletRequest = serviceContext.getRequest();
+
+		if (httpServletRequest == null) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return null;
+		}
+
+		return StringBundler.concat(
+			themeDisplay.getPortalURL(),
+			themeDisplay.getPathFriendlyURLPublic(), "/forms/shared/-/form/",
+			ddmFormInstanceRecord.getFormInstanceId(), "?_",
+			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM, "_formInstanceRecordId=",
+			ddmFormInstanceRecord.getFormInstanceRecordId());
 	}
 
 	private List<DDMFormInstanceRecord> _getFormInstanceRecords(Hits hits)

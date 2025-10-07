@@ -2010,7 +2010,7 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		String content = _getRenderLayoutHTML(layout);
 
@@ -2060,7 +2060,7 @@ public class RenderLayoutStructureTagTest {
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		String content = _getRenderLayoutHTML(layout);
 

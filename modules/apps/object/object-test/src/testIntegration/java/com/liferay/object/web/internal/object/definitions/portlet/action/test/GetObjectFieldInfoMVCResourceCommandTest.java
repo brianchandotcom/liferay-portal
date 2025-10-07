@@ -13,26 +13,19 @@ import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,16 +38,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @RunWith(Arquillian.class)
 public class GetObjectFieldInfoMVCResourceCommandTest
 	extends BaseMVCResourceCommandTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@ClassRule
-	public static final PermissionCheckerMethodTestRule
-		permissionCheckerMethodTestRule =
-			PermissionCheckerMethodTestRule.INSTANCE;
 
 	@Test
 	public void testGetFormulaObjectFieldInfo() throws Exception {
@@ -72,7 +55,7 @@ public class GetObjectFieldInfoMVCResourceCommandTest
 		ObjectField objectField = ObjectFieldUtil.addCustomObjectField(
 			new FormulaObjectFieldBuilder(
 			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+				RandomTestUtil.randomLocaleStringMap()
 			).name(
 				"a" + RandomTestUtil.randomString()
 			).objectDefinitionId(
@@ -149,9 +132,6 @@ public class GetObjectFieldInfoMVCResourceCommandTest
 		filter = "mvc.command.name=/object_definitions/get_object_field_info"
 	)
 	private MVCResourceCommand _mvcResourceCommand;
-
-	@Inject
-	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

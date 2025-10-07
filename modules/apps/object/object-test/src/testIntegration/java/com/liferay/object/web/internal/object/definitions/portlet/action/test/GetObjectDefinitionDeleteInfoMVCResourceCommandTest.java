@@ -13,17 +13,13 @@ import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Collections;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -33,11 +29,6 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class GetObjectDefinitionDeleteInfoMVCResourceCommandTest
 	extends BaseMVCResourceCommandTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetObjectDefinitionDeleteInfo() throws Exception {

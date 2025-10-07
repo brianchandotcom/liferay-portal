@@ -10,22 +10,19 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayResourceResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.ByteArrayOutputStream;
 
 import org.junit.ClassRule;
+import org.junit.Rule;
 
 /**
  * @author Aquiles Duarte
@@ -33,8 +30,11 @@ import org.junit.ClassRule;
 public abstract class BaseMVCResourceCommandTestCase {
 
 	@ClassRule
+	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	protected JSONObject getJSONObject(
 			String parameterName, String parameterValue)
@@ -56,23 +56,8 @@ public abstract class BaseMVCResourceCommandTestCase {
 		MockLiferayResourceResponse mockLiferayResourceResponse =
 			new MockLiferayResourceResponse();
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-			mvcResourceCommand.serveResource(
-				mockLiferayResourceRequest, mockLiferayResourceResponse);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-		}
+		mvcResourceCommand.serveResource(
+			mockLiferayResourceRequest, mockLiferayResourceResponse);
 
 		ByteArrayOutputStream byteArrayOutputStream =
 			(ByteArrayOutputStream)

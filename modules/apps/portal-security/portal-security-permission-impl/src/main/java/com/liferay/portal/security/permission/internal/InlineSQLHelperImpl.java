@@ -124,7 +124,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			baseModel.getModelClassName(), permissionChecker.getUserId(),
 			groupIds, permittedClassPKs);
 
-		if ((baseModel instanceof GroupedModel) && (groupIds.length > 0)) {
+		if (baseModel instanceof GroupedModel) {
 			Set<Long> disabledGroupIds = new HashSet<>();
 
 			for (long groupId : groupIds) {

@@ -65,10 +65,7 @@ public class AssetEntryListLayoutListRetriever
 		if (classedModelListObjectReference.getClassPK() > 0) {
 			assetListEntry = _assetListEntryLocalService.fetchAssetListEntry(
 				classedModelListObjectReference.getClassPK());
-		}
-
-		if ((assetListEntry == null) &&
-			Validator.isNotNull(
+		} else if (Validator.isNotNull(
 				classedModelListObjectReference.getExternalReferenceCode())) {
 
 			String scopeExternalReferenceCode =

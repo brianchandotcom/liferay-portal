@@ -42,10 +42,10 @@ export class StructureBuilderPage {
 	private readonly customizeExperienceButton: Locator;
 	private readonly labelInput: Locator;
 	private readonly nameInput: Locator;
-	private readonly spaceCheckbox: Locator;
 
 	readonly publishButton: Locator;
 	readonly saveButton: Locator;
+	readonly spaceCheckbox: Locator;
 	readonly spaceSelector: Locator;
 
 	constructor(page: Page, dataApiHelpers: DataApiHelpers) {
@@ -413,6 +413,13 @@ export class StructureBuilderPage {
 	}
 
 	async enableForAllSpaces() {
+		if (
+			(await this.spaceCheckbox.isChecked()) &&
+			this.spaceSelector.isDisabled()
+		) {
+			return;
+		}
+
 		await expect(async () => {
 			await this.page
 				.getByText('Content Structure Fields')

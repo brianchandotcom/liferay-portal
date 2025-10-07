@@ -2013,7 +2013,6 @@ public class ObjectActionLocalServiceTest {
 			"John", "Smith", WorkflowConstants.STATUS_APPROVED);
 	}
 
-	@FeatureFlag("LPD-59081")
 	@Test
 	public void testExecuteObjectActionAfterUserLogin() throws Exception {
 		ObjectDefinition userObjectDefinition =

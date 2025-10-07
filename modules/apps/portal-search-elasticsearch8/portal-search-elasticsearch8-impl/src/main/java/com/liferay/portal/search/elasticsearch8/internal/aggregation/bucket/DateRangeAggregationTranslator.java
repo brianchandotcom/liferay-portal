@@ -15,17 +15,12 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = DateRangeAggregationTranslator.class)
-public class DateRangeAggregationTranslatorImpl
-	extends RangeAggregationTranslatorImpl
-	implements DateRangeAggregationTranslator {
+public class DateRangeAggregationTranslator
+	extends RangeAggregationTranslatorImpl {
 
-	@Override
 	public DateRangeAggregationBuilder translate(
 		DateRangeAggregation dateRangeAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

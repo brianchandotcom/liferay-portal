@@ -8,7 +8,7 @@ package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateHistogramAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateRangeAggregationTranslatorImpl;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.DateRangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FilterAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
@@ -67,7 +67,7 @@ public class ElasticsearchAggregationTranslatorFixture {
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_dateRangeAggregationTranslator",
-			new DateRangeAggregationTranslatorImpl());
+			new DateRangeAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_histogramAggregationTranslator",

@@ -125,11 +125,6 @@ public class BaseNotificationTypeTest {
 			BaseNotificationTypeTest.dtoConverterRegistry, null,
 			LocaleUtil.getDefault(), null, user1);
 
-		ListType prefixListType = _listTypeLocalService.getListType(
-			user1.getCompanyId(), "dr", ListTypeConstants.CONTACT_PREFIX);
-		ListType suffixListType = _listTypeLocalService.getListType(
-			user1.getCompanyId(), "ii", ListTypeConstants.CONTACT_SUFFIX);
-
 		_originalName = PrincipalThreadLocal.getName();
 		_originalPermissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -141,6 +136,11 @@ public class BaseNotificationTypeTest {
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.VIEW);
+
+		ListType prefixListType = _listTypeLocalService.getListType(
+			user1.getCompanyId(), "dr", ListTypeConstants.CONTACT_PREFIX);
+		ListType suffixListType = _listTypeLocalService.getListType(
+			user1.getCompanyId(), "ii", ListTypeConstants.CONTACT_SUFFIX);
 
 		user2 = userLocalService.addUser(
 			user1.getUserId(), user1.getCompanyId(), true, null, null, true,

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.dynamic.data.mapping.internal.change.tracking.spi.listener.test;
+package com.liferay.change.tracking.internal.spi.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.change.tracking.model.CTCollection;
@@ -70,7 +70,7 @@ public class DDMFieldAttributeCTEventListenerTest {
 	}
 
 	@Test
-	public void testOnBeforePublish() throws Exception {
+	public void testOnAfterPublish() throws Exception {
 		JournalArticle journalArticle = null;
 
 		try (SafeCloseable safeCloseable =

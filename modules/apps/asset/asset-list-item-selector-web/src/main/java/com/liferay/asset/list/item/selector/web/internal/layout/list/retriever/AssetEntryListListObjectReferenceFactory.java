@@ -11,11 +11,7 @@ import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.list.retriever.ClassedModelListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.list.retriever.ListObjectReferenceFactory;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -33,17 +29,6 @@ public class AssetEntryListListObjectReferenceFactory
 		String classPK = jsonObject.getString("classPK");
 		String itemType = jsonObject.getString("itemType");
 
-		try {
-			jsonObject = _jSONFactory.createJSONObject(jsonObject.toString());
-		}
-		catch (JSONException jsonException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(jsonException);
-			}
-
-			return null;
-		}
-
 		return new ClassedModelListObjectReference(
 			jsonObject.put(
 				"itemType",
@@ -60,13 +45,7 @@ public class AssetEntryListListObjectReferenceFactory
 				}));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AssetEntryListListObjectReferenceFactory.class);
-
 	@Reference
 	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private JSONFactory _jSONFactory;
 
 }

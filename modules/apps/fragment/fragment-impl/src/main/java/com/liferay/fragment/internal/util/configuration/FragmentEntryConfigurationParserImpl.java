@@ -208,6 +208,10 @@ public class FragmentEntryConfigurationParserImpl
 
 				ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
+				if (themeDisplay == null) {
+					return null;
+				}
+
 				Object contextListObject = _getInfoListObjectEntry(
 					configurationValuesJSONObject.getString(name),
 					segmentsEntryIds, themeDisplay.getScopeGroupId(),

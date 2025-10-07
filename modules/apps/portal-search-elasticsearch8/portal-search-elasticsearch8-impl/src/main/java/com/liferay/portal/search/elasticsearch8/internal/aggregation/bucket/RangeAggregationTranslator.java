@@ -20,16 +20,11 @@ import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = RangeAggregationTranslator.class)
-public class RangeAggregationTranslatorImpl
-	implements RangeAggregationTranslator {
+public class RangeAggregationTranslator {
 
-	@Override
 	public RangeAggregationBuilder translate(
 		RangeAggregation rangeAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

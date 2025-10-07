@@ -13,7 +13,7 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.Filt
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.FiltersAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.GeoDistanceAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslatorImpl;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTextAggregationTranslator;
@@ -75,7 +75,7 @@ public class ElasticsearchAggregationTranslatorFixture {
 			"_pipelineAggregationTranslator", pipelineAggregationTranslator);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_rangeAggregationTranslator",
-			new RangeAggregationTranslatorImpl());
+			new RangeAggregationTranslator());
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator, "_termsAggregationTranslator",
 			new TermsAggregationTranslatorImpl());

@@ -6,6 +6,7 @@
 package com.liferay.portlet;
 
 import com.liferay.portal.kernel.portlet.Route;
+import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -24,7 +25,7 @@ import org.junit.Test;
  * @author Connor McKay
  * @author Brian Wing Shun Chan
  */
-public class RouterImplTest {
+public class RouterTest {
 
 	@ClassRule
 	@Rule
@@ -33,71 +34,69 @@ public class RouterImplTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_routerImpl = new RouterImpl();
+		_router = new Router();
 
-		Route route = _routerImpl.addRoute(
+		Route route = _router.addRoute(
 			"instance/{userIdAndInstanceId}/{topLink}");
 
 		route.addGeneratedParameter(
 			"p_p_id", "15_INSTANCE_{userIdAndInstanceId}");
 
-		route = _routerImpl.addRoute("GET/{controller}");
+		route = _router.addRoute("GET/{controller}");
 
 		route.addImplicitParameter("action", "index");
 		route.addImplicitParameter("format", "html");
 		route.addImplicitParameter("method", "GET");
 
-		route = _routerImpl.addRoute("GET/{controller}.{format}");
+		route = _router.addRoute("GET/{controller}.{format}");
 
 		route.addImplicitParameter("action", "index");
 		route.addImplicitParameter("method", "GET");
 
-		route = _routerImpl.addRoute("POST/{controller}");
+		route = _router.addRoute("POST/{controller}");
 
 		route.addImplicitParameter("action", "create");
 		route.addImplicitParameter("format", "html");
 		route.addImplicitParameter("method", "POST");
 
-		route = _routerImpl.addRoute("POST/{controller}.{format}");
+		route = _router.addRoute("POST/{controller}.{format}");
 
 		route.addImplicitParameter("action", "create");
 		route.addImplicitParameter("method", "POST");
 
-		route = _routerImpl.addRoute("GET/{controller}/{id:\\d+}");
+		route = _router.addRoute("GET/{controller}/{id:\\d+}");
 
 		route.addImplicitParameter("action", "view");
 		route.addImplicitParameter("format", "html");
 		route.addImplicitParameter("method", "GET");
 
-		route = _routerImpl.addRoute("GET/{controller}/{id:\\d+}.{format}");
+		route = _router.addRoute("GET/{controller}/{id:\\d+}.{format}");
 
 		route.addImplicitParameter("action", "view");
 		route.addImplicitParameter("method", "GET");
 
-		route = _routerImpl.addRoute("POST/{controller}/{id:\\d+}");
+		route = _router.addRoute("POST/{controller}/{id:\\d+}");
 
 		route.addImplicitParameter("action", "update");
 		route.addImplicitParameter("format", "html");
 		route.addImplicitParameter("method", "POST");
 
-		route = _routerImpl.addRoute("POST/{controller}/{id:\\d+}.{format}");
+		route = _router.addRoute("POST/{controller}/{id:\\d+}.{format}");
 
 		route.addImplicitParameter("action", "update");
 		route.addImplicitParameter("method", "POST");
 
-		route = _routerImpl.addRoute(
-			"{method}/{controller}/{id:\\d+}/{action}");
+		route = _router.addRoute("{method}/{controller}/{id:\\d+}/{action}");
 
 		route.addImplicitParameter("format", "html");
 
-		_routerImpl.addRoute(
-			"{method}/{controller}/{id:\\d+}/{action}.{format}");
+		_router.addRoute("{method}/{controller}/{id:\\d+}/{action}.{format}");
 
-		route = _routerImpl.addRoute("{method}/{controller}/{action}");
+		route = _router.addRoute("{method}/{controller}/{action}");
 
 		route.addImplicitParameter("format", "html");
 
-		_routerImpl.addRoute("{method}/{controller}/{action}.{format}");
+		_router.addRoute("{method}/{controller}/{action}.{format}");
 	}
 
 	@Test
@@ -171,7 +170,7 @@ public class RouterImplTest {
 
 		Map<String, String> parameters = new HashMap<>();
 
-		_routerImpl.urlToParameters(url, parameters);
+		_router.urlToParameters(url, parameters);
 
 		Assert.assertEquals(value, MapUtil.getString(parameters, name));
 	}
@@ -184,7 +183,7 @@ public class RouterImplTest {
 
 		Map<String, String> generatedParameters = new HashMap<>();
 
-		_routerImpl.urlToParameters(url, generatedParameters);
+		_router.urlToParameters(url, generatedParameters);
 
 		AssertUtils.assertEquals(parameters, generatedParameters);
 	}
@@ -196,13 +195,13 @@ public class RouterImplTest {
 	protected void assertUrlRegeneratesUrl(String url, String expectedUrl) {
 		Map<String, String> parameters = new HashMap<>();
 
-		_routerImpl.urlToParameters(url, parameters);
+		_router.urlToParameters(url, parameters);
 
-		String generatedUrl = _routerImpl.parametersToUrl(parameters);
+		String generatedUrl = _router.parametersToUrl(parameters);
 
 		Assert.assertEquals(expectedUrl, generatedUrl);
 	}
 
-	private RouterImpl _routerImpl;
+	private Router _router;
 
 }

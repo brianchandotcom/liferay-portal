@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.portlet.RouterImpl;
 
 import java.util.List;
 import java.util.Map;
@@ -267,7 +266,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 			List<Element> routeElements = rootElement.elements("route");
 
-			Router router = new RouterImpl(routeElements.size());
+			Router router = new Router(routeElements.size());
 
 			for (Element routeElement : routeElements) {
 				String pattern = routeElement.elementText("pattern");

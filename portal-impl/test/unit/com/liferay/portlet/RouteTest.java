@@ -20,7 +20,7 @@ import org.junit.Test;
 /**
  * @author Connor McKay
  */
-public class RouteImplTest {
+public class RouteTest {
 
 	@ClassRule
 	@Rule
@@ -37,7 +37,7 @@ public class RouteImplTest {
 
 		Map<String, String> originalParameters = new HashMap<>(parameters);
 
-		Route route = new RouteImpl("{action}/{id:\\d+}");
+		Route route = new Route("{action}/{id:\\d+}");
 
 		String url = route.parametersToUrl(parameters);
 

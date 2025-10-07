@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
-import com.liferay.portlet.RouterImpl;
 
 import jakarta.portlet.WindowState;
 
@@ -32,7 +31,7 @@ public class CETPortletFriendlyURLMapper
 		_mapping = mapping;
 		_portletId = portletId;
 
-		Router router = new RouterImpl();
+		Router router = new Router();
 
 		Route route = router.addRoute(StringPool.BLANK);
 

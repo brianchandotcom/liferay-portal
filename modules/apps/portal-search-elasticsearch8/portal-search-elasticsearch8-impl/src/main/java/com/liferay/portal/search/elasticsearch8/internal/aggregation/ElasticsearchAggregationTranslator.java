@@ -540,9 +540,8 @@ public class ElasticsearchAggregationTranslator
 	private final GeoDistanceAggregationTranslator
 		_geoDistanceAggregationTranslator =
 			new GeoDistanceAggregationTranslator();
-
-	@Reference
-	private HistogramAggregationTranslator _histogramAggregationTranslator;
+	private final HistogramAggregationTranslator
+		_histogramAggregationTranslator = new HistogramAggregationTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>

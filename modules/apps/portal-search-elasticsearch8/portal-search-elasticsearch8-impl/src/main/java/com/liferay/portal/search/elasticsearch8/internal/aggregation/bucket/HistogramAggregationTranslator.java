@@ -19,16 +19,11 @@ import org.elasticsearch.search.aggregations.BucketOrder;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = HistogramAggregationTranslator.class)
-public class HistogramAggregationTranslatorImpl
-	implements HistogramAggregationTranslator {
+public class HistogramAggregationTranslator {
 
-	@Override
 	public HistogramAggregationBuilder translate(
 		HistogramAggregation histogramAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

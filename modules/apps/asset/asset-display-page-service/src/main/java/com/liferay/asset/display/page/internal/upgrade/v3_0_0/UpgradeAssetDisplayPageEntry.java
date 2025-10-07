@@ -86,10 +86,10 @@ public class UpgradeAssetDisplayPageEntry
 					preparedStatement2.setLong(10, fileEntryClassNameId);
 					preparedStatement2.setLong(
 						11, resultSet.getLong("fileEntryId"));
-					preparedStatement2.setLong(12, 0);
+					preparedStatement2.setLong(12, 0L);
 					preparedStatement2.setLong(
 						13, AssetDisplayPageConstants.TYPE_NONE);
-					preparedStatement2.setLong(14, 0);
+					preparedStatement2.setLong(14, 0L);
 
 					preparedStatement2.addBatch();
 				}

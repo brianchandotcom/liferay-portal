@@ -57,17 +57,17 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 					preparedStatement2.setLong(3, resultSet.getLong("groupId"));
 					preparedStatement2.setLong(
 						4, resultSet.getLong("companyId"));
-					preparedStatement2.setLong(5, 0);
+					preparedStatement2.setLong(5, 0L);
 					preparedStatement2.setString(6, null);
 					preparedStatement2.setTimestamp(7, now);
 					preparedStatement2.setTimestamp(8, now);
 					preparedStatement2.setLong(9, modelClassNameId);
 					preparedStatement2.setLong(
 						10, resultSet.getLong(pkColumnName));
-					preparedStatement2.setLong(11, 0);
+					preparedStatement2.setLong(11, 0L);
 					preparedStatement2.setLong(
 						12, AssetDisplayPageConstants.TYPE_NONE);
-					preparedStatement2.setLong(13, 0);
+					preparedStatement2.setLong(13, 0L);
 
 					preparedStatement2.addBatch();
 				}

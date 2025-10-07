@@ -36,10 +36,31 @@ const CategorizationContentContainer = ({mainContentMap}: Props) => {
 
 	const verticalNavItems: VerticalNavItem[] = [];
 
+	const getLabel = (key: string) => {
+		const NAVIGATION_TABS = {
+			GENERAL: 'general',
+			IMAGES: 'images',
+			PROPERTIES: 'properties',
+		};
+
+		if (key === NAVIGATION_TABS.GENERAL) {
+			return Liferay.Language.get('general');
+		}
+		else if (key === NAVIGATION_TABS.IMAGES) {
+			return Liferay.Language.get('images');
+		}
+		else if (key === NAVIGATION_TABS.PROPERTIES) {
+			return Liferay.Language.get('properties');
+		}
+		else {
+			return Liferay.Language.get(key);
+		}
+	};
+
 	mainContentMap.forEach((value: ReactElement, key: string) => {
 		verticalNavItems.push({
 			active: activeVerticalNavKey === key,
-			label: Liferay.Language.get(key),
+			label: getLabel(key),
 			onClick: () => {
 				setActiveVerticalNavKey(key);
 			},
@@ -47,29 +68,27 @@ const CategorizationContentContainer = ({mainContentMap}: Props) => {
 	});
 
 	return (
-		<>
-			<ClayLayout.ContainerFluid size={false}>
-				<ClayLayout.Row className="min-vh-100">
-					<ClayLayout.Col
-						className="cms-sidebar-nav sidebar-layout"
-						md="auto"
-						sm={12}
+		<ClayLayout.ContainerFluid size={false}>
+			<ClayLayout.Row className="min-vh-100">
+				<ClayLayout.Col
+					className="cms-sidebar-nav sidebar-layout"
+					md="auto"
+					sm={12}
+				>
+					<div
+						className="px-md-2 py-3 py-md-4"
+						data-testid="categorization-sidebar"
 					>
-						<div
-							className="px-md-2 py-3 py-md-4"
-							data-testid="categorization-sidebar"
-						>
-							<ClayVerticalNav items={verticalNavItems} />
-						</div>
-					</ClayLayout.Col>
+						<ClayVerticalNav items={verticalNavItems} />
+					</div>
+				</ClayLayout.Col>
 
-					<ClayLayout.Col className="col-md" sm={12}>
-						{mainContentMap.has(activeVerticalNavKey) &&
-							mainContentMap.get(activeVerticalNavKey)}
-					</ClayLayout.Col>
-				</ClayLayout.Row>
-			</ClayLayout.ContainerFluid>
-		</>
+				<ClayLayout.Col className="col-md" sm={12}>
+					{mainContentMap.has(activeVerticalNavKey) &&
+						mainContentMap.get(activeVerticalNavKey)}
+				</ClayLayout.Col>
+			</ClayLayout.Row>
+		</ClayLayout.ContainerFluid>
 	);
 };
 

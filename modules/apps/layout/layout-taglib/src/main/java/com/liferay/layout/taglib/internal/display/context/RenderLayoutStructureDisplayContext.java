@@ -746,14 +746,10 @@ public class RenderLayoutStructureDisplayContext {
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
-			String value = _getValue(
+			return _getValue(
 				collectionFieldId,
 				(InfoItemReference)_httpServletRequest.getAttribute(
 					InfoDisplayWebKeys.INFO_ITEM_REFERENCE));
-
-			if (Validator.isNotNull(value)) {
-				return value;
-			}
 		}
 
 		String mappedField = jsonObject.getString("mappedField");
@@ -777,15 +773,13 @@ public class RenderLayoutStructureDisplayContext {
 							infoItemDetails.getClassName());
 
 				if (infoItemFieldValuesProvider != null) {
-					String value = _parseInfoFieldValue(
+					return _parseInfoFieldValue(
 						infoItemFieldValuesProvider.getInfoFieldValue(
 							infoItem, mappedField));
-
-					if (Validator.isNotNull(value)) {
-						return value;
-					}
 				}
 			}
+
+			return StringPool.BLANK;
 		}
 
 		String fieldId = jsonObject.getString("fieldId");

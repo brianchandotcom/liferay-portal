@@ -24,10 +24,13 @@ export const test = mergeTests(
 );
 
 test.describe('Factory Configuration Tests', () => {
-	test('Asserts that a user can create multiple factory configurations', async ({
+	test('Asserts that a user can create/update/delete factory configurations', async ({
 		instanceSettingsPage,
 		page,
 	}) => {
+
+		// Assert multiple factory configurations can be created
+
 		let providerName = getRandomString();
 
 		await instanceSettingsPage.goToInstanceSetting(
@@ -74,55 +77,16 @@ test.describe('Factory Configuration Tests', () => {
 		});
 
 		await expect(page.getByText(providerName)).toBeVisible();
-	});
 
-	test('Asserts that a user can delete a factory configuration', async ({
-		instanceSettingsPage,
-		page,
-	}) => {
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
-		const firstRow = page.locator('tbody tr:first-of-type');
-
-		const providerName = await firstRow.innerText();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByText('Delete').first(),
-			trigger: firstRow.getByRole('button'),
-		});
-
-		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
-
-		await expect(
-			await page.locator('tbody tr:first-of-type').innerText()
-		).not.toBe(providerName);
+		// Assert a factory configuration can be edited
 
 		await instanceSettingsPage.goToInstanceSetting(
 			'SSO',
 			'OpenID Connect Provider Connection'
 		);
+		const firstRow = page.locator('tbody tr').first();
 
-		await expect(
-			await page.locator('tbody tr:first-of-type').innerText()
-		).not.toBe(providerName);
-	});
-
-	test('Asserts that a user can edit a factory configuration', async ({
-		instanceSettingsPage,
-		page,
-	}) => {
-		await instanceSettingsPage.goToInstanceSetting(
-			'SSO',
-			'OpenID Connect Provider Connection'
-		);
-		const firstRow = page.locator('tbody tr:first-of-type');
-
-		const providerName = await firstRow.innerText();
+		providerName = await firstRow.innerText();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -140,11 +104,40 @@ test.describe('Factory Configuration Tests', () => {
 		});
 
 		await expect(
-			await page.locator('tbody tr:first-of-type').innerText()
+			await page.locator('tbody tr').first().innerText()
 		).not.toBe(providerName);
 		await expect(
-			(await page.locator('tbody tr:first-of-type').innerText()).trim()
+			(await page.locator('tbody tr').first().innerText()).trim()
 		).toBe(editedProviderName);
+
+		// Assert a factory configuration can be deleted
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'SSO',
+			'OpenID Connect Provider Connection'
+		);
+
+		while ((await page.locator('tbody tr').count()) > 0) {
+			const row = page.locator('tbody tr').first();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByText('Delete').first(),
+				trigger: row.getByRole('button'),
+			});
+
+			await expect(
+				page.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await page.reload();
+		}
+
+		await instanceSettingsPage.goToInstanceSetting(
+			'SSO',
+			'OpenID Connect Provider Connection'
+		);
+
+		await expect(await page.locator('tbody tr').count()).toBe(0);
 	});
 });
 

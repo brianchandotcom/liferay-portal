@@ -70,6 +70,7 @@ import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
@@ -105,6 +106,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -127,6 +129,10 @@ public class BaseNotificationTypeTest {
 			user1.getCompanyId(), "dr", ListTypeConstants.CONTACT_PREFIX);
 		ListType suffixListType = _listTypeLocalService.getListType(
 			user1.getCompanyId(), "ii", ListTypeConstants.CONTACT_SUFFIX);
+
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
 		role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -270,6 +276,13 @@ public class BaseNotificationTypeTest {
 		).put(
 			"textObjectField", RandomTestUtil.randomString()
 		).build();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Before
@@ -930,6 +943,9 @@ public class BaseNotificationTypeTest {
 
 	@Inject
 	private static ListTypeLocalService _listTypeLocalService;
+
+	private static String _originalName;
+	private static PermissionChecker _originalPermissionChecker;
 
 	private Map<String, Object> _childAuthorTermValues;
 	private Map<String, Object> _generalTermValues;

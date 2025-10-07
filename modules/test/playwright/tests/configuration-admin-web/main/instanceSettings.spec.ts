@@ -77,10 +77,6 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 
 	// Assert a factory configuration can be edited
 
-	await instanceSettingsPage.goToInstanceSetting(
-		'SSO',
-		'OpenID Connect Provider Connection'
-	);
 	const firstRow = page.locator('tbody tr').first();
 
 	const oldProviderName = await firstRow.innerText();
@@ -109,11 +105,6 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 
 	// Assert a factory configuration can be deleted
 
-	await instanceSettingsPage.goToInstanceSetting(
-		'SSO',
-		'OpenID Connect Provider Connection'
-	);
-
 	while ((await page.locator('tbody tr').count()) > 0) {
 		const row = page.locator('tbody tr').first();
 		await clickAndExpectToBeVisible({
@@ -129,12 +120,7 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		await page.reload();
 	}
 
-	await instanceSettingsPage.goToInstanceSetting(
-		'SSO',
-		'OpenID Connect Provider Connection'
-	);
-
-	await expect(await page.locator('tbody tr').count()).toBe(0);
+	await expect(await page.locator('td.lfr-provider-name-column').count()).toBe(0);
 });
 
 test('Asserts that a user can export a configuration', async ({

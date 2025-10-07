@@ -27,6 +27,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 
@@ -65,33 +67,20 @@ public class AssetEntryListLayoutListRetriever
 		if (classedModelListObjectReference.getClassPK() > 0) {
 			assetListEntry = _assetListEntryLocalService.fetchAssetListEntry(
 				classedModelListObjectReference.getClassPK());
-		} else if (Validator.isNotNull(
-				classedModelListObjectReference.getExternalReferenceCode())) {
+		}
+		else if (Validator.isNotNull(
+					classedModelListObjectReference.
+						getExternalReferenceCode())) {
 
-			String scopeExternalReferenceCode =
-				classedModelListObjectReference.getScopeExternalReferenceCode();
-			Group scopeGroup = _groupLocalService.fetchGroup(
-				layoutListRetrieverContext.getScopeGroupId());
-
-			if (Validator.isNotNull(scopeExternalReferenceCode) &&
-				(scopeGroup != null) &&
-				!Objects.equals(
-					scopeExternalReferenceCode,
-					scopeGroup.getExternalReferenceCode())) {
-
-				scopeGroup =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						scopeExternalReferenceCode, scopeGroup.getCompanyId());
-			}
-
-			if (scopeGroup != null) {
-				assetListEntry =
-					_assetListEntryLocalService.
-						fetchAssetListEntryByExternalReferenceCode(
+			assetListEntry =
+				_assetListEntryLocalService.
+					fetchAssetListEntryByExternalReferenceCode(
+						classedModelListObjectReference.
+							getExternalReferenceCode(),
+						_getGroupId(
 							classedModelListObjectReference.
-								getExternalReferenceCode(),
-							scopeGroup.getGroupId());
-			}
+								getScopeExternalReferenceCode(),
+							layoutListRetrieverContext.getScopeGroupId()));
 		}
 
 		if (assetListEntry == null) {
@@ -188,6 +177,30 @@ public class AssetEntryListLayoutListRetriever
 		}
 
 		return tagsInfoFilter.getTagNames();
+	}
+
+	private long _getGroupId(
+		String scopeExternalReferenceCode, long scopeGroupId) {
+
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			return scopeGroupId;
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			return scopeGroupId;
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			scopeExternalReferenceCode, serviceContext.getCompanyId());
+
+		if (group == null) {
+			return scopeGroupId;
+		}
+
+		return group.getGroupId();
 	}
 
 	private String _getKeywords(

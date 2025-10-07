@@ -2046,8 +2046,6 @@ public class RenderLayoutStructureTagTest {
 					).put(
 						"classNameId", _portal.getClassNameId(FileEntry.class)
 					).put(
-						"classPK", RandomTestUtil.randomLong()
-					).put(
 						"externalReferenceCode",
 						fileEntry.getExternalReferenceCode()
 					).put(

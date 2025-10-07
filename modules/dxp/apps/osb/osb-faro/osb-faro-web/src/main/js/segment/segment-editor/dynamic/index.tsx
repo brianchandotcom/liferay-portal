@@ -98,6 +98,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	_formRef = React.createRef<Formik>();
 
 	@autobind
+	// TODO => Change this function name
 	createDynamicSegment({criteria, includeAnonymousUsers, name}) {
 		const {
 			channelId,

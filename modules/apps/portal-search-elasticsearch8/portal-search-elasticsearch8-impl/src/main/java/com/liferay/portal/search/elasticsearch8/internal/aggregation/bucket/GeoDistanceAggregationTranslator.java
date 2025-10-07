@@ -23,16 +23,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = GeoDistanceAggregationTranslator.class)
-public class GeoDistanceAggregationTranslatorImpl
-	implements GeoDistanceAggregationTranslator {
+public class GeoDistanceAggregationTranslator {
 
-	@Override
 	public GeoDistanceAggregationBuilder translate(
 		GeoDistanceAggregation geoDistanceAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

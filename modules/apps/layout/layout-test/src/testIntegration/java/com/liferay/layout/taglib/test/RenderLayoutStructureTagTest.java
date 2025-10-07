@@ -2045,13 +2045,37 @@ public class RenderLayoutStructureTagTest {
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
 			_layoutStructureProvider, segmentsExperienceId);
 
+		ContentLayoutTestUtil.addItemToLayout(
+			JSONUtil.put(
+				"styles",
+				JSONUtil.put(
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", classNameId
+					).put(
+						"classPK", RandomTestUtil::randomLong
+					).put(
+						"externalReferenceCode",
+						fileEntry.getExternalReferenceCode()
+					).put(
+						"fieldId", "FileEntry_title"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, draftLayout,
+			_layoutStructureProvider, segmentsExperienceId);
+
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
 		String content = _getRenderLayoutHTML(layout);
 
-		Assert.assertTrue(content.contains("--lfr-background-image"));
-		Assert.assertTrue(content.contains(depotFileEntry.getTitle()));
-		Assert.assertTrue(content.contains(fileEntry.getTitle()));
+		Assert.assertEquals(
+			content, 2, StringUtil.count(content, "--lfr-background-image"));
+		Assert.assertEquals(
+			content, 1, StringUtil.count(content, depotFileEntry.getTitle()));
+		Assert.assertEquals(
+			content, 1, StringUtil.count(content, fileEntry.getTitle()));
 	}
 
 	@Test

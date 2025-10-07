@@ -81,7 +81,7 @@ public class MasterPageDTOConverter
 						layoutPageTemplateEntry.getGroupId()));
 				setThumbnail(
 					() ->
-						ThumbnailUtil.getPortletFileEntryItemExternalReference(
+						ThumbnailUtil.getPortletFileEntryURLReference(
 							layoutPageTemplateEntry.getPreviewFileEntryId()));
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}

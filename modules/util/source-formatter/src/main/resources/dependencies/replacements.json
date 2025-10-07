@@ -4904,14 +4904,6 @@
 		"to": "setCompanyIdWithSafeCloseable"
 	},
 	{
-		"from": "PropsValues.XML_SITEMAP_INDEX_ENABLED",
-		"issueKey": "LPD-59753",
-		"newImports": [
-			"com.liferay.site.constants.LegacySitemapIndexPropsKeys"
-		],
-		"to": "LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED"
-	},
-	{
 		"classNames": [
 			"LayoutPageTemplateStructureLocalService",
 			"LayoutPageTemplateStructureLocalServiceUtil"
@@ -4919,6 +4911,14 @@
 		"from": "fetchLayoutPageTemplateStructure(long paramName, long paramName, boolean paramName)",
 		"issueKey": "LPD-58976",
 		"to": "fetchLayoutPageTemplateStructure(param#0#, param#1#)"
+	},
+	{
+		"from": "PropsValues.XML_SITEMAP_INDEX_ENABLED",
+		"issueKey": "LPD-59753",
+		"newImports": [
+			"com.liferay.site.constants.LegacySitemapIndexPropsKeys"
+		],
+		"to": "LegacySitemapIndexPropsKeys.XML_SITEMAP_INDEX_ENABLED"
 	},
 	{
 		"classNames": [

@@ -15,6 +15,8 @@ public class LPD_58976 {
 	public void method(long groupId, long plid, boolean rebuildStructure) {
 		LayoutPageTemplateStructureLocalServiceUtil.
 			fetchLayoutPageTemplateStructure(123, plid, rebuildStructure);
+		LayoutPageTemplateStructureLocalServiceUtil.
+			fetchLayoutPageTemplateStructure(groupId, plid, rebuildStructure);
 		_layoutPageTemplateStructureLocalService.
 			fetchLayoutPageTemplateStructure(groupId, plid, rebuildStructure);
 	}

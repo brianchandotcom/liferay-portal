@@ -94,7 +94,7 @@ public class MasterPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return LayoutPageTemplateEntry.class.getName();
 			}
 

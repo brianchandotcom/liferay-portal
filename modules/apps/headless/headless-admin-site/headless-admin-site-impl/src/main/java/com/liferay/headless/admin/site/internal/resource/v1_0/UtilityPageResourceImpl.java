@@ -95,7 +95,7 @@ public class UtilityPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return LayoutUtilityPageEntry.class.getName();
 			}
 

@@ -401,7 +401,7 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return _objectDefinition.getClassName();
 			}
 

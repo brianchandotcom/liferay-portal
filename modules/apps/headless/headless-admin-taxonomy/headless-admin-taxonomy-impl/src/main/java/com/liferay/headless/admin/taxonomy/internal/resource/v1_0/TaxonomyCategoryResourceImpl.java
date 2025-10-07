@@ -140,7 +140,7 @@ public class TaxonomyCategoryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return AssetCategory.class.getName();
 			}
 

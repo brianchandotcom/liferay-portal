@@ -95,7 +95,7 @@ public class BatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return BatchTestEntity.class.getName();
 			}
 

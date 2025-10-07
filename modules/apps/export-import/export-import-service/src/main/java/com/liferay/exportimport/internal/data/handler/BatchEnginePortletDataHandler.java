@@ -99,7 +99,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			Map<String, String> map =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					exportImportDescriptor.getItemClassName() +
+					exportImportDescriptor.getDeletionSystemEventClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -291,7 +291,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				if ((activeRegistrations.size() > 1) &&
 					!portletDataContext.getBooleanParameter(
 						getPortletId(),
-						exportImportDescriptor.getItemClassName())) {
+						exportImportDescriptor.
+							getDeletionSystemEventClassName())) {
 
 					continue;
 				}
@@ -345,7 +346,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			if ((activeRegistrations.size() > 1) &&
 				!portletDataContext.getBooleanParameter(
 					getPortletId(),
-					exportImportDescriptor.getItemClassName())) {
+					exportImportDescriptor.getDeletionSystemEventClassName())) {
 
 				continue;
 			}
@@ -534,9 +535,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(), exportImportDescriptor.getItemClassName(),
+			getPortletId(),
+			exportImportDescriptor.getDeletionSystemEventClassName(),
 			exportImportDescriptor.getLabel(), true, false, null,
-			exportImportDescriptor.getItemClassName(), null);
+			exportImportDescriptor.getDeletionSystemEventClassName(), null);
 	}
 
 	private String _getSiteExternalReferenceCode(
@@ -556,7 +558,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
-		return new StagedModelType(exportImportDescriptor.getItemClassName());
+		return new StagedModelType(
+			exportImportDescriptor.getDeletionSystemEventClassName());
 	}
 
 	private long _getUserId() {

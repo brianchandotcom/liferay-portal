@@ -147,7 +147,7 @@ public class TaxonomyVocabularyResourceImpl
 			ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return AssetVocabulary.class.getName();
 			}
 

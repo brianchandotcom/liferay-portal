@@ -251,7 +251,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 			exportImportDescriptor = _mockExportImportDescriptor();
 
 		Mockito.when(
-			exportImportDescriptor.getItemClassName()
+			exportImportDescriptor.getDeletionSystemEventClassName()
 		).thenReturn(
 			itemClassName
 		);

@@ -23,10 +23,10 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
-		public String getItemClassName();
+		public String getDeletionSystemEventClassName();
 
 		public default String getItemModelName() {
-			return getItemClassName();
+			return getDeletionSystemEventClassName();
 		}
 
 		public default String getLabel() {

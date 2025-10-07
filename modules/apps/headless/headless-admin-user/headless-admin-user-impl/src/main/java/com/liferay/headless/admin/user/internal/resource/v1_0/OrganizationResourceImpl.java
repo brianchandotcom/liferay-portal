@@ -304,7 +304,7 @@ public class OrganizationResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return com.liferay.portal.kernel.model.Organization.class.
 					getName();
 			}

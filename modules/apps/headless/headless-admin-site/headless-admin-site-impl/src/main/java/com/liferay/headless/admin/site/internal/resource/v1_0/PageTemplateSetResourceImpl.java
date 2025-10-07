@@ -76,7 +76,7 @@ public class PageTemplateSetResourceImpl
 			ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return LayoutPageTemplateCollection.class.getName();
 			}
 

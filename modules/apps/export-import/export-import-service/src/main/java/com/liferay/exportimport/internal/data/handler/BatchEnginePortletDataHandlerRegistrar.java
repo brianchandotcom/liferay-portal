@@ -230,7 +230,8 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					_setEnabledCompanyIds(
 						HashMapDictionaryBuilder.<String, Object>put(
 							"batch.engine.task.item.delegate.item.class.name",
-							exportImportDescriptor.getItemClassName()
+							exportImportDescriptor.
+								getDeletionSystemEventClassName()
 						).put(
 							"jakarta.portlet.name", portletId
 						).put(

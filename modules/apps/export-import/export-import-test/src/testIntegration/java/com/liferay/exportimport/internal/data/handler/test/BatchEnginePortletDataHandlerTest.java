@@ -1767,7 +1767,7 @@ public class BatchEnginePortletDataHandlerTest {
 			return new ExportImportDescriptor() {
 
 				@Override
-				public String getItemClassName() {
+				public String getDeletionSystemEventClassName() {
 					return _itemClassName;
 				}
 

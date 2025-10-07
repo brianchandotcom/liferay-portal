@@ -79,7 +79,7 @@ public class DisplayPageTemplateFolderResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getItemClassName() {
+			public String getDeletionSystemEventClassName() {
 				return LayoutPageTemplateCollection.class.getName();
 			}
 

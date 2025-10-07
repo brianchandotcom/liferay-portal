@@ -99,7 +99,8 @@ public class BatchEnginePortletDataHandlerUtil {
 				return sb.toString();
 			}
 		).put(
-			"itemClassName", exportImportDescriptor.getItemClassName()
+			"itemClassName",
+			exportImportDescriptor.getDeletionSystemEventClassName()
 		).put(
 			"itemModelName", exportImportDescriptor.getItemModelName()
 		).put(
@@ -166,7 +167,8 @@ public class BatchEnginePortletDataHandlerUtil {
 					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
 			}
 		).put(
-			"itemClassName", exportImportDescriptor.getItemClassName()
+			"itemClassName",
+			exportImportDescriptor.getDeletionSystemEventClassName()
 		).put(
 			"itemModelName", exportImportDescriptor.getItemModelName()
 		).put(

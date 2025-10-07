@@ -170,7 +170,8 @@ public class RenderLayoutStructureDisplayContext {
 			linkJSONObject = localizedJSONObject;
 		}
 
-		String value = _getFieldValue(linkJSONObject);
+		String value = _getFieldValue(
+			_getInfoItemReference(linkJSONObject), linkJSONObject);
 
 		if (Validator.isNotNull(value)) {
 			return value;
@@ -588,7 +589,11 @@ public class RenderLayoutStructureDisplayContext {
 		JSONObject backgroundImageJSONObject =
 			styledLayoutStructureItem.getBackgroundImageJSONObject();
 
-		long fileEntryId = _getFileEntryId(backgroundImageJSONObject);
+		InfoItemReference infoItemReference = _getInfoItemReference(
+			backgroundImageJSONObject);
+
+		long fileEntryId = _getFileEntryId(
+			infoItemReference, backgroundImageJSONObject);
 
 		if (fileEntryId != 0) {
 			sb.append("--background-image-file-entry-id:");
@@ -597,7 +602,7 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		String backgroundImageURL = _getBackgroundImage(
-			backgroundImageJSONObject);
+			infoItemReference, backgroundImageJSONObject);
 
 		if (Validator.isNotNull(backgroundImageURL)) {
 			sb.append("--lfr-background-image-");
@@ -722,12 +727,14 @@ public class RenderLayoutStructureDisplayContext {
 		return false;
 	}
 
-	private String _getBackgroundImage(JSONObject jsonObject) {
+	private String _getBackgroundImage(
+		InfoItemReference infoItemReference, JSONObject jsonObject) {
+
 		if (jsonObject == null) {
 			return StringPool.BLANK;
 		}
 
-		String value = _getFieldValue(jsonObject);
+		String value = _getFieldValue(infoItemReference, jsonObject);
 
 		if (Validator.isNotNull(value)) {
 			return value;
@@ -742,7 +749,9 @@ public class RenderLayoutStructureDisplayContext {
 		return StringPool.BLANK;
 	}
 
-	private String _getFieldValue(JSONObject jsonObject) {
+	private String _getFieldValue(
+		InfoItemReference infoItemReference, JSONObject jsonObject) {
+
 		String collectionFieldId = jsonObject.getString("collectionFieldId");
 
 		if (Validator.isNotNull(collectionFieldId)) {
@@ -785,18 +794,19 @@ public class RenderLayoutStructureDisplayContext {
 		String fieldId = jsonObject.getString("fieldId");
 
 		if (Validator.isNotNull(fieldId)) {
-			return _getValue(fieldId, _getInfoItemReference(jsonObject));
+			return _getValue(fieldId, infoItemReference);
 		}
 
 		return StringPool.BLANK;
 	}
 
-	private long _getFileEntryId(JSONObject jsonObject) throws Exception {
+	private long _getFileEntryId(
+			InfoItemReference infoItemReference, JSONObject jsonObject)
+		throws Exception {
+
 		if (jsonObject.has("fileEntryId")) {
 			return jsonObject.getLong("fileEntryId");
 		}
-
-		InfoItemReference infoItemReference = _getInfoItemReference(jsonObject);
 
 		if ((infoItemReference != null) && jsonObject.has("fieldId")) {
 			FragmentEntryProcessorHelper fragmentEntryProcessorHelper =
@@ -845,8 +855,7 @@ public class RenderLayoutStructureDisplayContext {
 			ServletContextUtil.getFragmentEntryProcessorHelper();
 
 		return fragmentEntryProcessorHelper.getFileEntryId(
-			infoItemReference, fieldId,
-			_themeDisplay.getLocale());
+			infoItemReference, fieldId, _themeDisplay.getLocale());
 	}
 
 	private String _getFormInputLabel(String infoFieldUniqueId) {

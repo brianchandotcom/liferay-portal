@@ -8,6 +8,7 @@ package com.liferay.asset.display.page.internal.upgrade.v3_0_0;
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.asset.display.page.upgrade.BaseUpgradeAssetDisplayPageEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -26,14 +27,18 @@ public class UpgradeAssetDisplayPageEntry
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		upgradeAssetDisplayPageTypes(
-			"BlogsEntry", "entryId", "com.liferay.blogs.model.BlogsEntry");
+		try (SafeCloseable safeCloseable = addTemporaryIndex(
+				"AssetDisplayPageEntry", false, "classNameId", "type_")) {
 
-		upgradeAssetDisplayPageTypes(
-			"JournalArticle", "resourcePrimKey",
-			"com.liferay.journal.model.JournalArticle");
+			upgradeAssetDisplayPageTypes(
+				"BlogsEntry", "entryId", "com.liferay.blogs.model.BlogsEntry");
 
-		_upgradeDLAssetDisplayPageTypes();
+			upgradeAssetDisplayPageTypes(
+				"JournalArticle", "resourcePrimKey",
+				"com.liferay.journal.model.JournalArticle");
+
+			_upgradeDLAssetDisplayPageTypes();
+		}
 	}
 
 	private void _upgradeDLAssetDisplayPageTypes() throws Exception {

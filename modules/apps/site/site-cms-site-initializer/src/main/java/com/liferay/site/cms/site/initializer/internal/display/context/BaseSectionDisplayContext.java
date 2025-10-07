@@ -929,7 +929,8 @@ public abstract class BaseSectionDisplayContext {
 
 	private static final List<Integer> _statuses = Arrays.asList(
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,
-		WorkflowConstants.STATUS_EXPIRED);
+		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_PENDING,
+		WorkflowConstants.STATUS_SCHEDULED);
 
 	private final DLConfiguration _dlConfiguration;
 	private final ObjectDefinitionService _objectDefinitionService;

@@ -57,7 +57,7 @@ public class TermUsersProvider implements UsersProvider {
 			NotificationContext notificationContext, List<String> values)
 		throws PortalException {
 
-		Map<Long, User> users = new LinkedHashMap<>();
+		Map<Long, User> usersMap = new LinkedHashMap<>();
 
 		List<String> screenNames = new ArrayList<>();
 		List<String> termNames = new ArrayList<>();
@@ -75,12 +75,12 @@ public class TermUsersProvider implements UsersProvider {
 			User user = _userLocalService.getUserByScreenName(
 				notificationContext.getCompanyId(), screenName);
 
-			if (users.containsKey(user.getUserId())) {
+			if (usersMap.containsKey(user.getUserId())) {
 				continue;
 			}
 
 			if (_hasViewPermission(user, notificationContext)) {
-				users.put(user.getUserId(), user);
+				usersMap.put(user.getUserId(), user);
 			}
 		}
 
@@ -111,26 +111,26 @@ public class TermUsersProvider implements UsersProvider {
 									Collections.singletonList(
 										role.getName()))) {
 
-							users.put(user.getUserId(), user);
+							usersMap.put(user.getUserId(), user);
 						}
 
 						continue;
 					}
 
-					if (users.containsKey(id)) {
+					if (usersMap.containsKey(id)) {
 						continue;
 					}
 
 					User user = _userLocalService.getUser(id);
 
 					if (_hasViewPermission(user, notificationContext)) {
-						users.put(id, user);
+						usersMap.put(id, user);
 					}
 				}
 			}
 		}
 
-		return new ArrayList<>(users.values());
+		return new ArrayList<>(usersMap.values());
 	}
 
 	private boolean _hasViewPermission(

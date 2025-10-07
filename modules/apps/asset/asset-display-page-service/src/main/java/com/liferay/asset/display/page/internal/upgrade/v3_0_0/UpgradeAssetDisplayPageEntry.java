@@ -103,17 +103,8 @@ public class UpgradeAssetDisplayPageEntry
 			}
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from AssetDisplayPageEntry where (classNameId = ? or " +
-					"classNameId = ?) and type_ = ?")) {
-
-			preparedStatement.setLong(1, dlFileEntryClassNameId);
-			preparedStatement.setLong(2, fileEntryClassNameId);
-			preparedStatement.setLong(
-				3, AssetDisplayPageConstants.TYPE_DEFAULT);
-
-			preparedStatement.executeUpdate();
-		}
+		cleanAssetDisplayPageEntry(
+			new long[] {dlFileEntryClassNameId, fileEntryClassNameId});
 	}
 
 }

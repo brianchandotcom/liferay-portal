@@ -29,10 +29,15 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select distinct groupId, companyId, ", pkColumnName,
-					" from ", tableName, " where ", pkColumnName,
-					" not in (select classPK from AssetDisplayPageEntry where ",
-					"classNameId in (", modelClassNameId, "))"));
+					"select distinct ", tableName, ".groupId, ", tableName,
+					".companyId, ", tableName, StringPool.PERIOD, pkColumnName,
+					" from ", tableName, " left join AssetDisplayPageEntry on ",
+					"AssetDisplayPageEntry.classPK = ", tableName,
+					StringPool.PERIOD, pkColumnName,
+					" and AssetDisplayPageEntry.classNameId = ",
+					modelClassNameId, " and AssetDisplayPageEntry.groupId = ",
+					tableName,
+					".groupId  where AssetDisplayPageEntry is null"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

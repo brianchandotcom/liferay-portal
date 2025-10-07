@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.change.tracking.web.internal.transformer;
+package com.liferay.change.tracking.web.internal.templateparser;
 
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.petra.string.StringBundler;

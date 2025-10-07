@@ -19,7 +19,6 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.Sign
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslatorImpl;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.pipeline.ElasticsearchPipelineAggregationTranslatorFixture;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
@@ -180,7 +179,7 @@ public class ElasticsearchAggregationTranslatorFixture {
 					elasticsearchQueryTranslator);
 
 		TopHitsAggregationTranslator topHitsAggregationTranslator =
-			new TopHitsAggregationTranslatorImpl();
+			new TopHitsAggregationTranslator();
 
 		ReflectionTestUtil.setFieldValue(
 			topHitsAggregationTranslator, "_queryTranslator",

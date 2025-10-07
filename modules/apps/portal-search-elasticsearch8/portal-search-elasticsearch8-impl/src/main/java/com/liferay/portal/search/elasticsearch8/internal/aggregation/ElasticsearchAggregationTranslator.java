@@ -557,10 +557,9 @@ public class ElasticsearchAggregationTranslator
 	private final SignificantTermsAggregationTranslator
 		_significantTermsAggregationTranslator =
 			new SignificantTermsAggregationTranslator();
-
-	@Reference
-	private SignificantTextAggregationTranslator
-		_significantTextAggregationTranslator;
+	private final SignificantTextAggregationTranslator
+		_significantTextAggregationTranslator =
+			new SignificantTextAggregationTranslator();
 
 	@Reference
 	private TermsAggregationTranslator _termsAggregationTranslator;

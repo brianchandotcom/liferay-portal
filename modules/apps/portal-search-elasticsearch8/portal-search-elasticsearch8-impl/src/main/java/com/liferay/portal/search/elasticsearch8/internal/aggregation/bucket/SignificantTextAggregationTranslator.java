@@ -20,16 +20,11 @@ import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Michael C. Han
  */
-@Component(service = SignificantTextAggregationTranslator.class)
-public class SignificantTextAggregationTranslatorImpl
-	implements SignificantTextAggregationTranslator {
+public class SignificantTextAggregationTranslator {
 
-	@Override
 	public SignificantTextAggregationBuilder translate(
 		SignificantTextAggregation significantTextAggregation,
 		AggregationTranslator<AggregationBuilder> aggregationTranslator,

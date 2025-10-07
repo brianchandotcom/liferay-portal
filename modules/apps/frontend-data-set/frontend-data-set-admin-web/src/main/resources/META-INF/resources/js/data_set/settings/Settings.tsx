@@ -6,6 +6,7 @@
 import ClayButton from '@clayui/button';
 import {Option, Picker, Text} from '@clayui/core';
 import DropDown from '@clayui/drop-down';
+import {ClayToggle} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
@@ -41,6 +42,8 @@ const Settings = ({
 		string | undefined
 	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
 	const [loading, setLoading] = useState(true);
+	const [showManagementBarInEmptyState, setShowManagementBarInEmptyState] =
+		useState(false);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
@@ -119,9 +122,30 @@ const Settings = ({
 		setLoading(false);
 	};
 
+	const getShowManagementBarInEmptyState = async () => {
+		const url = getDataSetResourceURL({
+			dataSetERC: dataSet.externalReferenceCode,
+			params: {
+				fields: 'showManagementBarInEmptyState',
+			},
+		});
+
+		const response = await fetch(url, {
+			headers: DEFAULT_FETCH_HEADERS,
+		});
+
+		if (response.ok) {
+			const responseJSON = await response.json();
+			setShowManagementBarInEmptyState(
+				responseJSON.showManagementBarInEmptyState || false
+			);
+		}
+	};
+
 	const updateFDSViewSettings = async () => {
 		const body = {
 			defaultVisualizationMode,
+			showManagementBarInEmptyState,
 		};
 
 		const url = getDataSetResourceURL({
@@ -154,6 +178,8 @@ const Settings = ({
 
 	useEffect(() => {
 		getActiveVisualizationModes();
+
+		getShowManagementBarInEmptyState();
 
 		// eslint-disable-next-line react-compiler/react-compiler
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -309,6 +335,44 @@ const Settings = ({
 									)}
 								</ClayLink>
 							)}
+						</ClayLayout.Col>
+					</ClayLayout.Row>
+				</ClayLayout.SheetSection>
+
+				<ClayLayout.SheetSection>
+					<h3 className="sheet-subtitle">
+						{Liferay.Language.get('user-customization')}
+					</h3>
+
+					<ClayLayout.Row className="align-items-center justify-content-between">
+						<ClayLayout.Col size={8}>
+							<div>
+								<label
+									htmlFor="show-management-bar-in-empty-state"
+									id="show-management-bar-in-empty-state"
+								>
+									{Liferay.Language.get(
+										'show-management-bar-in-empty-state'
+									)}
+								</label>
+							</div>
+
+							<div>
+								{Liferay.Language.get(
+									'show-management-bar-in-empty-state-help'
+								)}
+							</div>
+						</ClayLayout.Col>
+
+						<ClayLayout.Col size={4}>
+							<ClayToggle
+								checked={showManagementBarInEmptyState}
+								onChange={() =>
+									setShowManagementBarInEmptyState(
+										!showManagementBarInEmptyState
+									)
+								}
+							/>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.SheetSection>

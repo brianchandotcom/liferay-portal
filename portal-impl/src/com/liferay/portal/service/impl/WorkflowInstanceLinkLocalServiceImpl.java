@@ -11,8 +11,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchWorkflowInstanceLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
@@ -121,12 +119,6 @@ public class WorkflowInstanceLinkLocalServiceImpl
 				workflowInstanceId);
 
 		if (workflowInstanceLink == null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Workflow instance link is already deleted with the " +
-						"workflowInstanceId: " + workflowInstanceId);
-			}
-
 			return;
 		}
 
@@ -372,9 +364,6 @@ public class WorkflowInstanceLinkLocalServiceImpl
 				).build());
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowInstanceLinkLocalServiceImpl.class);
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;

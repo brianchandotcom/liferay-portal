@@ -10,7 +10,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
 
-import java.util.List;
 import java.util.Map;
 
 import net.htmlparser.jericho.Attributes;
@@ -39,27 +38,29 @@ public class CTJournalTransformerListener extends BaseTransformerListener {
 
 		Source source = new Source(output);
 
-		List<StartTag> imgTags = source.getAllStartTags("img");
+		StartTag imgTag = source.getFirstStartTag("img");
 
-		OutputDocument outputDocument = new OutputDocument(source);
+		if (imgTag == null) {
+			return output;
+		}
 
 		Long ctCollectionId = Long.valueOf(tokens.get("ct_collection_id"));
 
-		for (StartTag imgTag : imgTags) {
-			Attributes attributes = imgTag.getAttributes();
+		Attributes attributes = imgTag.getAttributes();
 
-			Map<String, String> map = outputDocument.replace(attributes, false);
+		OutputDocument outputDocument = new OutputDocument(source);
 
-			String src = attributes.getValue("src");
+		Map<String, String> map = outputDocument.replace(attributes, false);
 
-			int previewCTCollectionId = src.indexOf("previewCTCollectionId=");
+		String src = attributes.getValue("src");
 
-			map.put(
-				"src",
-				StringBundler.concat(
-					src.substring(0, previewCTCollectionId),
-					"previewCTCollectionId=", ctCollectionId));
-		}
+		int previewCTCollectionId = src.indexOf("previewCTCollectionId=");
+
+		map.put(
+			"src",
+			StringBundler.concat(
+				src.substring(0, previewCTCollectionId),
+				"previewCTCollectionId=", ctCollectionId));
 
 		return outputDocument.toString();
 	}

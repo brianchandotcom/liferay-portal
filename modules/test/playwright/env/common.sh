@@ -3,7 +3,7 @@
 function cluster_set_up {
 	default_set_up
 
-	prepare_additional_bundles ${1}
+	prepare_additional_bundles ${1} ${2}
 
 	local slave_home="${LIFERAY_HOME}-${1}"
 

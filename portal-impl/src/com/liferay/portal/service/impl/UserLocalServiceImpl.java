@@ -6112,9 +6112,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			try {
 				user = _checkPasswordPolicy(user);
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-59081")) {
-					sendUserLoginMessage(companyId, user.getUserId());
-				}
+				sendUserLoginMessage(companyId, user.getUserId());
 			}
 			catch (PortalException portalException) {
 				handleAuthenticationFailure(

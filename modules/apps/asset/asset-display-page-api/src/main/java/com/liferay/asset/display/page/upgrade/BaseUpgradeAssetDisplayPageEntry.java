@@ -7,9 +7,11 @@ package com.liferay.asset.display.page.upgrade;
 
 import com.liferay.asset.display.page.constants.AssetDisplayPageConstants;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.PreparedStatement;
@@ -20,6 +22,16 @@ import java.sql.Timestamp;
  * @author Jürgen Kappler
  */
 public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
+
+	protected void cleanAssetDisplayPageEntry(long[] classNameIds)
+		throws Exception {
+
+		runSQL(
+			StringBundler.concat(
+				"delete from AssetDisplayPageEntry where classNameId in (",
+				StringUtil.merge(classNameIds), ") and type_ = ",
+				AssetDisplayPageConstants.TYPE_DEFAULT));
+	}
 
 	protected void upgradeAssetDisplayPageTypes(
 			String tableName, String pkColumnName, String modelClassName)
@@ -76,16 +88,7 @@ public abstract class BaseUpgradeAssetDisplayPageEntry extends UpgradeProcess {
 			}
 		}
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from AssetDisplayPageEntry where classNameId = ? and " +
-					"type_ = ?")) {
-
-			preparedStatement.setLong(1, modelClassNameId);
-			preparedStatement.setLong(
-				2, AssetDisplayPageConstants.TYPE_DEFAULT);
-
-			preparedStatement.executeUpdate();
-		}
+		cleanAssetDisplayPageEntry(new long[] {modelClassNameId});
 	}
 
 }

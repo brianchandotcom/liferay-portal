@@ -460,6 +460,7 @@ public class JenkinsCohort {
 		_addNodeData(
 			jsonObject, timestampCount, "downstream_started_builds",
 			getStartedDownstreamBuildCountAfter(previousDate));
+
 		_addNodeData(
 			jsonObject, timestampCount, "idle_nodes",
 			getIdleJenkinsSlaveCount());
@@ -476,6 +477,7 @@ public class JenkinsCohort {
 			jsonObject, timestampCount, "queued_builds", getQueuedBuildCount());
 		_addNodeData(
 			jsonObject, timestampCount, "timestamps", currentTimestamp);
+
 		_addNodeData(
 			jsonObject, timestampCount, "top_level_started_builds",
 			getStartedTopLevelBuildCountAfter(previousDate));

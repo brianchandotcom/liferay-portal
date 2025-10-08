@@ -17,7 +17,7 @@ import StructureTree from './StructureTree';
 
 export default function () {
 	return (
-		<div className="border structure-builder__sidebar">
+		<div className="border rounded-lg structure-builder__sidebar">
 			<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
 				{Liferay.Language.get('content-structure-fields')}
 			</h3>

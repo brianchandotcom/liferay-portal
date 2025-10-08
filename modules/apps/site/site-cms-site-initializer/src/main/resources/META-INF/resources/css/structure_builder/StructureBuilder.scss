@@ -5,16 +5,11 @@ $structureFieldsWidth: 448px;
 .structure-builder {
 	&__sidebar {
 		background-color: $cadmin-light-l1;
-		border-radius: 8px;
 		width: $structureFieldsWidth;
-
-		& .management-bar {
-			min-height: 3rem;
-		}
 	}
 
 	&__title-input {
-		font-size: 28px;
+		font-size: 1.75rem;
 	}
 
 	&__tree {

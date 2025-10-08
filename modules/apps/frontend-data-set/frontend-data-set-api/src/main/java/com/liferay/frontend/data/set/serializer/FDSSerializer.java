@@ -75,6 +75,12 @@ public interface FDSSerializer {
 	public String serializePropsTransformer(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public default Boolean serializeShowManagementBarInEmptyState(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		return false;
+	}
+
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 

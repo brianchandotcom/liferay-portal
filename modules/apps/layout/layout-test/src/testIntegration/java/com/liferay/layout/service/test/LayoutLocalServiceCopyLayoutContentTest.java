@@ -1216,6 +1216,27 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 			editableValuesJSONObject.getString("instanceId"));
 	}
 
+	private void _assertFragmentEntryLink(
+		FragmentEntryLink expectedFragmentEntryLink,
+		FragmentEntryLink fragmentEntryLink) {
+
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getConfiguration(),
+			fragmentEntryLink.getConfiguration());
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getCss(), fragmentEntryLink.getCss());
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getEditableValues(),
+			fragmentEntryLink.getEditableValues());
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getHtml(), fragmentEntryLink.getHtml());
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getJs(), fragmentEntryLink.getJs());
+		Assert.assertEquals(
+			expectedFragmentEntryLink.getLastPropagationDate(),
+			fragmentEntryLink.getLastPropagationDate());
+	}
+
 	private long[] _assertFragmentEntryLinksAndGetOriginalFragmentEntryLinkIds(
 		List<FragmentEntryLink> copiedFragmentEntryLinks,
 		List<FragmentEntryLink> sourceFragmentEntryLinks) {
@@ -1256,24 +1277,9 @@ public class LayoutLocalServiceCopyLayoutContentTest {
 					sourceFragmentEntryLink.getFragmentEntryLinkId());
 
 			Assert.assertNotNull(copiedFragmentEntryLink);
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getConfiguration(),
-				copiedFragmentEntryLink.getConfiguration());
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getCss(),
-				copiedFragmentEntryLink.getCss());
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getEditableValues(),
-				copiedFragmentEntryLink.getEditableValues());
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getHtml(),
-				copiedFragmentEntryLink.getHtml());
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getJs(),
-				copiedFragmentEntryLink.getJs());
-			Assert.assertEquals(
-				sourceFragmentEntryLink.getLastPropagationDate(),
-				copiedFragmentEntryLink.getLastPropagationDate());
+
+			_assertFragmentEntryLink(
+				sourceFragmentEntryLink, copiedFragmentEntryLink);
 		}
 
 		return originalFragmentEntryLinkIds;

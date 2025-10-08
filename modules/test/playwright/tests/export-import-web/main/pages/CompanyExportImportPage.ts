@@ -143,7 +143,7 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.continueButton.click();
 
 		if (includePermissions) {
-			await this.exportImportPage.importPermissionsButton.click();
+			await this.exportImportPage.importPermissionsCheckbox.check();
 		}
 
 		if (useCurrentUser) {

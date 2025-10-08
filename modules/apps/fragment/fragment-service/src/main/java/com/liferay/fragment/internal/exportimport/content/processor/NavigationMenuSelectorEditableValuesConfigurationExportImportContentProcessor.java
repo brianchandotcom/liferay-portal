@@ -122,6 +122,23 @@ public class
 		}
 	}
 
+	private long _getGroupId(
+		String externalReferenceCode, PortletDataContext portletDataContext) {
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return portletDataContext.getScopeGroupId();
+		}
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			externalReferenceCode, portletDataContext.getCompanyId());
+
+		if (group == null) {
+			return portletDataContext.getScopeGroupId();
+		}
+
+		return group.getGroupId();
+	}
+
 	private StagedModel _getStagedModel(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
@@ -142,28 +159,13 @@ public class
 		}
 
 		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
-			long groupId = portletDataContext.getScopeGroupId();
-
-			String siteNavigationMenuScopeExternalReferenceCode =
-				jsonObject.getString(
-					"siteNavigationMenuScopeExternalReferenceCode");
-
-			if (Validator.isNotNull(
-					siteNavigationMenuScopeExternalReferenceCode)) {
-
-				Group group =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						siteNavigationMenuScopeExternalReferenceCode,
-						portletDataContext.getCompanyId());
-
-				if (group != null) {
-					groupId = group.getGroupId();
-				}
-			}
-
 			return _siteNavigationMenuLocalService.
 				fetchSiteNavigationMenuByExternalReferenceCode(
-					siteNavigationMenuExternalReferenceCode, groupId);
+					siteNavigationMenuExternalReferenceCode,
+					_getGroupId(
+						jsonObject.getString(
+							"siteNavigationMenuScopeExternalReferenceCode"),
+						portletDataContext));
 		}
 
 		return null;

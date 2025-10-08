@@ -7,6 +7,7 @@ package com.liferay.portal.search.elasticsearch8.internal.aggregation.pipeline;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.BucketMetricsPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
@@ -33,15 +34,21 @@ import java.util.List;
 
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregatorBuilders;
+import org.elasticsearch.search.aggregations.pipeline.AvgBucketPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.BucketMetricsPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.BucketSelectorPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.BucketSortPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.CumulativeSumPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.MinBucketPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.MovFnPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.SerialDiffPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.SumBucketPipelineAggregationBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
@@ -69,12 +76,16 @@ public class ElasticsearchPipelineAggregationTranslator
 	public PipelineAggregationBuilder visit(
 		AvgBucketPipelineAggregation avgBucketPipelineAggregation) {
 
-		return _bucketMetricsPipelineAggregationTranslator.translate(
-			bucketMetricsPipelineAggregation ->
+		AvgBucketPipelineAggregationBuilder
+			avgBucketPipelineAggregationBuilder =
 				PipelineAggregatorBuilders.avgBucket(
-					bucketMetricsPipelineAggregation.getName(),
-					bucketMetricsPipelineAggregation.getBucketsPath()),
-			avgBucketPipelineAggregation);
+					avgBucketPipelineAggregation.getName(),
+					avgBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			avgBucketPipelineAggregation, avgBucketPipelineAggregationBuilder);
+
+		return avgBucketPipelineAggregationBuilder;
 	}
 
 	@Override
@@ -214,12 +225,13 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		ExtendedStatsBucketPipelineAggregationBuilder
 			extendedStatsBucketPipelineAggregationBuilder =
-				_bucketMetricsPipelineAggregationTranslator.translate(
-					bucketMetricsPipelineAggregation ->
-						PipelineAggregatorBuilders.extendedStatsBucket(
-							bucketMetricsPipelineAggregation.getName(),
-							bucketMetricsPipelineAggregation.getBucketsPath()),
-					extendedStatsBucketPipelineAggregation);
+				PipelineAggregatorBuilders.extendedStatsBucket(
+					extendedStatsBucketPipelineAggregation.getName(),
+					extendedStatsBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			extendedStatsBucketPipelineAggregation,
+			extendedStatsBucketPipelineAggregationBuilder);
 
 		if (extendedStatsBucketPipelineAggregation.getSigma() != null) {
 			extendedStatsBucketPipelineAggregationBuilder.sigma(
@@ -233,24 +245,32 @@ public class ElasticsearchPipelineAggregationTranslator
 	public PipelineAggregationBuilder visit(
 		MaxBucketPipelineAggregation maxBucketPipelineAggregation) {
 
-		return _bucketMetricsPipelineAggregationTranslator.translate(
-			bucketMetricsPipelineAggregation ->
+		MaxBucketPipelineAggregationBuilder
+			maxBucketPipelineAggregationBuilder =
 				PipelineAggregatorBuilders.maxBucket(
-					bucketMetricsPipelineAggregation.getName(),
-					bucketMetricsPipelineAggregation.getBucketsPath()),
-			maxBucketPipelineAggregation);
+					maxBucketPipelineAggregation.getName(),
+					maxBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			maxBucketPipelineAggregation, maxBucketPipelineAggregationBuilder);
+
+		return maxBucketPipelineAggregationBuilder;
 	}
 
 	@Override
 	public PipelineAggregationBuilder visit(
 		MinBucketPipelineAggregation minBucketPipelineAggregation) {
 
-		return _bucketMetricsPipelineAggregationTranslator.translate(
-			bucketMetricsPipelineAggregation ->
+		MinBucketPipelineAggregationBuilder
+			minBucketPipelineAggregationBuilder =
 				PipelineAggregatorBuilders.minBucket(
-					bucketMetricsPipelineAggregation.getName(),
-					bucketMetricsPipelineAggregation.getBucketsPath()),
-			minBucketPipelineAggregation);
+					minBucketPipelineAggregation.getName(),
+					minBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			minBucketPipelineAggregation, minBucketPipelineAggregationBuilder);
+
+		return minBucketPipelineAggregationBuilder;
 	}
 
 	@Override
@@ -286,12 +306,13 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		PercentilesBucketPipelineAggregationBuilder
 			percentilesBucketPipelineAggregationBuilder =
-				_bucketMetricsPipelineAggregationTranslator.translate(
-					bucketMetricsPipelineAggregation ->
-						PipelineAggregatorBuilders.percentilesBucket(
-							bucketMetricsPipelineAggregation.getName(),
-							bucketMetricsPipelineAggregation.getBucketsPath()),
-					percentilesBucketPipelineAggregation);
+				PipelineAggregatorBuilders.percentilesBucket(
+					percentilesBucketPipelineAggregation.getName(),
+					percentilesBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			percentilesBucketPipelineAggregation,
+			percentilesBucketPipelineAggregationBuilder);
 
 		if (ArrayUtil.isNotEmpty(
 				percentilesBucketPipelineAggregation.getPercents())) {
@@ -336,29 +357,52 @@ public class ElasticsearchPipelineAggregationTranslator
 	public PipelineAggregationBuilder visit(
 		StatsBucketPipelineAggregation statsBucketPipelineAggregation) {
 
-		return _bucketMetricsPipelineAggregationTranslator.translate(
-			bucketMetricsPipelineAggregation ->
+		StatsBucketPipelineAggregationBuilder
+			statsBucketPipelineAggregationBuilder =
 				PipelineAggregatorBuilders.statsBucket(
-					bucketMetricsPipelineAggregation.getName(),
-					bucketMetricsPipelineAggregation.getBucketsPath()),
-			statsBucketPipelineAggregation);
+					statsBucketPipelineAggregation.getName(),
+					statsBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			statsBucketPipelineAggregation,
+			statsBucketPipelineAggregationBuilder);
+
+		return statsBucketPipelineAggregationBuilder;
 	}
 
 	@Override
 	public PipelineAggregationBuilder visit(
 		SumBucketPipelineAggregation sumBucketPipelineAggregation) {
 
-		return _bucketMetricsPipelineAggregationTranslator.translate(
-			bucketMetricsPipelineAggregation ->
+		SumBucketPipelineAggregationBuilder
+			sumBucketPipelineAggregationBuilder =
 				PipelineAggregatorBuilders.sumBucket(
-					bucketMetricsPipelineAggregation.getName(),
-					bucketMetricsPipelineAggregation.getBucketsPath()),
-			sumBucketPipelineAggregation);
+					sumBucketPipelineAggregation.getName(),
+					sumBucketPipelineAggregation.getBucketsPath());
+
+		_assemble(
+			sumBucketPipelineAggregation, sumBucketPipelineAggregationBuilder);
+
+		return sumBucketPipelineAggregationBuilder;
 	}
 
-	private final BucketMetricsPipelineAggregationTranslator
-		_bucketMetricsPipelineAggregationTranslator =
-			new BucketMetricsPipelineAggregationTranslator();
+	private void _assemble(
+		BucketMetricsPipelineAggregation bucketMetricsPipelineAggregation,
+		BucketMetricsPipelineAggregationBuilder
+			bucketMetricsPipelineAggregationBuilder) {
+
+		if (bucketMetricsPipelineAggregation.getFormat() != null) {
+			bucketMetricsPipelineAggregationBuilder.format(
+				bucketMetricsPipelineAggregation.getFormat());
+		}
+
+		if (bucketMetricsPipelineAggregation.getGapPolicy() != null) {
+			bucketMetricsPipelineAggregationBuilder.gapPolicy(
+				_gapPolicyTranslator.translate(
+					bucketMetricsPipelineAggregation.getGapPolicy()));
+		}
+	}
+
 	private final GapPolicyTranslator _gapPolicyTranslator =
 		new GapPolicyTranslator();
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();

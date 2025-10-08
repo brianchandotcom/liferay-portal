@@ -29,11 +29,11 @@ const testAdditionalProps = {
 		image: 'document-image',
 	},
 	objectDefinitionCssClasses: {
-		L_BASIC_WEB_CONTENT: 'content-icon-basic-content',
+		L_CMS_BASIC_WEB_CONTENT: 'content-icon-basic-content',
 		default: 'content-icon-custom-structure',
 	},
 	objectDefinitionIcons: {
-		L_BASIC_WEB_CONTENT: 'web-content',
+		L_CMS_BASIC_WEB_CONTENT: 'web-content',
 		default: 'forms',
 	},
 };
@@ -45,7 +45,7 @@ const testBaseProps = {
 		embedded: {
 			systemProperties: {
 				objectDefinitionBrief: {
-					externalReferenceCode: 'L_BASIC_WEB_CONTENT',
+					externalReferenceCode: 'L_CMS_BASIC_WEB_CONTENT',
 				},
 			},
 		},

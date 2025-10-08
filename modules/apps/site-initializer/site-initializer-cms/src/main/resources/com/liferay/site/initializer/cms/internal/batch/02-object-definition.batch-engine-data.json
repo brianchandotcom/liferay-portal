@@ -125,12 +125,12 @@
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
-			"externalReferenceCode": "L_BASIC_WEB_CONTENT",
+			"externalReferenceCode": "L_CMS_BASIC_WEB_CONTENT",
 			"label": {
 				"en_US": "Basic Web Content"
 			},
 			"modifiable": true,
-			"name": "BasicWebContent",
+			"name": "CMSBasicWebContent",
 			"objectDefinitionSettings": [
 				{
 					"name": "acceptAllGroups",

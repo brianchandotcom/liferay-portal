@@ -193,7 +193,8 @@ public class ObjectEntryModelListenerTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", objectEntryFolder2.getCompanyId());
+					"L_CMS_BASIC_WEB_CONTENT",
+					objectEntryFolder2.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

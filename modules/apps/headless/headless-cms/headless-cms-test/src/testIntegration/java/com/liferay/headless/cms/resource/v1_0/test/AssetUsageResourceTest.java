@@ -143,10 +143,10 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_DOCUMENT", testCompany.getCompanyId());
-		_basicWebContentObjectDefinition =
+		_cmsBasicWebContentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
+					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
 		_serviceContext = new ServiceContext() {
 			{
@@ -175,13 +175,13 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	public void testGetAssetUsagesAssetPage() throws Exception {
 		_addObjectRelationship(
 			_cmsBasicDocumentObjectDefinition,
-			_basicWebContentObjectDefinition);
+			_cmsBasicWebContentObjectDefinition);
 
 		long assetId = testGetAssetUsagesAssetPage_getAssetId();
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_depotEntry.getGroupId(), TestPropsValues.getUserId(),
-			_basicWebContentObjectDefinition.getObjectDefinitionId(),
+			_cmsBasicWebContentObjectDefinition.getObjectDefinitionId(),
 			_objectEntryFolder.getObjectEntryFolderId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"title_i18n",
@@ -197,7 +197,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 		assetUsage1.setName(() -> objectEntry.getTitleValue(_LANGUAGE_ID));
 		assetUsage1.setType(
-			() -> _basicWebContentObjectDefinition.getLabel(_LANGUAGE_ID));
+			() -> _cmsBasicWebContentObjectDefinition.getLabel(_LANGUAGE_ID));
 		assetUsage1.setUrl(
 			() -> StringBundler.concat(
 				_themeDisplay.getPortalURL(), _portal.getPathMain(),
@@ -413,8 +413,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	private static final String _LANGUAGE_ID = "en_US";
 
-	private ObjectDefinition _basicWebContentObjectDefinition;
-
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -422,6 +420,7 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	private ObjectDefinition _cmsBasicDocumentObjectDefinition;
+	private ObjectDefinition _cmsBasicWebContentObjectDefinition;
 
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;

@@ -54,7 +54,7 @@ public class ViewAllSectionDisplayContextTest
 		return LinkedHashMapBuilder.put(
 			"basic-content",
 			getRedirect(
-				"L_BASIC_WEB_CONTENT",
+				"L_CMS_BASIC_WEB_CONTENT",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
 			"single-file",

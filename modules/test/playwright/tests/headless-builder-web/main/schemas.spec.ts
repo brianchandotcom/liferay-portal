@@ -10,6 +10,7 @@ import {
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {headlessDiscoveryPagesTest} from '../../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
@@ -19,6 +20,7 @@ export const testFeatureFlagsEnabled = mergeTests(
 	headlessBuilderPagesTest({
 		'LPD-21414': {enabled: true},
 	}),
+	headlessDiscoveryPagesTest,
 	loginTest()
 );
 
@@ -168,7 +170,7 @@ const objectDefinition1Data: ObjectDefinition = {
 	},
 };
 
-const applicationData = {
+const applicationData1 = {
 	apiApplicationToAPISchemas: [
 		{
 			description: 'API Application Schema',
@@ -178,6 +180,28 @@ const applicationData = {
 		},
 	],
 	applicationStatus: 'published',
+	baseURL: 'basic-application',
+	description: 'Test API Application',
+	externalReferenceCode: 'basic-application',
+	title: 'Basic application',
+};
+
+const applicationData2 = {
+	apiApplicationToAPISchemas: [
+		{
+			description: 'API Application Schema',
+			externalReferenceCode: 'api-application-schema',
+			mainObjectDefinitionERC: 'L_API_APPLICATION',
+			name: 'API Application Schema',
+		},
+		{
+			description: 'API Application Second Schema',
+			externalReferenceCode: 'api-application-second-schema',
+			mainObjectDefinitionERC: 'L_API_APPLICATION',
+			name: 'API Application Second Schema',
+		},
+	],
+	applicationStatus: 'unpublished',
 	baseURL: 'basic-application',
 	description: 'Test API Application',
 	externalReferenceCode: 'basic-application',
@@ -240,7 +264,7 @@ testFeatureFlagsDisabled(
 		}
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			applicationData,
+			applicationData1,
 			'headless-builder/applications'
 		);
 
@@ -280,7 +304,7 @@ testFeatureFlagsDisabled(
 		});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			applicationData,
+			applicationData1,
 			'headless-builder/applications'
 		);
 
@@ -320,7 +344,7 @@ testFeatureFlagsEnabled(
 		});
 
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			applicationData,
+			applicationData1,
 			'headless-builder/applications'
 		);
 
@@ -659,5 +683,172 @@ testFeatureFlagsEnabled(
 			await property.waitFor({state: 'attached'});
 			await expect(property).not.toHaveClass(/disabled/);
 		}
+	}
+);
+
+testFeatureFlagsEnabled(
+	'cannot edit object field of a related schema in unpublished application',
+	{tag: ['@LPD-67357']},
+	async ({
+		apiHelpers,
+		applicationPage,
+		headlessBuilderPage,
+		page,
+		schemaPage,
+	}) => {
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				apiApplicationToAPISchemas: [
+					{
+						description: 'Schema for My-app2',
+						externalReferenceCode: 'testSchema',
+						mainObjectDefinitionERC: 'L_API_APPLICATION',
+						name: 'testSchema',
+					},
+				],
+				applicationStatus: 'unpublished',
+				baseURL: 'my-app2',
+				description: 'Unpublished App with schema',
+				externalReferenceCode: 'my-app2',
+				title: 'My-app2',
+			},
+			'headless-builder/applications'
+		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		await headlessBuilderPage.openApplicationAndEdit(application.title);
+		await applicationPage.goToSchemasTab();
+		await schemaPage.goTo('testSchema');
+
+		const objectInput = page.getByLabel(
+			'Object Definition APIApplication is Selected'
+		);
+		await expect(objectInput).toBeDisabled();
+		await expect(objectInput).toHaveText('APIApplication');
+	}
+);
+
+testFeatureFlagsEnabled(
+	'can edit schema name and description in an unpublished application',
+	{tag: ['@LPD-67357']},
+	async ({
+		apiHelpers,
+		applicationPage,
+		headlessBuilderPage,
+		page,
+		schemaPage,
+	}) => {
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				apiApplicationToAPISchemas: [
+					{
+						description: 'Schema for My-app2',
+						externalReferenceCode: 'testSchema',
+						mainObjectDefinitionERC: 'L_API_APPLICATION',
+						name: 'testSchema',
+					},
+				],
+				applicationStatus: 'unpublished',
+				baseURL: 'my-app2',
+				description: 'Unpublished App',
+				externalReferenceCode: 'my-app2',
+				title: 'My-app2',
+			},
+			'headless-builder/applications'
+		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		await headlessBuilderPage.openApplicationAndEdit(application.title);
+		await applicationPage.goToSchemasTab();
+		await schemaPage.goTo('testSchema');
+
+		await page.getByLabel('Name').fill('testSchema edited');
+		await page.getByLabel('Description').fill('Description edited');
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page.getByText('API schema changes were saved.')
+		).toBeVisible();
+
+		await expect(page.getByLabel('Name')).toHaveValue('testSchema edited');
+		await expect(page.getByLabel('Description')).toHaveValue(
+			'Description edited'
+		);
+	}
+);
+
+testFeatureFlagsEnabled(
+	'can relate the same schema with multiple endpoints',
+	{tag: ['@LPD-67357']},
+	async ({apiHelpers, applicationPage, headlessBuilderPage, page}) => {
+		const application = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				...applicationData2,
+				apiApplicationToAPIEndpoints: [
+					{
+						description: 'Test API Endpoint',
+						externalReferenceCode: 'basic-endpoint',
+						httpMethod: 'get',
+						name: 'Basic API Endpoint',
+						path: '/endpoint/',
+						r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
+							'api-application-schema',
+						retrieveType: 'collection',
+						scope: 'company',
+					},
+				],
+				applicationStatus: 'unpublished',
+				baseURL: 'basic-application',
+				description: 'Test API Application',
+				externalReferenceCode: 'basic-application',
+				title: 'Basic application',
+			},
+			'headless-builder/applications'
+		);
+
+		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+		await apiHelpers.objectEntry.postObjectEntry(
+			{
+				description: 'Test API Endpoint',
+				externalReferenceCode: 'second-endpoint',
+				httpMethod: 'get',
+				name: 'Second API Endpoint',
+				path: '/second-endpoint/',
+				r_apiApplicationToAPIEndpoints_l_apiApplicationId:
+					application.id,
+				r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC:
+					'api-application-second-schema',
+				retrieveType: 'collection',
+				scope: 'company',
+			},
+			'headless-builder/endpoints'
+		);
+
+		await headlessBuilderPage.openApplicationAndEdit(application.title);
+		await applicationPage.goToEndpointsTab();
+		await applicationPage.goToEditEndpoint('/endpoint/');
+		await applicationPage.goToEndpointConfigurationTab();
+		await page.getByLabel('Response Body Schema').click();
+		await page
+			.getByRole('menuitem', {name: 'API Application Second Schema'})
+			.click();
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		const response =
+			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+				'headless-builder/endpoints'
+			);
+
+		const schemaERCs = response.items.map(
+			(endpoint: any) =>
+				endpoint?.r_responseAPISchemaToAPIEndpoints_l_apiSchemaERC
+		);
+
+		expect(schemaERCs.sort().join(',')).toEqual(
+			'api-application-second-schema,api-application-second-schema'
+		);
 	}
 );

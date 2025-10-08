@@ -769,7 +769,7 @@ testWithRepeatableFF(
 
 		const title = getRandomString();
 
-		await page.getByLabel('Title').fill(title);
+		await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
 
 		// Add Repeatable Groups
 

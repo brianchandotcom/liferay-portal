@@ -7,7 +7,7 @@ clarity-solution-custom-element-distributors-map:
     friendlyURLMapping: clarity-solution-custom-element-distributors-map
     htmlElementName: clarity-solution-custom-element-distributors-map
     instanceable: false
-    name: Clarity Distributor Map
+    name: Clarity Solution Custom Element Distributors Map
     portletCategoryName: category.client-extensions
     type: customElement
     urls:

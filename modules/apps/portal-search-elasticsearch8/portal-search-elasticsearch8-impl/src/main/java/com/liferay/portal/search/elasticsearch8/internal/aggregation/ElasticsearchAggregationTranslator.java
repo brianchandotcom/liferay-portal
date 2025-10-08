@@ -49,15 +49,19 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.IncludeExcludeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.significance.SignificanceHeuristicTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
+import com.liferay.portal.search.script.ScriptField;
+import com.liferay.portal.search.sort.Sort;
+import com.liferay.portal.search.sort.SortFieldTranslator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +99,11 @@ import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder
 import org.elasticsearch.search.aggregations.metrics.PercentileRanksAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.TopHitsAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -819,8 +827,97 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(TopHitsAggregation topHitsAggregation) {
-		return _topHitsAggregationTranslator.translate(
-			topHitsAggregation, this, _pipelineAggregationTranslator);
+		TopHitsAggregationBuilder topHitsAggregationBuilder =
+			AggregationBuilders.topHits(topHitsAggregation.getName());
+
+		if (topHitsAggregation.getExplain() != null) {
+			topHitsAggregationBuilder.explain(topHitsAggregation.getExplain());
+		}
+
+		if (ListUtil.isNotEmpty(topHitsAggregation.getSelectedFields())) {
+			List<String> selectedFields =
+				topHitsAggregation.getSelectedFields();
+
+			selectedFields.forEach(topHitsAggregationBuilder::docValueField);
+		}
+
+		if (topHitsAggregation.getFetchSource() != null) {
+			topHitsAggregationBuilder.fetchSource(
+				topHitsAggregation.getFetchSource());
+
+			if (topHitsAggregation.getFetchSource() &&
+				((topHitsAggregation.getFetchSourceInclude() != null) ||
+				 (topHitsAggregation.getFetchSourceExclude() != null))) {
+
+				topHitsAggregationBuilder.fetchSource(
+					topHitsAggregation.getFetchSourceInclude(),
+					topHitsAggregation.getFetchSourceExclude());
+			}
+		}
+
+		if (topHitsAggregation.getFrom() != null) {
+			topHitsAggregationBuilder.from(topHitsAggregation.getFrom());
+		}
+
+		if (topHitsAggregation.getHighlight() != null) {
+			HighlightBuilder highlightBuilder = _highlightTranslator.translate(
+				topHitsAggregation.getHighlight(), _queryTranslator);
+
+			topHitsAggregationBuilder.highlighter(highlightBuilder);
+		}
+
+		if (topHitsAggregation.getScriptFields() != null) {
+			List<ScriptField> scriptFields =
+				topHitsAggregation.getScriptFields();
+
+			List<SearchSourceBuilder.ScriptField>
+				searchSourceBuilderScriptFields = new ArrayList<>(
+					scriptFields.size());
+
+			scriptFields.forEach(
+				scriptField -> {
+					Script script = _scriptTranslator.translate(
+						scriptField.getScript());
+
+					SearchSourceBuilder.ScriptField
+						searchSourceBuilderScriptField =
+							new SearchSourceBuilder.ScriptField(
+								scriptField.getField(), script,
+								scriptField.isIgnoreFailure());
+
+					searchSourceBuilderScriptFields.add(
+						searchSourceBuilderScriptField);
+				});
+
+			topHitsAggregationBuilder.scriptFields(
+				searchSourceBuilderScriptFields);
+		}
+
+		if (topHitsAggregation.getSize() != null) {
+			topHitsAggregationBuilder.size(topHitsAggregation.getSize());
+		}
+
+		if (ListUtil.isNotEmpty(topHitsAggregation.getSortFields())) {
+			List<Sort> sorts = topHitsAggregation.getSortFields();
+
+			List<SortBuilder<?>> sortBuilders = new ArrayList<>(sorts.size());
+
+			sorts.forEach(
+				sort -> sortBuilders.add(_sortFieldTranslator.translate(sort)));
+
+			topHitsAggregationBuilder.sorts(sortBuilders);
+		}
+
+		if (topHitsAggregation.getTrackScores() != null) {
+			topHitsAggregationBuilder.trackScores(
+				topHitsAggregation.getTrackScores());
+		}
+
+		if (topHitsAggregation.getVersion() != null) {
+			topHitsAggregationBuilder.version(topHitsAggregation.getVersion());
+		}
+
+		return topHitsAggregationBuilder;
 	}
 
 	@Override
@@ -907,6 +1004,8 @@ public class ElasticsearchAggregationTranslator
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
 		new GeoDistanceTypeTranslator();
+	private final HighlightTranslator _highlightTranslator =
+		new HighlightTranslator();
 	private final IncludeExcludeTranslator _includeExcludeTranslator =
 		new IncludeExcludeTranslator();
 	private final OrderTranslator _orderTranslator = new OrderTranslator();
@@ -921,10 +1020,10 @@ public class ElasticsearchAggregationTranslator
 	private final SignificanceHeuristicTranslator
 		_significanceHeuristicTranslator =
 			new SignificanceHeuristicTranslator();
+	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
+		new ElasticsearchSortFieldTranslator();
 	private final TermsAggregationTranslator _termsAggregationTranslator =
 		new TermsAggregationTranslator();
-	private final TopHitsAggregationTranslator _topHitsAggregationTranslator =
-		new TopHitsAggregationTranslator();
 	private final WeightedAvgAggregationTranslator
 		_weightedAvgAggregationTranslator =
 			new WeightedAvgAggregationTranslator();

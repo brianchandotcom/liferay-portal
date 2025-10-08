@@ -1119,14 +1119,14 @@ public class GroupServiceTest {
 		Assert.assertFalse(layout.hasScopeGroup());
 
 		Group scopeGroup = _groupLocalService.addGroup(
-			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			Layout.class.getName(), layout.getPlid(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, Layout.class.getName(),
+			layout.getPlid(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), layout.getName(LocaleUtil.getDefault())
 			).build(),
-			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
-			false, true, null);
+			null, 0, null, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			null, false, false, true, null);
 
 		_groups.addFirst(scopeGroup);
 
@@ -1328,7 +1328,7 @@ public class GroupServiceTest {
 		_testUpdateGroupWithDifferentDefaultLocale(
 			"Spanish",
 			_groupLocalService.addGroup(
-				TestPropsValues.getUserId(),
+				StringPool.BLANK, TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, null, 0,
 				GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				HashMapBuilder.put(
@@ -1336,16 +1336,16 @@ public class GroupServiceTest {
 				).put(
 					LocaleUtil.US, "English"
 				).build(),
-				null, GroupConstants.TYPE_SITE_OPEN, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, true,
-				ServiceContextTestUtil.getServiceContext()));
+				null, GroupConstants.TYPE_SITE_OPEN, null, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true,
+				false, true, ServiceContextTestUtil.getServiceContext()));
 
 		long classPK = RandomTestUtil.nextLong();
 
 		_testUpdateGroupWithDifferentDefaultLocale(
 			String.valueOf(classPK),
 			_groupLocalService.addGroup(
-				TestPropsValues.getUserId(),
+				StringPool.BLANK, TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, Company.class.getName(),
 				classPK, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				HashMapBuilder.put(
@@ -1356,9 +1356,9 @@ public class GroupServiceTest {
 						return group1.getName(LocaleUtil.getDefault());
 					}
 				).build(),
-				null, GroupConstants.TYPE_SITE_OPEN, true,
-				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true, true,
-				ServiceContextTestUtil.getServiceContext()));
+				null, GroupConstants.TYPE_SITE_OPEN, null, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, true,
+				false, true, ServiceContextTestUtil.getServiceContext()));
 	}
 
 	@Test
@@ -1386,14 +1386,14 @@ public class GroupServiceTest {
 		Layout scopeLayout = LayoutTestUtil.addTypePortletLayout(group);
 
 		return _groupLocalService.addGroup(
-			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
-			Layout.class.getName(), scopeLayout.getPlid(),
-			GroupConstants.DEFAULT_LIVE_GROUP_ID,
+			StringPool.BLANK, TestPropsValues.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID, Layout.class.getName(),
+			scopeLayout.getPlid(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
-			false, true, null);
+			null, 0, null, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			null, false, false, true, null);
 	}
 
 	private void _assertExpectedGroups(

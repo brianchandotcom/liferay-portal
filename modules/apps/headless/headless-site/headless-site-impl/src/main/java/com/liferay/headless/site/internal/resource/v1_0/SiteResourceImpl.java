@@ -579,6 +579,10 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 			UnicodeProperties oldUnicodeProperties)
 		throws Exception {
 
+		if (typeSettings == null) {
+			return null;
+		}
+
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.putAll(
 			typeSettings
 		).build();
@@ -727,18 +731,12 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 					site.getParentSiteKey()),
 				_getNameMap(site), _getLocalizationMap(site.getDescription()),
 				_getType(site.getMembershipType()),
+				_getTypeSettings(
+					site.getTypeSettings(), group.getTypeSettingsProperties()),
 				_isManualMembership(site.getManualMembership()),
 				_getMembershipRestriction(site.getMembershipRestriction()),
 				site.getFriendlyUrlPath(), false, _isActive(site.getActive()),
 				_getServiceContext());
-
-			if (Validator.isNotNull(site.getTypeSettings())) {
-				updatedGroup = _groupService.updateGroup(
-					updatedGroup.getGroupId(),
-					_getTypeSettings(
-						site.getTypeSettings(),
-						group.getTypeSettingsProperties()));
-			}
 
 			LiveUsers.joinGroup(
 				contextCompany.getCompanyId(), updatedGroup.getGroupId(),

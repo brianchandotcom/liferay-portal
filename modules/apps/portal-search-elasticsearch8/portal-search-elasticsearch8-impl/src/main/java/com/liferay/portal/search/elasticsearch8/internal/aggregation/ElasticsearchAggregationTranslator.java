@@ -46,6 +46,7 @@ import com.liferay.portal.search.aggregation.metrics.SumAggregation;
 import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
+import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
@@ -274,7 +275,7 @@ public class ElasticsearchAggregationTranslator
 			AggregationBuilders.filter(
 				filterAggregation.getName(), filterQueryBuilder);
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			filterAggregationBuilder, filterAggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -315,7 +316,7 @@ public class ElasticsearchAggregationTranslator
 				filtersAggregation.getOtherBucketKey());
 		}
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			filtersAggregationBuilder, filtersAggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -666,7 +667,7 @@ public class ElasticsearchAggregationTranslator
 		scriptedMetricAggregationBuilder.params(
 			scriptedMetricAggregation.getParameters());
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			scriptedMetricAggregationBuilder, scriptedMetricAggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -790,7 +791,7 @@ public class ElasticsearchAggregationTranslator
 				significantTextAggregation.getSourceFields());
 		}
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			significantTextAggregationBuilder, significantTextAggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -1016,7 +1017,7 @@ public class ElasticsearchAggregationTranslator
 					weightedAvgAggregation.getValueType()));
 		}
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			weightedAvgAggregationBuilder, weightedAvgAggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -1053,7 +1054,7 @@ public class ElasticsearchAggregationTranslator
 	private <AB extends AggregationBuilder> AB _assemble(
 		AB aggregationBuilder, Aggregation aggregation) {
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			aggregationBuilder, aggregation, this,
 			_pipelineAggregationTranslator);
 
@@ -1125,6 +1126,29 @@ public class ElasticsearchAggregationTranslator
 		}
 	}
 
+	private AggregationBuilder _translate(
+		AggregationBuilder aggregationBuilder, Aggregation aggregation,
+		AggregationTranslator<AggregationBuilder> aggregationTranslator,
+		PipelineAggregationTranslator<PipelineAggregationBuilder>
+			pipelineAggregationTranslator) {
+
+		for (Aggregation childAggregation :
+				aggregation.getChildrenAggregations()) {
+
+			aggregationBuilder.subAggregation(
+				aggregationTranslator.translate(childAggregation));
+		}
+
+		for (PipelineAggregation pipelineAggregation :
+				aggregation.getPipelineAggregations()) {
+
+			aggregationBuilder.subAggregation(
+				pipelineAggregationTranslator.translate(pipelineAggregation));
+		}
+
+		return aggregationBuilder;
+	}
+
 	private <T extends ValuesSourceAggregationBuilder> T _translate(
 		ValuesSourceAggregationBuilderFactory<T>
 			valuesSourceAggregationBuilderFactory,
@@ -1140,15 +1164,13 @@ public class ElasticsearchAggregationTranslator
 		_setMissing(valuesSourceAggregationBuilder, baseFieldAggregation);
 		_setScript(valuesSourceAggregationBuilder, baseFieldAggregation);
 
-		_baseAggregationTranslator.translate(
+		_translate(
 			valuesSourceAggregationBuilder, baseFieldAggregation,
 			aggregationTranslator, pipelineAggregationTranslator);
 
 		return valuesSourceAggregationBuilder;
 	}
 
-	private final BaseAggregationTranslator _baseAggregationTranslator =
-		new BaseAggregationTranslator();
 	private final DistanceUnitTranslator _distanceUnitTranslator =
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =

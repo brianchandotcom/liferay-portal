@@ -1231,9 +1231,7 @@ public class ActionUtil {
 					addedFragmentEntryLinks, null, formManager, null,
 					(InfoField<?>)infoFieldSetEntry, layout, layoutStructure,
 					layoutStructureItem, false, segmentsExperienceId,
-					serviceContext,
-					JSONUtil.put(
-						"styles", JSONUtil.put("marginBottom", "16px")));
+					serviceContext, JSONUtil.put("marginBottom", "16px"));
 			}
 		}
 	}

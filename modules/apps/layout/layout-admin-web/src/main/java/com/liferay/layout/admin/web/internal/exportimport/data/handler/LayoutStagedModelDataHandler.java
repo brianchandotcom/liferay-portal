@@ -1668,7 +1668,7 @@ public class LayoutStagedModelDataHandler
 			Layout layout, PortletDataContext portletDataContext)
 		throws Exception {
 
-		StyleBookEntry styleBookEntry = _getStyleBookEntry(layout);
+		StyleBookEntry styleBookEntry = _fetchStyleBookEntry(layout);
 
 		if (styleBookEntry == null) {
 			return;
@@ -1997,7 +1997,7 @@ public class LayoutStagedModelDataHandler
 		return portletIds;
 	}
 
-	private StyleBookEntry _getStyleBookEntry(Layout layout) {
+	private StyleBookEntry _fetchStyleBookEntry(Layout layout) {
 		if (Validator.isNull(layout.getStyleBookEntryERC())) {
 			return null;
 		}
@@ -2606,7 +2606,7 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		StyleBookEntry styleBookEntry = _getStyleBookEntry(layout);
+		StyleBookEntry styleBookEntry = _fetchStyleBookEntry(layout);
 
 		if (styleBookEntry == null) {
 			return;

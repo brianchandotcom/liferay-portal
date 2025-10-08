@@ -1181,60 +1181,6 @@ public class FreeMarkerTool {
 		return false;
 	}
 
-	public boolean isGeneratePermissions(
-		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
-		List<JavaMethodSignature> javaMethodSignatures, Schema schema,
-		String schemaName) {
-
-		if (!configYAML.isGeneratePermissions()) {
-			return false;
-		}
-
-		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
-
-		if (MapUtil.isEmpty(propertySchemas) ||
-			!propertySchemas.containsKey("permissions")) {
-
-			return false;
-		}
-
-		String methodName = javaMethodSignature.getMethodName();
-		String parentSchemaName = GetterUtil.getString(
-			javaMethodSignature.getParentSchemaName());
-		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
-
-		if (!(methodName.equals(
-				StringBundler.concat(
-					"get", parentSchemaName, pluralSchemaName, "Page")) ||
-			  methodName.equals("get" + parentSchemaName + schemaName) ||
-			  methodName.equals(
-				  StringBundler.concat(
-					  "get", parentSchemaName, schemaName,
-					  "ByExternalReferenceCode")) ||
-			  methodName.equals("post" + parentSchemaName + schemaName) ||
-			  methodName.equals("put" + parentSchemaName + schemaName) ||
-			  methodName.equals(
-				  StringBundler.concat(
-					  "put", parentSchemaName, schemaName,
-					  "ByExternalReferenceCode")))) {
-
-			return false;
-		}
-
-		Schema permissionsSchema = propertySchemas.get("permissions");
-
-		if (permissionsSchema.isReadOnly() || permissionsSchema.isWriteOnly()) {
-			throw new IllegalStateException(
-				StringBundler.concat(
-					"The attribute \"", schemaName,
-					".permissions\" cannot be \"",
-					permissionsSchema.isReadOnly() ? "readOnly" : "writeOnly",
-					"\""));
-		}
-
-		return true;
-	}
-
 	public boolean isIdParameter(
 		JavaMethodParameter javaMethodParameter, String schemaName) {
 
@@ -1361,6 +1307,84 @@ public class FreeMarkerTool {
 		JavaMethodParameter javaMethodParameter, Operation operation) {
 
 		return isParameter(javaMethodParameter, operation, "path");
+	}
+
+	public boolean isPermissionsCompatibleMethod(
+		ConfigYAML configYAML, JavaMethodSignature javaMethodSignature,
+		List<JavaMethodSignature> javaMethodSignatures, Schema schema,
+		String schemaName) {
+
+		if (!configYAML.isGeneratePermissions()) {
+			return false;
+		}
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (MapUtil.isEmpty(propertySchemas) ||
+			!propertySchemas.containsKey("permissions")) {
+
+			return false;
+		}
+
+		String methodName = javaMethodSignature.getMethodName();
+		String parentSchemaName = GetterUtil.getString(
+			javaMethodSignature.getParentSchemaName());
+		String pluralSchemaName = TextFormatter.formatPlural(schemaName);
+
+		if (!(methodName.equals(
+				StringBundler.concat(
+					"get", parentSchemaName, pluralSchemaName, "Page")) ||
+			  methodName.equals("get" + parentSchemaName + schemaName) ||
+			  methodName.equals(
+				  StringBundler.concat(
+					  "get", parentSchemaName, schemaName,
+					  "ByExternalReferenceCode")) ||
+			  methodName.equals("post" + parentSchemaName + schemaName) ||
+			  methodName.equals("put" + parentSchemaName + schemaName) ||
+			  methodName.equals(
+				  StringBundler.concat(
+					  "put", parentSchemaName, schemaName,
+					  "ByExternalReferenceCode")))) {
+
+			return false;
+		}
+
+		Schema permissionsSchema = propertySchemas.get("permissions");
+
+		if (permissionsSchema.isReadOnly() || permissionsSchema.isWriteOnly()) {
+			throw new IllegalStateException(
+				StringBundler.concat(
+					"The attribute \"", schemaName,
+					".permissions\" cannot be \"",
+					permissionsSchema.isReadOnly() ? "readOnly" : "writeOnly",
+					"\""));
+		}
+
+		JavaMethodSignature getPermissionsPageJavaMethodSignature =
+			getJavaMethodSignature(
+				javaMethodSignatures, "get" + schemaName + "PermissionsPage");
+
+		JavaMethodSignature putPermissionsPageJavaMethodSignature =
+			getJavaMethodSignature(
+				javaMethodSignatures, "put" + schemaName + "PermissionsPage");
+
+		JavaMethodSignature getParentPermissionsPageJavaMethodSignature =
+			getParentPermissionsPageJavaMethodSignature(
+				"get", javaMethodSignatures, parentSchemaName, schemaName);
+
+		JavaMethodSignature putParentPermissionsPageJavaMethodSignature =
+			getParentPermissionsPageJavaMethodSignature(
+				"put", javaMethodSignatures, parentSchemaName, schemaName);
+
+		if (((getPermissionsPageJavaMethodSignature != null) &&
+			 (putPermissionsPageJavaMethodSignature != null)) ||
+			((getParentPermissionsPageJavaMethodSignature != null) &&
+			 (putParentPermissionsPageJavaMethodSignature != null))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isQueryParameter(

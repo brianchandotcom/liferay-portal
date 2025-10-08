@@ -156,10 +156,6 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.importButton.click();
 
 		const fileName = path.basename(filePath);
-		await this.page
-			.getByText(fileName)
-			.locator('../../../..')
-			.getByText('Successful')
-			.waitFor();
+		await this.exportImportPage.taskSuccessLabel(fileName).waitFor();
 	}
 }

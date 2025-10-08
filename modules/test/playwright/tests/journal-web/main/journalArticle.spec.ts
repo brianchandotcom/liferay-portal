@@ -14,6 +14,7 @@ import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
+import {createCategories} from '../../../helpers/CreateCategories';
 import {SystemSettingsPage} from '../../../pages/configuration-admin-web/SystemSettingsPage';
 import {checkAccessibility} from '../../../utils/checkAccessibility';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -2161,5 +2162,48 @@ baseTest(
 		const displayDateText = await spanInsideTd.textContent();
 
 		expect(displayDateText).not.toBe('1 Minute ago');
+	}
+);
+
+baseTest(
+	'Can add and remove all categories from a Web Content',
+	{
+		tag: '@LPD-67395',
+	},
+	async ({apiHelpers, journalEditArticlePage, page, site}) => {
+		const category1 = getRandomString();
+		const vocabularyName = getRandomString();
+
+		await baseTest.step('create vocabulary and category', async () => {
+			await createCategories({
+				apiHelpers,
+				categoryNames: [{name: category1}],
+				siteId: site.id,
+				vocabularyName,
+			});
+		});
+
+		await baseTest.step('select category in web content', async () => {
+			await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+			await journalEditArticlePage.selectCategories(vocabularyName, [
+				category1,
+			]);
+
+			await expect(
+				page.getByRole('gridcell', {exact: true, name: category1})
+			).toBeVisible();
+		});
+
+		await baseTest.step(
+			'can remove categories via Clear All button',
+			async () => {
+				await journalEditArticlePage.clearAllCategories(vocabularyName);
+
+				await expect(
+					page.getByRole('gridcell', {exact: true, name: category1})
+				).not.toBeVisible();
+			}
+		);
 	}
 );

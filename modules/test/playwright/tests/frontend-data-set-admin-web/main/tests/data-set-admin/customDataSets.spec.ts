@@ -16,6 +16,7 @@ export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	customDataSetsPageTest,
 	featureFlagsTest({
+		'LPD-38564': {enabled: true},
 		'LPS-164563': {enabled: true},
 	}),
 	loginTest()
@@ -53,29 +54,38 @@ const skusDataSetConfig = {
 
 const tableSectionsDataSetConfig = {
 	name: getRandomString(),
-	restApplication: '/data-set-admin/table-sections',
-	restEndpoint: '/',
+	restApplication: '/data-set-admin/data-sets',
+	restEndpoint:
+		'/by-external-reference-code/{currentExternalReferenceCode}/dataSetToDataSetTableSections',
 	restSchema: 'DataSetTableSection',
 };
 
 const tableSectionsWithSpecialCharactersDataSetConfig = {
 	name: 'Data Set ~!@#$%^&*(){}[].<>/? name',
-	restApplication: '/data-set-admin/table-sections',
-	restEndpoint: '/',
+	restApplication: '/data-set-admin/data-sets',
+	restEndpoint:
+		'/by-external-reference-code/{currentExternalReferenceCode}/dataSetToDataSetTableSections',
 	restSchema: 'DataSetTableSection',
 };
 
 async function assertTableActionLabels(customDataSetsPage: CustomDataSetsPage) {
-	await customDataSetsPage.table.bodyRows
+	const firstRowActionsButton = customDataSetsPage.table.bodyRows
 		.locator('td.cell-item-actions')
 		.first()
-		.locator('.dropdown-toggle')
-		.click();
+		.locator('.dropdown-toggle');
+
+	firstRowActionsButton.click();
+
+	const actionsDropdownId =
+		await firstRowActionsButton.getAttribute('aria-controls');
+	const actionsDropdown = customDataSetsPage.page.locator(
+		`#${actionsDropdownId}`
+	);
+
+	await actionsDropdown.waitFor();
 
 	const tableItemActions = await customDataSetsPage.page
-		.locator('.dropdown-menu')
-		.filter({has: customDataSetsPage.page.locator('span.pr-2')})
-		.first()
+		.locator(`#${actionsDropdownId}`)
 		.locator('.dropdown-item')
 		.allInnerTexts();
 

@@ -46,7 +46,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.HistogramAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
@@ -78,6 +77,7 @@ import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
 import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
+import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
 import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
@@ -420,8 +420,43 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(HistogramAggregation histogramAggregation) {
-		return _histogramAggregationTranslator.translate(
-			histogramAggregation, this, _pipelineAggregationTranslator);
+		HistogramAggregationBuilder histogramAggregationBuilder =
+			_baseFieldAggregationTranslator.translate(
+				baseMetricsAggregation -> AggregationBuilders.histogram(
+					baseMetricsAggregation.getName()),
+				histogramAggregation, this, _pipelineAggregationTranslator);
+
+		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
+			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+				histogramAggregation.getOrders());
+
+			histogramAggregationBuilder.order(bucketOrders);
+		}
+
+		if ((histogramAggregation.getMaxBound() != null) &&
+			(histogramAggregation.getMinBound() != null)) {
+
+			histogramAggregationBuilder.extendedBounds(
+				histogramAggregation.getMinBound(),
+				histogramAggregation.getMaxBound());
+		}
+
+		if (histogramAggregation.getMinDocCount() != null) {
+			histogramAggregationBuilder.minDocCount(
+				histogramAggregation.getMinDocCount());
+		}
+
+		if (histogramAggregation.getInterval() != null) {
+			histogramAggregationBuilder.interval(
+				histogramAggregation.getInterval());
+		}
+
+		if (histogramAggregation.getOffset() != null) {
+			histogramAggregationBuilder.offset(
+				histogramAggregation.getOffset());
+		}
+
+		return histogramAggregationBuilder;
 	}
 
 	@Override
@@ -713,8 +748,6 @@ public class ElasticsearchAggregationTranslator
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
 		new GeoDistanceTypeTranslator();
-	private final HistogramAggregationTranslator
-		_histogramAggregationTranslator = new HistogramAggregationTranslator();
 	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")

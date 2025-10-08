@@ -208,6 +208,19 @@ public class FDSRendererImpl implements FDSRenderer {
 						return paginationJSONObject;
 					}
 				).put(
+					"showManagementBarInEmptyState",
+					() -> {
+						Boolean showManagementBarInEmptyState =
+							fdsSerializer.serializeShowManagementBarInEmptyState(
+								fdsName, httpServletRequest);
+
+						if (showManagementBarInEmptyState == null) {
+							return false;
+						}
+
+						return showManagementBarInEmptyState;
+					}
+				).put(
 					"sorts",
 					() -> {
 						List<FDSSortItem> fdsSortItems =

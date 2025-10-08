@@ -95,6 +95,23 @@ public class BatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public List<String> getApplicableExternalReferenceCodes(
+				List<String> externalReferenceCodes) {
+
+				return transform(
+					externalReferenceCodes,
+					externalReferenceCode -> {
+						if (externalReferenceCode.endsWith(
+								"_FROM_DIFFERENT_DTO")) {
+
+							return null;
+						}
+
+						return externalReferenceCode;
+					});
+			}
+
+			@Override
 			public String getDeletionSystemEventClassName() {
 				return BatchTestEntity.class.getName();
 			}

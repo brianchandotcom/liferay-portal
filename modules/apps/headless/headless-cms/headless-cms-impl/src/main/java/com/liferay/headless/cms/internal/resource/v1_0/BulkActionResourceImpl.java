@@ -859,12 +859,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 
 			return "blog";
 		}
-		else if (Objects.equals(
-					objectDefinition.getExternalReferenceCode(),
-					"L_KNOWLEDGE_BASE")) {
-
-			return "knowledge-base";
-		}
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.getObjectEntryVersion(

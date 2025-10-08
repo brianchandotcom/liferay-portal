@@ -24,6 +24,7 @@ import com.liferay.portal.search.aggregation.bucket.HistogramAggregation;
 import com.liferay.portal.search.aggregation.bucket.IncludeExcludeClause;
 import com.liferay.portal.search.aggregation.bucket.MissingAggregation;
 import com.liferay.portal.search.aggregation.bucket.NestedAggregation;
+import com.liferay.portal.search.aggregation.bucket.Order;
 import com.liferay.portal.search.aggregation.bucket.Range;
 import com.liferay.portal.search.aggregation.bucket.RangeAggregation;
 import com.liferay.portal.search.aggregation.bucket.ReverseNestedAggregation;
@@ -183,7 +184,7 @@ public class ElasticsearchAggregationTranslator
 				dateHistogramAggregation.getName());
 
 		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+			List<BucketOrder> bucketOrders = _translate(
 				dateHistogramAggregation.getOrders());
 
 			dateHistogramAggregationBuilder.order(bucketOrders);
@@ -455,7 +456,7 @@ public class ElasticsearchAggregationTranslator
 		_assemble(histogramAggregation, histogramAggregationBuilder);
 
 		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+			List<BucketOrder> bucketOrders = _translate(
 				histogramAggregation.getOrders());
 
 			histogramAggregationBuilder.order(bucketOrders);
@@ -883,7 +884,7 @@ public class ElasticsearchAggregationTranslator
 		}
 
 		if (ListUtil.isNotEmpty(termsAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _orderTranslator.translate(
+			List<BucketOrder> bucketOrders = _translate(
 				termsAggregation.getOrders());
 
 			termsAggregationBuilder.order(bucketOrders);
@@ -1116,6 +1117,22 @@ public class ElasticsearchAggregationTranslator
 		}
 	}
 
+	private BucketOrder _convert(Order order) {
+		if (Order.COUNT_METRIC_NAME.equals(order.getMetricName())) {
+			return BucketOrder.count(order.isAscending());
+		}
+		else if (Order.KEY_METRIC_NAME.equals(order.getMetricName())) {
+			return BucketOrder.key(order.isAscending());
+		}
+		else if (order.getMetricName() == null) {
+			return BucketOrder.aggregation(
+				order.getPath(), order.isAscending());
+		}
+
+		return BucketOrder.aggregation(
+			order.getPath(), order.getMetricName(), order.isAscending());
+	}
+
 	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(
 		String field, Object missing,
 		com.liferay.portal.search.script.Script script) {
@@ -1190,13 +1207,25 @@ public class ElasticsearchAggregationTranslator
 		return includeExclude;
 	}
 
+	private List<BucketOrder> _translate(List<Order> orders) {
+		List<BucketOrder> bucketOrders = new ArrayList<>(orders.size());
+
+		orders.forEach(
+			order -> {
+				BucketOrder bucketOrder = _convert(order);
+
+				bucketOrders.add(bucketOrder);
+			});
+
+		return bucketOrders;
+	}
+
 	private final DistanceUnitTranslator _distanceUnitTranslator =
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
 		new GeoDistanceTypeTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
-	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	private PipelineAggregationTranslator<PipelineAggregationBuilder>

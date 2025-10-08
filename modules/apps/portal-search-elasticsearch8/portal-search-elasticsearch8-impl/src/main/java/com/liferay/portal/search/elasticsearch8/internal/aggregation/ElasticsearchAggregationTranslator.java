@@ -46,8 +46,8 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.IncludeExcludeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTextAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
@@ -57,6 +57,7 @@ import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUni
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.significance.SignificanceHeuristicTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 
 import java.util.ArrayList;
@@ -86,6 +87,7 @@ import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilde
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder;
@@ -629,10 +631,58 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		SignificantTermsAggregation significantTermsAggregation) {
 
+		SignificantTermsAggregationBuilder significantTermsAggregationBuilder =
+			AggregationBuilders.significantTerms(
+				significantTermsAggregation.getName());
+
+		significantTermsAggregationBuilder.field(
+			significantTermsAggregation.getField());
+
+		if (significantTermsAggregation.getBackgroundFilterQuery() != null) {
+			significantTermsAggregationBuilder.backgroundFilter(
+				_queryTranslator.translate(
+					significantTermsAggregation.getBackgroundFilterQuery()));
+		}
+
+		if (significantTermsAggregation.getExecutionHint() != null) {
+			significantTermsAggregationBuilder.executionHint(
+				significantTermsAggregation.getExecutionHint());
+		}
+
+		if (significantTermsAggregation.getIncludeExcludeClause() != null) {
+			significantTermsAggregationBuilder.includeExclude(
+				_includeExcludeTranslator.translate(
+					significantTermsAggregation.getIncludeExcludeClause()));
+		}
+
+		if (significantTermsAggregation.getMinDocCount() != null) {
+			significantTermsAggregationBuilder.minDocCount(
+				significantTermsAggregation.getMinDocCount());
+		}
+
+		if (significantTermsAggregation.getShardMinDocCount() != null) {
+			significantTermsAggregationBuilder.shardMinDocCount(
+				significantTermsAggregation.getShardMinDocCount());
+		}
+
+		if (significantTermsAggregation.getShardSize() != null) {
+			significantTermsAggregationBuilder.shardSize(
+				significantTermsAggregation.getShardSize());
+		}
+
+		if (significantTermsAggregation.getSize() != null) {
+			significantTermsAggregationBuilder.size(
+				significantTermsAggregation.getSize());
+		}
+
+		if (significantTermsAggregation.getSignificanceHeuristic() != null) {
+			significantTermsAggregationBuilder.significanceHeuristic(
+				_significanceHeuristicTranslator.translate(
+					significantTermsAggregation.getSignificanceHeuristic()));
+		}
+
 		return _assemble(
-			_significantTermsAggregationTranslator.translate(
-				significantTermsAggregation),
-			significantTermsAggregation);
+			significantTermsAggregationBuilder, significantTermsAggregation);
 	}
 
 	@Override
@@ -756,6 +806,8 @@ public class ElasticsearchAggregationTranslator
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
 		new GeoDistanceTypeTranslator();
+	private final IncludeExcludeTranslator _includeExcludeTranslator =
+		new IncludeExcludeTranslator();
 	private final OrderTranslator _orderTranslator = new OrderTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
@@ -767,9 +819,9 @@ public class ElasticsearchAggregationTranslator
 	private final ScriptedMetricAggregationTranslator
 		_scriptedMetricAggregationTranslator =
 			new ScriptedMetricAggregationTranslator();
-	private final SignificantTermsAggregationTranslator
-		_significantTermsAggregationTranslator =
-			new SignificantTermsAggregationTranslator();
+	private final SignificanceHeuristicTranslator
+		_significanceHeuristicTranslator =
+			new SignificanceHeuristicTranslator();
 	private final SignificantTextAggregationTranslator
 		_significantTextAggregationTranslator =
 			new SignificantTextAggregationTranslator();

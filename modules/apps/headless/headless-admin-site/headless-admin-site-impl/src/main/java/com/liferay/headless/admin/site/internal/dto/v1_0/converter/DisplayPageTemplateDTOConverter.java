@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Locale;
@@ -130,9 +131,12 @@ public class DisplayPageTemplateDTOConverter
 							layoutPageTemplateCollection);
 					});
 				setThumbnail(
-					() ->
-						ThumbnailUtil.getPortletFileEntryURLReference(
-							layoutPageTemplateEntry.getPreviewFileEntryId()));
+					() -> NestedFieldsSupplier.supply(
+						"thumbnail",
+						fieldName ->
+							ThumbnailUtil.getPortletFileEntryURLReference(
+								layoutPageTemplateEntry.
+									getPreviewFileEntryId())));
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};

@@ -108,26 +108,14 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.InputStream;
-import java.io.Serializable;
-
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Locale;
-import java.util.Map;
-
 import org.hamcrest.CoreMatchers;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -135,9 +123,15 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
+
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -198,11 +192,11 @@ public class EditableFragmentEntryProcessorTest {
 
 		Assert.assertEquals(
 			_processedHTML,
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			StringUtil.trim(_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
 					LocaleUtil.getMostRelevantLocale(),
-					FragmentEntryLinkConstants.EDIT)));
+					FragmentEntryLinkConstants.EDIT))));
 	}
 
 	@Test
@@ -1330,10 +1324,10 @@ public class EditableFragmentEntryProcessorTest {
 
 		Assert.assertEquals(
 			_getProcessedHTML("processed_fragment_entry_empty_string.html"),
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			StringUtil.trim(_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
-					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)));
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT))));
 	}
 
 	@Test
@@ -1477,10 +1471,10 @@ public class EditableFragmentEntryProcessorTest {
 
 		Assert.assertEquals(
 			_processedHTML,
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			StringUtil.trim(_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
-					LocaleUtil.US, FragmentEntryLinkConstants.EDIT)));
+					LocaleUtil.US, FragmentEntryLinkConstants.EDIT))));
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -1537,10 +1531,10 @@ public class EditableFragmentEntryProcessorTest {
 
 		Assert.assertEquals(
 			_processedHTML,
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+			StringUtil.trim(_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
 				fragmentEntryLink,
 				_getFragmentEntryProcessorContext(
-					LocaleUtil.CHINESE, FragmentEntryLinkConstants.EDIT)));
+					LocaleUtil.CHINESE, FragmentEntryLinkConstants.EDIT))));
 	}
 
 	@Test
@@ -1821,7 +1815,8 @@ public class EditableFragmentEntryProcessorTest {
 		throws Exception {
 
 		return new DefaultFragmentEntryProcessorContext(
-			_getHttpServletRequest(locale), null, mode, locale);
+			_getHttpServletRequest(locale), new MockHttpServletResponse(), mode,
+			locale);
 	}
 
 	private HttpServletRequest _getHttpServletRequest(Locale locale)

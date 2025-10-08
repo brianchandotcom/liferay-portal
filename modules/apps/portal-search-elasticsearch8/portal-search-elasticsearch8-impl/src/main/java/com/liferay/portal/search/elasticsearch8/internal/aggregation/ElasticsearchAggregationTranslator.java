@@ -10,6 +10,7 @@ import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.AggregationVisitor;
 import com.liferay.portal.search.aggregation.FieldAggregation;
+import com.liferay.portal.search.aggregation.ValueType;
 import com.liferay.portal.search.aggregation.bucket.ChildrenAggregation;
 import com.liferay.portal.search.aggregation.bucket.CollectionMode;
 import com.liferay.portal.search.aggregation.bucket.DateHistogramAggregation;
@@ -1064,8 +1065,7 @@ public class ElasticsearchAggregationTranslator
 
 		if (weightedAvgAggregation.getValueType() != null) {
 			weightedAvgAggregationBuilder.userValueTypeHint(
-				_valueTypeTranslator.translate(
-					weightedAvgAggregation.getValueType()));
+				_translate(weightedAvgAggregation.getValueType()));
 		}
 
 		_assembleSubaggregations(
@@ -1291,6 +1291,47 @@ public class ElasticsearchAggregationTranslator
 			"Invalid significance heuristic: " + significanceHeuristic);
 	}
 
+	private org.elasticsearch.search.aggregations.support.ValueType _translate(
+		ValueType valueType) {
+
+		if (valueType == ValueType.BOOLEAN) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				BOOLEAN;
+		}
+		else if (valueType == ValueType.DATE) {
+			return org.elasticsearch.search.aggregations.support.ValueType.DATE;
+		}
+		else if (valueType == ValueType.DOUBLE) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				DOUBLE;
+		}
+		else if (valueType == ValueType.GEOPOINT) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				GEOPOINT;
+		}
+		else if (valueType == ValueType.IP) {
+			return org.elasticsearch.search.aggregations.support.ValueType.IP;
+		}
+		else if (valueType == ValueType.LONG) {
+			return org.elasticsearch.search.aggregations.support.ValueType.LONG;
+		}
+		else if (valueType == ValueType.NUMBER) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				NUMBER;
+		}
+		else if (valueType == ValueType.NUMERIC) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				NUMERIC;
+		}
+		else if (valueType == ValueType.STRING) {
+			return org.elasticsearch.search.aggregations.support.ValueType.
+				STRING;
+		}
+
+		throw new IllegalArgumentException(
+			"No available mapping for value type " + valueType);
+	}
+
 	private final DistanceUnitTranslator _distanceUnitTranslator =
 		new DistanceUnitTranslator();
 	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
@@ -1307,7 +1348,5 @@ public class ElasticsearchAggregationTranslator
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
-	private final ValueTypeTranslator _valueTypeTranslator =
-		new ValueTypeTranslator();
 
 }

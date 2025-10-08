@@ -59,13 +59,14 @@ public class
 
 		long siteNavigationMenuId = configurationValueJSONObject.getLong(
 			"siteNavigationMenuId");
-		String siteNavigationMenuERC = configurationValueJSONObject.getString(
-			"siteNavigationMenuERC");
+		String siteNavigationMenuExternalReferenceCode =
+			configurationValueJSONObject.getString(
+				"siteNavigationMenuExternalReferenceCode");
 
 		StagedModel stagedModel = null;
 
 		if ((siteNavigationMenuId == 0) &&
-			Validator.isNull(siteNavigationMenuERC)) {
+			Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
 
 			stagedModel = _layoutLocalService.fetchLayout(
 				configurationValueJSONObject.getLong(
@@ -76,17 +77,19 @@ public class
 				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
 					siteNavigationMenuId);
 		}
-		else if (Validator.isNotNull(siteNavigationMenuERC)) {
-			String siteNavigationMenuScopeERC =
+		else if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			String siteNavigationMenuScopeExternalReferenceCode =
 				configurationValueJSONObject.getString(
-					"siteNavigationMenuScopeERC");
+					"siteNavigationMenuScopeExternalReferenceCode");
 
 			Group scopeGroup;
 
-			if (Validator.isNotNull(siteNavigationMenuScopeERC)) {
+			if (Validator.isNotNull(
+					siteNavigationMenuScopeExternalReferenceCode)) {
+
 				scopeGroup =
 					_groupLocalService.fetchGroupByExternalReferenceCode(
-						siteNavigationMenuScopeERC,
+						siteNavigationMenuScopeExternalReferenceCode,
 						portletDataContext.getCompanyId());
 			}
 			else {
@@ -98,7 +101,8 @@ public class
 				stagedModel =
 					_siteNavigationMenuLocalService.
 						fetchSiteNavigationMenuByExternalReferenceCode(
-							siteNavigationMenuERC, scopeGroup.getGroupId());
+							siteNavigationMenuExternalReferenceCode,
+							scopeGroup.getGroupId());
 			}
 		}
 

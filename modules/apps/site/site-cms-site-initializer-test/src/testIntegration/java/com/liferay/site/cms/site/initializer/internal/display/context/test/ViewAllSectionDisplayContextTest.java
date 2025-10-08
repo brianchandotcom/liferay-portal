@@ -71,7 +71,7 @@ public class ViewAllSectionDisplayContextTest
 		).put(
 			"external-video-shortcut",
 			getRedirect(
-				"L_EXTERNAL_VIDEO",
+				"L_CMS_EXTERNAL_VIDEO",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)
 		).build();
 	}

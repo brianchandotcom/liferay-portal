@@ -815,12 +815,12 @@
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
-			"externalReferenceCode": "L_EXTERNAL_VIDEO",
+			"externalReferenceCode": "L_CMS_EXTERNAL_VIDEO",
 			"label": {
 				"en_US": "External Video"
 			},
 			"modifiable": true,
-			"name": "ExternalVideo",
+			"name": "CMSExternalVideo",
 			"objectDefinitionSettings": [
 				{
 					"name": "acceptAllGroups",

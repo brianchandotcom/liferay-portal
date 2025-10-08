@@ -480,7 +480,7 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
-				getExternalVideoShortcutDropdownItem(
+				getCMSExternalVideoDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)));
 
@@ -589,6 +589,15 @@ public class ActionUtil {
 		return getStructuredContentDropdownItem(
 			httpServletRequest, "blogs", "blog", "L_CMS_BLOG",
 			objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getCMSExternalVideoDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "video", "external-video-shortcut",
+			"L_CMS_EXTERNAL_VIDEO", objectEntryFolderExternalReferenceCode);
 	}
 
 	public static List<DropdownItem> getContentsCustomDropdownItems(
@@ -787,15 +796,6 @@ public class ActionUtil {
 		return StringPool.BLANK;
 	}
 
-	public static DropdownItem getExternalVideoShortcutDropdownItem(
-		HttpServletRequest httpServletRequest,
-		String objectEntryFolderExternalReferenceCode) {
-
-		return getStructuredContentDropdownItem(
-			httpServletRequest, "video", "external-video-shortcut",
-			"L_EXTERNAL_VIDEO", objectEntryFolderExternalReferenceCode);
-	}
-
 	public static List<DropdownItem> getFilesCustomDropdownItems(
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
@@ -846,7 +846,7 @@ public class ActionUtil {
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
 				getCreateFolderDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
-				getExternalVideoShortcutDropdownItem(
+				getCMSExternalVideoDropdownItem(
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 

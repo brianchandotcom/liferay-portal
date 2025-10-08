@@ -7,6 +7,7 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
+import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -21,7 +22,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -247,10 +247,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
-			Layout layout = _layoutLocalService.fetchLayout(
-				pageJSONObject.getLong("groupId"),
-				pageJSONObject.getBoolean("privateLayout"),
-				pageJSONObject.getLong("layoutId"));
+			Layout layout = LayoutReferenceResolverUtil.resolve(
+				themeDisplay.getCompanyId(), pageJSONObject,
+				themeDisplay.getScopeGroupId());
 
 			if (layout == null) {
 				return;
@@ -287,9 +286,6 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

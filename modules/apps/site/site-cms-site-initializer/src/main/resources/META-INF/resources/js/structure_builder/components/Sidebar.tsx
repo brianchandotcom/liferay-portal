@@ -5,16 +5,13 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import ClayEmptyState from '@clayui/empty-state';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
-import {getImage} from '../../common/utils/getImage';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
-import selectStructureChildren from '../selectors/selectStructureChildren';
 import AddChildDropdown from './AddChildDropdown';
 import StructureTree from './StructureTree';
 
@@ -31,13 +28,7 @@ export default function () {
 }
 
 function Content() {
-	const children = useSelector(selectStructureChildren);
-
 	const [search, setSearch] = useState('');
-
-	if (!children.size) {
-		return <EmptyState />;
-	}
 
 	return (
 		<>
@@ -45,23 +36,6 @@ function Content() {
 
 			<StructureTree search={search} />
 		</>
-	);
-}
-
-function EmptyState() {
-	return (
-		<ClayEmptyState
-			className="mt-6 px-4 structure-builder__empty-state"
-			description={Liferay.Language.get(
-				'add-new-fields-to-start-building-your-content-structure'
-			)}
-			imgSrc={getImage('structure_fields_empty_state.svg')}
-			imgSrcReducedMotion={getImage('structure_fields_empty_state.svg')}
-			small
-			title={Liferay.Language.get('no-fields-yet')}
-		>
-			<AddChildDropdown />
-		</ClayEmptyState>
 	);
 }
 

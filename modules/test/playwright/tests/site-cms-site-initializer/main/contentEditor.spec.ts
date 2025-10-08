@@ -850,3 +850,107 @@ testWithRepeatableFF(
 		});
 	}
 );
+
+testWithRepeatableFF(
+	'Create item with referenced structure',
+	{
+		tag: '@LPD-50378',
+	},
+	async ({contentsPage, page, structureBuilderPage}) => {
+
+		// Create referenced structure
+
+		const referencedStructureLabel = `ReferencedStructureName${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: referencedStructureLabel,
+			name: referencedStructureLabel,
+			page: structureBuilderPage,
+			publish: true,
+		});
+
+		// Create main structure
+
+		const structureLabel = `StructureName${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: structureLabel,
+			page: structureBuilderPage,
+			publish: false,
+		});
+
+		// Add fields and publish structure
+
+		await structureBuilderPage.addReferencedStructures([
+			referencedStructureLabel,
+		]);
+
+		await structureBuilderPage.publishStructure();
+
+		// Go to CMS Contents
+
+		await contentsPage.goto();
+
+		// Create new content
+
+		await contentsPage.createContent(structureLabel);
+
+		const title = getRandomString();
+
+		await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
+
+		// Add Repeatable Groups
+
+		await page.getByRole('button', {name: 'Add New'}).first().click();
+
+		// Fill the fields
+
+		const firstText = page
+			.locator('.lfr-layout-structure-item-form-relationship')
+			.getByRole('textbox', {exact: true, name: 'Title'})
+			.first();
+
+		await firstText.fill('First Text');
+
+		const secondText = page
+			.locator('.lfr-layout-structure-item-form-relationship')
+			.getByRole('textbox', {exact: true, name: 'Title'})
+			.last();
+
+		await secondText.fill('Second Text');
+
+		// Save content
+
+		await contentsPage.saveContent();
+
+		// Edit the content again and check values
+
+		await contentsPage.editContent(title);
+
+		await expect(firstText).toHaveValue('First Text');
+		await expect(secondText).toHaveValue('Second Text');
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		const card = page
+			.locator('tr', {hasText: title})
+			.or(page.locator('.card-row', {hasText: title}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: card.locator('button'),
+		});
+
+		page.getByRole('dialog')
+			.getByRole('button', {name: 'Delete Entry'})
+			.click();
+
+		await waitForAlert(page, `Success:${title} was moved`, {
+			autoClose: false,
+		});
+	}
+);

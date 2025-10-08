@@ -49,13 +49,13 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.IncludeExcludeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.significance.SignificanceHeuristicTranslator;
 import com.liferay.portal.search.query.QueryTranslator;
 
@@ -66,6 +66,7 @@ import org.elasticsearch.common.geo.GeoDistance;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
+import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.BucketOrder;
@@ -93,6 +94,7 @@ import org.elasticsearch.search.aggregations.metrics.ExtendedStatsAggregationBui
 import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.PercentileRanksAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
 
 import org.osgi.service.component.annotations.Component;
@@ -623,8 +625,49 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		ScriptedMetricAggregation scriptedMetricAggregation) {
 
-		return _scriptedMetricAggregationTranslator.translate(
-			scriptedMetricAggregation, this, _pipelineAggregationTranslator);
+		ScriptedMetricAggregationBuilder scriptedMetricAggregationBuilder =
+			AggregationBuilders.scriptedMetric(
+				scriptedMetricAggregation.getName());
+
+		if (scriptedMetricAggregation.getCombineScript() != null) {
+			Script elasticsearchCombineScript = _scriptTranslator.translate(
+				scriptedMetricAggregation.getCombineScript());
+
+			scriptedMetricAggregationBuilder.combineScript(
+				elasticsearchCombineScript);
+		}
+
+		if (scriptedMetricAggregation.getInitScript() != null) {
+			Script elasticsearchInitScript = _scriptTranslator.translate(
+				scriptedMetricAggregation.getInitScript());
+
+			scriptedMetricAggregationBuilder.initScript(
+				elasticsearchInitScript);
+		}
+
+		if (scriptedMetricAggregation.getMapScript() != null) {
+			Script elasticsearchMapScript = _scriptTranslator.translate(
+				scriptedMetricAggregation.getMapScript());
+
+			scriptedMetricAggregationBuilder.mapScript(elasticsearchMapScript);
+		}
+
+		if (scriptedMetricAggregation.getReduceScript() != null) {
+			Script elasticsearchReduceScript = _scriptTranslator.translate(
+				scriptedMetricAggregation.getReduceScript());
+
+			scriptedMetricAggregationBuilder.reduceScript(
+				elasticsearchReduceScript);
+		}
+
+		scriptedMetricAggregationBuilder.params(
+			scriptedMetricAggregation.getParameters());
+
+		_baseAggregationTranslator.translate(
+			scriptedMetricAggregationBuilder, scriptedMetricAggregation, this,
+			_pipelineAggregationTranslator);
+
+		return scriptedMetricAggregationBuilder;
 	}
 
 	@Override
@@ -874,9 +917,7 @@ public class ElasticsearchAggregationTranslator
 
 	private final QueryTranslator<QueryBuilder> _queryTranslator =
 		new ElasticsearchQueryTranslator();
-	private final ScriptedMetricAggregationTranslator
-		_scriptedMetricAggregationTranslator =
-			new ScriptedMetricAggregationTranslator();
+	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 	private final SignificanceHeuristicTranslator
 		_significanceHeuristicTranslator =
 			new SignificanceHeuristicTranslator();

@@ -15,13 +15,14 @@ import com.liferay.fragment.renderer.FragmentRendererRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -73,13 +74,82 @@ public class
 		_layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
 
 		_draftLayout = _layout.fetchDraftLayout();
+
+		_segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_draftLayout.getPlid());
 	}
 
 	@Test
 	@TestInfo("LPD-67100")
 	public void testNavigationMenuSelectorEditableValues() throws Exception {
-		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(
-			_stagingGroup.getGroupId());
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					siteNavigationMenu.getExternalReferenceCode(),
+					jsonObject.get("siteNavigationMenuExternalReferenceCode"));
+				Assert.assertTrue(
+					Validator.isNull(
+						jsonObject.get(
+							"siteNavigationMenuScopeExternalReferenceCode")));
+
+				Assert.assertNotNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"parentSiteNavigationMenuItemExternalReferenceCode",
+				StringPool.BLANK
+			).put(
+				"privateLayout", Boolean.FALSE.toString()
+			).put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuScopeExternalReferenceCode", StringPool.BLANK
+			).put(
+				"title", RandomTestUtil.randomString()
+			).put(
+				"type",
+				"class com.liferay.site.navigation.item.selector." +
+					"SiteNavigationMenuItemSelectorReturnType"
+			));
+	}
+
+	private void _publishLayouts() throws Exception {
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactoryUtil.
+				buildParameterMap();
+
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA,
+			new String[] {Boolean.FALSE.toString()});
+		parameterMap.put(
+			PortletDataHandlerKeys.PORTLET_DATA_ALL,
+			new String[] {Boolean.FALSE.toString()});
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
+			_liveGroup.getGroupId(), false, parameterMap);
+	}
+
+	private void _testNavigationMenuSelectorEditableValues(
+			long groupId,
+			UnsafeBiConsumer<JSONObject, SiteNavigationMenu, Exception>
+				unsafeBiConsumer,
+			UnsafeFunction<SiteNavigationMenu, JSONObject, Exception>
+				unsafeFunction)
+		throws Exception {
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.addSiteNavigationMenu(
+				null, TestPropsValues.getUserId(), groupId,
+				RandomTestUtil.randomString(),
+				SiteNavigationConstants.TYPE_DEFAULT, true,
+				ServiceContextTestUtil.getServiceContext(groupId));
 
 		FragmentEntryLink draftFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
@@ -93,25 +163,9 @@ public class
 					).put(
 						"selectedItemColor", StringPool.BLANK
 					).put(
-						"source",
-						JSONUtil.put(
-							"parentSiteNavigationMenuItemExternalReferenceCode",
-							StringPool.BLANK
-						).put(
-							"privateLayout", Boolean.FALSE.toString()
-						).put(
-							"siteNavigationMenuExternalReferenceCode",
-							siteNavigationMenu.getExternalReferenceCode()
-						).put(
-							"siteNavigationMenuScopeExternalReferenceCode",
-							StringPool.BLANK
-						).put(
-							"title", RandomTestUtil.randomString()
-						).put(
-							"type",
-							"class com.liferay.site.navigation.item.selector." +
-								"SiteNavigationMenuItemSelectorReturnType"
-						)
+						"source", unsafeFunction.apply(siteNavigationMenu)
+					).put(
+						"source", unsafeFunction.apply(siteNavigationMenu)
 					).put(
 						"sublevels", "-1"
 					)
@@ -119,9 +173,7 @@ public class
 				_fragmentRendererRegistry.getFragmentRenderer(
 					"com.liferay.fragment.renderer.menu.display.internal." +
 						"MenuDisplayFragmentRenderer"),
-				_draftLayout, null, 0,
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
+				_draftLayout, null, 0, _segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
@@ -145,48 +197,9 @@ public class
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR);
 
-		JSONObject sourceJSONObject =
-			freeMarkerFragmentEntryProcessorJSONObject.getJSONObject("source");
-
-		Assert.assertEquals(
-			siteNavigationMenu.getExternalReferenceCode(),
-			sourceJSONObject.get("siteNavigationMenuExternalReferenceCode"));
-		Assert.assertTrue(
-			Validator.isNull(
-				sourceJSONObject.get(
-					"siteNavigationMenuScopeExternalReferenceCode")));
-
-		_siteNavigationMenuLocalService.getSiteNavigationMenuByUuidAndGroupId(
-			siteNavigationMenu.getUuid(), _liveGroup.getGroupId());
-	}
-
-	private SiteNavigationMenu _addSiteNavigationMenu(long groupId)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		return _siteNavigationMenuLocalService.addSiteNavigationMenu(
-			null, TestPropsValues.getUserId(), groupId,
-			RandomTestUtil.randomString(), SiteNavigationConstants.TYPE_DEFAULT,
-			true, serviceContext);
-	}
-
-	private void _publishLayouts() throws Exception {
-		Map<String, String[]> parameterMap =
-			ExportImportConfigurationParameterMapFactoryUtil.
-				buildParameterMap();
-
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA,
-			new String[] {Boolean.FALSE.toString()});
-		parameterMap.put(
-			PortletDataHandlerKeys.PORTLET_DATA_ALL,
-			new String[] {Boolean.FALSE.toString()});
-
-		StagingUtil.publishLayouts(
-			TestPropsValues.getUserId(), _stagingGroup.getGroupId(),
-			_liveGroup.getGroupId(), false, parameterMap);
+		unsafeBiConsumer.accept(
+			freeMarkerFragmentEntryProcessorJSONObject.getJSONObject("source"),
+			siteNavigationMenu);
 	}
 
 	private Layout _draftLayout;
@@ -204,6 +217,8 @@ public class
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;
+
+	private long _segmentsExperienceId;
 
 	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

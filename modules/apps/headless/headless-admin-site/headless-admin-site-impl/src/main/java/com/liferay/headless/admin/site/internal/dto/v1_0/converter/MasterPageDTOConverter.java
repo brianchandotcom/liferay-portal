@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,9 +81,12 @@ public class MasterPageDTOConverter
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
 				setThumbnail(
-					() ->
-						ThumbnailUtil.getPortletFileEntryURLReference(
-							layoutPageTemplateEntry.getPreviewFileEntryId()));
+					() -> NestedFieldsSupplier.supply(
+						"thumbnail",
+						fieldName ->
+							ThumbnailUtil.getPortletFileEntryURLReference(
+								layoutPageTemplateEntry.
+									getPreviewFileEntryId())));
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
 		};

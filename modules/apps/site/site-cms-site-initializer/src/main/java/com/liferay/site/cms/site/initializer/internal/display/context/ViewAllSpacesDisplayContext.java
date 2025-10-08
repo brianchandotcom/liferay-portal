@@ -245,7 +245,7 @@ public class ViewAllSpacesDisplayContext {
 					ObjectDefinition objectDefinition =
 						ObjectDefinitionLocalServiceUtil.
 							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_WEB_CONTENT",
+								"L_CMS_BASIC_WEB_CONTENT",
 								_themeDisplay.getCompanyId());
 
 					List<String> guestUnsupportedActions =

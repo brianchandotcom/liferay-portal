@@ -148,7 +148,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
+					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
 		_serviceContext.setAttribute(
 			"friendlyUrlMap", new HashMap<String, String>());

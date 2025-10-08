@@ -165,10 +165,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			}
 		}
 
-		_basicWebContentObjectDefinition =
+		_cmsBasicWebContentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_WEB_CONTENT", testCompany.getCompanyId());
+					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 		_bulkActionTaskObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -238,7 +238,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		return _objectEntryLocalService.addObjectEntry(
 			groupId, _user.getUserId(),
-			_basicWebContentObjectDefinition.getObjectDefinitionId(),
+			_cmsBasicWebContentObjectDefinition.getObjectDefinitionId(),
 			objectEntryFolderId, _LANGUAGE_ID,
 			HashMapBuilder.<String, Serializable>put(
 				"title_i18n",
@@ -446,7 +446,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
 			testGroup.getGroupId(), StringPool.BLANK,
 			_portal.getClassNameId(
-				_basicWebContentObjectDefinition.getClassName()),
+				_cmsBasicWebContentObjectDefinition.getClassName()),
 			objectEntry.getObjectEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 			_serviceContext);
@@ -478,7 +478,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		bulkAction.setBulkActionItems(
 			new BulkActionItem[] {
 				_toBulkActionItem(
-					_basicWebContentObjectDefinition.getClassName(),
+					_cmsBasicWebContentObjectDefinition.getClassName(),
 					objectEntry),
 				_toBulkActionItem(objectEntryFolder)
 			});
@@ -823,31 +823,27 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			Assert.assertEquals("Filter is null", problem.getTitle());
 		}
 
-		ObjectEntry basicWebContentObjectEntry =
-			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
-				Collections.emptyMap());
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			Collections.emptyMap());
 
-		bulkAction.setBulkActionItems(
-			_toBulkActionItems(basicWebContentObjectEntry));
+		bulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
 		_postBulkAction(bulkAction);
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
-				basicWebContentObjectEntry.getObjectEntryId()));
+				objectEntry.getObjectEntryId()));
 	}
 
 	private void _testPostBulkActionWithTypeKeyword() throws Exception {
 		KeywordBulkAction keywordBulkAction = new KeywordBulkAction();
 
-		ObjectEntry basicWebContentObjectEntry =
-			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
-				Collections.emptyMap());
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			Collections.emptyMap());
 
-		keywordBulkAction.setBulkActionItems(
-			_toBulkActionItems(basicWebContentObjectEntry));
+		keywordBulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
 		String[] keywords = {
 			RandomTestUtil.randomString(), RandomTestUtil.randomString()
@@ -862,8 +858,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertArrayEquals(
 			keywords,
 			_assetTagLocalService.getTagNames(
-				_basicWebContentObjectDefinition.getClassName(),
-				basicWebContentObjectEntry.getObjectEntryId()));
+				_cmsBasicWebContentObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
 	}
 
 	private void _testPostBulkActionWithTypePermission() throws Exception {
@@ -874,13 +870,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		_roleLocalService.addGroupRole(
 			testGroup.getGroupId(), role.getRoleId());
 
-		ObjectEntry basicWebContentObjectEntry =
-			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
-				Collections.emptyMap());
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			Collections.emptyMap());
 
 		permissionBulkAction.setBulkActionItems(
-			_toBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(objectEntry));
 
 		permissionBulkAction.setPermissions(
 			new Permission[] {
@@ -901,10 +896,9 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ResourcePermission resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
-				_depotEntry2.getCompanyId(),
-				basicWebContentObjectEntry.getModelClassName(),
+				_depotEntry2.getCompanyId(), objectEntry.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(basicWebContentObjectEntry.getObjectEntryId()),
+				String.valueOf(objectEntry.getObjectEntryId()),
 				role.getRoleId());
 
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
@@ -916,13 +910,12 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		TaxonomyCategoryBulkAction taxonomyCategoryBulkAction =
 			new TaxonomyCategoryBulkAction();
 
-		ObjectEntry basicWebContentObjectEntry =
-			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry2.getGroupId(), _basicWebContentObjectDefinition,
-				Collections.emptyMap());
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
+			Collections.emptyMap());
 
 		taxonomyCategoryBulkAction.setBulkActionItems(
-			_toBulkActionItems(basicWebContentObjectEntry));
+			_toBulkActionItems(objectEntry));
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
@@ -955,8 +948,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		Assert.assertArrayEquals(
 			ArrayUtil.toArray(taxonomyCategoryIds),
 			_assetCategoryLocalService.getCategoryIds(
-				_basicWebContentObjectDefinition.getClassName(),
-				basicWebContentObjectEntry.getObjectEntryId()));
+				_cmsBasicWebContentObjectDefinition.getClassName(),
+				objectEntry.getObjectEntryId()));
 	}
 
 	private BulkActionItem _toBulkActionItem(
@@ -988,19 +981,18 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		return bulkActionItem;
 	}
 
-	private BulkActionItem[] _toBulkActionItems(
-			ObjectEntry basicWebContentObjectEntry)
+	private BulkActionItem[] _toBulkActionItems(ObjectEntry objectEntry)
 		throws Exception {
 
 		return new BulkActionItem[] {
 			new BulkActionItem() {
 				{
 					setClassExternalReferenceCode(
-						basicWebContentObjectEntry.getExternalReferenceCode());
+						objectEntry.getExternalReferenceCode());
 					setClassName(
-						_basicWebContentObjectDefinition.getClassName());
-					setClassPK(basicWebContentObjectEntry.getObjectEntryId());
-					setName(basicWebContentObjectEntry.getTitleValue());
+						_cmsBasicWebContentObjectDefinition.getClassName());
+					setClassPK(objectEntry.getObjectEntryId());
+					setName(objectEntry.getTitleValue());
 				}
 			}
 		};
@@ -1035,8 +1027,6 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
-	private ObjectDefinition _basicWebContentObjectDefinition;
-
 	@Inject
 	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
 
@@ -1044,6 +1034,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
 	private ObjectDefinition _bulkActionTaskObjectDefinition;
+	private ObjectDefinition _cmsBasicWebContentObjectDefinition;
 	private DepotEntry _depotEntry1;
 	private DepotEntry _depotEntry2;
 

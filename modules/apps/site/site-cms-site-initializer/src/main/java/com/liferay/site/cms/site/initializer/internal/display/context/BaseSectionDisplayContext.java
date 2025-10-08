@@ -252,18 +252,18 @@ public abstract class BaseSectionDisplayContext {
 			HashMapBuilder.put(
 				"default", "content-icon-custom-structure"
 			).put(
-				"L_BASIC_WEB_CONTENT", "content-icon-basic-content"
-			).put(
 				"L_BLOG", "content-icon-blog"
+			).put(
+				"L_CMS_BASIC_WEB_CONTENT", "content-icon-basic-content"
 			).build()
 		).put(
 			"objectDefinitionIcons",
 			HashMapBuilder.put(
 				"default", "web-content"
 			).put(
-				"L_BASIC_WEB_CONTENT", "forms"
-			).put(
 				"L_BLOG", "blogs"
+			).put(
+				"L_CMS_BASIC_WEB_CONTENT", "forms"
 			).build()
 		).put(
 			"parentObjectEntryFolderExternalReferenceCode",
@@ -569,7 +569,7 @@ public abstract class BaseSectionDisplayContext {
 					ObjectDefinition objectDefinition =
 						ObjectDefinitionLocalServiceUtil.
 							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_WEB_CONTENT",
+								"L_CMS_BASIC_WEB_CONTENT",
 								themeDisplay.getCompanyId());
 
 					List<String> guestUnsupportedActions =

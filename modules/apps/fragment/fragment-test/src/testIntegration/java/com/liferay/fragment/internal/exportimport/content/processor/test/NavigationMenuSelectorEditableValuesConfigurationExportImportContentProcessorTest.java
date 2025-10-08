@@ -101,21 +101,10 @@ public class
 							_liveGroup.getGroupId()));
 			},
 			siteNavigationMenu -> JSONUtil.put(
-				"parentSiteNavigationMenuItemExternalReferenceCode",
-				StringPool.BLANK
-			).put(
-				"privateLayout", Boolean.FALSE.toString()
-			).put(
 				"siteNavigationMenuExternalReferenceCode",
 				siteNavigationMenu.getExternalReferenceCode()
 			).put(
 				"siteNavigationMenuScopeExternalReferenceCode", StringPool.BLANK
-			).put(
-				"title", RandomTestUtil.randomString()
-			).put(
-				"type",
-				"class com.liferay.site.navigation.item.selector." +
-					"SiteNavigationMenuItemSelectorReturnType"
 			));
 	}
 
@@ -157,18 +146,7 @@ public class
 					FragmentEntryProcessorConstants.
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put(
-						"displayStyle", "horizontal"
-					).put(
-						"hoveredItemColor", StringPool.BLANK
-					).put(
-						"selectedItemColor", StringPool.BLANK
-					).put(
-						"source", unsafeFunction.apply(siteNavigationMenu)
-					).put(
-						"source", unsafeFunction.apply(siteNavigationMenu)
-					).put(
-						"sublevels", "-1"
-					)
+						"source", unsafeFunction.apply(siteNavigationMenu))
 				).toString(),
 				_fragmentRendererRegistry.getFragmentRenderer(
 					"com.liferay.fragment.renderer.menu.display.internal." +

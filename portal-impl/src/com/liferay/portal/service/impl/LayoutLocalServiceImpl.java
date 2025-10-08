@@ -121,6 +121,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.LayoutComparator;
 import com.liferay.portal.kernel.util.comparator.LayoutPriorityComparator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
@@ -295,8 +296,17 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (Validator.isNotNull(uuid)) {
 			layout.setUuid(uuid);
 		}
+		else {
+			layout.setUuid(PortalUUIDUtil.generate());
+		}
 
-		layout.setExternalReferenceCode(externalReferenceCode);
+		if (Validator.isNotNull(externalReferenceCode)) {
+			layout.setExternalReferenceCode(externalReferenceCode);
+		}
+		else {
+			layout.setExternalReferenceCode(layout.getUuid());
+		}
+
 		layout.setGroupId(groupId);
 		layout.setCompanyId(user.getCompanyId());
 		layout.setUserId(user.getUserId());

@@ -47,7 +47,6 @@ import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.RangeAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTextAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
@@ -83,6 +82,7 @@ import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregat
 import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
@@ -575,8 +575,16 @@ public class ElasticsearchAggregationTranslator
 
 	@Override
 	public AggregationBuilder visit(RangeAggregation rangeAggregation) {
-		return _rangeAggregationTranslator.translate(
-			rangeAggregation, this, _pipelineAggregationTranslator);
+		RangeAggregationBuilder rangeAggregationBuilder =
+			_baseFieldAggregationTranslator.translate(
+				baseMetricsAggregation -> AggregationBuilders.range(
+					baseMetricsAggregation.getName()),
+				rangeAggregation, this, _pipelineAggregationTranslator);
+
+		populateRangeAggregationBuilder(
+			rangeAggregation, rangeAggregationBuilder);
+
+		return rangeAggregationBuilder;
 	}
 
 	@Override
@@ -756,8 +764,6 @@ public class ElasticsearchAggregationTranslator
 
 	private final QueryTranslator<QueryBuilder> _queryTranslator =
 		new ElasticsearchQueryTranslator();
-	private final RangeAggregationTranslator _rangeAggregationTranslator =
-		new RangeAggregationTranslator();
 	private final ScriptedMetricAggregationTranslator
 		_scriptedMetricAggregationTranslator =
 			new ScriptedMetricAggregationTranslator();

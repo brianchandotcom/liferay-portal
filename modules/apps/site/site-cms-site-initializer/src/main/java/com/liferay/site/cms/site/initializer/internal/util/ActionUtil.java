@@ -197,7 +197,7 @@ public class ActionUtil {
 						serviceContext.getLocale(), "new-x",
 						infoForm.getLabel(serviceContext.getLocale())))),
 			formManager, "INPUTS-inline-text-input",
-			infoForm.getInfoField("title"), layout, layoutStructure,
+			infoForm.getInfoField("ObjectField_title"), layout, layoutStructure,
 			formStyledLayoutStructureItem, false, segmentsExperienceId,
 			serviceContext,
 			JSONUtil.put(

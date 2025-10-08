@@ -112,6 +112,9 @@ public class BatchTestEntityExportImportTest {
 	public void setUp() throws Exception {
 		Group testGroup = GroupTestUtil.addGroup();
 
+		_companyGroup = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
 		Company testCompany = CompanyLocalServiceUtil.getCompany(
 			testGroup.getCompanyId());
 
@@ -224,10 +227,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		File larFile = _exportLayout(false, group.getGroupId());
+		File larFile = _exportLayout(false);
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -239,7 +239,7 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		_importLayout(false, larFile, group.getGroupId());
+		_importLayout(false, larFile);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -321,10 +321,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		File larFile = _exportLayout(false, group.getGroupId());
+		File larFile = _exportLayout(false);
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -343,7 +340,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
 		ExportImportConfiguration exportImportConfiguration = _importLayout(
-			false, larFile, group.getGroupId());
+			false, larFile);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -447,10 +444,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		File larFile = _exportLayout(false, group.getGroupId());
+		File larFile = _exportLayout(false);
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -483,7 +477,7 @@ public class BatchTestEntityExportImportTest {
 				null);
 
 		ExportImportConfiguration exportImportConfiguration = _importLayout(
-			false, larFile, group.getGroupId(), serviceRegistration);
+			false, larFile, serviceRegistration);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -555,10 +549,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 1, batchTestEntitiesPage.getTotalCount());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		File larFile = _exportLayout(false, group.getGroupId());
+		File larFile = _exportLayout(false);
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity.getExternalReferenceCode());
@@ -581,7 +572,7 @@ public class BatchTestEntityExportImportTest {
 				new TestExtensionProvider(propertyName), null);
 
 		ExportImportConfiguration exportImportConfiguration = _importLayout(
-			false, larFile, group.getGroupId(), serviceRegistration);
+			false, larFile, serviceRegistration);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -661,11 +652,8 @@ public class BatchTestEntityExportImportTest {
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		_systemEventLocalService.addSystemEvent(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), _companyGroup.getGroupId(),
 			batchTestEntity1.getExternalReferenceCode(),
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
 				class.getName(),
@@ -677,7 +665,7 @@ public class BatchTestEntityExportImportTest {
 			batchTestEntity2.getExternalReferenceCode());
 
 		_systemEventLocalService.addSystemEvent(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), _companyGroup.getGroupId(),
 			batchTestEntity2.getExternalReferenceCode(),
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
 				class.getName(),
@@ -690,7 +678,7 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		File larFile = _exportLayout(true, group.getGroupId());
+		File larFile = _exportLayout(true);
 
 		_batchTestEntityResource.postBatchTestEntity(batchTestEntity1);
 		_batchTestEntityResource.postBatchTestEntity(batchTestEntity2);
@@ -701,7 +689,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
 
-		_importLayout(true, larFile, group.getGroupId());
+		_importLayout(true, larFile);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -732,10 +720,7 @@ public class BatchTestEntityExportImportTest {
 					}
 				});
 
-		Group group = _stagingGroupHelper.fetchCompanyGroup(
-			TestPropsValues.getCompanyId());
-
-		File larFile = _exportLayout(true, group.getGroupId());
+		File larFile = _exportLayout(true);
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -759,8 +744,7 @@ public class BatchTestEntityExportImportTest {
 				null);
 
 		ExportImportConfiguration exportImportConfiguration = _importLayout(
-			false, larFile, group.getGroupId(), serviceRegistration1,
-			serviceRegistration2);
+			false, larFile, serviceRegistration1, serviceRegistration2);
 
 		User user = _userLocalService.getUser(TestPropsValues.getUserId());
 
@@ -846,9 +830,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 
-	private File _exportLayout(boolean deletions, long groupId)
-		throws Exception {
-
+	private File _exportLayout(boolean deletions) throws Exception {
 		return _exportImportLocalService.exportLayoutsAsFile(
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
@@ -856,8 +838,8 @@ public class BatchTestEntityExportImportTest {
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), groupId, false,
-							new long[0],
+							TestPropsValues.getUser(),
+							_companyGroup.getGroupId(), false, new long[0],
 							HashMapBuilder.put(
 								_PORTLET_DATA_KEY,
 								new String[] {Boolean.TRUE.toString()}
@@ -871,7 +853,7 @@ public class BatchTestEntityExportImportTest {
 	}
 
 	private ExportImportConfiguration _importLayout(
-			boolean deletions, File file, long groupId,
+			boolean deletions, File file,
 			ServiceRegistration<?>... serviceRegistrations)
 		throws Exception {
 
@@ -887,8 +869,8 @@ public class BatchTestEntityExportImportTest {
 						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
 						ExportImportConfigurationSettingsMapFactoryUtil.
 							buildImportLayoutSettingsMap(
-								TestPropsValues.getUser(), groupId, false,
-								new long[0],
+								TestPropsValues.getUser(),
+								_companyGroup.getGroupId(), false, new long[0],
 								HashMapBuilder.put(
 									_PORTLET_DATA_KEY,
 									new String[] {Boolean.TRUE.toString()}
@@ -925,6 +907,7 @@ public class BatchTestEntityExportImportTest {
 				"BatchTestEntityPortlet";
 
 	private BatchTestEntityResource _batchTestEntityResource;
+	private Group _companyGroup;
 	private CompanyTestEntityResource _companyTestEntityResource;
 
 	@Inject

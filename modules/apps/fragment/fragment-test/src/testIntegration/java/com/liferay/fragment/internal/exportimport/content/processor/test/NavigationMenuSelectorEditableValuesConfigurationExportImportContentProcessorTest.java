@@ -81,10 +81,6 @@ public class
 		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(
 			_stagingGroup.getGroupId());
 
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
 		FragmentEntryLink draftFragmentEntryLink =
 			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
 				JSONUtil.put(
@@ -123,17 +119,17 @@ public class
 				_fragmentRendererRegistry.getFragmentRenderer(
 					"com.liferay.fragment.renderer.menu.display.internal." +
 						"MenuDisplayFragmentRenderer"),
-				draftLayout, null, 0,
+				_draftLayout, null, 0,
 				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(draftLayout.getPlid()));
+					fetchDefaultSegmentsExperienceId(_draftLayout.getPlid()));
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.getFragmentEntryLink(
-				layout.getGroupId(),
+				_layout.getGroupId(),
 				draftFragmentEntryLink.getFragmentEntryLinkId(),
-				layout.getPlid());
+				_layout.getPlid());
 
 		_publishLayouts();
 

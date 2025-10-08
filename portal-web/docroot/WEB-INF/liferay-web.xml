@@ -336,6 +336,8 @@
 	<filter-mapping>
 		<filter-name>Portal Instances Filter</filter-name>
 		<url-pattern>/*</url-pattern>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>Ignore Filter - FTL</filter-name>

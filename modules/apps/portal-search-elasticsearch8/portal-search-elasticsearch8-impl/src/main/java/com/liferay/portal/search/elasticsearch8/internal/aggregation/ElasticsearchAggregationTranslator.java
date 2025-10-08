@@ -1058,16 +1058,11 @@ public class ElasticsearchAggregationTranslator
 	private <AB extends AggregationBuilder> AB _assemble(
 		AB aggregationBuilder, Aggregation aggregation) {
 
-		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactory(
-				_pipelineAggregationTranslator);
+		_baseAggregationTranslator.translate(
+			aggregationBuilder, aggregation, this,
+			_pipelineAggregationTranslator);
 
-		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
-
-		return aggregationBuilderAssemblerImpl.assembleAggregation(
-			aggregationBuilder, aggregation);
+		return aggregationBuilder;
 	}
 
 	private <VSAB extends ValuesSourceAggregationBuilder> VSAB _assemble(

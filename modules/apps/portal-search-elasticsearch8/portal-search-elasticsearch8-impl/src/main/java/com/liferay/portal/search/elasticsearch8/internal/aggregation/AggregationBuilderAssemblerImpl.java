@@ -5,7 +5,6 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
-import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
@@ -28,16 +27,6 @@ public class AggregationBuilderAssemblerImpl {
 		_pipelineAggregationTranslator = pipelineAggregationTranslator;
 	}
 
-	public <AB extends AggregationBuilder> AB assembleAggregation(
-		AB aggregationBuilder, Aggregation aggregation) {
-
-		_baseAggregationTranslator.translate(
-			aggregationBuilder, aggregation, _aggregationTranslator,
-			_pipelineAggregationTranslator);
-
-		return aggregationBuilder;
-	}
-
 	public <VSAB extends ValuesSourceAggregationBuilder> VSAB
 		assembleFieldAggregation(
 			VSAB valuesSourceAggregationBuilder,
@@ -53,8 +42,6 @@ public class AggregationBuilderAssemblerImpl {
 
 	private final AggregationTranslator<AggregationBuilder>
 		_aggregationTranslator;
-	private final BaseAggregationTranslator _baseAggregationTranslator =
-		new BaseAggregationTranslator();
 	private final BaseFieldAggregationTranslator
 		_baseFieldAggregationTranslator = new BaseFieldAggregationTranslator();
 	private final PipelineAggregationTranslator<PipelineAggregationBuilder>

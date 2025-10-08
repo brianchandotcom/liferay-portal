@@ -70,7 +70,9 @@ public class LayoutWarningMessageHelperTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		_layout = layout.fetchDraftLayout();
 
 		_collectionStyledLayoutStructureItem =
 			_addCollectionStyledLayoutStructureItem(_group);

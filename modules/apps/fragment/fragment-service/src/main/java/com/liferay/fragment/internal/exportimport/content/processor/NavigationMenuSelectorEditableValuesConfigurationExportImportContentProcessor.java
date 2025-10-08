@@ -57,54 +57,8 @@ public class
 			boolean exportReferencedContent)
 		throws Exception {
 
-		long siteNavigationMenuId = configurationValueJSONObject.getLong(
-			"siteNavigationMenuId");
-		String siteNavigationMenuExternalReferenceCode =
-			configurationValueJSONObject.getString(
-				"siteNavigationMenuExternalReferenceCode");
-
-		StagedModel stagedModel = null;
-
-		if ((siteNavigationMenuId == 0) &&
-			Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
-
-			stagedModel = _layoutLocalService.fetchLayout(
-				configurationValueJSONObject.getLong(
-					"parentSiteNavigationMenuItemId"));
-		}
-		else if (siteNavigationMenuId > 0) {
-			stagedModel =
-				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
-					siteNavigationMenuId);
-		}
-		else if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
-			String siteNavigationMenuScopeExternalReferenceCode =
-				configurationValueJSONObject.getString(
-					"siteNavigationMenuScopeExternalReferenceCode");
-
-			Group scopeGroup;
-
-			if (Validator.isNotNull(
-					siteNavigationMenuScopeExternalReferenceCode)) {
-
-				scopeGroup =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						siteNavigationMenuScopeExternalReferenceCode,
-						portletDataContext.getCompanyId());
-			}
-			else {
-				scopeGroup = _groupLocalService.fetchGroup(
-					portletDataContext.getScopeGroupId());
-			}
-
-			if (scopeGroup != null) {
-				stagedModel =
-					_siteNavigationMenuLocalService.
-						fetchSiteNavigationMenuByExternalReferenceCode(
-							siteNavigationMenuExternalReferenceCode,
-							scopeGroup.getGroupId());
-			}
-		}
+		StagedModel stagedModel = _getStagedModel(
+			configurationValueJSONObject, portletDataContext);
 
 		if (stagedModel == null) {
 			return;
@@ -166,6 +120,56 @@ public class
 				siteNavigationMenuItemNewPrimaryKeys.getOrDefault(
 					parentSiteNavigationMenuItemId, 0L));
 		}
+	}
+
+	private StagedModel _getStagedModel(
+		JSONObject jsonObject, PortletDataContext portletDataContext) {
+
+		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
+		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
+			"siteNavigationMenuExternalReferenceCode");
+
+		if ((siteNavigationMenuId == 0) &&
+			Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
+
+			return _layoutLocalService.fetchLayout(
+				jsonObject.getLong("parentSiteNavigationMenuItemId"));
+		}
+
+		if (siteNavigationMenuId > 0) {
+			return _siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+				siteNavigationMenuId);
+		}
+
+		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			String siteNavigationMenuScopeExternalReferenceCode =
+				jsonObject.getString(
+					"siteNavigationMenuScopeExternalReferenceCode");
+
+			Group scopeGroup;
+
+			if (Validator.isNotNull(
+					siteNavigationMenuScopeExternalReferenceCode)) {
+
+				scopeGroup =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						siteNavigationMenuScopeExternalReferenceCode,
+						portletDataContext.getCompanyId());
+			}
+			else {
+				scopeGroup = _groupLocalService.fetchGroup(
+					portletDataContext.getScopeGroupId());
+			}
+
+			if (scopeGroup != null) {
+				return _siteNavigationMenuLocalService.
+					fetchSiteNavigationMenuByExternalReferenceCode(
+						siteNavigationMenuExternalReferenceCode,
+						scopeGroup.getGroupId());
+			}
+		}
+
+		return null;
 	}
 
 	@Reference

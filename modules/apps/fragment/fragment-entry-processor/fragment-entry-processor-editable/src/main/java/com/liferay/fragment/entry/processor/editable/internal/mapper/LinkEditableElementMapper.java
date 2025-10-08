@@ -180,6 +180,46 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		}
 	}
 
+	private Layout _fetchLayout(
+		JSONObject layoutJSONObject, ThemeDisplay themeDisplay) {
+
+		if (layoutJSONObject.has("layoutId")) {
+			long groupId = layoutJSONObject.getLong("groupId");
+
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				return null;
+			}
+
+			return _layoutLocalService.fetchLayout(
+				groupId, layoutJSONObject.getBoolean("privateLayout"),
+				layoutJSONObject.getLong("layoutId"));
+		}
+
+		if (layoutJSONObject.has("externalReferenceCode")) {
+			long groupId = themeDisplay.getScopeGroupId();
+			String scopeExternalReferenceCode = layoutJSONObject.getString(
+				"scopeExternalReferenceCode");
+
+			if (Validator.isNotNull(scopeExternalReferenceCode)) {
+				Group group =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						scopeExternalReferenceCode,
+						themeDisplay.getCompanyId());
+
+				if (group != null) {
+					groupId = group.getGroupId();
+				}
+			}
+
+			return _layoutLocalService.fetchLayoutByExternalReferenceCode(
+				layoutJSONObject.getString("externalReferenceCode"), groupId);
+		}
+
+		return null;
+	}
+
 	private Object _getMappedLayoutValue(
 			JSONObject jsonObject,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
@@ -206,17 +246,11 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
 
-		long groupId = layoutJSONObject.getLong("groupId");
-
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if (group == null) {
+		if (layoutJSONObject == null) {
 			return StringPool.POUND;
 		}
 
-		Layout layout = _layoutLocalService.fetchLayout(
-			groupId, layoutJSONObject.getBoolean("privateLayout"),
-			layoutJSONObject.getLong("layoutId"));
+		Layout layout = _fetchLayout(layoutJSONObject, themeDisplay);
 
 		if (layout == null) {
 			return StringPool.POUND;

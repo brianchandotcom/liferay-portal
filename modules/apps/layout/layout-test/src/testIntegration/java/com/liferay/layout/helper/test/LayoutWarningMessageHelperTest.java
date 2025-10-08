@@ -70,6 +70,8 @@ public class LayoutWarningMessageHelperTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_layout = LayoutTestUtil.addTypeContentLayout(_group);
+
 		_collectionStyledLayoutStructureItem =
 			_addCollectionStyledLayoutStructureItem(_group);
 	}
@@ -83,15 +85,12 @@ public class LayoutWarningMessageHelperTest {
 	}
 
 	private CollectionStyledLayoutStructureItem
-			_addCollectionStyledLayoutStructureItem(Group group)
-		throws Exception {
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+		_addCollectionStyledLayoutStructureItem(Group group) {
 
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
 				fetchLayoutPageTemplateStructure(
-					group.getGroupId(), layout.getPlid());
+					group.getGroupId(), _layout.getPlid());
 
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			layoutPageTemplateStructure.getDefaultSegmentsExperienceData());
@@ -260,6 +259,8 @@ public class LayoutWarningMessageHelperTest {
 
 	@Inject
 	private Language _language;
+
+	private Layout _layout;
 
 	@Inject
 	private LayoutPageTemplateStructureLocalService

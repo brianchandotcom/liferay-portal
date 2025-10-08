@@ -120,7 +120,9 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		await page.reload();
 	}
 
-	await expect(await page.locator('td.lfr-provider-name-column').count()).toBe(0);
+	await expect(
+		await page.locator('td.lfr-provider-name-column').count()
+	).toBe(0);
 });
 
 test('Asserts that a user can export a configuration', async ({

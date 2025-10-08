@@ -47,7 +47,6 @@ import com.liferay.portal.search.aggregation.metrics.TopHitsAggregation;
 import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;

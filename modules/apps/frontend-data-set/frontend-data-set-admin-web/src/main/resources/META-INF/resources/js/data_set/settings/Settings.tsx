@@ -12,7 +12,7 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {fetch, navigate} from 'frontend-js-web';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import {
 	DEFAULT_FETCH_HEADERS,
@@ -43,10 +43,16 @@ const Settings = ({
 	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
 	const [loading, setLoading] = useState(true);
 	const [showManagementBarInEmptyState, setShowManagementBarInEmptyState] =
-		useState(false);
+		useState(dataSet.showManagementBarInEmptyState ?? false);
+
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
+
+	const handleToggleChange = useCallback(
+		() => setShowManagementBarInEmptyState(!showManagementBarInEmptyState),
+		[showManagementBarInEmptyState]
+	);
 
 	const updateFDSViewSettings = async () => {
 		const body = {
@@ -155,9 +161,12 @@ const Settings = ({
 					}
 				});
 
-				setShowManagementBarInEmptyState(
-					responseJSON.showManagementBarInEmptyState || false
-				);
+				const serverValue =
+					responseJSON.showManagementBarInEmptyState || false;
+
+				if (serverValue !== showManagementBarInEmptyState) {
+					setShowManagementBarInEmptyState(serverValue);
+				}
 
 				setLoading(false);
 			}
@@ -354,14 +363,13 @@ const Settings = ({
 						</ClayLayout.Col>
 
 						<ClayLayout.Col size={4}>
-							<ClayToggle
-								checked={showManagementBarInEmptyState}
-								onChange={() =>
-									setShowManagementBarInEmptyState(
-										!showManagementBarInEmptyState
-									)
-								}
-							/>
+							<div className="form-group">
+								<ClayToggle
+									disabled={loading}
+									onToggle={handleToggleChange}
+									toggled={showManagementBarInEmptyState}
+								/>
+							</div>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.SheetSection>

@@ -743,6 +743,57 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67912")
+	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessPageReferencedByERC()
+		throws Exception {
+
+		long classNameId = _portal.getClassNameId(
+			ObjectDefinitionConstants.
+				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
+					RandomTestUtil.randomLong());
+		long classPK = RandomTestUtil.randomLong();
+		String fieldId =
+			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
+				RandomTestUtil.randomLong();
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		String editableValues = StringUtil.replace(
+			_readJSONFileToString(
+				"action/editable_values_action_mapped_action_on_" +
+					"success_page_by_erc.json"),
+			new String[] {
+				"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID",
+				"EXTERNAL_REFERENCE_CODE", "SCOPE_ERC"
+			},
+			new String[] {
+				String.valueOf(classNameId), String.valueOf(classPK), fieldId,
+				layout.getExternalReferenceCode(),
+				group.getExternalReferenceCode()
+			});
+
+		Element element = _getElement(
+			"data-lfr-editable-id", "editable_action", editableValues,
+			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
+			FragmentEntryLinkConstants.VIEW);
+
+		Assert.assertEquals(
+			String.valueOf(classNameId),
+			element.attr("data-lfr-class-name-id"));
+		Assert.assertEquals(
+			String.valueOf(classPK), element.attr("data-lfr-class-pk"));
+		Assert.assertEquals(fieldId, element.attr("data-lfr-field-id"));
+		Assert.assertEquals(
+			"page", element.attr("data-lfr-on-success-interaction"));
+		Assert.assertEquals(
+			_portal.getLayoutURL(
+				layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
+			element.attr("data-lfr-on-success-page-url"));
+	}
+
+	@Test
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessURL()
 		throws Exception {
 

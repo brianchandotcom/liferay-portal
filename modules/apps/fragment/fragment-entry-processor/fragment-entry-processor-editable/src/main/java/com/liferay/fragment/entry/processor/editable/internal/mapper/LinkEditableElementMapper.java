@@ -7,14 +7,12 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -180,46 +178,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 		}
 	}
 
-	private Layout _fetchLayout(
-		JSONObject layoutJSONObject, ThemeDisplay themeDisplay) {
-
-		if (layoutJSONObject.has("layoutId")) {
-			long groupId = layoutJSONObject.getLong("groupId");
-
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group == null) {
-				return null;
-			}
-
-			return _layoutLocalService.fetchLayout(
-				groupId, layoutJSONObject.getBoolean("privateLayout"),
-				layoutJSONObject.getLong("layoutId"));
-		}
-
-		if (layoutJSONObject.has("externalReferenceCode")) {
-			long groupId = themeDisplay.getScopeGroupId();
-			String scopeExternalReferenceCode = layoutJSONObject.getString(
-				"scopeExternalReferenceCode");
-
-			if (Validator.isNotNull(scopeExternalReferenceCode)) {
-				Group group =
-					_groupLocalService.fetchGroupByExternalReferenceCode(
-						scopeExternalReferenceCode,
-						themeDisplay.getCompanyId());
-
-				if (group != null) {
-					groupId = group.getGroupId();
-				}
-			}
-
-			return _layoutLocalService.fetchLayoutByExternalReferenceCode(
-				layoutJSONObject.getString("externalReferenceCode"), groupId);
-		}
-
-		return null;
-	}
-
 	private Object _getMappedLayoutValue(
 			JSONObject jsonObject,
 			FragmentEntryProcessorContext fragmentEntryProcessorContext)
@@ -250,7 +208,9 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			return StringPool.POUND;
 		}
 
-		Layout layout = _fetchLayout(layoutJSONObject, themeDisplay);
+		Layout layout = LayoutReferenceResolverUtil.resolve(
+			themeDisplay.getCompanyId(), layoutJSONObject,
+			themeDisplay.getScopeGroupId());
 
 		if (layout == null) {
 			return StringPool.POUND;
@@ -299,12 +259,6 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

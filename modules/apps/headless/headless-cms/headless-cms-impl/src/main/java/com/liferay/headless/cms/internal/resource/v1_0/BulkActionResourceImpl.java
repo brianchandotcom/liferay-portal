@@ -854,7 +854,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			return "basic-web-content";
 		}
 		else if (Objects.equals(
-					objectDefinition.getExternalReferenceCode(), "L_BLOG")) {
+					objectDefinition.getExternalReferenceCode(),
+					"L_CMS_BLOG")) {
 
 			return "blog";
 		}

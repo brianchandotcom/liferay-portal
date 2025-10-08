@@ -252,18 +252,18 @@ public abstract class BaseSectionDisplayContext {
 			HashMapBuilder.put(
 				"default", "content-icon-custom-structure"
 			).put(
-				"L_BLOG", "content-icon-blog"
-			).put(
 				"L_CMS_BASIC_WEB_CONTENT", "content-icon-basic-content"
+			).put(
+				"L_CMS_BLOG", "content-icon-blog"
 			).build()
 		).put(
 			"objectDefinitionIcons",
 			HashMapBuilder.put(
 				"default", "web-content"
 			).put(
-				"L_BLOG", "blogs"
-			).put(
 				"L_CMS_BASIC_WEB_CONTENT", "forms"
+			).put(
+				"L_CMS_BLOG", "blogs"
 			).build()
 		).put(
 			"parentObjectEntryFolderExternalReferenceCode",

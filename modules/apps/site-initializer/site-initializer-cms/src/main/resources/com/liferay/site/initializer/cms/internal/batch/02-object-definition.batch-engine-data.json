@@ -206,12 +206,12 @@
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
-			"externalReferenceCode": "L_BLOG",
+			"externalReferenceCode": "L_CMS_BLOG",
 			"label": {
 				"en_US": "Blog"
 			},
 			"modifiable": true,
-			"name": "Blog",
+			"name": "CMSBlog",
 			"objectDefinitionSettings": [
 				{
 					"name": "acceptAllGroups",

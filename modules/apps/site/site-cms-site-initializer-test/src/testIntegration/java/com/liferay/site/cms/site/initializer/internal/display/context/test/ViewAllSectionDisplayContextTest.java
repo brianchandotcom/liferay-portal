@@ -66,7 +66,7 @@ public class ViewAllSectionDisplayContextTest
 		).put(
 			"blog",
 			getRedirect(
-				"L_BLOG",
+				"L_CMS_BLOG",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS)
 		).put(
 			"external-video-shortcut",

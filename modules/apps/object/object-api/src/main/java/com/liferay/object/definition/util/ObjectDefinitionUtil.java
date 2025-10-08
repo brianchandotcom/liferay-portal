@@ -118,8 +118,6 @@ public class ObjectDefinitionUtil {
 		).put(
 			"APISort", "/headless-builder/sorts"
 		).put(
-			"Blog", "/cms/blogs"
-		).put(
 			"Bookmark", "/bookmarks"
 		).put(
 			"BulkActionTask", "/cms/bulk-action-tasks"
@@ -129,6 +127,8 @@ public class ObjectDefinitionUtil {
 			"CMSBasicDocument", "/cms/basic-documents"
 		).put(
 			"CMSBasicWebContent", "/cms/basic-web-contents"
+		).put(
+			"CMSBlog", "/cms/blogs"
 		).put(
 			"CMSDefaultPermission", "/cms/default-permissions"
 		).put(

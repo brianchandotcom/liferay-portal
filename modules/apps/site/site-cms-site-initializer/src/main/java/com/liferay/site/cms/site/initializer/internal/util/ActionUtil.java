@@ -476,7 +476,7 @@ public class ActionUtil {
 				getUploadMultipleFilesDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
-				getBlogDropdownItem(
+				getCMSBlogDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
@@ -564,15 +564,6 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
-	public static DropdownItem getBlogDropdownItem(
-		HttpServletRequest httpServletRequest,
-		String objectEntryFolderExternalReferenceCode) {
-
-		return getStructuredContentDropdownItem(
-			httpServletRequest, "blogs", "blog", "L_BLOG",
-			objectEntryFolderExternalReferenceCode);
-	}
-
 	public static DropdownItem getCMSBasicDocumentDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
@@ -589,6 +580,15 @@ public class ActionUtil {
 		return getStructuredContentDropdownItem(
 			httpServletRequest, "forms", "basic-content",
 			"L_CMS_BASIC_WEB_CONTENT", objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getCMSBlogDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "blogs", "blog", "L_CMS_BLOG",
+			objectEntryFolderExternalReferenceCode);
 	}
 
 	public static List<DropdownItem> getContentsCustomDropdownItems(
@@ -641,7 +641,7 @@ public class ActionUtil {
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
 				getCMSBasicWebContentDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
-				getBlogDropdownItem(
+				getCMSBlogDropdownItem(
 					httpServletRequest,
 					objectEntryFolderExternalReferenceCode)));
 

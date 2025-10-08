@@ -114,7 +114,7 @@ public class ViewContentsSectionDisplayContextTest
 		).put(
 			"basic-content", getRedirect("L_CMS_BASIC_WEB_CONTENT")
 		).put(
-			"blog", getRedirect("L_BLOG")
+			"blog", getRedirect("L_CMS_BLOG")
 		).build();
 	}
 

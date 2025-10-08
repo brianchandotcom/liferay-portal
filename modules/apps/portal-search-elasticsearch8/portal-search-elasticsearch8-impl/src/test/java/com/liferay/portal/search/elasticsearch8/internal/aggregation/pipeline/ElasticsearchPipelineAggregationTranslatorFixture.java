@@ -6,6 +6,7 @@
 package com.liferay.portal.search.elasticsearch8.internal.aggregation.pipeline;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslatorFixture;
 

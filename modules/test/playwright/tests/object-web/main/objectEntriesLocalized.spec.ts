@@ -1531,7 +1531,7 @@ test.describe('Required localized object fields', () => {
 		await viewObjectEntriesPage.saveObjectEntryButton.click();
 
 		await expect(
-			page.getByText('Aquest camp és obligatori.', {exact: true})
+			page.getByText('This field is required.', {exact: true})
 		).toBeVisible();
 
 		await translationsDropdownTrigger.click();

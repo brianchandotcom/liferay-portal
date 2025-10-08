@@ -48,7 +48,6 @@ import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.IncludeExcludeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.SignificantTextAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.ScriptedMetricAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.TopHitsAggregationTranslator;
@@ -88,6 +87,7 @@ import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
 import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder;
@@ -689,8 +689,66 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		SignificantTextAggregation significantTextAggregation) {
 
-		return _significantTextAggregationTranslator.translate(
-			significantTextAggregation, this, _pipelineAggregationTranslator);
+		SignificantTextAggregationBuilder significantTextAggregationBuilder =
+			AggregationBuilders.significantText(
+				significantTextAggregation.getName(),
+				significantTextAggregation.getField());
+
+		significantTextAggregationBuilder.bucketCountThresholds();
+
+		if (significantTextAggregation.getBackgroundFilterQuery() != null) {
+			significantTextAggregationBuilder.backgroundFilter(
+				_queryTranslator.translate(
+					significantTextAggregation.getBackgroundFilterQuery()));
+		}
+
+		if (significantTextAggregation.getFilterDuplicateText() != null) {
+			significantTextAggregationBuilder.filterDuplicateText(
+				significantTextAggregation.getFilterDuplicateText());
+		}
+
+		if (significantTextAggregation.getIncludeExcludeClause() != null) {
+			significantTextAggregationBuilder.includeExclude(
+				_includeExcludeTranslator.translate(
+					significantTextAggregation.getIncludeExcludeClause()));
+		}
+
+		if (significantTextAggregation.getMinDocCount() != null) {
+			significantTextAggregationBuilder.minDocCount(
+				significantTextAggregation.getMinDocCount());
+		}
+
+		if (significantTextAggregation.getShardMinDocCount() != null) {
+			significantTextAggregationBuilder.shardMinDocCount(
+				significantTextAggregation.getShardMinDocCount());
+		}
+
+		if (significantTextAggregation.getShardSize() != null) {
+			significantTextAggregationBuilder.shardSize(
+				significantTextAggregation.getShardSize());
+		}
+
+		if (significantTextAggregation.getSize() != null) {
+			significantTextAggregationBuilder.size(
+				significantTextAggregation.getSize());
+		}
+
+		if (significantTextAggregation.getSignificanceHeuristic() != null) {
+			significantTextAggregationBuilder.significanceHeuristic(
+				_significanceHeuristicTranslator.translate(
+					significantTextAggregation.getSignificanceHeuristic()));
+		}
+
+		if (ListUtil.isNotEmpty(significantTextAggregation.getSourceFields())) {
+			significantTextAggregationBuilder.sourceFieldNames(
+				significantTextAggregation.getSourceFields());
+		}
+
+		_baseAggregationTranslator.translate(
+			significantTextAggregationBuilder, significantTextAggregation, this,
+			_pipelineAggregationTranslator);
+
+		return significantTextAggregationBuilder;
 	}
 
 	@Override
@@ -822,9 +880,6 @@ public class ElasticsearchAggregationTranslator
 	private final SignificanceHeuristicTranslator
 		_significanceHeuristicTranslator =
 			new SignificanceHeuristicTranslator();
-	private final SignificantTextAggregationTranslator
-		_significantTextAggregationTranslator =
-			new SignificantTextAggregationTranslator();
 	private final TermsAggregationTranslator _termsAggregationTranslator =
 		new TermsAggregationTranslator();
 	private final TopHitsAggregationTranslator _topHitsAggregationTranslator =

@@ -112,9 +112,6 @@ public class SiteParamConverterProviderTest {
 			URLConnectionUtil.read(
 				_TEST_BASE_URL + company.getGroupId() + "/name");
 		}
-		finally {
-			CompanyLocalServiceUtil.deleteCompany(company);
-		}
 	}
 
 	@Test

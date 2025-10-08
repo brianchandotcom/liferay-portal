@@ -241,10 +241,10 @@ export class Session {
 	}
 
 	private _setTimestamp() {
-		Liferay?.Util?.LocalStorage?.setItem(
+		Liferay.Util.LocalStorage.setItem(
 			this._timestampKey,
 			Date.now().toString(),
-			Liferay?.Util?.LocalStorage?.TYPES?.NECESSARY
+			Liferay.Util.LocalStorage.TYPES.NECESSARY
 		);
 	}
 

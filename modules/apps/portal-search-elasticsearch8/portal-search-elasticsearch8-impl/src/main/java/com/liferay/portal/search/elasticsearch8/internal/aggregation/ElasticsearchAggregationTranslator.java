@@ -1069,16 +1069,11 @@ public class ElasticsearchAggregationTranslator
 		VSAB valuesSourceAggregationBuilder,
 		FieldAggregation fieldAggregation) {
 
-		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactory(
-				_pipelineAggregationTranslator);
+		_baseFieldAggregationTranslator.translate(
+			baseMetricsAggregation -> valuesSourceAggregationBuilder,
+			fieldAggregation, this, _pipelineAggregationTranslator);
 
-		AggregationBuilderAssemblerImpl aggregationBuilderAssemblerImpl =
-			aggregationBuilderAssemblerFactory.getAggregationBuilderAssembler(
-				this);
-
-		return aggregationBuilderAssemblerImpl.assembleFieldAggregation(
-			valuesSourceAggregationBuilder, fieldAggregation);
+		return valuesSourceAggregationBuilder;
 	}
 
 	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(

@@ -115,8 +115,8 @@ export class CustomDataSetsPage {
 
 	async createDataSet({
 		name = DEFAULT_LABEL.DATA_SET,
-		restApplication = '/data-set-admin/table-sections',
-		restEndpoint = '/',
+		restApplication = API_ENDPOINT_PATH,
+		restEndpoint = '/by-external-reference-code/{currentExternalReferenceCode}/dataSetToDataSetTableSections',
 		restSchema = 'DataSetTableSection',
 	}: {
 		name?: string;
@@ -164,8 +164,6 @@ export class CustomDataSetsPage {
 			.getByRole('option', {exact: true, name: restEndpoint})
 			.click();
 
-		await modal.restEndpointField.click();
-
 		await modal.nameInput.click();
 
 		await modal.saveButton.click();
@@ -187,7 +185,7 @@ export class CustomDataSetsPage {
 			await this.page.locator('.system-data-sets').waitFor();
 		}
 		else {
-			await this.pageContainer.waitFor();
+			await this.pageContainer.waitFor({state: 'visible'});
 		}
 	}
 
@@ -200,7 +198,7 @@ export class CustomDataSetsPage {
 	async deleteDataSet(name = DEFAULT_LABEL.DATA_SET) {
 		await this.goto();
 
-		const datasetTestRow = await this.table.bodyRows.filter({
+		const datasetTestRow = this.table.bodyRows.filter({
 			hasText: name,
 		});
 
@@ -211,7 +209,7 @@ export class CustomDataSetsPage {
 
 		await this.page.getByRole('menuitem', {name: 'Delete'}).click();
 
-		const deleteModal = await this.page.getByRole('dialog');
+		const deleteModal = this.page.getByRole('dialog');
 
 		await deleteModal.getByRole('button', {name: 'Delete'}).click();
 	}

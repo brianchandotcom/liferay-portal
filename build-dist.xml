@@ -939,6 +939,13 @@ this task.
 			<replacevalue><![CDATA[<!--<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>-->]]></replacevalue>
 		</replace>
 
+		<replace
+			file="${app.server.jboss.dir}/standalone/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacevalue><![CDATA[<!--<jsp-config/>-->]]></replacevalue>
+		</replace>
+
 		<echo append="true" file="${app.server.jboss.bin.dir}/standalone.conf">
 			<![CDATA[${line.separator}JAVA_OPTS="$JAVA_OPTS ${app.server.jboss.jvm.args} ${app.server.jboss.jvm.mem}"
 
@@ -1891,6 +1898,13 @@ this task.
                     <named-formatter name="COLOR-PATTERN"]]></replacevalue>
 			</replace-elements>
 		</replace-multilines>
+
+		<replace
+			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
+		>
+			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacevalue><![CDATA[<!--<jsp-config/>-->]]></replacevalue>
+		</replace>
 
 		<echo append="true" file="${app.server.wildfly.bin.dir}/standalone.conf">
 			<![CDATA[${line.separator}JAVA_OPTS="$JAVA_OPTS ${app.server.wildfly.jvm.args} ${app.server.wildfly.jvm.mem}"

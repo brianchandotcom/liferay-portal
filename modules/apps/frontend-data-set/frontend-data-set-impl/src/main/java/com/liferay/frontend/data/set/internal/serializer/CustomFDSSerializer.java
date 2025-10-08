@@ -464,6 +464,16 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public Boolean serializeShowManagementBarInEmptyState(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
+
+		return (Boolean)properties.get("showManagementBarInEmptyState");
+	}
+
+	@Override
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

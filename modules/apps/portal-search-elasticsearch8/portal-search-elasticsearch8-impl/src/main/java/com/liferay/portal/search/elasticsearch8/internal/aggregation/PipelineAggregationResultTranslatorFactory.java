@@ -5,9 +5,9 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
-import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
 
-import org.elasticsearch.search.aggregations.Aggregation;
+import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 
 /**
  * @author André de Oliveira
@@ -15,6 +15,6 @@ import org.elasticsearch.search.aggregations.Aggregation;
 public interface PipelineAggregationResultTranslatorFactory {
 
 	public PipelineAggregationResultTranslator
-		createPipelineAggregationResultTranslator(Aggregation aggregation);
+		createPipelineAggregationResultTranslator(Aggregate aggregate);
 
 }

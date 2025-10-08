@@ -49,7 +49,6 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTransla
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.IncludeExcludeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.OrderTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.bucket.TermsAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.metrics.WeightedAvgAggregationTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
@@ -100,6 +99,8 @@ import org.elasticsearch.search.aggregations.metrics.PercentileRanksAggregationB
 import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.TopHitsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
+import org.elasticsearch.search.aggregations.support.MultiValuesSourceFieldConfig;
 import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
@@ -934,8 +935,42 @@ public class ElasticsearchAggregationTranslator
 	public AggregationBuilder visit(
 		WeightedAvgAggregation weightedAvgAggregation) {
 
-		return _weightedAvgAggregationTranslator.translate(
-			weightedAvgAggregation, this, _pipelineAggregationTranslator);
+		WeightedAvgAggregationBuilder weightedAvgAggregationBuilder =
+			AggregationBuilders.weightedAvg(weightedAvgAggregation.getName());
+
+		MultiValuesSourceFieldConfig valueMultiValuesSourceFieldConfig =
+			_getMultiValuesSourceFieldConfig(
+				weightedAvgAggregation.getValueField(),
+				weightedAvgAggregation.getValueMissing(),
+				weightedAvgAggregation.getValueScript());
+
+		weightedAvgAggregationBuilder.value(valueMultiValuesSourceFieldConfig);
+
+		MultiValuesSourceFieldConfig weightMultiValuesSourceFieldConfig =
+			_getMultiValuesSourceFieldConfig(
+				weightedAvgAggregation.getWeightField(),
+				weightedAvgAggregation.getWeightMissing(),
+				weightedAvgAggregation.getWeightScript());
+
+		weightedAvgAggregationBuilder.weight(
+			weightMultiValuesSourceFieldConfig);
+
+		if (weightedAvgAggregation.getFormat() != null) {
+			weightedAvgAggregationBuilder.format(
+				weightedAvgAggregation.getFormat());
+		}
+
+		if (weightedAvgAggregation.getValueType() != null) {
+			weightedAvgAggregationBuilder.userValueTypeHint(
+				_valueTypeTranslator.translate(
+					weightedAvgAggregation.getValueType()));
+		}
+
+		_baseAggregationTranslator.translate(
+			weightedAvgAggregationBuilder, weightedAvgAggregation, this,
+			_pipelineAggregationTranslator);
+
+		return weightedAvgAggregationBuilder;
 	}
 
 	protected void populateRangeAggregationBuilder(
@@ -996,6 +1031,28 @@ public class ElasticsearchAggregationTranslator
 			valuesSourceAggregationBuilder, fieldAggregation);
 	}
 
+	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(
+		String field, Object missing,
+		com.liferay.portal.search.script.Script script) {
+
+		MultiValuesSourceFieldConfig.Builder
+			multiValuesSourceFieldConfigBuilder =
+				new MultiValuesSourceFieldConfig.Builder();
+
+		multiValuesSourceFieldConfigBuilder.setFieldName(field);
+
+		if (missing != null) {
+			multiValuesSourceFieldConfigBuilder.setMissing(missing);
+		}
+
+		if (script != null) {
+			multiValuesSourceFieldConfigBuilder.setScript(
+				_scriptTranslator.translate(script));
+		}
+
+		return multiValuesSourceFieldConfigBuilder.build();
+	}
+
 	private final BaseAggregationTranslator _baseAggregationTranslator =
 		new BaseAggregationTranslator();
 	private final BaseFieldAggregationTranslator
@@ -1024,8 +1081,7 @@ public class ElasticsearchAggregationTranslator
 		new ElasticsearchSortFieldTranslator();
 	private final TermsAggregationTranslator _termsAggregationTranslator =
 		new TermsAggregationTranslator();
-	private final WeightedAvgAggregationTranslator
-		_weightedAvgAggregationTranslator =
-			new WeightedAvgAggregationTranslator();
+	private final ValueTypeTranslator _valueTypeTranslator =
+		new ValueTypeTranslator();
 
 }

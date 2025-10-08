@@ -43,6 +43,25 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 				</clay:col>
 			</clay:row>
 
+			<%@ include file="/object_entries/object_entry/categorization.jspf" %>
+
+			<c:if test="<%= objectDefinition.isEnableObjectEntrySchedule() && defaultObjectLayout %>">
+				<div>
+					<react:component
+						module="{ScheduleContainer} from object-web"
+						props='<%=
+							HashMapBuilder.<String, Object>put(
+								"portletNamespace", portletNamespace
+							).put(
+								"scheduleProperties", objectEntryDisplayContext.getScheduleProperties()
+							).put(
+								"submitRef", portletNamespace + "submitObjectEntry"
+							).build()
+						%>'
+					/>
+				</div>
+			</c:if>
+
 			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && defaultObjectLayout %>'>
 				<clay:panel-group>
 					<clay:panel
@@ -68,26 +87,7 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 					</clay:panel>
 				</clay:panel-group>
 			</c:if>
-
-			<c:if test="<%= objectDefinition.isEnableObjectEntrySchedule() && defaultObjectLayout %>">
-				<div>
-					<react:component
-						module="{ScheduleContainer} from object-web"
-						props='<%=
-							HashMapBuilder.<String, Object>put(
-								"portletNamespace", portletNamespace
-							).put(
-								"scheduleProperties", objectEntryDisplayContext.getScheduleProperties()
-							).put(
-								"submitRef", portletNamespace + "submitObjectEntry"
-							).build()
-						%>'
-					/>
-				</div>
-			</c:if>
 		</clay:sheet-section>
-
-		<%@ include file="/object_entries/object_entry/categorization.jspf" %>
 	</liferay-frontend:edit-form-body>
 
 	<c:if test="<%= !objectEntryDisplayContext.isReadOnly() %>">

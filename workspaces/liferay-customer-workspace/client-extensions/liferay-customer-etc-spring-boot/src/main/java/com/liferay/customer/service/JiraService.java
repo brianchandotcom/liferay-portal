@@ -11,12 +11,12 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -590,7 +590,12 @@ public class JiraService extends BaseService {
 		String jiraUserNameAndJiraApiToken =
 			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
 
-		return "Basic " + Base64.encode(jiraUserNameAndJiraApiToken.getBytes());
+		String encodedApiToken = Base64.getEncoder(
+		).encodeToString(
+			jiraUserNameAndJiraApiToken.getBytes()
+		);
+
+		return "Basic " + encodedApiToken;
 	}
 
 	private String _getJQLCustomField(String customField) {

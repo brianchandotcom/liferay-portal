@@ -26,17 +26,9 @@ public class ElasticsearchAggregationTranslatorFixture {
 				pipelineAggregationTranslatorFixture.
 					getElasticsearchPipelineAggregationTranslator();
 
-		AggregationBuilderAssemblerFactory aggregationBuilderAssemblerFactory =
-			new AggregationBuilderAssemblerFactory(
-				pipelineAggregationTranslator);
-
 		ElasticsearchAggregationTranslator elasticsearchAggregationTranslator =
 			new ElasticsearchAggregationTranslator();
 
-		ReflectionTestUtil.setFieldValue(
-			elasticsearchAggregationTranslator,
-			"_aggregationBuilderAssemblerFactory",
-			aggregationBuilderAssemblerFactory);
 		ReflectionTestUtil.setFieldValue(
 			elasticsearchAggregationTranslator,
 			"_pipelineAggregationTranslator", pipelineAggregationTranslator);

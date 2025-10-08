@@ -10,10 +10,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.TryFilter;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalInstances;
 
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -39,7 +41,8 @@ public class PortalInstancesFilter extends BaseFilter implements TryFilter {
 
 		try {
 			PortalInstances.getCompanyId(
-				httpServletRequest, PropsValues.VIRTUAL_HOSTS_STRICT_ACCESS);
+				httpServletRequest,
+				_isVirtualHostsStrictAccess(httpServletRequest));
 		}
 		catch (NoSuchVirtualHostException noSuchVirtualHostException) {
 			_log.error(noSuchVirtualHostException);
@@ -58,6 +61,21 @@ public class PortalInstancesFilter extends BaseFilter implements TryFilter {
 	@Override
 	protected Log getLog() {
 		return _log;
+	}
+
+	private boolean _isVirtualHostsStrictAccess(
+		HttpServletRequest httpServletRequest) {
+
+		if (!PropsValues.VIRTUAL_HOSTS_STRICT_ACCESS ||
+			((httpServletRequest.getDispatcherType() == DispatcherType.ERROR) &&
+			 GetterUtil.getBoolean(
+				 httpServletRequest.getAttribute(
+					 WebKeys.UNKNOWN_VIRTUAL_HOST)))) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -6,14 +6,38 @@
 package com.liferay.fragment.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -23,6 +47,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Rubén Pulido
@@ -60,6 +87,148 @@ public class FragmentEntryConfigurationParserTest {
 		_testTranslateConfiguration("es");
 	}
 
+	@Test
+	@TestInfo("LPD-67912")
+	public void testURLConfigurationWithLinkedLayoutReferencedByExternalReferenceCode()
+		throws Exception {
+
+		Group group1 = _groupLocalService.getGroup(
+			TestPropsValues.getGroupId());
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group1.getGroupId());
+
+		serviceContext.setRequest(
+			_getHttpServletRequest(
+				_companyLocalService.getCompany(group1.getCompanyId()), group1,
+				layout1));
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		try {
+			String name = RandomTestUtil.randomString();
+
+			JSONObject configurationValuesJSONObject =
+				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
+					JSONUtil.put(
+						"fieldSets",
+						JSONUtil.put(
+							JSONUtil.put(
+								"fields",
+								JSONUtil.put(
+									JSONUtil.put(
+										"label", "My URL"
+									).put(
+										"name", name
+									).put(
+										"type", "url"
+									))))),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							name,
+							JSONUtil.put(
+								"layout",
+								JSONUtil.put(
+									"externalReferenceCode",
+									layout1.getExternalReferenceCode()
+								).put(
+									"title", name
+								)))),
+					LocaleUtil.US);
+
+			Assert.assertEquals(
+				_portal.getLayoutFullURL(
+					layout1, serviceContext.getThemeDisplay()),
+				configurationValuesJSONObject.getString(name));
+
+			Group group2 = GroupTestUtil.addGroup();
+
+			Layout layout2 = LayoutTestUtil.addTypeContentLayout(group2);
+
+			configurationValuesJSONObject =
+				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
+					JSONUtil.put(
+						"fieldSets",
+						JSONUtil.put(
+							JSONUtil.put(
+								"fields",
+								JSONUtil.put(
+									JSONUtil.put(
+										"label", "My URL"
+									).put(
+										"name", name
+									).put(
+										"type", "url"
+									))))),
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							name,
+							JSONUtil.put(
+								"layout",
+								JSONUtil.put(
+									"externalReferenceCode",
+									layout2.getExternalReferenceCode()
+								).put(
+									"scopeExternalReferenceCode",
+									group2.getExternalReferenceCode()
+								).put(
+									"title", name
+								)))),
+					LocaleUtil.US);
+
+			Assert.assertEquals(
+				_portal.getLayoutFullURL(
+					layout2, serviceContext.getThemeDisplay()),
+				configurationValuesJSONObject.getString(name));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
+	}
+
+	private HttpServletRequest _getHttpServletRequest(
+			Company company, Group group, Layout layout)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(company);
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.US));
+		themeDisplay.setLayout(layout);
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		themeDisplay.setLayoutSet(layoutSet);
+		themeDisplay.setLookAndFeel(
+			layoutSet.getTheme(), layoutSet.getColorScheme());
+
+		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
+		themeDisplay.setRealUser(TestPropsValues.getUser());
+		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setResponse(new MockHttpServletResponse());
+		themeDisplay.setScopeGroupId(group.getGroupId());
+		themeDisplay.setSiteGroupId(group.getGroupId());
+		themeDisplay.setUser(TestPropsValues.getUser());
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return mockHttpServletRequest;
+	}
+
 	private ResourceBundle _getResourceBundle(String language) {
 		Class<?> clazz = getClass();
 
@@ -92,6 +261,15 @@ public class FragmentEntryConfigurationParserTest {
 	}
 
 	@Inject
+	private CompanyLocalService _companyLocalService;
+
+	@Inject
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Portal _portal;
 
 }

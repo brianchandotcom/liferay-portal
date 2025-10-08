@@ -14,6 +14,7 @@ import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregat
 import com.liferay.portal.search.aggregation.pipeline.CumulativeSumPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.DerivativePipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.ExtendedStatsBucketPipelineAggregation;
+import com.liferay.portal.search.aggregation.pipeline.GapPolicy;
 import com.liferay.portal.search.aggregation.pipeline.MaxBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MinBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.MovingFunctionPipelineAggregation;
@@ -35,6 +36,7 @@ import java.util.List;
 import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.PipelineAggregatorBuilders;
 import org.elasticsearch.search.aggregations.pipeline.AvgBucketPipelineAggregationBuilder;
+import org.elasticsearch.search.aggregations.pipeline.BucketHelpers;
 import org.elasticsearch.search.aggregations.pipeline.BucketMetricsPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
 import org.elasticsearch.search.aggregations.pipeline.BucketSelectorPipelineAggregationBuilder;
@@ -122,8 +124,7 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (bucketSelectorPipelineAggregation.getGapPolicy() != null) {
 			bucketScriptPipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					bucketSelectorPipelineAggregation.getGapPolicy()));
+				_translate(bucketSelectorPipelineAggregation.getGapPolicy()));
 		}
 
 		return bucketScriptPipelineAggregationBuilder;
@@ -154,8 +155,7 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (bucketSortPipelineAggregation.getGapPolicy() != null) {
 			bucketSortPipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					bucketSortPipelineAggregation.getGapPolicy()));
+				_translate(bucketSortPipelineAggregation.getGapPolicy()));
 		}
 
 		if (bucketSortPipelineAggregation.getFrom() != null) {
@@ -206,8 +206,7 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (derivativePipelineAggregation.getGapPolicy() != null) {
 			derivativePipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					derivativePipelineAggregation.getGapPolicy()));
+				_translate(derivativePipelineAggregation.getGapPolicy()));
 		}
 
 		if (derivativePipelineAggregation.getUnit() != null) {
@@ -292,8 +291,7 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (movingFunctionPipelineAggregation.getGapPolicy() != null) {
 			movFnPipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					movingFunctionPipelineAggregation.getGapPolicy()));
+				_translate(movingFunctionPipelineAggregation.getGapPolicy()));
 		}
 
 		return movFnPipelineAggregationBuilder;
@@ -341,8 +339,7 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (serialDiffPipelineAggregation.getGapPolicy() != null) {
 			serialDiffPipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					serialDiffPipelineAggregation.getGapPolicy()));
+				_translate(serialDiffPipelineAggregation.getGapPolicy()));
 		}
 
 		if (serialDiffPipelineAggregation.getLag() != null) {
@@ -398,13 +395,21 @@ public class ElasticsearchPipelineAggregationTranslator
 
 		if (bucketMetricsPipelineAggregation.getGapPolicy() != null) {
 			bucketMetricsPipelineAggregationBuilder.gapPolicy(
-				_gapPolicyTranslator.translate(
-					bucketMetricsPipelineAggregation.getGapPolicy()));
+				_translate(bucketMetricsPipelineAggregation.getGapPolicy()));
 		}
 	}
 
-	private final GapPolicyTranslator _gapPolicyTranslator =
-		new GapPolicyTranslator();
+	private BucketHelpers.GapPolicy _translate(GapPolicy gapPolicy) {
+		if (gapPolicy == GapPolicy.INSTANT_ZEROS) {
+			return BucketHelpers.GapPolicy.INSERT_ZEROS;
+		}
+		else if (gapPolicy == GapPolicy.SKIP) {
+			return BucketHelpers.GapPolicy.SKIP;
+		}
+
+		throw new IllegalArgumentException("Invalid gap policy" + gapPolicy);
+	}
+
 	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
 	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();

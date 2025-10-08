@@ -20,11 +20,14 @@ import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -37,6 +40,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
@@ -659,6 +663,154 @@ public class BatchTestEntityExportImportTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67397")
+	public void testExportImportReplicateDeletions() throws Exception {
+		Page<BatchTestEntity> batchTestEntitiesPage =
+			_batchTestEntityResource.getBatchTestEntitiesPage();
+
+		long totalCount = batchTestEntitiesPage.getTotalCount();
+
+		String externalReferenceCode1 =
+			StringUtil.toLowerCase(RandomTestUtil.randomString()) +
+				"_FROM_DIFFERENT_DTO";
+
+		BatchTestEntity batchTestEntity1 =
+			_batchTestEntityResource.postBatchTestEntity(
+				new BatchTestEntity() {
+					{
+						externalReferenceCode = externalReferenceCode1;
+						id = RandomTestUtil.randomLong();
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+					}
+				});
+
+		BatchTestEntity batchTestEntity2 =
+			_batchTestEntityResource.postBatchTestEntity(
+				new BatchTestEntity() {
+					{
+						externalReferenceCode = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						id = RandomTestUtil.randomLong();
+						name = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+						nestedField = StringUtil.toLowerCase(
+							RandomTestUtil.randomString());
+					}
+				});
+
+		batchTestEntitiesPage =
+			_batchTestEntityResource.getBatchTestEntitiesPage();
+
+		Assert.assertEquals(
+			totalCount + 2, batchTestEntitiesPage.getTotalCount());
+
+		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
+			batchTestEntity1.getExternalReferenceCode());
+
+		Group group = _stagingGroupHelper.fetchCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		_systemEventLocalService.addSystemEvent(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			batchTestEntity1.getExternalReferenceCode(),
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
+				class.getName(),
+			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
+			StringPool.BLANK);
+
+		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
+			batchTestEntity2.getExternalReferenceCode());
+
+		_systemEventLocalService.addSystemEvent(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			batchTestEntity2.getExternalReferenceCode(),
+			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
+				class.getName(),
+			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
+			StringPool.BLANK);
+
+		batchTestEntitiesPage =
+			_batchTestEntityResource.getBatchTestEntitiesPage();
+
+		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
+
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.DELETIONS,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									"com_liferay_portal_tools_rest_builder_" +
+										"test_portlet_BatchTestEntityPortlet",
+								new String[] {Boolean.TRUE.toString()}
+							).build())));
+
+		_batchTestEntityResource.postBatchTestEntity(batchTestEntity1);
+		_batchTestEntityResource.postBatchTestEntity(batchTestEntity2);
+
+		batchTestEntitiesPage =
+			_batchTestEntityResource.getBatchTestEntitiesPage();
+
+		Assert.assertEquals(
+			totalCount + 2, batchTestEntitiesPage.getTotalCount());
+
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildImportLayoutSettingsMap(
+							TestPropsValues.getUser(), group.getGroupId(),
+							false, new long[0],
+							HashMapBuilder.put(
+								PortletDataHandlerKeys.DELETIONS,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA,
+								new String[] {Boolean.TRUE.toString()}
+							).put(
+								PortletDataHandlerKeys.PORTLET_DATA + "_" +
+									"com_liferay_portal_tools_rest_builder_" +
+										"test_portlet_BatchTestEntityPortlet",
+								new String[] {Boolean.TRUE.toString()}
+							).build()));
+
+		_exportImportLocalService.importLayoutsDataDeletions(
+			exportImportConfiguration, larFile);
+
+		_exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
+
+		batchTestEntitiesPage =
+			_batchTestEntityResource.getBatchTestEntitiesPage();
+
+		Assert.assertEquals(
+			totalCount + 1, batchTestEntitiesPage.getTotalCount());
+
+		_assertEquals(
+			batchTestEntity1,
+			_batchTestEntityResource.getBatchTestEntityByExternalReferenceCode(
+				batchTestEntity1.getExternalReferenceCode()));
+	}
+
+	@Test
 	@TestInfo("LPD-65186")
 	public void testExportImportRollbackOnError() throws Exception {
 		BatchTestEntity batchTestEntity1 =
@@ -896,6 +1048,9 @@ public class BatchTestEntityExportImportTest {
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

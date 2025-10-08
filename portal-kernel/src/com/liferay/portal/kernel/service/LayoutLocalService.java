@@ -1414,7 +1414,8 @@ public interface LayoutLocalService
 	 String)}.
 	 * @param hasIconImage whether the icon image will be updated
 	 * @param iconBytes the byte array of the layout's new icon image
-	 * @param styleBookEntryERC the external reference code of the style book entry
+	 * @param styleBookEntryERC the external reference code of the style book
+	 entry
 	 * @param faviconFileEntryId the file entry ID of the layout's new favicon
 	 * @param masterLayoutPlid the primary key of the master layout
 	 * @param serviceContext the service context to be applied. Can set the
@@ -1662,7 +1663,8 @@ public interface LayoutLocalService
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group
 	 * @param layoutId the layout ID of the layout
-	 * @param styleBookEntryERC the external reference code of the style book entry
+	 * @param styleBookEntryERC the external reference code of the style book
+	 entry
 	 * @return the updated layout
 	 * @throws PortalException if a portal exception occurred
 	 */

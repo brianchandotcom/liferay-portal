@@ -13,6 +13,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
@@ -102,9 +103,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		Group group = groupLocalService.addGroup(
-			getUserId(), parentGroupId, null, 0, liveGroupId, nameMap,
-			descriptionMap, type, manualMembership, membershipRestriction,
-			friendlyURL, site, inheritContent, active, serviceContext);
+			StringPool.BLANK, getUserId(), parentGroupId, null, 0, liveGroupId,
+			nameMap, descriptionMap, type, null, manualMembership,
+			membershipRestriction, friendlyURL, site, inheritContent, active,
+			serviceContext);
 
 		if (site) {
 			SiteMembershipPolicyUtil.verifyPolicy(group);
@@ -1083,7 +1085,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				oldExpandoBridge.getAttributes();
 
 			group = groupLocalService.updateGroup(
-				groupId, parentGroupId, nameMap, descriptionMap, type,
+				groupId, parentGroupId, nameMap, descriptionMap, type, null,
 				manualMembership, membershipRestriction, friendlyURL,
 				inheritContent, active, serviceContext);
 
@@ -1095,7 +1097,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		}
 
 		return groupLocalService.updateGroup(
-			groupId, parentGroupId, nameMap, descriptionMap, type,
+			groupId, parentGroupId, nameMap, descriptionMap, type, null,
 			manualMembership, membershipRestriction, friendlyURL,
 			inheritContent, active, serviceContext);
 	}

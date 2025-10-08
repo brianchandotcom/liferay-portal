@@ -662,19 +662,16 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (group == null) {
 			group = addGroup(
-				userId, parentGroupId, className, classPK, liveGroupId, nameMap,
-				descriptionMap, type, manualMembership, membershipRestriction,
-				friendlyURL, site, inheritContent, active, serviceContext);
-
-			group.setExternalReferenceCode(externalReferenceCode);
-
-			group = groupPersistence.update(group);
+				externalReferenceCode, userId, parentGroupId, className,
+				classPK, liveGroupId, nameMap, descriptionMap, type, null,
+				manualMembership, membershipRestriction, friendlyURL, site,
+				inheritContent, active, serviceContext);
 		}
 		else {
 			group = updateGroup(
 				group.getGroupId(), parentGroupId, nameMap, descriptionMap,
-				type, manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
+				type, null, manualMembership, membershipRestriction,
+				friendlyURL, inheritContent, active, serviceContext);
 		}
 
 		return group;
@@ -782,14 +779,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		return groupLocalService.addGroup(
-			userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			StringPool.BLANK, userId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), String.valueOf(layout.getPlid())
 			).build(),
-			null, 0, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
-			false, true, null);
+			null, 0, null, true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
+			null, false, false, true, null);
 	}
 
 	/**
@@ -885,11 +882,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				}
 
 				group = groupLocalService.addGroup(
-					guestUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
-					className, classPK, GroupConstants.DEFAULT_LIVE_GROUP_ID,
-					getLocalizationMap(groupKey), null, type, true,
+					StringPool.BLANK, guestUserId,
+					GroupConstants.DEFAULT_PARENT_GROUP_ID, className, classPK,
+					GroupConstants.DEFAULT_LIVE_GROUP_ID,
+					getLocalizationMap(groupKey), null, type, null, true,
 					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL,
-					site, true, null);
+					site, false, true, null);
 
 				if (typeSettingsUnicodeProperties != null) {
 					group.setTypeSettingsProperties(

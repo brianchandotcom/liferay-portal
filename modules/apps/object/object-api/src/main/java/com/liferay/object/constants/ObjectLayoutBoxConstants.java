@@ -14,4 +14,6 @@ public class ObjectLayoutBoxConstants {
 
 	public static final String TYPE_REGULAR = "regular";
 
+	public static final String TYPE_SEO = "seo";
+
 }

@@ -7,6 +7,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
 import {ApplicationsMenuPage} from '../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {openFieldset} from '../../../../utils/openFieldset';
 import {DateOptions} from '../types/dateOptions';
 import {ExportImportPage} from './ExportImportPage';
 
@@ -147,17 +148,7 @@ export class CompanyExportImportPage {
 		}
 
 		if (useCurrentUser) {
-			if (
-				!(await this.exportImportPage.useCurrentUserAsAuthorCheckbox.isVisible())
-			) {
-				await this.page
-					.getByRole('button', {name: 'Authorship of the Content'})
-					.click();
-
-				await this.exportImportPage.useCurrentUserAsAuthorCheckbox.waitFor(
-					{state: 'visible'}
-				);
-			}
+			openFieldset(this.page, 'Authorship of the Content');
 
 			await this.exportImportPage.useCurrentUserAsAuthorCheckbox.check();
 		}

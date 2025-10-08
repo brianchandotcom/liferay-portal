@@ -41,9 +41,6 @@ public class CloudBucketUtil {
 	public static final String GCP_BUCKET_PATH_TESTRAY_RESULTS =
 		"gs://testray-results";
 
-	public static final String S3_BUCKET_PATH_FILE_PROPAGATOR =
-		"s3://liferayci-file-propagator";
-
 	public static void copyGCPFile(String destination, String source)
 		throws IOException {
 

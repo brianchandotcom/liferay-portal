@@ -107,8 +107,6 @@ public class
 							"siteNavigationMenuExternalReferenceCode",
 							siteNavigationMenu.getExternalReferenceCode()
 						).put(
-							"siteNavigationMenuId", RandomTestUtil.randomLong()
-						).put(
 							"siteNavigationMenuScopeExternalReferenceCode",
 							StringPool.BLANK
 						).put(

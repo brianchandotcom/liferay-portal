@@ -88,14 +88,14 @@ public class HelpCenterUtil {
 
 		Http.Options options = new Http.Options();
 
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
 		String login =
 			patcherConfiguration.helpCenterApiUserName() + ":" +
 				patcherConfiguration.helpCenterApiPassword();
 
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(login.getBytes()));
-
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
 
 		PatcherAccount patcherAccount =
 			PatcherAccountLocalServiceUtil.getPatcherAccount(
@@ -132,6 +132,8 @@ public class HelpCenterUtil {
 
 		Http.Options options = new Http.Options();
 
+		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
+
 		PatcherConfiguration patcherConfiguration =
 			ConfigurationProviderUtil.getCompanyConfiguration(
 				PatcherConfiguration.class, companyId);
@@ -142,8 +144,6 @@ public class HelpCenterUtil {
 
 		options.addHeader(
 			"Authorization", "Basic " + Base64.encode(login.getBytes()));
-
-		options.addHeader(HttpHeaders.USER_AGENT, _PATCHER_USER_AGENT);
 
 		options.addPart("code", accountEntryCode);
 

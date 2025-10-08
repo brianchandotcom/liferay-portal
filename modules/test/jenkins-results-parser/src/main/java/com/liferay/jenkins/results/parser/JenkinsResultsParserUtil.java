@@ -1475,6 +1475,13 @@ public class JenkinsResultsParserUtil {
 					"user.home", getCanonicalPath(_userHomeDir));
 			}
 
+			String s3BucketName = System.getenv("S3_BUCKET_NAME");
+
+			if (!isNullOrEmpty(s3BucketName)) {
+				properties.setProperty(
+					"env.S3_BUCKET_NAME", System.getenv("S3_BUCKET_NAME"));
+			}
+
 			_buildProperties.clear();
 
 			_buildProperties.putAll(properties);

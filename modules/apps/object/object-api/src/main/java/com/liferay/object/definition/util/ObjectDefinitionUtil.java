@@ -132,6 +132,8 @@ public class ObjectDefinitionUtil {
 		).put(
 			"CMSDefaultPermission", "/cms/default-permissions"
 		).put(
+			"CMSExternalVideo", "/cms/external-videos"
+		).put(
 			"CommerceReturn", "/commerce/returns"
 		).put(
 			"CommerceReturnItem", "/commerce/return-items"
@@ -154,8 +156,6 @@ public class ObjectDefinitionUtil {
 			"DataSetSort", "/data-set-admin/sorts"
 		).put(
 			"DataSetTableSection", "/data-set-admin/table-sections"
-		).put(
-			"ExternalVideo", "/cms/external-videos"
 		).put(
 			"FDSAction", "/data-set-manager/actions"
 		).put(

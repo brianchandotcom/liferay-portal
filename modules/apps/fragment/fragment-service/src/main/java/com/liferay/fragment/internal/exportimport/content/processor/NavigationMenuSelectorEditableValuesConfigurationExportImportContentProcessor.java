@@ -142,31 +142,28 @@ public class
 		}
 
 		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			long groupId = portletDataContext.getScopeGroupId();
+
 			String siteNavigationMenuScopeExternalReferenceCode =
 				jsonObject.getString(
 					"siteNavigationMenuScopeExternalReferenceCode");
 
-			Group scopeGroup;
-
 			if (Validator.isNotNull(
 					siteNavigationMenuScopeExternalReferenceCode)) {
 
-				scopeGroup =
+				Group group =
 					_groupLocalService.fetchGroupByExternalReferenceCode(
 						siteNavigationMenuScopeExternalReferenceCode,
 						portletDataContext.getCompanyId());
-			}
-			else {
-				scopeGroup = _groupLocalService.fetchGroup(
-					portletDataContext.getScopeGroupId());
+
+				if (group != null) {
+					groupId = group.getGroupId();
+				}
 			}
 
-			if (scopeGroup != null) {
-				return _siteNavigationMenuLocalService.
-					fetchSiteNavigationMenuByExternalReferenceCode(
-						siteNavigationMenuExternalReferenceCode,
-						scopeGroup.getGroupId());
-			}
+			return _siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					siteNavigationMenuExternalReferenceCode, groupId);
 		}
 
 		return null;

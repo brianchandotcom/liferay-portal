@@ -99,16 +99,18 @@ public class
 					).put(
 						"source",
 						JSONUtil.put(
-							"parentSiteNavigationMenuItemERC", StringPool.BLANK
+							"parentSiteNavigationMenuItemExternalReferenceCode",
+							StringPool.BLANK
 						).put(
 							"privateLayout", Boolean.FALSE.toString()
 						).put(
-							"siteNavigationMenuERC",
+							"siteNavigationMenuExternalReferenceCode",
 							siteNavigationMenu.getExternalReferenceCode()
 						).put(
 							"siteNavigationMenuId", RandomTestUtil.randomLong()
 						).put(
-							"siteNavigationMenuScopeERC", StringPool.BLANK
+							"siteNavigationMenuScopeExternalReferenceCode",
+							StringPool.BLANK
 						).put(
 							"title", RandomTestUtil.randomString()
 						).put(
@@ -154,10 +156,11 @@ public class
 
 		Assert.assertEquals(
 			siteNavigationMenu.getExternalReferenceCode(),
-			sourceJSONObject.get("siteNavigationMenuERC"));
+			sourceJSONObject.get("siteNavigationMenuExternalReferenceCode"));
 		Assert.assertTrue(
 			Validator.isNull(
-				sourceJSONObject.get("siteNavigationMenuScopeERC")));
+				sourceJSONObject.get(
+					"siteNavigationMenuScopeExternalReferenceCode")));
 
 		_siteNavigationMenuLocalService.getSiteNavigationMenuByUuidAndGroupId(
 			siteNavigationMenu.getUuid(), _liveGroup.getGroupId());

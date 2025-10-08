@@ -58,7 +58,7 @@ const ConnectedSiteActions = ({
 		showSuccessMessage(
 			sub(
 				Liferay.Language.get(
-					'site-x-disconnected-successfully-to-space'
+					'site-x-was-successfully-disconnected-from-the-space'
 				),
 				`<strong>${site.name}</strong>`
 			)
@@ -141,7 +141,7 @@ const SitesSelector = ({
 				showSuccessMessage(
 					sub(
 						Liferay.Language.get(
-							'site-x-connected-successfully-to-space'
+							'site-x-was-successfully-connected-to-the-space'
 						),
 						`<strong>${siteSelected.name}</strong>`
 					)

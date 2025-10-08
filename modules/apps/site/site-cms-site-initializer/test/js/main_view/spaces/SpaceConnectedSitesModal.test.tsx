@@ -225,7 +225,9 @@ describe('SpaceConnectedSitesModal', () => {
 				);
 			});
 
-			await assertSuccessToast('site-x-connected-successfully-to-space');
+			await assertSuccessToast(
+				'site-x-was-successfully-connected-to-the-space'
+			);
 
 			expect(
 				screen.getByText(mockUnconnectedSite.name)
@@ -283,7 +285,7 @@ describe('SpaceConnectedSitesModal', () => {
 			});
 
 			await assertSuccessToast(
-				'site-x-disconnected-successfully-to-space'
+				'site-x-was-successfully-disconnected-from-the-space'
 			);
 
 			expect(

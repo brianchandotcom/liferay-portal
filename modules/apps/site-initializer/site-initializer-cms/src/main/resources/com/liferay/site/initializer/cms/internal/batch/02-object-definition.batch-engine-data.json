@@ -337,12 +337,12 @@
 		{
 			"className": "com.liferay.object.model.ObjectDefinition#P4T1",
 			"enableCategorization": true,
-			"externalReferenceCode": "L_BULK_ACTION_TASK",
+			"externalReferenceCode": "L_CMS_BULK_ACTION_TASK",
 			"label": {
 				"en_US": "Bulk Action Task"
 			},
 			"modifiable": true,
-			"name": "BulkActionTask",
+			"name": "CMSBulkActionTask",
 			"objectFields": [
 				{
 					"DBType": "String",
@@ -411,7 +411,7 @@
 					"objectFieldSettings": [
 						{
 							"name": "objectRelationshipName",
-							"value": "bulkActionTaskToBulkActionTaskItems"
+							"value": "cmsBATaskToCMSBATaskItems"
 						},
 						{
 							"name": "function",
@@ -477,35 +477,35 @@
 				{
 					"deletionType": "prevent",
 					"edge": false,
-					"externalReferenceCode": "L_BULK_ACTION_TASK_TO_L_BULK_ACTION_TASK_ITEMS",
+					"externalReferenceCode": "L_CMS_BULK_ACTION_TASK_TO_L_CMS_BULK_ACTION_TASK_ITEMS",
 					"label": {
 						"en_US": "Bulk Action Task to Bulk Action Task Items"
 					},
-					"name": "bulkActionTaskToBulkActionTaskItems",
-					"objectDefinitionExternalReferenceCode1": "L_BULK_ACTION_TASK",
-					"objectDefinitionExternalReferenceCode2": "L_BULK_ACTION_TASK_ITEM",
+					"name": "cmsBATaskToCMSBATaskItems",
+					"objectDefinitionExternalReferenceCode1": "L_CMS_BULK_ACTION_TASK",
+					"objectDefinitionExternalReferenceCode2": "L_CMS_BULK_ACTION_TASK_ITEM",
 					"objectDefinitionModifiable2": true,
-					"objectDefinitionName2": "BulkActionTaskItem",
+					"objectDefinitionName2": "CMSBulkActionTaskItem",
 					"objectDefinitionScope2": "company",
 					"objectDefinitionSystem2": true,
 					"objectField": {
 						"DBType": "Long",
 						"businessType": "Relationship",
-						"externalReferenceCode": "BULK_ACTION_TASK_TO_BULK_ACTION_TASK_ITEMS",
+						"externalReferenceCode": "CMS_BULK_ACTION_TASK_TO_CMS_BULK_ACTION_TASK_ITEMS",
 						"indexed": true,
 						"indexedAsKeyword": false,
 						"label": {
 							"en_US": "Bulk Action Task to Bulk Action Task Items"
 						},
-						"name": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskId",
+						"name": "r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskId",
 						"objectFieldSettings": [
 							{
 								"name": "objectDefinition1ShortName",
-								"value": "BulkActionTask"
+								"value": "CMSBulkActionTask"
 							},
 							{
 								"name": "objectRelationshipERCObjectFieldName",
-								"value": "r_bulkActionTaskToBulkActionTaskItems_c_bulkActionTaskERC"
+								"value": "r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskERC"
 							}
 						],
 						"relationshipType": "oneToMany",
@@ -537,12 +537,12 @@
 		{
 			"className": "com.liferay.object.model.ObjectDefinition#S8R3",
 			"enableCategorization": true,
-			"externalReferenceCode": "L_BULK_ACTION_TASK_ITEM",
+			"externalReferenceCode": "L_CMS_BULK_ACTION_TASK_ITEM",
 			"label": {
 				"en_US": "Bulk Action Task Item"
 			},
 			"modifiable": true,
-			"name": "BulkActionTaskItem",
+			"name": "CMSBulkActionTaskItem",
 			"objectFields": [
 				{
 					"DBType": "String",

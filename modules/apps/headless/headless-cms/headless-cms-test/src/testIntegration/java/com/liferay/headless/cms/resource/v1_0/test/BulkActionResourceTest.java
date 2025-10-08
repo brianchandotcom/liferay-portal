@@ -169,10 +169,10 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
-		_bulkActionTaskObjectDefinition =
+		_cmsBulkActionTaskObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BULK_ACTION_TASK", testCompany.getCompanyId());
+					"L_CMS_BULK_ACTION_TASK", testCompany.getCompanyId());
 
 		_depotEntry1 = _addDepotEntry(true);
 		_depotEntry2 = _addDepotEntry(false);
@@ -351,8 +351,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			_objectEntryLocalService.getOneToManyObjectEntries(
 				bulkActionTaskObjectEntry.getGroupId(),
 				_objectRelationshipLocalService.getObjectRelationship(
-					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
-					"bulkActionTaskToBulkActionTaskItems"
+					_cmsBulkActionTaskObjectDefinition.getObjectDefinitionId(),
+					"cmsBATaskToCMSBATaskItems"
 				).getObjectRelationshipId(),
 				null, false, bulkActionTaskObjectEntry.getObjectEntryId(), true,
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
@@ -360,8 +360,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				GetterUtil.getLong(
 					objectEntry.getValues(
 					).get(
-						"r_bulkActionTaskToBulkActionTaskItems_c_" +
-							"bulkActionTaskId"
+						"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskId"
 					)),
 				bulkActionTaskObjectEntry.getObjectEntryId()));
 
@@ -397,8 +396,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 			_objectEntryLocalService.getOneToManyObjectEntries(
 				bulkActionTaskObjectEntry.getGroupId(),
 				_objectRelationshipLocalService.getObjectRelationship(
-					_bulkActionTaskObjectDefinition.getObjectDefinitionId(),
-					"bulkActionTaskToBulkActionTaskItems"
+					_cmsBulkActionTaskObjectDefinition.getObjectDefinitionId(),
+					"cmsBATaskToCMSBATaskItems"
 				).getObjectRelationshipId(),
 				null, false, bulkActionTaskObjectEntry.getObjectEntryId(), true,
 				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
@@ -406,8 +405,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 				GetterUtil.getLong(
 					objectEntry.getValues(
 					).get(
-						"r_bulkActionTaskToBulkActionTaskItems_c_" +
-							"bulkActionTaskId"
+						"r_cmsBATaskToCMSBATaskItems_c_cmsBulkActionTaskId"
 					)),
 				bulkActionTaskObjectEntry.getObjectEntryId()));
 
@@ -1033,8 +1031,8 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 	@Inject
 	private BatchEngineUnitReader _batchEngineUnitReader;
 
-	private ObjectDefinition _bulkActionTaskObjectDefinition;
 	private ObjectDefinition _cmsBasicWebContentObjectDefinition;
+	private ObjectDefinition _cmsBulkActionTaskObjectDefinition;
 	private DepotEntry _depotEntry1;
 	private DepotEntry _depotEntry2;
 

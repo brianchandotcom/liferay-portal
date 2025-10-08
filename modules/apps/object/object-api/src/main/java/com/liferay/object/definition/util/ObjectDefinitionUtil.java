@@ -120,15 +120,15 @@ public class ObjectDefinitionUtil {
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(
-			"BulkActionTask", "/cms/bulk-action-tasks"
-		).put(
-			"BulkActionTaskItem", "/cms/bulk-action-task-items"
-		).put(
 			"CMSBasicDocument", "/cms/basic-documents"
 		).put(
 			"CMSBasicWebContent", "/cms/basic-web-contents"
 		).put(
 			"CMSBlog", "/cms/blogs"
+		).put(
+			"CMSBulkActionTask", "/cms/bulk-action-tasks"
+		).put(
+			"CMSBulkActionTaskItem", "/cms/bulk-action-task-items"
 		).put(
 			"CMSDefaultPermission", "/cms/default-permissions"
 		).put(

@@ -215,9 +215,10 @@ public class LayoutLocalServiceWrapper
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
-					_updateLayoutPageTemplateStructureData(
-						data, layout, segmentsExperienceId, layout,
-						segmentsExperienceId, user);
+					_layoutPageTemplateStructureLocalService.
+						updateLayoutPageTemplateStructureData(
+							user.getUserId(), layout.getGroupId(),
+							layout.getPlid(), segmentsExperienceId, data);
 
 					return null;
 				});

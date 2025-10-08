@@ -77,6 +77,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 			hasLeftSymbols
 			hasRightSymbols
 			onActiveChange={onActiveChange}
+			title={title}
 			trigger={
 				<ClayButton
 					aria-label={selectedItem.label}
@@ -95,7 +96,7 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 					}}
 					size="sm"
 				>
-					{icon && <ClayIcon symbol={icon} />}
+					{icon && <ClayIcon aria-label={title} symbol={icon} />}
 
 					<span className={triggerLabelClass}>
 						{selectedItem.label}

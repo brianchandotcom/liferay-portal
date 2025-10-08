@@ -409,19 +409,18 @@ public class ResourceOpenAPIParser {
 
 			String schemaName = javaMethodSignature.getSchemaName();
 
-			boolean hasExternalReferenceCodeParameter = hasPathParameter(
-				javaMethodSignature,
-				OpenAPIParserUtil.getSchemaVarName(schemaName) +
-					"ExternalReferenceCode");
+			if (hasPathParameter(
+					javaMethodSignature,
+					OpenAPIParserUtil.getSchemaVarName(schemaName) +
+						"ExternalReferenceCode")) {
 
-			if (methodName.equals("patch" + schemaName) &&
-				!hasExternalReferenceCodeParameter) {
+				continue;
+			}
 
+			if (methodName.equals("patch" + schemaName)) {
 				updateStrategies.add("PARTIAL_UPDATE");
 			}
-			else if (methodName.equals("put" + schemaName) &&
-					 !hasExternalReferenceCodeParameter) {
-
+			else if (methodName.equals("put" + schemaName)) {
 				updateStrategies.add("UPDATE");
 			}
 		}

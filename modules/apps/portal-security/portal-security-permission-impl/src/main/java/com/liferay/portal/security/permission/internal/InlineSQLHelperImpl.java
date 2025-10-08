@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.ResourcePermissionTable;
@@ -55,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -124,7 +124,13 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			baseModel.getModelClassName(), permissionChecker.getUserId(),
 			groupIds, permittedClassPKs);
 
-		if (baseModel instanceof GroupedModel) {
+		Map<String, Function<T, Object>> attributeGetterFunctions =
+			baseModel.getAttributeGetterFunctions();
+
+		Function<T, Object> groupIdGetterFunction =
+			attributeGetterFunctions.get("groupId");
+
+		if (groupIdGetterFunction != null) {
 			Set<Long> disabledGroupIds = new HashSet<>();
 
 			for (long groupId : groupIds) {
@@ -143,10 +149,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 							return true;
 						}
 
-						GroupedModel groupedModel = (GroupedModel)t;
-
 						return disabledGroupIds.contains(
-							groupedModel.getGroupId());
+							groupIdGetterFunction.apply(t));
 					});
 			}
 		}

@@ -5,6 +5,10 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.util.NamedValue;
+
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
@@ -1130,22 +1134,6 @@ public class ElasticsearchAggregationTranslator
 		}
 	}
 
-	private BucketOrder _convert(Order order) {
-		if (Order.COUNT_METRIC_NAME.equals(order.getMetricName())) {
-			return BucketOrder.count(order.isAscending());
-		}
-		else if (Order.KEY_METRIC_NAME.equals(order.getMetricName())) {
-			return BucketOrder.key(order.isAscending());
-		}
-		else if (order.getMetricName() == null) {
-			return BucketOrder.aggregation(
-				order.getPath(), order.isAscending());
-		}
-
-		return BucketOrder.aggregation(
-			order.getPath(), order.getMetricName(), order.isAscending());
-	}
-
 	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(
 		String field, Object missing,
 		com.liferay.portal.search.script.Script script) {
@@ -1220,17 +1208,42 @@ public class ElasticsearchAggregationTranslator
 		return includeExclude;
 	}
 
-	private List<BucketOrder> _translate(List<Order> orders) {
-		List<BucketOrder> bucketOrders = new ArrayList<>(orders.size());
+	private List<NamedValue<SortOrder>> _translate(List<Order> orders) {
+		List<NamedValue<SortOrder>> sortOrders = new ArrayList<>(orders.size());
 
 		orders.forEach(
 			order -> {
-				BucketOrder bucketOrder = _convert(order);
+				NamedValue<SortOrder> sortOrder = _translate(order);
 
-				bucketOrders.add(bucketOrder);
+				sortOrders.add(sortOrder);
 			});
 
-		return bucketOrders;
+		return sortOrders;
+	}
+
+	private NamedValue<SortOrder> _translate(Order order) {
+		SortOrder sortOrder;
+
+		if (order.isAscending()) {
+			sortOrder = SortOrder.Asc;
+		}
+		else {
+			sortOrder = SortOrder.Desc;
+		}
+
+		if (Order.COUNT_METRIC_NAME.equals(order.getMetricName())) {
+			return NamedValue.of(Order.COUNT_METRIC_NAME, sortOrder);
+		}
+		else if (Order.KEY_METRIC_NAME.equals(order.getMetricName())) {
+			return NamedValue.of(Order.KEY_METRIC_NAME, sortOrder);
+		}
+		else if (order.getMetricName() == null) {
+			return NamedValue.of(order.getPath(), sortOrder);
+		}
+
+		return NamedValue.of(
+			order.getPath() + StringPool.PERIOD + order.getMetricName(),
+			sortOrder);
 	}
 
 	private org.elasticsearch.search.aggregations.bucket.terms.heuristic.

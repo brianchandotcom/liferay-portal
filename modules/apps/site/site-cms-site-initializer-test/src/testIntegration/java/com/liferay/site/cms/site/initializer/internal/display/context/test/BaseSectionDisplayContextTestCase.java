@@ -715,7 +715,7 @@ public abstract class BaseSectionDisplayContextTestCase
 					ObjectDefinition objectDefinition =
 						ObjectDefinitionLocalServiceUtil.
 							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_DOCUMENT",
+								"L_CMS_BASIC_DOCUMENT",
 								TestPropsValues.getCompanyId());
 
 					List<String> guestUnsupportedActions =

@@ -280,7 +280,7 @@ public class ObjectEntryModelListenerTest {
 		objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_DOCUMENT", objectEntryFolder2.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", objectEntryFolder2.getCompanyId());
 
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), depotEntry.getGroupId(),

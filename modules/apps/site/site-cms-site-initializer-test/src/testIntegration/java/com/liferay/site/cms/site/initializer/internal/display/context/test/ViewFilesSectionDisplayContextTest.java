@@ -127,7 +127,7 @@ public class ViewFilesSectionDisplayContextTest
 		throws PortalException {
 
 		return LinkedHashMapBuilder.put(
-			"single-file", getRedirect("L_BASIC_DOCUMENT")
+			"single-file", getRedirect("L_CMS_BASIC_DOCUMENT")
 		).put(
 			"multiple-files", StringPool.BLANK
 		).put(

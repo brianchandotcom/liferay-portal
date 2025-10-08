@@ -59,7 +59,7 @@ public class ViewAllSectionDisplayContextTest
 		).put(
 			"single-file",
 			getRedirect(
-				"L_BASIC_DOCUMENT",
+				"L_CMS_BASIC_DOCUMENT",
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)
 		).put(
 			"multiple-files", StringPool.BLANK

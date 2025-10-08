@@ -125,10 +125,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		ObjectDefinition basicDocumentObjectDefinition =
+		ObjectDefinition cmsBasicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_DOCUMENT", group.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
 		ObjectDefinition basicWebContentObjectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
@@ -152,7 +152,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					RoleConstants.CMS_ADMINISTRATOR,
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
-							basicDocumentObjectDefinition.getClassName()),
+							cmsBasicDocumentObjectDefinition.getClassName()),
 						resourceAction -> resourceAction.getActionId(),
 						String.class))
 			).put(

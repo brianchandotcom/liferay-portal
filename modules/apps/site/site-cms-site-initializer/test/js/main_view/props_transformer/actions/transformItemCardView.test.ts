@@ -121,7 +121,7 @@ describe('transformItemCardView', () => {
 						},
 						systemProperties: {
 							objectDefinitionBrief: {
-								externalReferenceCode: 'L_BASIC_DOCUMENT',
+								externalReferenceCode: 'L_CMS_BASIC_DOCUMENT',
 							},
 						},
 					},
@@ -147,7 +147,7 @@ describe('transformItemCardView', () => {
 						},
 						systemProperties: {
 							objectDefinitionBrief: {
-								externalReferenceCode: 'L_BASIC_DOCUMENT',
+								externalReferenceCode: 'L_CMS_BASIC_DOCUMENT',
 							},
 						},
 					},
@@ -173,7 +173,7 @@ describe('transformItemCardView', () => {
 						},
 						systemProperties: {
 							objectDefinitionBrief: {
-								externalReferenceCode: 'L_BASIC_DOCUMENT',
+								externalReferenceCode: 'L_CMS_BASIC_DOCUMENT',
 							},
 						},
 					},
@@ -199,7 +199,7 @@ describe('transformItemCardView', () => {
 						},
 						systemProperties: {
 							objectDefinitionBrief: {
-								externalReferenceCode: 'L_BASIC_DOCUMENT',
+								externalReferenceCode: 'L_CMS_BASIC_DOCUMENT',
 							},
 						},
 					},

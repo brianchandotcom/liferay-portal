@@ -470,7 +470,7 @@ public class ActionUtil {
 					httpServletRequest,
 					ObjectEntryFolderConstants.
 						EXTERNAL_REFERENCE_CODE_CONTENTS),
-				getBasicDocumentDropdownItem(
+				getCMSBasicDocumentDropdownItem(
 					httpServletRequest,
 					ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES),
 				getUploadMultipleFilesDropdownItem(
@@ -564,15 +564,6 @@ public class ActionUtil {
 			StringPool.SLASH);
 	}
 
-	public static DropdownItem getBasicDocumentDropdownItem(
-		HttpServletRequest httpServletRequest,
-		String objectEntryFolderExternalReferenceCode) {
-
-		return getStructuredContentDropdownItem(
-			httpServletRequest, "upload", "single-file", "L_BASIC_DOCUMENT",
-			objectEntryFolderExternalReferenceCode);
-	}
-
 	public static DropdownItem getBasicWebContentDropdownItem(
 		HttpServletRequest httpServletRequest,
 		String objectEntryFolderExternalReferenceCode) {
@@ -588,6 +579,15 @@ public class ActionUtil {
 
 		return getStructuredContentDropdownItem(
 			httpServletRequest, "blogs", "blog", "L_BLOG",
+			objectEntryFolderExternalReferenceCode);
+	}
+
+	public static DropdownItem getCMSBasicDocumentDropdownItem(
+		HttpServletRequest httpServletRequest,
+		String objectEntryFolderExternalReferenceCode) {
+
+		return getStructuredContentDropdownItem(
+			httpServletRequest, "upload", "single-file", "L_CMS_BASIC_DOCUMENT",
 			objectEntryFolderExternalReferenceCode);
 	}
 
@@ -840,7 +840,7 @@ public class ActionUtil {
 
 		List<DropdownItem> dropdownItems = new ArrayList<>(
 			List.of(
-				getBasicDocumentDropdownItem(
+				getCMSBasicDocumentDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),
 				getUploadMultipleFilesDropdownItem(
 					httpServletRequest, objectEntryFolderExternalReferenceCode),

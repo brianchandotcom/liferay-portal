@@ -597,7 +597,7 @@ public abstract class BaseSectionDisplayContext {
 					ObjectDefinition objectDefinition =
 						ObjectDefinitionLocalServiceUtil.
 							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_DOCUMENT",
+								"L_CMS_BASIC_DOCUMENT",
 								themeDisplay.getCompanyId());
 
 					List<String> guestUnsupportedActions =

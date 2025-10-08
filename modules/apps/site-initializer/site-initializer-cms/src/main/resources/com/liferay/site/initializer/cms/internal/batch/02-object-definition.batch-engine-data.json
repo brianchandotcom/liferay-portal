@@ -23,12 +23,12 @@
 			"enableObjectEntryHistory": true,
 			"enableObjectEntrySchedule": true,
 			"enableObjectEntryVersioning": true,
-			"externalReferenceCode": "L_BASIC_DOCUMENT",
+			"externalReferenceCode": "L_CMS_BASIC_DOCUMENT",
 			"label": {
 				"en_US": "Basic Document"
 			},
 			"modifiable": true,
-			"name": "BasicDocument",
+			"name": "CMSBasicDocument",
 			"objectActions": [
 			],
 			"objectDefinitionSettings": [

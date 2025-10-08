@@ -48,100 +48,6 @@ const Settings = ({
 		Array<TVisualizationMode>
 	>([]);
 
-	const getActiveVisualizationModes = async () => {
-		const fields = [
-			OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS,
-			OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS,
-			OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS,
-		].join(',');
-
-		const url = getDataSetResourceURL({
-			dataSetERC: dataSet.externalReferenceCode,
-			params: {
-				fields,
-				nestedFields: fields,
-			},
-		});
-
-		const response = await fetch(url, {
-			headers: DEFAULT_FETCH_HEADERS,
-		});
-
-		if (!response.ok) {
-			openDefaultFailureToast();
-
-			setVisualizationModes([]);
-
-			setLoading(false);
-
-			return;
-		}
-
-		const responseJSON = await response.json();
-
-		const {
-			[OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS]: cards,
-			[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS]: list,
-			[OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS]: table,
-		} = responseJSON;
-
-		const activeViews: Array<TVisualizationMode> = [];
-
-		(DEFAULT_VISUALIZATION_MODES as Array<TVisualizationMode>).forEach(
-			(view) => {
-				if (view.mode === 'cards' && cards && cards.length) {
-					activeViews.push(view);
-				}
-				if (view.mode === 'list' && list && list.length) {
-					activeViews.push(view);
-				}
-				if (view.mode === 'table' && table && table.length) {
-					activeViews.push(view);
-				}
-			}
-		);
-
-		setVisualizationModes(activeViews);
-
-		setDefaultVisualizationMode(() => {
-			if (
-				activeViews.find(
-					(view: TVisualizationMode) =>
-						view.mode === dataSet.defaultVisualizationMode
-				)
-			) {
-				return dataSet.defaultVisualizationMode;
-			}
-			else {
-				return activeViews.length
-					? activeViews[0].mode
-					: NOT_CONFIGURED_VISUALIZATION_MODE.type;
-			}
-		});
-
-		setLoading(false);
-	};
-
-	const getShowManagementBarInEmptyState = async () => {
-		const url = getDataSetResourceURL({
-			dataSetERC: dataSet.externalReferenceCode,
-			params: {
-				fields: 'showManagementBarInEmptyState',
-			},
-		});
-
-		const response = await fetch(url, {
-			headers: DEFAULT_FETCH_HEADERS,
-		});
-
-		if (response.ok) {
-			const responseJSON = await response.json();
-			setShowManagementBarInEmptyState(
-				responseJSON.showManagementBarInEmptyState || false
-			);
-		}
-	};
-
 	const updateFDSViewSettings = async () => {
 		const body = {
 			defaultVisualizationMode,
@@ -177,9 +83,92 @@ const Settings = ({
 	};
 
 	useEffect(() => {
-		getActiveVisualizationModes();
+		const fetchSettings = async () => {
+			const fields = [
+				OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS,
+				OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS,
+				OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS,
+			].join(',');
 
-		getShowManagementBarInEmptyState();
+			const url = getDataSetResourceURL({
+				dataSetERC: dataSet.externalReferenceCode,
+				params: {
+					fields: `${fields},showManagementBarInEmptyState`,
+					nestedFields: fields,
+				},
+			});
+
+			try {
+				const response = await fetch(url, {
+					headers: DEFAULT_FETCH_HEADERS,
+				});
+
+				if (!response.ok) {
+					openDefaultFailureToast();
+
+					setVisualizationModes([]);
+
+					setLoading(false);
+
+					return;
+				}
+
+				const responseJSON = await response.json();
+
+				const {
+					[OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS]: cards,
+					[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS]: list,
+					[OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS]: table,
+				} = responseJSON;
+
+				const activeViews: Array<TVisualizationMode> = [];
+
+				(
+					DEFAULT_VISUALIZATION_MODES as Array<TVisualizationMode>
+				).forEach((view) => {
+					if (view.mode === 'cards' && cards && cards.length) {
+						activeViews.push(view);
+					}
+					if (view.mode === 'list' && list && list.length) {
+						activeViews.push(view);
+					}
+					if (view.mode === 'table' && table && table.length) {
+						activeViews.push(view);
+					}
+				});
+
+				setVisualizationModes(activeViews);
+
+				setDefaultVisualizationMode(() => {
+					if (
+						activeViews.find(
+							(view: TVisualizationMode) =>
+								view.mode === dataSet.defaultVisualizationMode
+						)
+					) {
+						return dataSet.defaultVisualizationMode;
+					}
+					else {
+						return activeViews.length
+							? activeViews[0].mode
+							: NOT_CONFIGURED_VISUALIZATION_MODE.type;
+					}
+				});
+
+				setShowManagementBarInEmptyState(
+					responseJSON.showManagementBarInEmptyState || false
+				);
+
+				setLoading(false);
+			}
+			catch (error) {
+				openDefaultFailureToast();
+				setVisualizationModes([]);
+				setLoading(false);
+			}
+		};
+
+		fetchSettings();
 
 		// eslint-disable-next-line react-compiler/react-compiler
 		// eslint-disable-next-line react-hooks/exhaustive-deps

@@ -41,15 +41,28 @@ const getURLPreview = ({
 	// to avoid repeating the version when combining the restApplication and
 	// restEndpoint.
 
-	return (
-		restApplication +
-		restEndpoint
-			.split('/')
-			.filter((_, index) => index !== 1)
-			.join('/') +
-		'?' +
-		encodedAdditionalAPIURLParameters
-	);
+	if (restEndpoint.includes('/v1.')) {
+		return (
+			restApplication +
+			restEndpoint
+				.split('/')
+				.filter((_, index) => index !== 1)
+				.join('/') +
+			'?' +
+			encodedAdditionalAPIURLParameters
+		);
+	}
+
+	// Prevents removing the first part of the url if no /v1.0 is included
+
+	else {
+		return (
+			restApplication +
+			restEndpoint +
+			'?' +
+			encodedAdditionalAPIURLParameters
+		);
+	}
 };
 
 const Details = ({

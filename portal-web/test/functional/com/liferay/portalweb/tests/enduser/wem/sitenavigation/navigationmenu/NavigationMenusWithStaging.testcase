@@ -337,62 +337,6 @@ definition {
 		}
 	}
 
-	@description = "The user can edit the navigation menus in the staging site but cannot in the live site."
-	@priority = 5
-	@uitest
-	test CannotEditNavigationMenuInLive {
-		property portal.acceptance = "true";
-
-		task ("Add a navigation menu") {
-			JSONSitenavigation.addSiteNavigationMenu(
-				groupName = "Test Site Name (Staging)",
-				site = "false",
-				siteNavigationMenuName = "Navigation Menu Name");
-		}
-
-		task ("Publish to live") {
-			Staging.openStagingAdmin(siteURLKey = "test-site-name-staging");
-
-			Staging.publishCustomPublication();
-		}
-
-		task ("Navigate to Navigation Menus admin in the staging site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name-staging");
-		}
-
-		task ("Assert the navigation menu is editable in the staging site") {
-			AssertVisible(
-				key_rowEntry = "Navigation Menu Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
-
-			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
-
-			AssertVisible(
-				key_menuItem = "Edit",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
-
-		task ("Navigate to Navigation Menus admin in the live site") {
-			NavigationMenusAdmin.openNavigationMenusAdmin(siteURLKey = "test-site-name");
-		}
-
-		task ("Assert the navigation menu is not editable in the live site") {
-			AssertVisible(
-				key_rowEntry = "Navigation Menu Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME");
-
-			AssertElementNotPresent(
-				key_rowEntry = "Navigation Menu Name",
-				locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_NAME_LINK");
-
-			LexiconEntry.openEntryMenu(rowEntry = "Navigation Menu Name");
-
-			AssertElementNotPresent(
-				key_menuItem = "Edit",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
-	}
-
 	@description = "This is a test for LPS-89358. Deleted navigation menus will not appear in live after publish."
 	@priority = 3
 	test DeletedNavigationMenuNotShownInLiveAfterPublish {

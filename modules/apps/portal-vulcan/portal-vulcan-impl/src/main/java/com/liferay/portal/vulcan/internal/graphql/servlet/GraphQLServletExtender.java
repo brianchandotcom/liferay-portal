@@ -1323,14 +1323,7 @@ public class GraphQLServletExtender {
 			Dictionary<String, Object> dictionary =
 				configurations[0].getProperties();
 
-			Object graphQLEnabledValue =
-				(dictionary != null) ? dictionary.get("graphQLEnabled") : null;
-
-			if (graphQLEnabledValue instanceof Boolean) {
-				return (Boolean)graphQLEnabledValue;
-			}
-
-			return true;
+			return GetterUtil.get(dictionary.get("graphQLEnabled"), true);
 		}
 
 		return true;

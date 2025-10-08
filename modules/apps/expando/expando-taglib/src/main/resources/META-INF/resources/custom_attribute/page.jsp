@@ -635,11 +635,6 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 							/>
 						</c:when>
 						<c:otherwise>
-
-							<%
-							value = ParamUtil.getString(request, "ExpandoAttribute--" + name + "--", String.valueOf(value));
-							%>
-
 							<c:if test="<%= (propertyHeight > 0) || (propertyWidth > 0) %>">
 								<aui:style type="text/css">
 									#<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %> {
@@ -659,7 +654,7 @@ ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.
 									<textarea
 										class="field form-control lfr-input-text"
 										id="<portlet:namespace /><%= randomNamespace %><%= HtmlUtil.getAUICompatibleId(name) %>"
-										name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= HtmlUtil.escape(String.valueOf(value)) %></textarea
+										name="<portlet:namespace />ExpandoAttribute--<%= HtmlUtil.escapeAttribute(name) %>--"><%= HtmlUtil.escape(ParamUtil.getString(request, "ExpandoAttribute--" + name + "--", String.valueOf(value))) %></textarea
 									>
 								</c:when>
 								<c:otherwise>

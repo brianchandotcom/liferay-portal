@@ -62,10 +62,16 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 				</div>
 			</c:if>
 
-			<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization() && defaultObjectLayout %>'>
+			<%
+			boolean showFriendlyURL = FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization();
+
+			ObjectLayoutBox seoObjectLayoutBox = objectEntryDisplayContext.getObjectLayoutBox(ObjectLayoutBoxConstants.TYPE_SEO);
+			%>
+
+			<c:if test="<%= showFriendlyURL && ((seoObjectLayoutBox != null) || defaultObjectLayout) %>">
 				<clay:panel-group>
 					<clay:panel
-						collapsable="<%= true %>"
+						collapsable="<%= (seoObjectLayoutBox == null) ? true : seoObjectLayoutBox.isCollapsable() %>"
 						displayTitle='<%= LanguageUtil.get(request, "seo") %>'
 						displayType="default"
 						expanded="<%= true %>"

@@ -122,6 +122,21 @@ public class
 		}
 	}
 
+	private Layout _fetchLayout(
+		String externalReferenceCode, long groupId, long plid) {
+
+		if (Validator.isNull(externalReferenceCode) && (plid == 0)) {
+			return null;
+		}
+
+		if (plid > 0) {
+			return _layoutLocalService.fetchLayout(plid);
+		}
+
+		return _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	private long _getGroupId(
 		String externalReferenceCode, PortletDataContext portletDataContext) {
 
@@ -149,7 +164,10 @@ public class
 		if ((siteNavigationMenuId == 0) &&
 			Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
 
-			return _layoutLocalService.fetchLayout(
+			return _fetchLayout(
+				jsonObject.getString(
+					"parentSiteNavigationMenuItemExternalReferenceCode"),
+				portletDataContext.getScopeGroupId(),
 				jsonObject.getLong("parentSiteNavigationMenuItemId"));
 		}
 

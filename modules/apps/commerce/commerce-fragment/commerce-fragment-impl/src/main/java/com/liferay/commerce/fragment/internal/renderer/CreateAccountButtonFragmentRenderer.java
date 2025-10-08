@@ -81,7 +81,7 @@ public class CreateAccountButtonFragmentRenderer
 		).put(
 			"commerceChannelId", commerceContext.getCommerceChannelId()
 		).put(
-			"currentAccountURL",
+			"setCurrentAccountURL",
 			PortalUtil.getPortalURL(httpServletRequest) +
 				PortalUtil.getPathContext() +
 					"/o/commerce-ui/set-current-account"

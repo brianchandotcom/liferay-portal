@@ -6,6 +6,8 @@
 package com.liferay.commerce.fragment.internal.renderer;
 
 import com.liferay.account.model.AccountEntry;
+import com.liferay.commerce.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.fragment.internal.constants.CommerceFragmentCollectionKeys;
@@ -14,17 +16,28 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Account;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+
+import jakarta.portlet.PortletURL;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Map;
 
+import jakarta.servlet.http.HttpSession;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -94,6 +107,10 @@ public class AccountSelectorButtonFragmentRenderer
 						_portal.getUser(httpServletRequest)));
 			}
 		).put(
+			"accountEntryAllowedTypes", commerceContext.getAccountEntryAllowedTypes()
+		).put(
+			"checkoutURL", _getCheckoutURL(httpServletRequest)
+		).put(
 			"order",
 			() -> {
 				CommerceOrder commerceOrder =
@@ -110,7 +127,46 @@ public class AccountSelectorButtonFragmentRenderer
 						fragmentRendererContext.getLocale(), null,
 						_portal.getUser(httpServletRequest)));
 			}
+		).put(
+			"setCurrentAccountURL", StringBundler.concat(
+				_portal.getPortalURL(httpServletRequest),
+				_portal.getPathContext(), "/o/commerce-ui/set-current-account")
 		).build();
+	}
+
+	private String _getCheckoutURL(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		HttpServletRequest originalHttpServletRequest =
+			PortalUtil.getOriginalServletRequest(httpServletRequest);
+
+		HttpSession httpSession = originalHttpServletRequest.getSession();
+
+		boolean immediateCheckout = GetterUtil.getBoolean(
+			httpSession.getAttribute(
+				CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT));
+
+		if (!immediateCheckout) {
+			return StringPool.BLANK;
+		}
+
+		httpSession.removeAttribute(
+			CommerceCheckoutWebKeys.SUFFIX_IMMEDIATE_CHECKOUT);
+
+		PortletURL commerceCheckoutPortletURL =
+			PortletProviderUtil.getPortletURL(
+				httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT,
+				PortletProvider.Action.VIEW);
+
+		if (commerceCheckoutPortletURL == null) {
+			return StringPool.BLANK;
+		}
+
+		return PortletURLBuilder.create(
+			commerceCheckoutPortletURL
+		).setMVCRenderCommandName(
+			"/commerce_checkout/checkout_redirect"
+		).buildString();
 	}
 
 	@Reference(

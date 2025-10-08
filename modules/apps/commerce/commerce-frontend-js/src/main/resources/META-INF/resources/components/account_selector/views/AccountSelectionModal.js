@@ -23,7 +23,7 @@ function AccountSelectionModal({
 	checkoutURL,
 	commerceChannelId,
 	hasCreatePermission,
-	hasManagePermission,
+	hasManagePermission = true,
 }) {
 	const {observer, onOpenChange, open} = useModal({defaultOpen: true});
 	const [accountFields, setAccountFields] = useState({

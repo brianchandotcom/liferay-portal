@@ -17,8 +17,8 @@ import com.liferay.portal.search.elasticsearch8.internal.SearchHitDocumentTransl
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.AggregationResultTranslatorFactory;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.PipelineAggregationResultTranslatorFactory;
-import com.liferay.portal.search.elasticsearch8.internal.aggregation.pipeline.ElasticsearchPipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.hits.SearchHitsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;

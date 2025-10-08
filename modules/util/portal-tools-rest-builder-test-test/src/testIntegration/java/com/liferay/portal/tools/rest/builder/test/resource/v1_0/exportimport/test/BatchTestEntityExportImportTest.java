@@ -227,10 +227,7 @@ public class BatchTestEntityExportImportTest {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT));
+		File larFile = _exportLayout(false, group.getGroupId());
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -242,11 +239,7 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		_exportImportLocalService.importLayouts(
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT),
-			larFile);
+		_importLayout(false, larFile, group.getGroupId());
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -331,10 +324,7 @@ public class BatchTestEntityExportImportTest {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT));
+		File larFile = _exportLayout(false, group.getGroupId());
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -352,13 +342,8 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		ExportImportConfiguration exportImportConfiguration =
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT);
-
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
+		ExportImportConfiguration exportImportConfiguration = _importLayout(
+			false, larFile, group.getGroupId());
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -465,10 +450,7 @@ public class BatchTestEntityExportImportTest {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT));
+		File larFile = _exportLayout(false, group.getGroupId());
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
@@ -486,11 +468,6 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		ExportImportConfiguration exportImportConfiguration =
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT);
-
 		Bundle bundle = FrameworkUtil.getBundle(
 			BatchTestEntityExportImportTest.class);
 
@@ -505,17 +482,8 @@ public class BatchTestEntityExportImportTest {
 					errorMessage, externalReferenceCode2),
 				null);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			_exportImportLocalService.importLayouts(
-				exportImportConfiguration, larFile);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		ExportImportConfiguration exportImportConfiguration = _importLayout(
+			false, larFile, group.getGroupId(), serviceRegistration);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -590,10 +558,7 @@ public class BatchTestEntityExportImportTest {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT));
+		File larFile = _exportLayout(false, group.getGroupId());
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity.getExternalReferenceCode());
@@ -608,11 +573,6 @@ public class BatchTestEntityExportImportTest {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		ExportImportConfiguration exportImportConfiguration =
-			_getDraftExportImportConfiguration(
-				group.getGroupId(),
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT);
-
 		String propertyName = RandomTestUtil.randomString();
 
 		ServiceRegistration<ExtensionProvider> serviceRegistration =
@@ -620,17 +580,8 @@ public class BatchTestEntityExportImportTest {
 				ExtensionProvider.class,
 				new TestExtensionProvider(propertyName), null);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			_exportImportLocalService.importLayouts(
-				exportImportConfiguration, larFile);
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		ExportImportConfiguration exportImportConfiguration = _importLayout(
+			false, larFile, group.getGroupId(), serviceRegistration);
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -739,27 +690,7 @@ public class BatchTestEntityExportImportTest {
 
 		Assert.assertEquals(totalCount, batchTestEntitiesPage.getTotalCount());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(),
-							false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.DELETIONS,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build())));
+		File larFile = _exportLayout(true, group.getGroupId());
 
 		_batchTestEntityResource.postBatchTestEntity(batchTestEntity1);
 		_batchTestEntityResource.postBatchTestEntity(batchTestEntity2);
@@ -770,33 +701,7 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(
 			totalCount + 2, batchTestEntitiesPage.getTotalCount());
 
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(),
-							false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.DELETIONS,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
-
-		_exportImportLocalService.importLayoutsDataDeletions(
-			exportImportConfiguration, larFile);
-
-		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, larFile);
+		_importLayout(true, larFile, group.getGroupId());
 
 		batchTestEntitiesPage =
 			_batchTestEntityResource.getBatchTestEntitiesPage();
@@ -830,46 +735,10 @@ public class BatchTestEntityExportImportTest {
 		Group group = _stagingGroupHelper.fetchCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		File larFile = _exportImportLocalService.exportLayoutsAsFile(
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildExportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(),
-							false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build())));
+		File larFile = _exportLayout(true, group.getGroupId());
 
 		_batchTestEntityResource.deleteBatchTestEntityByExternalReferenceCode(
 			batchTestEntity1.getExternalReferenceCode());
-
-		ExportImportConfiguration exportImportConfiguration =
-			_exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(),
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), group.getGroupId(),
-							false, new long[0],
-							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
-								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			BatchTestEntityExportImportTest.class);
@@ -889,18 +758,9 @@ public class BatchTestEntityExportImportTest {
 				new TestExportImportRollbackOnErrorPostAction(errorMessage),
 				null);
 
-		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.batch.engine.internal." +
-					"BatchEngineImportTaskExecutorImpl",
-				LoggerTestUtil.ERROR)) {
-
-			_exportImportLocalService.importLayouts(
-				exportImportConfiguration, larFile);
-		}
-		finally {
-			serviceRegistration1.unregister();
-			serviceRegistration2.unregister();
-		}
+		ExportImportConfiguration exportImportConfiguration = _importLayout(
+			false, larFile, group.getGroupId(), serviceRegistration1,
+			serviceRegistration2);
 
 		User user = _userLocalService.getUser(TestPropsValues.getUserId());
 
@@ -986,51 +846,83 @@ public class BatchTestEntityExportImportTest {
 		Assert.assertEquals(expectedType, exportImportReportEntry.getType());
 	}
 
-	private ExportImportConfiguration _getDraftExportImportConfiguration(
-			long groupId, int type)
+	private File _exportLayout(boolean deletions, long groupId)
 		throws Exception {
 
-		if (type == ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT) {
-			return _exportImportConfigurationLocalService.
+		return _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), type,
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					ExportImportConfigurationSettingsMapFactoryUtil.
 						buildExportLayoutSettingsMap(
 							TestPropsValues.getUser(), groupId, false,
 							new long[0],
 							HashMapBuilder.put(
-								PortletDataHandlerKeys.PORTLET_DATA,
+								_PORTLET_DATA_KEY,
 								new String[] {Boolean.TRUE.toString()}
 							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
-		}
-		else if (type ==
-					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT) {
-
-			return _exportImportConfigurationLocalService.
-				addDraftExportImportConfiguration(
-					TestPropsValues.getUserId(), type,
-					ExportImportConfigurationSettingsMapFactoryUtil.
-						buildImportLayoutSettingsMap(
-							TestPropsValues.getUser(), groupId, false,
-							new long[0],
-							HashMapBuilder.put(
+								PortletDataHandlerKeys.DELETIONS,
+								new String[] {Boolean.toString(deletions)}
+							).put(
 								PortletDataHandlerKeys.PORTLET_DATA,
 								new String[] {Boolean.TRUE.toString()}
-							).put(
-								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									"com_liferay_portal_tools_rest_builder_" +
-										"test_portlet_BatchTestEntityPortlet",
-								new String[] {Boolean.TRUE.toString()}
-							).build()));
-		}
-
-		return null;
+							).build())));
 	}
+
+	private ExportImportConfiguration _importLayout(
+			boolean deletions, File file, long groupId,
+			ServiceRegistration<?>... serviceRegistrations)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"BatchEngineImportTaskExecutorImpl",
+				LoggerTestUtil.ERROR)) {
+
+			ExportImportConfiguration exportImportConfiguration =
+				_exportImportConfigurationLocalService.
+					addDraftExportImportConfiguration(
+						TestPropsValues.getUserId(),
+						ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+						ExportImportConfigurationSettingsMapFactoryUtil.
+							buildImportLayoutSettingsMap(
+								TestPropsValues.getUser(), groupId, false,
+								new long[0],
+								HashMapBuilder.put(
+									_PORTLET_DATA_KEY,
+									new String[] {Boolean.TRUE.toString()}
+								).put(
+									PortletDataHandlerKeys.DELETIONS,
+									new String[] {Boolean.toString(deletions)}
+								).put(
+									PortletDataHandlerKeys.PORTLET_DATA,
+									new String[] {Boolean.TRUE.toString()}
+								).build()));
+
+			if (deletions) {
+				_exportImportLocalService.importLayoutsDataDeletions(
+					exportImportConfiguration, file);
+			}
+
+			_exportImportLocalService.importLayouts(
+				exportImportConfiguration, file);
+
+			return exportImportConfiguration;
+		}
+		finally {
+			for (ServiceRegistration<?> serviceRegistration :
+					serviceRegistrations) {
+
+				serviceRegistration.unregister();
+			}
+		}
+	}
+
+	private static final String _PORTLET_DATA_KEY =
+		PortletDataHandlerKeys.PORTLET_DATA +
+			"_com_liferay_portal_tools_rest_builder_test_portlet_" +
+				"BatchTestEntityPortlet";
 
 	private BatchTestEntityResource _batchTestEntityResource;
 	private CompanyTestEntityResource _companyTestEntityResource;

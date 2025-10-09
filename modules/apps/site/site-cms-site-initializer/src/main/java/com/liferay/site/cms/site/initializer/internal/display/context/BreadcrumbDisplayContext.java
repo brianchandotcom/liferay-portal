@@ -81,8 +81,12 @@ public class BreadcrumbDisplayContext {
 				JSONUtil.put(
 					"confirmationMessage",
 					LanguageUtil.get(
-						_httpServletRequest,
-						"are-you-sure-you-want-to-delete-this-entry")
+						_httpServletRequest, "delete-space-confirmation-body")
+				).put(
+					"confirmationTitle",
+					LanguageUtil.format(
+						_httpServletRequest, "delete-space-confirmation-title",
+						group.getDescriptiveName())
 				).put(
 					"href",
 					"/o/headless-asset-library/v1.0/asset-libraries" +
@@ -95,6 +99,11 @@ public class BreadcrumbDisplayContext {
 					StringBundler.concat(
 						_themeDisplay.getPathFriendlyURLPublic(),
 						GroupConstants.CMS_FRIENDLY_URL, "/all-spaces")
+				).put(
+					"successMessage",
+					LanguageUtil.format(
+						_httpServletRequest, "x-was-successfully-deleted",
+						group.getDescriptiveName())
 				).put(
 					"symbolLeft", "trash"
 				).put(

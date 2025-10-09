@@ -7,22 +7,21 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown, {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClaySticker from '@clayui/sticker';
-import {openConfirmModal, openModal} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {ComponentProps} from 'react';
 
 import ApiHelper from '../services/ApiHelper';
-import {
-	displayErrorToast,
-	displayRequestSuccessToast,
-} from '../utils/toastUtil';
+import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
 
 interface ActionDropdownItemProps {
 	confirmationMessage?: string;
+	confirmationTitle?: string;
 	href?: string;
 	redirect?: string;
 	size?: 'full-screen' | 'lg' | 'md' | 'sm';
+	successMessage?: string;
 	target?: 'asyncDelete' | 'link' | 'modal';
 }
 
@@ -46,10 +45,12 @@ export interface BreadcrumbItem {
 
 function ActionDropdownItem({
 	confirmationMessage,
+	confirmationTitle,
 	href = '',
 	label,
 	redirect,
 	size = 'full-screen',
+	successMessage,
 	target = 'link',
 	...props
 }: {label: string} & ActionDropdownItemProps) {
@@ -65,7 +66,14 @@ function ActionDropdownItem({
 			const {error} = await ApiHelper.delete(href);
 
 			if (!error) {
-				displayRequestSuccessToast();
+				openToast({
+					message:
+						successMessage ||
+						Liferay.Language.get(
+							'your-request-completed-successfully'
+						),
+					type: 'success',
+				});
 
 				if (redirect) {
 					navigate(redirect);
@@ -82,13 +90,27 @@ function ActionDropdownItem({
 
 	const handleClick = () => {
 		if (confirmationMessage) {
-			openConfirmModal({
-				message: confirmationMessage,
-				onConfirm: (isConfirmed) => {
-					if (isConfirmed) {
-						handleTargetAction();
-					}
-				},
+			openModal({
+				bodyHTML: confirmationMessage,
+				buttons: [
+					{
+						autoFocus: true,
+						displayType: 'secondary',
+						label: Liferay.Language.get('cancel'),
+						type: 'cancel',
+					},
+					{
+						displayType: 'danger',
+						label: Liferay.Language.get('delete'),
+						onClick: ({processClose}) => {
+							processClose();
+							handleTargetAction();
+						},
+					},
+				],
+				role: 'alertdialog',
+				status: 'danger',
+				title: confirmationTitle || Liferay.Language.get('delete'),
 			});
 		}
 		else {

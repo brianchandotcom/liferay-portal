@@ -771,16 +771,6 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			return true;
 		}
 
-		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				disabledGroupIds.add(groupId);
-			}
-		}
-
-		if (disabledGroupIds.containsAll(ListUtil.fromArray(groupIds))) {
-			return true;
-		}
-
 		if (Validator.isNull(className)) {
 			throw new IllegalArgumentException("className is null");
 		}
@@ -792,27 +782,60 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		long companyId = permissionChecker.getCompanyId();
 
-		if (groupIds.length == 1) {
-			long groupId = groupIds[0];
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				disabledGroupIds.add(groupId);
+			}
+			else {
+				Group group = _groupLocalService.fetchGroup(groupId);
 
-			Group group = _groupLocalService.fetchGroup(groupId);
-
-			if (group != null) {
 				long[] roleIds = _getRoleIds(groupId);
 
+				if (group != null) {
+					if (group.getCompanyId() != companyId) {
+						throw new IllegalArgumentException(
+							"Permission queries across multiple portal " +
+								"instances are not supported");
+					}
+
+					try {
+						if (_resourcePermissionLocalService.
+								hasResourcePermission(
+									companyId, className,
+									ResourceConstants.SCOPE_GROUP,
+									String.valueOf(groupId), roleIds,
+									ActionKeys.VIEW) ||
+							_resourcePermissionLocalService.
+								hasResourcePermission(
+									companyId, className,
+									ResourceConstants.SCOPE_GROUP_TEMPLATE,
+									String.valueOf(
+										GroupConstants.DEFAULT_PARENT_GROUP_ID),
+									roleIds, ActionKeys.VIEW)) {
+
+							disabledGroupIds.add(groupId);
+						}
+					}
+					catch (PortalException portalException) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								StringBundler.concat(
+									"Unable to get resource permissions for ",
+									className, " with group ", groupId),
+								portalException);
+						}
+					}
+				}
+
 				try {
-					if (_resourcePermissionLocalService.hasResourcePermission(
-							companyId, className, ResourceConstants.SCOPE_GROUP,
-							String.valueOf(groupId), roleIds,
-							ActionKeys.VIEW) ||
+					if (!disabledGroupIds.contains(groupId) &&
 						_resourcePermissionLocalService.hasResourcePermission(
 							companyId, className,
-							ResourceConstants.SCOPE_GROUP_TEMPLATE,
-							String.valueOf(
-								GroupConstants.DEFAULT_PARENT_GROUP_ID),
-							roleIds, ActionKeys.VIEW)) {
+							ResourceConstants.SCOPE_COMPANY,
+							String.valueOf(companyId), roleIds,
+							ActionKeys.VIEW)) {
 
-						return true;
+						disabledGroupIds.add(groupId);
 					}
 				}
 				catch (PortalException portalException) {
@@ -820,45 +843,14 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 						_log.debug(
 							StringBundler.concat(
 								"Unable to get resource permissions for ",
-								className, " with group ", groupId),
+								className, " with company ", companyId),
 							portalException);
 					}
 				}
 			}
 		}
-		else {
-			for (long groupId : groupIds) {
-				Group group = _groupLocalService.fetchGroup(groupId);
 
-				if ((group != null) && (group.getCompanyId() != companyId)) {
-					throw new IllegalArgumentException(
-						"Permission queries across multiple portal instances " +
-							"are not supported");
-				}
-			}
-		}
-
-		try {
-			if (_resourcePermissionLocalService.hasResourcePermission(
-					companyId, className, ResourceConstants.SCOPE_COMPANY,
-					String.valueOf(companyId),
-					_getRoleIds(ArrayUtil.append(groupIds, 0)),
-					ActionKeys.VIEW)) {
-
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					StringBundler.concat(
-						"Unable to get resource permissions for ", className,
-						" with company ", companyId),
-					portalException);
-			}
-		}
-
-		return false;
+		return disabledGroupIds.containsAll(ListUtil.fromArray(groupIds));
 	}
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";

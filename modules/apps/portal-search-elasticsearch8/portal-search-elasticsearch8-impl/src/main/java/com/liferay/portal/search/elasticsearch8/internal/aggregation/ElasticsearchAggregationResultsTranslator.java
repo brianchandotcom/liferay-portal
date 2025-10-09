@@ -5,14 +5,16 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
-import com.liferay.petra.function.transform.TransformUtil;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import org.elasticsearch.search.aggregations.Aggregations;
+import java.util.Map;
 
 /**
  * @author André de Oliveira
@@ -35,11 +37,16 @@ public class ElasticsearchAggregationResultsTranslator {
 	}
 
 	public List<AggregationResult> translate(
-		Aggregations elasticsearchAggregations) {
+		Map<String, Aggregate> aggregations) {
 
-		return TransformUtil.transform(
-			elasticsearchAggregations.asList(),
-			aggregation -> translate(aggregation));
+		List<AggregationResult> aggregationResults = new ArrayList<>();
+
+		MapUtil.isNotEmptyForEach(
+			aggregations,
+			(name, aggregate) -> aggregationResults.add(
+				translate(aggregate, name)));
+
+		return aggregationResults;
 	}
 
 	public interface AggregationLookup {
@@ -54,19 +61,13 @@ public class ElasticsearchAggregationResultsTranslator {
 
 	}
 
-	protected AggregationResult translate(
-		org.elasticsearch.search.aggregations.Aggregation
-			elasticsearchAggregation) {
-
-		String name = elasticsearchAggregation.getName();
-
+	protected AggregationResult translate(Aggregate aggregate, String name) {
 		Aggregation aggregation = _aggregationLookup.lookup(name);
 
 		if (aggregation != null) {
 			return aggregation.accept(
 				_aggregationResultTranslatorFactory.
-					createAggregationResultTranslator(
-						elasticsearchAggregation));
+					createAggregationResultTranslator(aggregate));
 		}
 
 		PipelineAggregation pipelineAggregation =
@@ -78,8 +79,7 @@ public class ElasticsearchAggregationResultsTranslator {
 
 		return pipelineAggregation.accept(
 			_pipelineAggregationResultTranslatorFactory.
-				createPipelineAggregationResultTranslator(
-					elasticsearchAggregation));
+				createPipelineAggregationResultTranslator(aggregate));
 	}
 
 	private final AggregationLookup _aggregationLookup;

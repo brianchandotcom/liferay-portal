@@ -724,7 +724,6 @@ testFeatureFlagsEnabled(
 		apiHelpers,
 		applicationPage,
 		headlessBuilderPage,
-		page,
 		schemaPage,
 		uiElementsPage,
 	}) => {
@@ -737,22 +736,20 @@ testFeatureFlagsEnabled(
 
 		await headlessBuilderPage.openApplicationAndEdit(application.title);
 		await applicationPage.goToSchemasTab();
-		await schemaPage.goTo('API Application Schema');
+		await schemaPage.goTo(
+			applicationData1.apiApplicationToAPISchemas[0].name
+		);
 
-		await page.getByLabel('Name').fill('API Application Schema edited');
-		await page.getByLabel('Description').fill('Description edited');
+		const newDescription = 'Description edited';
+		const newName = 'API Application Schema edited';
+
+		await schemaPage.fillDescription(newDescription);
+		await schemaPage.fillName(newName);
 		await uiElementsPage.saveButton.click();
 
-		await expect(
-			page.getByText('API schema changes were saved.')
-		).toBeVisible();
-
-		await expect(page.getByLabel('Name')).toHaveValue(
-			'API Application Schema edited'
-		);
-		await expect(page.getByLabel('Description')).toHaveValue(
-			'Description edited'
-		);
+		await expect(schemaPage.successSaveMessage).toBeVisible();
+		await expect(schemaPage.descriptionInput).toHaveValue(newDescription);
+		await expect(schemaPage.nameInput).toHaveValue(newName);
 	}
 );
 
@@ -763,7 +760,6 @@ testFeatureFlagsEnabled(
 		apiHelpers,
 		applicationPage,
 		headlessBuilderPage,
-		page,
 		uiElementsPage,
 	}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(
@@ -809,10 +805,9 @@ testFeatureFlagsEnabled(
 		await applicationPage.goToEndpointsTab();
 		await applicationPage.goToEditEndpoint('/endpoint/');
 		await applicationPage.goToEndpointConfigurationTab();
-		await page.getByLabel('Response Body Schema').click();
-		await page
-			.getByRole('menuitem', {name: 'API Application Second Schema'})
-			.click();
+		await applicationPage.configureSchemaOfEndpoint(
+			'API Application Second Schema'
+		);
 		await uiElementsPage.saveButton.click();
 
 		const response =

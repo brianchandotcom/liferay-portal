@@ -1222,8 +1222,9 @@ public class ActionUtil {
 			InfoFieldSet infoFieldSet, Layout layout,
 			LayoutStructure layoutStructure,
 			LayoutStructureItem layoutStructureItem,
-			String objectDefinitionName, long segmentsExperienceId,
-			ServiceContext serviceContext)
+			String objectDefinitionName, boolean readOnly,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			JSONObject stylesJSONObject)
 		throws Exception {
 
 		if (infoFieldSet.isRelationship()) {
@@ -1337,14 +1338,15 @@ public class ActionUtil {
 					fragmentEntryLinkService, formManager,
 					fragmentRendererRegistry, (InfoFieldSet)infoFieldSetEntry,
 					layout, layoutStructure, layoutStructureItem,
-					objectDefinitionName, segmentsExperienceId, serviceContext);
+					objectDefinitionName, readOnly, segmentsExperienceId,
+					serviceContext, stylesJSONObject);
 			}
 			else {
 				_addInputFragmentEntryLink(
 					addedFragmentEntryLinks, null, formManager, null,
 					(InfoField<?>)infoFieldSetEntry, layout, layoutStructure,
-					layoutStructureItem, false, segmentsExperienceId,
-					serviceContext, JSONUtil.put("marginBottom", "16px"));
+					layoutStructureItem, readOnly, segmentsExperienceId,
+					serviceContext, stylesJSONObject);
 			}
 		}
 

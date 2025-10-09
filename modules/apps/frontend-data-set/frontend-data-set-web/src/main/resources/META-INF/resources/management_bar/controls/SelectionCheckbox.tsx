@@ -23,6 +23,11 @@ const SelectionCheckbox = ({
 
 	return (
 		<ClayCheckbox
+			aria-label={
+				items.length !== selectedItemsValue.length
+					? Liferay.Language.get('select-items')
+					: Liferay.Language.get('clear-selection')
+			}
 			checked={allItemsSelectedActive || !!selectedItemsValue.length}
 			indeterminate={
 				!!selectedItemsValue.length &&

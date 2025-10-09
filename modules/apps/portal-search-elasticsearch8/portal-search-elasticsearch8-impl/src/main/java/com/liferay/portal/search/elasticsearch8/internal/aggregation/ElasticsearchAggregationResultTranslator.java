@@ -558,8 +558,8 @@ public class ElasticsearchAggregationResultTranslator
 		ElasticsearchAggregationResultsTranslator
 			elasticsearchAggregationResultsTranslator =
 				new ElasticsearchAggregationResultsTranslator(
-					this, this, aggregation::getChildAggregation,
-					aggregation::getPipelineAggregation);
+					aggregation::getChildAggregation, this,
+					aggregation::getPipelineAggregation, this);
 
 		return elasticsearchAggregationResultsTranslator.translate(
 			elasticsearchAggregations);

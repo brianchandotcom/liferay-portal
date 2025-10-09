@@ -142,8 +142,8 @@ public class SearchSearchResponseAssemblerImpl
 		ElasticsearchAggregationResultsTranslator
 			elasticsearchAggregationResultsTranslator =
 				new ElasticsearchAggregationResultsTranslator(
-					this, this, aggregationsMap::get,
-					pipelineAggregationsMap::get);
+					aggregationsMap::get, this, pipelineAggregationsMap::get,
+					this);
 
 		List<AggregationResult> aggregationResults =
 			elasticsearchAggregationResultsTranslator.translate(

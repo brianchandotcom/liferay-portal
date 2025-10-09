@@ -20,18 +20,18 @@ import org.elasticsearch.search.aggregations.Aggregations;
 public class ElasticsearchAggregationResultsTranslator {
 
 	public ElasticsearchAggregationResultsTranslator(
-		AggregationResultTranslatorFactory aggregationResultTranslatorFactory,
-		PipelineAggregationResultTranslatorFactory
-			pipelineAggregationResultTranslatorFactory,
 		AggregationLookup aggregationLookup,
-		PipelineAggregationLookup pipelineAggregationLookup) {
+		AggregationResultTranslatorFactory aggregationResultTranslatorFactory,
+		PipelineAggregationLookup pipelineAggregationLookup,
+		PipelineAggregationResultTranslatorFactory
+			pipelineAggregationResultTranslatorFactory) {
 
+		_aggregationLookup = aggregationLookup;
 		_aggregationResultTranslatorFactory =
 			aggregationResultTranslatorFactory;
+		_pipelineAggregationLookup = pipelineAggregationLookup;
 		_pipelineAggregationResultTranslatorFactory =
 			pipelineAggregationResultTranslatorFactory;
-		_aggregationLookup = aggregationLookup;
-		_pipelineAggregationLookup = pipelineAggregationLookup;
 	}
 
 	public List<AggregationResult> translate(

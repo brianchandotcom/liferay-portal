@@ -90,7 +90,7 @@ public class DDMFieldAttributeCTEventListenerTest {
 								DLURLHelperUtil.getPreviewURL(
 									fileEntry, fileEntry.getFileVersion(), null,
 									StringPool.BLANK),
-								null, null, "\"/>")
+								"\"/>")
 						).build()),
 					LanguageUtil.getLanguageId(LocaleUtil.US)),
 				"BASIC-WEB-CONTENT", "BASIC-WEB-CONTENT");

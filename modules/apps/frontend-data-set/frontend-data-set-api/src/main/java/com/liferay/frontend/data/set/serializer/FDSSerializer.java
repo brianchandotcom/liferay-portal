@@ -66,6 +66,12 @@ public interface FDSSerializer {
 	public JSONArray serializeFilters(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public default Boolean serializeHideManagementBarInEmptyState(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		return true;
+	}
+
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest);
 
@@ -74,12 +80,6 @@ public interface FDSSerializer {
 
 	public String serializePropsTransformer(
 		String fdsName, HttpServletRequest httpServletRequest);
-
-	public default Boolean serializeHideManagementBarInEmptyState(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		return true;
-	}
 
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);

@@ -180,6 +180,20 @@ public class FDSRendererImpl implements FDSRenderer {
 						return filtersJSONArray;
 					}
 				).put(
+					"hideManagementBarInEmptyState",
+					() -> {
+						Boolean hideManagementBarInEmptyState =
+							fdsSerializer.
+								serializeHideManagementBarInEmptyState(
+									fdsName, httpServletRequest);
+
+						if (hideManagementBarInEmptyState == null) {
+							return true;
+						}
+
+						return hideManagementBarInEmptyState;
+					}
+				).put(
 					"itemsActions",
 					() -> {
 						List<FDSActionDropdownItem> fdsActionDropdownItems =
@@ -204,19 +218,6 @@ public class FDSRendererImpl implements FDSRenderer {
 						}
 
 						return paginationJSONObject;
-					}
-				).put(
-					"hideManagementBarInEmptyState",
-					() -> {
-						Boolean hideManagementBarInEmptyState =
-							fdsSerializer.serializeHideManagementBarInEmptyState(
-								fdsName, httpServletRequest);
-
-						if (hideManagementBarInEmptyState == null) {
-							return true;
-						}
-
-						return hideManagementBarInEmptyState;
 					}
 				).put(
 					"sorts",

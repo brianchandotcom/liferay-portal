@@ -782,11 +782,6 @@ testFeatureFlagsEnabled(
 						scope: 'company',
 					},
 				],
-				applicationStatus: 'unpublished',
-				baseURL: 'basic-application',
-				description: 'Test API Application',
-				externalReferenceCode: 'basic-application',
-				title: 'Basic application',
 			},
 			'headless-builder/applications'
 		);

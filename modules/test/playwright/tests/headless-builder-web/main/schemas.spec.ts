@@ -12,6 +12,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {waitForLoading} from '../../osb-faro-web/main/utils/loading';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
@@ -21,7 +22,8 @@ export const testFeatureFlagsEnabled = mergeTests(
 		'LPD-21414': {enabled: true},
 	}),
 	headlessDiscoveryPagesTest,
-	loginTest()
+	loginTest(),
+	uiElementsPageTest
 );
 
 export const testFeatureFlagsDisabled = mergeTests(
@@ -724,6 +726,7 @@ testFeatureFlagsEnabled(
 		headlessBuilderPage,
 		page,
 		schemaPage,
+		uiElementsPage,
 	}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{...applicationData1, applicationStatus: 'unpublished'},
@@ -738,7 +741,7 @@ testFeatureFlagsEnabled(
 
 		await page.getByLabel('Name').fill('API Application Schema edited');
 		await page.getByLabel('Description').fill('Description edited');
-		await page.getByRole('button', {name: 'Save'}).click();
+		await uiElementsPage.saveButton.click();
 
 		await expect(
 			page.getByText('API schema changes were saved.')
@@ -756,7 +759,13 @@ testFeatureFlagsEnabled(
 testFeatureFlagsEnabled(
 	'Can relate the same schema with multiple endpoints',
 	{tag: ['@LPD-67357']},
-	async ({apiHelpers, applicationPage, headlessBuilderPage, page}) => {
+	async ({
+		apiHelpers,
+		applicationPage,
+		headlessBuilderPage,
+		page,
+		uiElementsPage,
+	}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				...applicationData2,
@@ -809,7 +818,7 @@ testFeatureFlagsEnabled(
 		await page
 			.getByRole('menuitem', {name: 'API Application Second Schema'})
 			.click();
-		await page.getByRole('button', {name: 'Save'}).click();
+		await uiElementsPage.saveButton.click();
 
 		const response =
 			await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(

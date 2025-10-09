@@ -227,39 +227,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return ddmFormInstanceRecord;
 	}
 
-	private void _startWorkflowInstance(
-			long companyId, DDMFormInstance ddmFormInstance,
-			DDMFormInstanceRecord ddmFormInstanceRecord,
-			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
-			long groupId, ServiceContext serviceContext, long userId)
-		throws PortalException {
-
-		if (serviceContext.getWorkflowAction() !=
-				WorkflowConstants.ACTION_PUBLISH) {
-
-			return;
-		}
-
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
-			companyId, groupId, userId, DDMFormInstanceRecord.class.getName(),
-			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
-			ddmFormInstanceRecordVersion, serviceContext,
-			HashMapBuilder.<String, Serializable>put(
-				WorkflowConstants.CONTEXT_URL,
-				_getEntryURL(ddmFormInstanceRecord, serviceContext)
-			).put(
-				"entryTitle",
-				ddmFormInstance.getName(serviceContext.getLocale())
-			).put(
-				"entryTitleXML", ddmFormInstance.getName()
-			).build());
-
-		if (_isEmailNotificationEnabled(ddmFormInstance)) {
-			_ddmFormEmailNotificationSender.sendEmailNotification(
-				ddmFormInstanceRecord, serviceContext);
-		}
-	}
-
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
@@ -951,6 +918,39 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			latestExpandoBridge.getAttributes();
 
 		return lastAttributes.equals(latestAttributes);
+	}
+
+	private void _startWorkflowInstance(
+			long companyId, DDMFormInstance ddmFormInstance,
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			long groupId, ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		if (serviceContext.getWorkflowAction() !=
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			return;
+		}
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			companyId, groupId, userId, DDMFormInstanceRecord.class.getName(),
+			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
+			ddmFormInstanceRecordVersion, serviceContext,
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_URL,
+				_getEntryURL(ddmFormInstanceRecord, serviceContext)
+			).put(
+				"entryTitle",
+				ddmFormInstance.getName(serviceContext.getLocale())
+			).put(
+				"entryTitleXML", ddmFormInstance.getName()
+			).build());
+
+		if (_isEmailNotificationEnabled(ddmFormInstance)) {
+			_ddmFormEmailNotificationSender.sendEmailNotification(
+				ddmFormInstanceRecord, serviceContext);
+		}
 	}
 
 	private void _updateAsset(

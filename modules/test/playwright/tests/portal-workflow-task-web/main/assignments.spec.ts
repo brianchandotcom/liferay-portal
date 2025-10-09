@@ -23,6 +23,7 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
+import {waitForAlert} from '../../../utils/waitForAlert';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
@@ -283,6 +284,8 @@ test('logged user must be able to see workflow task at least from a read-only pe
 		'ThreadContent' + getRandomInt()
 	);
 
+	await waitForAlert(page);
+
 	await performUserSwitch(page, defaultUser.alternateName);
 
 	await workflowTasksPage.goToAssignedToMyRoles();
@@ -308,12 +311,18 @@ test('logged user must be able to see workflow task at least from a read-only pe
 
 	await performUserSwitch(page, defaultUser.alternateName);
 
-	await workflowTasksPage.goto();
+	await page.getByTitle('User Profile Menu').click();
+
+	await page.getByRole('menuitem', {name: 'My Workflow Tasks'}).click();
+
+	await page.waitForLoadState('networkidle');
 
 	await workflowTaskDetailsPage.writeTaskComment(
 		threadTitle,
 		getRandomString()
 	);
+
+	await page.waitForLoadState('networkidle');
 
 	await performUserSwitch(page, user.alternateName);
 

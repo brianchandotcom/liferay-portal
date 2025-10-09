@@ -160,17 +160,14 @@ public class LayoutListRetrieverTest {
 		_testAssetEntryListLayoutListRetriever(
 			JSONUtil.put("classPK", assetListEntry.getAssetListEntryId()),
 			layoutListRetrieverContext, journalArticle.getResourcePrimKey());
-
 		_testAssetEntryListLayoutListRetriever(
 			JSONUtil.put(
 				"classPK", companyGroupAssetListEntry.getAssetListEntryId()),
 			layoutListRetrieverContext,
 			companyGroupJournalArticle.getResourcePrimKey());
-
 		_testAssetEntryListLayoutListRetriever(
 			JSONUtil.put("externalReferenceCode", externalReferenceCode),
 			layoutListRetrieverContext, journalArticle.getResourcePrimKey());
-
 		_testAssetEntryListLayoutListRetriever(
 			JSONUtil.put(
 				"classPK", RandomTestUtil.randomLong()
@@ -178,7 +175,6 @@ public class LayoutListRetrieverTest {
 				"externalReferenceCode", externalReferenceCode
 			),
 			layoutListRetrieverContext);
-
 		_testAssetEntryListLayoutListRetriever(
 			JSONUtil.put(
 				"externalReferenceCode", externalReferenceCode

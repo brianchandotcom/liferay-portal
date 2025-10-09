@@ -722,7 +722,6 @@ public class FragmentEntryConfigurationParserImpl
 			}
 
 			defaultLayoutListRetrieverContext.setScopeGroupId(scopeGroupId);
-
 			defaultLayoutListRetrieverContext.setSegmentsEntryIds(
 				segmentsEntryIds);
 

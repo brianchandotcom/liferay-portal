@@ -41,17 +41,17 @@ const Map = ({ promoCodeStore }) => {
 	return (
 		distributors && <APIProvider apiKey="YOUR_API_KEY">
 			<GoogleMap
-				style={{ width: '100%', height: '500px' }}
 				defaultCenter={center}
 				defaultZoom={5}
 				mapId="claritySolutionCustomElementDistributorsMap"
+				style={{ width: '100%', height: '500px' }}
 			>
 				{
 					distributors.map(distributor => (
 						<AdvancedMarkerWithInfoWindow
-							key={distributor.id}
-							hoveredMarker={hoveredMarker}
 							distributor={distributor}
+							hoveredMarker={hoveredMarker}
+							key={distributor.id}
 							onClick={handleMarkerClick}
 							onClose={setActiveMarker}
 							onMouseOver={handleMouseOver}

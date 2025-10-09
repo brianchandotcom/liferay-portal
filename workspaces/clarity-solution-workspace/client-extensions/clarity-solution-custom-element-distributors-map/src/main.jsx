@@ -17,6 +17,7 @@ class WebComponent extends HTMLElement {
 		const root = ReactDOM.createRoot(mountPoint);
 
 		this.attachShadow({ mode: 'open' }).appendChild(mountPoint);
+		
 		root.render(<Main promoCodeStore={promoCodeStore} />);
 	}
 }

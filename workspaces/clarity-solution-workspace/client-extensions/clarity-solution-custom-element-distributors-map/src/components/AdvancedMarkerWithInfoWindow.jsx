@@ -7,8 +7,8 @@ const AdvancedMarkerWithInfoWindow = (
 		hoveredMarker,
 		onClick,
 		onClose,
-		onMouseOver,
 		onMouseOut,
+		onMouseOver,
 		promoCodeStore
 	}
 ) => {
@@ -16,13 +16,13 @@ const AdvancedMarkerWithInfoWindow = (
 
 	return (
 		<AdvancedMarker
-			ref={markerRef}
-			title={distributor.name}
 			key={`advancedMarker_${distributor.id}`}
-			position={distributor.position}
 			onClick={() => onClick(distributor.id)}
 			onMouseEnter={() => onMouseOver(distributor.id)}
 			onMouseLeave={() => onMouseOut()}
+			position={distributor.position}
+			ref={markerRef}
+			title={distributor.name}
 		>
 			{
 				distributor.name == promoCodeStore ?
@@ -33,11 +33,11 @@ const AdvancedMarkerWithInfoWindow = (
 				hoveredMarker == distributor.id &&
 				(
 					<InfoWindow
-						key={`infoWindow_${distributor.id}`}
 						anchor={marker}
-						position={distributor.position}
-						onCloseClick={() => onClose(null)}
 						headerContent={(<strong>{distributor.name}</strong>)}
+						key={`infoWindow_${distributor.id}`}
+						onCloseClick={() => onClose(null)}
+						position={distributor.position}
 					>
 						<div style={{ maxWidth: 300 }}>
 							<div>{distributor.street}</div>

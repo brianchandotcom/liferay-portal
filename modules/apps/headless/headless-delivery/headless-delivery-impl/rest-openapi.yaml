@@ -4100,6 +4100,10 @@ components:
                     description:
                         The custom name of of a Page form.
                     type: string
+                repeatable:
+                    description:
+                        A flag that indicates whether this form relationship can be repeatable.
+                    type: boolean
             type: object
         PageFormStepContainerDefinition:
             # @review

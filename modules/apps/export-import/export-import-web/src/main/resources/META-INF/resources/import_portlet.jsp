@@ -10,10 +10,19 @@
 <%
 String tabs3 = ParamUtil.getString(request, "tabs3", "new-import-process");
 
+String redirect = ParamUtil.getString(request, "redirect");
+
+if (Validator.isNotNull(redirect)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+}
+
 PortletURL portletURL = PortletURLBuilder.createRenderURL(
 	renderResponse
 ).setMVCRenderCommandName(
 	"/export_import/export_import"
+).setRedirect(
+	redirect
 ).setPortletResource(
 	portletResource
 ).setTabs2(

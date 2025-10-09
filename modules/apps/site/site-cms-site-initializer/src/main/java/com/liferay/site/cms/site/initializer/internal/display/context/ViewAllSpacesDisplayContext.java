@@ -218,6 +218,13 @@ public class ViewAllSpacesDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "default-permissions"),
 				null, "permissions", null),
 			new FDSActionDropdownItem(
+				StringPool.BLANK, "password-policies",
+				"edit-and-propagate-default-permissions",
+				LanguageUtil.get(
+					_httpServletRequest,
+					"edit-and-propagate-default-permissions"),
+				null, "permissions", null),
+			new FDSActionDropdownItem(
 				"{actions.delete.href}", "trash", "delete",
 				_language.get(_httpServletRequest, "delete"), "delete",
 				"delete", null));

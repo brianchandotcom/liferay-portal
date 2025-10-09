@@ -104,7 +104,10 @@ export default function AllSpacesFDSPropsTransformer({
 			};
 			loadData: () => {};
 		}) => {
-			if (action.data.id === 'default-permissions') {
+			if (
+				action.data.id === 'default-permissions' ||
+				action.data.id === 'edit-and-propagate-default-permissions'
+			) {
 				openModal({
 					containerProps: {
 						className: '',
@@ -117,6 +120,9 @@ export default function AllSpacesFDSPropsTransformer({
 						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
+							allowPropagate:
+								action.data.id ===
+								'edit-and-propagate-default-permissions',
 							apiURL:
 
 								// @ts-ignore

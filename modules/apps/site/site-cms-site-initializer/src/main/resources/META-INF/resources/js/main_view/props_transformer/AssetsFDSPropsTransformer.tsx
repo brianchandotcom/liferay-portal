@@ -122,7 +122,10 @@ export default function AssetsFDSPropsTransformer({
 			/>
 		),
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'default-permissions') {
+			if (
+				action?.data?.id === 'default-permissions' ||
+				action?.data?.id === 'edit-and-propagate-default-permissions'
+			) {
 				return {
 					...action,
 					isVisible: (item: any) =>
@@ -192,7 +195,10 @@ export default function AssetsFDSPropsTransformer({
 			items: any;
 			loadData: () => {};
 		}) {
-			if (action?.data?.id === 'default-permissions') {
+			if (
+				action?.data?.id === 'default-permissions' ||
+				action.data.id === 'edit-and-propagate-default-permissions'
+			) {
 				openModal({
 					containerProps: {
 						className: '',
@@ -205,6 +211,9 @@ export default function AssetsFDSPropsTransformer({
 						DefaultPermissionModalContent({
 							...(additionalProps.defaultPermissionAdditionalProps ||
 								{}),
+							allowPropagate:
+								action.data.id ===
+								'edit-and-propagate-default-permissions',
 							apiURL: otherProps.apiURL,
 							classExternalReferenceCode:
 								itemData.embedded.externalReferenceCode,

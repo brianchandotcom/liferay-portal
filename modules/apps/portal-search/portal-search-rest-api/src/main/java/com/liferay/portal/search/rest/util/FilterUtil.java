@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.search.rest.internal.util;
+package com.liferay.portal.search.rest.util;
 
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -16,8 +16,8 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.search.rest.internal.search.filter.BaseFilterVisitor;
-import com.liferay.portal.search.rest.internal.search.query.BaseQueryVisitor;
+import com.liferay.portal.search.rest.search.filter.BaseFilterVisitor;
+import com.liferay.portal.search.rest.search.query.BaseQueryVisitor;
 
 import java.util.Collection;
 import java.util.HashSet;

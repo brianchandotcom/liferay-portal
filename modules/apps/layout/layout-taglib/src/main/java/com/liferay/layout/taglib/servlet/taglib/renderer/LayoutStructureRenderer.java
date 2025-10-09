@@ -1123,33 +1123,38 @@ public class LayoutStructureRenderer {
 				}
 			}
 
-			_renderReactComponent(
-				"{FormRelationshipAddButton} from layout-taglib/render",
-				HashMapBuilder.<String, Object>put(
-					"contentId",
-					formRelationshipStyledLayoutStructureItemContentId
-				).put(
-					"itemId",
-					formRelationshipStyledLayoutStructureItem.getItemId()
-				).put(
-					"label",
-					formRelationshipStyledLayoutStructureItem.
-						getButtonLabelJSONObject()
-				).put(
-					"renderURL",
-					HttpComponentsUtil.addParameters(
-						StringBundler.concat(
-							_themeDisplay.getPortalURL(),
-							_themeDisplay.getPathMain(), "/portal",
-							"/render_form_relationship_layout_structure_item"),
-						"formRelationshipLayoutStructureItemId",
-						formRelationshipStyledLayoutStructureItem.getItemId(),
-						"p_l_id", _themeDisplay.getPlid(),
-						"parentItemExternalReferenceCode",
-						parentItemExternalReferenceCode, "segmentsExperienceId",
-						SegmentsExperienceUtil.getSegmentsExperienceId(
-							_httpServletRequest))
-				).build());
+			if (formRelationshipStyledLayoutStructureItem.isRepeatable()) {
+				_renderReactComponent(
+					"{FormRelationshipAddButton} from layout-taglib/render",
+					HashMapBuilder.<String, Object>put(
+						"contentId",
+						formRelationshipStyledLayoutStructureItemContentId
+					).put(
+						"itemId",
+						formRelationshipStyledLayoutStructureItem.getItemId()
+					).put(
+						"label",
+						formRelationshipStyledLayoutStructureItem.
+							getButtonLabelJSONObject()
+					).put(
+						"renderURL",
+						HttpComponentsUtil.addParameters(
+							StringBundler.concat(
+								_themeDisplay.getPortalURL(),
+								_themeDisplay.getPathMain(), "/portal",
+								"/render_form_relationship_layout_structure_",
+								"item"),
+							"formRelationshipLayoutStructureItemId",
+							formRelationshipStyledLayoutStructureItem.
+								getItemId(),
+							"p_l_id", _themeDisplay.getPlid(),
+							"parentItemExternalReferenceCode",
+							parentItemExternalReferenceCode,
+							"segmentsExperienceId",
+							SegmentsExperienceUtil.getSegmentsExperienceId(
+								_httpServletRequest))
+					).build());
+			}
 		}
 		finally {
 			_httpServletRequest.setAttribute(

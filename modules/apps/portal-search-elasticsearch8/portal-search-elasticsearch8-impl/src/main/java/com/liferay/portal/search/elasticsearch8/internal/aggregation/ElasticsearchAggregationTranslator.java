@@ -31,6 +31,7 @@ import co.elastic.clients.elasticsearch._types.aggregations.TermsExclude;
 import co.elastic.clients.elasticsearch._types.aggregations.TermsInclude;
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageAggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
 import co.elastic.clients.elasticsearch.core.search.SourceConfig;
 import co.elastic.clients.elasticsearch.core.search.SourceConfigBuilders;
@@ -93,7 +94,6 @@ import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortF
 import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
-import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.QueryTranslator;
 import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
@@ -268,9 +268,8 @@ public class ElasticsearchAggregationTranslator
 		}
 
 		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
-			List<Order> orders = dateHistogramAggregation.getOrders();
-
-			dateHistogramAggregationBuilder.order(_translateOrders(orders));
+			dateHistogramAggregationBuilder.order(
+				_translateOrders(dateHistogramAggregation.getOrders()));
 		}
 
 		return _translateChildAggregations(
@@ -651,9 +650,8 @@ public class ElasticsearchAggregationTranslator
 			histogramAggregation.getOffset());
 
 		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
-			List<Order> orders = histogramAggregation.getOrders();
-
-			histogramAggregationBuilder.order(_translateOrders(orders));
+			histogramAggregationBuilder.order(
+				_translateOrders(histogramAggregation.getOrders()));
 		}
 
 		SetterUtil.setNotNullScript(
@@ -1028,7 +1026,10 @@ public class ElasticsearchAggregationTranslator
 
 			if (includeExcludeClause.getIncludedValues() != null) {
 				significantTermsAggregationBuilder.include(
-					Arrays.asList(includeExcludeClause.getIncludedValues()));
+					TermsInclude.of(
+						termsInclude -> termsInclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getIncludedValues()))));
 			}
 		}
 
@@ -1144,7 +1145,10 @@ public class ElasticsearchAggregationTranslator
 
 			if (includeExcludeClause.getIncludedValues() != null) {
 				significantTextAggregationBuilder.include(
-					Arrays.asList(includeExcludeClause.getIncludedValues()));
+					TermsInclude.of(
+						termsInclude -> termsInclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getIncludedValues()))));
 			}
 		}
 
@@ -1496,6 +1500,95 @@ public class ElasticsearchAggregationTranslator
 				weightedAverageAggregationBuilder.build()));
 	}
 
+	protected void setNotNullQuery(
+		Consumer<Query> consumer, com.liferay.portal.search.query.Query query) {
+
+		if (query != null) {
+			consumer.accept(new Query(_queryTranslator.translate(query)));
+		}
+	}
+
+	protected void setRanges(
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DateRangeAggregation.Builder builder,
+		DateRangeAggregation dateRangeAggregation) {
+
+		List<Range> ranges = dateRangeAggregation.getRanges();
+
+		ranges.forEach(
+			range -> builder.ranges(
+				DateRangeExpression.of(
+					dateRangeExpression -> dateRangeExpression.from(
+						ConversionUtil.toFieldDateMath(
+							range.getFromAsString(), range.getFrom())
+					).key(
+						range.getKey()
+					).to(
+						ConversionUtil.toFieldDateMath(
+							range.getToAsString(), range.getTo())
+					))));
+	}
+
+	protected void setRanges(
+		co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation.
+			Builder builder,
+		RangeAggregation rangeAggregation) {
+
+		List<Range> ranges = rangeAggregation.getRanges();
+
+		ranges.forEach(
+			range -> builder.ranges(
+				_createAggregationRange(
+					ElasticsearchStringUtil.getFirstStringValue(
+						range::getFromAsString, range::getFrom),
+					range.getKey(),
+					ElasticsearchStringUtil.getFirstStringValue(
+						range::getToAsString, range::getTo))));
+	}
+
+	protected co.elastic.clients.elasticsearch._types.aggregations.ValueType
+		translateValueType(ValueType valueType) {
+
+		if (valueType == ValueType.BOOLEAN) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Boolean;
+		}
+		else if (valueType == ValueType.DATE) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Date;
+		}
+		else if (valueType == ValueType.DOUBLE) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Double;
+		}
+		else if (valueType == ValueType.GEOPOINT) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.GeoPoint;
+		}
+		else if (valueType == ValueType.IP) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Ip;
+		}
+		else if (valueType == ValueType.LONG) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Long;
+		}
+		else if (valueType == ValueType.NUMBER) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Number;
+		}
+		else if (valueType == ValueType.NUMERIC) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Numeric;
+		}
+		else if (valueType == ValueType.STRING) {
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.String;
+		}
+
+		throw new IllegalArgumentException("Invalid value type " + valueType);
+	}
+
 	protected final ScriptTranslator scriptTranslator = new ScriptTranslator();
 
 	private AggregationRange _createAggregationRange(
@@ -1626,19 +1719,6 @@ public class ElasticsearchAggregationTranslator
 				));
 	}
 
-	private List<NamedValue<SortOrder>> _translateOrders(List<Order> orders) {
-		List<NamedValue<SortOrder>> sortOrders = new ArrayList<>(orders.size());
-
-		orders.forEach(
-			order -> {
-				NamedValue<SortOrder> sortOrder = _translateOrder(order);
-
-				sortOrders.add(sortOrder);
-			});
-
-		return sortOrders;
-	}
-
 	private NamedValue<SortOrder> _translateOrder(Order order) {
 		SortOrder sortOrder;
 
@@ -1664,6 +1744,14 @@ public class ElasticsearchAggregationTranslator
 			sortOrder);
 	}
 
+	private List<NamedValue<SortOrder>> _translateOrders(List<Order> orders) {
+		List<NamedValue<SortOrder>> sortOrders = new ArrayList<>(orders.size());
+
+		orders.forEach(order -> sortOrders.add(_translateOrder(order)));
+
+		return sortOrders;
+	}
+
 	private ScriptedHeuristic _translateScriptSignificanceHeuristic(
 		ScriptSignificanceHeuristic scriptSignificanceHeuristic) {
 
@@ -1671,93 +1759,6 @@ public class ElasticsearchAggregationTranslator
 			scriptedHeuristic -> scriptedHeuristic.script(
 				scriptTranslator.translate(
 					scriptSignificanceHeuristic.getScript())));
-	}
-
-	protected void setNotNullQuery(Consumer<Query> consumer, Query query) {
-		if (query != null) {
-			consumer.accept(new Query(_queryTranslator.translate(query)));
-		}
-	}
-
-	protected void setRanges(
-		co.elastic.clients.elasticsearch._types.aggregations.
-			DateRangeAggregation.Builder builder,
-		DateRangeAggregation dateRangeAggregation) {
-
-		List<Range> ranges = dateRangeAggregation.getRanges();
-
-		ranges.forEach(
-			range -> builder.ranges(
-				DateRangeExpression.of(
-					dateRangeExpression -> dateRangeExpression.from(
-						ConversionUtil.toFieldDateMath(
-							range.getFromAsString(), range.getFrom())
-					).key(
-						range.getKey()
-					).to(
-						ConversionUtil.toFieldDateMath(
-							range.getToAsString(), range.getTo())
-					))));
-	}
-
-	protected void setRanges(
-		co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation.
-			Builder builder,
-		RangeAggregation rangeAggregation) {
-
-		List<Range> ranges = rangeAggregation.getRanges();
-
-		ranges.forEach(
-			range -> builder.ranges(
-				_createAggregationRange(
-					ElasticsearchStringUtil.getFirstStringValue(
-						range::getFromAsString, range::getFrom),
-					range.getKey(),
-					ElasticsearchStringUtil.getFirstStringValue(
-						range::getToAsString, range::getTo))));
-	}
-
-	protected co.elastic.clients.elasticsearch._types.aggregations.ValueType
-		translateValueType(ValueType valueType) {
-
-		if (valueType == ValueType.BOOLEAN) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Boolean;
-		}
-		else if (valueType == ValueType.DATE) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Date;
-		}
-		else if (valueType == ValueType.DOUBLE) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Double;
-		}
-		else if (valueType == ValueType.GEOPOINT) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.GeoPoint;
-		}
-		else if (valueType == ValueType.IP) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Ip;
-		}
-		else if (valueType == ValueType.LONG) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Long;
-		}
-		else if (valueType == ValueType.NUMBER) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Number;
-		}
-		else if (valueType == ValueType.NUMERIC) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.Numeric;
-		}
-		else if (valueType == ValueType.STRING) {
-			return co.elastic.clients.elasticsearch._types.aggregations.
-				ValueType.String;
-		}
-
-		throw new IllegalArgumentException("Invalid value type " + valueType);
 	}
 
 	private final GeoTranslator _geoTranslator = new GeoTranslator();

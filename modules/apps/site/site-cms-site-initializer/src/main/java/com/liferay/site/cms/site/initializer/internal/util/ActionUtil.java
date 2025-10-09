@@ -1275,6 +1275,9 @@ public class ActionUtil {
 						formRelationshipStyledLayoutStructureItem.getItemId(),
 						0);
 
+				fragmentStyledLayoutStructureItem.updateItemConfig(
+					JSONUtil.put("styles", stylesJSONObject));
+
 				LayoutPageTemplateStructureLocalServiceUtil.
 					updateLayoutPageTemplateStructureData(
 						serviceContext.getUserId(), layout.getGroupId(),

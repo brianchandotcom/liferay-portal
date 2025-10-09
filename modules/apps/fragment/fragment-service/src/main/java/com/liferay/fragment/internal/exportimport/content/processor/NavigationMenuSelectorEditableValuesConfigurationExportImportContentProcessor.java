@@ -157,12 +157,12 @@ public class
 	private StagedModel _getStagedModel(
 		JSONObject jsonObject, PortletDataContext portletDataContext) {
 
-		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
 		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
 			"siteNavigationMenuExternalReferenceCode");
+		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
 
-		if ((siteNavigationMenuId == 0) &&
-			Validator.isNull(siteNavigationMenuExternalReferenceCode)) {
+		if (Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
+			(siteNavigationMenuId == 0)) {
 
 			return _fetchLayout(
 				jsonObject.getString(

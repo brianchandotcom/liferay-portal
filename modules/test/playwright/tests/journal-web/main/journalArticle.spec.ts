@@ -104,6 +104,51 @@ const translationAndAutosaveTest = mergeTests(
 const privateContentIconTest = mergeTests(baseTest);
 
 baseTest(
+	'Check permissions when only Owner was given permissions',
+	{
+		tag: '@LPD-68086',
+	},
+	async ({journalEditArticlePage, journalPage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: /publish with permissions/i,
+			}),
+			trigger: journalEditArticlePage.publishDropdown,
+		});
+
+		await journalEditArticlePage.inputPermissionsViewRole.selectOption(
+			'Owner'
+		);
+
+		await page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_guestPermissions_ADD_DISCUSSION'
+			)
+			.uncheck();
+
+		await page
+			.locator(
+				'#_com_liferay_journal_web_portlet_JournalPortlet_groupPermissions_ADD_DISCUSSION'
+			)
+			.uncheck();
+
+		await page.getByRole('button', {exact: true, name: 'Publish'}).click();
+
+		await journalPage.assertJournalArticlePermissions(title, [
+			{enabled: false, locator: '#guest_ACTION_ADD_DISCUSSION'},
+			{enabled: false, locator: '#site-member_ACTION_ADD_DISCUSSION'},
+		]);
+	}
+);
+
+baseTest(
 	'Check alert message of duplicated friendly URL in french',
 	{
 		tag: '@LPD-32185',

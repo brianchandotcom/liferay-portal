@@ -471,6 +471,7 @@ public class ConfigurationPersistenceManager
 										getPropertyKey());
 
 								if ((scopeCompanyId != null) &&
+									(scopeCompanyId != 0) &&
 									!scopeCompanyId.equals(companyId)) {
 
 									continue;

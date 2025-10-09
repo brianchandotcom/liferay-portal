@@ -1113,25 +1113,39 @@ public class ActionUtil {
 		FragmentRenderer fragmentRenderer =
 			fragmentRendererRegistry.getFragmentRenderer(fragmentEntryKey);
 
-		if (fragmentRenderer == null) {
-			return null;
+		if (fragmentRenderer != null) {
+			DefaultFragmentRendererContext defaultFragmentRendererContext =
+				new DefaultFragmentRendererContext(null);
+
+			return fragmentEntryLinkService.addFragmentEntryLink(
+				null, layout.getGroupId(), 0, 0, segmentsExperienceId,
+				layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK,
+				JSONFactoryUtil.toString(
+					fragmentRenderer.getConfigurationJSONObject(
+						defaultFragmentRendererContext)),
+				editableValues, StringPool.BLANK, 0, fragmentEntryKey,
+				fragmentRenderer.getType(), serviceContext);
 		}
 
-		DefaultFragmentRendererContext defaultFragmentRendererContext =
-			new DefaultFragmentRendererContext(null);
+	private static void _addInputFragmentEntryLink(
+		FragmentEntry fragmentEntry =
+			FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+				fragmentEntryKey);
+
+		String contributedRendererKey = null;
+
+		if (fragmentEntry.getFragmentEntryId() == 0) {
+			contributedRendererKey = fragmentEntryKey;
+		}
 
 		return fragmentEntryLinkService.addFragmentEntryLink(
-			null, layout.getGroupId(), 0, 0, segmentsExperienceId,
-			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK,
-			JSONFactoryUtil.toString(
-				fragmentRenderer.getConfigurationJSONObject(
-					defaultFragmentRendererContext)),
-			editableValues, StringPool.BLANK, 0, fragmentEntryKey,
-			fragmentRenderer.getType(), serviceContext);
+			null, layout.getGroupId(), 0, fragmentEntry.getFragmentEntryId(),
+			segmentsExperienceId, layout.getPlid(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs(),
+			fragmentEntry.getConfiguration(), editableValues, StringPool.BLANK,
+			0, contributedRendererKey, fragmentEntry.getType(), serviceContext);
 	}
-
-	private static void _addInputFragmentEntryLink(
 			List<FragmentEntryLink> addedFragmentEntryLinks,
 			JSONObject configurationJSONObject, FormManager formManager,
 			String fragmentEntryKey, InfoField<?> infoField, Layout layout,

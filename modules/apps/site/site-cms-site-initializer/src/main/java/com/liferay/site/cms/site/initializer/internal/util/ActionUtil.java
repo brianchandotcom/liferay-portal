@@ -247,7 +247,8 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
-			objectDefinition.getName(), segmentsExperienceId, serviceContext);
+			objectDefinition.getName(), false, segmentsExperienceId,
+			serviceContext);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
@@ -276,7 +277,7 @@ public class ActionUtil {
 			InfoItemServiceRegistry infoItemServiceRegistry,
 			InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
 			Layout layout, LayoutPageTemplateEntry layoutPageTemplateEntry,
-			ServiceContext serviceContext)
+			String name, ServiceContext serviceContext)
 		throws Exception {
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
@@ -1359,7 +1360,7 @@ public class ActionUtil {
 				FragmentRendererRegistry fragmentRendererRegistry, long groupId,
 				InfoItemServiceRegistry infoItemServiceRegistry,
 				InfoSearchClassMapperRegistry infoSearchClassMapperRegistry,
-				String name, ServiceContext serviceContext)
+				String objectDefinitionName, ServiceContext serviceContext)
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -1367,7 +1368,9 @@ public class ActionUtil {
 				null, serviceContext.getUserId(), groupId, 0,
 				_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
 					classNameId,
-				classNameId, 0, name,
+				classNameId, 0,
+				_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
+					objectDefinitionName,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,
 				0, 0, WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -1380,7 +1383,7 @@ public class ActionUtil {
 			formManager, fragmentEntryLinkListenerRegistry,
 			fragmentEntryLinkService, fragmentRendererRegistry,
 			infoItemServiceRegistry, infoSearchClassMapperRegistry, draftLayout,
-			layoutPageTemplateEntry, serviceContext);
+			layoutPageTemplateEntry, objectDefinitionName, serviceContext);
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			LayoutPageTemplateEntryLocalServiceUtil.
@@ -1488,9 +1491,7 @@ public class ActionUtil {
 					classNameId, formManager, fragmentEntryLinkListenerRegistry,
 					fragmentEntryLinkService, fragmentRendererRegistry,
 					group.getGroupId(), infoItemServiceRegistry,
-					infoSearchClassMapperRegistry,
-					_TRANSLATION_LAYOUT_PAGE_TEMPLATE_ENTRY_KEY_PREFIX +
-						objectDefinition.getName(),
+					infoSearchClassMapperRegistry, objectDefinition.getName(),
 					serviceContext);
 		}
 

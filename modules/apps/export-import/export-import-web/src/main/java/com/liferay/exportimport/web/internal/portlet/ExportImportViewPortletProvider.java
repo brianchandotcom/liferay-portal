@@ -1,0 +1,53 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.exportimport.web.internal.portlet;
+
+import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.portlet.BasePortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+
+import jakarta.portlet.PortletRequest;
+import jakarta.portlet.PortletURL;
+
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Jaime León Rosado
+ */
+@Component(
+	property = "model.class.name=" + ExportImportConstants.EXPORT_IMPORT_MODEL_NAME,
+	service = PortletProvider.class
+)
+public class ExportImportViewPortletProvider extends BasePortletProvider {
+
+	@Override
+	public String getPortletName() {
+		return ExportImportPortletKeys.EXPORT_IMPORT;
+	}
+
+	@Override
+	public PortletURL getPortletURL(
+			HttpServletRequest httpServletRequest, Group group)
+		throws PortalException {
+
+		return PortletURLFactoryUtil.create(
+			httpServletRequest, getPortletName(), PortletRequest.RENDER_PHASE);
+	}
+
+	@Override
+	public Action[] getSupportedActions() {
+		return _supportedActions;
+	}
+
+	private final Action[] _supportedActions = {Action.VIEW};
+
+}

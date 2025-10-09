@@ -587,15 +587,13 @@ public class JiraService extends BaseService {
 	}
 
 	private String _getCredentials() {
+		Base64.Encoder encoder = Base64.getEncoder();
+
 		String jiraUserNameAndJiraApiToken =
 			_jiraAPIEmailAddress + StringPool.COLON + _jiraAPIToken;
 
-		String encodedApiToken = Base64.getEncoder(
-		).encodeToString(
-			jiraUserNameAndJiraApiToken.getBytes()
-		);
-
-		return "Basic " + encodedApiToken;
+		return "Basic " +
+			encoder.encodeToString(jiraUserNameAndJiraApiToken.getBytes());
 	}
 
 	private String _getJQLCustomField(String customField) {

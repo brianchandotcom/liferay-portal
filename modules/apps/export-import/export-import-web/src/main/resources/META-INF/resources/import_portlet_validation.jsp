@@ -31,9 +31,18 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</clay:container-fluid>
 	</div>
 
-	<aui:button-row>
-		<aui:button name="continueButton" type="submit" value="continue" />
-	</aui:button-row>
+	<c:choose>
+		<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-57655") %>'>
+			<aui:button-row>
+				<aui:button name="continueButton" type="submit" value="continue" />
+			</aui:button-row>
+		</c:when>
+		<c:otherwise>
+			<aui:button-row>
+				<aui:button cssClass='<%= (fileEntry == null) ? " hide" : StringPool.BLANK %>' name="continueButton" type="submit" value="continue" />
+			</aui:button-row>
+		</c:otherwise>
+	</c:choose>
 
 	<%
 	Date expirationDate = new Date(System.currentTimeMillis() + (PropsValues.SESSION_TIMEOUT * Time.MINUTE));
@@ -88,27 +97,53 @@ String redirect = ParamUtil.getString(request, "redirect");
 				'<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>" name="/export_import/export_import"><portlet:param name="mvcRenderCommandName" value="/export_import/export_import" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="redirect" value="<%= redirect %>" /><portlet:param name="plid" value="<%= String.valueOf(plid) %>" /> <portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" /><portlet:param name="portletResource" value="<%= portletResource %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= Group.class.getName() %>" />',
 		});
 
-		liferayUpload._uploader.on('alluploadscomplete', (event) => {
-			toggleContinueButton();
-		});
+		if (!Liferay.FeatureFlags['LPD-57655']) {
+			liferayUpload._uploader.on('alluploadscomplete', (event) => {
+				toggleContinueButton();
+			});
 
-		Liferay.on('tempFileRemoved', (event) => {
-			toggleContinueButton();
-		});
+			Liferay.on('tempFileRemoved', (event) => {
+				toggleContinueButton();
+			});
 
-		function toggleContinueButton() {
-			var lfrDynamicUploader = liferayUpload
-				.get('boundingBox')
-				.ancestor('.lfr-dynamic-uploader');
-			var uploadedFiles = liferayUpload._fileListContent.all(
-				'.upload-file.upload-complete'
-			);
+			function toggleContinueButton() {
+				var lfrDynamicUploader = liferayUpload
+					.get('boundingBox')
+					.ancestor('.lfr-dynamic-uploader');
+				var uploadedFiles = liferayUpload._fileListContent.all(
+					'.upload-file.upload-complete'
+				);
 
-			if (uploadedFiles.size() == 1) {
-				lfrDynamicUploader.removeClass('hide-dialog-footer');
+				if (uploadedFiles.size() == 1) {
+					lfrDynamicUploader.removeClass('hide-dialog-footer');
+				}
+				else {
+					lfrDynamicUploader.addClass('hide-dialog-footer');
+				}
 			}
-			else {
-				lfrDynamicUploader.addClass('hide-dialog-footer');
+		}
+		else {
+			var continueButton = A.one('#<portlet:namespace />continueButton');
+
+			liferayUpload._uploader.on('alluploadscomplete', (event) => {
+				toggleContinueButton();
+			});
+
+			Liferay.on('tempFileRemoved', (event) => {
+				toggleContinueButton();
+			});
+
+			function toggleContinueButton() {
+				var uploadedFiles = liferayUpload._fileListContent.all(
+					'.upload-file.upload-complete'
+				);
+
+				if (uploadedFiles.size() == 1) {
+					continueButton.show();
+				}
+				else {
+					continueButton.hide();
+				}
 			}
 		}
 	</aui:script>

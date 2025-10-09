@@ -6,7 +6,17 @@
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketMetricValueAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.DerivativeAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.ExtendedStatsBucketAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.Percentiles;
+import co.elastic.clients.elasticsearch._types.aggregations.PercentilesBucketAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.SimpleValueAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.StatsBucketAggregate;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
@@ -37,12 +47,7 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 
-import org.elasticsearch.search.aggregations.pipeline.BucketMetricValue;
-import org.elasticsearch.search.aggregations.pipeline.Derivative;
-import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucket;
-import org.elasticsearch.search.aggregations.pipeline.ParsedPercentilesBucket;
-import org.elasticsearch.search.aggregations.pipeline.SimpleValue;
-import org.elasticsearch.search.aggregations.pipeline.StatsBucket;
+import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -59,63 +64,66 @@ public class ElasticsearchPipelineAggregationResultTranslator
 
 	@Override
 	public AvgBucketPipelineAggregationResult visit(
-		AvgBucketPipelineAggregation avgAggregation) {
+		AvgBucketPipelineAggregation avgBucketPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.avgBucket(
-			simpleValue.getName(), simpleValue.value());
+			avgBucketPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	@Override
 	public BucketScriptPipelineAggregationResult visit(
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.bucketScript(
-			simpleValue.getName(), simpleValue.value());
+			bucketScriptPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	@Override
 	public AggregationResult visit(
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation) {
 
-		throw new UnsupportedOperationException(
-			"BucketSelector does not return a separate AggregationResult");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public AggregationResult visit(
 		BucketSortPipelineAggregation bucketSortPipelineAggregation) {
 
-		throw new UnsupportedOperationException(
-			"BucketSort does not return a separate AggregationResult");
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public CumulativeSumPipelineAggregationResult visit(
 		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.cumulativeSum(
-			simpleValue.getName(), simpleValue.value());
+			cumulativeSumPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	@Override
 	public DerivativePipelineAggregationResult visit(
 		DerivativePipelineAggregation derivativePipelineAggregation) {
 
-		Derivative derivative = (Derivative)_elasticsearchAggregation;
+		DerivativeAggregate derivativeAggregate = _aggregate.derivative();
 
 		if (derivativePipelineAggregation.getUnit() != null) {
 			return _aggregationResults.derivative(
-				derivative.getName(), derivative.normalizedValue());
+				derivativePipelineAggregation.getName(),
+				derivativeAggregate.normalizedValue());
 		}
 
 		return _aggregationResults.derivative(
-			derivative.getName(), derivative.value());
+			derivativePipelineAggregation.getName(),
+			derivativeAggregate.value());
 	}
 
 	@Override
@@ -123,30 +131,36 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		ExtendedStatsBucketPipelineAggregation
 			extendedStatsBucketPipelineAggregation) {
 
-		ExtendedStatsBucket extendedStatsBucket =
-			(ExtendedStatsBucket)_elasticsearchAggregation;
+		ExtendedStatsBucketAggregate extendedStatsBucketAggregate =
+			_aggregate.extendedStatsBucket();
 
 		return _aggregationResults.extendedStatsBucket(
-			extendedStatsBucket.getName(), extendedStatsBucket.getAvg(),
-			extendedStatsBucket.getCount(), extendedStatsBucket.getMin(),
-			extendedStatsBucket.getMax(), extendedStatsBucket.getSum(),
-			extendedStatsBucket.getSumOfSquares(),
-			extendedStatsBucket.getVariance(),
-			extendedStatsBucket.getStdDeviation());
+			extendedStatsBucketPipelineAggregation.getName(),
+			extendedStatsBucketAggregate.avg(),
+			extendedStatsBucketAggregate.count(),
+			extendedStatsBucketAggregate.min(),
+			extendedStatsBucketAggregate.max(),
+			extendedStatsBucketAggregate.sum(),
+			extendedStatsBucketAggregate.sumOfSquares(),
+			extendedStatsBucketAggregate.variance(),
+			extendedStatsBucketAggregate.stdDeviation());
 	}
 
 	@Override
 	public MaxBucketPipelineAggregationResult visit(
 		MaxBucketPipelineAggregation maxBucketPipelineAggregation) {
 
-		BucketMetricValue bucketMetricValue =
-			(BucketMetricValue)_elasticsearchAggregation;
+		BucketMetricValueAggregate bucketMetricValueAggregate =
+			_aggregate.bucketMetricValue();
 
 		MaxBucketPipelineAggregationResult maxBucketPipelineAggregationResult =
 			_aggregationResults.maxBucket(
-				bucketMetricValue.getName(), bucketMetricValue.value());
+				maxBucketPipelineAggregation.getName(),
+				bucketMetricValueAggregate.value());
 
-		maxBucketPipelineAggregationResult.setKeys(bucketMetricValue.keys());
+		List<String> keys = bucketMetricValueAggregate.keys();
+
+		maxBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 
 		return maxBucketPipelineAggregationResult;
 	}
@@ -155,14 +169,17 @@ public class ElasticsearchPipelineAggregationResultTranslator
 	public MinBucketPipelineAggregationResult visit(
 		MinBucketPipelineAggregation minBucketPipelineAggregation) {
 
-		BucketMetricValue bucketMetricValue =
-			(BucketMetricValue)_elasticsearchAggregation;
+		BucketMetricValueAggregate bucketMetricValueAggregate =
+			_aggregate.bucketMetricValue();
 
 		MinBucketPipelineAggregationResult minBucketPipelineAggregationResult =
 			_aggregationResults.minBucket(
-				bucketMetricValue.getName(), bucketMetricValue.value());
+				minBucketPipelineAggregation.getName(),
+				bucketMetricValueAggregate.value());
 
-		minBucketPipelineAggregationResult.setKeys(bucketMetricValue.keys());
+		List<String> keys = bucketMetricValueAggregate.keys();
+
+		minBucketPipelineAggregationResult.setKeys(keys.toArray(new String[0]));
 
 		return minBucketPipelineAggregationResult;
 	}
@@ -171,10 +188,11 @@ public class ElasticsearchPipelineAggregationResultTranslator
 	public MovingFunctionPipelineAggregationResult visit(
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.movingFunction(
-			simpleValue.getName(), simpleValue.value());
+			movingFunctionPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	@Override
@@ -182,18 +200,31 @@ public class ElasticsearchPipelineAggregationResultTranslator
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation) {
 
-		ParsedPercentilesBucket parsedPercentilesBucket =
-			(ParsedPercentilesBucket)_elasticsearchAggregation;
+		PercentilesBucketAggregate percentilesBucketAggregate =
+			_aggregate.percentilesBucket();
 
 		PercentilesBucketPipelineAggregationResult
 			percentilesBucketPipelineAggregationResult =
 				_aggregationResults.percentilesBucket(
-					parsedPercentilesBucket.getName());
+					percentilesBucketPipelineAggregation.getName());
 
-		parsedPercentilesBucket.forEach(
-			percentile ->
-				percentilesBucketPipelineAggregationResult.addPercentile(
-					percentile.getPercent(), percentile.getValue()));
+		Percentiles percentiles = percentilesBucketAggregate.values();
+
+		if (percentiles.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				percentiles.array(),
+				percentile ->
+					percentilesBucketPipelineAggregationResult.addPercentile(
+						Double.valueOf(percentile.key()),
+						GetterUtil.getDouble(percentile.value())));
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				percentiles.keyed(),
+				(key, percentile) ->
+					percentilesBucketPipelineAggregationResult.addPercentile(
+						Double.valueOf(key), GetterUtil.getDouble(percentile)));
+		}
 
 		return percentilesBucketPipelineAggregationResult;
 	}
@@ -202,31 +233,35 @@ public class ElasticsearchPipelineAggregationResultTranslator
 	public SerialDiffPipelineAggregationResult visit(
 		SerialDiffPipelineAggregation serialDiffPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.serialDiff(
-			simpleValue.getName(), simpleValue.value());
+			serialDiffPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	@Override
 	public StatsBucketPipelineAggregationResult visit(
 		StatsBucketPipelineAggregation statsBucketPipelineAggregation) {
 
-		StatsBucket statsBucket = (StatsBucket)_elasticsearchAggregation;
+		StatsBucketAggregate statsBucketAggregate = _aggregate.statsBucket();
 
 		return _aggregationResults.statsBucket(
-			statsBucket.getName(), statsBucket.getAvg(), statsBucket.getCount(),
-			statsBucket.getMin(), statsBucket.getMax(), statsBucket.getSum());
+			statsBucketPipelineAggregation.getName(),
+			statsBucketAggregate.avg(), statsBucketAggregate.count(),
+			statsBucketAggregate.min(), statsBucketAggregate.max(),
+			statsBucketAggregate.sum());
 	}
 
 	@Override
 	public SumBucketPipelineAggregationResult visit(
 		SumBucketPipelineAggregation sumBucketPipelineAggregation) {
 
-		SimpleValue simpleValue = (SimpleValue)_elasticsearchAggregation;
+		SimpleValueAggregate simpleValueAggregate = _aggregate.simpleValue();
 
 		return _aggregationResults.sumBucket(
-			simpleValue.getName(), simpleValue.value());
+			sumBucketPipelineAggregation.getName(),
+			simpleValueAggregate.value());
 	}
 
 	private final Aggregate _aggregate;

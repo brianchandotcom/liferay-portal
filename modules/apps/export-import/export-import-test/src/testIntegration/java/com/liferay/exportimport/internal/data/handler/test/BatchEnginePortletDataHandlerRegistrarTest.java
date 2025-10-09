@@ -307,9 +307,9 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				   VulcanBatchEngineTaskItemDelegate<Object> {
 
 		public TestExportImportVulcanBatchEngineTaskItemDelegate(
-			String itemClassName, String portletId) {
+			String className, String portletId) {
 
-			_itemClassName = itemClassName;
+			_className = className;
 			_portletId = portletId;
 		}
 
@@ -335,8 +335,13 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			return new ExportImportDescriptor() {
 
 				@Override
+				public String getClassName() {
+					return _className;
+				}
+
+				@Override
 				public String getDeletionSystemEventClassName() {
-					return _itemClassName;
+					return _className;
 				}
 
 				@Override
@@ -406,7 +411,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			Collection<Object> items, Map<String, Serializable> parameters) {
 		}
 
-		private final String _itemClassName;
+		private final String _className;
 		private final String _portletId;
 
 	}

@@ -78,30 +78,9 @@ resource "aws_iam_policy" "s3" {
 			Version="2012-10-17"
 		})
 }
-resource "aws_iam_role" "liferay" {
-	assume_role_policy=jsonencode(
-		{
-			Statement=[
-				{
-					Action="sts:AssumeRoleWithWebIdentity"
-					Condition={
-						StringEquals={
-							"${local.oidc_provider}:sub" : "system:serviceaccount:${var.deployment_namespace}:liferay-default"
-						}
-					}
-					Effect="Allow"
-					Principal={
-						Federated=local.oidc_provider_arn
-					}
-				}
-			]
-			Version="2012-10-17"
-		})
-	name="${var.deployment_name}-irsa"
-}
 resource "aws_iam_role_policy_attachment" "s3" {
 	policy_arn=aws_iam_policy.s3.arn
-	role=aws_iam_role.liferay.name
+	role=var.liferay_sa_role_name
 }
 resource "aws_opensearch_domain" "os" {
 	access_policies=<<POLICY

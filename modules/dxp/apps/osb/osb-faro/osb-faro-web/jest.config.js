@@ -248,7 +248,7 @@ module.exports = {
 				ready: 'READY'
 			},
 			segmentTypes: {
-				dynamic: 'DYNAMIC',
+				dynamic: 'BATCH',
 				static: 'STATIC'
 			},
 			subscriptionPlans: {

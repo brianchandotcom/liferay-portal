@@ -33,9 +33,9 @@ import org.elasticsearch.common.document.DocumentField;
 /**
  * @author Michael C. Han
  */
-public class SearchHitsTranslator {
+public class HitsMetadataTranslator {
 
-	public SearchHitsTranslator(
+	public HitsMetadataTranslator(
 		SearchHitBuilderFactory searchHitBuilderFactory,
 		SearchHitsBuilderFactory searchHitsBuilderFactory,
 		DocumentBuilderFactory documentBuilderFactory,

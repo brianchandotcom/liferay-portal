@@ -77,7 +77,7 @@ import com.liferay.portal.search.aggregation.metrics.ValueCountAggregationResult
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.hits.HitsMetadataTranslator;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
@@ -126,11 +126,12 @@ public class ElasticsearchAggregationResultTranslator
 		org.elasticsearch.search.aggregations.Aggregation
 			elasticsearchAggregation,
 		AggregationResults aggregationResults,
-		SearchHitsTranslator searchHitsTranslator, GeoBuilders geoBuilders) {
+		HitsMetadataTranslator hitsMetadataTranslator,
+		GeoBuilders geoBuilders) {
 
 		_elasticsearchAggregation = elasticsearchAggregation;
 		_aggregationResults = aggregationResults;
-		_searchHitsTranslator = searchHitsTranslator;
+		_hitsMetadataTranslator = hitsMetadataTranslator;
 		_geoBuilders = geoBuilders;
 	}
 
@@ -141,7 +142,7 @@ public class ElasticsearchAggregationResultTranslator
 
 		return new ElasticsearchAggregationResultTranslator(
 			elasticsearchAggregation, _aggregationResults,
-			_searchHitsTranslator, _geoBuilders);
+			_hitsMetadataTranslator, _geoBuilders);
 	}
 
 	@Override
@@ -529,7 +530,7 @@ public class ElasticsearchAggregationResultTranslator
 		SearchHits searchHits = topHits.getHits();
 
 		return _aggregationResults.topHits(
-			topHits.getName(), _searchHitsTranslator.translate(searchHits));
+			topHits.getName(), _hitsMetadataTranslator.translate(searchHits));
 	}
 
 	@Override
@@ -604,6 +605,6 @@ public class ElasticsearchAggregationResultTranslator
 	private final org.elasticsearch.search.aggregations.Aggregation
 		_elasticsearchAggregation;
 	private final GeoBuilders _geoBuilders;
-	private final SearchHitsTranslator _searchHitsTranslator;
+	private final HitsMetadataTranslator _hitsMetadataTranslator;
 
 }

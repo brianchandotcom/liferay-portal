@@ -19,7 +19,7 @@ import com.liferay.portal.search.elasticsearch8.internal.aggregation.Elasticsear
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchAggregationResultsTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.ElasticsearchPipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.aggregation.PipelineAggregationResultTranslatorFactory;
-import com.liferay.portal.search.elasticsearch8.internal.hits.SearchHitsTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.hits.HitsMetadataTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.search.response.SearchResponseTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.stats.StatsTranslator;
 import com.liferay.portal.search.engine.adapter.search.SearchSearchRequest;
@@ -85,7 +85,7 @@ public class SearchSearchResponseAssemblerImpl
 
 		return new ElasticsearchAggregationResultTranslator(
 			elasticsearchAggregation, _aggregationResults,
-			new SearchHitsTranslator(
+			new HitsMetadataTranslator(
 				_searchHitBuilderFactory, _searchHitsBuilderFactory,
 				_documentBuilderFactory, _highlightFieldBuilderFactory,
 				_geoBuilders),
@@ -168,15 +168,16 @@ public class SearchSearchResponseAssemblerImpl
 		SearchSearchResponse searchSearchResponse,
 		SearchSearchRequest searchSearchRequest) {
 
-		SearchHitsTranslator searchHitsTranslator = new SearchHitsTranslator(
-			_searchHitBuilderFactory, _searchHitsBuilderFactory,
-			_documentBuilderFactory, _highlightFieldBuilderFactory,
-			_geoBuilders);
+		HitsMetadataTranslator hitsMetadataTranslator =
+			new HitsMetadataTranslator(
+				_searchHitBuilderFactory, _searchHitsBuilderFactory,
+				_documentBuilderFactory, _highlightFieldBuilderFactory,
+				_geoBuilders);
 
 		SearchHits searchHits = searchResponse.getHits();
 
 		searchSearchResponse.setSearchHits(
-			searchHitsTranslator.translate(
+			hitsMetadataTranslator.translate(
 				searchHits, searchSearchRequest.getAlternateUidFieldName()));
 	}
 

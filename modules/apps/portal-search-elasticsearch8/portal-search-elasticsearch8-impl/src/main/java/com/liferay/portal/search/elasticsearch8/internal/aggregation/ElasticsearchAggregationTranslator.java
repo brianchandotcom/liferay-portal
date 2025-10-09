@@ -5,15 +5,45 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.GeoHashPrecision;
+import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.Time;
+import co.elastic.clients.elasticsearch._types.TimeUnit;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder.ContainerBuilder;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationRange;
+import co.elastic.clients.elasticsearch._types.aggregations.AverageAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.Buckets;
+import co.elastic.clients.elasticsearch._types.aggregations.ChiSquareHeuristic;
+import co.elastic.clients.elasticsearch._types.aggregations.DateRangeExpression;
+import co.elastic.clients.elasticsearch._types.aggregations.ExtendedBounds;
+import co.elastic.clients.elasticsearch._types.aggregations.GoogleNormalizedDistanceHeuristic;
+import co.elastic.clients.elasticsearch._types.aggregations.HdrMethod;
+import co.elastic.clients.elasticsearch._types.aggregations.MutualInformationHeuristic;
+import co.elastic.clients.elasticsearch._types.aggregations.PercentageScoreHeuristic;
+import co.elastic.clients.elasticsearch._types.aggregations.SamplerAggregationExecutionHint;
+import co.elastic.clients.elasticsearch._types.aggregations.ScriptedHeuristic;
+import co.elastic.clients.elasticsearch._types.aggregations.TDigest;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregationCollectMode;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsAggregationExecutionHint;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsExclude;
+import co.elastic.clients.elasticsearch._types.aggregations.TermsInclude;
+import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.WeightedAverageValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.QueryVariant;
+import co.elastic.clients.elasticsearch.core.search.SourceConfig;
+import co.elastic.clients.elasticsearch.core.search.SourceConfigBuilders;
+import co.elastic.clients.elasticsearch.core.search.SourceFilter;
 import co.elastic.clients.util.NamedValue;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationTranslator;
 import com.liferay.portal.search.aggregation.AggregationVisitor;
-import com.liferay.portal.search.aggregation.FieldAggregation;
 import com.liferay.portal.search.aggregation.ValueType;
 import com.liferay.portal.search.aggregation.bucket.ChildrenAggregation;
 import com.liferay.portal.search.aggregation.bucket.CollectionMode;
@@ -55,85 +85,31 @@ import com.liferay.portal.search.aggregation.metrics.ValueCountAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.DistanceUnitTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoDistanceTypeTranslator;
-import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoLocationPointTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.geolocation.GeoTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.highlight.HighlightTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.query.ElasticsearchQueryTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ConversionUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.QueryTranslator;
-import com.liferay.portal.search.script.ScriptField;
+import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.significance.ChiSquareSignificanceHeuristic;
 import com.liferay.portal.search.significance.GNDSignificanceHeuristic;
-import com.liferay.portal.search.significance.JLHScoreSignificanceHeuristic;
 import com.liferay.portal.search.significance.MutualInformationSignificanceHeuristic;
 import com.liferay.portal.search.significance.PercentageScoreSignificanceHeuristic;
 import com.liferay.portal.search.significance.ScriptSignificanceHeuristic;
 import com.liferay.portal.search.significance.SignificanceHeuristic;
-import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-import org.elasticsearch.common.geo.GeoDistance;
-import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.join.aggregations.ChildrenAggregationBuilder;
-import org.elasticsearch.script.Script;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregator;
-import org.elasticsearch.search.aggregations.BucketOrder;
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.filter.FiltersAggregator;
-import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGridAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
-import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.histogram.LongBounds;
-import org.elasticsearch.search.aggregations.bucket.missing.MissingAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.nested.ReverseNestedAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.AbstractRangeBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.DateRangeAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.GeoDistanceAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.RangeAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.range.RangeAggregator;
-import org.elasticsearch.search.aggregations.bucket.sampler.DiversifiedAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.sampler.SamplerAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.IncludeExclude;
-import org.elasticsearch.search.aggregations.bucket.terms.SignificantTermsAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.SignificantTextAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.ChiSquare;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.GND;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.JLHScore;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.MutualInformation;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.PercentageScore;
-import org.elasticsearch.search.aggregations.bucket.terms.heuristic.ScriptHeuristic;
-import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.CardinalityAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.ExtendedStatsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.GeoBoundsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.GeoCentroidAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.MaxAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.MinAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.PercentileRanksAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.PercentilesAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.ScriptedMetricAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.StatsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.TopHitsAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.ValueCountAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.WeightedAvgAggregationBuilder;
-import org.elasticsearch.search.aggregations.support.MultiValuesSourceFieldConfig;
-import org.elasticsearch.search.aggregations.support.ValuesSourceAggregationBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -146,1074 +122,1516 @@ import org.osgi.service.component.annotations.Reference;
 	service = AggregationTranslator.class
 )
 public class ElasticsearchAggregationTranslator
-	implements AggregationTranslator<AggregationBuilder>,
-			   AggregationVisitor<AggregationBuilder> {
+	implements AggregationTranslator
+		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>,
+			   AggregationVisitor
+				   <co.elastic.clients.elasticsearch._types.aggregations.
+					   Aggregation> {
 
 	@Override
-	public AggregationBuilder translate(Aggregation aggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		translate(Aggregation aggregation) {
+
 		return aggregation.accept(this);
 	}
 
 	@Override
-	public AggregationBuilder visit(AvgAggregation avgAggregation) {
-		AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders.avg(
-			avgAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(AvgAggregation avgAggregation) {
 
-		_assemble(avgAggregation, avgAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return avgAggregationBuilder;
+		AverageAggregation.Builder averageAggregationBuilder =
+			AggregationBuilders.avg();
+
+		averageAggregationBuilder.field(avgAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			averageAggregationBuilder::missing, avgAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			averageAggregationBuilder::script, avgAggregation.getScript());
+
+		return _translateChildAggregations(
+			avgAggregation,
+			aggregationBuilder.avg(averageAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		CardinalityAggregation cardinalityAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(CardinalityAggregation cardinalityAggregation) {
 
-		CardinalityAggregationBuilder cardinalityAggregationBuilder =
-			AggregationBuilders.cardinality(cardinalityAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		if (cardinalityAggregation.getPrecisionThreshold() != null) {
-			cardinalityAggregationBuilder.precisionThreshold(
-				cardinalityAggregation.getPrecisionThreshold());
+		co.elastic.clients.elasticsearch._types.aggregations.
+			CardinalityAggregation.Builder cardinalityAggregationBuilder =
+				AggregationBuilders.cardinality();
+
+		cardinalityAggregationBuilder.field(cardinalityAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			cardinalityAggregationBuilder::missing,
+			cardinalityAggregation.getMissing());
+		SetterUtil.setNotNullInteger(
+			cardinalityAggregationBuilder::precisionThreshold,
+			cardinalityAggregation.getPrecisionThreshold());
+		SetterUtil.setNotNullScript(
+			cardinalityAggregationBuilder::script,
+			cardinalityAggregation.getScript());
+
+		return _translateChildAggregations(
+			cardinalityAggregation,
+			aggregationBuilder.cardinality(
+				cardinalityAggregationBuilder.build()));
+	}
+
+	@Override
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(ChildrenAggregation childrenAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.
+			ChildrenAggregation.Builder childrenAggregationBuilder =
+				AggregationBuilders.children();
+
+		SetterUtil.setNotBlankString(
+			childrenAggregationBuilder::type,
+			childrenAggregation.getChildType());
+
+		return _translateChildAggregations(
+			childrenAggregation,
+			aggregationBuilder.children(childrenAggregationBuilder.build()));
+	}
+
+	@Override
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(DateHistogramAggregation dateHistogramAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DateHistogramAggregation.Builder dateHistogramAggregationBuilder =
+				AggregationBuilders.dateHistogram();
+
+		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
+			dateHistogramAggregationBuilder.interval(
+				Time.of(
+					time -> time.time(
+						dateHistogramAggregation.getDateHistogramInterval())));
 		}
 
-		_assemble(cardinalityAggregation, cardinalityAggregationBuilder);
-
-		return cardinalityAggregationBuilder;
-	}
-
-	@Override
-	public AggregationBuilder visit(ChildrenAggregation childrenAggregation) {
-		ChildrenAggregationBuilder childrenAggregationBuilder =
-			new ChildrenAggregationBuilder(
-				childrenAggregation.getName(),
-				childrenAggregation.getChildType());
-
-		_assemble(childrenAggregation, childrenAggregationBuilder);
-
-		return childrenAggregationBuilder;
-	}
-
-	@Override
-	public AggregationBuilder visit(
-		DateHistogramAggregation dateHistogramAggregation) {
-
-		DateHistogramAggregationBuilder dateHistogramAggregationBuilder =
-			AggregationBuilders.dateHistogram(
-				dateHistogramAggregation.getName());
-
-		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _translate(
-				dateHistogramAggregation.getOrders());
-
-			dateHistogramAggregationBuilder.order(bucketOrders);
-		}
+		dateHistogramAggregationBuilder.field(
+			dateHistogramAggregation.getField());
 
 		if ((dateHistogramAggregation.getMaxBound() != null) &&
 			(dateHistogramAggregation.getMinBound() != null)) {
 
-			LongBounds longBounds = new LongBounds(
-				dateHistogramAggregation.getMinBound(),
-				dateHistogramAggregation.getMaxBound());
-
-			dateHistogramAggregationBuilder.extendedBounds(longBounds);
+			dateHistogramAggregationBuilder.extendedBounds(
+				ExtendedBounds.of(
+					elasticsearchExtendedBounds ->
+						elasticsearchExtendedBounds.max(
+							ConversionUtil.toFieldDateMath(
+								null,
+								ConversionUtil.toDouble(
+									dateHistogramAggregation.getMaxBound()))
+						).min(
+							ConversionUtil.toFieldDateMath(
+								null,
+								ConversionUtil.toDouble(
+									dateHistogramAggregation.getMinBound()))
+						)));
 		}
 
 		if (dateHistogramAggregation.getMinDocCount() != null) {
 			dateHistogramAggregationBuilder.minDocCount(
-				dateHistogramAggregation.getMinDocCount());
-		}
-
-		if (dateHistogramAggregation.getDateHistogramInterval() != null) {
-			dateHistogramAggregationBuilder.dateHistogramInterval(
-				new DateHistogramInterval(
-					dateHistogramAggregation.getDateHistogramInterval()));
-		}
-
-		if (dateHistogramAggregation.getInterval() != null) {
-			dateHistogramAggregationBuilder.interval(
-				dateHistogramAggregation.getInterval());
+				Math.toIntExact(dateHistogramAggregation.getMinDocCount()));
 		}
 
 		if (dateHistogramAggregation.getOffset() != null) {
 			dateHistogramAggregationBuilder.offset(
-				dateHistogramAggregation.getOffset());
+				Time.of(
+					time -> time.time(
+						dateHistogramAggregation.getOffset() +
+							TimeUnit.Milliseconds.jsonValue())));
 		}
 
-		_assemble(dateHistogramAggregation, dateHistogramAggregationBuilder);
+		if (ListUtil.isNotEmpty(dateHistogramAggregation.getOrders())) {
+			List<Order> orders = dateHistogramAggregation.getOrders();
 
-		return dateHistogramAggregationBuilder;
+			dateHistogramAggregationBuilder.order(_translateOrders(orders));
+		}
+
+		return _translateChildAggregations(
+			dateHistogramAggregation,
+			aggregationBuilder.dateHistogram(
+				dateHistogramAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(DateRangeAggregation dateRangeAggregation) {
-		DateRangeAggregationBuilder dateRangeAggregationBuilder =
-			AggregationBuilders.dateRange(dateRangeAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(DateRangeAggregation dateRangeAggregation) {
 
-		_assemble(dateRangeAggregation, dateRangeAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		populateRangeAggregationBuilder(
-			dateRangeAggregation, dateRangeAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DateRangeAggregation.Builder dateRangeAggregationBuilder =
+				AggregationBuilders.dateRange();
 
-		return dateRangeAggregationBuilder;
+		dateRangeAggregationBuilder.field(dateRangeAggregation.getField());
+
+		SetterUtil.setNotBlankString(
+			dateRangeAggregationBuilder::format,
+			dateRangeAggregation.getFormat());
+		SetterUtil.setNotNullBoolean(
+			dateRangeAggregationBuilder::keyed,
+			dateRangeAggregation.getKeyed());
+		SetterUtil.setNotNullFieldValue(
+			dateRangeAggregationBuilder::missing,
+			dateRangeAggregation.getMissing());
+		setRanges(dateRangeAggregationBuilder, dateRangeAggregation);
+
+		return _translateChildAggregations(
+			dateRangeAggregation,
+			aggregationBuilder.dateRange(dateRangeAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		DiversifiedSamplerAggregation diversifiedSamplerAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(DiversifiedSamplerAggregation diversifiedSamplerAggregation) {
 
-		DiversifiedAggregationBuilder diversifiedAggregationBuilder =
-			AggregationBuilders.diversifiedSampler(
-				diversifiedSamplerAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(diversifiedSamplerAggregation, diversifiedAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DiversifiedSamplerAggregation.Builder
+				diversifiedSamplerAggregationBuilder =
+					AggregationBuilders.diversifiedSampler();
 
 		if (diversifiedSamplerAggregation.getExecutionHint() != null) {
-			diversifiedAggregationBuilder.executionHint(
-				diversifiedSamplerAggregation.getExecutionHint());
+			diversifiedSamplerAggregationBuilder.executionHint(
+				SamplerAggregationExecutionHint.valueOf(
+					diversifiedSamplerAggregation.getExecutionHint()));
 		}
 
-		if (diversifiedSamplerAggregation.getMaxDocsPerValue() != null) {
-			diversifiedAggregationBuilder.maxDocsPerValue(
-				diversifiedSamplerAggregation.getMaxDocsPerValue());
-		}
+		diversifiedSamplerAggregationBuilder.field(
+			diversifiedSamplerAggregation.getField());
 
-		if (diversifiedSamplerAggregation.getShardSize() != null) {
-			diversifiedAggregationBuilder.shardSize(
-				diversifiedSamplerAggregation.getShardSize());
-		}
+		SetterUtil.setNotNullInteger(
+			diversifiedSamplerAggregationBuilder::maxDocsPerValue,
+			diversifiedSamplerAggregation.getMaxDocsPerValue());
+		SetterUtil.setNotNullScript(
+			diversifiedSamplerAggregationBuilder::script,
+			diversifiedSamplerAggregation.getScript());
+		SetterUtil.setNotNullInteger(
+			diversifiedSamplerAggregationBuilder::shardSize,
+			diversifiedSamplerAggregation.getShardSize());
 
-		return diversifiedAggregationBuilder;
+		return _translateChildAggregations(
+			diversifiedSamplerAggregation,
+			aggregationBuilder.diversifiedSampler(
+				diversifiedSamplerAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		ExtendedStatsAggregation extendedStatsAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(ExtendedStatsAggregation extendedStatsAggregation) {
 
-		ExtendedStatsAggregationBuilder extendedStatsAggregationBuilder =
-			AggregationBuilders.extendedStats(
-				extendedStatsAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(extendedStatsAggregation, extendedStatsAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			ExtendedStatsAggregation.Builder extendedStatsAggregationBuilder =
+				AggregationBuilders.extendedStats();
 
-		if (extendedStatsAggregation.getSigma() != null) {
-			extendedStatsAggregationBuilder.sigma(
-				extendedStatsAggregation.getSigma());
+		extendedStatsAggregationBuilder.field(
+			extendedStatsAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			extendedStatsAggregationBuilder::missing,
+			extendedStatsAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			extendedStatsAggregationBuilder::script,
+			extendedStatsAggregation.getScript());
+
+		Integer sigma = extendedStatsAggregation.getSigma();
+
+		if (sigma != null) {
+			extendedStatsAggregationBuilder.sigma(sigma.doubleValue());
 		}
 
-		return extendedStatsAggregationBuilder;
+		return _translateChildAggregations(
+			extendedStatsAggregation,
+			aggregationBuilder.extendedStats(
+				extendedStatsAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(FilterAggregation filterAggregation) {
-		QueryBuilder filterQueryBuilder = _queryTranslator.translate(
-			filterAggregation.getFilterQuery());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(FilterAggregation filterAggregation) {
 
-		FilterAggregationBuilder filterAggregationBuilder =
-			AggregationBuilders.filter(
-				filterAggregation.getName(), filterQueryBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			builder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assembleSubaggregations(filterAggregation, filterAggregationBuilder);
-
-		return filterAggregationBuilder;
+		return _translateChildAggregations(
+			filterAggregation,
+			builder.filter(
+				new Query(
+					_queryTranslator.translate(
+						filterAggregation.getFilterQuery()))));
 	}
 
 	@Override
-	public AggregationBuilder visit(FiltersAggregation filtersAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(FiltersAggregation filtersAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.FiltersAggregation.
+			Builder filtersAggregationBuilder = AggregationBuilders.filters();
+
 		List<FiltersAggregation.KeyedQuery> keyedQueries =
 			filtersAggregation.getKeyedQueries();
 
-		List<FiltersAggregator.KeyedFilter> keyedFilters = new ArrayList<>(
-			keyedQueries.size());
+		Map<String, Query> keyedFilters = new HashMap<>();
 
 		keyedQueries.forEach(
-			keyedQuery -> {
-				QueryBuilder filterQueryBuilder = _queryTranslator.translate(
-					keyedQuery.getQuery());
+			keyedQuery -> keyedFilters.put(
+				keyedQuery.getKey(),
+				new Query(_queryTranslator.translate(keyedQuery.getQuery()))));
 
-				keyedFilters.add(
-					new FiltersAggregator.KeyedFilter(
-						keyedQuery.getKey(), filterQueryBuilder));
-			});
+		Buckets.Builder<Query> bucketsBuilder = new Buckets.Builder<>();
 
-		FiltersAggregationBuilder filtersAggregationBuilder =
-			AggregationBuilders.filters(
-				filtersAggregation.getName(),
-				keyedFilters.toArray(
-					new FiltersAggregator.KeyedFilter[keyedQueries.size()]));
+		filtersAggregationBuilder.filters(
+			bucketsBuilder.keyed(
+				keyedFilters
+			).build());
 
-		if (filtersAggregation.getOtherBucket() != null) {
-			filtersAggregationBuilder.otherBucket(
-				filtersAggregation.getOtherBucket());
-		}
+		SetterUtil.setNotNullBoolean(
+			filtersAggregationBuilder::otherBucket,
+			filtersAggregation.getOtherBucket());
+		SetterUtil.setNotBlankString(
+			filtersAggregationBuilder::otherBucketKey,
+			filtersAggregation.getOtherBucketKey());
 
-		if (filtersAggregation.getOtherBucketKey() != null) {
-			filtersAggregationBuilder.otherBucketKey(
-				filtersAggregation.getOtherBucketKey());
-		}
-
-		_assembleSubaggregations(filtersAggregation, filtersAggregationBuilder);
-
-		return filtersAggregationBuilder;
+		return _translateChildAggregations(
+			filtersAggregation,
+			aggregationBuilder.filters(filtersAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(GeoBoundsAggregation geoBoundsAggregation) {
-		GeoBoundsAggregationBuilder geoBoundsAggregationBuilder =
-			AggregationBuilders.geoBounds(geoBoundsAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(GeoBoundsAggregation geoBoundsAggregation) {
 
-		_assemble(geoBoundsAggregation, geoBoundsAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		if (geoBoundsAggregation.getWrapLongitude() != null) {
-			geoBoundsAggregationBuilder.wrapLongitude(
-				geoBoundsAggregation.getWrapLongitude());
+		co.elastic.clients.elasticsearch._types.aggregations.
+			GeoBoundsAggregation.Builder geoBoundsAggregationBuilder =
+				AggregationBuilders.geoBounds();
+
+		geoBoundsAggregationBuilder.field(geoBoundsAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			geoBoundsAggregationBuilder::missing,
+			geoBoundsAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			geoBoundsAggregationBuilder::script,
+			geoBoundsAggregation.getScript());
+		SetterUtil.setNotNullBoolean(
+			geoBoundsAggregationBuilder::wrapLongitude,
+			geoBoundsAggregation.getWrapLongitude());
+
+		return _translateChildAggregations(
+			geoBoundsAggregation,
+			aggregationBuilder.geoBounds(geoBoundsAggregationBuilder.build()));
+	}
+
+	@Override
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(GeoCentroidAggregation geoCentroidAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.
+			GeoCentroidAggregation.Builder geoCentroidAggregationBuilder =
+				AggregationBuilders.geoCentroid();
+
+		geoCentroidAggregationBuilder.field(geoCentroidAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			geoCentroidAggregationBuilder::missing,
+			geoCentroidAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			geoCentroidAggregationBuilder::script,
+			geoCentroidAggregation.getScript());
+
+		return _translateChildAggregations(
+			geoCentroidAggregation,
+			aggregationBuilder.geoCentroid(
+				geoCentroidAggregationBuilder.build()));
+	}
+
+	@Override
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(GeoDistanceAggregation geoDistanceAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.
+			GeoDistanceAggregation.Builder geoDistanceAggregationBuilder =
+				AggregationBuilders.geoDistance();
+
+		if (geoDistanceAggregation.getGeoDistanceType() != null) {
+			geoDistanceAggregationBuilder.distanceType(
+				_geoTranslator.translateGeoDistanceType(
+					geoDistanceAggregation.getGeoDistanceType()));
 		}
 
-		return geoBoundsAggregationBuilder;
-	}
+		geoDistanceAggregationBuilder.field(geoDistanceAggregation.getField());
 
-	@Override
-	public AggregationBuilder visit(
-		GeoCentroidAggregation geoCentroidAggregation) {
-
-		GeoCentroidAggregationBuilder geoCentroidAggregationBuilder =
-			AggregationBuilders.geoCentroid(geoCentroidAggregation.getName());
-
-		_assemble(geoCentroidAggregation, geoCentroidAggregationBuilder);
-
-		return geoCentroidAggregationBuilder;
-	}
-
-	@Override
-	public AggregationBuilder visit(
-		GeoDistanceAggregation geoDistanceAggregation) {
-
-		GeoPoint geoPoint = GeoLocationPointTranslator.translate(
-			geoDistanceAggregation.getGeoLocationPoint());
-
-		GeoDistanceAggregationBuilder geoDistanceAggregationBuilder =
-			AggregationBuilders.geoDistance(
-				geoDistanceAggregation.getName(), geoPoint);
-
-		_assemble(geoDistanceAggregation, geoDistanceAggregationBuilder);
+		geoDistanceAggregationBuilder.origin(
+			_geoTranslator.translateGeoLocationPoint(
+				geoDistanceAggregation.getGeoLocationPoint()));
 
 		if (geoDistanceAggregation.getDistanceUnit() != null) {
 			geoDistanceAggregationBuilder.unit(
-				_distanceUnitTranslator.translate(
+				_geoTranslator.translateDistanceUnit(
 					geoDistanceAggregation.getDistanceUnit()));
-		}
-
-		if (geoDistanceAggregation.getGeoDistanceType() != null) {
-			GeoDistance geoDistance = _geoDistanceTypeTranslator.translate(
-				geoDistanceAggregation.getGeoDistanceType());
-
-			geoDistanceAggregationBuilder.distanceType(geoDistance);
-		}
-
-		if (geoDistanceAggregation.getKeyed() != null) {
-			geoDistanceAggregationBuilder.keyed(
-				geoDistanceAggregation.getKeyed());
 		}
 
 		List<Range> rangeAggregationRanges = geoDistanceAggregation.getRanges();
 
 		rangeAggregationRanges.forEach(
-			rangeAggregationRange -> {
-				GeoDistanceAggregationBuilder.Range range =
-					new GeoDistanceAggregationBuilder.Range(
-						rangeAggregationRange.getKey(),
-						rangeAggregationRange.getFrom(),
-						rangeAggregationRange.getTo());
+			rangeAggregationRange -> geoDistanceAggregationBuilder.ranges(
+				_createAggregationRange(
+					ElasticsearchStringUtil.getFirstStringValue(
+						rangeAggregationRange::getFromAsString,
+						rangeAggregationRange::getFrom),
+					rangeAggregationRange.getKey(),
+					ElasticsearchStringUtil.getFirstStringValue(
+						rangeAggregationRange::getToAsString,
+						rangeAggregationRange::getTo))));
 
-				geoDistanceAggregationBuilder.addRange(range);
-			});
-
-		return geoDistanceAggregationBuilder;
+		return _translateChildAggregations(
+			geoDistanceAggregation,
+			aggregationBuilder.geoDistance(
+				geoDistanceAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		GeoHashGridAggregation geoHashGridAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(GeoHashGridAggregation geoHashGridAggregation) {
 
-		GeoGridAggregationBuilder geoGridAggregationBuilder =
-			AggregationBuilders.geohashGrid(geoHashGridAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(geoHashGridAggregation, geoGridAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			GeoHashGridAggregation.Builder geoHashGridAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					GeoHashGridAggregation.Builder();
+
+		geoHashGridAggregationBuilder.field(geoHashGridAggregation.getField());
 
 		if (geoHashGridAggregation.getPrecision() != null) {
-			geoGridAggregationBuilder.precision(
-				geoHashGridAggregation.getPrecision());
+			geoHashGridAggregationBuilder.precision(
+				GeoHashPrecision.of(
+					geoHashPrecision -> geoHashPrecision.geohashLength(
+						geoHashGridAggregation.getPrecision())));
 		}
 
-		if (geoHashGridAggregation.getShardSize() != null) {
-			geoGridAggregationBuilder.shardSize(
-				geoHashGridAggregation.getShardSize());
-		}
+		SetterUtil.setNotNullInteger(
+			geoHashGridAggregationBuilder::shardSize,
+			geoHashGridAggregation.getShardSize());
+		SetterUtil.setNotNullInteger(
+			geoHashGridAggregationBuilder::size,
+			geoHashGridAggregation.getSize());
 
-		if (geoHashGridAggregation.getSize() != null) {
-			geoGridAggregationBuilder.size(geoHashGridAggregation.getSize());
-		}
-
-		return geoGridAggregationBuilder;
+		return _translateChildAggregations(
+			geoHashGridAggregation,
+			aggregationBuilder.geohashGrid(
+				geoHashGridAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(GlobalAggregation globalAggregation) {
-		AggregationBuilder aggregationBuilder = AggregationBuilders.global(
-			globalAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(GlobalAggregation globalAggregation) {
 
-		_assembleSubaggregations(globalAggregation, aggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return aggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.GlobalAggregation.
+			Builder globalAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					GlobalAggregation.Builder();
+
+		return _translateChildAggregations(
+			globalAggregation,
+			aggregationBuilder.global(globalAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(HistogramAggregation histogramAggregation) {
-		HistogramAggregationBuilder histogramAggregationBuilder =
-			AggregationBuilders.histogram(histogramAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(HistogramAggregation histogramAggregation) {
 
-		_assemble(histogramAggregation, histogramAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _translate(
-				histogramAggregation.getOrders());
+		co.elastic.clients.elasticsearch._types.aggregations.
+			HistogramAggregation.Builder histogramAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					HistogramAggregation.Builder();
 
-			histogramAggregationBuilder.order(bucketOrders);
-		}
+		histogramAggregationBuilder.field(histogramAggregation.getField());
 
 		if ((histogramAggregation.getMaxBound() != null) &&
 			(histogramAggregation.getMinBound() != null)) {
 
 			histogramAggregationBuilder.extendedBounds(
-				histogramAggregation.getMinBound(),
-				histogramAggregation.getMaxBound());
+				ExtendedBounds.of(
+					elasticsearchExtendedBounds ->
+						elasticsearchExtendedBounds.max(
+							histogramAggregation.getMaxBound()
+						).min(
+							histogramAggregation.getMinBound()
+						)));
 		}
+
+		SetterUtil.setNotNullDouble(
+			histogramAggregationBuilder::interval,
+			histogramAggregation.getInterval());
 
 		if (histogramAggregation.getMinDocCount() != null) {
 			histogramAggregationBuilder.minDocCount(
-				histogramAggregation.getMinDocCount());
+				Math.toIntExact(histogramAggregation.getMinDocCount()));
 		}
 
-		if (histogramAggregation.getInterval() != null) {
-			histogramAggregationBuilder.interval(
-				histogramAggregation.getInterval());
+		SetterUtil.setNotNullDouble(
+			histogramAggregationBuilder::missing,
+			GetterUtil.getDouble(histogramAggregation.getMissing()));
+		SetterUtil.setNotNullDouble(
+			histogramAggregationBuilder::offset,
+			histogramAggregation.getOffset());
+
+		if (ListUtil.isNotEmpty(histogramAggregation.getOrders())) {
+			List<Order> orders = histogramAggregation.getOrders();
+
+			histogramAggregationBuilder.order(_translateOrders(orders));
 		}
 
-		if (histogramAggregation.getOffset() != null) {
-			histogramAggregationBuilder.offset(
-				histogramAggregation.getOffset());
-		}
+		SetterUtil.setNotNullScript(
+			histogramAggregationBuilder::script,
+			histogramAggregation.getScript());
 
-		return histogramAggregationBuilder;
+		return _translateChildAggregations(
+			histogramAggregation,
+			aggregationBuilder.histogram(histogramAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(MaxAggregation maxAggregation) {
-		MaxAggregationBuilder maxAggregationBuilder = AggregationBuilders.max(
-			maxAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(MaxAggregation maxAggregation) {
 
-		_assemble(maxAggregation, maxAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return maxAggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.MaxAggregation.
+			Builder maxAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					MaxAggregation.Builder();
+
+		maxAggregationBuilder.field(maxAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			maxAggregationBuilder::missing, maxAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			maxAggregationBuilder::script, maxAggregation.getScript());
+
+		return _translateChildAggregations(
+			maxAggregation,
+			aggregationBuilder.max(maxAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(MinAggregation minAggregation) {
-		MinAggregationBuilder minAggregationBuilder = AggregationBuilders.min(
-			minAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(MinAggregation minAggregation) {
 
-		_assemble(minAggregation, minAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return minAggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.MinAggregation.
+			Builder minAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					MinAggregation.Builder();
+
+		minAggregationBuilder.field(minAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			minAggregationBuilder::missing, minAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			minAggregationBuilder::script, minAggregation.getScript());
+
+		return _translateChildAggregations(
+			minAggregation,
+			aggregationBuilder.min(minAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(MissingAggregation missingAggregation) {
-		MissingAggregationBuilder missingAggregationBuilder =
-			AggregationBuilders.missing(missingAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(MissingAggregation missingAggregation) {
 
-		_assemble(missingAggregation, missingAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return missingAggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.MissingAggregation.
+			Builder missingAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					MissingAggregation.Builder();
+
+		missingAggregationBuilder.field(missingAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			missingAggregationBuilder::missing,
+			missingAggregation.getMissing());
+
+		return _translateChildAggregations(
+			missingAggregation,
+			aggregationBuilder.missing(missingAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(NestedAggregation nestedAggregation) {
-		AggregationBuilder aggregationBuilder = AggregationBuilders.nested(
-			nestedAggregation.getName(), nestedAggregation.getPath());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(NestedAggregation nestedAggregation) {
 
-		_assembleSubaggregations(nestedAggregation, aggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return aggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.NestedAggregation.
+			Builder nestedAggregationBuilder = AggregationBuilders.nested();
+
+		nestedAggregationBuilder.path(nestedAggregation.getPath());
+
+		return _translateChildAggregations(
+			nestedAggregation,
+			aggregationBuilder.nested(nestedAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		PercentileRanksAggregation percentileRanksAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(PercentileRanksAggregation percentileRanksAggregation) {
 
-		PercentileRanksAggregationBuilder percentileRanksAggregationBuilder =
-			AggregationBuilders.percentileRanks(
-				percentileRanksAggregation.getName(),
-				percentileRanksAggregation.getValues());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(
-			percentileRanksAggregation, percentileRanksAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			PercentileRanksAggregation.Builder
+				percentileRanksAggregationBuilder =
+					AggregationBuilders.percentileRanks();
 
-		if (percentileRanksAggregation.getCompression() != null) {
-			percentileRanksAggregationBuilder.compression(
-				percentileRanksAggregation.getCompression());
-		}
+		percentileRanksAggregationBuilder.field(
+			percentileRanksAggregation.getField());
 
-		if (percentileRanksAggregation.getHdrSignificantValueDigits() != null) {
-			percentileRanksAggregationBuilder.numberOfSignificantValueDigits(
-				percentileRanksAggregation.getHdrSignificantValueDigits());
-		}
-
-		if (percentileRanksAggregation.getKeyed() != null) {
-			percentileRanksAggregationBuilder.keyed(
-				percentileRanksAggregation.getKeyed());
-		}
+		SetterUtil.setNotNullBoolean(
+			percentileRanksAggregationBuilder::keyed,
+			percentileRanksAggregation.getKeyed());
+		SetterUtil.setNotNullFieldValue(
+			percentileRanksAggregationBuilder::missing,
+			percentileRanksAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			percentileRanksAggregationBuilder::script,
+			percentileRanksAggregation.getScript());
 
 		if (percentileRanksAggregation.getPercentilesMethod() != null) {
 			PercentilesMethod percentilesMethod =
 				percentileRanksAggregation.getPercentilesMethod();
 
-			percentileRanksAggregationBuilder.method(
-				org.elasticsearch.search.aggregations.metrics.PercentilesMethod.
-					valueOf(percentilesMethod.name()));
+			if (percentilesMethod.equals(PercentilesMethod.HDR)) {
+				percentileRanksAggregationBuilder.hdr(
+					HdrMethod.of(
+						hdrMethor -> hdrMethor.numberOfSignificantValueDigits(
+							percentileRanksAggregation.
+								getHdrSignificantValueDigits())));
+			}
+			else if (percentilesMethod.equals(PercentilesMethod.TDIGEST)) {
+				percentileRanksAggregationBuilder.tdigest(
+					TDigest.of(
+						tdigest -> tdigest.compression(
+							percentileRanksAggregation.getCompression())));
+			}
 		}
 
-		return percentileRanksAggregationBuilder;
+		percentileRanksAggregationBuilder.values(
+			ConversionUtil.toDoubleList(
+				percentileRanksAggregation.getValues()));
+
+		return _translateChildAggregations(
+			percentileRanksAggregation,
+			aggregationBuilder.percentileRanks(
+				percentileRanksAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		PercentilesAggregation percentilesAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(PercentilesAggregation percentilesAggregation) {
 
-		PercentilesAggregationBuilder percentilesAggregationBuilder =
-			AggregationBuilders.percentiles(percentilesAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(percentilesAggregation, percentilesAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			PercentilesAggregation.Builder percentilesAggregationBuilder =
+				AggregationBuilders.percentiles();
 
-		if (percentilesAggregation.getCompression() != null) {
-			percentilesAggregationBuilder.compression(
-				percentilesAggregation.getCompression());
-		}
+		percentilesAggregationBuilder.field(percentilesAggregation.getField());
 
-		if (percentilesAggregation.getHdrSignificantValueDigits() != null) {
-			percentilesAggregationBuilder.numberOfSignificantValueDigits(
-				percentilesAggregation.getHdrSignificantValueDigits());
-		}
+		SetterUtil.setNotNullBoolean(
+			percentilesAggregationBuilder::keyed,
+			percentilesAggregation.getKeyed());
+		SetterUtil.setNotNullFieldValue(
+			percentilesAggregationBuilder::missing,
+			percentilesAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			percentilesAggregationBuilder::script,
+			percentilesAggregation.getScript());
 
-		if (percentilesAggregation.getKeyed() != null) {
-			percentilesAggregationBuilder.keyed(
-				percentilesAggregation.getKeyed());
-		}
-
-		double[] percents = percentilesAggregation.getPercents();
-
-		if (percents != null) {
-			percentilesAggregationBuilder.percentiles(percents);
+		if (percentilesAggregation.getPercents() != null) {
+			percentilesAggregationBuilder.percents(
+				ConversionUtil.toDoubleList(
+					percentilesAggregation.getPercents()));
 		}
 
 		if (percentilesAggregation.getPercentilesMethod() != null) {
 			PercentilesMethod percentilesMethod =
 				percentilesAggregation.getPercentilesMethod();
 
-			percentilesAggregationBuilder.method(
-				org.elasticsearch.search.aggregations.metrics.PercentilesMethod.
-					valueOf(percentilesMethod.name()));
+			if (percentilesMethod.equals(PercentilesMethod.HDR)) {
+				percentilesAggregationBuilder.hdr(
+					HdrMethod.of(
+						hdrMethor -> hdrMethor.numberOfSignificantValueDigits(
+							percentilesAggregation.
+								getHdrSignificantValueDigits())));
+			}
+			else if (percentilesMethod.equals(PercentilesMethod.TDIGEST)) {
+				percentilesAggregationBuilder.tdigest(
+					TDigest.of(
+						tdigest -> tdigest.compression(
+							percentilesAggregation.getCompression())));
+			}
 		}
 
-		return percentilesAggregationBuilder;
+		return _translateChildAggregations(
+			percentilesAggregation,
+			aggregationBuilder.percentiles(
+				percentilesAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(RangeAggregation rangeAggregation) {
-		RangeAggregationBuilder rangeAggregationBuilder =
-			AggregationBuilders.range(rangeAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(RangeAggregation rangeAggregation) {
 
-		_assemble(rangeAggregation, rangeAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		populateRangeAggregationBuilder(
-			rangeAggregation, rangeAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation.
+			Builder rangeAggregationBuilder = AggregationBuilders.range();
 
-		return rangeAggregationBuilder;
+		rangeAggregationBuilder.field(rangeAggregation.getField());
+
+		SetterUtil.setNotNullBoolean(
+			rangeAggregationBuilder::keyed, rangeAggregation.getKeyed());
+		SetterUtil.setNotNullInteger(
+			rangeAggregationBuilder::missing,
+			GetterUtil.getInteger(rangeAggregation.getMissing()));
+		setRanges(rangeAggregationBuilder, rangeAggregation);
+		SetterUtil.setNotNullScript(
+			rangeAggregationBuilder::script, rangeAggregation.getScript());
+
+		return _translateChildAggregations(
+			rangeAggregation,
+			aggregationBuilder.range(rangeAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		ReverseNestedAggregation reverseNestedAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(ReverseNestedAggregation reverseNestedAggregation) {
 
-		ReverseNestedAggregationBuilder reverseNestedAggregationBuilder =
-			AggregationBuilders.reverseNested(
-				reverseNestedAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		if (reverseNestedAggregation.getPath() != null) {
-			reverseNestedAggregationBuilder.path(
-				reverseNestedAggregation.getPath());
-		}
+		co.elastic.clients.elasticsearch._types.aggregations.
+			ReverseNestedAggregation.Builder reverseNestedAggregationBuilder =
+				AggregationBuilders.reverseNested();
 
-		_assembleSubaggregations(
-			reverseNestedAggregation, reverseNestedAggregationBuilder);
+		reverseNestedAggregationBuilder.path(
+			reverseNestedAggregation.getPath());
 
-		return reverseNestedAggregationBuilder;
+		return _translateChildAggregations(
+			reverseNestedAggregation,
+			aggregationBuilder.reverseNested(
+				reverseNestedAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(SamplerAggregation samplerAggregation) {
-		SamplerAggregationBuilder samplerAggregationBuilder =
-			AggregationBuilders.sampler(samplerAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(SamplerAggregation samplerAggregation) {
 
-		if (samplerAggregation.getShardSize() != null) {
-			samplerAggregationBuilder.shardSize(
-				samplerAggregation.getShardSize());
-		}
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assembleSubaggregations(samplerAggregation, samplerAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.SamplerAggregation.
+			Builder samplerAggregationBuilder = AggregationBuilders.sampler();
 
-		return samplerAggregationBuilder;
+		SetterUtil.setNotNullInteger(
+			samplerAggregationBuilder::shardSize,
+			samplerAggregation.getShardSize());
+
+		return _translateChildAggregations(
+			samplerAggregation,
+			aggregationBuilder.sampler(samplerAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		ScriptedMetricAggregation scriptedMetricAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(ScriptedMetricAggregation scriptedMetricAggregation) {
 
-		ScriptedMetricAggregationBuilder scriptedMetricAggregationBuilder =
-			AggregationBuilders.scriptedMetric(
-				scriptedMetricAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		if (scriptedMetricAggregation.getCombineScript() != null) {
-			Script elasticsearchCombineScript = _scriptTranslator.translate(
-				scriptedMetricAggregation.getCombineScript());
+		co.elastic.clients.elasticsearch._types.aggregations.
+			ScriptedMetricAggregation.Builder scriptedMetricAggregationBuilder =
+				AggregationBuilders.scriptedMetric();
 
-			scriptedMetricAggregationBuilder.combineScript(
-				elasticsearchCombineScript);
-		}
-
-		if (scriptedMetricAggregation.getInitScript() != null) {
-			Script elasticsearchInitScript = _scriptTranslator.translate(
-				scriptedMetricAggregation.getInitScript());
-
-			scriptedMetricAggregationBuilder.initScript(
-				elasticsearchInitScript);
-		}
-
-		if (scriptedMetricAggregation.getMapScript() != null) {
-			Script elasticsearchMapScript = _scriptTranslator.translate(
-				scriptedMetricAggregation.getMapScript());
-
-			scriptedMetricAggregationBuilder.mapScript(elasticsearchMapScript);
-		}
-
-		if (scriptedMetricAggregation.getReduceScript() != null) {
-			Script elasticsearchReduceScript = _scriptTranslator.translate(
-				scriptedMetricAggregation.getReduceScript());
-
-			scriptedMetricAggregationBuilder.reduceScript(
-				elasticsearchReduceScript);
-		}
+		SetterUtil.setNotNullScript(
+			scriptedMetricAggregationBuilder::combineScript,
+			scriptedMetricAggregation.getCombineScript());
+		SetterUtil.setNotNullScript(
+			scriptedMetricAggregationBuilder::initScript,
+			scriptedMetricAggregation.getInitScript());
+		SetterUtil.setNotNullScript(
+			scriptedMetricAggregationBuilder::mapScript,
+			scriptedMetricAggregation.getMapScript());
 
 		scriptedMetricAggregationBuilder.params(
-			scriptedMetricAggregation.getParameters());
+			ConversionUtil.toJsonDataMap(
+				scriptedMetricAggregation.getParameters()));
 
-		_assembleSubaggregations(
-			scriptedMetricAggregation, scriptedMetricAggregationBuilder);
+		SetterUtil.setNotNullScript(
+			scriptedMetricAggregationBuilder::reduceScript,
+			scriptedMetricAggregation.getReduceScript());
 
-		return scriptedMetricAggregationBuilder;
+		return _translateChildAggregations(
+			scriptedMetricAggregation,
+			aggregationBuilder.scriptedMetric(
+				scriptedMetricAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		SignificantTermsAggregation significantTermsAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(SignificantTermsAggregation significantTermsAggregation) {
 
-		SignificantTermsAggregationBuilder significantTermsAggregationBuilder =
-			AggregationBuilders.significantTerms(
-				significantTermsAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.
+			SignificantTermsAggregation.Builder
+				significantTermsAggregationBuilder =
+					AggregationBuilders.significantTerms();
+
+		setNotNullQuery(
+			significantTermsAggregationBuilder::backgroundFilter,
+			significantTermsAggregation.getBackgroundFilterQuery());
+
+		if (significantTermsAggregation.getExecutionHint() != null) {
+			significantTermsAggregationBuilder.executionHint(
+				_translateExecutionHint(
+					significantTermsAggregation.getExecutionHint()));
+		}
 
 		significantTermsAggregationBuilder.field(
 			significantTermsAggregation.getField());
 
-		if (significantTermsAggregation.getBackgroundFilterQuery() != null) {
-			significantTermsAggregationBuilder.backgroundFilter(
-				_queryTranslator.translate(
-					significantTermsAggregation.getBackgroundFilterQuery()));
-		}
-
-		if (significantTermsAggregation.getExecutionHint() != null) {
-			significantTermsAggregationBuilder.executionHint(
-				significantTermsAggregation.getExecutionHint());
-		}
-
 		if (significantTermsAggregation.getIncludeExcludeClause() != null) {
-			significantTermsAggregationBuilder.includeExclude(
-				_translate(
-					significantTermsAggregation.getIncludeExcludeClause()));
+			IncludeExcludeClause includeExcludeClause =
+				significantTermsAggregation.getIncludeExcludeClause();
+
+			if (includeExcludeClause.getExcludeRegex() != null) {
+				significantTermsAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsExclude -> termsExclude.regexp(
+							includeExcludeClause.getExcludeRegex())));
+			}
+			else if (includeExcludeClause.getExcludedValues() != null) {
+				significantTermsAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsExclude -> termsExclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getExcludedValues()))));
+			}
+
+			if (includeExcludeClause.getIncludedValues() != null) {
+				significantTermsAggregationBuilder.include(
+					Arrays.asList(includeExcludeClause.getIncludedValues()));
+			}
 		}
 
-		if (significantTermsAggregation.getMinDocCount() != null) {
-			significantTermsAggregationBuilder.minDocCount(
-				significantTermsAggregation.getMinDocCount());
-		}
-
-		if (significantTermsAggregation.getShardMinDocCount() != null) {
-			significantTermsAggregationBuilder.shardMinDocCount(
-				significantTermsAggregation.getShardMinDocCount());
-		}
-
-		if (significantTermsAggregation.getShardSize() != null) {
-			significantTermsAggregationBuilder.shardSize(
-				significantTermsAggregation.getShardSize());
-		}
-
-		if (significantTermsAggregation.getSize() != null) {
-			significantTermsAggregationBuilder.size(
-				significantTermsAggregation.getSize());
-		}
+		SetterUtil.setNotNullLong(
+			significantTermsAggregationBuilder::minDocCount,
+			significantTermsAggregation.getMinDocCount());
+		SetterUtil.setNotNullLong(
+			significantTermsAggregationBuilder::shardMinDocCount,
+			significantTermsAggregation.getShardMinDocCount());
+		SetterUtil.setNotNullInteger(
+			significantTermsAggregationBuilder::shardSize,
+			significantTermsAggregation.getShardSize());
 
 		if (significantTermsAggregation.getSignificanceHeuristic() != null) {
-			significantTermsAggregationBuilder.significanceHeuristic(
-				_translate(
-					significantTermsAggregation.getSignificanceHeuristic()));
+			SignificanceHeuristic significanceHeuristic =
+				significantTermsAggregation.getSignificanceHeuristic();
+
+			if (significanceHeuristic instanceof
+					ChiSquareSignificanceHeuristic) {
+
+				significantTermsAggregationBuilder.chiSquare(
+					_translateChiSquareHeuristic(
+						(ChiSquareSignificanceHeuristic)significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						GNDSignificanceHeuristic) {
+
+				significantTermsAggregationBuilder.gnd(
+					_translateGNDSignificanceHeuristic(
+						(GNDSignificanceHeuristic)significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						MutualInformationSignificanceHeuristic) {
+
+				significantTermsAggregationBuilder.mutualInformation(
+					_translateMutualInformationSignificanceHeuristic(
+						(MutualInformationSignificanceHeuristic)
+							significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						PercentageScoreSignificanceHeuristic) {
+
+				significantTermsAggregationBuilder.percentage(
+					new PercentageScoreHeuristic());
+			}
+			else if (significanceHeuristic instanceof
+						ScriptSignificanceHeuristic) {
+
+				significantTermsAggregationBuilder.scriptHeuristic(
+					_translateScriptSignificanceHeuristic(
+						(ScriptSignificanceHeuristic)significanceHeuristic));
+			}
 		}
 
-		_assemble(
-			significantTermsAggregation, significantTermsAggregationBuilder);
+		SetterUtil.setNotNullInteger(
+			significantTermsAggregationBuilder::size,
+			significantTermsAggregation.getSize());
 
-		return significantTermsAggregationBuilder;
+		return _translateChildAggregations(
+			significantTermsAggregation,
+			aggregationBuilder.significantTerms(
+				significantTermsAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		SignificantTextAggregation significantTextAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(SignificantTextAggregation significantTextAggregation) {
 
-		SignificantTextAggregationBuilder significantTextAggregationBuilder =
-			AggregationBuilders.significantText(
-				significantTextAggregation.getName(),
-				significantTextAggregation.getField());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		significantTextAggregationBuilder.bucketCountThresholds();
+		co.elastic.clients.elasticsearch._types.aggregations.
+			SignificantTextAggregation.Builder
+				significantTextAggregationBuilder =
+					AggregationBuilders.significantText();
 
-		if (significantTextAggregation.getBackgroundFilterQuery() != null) {
-			significantTextAggregationBuilder.backgroundFilter(
-				_queryTranslator.translate(
-					significantTextAggregation.getBackgroundFilterQuery()));
+		setNotNullQuery(
+			significantTextAggregationBuilder::backgroundFilter,
+			significantTextAggregation.getBackgroundFilterQuery());
+
+		if (significantTextAggregation.getExecutionHint() != null) {
+			significantTextAggregationBuilder.executionHint(
+				_translateExecutionHint(
+					significantTextAggregation.getExecutionHint()));
 		}
 
-		if (significantTextAggregation.getFilterDuplicateText() != null) {
-			significantTextAggregationBuilder.filterDuplicateText(
-				significantTextAggregation.getFilterDuplicateText());
-		}
+		significantTextAggregationBuilder.field(
+			significantTextAggregation.getField());
+
+		SetterUtil.setNotNullBoolean(
+			significantTextAggregationBuilder::filterDuplicateText,
+			significantTextAggregation.getFilterDuplicateText());
 
 		if (significantTextAggregation.getIncludeExcludeClause() != null) {
-			significantTextAggregationBuilder.includeExclude(
-				_translate(
-					significantTextAggregation.getIncludeExcludeClause()));
+			IncludeExcludeClause includeExcludeClause =
+				significantTextAggregation.getIncludeExcludeClause();
+
+			if (includeExcludeClause.getExcludeRegex() != null) {
+				significantTextAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsExclude -> termsExclude.regexp(
+							includeExcludeClause.getExcludeRegex())));
+			}
+			else if (includeExcludeClause.getExcludedValues() != null) {
+				significantTextAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsExclude -> termsExclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getExcludedValues()))));
+			}
+
+			if (includeExcludeClause.getIncludedValues() != null) {
+				significantTextAggregationBuilder.include(
+					Arrays.asList(includeExcludeClause.getIncludedValues()));
+			}
 		}
 
-		if (significantTextAggregation.getMinDocCount() != null) {
-			significantTextAggregationBuilder.minDocCount(
-				significantTextAggregation.getMinDocCount());
-		}
-
-		if (significantTextAggregation.getShardMinDocCount() != null) {
-			significantTextAggregationBuilder.shardMinDocCount(
-				significantTextAggregation.getShardMinDocCount());
-		}
-
-		if (significantTextAggregation.getShardSize() != null) {
-			significantTextAggregationBuilder.shardSize(
-				significantTextAggregation.getShardSize());
-		}
-
-		if (significantTextAggregation.getSize() != null) {
-			significantTextAggregationBuilder.size(
-				significantTextAggregation.getSize());
-		}
+		SetterUtil.setNotNullLong(
+			significantTextAggregationBuilder::minDocCount,
+			significantTextAggregation.getMinDocCount());
+		SetterUtil.setNotNullLong(
+			significantTextAggregationBuilder::shardMinDocCount,
+			significantTextAggregation.getShardMinDocCount());
+		SetterUtil.setNotNullInteger(
+			significantTextAggregationBuilder::shardSize,
+			significantTextAggregation.getShardSize());
 
 		if (significantTextAggregation.getSignificanceHeuristic() != null) {
-			significantTextAggregationBuilder.significanceHeuristic(
-				_translate(
-					significantTextAggregation.getSignificanceHeuristic()));
+			SignificanceHeuristic significanceHeuristic =
+				significantTextAggregation.getSignificanceHeuristic();
+
+			if (significanceHeuristic instanceof
+					ChiSquareSignificanceHeuristic) {
+
+				significantTextAggregationBuilder.chiSquare(
+					_translateChiSquareHeuristic(
+						(ChiSquareSignificanceHeuristic)significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						GNDSignificanceHeuristic) {
+
+				significantTextAggregationBuilder.gnd(
+					_translateGNDSignificanceHeuristic(
+						(GNDSignificanceHeuristic)significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						MutualInformationSignificanceHeuristic) {
+
+				significantTextAggregationBuilder.mutualInformation(
+					_translateMutualInformationSignificanceHeuristic(
+						(MutualInformationSignificanceHeuristic)
+							significanceHeuristic));
+			}
+			else if (significanceHeuristic instanceof
+						PercentageScoreSignificanceHeuristic) {
+
+				significantTextAggregationBuilder.percentage(
+					new PercentageScoreHeuristic());
+			}
+			else if (significanceHeuristic instanceof
+						ScriptSignificanceHeuristic) {
+
+				significantTextAggregationBuilder.scriptHeuristic(
+					_translateScriptSignificanceHeuristic(
+						(ScriptSignificanceHeuristic)significanceHeuristic));
+			}
 		}
 
-		if (ListUtil.isNotEmpty(significantTextAggregation.getSourceFields())) {
-			significantTextAggregationBuilder.sourceFieldNames(
-				significantTextAggregation.getSourceFields());
-		}
+		SetterUtil.setNotNullInteger(
+			significantTextAggregationBuilder::size,
+			significantTextAggregation.getSize());
+		SetterUtil.setNotEmptyStringList(
+			significantTextAggregationBuilder::sourceFields,
+			significantTextAggregation.getSourceFields());
 
-		_assembleSubaggregations(
-			significantTextAggregation, significantTextAggregationBuilder);
-
-		return significantTextAggregationBuilder;
+		return _translateChildAggregations(
+			significantTextAggregation,
+			aggregationBuilder.significantText(
+				significantTextAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(StatsAggregation statsAggregation) {
-		StatsAggregationBuilder statsAggregationBuilder =
-			AggregationBuilders.stats(statsAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(StatsAggregation statsAggregation) {
 
-		_assemble(statsAggregation, statsAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return statsAggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.StatsAggregation.
+			Builder statsAggregationBuilder = AggregationBuilders.stats();
+
+		statsAggregationBuilder.field(statsAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			statsAggregationBuilder::missing, statsAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			statsAggregationBuilder::script, statsAggregation.getScript());
+
+		return _translateChildAggregations(
+			statsAggregation,
+			aggregationBuilder.stats(statsAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(SumAggregation sumAggregation) {
-		SumAggregationBuilder sumAggregationBuilder = AggregationBuilders.sum(
-			sumAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(SumAggregation sumAggregation) {
 
-		_assemble(sumAggregation, sumAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		return sumAggregationBuilder;
+		co.elastic.clients.elasticsearch._types.aggregations.SumAggregation.
+			Builder sumAggregationBuilder = AggregationBuilders.sum();
+
+		sumAggregationBuilder.field(sumAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			sumAggregationBuilder::missing, sumAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			sumAggregationBuilder::script, sumAggregation.getScript());
+
+		return _translateChildAggregations(
+			sumAggregation,
+			aggregationBuilder.sum(sumAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(TermsAggregation termsAggregation) {
-		TermsAggregationBuilder termsAggregationBuilder =
-			AggregationBuilders.terms(termsAggregation.getName());
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(TermsAggregation termsAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.TermsAggregation.
+			Builder termsAggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					TermsAggregation.Builder();
 
 		if (termsAggregation.getCollectionMode() != null) {
-			CollectionMode collectionMode =
-				termsAggregation.getCollectionMode();
-
-			if (collectionMode == CollectionMode.BREADTH_FIRST) {
-				termsAggregationBuilder.collectMode(
-					Aggregator.SubAggCollectionMode.BREADTH_FIRST);
-			}
-			else if (collectionMode == CollectionMode.DEPTH_FIRST) {
-				termsAggregationBuilder.collectMode(
-					Aggregator.SubAggCollectionMode.DEPTH_FIRST);
-			}
+			termsAggregationBuilder.collectMode(
+				_translateCollectMode(termsAggregation.getCollectionMode()));
 		}
 
 		if (termsAggregation.getExecutionHint() != null) {
 			termsAggregationBuilder.executionHint(
-				termsAggregation.getExecutionHint());
+				_translateExecutionHint(termsAggregation.getExecutionHint()));
 		}
+
+		termsAggregationBuilder.field(termsAggregation.getField());
+
+		SetterUtil.setNotNullInteger(
+			termsAggregationBuilder::minDocCount,
+			termsAggregation.getMinDocCount());
+		SetterUtil.setNotNullFieldValue(
+			termsAggregationBuilder::missing, termsAggregation.getMissing());
 
 		if (termsAggregation.getIncludeExcludeClause() != null) {
-			termsAggregationBuilder.includeExclude(
-				_translate(termsAggregation.getIncludeExcludeClause()));
-		}
+			IncludeExcludeClause includeExcludeClause =
+				termsAggregation.getIncludeExcludeClause();
 
-		if (termsAggregation.getMinDocCount() != null) {
-			termsAggregationBuilder.minDocCount(
-				termsAggregation.getMinDocCount());
-		}
+			if (includeExcludeClause.getExcludeRegex() != null) {
+				termsAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsExclude -> termsExclude.regexp(
+							includeExcludeClause.getExcludeRegex())));
+			}
+			else if (includeExcludeClause.getExcludedValues() != null) {
+				termsAggregationBuilder.exclude(
+					TermsExclude.of(
+						termsInclude -> termsInclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getExcludedValues()))));
+			}
 
-		if (ListUtil.isNotEmpty(termsAggregation.getOrders())) {
-			List<BucketOrder> bucketOrders = _translate(
-				termsAggregation.getOrders());
-
-			termsAggregationBuilder.order(bucketOrders);
-		}
-
-		if (termsAggregation.getShardMinDocCount() != null) {
-			termsAggregationBuilder.shardMinDocCount(
-				termsAggregation.getShardMinDocCount());
-		}
-
-		if (termsAggregation.getShardSize() != null) {
-			termsAggregationBuilder.shardSize(termsAggregation.getShardSize());
-		}
-
-		if (termsAggregation.getShowTermDocCountError() != null) {
-			termsAggregationBuilder.showTermDocCountError(
-				termsAggregation.getShowTermDocCountError());
-		}
-
-		if (termsAggregation.getSize() != null) {
-			termsAggregationBuilder.size(termsAggregation.getSize());
-		}
-
-		_assemble(termsAggregation, termsAggregationBuilder);
-
-		return termsAggregationBuilder;
-	}
-
-	@Override
-	public AggregationBuilder visit(TopHitsAggregation topHitsAggregation) {
-		TopHitsAggregationBuilder topHitsAggregationBuilder =
-			AggregationBuilders.topHits(topHitsAggregation.getName());
-
-		if (topHitsAggregation.getExplain() != null) {
-			topHitsAggregationBuilder.explain(topHitsAggregation.getExplain());
-		}
-
-		if (ListUtil.isNotEmpty(topHitsAggregation.getSelectedFields())) {
-			List<String> selectedFields =
-				topHitsAggregation.getSelectedFields();
-
-			selectedFields.forEach(topHitsAggregationBuilder::docValueField);
-		}
-
-		if (topHitsAggregation.getFetchSource() != null) {
-			topHitsAggregationBuilder.fetchSource(
-				topHitsAggregation.getFetchSource());
-
-			if (topHitsAggregation.getFetchSource() &&
-				((topHitsAggregation.getFetchSourceInclude() != null) ||
-				 (topHitsAggregation.getFetchSourceExclude() != null))) {
-
-				topHitsAggregationBuilder.fetchSource(
-					topHitsAggregation.getFetchSourceInclude(),
-					topHitsAggregation.getFetchSourceExclude());
+			if (includeExcludeClause.getIncludeRegex() != null) {
+				termsAggregationBuilder.include(
+					TermsInclude.of(
+						termsInclude -> termsInclude.regexp(
+							includeExcludeClause.getIncludeRegex())));
+			}
+			else if (includeExcludeClause.getIncludedValues() != null) {
+				termsAggregationBuilder.include(
+					TermsInclude.of(
+						termsInclude -> termsInclude.terms(
+							Arrays.asList(
+								includeExcludeClause.getIncludedValues()))));
 			}
 		}
 
-		if (topHitsAggregation.getFrom() != null) {
-			topHitsAggregationBuilder.from(topHitsAggregation.getFrom());
+		if (ListUtil.isNotEmpty(termsAggregation.getOrders())) {
+			termsAggregationBuilder.order(
+				_translateOrders(termsAggregation.getOrders()));
 		}
+
+		SetterUtil.setNotNullScript(
+			termsAggregationBuilder::script, termsAggregation.getScript());
+		SetterUtil.setNotNullInteger(
+			termsAggregationBuilder::shardSize,
+			termsAggregation.getShardSize());
+		SetterUtil.setNotNullBoolean(
+			termsAggregationBuilder::showTermDocCountError,
+			termsAggregation.getShowTermDocCountError());
+		SetterUtil.setNotNullInteger(
+			termsAggregationBuilder::size, termsAggregation.getSize());
+
+		return _translateChildAggregations(
+			termsAggregation,
+			aggregationBuilder.terms(termsAggregationBuilder.build()));
+	}
+
+	@Override
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(TopHitsAggregation topHitsAggregation) {
+
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
+
+		co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregation.
+			Builder topHitsAggregationBuilder = AggregationBuilders.topHits();
+
+		SetterUtil.setNotEmptyStringList(
+			topHitsAggregationBuilder::docvalueFields,
+			topHitsAggregation.getSelectedFields());
+		SetterUtil.setNotNullBoolean(
+			topHitsAggregationBuilder::explain,
+			topHitsAggregation.getExplain());
+		SetterUtil.setNotNullInteger(
+			topHitsAggregationBuilder::from, topHitsAggregation.getFrom());
 
 		if (topHitsAggregation.getHighlight() != null) {
-			HighlightBuilder highlightBuilder = _highlightTranslator.translate(
-				topHitsAggregation.getHighlight(), _queryTranslator);
-
-			topHitsAggregationBuilder.highlighter(highlightBuilder);
+			topHitsAggregationBuilder.highlight(
+				_highlightTranslator.translate(
+					topHitsAggregation.getHighlight(), _queryTranslator));
 		}
 
-		if (topHitsAggregation.getScriptFields() != null) {
-			List<ScriptField> scriptFields =
-				topHitsAggregation.getScriptFields();
+		ListUtil.isNotEmptyForEach(
+			topHitsAggregation.getScriptFields(),
+			scriptField -> topHitsAggregationBuilder.scriptFields(
+				scriptField.getField(),
+				co.elastic.clients.elasticsearch._types.ScriptField.of(
+					elasticsearchScriptField ->
+						elasticsearchScriptField.ignoreFailure(
+							scriptField.isIgnoreFailure()
+						).script(
+							scriptTranslator.translate(scriptField.getScript())
+						))));
 
-			List<SearchSourceBuilder.ScriptField>
-				searchSourceBuilderScriptFields = new ArrayList<>(
-					scriptFields.size());
+		SetterUtil.setNotNullInteger(
+			topHitsAggregationBuilder::size, topHitsAggregation.getSize());
 
-			scriptFields.forEach(
-				scriptField -> {
-					Script script = _scriptTranslator.translate(
-						scriptField.getScript());
+		if (topHitsAggregation.getFetchSource() != null) {
+			SourceConfig.Builder sourceConfigBuilder =
+				new SourceConfig.Builder();
 
-					SearchSourceBuilder.ScriptField
-						searchSourceBuilderScriptField =
-							new SearchSourceBuilder.ScriptField(
-								scriptField.getField(), script,
-								scriptField.isIgnoreFailure());
+			sourceConfigBuilder.fetch(topHitsAggregation.getFetchSource());
 
-					searchSourceBuilderScriptFields.add(
-						searchSourceBuilderScriptField);
-				});
+			SourceFilter.Builder sourceFilterbuilder =
+				SourceConfigBuilders.filter();
 
-			topHitsAggregationBuilder.scriptFields(
-				searchSourceBuilderScriptFields);
+			if (topHitsAggregation.getFetchSourceInclude() != null) {
+				sourceFilterbuilder.includes(
+					Arrays.asList(topHitsAggregation.getFetchSourceInclude()));
+			}
+
+			if (topHitsAggregation.getFetchSourceExclude() != null) {
+				sourceFilterbuilder.includes(
+					Arrays.asList(topHitsAggregation.getFetchSourceExclude()));
+			}
+
+			sourceConfigBuilder.filter(sourceFilterbuilder.build());
+
+			topHitsAggregationBuilder.source(sourceConfigBuilder.build());
 		}
 
-		if (topHitsAggregation.getSize() != null) {
-			topHitsAggregationBuilder.size(topHitsAggregation.getSize());
-		}
+		ListUtil.isNotEmptyForEach(
+			topHitsAggregation.getSortFields(),
+			sortField -> topHitsAggregationBuilder.sort(
+				_sortFieldTranslator.translate(sortField)));
 
-		if (ListUtil.isNotEmpty(topHitsAggregation.getSortFields())) {
-			List<Sort> sorts = topHitsAggregation.getSortFields();
+		SetterUtil.setNotNullBoolean(
+			topHitsAggregationBuilder::trackScores,
+			topHitsAggregation.getTrackScores());
+		SetterUtil.setNotNullBoolean(
+			topHitsAggregationBuilder::version,
+			topHitsAggregation.getVersion());
 
-			List<SortBuilder<?>> sortBuilders = new ArrayList<>(sorts.size());
-
-			sorts.forEach(
-				sort -> sortBuilders.add(_sortFieldTranslator.translate(sort)));
-
-			topHitsAggregationBuilder.sorts(sortBuilders);
-		}
-
-		if (topHitsAggregation.getTrackScores() != null) {
-			topHitsAggregationBuilder.trackScores(
-				topHitsAggregation.getTrackScores());
-		}
-
-		if (topHitsAggregation.getVersion() != null) {
-			topHitsAggregationBuilder.version(topHitsAggregation.getVersion());
-		}
-
-		return topHitsAggregationBuilder;
+		return _translateChildAggregations(
+			topHitsAggregation,
+			aggregationBuilder.topHits(topHitsAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		ValueCountAggregation valueCountAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(ValueCountAggregation valueCountAggregation) {
 
-		ValueCountAggregationBuilder valueCountAggregationBuilder =
-			AggregationBuilders.count(valueCountAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		_assemble(valueCountAggregation, valueCountAggregationBuilder);
+		co.elastic.clients.elasticsearch._types.aggregations.
+			ValueCountAggregation.Builder valueCountAggregationBuilder =
+				AggregationBuilders.valueCount();
 
-		return valueCountAggregationBuilder;
+		valueCountAggregationBuilder.field(valueCountAggregation.getField());
+
+		SetterUtil.setNotNullFieldValue(
+			valueCountAggregationBuilder::missing,
+			valueCountAggregation.getMissing());
+		SetterUtil.setNotNullScript(
+			valueCountAggregationBuilder::script,
+			valueCountAggregation.getScript());
+
+		return _translateChildAggregations(
+			valueCountAggregation,
+			aggregationBuilder.valueCount(
+				valueCountAggregationBuilder.build()));
 	}
 
 	@Override
-	public AggregationBuilder visit(
-		WeightedAvgAggregation weightedAvgAggregation) {
+	public co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		visit(WeightedAvgAggregation weightedAvgAggregation) {
 
-		WeightedAvgAggregationBuilder weightedAvgAggregationBuilder =
-			AggregationBuilders.weightedAvg(weightedAvgAggregation.getName());
+		co.elastic.clients.elasticsearch._types.aggregations.Aggregation.Builder
+			aggregationBuilder =
+				new co.elastic.clients.elasticsearch._types.aggregations.
+					Aggregation.Builder();
 
-		MultiValuesSourceFieldConfig valueMultiValuesSourceFieldConfig =
-			_getMultiValuesSourceFieldConfig(
+		WeightedAverageAggregation.Builder weightedAverageAggregationBuilder =
+			AggregationBuilders.weightedAvg();
+
+		SetterUtil.setNotBlankString(
+			weightedAverageAggregationBuilder::format,
+			weightedAvgAggregation.getFormat());
+
+		weightedAverageAggregationBuilder.value(
+			_getWeightedAverageValue(
 				weightedAvgAggregation.getValueField(),
 				weightedAvgAggregation.getValueMissing(),
-				weightedAvgAggregation.getValueScript());
-
-		weightedAvgAggregationBuilder.value(valueMultiValuesSourceFieldConfig);
-
-		MultiValuesSourceFieldConfig weightMultiValuesSourceFieldConfig =
-			_getMultiValuesSourceFieldConfig(
-				weightedAvgAggregation.getWeightField(),
-				weightedAvgAggregation.getWeightMissing(),
-				weightedAvgAggregation.getWeightScript());
-
-		weightedAvgAggregationBuilder.weight(
-			weightMultiValuesSourceFieldConfig);
-
-		if (weightedAvgAggregation.getFormat() != null) {
-			weightedAvgAggregationBuilder.format(
-				weightedAvgAggregation.getFormat());
-		}
+				weightedAvgAggregation.getValueScript()));
 
 		if (weightedAvgAggregation.getValueType() != null) {
-			weightedAvgAggregationBuilder.userValueTypeHint(
-				_translate(weightedAvgAggregation.getValueType()));
+			weightedAverageAggregationBuilder.valueType(
+				translateValueType(weightedAvgAggregation.getValueType()));
 		}
 
-		_assembleSubaggregations(
-			weightedAvgAggregation, weightedAvgAggregationBuilder);
+		weightedAverageAggregationBuilder.weight(
+			_getWeightedAverageValue(
+				weightedAvgAggregation.getWeightField(),
+				weightedAvgAggregation.getWeightMissing(),
+				weightedAvgAggregation.getWeightScript()));
 
-		return weightedAvgAggregationBuilder;
+		return _translateChildAggregations(
+			weightedAvgAggregation,
+			aggregationBuilder.weightedAvg(
+				weightedAverageAggregationBuilder.build()));
 	}
 
-	protected void populateRangeAggregationBuilder(
-		RangeAggregation rangeAggregation,
-		AbstractRangeBuilder abstractRangeBuilder) {
+	protected final ScriptTranslator scriptTranslator = new ScriptTranslator();
 
-		if (rangeAggregation.getFormat() != null) {
-			abstractRangeBuilder.format(rangeAggregation.getFormat());
+	private AggregationRange _createAggregationRange(
+		String from, String key, String to) {
+
+		AggregationRange.Builder builder = new AggregationRange.Builder();
+
+		if (!Validator.isBlank(from)) {
+			builder.from(from);
 		}
 
-		if (rangeAggregation.getKeyed() != null) {
-			abstractRangeBuilder.keyed(rangeAggregation.getKeyed());
+		if (!Validator.isBlank(key)) {
+			builder.key(key);
 		}
 
-		List<Range> rangeAggregationRanges = rangeAggregation.getRanges();
+		if (!Validator.isBlank(to)) {
+			builder.to(to);
+		}
 
-		rangeAggregationRanges.forEach(
-			rangeAggregationRange -> {
-				RangeAggregator.Range range = new RangeAggregator.Range(
-					rangeAggregationRange.getKey(),
-					rangeAggregationRange.getFrom(),
-					rangeAggregationRange.getFromAsString(),
-					rangeAggregationRange.getTo(),
-					rangeAggregationRange.getToAsString());
-
-				abstractRangeBuilder.addRange(range);
-			});
+		return builder.build();
 	}
 
-	private void _assemble(
-		FieldAggregation fieldAggregation,
-		ValuesSourceAggregationBuilder valuesSourceAggregationBuilder) {
+	private WeightedAverageValue _getWeightedAverageValue(
+		String field, Object missing, Script script) {
 
-		_setField(fieldAggregation, valuesSourceAggregationBuilder);
-		_setMissing(fieldAggregation, valuesSourceAggregationBuilder);
-		_setScript(fieldAggregation, valuesSourceAggregationBuilder);
+		WeightedAverageValue.Builder builder =
+			new WeightedAverageValue.Builder();
 
-		_assembleSubaggregations(
-			fieldAggregation, valuesSourceAggregationBuilder);
+		builder.field(field);
+
+		if (missing != null) {
+			builder.missing(ConversionUtil.toDouble(missing));
+		}
+
+		if (script != null) {
+			builder.script(scriptTranslator.translate(script));
+		}
+
+		return builder.build();
 	}
 
-	private void _assembleSubaggregations(
-		Aggregation aggregation, AggregationBuilder aggregationBuilder) {
+	private co.elastic.clients.elasticsearch._types.aggregations.Aggregation
+		_translateChildAggregations(
+			Aggregation aggregation, ContainerBuilder containerBuilder) {
 
 		for (Aggregation childAggregation :
 				aggregation.getChildrenAggregations()) {
 
-			aggregationBuilder.subAggregation(translate(childAggregation));
+			containerBuilder.aggregations(
+				childAggregation.getName(), translate(childAggregation));
 		}
 
 		for (PipelineAggregation pipelineAggregation :
 				aggregation.getPipelineAggregations()) {
 
-			aggregationBuilder.subAggregation(
+			containerBuilder.aggregations(
+				pipelineAggregation.getName(),
 				_pipelineAggregationTranslator.translate(pipelineAggregation));
 		}
+
+		return containerBuilder.build();
 	}
 
-	private MultiValuesSourceFieldConfig _getMultiValuesSourceFieldConfig(
-		String field, Object missing,
-		com.liferay.portal.search.script.Script script) {
+	private ChiSquareHeuristic _translateChiSquareHeuristic(
+		ChiSquareSignificanceHeuristic chiSquareSignificanceHeuristic) {
 
-		MultiValuesSourceFieldConfig.Builder
-			multiValuesSourceFieldConfigBuilder =
-				new MultiValuesSourceFieldConfig.Builder();
-
-		multiValuesSourceFieldConfigBuilder.setFieldName(field);
-
-		if (missing != null) {
-			multiValuesSourceFieldConfigBuilder.setMissing(missing);
-		}
-
-		if (script != null) {
-			multiValuesSourceFieldConfigBuilder.setScript(
-				_scriptTranslator.translate(script));
-		}
-
-		return multiValuesSourceFieldConfigBuilder.build();
+		return ChiSquareHeuristic.of(
+			chiSquareHeuristic -> chiSquareHeuristic.backgroundIsSuperset(
+				chiSquareSignificanceHeuristic.isBackgroundIsSuperset()
+			).includeNegatives(
+				chiSquareSignificanceHeuristic.isIncludeNegatives()
+			));
 	}
 
-	private void _setField(
-		FieldAggregation fieldAggregation,
-		ValuesSourceAggregationBuilder valuesSourceAggregationBuilder) {
+	private TermsAggregationCollectMode _translateCollectMode(
+		CollectionMode collectionMode) {
 
-		if (fieldAggregation.getField() != null) {
-			valuesSourceAggregationBuilder.field(fieldAggregation.getField());
+		if (collectionMode == CollectionMode.BREADTH_FIRST) {
+			return TermsAggregationCollectMode.BreadthFirst;
 		}
+		else if (collectionMode == CollectionMode.DEPTH_FIRST) {
+			return TermsAggregationCollectMode.DepthFirst;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid collection mode " + collectionMode);
 	}
 
-	private void _setMissing(
-		FieldAggregation fieldAggregation,
-		ValuesSourceAggregationBuilder valuesSourceAggregationBuilder) {
+	private TermsAggregationExecutionHint _translateExecutionHint(
+		String executionHint) {
 
-		if (fieldAggregation.getMissing() != null) {
-			valuesSourceAggregationBuilder.missing(
-				fieldAggregation.getMissing());
+		if (executionHint.equals("global_ordinals")) {
+			return TermsAggregationExecutionHint.GlobalOrdinals;
 		}
+		else if (executionHint.equals("global_ordinals_hash")) {
+			return TermsAggregationExecutionHint.GlobalOrdinalsHash;
+		}
+		else if (executionHint.equals("global_ordinals_low_cardinality")) {
+			return TermsAggregationExecutionHint.GlobalOrdinalsLowCardinality;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid execution hint " + executionHint);
 	}
 
-	private void _setScript(
-		FieldAggregation fieldAggregation,
-		ValuesSourceAggregationBuilder valuesSourceAggregationBuilder) {
+	private GoogleNormalizedDistanceHeuristic
+		_translateGNDSignificanceHeuristic(
+			GNDSignificanceHeuristic gndSignificanceHeuristic) {
 
-		if (fieldAggregation.getScript() != null) {
-			Script elasticsearchScript = _scriptTranslator.translate(
-				fieldAggregation.getScript());
-
-			valuesSourceAggregationBuilder.script(elasticsearchScript);
-		}
+		return GoogleNormalizedDistanceHeuristic.of(
+			googleNormalizedDistanceHeuristic ->
+				googleNormalizedDistanceHeuristic.backgroundIsSuperset(
+					gndSignificanceHeuristic.isBackgroundIsSuperset()));
 	}
 
-	private IncludeExclude _translate(
-		IncludeExcludeClause includeExcludeClause) {
+	private MutualInformationHeuristic
+		_translateMutualInformationSignificanceHeuristic(
+			MutualInformationSignificanceHeuristic
+				mutualInformationSignificanceHeuristic) {
 
-		IncludeExclude includeExclude = null;
-
-		if ((includeExcludeClause.getExcludeRegex() != null) ||
-			(includeExcludeClause.getIncludeRegex() != null)) {
-
-			includeExclude = new IncludeExclude(
-				includeExcludeClause.getIncludeRegex(),
-				includeExcludeClause.getExcludeRegex());
-		}
-		else {
-			includeExclude = new IncludeExclude(
-				includeExcludeClause.getIncludedValues(),
-				includeExcludeClause.getExcludedValues());
-		}
-
-		return includeExclude;
+		return MutualInformationHeuristic.of(
+			mutualInformationHeuristic ->
+				mutualInformationHeuristic.backgroundIsSuperset(
+					mutualInformationSignificanceHeuristic.
+						isBackgroundIsSuperset()
+				).includeNegatives(
+					mutualInformationSignificanceHeuristic.isIncludeNegatives()
+				));
 	}
 
-	private List<NamedValue<SortOrder>> _translate(List<Order> orders) {
+	private List<NamedValue<SortOrder>> _translateOrders(List<Order> orders) {
 		List<NamedValue<SortOrder>> sortOrders = new ArrayList<>(orders.size());
 
 		orders.forEach(
 			order -> {
-				NamedValue<SortOrder> sortOrder = _translate(order);
+				NamedValue<SortOrder> sortOrder = _translateOrder(order);
 
 				sortOrders.add(sortOrder);
 			});
@@ -1221,7 +1639,7 @@ public class ElasticsearchAggregationTranslator
 		return sortOrders;
 	}
 
-	private NamedValue<SortOrder> _translate(Order order) {
+	private NamedValue<SortOrder> _translateOrder(Order order) {
 		SortOrder sortOrder;
 
 		if (order.isAscending()) {
@@ -1246,120 +1664,114 @@ public class ElasticsearchAggregationTranslator
 			sortOrder);
 	}
 
-	private org.elasticsearch.search.aggregations.bucket.terms.heuristic.
-		SignificanceHeuristic _translate(
-			SignificanceHeuristic significanceHeuristic) {
+	private ScriptedHeuristic _translateScriptSignificanceHeuristic(
+		ScriptSignificanceHeuristic scriptSignificanceHeuristic) {
 
-		if (significanceHeuristic instanceof ChiSquareSignificanceHeuristic) {
-			ChiSquareSignificanceHeuristic chiSquareSignificanceHeuristic =
-				(ChiSquareSignificanceHeuristic)significanceHeuristic;
-
-			return new ChiSquare(
-				chiSquareSignificanceHeuristic.isIncludeNegatives(),
-				chiSquareSignificanceHeuristic.isBackgroundIsSuperset());
-		}
-
-		if (significanceHeuristic instanceof GNDSignificanceHeuristic) {
-			GNDSignificanceHeuristic gndSignificanceHeuristic =
-				(GNDSignificanceHeuristic)significanceHeuristic;
-
-			return new GND(gndSignificanceHeuristic.isBackgroundIsSuperset());
-		}
-
-		if (significanceHeuristic instanceof JLHScoreSignificanceHeuristic) {
-			return new JLHScore();
-		}
-
-		if (significanceHeuristic instanceof
-				MutualInformationSignificanceHeuristic) {
-
-			MutualInformationSignificanceHeuristic
-				mutualInformationSignificanceHeuristic =
-					(MutualInformationSignificanceHeuristic)
-						significanceHeuristic;
-
-			return new MutualInformation(
-				mutualInformationSignificanceHeuristic.isIncludeNegatives(),
-				mutualInformationSignificanceHeuristic.
-					isBackgroundIsSuperset());
-		}
-
-		if (significanceHeuristic instanceof
-				PercentageScoreSignificanceHeuristic) {
-
-			return new PercentageScore();
-		}
-
-		if (significanceHeuristic instanceof ScriptSignificanceHeuristic) {
-			ScriptSignificanceHeuristic scriptSignificanceHeuristic =
-				(ScriptSignificanceHeuristic)significanceHeuristic;
-
-			Script script = _scriptTranslator.translate(
-				scriptSignificanceHeuristic.getScript());
-
-			return new ScriptHeuristic(script);
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid significance heuristic: " + significanceHeuristic);
+		return ScriptedHeuristic.of(
+			scriptedHeuristic -> scriptedHeuristic.script(
+				scriptTranslator.translate(
+					scriptSignificanceHeuristic.getScript())));
 	}
 
-	private org.elasticsearch.search.aggregations.support.ValueType _translate(
-		ValueType valueType) {
+	protected void setNotNullQuery(Consumer<Query> consumer, Query query) {
+		if (query != null) {
+			consumer.accept(new Query(_queryTranslator.translate(query)));
+		}
+	}
+
+	protected void setRanges(
+		co.elastic.clients.elasticsearch._types.aggregations.
+			DateRangeAggregation.Builder builder,
+		DateRangeAggregation dateRangeAggregation) {
+
+		List<Range> ranges = dateRangeAggregation.getRanges();
+
+		ranges.forEach(
+			range -> builder.ranges(
+				DateRangeExpression.of(
+					dateRangeExpression -> dateRangeExpression.from(
+						ConversionUtil.toFieldDateMath(
+							range.getFromAsString(), range.getFrom())
+					).key(
+						range.getKey()
+					).to(
+						ConversionUtil.toFieldDateMath(
+							range.getToAsString(), range.getTo())
+					))));
+	}
+
+	protected void setRanges(
+		co.elastic.clients.elasticsearch._types.aggregations.RangeAggregation.
+			Builder builder,
+		RangeAggregation rangeAggregation) {
+
+		List<Range> ranges = rangeAggregation.getRanges();
+
+		ranges.forEach(
+			range -> builder.ranges(
+				_createAggregationRange(
+					ElasticsearchStringUtil.getFirstStringValue(
+						range::getFromAsString, range::getFrom),
+					range.getKey(),
+					ElasticsearchStringUtil.getFirstStringValue(
+						range::getToAsString, range::getTo))));
+	}
+
+	protected co.elastic.clients.elasticsearch._types.aggregations.ValueType
+		translateValueType(ValueType valueType) {
 
 		if (valueType == ValueType.BOOLEAN) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				BOOLEAN;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Boolean;
 		}
 		else if (valueType == ValueType.DATE) {
-			return org.elasticsearch.search.aggregations.support.ValueType.DATE;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Date;
 		}
 		else if (valueType == ValueType.DOUBLE) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				DOUBLE;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Double;
 		}
 		else if (valueType == ValueType.GEOPOINT) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				GEOPOINT;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.GeoPoint;
 		}
 		else if (valueType == ValueType.IP) {
-			return org.elasticsearch.search.aggregations.support.ValueType.IP;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Ip;
 		}
 		else if (valueType == ValueType.LONG) {
-			return org.elasticsearch.search.aggregations.support.ValueType.LONG;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Long;
 		}
 		else if (valueType == ValueType.NUMBER) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				NUMBER;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Number;
 		}
 		else if (valueType == ValueType.NUMERIC) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				NUMERIC;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.Numeric;
 		}
 		else if (valueType == ValueType.STRING) {
-			return org.elasticsearch.search.aggregations.support.ValueType.
-				STRING;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				ValueType.String;
 		}
 
-		throw new IllegalArgumentException(
-			"No available mapping for value type " + valueType);
+		throw new IllegalArgumentException("Invalid value type " + valueType);
 	}
 
-	private final DistanceUnitTranslator _distanceUnitTranslator =
-		new DistanceUnitTranslator();
-	private final GeoDistanceTypeTranslator _geoDistanceTypeTranslator =
-		new GeoDistanceTypeTranslator();
+	private final GeoTranslator _geoTranslator = new GeoTranslator();
 	private final HighlightTranslator _highlightTranslator =
 		new HighlightTranslator();
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
-	private PipelineAggregationTranslator<PipelineAggregationBuilder>
-		_pipelineAggregationTranslator;
+	private PipelineAggregationTranslator
+		<co.elastic.clients.elasticsearch._types.aggregations.Aggregation>
+			_pipelineAggregationTranslator;
 
-	private final QueryTranslator<QueryBuilder> _queryTranslator =
+	private final QueryTranslator<QueryVariant> _queryTranslator =
 		new ElasticsearchQueryTranslator();
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
-	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 
 }

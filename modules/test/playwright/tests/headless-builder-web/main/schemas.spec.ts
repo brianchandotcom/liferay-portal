@@ -697,21 +697,7 @@ testFeatureFlagsEnabled(
 		schemaPage,
 	}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'Schema for My-app2',
-						externalReferenceCode: 'testSchema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'testSchema',
-					},
-				],
-				applicationStatus: 'unpublished',
-				baseURL: 'my-app2',
-				description: 'Unpublished App with schema',
-				externalReferenceCode: 'my-app2',
-				title: 'My-app2',
-			},
+			{...applicationData1, applicationStatus: 'unpublished'},
 			'headless-builder/applications'
 		);
 
@@ -719,7 +705,7 @@ testFeatureFlagsEnabled(
 
 		await headlessBuilderPage.openApplicationAndEdit(application.title);
 		await applicationPage.goToSchemasTab();
-		await schemaPage.goTo('testSchema');
+		await schemaPage.goTo('API Application Schema');
 
 		const objectInput = page.getByLabel(
 			'Object Definition APIApplication is Selected'
@@ -740,21 +726,7 @@ testFeatureFlagsEnabled(
 		schemaPage,
 	}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				apiApplicationToAPISchemas: [
-					{
-						description: 'Schema for My-app2',
-						externalReferenceCode: 'testSchema',
-						mainObjectDefinitionERC: 'L_API_APPLICATION',
-						name: 'testSchema',
-					},
-				],
-				applicationStatus: 'unpublished',
-				baseURL: 'my-app2',
-				description: 'Unpublished App',
-				externalReferenceCode: 'my-app2',
-				title: 'My-app2',
-			},
+			{...applicationData1, applicationStatus: 'unpublished'},
 			'headless-builder/applications'
 		);
 
@@ -762,9 +734,9 @@ testFeatureFlagsEnabled(
 
 		await headlessBuilderPage.openApplicationAndEdit(application.title);
 		await applicationPage.goToSchemasTab();
-		await schemaPage.goTo('testSchema');
+		await schemaPage.goTo('API Application Schema');
 
-		await page.getByLabel('Name').fill('testSchema edited');
+		await page.getByLabel('Name').fill('API Application Schema edited');
 		await page.getByLabel('Description').fill('Description edited');
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -772,7 +744,9 @@ testFeatureFlagsEnabled(
 			page.getByText('API schema changes were saved.')
 		).toBeVisible();
 
-		await expect(page.getByLabel('Name')).toHaveValue('testSchema edited');
+		await expect(page.getByLabel('Name')).toHaveValue(
+			'API Application Schema edited'
+		);
 		await expect(page.getByLabel('Description')).toHaveValue(
 			'Description edited'
 		);

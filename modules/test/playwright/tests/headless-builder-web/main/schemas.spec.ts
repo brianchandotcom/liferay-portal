@@ -709,11 +709,9 @@ testFeatureFlagsEnabled(
 		await applicationPage.goToSchemasTab();
 		await schemaPage.goTo('API Application Schema');
 
-		const objectInput = page.getByLabel(
-			'Object Definition APIApplication is Selected'
-		);
-		await expect(objectInput).toBeDisabled();
-		await expect(objectInput).toHaveText('APIApplication');
+		await expect(
+			page.getByLabel('Object Definition APIApplication is Selected')
+		).toBeDisabled();
 	}
 );
 

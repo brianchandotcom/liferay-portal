@@ -900,6 +900,12 @@ testWithRepeatableFF(
 
 		await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
 
+		// Check that we are adding the accordion fragment
+
+		await expect(
+			page.locator('.lfr-layout-structure-item-basic-component-accordion')
+		).toBeVisible();
+
 		// Add Repeatable Groups
 
 		await page.getByRole('button', {name: 'Add New'}).first().click();

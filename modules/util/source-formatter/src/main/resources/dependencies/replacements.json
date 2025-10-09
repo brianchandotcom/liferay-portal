@@ -3391,6 +3391,19 @@
 	},
 	{
 		"classNames": [
+			"PDFProcessor"
+		],
+		"classStructurePattern": true,
+		"issueKey": "LPD-30560",
+		"newImports": [
+			"com.liferay.document.library.kernel.processor.PDFProcessorUtil"
+		],
+		"newMethods": [
+			"@Override\n\tpublic void generatePreviews() {\n\t\treturn PDFProcessorUtil.getPDFProcessor().generatePreviews();\n\t}"
+		]
+	},
+	{
+		"classNames": [
 			"UserLocalService",
 			"UserLocalServiceUtil",
 			"UserService",

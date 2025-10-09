@@ -99,6 +99,9 @@ describe('DefaultPermissionModalContent', () => {
 		expect(screen.getByTestId('button-cancel')).toBeInTheDocument();
 		expect(screen.getByTestId('button-save')).toBeInTheDocument();
 		expect(
+			screen.queryByTestId('checkbox-propagate')
+		).not.toBeInTheDocument();
+		expect(
 			screen.getByTestId(`row-checkbox-admin_UPDATE3`)
 		).toBeInTheDocument();
 		expect(
@@ -319,6 +322,7 @@ describe('DefaultPermissionModalContent', () => {
 			classExternalReferenceCode: 'ERC1',
 			className: 'com.liferay.depot.model.DepotEntry',
 			closeModal: closeModalFn,
+			isEditAndPropagate: true,
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},
@@ -357,6 +361,7 @@ describe('DefaultPermissionModalContent', () => {
 		});
 
 		expect(screen.getByTestId(`row-checkbox-guest_UPDATE3`)).toBeChecked();
+		expect(screen.getByTestId('button-save')).toBeDisabled();
 
 		await waitFor(() => {
 			screen.getByTestId('checkbox-propagate').click();

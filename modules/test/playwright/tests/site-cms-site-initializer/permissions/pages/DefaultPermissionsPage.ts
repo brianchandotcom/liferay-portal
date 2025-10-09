@@ -12,6 +12,7 @@ export class DefaultPermissionsPage {
 	readonly permissionsModal: Locator;
 	readonly permissionsModalCancelButton: Locator;
 	readonly permissionsModalSaveButton: Locator;
+	readonly propagateCheckbox: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -20,11 +21,15 @@ export class DefaultPermissionsPage {
 			this.permissionsModal.getByTestId('button-cancel');
 		this.permissionsModalSaveButton =
 			this.permissionsModal.getByTestId('button-save');
+		this.propagateCheckbox = this.permissionsModal.getByLabel(
+			'I understand that these changes will also affect existing entities.'
+		);
 	}
 
 	async checkPermissionsAndSave(
 		permissions: Array<{action: string; role: string}>,
-		bulk = false
+		bulk = false,
+		propagate = false
 	) {
 		await expect(this.permissionsModal).toBeVisible();
 
@@ -36,6 +41,12 @@ export class DefaultPermissionsPage {
 				.check();
 		}
 
+		if (propagate) {
+			await expect(this.permissionsModalSaveButton).toBeDisabled();
+
+			await this.propagateCheckbox.check();
+		}
+
 		await this.permissionsModalSaveButton.click();
 
 		if (bulk) {
@@ -45,9 +56,41 @@ export class DefaultPermissionsPage {
 				{type: 'info'}
 			);
 		}
+		else if (propagate) {
+			await waitForAlert(
+				this.page,
+				'Info:Default permissions update action started for all assets. Check the Task Report for details.',
+				{type: 'info'}
+			);
+		}
 		else {
 			await waitForAlert(this.page);
 		}
+	}
+
+	async checkPermissionsAndSavePropagate(
+		permissions: Array<{action: string; role: string}>
+	) {
+		await expect(this.permissionsModal).toBeVisible();
+		for (const permission of permissions) {
+			await this.permissionsModal
+				.getByTestId(
+					`row-checkbox-${permission.role}_${permission.action}`
+				)
+				.check();
+		}
+
+		await expect(this.permissionsModalSaveButton).toBeDisabled();
+
+		await this.propagateCheckbox.check();
+
+		await this.permissionsModalSaveButton.click();
+
+		await waitForAlert(
+			this.page,
+			'Info:Default permissions update action started for all assets. Check the Task Report for details.',
+			{type: 'info'}
+		);
 	}
 
 	async verifyPermissions(

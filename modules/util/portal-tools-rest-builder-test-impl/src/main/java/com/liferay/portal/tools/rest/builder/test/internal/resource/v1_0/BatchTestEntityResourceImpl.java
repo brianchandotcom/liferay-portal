@@ -7,6 +7,7 @@ package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
 import com.liferay.exportimport.kernel.empty.model.EmptyModelManager;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LongWrapper;
@@ -95,20 +96,16 @@ public class BatchTestEntityResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public List<String> getApplicableExternalReferenceCodes(
-				List<String> externalReferenceCodes) {
+			public UnsafeFunction<String, String, Exception>
+				filterApplicableExternalReferenceCode() {
 
-				return transform(
-					externalReferenceCodes,
-					externalReferenceCode -> {
-						if (externalReferenceCode.endsWith(
-								"_FROM_DIFFERENT_DTO")) {
+				return externalReferenceCode -> {
+					if (externalReferenceCode.endsWith("_FROM_DIFFERENT_DTO")) {
+						return null;
+					}
 
-							return null;
-						}
-
-						return externalReferenceCode;
-					});
+					return externalReferenceCode;
+				};
 			}
 
 			@Override

@@ -102,10 +102,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					exportImportDescriptor.getDeletionSystemEventClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
-			List<String> externalReferenceCodes =
-				exportImportDescriptor.getApplicableExternalReferenceCodes(
-					TransformUtil.transform(
-						newPrimaryKeysMap.keySet(), String::valueOf));
+			List<String> externalReferenceCodes = TransformUtil.transform(
+				newPrimaryKeysMap.keySet(),
+				exportImportDescriptor.filterApplicableExternalReferenceCode());
 
 			JSONArray jsonArray = JSONUtil.toJSONArray(
 				externalReferenceCodes,

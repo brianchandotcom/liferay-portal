@@ -126,6 +126,6 @@ public class FormRelationshipStyledLayoutStructureItem
 
 	private JSONObject _buttonLabelJSONObject;
 	private String _contentType = "";
-	private boolean _repeatable;
+	private boolean _repeatable = true;
 
 }

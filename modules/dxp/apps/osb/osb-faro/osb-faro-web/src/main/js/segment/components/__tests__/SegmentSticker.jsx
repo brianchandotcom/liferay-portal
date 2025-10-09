@@ -15,7 +15,7 @@ describe('SegmentSticker', () => {
 
 	it('should render with a dynamic segment icon', () => {
 		const {container} = render(
-			<SegmentSticker segmentType={SegmentTypes.Dynamic} />
+			<SegmentSticker segmentType={SegmentTypes.Batch} />
 		);
 
 		expect(container.querySelector('use')).toHaveAttribute(

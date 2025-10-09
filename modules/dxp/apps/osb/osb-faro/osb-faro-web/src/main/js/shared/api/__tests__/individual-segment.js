@@ -50,8 +50,8 @@ describe('Individual Segment API', () => {
 			});
 		});
 
-		it('should not pass individualIds in the data object to sendRequest if the segmentType is DYNAMIC', () => {
-			const segmentType = 'DYNAMIC';
+		it('should not pass individualIds in the data object to sendRequest if the segmentType is BATCH', () => {
+			const segmentType = 'BATCH';
 
 			create({...createArgs, segmentType});
 
@@ -69,8 +69,8 @@ describe('Individual Segment API', () => {
 	});
 
 	describe('Update Segment', () => {
-		it('should pass filter in data object to sendRequest if the segmentType is DYNAMIC', () => {
-			const segmentType = 'DYNAMIC';
+		it('should pass filter in data object to sendRequest if the segmentType is BATCH', () => {
+			const segmentType = 'BATCH';
 
 			const data = {
 				channelId: '123',

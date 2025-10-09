@@ -123,7 +123,7 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		validateCreate(channelId, segmentType);
 
-		if (segmentType.equals(IndividualSegment.Type.DYNAMIC.name())) {
+		if (segmentType.equals(IndividualSegment.Type.BATCH.name())) {
 			return createDynamic(
 				channelId, groupId, filter, includeAnonymousUsers, name);
 		}
@@ -381,7 +381,7 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		String segmentType = individualSegment.getSegmentType();
 
-		if (segmentType.equals(IndividualSegment.Type.DYNAMIC.name())) {
+		if (segmentType.equals(IndividualSegment.Type.BATCH.name())) {
 			return updateDynamic(
 				groupId, individualSegment, filter, includeAnonymousUsers,
 				name);
@@ -407,7 +407,7 @@ public class IndividualSegmentController extends BaseFaroController {
 			contactsEngineClient.addIndividualSegment(
 				faroProject, getUserId(), channelId, filter,
 				includeAnonymousUsers, name,
-				IndividualSegment.Type.DYNAMIC.name(),
+				IndividualSegment.Type.BATCH.name(),
 				IndividualSegment.Status.ACTIVE.name()));
 	}
 
@@ -550,7 +550,7 @@ public class IndividualSegmentController extends BaseFaroController {
 		}
 
 		if (!segmentType.equals(IndividualSegment.Type.STATIC.name()) &&
-			!segmentType.equals(IndividualSegment.Type.DYNAMIC.name())) {
+			!segmentType.equals(IndividualSegment.Type.BATCH.name())) {
 
 			throw new FaroException("Invalid segment type: " + segmentType);
 		}

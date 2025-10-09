@@ -50,7 +50,7 @@ import org.junit.runner.RunWith;
  * @author Lourdes Fernández Besada
  */
 @RunWith(Arquillian.class)
-public class LayoutStyleBookEntryERCUpgradeProcessTest {
+public class LayoutUpgradeProcessTest {
 
 	@ClassRule
 	@Rule

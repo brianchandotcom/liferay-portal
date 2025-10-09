@@ -14,7 +14,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 /**
  * @author Lourdes Fernández Besada
  */
-public class LayoutStyleBookEntryERCUpgradeProcess extends UpgradeProcess {
+public class LayoutUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

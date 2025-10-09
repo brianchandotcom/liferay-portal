@@ -19,7 +19,6 @@ import com.liferay.layout.internal.upgrade.v1_2_2.LayoutSEOUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_2_3.LayoutRevisionUpgradeProcess;
 import com.liferay.layout.internal.upgrade.v1_3_0.util.LayoutLocalizationTable;
 import com.liferay.layout.internal.upgrade.v1_3_1.LayoutLocalizationUpgradeProcess;
-import com.liferay.layout.internal.upgrade.v3_0_0.LayoutStyleBookEntryERCUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Release;
@@ -141,7 +140,9 @@ public class LayoutServiceUpgradeStepRegistrator
 				"classExternalReferenceCode VARCHAR(75) null"));
 
 		registry.register(
-			"2.0.0", "3.0.0", new LayoutStyleBookEntryERCUpgradeProcess());
+			"2.0.0", "3.0.0",
+			new com.liferay.layout.internal.upgrade.v3_0_0.
+				LayoutUpgradeProcess());
 	}
 
 	@Reference

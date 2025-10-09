@@ -33,23 +33,6 @@ const updateRequestParams = {
 
 describe('Individual Segment API', () => {
 	describe('Create Segment', () => {
-		it('should NOT pass filter in the data object to sendRequest if the segmentType is STATIC', () => {
-			const segmentType = 'STATIC';
-
-			const data = {
-				channelId: '123',
-				individualIds: createArgs.individualIds,
-				name: createArgs.name
-			};
-
-			create({...createArgs, segmentType});
-
-			expect(sendRequest).toHaveBeenCalledWith({
-				...newRequestParams,
-				data: {...data, segmentType}
-			});
-		});
-
 		it('should not pass individualIds in the data object to sendRequest if the segmentType is BATCH', () => {
 			const segmentType = 'BATCH';
 
@@ -76,23 +59,6 @@ describe('Individual Segment API', () => {
 				channelId: '123',
 				filter: "(name eq 'test test')",
 				includeAnonymousUsers: false,
-				name: updateArgs.name
-			};
-
-			update({...updateArgs, segmentType});
-
-			expect(sendRequest).toHaveBeenCalledWith({
-				...updateRequestParams,
-				data: {...data, segmentType}
-			});
-		});
-
-		it('should NOT pass filter in data object to sendRequest if the segmentType is STATIC', () => {
-			const segmentType = 'STATIC';
-
-			const data = {
-				channelId: '123',
-				individualIds: updateArgs.individualIds,
 				name: updateArgs.name
 			};
 

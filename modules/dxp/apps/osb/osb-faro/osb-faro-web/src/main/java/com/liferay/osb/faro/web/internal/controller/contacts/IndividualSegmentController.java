@@ -61,29 +61,6 @@ import org.osgi.service.component.annotations.Reference;
 @Produces(MediaType.APPLICATION_JSON)
 public class IndividualSegmentController extends BaseFaroController {
 
-	@Path("/{id}/memberships")
-	@PUT
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public IndividualSegmentDisplay addMemberships(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@FormParam("individualIds") FaroParam<List<String>>
-				individualIdsFaroParam)
-		throws Exception {
-
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		IndividualSegment individualSegment =
-			contactsEngineClient.getIndividualSegment(faroProject, id, false);
-
-		validateUpdateMemberships(individualSegment);
-
-		contactsEngineClient.addMemberships(
-			faroProject, id, individualIdsFaroParam.getValue());
-
-		return new IndividualSegmentDisplay(individualSegment);
-	}
-
 	@Path("/{id}/channel/{channelId}")
 	@PUT
 	@RolesAllowed(RoleConstants.SITE_MEMBER)
@@ -127,10 +104,6 @@ public class IndividualSegmentController extends BaseFaroController {
 			return createDynamic(
 				channelId, groupId, filter, includeAnonymousUsers, name);
 		}
-		else if (segmentType.equals(IndividualSegment.Type.STATIC.name())) {
-			return createStatic(
-				channelId, groupId, individualIdsFaroParam.getValue(), name);
-		}
 
 		return null;
 	}
@@ -147,31 +120,6 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		_preferencesController.removeIndividualSegmentPreferences(
 			groupId, id, FaroPreferencesConstants.SCOPE_GROUP);
-	}
-
-	@DELETE
-	@Path("/{id}/memberships")
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public IndividualSegmentDisplay deleteMemberships(
-			@PathParam("groupId") long groupId, @PathParam("id") String id,
-			@FormParam("individualIds") FaroParam<List<String>>
-				individualIdsFaroParam)
-		throws Exception {
-
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		IndividualSegment individualSegment =
-			contactsEngineClient.getIndividualSegment(faroProject, id, false);
-
-		validateUpdateMemberships(individualSegment);
-
-		for (String individualId : individualIdsFaroParam.getValue()) {
-			contactsEngineClient.deleteMembership(
-				faroProject, id, individualId);
-		}
-
-		return new IndividualSegmentDisplay(individualSegment);
 	}
 
 	@GET
@@ -386,11 +334,6 @@ public class IndividualSegmentController extends BaseFaroController {
 				groupId, individualSegment, filter, includeAnonymousUsers,
 				name);
 		}
-		else if (segmentType.equals(IndividualSegment.Type.STATIC.name())) {
-			return updateStatic(
-				groupId, individualSegment, individualIdsFaroParam.getValue(),
-				name);
-		}
 
 		return new IndividualSegmentDisplay(individualSegment);
 	}
@@ -409,26 +352,6 @@ public class IndividualSegmentController extends BaseFaroController {
 				includeAnonymousUsers, name,
 				IndividualSegment.Type.BATCH.name(),
 				IndividualSegment.Status.ACTIVE.name()));
-	}
-
-	protected IndividualSegmentDisplay createStatic(
-			String channelId, long groupId, List<String> individualIds,
-			String name)
-		throws Exception {
-
-		FaroProject faroProject =
-			faroProjectLocalService.getFaroProjectByGroupId(groupId);
-
-		IndividualSegment individualSegment =
-			contactsEngineClient.addIndividualSegment(
-				faroProject, getUserId(), channelId, null, false, name,
-				IndividualSegment.Type.STATIC.name(),
-				IndividualSegment.Status.ACTIVE.name());
-
-		contactsEngineClient.addMemberships(
-			faroProject, individualSegment.getId(), individualIds);
-
-		return new IndividualSegmentDisplay(individualSegment);
 	}
 
 	protected FaroResultsDisplay<IndividualSegment> search(
@@ -549,9 +472,7 @@ public class IndividualSegmentController extends BaseFaroController {
 			throw new FaroException("Invalid channel ID: " + channelId);
 		}
 
-		if (!segmentType.equals(IndividualSegment.Type.STATIC.name()) &&
-			!segmentType.equals(IndividualSegment.Type.BATCH.name())) {
-
+		if (!segmentType.equals(IndividualSegment.Type.BATCH.name())) {
 			throw new FaroException("Invalid segment type: " + segmentType);
 		}
 	}
@@ -564,19 +485,6 @@ public class IndividualSegmentController extends BaseFaroController {
 	}
 
 	protected void validateUpdate(IndividualSegment individualSegment) {
-		validateStatus(individualSegment.getStatus());
-	}
-
-	protected void validateUpdateMemberships(
-		IndividualSegment individualSegment) {
-
-		String segmentType = individualSegment.getSegmentType();
-
-		if (!segmentType.equals(IndividualSegment.Type.STATIC.name())) {
-			throw new FaroException(
-				"You cannot modify memberships of type: " + segmentType);
-		}
-
 		validateStatus(individualSegment.getStatus());
 	}
 

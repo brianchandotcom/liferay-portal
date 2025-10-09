@@ -33,8 +33,6 @@ public class SegmentConstants {
 		).build();
 	private static final Map<String, String> _segmentTypes = HashMapBuilder.put(
 		"batch", IndividualSegment.Type.BATCH.name()
-	).put(
-		"static", IndividualSegment.Type.STATIC.name()
 	).build();
 
 }

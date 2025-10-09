@@ -215,7 +215,7 @@ public class IndividualSegment {
 
 	public enum Type {
 
-		BATCH, STATIC
+		BATCH
 
 	}
 

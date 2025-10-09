@@ -6,13 +6,6 @@ import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 jest.unmock('react-dom');
 
 describe('SegmentSticker', () => {
-	it('should render', () => {
-		const {container} = render(
-			<SegmentSticker segmentType={SegmentTypes.Static} />
-		);
-		expect(container).toMatchSnapshot();
-	});
-
 	it('should render with a dynamic segment icon', () => {
 		const {container} = render(
 			<SegmentSticker segmentType={SegmentTypes.Batch} />

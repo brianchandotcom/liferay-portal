@@ -401,28 +401,18 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		throws Exception {
 
 		Group group = _groupService.addGroup(
+			externalReferenceCode,
 			_getParentGroupId(
 				null, site.getParentSiteExternalReferenceCode(),
 				site.getParentSiteKey()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, _getNameMap(site),
 			_getLocalizationMap(site.getDescription()),
 			_getType(site.getMembershipType()),
+			_getTypeSettings(site.getTypeSettings(), null),
 			_isManualMembership(site.getManualMembership()),
 			_getMembershipRestriction(site.getMembershipRestriction()),
 			site.getFriendlyUrlPath(), true, false, _isActive(site.getActive()),
 			serviceContext);
-
-		if (Validator.isNotNull(externalReferenceCode)) {
-			group.setExternalReferenceCode(externalReferenceCode);
-
-			group = _groupLocalService.updateGroup(group);
-		}
-
-		if (Validator.isNotNull(site.getTypeSettings())) {
-			group = _groupService.updateGroup(
-				group.getGroupId(),
-				_getTypeSettings(site.getTypeSettings(), null));
-		}
 
 		LiveUsers.joinGroup(
 			contextCompany.getCompanyId(), group.getGroupId(),

@@ -294,8 +294,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				if ((activeRegistrations.size() > 1) &&
 					!portletDataContext.getBooleanParameter(
 						getPortletId(),
-						exportImportDescriptor.
-							getDeletionSystemEventClassName())) {
+						exportImportDescriptor.getClassName())) {
 
 					continue;
 				}
@@ -348,8 +347,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			if ((activeRegistrations.size() > 1) &&
 				!portletDataContext.getBooleanParameter(
-					getPortletId(),
-					exportImportDescriptor.getDeletionSystemEventClassName())) {
+					getPortletId(), exportImportDescriptor.getClassName())) {
 
 				continue;
 			}
@@ -538,10 +536,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(),
-			exportImportDescriptor.getDeletionSystemEventClassName(),
+			getPortletId(), exportImportDescriptor.getClassName(),
 			exportImportDescriptor.getLabel(), true, false, null,
-			exportImportDescriptor.getDeletionSystemEventClassName(), null);
+			exportImportDescriptor.getClassName(), null);
 	}
 
 	private String _getSiteExternalReferenceCode(
@@ -561,8 +558,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
-		return new StagedModelType(
-			exportImportDescriptor.getDeletionSystemEventClassName());
+		return new StagedModelType(exportImportDescriptor.getClassName());
 	}
 
 	private long _getUserId() {

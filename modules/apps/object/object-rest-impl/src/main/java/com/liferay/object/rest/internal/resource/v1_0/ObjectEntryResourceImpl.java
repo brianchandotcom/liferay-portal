@@ -401,12 +401,17 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
+			public String getClassName() {
+				return _objectDefinition.getClassName();
+			}
+
+			@Override
 			public String getDeletionSystemEventClassName() {
 				return _objectDefinition.getClassName();
 			}
 
 			@Override
-			public String getItemModelName() {
+			public String getModelName() {
 				return _objectDefinition.getShortName();
 			}
 

@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResults;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
@@ -35,7 +37,6 @@ import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggrega
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregationResult;
 
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.pipeline.BucketMetricValue;
 import org.elasticsearch.search.aggregations.pipeline.Derivative;
 import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucket;
@@ -50,10 +51,9 @@ public class ElasticsearchPipelineAggregationResultTranslator
 	implements PipelineAggregationResultTranslator {
 
 	public ElasticsearchPipelineAggregationResultTranslator(
-		Aggregation elasticsearchAggregation,
-		AggregationResults aggregationResults) {
+		Aggregate aggregate, AggregationResults aggregationResults) {
 
-		_elasticsearchAggregation = elasticsearchAggregation;
+		_aggregate = aggregate;
 		_aggregationResults = aggregationResults;
 	}
 
@@ -229,7 +229,7 @@ public class ElasticsearchPipelineAggregationResultTranslator
 			simpleValue.getName(), simpleValue.value());
 	}
 
+	private final Aggregate _aggregate;
 	private final AggregationResults _aggregationResults;
-	private final Aggregation _elasticsearchAggregation;
 
 }

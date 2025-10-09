@@ -245,7 +245,7 @@ public class ActionUtil {
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
-			objectDefinition.getName(), false, segmentsExperienceId,
+			objectDefinition.getName(), false, true, segmentsExperienceId,
 			serviceContext, JSONUtil.put("marginBottom", "16px"));
 
 		LayoutPageTemplateStructureLocalServiceUtil.
@@ -348,7 +348,7 @@ public class ActionUtil {
 			addedFragmentEntryLinks, fragmentEntryLinkListenerRegistry,
 			fragmentEntryLinkService, formManager, fragmentRendererRegistry,
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
-			layoutStructure, formStyledLayoutStructureItem, name, true,
+			layoutStructure, formStyledLayoutStructureItem, name, true, false,
 			segmentsExperienceId, serviceContext,
 			JSONUtil.put("marginBottom", "24px"));
 
@@ -411,7 +411,7 @@ public class ActionUtil {
 			addedFragmentEntryLinks, fragmentEntryLinkListenerRegistry,
 			fragmentEntryLinkService, formManager, fragmentRendererRegistry,
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(name), layout,
-			layoutStructure, formStyledLayoutStructureItem, name, false,
+			layoutStructure, formStyledLayoutStructureItem, name, false, false,
 			segmentsExperienceId, serviceContext,
 			JSONUtil.put("marginBottom", "24px"));
 
@@ -1217,7 +1217,7 @@ public class ActionUtil {
 			InfoFieldSet infoFieldSet, Layout layout,
 			LayoutStructure layoutStructure,
 			LayoutStructureItem layoutStructureItem,
-			String objectDefinitionName, boolean readOnly,
+			String objectDefinitionName, boolean readOnly, boolean repeatable,
 			long segmentsExperienceId, ServiceContext serviceContext,
 			JSONObject stylesJSONObject)
 		throws Exception {
@@ -1233,6 +1233,7 @@ public class ActionUtil {
 
 			formRelationshipStyledLayoutStructureItem.setContentType(
 				infoFieldSet.getName());
+			formRelationshipStyledLayoutStructureItem.setRepeatable(repeatable);
 
 			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 				JSONUtil.toString(
@@ -1333,8 +1334,8 @@ public class ActionUtil {
 					fragmentEntryLinkService, formManager,
 					fragmentRendererRegistry, (InfoFieldSet)infoFieldSetEntry,
 					layout, layoutStructure, layoutStructureItem,
-					objectDefinitionName, readOnly, segmentsExperienceId,
-					serviceContext, stylesJSONObject);
+					objectDefinitionName, readOnly, repeatable,
+					segmentsExperienceId, serviceContext, stylesJSONObject);
 			}
 			else {
 				_addInputFragmentEntryLink(

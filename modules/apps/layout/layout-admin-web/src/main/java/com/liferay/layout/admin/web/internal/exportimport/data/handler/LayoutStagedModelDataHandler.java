@@ -1774,6 +1774,16 @@ public class LayoutStagedModelDataHandler
 		return new Object[] {url.substring(x, y), url, x, y};
 	}
 
+	private StyleBookEntry _fetchStyleBookEntry(Layout layout) {
+		if (Validator.isNull(layout.getStyleBookEntryERC())) {
+			return null;
+		}
+
+		return _styleBookEntryLocalService.
+			fetchStyleBookEntryByExternalReferenceCode(
+				layout.getStyleBookEntryERC(), layout.getGroupId());
+	}
+
 	private void _fixExportTypeSettings(Layout layout) throws Exception {
 		Object[] friendlyURLInfo = _extractFriendlyURLInfo(layout);
 
@@ -1995,16 +2005,6 @@ public class LayoutStagedModelDataHandler
 		}
 
 		return portletIds;
-	}
-
-	private StyleBookEntry _fetchStyleBookEntry(Layout layout) {
-		if (Validator.isNull(layout.getStyleBookEntryERC())) {
-			return null;
-		}
-
-		return _styleBookEntryLocalService.
-			fetchStyleBookEntryByExternalReferenceCode(
-				layout.getStyleBookEntryERC(), layout.getGroupId());
 	}
 
 	private String _getUniqueFriendlyURL(

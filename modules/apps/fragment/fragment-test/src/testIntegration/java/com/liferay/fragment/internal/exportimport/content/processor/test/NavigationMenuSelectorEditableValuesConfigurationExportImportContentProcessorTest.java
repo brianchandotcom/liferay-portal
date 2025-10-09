@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -106,6 +107,183 @@ public class
 			).put(
 				"siteNavigationMenuScopeExternalReferenceCode", StringPool.BLANK
 			));
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertTrue(
+					Validator.isNull(
+						jsonObject.get(
+							"siteNavigationMenuExternalReferenceCode")));
+				Assert.assertTrue(
+					Validator.isNull(
+						jsonObject.get(
+							"siteNavigationMenuScopeExternalReferenceCode")));
+
+				SiteNavigationMenu liveSiteNavigationMenu =
+					_siteNavigationMenuLocalService.
+						getSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId());
+
+				Assert.assertEquals(
+					liveSiteNavigationMenu.getSiteNavigationMenuId(),
+					jsonObject.getLong("siteNavigationMenuId"));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"siteNavigationMenuId",
+				siteNavigationMenu.getSiteNavigationMenuId()));
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					siteNavigationMenu.getExternalReferenceCode(),
+					jsonObject.get("siteNavigationMenuExternalReferenceCode"));
+				Assert.assertEquals(
+					0, jsonObject.getLong("siteNavigationMenuId"));
+				Assert.assertTrue(
+					Validator.isNull(
+						jsonObject.get(
+							"siteNavigationMenuScopeExternalReferenceCode")));
+
+				Assert.assertNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId", RandomTestUtil.randomLong()
+			).put(
+				"siteNavigationMenuScopeExternalReferenceCode", StringPool.BLANK
+			));
+
+		Group companyGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
+
+		_testNavigationMenuSelectorEditableValues(
+			companyGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					siteNavigationMenu.getExternalReferenceCode(),
+					jsonObject.get("siteNavigationMenuExternalReferenceCode"));
+				Assert.assertEquals(
+					companyGroup.getExternalReferenceCode(),
+					jsonObject.get(
+						"siteNavigationMenuScopeExternalReferenceCode"));
+
+				Assert.assertNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuScopeExternalReferenceCode",
+				companyGroup.getExternalReferenceCode()
+			));
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_stagingGroup);
+
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					layout.getExternalReferenceCode(),
+					jsonObject.get(
+						"parentSiteNavigationMenuItemExternalReferenceCode"));
+
+				SiteNavigationMenu liveSiteNavigationMenu =
+					_siteNavigationMenuLocalService.
+						getSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId());
+
+				Assert.assertEquals(
+					liveSiteNavigationMenu.getSiteNavigationMenuId(),
+					jsonObject.getLong("siteNavigationMenuId"));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"parentSiteNavigationMenuItemExternalReferenceCode",
+				layout.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuId",
+				siteNavigationMenu.getSiteNavigationMenuId()
+			));
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					0, jsonObject.getLong("parentSiteNavigationMenuItemId"));
+				Assert.assertEquals(
+					siteNavigationMenu.getExternalReferenceCode(),
+					jsonObject.get("siteNavigationMenuExternalReferenceCode"));
+				Assert.assertEquals(
+					0, jsonObject.getLong("siteNavigationMenuId"));
+
+				Assert.assertNotNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"parentSiteNavigationMenuItemId",
+				layout.getExternalReferenceCode()
+			).put(
+				"siteNavigationMenuExternalReferenceCode",
+				siteNavigationMenu.getExternalReferenceCode()
+			));
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertEquals(
+					layout.getExternalReferenceCode(),
+					jsonObject.get(
+						"parentSiteNavigationMenuItemExternalReferenceCode"));
+				Assert.assertEquals(
+					0, jsonObject.getLong("parentSiteNavigationMenuItemId"));
+
+				Assert.assertNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"parentSiteNavigationMenuItemExternalReferenceCode",
+				layout.getExternalReferenceCode()));
+		_testNavigationMenuSelectorEditableValues(
+			_stagingGroup.getGroupId(),
+			(jsonObject, siteNavigationMenu) -> {
+				Assert.assertTrue(
+					Validator.isNull(
+						jsonObject.get(
+							"parentSiteNavigationMenuItemExternalReference" +
+								"Code")));
+
+				Layout liveLayout =
+					_layoutLocalService.getLayoutByUuidAndGroupId(
+						layout.getUuid(), _liveGroup.getGroupId(),
+						layout.isPrivateLayout());
+
+				Assert.assertEquals(
+					liveLayout.getPlid(),
+					jsonObject.getLong("parentSiteNavigationMenuItemId"));
+
+				Assert.assertNull(
+					_siteNavigationMenuLocalService.
+						fetchSiteNavigationMenuByUuidAndGroupId(
+							siteNavigationMenu.getUuid(),
+							_liveGroup.getGroupId()));
+			},
+			siteNavigationMenu -> JSONUtil.put(
+				"parentSiteNavigationMenuItemId", layout.getPlid()));
 	}
 
 	private void _publishLayouts() throws Exception {
@@ -192,6 +370,9 @@ public class
 	private GroupLocalService _groupLocalService;
 
 	private Layout _layout;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;

@@ -320,6 +320,16 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public Boolean serializeHideManagementBarInEmptyState(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
+
+		return (Boolean)properties.get("hideManagementBarInEmptyState");
+	}
+
+	@Override
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
@@ -461,16 +471,6 @@ public class CustomFDSSerializer
 			fdsName, httpServletRequest);
 
 		return String.valueOf(properties.get("propsTransformer"));
-	}
-
-	@Override
-	public Boolean serializeHideManagementBarInEmptyState(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		Map<String, Object> properties = getDataSetObjectEntryProperties(
-			fdsName, httpServletRequest);
-
-		return (Boolean)properties.get("hideManagementBarInEmptyState");
 	}
 
 	@Override

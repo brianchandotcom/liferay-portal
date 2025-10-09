@@ -112,7 +112,13 @@ async function verifyPermissions({
 test(
 	'Space and folder contents inherit parent default permissions',
 	{tag: '@LPD-62475'},
-	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
+	async ({
+		contentsPage,
+		defaultPermissionsPage,
+		folderPage,
+		page,
+		spaceSummaryPage,
+	}) => {
 		test.setTimeout(90000);
 
 		await page.goto(PORTLET_URLS.cmsAllSpaces);
@@ -161,9 +167,11 @@ test(
 				permissions,
 			});
 
-			await page.getByTestId('fdsCreationActionButton').click();
-			await page.getByRole('menuitem', {name: 'Basic Content'}).click();
-			await page.getByRole('button', {name: 'Publish'}).click();
+			await contentsPage.createContent('Basic Content');
+
+			await contentsPage.fillData([{label: 'Title', value: '1234'}]);
+
+			await contentsPage.saveContent();
 
 			await (await getTableRowByText(page, 'Basic Web Content'))
 				.getByRole('button', {name: 'Actions'})

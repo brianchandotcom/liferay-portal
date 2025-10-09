@@ -29,14 +29,18 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return externalReferenceCodes;
 		}
 
-		public String getDeletionSystemEventClassName();
-
-		public default String getItemModelName() {
-			return getDeletionSystemEventClassName();
+		public default String getClassName() {
+			return getClass().getName();
 		}
+
+		public String getDeletionSystemEventClassName();
 
 		public default String getLabel() {
 			return null;
+		}
+
+		public default String getModelName() {
+			return getClassName();
 		}
 
 		public default List<String> getNestedFields() {

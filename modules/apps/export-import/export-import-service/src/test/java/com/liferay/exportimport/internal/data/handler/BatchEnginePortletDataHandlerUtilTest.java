@@ -66,6 +66,18 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
+	public void testBuildExportParametersWithClassName() {
+		String className = RandomTestUtil.randomString();
+
+		Map<String, Serializable> parameters =
+			BatchEnginePortletDataHandlerUtil.buildExportParameters(
+				_mockExportImportDescriptor(className, null, null, null),
+				_mockPortletDataContext(), null);
+
+		Assert.assertEquals(className, parameters.get("className"));
+	}
+
+	@Test
 	public void testBuildExportParametersWithEndDate() {
 		Date endDate = _getDate(0);
 
@@ -97,27 +109,15 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildExportParametersWithItemClassName() {
-		String itemClassName = RandomTestUtil.randomString();
+	public void testBuildExportParametersWithModelName() {
+		String modelName = RandomTestUtil.randomString();
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockExportImportDescriptor(itemClassName, null, null, null),
+				_mockExportImportDescriptor(null, modelName, null, null),
 				_mockPortletDataContext(), null);
 
-		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
-	}
-
-	@Test
-	public void testBuildExportParametersWithItemModelName() {
-		String itemModelName = RandomTestUtil.randomString();
-
-		Map<String, Serializable> parameters =
-			BatchEnginePortletDataHandlerUtil.buildExportParameters(
-				_mockExportImportDescriptor(null, itemModelName, null, null),
-				_mockPortletDataContext(), null);
-
-		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
+		Assert.assertEquals(modelName, parameters.get("modelName"));
 	}
 
 	@Test
@@ -203,27 +203,27 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildImportParametersWithItemClassName() {
-		String itemClassName = RandomTestUtil.randomString();
+	public void testBuildImportParametersWithClassName() {
+		String className = RandomTestUtil.randomString();
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildImportParameters(
-				_mockExportImportDescriptor(itemClassName, null, null, null),
+				_mockExportImportDescriptor(className, null, null, null),
 				_mockPortletDataContext(), null);
 
-		Assert.assertEquals(itemClassName, parameters.get("itemClassName"));
+		Assert.assertEquals(className, parameters.get("className"));
 	}
 
 	@Test
-	public void testBuildImportParametersWithItemModelName() {
-		String itemModelName = RandomTestUtil.randomString();
+	public void testBuildImportParametersWithModelName() {
+		String modelName = RandomTestUtil.randomString();
 
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildImportParameters(
-				_mockExportImportDescriptor(null, itemModelName, null, null),
+				_mockExportImportDescriptor(null, modelName, null, null),
 				_mockPortletDataContext(), null);
 
-		Assert.assertEquals(itemModelName, parameters.get("itemModelName"));
+		Assert.assertEquals(modelName, parameters.get("modelName"));
 	}
 
 	private Date _getDate(int days) {
@@ -244,22 +244,22 @@ public class BatchEnginePortletDataHandlerUtilTest {
 
 	private ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 		_mockExportImportDescriptor(
-			String itemClassName, String itemModelName,
-			List<String> nestedFields, Map<String, Serializable> parameters) {
+			String className, String modelName, List<String> nestedFields,
+			Map<String, Serializable> parameters) {
 
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor = _mockExportImportDescriptor();
 
 		Mockito.when(
-			exportImportDescriptor.getDeletionSystemEventClassName()
+			exportImportDescriptor.getClassName()
 		).thenReturn(
-			itemClassName
+			className
 		);
 
 		Mockito.when(
-			exportImportDescriptor.getItemModelName()
+			exportImportDescriptor.getModelName()
 		).thenReturn(
-			itemModelName
+			modelName
 		);
 
 		Mockito.when(

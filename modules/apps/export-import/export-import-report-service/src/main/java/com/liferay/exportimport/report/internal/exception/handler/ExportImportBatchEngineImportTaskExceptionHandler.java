@@ -50,12 +50,12 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			groupId, batchEngineImportTask.getCompanyId(),
 			_getExternalReferenceCode(item),
 			_classNameLocalService.getClassNameId(
-				batchEngineImportTask.getParameterValue("itemClassName")),
+				batchEngineImportTask.getParameterValue("className")),
 			_getId(item),
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),
 			exception.getMessage(), _getErrorStackTrace(exception),
-			batchEngineImportTask.getParameterValue("itemModelName"),
+			batchEngineImportTask.getParameterValue("modelName"),
 			ExportImportReportEntryConstants.ORIGIN_BATCH,
 			ExportImportReportEntryUtil.getScope(groupId),
 			ExportImportReportEntryUtil.getScopeKey(groupId));

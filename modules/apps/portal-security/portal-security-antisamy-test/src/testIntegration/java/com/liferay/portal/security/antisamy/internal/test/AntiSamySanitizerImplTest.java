@@ -38,17 +38,31 @@ public class AntiSamySanitizerImplTest {
 
 	@Test
 	public void testSanitize() throws Exception {
+		_testSanitize(
+			"This little text should not have a space removed but it happens " +
+				"right here.",
+			"This little text should not have a space removed but it happens " +
+				"right here.");
+		_testSanitize(
+			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
+				"target=\"_blank\"></a></p>",
+			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
+				"target=\"_blank\"></a></p>");
+	}
+
+	private void _testSanitize(String expectedValue, String value)
+		throws Exception {
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.security.antisamy.internal." +
 					"AntiSamySanitizerImpl",
 				LoggerTestUtil.WARN)) {
 
-			_sanitizer.sanitize(
+			String sanitizedValue = _sanitizer.sanitize(
 				TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
-				ContentTypes.TEXT_HTML, new String[0],
-				"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
-					"target=\"_blank\"></a></p>",
-				new HashMap<>());
+				ContentTypes.TEXT_HTML, new String[0], value, new HashMap<>());
+
+			Assert.assertEquals(expectedValue, sanitizedValue);
 
 			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
 		}

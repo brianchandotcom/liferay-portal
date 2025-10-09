@@ -92,8 +92,3 @@
     # Ignore the copyright template file.
     #
     **/copyright.js
-
-    #
-    # LPD-66707 Vercel templates.
-    #
-    integrations/vercel/templates/**/.next

@@ -220,33 +220,44 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			serviceContext.getAssetTagNames(), serviceContext.getLocale(),
 			serviceContext.getAssetPriority());
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
-
-			Map<String, Serializable> workflowContext =
-				HashMapBuilder.<String, Serializable>put(
-					WorkflowConstants.CONTEXT_URL,
-					_getEntryURL(ddmFormInstanceRecord, serviceContext)
-				).put(
-					"entryTitle",
-					ddmFormInstance.getName(serviceContext.getLocale())
-				).put(
-					"entryTitleXML", ddmFormInstance.getName()
-				).build();
-
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), groupId, userId,
-				DDMFormInstanceRecord.class.getName(),
-				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
-				ddmFormInstanceRecordVersion, serviceContext, workflowContext);
-
-			if (_isEmailNotificationEnabled(ddmFormInstance)) {
-				_ddmFormEmailNotificationSender.sendEmailNotification(
-					ddmFormInstanceRecord, serviceContext);
-			}
-		}
+		_startWorkflowInstance(
+			user.getCompanyId(), ddmFormInstance, ddmFormInstanceRecord,
+			ddmFormInstanceRecordVersion, groupId, serviceContext, userId);
 
 		return ddmFormInstanceRecord;
+	}
+
+	private void _startWorkflowInstance(
+			long companyId, DDMFormInstance ddmFormInstance,
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion,
+			long groupId, ServiceContext serviceContext, long userId)
+		throws PortalException {
+
+		if (serviceContext.getWorkflowAction() !=
+				WorkflowConstants.ACTION_PUBLISH) {
+
+			return;
+		}
+
+		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			companyId, groupId, userId, DDMFormInstanceRecord.class.getName(),
+			ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
+			ddmFormInstanceRecordVersion, serviceContext,
+			HashMapBuilder.<String, Serializable>put(
+				WorkflowConstants.CONTEXT_URL,
+				_getEntryURL(ddmFormInstanceRecord, serviceContext)
+			).put(
+				"entryTitle",
+				ddmFormInstance.getName(serviceContext.getLocale())
+			).put(
+				"entryTitleXML", ddmFormInstance.getName()
+			).build());
+
+		if (_isEmailNotificationEnabled(ddmFormInstance)) {
+			_ddmFormEmailNotificationSender.sendEmailNotification(
+				ddmFormInstanceRecord, serviceContext);
+		}
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -544,20 +555,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
-
-			WorkflowHandlerRegistryUtil.startWorkflowInstance(
-				user.getCompanyId(), ddmFormInstanceRecord.getGroupId(), userId,
-				DDMFormInstanceRecord.class.getName(),
-				ddmFormInstanceRecordVersion.getFormInstanceRecordVersionId(),
-				ddmFormInstanceRecordVersion, serviceContext);
-
-			if (_isEmailNotificationEnabled(ddmFormInstance)) {
-				_ddmFormEmailNotificationSender.sendEmailNotification(
-					ddmFormInstanceRecord, serviceContext);
-			}
-		}
+		_startWorkflowInstance(
+			user.getCompanyId(), ddmFormInstance, ddmFormInstanceRecord,
+			ddmFormInstanceRecordVersion, ddmFormInstanceRecord.getGroupId(),
+			serviceContext, userId);
 
 		return ddmFormInstanceRecord;
 	}

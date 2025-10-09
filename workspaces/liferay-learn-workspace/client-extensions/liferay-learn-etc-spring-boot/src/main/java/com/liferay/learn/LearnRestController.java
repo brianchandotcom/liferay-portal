@@ -100,85 +100,88 @@ public class LearnRestController extends BaseRestController {
 					).build(
 					).toUri()));
 
-			JSONObject documentJSONObject = null;
+			OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
+				lessonJSONObject.getString("dateModified")
+			).truncatedTo(
+				ChronoUnit.MINUTES
+			);
 
+			OffsetDateTime offsetDateTime2 = OffsetDateTime.MIN;
+
+			JSONObject documentJSONObject = null;
 			JSONArray jsonArray = documentsJSONObject.optJSONArray("items");
 
-			if (!jsonArray.isEmpty()) {
-				OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
-					lessonJSONObject.getString("dateModified")
-				).truncatedTo(
-					ChronoUnit.MINUTES
-				);
-
+			if ((jsonArray != null) && (jsonArray.length() > 0)) {
 				documentJSONObject = jsonArray.optJSONObject(0);
 
-				OffsetDateTime offsetDateTime2 = OffsetDateTime.parse(
+				offsetDateTime2 = OffsetDateTime.parse(
 					documentJSONObject.getString("dateModified")
 				).truncatedTo(
 					ChronoUnit.MINUTES
 				);
+			}
 
-				if (offsetDateTime1.isAfter(offsetDateTime2)) {
-					ByteArrayOutputStream byteArrayOutputStream =
-						new ByteArrayOutputStream();
+			if (offsetDateTime1.isAfter(offsetDateTime2)) {
+				ByteArrayOutputStream byteArrayOutputStream =
+					new ByteArrayOutputStream();
 
-					List<String> ssmls = _splitSsml(
-						content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
+				List<String> ssmls = _splitSsml(
+					content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
 
-					for (String ssml : ssmls) {
-						String response = post(
-							_getGoogleAccessToken(),
-							new JSONObject(
-								HashMapBuilder.<String, Object>put(
-									"audioConfig",
-									HashMapBuilder.<String, Object>put(
-										"audioEncoding", "MP3"
-									).build()
-								).put(
-									"input",
-									HashMapBuilder.<String, Object>put(
-										"text", ssml
-									).build()
-								).put(
-									"voice",
-									HashMapBuilder.<String, Object>put(
-										"languageCode", languageCode
-									).put(
-										"name", voiceName
-									).build()
-								).build()
-							).toString(),
-							UriComponentsBuilder.fromUriString(
-								"https://texttospeech.googleapis.com/v1beta1" +
-									"/text:synthesize"
-							).build(
-							).toUri());
-
-						byteArrayOutputStream.write(
-							Base64.getDecoder(
-							).decode(
-								new JSONObject(
-									response
-								).getString(
-									"audioContent"
-								)
-							));
-					}
-
-					String audioContentBase64 = Base64.getEncoder(
-					).encodeToString(
-						byteArrayOutputStream.toByteArray()
-					);
-
-					return ResponseEntity.ok(
+				for (String ssml : ssmls) {
+					String response = post(
+						_getGoogleAccessToken(),
 						new JSONObject(
-						).put(
-							"audioContentBase64", audioContentBase64
-						).put(
-							"id", documentJSONObject.optString("id", null)
-						).toString());
+							HashMapBuilder.<String, Object>put(
+								"audioConfig",
+								HashMapBuilder.<String, Object>put(
+									"audioEncoding", "MP3"
+								).build()
+							).put(
+								"input",
+								HashMapBuilder.<String, Object>put(
+									"text", ssml
+								).build()
+							).put(
+								"voice",
+								HashMapBuilder.<String, Object>put(
+									"languageCode", languageCode
+								).put(
+									"name", voiceName
+								).build()
+							).build()
+						).toString(),
+						UriComponentsBuilder.fromUriString(
+							"https://texttospeech.googleapis.com/v1beta1" +
+								"/text:synthesize"
+						).build(
+						).toUri());
+
+					byteArrayOutputStream.write(
+						Base64.getDecoder(
+						).decode(
+							new JSONObject(
+								response
+							).getString(
+								"audioContent"
+							)
+						));
 				}
+
+				String audioContentBase64 = Base64.getEncoder(
+				).encodeToString(
+					byteArrayOutputStream.toByteArray()
+				);
+
+				return ResponseEntity.ok(
+					new JSONObject(
+					).put(
+						"audioContentBase64", audioContentBase64
+					).put(
+						"id",
+						(documentJSONObject != null) ?
+							documentJSONObject.optString("id", null) : null
+					).toString());
 			}
 
 			return ResponseEntity.ok(

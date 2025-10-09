@@ -248,7 +248,7 @@ public class ActionUtil {
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
 			objectDefinition.getName(), false, segmentsExperienceId,
-			serviceContext);
+			serviceContext, JSONUtil.put("marginBottom", "16px"));
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(

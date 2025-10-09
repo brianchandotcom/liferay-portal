@@ -5,9 +5,30 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.AggregationBuilders;
+import co.elastic.clients.elasticsearch._types.aggregations.AverageBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketScriptAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketSelectorAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketSortAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.BucketsPath;
+import co.elastic.clients.elasticsearch._types.aggregations.CumulativeSumAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.DerivativeAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.ExtendedStatsBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.MaxBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.MinBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.MovingFunctionAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.PercentilesBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.SerialDifferencingAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.StatsBucketAggregation;
+import co.elastic.clients.elasticsearch._types.aggregations.SumBucketAggregation;
+
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.pipeline.AvgBucketPipelineAggregation;
-import com.liferay.portal.search.aggregation.pipeline.BucketMetricsPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketScriptPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSelectorPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.BucketSortPipelineAggregation;
@@ -25,34 +46,15 @@ import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationVisitor
 import com.liferay.portal.search.aggregation.pipeline.SerialDiffPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.StatsBucketPipelineAggregation;
 import com.liferay.portal.search.aggregation.pipeline.SumBucketPipelineAggregation;
-import com.liferay.portal.search.elasticsearch8.internal.script.ScriptTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.sort.ElasticsearchSortFieldTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.SetterUtil;
+import com.liferay.portal.search.script.Script;
 import com.liferay.portal.search.sort.FieldSort;
 import com.liferay.portal.search.sort.SortFieldTranslator;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import org.elasticsearch.search.aggregations.PipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.PipelineAggregatorBuilders;
-import org.elasticsearch.search.aggregations.pipeline.AvgBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.BucketHelpers;
-import org.elasticsearch.search.aggregations.pipeline.BucketMetricsPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.BucketScriptPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.BucketSelectorPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.BucketSortPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.CumulativeSumPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.DerivativePipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.ExtendedStatsBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.MaxBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.MinBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.MovFnPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.PercentilesBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.SerialDiffPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.StatsBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.aggregations.pipeline.SumBucketPipelineAggregationBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.SortBuilder;
+import java.util.Map;
+import java.util.function.Consumer;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -64,354 +66,339 @@ import org.osgi.service.component.annotations.Component;
 	service = PipelineAggregationTranslator.class
 )
 public class ElasticsearchPipelineAggregationTranslator
-	implements PipelineAggregationTranslator<PipelineAggregationBuilder>,
-			   PipelineAggregationVisitor<PipelineAggregationBuilder> {
+	implements PipelineAggregationTranslator<Aggregation>,
+			   PipelineAggregationVisitor<Aggregation> {
 
 	@Override
-	public PipelineAggregationBuilder translate(
-		PipelineAggregation pipelineAggregation) {
-
+	public Aggregation translate(PipelineAggregation pipelineAggregation) {
 		return pipelineAggregation.accept(this);
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		AvgBucketPipelineAggregation avgBucketPipelineAggregation) {
 
-		AvgBucketPipelineAggregationBuilder
-			avgBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.avgBucket(
-					avgBucketPipelineAggregation.getName(),
-					avgBucketPipelineAggregation.getBucketsPath());
+		AverageBucketAggregation.Builder builder =
+			AggregationBuilders.avgBucket();
 
-		_assemble(
-			avgBucketPipelineAggregation, avgBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			avgBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, avgBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, avgBucketPipelineAggregation.getGapPolicy());
 
-		return avgBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		BucketScriptPipelineAggregation bucketScriptPipelineAggregation) {
 
-		BucketScriptPipelineAggregationBuilder
-			bucketScriptPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.bucketScript(
-					bucketScriptPipelineAggregation.getName(),
-					bucketScriptPipelineAggregation.getBucketsPathsMap(),
-					_scriptTranslator.translate(
-						bucketScriptPipelineAggregation.getScript()));
+		BucketScriptAggregation.Builder builder =
+			AggregationBuilders.bucketScript();
 
-		if (bucketScriptPipelineAggregation.getFormat() != null) {
-			bucketScriptPipelineAggregationBuilder.format(
-				bucketScriptPipelineAggregation.getFormat());
-		}
+		_setNotEmptyBucketsPathMap(
+			builder::bucketsPath,
+			bucketScriptPipelineAggregation.getBucketsPathsMap());
+		SetterUtil.setNotBlankString(
+			builder::format, bucketScriptPipelineAggregation.getFormat());
+		SetterUtil.setNotNullScript(
+			builder::script, bucketScriptPipelineAggregation.getScript());
 
-		return bucketScriptPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		BucketSelectorPipelineAggregation bucketSelectorPipelineAggregation) {
 
-		BucketSelectorPipelineAggregationBuilder
-			bucketScriptPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.bucketSelector(
-					bucketSelectorPipelineAggregation.getName(),
-					bucketSelectorPipelineAggregation.getBucketsPathsMap(),
-					_scriptTranslator.translate(
-						bucketSelectorPipelineAggregation.getScript()));
+		BucketSelectorAggregation.Builder builder =
+			AggregationBuilders.bucketSelector();
 
-		if (bucketSelectorPipelineAggregation.getGapPolicy() != null) {
-			bucketScriptPipelineAggregationBuilder.gapPolicy(
-				_translate(bucketSelectorPipelineAggregation.getGapPolicy()));
-		}
+		_setNotEmptyBucketsPathMap(
+			builder::bucketsPath,
+			bucketSelectorPipelineAggregation.getBucketsPathsMap());
+		_setNotNullGapPolicy(
+			builder::gapPolicy,
+			bucketSelectorPipelineAggregation.getGapPolicy());
+		SetterUtil.setNotNullScript(
+			builder::script, bucketSelectorPipelineAggregation.getScript());
 
-		return bucketScriptPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		BucketSortPipelineAggregation bucketSortPipelineAggregation) {
+
+		BucketSortAggregation.Builder builder =
+			AggregationBuilders.bucketSort();
+
+		SetterUtil.setNotNullInteger(
+			builder::from, bucketSortPipelineAggregation.getFrom());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, bucketSortPipelineAggregation.getGapPolicy());
+		SetterUtil.setNotNullInteger(
+			builder::size, bucketSortPipelineAggregation.getSize());
 
 		List<FieldSort> fieldSorts =
 			bucketSortPipelineAggregation.getFieldSorts();
 
-		List<FieldSortBuilder> fieldSortBuilders = new ArrayList<>(
-			fieldSorts.size());
-
 		fieldSorts.forEach(
-			fieldSort -> {
-				FieldSortBuilder fieldSortBuilder =
-					(FieldSortBuilder)_sortFieldTranslator.translate(fieldSort);
+			fieldSort -> builder.sort(
+				_sortFieldTranslator.translate(fieldSort)));
 
-				fieldSortBuilders.add(fieldSortBuilder);
-			});
-
-		BucketSortPipelineAggregationBuilder
-			bucketSortPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.bucketSort(
-					bucketSortPipelineAggregation.getName(), fieldSortBuilders);
-
-		if (bucketSortPipelineAggregation.getGapPolicy() != null) {
-			bucketSortPipelineAggregationBuilder.gapPolicy(
-				_translate(bucketSortPipelineAggregation.getGapPolicy()));
-		}
-
-		if (bucketSortPipelineAggregation.getFrom() != null) {
-			bucketSortPipelineAggregationBuilder.from(
-				bucketSortPipelineAggregation.getFrom());
-		}
-
-		if (bucketSortPipelineAggregation.getSize() != null) {
-			bucketSortPipelineAggregationBuilder.size(
-				bucketSortPipelineAggregation.getSize());
-		}
-
-		return bucketSortPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		CumulativeSumPipelineAggregation cumulativeSumPipelineAggregation) {
 
-		CumulativeSumPipelineAggregationBuilder
-			cumulativeSumPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.cumulativeSum(
-					cumulativeSumPipelineAggregation.getName(),
-					cumulativeSumPipelineAggregation.getBucketsPath());
+		CumulativeSumAggregation.Builder builder =
+			AggregationBuilders.cumulativeSum();
 
-		if (cumulativeSumPipelineAggregation.getFormat() != null) {
-			cumulativeSumPipelineAggregationBuilder.format(
-				cumulativeSumPipelineAggregation.getFormat());
-		}
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			cumulativeSumPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, cumulativeSumPipelineAggregation.getFormat());
 
-		return cumulativeSumPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		DerivativePipelineAggregation derivativePipelineAggregation) {
 
-		DerivativePipelineAggregationBuilder
-			derivativePipelineAggregationBuilder =
-				PipelineAggregatorBuilders.derivative(
-					derivativePipelineAggregation.getName(),
-					derivativePipelineAggregation.getBucketsPath());
+		DerivativeAggregation.Builder builder =
+			AggregationBuilders.derivative();
 
-		if (derivativePipelineAggregation.getFormat() != null) {
-			derivativePipelineAggregationBuilder.format(
-				derivativePipelineAggregation.getFormat());
-		}
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			derivativePipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, derivativePipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, derivativePipelineAggregation.getGapPolicy());
 
-		if (derivativePipelineAggregation.getGapPolicy() != null) {
-			derivativePipelineAggregationBuilder.gapPolicy(
-				_translate(derivativePipelineAggregation.getGapPolicy()));
-		}
-
-		if (derivativePipelineAggregation.getUnit() != null) {
-			derivativePipelineAggregationBuilder.unit(
-				derivativePipelineAggregation.getUnit());
-		}
-
-		return derivativePipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		ExtendedStatsBucketPipelineAggregation
 			extendedStatsBucketPipelineAggregation) {
 
-		ExtendedStatsBucketPipelineAggregationBuilder
-			extendedStatsBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.extendedStatsBucket(
-					extendedStatsBucketPipelineAggregation.getName(),
-					extendedStatsBucketPipelineAggregation.getBucketsPath());
+		ExtendedStatsBucketAggregation.Builder builder =
+			AggregationBuilders.extendedStatsBucket();
 
-		_assemble(
-			extendedStatsBucketPipelineAggregation,
-			extendedStatsBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			extendedStatsBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format,
+			extendedStatsBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy,
+			extendedStatsBucketPipelineAggregation.getGapPolicy());
 
 		if (extendedStatsBucketPipelineAggregation.getSigma() != null) {
-			extendedStatsBucketPipelineAggregationBuilder.sigma(
-				extendedStatsBucketPipelineAggregation.getSigma());
+			builder.sigma(extendedStatsBucketPipelineAggregation.getSigma());
 		}
 
-		return extendedStatsBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		MaxBucketPipelineAggregation maxBucketPipelineAggregation) {
 
-		MaxBucketPipelineAggregationBuilder
-			maxBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.maxBucket(
-					maxBucketPipelineAggregation.getName(),
-					maxBucketPipelineAggregation.getBucketsPath());
+		MaxBucketAggregation.Builder builder = AggregationBuilders.maxBucket();
 
-		_assemble(
-			maxBucketPipelineAggregation, maxBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			maxBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, maxBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, maxBucketPipelineAggregation.getGapPolicy());
 
-		return maxBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		MinBucketPipelineAggregation minBucketPipelineAggregation) {
 
-		MinBucketPipelineAggregationBuilder
-			minBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.minBucket(
-					minBucketPipelineAggregation.getName(),
-					minBucketPipelineAggregation.getBucketsPath());
+		MinBucketAggregation.Builder builder = AggregationBuilders.minBucket();
 
-		_assemble(
-			minBucketPipelineAggregation, minBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			minBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, minBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, minBucketPipelineAggregation.getGapPolicy());
 
-		return minBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		MovingFunctionPipelineAggregation movingFunctionPipelineAggregation) {
 
-		MovFnPipelineAggregationBuilder movFnPipelineAggregationBuilder =
-			PipelineAggregatorBuilders.movingFunction(
-				movingFunctionPipelineAggregation.getName(),
-				_scriptTranslator.translate(
-					movingFunctionPipelineAggregation.getScript()),
-				movingFunctionPipelineAggregation.getBucketsPath(),
-				movingFunctionPipelineAggregation.getWindow());
+		MovingFunctionAggregation.Builder builder =
+			AggregationBuilders.movingFn();
 
-		if (movingFunctionPipelineAggregation.getFormat() != null) {
-			movFnPipelineAggregationBuilder.format(
-				movingFunctionPipelineAggregation.getFormat());
-		}
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			movingFunctionPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, movingFunctionPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy,
+			movingFunctionPipelineAggregation.getGapPolicy());
 
-		if (movingFunctionPipelineAggregation.getGapPolicy() != null) {
-			movFnPipelineAggregationBuilder.gapPolicy(
-				_translate(movingFunctionPipelineAggregation.getGapPolicy()));
-		}
+		Script script = movingFunctionPipelineAggregation.getScript();
 
-		return movFnPipelineAggregationBuilder;
+		builder.script(script.getIdOrCode());
+
+		SetterUtil.setNotNullInteger(
+			builder::window, movingFunctionPipelineAggregation.getWindow());
+
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		PercentilesBucketPipelineAggregation
 			percentilesBucketPipelineAggregation) {
 
-		PercentilesBucketPipelineAggregationBuilder
-			percentilesBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.percentilesBucket(
-					percentilesBucketPipelineAggregation.getName(),
-					percentilesBucketPipelineAggregation.getBucketsPath());
+		PercentilesBucketAggregation.Builder builder =
+			AggregationBuilders.percentilesBucket();
 
-		_assemble(
-			percentilesBucketPipelineAggregation,
-			percentilesBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			percentilesBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, percentilesBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy,
+			percentilesBucketPipelineAggregation.getGapPolicy());
 
 		if (ArrayUtil.isNotEmpty(
 				percentilesBucketPipelineAggregation.getPercents())) {
 
-			percentilesBucketPipelineAggregationBuilder.setPercents(
-				percentilesBucketPipelineAggregation.getPercents());
+			builder.percents(
+				ListUtil.fromArray(
+					percentilesBucketPipelineAggregation.getPercents()));
 		}
 
-		return percentilesBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		SerialDiffPipelineAggregation serialDiffPipelineAggregation) {
 
-		SerialDiffPipelineAggregationBuilder
-			serialDiffPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.diff(
-					serialDiffPipelineAggregation.getName(),
-					serialDiffPipelineAggregation.getBucketsPath());
+		SerialDifferencingAggregation.Builder builder =
+			AggregationBuilders.serialDiff();
 
-		if (serialDiffPipelineAggregation.getFormat() != null) {
-			serialDiffPipelineAggregationBuilder.format(
-				serialDiffPipelineAggregation.getFormat());
-		}
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			serialDiffPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, serialDiffPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, serialDiffPipelineAggregation.getGapPolicy());
+		SetterUtil.setNotNullInteger(
+			builder::lag, serialDiffPipelineAggregation.getLag());
 
-		if (serialDiffPipelineAggregation.getGapPolicy() != null) {
-			serialDiffPipelineAggregationBuilder.gapPolicy(
-				_translate(serialDiffPipelineAggregation.getGapPolicy()));
-		}
-
-		if (serialDiffPipelineAggregation.getLag() != null) {
-			serialDiffPipelineAggregationBuilder.lag(
-				serialDiffPipelineAggregation.getLag());
-		}
-
-		return serialDiffPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		StatsBucketPipelineAggregation statsBucketPipelineAggregation) {
 
-		StatsBucketPipelineAggregationBuilder
-			statsBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.statsBucket(
-					statsBucketPipelineAggregation.getName(),
-					statsBucketPipelineAggregation.getBucketsPath());
+		StatsBucketAggregation.Builder builder =
+			AggregationBuilders.statsBucket();
 
-		_assemble(
-			statsBucketPipelineAggregation,
-			statsBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			statsBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, statsBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, statsBucketPipelineAggregation.getGapPolicy());
 
-		return statsBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
 	@Override
-	public PipelineAggregationBuilder visit(
+	public Aggregation visit(
 		SumBucketPipelineAggregation sumBucketPipelineAggregation) {
 
-		SumBucketPipelineAggregationBuilder
-			sumBucketPipelineAggregationBuilder =
-				PipelineAggregatorBuilders.sumBucket(
-					sumBucketPipelineAggregation.getName(),
-					sumBucketPipelineAggregation.getBucketsPath());
+		SumBucketAggregation.Builder builder = AggregationBuilders.sumBucket();
 
-		_assemble(
-			sumBucketPipelineAggregation, sumBucketPipelineAggregationBuilder);
+		_setNotBlankBucketsPath(
+			builder::bucketsPath,
+			sumBucketPipelineAggregation.getBucketsPath());
+		SetterUtil.setNotBlankString(
+			builder::format, sumBucketPipelineAggregation.getFormat());
+		_setNotNullGapPolicy(
+			builder::gapPolicy, sumBucketPipelineAggregation.getGapPolicy());
 
-		return sumBucketPipelineAggregationBuilder;
+		return new Aggregation(builder.build());
 	}
 
-	private void _assemble(
-		BucketMetricsPipelineAggregation bucketMetricsPipelineAggregation,
-		BucketMetricsPipelineAggregationBuilder
-			bucketMetricsPipelineAggregationBuilder) {
+	private void _setNotBlankBucketsPath(
+		Consumer<BucketsPath> consumer, String value) {
 
-		if (bucketMetricsPipelineAggregation.getFormat() != null) {
-			bucketMetricsPipelineAggregationBuilder.format(
-				bucketMetricsPipelineAggregation.getFormat());
-		}
-
-		if (bucketMetricsPipelineAggregation.getGapPolicy() != null) {
-			bucketMetricsPipelineAggregationBuilder.gapPolicy(
-				_translate(bucketMetricsPipelineAggregation.getGapPolicy()));
+		if (!Validator.isBlank(value)) {
+			consumer.accept(
+				BucketsPath.of(bucketsPath -> bucketsPath.single(value)));
 		}
 	}
 
-	private BucketHelpers.GapPolicy _translate(GapPolicy gapPolicy) {
+	private void _setNotEmptyBucketsPathMap(
+		Consumer<BucketsPath> consumer, Map<String, String> values) {
+
+		if (MapUtil.isNotEmpty(values)) {
+			consumer.accept(
+				BucketsPath.of(bucketsPath -> bucketsPath.dict(values)));
+		}
+	}
+
+	private void _setNotNullGapPolicy(
+		Consumer<co.elastic.clients.elasticsearch._types.aggregations.GapPolicy>
+			consumer,
+		GapPolicy gapPolicy) {
+
+		if (gapPolicy != null) {
+			consumer.accept(_translateGapPolicy(gapPolicy));
+		}
+	}
+
+	private co.elastic.clients.elasticsearch._types.aggregations.GapPolicy
+		_translateGapPolicy(GapPolicy gapPolicy) {
+
 		if (gapPolicy == GapPolicy.INSTANT_ZEROS) {
-			return BucketHelpers.GapPolicy.INSERT_ZEROS;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				GapPolicy.InsertZeros;
 		}
 		else if (gapPolicy == GapPolicy.SKIP) {
-			return BucketHelpers.GapPolicy.SKIP;
+			return co.elastic.clients.elasticsearch._types.aggregations.
+				GapPolicy.Skip;
 		}
 
-		throw new IllegalArgumentException("Invalid gap policy" + gapPolicy);
+		throw new IllegalArgumentException("Invalid gap policy " + gapPolicy);
 	}
 
-	private final ScriptTranslator _scriptTranslator = new ScriptTranslator();
-	private final SortFieldTranslator<SortBuilder<?>> _sortFieldTranslator =
+	private final SortFieldTranslator<SortOptions> _sortFieldTranslator =
 		new ElasticsearchSortFieldTranslator();
 
 }

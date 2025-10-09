@@ -170,14 +170,8 @@ public class ObjectDefinitionUtil {
 							isEnableFormContainer();
 					});
 				setEnableFriendlyURLCustomization(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-							return null;
-						}
-
-						return serviceBuilderObjectDefinition.
-							isEnableFriendlyURLCustomization();
-					});
+					serviceBuilderObjectDefinition::
+						isEnableFriendlyURLCustomization);
 				setEnableIndexSearch(
 					serviceBuilderObjectDefinition::isEnableIndexSearch);
 				setEnableLocalization(
@@ -219,14 +213,7 @@ public class ObjectDefinitionUtil {
 				setExternalReferenceCode(
 					serviceBuilderObjectDefinition::getExternalReferenceCode);
 				setFriendlyURLSeparator(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-							return null;
-						}
-
-						return serviceBuilderObjectDefinition.
-							getFriendlyURLSeparator();
-					});
+					serviceBuilderObjectDefinition::getFriendlyURLSeparator);
 				setId(serviceBuilderObjectDefinition::getObjectDefinitionId);
 				setLabel(
 					() -> LocalizedMapUtil.getLanguageIdMap(

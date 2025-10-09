@@ -67,14 +67,12 @@ public class ServiceContextUtil {
 		ServiceContext serviceContext = createServiceContext(
 			companyId, groupId, objectEntry, userId);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			serviceContext.setAttribute(
-				"friendlyUrlMap",
-				(Serializable)LocalizedMapUtil.populateI18nMap(
-					LocaleUtil.toLanguageId(locale),
-					objectEntry.getFriendlyUrlPath_i18n(),
-					objectEntry.getFriendlyUrlPath()));
-		}
+		serviceContext.setAttribute(
+			"friendlyUrlMap",
+			(Serializable)LocalizedMapUtil.populateI18nMap(
+				LocaleUtil.toLanguageId(locale),
+				objectEntry.getFriendlyUrlPath_i18n(),
+				objectEntry.getFriendlyUrlPath()));
 
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));

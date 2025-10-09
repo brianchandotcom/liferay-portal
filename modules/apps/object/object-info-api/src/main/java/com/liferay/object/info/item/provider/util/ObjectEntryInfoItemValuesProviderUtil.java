@@ -43,7 +43,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -190,28 +189,24 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 					namespace, objectRelationshipLocalService, themeDisplay,
 					value);
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						parentObjectDefinition.getCompanyId(), "LPD-21926")) {
+				infoFieldValues.add(
+					new InfoFieldValue<>(
+						ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+							parentObjectDefinition.
+								isEnableFriendlyURLCustomization(),
+							objectRelationship.getName(), namespace),
+						() -> {
+							if (objectEntry == null) {
+								return null;
+							}
 
-					infoFieldValues.add(
-						new InfoFieldValue<>(
-							ObjectEntryInfoItemFields.getFriendlyURLInfoField(
-								parentObjectDefinition.
-									isEnableFriendlyURLCustomization(),
-								objectRelationship.getName(), namespace),
-							() -> {
-								if (objectEntry == null) {
-									return null;
-								}
-
-								return getFriendlyURLInfoFieldValue(
-									portal.getClassNameId(
-										parentObjectDefinition.getClassName()),
-									friendlyURLEntryLocalService,
-									GetterUtil.getLong(
-										values.get(objectField.getName())));
-							}));
-				}
+							return getFriendlyURLInfoFieldValue(
+								portal.getClassNameId(
+									parentObjectDefinition.getClassName()),
+								friendlyURLEntryLocalService,
+								GetterUtil.getLong(
+									values.get(objectField.getName())));
+						}));
 			}
 		}
 

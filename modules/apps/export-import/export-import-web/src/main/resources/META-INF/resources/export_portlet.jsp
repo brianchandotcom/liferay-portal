@@ -512,7 +512,19 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<aui:button-row>
 				<aui:button type="submit" value="export" />
 
-				<aui:button type="cancel" />
+				<c:choose>
+					<c:when test='<%= FeatureFlagManagerUtil.isEnabled(company.getCompanyId(), "LPD-57655") %>'>
+						<clay:link
+							cssClass="btn btn-secondary"
+							href="<%= redirect %>"
+							label='<%= LanguageUtil.get(request, "cancel") %>'
+							role="button"
+						/>
+					</c:when>
+					<c:otherwise>
+						<aui:button type="cancel" />
+					</c:otherwise>
+				</c:choose>
 			</aui:button-row>
 		</aui:form>
 

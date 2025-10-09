@@ -25,7 +25,7 @@ const AdvancedMarkerWithInfoWindow = (
 			title={distributor.name}
 		>
 			{
-				distributor.name == promoCodeStore ?
+				distributor.name === promoCodeStore ?
 					<Pin background={'#4285F4'} borderColor={'#1A73E8'} glyphColor={'#FFF'} /> :
 					<Pin background={'#f30808ff'} borderColor={'#1A73E8'} glyphColor={'#FFF'} />
 			}

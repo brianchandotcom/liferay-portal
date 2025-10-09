@@ -1,6 +1,5 @@
 {
 	"dependencies": {
-		"@react-google-maps/api": "^2.20.7",
 		"@vis.gl/react-google-maps": "^1.5.5",
 		"clarity-distributors-api": "*",
 		"react": "18.2.0",

@@ -53,7 +53,11 @@ async function getTableRowByText(page, text: string) {
 	return page.locator('table.table tbody tr', {hasText: text}).first();
 }
 
-async function goToDefaultPermissions(page, objectName?: string) {
+async function goToDefaultPermissions(
+	page,
+	objectName?: string,
+	propagate: boolean = false
+) {
 	await expect(async () => {
 		if (!objectName) {
 			await page.getByLabel('Actions').click();
@@ -64,7 +68,12 @@ async function goToDefaultPermissions(page, objectName?: string) {
 				.click();
 		}
 		await page
-			.getByRole('menuitem', {exact: true, name: 'Default Permissions'})
+			.getByRole('menuitem', {
+				exact: true,
+				name: propagate
+					? 'Edit & Propagate Default Permissions'
+					: 'Default Permissions',
+			})
 			.click();
 	}).toPass();
 }
@@ -371,6 +380,89 @@ test(
 
 			await deleteSpace(page, spaceName1);
 			await deleteSpace(page, spaceName2);
+		}
+	}
+);
+
+test(
+	'Can propagate Default Permissions to existing assets',
+	{tag: ['@LPD-67436']},
+	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
+		test.setTimeout(90000);
+
+		await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+		const spaceName = 'Space' + getRandomInt();
+
+		await createSpace(page, spaceName);
+
+		try {
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			const folderName = 'Folder' + getRandomInt();
+
+			await folderPage.createFolder(folderName);
+
+			await page.getByRole('link', {name: folderName}).click();
+
+			const subFolderName = 'SubFolder' + getRandomInt();
+
+			await folderPage.createFolder(subFolderName);
+
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			await goToDefaultPermissions(page, spaceName, true);
+
+			const permissions = [
+				{action: 'DELETE', checked: true, role: 'Power User'},
+				{action: 'PERMISSIONS', checked: true, role: 'User'},
+			];
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				permissions,
+				false,
+				true
+			);
+
+			await spaceSummaryPage.goto(spaceName);
+
+			await spaceSummaryPage.viewAllContentLink.click();
+
+			await verifyPermissions({
+				defaultPermissionsPage,
+				objectName: folderName,
+				page,
+				permissions,
+			});
+
+			await goToDefaultPermissions(page, folderName, true);
+
+			const permissions2 = [
+				{action: 'UPDATE', checked: true, role: 'Power User'},
+				{action: 'VIEW', checked: true, role: 'User'},
+			];
+
+			await defaultPermissionsPage.checkPermissionsAndSave(
+				permissions2,
+				false,
+				true
+			);
+
+			await page.getByRole('link', {name: folderName}).click();
+
+			const allPermissions = permissions.concat(permissions2);
+
+			await verifyPermissions({
+				defaultPermissionsPage,
+				objectName: subFolderName,
+				page,
+				permissions: allPermissions,
+			});
+		}
+		finally {
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			await deleteSpace(page, spaceName);
 		}
 	}
 );

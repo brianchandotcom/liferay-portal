@@ -190,12 +190,13 @@ public class GroupTestUtil {
 		}
 
 		return GroupServiceUtil.addGroup(
-			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
+			StringPool.BLANK, parentGroupId,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap,
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
 			).build(),
-			type, manualMembership, membershipRestriction, friendlyURL, site,
-			active, serviceContext);
+			type, null, manualMembership, membershipRestriction, friendlyURL,
+			site, false, active, serviceContext);
 	}
 
 	public static Group addGroupToCompany(long companyId) throws Exception {

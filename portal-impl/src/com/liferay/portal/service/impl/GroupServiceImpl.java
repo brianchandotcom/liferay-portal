@@ -131,19 +131,16 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		if (group == null) {
 			group = addGroup(
-				parentGroupId, liveGroupId, nameMap, descriptionMap, type,
-				manualMembership, membershipRestriction, friendlyURL, site,
-				inheritContent, active, serviceContext);
-
-			group.setExternalReferenceCode(externalReferenceCode);
-
-			group = groupPersistence.update(group);
+				externalReferenceCode, parentGroupId, liveGroupId, nameMap,
+				descriptionMap, type, null, manualMembership,
+				membershipRestriction, friendlyURL, site, inheritContent,
+				active, serviceContext);
 		}
 		else {
 			group = updateGroup(
 				group.getGroupId(), parentGroupId, nameMap, descriptionMap,
-				type, manualMembership, membershipRestriction, friendlyURL,
-				inheritContent, active, serviceContext);
+				type, null, manualMembership, membershipRestriction,
+				friendlyURL, inheritContent, active, serviceContext);
 		}
 
 		return group;

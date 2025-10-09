@@ -2,7 +2,6 @@
 
 Check | Category | Description
 ----- | -------- | -----------
-AccessModifierCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks for cases where visibility of methods can be decreased. |
 [AnnotationUseStyleCheck](https://checkstyle.sourceforge.io/checks/annotation/annotationusestyle.html) | [Styling](styling_checks.md#styling-checks) | Checks the style of elements in annotations. |
 [AnonymousClassCheck](check/anonymous_class_check.md#anonymousclasscheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks for serialization issue when using anonymous class. |
 AppendCheck | [Styling](styling_checks.md#styling-checks) | Checks instances where literal Strings are appended. |
@@ -271,6 +270,7 @@ SealedAndNonsealedModifierCheck | [Performance](performance_checks.md#performanc
 SelfReferenceCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds cases of unnecessary reference to its own class. |
 SemiColonCheck | [Styling](styling_checks.md#styling-checks) | Finds cases of unnecessary semicolon. |
 [ServiceComponentRuntimeCheck](check/service_component_runtime_check.md#servicecomponentruntimecheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks `ServiceComponentRuntime` usage in test classes. |
+ServiceImplAccessModifierCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks for cases where visibility of methods can be decreased. |
 [ServiceProxyFactoryCheck](check/service_proxy_factory_check.md#serviceproxyfactorycheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Finds incorrect parameter in method call. |
 ServiceUpdateCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | Checks that there are no stale references in service code from service updates. |
 SessionKeysCheck | [Naming Conventions](naming_conventions_checks.md#naming-conventions-checks) | Checks that messages send to `SessionsErrors` or `SessionMessages` follow naming conventions. |

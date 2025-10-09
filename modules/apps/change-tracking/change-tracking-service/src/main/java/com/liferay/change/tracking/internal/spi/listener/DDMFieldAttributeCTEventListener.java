@@ -12,14 +12,9 @@ import com.liferay.change.tracking.spi.listener.CTEventListener;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
-import java.util.Map;
-
-import net.htmlparser.jericho.Attributes;
-import net.htmlparser.jericho.OutputDocument;
-import net.htmlparser.jericho.Source;
-import net.htmlparser.jericho.StartTag;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,37 +50,21 @@ public class DDMFieldAttributeCTEventListener implements CTEventListener {
 						continue;
 					}
 
-					String output = ddmFieldAttribute.getAttributeValue();
+					String value = ddmFieldAttribute.getAttributeValue();
 
-					if (!output.contains("previewCTCollectionId")) {
-						continue;
+					String parameter =
+						"previewCTCollectionId=" + ctCollectionId;
+
+					while (value.contains(parameter)) {
+						int index = value.indexOf(parameter);
+
+						value = StringUtil.removeSubstring(
+							value,
+							value.substring(
+								index - 1, index + parameter.length()));
 					}
 
-					Source source = new Source(output);
-
-					List<StartTag> imgTags = source.getAllStartTags("img");
-
-					OutputDocument outputDocument = new OutputDocument(source);
-
-					for (StartTag imgTag : imgTags) {
-						Attributes attributes = imgTag.getAttributes();
-
-						Map<String, String> map = outputDocument.replace(
-							attributes, false);
-
-						String src = attributes.getValue("src");
-
-						int index = src.indexOf("previewCTCollectionId=");
-
-						if (index == -1) {
-							continue;
-						}
-
-						map.put("src", src.substring(0, index));
-					}
-
-					ddmFieldAttribute.setAttributeValue(
-						outputDocument.toString());
+					ddmFieldAttribute.setAttributeValue(value);
 
 					ddmFieldAttributeCTPersistence.update(ddmFieldAttribute);
 				}

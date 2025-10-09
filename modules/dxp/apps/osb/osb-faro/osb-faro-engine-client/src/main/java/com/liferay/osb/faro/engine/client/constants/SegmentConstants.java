@@ -33,6 +33,8 @@ public class SegmentConstants {
 		).build();
 	private static final Map<String, String> _segmentTypes = HashMapBuilder.put(
 		"batch", IndividualSegment.Type.BATCH.name()
+	).put(
+		"realTime", IndividualSegment.Type.REAL_TIME.name()
 	).build();
 
 }

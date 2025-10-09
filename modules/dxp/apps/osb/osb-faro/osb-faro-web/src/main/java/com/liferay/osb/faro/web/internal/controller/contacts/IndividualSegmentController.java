@@ -100,12 +100,9 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		validateCreate(channelId, segmentType);
 
-		if (segmentType.equals(IndividualSegment.Type.BATCH.name())) {
-			return createDynamic(
-				channelId, groupId, filter, includeAnonymousUsers, name);
-		}
-
-		return null;
+		return createIndividualSegment(
+			channelId, groupId, filter, includeAnonymousUsers, name,
+			segmentType);
 	}
 
 	@DELETE
@@ -327,20 +324,13 @@ public class IndividualSegmentController extends BaseFaroController {
 
 		validateUpdate(individualSegment);
 
-		String segmentType = individualSegment.getSegmentType();
-
-		if (segmentType.equals(IndividualSegment.Type.BATCH.name())) {
-			return updateDynamic(
-				groupId, individualSegment, filter, includeAnonymousUsers,
-				name);
-		}
-
-		return new IndividualSegmentDisplay(individualSegment);
+		return updateIndividualSegment(
+			groupId, individualSegment, filter, includeAnonymousUsers, name);
 	}
 
-	protected IndividualSegmentDisplay createDynamic(
+	protected IndividualSegmentDisplay createIndividualSegment(
 			String channelId, long groupId, String filter,
-			boolean includeAnonymousUsers, String name)
+			boolean includeAnonymousUsers, String name, String segmentType)
 		throws Exception {
 
 		FaroProject faroProject =
@@ -349,8 +339,7 @@ public class IndividualSegmentController extends BaseFaroController {
 		return new IndividualSegmentDisplay(
 			contactsEngineClient.addIndividualSegment(
 				faroProject, getUserId(), channelId, filter,
-				includeAnonymousUsers, name,
-				IndividualSegment.Type.BATCH.name(),
+				includeAnonymousUsers, name, segmentType,
 				IndividualSegment.Status.ACTIVE.name()));
 	}
 
@@ -394,7 +383,7 @@ public class IndividualSegmentController extends BaseFaroController {
 		return new FaroResultsDisplay<>();
 	}
 
-	protected IndividualSegmentDisplay updateDynamic(
+	protected IndividualSegmentDisplay updateIndividualSegment(
 			long groupId, IndividualSegment individualSegment, String filter,
 			boolean includeAnonymousUsers, String name)
 		throws Exception {
@@ -472,9 +461,7 @@ public class IndividualSegmentController extends BaseFaroController {
 			throw new FaroException("Invalid channel ID: " + channelId);
 		}
 
-		if (!segmentType.equals(IndividualSegment.Type.BATCH.name())) {
-			throw new FaroException("Invalid segment type: " + segmentType);
-		}
+		validateType(segmentType);
 	}
 
 	protected void validateStatus(String status) {
@@ -484,8 +471,17 @@ public class IndividualSegmentController extends BaseFaroController {
 		}
 	}
 
+	protected void validateType(String segmentType) {
+		if (!segmentType.equals(IndividualSegment.Type.BATCH.name()) &&
+			!segmentType.equals(IndividualSegment.Type.REAL_TIME.name())) {
+
+			throw new FaroException("Invalid segment type: " + segmentType);
+		}
+	}
+
 	protected void validateUpdate(IndividualSegment individualSegment) {
 		validateStatus(individualSegment.getStatus());
+		validateType(individualSegment.getSegmentType());
 	}
 
 	private static final int[] _ENTITY_TYPES = {

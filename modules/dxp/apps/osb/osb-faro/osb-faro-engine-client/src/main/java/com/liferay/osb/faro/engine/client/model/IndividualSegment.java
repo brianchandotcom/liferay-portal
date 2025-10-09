@@ -215,7 +215,7 @@ public class IndividualSegment {
 
 	public enum Type {
 
-		BATCH
+		BATCH, REAL_TIME
 
 	}
 

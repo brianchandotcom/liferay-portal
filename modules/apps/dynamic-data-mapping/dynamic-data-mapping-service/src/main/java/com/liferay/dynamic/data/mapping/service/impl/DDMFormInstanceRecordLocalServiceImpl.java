@@ -828,8 +828,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		return StringBundler.concat(
 			themeDisplay.getPortalURL(),
 			themeDisplay.getPathFriendlyURLPublic(), "/forms/shared/-/form/",
-			ddmFormInstanceRecord.getFormInstanceId(), "?_",
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM, "_formInstanceRecordId=",
+			ddmFormInstanceRecord.getFormInstanceId(), "?",
+			_portal.getPortletNamespace(
+				DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM),
+			"formInstanceRecordId=",
 			ddmFormInstanceRecord.getFormInstanceRecordId());
 	}
 

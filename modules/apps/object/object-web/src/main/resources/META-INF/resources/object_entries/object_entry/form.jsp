@@ -63,7 +63,7 @@ if (ParamUtil.getBoolean(request, "showHeader", true)) {
 			</c:if>
 
 			<%
-			boolean showFriendlyURL = FeatureFlagManagerUtil.isEnabled("LPD-21926") && objectDefinition.isEnableFriendlyURLCustomization();
+			boolean showFriendlyURL = objectDefinition.isEnableFriendlyURLCustomization();
 
 			ObjectLayoutBox seoObjectLayoutBox = objectEntryDisplayContext.getObjectLayoutBox(ObjectLayoutBoxConstants.TYPE_SEO);
 			%>

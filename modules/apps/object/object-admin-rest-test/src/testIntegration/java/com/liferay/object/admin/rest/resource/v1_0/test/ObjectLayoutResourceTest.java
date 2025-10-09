@@ -20,7 +20,6 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -91,7 +90,6 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 	public void testGraphQLGetObjectLayoutNotFound() {
 	}
 
-	@FeatureFlag("LPD-21926")
 	@Override
 	@Test
 	public void testPostObjectDefinitionObjectLayout() throws Exception {

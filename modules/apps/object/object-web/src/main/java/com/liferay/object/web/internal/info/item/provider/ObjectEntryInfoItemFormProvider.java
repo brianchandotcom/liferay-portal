@@ -122,16 +122,8 @@ public class ObjectEntryInfoItemFormProvider
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.modifiedDateInfoField
 				).infoFieldSetEntry(
-					unsafeConsumer -> {
-						if (FeatureFlagManagerUtil.isEnabled(
-								_objectDefinition.getCompanyId(),
-								"LPD-21926")) {
-
-							unsafeConsumer.accept(
-								ObjectEntryInfoItemFields.
-									getFriendlyURLInfoField(_objectDefinition));
-						}
-					}
+					ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+						_objectDefinition)
 				).infoFieldSetEntry(
 					ObjectEntryInfoItemFields.objectEntryIdInfoField
 				).infoFieldSetEntry(

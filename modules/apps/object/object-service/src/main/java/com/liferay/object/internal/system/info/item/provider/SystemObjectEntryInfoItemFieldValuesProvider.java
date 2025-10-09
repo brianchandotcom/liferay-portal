@@ -32,7 +32,6 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -145,21 +144,17 @@ public class SystemObjectEntryInfoItemFieldValuesProvider
 
 		List<InfoFieldValue<Object>> infoFieldValues = new ArrayList<>();
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				_objectDefinition.getCompanyId(), "LPD-21926")) {
-
-			infoFieldValues.add(
-				new InfoFieldValue<>(
-					ObjectEntryInfoItemFields.getFriendlyURLInfoField(
-						_objectDefinition),
-					() ->
-						ObjectEntryInfoItemValuesProviderUtil.
-							getFriendlyURLInfoFieldValue(
-								_portal.getClassNameId(
-									_objectDefinition.getClassName()),
-								_friendlyURLEntryLocalService,
-								systemObjectEntry.getClassPK())));
-		}
+		infoFieldValues.add(
+			new InfoFieldValue<>(
+				ObjectEntryInfoItemFields.getFriendlyURLInfoField(
+					_objectDefinition),
+				() ->
+					ObjectEntryInfoItemValuesProviderUtil.
+						getFriendlyURLInfoFieldValue(
+							_portal.getClassNameId(
+								_objectDefinition.getClassName()),
+							_friendlyURLEntryLocalService,
+							systemObjectEntry.getClassPK())));
 
 		Map<String, Object> values = systemObjectEntry.getValues();
 

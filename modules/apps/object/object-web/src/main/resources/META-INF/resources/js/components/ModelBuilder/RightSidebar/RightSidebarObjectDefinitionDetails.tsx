@@ -208,7 +208,6 @@ export function RightSidebarObjectDefinitionDetails({
 	);
 
 	const showSeoSection =
-		Liferay.FeatureFlags['LPD-21926'] &&
 		values.friendlyURLSeparator !== undefined &&
 		!(
 			(Liferay.FeatureFlags['LPS-135430'] &&

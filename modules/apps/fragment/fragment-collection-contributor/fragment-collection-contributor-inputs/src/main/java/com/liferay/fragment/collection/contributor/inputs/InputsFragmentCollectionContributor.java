@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import jakarta.servlet.ServletContext;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -52,16 +51,6 @@ public class InputsFragmentCollectionContributor
 	}
 
 	private List<FragmentEntry> _filter(List<FragmentEntry> fragmentEntries) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-21926")) {
-
-			fragmentEntries = ListUtil.filter(
-				fragmentEntries,
-				fragmentEntry -> !Objects.equals(
-					fragmentEntry.getFragmentEntryKey(),
-					"INPUTS-friendly-url-input"));
-		}
-
 		if (!FeatureFlagManagerUtil.isEnabled(
 				CompanyThreadLocal.getCompanyId(), "LPD-17564")) {
 

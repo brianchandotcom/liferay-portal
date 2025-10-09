@@ -27,7 +27,6 @@ import com.liferay.object.service.ObjectEntryVersionLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -88,17 +87,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 	public LayoutDisplayPageObjectProvider<ObjectEntry>
 		getLayoutDisplayPageObjectProvider(long groupId, String urlTitle) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
-			ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
-				groupId, _objectDefinition, urlTitle);
+		ObjectEntry objectEntry = _objectEntryLocalService.fetchObjectEntry(
+			groupId, _objectDefinition, urlTitle);
 
-			if (objectEntry != null) {
-				return new ObjectEntryLayoutDisplayPageObjectProvider(
-					_assetHelper, _infoItemFriendlyURLProvider,
-					_objectDefinition, _objectDefinitionLocalService,
-					objectEntry, _objectEntryLocalService,
-					_objectRelationshipLocalService);
-			}
+		if (objectEntry != null) {
+			return new ObjectEntryLayoutDisplayPageObjectProvider(
+				_assetHelper, _infoItemFriendlyURLProvider, _objectDefinition,
+				_objectDefinitionLocalService, objectEntry,
+				_objectEntryLocalService, _objectRelationshipLocalService);
 		}
 
 		if (!_objectDefinition.isDefaultStorageType()) {

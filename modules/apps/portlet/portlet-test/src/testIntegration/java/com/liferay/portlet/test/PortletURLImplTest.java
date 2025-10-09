@@ -173,11 +173,11 @@ public class PortletURLImplTest {
 		Assert.assertEquals(expectedToString, liferayPortletURL.toString());
 	}
 
-	@DeleteAfterTestRun
-	private Group _group;
-
 	@Inject
 	private Encryptor _encryptor;
+
+	@DeleteAfterTestRun
+	private Group _group;
 
 	@Inject
 	private PortletURLFactory _portletURLFactory;

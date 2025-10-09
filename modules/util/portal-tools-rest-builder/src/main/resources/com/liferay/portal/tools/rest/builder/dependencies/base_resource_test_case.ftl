@@ -37,6 +37,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 </#if>
 
 <#assign
+	generatePermissionsJavaMethodSignatures = []
 	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
@@ -45,7 +46,6 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	hasIdProperty = properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")
 
 	generateDepotEntry = false
-	generateRandomPermissions = false
 	useDeleteAssetLibrary = false
 	useDeleteByExternalReferenceCode = false
 	useDeleteById = false
@@ -55,7 +55,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 <#list javaMethodSignatures as javaMethodSignature>
 	<#assign
 		generateDepotEntry = generateDepotEntry || javaMethodSignature.methodName?contains("AssetLibrary")
-		generateRandomPermissions = generateRandomPermissions || freeMarkerTool.isPermissionsCompatibleMethod(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)
+		generatePermissionsJavaMethodSignatures = generatePermissionsJavaMethodSignatures + (isPermissionsCompatibleMethod(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)?then([javaMethodSignature], []))
 		useDeleteAssetLibrary = useDeleteAssetLibrary || (hasExternalReferenceCodeProperty && stringUtil.equals(javaMethodSignature.methodName, "deleteAssetLibrary" + schemaName))
 		useDeleteByExternalReferenceCode = useDeleteByExternalReferenceCode || (freeMarkerTool.isExternalReferenceCodeMethod("delete", javaMethodSignature) && hasExternalReferenceCodeProperty && !javaMethodSignature.parentSchemaName?has_content)
 		useDeleteById = useDeleteById || (stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && (freeMarkerTool.hasPathParameter(javaMethodSignature, "id") || freeMarkerTool.hasPathParameter(javaMethodSignature, schemaVarName + "Id")) && hasIdProperty)
@@ -267,7 +267,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			).build();
 		</#if>
 
-		<#if generateRandomPermissions>
+		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 			permissions${schemaName}Resource = ${schemaName}Resource.builder(
 			).authentication(
 				_testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
@@ -368,7 +368,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#list javaMethodSignatures as javaMethodSignature>
 		<#assign
-			generatePermissions = freeMarkerTool.isPermissionsCompatibleMethod(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName)
+			generatePermissions = generatePermissionsJavaMethodSignatures?seq_contains(javaMethodSignature)
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 			parentSchemaName = javaMethodSignature.parentSchemaName!""
 		/>
@@ -4011,7 +4011,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			return random${schemaName}();
 		}
 
-		<#if generateRandomPermissions>
+		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 			protected ${schemaName} randomPermissions${schemaName}() throws Exception {
 				${schemaName} ${schemaVarName} = random${schemaName}();
 
@@ -4078,7 +4078,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 
-	<#if generateRandomPermissions>
+	<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 		protected ${schemaName}Resource permissions${schemaName}Resource;
 	</#if>
 
@@ -4285,6 +4285,25 @@ public abstract class Base${schemaName}ResourceTestCase {
 	</#if>
 
 }
+
+<#function isPermissionsCompatibleMethod
+	configYAML
+	javaMethodSignature
+	javaMethodSignatures
+	schema
+	schemaName
+>
+	<#if freeMarkerTool.isGeneratePermissions(configYAML, javaMethodSignature, javaMethodSignatures, schema, schemaName) &&
+		 ((freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName + "PermissionsPage")?? &&
+		   freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "put" + schemaName + "PermissionsPage")??) ||
+		  (freeMarkerTool.getParentPermissionsPageJavaMethodSignature("get", javaMethodSignatures, javaMethodSignature.parentSchemaName, schemaName)?? &&
+		   freeMarkerTool.getParentPermissionsPageJavaMethodSignature("put", javaMethodSignatures, javaMethodSignature.parentSchemaName, schemaName)??))>
+
+		<#return true />
+	</#if>
+
+	<#return false />
+</#function>
 
 <#macro getDefaultParameter
 	javaMethodParameter

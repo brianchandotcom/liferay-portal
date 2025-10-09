@@ -674,17 +674,48 @@ public class ObjectEntryRelatedObjectsResourceTest {
 				objectRelationship.getName()),
 			Http.Method.POST);
 
-		jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			StringBundler.concat(
-				_objectDefinition1.getRESTContextPath(),
-				"/by-external-reference-code/",
-				_objectEntry1.getExternalReferenceCode(), "/",
-				objectRelationship.getName(), "/",
-				jsonObject.get("externalReferenceCode")),
-			Http.Method.GET);
+		String endpoint = StringBundler.concat(
+			_objectDefinition1.getRESTContextPath(),
+			"/by-external-reference-code/",
+			_objectEntry1.getExternalReferenceCode(), "/",
+			objectRelationship.getName(), "/",
+			jsonObject.get("externalReferenceCode"));
 
-		Assert.assertNotNull(jsonObject.get("dateCreated"));
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		JSONObject actionsJSONObject = jsonObject.getJSONObject("actions");
+
+		String href = "http://localhost:8080/o" + endpoint;
+
+		Assert.assertEquals(
+			actionsJSONObject.toString(),
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				"get",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "GET"
+				).put(
+					"href", href
+				)
+			).put(
+				"update",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "PATCH"
+				).put(
+					"href", href
+				)
+			).put(
+				"delete",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "DELETE"
+				).put(
+					"href", href
+				)
+			).toString());
 	}
 
 	@Test

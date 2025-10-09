@@ -1,4 +1,6 @@
-import com.liferay.gradle.util.copy.StripPathSegmentsAction
+import com.liferay.gradle.util.hash.HashUtil
+
+import org.gradle.api.file.RelativePath
 
 task buildLiferayAMDLoader(type: Copy)
 
@@ -6,7 +8,6 @@ File jsDestinationDir = file("tmp/META-INF/resources")
 
 buildLiferayAMDLoader {
 	dependsOn npmInstall
-	eachFile new StripPathSegmentsAction(4)
 	from npmInstall.nodeModulesDir
 
 	include "@liferay/amd-loader/build/loader/loader.js.map"
@@ -14,6 +15,32 @@ buildLiferayAMDLoader {
 
 	includeEmptyDirs = false
 	into jsDestinationDir
+
+	eachFile {
+		details ->
+
+		def sourcePath = details.sourcePath
+
+		if (sourcePath.endsWith(".map")) {
+			sourcePath = sourcePath[0..-5]
+		}
+
+		def md5 = HashUtil.md5(
+			new File("${npmInstall.nodeModulesDir}/${sourcePath}"))
+
+		def hash = md5.asCompactString()[0..11]
+
+		def segments = details.relativePath.segments
+
+		def fileName = segments[-1]
+
+		def i = fileName.indexOf(".")
+
+		segments[-1] = "${fileName[0..i]}(${hash})${fileName[i..-1]}"
+
+		details.relativePath = new RelativePath(
+			true, segments[4..-1].toArray(new String[]{}))
+	}
 }
 
 classes {

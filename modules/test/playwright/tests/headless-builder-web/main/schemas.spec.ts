@@ -209,7 +209,7 @@ const applicationData2 = {
 };
 
 testFeatureFlagsDisabled(
-	'can see all available object definitions on schema creation',
+	'Can see all available object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinitions = [];
 
@@ -288,7 +288,7 @@ testFeatureFlagsDisabled(
 );
 
 testFeatureFlagsDisabled(
-	'can see allowed object definitions on schema creation',
+	'Can see allowed object definitions on schema creation',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -328,7 +328,7 @@ testFeatureFlagsDisabled(
 );
 
 testFeatureFlagsEnabled(
-	'can see allowed object definitions on schema creation with feature flag',
+	'Can see allowed object definitions on schema creation with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage}) => {
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -377,7 +377,7 @@ testFeatureFlagsEnabled(
 );
 
 testFeatureFlagsDisabled(
-	'check related objects enablement without feature flag',
+	'Check related objects enablement without feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -530,7 +530,7 @@ testFeatureFlagsDisabled(
 );
 
 testFeatureFlagsEnabled(
-	'check related objects enablement with feature flag',
+	'Check related objects enablement with feature flag',
 	async ({apiHelpers, applicationPage, headlessBuilderPage, schemaPage}) => {
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -687,7 +687,7 @@ testFeatureFlagsEnabled(
 );
 
 testFeatureFlagsEnabled(
-	'cannot edit object field of a related schema in unpublished application',
+	'Cannot edit object field of a related schema in unpublished application',
 	{tag: ['@LPD-67357']},
 	async ({
 		apiHelpers,
@@ -716,7 +716,7 @@ testFeatureFlagsEnabled(
 );
 
 testFeatureFlagsEnabled(
-	'can edit schema name and description in an unpublished application',
+	'Can edit schema name and description in an unpublished application',
 	{tag: ['@LPD-67357']},
 	async ({
 		apiHelpers,
@@ -754,7 +754,7 @@ testFeatureFlagsEnabled(
 );
 
 testFeatureFlagsEnabled(
-	'can relate the same schema with multiple endpoints',
+	'Can relate the same schema with multiple endpoints',
 	{tag: ['@LPD-67357']},
 	async ({apiHelpers, applicationPage, headlessBuilderPage, page}) => {
 		const application = await apiHelpers.objectEntry.postObjectEntry(

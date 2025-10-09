@@ -11,7 +11,13 @@ export default defineConfig({
 		outDir: 'build/vite',
 		rollupOptions: {
 			external: ['react', 'react-dom', 'clarity-distributors-api'],
+			output: {
+				assetFileNames: '[name]-[hash][extname]',
+				chunkFileNames: '[name]-[hash].js',
+				entryFileNames: '[name]-[hash].js',
+			},
 		},
+		target: 'esnext',
 	},
 	plugins: [react()],
 	server: {

@@ -3,7 +3,7 @@ assemble:
         into: static
 clarity-solution-custom-element-distributors-map:
     cssURLs:
-        -   assets/*.css
+        -   "*.css"
     friendlyURLMapping: clarity-solution-custom-element-distributors-map
     htmlElementName: clarity-solution-custom-element-distributors-map
     instanceable: false
@@ -11,5 +11,5 @@ clarity-solution-custom-element-distributors-map:
     portletCategoryName: category.client-extensions
     type: customElement
     urls:
-        -   assets/*.js
+        -   "*.js"
     useESM: true

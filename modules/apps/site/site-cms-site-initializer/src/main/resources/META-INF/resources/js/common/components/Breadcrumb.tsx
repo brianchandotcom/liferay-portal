@@ -15,7 +15,7 @@ import ApiHelper from '../services/ApiHelper';
 import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
 
-interface ActionDropdownItemProps {
+export interface ActionDropdownItemProps {
 	confirmationMessage?: string;
 	confirmationTitle?: string;
 	href?: string;

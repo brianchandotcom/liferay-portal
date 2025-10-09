@@ -42,22 +42,22 @@ const Settings = ({
 		string | undefined
 	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
 	const [loading, setLoading] = useState(true);
-	const [showManagementBarInEmptyState, setShowManagementBarInEmptyState] =
-		useState(dataSet.showManagementBarInEmptyState ?? false);
+	const [hideManagementBarInEmptyState, setHideManagementBarInEmptyState] =
+		useState(dataSet.hideManagementBarInEmptyState ?? false);
 
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);
 
 	const handleToggleChange = useCallback(
-		() => setShowManagementBarInEmptyState(!showManagementBarInEmptyState),
-		[showManagementBarInEmptyState]
+		() => setHideManagementBarInEmptyState(!hideManagementBarInEmptyState),
+		[hideManagementBarInEmptyState]
 	);
 
 	const updateFDSViewSettings = async () => {
 		const body = {
 			defaultVisualizationMode,
-			showManagementBarInEmptyState,
+			hideManagementBarInEmptyState,
 		};
 
 		const url = getDataSetResourceURL({
@@ -99,7 +99,7 @@ const Settings = ({
 			const url = getDataSetResourceURL({
 				dataSetERC: dataSet.externalReferenceCode,
 				params: {
-					fields: `${fields},showManagementBarInEmptyState`,
+					fields: `${fields},hideManagementBarInEmptyState`,
 					nestedFields: fields,
 				},
 			});
@@ -162,10 +162,10 @@ const Settings = ({
 				});
 
 				const serverValue =
-					responseJSON.showManagementBarInEmptyState || false;
+					responseJSON.hideManagementBarInEmptyState || false;
 
-				if (serverValue !== showManagementBarInEmptyState) {
-					setShowManagementBarInEmptyState(serverValue);
+				if (serverValue !== hideManagementBarInEmptyState) {
+					setHideManagementBarInEmptyState(serverValue);
 				}
 
 				setLoading(false);
@@ -346,28 +346,28 @@ const Settings = ({
 						<ClayLayout.Col size={8}>
 							<div>
 								<label
-									htmlFor="show-management-bar-in-empty-state"
-									id="show-management-bar-in-empty-state"
+									htmlFor="hide-management-bar-in-empty-state"
+									id="hide-management-bar-in-empty-state"
 								>
 									{Liferay.Language.get(
-										'show-management-bar-in-empty-state'
+										'hide-management-bar-in-empty-state'
 									)}
 								</label>
 							</div>
 
 							<div>
 								{Liferay.Language.get(
-									'show-management-bar-in-empty-state-help'
+									'hide-management-bar-in-empty-state-help'
 								)}
 							</div>
 						</ClayLayout.Col>
 
 						<ClayLayout.Col size={4}>
-							<div className="form-group">
+							<div className="d-flex form-group justify-content-end mr-2">
 								<ClayToggle
 									disabled={loading}
 									onToggle={handleToggleChange}
-									toggled={showManagementBarInEmptyState}
+									toggled={hideManagementBarInEmptyState}
 								/>
 							</div>
 						</ClayLayout.Col>

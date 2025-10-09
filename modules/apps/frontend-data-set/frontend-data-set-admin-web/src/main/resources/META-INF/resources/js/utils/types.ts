@@ -63,6 +63,7 @@ export interface IDataSet {
 	description?: string;
 	externalReferenceCode: string;
 	filtersOrder?: string;
+	hideManagementBarInEmptyState?: boolean;
 	id: string;
 	itemActionsOrder?: string;
 	label: string;
@@ -70,7 +71,6 @@ export interface IDataSet {
 	restApplication: string;
 	restEndpoint: string;
 	restSchema: string;
-	showManagementBarInEmptyState?: boolean;
 	sortsOrder?: string;
 	tableSectionsOrder?: string;
 }

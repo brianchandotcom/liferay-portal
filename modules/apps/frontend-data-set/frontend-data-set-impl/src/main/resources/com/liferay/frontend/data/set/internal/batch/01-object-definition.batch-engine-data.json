@@ -267,13 +267,13 @@
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"defaultValue": false,
-					"externalReferenceCode": "SHOW_MANAGEMENT_BAR_IN_EMPTY_STATE",
+					"externalReferenceCode": "HIDE_MANAGEMENT_BAR_IN_EMPTY_STATE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Show Management Bar in Empty State"
+						"en_US": "Hide Management Bar in Empty State"
 					},
-					"name": "showManagementBarInEmptyState",
+					"name": "hideManagementBarInEmptyState",
 					"required": false,
 					"state": false,
 					"system": true,

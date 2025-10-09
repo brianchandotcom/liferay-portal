@@ -32,31 +32,33 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		</div>
 	</c:when>
 	<c:otherwise>
-		<clay:navigation-bar
-			navigationItems='<%=
-				new JSPNavigationItemList(pageContext) {
-					{
-						portletURL.setParameter("tabs2", "export");
+		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-57655") %>'>
+			<clay:navigation-bar
+				navigationItems='<%=
+					new JSPNavigationItemList(pageContext) {
+						{
+							portletURL.setParameter("tabs2", "export");
 
-						add(
-							navigationItem -> {
-								navigationItem.setActive(tabs2.equals("export"));
-								navigationItem.setHref(portletURL.toString());
-								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "export"));
-							});
+							add(
+								navigationItem -> {
+									navigationItem.setActive(tabs2.equals("export"));
+									navigationItem.setHref(portletURL.toString());
+									navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "export"));
+								});
 
-						portletURL.setParameter("tabs2", "import");
+							portletURL.setParameter("tabs2", "import");
 
-						add(
-							navigationItem -> {
-								navigationItem.setActive(tabs2.equals("import"));
-								navigationItem.setHref(portletURL.toString());
-								navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "import"));
-							});
+							add(
+								navigationItem -> {
+									navigationItem.setActive(tabs2.equals("import"));
+									navigationItem.setHref(portletURL.toString());
+									navigationItem.setLabel(LanguageUtil.get(httpServletRequest, "import"));
+								});
+						}
 					}
-				}
-			%>'
-		/>
+				%>'
+			/>
+		</c:if>
 
 		<div class="portlet-export-import-container" id="<portlet:namespace />exportImportPortletContainer">
 			<liferay-util:include page="/export_import_error.jsp" servletContext="<%= application %>" />

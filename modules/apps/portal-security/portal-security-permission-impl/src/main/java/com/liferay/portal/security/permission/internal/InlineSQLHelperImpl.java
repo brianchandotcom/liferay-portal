@@ -94,8 +94,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		Set<Long> disabledGroupIds = new HashSet<>();
+
 		if (_isSkipReplace(
-				permissionChecker, baseModel.getModelClassName(), groupIds)) {
+				permissionChecker, baseModel.getModelClassName(), groupIds,
+				disabledGroupIds)) {
 
 			return list;
 		}
@@ -130,29 +133,19 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Function<T, Object> groupIdGetterFunction =
 			attributeGetterFunctions.get("groupId");
 
-		if (groupIdGetterFunction != null) {
-			Set<Long> disabledGroupIds = new HashSet<>();
+		if ((groupIdGetterFunction != null) && !disabledGroupIds.isEmpty()) {
+			return ListUtil.filter(
+				list,
+				t -> {
+					if (permittedClassPKs.contains(
+							(Long)t.getPrimaryKeyObj())) {
 
-			for (long groupId : groupIds) {
-				if (!isEnabled(groupId)) {
-					disabledGroupIds.add(groupId);
-				}
-			}
+						return true;
+					}
 
-			if (!disabledGroupIds.isEmpty()) {
-				return ListUtil.filter(
-					list,
-					t -> {
-						if (permittedClassPKs.contains(
-								(Long)t.getPrimaryKeyObj())) {
-
-							return true;
-						}
-
-						return disabledGroupIds.contains(
-							groupIdGetterFunction.apply(t));
-					});
-			}
+					return disabledGroupIds.contains(
+						groupIdGetterFunction.apply(t));
+				});
 		}
 
 		return ListUtil.filter(
@@ -179,12 +172,18 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			groupIds = new long[] {0};
 		}
 
-		if (_isSkipReplace(permissionChecker, modelClassName, groupIds)) {
+		Set<Long> disabledGroupIds = new HashSet<>();
+
+		if (_isSkipReplace(
+				permissionChecker, modelClassName, groupIds,
+				disabledGroupIds)) {
+
 			return null;
 		}
 
 		return _getPermissionWherePredicate(
-			permissionChecker, modelClassName, classPKColumn, groupIds);
+			permissionChecker, modelClassName, classPKColumn, groupIds,
+			disabledGroupIds);
 	}
 
 	@Override
@@ -292,8 +291,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
+		Set<Long> disabledGroupIds = new HashSet<>();
+
 		if ((sql == null) ||
-			_isSkipReplace(permissionChecker, className, groupIds)) {
+			_isSkipReplace(
+				permissionChecker, className, groupIds, disabledGroupIds)) {
 
 			return sql;
 		}
@@ -308,7 +310,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		return _insertResourcePermissionSQL(
 			sql, className, classPKField, groupIdField, groupIds,
-			resourcePermissionSQL);
+			resourcePermissionSQL, disabledGroupIds);
 	}
 
 	@Activate
@@ -334,7 +336,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private void _appendPermissionSQL(
 		StringBundler sb, String className, String classPKField,
-		String groupIdField, long[] groupIds, String permissionSQL) {
+		String groupIdField, long[] groupIds, String permissionSQL,
+		Set<Long> disabledGroupIds) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_serviceTrackerMap.getService(className);
@@ -366,18 +369,16 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		StringBundler groupAdminResourcePermissionSB = null;
 
-		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				if (groupAdminResourcePermissionSB == null) {
-					groupAdminResourcePermissionSB = new StringBundler(
-						(groupIds.length * 2) - 1);
-				}
-				else {
-					groupAdminResourcePermissionSB.append(", ");
-				}
-
-				groupAdminResourcePermissionSB.append(groupId);
+		for (long disabledGroupId : disabledGroupIds) {
+			if (groupAdminResourcePermissionSB == null) {
+				groupAdminResourcePermissionSB = new StringBundler(
+					(groupIds.length * 2) - 1);
 			}
+			else {
+				groupAdminResourcePermissionSB.append(", ");
+			}
+
+			groupAdminResourcePermissionSB.append(disabledGroupId);
 		}
 
 		if ((permissionSQLContributorsSQLSB != null) ||
@@ -432,7 +433,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private <T extends Table<T>> Predicate _getPermissionWherePredicate(
 		PermissionChecker permissionChecker, String modelClassName,
-		Column<T, Long> classPKColumn, long[] groupIds) {
+		Column<T, Long> classPKColumn, long[] groupIds,
+		Set<Long> disabledGroupIds) {
 
 		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
 			permissionChecker, modelClassName, groupIds);
@@ -469,14 +471,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		Set<Long> groupIdSet = null;
 
-		for (long groupId : groupIds) {
-			if (!isEnabled(groupId)) {
-				if (groupIdSet == null) {
-					groupIdSet = new LinkedHashSet<>();
-				}
-
-				groupIdSet.add(groupId);
+		for (long disabledGroupId : disabledGroupIds) {
+			if (groupIdSet == null) {
+				groupIdSet = new LinkedHashSet<>();
 			}
+
+			groupIdSet.add(disabledGroupId);
 		}
 
 		if (groupIdSet != null) {
@@ -716,7 +716,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 	private String _insertResourcePermissionSQL(
 		String sql, String className, String classPKField, String groupIdField,
-		long[] groupIds, String permissionSQL) {
+		long[] groupIds, String permissionSQL, Set<Long> disabledGroupIds) {
 
 		StringBundler sb = new StringBundler(11);
 
@@ -740,7 +740,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			_appendPermissionSQL(
 				sb, className, classPKField, groupIdField, groupIds,
-				permissionSQL);
+				permissionSQL, disabledGroupIds);
 
 			if (pos != -1) {
 				sb.append(sql.substring(pos));
@@ -753,7 +753,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 			_appendPermissionSQL(
 				sb, className, classPKField, groupIdField, groupIds,
-				permissionSQL);
+				permissionSQL, disabledGroupIds);
 
 			sb.append("AND ");
 
@@ -764,10 +764,20 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private boolean _isSkipReplace(
-		PermissionChecker permissionChecker, String className,
-		long[] groupIds) {
+		PermissionChecker permissionChecker, String className, long[] groupIds,
+		Set<Long> disabledGroupIds) {
 
-		if (!isEnabled(groupIds)) {
+		if (!_inlinePermissionConfiguration.sqlCheckEnabled()) {
+			return true;
+		}
+
+		for (long groupId : groupIds) {
+			if (!isEnabled(groupId)) {
+				disabledGroupIds.add(groupId);
+			}
+		}
+
+		if (disabledGroupIds.containsAll(ListUtil.fromArray(groupIds))) {
 			return true;
 		}
 

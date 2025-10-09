@@ -5,6 +5,8 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResultTranslator;
@@ -123,16 +125,14 @@ public class ElasticsearchAggregationResultTranslator
 			   PipelineAggregationResultTranslatorFactory {
 
 	public ElasticsearchAggregationResultTranslator(
-		org.elasticsearch.search.aggregations.Aggregation
-			elasticsearchAggregation,
-		AggregationResults aggregationResults,
-		HitsMetadataTranslator hitsMetadataTranslator,
-		GeoBuilders geoBuilders) {
+		Aggregate aggregate, AggregationResults aggregationResults,
+		GeoBuilders geoBuilders,
+		HitsMetadataTranslator hitsMetadataTranslator) {
 
-		_elasticsearchAggregation = elasticsearchAggregation;
+		_aggregate = aggregate;
 		_aggregationResults = aggregationResults;
-		_hitsMetadataTranslator = hitsMetadataTranslator;
 		_geoBuilders = geoBuilders;
+		_hitsMetadataTranslator = hitsMetadataTranslator;
 	}
 
 	@Override
@@ -141,8 +141,8 @@ public class ElasticsearchAggregationResultTranslator
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults,
-			_hitsMetadataTranslator, _geoBuilders);
+			elasticsearchAggregation, _aggregationResults, _geoBuilders,
+			_hitsMetadataTranslator);
 	}
 
 	@Override
@@ -601,9 +601,8 @@ public class ElasticsearchAggregationResultTranslator
 			geoPoint.getLat(), geoPoint.getLon());
 	}
 
+	private final Aggregate _aggregate;
 	private final AggregationResults _aggregationResults;
-	private final org.elasticsearch.search.aggregations.Aggregation
-		_elasticsearchAggregation;
 	private final GeoBuilders _geoBuilders;
 	private final HitsMetadataTranslator _hitsMetadataTranslator;
 

@@ -84,12 +84,11 @@ public class SearchSearchResponseAssemblerImpl
 			elasticsearchAggregation) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults,
+			elasticsearchAggregation, _aggregationResults, _geoBuilders,
 			new HitsMetadataTranslator(
 				_searchHitBuilderFactory, _searchHitsBuilderFactory,
 				_documentBuilderFactory, _highlightFieldBuilderFactory,
-				_geoBuilders),
-			_geoBuilders);
+				_geoBuilders));
 	}
 
 	@Override

@@ -392,7 +392,7 @@ components:
                     format: int32
                     type: integer
                 type:
-                    enum: [categorization, regular]
+                    enum: [categorization, regular, seo]
                     type: string
             type: object
         ObjectLayoutColumn:

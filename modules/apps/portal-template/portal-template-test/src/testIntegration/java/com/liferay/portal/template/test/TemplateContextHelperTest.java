@@ -6,6 +6,10 @@
 package com.liferay.portal.template.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -15,6 +19,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.template.ServiceLocator;
 import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -44,6 +49,36 @@ public class TemplateContextHelperTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testExpandoServicesAccessibleOnlyThroughServiceLocator() {
+		TemplateContextHelper templateContextHelper =
+			new TemplateContextHelper();
+
+		Map<String, Object> helperUtilities =
+			templateContextHelper.getHelperUtilities(false);
+
+		_assertNotInHelperUtilities(
+			helperUtilities, "expandoColumnLocalService",
+			"ExpandoColumnLocalService");
+		_assertNotInHelperUtilities(
+			helperUtilities, "expandoRowLocalService",
+			"ExpandoRowLocalService");
+		_assertNotInHelperUtilities(
+			helperUtilities, "expandoTableLocalService",
+			"ExpandoTableLocalService");
+		_assertNotInHelperUtilities(
+			helperUtilities, "expandoValueLocalService",
+			"ExpandoValueLocalService");
+
+		ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
+		_assertServiceAvailable(
+			serviceLocator, ExpandoColumnLocalService.class);
+		_assertServiceAvailable(serviceLocator, ExpandoRowLocalService.class);
+		_assertServiceAvailable(serviceLocator, ExpandoTableLocalService.class);
+		_assertServiceAvailable(serviceLocator, ExpandoValueLocalService.class);
+	}
 
 	@Test
 	public void testFollowRedirectDisabled() throws Exception {
@@ -164,6 +199,25 @@ public class TemplateContextHelperTest {
 
 		Assert.assertEquals(
 			" nonce=\"TEST_NONCE\"", contextObjects.get("nonceAttribute"));
+	}
+
+	private void _assertNotInHelperUtilities(
+		Map<String, Object> helperUtilities, String key, String serviceName) {
+
+		Assert.assertFalse(
+			serviceName + " should not be exposed in helper utilities",
+			helperUtilities.containsKey(key));
+	}
+
+	private void _assertServiceAvailable(
+		ServiceLocator serviceLocator, Class<?> serviceClass) {
+
+		Object service = serviceLocator.findService(serviceClass.getName());
+
+		Assert.assertNotNull(
+			serviceClass.getSimpleName() +
+				" should still be retrievable via ServiceLocator",
+			service);
 	}
 
 }

@@ -479,8 +479,9 @@ public class FriendlyURLServlet extends HttpServlet {
 			String doAsUserId = ParamUtil.getString(
 				httpServletRequest, "doAsUserId");
 
-			if (!Validator.isHex(doAsUserId) || !ChecksumUtil.isValid(
-				StringUtil.hexStringToBytes(doAsUserId))) {
+			if (!Validator.isHex(doAsUserId) ||
+				!ChecksumUtil.isValid(
+					StringUtil.hexStringToBytes(doAsUserId))) {
 
 				Company company = portal.getCompany(httpServletRequest);
 

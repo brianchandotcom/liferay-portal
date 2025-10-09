@@ -8,6 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import ClaySticker from '@clayui/sticker';
+import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
 import {getObjectValueFromPath} from 'frontend-js-web';
 import React, {forwardRef, useContext} from 'react';
@@ -56,12 +57,14 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 	(
 		{
 			className,
+			clayListItemProps,
 			item,
 			items,
 			onItemSelectionChange,
 			schema,
 		}: {
 			className: string;
+			clayListItemProps: Object;
 			item: any;
 			items: any[];
 			onItemSelectionChange: Function;
@@ -77,12 +80,15 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			selectionType,
 		} = useContext(FrontendDataSetContext);
 
-		const [viewsContext] = useContext(ViewsContext);
-
-		const activeView: IView = viewsContext.activeView;
-
-		const {description, image, sticker, symbol, title, titleRenderer} =
-			schema;
+		const {
+			description,
+			image,
+			sticker,
+			symbol,
+			title,
+			titleRenderer,
+			tooltip,
+		} = schema;
 
 		const SelectionInput =
 			selectionType === 'single' ? ClayRadio : ClayCheckbox;
@@ -92,18 +98,14 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 			path: selectedItemsKey,
 		});
 
-		const props = {
-			className: classNames(className, {
-				active: selectedItemsValue?.includes(itemId),
-			}),
-			flex: true,
-		};
-
 		return (
 			<ClayList.Item
-				{...props}
-				{...(activeView.setItemComponentProps?.({item, props}) ?? {})}
+				className={classNames(className, {
+					active: selectedItemsValue?.includes(itemId),
+				})}
+				flex
 				ref={ref}
+				{...clayListItemProps}
 			>
 				{selectable && (
 					<ClayList.ItemField className="justify-content-center selection-control">
@@ -134,11 +136,21 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					symbol &&
 					item[symbol] && (
 						<ClayList.ItemField>
-							<ClaySticker {...(sticker && item[sticker])}>
-								{item[symbol] && (
+							{tooltip && item[tooltip] ? (
+								<ClayTooltipProvider>
+									<span title={item[tooltip]}>
+										<ClaySticker
+											{...(sticker && item[sticker])}
+										>
+											<ClayIcon symbol={item[symbol]} />
+										</ClaySticker>
+									</span>
+								</ClayTooltipProvider>
+							) : (
+								<ClaySticker {...(sticker && item[sticker])}>
 									<ClayIcon symbol={item[symbol]} />
-								)}
-							</ClaySticker>
+								</ClaySticker>
+							)}
 						</ClayList.ItemField>
 					)
 				)}
@@ -165,8 +177,8 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 					)}
 				</ClayList.ItemField>
 
-				<ClayList.ItemField>
-					{(itemsActions || item.actionDropdownItems) && (
+				{(itemsActions || item.actionDropdownItems) && (
+					<ClayList.ItemField>
 						<Actions
 							actions={itemsActions || item.actionDropdownItems}
 							itemData={item}
@@ -174,19 +186,21 @@ const ListItem = forwardRef<HTMLLIElement, any>(
 							items={items}
 							onItemSelectionChange={onItemSelectionChange}
 						/>
-					)}
-				</ClayList.ItemField>
+					</ClayList.ItemField>
+				)}
 			</ClayList.Item>
 		);
 	}
 );
 
 const ListItemOptionalDropTarget = ({
+	clayListItemProps,
 	item,
 	items,
 	onItemSelectionChange,
 	schema,
 }: {
+	clayListItemProps?: object;
 	item: any;
 	items: any[];
 	onItemSelectionChange: Function;
@@ -197,6 +211,7 @@ const ListItemOptionalDropTarget = ({
 	return (
 		<ListItem
 			className={className}
+			clayListItemProps={clayListItemProps}
 			item={item}
 			items={items}
 			onItemSelectionChange={onItemSelectionChange}
@@ -219,9 +234,19 @@ const List = ({
 }) => {
 	const {selectedItemsKey} = useContext(FrontendDataSetContext);
 
+	const [viewsContext] = useContext(ViewsContext);
+
 	if (!items?.length) {
 		return null;
 	}
+
+	const activeView: IView = viewsContext.activeView;
+
+	const props = {
+		items,
+		onItemSelectionChange,
+		schema,
+	};
 
 	return (
 		<ClayLayout.Sheet
@@ -240,7 +265,6 @@ const List = ({
 					{items.map((item: any, index: number) => (
 						<ListItemOptionalDropTarget
 							item={item}
-							items={items}
 							key={
 								selectedItemsKey
 									? getObjectValueFromPath({
@@ -249,8 +273,11 @@ const List = ({
 										})
 									: index
 							}
-							onItemSelectionChange={onItemSelectionChange}
-							schema={schema}
+							{...props}
+							{...(activeView.setItemComponentProps?.({
+								item,
+								props,
+							}) ?? {})}
 						/>
 					))}
 				</ClayList>

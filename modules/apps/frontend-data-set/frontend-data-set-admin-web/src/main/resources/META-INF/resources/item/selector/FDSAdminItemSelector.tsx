@@ -25,8 +25,39 @@ const views = [
 		name: 'list',
 		schema: {
 			description: 'description',
+			sticker: 'sticker',
 			symbol: 'symbol',
 			title: 'label',
+			tooltip: 'tooltip',
+		},
+		setItemComponentProps: ({item, props}: {item: any; props: any}) => {
+			if (
+				!item.dataSetToDataSetCardsSections.length &&
+				!item.dataSetToDataSetTableSections.length &&
+				!item.dataSetToDataSetListSections.length
+			) {
+				return {
+					...props,
+					item: {
+						...item,
+						sticker: {displayType: 'warning'},
+						symbol: 'exclamation-circle',
+						tooltip: Liferay.Language.get(
+							'no-visualization-modes-have-been-defined'
+						),
+					},
+				};
+			}
+			else {
+				return {
+					...props,
+					item: {
+						...item,
+						sticker: {displayType: 'unstyled'},
+						symbol: 'catalog',
+					},
+				};
+			}
 		},
 	},
 ];
@@ -67,7 +98,12 @@ const FDSAdminItemSelector = ({
 			<ClayModal.Body>
 				<FrontendDataSet
 					{...FDS_DEFAULT_PROPS}
-					apiURL={getDataSetResourceURL({})}
+					apiURL={getDataSetResourceURL({
+						params: {
+							nestedFields:
+								'dataSetToDataSetCardsSections, dataSetToDataSetTableSections, dataSetToDataSetListSections',
+						},
+					})}
 					id={`${namespace}FDSAdminItemSelector`}
 					onSelectedItemsChange={(
 						selectedItems: Array<ISelectedItem>

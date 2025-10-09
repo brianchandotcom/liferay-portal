@@ -245,9 +245,10 @@ export interface IListSchema {
 	description: string;
 	image?: string;
 	sticker?: string;
-	symbol: string;
+	symbol?: string;
 	title: string;
 	titleRenderer: IListTitleRenderer;
+	tooltip?: string;
 }
 
 export type ISchema = ITableSchema | ICardSchema | IListSchema;

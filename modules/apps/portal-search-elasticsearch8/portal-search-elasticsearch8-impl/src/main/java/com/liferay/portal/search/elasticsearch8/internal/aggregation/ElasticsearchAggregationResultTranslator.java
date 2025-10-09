@@ -5,8 +5,57 @@
 
 package com.liferay.portal.search.elasticsearch8.internal.aggregation;
 
+import co.elastic.clients.elasticsearch._types.GeoBounds;
+import co.elastic.clients.elasticsearch._types.GeoLocation;
+import co.elastic.clients.elasticsearch._types.LatLonGeoLocation;
+import co.elastic.clients.elasticsearch._types.TopLeftBottomRightGeoBounds;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.AvgAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.Buckets;
+import co.elastic.clients.elasticsearch._types.aggregations.CardinalityAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.ChildrenAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.DateHistogramAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.DateHistogramBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.DateRangeAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.ExtendedStatsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.FilterAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.FiltersAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.FiltersBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.GeoBoundsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.GeoCentroidAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.GeoDistanceAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.GeoHashGridAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.GeoHashGridBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.GlobalAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.HdrPercentileRanksAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.HdrPercentilesAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.HistogramAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.HistogramBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.LongTermsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.LongTermsBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.MaxAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.MinAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.MissingAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.NestedAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.Percentiles;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.RangeBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.ReverseNestedAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.SamplerAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.ScriptedMetricAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.StatsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.StringTermsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
+import co.elastic.clients.elasticsearch._types.aggregations.SumAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.TDigestPercentileRanksAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.TDigestPercentilesAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.TopHitsAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.ValueCountAggregate;
+import co.elastic.clients.elasticsearch._types.aggregations.WeightedAvgAggregate;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.search.aggregation.Aggregation;
 import com.liferay.portal.search.aggregation.AggregationResult;
 import com.liferay.portal.search.aggregation.AggregationResultTranslator;
@@ -80,42 +129,12 @@ import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregation;
 import com.liferay.portal.search.aggregation.metrics.WeightedAvgAggregationResult;
 import com.liferay.portal.search.aggregation.pipeline.PipelineAggregationResultTranslator;
 import com.liferay.portal.search.elasticsearch8.internal.hits.HitsMetadataTranslator;
+import com.liferay.portal.search.elasticsearch8.internal.util.ElasticsearchStringUtil;
 import com.liferay.portal.search.geolocation.GeoBuilders;
 import com.liferay.portal.search.geolocation.GeoLocationPoint;
 
 import java.util.List;
-
-import org.elasticsearch.common.geo.GeoPoint;
-import org.elasticsearch.join.aggregations.Children;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.MultiBucketsAggregation;
-import org.elasticsearch.search.aggregations.bucket.filter.Filter;
-import org.elasticsearch.search.aggregations.bucket.filter.Filters;
-import org.elasticsearch.search.aggregations.bucket.geogrid.GeoGrid;
-import org.elasticsearch.search.aggregations.bucket.global.Global;
-import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
-import org.elasticsearch.search.aggregations.bucket.missing.Missing;
-import org.elasticsearch.search.aggregations.bucket.nested.Nested;
-import org.elasticsearch.search.aggregations.bucket.nested.ReverseNested;
-import org.elasticsearch.search.aggregations.bucket.range.Range;
-import org.elasticsearch.search.aggregations.bucket.sampler.Sampler;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.metrics.Avg;
-import org.elasticsearch.search.aggregations.metrics.Cardinality;
-import org.elasticsearch.search.aggregations.metrics.ExtendedStats;
-import org.elasticsearch.search.aggregations.metrics.GeoBounds;
-import org.elasticsearch.search.aggregations.metrics.GeoCentroid;
-import org.elasticsearch.search.aggregations.metrics.Max;
-import org.elasticsearch.search.aggregations.metrics.Min;
-import org.elasticsearch.search.aggregations.metrics.PercentileRanks;
-import org.elasticsearch.search.aggregations.metrics.Percentiles;
-import org.elasticsearch.search.aggregations.metrics.ScriptedMetric;
-import org.elasticsearch.search.aggregations.metrics.Stats;
-import org.elasticsearch.search.aggregations.metrics.Sum;
-import org.elasticsearch.search.aggregations.metrics.TopHits;
-import org.elasticsearch.search.aggregations.metrics.ValueCount;
-import org.elasticsearch.search.aggregations.metrics.WeightedAvg;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -137,53 +156,51 @@ public class ElasticsearchAggregationResultTranslator
 
 	@Override
 	public AggregationResultTranslator createAggregationResultTranslator(
-		org.elasticsearch.search.aggregations.Aggregation
-			elasticsearchAggregation) {
+		Aggregate aggregate) {
 
 		return new ElasticsearchAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults, _geoBuilders,
+			aggregate, _aggregationResults, _geoBuilders,
 			_hitsMetadataTranslator);
 	}
 
 	@Override
 	public PipelineAggregationResultTranslator
-		createPipelineAggregationResultTranslator(
-			org.elasticsearch.search.aggregations.Aggregation
-				elasticsearchAggregation) {
+		createPipelineAggregationResultTranslator(Aggregate aggregate) {
 
 		return new ElasticsearchPipelineAggregationResultTranslator(
-			elasticsearchAggregation, _aggregationResults);
+			aggregate, _aggregationResults);
 	}
 
 	@Override
 	public AvgAggregationResult visit(AvgAggregation avgAggregation) {
-		Avg avg = (Avg)_elasticsearchAggregation;
+		AvgAggregate avgAggregate = _aggregate.avg();
 
-		return _aggregationResults.avg(avg.getName(), avg.getValue());
+		return _aggregationResults.avg(
+			avgAggregation.getName(), avgAggregate.value());
 	}
 
 	@Override
 	public CardinalityAggregationResult visit(
 		CardinalityAggregation cardinalityAggregation) {
 
-		Cardinality cardinality = (Cardinality)_elasticsearchAggregation;
+		CardinalityAggregate cardinalityAggregate = _aggregate.cardinality();
 
 		return _aggregationResults.cardinality(
-			cardinality.getName(), cardinality.getValue());
+			cardinalityAggregation.getName(), cardinalityAggregate.value());
 	}
 
 	@Override
 	public ChildrenAggregationResult visit(
 		ChildrenAggregation childrenAggregation) {
 
-		Children children = (Children)_elasticsearchAggregation;
+		ChildrenAggregate childrenAggregate = _aggregate.children();
 
 		ChildrenAggregationResult childrenAggregationResult =
 			_aggregationResults.children(
-				children.getName(), children.getDocCount());
+				childrenAggregation.getName(), childrenAggregate.docCount());
 
 		childrenAggregationResult.addChildrenAggregationResults(
-			translate(children.getAggregations(), childrenAggregation));
+			translate(childrenAggregation, childrenAggregate.aggregations()));
 
 		return childrenAggregationResult;
 	}
@@ -192,37 +209,73 @@ public class ElasticsearchAggregationResultTranslator
 	public DateHistogramAggregationResult visit(
 		DateHistogramAggregation dateHistogramAggregation) {
 
-		return _translateBuckets(
-			(Histogram)_elasticsearchAggregation,
+		DateHistogramAggregate dateHistogramAggregate =
+			_aggregate.dateHistogram();
+
+		DateHistogramAggregationResult dateHistogramAggregationResult =
 			_aggregationResults.dateHistogram(
-				_elasticsearchAggregation.getName()),
-			dateHistogramAggregation);
+				dateHistogramAggregation.getName());
+
+		Buckets<DateHistogramBucket> buckets = dateHistogramAggregate.buckets();
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				dateHistogramBucket -> {
+					Bucket bucket = dateHistogramAggregationResult.addBucket(
+						ElasticsearchStringUtil.getFirstStringValue(
+							dateHistogramBucket::keyAsString,
+							dateHistogramBucket::key),
+						dateHistogramBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						dateHistogramAggregation,
+						dateHistogramBucket.aggregations(), bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, dateHistogramBucket) -> {
+					Bucket bucket = dateHistogramAggregationResult.addBucket(
+						key, dateHistogramBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						dateHistogramAggregation,
+						dateHistogramBucket.aggregations(), bucket);
+				});
+		}
+
+		return dateHistogramAggregationResult;
 	}
 
 	@Override
 	public RangeAggregationResult visit(
 		DateRangeAggregation dateRangeAggregation) {
 
-		return _translateBuckets(
-			(Range)_elasticsearchAggregation,
-			_aggregationResults.range(_elasticsearchAggregation.getName()),
-			dateRangeAggregation);
+		DateRangeAggregate dateRangeAggregate = _aggregate.dateRange();
+
+		return _translateRangeBuckets(
+			dateRangeAggregation, dateRangeAggregate.buckets(),
+			_aggregationResults.range(dateRangeAggregation.getName()));
 	}
 
 	@Override
 	public DiversifiedSamplerAggregationResult visit(
 		DiversifiedSamplerAggregation diversifiedSamplerAggregation) {
 
-		Sampler sampler = (Sampler)_elasticsearchAggregation;
+		SamplerAggregate samplerAggregate = _aggregate.sampler();
 
 		DiversifiedSamplerAggregationResult
 			diversifiedSamplerAggregationResult =
 				_aggregationResults.diversifiedSampler(
-					sampler.getName(), sampler.getDocCount());
+					diversifiedSamplerAggregation.getName(),
+					samplerAggregate.docCount());
 
 		diversifiedSamplerAggregationResult.addChildrenAggregationResults(
 			translate(
-				sampler.getAggregations(), diversifiedSamplerAggregation));
+				diversifiedSamplerAggregation,
+				samplerAggregate.aggregations()));
 
 		return diversifiedSamplerAggregationResult;
 	}
@@ -231,25 +284,28 @@ public class ElasticsearchAggregationResultTranslator
 	public ExtendedStatsAggregationResult visit(
 		ExtendedStatsAggregation extendedStatsAggregation) {
 
-		ExtendedStats extendedStats = (ExtendedStats)_elasticsearchAggregation;
+		ExtendedStatsAggregate extendedStatsAggregate =
+			_aggregate.extendedStats();
 
 		return _aggregationResults.extendedStats(
-			extendedStats.getName(), extendedStats.getAvg(),
-			extendedStats.getCount(), extendedStats.getMin(),
-			extendedStats.getMax(), extendedStats.getSum(),
-			extendedStats.getSumOfSquares(), extendedStats.getVariance(),
-			extendedStats.getStdDeviation());
+			extendedStatsAggregation.getName(), extendedStatsAggregate.avg(),
+			extendedStatsAggregate.count(), extendedStatsAggregate.min(),
+			extendedStatsAggregate.max(), extendedStatsAggregate.sum(),
+			extendedStatsAggregate.sumOfSquares(),
+			extendedStatsAggregate.variance(),
+			extendedStatsAggregate.stdDeviation());
 	}
 
 	@Override
 	public FilterAggregationResult visit(FilterAggregation filterAggregation) {
-		Filter filter = (Filter)_elasticsearchAggregation;
+		FilterAggregate filterAggregate = _aggregate.filter();
 
 		FilterAggregationResult filterAggregationResult =
-			_aggregationResults.filter(filter.getName(), filter.getDocCount());
+			_aggregationResults.filter(
+				filterAggregation.getName(), filterAggregate.docCount());
 
 		filterAggregationResult.addChildrenAggregationResults(
-			translate(filter.getAggregations(), filterAggregation));
+			translate(filterAggregation, filterAggregate.aggregations()));
 
 		return filterAggregationResult;
 	}
@@ -258,68 +314,120 @@ public class ElasticsearchAggregationResultTranslator
 	public FiltersAggregationResult visit(
 		FiltersAggregation filtersAggregation) {
 
-		Filters filters = (Filters)_elasticsearchAggregation;
+		FiltersAggregate filtersAggregate = _aggregate.filters();
 
-		return _translateBuckets(
-			filters, _aggregationResults.filters(filters.getName()),
-			filtersAggregation);
+		FiltersAggregationResult filtersAggregationResult =
+			_aggregationResults.filters(filtersAggregation.getName());
+
+		Buckets<FiltersBucket> buckets = filtersAggregate.buckets();
+
+		MapUtil.isNotEmptyForEach(
+			buckets.keyed(),
+			(key, filtersBucket) -> {
+				Bucket bucket = filtersAggregationResult.addBucket(
+					key, filtersBucket.docCount());
+
+				_addBucketChildAggregationResults(
+					filtersAggregation, filtersBucket.aggregations(), bucket);
+			});
+
+		return filtersAggregationResult;
 	}
 
 	@Override
 	public GeoBoundsAggregationResult visit(
 		GeoBoundsAggregation geoBoundsAggregation) {
 
-		GeoBounds geoBounds = (GeoBounds)_elasticsearchAggregation;
+		GeoBoundsAggregate geoBoundsAggregate = _aggregate.geoBounds();
+
+		GeoBounds geoBounds = geoBoundsAggregate.bounds();
+
+		if (!geoBounds.isTlbr()) {
+			throw new UnsupportedOperationException();
+		}
+
+		TopLeftBottomRightGeoBounds topLeftBottomRightGeoBounds =
+			geoBounds.tlbr();
 
 		return _aggregationResults.geoBounds(
-			geoBounds.getName(), _translateGeoPoint(geoBounds.topLeft()),
-			_translateGeoPoint(geoBounds.bottomRight()));
+			geoBoundsAggregation.getName(),
+			_translateGeoLocation(topLeftBottomRightGeoBounds.topLeft()),
+			_translateGeoLocation(topLeftBottomRightGeoBounds.bottomRight()));
 	}
 
 	@Override
 	public GeoCentroidAggregationResult visit(
 		GeoCentroidAggregation geoCentroidAggregation) {
 
-		GeoCentroid geoCentroid = (GeoCentroid)_elasticsearchAggregation;
+		GeoCentroidAggregate geoCentroidAggregate = _aggregate.geoCentroid();
 
-		GeoPoint geoPoint = geoCentroid.centroid();
+		GeoLocation geoLocation = geoCentroidAggregate.location();
 
 		return _aggregationResults.geoCentroid(
-			geoCentroid.getName(), _translateGeoPoint(geoPoint),
-			geoCentroid.count());
+			geoCentroidAggregation.getName(),
+			_translateGeoLocation(geoLocation), geoCentroidAggregate.count());
 	}
 
 	@Override
 	public GeoDistanceAggregationResult visit(
 		GeoDistanceAggregation geoDistanceAggregation) {
 
-		return _translateBuckets(
-			(Range)_elasticsearchAggregation,
-			_aggregationResults.geoDistance(
-				_elasticsearchAggregation.getName()),
-			geoDistanceAggregation);
+		GeoDistanceAggregate geoDistanceAggregate = _aggregate.geoDistance();
+
+		return _translateRangeBuckets(
+			geoDistanceAggregation, geoDistanceAggregate.buckets(),
+			_aggregationResults.geoDistance(geoDistanceAggregation.getName()));
 	}
 
 	@Override
 	public GeoHashGridAggregationResult visit(
 		GeoHashGridAggregation geoHashGridAggregation) {
 
-		GeoGrid geoGrid = (GeoGrid)_elasticsearchAggregation;
+		GeoHashGridAggregate geoHashGridAggregate = _aggregate.geohashGrid();
 
-		return _translateBuckets(
-			geoGrid, _aggregationResults.geoHashGrid(geoGrid.getName()),
-			geoHashGridAggregation);
+		GeoHashGridAggregationResult geoHashGridAggregationResult =
+			_aggregationResults.geoHashGrid(geoHashGridAggregation.getName());
+
+		Buckets<GeoHashGridBucket> buckets = geoHashGridAggregate.buckets();
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				geoHashGridBucket -> {
+					Bucket bucket = geoHashGridAggregationResult.addBucket(
+						geoHashGridBucket.key(), geoHashGridBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						geoHashGridAggregation,
+						geoHashGridBucket.aggregations(), bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, geoHashGridBucket) -> {
+					Bucket bucket = geoHashGridAggregationResult.addBucket(
+						key, geoHashGridBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						geoHashGridAggregation,
+						geoHashGridBucket.aggregations(), bucket);
+				});
+		}
+
+		return geoHashGridAggregationResult;
 	}
 
 	@Override
 	public GlobalAggregationResult visit(GlobalAggregation globalAggregation) {
-		Global global = (Global)_elasticsearchAggregation;
+		GlobalAggregate globalAggregate = _aggregate.global();
 
 		GlobalAggregationResult globalAggregationResult =
-			_aggregationResults.global(global.getName(), global.getDocCount());
+			_aggregationResults.global(
+				globalAggregation.getName(), globalAggregate.docCount());
 
 		globalAggregationResult.addChildrenAggregationResults(
-			translate(global.getAggregations(), globalAggregation));
+			translate(globalAggregation, globalAggregate.aggregations()));
 
 		return globalAggregationResult;
 	}
@@ -328,51 +436,85 @@ public class ElasticsearchAggregationResultTranslator
 	public HistogramAggregationResult visit(
 		HistogramAggregation histogramAggregation) {
 
-		return _translateBuckets(
-			(Histogram)_elasticsearchAggregation,
-			_aggregationResults.histogram(_elasticsearchAggregation.getName()),
-			histogramAggregation);
+		HistogramAggregate histogramAggregate = _aggregate.histogram();
+
+		HistogramAggregationResult histogramAggregationResult =
+			_aggregationResults.histogram(histogramAggregation.getName());
+
+		Buckets<HistogramBucket> buckets = histogramAggregate.buckets();
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				histogramBucket -> {
+					Bucket bucket = histogramAggregationResult.addBucket(
+						ElasticsearchStringUtil.getFirstStringValue(
+							histogramBucket::keyAsString, histogramBucket::key),
+						histogramBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						histogramAggregation, histogramBucket.aggregations(),
+						bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, histogramBucket) -> {
+					Bucket bucket = histogramAggregationResult.addBucket(
+						key, histogramBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						histogramAggregation, histogramBucket.aggregations(),
+						bucket);
+				});
+		}
+
+		return histogramAggregationResult;
 	}
 
 	@Override
 	public MaxAggregationResult visit(MaxAggregation maxAggregation) {
-		Max max = (Max)_elasticsearchAggregation;
+		MaxAggregate maxAggregate = _aggregate.max();
 
-		return _aggregationResults.max(max.getName(), max.getValue());
+		return _aggregationResults.max(
+			maxAggregation.getName(), maxAggregate.value());
 	}
 
 	@Override
 	public MinAggregationResult visit(MinAggregation minAggregation) {
-		Min min = (Min)_elasticsearchAggregation;
+		MinAggregate minAggregate = _aggregate.min();
 
-		return _aggregationResults.min(min.getName(), min.getValue());
+		return _aggregationResults.min(
+			minAggregation.getName(), minAggregate.value());
 	}
 
 	@Override
 	public MissingAggregationResult visit(
 		MissingAggregation missingAggregation) {
 
-		Missing missing = (Missing)_elasticsearchAggregation;
+		MissingAggregate missingAggregate = _aggregate.missing();
 
 		MissingAggregationResult missingAggregationResult =
 			_aggregationResults.missing(
-				missing.getName(), missing.getDocCount());
+				missingAggregation.getName(), missingAggregate.docCount());
 
 		missingAggregationResult.addChildrenAggregationResults(
-			translate(missing.getAggregations(), missingAggregation));
+			translate(missingAggregation, missingAggregate.aggregations()));
 
 		return missingAggregationResult;
 	}
 
 	@Override
 	public NestedAggregationResult visit(NestedAggregation nestedAggregation) {
-		Nested nested = (Nested)_elasticsearchAggregation;
+		NestedAggregate nestedAggregate = _aggregate.nested();
 
 		NestedAggregationResult nestedAggregationResult =
-			_aggregationResults.nested(nested.getName(), nested.getDocCount());
+			_aggregationResults.nested(
+				nestedAggregation.getName(), nestedAggregate.docCount());
 
 		List<AggregationResult> aggregationResults = translate(
-			nested.getAggregations(), nestedAggregation);
+			nestedAggregation, nestedAggregate.aggregations());
 
 		nestedAggregationResult.addChildrenAggregationResults(
 			aggregationResults);
@@ -384,15 +526,42 @@ public class ElasticsearchAggregationResultTranslator
 	public PercentileRanksAggregationResult visit(
 		PercentileRanksAggregation percentileRanksAggregation) {
 
-		PercentileRanks percentileRanks =
-			(PercentileRanks)_elasticsearchAggregation;
+		Percentiles percentiles = null;
+
+		if (_aggregate.isHdrPercentileRanks()) {
+			HdrPercentileRanksAggregate hdrPercentileRanksAggregate =
+				_aggregate.hdrPercentileRanks();
+
+			percentiles = hdrPercentileRanksAggregate.values();
+		}
+		else if (_aggregate.isTdigestPercentileRanks()) {
+			TDigestPercentileRanksAggregate tDigestPercentileRanksAggregate =
+				_aggregate.tdigestPercentileRanks();
+
+			percentiles = tDigestPercentileRanksAggregate.values();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 
 		PercentileRanksAggregationResult percentileRanksAggregationResult =
-			_aggregationResults.percentileRanks(percentileRanks.getName());
+			_aggregationResults.percentileRanks(
+				percentileRanksAggregation.getName());
 
-		percentileRanks.forEach(
-			percentileRank -> percentileRanksAggregationResult.addPercentile(
-				percentileRank.getValue(), percentileRank.getPercent()));
+		if (percentiles.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				percentiles.array(),
+				arrayPercentilesItem ->
+					percentileRanksAggregationResult.addPercentile(
+						Double.valueOf(arrayPercentilesItem.key()),
+						arrayPercentilesItem.value()));
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				percentiles.keyed(),
+				(key, value) -> percentileRanksAggregationResult.addPercentile(
+					Double.valueOf(key), GetterUtil.getDouble(value)));
+		}
 
 		return percentileRanksAggregationResult;
 	}
@@ -401,39 +570,69 @@ public class ElasticsearchAggregationResultTranslator
 	public PercentilesAggregationResult visit(
 		PercentilesAggregation percentilesAggregation) {
 
-		Percentiles percentiles = (Percentiles)_elasticsearchAggregation;
+		Percentiles percentiles;
+
+		if (_aggregate.isHdrPercentiles()) {
+			HdrPercentilesAggregate hdrPercentilesAggregate =
+				_aggregate.hdrPercentiles();
+
+			percentiles = hdrPercentilesAggregate.values();
+		}
+		else if (_aggregate.isTdigestPercentiles()) {
+			TDigestPercentilesAggregate tDigestPercentilesAggregate =
+				_aggregate.tdigestPercentiles();
+
+			percentiles = tDigestPercentilesAggregate.values();
+		}
+		else {
+			throw new UnsupportedOperationException();
+		}
 
 		PercentilesAggregationResult percentilesAggregationResult =
-			_aggregationResults.percentiles(percentiles.getName());
+			_aggregationResults.percentiles(percentilesAggregation.getName());
 
-		percentiles.forEach(
-			percentile -> percentilesAggregationResult.addPercentile(
-				percentile.getPercent(), percentile.getValue()));
+		if (percentiles.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				percentiles.array(),
+				percentilesItem -> percentilesAggregationResult.addPercentile(
+					Double.valueOf(percentilesItem.key()),
+					GetterUtil.getDouble(percentilesItem.value())));
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				percentiles.keyed(),
+				(key, value) -> percentilesAggregationResult.addPercentile(
+					Double.valueOf(key), GetterUtil.getDouble(value)));
+		}
 
 		return percentilesAggregationResult;
 	}
 
 	@Override
 	public RangeAggregationResult visit(RangeAggregation rangeAggregation) {
-		return _translateBuckets(
-			(Range)_elasticsearchAggregation,
-			_aggregationResults.range(_elasticsearchAggregation.getName()),
-			rangeAggregation);
+		RangeAggregate rangeAggregate = _aggregate.range();
+
+		return _translateRangeBuckets(
+			rangeAggregation, rangeAggregate.buckets(),
+			_aggregationResults.range(rangeAggregation.getName()));
 	}
 
 	@Override
 	public ReverseNestedAggregationResult visit(
 		ReverseNestedAggregation reverseNestedAggregation) {
 
-		ReverseNested reverseNested = (ReverseNested)_elasticsearchAggregation;
+		ReverseNestedAggregate reverseNestedAggregate =
+			_aggregate.reverseNested();
 
 		ReverseNestedAggregationResult reverseNestedAggregationResult =
 			_aggregationResults.reverseNested(
-				reverseNested.getName(), reverseNested.getDocCount());
+				reverseNestedAggregation.getName(),
+				reverseNestedAggregate.docCount());
 
 		reverseNestedAggregationResult.addChildrenAggregationResults(
 			translate(
-				reverseNested.getAggregations(), reverseNestedAggregation));
+				reverseNestedAggregation,
+				reverseNestedAggregate.aggregations()));
 
 		return reverseNestedAggregationResult;
 	}
@@ -442,14 +641,14 @@ public class ElasticsearchAggregationResultTranslator
 	public SamplerAggregationResult visit(
 		SamplerAggregation samplerAggregation) {
 
-		Sampler sampler = (Sampler)_elasticsearchAggregation;
+		SamplerAggregate samplerAggregate = _aggregate.sampler();
 
 		SamplerAggregationResult samplerAggregationResult =
 			_aggregationResults.sampler(
-				sampler.getName(), sampler.getDocCount());
+				samplerAggregation.getName(), samplerAggregate.docCount());
 
 		samplerAggregationResult.addChildrenAggregationResults(
-			translate(sampler.getAggregations(), samplerAggregation));
+			translate(samplerAggregation, samplerAggregate.aggregations()));
 
 		return samplerAggregationResult;
 	}
@@ -458,103 +657,107 @@ public class ElasticsearchAggregationResultTranslator
 	public ScriptedMetricAggregationResult visit(
 		ScriptedMetricAggregation scriptedMetricAggregation) {
 
-		ScriptedMetric scriptedMetric =
-			(ScriptedMetric)_elasticsearchAggregation;
+		ScriptedMetricAggregate scriptedMetricAggregate =
+			_aggregate.scriptedMetric();
 
 		return _aggregationResults.scriptedMetric(
-			scriptedMetric.getName(), scriptedMetric.aggregation());
+			scriptedMetricAggregation.getName(),
+			scriptedMetricAggregate.value());
 	}
 
 	@Override
 	public SignificantTermsAggregationResult visit(
 		SignificantTermsAggregation significantTermsAggregation) {
 
-		Terms terms = (Terms)_elasticsearchAggregation;
-
-		return _translateBuckets(
-			terms,
-			_aggregationResults.significantTerms(
-				terms.getName(), terms.getDocCountError(),
-				terms.getSumOfOtherDocCounts()),
-			significantTermsAggregation);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public SignificantTextAggregationResult visit(
 		SignificantTextAggregation significantTextAggregation) {
 
-		Terms terms = (Terms)_elasticsearchAggregation;
-
-		return _translateBuckets(
-			terms,
-			_aggregationResults.significantText(
-				terms.getName(), terms.getDocCountError(),
-				terms.getSumOfOtherDocCounts()),
-			significantTextAggregation);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public StatsAggregationResult visit(StatsAggregation statsAggregation) {
-		Stats stats = (Stats)_elasticsearchAggregation;
+		StatsAggregate statsAggregate = _aggregate.stats();
 
 		return _aggregationResults.stats(
-			stats.getName(), stats.getAvg(), stats.getCount(), stats.getMin(),
-			stats.getMax(), stats.getSum());
+			statsAggregation.getName(), statsAggregate.avg(),
+			statsAggregate.count(), statsAggregate.min(), statsAggregate.max(),
+			statsAggregate.sum());
 	}
 
 	@Override
 	public SumAggregationResult visit(SumAggregation sumAggregation) {
-		Sum sum = (Sum)_elasticsearchAggregation;
+		SumAggregate sumAggregate = _aggregate.sum();
 
-		return _aggregationResults.sum(sum.getName(), sum.getValue());
+		return _aggregationResults.sum(
+			sumAggregation.getName(), sumAggregate.value());
 	}
 
 	@Override
 	public TermsAggregationResult visit(TermsAggregation termsAggregation) {
-		Terms terms = (Terms)_elasticsearchAggregation;
+		if (_aggregate.isSterms()) {
+			StringTermsAggregate stringTermsAggregate = _aggregate.sterms();
 
-		return _translateBuckets(
-			terms,
-			_aggregationResults.terms(
-				terms.getName(), terms.getDocCountError(),
-				terms.getSumOfOtherDocCounts()),
-			termsAggregation);
+			return _translateStringTermBuckets(
+				termsAggregation, stringTermsAggregate.buckets(),
+				_aggregationResults.terms(
+					termsAggregation.getName(),
+					stringTermsAggregate.docCountErrorUpperBound(),
+					stringTermsAggregate.sumOtherDocCount()));
+		}
+		else if (_aggregate.isLterms()) {
+			LongTermsAggregate longTermsAggregate = _aggregate.lterms();
+
+			return _translateLongTermBuckets(
+				termsAggregation, longTermsAggregate.buckets(),
+				_aggregationResults.terms(
+					termsAggregation.getName(),
+					longTermsAggregate.docCountErrorUpperBound(),
+					longTermsAggregate.sumOtherDocCount()));
+		}
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public TopHitsAggregationResult visit(
 		TopHitsAggregation topHitsAggregation) {
 
-		TopHits topHits = (TopHits)_elasticsearchAggregation;
-
-		SearchHits searchHits = topHits.getHits();
+		TopHitsAggregate topHitsAggregate = _aggregate.topHits();
 
 		return _aggregationResults.topHits(
-			topHits.getName(), _hitsMetadataTranslator.translate(searchHits));
+			topHitsAggregation.getName(),
+			_hitsMetadataTranslator.translate(topHitsAggregate.hits()));
 	}
 
 	@Override
 	public ValueCountAggregationResult visit(
 		ValueCountAggregation valueCountAggregation) {
 
-		ValueCount valueCount = (ValueCount)_elasticsearchAggregation;
+		ValueCountAggregate valueCountAggregate = _aggregate.valueCount();
+
+		Double value = Double.valueOf(valueCountAggregate.value());
 
 		return _aggregationResults.valueCount(
-			valueCount.getName(), valueCount.getValue());
+			valueCountAggregation.getName(), value.longValue());
 	}
 
 	@Override
 	public WeightedAvgAggregationResult visit(
 		WeightedAvgAggregation weightedAvgAggregation) {
 
-		WeightedAvg weightedAvg = (WeightedAvg)_elasticsearchAggregation;
+		WeightedAvgAggregate weightedAvgAggregate = _aggregate.weightedAvg();
 
 		return _aggregationResults.weightedAvg(
-			weightedAvg.getName(), weightedAvg.getValue());
+			weightedAvgAggregation.getName(), weightedAvgAggregate.value());
 	}
 
 	protected List<AggregationResult> translate(
-		Aggregations elasticsearchAggregations, Aggregation aggregation) {
+		Aggregation aggregation, Map<String, Aggregate> aggregations) {
 
 		ElasticsearchAggregationResultsTranslator
 			elasticsearchAggregationResultsTranslator =
@@ -563,42 +766,119 @@ public class ElasticsearchAggregationResultTranslator
 					aggregation::getPipelineAggregation, this);
 
 		return elasticsearchAggregationResultsTranslator.translate(
-			elasticsearchAggregations);
+			aggregations);
 	}
 
-	private <T extends BucketAggregationResult> T _translateBuckets(
-		MultiBucketsAggregation multiBucketsAggregation,
-		T bucketAggregationResult, Aggregation aggregation) {
+	private void _addBucketChildAggregationResults(
+		Aggregation aggregation, Map<String, Aggregate> aggregations,
+		Bucket bucket) {
 
-		List<? extends MultiBucketsAggregation.Bucket>
-			multiBucketAggregationBuckets =
-				multiBucketsAggregation.getBuckets();
+		for (AggregationResult aggregationResult :
+				translate(aggregation, aggregations)) {
 
-		multiBucketAggregationBuckets.forEach(
-			multiBucketAggregationBucket -> {
-				Bucket bucket = bucketAggregationResult.addBucket(
-					multiBucketAggregationBucket.getKeyAsString(),
-					multiBucketAggregationBucket.getDocCount());
+			bucket.addChildAggregationResult(aggregationResult);
+		}
+	}
 
-				for (AggregationResult aggregationResult :
-						translate(
-							multiBucketAggregationBucket.getAggregations(),
-							aggregation)) {
+	private GeoLocationPoint _translateGeoLocation(GeoLocation geoLocation) {
+		if ((geoLocation == null) || !geoLocation.isLatlon()) {
+			return null;
+		}
 
-					bucket.addChildAggregationResult(aggregationResult);
-				}
-			});
+		LatLonGeoLocation latLonGeoLocation = geoLocation.latlon();
+
+		return _geoBuilders.geoLocationPoint(
+			latLonGeoLocation.lat(), latLonGeoLocation.lon());
+	}
+
+	private <T extends BucketAggregationResult> T _translateLongTermBuckets(
+		Aggregation aggregation, Buckets<LongTermsBucket> buckets,
+		T bucketAggregationResult) {
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				longTermsBucket -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						longTermsBucket.key(), longTermsBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, longTermsBucket.aggregations(), bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, longTermsBucket) -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						longTermsBucket.key(), longTermsBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, longTermsBucket.aggregations(), bucket);
+				});
+		}
 
 		return bucketAggregationResult;
 	}
 
-	private GeoLocationPoint _translateGeoPoint(GeoPoint geoPoint) {
-		if (geoPoint == null) {
-			return null;
+	private <T extends BucketAggregationResult> T _translateRangeBuckets(
+		Aggregation aggregation, Buckets<RangeBucket> buckets,
+		T bucketAggregationResult) {
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				rangeBucket -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						rangeBucket.key(), rangeBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, rangeBucket.aggregations(), bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, rangeBucket) -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						key, rangeBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, rangeBucket.aggregations(), bucket);
+				});
 		}
 
-		return _geoBuilders.geoLocationPoint(
-			geoPoint.getLat(), geoPoint.getLon());
+		return bucketAggregationResult;
+	}
+
+	private <T extends BucketAggregationResult> T _translateStringTermBuckets(
+		Aggregation aggregation, Buckets<StringTermsBucket> buckets,
+		T bucketAggregationResult) {
+
+		if (buckets.isArray()) {
+			ListUtil.isNotEmptyForEach(
+				buckets.array(),
+				stringTermsBucket -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						stringTermsBucket.key(), stringTermsBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, stringTermsBucket.aggregations(), bucket);
+				});
+		}
+		else {
+			MapUtil.isNotEmptyForEach(
+				buckets.keyed(),
+				(key, stringTermsBucket) -> {
+					Bucket bucket = bucketAggregationResult.addBucket(
+						stringTermsBucket.key(), stringTermsBucket.docCount());
+
+					_addBucketChildAggregationResults(
+						aggregation, stringTermsBucket.aggregations(), bucket);
+				});
+		}
+
+		return bucketAggregationResult;
 	}
 
 	private final Aggregate _aggregate;

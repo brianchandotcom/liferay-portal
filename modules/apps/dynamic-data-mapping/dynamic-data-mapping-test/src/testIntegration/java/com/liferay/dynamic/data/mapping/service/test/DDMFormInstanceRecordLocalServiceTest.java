@@ -213,13 +213,12 @@ public class DDMFormInstanceRecordLocalServiceTest
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			JavaConstants.JAKARTA_PORTLET_RESPONSE,
 			new MockLiferayPortletRenderResponse());
-		mockHttpServletRequest.setAttribute(
+		httpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080/currentURL");
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
@@ -228,16 +227,15 @@ public class DDMFormInstanceRecordLocalServiceTest
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setPathFriendlyURLPublic("/path-friendly-url-public");
 		themeDisplay.setPortalURL("http://localhost:8080");
-		themeDisplay.setRequest(mockHttpServletRequest);
+		themeDisplay.setRequest(httpServletRequest);
 		themeDisplay.setResponse(new MockHttpServletResponse());
 		themeDisplay.setScopeGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setSiteGroupId(TestPropsValues.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return mockHttpServletRequest;
+		return httpServletRequest;
 	}
 
 	@Inject

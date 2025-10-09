@@ -221,7 +221,35 @@ public class BatchEnginePortletDataHandlerRegistrar {
 						"batch.engine.task.item.delegate.name"));
 
 			if (previousBatchEnginePortletDataHandler != null) {
-				return _serviceRegistrations.get(portletId);
+				ServiceRegistration<PortletDataHandler> serviceRegistration =
+					_serviceRegistrations.get(portletId);
+
+				ServiceReference<PortletDataHandler>
+					registrationServiceReference =
+						serviceRegistration.getReference();
+
+				serviceRegistration.setProperties(
+					_setEnabledCompanyIds(
+						HashMapDictionaryBuilder.<String, Object>put(
+							BatchEnginePortletDataHandlerRegistryUtil.
+								KEY_DELETION_SYSTEM_EVENT_CLASS_NAME,
+							() -> {
+								String[] deletionSystemEventClassNames =
+									(String[])
+										registrationServiceReference.
+											getProperty(
+												BatchEnginePortletDataHandlerRegistryUtil.KEY_DELETION_SYSTEM_EVENT_CLASS_NAME);
+
+								return ArrayUtil.append(
+									deletionSystemEventClassNames,
+									exportImportDescriptor.
+										getDeletionSystemEventClassName());
+							}
+						).put(
+							"jakarta.portlet.name", portletId
+						).put(
+							"service.ranking", Integer.MAX_VALUE
+						).build()));
 			}
 
 			ServiceRegistration<PortletDataHandler> serviceRegistration =
@@ -229,9 +257,12 @@ public class BatchEnginePortletDataHandlerRegistrar {
 					PortletDataHandler.class, batchEnginePortletDataHandler,
 					_setEnabledCompanyIds(
 						HashMapDictionaryBuilder.<String, Object>put(
-							"batch.engine.task.item.delegate.item.class.name",
-							exportImportDescriptor.
-								getDeletionSystemEventClassName()
+							BatchEnginePortletDataHandlerRegistryUtil.
+								KEY_DELETION_SYSTEM_EVENT_CLASS_NAME,
+							new String[] {
+								exportImportDescriptor.
+									getDeletionSystemEventClassName()
+							}
 						).put(
 							"jakarta.portlet.name", portletId
 						).put(
@@ -287,6 +318,28 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			batchEnginePortletDataHandler.
 				unregisterExportImportVulcanBatchEngineTaskItemDelegate(
 					className, taskItemDelegateName);
+
+			serviceRegistration.setProperties(
+				_setEnabledCompanyIds(
+					HashMapDictionaryBuilder.<String, Object>put(
+						BatchEnginePortletDataHandlerRegistryUtil.
+							KEY_DELETION_SYSTEM_EVENT_CLASS_NAME,
+						() -> {
+							String[] deletionSystemEventClassNames =
+								(String[])serviceReference.getProperty(
+									BatchEnginePortletDataHandlerRegistryUtil.
+										KEY_DELETION_SYSTEM_EVENT_CLASS_NAME);
+
+							return ArrayUtil.remove(
+								deletionSystemEventClassNames,
+								exportImportDescriptor.
+									getDeletionSystemEventClassName());
+						}
+					).put(
+						"jakarta.portlet.name", portletId
+					).put(
+						"service.ranking", Integer.MAX_VALUE
+					).build()));
 
 			String[] classNames = batchEnginePortletDataHandler.getClassNames();
 

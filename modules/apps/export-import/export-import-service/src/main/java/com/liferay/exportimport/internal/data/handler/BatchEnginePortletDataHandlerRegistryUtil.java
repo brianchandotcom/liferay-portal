@@ -9,6 +9,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
+import java.util.List;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -21,10 +23,10 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 	public static BatchEnginePortletDataHandler
 		getBatchEnginePortletDataHandler(String className) {
 
-		PortletDataHandler portletDataHandler = _serviceTrackerMap.getService(
-			className);
+		List<PortletDataHandler> portletDataHandlers =
+			_serviceTrackerMap.getService(className);
 
-		if (portletDataHandler instanceof
+		if (portletDataHandlers.get(0) instanceof
 				BatchEnginePortletDataHandler batchEnginePortletDataHandler) {
 
 			return batchEnginePortletDataHandler;
@@ -37,7 +39,10 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		return _serviceTrackerMap.containsKey(className);
 	}
 
-	private static final ServiceTrackerMap<String, PortletDataHandler>
+	protected static final String KEY_DELETION_SYSTEM_EVENT_CLASS_NAME =
+		"batch.engine.task.item.delegate.deletion.system.event.class.name";
+
+	private static final ServiceTrackerMap<String, List<PortletDataHandler>>
 		_serviceTrackerMap;
 
 	static {
@@ -46,9 +51,9 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+		_serviceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
 			bundleContext, PortletDataHandler.class,
-			"batch.engine.task.item.delegate.item.class.name");
+			KEY_DELETION_SYSTEM_EVENT_CLASS_NAME);
 	}
 
 }

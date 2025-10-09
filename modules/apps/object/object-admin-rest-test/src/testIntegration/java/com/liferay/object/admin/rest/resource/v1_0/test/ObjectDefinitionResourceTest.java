@@ -2229,20 +2229,12 @@ public class ObjectDefinitionResourceTest
 			aggregationObjectFieldName, randomModifiableSystemObjectDefinition,
 			objectRelationship.getName());
 
-		_addObjectDefinition(randomModifiableSystemObjectDefinition);
-
-		com.liferay.object.model.ObjectDefinition
-			serviceBuilderObjectDefinition1 =
-				_objectDefinitionLocalService.
-					getObjectDefinitionByExternalReferenceCode(
-						randomModifiableSystemObjectDefinition.
-							getExternalReferenceCode(),
-						TestPropsValues.getCompanyId());
+		ObjectDefinition postObjectDefinition = _addObjectDefinition(
+			randomModifiableSystemObjectDefinition);
 
 		Assert.assertNotNull(
 			_objectFieldLocalService.getObjectField(
-				serviceBuilderObjectDefinition1.getObjectDefinitionId(),
-				aggregationObjectFieldName));
+				postObjectDefinition.getId(), aggregationObjectFieldName));
 	}
 
 	@TestInfo("LPD-63539")

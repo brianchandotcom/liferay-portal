@@ -6,9 +6,11 @@
 package com.liferay.site.cms.site.initializer.internal.util;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -24,11 +26,13 @@ import com.liferay.info.field.InfoFieldSetEntry;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
+import com.liferay.info.localized.InfoLocalizedValue;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalServiceUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
@@ -86,6 +90,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -236,8 +241,9 @@ public class ActionUtil {
 			ObjectDefinitionLocalServiceUtil.fetchObjectDefinitionByClassName(
 				layout.getCompanyId(), layoutPageTemplateEntry.getClassName());
 
-		_addInputFragmentEntryLinks(
-			addedFragmentEntryLinks, formManager,
+		layoutStructure = _addInputFragmentEntryLinks(
+			addedFragmentEntryLinks, fragmentEntryLinkListenerRegistry,
+			fragmentEntryLinkService, formManager, fragmentRendererRegistry,
 			(InfoFieldSet)infoForm.getInfoFieldSetEntry(
 				objectDefinition.getName()),
 			layout, layoutStructure, formStyledLayoutStructureItem,
@@ -1128,10 +1134,13 @@ public class ActionUtil {
 				fragmentRenderer.getType(), serviceContext);
 		}
 
-	private static void _addInputFragmentEntryLink(
 		FragmentEntry fragmentEntry =
 			FragmentCollectionContributorRegistryUtil.getFragmentEntry(
 				fragmentEntryKey);
+
+		if (fragmentEntry == null) {
+			return null;
+		}
 
 		String contributedRendererKey = null;
 
@@ -1146,6 +1155,8 @@ public class ActionUtil {
 			fragmentEntry.getConfiguration(), editableValues, StringPool.BLANK,
 			0, contributedRendererKey, fragmentEntry.getType(), serviceContext);
 	}
+
+	private static LayoutStructure _addInputFragmentEntryLink(
 			List<FragmentEntryLink> addedFragmentEntryLinks,
 			JSONObject configurationJSONObject, FormManager formManager,
 			String fragmentEntryKey, InfoField<?> infoField, Layout layout,
@@ -1156,7 +1167,7 @@ public class ActionUtil {
 		throws Exception {
 
 		if (infoField == null) {
-			return;
+			return layoutStructure;
 		}
 
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
@@ -1166,7 +1177,7 @@ public class ActionUtil {
 				serviceContext);
 
 		if (fragmentStyledLayoutStructureItem == null) {
-			return;
+			return layoutStructure;
 		}
 
 		fragmentStyledLayoutStructureItem.updateItemConfig(
@@ -1197,11 +1208,17 @@ public class ActionUtil {
 		if (fragmentEntryLink != null) {
 			addedFragmentEntryLinks.add(fragmentEntryLink);
 		}
+
+		return layoutStructure;
 	}
 
-	private static void _addInputFragmentEntryLinks(
+	private static LayoutStructure _addInputFragmentEntryLinks(
 			List<FragmentEntryLink> addedFragmentEntryLinks,
-			FormManager formManager, InfoFieldSet infoFieldSet, Layout layout,
+			FragmentEntryLinkListenerRegistry fragmentEntryLinkListenerRegistry,
+			FragmentEntryLinkService fragmentEntryLinkService,
+			FormManager formManager,
+			FragmentRendererRegistry fragmentRendererRegistry,
+			InfoFieldSet infoFieldSet, Layout layout,
 			LayoutStructure layoutStructure,
 			LayoutStructureItem layoutStructureItem,
 			String objectDefinitionName, long segmentsExperienceId,
@@ -1220,7 +1237,87 @@ public class ActionUtil {
 			formRelationshipStyledLayoutStructureItem.setContentType(
 				infoFieldSet.getName());
 
-			layoutStructureItem = formRelationshipStyledLayoutStructureItem;
+			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+				JSONUtil.toString(
+					JSONUtil.put(
+						FragmentEntryProcessorConstants.
+							KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+						JSONUtil.put(
+							"accordion-title",
+							() -> {
+								InfoLocalizedValue<String>
+									labelInfoLocalizedValue =
+										infoFieldSet.
+											getLabelInfoLocalizedValue();
+
+								JSONObject jsonObject =
+									JSONFactoryUtil.createJSONObject();
+
+								for (Locale availableLocale :
+										labelInfoLocalizedValue.
+											getAvailableLocales()) {
+
+									jsonObject.put(
+										LocaleUtil.toLanguageId(
+											availableLocale),
+										labelInfoLocalizedValue.getValue(
+											availableLocale));
+								}
+
+								return jsonObject;
+							}))),
+				fragmentEntryLinkService, fragmentRendererRegistry,
+				"BASIC_COMPONENT-accordion", layout, segmentsExperienceId,
+				serviceContext);
+
+			if (fragmentEntryLink != null) {
+				LayoutStructureItem fragmentStyledLayoutStructureItem =
+					layoutStructure.addFragmentStyledLayoutStructureItem(
+						fragmentEntryLink.getFragmentEntryLinkId(),
+						formRelationshipStyledLayoutStructureItem.getItemId(),
+						0);
+
+				LayoutPageTemplateStructureLocalServiceUtil.
+					updateLayoutPageTemplateStructureData(
+						serviceContext.getUserId(), layout.getGroupId(),
+						layout.getPlid(), segmentsExperienceId,
+						layoutStructure.toString());
+
+				for (FragmentEntryLinkListener fragmentEntryLinkListener :
+						fragmentEntryLinkListenerRegistry.
+							getFragmentEntryLinkListeners()) {
+
+					fragmentEntryLinkListener.onAddFragmentEntryLink(
+						fragmentEntryLink);
+				}
+
+				LayoutPageTemplateStructure layoutPageTemplateStructure =
+					LayoutPageTemplateStructureLocalServiceUtil.
+						fetchLayoutPageTemplateStructure(
+							layout.getGroupId(), layout.getPlid());
+
+				layoutStructure = LayoutStructure.of(
+					layoutPageTemplateStructure.getData(segmentsExperienceId));
+
+				fragmentStyledLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						fragmentStyledLayoutStructureItem.getItemId());
+
+				String childrenItemId =
+					fragmentStyledLayoutStructureItem.getChildrenItemId(0);
+
+				if (childrenItemId != null) {
+					layoutStructureItem =
+						layoutStructure.getLayoutStructureItem(childrenItemId);
+				}
+				else {
+					layoutStructureItem =
+						formRelationshipStyledLayoutStructureItem;
+				}
+			}
+			else {
+				layoutStructureItem = formRelationshipStyledLayoutStructureItem;
+			}
 		}
 
 		for (InfoFieldSetEntry infoFieldSetEntry :
@@ -1234,11 +1331,12 @@ public class ActionUtil {
 			}
 
 			if (infoFieldSetEntry instanceof InfoFieldSet) {
-				_addInputFragmentEntryLinks(
-					addedFragmentEntryLinks, formManager,
-					(InfoFieldSet)infoFieldSetEntry, layout, layoutStructure,
-					layoutStructureItem, objectDefinitionName,
-					segmentsExperienceId, serviceContext);
+				layoutStructure = _addInputFragmentEntryLinks(
+					addedFragmentEntryLinks, fragmentEntryLinkListenerRegistry,
+					fragmentEntryLinkService, formManager,
+					fragmentRendererRegistry, (InfoFieldSet)infoFieldSetEntry,
+					layout, layoutStructure, layoutStructureItem,
+					objectDefinitionName, segmentsExperienceId, serviceContext);
 			}
 			else {
 				_addInputFragmentEntryLink(
@@ -1248,6 +1346,8 @@ public class ActionUtil {
 					serviceContext, JSONUtil.put("marginBottom", "16px"));
 			}
 		}
+
+		return layoutStructure;
 	}
 
 	private static LayoutPageTemplateEntry

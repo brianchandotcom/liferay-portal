@@ -43,7 +43,7 @@ const Settings = ({
 	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
 	const [loading, setLoading] = useState(true);
 	const [hideManagementBarInEmptyState, setHideManagementBarInEmptyState] =
-		useState(dataSet.hideManagementBarInEmptyState ?? false);
+		useState(dataSet.hideManagementBarInEmptyState ?? true);
 
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
@@ -116,12 +116,16 @@ const Settings = ({
 
 					setLoading(false);
 
+					setHideManagementBarInEmptyState(true);
+
 					return;
 				}
 
 				const responseJSON = await response.json();
 
 				const {
+					hideManagementBarInEmptyState:
+						persistedHideManagementBarInEmptyState,
 					[OBJECT_RELATIONSHIP.DATA_SET_CARDS_SECTIONS]: cards,
 					[OBJECT_RELATIONSHIP.DATA_SET_LIST_SECTIONS]: list,
 					[OBJECT_RELATIONSHIP.DATA_SET_TABLE_SECTIONS]: table,
@@ -161,11 +165,16 @@ const Settings = ({
 					}
 				});
 
-				const serverValue =
-					responseJSON.hideManagementBarInEmptyState || false;
+				const serverHideManagementBarValue =
+					persistedHideManagementBarInEmptyState || false;
 
-				if (serverValue !== hideManagementBarInEmptyState) {
-					setHideManagementBarInEmptyState(serverValue);
+				if (
+					serverHideManagementBarValue !==
+					hideManagementBarInEmptyState
+				) {
+					setHideManagementBarInEmptyState(
+						serverHideManagementBarValue
+					);
 				}
 
 				setLoading(false);

@@ -14,6 +14,7 @@ import CategoriesAndTagsModalContent from '../categorization/modal/CategoriesAnd
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
 import DefaultPermissionModalContent from '../default_permission/DefaultPermissionModalContent';
+import openResetAssetPermissionModal from '../default_permission/ResetPermissionModalContent';
 import AssetTypeInfoPanel from '../info_panel/AssetTypeInfoPanelContent';
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
 import createAssetAction from './actions/createAssetAction';
@@ -247,6 +248,13 @@ export default function AssetsFDSPropsTransformer({
 					size: 'full-screen',
 					title: action.label,
 					url: formatActionURL(itemData, action.href),
+				});
+			}
+			else if (action?.data?.id === 'reset-to-default-permissions') {
+				openResetAssetPermissionModal({
+					className: itemData.entryClassName,
+					classPK: itemData.embedded.id,
+					loadData,
 				});
 			}
 			else if (action?.data?.id === 'share') {

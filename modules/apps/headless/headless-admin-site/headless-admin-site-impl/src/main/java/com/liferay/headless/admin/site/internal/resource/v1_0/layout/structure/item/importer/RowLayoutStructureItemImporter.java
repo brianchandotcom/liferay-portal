@@ -9,7 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
@@ -138,7 +138,7 @@ public class RowLayoutStructureItemImporter
 		GridViewport gridViewport = _getGridViewport(
 			gridViewportId, gridViewports);
 
-		String viewportIdInternalValue = ViewportUtil.toInternalValue(
+		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
 			gridViewportId.getValue());
 
 		if (gridViewport != null) {

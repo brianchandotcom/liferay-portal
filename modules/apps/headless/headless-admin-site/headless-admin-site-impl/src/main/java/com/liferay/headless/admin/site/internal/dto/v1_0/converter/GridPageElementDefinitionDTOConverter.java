@@ -9,7 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -113,7 +113,7 @@ public class GridPageElementDefinitionDTOConverter
 		GridViewport.Id gridViewportId,
 		Map<String, JSONObject> rowViewportConfigurationJSONObjects) {
 
-		String viewportIdInternalValue = ViewportUtil.toInternalValue(
+		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
 			gridViewportId.getValue());
 
 		if (!rowViewportConfigurationJSONObjects.containsKey(

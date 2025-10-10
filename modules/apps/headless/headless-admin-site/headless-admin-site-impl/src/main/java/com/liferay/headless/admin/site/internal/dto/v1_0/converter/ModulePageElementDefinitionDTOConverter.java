@@ -8,7 +8,7 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.dto.v1_0.ModuleViewportDefinition;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -58,7 +58,7 @@ public class ModulePageElementDefinitionDTOConverter
 		Map<String, JSONObject> columnViewportConfigurationJSONObjects,
 		ModuleViewport.Id moduleViewportId) {
 
-		String viewportIdInternalValue = ViewportUtil.toInternalValue(
+		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
 			moduleViewportId.getValue());
 
 		if (!columnViewportConfigurationJSONObjects.containsKey(

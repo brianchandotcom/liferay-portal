@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author Mikel Lorza
  */
-public class ViewportUtil {
+public class ViewportIdUtil {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(

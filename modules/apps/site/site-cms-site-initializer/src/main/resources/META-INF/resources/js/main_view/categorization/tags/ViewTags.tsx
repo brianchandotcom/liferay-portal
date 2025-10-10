@@ -183,8 +183,9 @@ export default function ViewTags({
 					closeModal,
 					cmsGroupId,
 					loadData,
-					tagId: itemData.id,
-					tagName: itemData.name,
+					selectIntoTags: [
+						{label: itemData.name, value: itemData.id},
+					],
 				}),
 			size: 'md',
 		});

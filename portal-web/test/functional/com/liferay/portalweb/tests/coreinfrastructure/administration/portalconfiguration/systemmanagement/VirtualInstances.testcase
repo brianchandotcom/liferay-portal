@@ -86,6 +86,90 @@ definition {
 		}
 	}
 
+	@description = "This test asserts that a user can update the general informations. Including update the default site name, default mail domain and so."
+	@ignore = "true"
+	@priority = 4
+	test CanUpdateGeneralInfos {
+		property portal.acceptance = "true";
+
+		PortalSettings.gotoConfiguration(
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.editText(
+			fieldName = "name",
+			fieldValue = "EditedLiferay");
+
+		FormFields.editText(
+			fieldName = "mx",
+			fieldValue = "newliferay.com");
+
+		FormFields.editText(
+			fieldName = "virtualHostname",
+			fieldValue = "www.able.com");
+
+		PortletEntry.save();
+
+		ApplicationsMenu.gotoSite(site = "EditedLiferay");
+
+		Navigator.openSpecificURL(url = "http://www.able.com:8080");
+
+		AssertElementPresent(
+			key_pageName = "Home",
+			locator1 = "Home#PAGE");
+
+		Navigator.gotoLoginPage();
+
+		AssertTextEquals(
+			locator1 = "TextInput#EMAIL_ADDRESS",
+			value1 = "@newliferay.com");
+
+		User.firstLoginUI(specificURL = "http://www.able.com:8080");
+
+		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.editText(
+			fieldName = "cdn-host-http",
+			fieldValue = "http://localhost:8080");
+
+		FormFields.editText(
+			fieldName = "cdn-host-https",
+			fieldValue = "https://localhost:8080");
+
+		for (var fieldName : list "legalName,tickerSymbol,legalId,industry,legalType,type,sicCode") {
+			FormFields.editText(
+				fieldName = ${fieldName},
+				fieldValue = ${fieldName});
+		}
+
+		Button.clickSave();
+
+		PortalSettings.gotoConfiguration(
+			baseURL = "http://www.able.com:8080",
+			configurationCategory = "Instance Configuration",
+			configurationName = "General",
+			configurationScope = "Virtual Instance Scope");
+
+		FormFields.viewTextValue(
+			fieldName = "cdn-host-http",
+			fieldValue = "http://localhost:8080");
+
+		FormFields.viewTextValue(
+			fieldName = "cdn-host-https",
+			fieldValue = "https://localhost:8080");
+
+		for (var fieldName : list "legalName,tickerSymbol,legalId,industry,legalType,type,sicCode") {
+			FormFields.viewTextValue(
+				fieldName = ${fieldName},
+				fieldValue = ${fieldName});
+		}
+	}
+
 	@description = "This is a use case for LPS-161481. Verify a non-omniadmin user can create a user in a user-limited virtual instance"
 	@priority = 3
 	test NonAdminUserCanCreateUserInUserLimitedVirtualInstance {

@@ -233,7 +233,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		ThemeDisplay themeDisplay) {
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getScopeGroupId(), "LPD-50377")) {
+				themeDisplay.getCompanyId(), "LPD-50377")) {
 
 			return ObjectEntryUtil.toProperties(
 				infoItemFieldValues, _objectDefinition,

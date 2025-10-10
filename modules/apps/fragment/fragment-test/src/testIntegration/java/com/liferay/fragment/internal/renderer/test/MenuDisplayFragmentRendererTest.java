@@ -170,13 +170,7 @@ public class MenuDisplayFragmentRendererTest {
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
-				"defaultLanguageId", defaultLanguageId
-			).put(
-				"name_" + defaultLanguageId, RandomTestUtil.randomString()
-			).put(
-				"url", "https://" + RandomTestUtil.randomString() + ".com"
-			).put(
-				"useNewTab", Boolean.FALSE
+				"url", url
 			).buildString(),
 			serviceContext);
 	}
@@ -262,34 +256,17 @@ public class MenuDisplayFragmentRendererTest {
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
-					"displayStyle", "horizontal"
-				).put(
-					"hoveredItemColor", StringPool.BLANK
-				).put(
-					"selectedItemColor", StringPool.BLANK
-				).put(
 					"source",
 					JSONUtil.put(
 						"parentSiteNavigationMenuItemExternalReferenceCode",
 						siteNavigationMenuItem1.getExternalReferenceCode()
-					).put(
-						"privateLayout", Boolean.FALSE.toString()
 					).put(
 						"siteNavigationMenuExternalReferenceCode",
 						siteNavigationMenu.getExternalReferenceCode()
 					).put(
 						"siteNavigationMenuScopeExternalReferenceCode",
 						siteNavigationMenuScopeExternalReferenceCode
-					).put(
-						"title", RandomTestUtil.randomString()
-					).put(
-						"type",
-						"class com.liferay.site.navigation.item.selector." +
-							"SiteNavigationMenuItemSelectorReturnType"
-					)
-				).put(
-					"sublevels", "-1"
-				)
+					))
 			).toString(),
 			_layout.getPlid());
 
@@ -331,32 +308,15 @@ public class MenuDisplayFragmentRendererTest {
 				FragmentEntryProcessorConstants.
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put(
-					"displayStyle", "horizontal"
-				).put(
-					"hoveredItemColor", StringPool.BLANK
-				).put(
-					"selectedItemColor", StringPool.BLANK
-				).put(
 					"source",
 					JSONUtil.put(
 						"parentSiteNavigationMenuItemId",
 						siteNavigationMenuItem1.getSiteNavigationMenuItemId()
 					).put(
-						"privateLayout", Boolean.FALSE.toString()
-					).put(
 						"siteNavigationMenuId",
 						String.valueOf(
 							siteNavigationMenu.getSiteNavigationMenuId())
-					).put(
-						"title", RandomTestUtil.randomString()
-					).put(
-						"type",
-						"class com.liferay.site.navigation.item.selector." +
-							"SiteNavigationMenuItemSelectorReturnType"
-					)
-				).put(
-					"sublevels", "-1"
-				)
+					))
 			).toString(),
 			_layout.getPlid());
 

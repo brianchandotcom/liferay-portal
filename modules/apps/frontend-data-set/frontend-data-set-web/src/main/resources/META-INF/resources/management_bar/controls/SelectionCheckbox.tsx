@@ -24,9 +24,9 @@ const SelectionCheckbox = ({
 	return (
 		<ClayCheckbox
 			aria-label={
-				items.length !== selectedItemsValue.length
-					? Liferay.Language.get('select-items')
-					: Liferay.Language.get('clear-selection')
+				selectedItemsValue.length
+					? Liferay.Language.get('clear-selection')
+					: Liferay.Language.get('select-items')
 			}
 			checked={allItemsSelectedActive || !!selectedItemsValue.length}
 			indeterminate={
@@ -36,9 +36,9 @@ const SelectionCheckbox = ({
 			name="items-selector"
 			onChange={handleCheckboxClick}
 			title={
-				items.length !== selectedItemsValue.length
-					? Liferay.Language.get('select-items')
-					: Liferay.Language.get('clear-selection')
+				selectedItemsValue.length
+					? Liferay.Language.get('clear-selection')
+					: Liferay.Language.get('select-items')
 			}
 		/>
 	);

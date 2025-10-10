@@ -290,6 +290,34 @@ public class MenuDisplayFragmentRendererTest {
 
 		Assert.assertFalse(content.contains(url1));
 		Assert.assertTrue(content.contains(url2));
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group, _layout.getPlid());
+
+		content = _render(
+			_addFragmentEntryLink(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"displayStyle", "stacked"
+					).put(
+						"source",
+						JSONUtil.put(
+							"parentSiteNavigationMenuItemExternalReferenceCode",
+							_layout.getExternalReferenceCode())
+					).put(
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
+
+		Assert.assertFalse(content.contains(url1));
+		Assert.assertFalse(content.contains(url2));
+		Assert.assertTrue(
+			content.contains(
+				layout.getTitle(
+					_portal.getSiteDefaultLocale(_group.getGroupId()))));
 	}
 
 	private void _testRenderWithIdReference(Group group) throws Exception {
@@ -358,6 +386,33 @@ public class MenuDisplayFragmentRendererTest {
 
 		Assert.assertFalse(content.contains(url1));
 		Assert.assertTrue(content.contains(url2));
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			_group, _layout.getPlid());
+
+		content = _render(
+			_addFragmentEntryLink(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"displayStyle", "stacked"
+					).put(
+						"source",
+						JSONUtil.put(
+							"parentSiteNavigationMenuItemId", _layout.getPlid())
+					).put(
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
+
+		Assert.assertFalse(content.contains(url1));
+		Assert.assertFalse(content.contains(url2));
+		Assert.assertTrue(
+			content.contains(
+				layout.getTitle(
+					_portal.getSiteDefaultLocale(_group.getGroupId()))));
 	}
 
 	@Inject

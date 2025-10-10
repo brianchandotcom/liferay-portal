@@ -47,13 +47,18 @@ public class FragmentEntryMenuDisplayConfiguration {
 			return;
 		}
 
+		String parentSiteNavigationMenuItemExternalReferenceCode =
+			jsonObject.getString(
+				"parentSiteNavigationMenuItemExternalReferenceCode");
 		long parentSiteNavigationMenuItemId = jsonObject.getLong(
 			"parentSiteNavigationMenuItemId");
 		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
 			"siteNavigationMenuExternalReferenceCode");
 		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
 
-		if ((parentSiteNavigationMenuItemId <= 0) &&
+		if (Validator.isNull(
+				parentSiteNavigationMenuItemExternalReferenceCode) &&
+			(parentSiteNavigationMenuItemId <= 0) &&
 			Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
 			(siteNavigationMenuId <= 0)) {
 
@@ -64,6 +69,17 @@ public class FragmentEntryMenuDisplayConfiguration {
 
 		if (Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
 			(siteNavigationMenuId <= 0)) {
+
+			if (parentSiteNavigationMenuItemId <= 0) {
+				Layout layout =
+					LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+						parentSiteNavigationMenuItemExternalReferenceCode,
+						scopeGroupId);
+
+				if (layout != null) {
+					parentSiteNavigationMenuItemId = layout.getPlid();
+				}
+			}
 
 			_source = new SiteNavigationMenuSource(
 				parentSiteNavigationMenuItemId,
@@ -79,9 +95,7 @@ public class FragmentEntryMenuDisplayConfiguration {
 
 		_source = new SiteNavigationMenuSource(
 			_getSiteNavigationMenuItemId(
-				groupId,
-				jsonObject.getString(
-					"parentSiteNavigationMenuItemExternalReferenceCode"),
+				groupId, parentSiteNavigationMenuItemExternalReferenceCode,
 				parentSiteNavigationMenuItemId),
 			jsonObject.getBoolean("privateLayout"),
 			_getSiteNavigationMenuId(

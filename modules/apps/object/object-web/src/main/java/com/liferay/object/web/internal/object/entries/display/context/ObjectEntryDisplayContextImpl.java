@@ -1500,6 +1500,16 @@ public class ObjectEntryDisplayContextImpl
 				ParamUtil.getLong(
 					_objectRequestHelper.getRequest(), "objectRelationshipId"));
 
+		long groupId = ParamUtil.getLong(
+			_objectRequestHelper.getRequest(), "groupId");
+
+		if (_readOnly && (groupId == 0)) {
+			HttpServletRequest httpServletRequest =
+				_objectRequestHelper.getRequest();
+
+			groupId = (long)httpServletRequest.getAttribute("groupId");
+		}
+
 		try {
 			if ((objectRelationship != null) && objectRelationship.isEdge()) {
 				DefaultObjectEntryManager defaultObjectEntryManager =
@@ -1508,13 +1518,13 @@ public class ObjectEntryDisplayContextImpl
 				_objectEntry = defaultObjectEntryManager.getRelatedObjectEntry(
 					_getDTOConverterContext(), externalReferenceCode,
 					objectRelationship, getParentObjectEntryERC(),
-					String.valueOf(_getGroupId()));
+					String.valueOf(groupId));
 			}
 			else {
 				_objectEntry = objectEntryManager.getObjectEntry(
 					_objectRequestHelper.getCompanyId(),
 					_getDTOConverterContext(), externalReferenceCode,
-					objectDefinition, String.valueOf(_getGroupId()));
+					objectDefinition, String.valueOf(groupId));
 			}
 		}
 		catch (Exception exception) {

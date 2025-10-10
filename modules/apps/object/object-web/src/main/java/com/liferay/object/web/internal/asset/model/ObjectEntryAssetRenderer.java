@@ -288,6 +288,7 @@ public class ObjectEntryAssetRenderer
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
 			_objectEntryDisplayContextFactory.create(httpServletRequest));
+		httpServletRequest.setAttribute("groupId", _objectEntry.getGroupId());
 
 		return super.include(httpServletRequest, httpServletResponse, template);
 	}

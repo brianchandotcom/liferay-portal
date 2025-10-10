@@ -48,24 +48,20 @@ public class FragmentEntryMenuDisplayConfiguration {
 		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
 
 		if (siteNavigationMenuId > 0) {
-			SiteNavigationMenu siteNavigationMenu =
-				SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
-					siteNavigationMenuId);
+			_source = new SiteNavigationMenuSource(
+				jsonObject.getLong("parentSiteNavigationMenuItemId"),
+				jsonObject.getBoolean("privateLayout"),
+				siteNavigationMenuId);
 
-			if (siteNavigationMenu != null) {
-				_source = new SiteNavigationMenuSource(
-					jsonObject.getLong("parentSiteNavigationMenuItemId"),
-					jsonObject.getBoolean("privateLayout"),
-					siteNavigationMenuId);
-
-				return;
-			}
+			return;
 		}
 
 		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
 			"siteNavigationMenuExternalReferenceCode");
 
 		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
+			long siteNavigationMenuItemId = 0;
+
 			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(groupId);
 
 			String siteNavigationMenuScopeExternalReferenceCode =
@@ -86,8 +82,6 @@ public class FragmentEntryMenuDisplayConfiguration {
 			}
 
 			if (scopeGroup != null) {
-				long siteNavigationMenuItemId = 0;
-
 				String parentSiteNavigationMenuItemExternalReferenceCode =
 					jsonObject.getString(
 						"parentSiteNavigationMenuItemExternalReferenceCode");
@@ -119,13 +113,15 @@ public class FragmentEntryMenuDisplayConfiguration {
 						siteNavigationMenu.getSiteNavigationMenuId();
 				}
 
-				_source = new SiteNavigationMenuSource(
-					siteNavigationMenuItemId,
-					jsonObject.getBoolean("privateLayout"),
-					siteNavigationMenuId);
 
-				return;
 			}
+
+			_source = new SiteNavigationMenuSource(
+				siteNavigationMenuItemId,
+				jsonObject.getBoolean("privateLayout"),
+				siteNavigationMenuId);
+
+			return;
 		}
 
 		_source = _DEFAULT_SOURCE;

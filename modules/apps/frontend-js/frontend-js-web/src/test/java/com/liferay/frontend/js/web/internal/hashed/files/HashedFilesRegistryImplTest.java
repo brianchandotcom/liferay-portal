@@ -34,6 +34,11 @@ public class HashedFilesRegistryImplTest {
 
 	@Before
 	public void setUp() {
+		_hashedFilesRegistryImpl = new HashedFilesRegistryImpl();
+
+		BundleContext bundleContext = Mockito.mock(BundleContext.class);
+
+		_hashedFilesRegistryImpl.activate(bundleContext);
 	}
 
 	@After
@@ -42,45 +47,14 @@ public class HashedFilesRegistryImplTest {
 
 	@Test
 	public void testGetResource() throws Exception {
-		HashedFilesRegistryImpl hashedFilesRegistryImpl =
-			new HashedFilesRegistryImpl();
-
-		BundleContext bundleContext = Mockito.mock(BundleContext.class);
-
-		hashedFilesRegistryImpl.activate(bundleContext);
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		Mockito.when(
-			portal.getPathContext()
-		).thenReturn(
-			StringPool.BLANK
-		);
+		ReflectionTestUtil.setFieldValue(
+			_hashedFilesRegistryImpl, "_portal", _mockPortal(StringPool.BLANK));
 
 		ReflectionTestUtil.setFieldValue(
-			hashedFilesRegistryImpl, "_portal", portal);
+			_hashedFilesRegistryImpl, "_serviceTrackerMap",
+			_mockServiceTrackerMap("/main.css", "/o/frontend-js-web"));
 
-		ServiceTrackerMap<String, ServletContext> serviceTrackerMap =
-			Mockito.mock(ServiceTrackerMap.class);
-
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-
-		Mockito.when(
-			servletContext.getResource("/main.css")
-		).thenReturn(
-			Mockito.mock(URL.class)
-		);
-
-		Mockito.when(
-			serviceTrackerMap.getService("/o/frontend-js-web")
-		).thenReturn(
-			servletContext
-		);
-
-		ReflectionTestUtil.setFieldValue(
-			hashedFilesRegistryImpl, "_serviceTrackerMap", serviceTrackerMap);
-
-		URL url = hashedFilesRegistryImpl.getResource(
+		URL url = _hashedFilesRegistryImpl.getResource(
 			"/o/frontend-js-web/main.css");
 
 		Assert.assertNotNull(url);
@@ -88,23 +62,34 @@ public class HashedFilesRegistryImplTest {
 
 	@Test
 	public void testGetResourceWithPortalContext() throws Exception {
-		HashedFilesRegistryImpl hashedFilesRegistryImpl =
-			new HashedFilesRegistryImpl();
+		ReflectionTestUtil.setFieldValue(
+			_hashedFilesRegistryImpl, "_portal", _mockPortal("liferay"));
 
-		BundleContext bundleContext = Mockito.mock(BundleContext.class);
+		ReflectionTestUtil.setFieldValue(
+			_hashedFilesRegistryImpl, "_serviceTrackerMap",
+			_mockServiceTrackerMap("/main.css", "/liferay/o/frontend-js-web"));
 
-		hashedFilesRegistryImpl.activate(bundleContext);
+		URL url = _hashedFilesRegistryImpl.getResource(
+			"/liferay/o/frontend-js-web/main.css");
 
+		Assert.assertNotNull(url);
+	}
+
+	private Portal _mockPortal(String pathContext) {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
 			portal.getPathContext()
 		).thenReturn(
-			"liferay"
+			pathContext
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			hashedFilesRegistryImpl, "_portal", portal);
+		return portal;
+	}
+
+	private ServiceTrackerMap<String, ServletContext> _mockServiceTrackerMap(
+			String resourcePath, String servletContextPath)
+		throws Exception {
 
 		ServiceTrackerMap<String, ServletContext> serviceTrackerMap =
 			Mockito.mock(ServiceTrackerMap.class);
@@ -112,24 +97,20 @@ public class HashedFilesRegistryImplTest {
 		ServletContext servletContext = Mockito.mock(ServletContext.class);
 
 		Mockito.when(
-			servletContext.getResource("/main.css")
+			servletContext.getResource(resourcePath)
 		).thenReturn(
 			Mockito.mock(URL.class)
 		);
 
 		Mockito.when(
-			serviceTrackerMap.getService("/liferay/o/frontend-js-web")
+			serviceTrackerMap.getService(servletContextPath)
 		).thenReturn(
 			servletContext
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			hashedFilesRegistryImpl, "_serviceTrackerMap", serviceTrackerMap);
-
-		URL url = hashedFilesRegistryImpl.getResource(
-			"/liferay/o/frontend-js-web/main.css");
-
-		Assert.assertNotNull(url);
+		return serviceTrackerMap;
 	}
+
+	private HashedFilesRegistryImpl _hashedFilesRegistryImpl;
 
 }

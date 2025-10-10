@@ -7,6 +7,7 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.customer.exception.TicketAttachmentAlreadyApprovedException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.customer.service.JiraService;
 import com.liferay.customer.service.NotificationQueueEntryService;
@@ -57,6 +58,7 @@ public class TicketAttachmentsCompleteUploadRestController
 			TicketAttachment ticketAttachment =
 				_ticketAttachmentService.approveTicketAttachment(
 					"Bearer " + jwt.getTokenValue(), ticketAttachmentId);
+
 			JSONObject jsonObject = new JSONObject(json);
 
 			String jiraIssueCommentBody = _buildJiraIssueCommentBody(
@@ -86,6 +88,16 @@ public class TicketAttachmentsCompleteUploadRestController
 
 			return new ResponseEntity<>(
 				"FILE_SERVER_UNAVAILABLE", HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		catch (TicketAttachmentAlreadyApprovedException
+					ticketAttachmentAlreadyApprovedException) {
+
+			_log.error(
+				ticketAttachmentAlreadyApprovedException,
+				ticketAttachmentAlreadyApprovedException);
+
+			return new ResponseEntity<>(
+				"ATTACHMENT_ALREADY_EXISTS", HttpStatus.CONFLICT);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

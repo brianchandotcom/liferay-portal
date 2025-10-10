@@ -14,17 +14,14 @@ interface IParams {
 
 interface IProps {
 	completeUpload: (params: IParams) => Promise<void>;
-	error: Error | null;
 	loading: boolean;
 }
 
 const useTicketAttachmentsCompleteUpload = (): IProps => {
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState<Error | null>(null);
 
 	const completeUpload = useCallback(async (params: IParams) => {
 		setLoading(true);
-		setError(null);
 
 		const {comment, fileMd5, ticketAttachmentId} = params;
 
@@ -52,18 +49,15 @@ const useTicketAttachmentsCompleteUpload = (): IProps => {
 		}
 		catch (uploadError) {
 			console.error('Complete upload error:', uploadError);
-			setError(
-				uploadError instanceof Error
-					? uploadError
-					: new Error(String(uploadError))
-			);
+
+			throw uploadError;
 		}
 		finally {
 			setLoading(false);
 		}
 	}, []);
 
-	return {completeUpload, error, loading};
+	return {completeUpload, loading};
 };
 
 export default useTicketAttachmentsCompleteUpload;

@@ -98,12 +98,6 @@ public class MenuDisplayFragmentRendererTest {
 		throws Exception {
 
 		_testRenderWithExternalReferenceCodeReference(_group, StringPool.BLANK);
-	}
-
-	@Test
-	@TestInfo("LPD-66793")
-	public void testRenderWithExternalReferenceCodeReferenceAndSiteNavigationMenuInCompanyGroup()
-		throws Exception {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
@@ -116,12 +110,6 @@ public class MenuDisplayFragmentRendererTest {
 	@TestInfo("LPD-66793")
 	public void testRenderWithIdReference() throws Exception {
 		_testRenderWithIdReference(_group);
-	}
-
-	@Test
-	@TestInfo("LPD-66793")
-	public void testRenderWithIdReferenceAndSiteNavigationMenuInCompanyGroup()
-		throws Exception {
 
 		_testRenderWithIdReference(
 			_groupLocalService.getCompanyGroup(TestPropsValues.getCompanyId()));

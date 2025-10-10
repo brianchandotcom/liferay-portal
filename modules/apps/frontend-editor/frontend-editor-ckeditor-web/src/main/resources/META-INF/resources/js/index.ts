@@ -72,7 +72,6 @@ export {default as BalloonEditor} from './ckeditor4/BalloonEditor';
 export {default as ClassicEditor} from './ckeditor4/ClassicEditor';
 
 export {Editor} from './ckeditor4/Editor';
-export {InlineEditor} from './ckeditor4/InlineEditor';
 
 export {default as CKEditor5BalloonEditor} from './ckeditor5/BalloonEditor';
 export {default as CKEditor5ClassicEditor} from './ckeditor5/ClassicEditor';

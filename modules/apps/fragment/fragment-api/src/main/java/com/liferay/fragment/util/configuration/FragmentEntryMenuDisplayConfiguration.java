@@ -124,6 +124,17 @@ public class FragmentEntryMenuDisplayConfiguration {
 			return;
 		}
 
+		long parentSiteNavigationMenuId = jsonObject.getLong("parentSiteNavigationMenuItemId");
+
+		if (parentSiteNavigationMenuId > 0) {
+			_source = new SiteNavigationMenuSource(
+				parentSiteNavigationMenuId,
+				jsonObject.getBoolean("privateLayout"),
+				siteNavigationMenuId);
+
+			return;
+		}
+
 		_source = _DEFAULT_SOURCE;
 	}
 

@@ -164,7 +164,8 @@ public class MenuDisplayFragmentRenderer implements FragmentRenderer {
 
 		FragmentEntryMenuDisplayConfiguration
 			fragmentEntryMenuDisplayConfiguration =
-				new FragmentEntryMenuDisplayConfiguration(groupId, source);
+				new FragmentEntryMenuDisplayConfiguration(
+					companyId, source, groupId);
 
 		navigationMenuTag.setNavigationMenuMode(
 			fragmentEntryMenuDisplayConfiguration.getNavigationMenuMode());

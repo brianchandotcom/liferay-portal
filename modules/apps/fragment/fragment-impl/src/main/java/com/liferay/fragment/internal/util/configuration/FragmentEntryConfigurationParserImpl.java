@@ -767,7 +767,8 @@ public class FragmentEntryConfigurationParserImpl
 		FragmentEntryMenuDisplayConfiguration
 			fragmentEntryMenuDisplayConfiguration =
 				new FragmentEntryMenuDisplayConfiguration(
-					serviceContext.getScopeGroupId(), value);
+					serviceContext.getCompanyId(), value,
+					serviceContext.getScopeGroupId());
 
 		return NavItemUtil.getNavigationMenuContext(
 			1, "auto", serviceContext.getRequest(),

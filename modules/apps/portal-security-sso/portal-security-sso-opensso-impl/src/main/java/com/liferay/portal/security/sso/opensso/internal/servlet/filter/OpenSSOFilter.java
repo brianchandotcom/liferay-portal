@@ -8,6 +8,7 @@ package com.liferay.portal.security.sso.opensso.internal.servlet.filter;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -77,8 +78,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 		try {
 			OpenSSOConfiguration openSSOConfiguration =
-				_getOpenSSOConfiguration(
-					_portal.getCompanyId(httpServletRequest));
+				_getOpenSSOConfiguration(CompanyThreadLocal.getCompanyId());
 
 			if (openSSOConfiguration.enabled() &&
 				Validator.isNotNull(openSSOConfiguration.loginURL()) &&
@@ -107,7 +107,7 @@ public class OpenSSOFilter extends BaseFilter {
 		throws Exception {
 
 		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
-			_portal.getCompanyId(httpServletRequest));
+			CompanyThreadLocal.getCompanyId());
 
 		String requestURI = GetterUtil.getString(
 			httpServletRequest.getRequestURI());

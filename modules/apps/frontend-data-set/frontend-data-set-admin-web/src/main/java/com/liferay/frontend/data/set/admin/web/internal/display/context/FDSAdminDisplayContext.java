@@ -254,9 +254,6 @@ public class FDSAdminDisplayContext {
 					_systemFDSEntryRegistry.getSystemFDSEntry(systemFDSName);
 
 				return JSONUtil.put(
-					"additionalAPIURLParameters",
-					systemFDSEntry.getAdditionalAPIURLParameters()
-				).put(
 					"defaultItemsPerPage",
 					systemFDSEntry.getDefaultItemsPerPage()
 				).put(

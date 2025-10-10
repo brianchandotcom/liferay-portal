@@ -6,7 +6,6 @@
 package com.liferay.portal.security.audit.wiring.internal.servlet.filter;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.audit.AuditRequestThreadLocal;
@@ -92,24 +91,19 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		String userLogin = StringPool.BLANK;
 
 		if (userId != null) {
-			try (SafeCloseable safeCloseable =
-					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						CompanyThreadLocal.getCompanyId())) {
+			User user = _userLocalService.fetchUser(userId);
 
-				User user = _userLocalService.fetchUser(userId);
+			if (user != null) {
+				userEmailAddress = user.getEmailAddress();
 
-				if (user != null) {
-					userEmailAddress = user.getEmailAddress();
+				auditRequestThreadLocal.setRealUserEmailAddress(
+					userEmailAddress);
 
-					auditRequestThreadLocal.setRealUserEmailAddress(
-						userEmailAddress);
+				auditRequestThreadLocal.setRealUserId(userId);
 
-					auditRequestThreadLocal.setRealUserId(userId);
+				userLogin = _getUserLogin(user);
 
-					userLogin = _getUserLogin(user);
-
-					auditRequestThreadLocal.setRealUserLogin(userLogin);
-				}
+				auditRequestThreadLocal.setRealUserLogin(userLogin);
 			}
 		}
 

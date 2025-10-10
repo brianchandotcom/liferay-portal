@@ -26,6 +26,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
@@ -111,6 +112,36 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			Long.class);
 	}
 
+	private JSONObject _getObjectEntryDefaultPermissionJSONObject(
+		String className) {
+
+		return JSONUtil.put(
+			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+			new String[] {
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+			}
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+			new String[] {
+				ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+				ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+				ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION, ActionKeys.VIEW
+			}
+		).put(
+			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+			new String[] {ActionKeys.VIEW}
+		).put(
+			RoleConstants.CMS_ADMINISTRATOR,
+			TransformUtil.transformToArray(
+				_resourceActionLocalService.getResourceActions(className),
+				ResourceAction::getActionId, String.class)
+		).put(
+			RoleConstants.USER, new String[] {ActionKeys.VIEW}
+		);
+	}
+
 	private void _onAfterCreate(Group group) throws PortalException {
 		if ((group.getType() != GroupConstants.TYPE_DEPOT) ||
 			!FeatureFlagManagerUtil.isEnabled(
@@ -142,64 +173,12 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			group.getExternalReferenceCode(), DepotEntry.class.getName(),
 			JSONUtil.put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-				JSONUtil.put(
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-					new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.VIEW
-					}
-				).put(
-					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-					new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.VIEW
-					}
-				).put(
-					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-					new String[] {ActionKeys.VIEW}
-				).put(
-					RoleConstants.CMS_ADMINISTRATOR,
-					TransformUtil.transformToArray(
-						_resourceActionLocalService.getResourceActions(
-							cmsBasicWebContentObjectDefinition.getClassName()),
-						ResourceAction::getActionId, String.class)
-				).put(
-					RoleConstants.USER, new String[] {ActionKeys.VIEW}
-				)
+				_getObjectEntryDefaultPermissionJSONObject(
+					cmsBasicWebContentObjectDefinition.getClassName())
 			).put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-				JSONUtil.put(
-					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
-					new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.VIEW
-					}
-				).put(
-					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
-					new String[] {
-						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
-						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
-						ActionKeys.VIEW
-					}
-				).put(
-					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-					new String[] {ActionKeys.VIEW}
-				).put(
-					RoleConstants.CMS_ADMINISTRATOR,
-					TransformUtil.transformToArray(
-						_resourceActionLocalService.getResourceActions(
-							cmsBasicDocumentObjectDefinition.getClassName()),
-						ResourceAction::getActionId, String.class)
-				).put(
-					RoleConstants.USER, new String[] {ActionKeys.VIEW}
-				)
+				_getObjectEntryDefaultPermissionJSONObject(
+					cmsBasicDocumentObjectDefinition.getClassName())
 			).put(
 				"OBJECT_ENTRY_FOLDERS",
 				JSONUtil.put(

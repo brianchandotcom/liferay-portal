@@ -10,6 +10,8 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -23,7 +25,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AccountEntriesSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
+	public String getAdditionalAPIURLParameters(
+		HttpServletRequest httpServletRequest) {
+
 		return "filter=type in ({filter})&sort=name:asc";
 	}
 

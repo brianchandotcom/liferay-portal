@@ -8,6 +8,8 @@ package com.liferay.frontend.data.set.sample.web.internal.frontend.data.set;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -20,7 +22,9 @@ import org.osgi.service.component.annotations.Component;
 public class AdvancedSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
-	public String getAdditionalAPIURLParameters() {
+	public String getAdditionalAPIURLParameters(
+		HttpServletRequest httpServletRequest) {
+
 		return "sort=title:asc";
 	}
 

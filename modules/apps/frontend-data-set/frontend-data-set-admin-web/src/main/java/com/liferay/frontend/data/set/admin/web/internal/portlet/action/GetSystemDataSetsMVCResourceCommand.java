@@ -120,7 +120,8 @@ public class GetSystemDataSetsMVCResourceCommand
 
 						return JSONUtil.put(
 							"additionalAPIURLParameters",
-							systemFDSEntry.getAdditionalAPIURLParameters()
+							systemFDSEntry.getAdditionalAPIURLParameters(
+								_portal.getHttpServletRequest(resourceRequest))
 						).put(
 							"defaultItemsPerPage",
 							systemFDSEntry.getDefaultItemsPerPage()

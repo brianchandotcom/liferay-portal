@@ -86,7 +86,7 @@ public class SystemFDSSerializer
 			httpServletRequest, systemFDSEntry.getRESTApplication(),
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
 		).addQueryString(
-			systemFDSEntry.getAdditionalAPIURLParameters()
+			systemFDSEntry.getAdditionalAPIURLParameters(httpServletRequest)
 		).setTokenResolutions(
 			tokenResolutionsJSONObject
 		).buildQueryString(

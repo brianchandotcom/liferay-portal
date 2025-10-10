@@ -10,6 +10,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -28,6 +29,27 @@ import java.util.Map;
  * @author Carolina Barbosa
  */
 public class NumericDDMFormFieldTypeUtil {
+
+	public static String getNumericInputMaskValue(String value) {
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		return JSONUtil.put(
+			"append", ""
+		).put(
+			"appendType", "prefix"
+		).put(
+			"decimalPlaces", 2
+		).put(
+			"symbols",
+			JSONUtil.put(
+				"decimalSymbol", "."
+			).put(
+				"thousandsSeparator", "none"
+			)
+		).toString();
+	}
 
 	public static Map<String, Object> getParameters(
 		String dataType, DDMFormField ddmFormField,
@@ -62,9 +84,10 @@ public class NumericDDMFormFieldTypeUtil {
 			).build();
 		}
 
-		String numericInputMask = _getPropertyValue(
-			ddmFormField, ddmFormFieldRenderingContext, locale,
-			"numericInputMask");
+		String numericInputMask = getNumericInputMaskValue(
+			_getPropertyValue(
+				ddmFormField, ddmFormFieldRenderingContext, locale,
+				"numericInputMask"));
 
 		return HashMapBuilder.<String, Object>put(
 			"inputMask", inputMask

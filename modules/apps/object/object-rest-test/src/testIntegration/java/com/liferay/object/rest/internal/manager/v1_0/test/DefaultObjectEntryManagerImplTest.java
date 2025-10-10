@@ -3051,6 +3051,17 @@ public class DefaultObjectEntryManagerImplTest
 
 		Assert.assertEquals("test-url", objectEntry.getFriendlyUrlPath());
 
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setFriendlyUrlPath("Accès aux crédits");
+				}
+			});
+
+		Assert.assertEquals(
+			"accès-aux-crédits", objectEntry.getFriendlyUrlPath());
+
 		objectEntry = _defaultObjectEntryManager.addObjectEntry(
 			_simpleDTOConverterContext, objectDefinition,
 			new ObjectEntry() {
@@ -3060,6 +3071,8 @@ public class DefaultObjectEntryManagerImplTest
 							"en_US", "Test URL"
 						).put(
 							"es_ES", "Test URL Spanish"
+						).put(
+							"fr_FR", "Accès aux crédits"
 						).put(
 							"pt_BR", ""
 						).build());
@@ -3072,6 +3085,8 @@ public class DefaultObjectEntryManagerImplTest
 				"en_US", "test-url-1"
 			).put(
 				"es_ES", "test-url-spanish"
+			).put(
+				"fr_FR", "accès-aux-crédits-1"
 			).build(),
 			objectEntry.getFriendlyUrlPath_i18n());
 

@@ -278,8 +278,6 @@ public class MenuDisplayFragmentRendererTest {
 						"siteNavigationMenuExternalReferenceCode",
 						siteNavigationMenu.getExternalReferenceCode()
 					).put(
-						"siteNavigationMenuId", RandomTestUtil.randomLong()
-					).put(
 						"siteNavigationMenuScopeExternalReferenceCode",
 						siteNavigationMenuScopeExternalReferenceCode
 					).put(

@@ -19,7 +19,7 @@ export default defineConfig({
 	},
 	experimental: {
 		renderBuiltUrl(filename: string) {
-			return `/o/liferay-sample-custom-element/${filename}`;
+			return `/o/liferay-sample-custom-element-6/${filename}`;
 		},
 	},
 	plugins: [react()],

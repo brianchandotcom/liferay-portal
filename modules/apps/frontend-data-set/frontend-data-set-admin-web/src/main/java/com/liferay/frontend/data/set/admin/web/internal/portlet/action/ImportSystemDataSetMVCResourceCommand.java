@@ -109,9 +109,6 @@ public class ImportSystemDataSetMVCResourceCommand
 			fdsName, 0, dataSetObjectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
-				"additionalAPIURLParameters",
-				systemFDSEntry.getAdditionalAPIURLParameters()
-			).put(
 				"defaultItemsPerPage", systemFDSEntry.getDefaultItemsPerPage()
 			).put(
 				"description", systemFDSEntry.getDescription()

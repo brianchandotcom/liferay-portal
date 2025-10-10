@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -95,7 +94,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		if (userId != null) {
 			try (SafeCloseable safeCloseable =
 					CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-						_portal.getCompanyId(httpServletRequest))) {
+						CompanyThreadLocal.getCompanyId())) {
 
 				User user = _userLocalService.fetchUser(userId);
 
@@ -141,7 +140,7 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 		httpServletResponse.setHeader(HttpHeaders.X_REQUEST_ID, xRequestId);
 
 		_auditLogContext.setContext(
-			remoteAddr, _portal.getCompanyId(httpServletRequest),
+			remoteAddr, CompanyThreadLocal.getCompanyId(),
 			httpServletRequest.getServerName(), userEmailAddress, userId,
 			userLogin, xRequestId);
 
@@ -231,9 +230,6 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
-
-	@Reference
-	private Portal _portal;
 
 	private ServiceRegistration<LogContext> _serviceRegistration;
 

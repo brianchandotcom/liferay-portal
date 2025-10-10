@@ -109,7 +109,7 @@ public class I18nFilter extends BasePortalFilter {
 		throws Exception {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
-			_portal.getCompanyId(httpServletRequest),
+			CompanyThreadLocal.getCompanyId(),
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (localePrependFriendlyURLStyle == 0) {
@@ -182,7 +182,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		Group friendlyURLGroup = _groupLocalService.fetchFriendlyURLGroup(
-			_portal.getCompanyId(httpServletRequest), groupFriendlyURL);
+			CompanyThreadLocal.getCompanyId(), groupFriendlyURL);
 
 		if ((friendlyURLGroup != null) &&
 			!_language.isAvailableLocale(
@@ -284,7 +284,7 @@ public class I18nFilter extends BasePortalFilter {
 
 		String friendlyURL = getFriendlyURL(httpServletRequest);
 
-		long companyId = _portal.getCompanyId(httpServletRequest);
+		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			Group group = _groupLocalService.getFriendlyURLGroup(

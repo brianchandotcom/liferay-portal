@@ -637,7 +637,8 @@
 		<column name="styleBookEntryERC" type="String" />
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
-		<column name="faviconFileEntryId" type="long" />
+		<column name="faviconFileEntryERC" type="String" />
+		<column name="faviconFileEntryScopeERC" type="String" />
 		<column db-name="masterLPTEERC" name="masterLayoutPageTemplateEntryERC" type="String" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />

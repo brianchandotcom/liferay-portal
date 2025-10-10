@@ -42,7 +42,7 @@ public class ModifiedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "modified-date-range";
+		return "modified-date";
 	}
 
 	@Override

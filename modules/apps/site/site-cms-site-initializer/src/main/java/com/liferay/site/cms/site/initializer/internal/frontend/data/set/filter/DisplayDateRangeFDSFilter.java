@@ -41,7 +41,7 @@ public class DisplayDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "display-date-range";
+		return "display-date";
 	}
 
 	@Override

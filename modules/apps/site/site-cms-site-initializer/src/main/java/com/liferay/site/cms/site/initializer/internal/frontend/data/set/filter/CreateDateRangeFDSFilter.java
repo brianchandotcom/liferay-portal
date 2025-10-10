@@ -42,7 +42,7 @@ public class CreateDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "create-date-range";
+		return "create-date";
 	}
 
 	@Override

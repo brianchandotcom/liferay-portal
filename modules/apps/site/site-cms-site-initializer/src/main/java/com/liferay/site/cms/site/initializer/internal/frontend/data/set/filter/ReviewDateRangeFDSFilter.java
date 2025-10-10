@@ -41,7 +41,7 @@ public class ReviewDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "review-date-range";
+		return "review-date";
 	}
 
 	@Override

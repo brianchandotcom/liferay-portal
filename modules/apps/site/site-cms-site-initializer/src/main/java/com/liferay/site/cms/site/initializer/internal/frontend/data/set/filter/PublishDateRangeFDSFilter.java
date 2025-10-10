@@ -41,7 +41,7 @@ public class PublishDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "publish-date-range";
+		return "publish-date";
 	}
 
 	@Override

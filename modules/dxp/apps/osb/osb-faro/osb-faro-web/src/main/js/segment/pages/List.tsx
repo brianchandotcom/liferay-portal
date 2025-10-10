@@ -2,7 +2,10 @@ import * as API from 'shared/api';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
+import ClayIcon from '@clayui/icon';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
+import Nav from 'shared/components/Nav';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -38,6 +41,10 @@ import {sub} from 'shared/util/lang';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
+import {
+	useSelectionContext,
+	withSelectionProvider
+} from 'shared/context/selection';
 
 export interface FetchSegmentsParams {
 	channelId: string;
@@ -86,6 +93,7 @@ export const List: React.FC<IListProps> = ({
 	const currentUser = useCurrentUser();
 	const _tableRef = useRef<HTMLDivElement & SearchableEntityTable>();
 
+	const {selectedItems /* selectionDispatch */} = useSelectionContext();
 	const {delta, orderIOMap, page, query} = useQueryPagination({
 		filterFields: [SEGMENT_STATE],
 		initialDelta: paginationDefaults.delta,
@@ -264,13 +272,17 @@ export const List: React.FC<IListProps> = ({
 			titleIcon: 'warning-full'
 		});
 	};
-	const handleViewSegment = ({id}) => id;
 	const renderRowActions = ({data: {id, name}, items}) => {
 		const commonActions = [
 			{
+				href: toRoute(Routes.CONTACTS_SEGMENT, {
+					channelId,
+					groupId,
+					id,
+					type: SEGMENTS
+				}),
 				iconSymbol: 'view',
-				label: Liferay.Language.get('view'),
-				onClick: () => handleViewSegment(id)
+				label: Liferay.Language.get('view')
 			},
 			{
 				href: toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
@@ -289,12 +301,14 @@ export const List: React.FC<IListProps> = ({
 			}
 		];
 
-		const actions = commonActions.map(({href, label, onClick}) => ({
-			href,
-			label,
-			onClick
-		}));
-
+		const actions = commonActions.map(
+			({href, iconSymbol, label, onClick}) => ({
+				href,
+				iconSymbol,
+				label,
+				onClick
+			})
+		);
 		return <RowActions actions={actions} quickActions={commonActions} />;
 	};
 
@@ -327,7 +341,67 @@ export const List: React.FC<IListProps> = ({
 	];
 
 	const pageActionsLabel = Liferay.Language.get('new-segment');
-
+	const renderNav = () => {
+		if (selectedItems.isEmpty()) {
+			return (
+				<Nav>
+					<Nav.Item>
+						{pageActions.length > 1 && (
+							<ClayDropDown
+								alignmentPosition={Align.BottomRight}
+								trigger={
+									<ClayButton
+										aria-label={
+											pageActionsLabel &&
+											Liferay.Language.get('menu')
+										}
+										className='button-root nav-btn p-2'
+										disabled={/* disabled || */ false}
+										displayType='primary'
+									>
+										<>
+											<span>{pageActionsLabel}</span>
+											<ClayIcon
+												className='icon-root ml-2'
+												symbol='caret-bottom'
+											/>
+										</>
+									</ClayButton>
+								}
+							>
+								{pageActions.map(({label, ...props}) => (
+									<ClayDropDown.Item key={label} {...props}>
+										{label}
+									</ClayDropDown.Item>
+								))}
+							</ClayDropDown>
+						)}
+					</Nav.Item>
+				</Nav>
+			);
+		}
+		return (
+			<Nav>
+				<ClayButton
+					aria-label={Liferay.Language.get('delete')}
+					borderless
+					className='button-root'
+					displayType='secondary'
+					onClick={() =>
+						handleDeleteSegment({
+							id: undefined,
+							items: selectedItems,
+							name
+						})
+					}
+					outline
+				>
+					<ClayIcon className='icon-root' symbol='trash' />
+					<span>{Liferay.Language.get('delete-segment')}</span>
+				</ClayButton>
+			</Nav>
+		);
+	};
 	return (
 		<BasePage
 			className='segment-list-root'
@@ -340,7 +414,6 @@ export const List: React.FC<IListProps> = ({
 					/>
 					<BasePage.Header.Section>
 						<BasePage.Header.PageActions
-							actions={pageActions}
 							disabled={error || loading}
 							label={pageActionsLabel}
 						/>
@@ -396,6 +469,7 @@ export const List: React.FC<IListProps> = ({
 							page={page}
 							query={query}
 							renderInlineRowActions={renderRowActions}
+							renderNav={renderNav}
 							total={data?.total}
 						/>
 					</Card.Body>
@@ -404,5 +478,4 @@ export const List: React.FC<IListProps> = ({
 		</BasePage>
 	);
 };
-
-export default compose(connector)(List);
+export default compose(connector, withSelectionProvider)(List);

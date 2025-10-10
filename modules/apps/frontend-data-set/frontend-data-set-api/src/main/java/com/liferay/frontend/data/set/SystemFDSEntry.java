@@ -7,12 +7,16 @@ package com.liferay.frontend.data.set;
 
 import com.liferay.portal.kernel.util.PropsValues;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 /**
  * @author Daniel Sanz
  */
 public interface SystemFDSEntry {
 
-	public default String getAdditionalAPIURLParameters() {
+	public default String getAdditionalAPIURLParameters(
+		HttpServletRequest httpServletRequest) {
+
 		return null;
 	}
 

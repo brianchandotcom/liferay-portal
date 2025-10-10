@@ -1745,7 +1745,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new SystemFDSEntry() {
 
 					@Override
-					public String getAdditionalAPIURLParameters() {
+					public String getAdditionalAPIURLParameters(
+						HttpServletRequest httpServletRequest) {
+
 						return _additionalURLParameters;
 					}
 

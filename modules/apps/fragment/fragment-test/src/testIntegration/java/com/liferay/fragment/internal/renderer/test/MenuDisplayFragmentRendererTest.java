@@ -94,19 +94,21 @@ public class MenuDisplayFragmentRendererTest {
 
 	@Test
 	@TestInfo("LPD-66793")
-	public void testRenderWithERCReference() throws Exception {
-		_testRenderWithERCReference(_group, StringPool.BLANK);
+	public void testRenderWithExternalReferenceCodeReference()
+		throws Exception {
+
+		_testRenderWithExternalReferenceCodeReference(_group, StringPool.BLANK);
 	}
 
 	@Test
 	@TestInfo("LPD-66793")
-	public void testRenderWithERCReferenceAndSiteNavigationMenuInCompanyGroup()
+	public void testRenderWithExternalReferenceCodeReferenceAndSiteNavigationMenuInCompanyGroup()
 		throws Exception {
 
 		Group companyGroup = _groupLocalService.getCompanyGroup(
 			TestPropsValues.getCompanyId());
 
-		_testRenderWithERCReference(
+		_testRenderWithExternalReferenceCodeReference(
 			companyGroup, companyGroup.getExternalReferenceCode());
 	}
 
@@ -227,7 +229,7 @@ public class MenuDisplayFragmentRendererTest {
 		return mockHttpServletResponse.getContentAsString();
 	}
 
-	private void _testRenderWithERCReference(
+	private void _testRenderWithExternalReferenceCodeReference(
 			Group group, String siteNavigationMenuScopeExternalReferenceCode)
 		throws Exception {
 

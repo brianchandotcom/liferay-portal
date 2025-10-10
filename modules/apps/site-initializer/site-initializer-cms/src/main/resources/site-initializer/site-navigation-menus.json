@@ -69,13 +69,6 @@
 						"friendlyURL": "/categorization",
 						"privateLayout": false,
 						"type": "layout"
-					},
-					{
-						"displayIcon": "trash",
-						"externalReferenceCode": "CMSPRIMARYNAVIGATION11",
-						"friendlyURL": "/recycle-bin",
-						"privateLayout": false,
-						"type": "layout"
 					}
 				],
 				"name_i18n": {
@@ -85,5 +78,18 @@
 			}
 		],
 		"name": "CMS Primary Navigation"
+	},
+	{
+		"externalReferenceCode": "CMSSECONDARYNAVIGATION",
+		"menuItems": [
+			{
+				"displayIcon": "trash",
+				"externalReferenceCode": "CMSSECONDARYNAVIGATION1",
+				"friendlyURL": "/recycle-bin",
+				"privateLayout": false,
+				"type": "layout"
+			}
+		],
+		"name": "CMS Secondary Navigation"
 	}
 ]

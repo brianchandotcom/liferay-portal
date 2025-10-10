@@ -45,19 +45,28 @@ public class FragmentEntryMenuDisplayConfiguration {
 			return;
 		}
 
+		long parentSiteNavigationMenuItemId = jsonObject.getLong(
+			"parentSiteNavigationMenuItemId");
+		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
+			"siteNavigationMenuExternalReferenceCode");
 		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
 
-		if (siteNavigationMenuId > 0) {
-			_source = new SiteNavigationMenuSource(
-				jsonObject.getLong("parentSiteNavigationMenuItemId"),
-				jsonObject.getBoolean("privateLayout"),
-				siteNavigationMenuId);
+		if ((parentSiteNavigationMenuItemId <= 0) &&
+			Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
+			(siteNavigationMenuId <= 0)) {
+
+			_source = _DEFAULT_SOURCE;
 
 			return;
 		}
 
-		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
-			"siteNavigationMenuExternalReferenceCode");
+		if (siteNavigationMenuId > 0) {
+			_source = new SiteNavigationMenuSource(
+				parentSiteNavigationMenuItemId,
+				jsonObject.getBoolean("privateLayout"), siteNavigationMenuId);
+
+			return;
+		}
 
 		if (Validator.isNotNull(siteNavigationMenuExternalReferenceCode)) {
 			long siteNavigationMenuItemId = 0;
@@ -112,30 +121,18 @@ public class FragmentEntryMenuDisplayConfiguration {
 					siteNavigationMenuId =
 						siteNavigationMenu.getSiteNavigationMenuId();
 				}
-
-
 			}
 
 			_source = new SiteNavigationMenuSource(
 				siteNavigationMenuItemId,
-				jsonObject.getBoolean("privateLayout"),
-				siteNavigationMenuId);
+				jsonObject.getBoolean("privateLayout"), siteNavigationMenuId);
 
 			return;
 		}
 
-		long parentSiteNavigationMenuId = jsonObject.getLong("parentSiteNavigationMenuItemId");
-
-		if (parentSiteNavigationMenuId > 0) {
-			_source = new SiteNavigationMenuSource(
-				parentSiteNavigationMenuId,
-				jsonObject.getBoolean("privateLayout"),
-				siteNavigationMenuId);
-
-			return;
-		}
-
-		_source = _DEFAULT_SOURCE;
+		_source = new SiteNavigationMenuSource(
+			parentSiteNavigationMenuItemId,
+			jsonObject.getBoolean("privateLayout"), siteNavigationMenuId);
 	}
 
 	public NavigationMenuMode getNavigationMenuMode() {

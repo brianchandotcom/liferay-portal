@@ -159,9 +159,6 @@ public class MenuDisplayFragmentRendererTest {
 			SiteNavigationMenu siteNavigationMenu)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
 		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 			null, TestPropsValues.getUserId(), groupId,
 			siteNavigationMenu.getSiteNavigationMenuId(),
@@ -172,7 +169,7 @@ public class MenuDisplayFragmentRendererTest {
 			).put(
 				"url", url
 			).buildString(),
-			serviceContext);
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest() throws Exception {

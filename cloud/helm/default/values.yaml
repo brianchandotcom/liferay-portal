@@ -160,8 +160,8 @@ initContainers:
                                     done
                                 {{- end }}
                             {{- end }}
-                image: bash:5.2
-                imagePullPolicy: IfNotPresent
+                image: {{ printf "%s:%s" .image.repository (.image.tag | toString) }}
+                imagePullPolicy: {{ .image.pullPolicy }}
                 name: liferay-wait-on-services
 livenessProbe:
     failureThreshold: 3

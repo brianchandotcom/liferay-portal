@@ -13,13 +13,13 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -77,6 +76,9 @@ public class MenuDisplayFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
+
 		_group = _groupLocalService.getGroup(TestPropsValues.getGroupId());
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
@@ -160,43 +162,24 @@ public class MenuDisplayFragmentRendererTest {
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
-		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+		HttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
+		mockHttpServletRequest.setAttribute(
 			TilesUtil.DEFINITION,
 			new Definition(StringPool.BLANK, new HashMap<>()));
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _getThemeDisplay(httpServletRequest));
 
-		_serviceContext.setRequest(httpServletRequest);
+		ThemeDisplay themeDisplay = ContentLayoutTestUtil.getThemeDisplay(
+			_company, _group, _layout);
 
-		return httpServletRequest;
-	}
+		themeDisplay.setRequest(mockHttpServletRequest);
 
-	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
-		throws Exception {
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
 
-		ThemeDisplay themeDisplay = new ThemeDisplay();
+		_serviceContext.setRequest(mockHttpServletRequest);
 
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(_layout);
-		themeDisplay.setLocale(LocaleUtil.getSiteDefault());
-
-		LayoutSet layoutSet = _group.getPublicLayoutSet();
-
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-
-		themeDisplay.setPermissionChecker(
-			PermissionThreadLocal.getPermissionChecker());
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(httpServletRequest);
-		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setSiteGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		return themeDisplay;
+		return mockHttpServletRequest;
 	}
 
 	private String _render(FragmentEntryLink fragmentEntryLink)
@@ -414,6 +397,8 @@ public class MenuDisplayFragmentRendererTest {
 				layout.getTitle(
 					_portal.getSiteDefaultLocale(_group.getGroupId()))));
 	}
+
+	private Company _company;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

@@ -238,26 +238,55 @@ public class MenuDisplayFragmentRendererTest {
 			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
 			siteNavigationMenu.getSiteNavigationMenuId(), url2);
 
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+		String content = _render(
+			_addFragmentEntryLink(
 				JSONUtil.put(
-					"source",
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put(
-						"parentSiteNavigationMenuItemExternalReferenceCode",
-						siteNavigationMenuItem1.getExternalReferenceCode()
+						"displayStyle", "stacked"
 					).put(
-						"siteNavigationMenuExternalReferenceCode",
-						siteNavigationMenu.getExternalReferenceCode()
+						"source",
+						JSONUtil.put(
+							"siteNavigationMenuExternalReferenceCode",
+							siteNavigationMenu.getExternalReferenceCode()
+						).put(
+							"siteNavigationMenuScopeExternalReferenceCode",
+							siteNavigationMenuScopeExternalReferenceCode
+						)
 					).put(
-						"siteNavigationMenuScopeExternalReferenceCode",
-						siteNavigationMenuScopeExternalReferenceCode
-					))
-			).toString(),
-			_layout.getPlid());
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
 
-		String content = _render(fragmentEntryLink);
+		Assert.assertTrue(content.contains(url1));
+		Assert.assertTrue(content.contains(url2));
+
+		content = _render(
+			_addFragmentEntryLink(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"displayStyle", "stacked"
+					).put(
+						"source",
+						JSONUtil.put(
+							"parentSiteNavigationMenuItemExternalReferenceCode",
+							siteNavigationMenuItem1.getExternalReferenceCode()
+						).put(
+							"siteNavigationMenuExternalReferenceCode",
+							siteNavigationMenu.getExternalReferenceCode()
+						).put(
+							"siteNavigationMenuScopeExternalReferenceCode",
+							siteNavigationMenuScopeExternalReferenceCode
+						)
+					).put(
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
 
 		Assert.assertFalse(content.contains(url1));
 		Assert.assertTrue(content.contains(url2));
@@ -281,24 +310,51 @@ public class MenuDisplayFragmentRendererTest {
 			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
 			siteNavigationMenu.getSiteNavigationMenuId(), url2);
 
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+		String content = _render(
+			_addFragmentEntryLink(
 				JSONUtil.put(
-					"source",
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put(
-						"parentSiteNavigationMenuItemId",
-						siteNavigationMenuItem1.getSiteNavigationMenuItemId()
+						"displayStyle", "stacked"
 					).put(
-						"siteNavigationMenuId",
-						String.valueOf(
-							siteNavigationMenu.getSiteNavigationMenuId())
-					))
-			).toString(),
-			_layout.getPlid());
+						"source",
+						JSONUtil.put(
+							"siteNavigationMenuId",
+							String.valueOf(
+								siteNavigationMenu.getSiteNavigationMenuId()))
+					).put(
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
 
-		String content = _render(fragmentEntryLink);
+		Assert.assertTrue(content.contains(url1));
+		Assert.assertTrue(content.contains(url2));
+
+		content = _render(
+			_addFragmentEntryLink(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"displayStyle", "stacked"
+					).put(
+						"source",
+						JSONUtil.put(
+							"parentSiteNavigationMenuItemId",
+							siteNavigationMenuItem1.
+								getSiteNavigationMenuItemId()
+						).put(
+							"siteNavigationMenuId",
+							String.valueOf(
+								siteNavigationMenu.getSiteNavigationMenuId())
+						)
+					).put(
+						"sublevels", "-1"
+					)
+				).toString(),
+				_layout.getPlid()));
 
 		Assert.assertFalse(content.contains(url1));
 		Assert.assertTrue(content.contains(url2));

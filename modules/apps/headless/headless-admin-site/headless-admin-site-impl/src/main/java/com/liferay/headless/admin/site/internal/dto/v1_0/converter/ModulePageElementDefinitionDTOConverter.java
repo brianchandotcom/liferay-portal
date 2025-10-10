@@ -58,17 +58,15 @@ public class ModulePageElementDefinitionDTOConverter
 		Map<String, JSONObject> columnViewportConfigurationJSONObjects,
 		ModuleViewport.Id moduleViewportId) {
 
-		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
+		String viewportId = ViewportIdUtil.toInternalValue(
 			moduleViewportId.getValue());
 
-		if (!columnViewportConfigurationJSONObjects.containsKey(
-				viewportIdInternalValue)) {
-
+		if (!columnViewportConfigurationJSONObjects.containsKey(viewportId)) {
 			return null;
 		}
 
 		JSONObject columnViewportConfigurationJSONObject =
-			columnViewportConfigurationJSONObjects.get(viewportIdInternalValue);
+			columnViewportConfigurationJSONObjects.get(viewportId);
 
 		if (JSONUtil.isEmpty(columnViewportConfigurationJSONObject)) {
 			return null;

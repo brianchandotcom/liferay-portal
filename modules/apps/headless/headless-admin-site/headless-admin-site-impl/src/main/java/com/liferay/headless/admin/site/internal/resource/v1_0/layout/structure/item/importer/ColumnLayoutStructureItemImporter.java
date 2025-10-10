@@ -99,16 +99,16 @@ public class ColumnLayoutStructureItemImporter
 		ModuleViewport moduleViewport = _getModuleViewport(
 			moduleViewportId, moduleViewports);
 
-		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
+		String viewportId = ViewportIdUtil.toInternalValue(
 			moduleViewportId.getValue());
 
 		if (moduleViewport != null) {
 			columnLayoutStructureItem.setViewportConfiguration(
-				viewportIdInternalValue, _toViewportJSONObject(moduleViewport));
+				viewportId, _toViewportJSONObject(moduleViewport));
 		}
 		else {
 			columnLayoutStructureItem.setViewportConfiguration(
-				viewportIdInternalValue, defaultViewportJSONObject);
+				viewportId, defaultViewportJSONObject);
 		}
 	}
 

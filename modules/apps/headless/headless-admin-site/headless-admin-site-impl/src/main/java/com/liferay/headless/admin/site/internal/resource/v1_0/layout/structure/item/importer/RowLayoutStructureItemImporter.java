@@ -138,16 +138,16 @@ public class RowLayoutStructureItemImporter
 		GridViewport gridViewport = _getGridViewport(
 			gridViewportId, gridViewports);
 
-		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
+		String viewportId = ViewportIdUtil.toInternalValue(
 			gridViewportId.getValue());
 
 		if (gridViewport != null) {
 			rowStyledLayoutStructureItem.setViewportConfiguration(
-				viewportIdInternalValue, _toViewportJSONObject(gridViewport));
+				viewportId, _toViewportJSONObject(gridViewport));
 		}
 		else {
 			rowStyledLayoutStructureItem.setViewportConfiguration(
-				viewportIdInternalValue, defaultViewportJSONObject);
+				viewportId, defaultViewportJSONObject);
 		}
 	}
 

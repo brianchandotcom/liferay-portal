@@ -623,9 +623,8 @@ public class FragmentEntryLinkManager {
 					rootComment, httpServletRequest);
 
 				List<Comment> childComments = _commentManager.getChildComments(
-					rootComment.getCommentId(),
-					WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS);
+					rootComment.getCommentId(), WorkflowConstants.STATUS_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 				JSONArray childCommentsJSONArray =
 					_jsonFactory.createJSONArray();

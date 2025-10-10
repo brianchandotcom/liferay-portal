@@ -42,7 +42,7 @@ export class AssetsPage {
 		this.page = page;
 
 		this.dataSetFragmentPage = new DataSetPage(page);
-		this.newButton = page.getByLabel('New');
+		this.newButton = page.getByTestId('fdsCreationActionButton').first();
 		this.processingTasksButton = page.getByRole('button', {
 			name: /Processing Tasks?/,
 		}) as Locator;

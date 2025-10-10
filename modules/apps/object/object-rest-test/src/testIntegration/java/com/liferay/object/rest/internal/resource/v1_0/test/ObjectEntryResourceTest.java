@@ -5807,9 +5807,9 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertFalse(actionsJSONObject1.isNull("create"));
 		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
-		Assert.assertTrue(actionsJSONObject1.isNull("deleteBatch"));
+		Assert.assertFalse(actionsJSONObject1.isNull("deleteBatch"));
 		Assert.assertTrue(actionsJSONObject1.isNull("get"));
-		Assert.assertTrue(actionsJSONObject1.isNull("updateBatch"));
+		Assert.assertFalse(actionsJSONObject1.isNull("updateBatch"));
 
 		HTTPTestUtil.customize(
 		).withGuest(

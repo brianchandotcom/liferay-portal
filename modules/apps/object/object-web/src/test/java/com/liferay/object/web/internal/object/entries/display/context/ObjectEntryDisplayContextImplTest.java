@@ -12,11 +12,15 @@ import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -25,12 +29,14 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -94,6 +100,158 @@ public class ObjectEntryDisplayContextImplTest {
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.BRAZIL));
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.SPAIN));
 		Assert.assertEquals(label, localizedValue.getString(LocaleUtil.US));
+	}
+
+	@Test
+	public void testGetObjectEntry() throws Exception {
+		HttpServletRequest httpServletRequest = Mockito.mock(
+			HttpServletRequest.class);
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		ObjectDefinition objectDefinition = Mockito.mock(
+			ObjectDefinition.class);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(
+				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
+		).thenReturn(
+			false
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_DEFINITION)
+		).thenReturn(
+			objectDefinition
+		);
+
+		Mockito.when(
+			httpServletRequest.getParameter("externalReferenceCode")
+		).thenReturn(
+			"ERC-123"
+		);
+
+		Mockito.when(
+			httpServletRequest.getParameter("objectRelationshipId")
+		).thenReturn(
+			"0"
+		);
+
+		Mockito.when(
+			httpServletRequest.getParameter("groupId")
+		).thenReturn(
+			"20123"
+		);
+
+		Mockito.when(
+			themeDisplay.getCompanyId()
+		).thenReturn(
+			2500L
+		);
+
+		Mockito.when(
+			themeDisplay.getSiteDefaultLocale()
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		Mockito.when(
+			themeDisplay.getUser()
+		).thenReturn(
+			Mockito.mock(User.class)
+		);
+
+		Mockito.when(
+			objectDefinition.getStorageType()
+		).thenReturn(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+		);
+
+		ObjectEntryManagerRegistry objectEntryManagerRegistry = Mockito.mock(
+			ObjectEntryManagerRegistry.class);
+		ObjectEntryManager objectEntryManager = Mockito.mock(
+			ObjectEntryManager.class);
+		ObjectRelationshipLocalService objectRelationshipLocalService =
+			Mockito.mock(ObjectRelationshipLocalService.class);
+
+		Mockito.when(
+			objectEntryManagerRegistry.getObjectEntryManager(
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)
+		).thenReturn(
+			objectEntryManager
+		);
+
+		Mockito.when(
+			objectRelationshipLocalService.fetchObjectRelationship(0L)
+		).thenReturn(
+			null
+		);
+
+		ObjectEntry objectEntry1 = Mockito.mock(ObjectEntry.class);
+
+		Mockito.when(
+			objectEntry1.getId()
+		).thenReturn(
+			12345L
+		);
+
+		Mockito.when(
+			objectEntryManager.getObjectEntry(
+				Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
+				Mockito.eq("ERC-123"), Mockito.eq(objectDefinition),
+				Mockito.eq("20123"))
+		).thenReturn(
+			objectEntry1
+		);
+
+		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
+			new ObjectEntryDisplayContextImpl(
+				Mockito.mock(DDMExpressionFactory.class),
+				Mockito.mock(DDMFormRenderer.class), httpServletRequest,
+				Mockito.mock(ItemSelector.class),
+				Mockito.mock(ObjectDefinitionLocalService.class),
+				objectEntryManagerRegistry,
+				Mockito.mock(ObjectEntryLocalService.class),
+				Mockito.mock(ObjectEntryService.class),
+				Mockito.mock(ObjectFieldBusinessTypeRegistry.class),
+				Mockito.mock(ObjectFieldLocalService.class),
+				Mockito.mock(ObjectLayoutLocalService.class),
+				objectRelationshipLocalService,
+				Mockito.mock(ObjectScopeProviderRegistry.class));
+
+		ObjectEntry objectEntry2 = ReflectionTestUtil.invoke(
+			objectEntryDisplayContextImpl, "_getObjectEntry", new Class<?>[0],
+			new Object[0]);
+
+		Assert.assertSame(objectEntry1, objectEntry2);
+
+		ObjectEntry objectEntry3 = ReflectionTestUtil.invoke(
+			objectEntryDisplayContextImpl, "_getObjectEntry", new Class<?>[0],
+			new Object[0]);
+
+		Assert.assertSame(objectEntry1, objectEntry3);
+
+		Mockito.verify(
+			objectRelationshipLocalService, Mockito.times(1)
+		).fetchObjectRelationship(
+			0L
+		);
+
+		Mockito.verify(
+			objectEntryManager, Mockito.times(1)
+		).getObjectEntry(
+			Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
+			Mockito.eq("ERC-123"), Mockito.eq(objectDefinition),
+			Mockito.eq("20123")
+		);
+
+		Mockito.verifyNoMoreInteractions(
+			objectRelationshipLocalService, objectEntryManager);
 	}
 
 	@Test

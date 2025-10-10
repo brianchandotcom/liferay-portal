@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -93,7 +94,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		}
 	}
 
-	private Long[] _getDepotGroupIds(long companyId) throws Exception {
+	private Long[] _getDepotGroupIds(long companyId) {
 		return TransformUtil.transformToArray(
 			_depotEntryLocalService.getDepotEntries(
 				companyId, DepotConstants.TYPE_SPACE),
@@ -165,8 +166,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
 							cmsBasicWebContentObjectDefinition.getClassName()),
-						resourceAction -> resourceAction.getActionId(),
-						String.class)
+						ResourceAction::getActionId, String.class)
 				).put(
 					RoleConstants.USER, new String[] {ActionKeys.VIEW}
 				)
@@ -196,8 +196,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
 							cmsBasicDocumentObjectDefinition.getClassName()),
-						resourceAction -> resourceAction.getActionId(),
-						String.class)
+						ResourceAction::getActionId, String.class)
 				).put(
 					RoleConstants.USER, new String[] {ActionKeys.VIEW}
 				)
@@ -226,8 +225,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						TransformUtil.transformToArray(
 							_resourceActionLocalService.getResourceActions(
 								ObjectEntryFolder.class.getName()),
-							resourceAction -> resourceAction.getActionId(),
-							String.class))
+							ResourceAction::getActionId, String.class))
 				).put(
 					RoleConstants.USER,
 					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}

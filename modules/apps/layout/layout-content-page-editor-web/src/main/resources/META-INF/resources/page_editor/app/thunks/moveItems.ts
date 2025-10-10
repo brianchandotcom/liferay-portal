@@ -6,8 +6,11 @@
 import {State} from '../../types/State';
 import moveItemsAction from '../actions/moveItems';
 import updateNetwork from '../actions/updateNetwork';
+import FragmentService from '../services/FragmentService';
 import LayoutService from '../services/LayoutService';
+import {getUnmappedFragmentEntryLinks} from '../utils/getUnmappedFragments';
 import sortItemIds from '../utils/sortItemIds';
+import {clearPageContents} from '../utils/usePageContents';
 import filterSelectedItems from './filterSelectedItems';
 
 type Props = {
@@ -23,7 +26,12 @@ export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 		) => void,
 		getState: () => State
 	) => {
-		const {layoutData, segmentsExperienceId} = getState();
+		const {
+			fragmentEntryLinks,
+			languageId,
+			layoutData,
+			segmentsExperienceId,
+		} = getState();
 
 		const sortedItemIds = sortItemIds(
 			filterSelectedItems(itemIds, layoutData.items),
@@ -36,8 +44,41 @@ export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 			parentItemIds,
 			positions,
 			segmentsExperienceId,
-		}).then((layoutData) =>
-			dispatch(moveItemsAction({itemIds: sortedItemIds, layoutData}))
-		);
+		}).then(async (updatedLayoutData) => {
+			const unmappedFragmentEntryLinks = getUnmappedFragmentEntryLinks({
+				fragmentEntryLinks,
+				layoutData,
+				movedIds: itemIds,
+				targetId: parentItemIds[0],
+			});
+
+			const updatedFragmentEntryLinks = [];
+
+			for (const {
+				editableValues,
+				fragmentEntryLinkId,
+			} of unmappedFragmentEntryLinks) {
+				const {fragmentEntryLink} =
+					await FragmentService.updateEditableValues({
+						editableValues,
+						fragmentEntryLinkId,
+						languageId,
+						onNetworkStatus: dispatch,
+						segmentsExperienceId,
+					});
+
+				updatedFragmentEntryLinks.push(fragmentEntryLink);
+			}
+
+			clearPageContents();
+
+			return dispatch(
+				moveItemsAction({
+					fragmentEntryLinks: updatedFragmentEntryLinks,
+					itemIds: sortedItemIds,
+					layoutData: updatedLayoutData,
+				})
+			);
+		});
 	};
 }

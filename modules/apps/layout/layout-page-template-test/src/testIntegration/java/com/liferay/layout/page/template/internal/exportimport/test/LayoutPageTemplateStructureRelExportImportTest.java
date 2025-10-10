@@ -17,16 +17,20 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
+import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -200,6 +204,175 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			backgroundImageJSONObject.getLong("classPK"));
 	}
 
+	@Test
+	@TestInfo("LPD-67912")
+	public void testFormContainerSuccessMessageWithPage() throws Exception {
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					group.getGroupId(), layout1.getPlid());
+
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			_layoutPageTemplateStructureRelLocalService.
+				fetchLayoutPageTemplateStructureRel(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId(),
+					SegmentsExperienceLocalServiceUtil.
+						fetchDefaultSegmentsExperienceId(layout1.getPlid()));
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructureRel.getData());
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					layoutStructure.getMainItemId(), 0);
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
+
+		formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+			JSONUtil.put(
+				"layout",
+				JSONUtil.put(
+					"groupId", layout2.getGroupId()
+				).put(
+					"layoutId", layout2.getLayoutId()
+				).put(
+					"layoutUuid", layout2.getUuid()
+				).put(
+					"privateLayout", layout2.isPrivateLayout()
+				)));
+
+		layoutPageTemplateStructureRel.setData(layoutStructure.toString());
+
+		_layoutPageTemplateStructureRelLocalService.
+			updateLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructureRel);
+
+		exportImportLayouts(
+			new long[] {layout2.getLayoutId(), layout1.getLayoutId()},
+			getImportParameterMap());
+
+		Layout importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout1.getUuid(), importedGroup.getGroupId(), false);
+
+		LayoutPageTemplateStructure importedLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					importedGroup.getGroupId(), importedLayout1.getPlid());
+
+		LayoutStructure importedLayoutStructure = LayoutStructure.of(
+			importedLayoutPageTemplateStructure.
+				getDefaultSegmentsExperienceData());
+
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+			importedLayoutStructure.getFormStyledLayoutStructureItems();
+
+		formStyledLayoutStructureItem = formStyledLayoutStructureItems.get(0);
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		Assert.assertEquals(
+			importedGroup.getGroupId(), layoutJSONObject.getLong("groupId"));
+
+		Layout importedLayout2 = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout2.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertEquals(
+			importedLayout2.getLayoutId(),
+			layoutJSONObject.getLong("layoutId"));
+	}
+
+	@Test
+	@TestInfo("LPD-67912")
+	public void testFormContainerSuccessMessageWithPageFromGuestSite()
+		throws Exception {
+
+		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
+
+		LayoutPageTemplateStructure layoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					group.getGroupId(), layout1.getPlid());
+
+		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
+			_layoutPageTemplateStructureRelLocalService.
+				fetchLayoutPageTemplateStructureRel(
+					layoutPageTemplateStructure.
+						getLayoutPageTemplateStructureId(),
+					SegmentsExperienceLocalServiceUtil.
+						fetchDefaultSegmentsExperienceId(layout1.getPlid()));
+
+		LayoutStructure layoutStructure = LayoutStructure.of(
+			layoutPageTemplateStructureRel.getData());
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					layoutStructure.getMainItemId(), 0);
+
+		Group guestGroup = _groupLocalService.getGroup(
+			TestPropsValues.getGroupId());
+
+		Layout layout2 = LayoutTestUtil.addTypeContentLayout(guestGroup);
+
+		formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+			JSONUtil.put(
+				"layout",
+				JSONUtil.put(
+					"groupId", layout2.getGroupId()
+				).put(
+					"layoutId", layout2.getLayoutId()
+				).put(
+					"layoutUuid", layout2.getUuid()
+				).put(
+					"privateLayout", layout2.isPrivateLayout()
+				)));
+
+		layoutPageTemplateStructureRel.setData(layoutStructure.toString());
+
+		_layoutPageTemplateStructureRelLocalService.
+			updateLayoutPageTemplateStructureRel(
+				layoutPageTemplateStructureRel);
+
+		exportImportLayouts(
+			new long[] {layout1.getLayoutId()}, getImportParameterMap());
+
+		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
+			layout1.getUuid(), importedGroup.getGroupId(), false);
+
+		LayoutPageTemplateStructure importedLayoutPageTemplateStructure =
+			_layoutPageTemplateStructureLocalService.
+				fetchLayoutPageTemplateStructure(
+					importedGroup.getGroupId(), importedLayout.getPlid());
+
+		LayoutStructure importedLayoutStructure = LayoutStructure.of(
+			importedLayoutPageTemplateStructure.
+				getDefaultSegmentsExperienceData());
+
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+			importedLayoutStructure.getFormStyledLayoutStructureItems();
+
+		formStyledLayoutStructureItem = formStyledLayoutStructureItems.get(0);
+
+		JSONObject successMessageJSONObject =
+			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
+
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		Assert.assertEquals(
+			layout2.getGroupId(), layoutJSONObject.getLong("groupId"));
+		Assert.assertEquals(
+			layout2.getLayoutId(), layoutJSONObject.getLong("layoutId"));
+	}
+
 	private byte[] _read(String fileName) throws Exception {
 		return FileUtil.getBytes(
 			LayoutPageTemplateStructureRelExportImportTest.class, fileName);
@@ -207,6 +380,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Inject
 	private DLAppLocalService _dlAppLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private Language _language;

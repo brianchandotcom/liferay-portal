@@ -113,7 +113,13 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	}
 
 	private JSONObject _getObjectEntryDefaultPermissionJSONObject(
-		String className) {
+			long companyId, String externalReferenceCode)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.
+				getObjectDefinitionByExternalReferenceCode(
+					externalReferenceCode, companyId);
 
 		return JSONUtil.put(
 			DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
@@ -135,7 +141,8 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		).put(
 			RoleConstants.CMS_ADMINISTRATOR,
 			TransformUtil.transformToArray(
-				_resourceActionLocalService.getResourceActions(className),
+				_resourceActionLocalService.getResourceActions(
+					objectDefinition.getClassName()),
 				ResourceAction::getActionId, String.class)
 		).put(
 			RoleConstants.USER, new String[] {ActionKeys.VIEW}
@@ -159,26 +166,17 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		ObjectDefinition cmsBasicDocumentObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_DOCUMENT", group.getCompanyId());
-		ObjectDefinition cmsBasicWebContentObjectDefinition =
-			_objectDefinitionLocalService.
-				getObjectDefinitionByExternalReferenceCode(
-					"L_CMS_BASIC_WEB_CONTENT", group.getCompanyId());
-
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			null, group.getCompanyId(), group.getCreatorUserId(),
 			group.getExternalReferenceCode(), DepotEntry.class.getName(),
 			JSONUtil.put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 				_getObjectEntryDefaultPermissionJSONObject(
-					cmsBasicWebContentObjectDefinition.getClassName())
+					group.getCompanyId(), "L_CMS_BASIC_WEB_CONTENT")
 			).put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 				_getObjectEntryDefaultPermissionJSONObject(
-					cmsBasicDocumentObjectDefinition.getClassName())
+					group.getCompanyId(), "L_CMS_BASIC_DOCUMENT")
 			).put(
 				"OBJECT_ENTRY_FOLDERS",
 				JSONUtil.put(

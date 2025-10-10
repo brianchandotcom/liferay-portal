@@ -20,8 +20,6 @@ components:
                         type: permission
                     type: array
         BatchTestEntity:
-            description:
-                "https://www.schema.org/Document"
             properties:
                 customFields:
                     items:
@@ -309,8 +307,6 @@ components:
                 -   value
             type: string
         TestEntity:
-            description:
-                "https://www.schema.org/Document"
             discriminator:
                 mapping:
                     ChildTestEntity1: "#/components/schemas/ChildTestEntity1"
@@ -359,8 +355,6 @@ components:
                     type: string
             type: object
         TestEntityAddress:
-            description:
-                "https://www.schema.org/Document"
             properties:
                 dateCreated:
                     format: date-time

@@ -23,7 +23,7 @@ wget -q -O- https://raw.githubusercontent.com/liferay/liferay-portal/master/modu
 Or, with `curl`:
 
 ```bash
-curl -sL https://raw.githubusercontent.com/gabsprates/liferay-portal/LPD-66707_clone/modules/integrations/vercel/templates/clone-template.sh
+curl -sL https://raw.githubusercontent.com/gabsprates/liferay-portal/LPD-66707_clone/modules/integrations/vercel/templates/clone-template.sh | bash -s -- blog
 ```
 
 And then go to your newly created repository:
@@ -89,7 +89,7 @@ Due to security reasons, Liferay doesn't publically exposes some APIs, and that'
 Once that API is now public, we need to make a Guest user (an unauthenticated one) able to see the content provided by it. To do that, follow the steps in [Defining Role Permissions](https://learn.liferay.com/w/dxp/security-and-administration/users-and-permissions/roles-and-permissions/defining-role-permissions) and add the following permissions for the `Guest` role:
 
 -   Under `Objects > Blog > Blog`, add `VIEW` permission.
-    ![guest permissions](./guest-permissions.png)
+    <br />![guest permissions](./guest-permissions.png)
 
 ### 3. Run your template
 
@@ -105,9 +105,9 @@ And before starting it, define your environment variables.
 1. Define:
     - `LIFERAY_HOST`: Your Liferay instance URL (`http://localhost:8080` for local development).
     - `LIFERAY_SPACE_ID`: Your CMS Space ID (aka Group ID, or Scope ID), you can get it in the Space settings.
-      ![space details](./space-details.png)
+      <br />![space details](./space-details.png)
 1. Feel free to add Blog content for your local testing:
-   ![add blog content](add-blog-content.png)
+   <br />![add blog content](add-blog-content.png)
 
 Once you have your're done, run the development server:
 

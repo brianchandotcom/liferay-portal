@@ -11,13 +11,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.TryFilter;
 import com.liferay.portal.kernel.servlet.WrapHttpServletResponseFilter;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.servlet.filters.BasePortalFilter;
-import com.liferay.portal.util.PortalInstances;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,8 +31,7 @@ import jakarta.servlet.http.HttpSession;
  * @author Brian Wing Shun Chan
  */
 public class AbsoluteRedirectsFilter
-	extends BasePortalFilter
-	implements TryFilter, WrapHttpServletResponseFilter {
+	extends BaseFilter implements TryFilter, WrapHttpServletResponseFilter {
 
 	@Override
 	public Object doFilterTry(
@@ -84,11 +81,9 @@ public class AbsoluteRedirectsFilter
 	}
 
 	@Override
-	public boolean isFilterEnabled() {
-		return _FILTER_ENABLED;
+	protected Log getLog() {
+		return _log;
 	}
-
-	private static final boolean _FILTER_ENABLED = true;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AbsoluteRedirectsFilter.class);

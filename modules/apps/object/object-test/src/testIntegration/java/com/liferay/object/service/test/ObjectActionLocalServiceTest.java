@@ -2376,7 +2376,7 @@ public class ObjectActionLocalServiceTest {
 				getSystemObjectDefinitionManager("User");
 
 		long userId = systemObjectDefinitionManager.addBaseModel(
-			TestPropsValues.getUser(),
+			false, TestPropsValues.getUser(),
 			HashMapBuilder.putAll(
 				values
 			).put(

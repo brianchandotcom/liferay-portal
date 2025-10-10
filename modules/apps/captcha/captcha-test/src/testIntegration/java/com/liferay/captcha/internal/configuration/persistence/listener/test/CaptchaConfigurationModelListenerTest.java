@@ -7,6 +7,7 @@ package com.liferay.captcha.internal.configuration.persistence.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.recaptcha.ReCaptchaImpl;
+import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
@@ -60,6 +61,29 @@ public class CaptchaConfigurationModelListenerTest {
 			"reCaptchaVerifyURL",
 			"https://www.google.com/recaptcha/api/siteverify"
 		).build();
+
+		_simpleCaptchaProperties = HashMapDictionaryBuilder.<String, Object>put(
+			"captchaEngine", SimpleCaptchaImpl.class.getName()
+		).put(
+			"simpleCaptchaBackgroundProducers",
+			new String[] {"nl.captcha.backgrounds.FlatColorBackgroundProducer"}
+		).put(
+			"simpleCaptchaGimpyRenderers",
+			new String[] {
+				"com.liferay.captcha.simplecaptcha.gimpy.BlockGimpyRenderer"
+			}
+		).put(
+			"simpleCaptchaNoiseProducers",
+			new String[] {"nl.captcha.noise.CurvedLineNoiseProducer"}
+		).put(
+			"simpleCaptchaTextProducers",
+			new String[] {
+				"com.liferay.captcha.simplecaptcha.PinNumberTextProducer"
+			}
+		).put(
+			"simpleCaptchaWordRenderers",
+			new String[] {"nl.captcha.text.renderer.DefaultWordRenderer"}
+		).build();
 	}
 
 	@After
@@ -69,39 +93,80 @@ public class CaptchaConfigurationModelListenerTest {
 
 	@Test
 	public void test() throws Exception {
-		_test(
+		_testReCaptcha(
 			"the-recaptcha-no-script-url-is-not-valid", "reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=");
-		_test(
+		_testReCaptcha(
 			"the-recaptcha-private-key-is-not-valid", "reCaptchaPrivateKey",
 			StringPool.BLANK);
-		_test(
+		_testReCaptcha(
 			"the-recaptcha-public-key-is-not-valid", "reCaptchaPublicKey",
 			StringPool.BLANK);
-		_test(
+		_testReCaptcha(
 			"the-recaptcha-script-url-is-not-valid", "reCaptchaScriptURL",
 			"https://www.test.com/recaptcha/api.js");
-		_test(
+		_testReCaptcha(
 			"the-recaptcha-verify-url-is-not-valid", "reCaptchaVerifyURL",
 			"https://www.test.com/recaptcha/api/siteverify");
+
+		_testSimpleCaptcha(
+			"the-simplecaptcha-background-producers-configuration-cannot-be-" +
+				"empty",
+			"simpleCaptchaBackgroundProducers", new String[0]);
+		_testSimpleCaptcha(
+			"the-simplecaptcha-gimpy-renderers-configuration-cannot-be-empty",
+			"simpleCaptchaGimpyRenderers", new String[0]);
+		_testSimpleCaptcha(
+			"the-simplecaptcha-noise-producers-configuration-cannot-be-empty",
+			"simpleCaptchaNoiseProducers", new String[0]);
+		_testSimpleCaptcha(
+			"the-simplecaptcha-text-producers-configuration-cannot-be-empty",
+			"simpleCaptchaTextProducers", new String[0]);
+		_testSimpleCaptcha(
+			"the-simplecaptcha-word-renderers-configuration-cannot-be-empty",
+			"simpleCaptchaWordRenderers", new String[0]);
 	}
 
-	private AutoCloseable _swapReCaptchaConfiguration(
-		String key, String value) {
+	private AutoCloseable _swapConfiguration(
+		Dictionary<String, Object> configuration, String key, Object value) {
 
-		String originalValue = (String)_reCaptchaProperties.put(key, value);
+		Object originalValue = configuration.put(key, value);
 
-		return () -> _reCaptchaProperties.put(key, originalValue);
+		return () -> configuration.put(key, originalValue);
 	}
 
-	private void _test(String exceptionMessageKey, String key, String value)
+	private void _testReCaptcha(
+			String exceptionMessageKey, String key, Object value)
 		throws Exception {
 
-		try (AutoCloseable autoCloseable = _swapReCaptchaConfiguration(
-				key, value)) {
+		try (AutoCloseable autoCloseable = _swapConfiguration(
+				_reCaptchaProperties, key, value)) {
 
 			_configurationModelListener.onBeforeSave(
 				StringPool.BLANK, _reCaptchaProperties);
+
+			Assert.fail();
+		}
+		catch (ConfigurationModelListenerException
+					configurationModelListenerException) {
+
+			String message = configurationModelListenerException.getMessage();
+
+			Assert.assertTrue(
+				message.contains(
+					_language.get(LocaleUtil.US, exceptionMessageKey)));
+		}
+	}
+
+	private void _testSimpleCaptcha(
+			String exceptionMessageKey, String key, Object value)
+		throws Exception {
+
+		try (AutoCloseable autoCloseable = _swapConfiguration(
+				_simpleCaptchaProperties, key, value)) {
+
+			_configurationModelListener.onBeforeSave(
+				StringPool.BLANK, _simpleCaptchaProperties);
 
 			Assert.fail();
 		}
@@ -126,5 +191,6 @@ public class CaptchaConfigurationModelListenerTest {
 
 	private Locale _locale;
 	private Dictionary<String, Object> _reCaptchaProperties;
+	private Dictionary<String, Object> _simpleCaptchaProperties;
 
 }

@@ -44,11 +44,8 @@ const useGCSUploadFile = (): IProps => {
 		loading: gcsGetUploadOffsetLoading,
 	} = useGCSGetUploadOffset();
 
-	const {
-		completeUpload,
-		error: completeUploadError,
-		loading: completeUploadLoading,
-	} = useTicketAttachmentsCompleteUpload();
+	const {completeUpload, loading: completeUploadLoading} =
+		useTicketAttachmentsCompleteUpload();
 
 	const uploadFile = useCallback(
 		async (params: IParams) => {
@@ -194,10 +191,6 @@ const useGCSUploadFile = (): IProps => {
 					ticketAttachmentId: String(ticketAttachmentId),
 				});
 
-				if (completeUploadError) {
-					throw completeUploadError;
-				}
-
 				if (!gcsGetUploadOffsetLoading && !completeUploadLoading) {
 					return {
 						success: true,
@@ -220,10 +213,15 @@ const useGCSUploadFile = (): IProps => {
 			catch (uploadError) {
 				setProgress(0);
 
+				const errorCode =
+					(uploadError as any).status === 409
+						? 'ATTACHMENT_ALREADY_EXISTS'
+						: 'UNEXPECTED_ERROR';
+
 				return {
 					success: false,
 					uploadProperties: {
-						errorCode: 'UNEXPECTED_ERROR',
+						errorCode,
 						errorMessage: String(uploadError),
 						ticketId,
 						uploadAccountKey: accountKey,
@@ -237,7 +235,6 @@ const useGCSUploadFile = (): IProps => {
 		},
 		[
 			completeUpload,
-			completeUploadError,
 			completeUploadLoading,
 			gcsGetUploadOffsetError,
 			getUploadOffset,

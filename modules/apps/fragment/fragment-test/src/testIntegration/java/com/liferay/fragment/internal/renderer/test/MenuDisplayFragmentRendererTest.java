@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Definition;
@@ -154,14 +153,12 @@ public class MenuDisplayFragmentRendererTest {
 	}
 
 	private SiteNavigationMenuItem _addURLSiteNavigationMenuItem(
-			long groupId, String defaultLanguageId,
-			long parentSiteNavigationMenuItemId,
-			SiteNavigationMenu siteNavigationMenu)
+			long groupId, long parentSiteNavigationMenuItemId,
+			long siteNavigationMenuId, String url)
 		throws Exception {
 
 		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-			null, TestPropsValues.getUserId(), groupId,
-			siteNavigationMenu.getSiteNavigationMenuId(),
+			null, TestPropsValues.getUserId(), groupId, siteNavigationMenuId,
 			parentSiteNavigationMenuItemId,
 			SiteNavigationMenuItemTypeConstants.URL,
 			UnicodePropertiesBuilder.create(
@@ -237,16 +234,19 @@ public class MenuDisplayFragmentRendererTest {
 		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(
 			group.getGroupId());
 
+		String url1 = RandomTestUtil.randomString();
+
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_addURLSiteNavigationMenuItem(
-				group.getGroupId(), _group.getDefaultLanguageId(), 0,
-				siteNavigationMenu);
+				group.getGroupId(), 0,
+				siteNavigationMenu.getSiteNavigationMenuId(), url1);
 
-		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_addURLSiteNavigationMenuItem(
-				group.getGroupId(), _group.getDefaultLanguageId(),
-				siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-				siteNavigationMenu);
+		String url2 = RandomTestUtil.randomString();
+
+		_addURLSiteNavigationMenuItem(
+			group.getGroupId(),
+			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
+			siteNavigationMenu.getSiteNavigationMenuId(), url2);
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.put(
@@ -269,36 +269,27 @@ public class MenuDisplayFragmentRendererTest {
 
 		String content = _render(fragmentEntryLink);
 
-		UnicodeProperties typeSettingsUnicodeProperties1 =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem1.getTypeSettings()
-			).build();
-
-		UnicodeProperties typeSettingsUnicodeProperties2 =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem2.getTypeSettings()
-			).build();
-
-		Assert.assertFalse(
-			content.contains(typeSettingsUnicodeProperties1.get("url")));
-		Assert.assertTrue(
-			content.contains(typeSettingsUnicodeProperties2.get("url")));
+		Assert.assertFalse(content.contains(url1));
+		Assert.assertTrue(content.contains(url2));
 	}
 
 	private void _testRenderWithIdReference(Group group) throws Exception {
 		SiteNavigationMenu siteNavigationMenu = _addSiteNavigationMenu(
 			group.getGroupId());
 
+		String url1 = RandomTestUtil.randomString();
+
 		SiteNavigationMenuItem siteNavigationMenuItem1 =
 			_addURLSiteNavigationMenuItem(
-				group.getGroupId(), _group.getDefaultLanguageId(), 0,
-				siteNavigationMenu);
+				group.getGroupId(), 0,
+				siteNavigationMenu.getSiteNavigationMenuId(), url1);
 
-		SiteNavigationMenuItem siteNavigationMenuItem2 =
-			_addURLSiteNavigationMenuItem(
-				group.getGroupId(), _group.getDefaultLanguageId(),
-				siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
-				siteNavigationMenu);
+		String url2 = RandomTestUtil.randomString();
+
+		_addURLSiteNavigationMenuItem(
+			group.getGroupId(),
+			siteNavigationMenuItem1.getSiteNavigationMenuItemId(),
+			siteNavigationMenu.getSiteNavigationMenuId(), url2);
 
 		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 			JSONUtil.put(
@@ -319,20 +310,8 @@ public class MenuDisplayFragmentRendererTest {
 
 		String content = _render(fragmentEntryLink);
 
-		UnicodeProperties typeSettingsUnicodeProperties1 =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem1.getTypeSettings()
-			).build();
-
-		UnicodeProperties typeSettingsUnicodeProperties2 =
-			UnicodePropertiesBuilder.fastLoad(
-				siteNavigationMenuItem2.getTypeSettings()
-			).build();
-
-		Assert.assertFalse(
-			content.contains(typeSettingsUnicodeProperties1.get("url")));
-		Assert.assertTrue(
-			content.contains(typeSettingsUnicodeProperties2.get("url")));
+		Assert.assertFalse(content.contains(url1));
+		Assert.assertTrue(content.contains(url2));
 	}
 
 	@Inject

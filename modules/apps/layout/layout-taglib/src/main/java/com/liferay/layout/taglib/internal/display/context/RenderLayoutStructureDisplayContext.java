@@ -927,12 +927,17 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		String layoutUuid = layoutJSONObject.getString("layoutUuid");
 		long groupId = layoutJSONObject.getLong("groupId");
 		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			layoutUuid, groupId, privateLayout);
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(
+			groupId, privateLayout, layoutJSONObject.getLong("layoutId"));
+
+		if (layout == null) {
+			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+				layoutJSONObject.getString("layoutUuid"), groupId,
+				privateLayout);
+		}
 
 		if (layout != null) {
 			return PortalUtil.getLayoutURL(layout, _themeDisplay);

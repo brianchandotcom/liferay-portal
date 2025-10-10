@@ -6,6 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.model.listener;
 
 import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
@@ -140,31 +142,96 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			JSONUtil.put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
 				JSONUtil.put(
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
+						ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
+						ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+					new String[] {ActionKeys.VIEW}
+				).put(
 					RoleConstants.CMS_ADMINISTRATOR,
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
 							cmsBasicWebContentObjectDefinition.getClassName()),
 						resourceAction -> resourceAction.getActionId(),
-						String.class))
+						String.class)
+				).put(
+					RoleConstants.USER, new String[] {ActionKeys.VIEW}
+				)
 			).put(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
 				JSONUtil.put(
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
+						ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.DELETE,
+						ActionKeys.DELETE_DISCUSSION, ActionKeys.PERMISSIONS,
+						ActionKeys.UPDATE, ActionKeys.UPDATE_DISCUSSION,
+						ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+					new String[] {ActionKeys.VIEW}
+				).put(
 					RoleConstants.CMS_ADMINISTRATOR,
 					TransformUtil.transformToArray(
 						_resourceActionLocalService.getResourceActions(
 							cmsBasicDocumentObjectDefinition.getClassName()),
 						resourceAction -> resourceAction.getActionId(),
-						String.class))
+						String.class)
+				).put(
+					RoleConstants.USER, new String[] {ActionKeys.VIEW}
+				)
 			).put(
 				"OBJECT_ENTRY_FOLDERS",
 				JSONUtil.put(
+					DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+					new String[] {
+						ActionKeys.ADD_ENTRY, ActionKeys.DELETE,
+						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+						ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER,
+					new String[] {
+						ActionKeys.ADD_ENTRY, ActionKeys.DELETE,
+						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+						ActionKeys.SUBSCRIBE, ActionKeys.VIEW
+					}
+				).put(
+					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
+					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
+				).put(
 					RoleConstants.CMS_ADMINISTRATOR,
 					JSONUtil.putAll(
 						TransformUtil.transformToArray(
 							_resourceActionLocalService.getResourceActions(
 								ObjectEntryFolder.class.getName()),
 							resourceAction -> resourceAction.getActionId(),
-							String.class)))
+							String.class))
+				).put(
+					RoleConstants.USER,
+					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
+				)
 			),
 			group.getGroupId(), StringPool.BLANK);
 	}

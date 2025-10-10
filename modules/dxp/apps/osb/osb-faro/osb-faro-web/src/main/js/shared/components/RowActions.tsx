@@ -7,6 +7,7 @@ import React from 'react';
 interface IRowActionsProps {
 	actions?: (React.HTMLAttributes<HTMLElement> & {
 		label: string;
+		iconSymbol?: string;
 		onClick?: any;
 	})[];
 	quickActions?: {
@@ -76,8 +77,14 @@ const RowActions: React.FC<IRowActionsProps> = ({
 					</ClayButton>
 				}
 			>
-				{actions.map(({label, ...props}) => (
+				{actions.map(({iconSymbol, label, ...props}) => (
 					<ClayDropDown.Item key={label} {...props}>
+						{iconSymbol && (
+							<ClayIcon
+								className='icon-root'
+								symbol={iconSymbol}
+							/>
+						)}
 						{label}
 					</ClayDropDown.Item>
 				))}

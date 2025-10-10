@@ -41,7 +41,7 @@ public class ExpirationDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "expiration-date-range";
+		return "expiration-date";
 	}
 
 	@Override

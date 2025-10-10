@@ -113,17 +113,15 @@ public class GridPageElementDefinitionDTOConverter
 		GridViewport.Id gridViewportId,
 		Map<String, JSONObject> rowViewportConfigurationJSONObjects) {
 
-		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
+		String viewportId = ViewportIdUtil.toInternalValue(
 			gridViewportId.getValue());
 
-		if (!rowViewportConfigurationJSONObjects.containsKey(
-				viewportIdInternalValue)) {
-
+		if (!rowViewportConfigurationJSONObjects.containsKey(viewportId)) {
 			return null;
 		}
 
 		JSONObject rowViewportConfigurationJSONObject =
-			rowViewportConfigurationJSONObjects.get(viewportIdInternalValue);
+			rowViewportConfigurationJSONObjects.get(viewportId);
 
 		if (JSONUtil.isEmpty(rowViewportConfigurationJSONObject)) {
 			return null;

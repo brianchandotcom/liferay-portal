@@ -9,7 +9,7 @@ import com.liferay.headless.admin.site.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.dto.v1_0.ModuleViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.responsive.ViewportSize;
@@ -99,7 +99,7 @@ public class ColumnLayoutStructureItemImporter
 		ModuleViewport moduleViewport = _getModuleViewport(
 			moduleViewportId, moduleViewports);
 
-		String viewportIdInternalValue = ViewportUtil.toInternalValue(
+		String viewportIdInternalValue = ViewportIdUtil.toInternalValue(
 			moduleViewportId.getValue());
 
 		if (moduleViewport != null) {

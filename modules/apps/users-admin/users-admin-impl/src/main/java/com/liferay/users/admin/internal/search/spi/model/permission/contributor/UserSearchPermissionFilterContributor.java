@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.ContactTable;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
@@ -18,6 +19,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.ContactLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.spi.model.permission.contributor.SearchPermissionFilterContributor;
@@ -47,12 +49,14 @@ public class UserSearchPermissionFilterContributor
 			return;
 		}
 
-		_addManagedOrganizationUsersFilter(booleanFilter, permissionChecker);
+		_addManagedOrganizationUsersFilter(
+			booleanFilter, companyId, permissionChecker);
 		_addOwnedUsersFilter(booleanFilter, permissionChecker, userId);
 	}
 
 	private void _addManagedOrganizationUsersFilter(
-		BooleanFilter booleanFilter, PermissionChecker permissionChecker) {
+		BooleanFilter booleanFilter, long companyId,
+		PermissionChecker permissionChecker) {
 
 		try {
 			TermsFilter termsFilter = new TermsFilter("organizationIds");
@@ -67,6 +71,20 @@ public class UserSearchPermissionFilterContributor
 						ActionKeys.MANAGE_USERS)) {
 
 					termsFilter.addValue(String.valueOf(userOrgId));
+				}
+
+				if (OrganizationPermissionUtil.contains(
+					permissionChecker, userOrgId,
+					ActionKeys.MANAGE_SUBORGANIZATIONS_USERS)) {
+
+					for (Organization organization :
+						_organizationLocalService.getSuborganizations(
+							companyId, userOrgId)) {
+
+						termsFilter.addValue(
+							String.valueOf(
+								organization.getOrganizationId()));
+					}
 				}
 			}
 
@@ -121,6 +139,9 @@ public class UserSearchPermissionFilterContributor
 
 	@Reference
 	private ContactLocalService _contactLocalService;
+
+	@Reference
+	private OrganizationLocalService _organizationLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -41,7 +41,7 @@ const getURLPreview = ({
 	// to avoid repeating the version when combining the restApplication and
 	// restEndpoint.
 
-	if (restEndpoint.includes('/v1.')) {
+	if (/\/v\d\.\d/.test(restEndpoint)) {
 		return (
 			restApplication +
 			restEndpoint

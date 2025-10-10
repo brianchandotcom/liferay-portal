@@ -5157,6 +5157,9 @@ public class JenkinsResultsParserUtil {
 					if (isCINode()) {
 						url = getLocalURL(url);
 					}
+					else {
+						url = getRemoteURL(url);
+					}
 
 					httpAuthorization = _getJenkinsHTTPAuthorization();
 				}

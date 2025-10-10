@@ -22,6 +22,43 @@ export const test = mergeTests(
 );
 
 test(
+	'Add a SKU',
+	{tag: '@COMMERCE-6021'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+		await commerceAdminProductDetailsPage.goToProductSkus();
+
+		await commerceAdminProductDetailsSkusPage.skuAddButton.click();
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuInput.fill(
+			'BLACKSKU'
+		);
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPurchasableToggle.check();
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPublishButton.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.skuAddModalSuccessMessage
+		).toBeVisible();
+	}
+);
+
+test(
 	'Back button works as expected',
 	{tag: '@LPD-43791'},
 	async ({

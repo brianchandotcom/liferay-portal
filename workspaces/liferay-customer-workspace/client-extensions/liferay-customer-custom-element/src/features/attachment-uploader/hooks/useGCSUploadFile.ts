@@ -13,6 +13,7 @@ interface IParams {
 	accountKey: string;
 	comment: string;
 	file: File;
+	fileMd5: string;
 	gcsSessionURL: string;
 	ticketAttachmentId: string;
 	ticketId: string;
@@ -34,6 +35,7 @@ const useGCSUploadFile = (): IProps => {
 	const [abortController, setAbortController] =
 		useState<AbortController | null>(null);
 	const [loading, setLoading] = useState(false);
+	const [md5, setMd5] = useState<string>('');
 	const [progress, setProgress] = useState(0);
 
 	const {
@@ -54,6 +56,7 @@ const useGCSUploadFile = (): IProps => {
 				accountKey,
 				comment,
 				file,
+				fileMd5,
 				gcsSessionURL,
 				ticketAttachmentId,
 				ticketId,
@@ -67,6 +70,7 @@ const useGCSUploadFile = (): IProps => {
 			const retryDelay = (attempt: number) => 500 * Math.pow(2, attempt);
 			const controller = new AbortController();
 			setAbortController(controller);
+			setMd5(fileMd5);
 
 			try {
 				if (!file) {
@@ -186,6 +190,7 @@ const useGCSUploadFile = (): IProps => {
 
 				await completeUpload({
 					comment,
+					fileMd5,
 					ticketAttachmentId: String(ticketAttachmentId),
 				});
 
@@ -244,11 +249,11 @@ const useGCSUploadFile = (): IProps => {
 		if (abortController) {
 			abortController.abort();
 
-			sessionStorage.removeItem('gcsSessionURL');
+			sessionStorage.removeItem(`gcsSessionURL:${md5}`);
 			setLoading(false);
 			setProgress(0);
 		}
-	}, [abortController]);
+	}, [abortController, md5]);
 
 	return {abortUpload, loading, progress, uploadFile};
 };

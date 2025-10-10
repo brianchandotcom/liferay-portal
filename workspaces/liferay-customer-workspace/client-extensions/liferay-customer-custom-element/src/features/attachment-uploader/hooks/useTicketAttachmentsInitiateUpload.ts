@@ -45,8 +45,9 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 						body: JSON.stringify({
 							fileName,
 							fileSize,
-							gcsSessionURL:
-								sessionStorage.getItem('gcsSessionURL'),
+							gcsSessionURL: sessionStorage.getItem(
+								`gcsSessionURL:${fileMd5}`
+							),
 							md5Checksum: fileMd5,
 							ticketId,
 						}),
@@ -56,7 +57,7 @@ const useTicketAttachmentsInitiateUpload = (): IProps => {
 				const responseJSON = await response.json();
 
 				sessionStorage.setItem(
-					'gcsSessionURL',
+					`gcsSessionURL:${fileMd5}`,
 					responseJSON.gcsSessionURL
 				);
 

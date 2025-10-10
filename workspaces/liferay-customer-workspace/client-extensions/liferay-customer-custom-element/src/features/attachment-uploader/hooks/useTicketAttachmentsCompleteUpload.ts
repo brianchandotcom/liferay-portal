@@ -8,6 +8,7 @@ import {Liferay} from '~/services/liferay';
 
 interface IParams {
 	comment: string;
+	fileMd5: string;
 	ticketAttachmentId: string;
 }
 
@@ -25,7 +26,7 @@ const useTicketAttachmentsCompleteUpload = (): IProps => {
 		setLoading(true);
 		setError(null);
 
-		const {comment, ticketAttachmentId} = params;
+		const {comment, fileMd5, ticketAttachmentId} = params;
 
 		try {
 			const response: Response =
@@ -47,7 +48,7 @@ const useTicketAttachmentsCompleteUpload = (): IProps => {
 				);
 			}
 
-			sessionStorage.removeItem('gcsSessionURL');
+			sessionStorage.removeItem(`gcsSessionURL:${fileMd5}`);
 		}
 		catch (uploadError) {
 			console.error('Complete upload error:', uploadError);

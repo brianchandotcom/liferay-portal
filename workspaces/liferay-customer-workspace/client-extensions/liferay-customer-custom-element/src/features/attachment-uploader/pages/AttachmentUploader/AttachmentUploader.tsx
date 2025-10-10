@@ -131,6 +131,7 @@ const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
 			accountKey: initiationResult.uploadProperties?.accountKey ?? '',
 			comment,
 			file,
+			fileMd5: calculatedMd5.hash,
 			gcsSessionURL:
 				initiationResult.uploadProperties?.gcsSessionURL ?? '',
 			ticketAttachmentId:

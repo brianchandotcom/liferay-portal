@@ -37,11 +37,11 @@ public class ResourceTestInjectionCheck extends BaseCheck {
 			return;
 		}
 
-		List<DetailAST> variableDefDetailASTList = getAllChildTokens(
+		List<DetailAST> variableDefDetailASTs = getAllChildTokens(
 			detailAST.findFirstToken(TokenTypes.OBJBLOCK), false,
 			TokenTypes.VARIABLE_DEF);
 
-		for (DetailAST variableDefDetailAST : variableDefDetailASTList) {
+		for (DetailAST variableDefDetailAST : variableDefDetailASTs) {
 			if (!AnnotationUtil.containsAnnotation(
 					variableDefDetailAST, "Inject")) {
 

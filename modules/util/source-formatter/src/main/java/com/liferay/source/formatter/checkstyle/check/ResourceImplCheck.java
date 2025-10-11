@@ -44,22 +44,20 @@ public class ResourceImplCheck extends BaseCheck {
 		DetailAST objBlockDetailAST = detailAST.findFirstToken(
 			TokenTypes.OBJBLOCK);
 
-		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+		List<DetailAST> methodDefinitionDetailASTs = getAllChildTokens(
 			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
 
-		_checkDoGetMethodModifier(methodDefinitionDetailASTList);
+		_checkDoGetMethodModifier(methodDefinitionDetailASTs);
 
 		if (!className.startsWith("Base")) {
-			_checkMethodParameterAnnotations(methodDefinitionDetailASTList);
+			_checkMethodParameterAnnotations(methodDefinitionDetailASTs);
 		}
 	}
 
 	private void _checkDoGetMethodModifier(
-		List<DetailAST> methodDefinitionDetailASTList) {
+		List<DetailAST> methodDefinitionDetailASTs) {
 
-		for (DetailAST methodDefinitionDetailAST :
-				methodDefinitionDetailASTList) {
-
+		for (DetailAST methodDefinitionDetailAST : methodDefinitionDetailASTs) {
 			String methodName = getName(methodDefinitionDetailAST);
 
 			if (!methodName.startsWith("doGet")) {
@@ -82,14 +80,12 @@ public class ResourceImplCheck extends BaseCheck {
 	}
 
 	private void _checkMethodParameterAnnotations(
-		List<DetailAST> methodDefinitionDetailASTList) {
+		List<DetailAST> methodDefinitionDetailASTs) {
 
 		List<String> allowedParameterAnnotationNames = getAttributeValues(
 			_ALLOWED_PARAMETER_ANNOTATION_NAMES_KEY);
 
-		for (DetailAST methodDefinitionDetailAST :
-				methodDefinitionDetailASTList) {
-
+		for (DetailAST methodDefinitionDetailAST : methodDefinitionDetailASTs) {
 			String methodName = getName(methodDefinitionDetailAST);
 
 			for (DetailAST parameterDefinitionDetailAST :

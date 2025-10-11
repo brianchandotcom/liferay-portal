@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -163,8 +163,8 @@ public class JSONLBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (BatchEngineImportTaskItemConversionException
-						batchEngineImportTaskItemConversionException) {
+			catch (BatchEngineImportTaskException
+						batchEngineImportTaskException) {
 			}
 		}
 	}
@@ -196,8 +196,8 @@ public class JSONLBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (BatchEngineImportTaskItemConversionException
-						batchEngineImportTaskItemConversionException) {
+			catch (BatchEngineImportTaskException
+						batchEngineImportTaskException) {
 			}
 		}
 	}

@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskException;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -175,8 +175,8 @@ public class XLSBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (BatchEngineImportTaskItemConversionException
-						batchEngineImportTaskItemConversionException) {
+			catch (BatchEngineImportTaskException
+						batchEngineImportTaskException) {
 			}
 		}
 	}

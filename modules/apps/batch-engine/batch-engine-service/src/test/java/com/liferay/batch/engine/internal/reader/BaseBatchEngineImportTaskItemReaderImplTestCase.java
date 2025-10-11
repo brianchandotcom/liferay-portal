@@ -7,7 +7,7 @@ package com.liferay.batch.engine.internal.reader;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskException;
 import com.liferay.batch.engine.model.impl.BatchEngineImportTaskImpl;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,7 +87,7 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 	protected static Item getItem(
 			Map<String, String> fieldNameMappingMap,
 			Map<String, Object> fieldNameValueMap)
-		throws BatchEngineImportTaskItemConversionException {
+		throws BatchEngineImportTaskException {
 
 		return BatchEngineImportTaskItemReaderUtil.convertValue(
 			new BatchEngineImportTaskImpl(), Item.class,
@@ -106,7 +106,7 @@ public abstract class BaseBatchEngineImportTaskItemReaderImplTestCase {
 			String createDateString, String description, Long id,
 			Map<String, String> fieldNameMappingMap,
 			Map<String, Object> fieldNameValueMap, Map<String, String> nameMap)
-		throws BatchEngineImportTaskItemConversionException {
+		throws BatchEngineImportTaskException {
 
 		Item item = getItem(fieldNameMappingMap, fieldNameValueMap);
 

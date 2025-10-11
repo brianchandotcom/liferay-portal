@@ -5,7 +5,7 @@
 
 package com.liferay.batch.engine.internal.reader;
 
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskException;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
@@ -201,8 +201,8 @@ public class CSVBatchEngineImportTaskItemReaderImplTest
 
 				Assert.fail();
 			}
-			catch (BatchEngineImportTaskItemConversionException
-						batchEngineImportTaskItemConversionException) {
+			catch (BatchEngineImportTaskException
+						batchEngineImportTaskException) {
 			}
 		}
 	}

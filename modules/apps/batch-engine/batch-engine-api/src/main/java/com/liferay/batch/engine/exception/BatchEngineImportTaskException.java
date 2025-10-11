@@ -10,12 +10,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Petteri Karttunen
  */
-public class BatchEngineImportTaskItemConversionException
-	extends PortalException {
+public class BatchEngineImportTaskException extends PortalException {
 
-	public BatchEngineImportTaskItemConversionException(
-		Object item, Throwable throwable) {
-
+	public BatchEngineImportTaskException(Object item, Throwable throwable) {
 		super("Unable to convert item", throwable);
 
 		_item = item;

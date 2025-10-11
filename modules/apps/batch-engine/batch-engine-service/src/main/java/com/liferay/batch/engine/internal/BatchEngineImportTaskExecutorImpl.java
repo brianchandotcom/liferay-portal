@@ -17,7 +17,7 @@ import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskException;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
@@ -324,15 +324,13 @@ public class BatchEngineImportTaskExecutorImpl
 		throws Exception {
 
 		if (exception1 instanceof
-				BatchEngineImportTaskItemConversionException
-					batchEngineImportTaskItemConversionException) {
+				BatchEngineImportTaskException batchEngineImportTaskException) {
 
 			Exception exception2 =
 				_unwrapBatchEngineImportTaskItemConversionException(
-					batchEngineImportTaskItemConversionException);
+					batchEngineImportTaskException);
 
-			Object item =
-				batchEngineImportTaskItemConversionException.getItem();
+			Object item = batchEngineImportTaskException.getItem();
 
 			_batchEngineImportTaskExceptionHandlers.forEach(
 				batchEngineImportTaskExceptionHandler ->
@@ -465,17 +463,15 @@ public class BatchEngineImportTaskExecutorImpl
 	}
 
 	private Exception _unwrapBatchEngineImportTaskItemConversionException(
-		BatchEngineImportTaskItemConversionException
-			batchEngineImportTaskItemConversionException) {
+		BatchEngineImportTaskException batchEngineImportTaskException) {
 
-		Throwable throwable =
-			batchEngineImportTaskItemConversionException.getCause();
+		Throwable throwable = batchEngineImportTaskException.getCause();
 
 		if (throwable instanceof Exception) {
 			return (Exception)throwable;
 		}
 
-		return batchEngineImportTaskItemConversionException;
+		return batchEngineImportTaskException;
 	}
 
 	private void _updateBatchEngineImportTask(

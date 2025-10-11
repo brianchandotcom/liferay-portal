@@ -193,9 +193,5 @@
 		<!-- Temporary suppressions for frontend React setup (LPS-99901, wincent) -->
 
 		<suppress checks="JSONPackageJSONCheck" files="modules/apps/frontend-js/frontend-js-react-web/package\.json" />
-
-		<!-- Temporary suppressions for jboss and wildfly setup (LPD-65848) -->
-
-		<suppress checks="XMLWhitespaceCheck" files="build-dist\.xml" />
 	</source-check>
 </suppressions>

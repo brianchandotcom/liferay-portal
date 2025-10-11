@@ -807,6 +807,11 @@
 			<message key="if.statement.inline" value="Use &quot;{0}(UnsafeSupplier)&quot; with inlined if-statement" />
 			<message key="set.method.use.instead" value="Use &quot;{0}(UnsafeSupplier)&quot; instead" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.ResultSetGetCallCheck">
+			<property name="category" value="Bug Prevention" />
+			<property name="description" value="Finds incorrect use of `ResultSet.get*` calls." />
+			<message key="set.call.parameter.incorrect" value="Do not use &quot;TableName.ColumnName&quot; as the parameter when calling method &quot;{0}&quot;, use column index or column name instead" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.ReturnVariableDeclarationAsUsedCheck">
 			<property name="category" value="Miscellaneous" />
 			<property name="description" value="Finds cases where a variable declaration should be moved." />

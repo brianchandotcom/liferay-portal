@@ -472,6 +472,7 @@ ResourceImplCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-che
 ResourcePermissionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Performs several checks on `*ResourcePermission` classes. |
 [ResourcePermissionFactoryCheck](check/resource_permission_factory_check.md#resourcepermissionfactorycheck) | [Performance](performance_checks.md#performance-checks) | .java | Checks usage of `*ResourcePermissionFactory` classes. |
 ResourceTestInjectionCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks that if any `*ResourceTest` class injects another resource that is not a `client`. |
+ResultSetGetCallCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Finds incorrect use of `ResultSet.get*` calls. |
 ReturnVariableDeclarationAsUsedCheck | [Miscellaneous](miscellaneous_checks.md#miscellaneous-checks) | .java | Finds cases where a variable declaration should be moved. |
 SQLEmptyLinesCheck | [Styling](styling_checks.md#styling-checks) | .sql | Finds missing and unnecessary empty lines. |
 [SQLLongNamesCheck](check/sql_long_names_check.md#sqllongnamescheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .sql | Checks for table and column names that exceed 30 characters. |

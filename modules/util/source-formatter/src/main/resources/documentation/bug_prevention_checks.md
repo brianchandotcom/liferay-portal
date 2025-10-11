@@ -210,6 +210,7 @@ ReferenceAnnotationCheck | .java | Performs several checks on classes with @Refe
 ResourceImplCheck | .java | Performs several checks on `*ResourceImpl` classes. |
 ResourcePermissionCheck | .java | Performs several checks on `*ResourcePermission` classes. |
 ResourceTestInjectionCheck | .java | Checks that if any `*ResourceTest` class injects another resource that is not a `client`. |
+ResultSetGetCallCheck | .java | Finds incorrect use of `ResultSet.get*` calls. |
 [SQLLongNamesCheck](check/sql_long_names_check.md#sqllongnamescheck) | .sql | Checks for table and column names that exceed 30 characters. |
 SelfReferenceCheck | .java | Finds cases of unnecessary reference to its own class. |
 [ServiceComponentRuntimeCheck](check/service_component_runtime_check.md#servicecomponentruntimecheck) | .java | Checks `ServiceComponentRuntime` usage in test classes. |

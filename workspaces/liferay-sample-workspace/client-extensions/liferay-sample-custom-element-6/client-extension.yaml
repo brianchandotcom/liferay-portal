@@ -7,7 +7,7 @@ liferay-sample-custom-element-6:
     friendlyURLMapping: liferay-sample-custom-element-6
     htmlElementName: liferay-sample-custom-element-6
     instanceable: false
-    name: Liferay Sample Custom Element
+    name: Liferay Sample Custom Element 6
     portletCategoryName: category.client-extensions
     properties:
         foo: bar

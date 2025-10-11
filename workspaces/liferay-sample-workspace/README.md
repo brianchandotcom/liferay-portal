@@ -68,7 +68,7 @@ For `liferay-sample-etc-cron` and `liferay-sample-etc-spring-boot` the third typ
 
 - *liferay-sample-custom-element-6*
 
-	Build a custom element that uses `react`, `react-dom` and `vite`.
+	Build a custom element that uses `react`, `react-dom`, and `vite`.
 
 - *liferay-sample-editor-config-contributor*
 

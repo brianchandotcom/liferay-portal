@@ -77,7 +77,7 @@ public class ResultSetGetCallCheck extends BaseCheck {
 
 			log(
 				firstChildDetailAST, _MSG_INCORRECT_SET_CALL_PARAMETER,
-				variableName + "." + methodName);
+				variableName + ".get*");
 		}
 	}
 

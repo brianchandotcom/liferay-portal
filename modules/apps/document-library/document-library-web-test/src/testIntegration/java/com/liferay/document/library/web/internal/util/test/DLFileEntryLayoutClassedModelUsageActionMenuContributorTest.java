@@ -88,12 +88,12 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_addLayoutClassedModelUsage(_fileEntry);
 
-		HttpServletRequest mockHttpServletRequest = _getHttpServletRequest();
+		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		List<DropdownItem> dropdownItems =
 			_layoutClassedModelUsageActionMenuContributor.
 				getLayoutClassedModelUsageActionDropdownItems(
-					mockHttpServletRequest, layoutClassedModelUsage);
+					httpServletRequest, layoutClassedModelUsage);
 
 		DropdownItem dropdownItem = dropdownItems.get(0);
 
@@ -135,18 +135,16 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 	}
 
 	private HttpServletRequest _getHttpServletRequest() {
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setLocale(LocaleUtil.getDefault());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
-		return mockHttpServletRequest;
+		return httpServletRequest;
 	}
 
 	private Company _company;

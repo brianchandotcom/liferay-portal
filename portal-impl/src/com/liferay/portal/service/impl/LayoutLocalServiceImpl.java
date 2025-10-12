@@ -3798,6 +3798,38 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layoutLocalService.updateLayout(layout);
 	}
 
+	/**
+	 * Updates the layout replacing its type settings.
+	 *
+	 * @param  layout the layout to be updated
+	 * @param  typeSettings the settings to load the unicode properties object.
+	 *         See {@link UnicodeProperties #fastLoad(String)}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateTypeSettings(Layout layout, String typeSettings)
+		throws PortalException {
+
+		Date date = new Date();
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				typeSettings
+			).build();
+
+		validateTypeSettingsProperties(layout, typeSettingsUnicodeProperties);
+
+		layout.setModifiedDate(date);
+		layout.setTypeSettings(typeSettingsUnicodeProperties.toString());
+
+		if (layout.isSystem() && (layout.getClassPK() > 0)) {
+			layout.setPublishDate(date);
+		}
+
+		return layoutPersistence.update(layout);
+	}
+
 	protected void validateTypeSettingsProperties(
 			Layout layout, UnicodeProperties typeSettingsUnicodeProperties)
 		throws PortalException {

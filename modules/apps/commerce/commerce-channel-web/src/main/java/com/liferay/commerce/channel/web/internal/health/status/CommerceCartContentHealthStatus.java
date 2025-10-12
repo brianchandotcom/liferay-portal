@@ -85,7 +85,7 @@ public class CommerceCartContentHealthStatus
 			PrincipalThreadLocal.getUserId(),
 			CommercePortletKeys.COMMERCE_CART_CONTENT);
 
-		_layoutService.updateLayout(
+		_layoutService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}

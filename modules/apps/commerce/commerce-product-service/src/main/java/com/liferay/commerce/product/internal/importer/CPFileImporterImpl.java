@@ -462,7 +462,7 @@ public class CPFileImporterImpl implements CPFileImporter {
 				serviceContext);
 		}
 
-		layout = _layoutLocalService.updateLayout(
+		layout = _layoutLocalService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

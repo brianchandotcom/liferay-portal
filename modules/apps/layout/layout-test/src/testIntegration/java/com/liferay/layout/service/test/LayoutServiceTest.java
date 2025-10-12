@@ -286,7 +286,7 @@ public class LayoutServiceTest {
 			typeSettingsUnicodeProperties.setProperty(
 				"layout-template-id", layoutTemplateId);
 
-			layout = _layoutService.updateLayout(
+			layout = _layoutService.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
 
@@ -330,7 +330,7 @@ public class LayoutServiceTest {
 		layoutTypePortlet.resetModes();
 		layoutTypePortlet.resetStates();
 
-		_layoutService.updateLayout(
+		_layoutService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

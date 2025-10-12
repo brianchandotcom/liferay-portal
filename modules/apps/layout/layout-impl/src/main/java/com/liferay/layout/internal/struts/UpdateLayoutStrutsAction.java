@@ -243,7 +243,7 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			layoutTypePortlet.resetModes();
 			layoutTypePortlet.resetStates();
 
-			layout = _layoutService.updateLayout(
+			layout = _layoutService.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.getTypeSettings());
 		}

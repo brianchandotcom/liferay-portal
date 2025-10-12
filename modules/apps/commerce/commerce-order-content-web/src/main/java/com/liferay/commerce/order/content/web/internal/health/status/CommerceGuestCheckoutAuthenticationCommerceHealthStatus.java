@@ -194,7 +194,7 @@ public class CommerceGuestCheckoutAuthenticationCommerceHealthStatus
 
 			portletPreferences.store();
 
-			_layoutLocalService.updateLayout(
+			_layoutLocalService.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), layout.getTypeSettings());
 		}

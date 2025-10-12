@@ -417,7 +417,7 @@ public class LayoutUtil {
 				typeSettingsUnicodeProperties,
 				layout.getTypeSettingsProperties())) {
 
-			layout = LayoutServiceUtil.updateLayout(
+			layout = LayoutServiceUtil.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
 		}
@@ -1012,7 +1012,7 @@ public class LayoutUtil {
 			unicodeProperties.putAll(settings.getThemeSettings());
 		}
 
-		layout = LayoutServiceUtil.updateLayout(
+		layout = LayoutServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			unicodeProperties.toString());
 
@@ -1078,7 +1078,7 @@ public class LayoutUtil {
 			layout.getTypeSettingsProperties();
 
 		if (widgetPageSpecification == null) {
-			return LayoutServiceUtil.updateLayout(
+			return LayoutServiceUtil.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(), unicodeProperties.toString());
 		}
@@ -1162,7 +1162,7 @@ public class LayoutUtil {
 				serviceContext.getUserId(), portletId);
 		}
 
-		return LayoutServiceUtil.updateLayout(
+		return LayoutServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			unicodeProperties.toString());
 	}

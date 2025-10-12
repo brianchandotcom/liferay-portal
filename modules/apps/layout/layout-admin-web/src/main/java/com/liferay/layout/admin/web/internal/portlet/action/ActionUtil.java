@@ -150,7 +150,7 @@ public class ActionUtil {
 				typeSettingsUnicodeProperties, deviceThemeId, true);
 		}
 
-		LayoutServiceUtil.updateLayout(
+		LayoutServiceUtil.updateTypeSettings(
 			groupId, privateLayout, layoutId,
 			typeSettingsUnicodeProperties.toString());
 

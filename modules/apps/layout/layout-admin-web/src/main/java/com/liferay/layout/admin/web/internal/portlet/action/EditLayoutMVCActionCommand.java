@@ -205,7 +205,7 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					layout.getTypeSettingsProperties());
 			}
 
-			layout = _layoutService.updateLayout(
+			layout = _layoutService.updateTypeSettings(
 				groupId, layout.isPrivateLayout(), layout.getLayoutId(),
 				layoutTypeSettingsUnicodeProperties.toString());
 

@@ -80,7 +80,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 		layoutTypePortlet.removePortletId(
 			contextUser.getUserId(), widgetInstanceExternalReferenceCode);
 
-		_layoutLocalService.updateLayout(
+		_layoutLocalService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
@@ -258,7 +258,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 				widgetPageWidgetInstance.getPosition());
 		}
 
-		layout = _layoutLocalService.updateLayout(
+		layout = _layoutLocalService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
@@ -282,7 +282,7 @@ public class WidgetPageWidgetInstanceResourceImpl
 					layout.getPlid(), " by user ", contextUser.getUserId()));
 		}
 
-		layout = _layoutLocalService.updateLayout(
+		layout = _layoutLocalService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

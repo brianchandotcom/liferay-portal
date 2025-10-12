@@ -1040,7 +1040,7 @@ public class FileSystemImporter extends BaseImporter {
 		_addLayoutColumns(
 			layout, LayoutTypePortletConstants.COLUMN_PREFIX, columnsJSONArray);
 
-		layoutLocalService.updateLayout(
+		layoutLocalService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 	}
@@ -1431,7 +1431,7 @@ public class FileSystemImporter extends BaseImporter {
 				layout, LayoutTypePortletConstants.COLUMN_PREFIX,
 				columnsJSONArray);
 
-			layoutLocalService.updateLayout(
+			layoutLocalService.updateTypeSettings(
 				groupId, layout.isPrivateLayout(), layout.getLayoutId(),
 				layout.getTypeSettings());
 

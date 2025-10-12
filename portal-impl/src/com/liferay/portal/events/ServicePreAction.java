@@ -312,7 +312,7 @@ public class ServicePreAction extends Action {
 				0, StringUtil.split(portletIds), columnId, false);
 		}
 
-		LayoutLocalServiceUtil.updateLayout(
+		LayoutLocalServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 
@@ -399,7 +399,7 @@ public class ServicePreAction extends Action {
 				0, StringUtil.split(portletIds), columnId, false);
 		}
 
-		LayoutLocalServiceUtil.updateLayout(
+		LayoutLocalServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

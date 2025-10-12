@@ -43,7 +43,7 @@ public class LayoutTypeSettingsUtil {
 					layoutTypeSettingsUnicodeProperties);
 			}
 
-			return layoutService.updateLayout(
+			return layoutService.updateTypeSettings(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId(),
 				layoutTypeSettingsUnicodeProperties.toString());
@@ -55,7 +55,7 @@ public class LayoutTypeSettingsUtil {
 		layoutTypeSettingsUnicodeProperties.putAll(
 			layout.getTypeSettingsProperties());
 
-		return layoutService.updateLayout(
+		return layoutService.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layoutTypeSettingsUnicodeProperties.toString());
 	}

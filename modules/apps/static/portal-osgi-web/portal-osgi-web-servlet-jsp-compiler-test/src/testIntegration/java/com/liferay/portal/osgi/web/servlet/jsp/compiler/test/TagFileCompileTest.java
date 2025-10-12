@@ -293,7 +293,7 @@ public class TagFileCompileTest {
 			TestPropsValues.getUserId(), JspPrecompilePortlet.PORTLET_NAME,
 			columnId, -1, false);
 
-		LayoutLocalServiceUtil.updateLayout(
+		LayoutLocalServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

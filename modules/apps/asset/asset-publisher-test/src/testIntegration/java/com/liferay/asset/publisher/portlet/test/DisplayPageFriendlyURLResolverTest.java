@@ -100,7 +100,7 @@ public class DisplayPageFriendlyURLResolverTest {
 			LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID,
 			portletId);
 
-		layout = LayoutLocalServiceUtil.updateLayout(
+		layout = LayoutLocalServiceUtil.updateTypeSettings(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
 

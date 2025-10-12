@@ -88,12 +88,10 @@ public class DLFileEntryLayoutClassedModelUsageActionMenuContributorTest {
 		LayoutClassedModelUsage layoutClassedModelUsage =
 			_addLayoutClassedModelUsage(_fileEntry);
 
-		HttpServletRequest httpServletRequest = _getHttpServletRequest();
-
 		List<DropdownItem> dropdownItems =
 			_layoutClassedModelUsageActionMenuContributor.
 				getLayoutClassedModelUsageActionDropdownItems(
-					httpServletRequest, layoutClassedModelUsage);
+					_getHttpServletRequest(), layoutClassedModelUsage);
 
 		DropdownItem dropdownItem = dropdownItems.get(0);
 

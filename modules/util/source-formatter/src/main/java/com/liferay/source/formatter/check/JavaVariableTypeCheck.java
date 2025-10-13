@@ -86,6 +86,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 			}
 
 			if (_isImmutableField(fieldType, absolutePath) ||
+				absolutePath.endsWith("ResourceImpl.java") ||
 				fieldType.matches("Pattern(\\[\\])*") ||
 				(fieldType.equals("Log") &&
 				 !isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath))) {

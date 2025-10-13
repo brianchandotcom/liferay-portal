@@ -26,7 +26,6 @@ export const liferay = {
 
 		const formattedLang = lang.replace('_', '-');
 
-		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(endpoint, {
 			headers: {
 				'accept': '*/*',

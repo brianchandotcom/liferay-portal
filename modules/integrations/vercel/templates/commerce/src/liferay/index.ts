@@ -18,7 +18,6 @@ export const liferay = {
 				? `${LIFERAY_HOST}${resource}`
 				: resource;
 
-		// eslint-disable-next-line @liferay/portal/no-global-fetch
 		const response = await fetch(endpoint, {
 			headers: {
 				'accept': '*/*',

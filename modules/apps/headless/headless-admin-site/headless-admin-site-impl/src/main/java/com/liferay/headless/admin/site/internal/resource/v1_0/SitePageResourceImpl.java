@@ -137,7 +137,7 @@ public class SitePageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
+			public String getModelClassName() {
 				return Layout.class.getName();
 			}
 

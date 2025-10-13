@@ -156,7 +156,7 @@ public class KeywordResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
+			public String getModelClassName() {
 				return AssetTag.class.getName();
 			}
 

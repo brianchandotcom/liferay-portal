@@ -1767,8 +1767,8 @@ public class BatchEnginePortletDataHandlerTest {
 			return new ExportImportDescriptor() {
 
 				@Override
-				public String getDeletionSystemEventClassName() {
-					return _itemClassName;
+				public String getModelClassName() {
+					return _modelClassName;
 				}
 
 				@Override
@@ -1861,7 +1861,7 @@ public class BatchEnginePortletDataHandlerTest {
 			};
 		}
 
-		private static String _itemClassName = RandomTestUtil.randomString();
+		private static String _modelClassName = RandomTestUtil.randomString();
 
 		private final Function<Filter, Page<TestItem>> _function;
 		private final String _portletId;

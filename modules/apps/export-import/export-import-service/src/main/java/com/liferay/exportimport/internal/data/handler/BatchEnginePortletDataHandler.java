@@ -99,7 +99,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			Map<String, String> newPrimaryKeysMap =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					exportImportDescriptor.getDeletionSystemEventClassName() +
+					exportImportDescriptor.getModelClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
 			List<String> externalReferenceCodes = TransformUtil.transform(
@@ -319,7 +319,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					result.getBatchEngineExportTask();
 
 				manifestSummary.addModelAdditionCount(
-					_getStagedModelType(registration),
+					new StagedModelType(exportImportDescriptor.getClassName()),
 					batchEngineExportTask.getProcessedItemsCount());
 			}
 
@@ -429,11 +429,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				BatchEngineExportTask batchEngineExportTask =
 					result.getBatchEngineExportTask();
 
+				ExportImportVulcanBatchEngineTaskItemDelegate.
+					ExportImportDescriptor exportImportDescriptor =
+						registration.getExportImportDescriptor();
+
 				ManifestSummary manifestSummary =
 					portletDataContext.getManifestSummary();
 
 				manifestSummary.addModelAdditionCount(
-					_getStagedModelType(registration),
+					new StagedModelType(exportImportDescriptor.getClassName()),
 					batchEngineExportTask.getTotalItemsCount());
 			}
 		}
@@ -553,13 +557,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return null;
 	}
 
-	private StagedModelType _getStagedModelType(Registration registration) {
-		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-			exportImportDescriptor = registration.getExportImportDescriptor();
-
-		return new StagedModelType(exportImportDescriptor.getClassName());
-	}
-
 	private long _getUserId() {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
@@ -577,7 +574,15 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	private void _updateDeletionSystemEventStagedModelTypes() {
 		setDeletionSystemEventStagedModelTypes(
 			TransformUtil.transformToArray(
-				_registrations, this::_getStagedModelType,
+				_registrations,
+				registration -> {
+					ExportImportVulcanBatchEngineTaskItemDelegate.
+						ExportImportDescriptor exportImportDescriptor =
+							registration.getExportImportDescriptor();
+
+					return new StagedModelType(
+						exportImportDescriptor.getModelClassName());
+				},
 				StagedModelType.class));
 	}
 

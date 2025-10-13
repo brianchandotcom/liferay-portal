@@ -75,14 +75,14 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 			}
 
 			@Override
-			public String getDeletionSystemEventClassName() {
-				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
-					"BatchTestEntityPortlet";
+			public String getLabel() {
+				return "Shared Internal Model Batch Test Entity";
 			}
 
 			@Override
-			public String getLabel() {
-				return "Shared Internal Model Batch Test Entity";
+			public String getModelClassName() {
+				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
+					"BatchTestEntityPortlet";
 			}
 
 			@Override

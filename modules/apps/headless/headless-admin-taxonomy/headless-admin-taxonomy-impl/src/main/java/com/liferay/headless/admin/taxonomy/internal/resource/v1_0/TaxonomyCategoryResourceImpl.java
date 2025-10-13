@@ -140,13 +140,13 @@ public class TaxonomyCategoryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
-				return AssetCategory.class.getName();
+			public String getLabel() {
+				return "categories";
 			}
 
 			@Override
-			public String getLabel() {
-				return "categories";
+			public String getModelClassName() {
+				return AssetCategory.class.getName();
 			}
 
 			@Override

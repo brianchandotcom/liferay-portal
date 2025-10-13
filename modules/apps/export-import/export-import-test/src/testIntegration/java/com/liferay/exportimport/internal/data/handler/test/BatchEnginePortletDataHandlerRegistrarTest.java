@@ -340,7 +340,7 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				}
 
 				@Override
-				public String getDeletionSystemEventClassName() {
+				public String getModelClassName() {
 					return _className;
 				}
 

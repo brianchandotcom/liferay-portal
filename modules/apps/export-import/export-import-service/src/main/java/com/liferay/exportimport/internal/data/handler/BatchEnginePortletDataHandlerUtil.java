@@ -71,8 +71,6 @@ public class BatchEnginePortletDataHandlerUtil {
 				return StringUtil.merge(batchNestedFields, StringPool.COMMA);
 			}
 		).put(
-			"className", exportImportDescriptor.getClassName()
-		).put(
 			"filter",
 			() -> {
 				if ((portletDataContext.getEndDate() == null) &&
@@ -100,6 +98,8 @@ public class BatchEnginePortletDataHandlerUtil {
 
 				return sb.toString();
 			}
+		).put(
+			"modelClassName", exportImportDescriptor.getModelClassName()
 		).put(
 			"modelName", exportImportDescriptor.getModelName()
 		).put(
@@ -150,8 +150,6 @@ public class BatchEnginePortletDataHandlerUtil {
 				return null;
 			}
 		).put(
-			"className", exportImportDescriptor.getClassName()
-		).put(
 			"createStrategy", CreateStrategy.UPSERT.getDBOperation()
 		).put(
 			"importCreatorStrategy",
@@ -167,6 +165,8 @@ public class BatchEnginePortletDataHandlerUtil {
 				return BatchEngineImportTaskConstants.
 					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
 			}
+		).put(
+			"modelClassName", exportImportDescriptor.getModelClassName()
 		).put(
 			"modelName", exportImportDescriptor.getModelName()
 		).put(

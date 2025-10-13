@@ -406,7 +406,7 @@ public class ObjectEntryResourceImpl
 			}
 
 			@Override
-			public String getDeletionSystemEventClassName() {
+			public String getModelClassName() {
 				return _objectDefinition.getClassName();
 			}
 

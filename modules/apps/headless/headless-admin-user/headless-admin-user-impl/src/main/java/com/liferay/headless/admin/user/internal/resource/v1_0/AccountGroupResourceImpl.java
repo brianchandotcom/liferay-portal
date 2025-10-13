@@ -207,7 +207,7 @@ public class AccountGroupResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
+			public String getModelClassName() {
 				return com.liferay.account.model.AccountGroup.class.getName();
 			}
 

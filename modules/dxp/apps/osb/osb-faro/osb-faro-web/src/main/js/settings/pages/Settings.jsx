@@ -2,6 +2,7 @@ import BundleRouter from 'route-middleware/BundleRouter';
 import checkProjectState from 'shared/hoc/CheckProjectState';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import ClayToolbar from '@clayui/toolbar';
 import getCN from 'classnames';
 import Loading from 'shared/components/Loading';
 import React, {Fragment, lazy, Suspense} from 'react';
@@ -14,6 +15,7 @@ import {Link, matchPath, Switch, withRouter} from 'react-router-dom';
 import {Project, User} from 'shared/util/records';
 import {PropTypes} from 'prop-types';
 import {Routes, toRoute} from 'shared/util/router';
+import {Text} from '@clayui/core';
 import {withOnboarding} from 'shared/hoc';
 
 // APIS
@@ -239,32 +241,39 @@ export class Settings extends React.Component {
 
 		return (
 			<div className='settings-root'>
-				<div className='settings-header'>
-					<div className='section-side'>
-						<Link
-							className='back-arrow'
-							to={
-								backURL ||
-								toRoute(Routes.WORKSPACE_WITH_ID, {groupId})
-							}
-						>
-							<span className='icon-wrapper'>
-								<ClayIcon
-									className='icon-root'
-									symbol='angle-left-small'
-								/>
-							</span>
+				<ClayToolbar className='bg-white mb-4'>
+					<ClayToolbar.Nav className='mx-4'>
+						<ClayToolbar.Item>
+							<div className='component-action'>
+								<Link
+									aria-label={Liferay.Language.get('back')}
+									className='text-secondary'
+									to={
+										backURL ||
+										toRoute(Routes.WORKSPACE_WITH_ID, {
+											groupId
+										})
+									}
+								>
+									<ClayIcon
+										className='mb-1'
+										symbol='angle-left'
+									/>
+								</Link>
+							</div>
+						</ClayToolbar.Item>
 
-							{Liferay.Language.get('exit-settings')}
-						</Link>
-					</div>
-
-					<div className='section-main'>
-						<h2 className='title'>
-							{Liferay.Language.get('settings')}
-						</h2>
-					</div>
-				</div>
+						<ClayToolbar.Item className='pl-0'>
+							<ClayToolbar.Section>
+								<span className='text-dark'>
+									<Text size={5} weight='bold'>
+										{Liferay.Language.get('settings')}
+									</Text>
+								</span>
+							</ClayToolbar.Section>
+						</ClayToolbar.Item>
+					</ClayToolbar.Nav>
+				</ClayToolbar>
 
 				<div className='content-wrapper'>
 					<nav className='section-side settings-side-bar'>

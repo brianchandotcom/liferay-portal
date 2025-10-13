@@ -17,7 +17,7 @@ import com.liferay.batch.engine.action.ImportTaskPreAction;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskExecutorException;
 import com.liferay.batch.engine.exception.handler.BatchEngineImportTaskExceptionHandler;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutor;
 import com.liferay.batch.engine.internal.item.BatchEngineTaskItemDelegateExecutorFactory;
@@ -324,15 +324,14 @@ public class BatchEngineImportTaskExecutorImpl
 		throws Exception {
 
 		if (exception1 instanceof
-				BatchEngineImportTaskItemConversionException
-					batchEngineImportTaskItemConversionException) {
+				BatchEngineImportTaskExecutorException
+					batchEngineImportTaskExecutorException) {
 
 			Exception exception2 =
-				_unwrapBatchEngineImportTaskItemConversionException(
-					batchEngineImportTaskItemConversionException);
+				_unwrapBatchEngineImportTaskExecutorException(
+					batchEngineImportTaskExecutorException);
 
-			Object item =
-				batchEngineImportTaskItemConversionException.getItem();
+			Object item = batchEngineImportTaskExecutorException.getItem();
 
 			_batchEngineImportTaskExceptionHandlers.forEach(
 				batchEngineImportTaskExceptionHandler ->
@@ -464,18 +463,17 @@ public class BatchEngineImportTaskExecutorImpl
 			_itemReaderPostActions.toList());
 	}
 
-	private Exception _unwrapBatchEngineImportTaskItemConversionException(
-		BatchEngineImportTaskItemConversionException
-			batchEngineImportTaskItemConversionException) {
+	private Exception _unwrapBatchEngineImportTaskExecutorException(
+		BatchEngineImportTaskExecutorException
+			batchEngineImportTaskExecutorException) {
 
-		Throwable throwable =
-			batchEngineImportTaskItemConversionException.getCause();
+		Throwable throwable = batchEngineImportTaskExecutorException.getCause();
 
 		if (throwable instanceof Exception) {
 			return (Exception)throwable;
 		}
 
-		return batchEngineImportTaskItemConversionException;
+		return batchEngineImportTaskExecutorException;
 	}
 
 	private void _updateBatchEngineImportTask(

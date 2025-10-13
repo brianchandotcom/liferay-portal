@@ -103,7 +103,7 @@ const FrontendDataSetContent = ({
 	apiURL,
 	appURL,
 	bulkActions = [],
-	configInURLSettings = EConfigInURLBehavior.OFF,
+	configInURLSettings = EConfigInURLBehavior.PUSH,
 	creationMenu: initialCreationMenu,
 	currentURL,
 	customDataRenderers,

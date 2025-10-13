@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const { debugEnabled, displayToasts, stepNumber } = configuration;
+const {debugEnabled, displayToasts, stepNumber} = configuration;
 
 const debug = (msg, ...args) => {
-	if (debugEnabled) { console.debug(`[Trial Step] ${msg}`, ...args); }
+	if (debugEnabled) {
+		console.debug(`[Trial Step] ${msg}`, ...args);
+	}
 };
 
-debug('configuration', { debugEnabled, displayToasts, stepNumber });
+debug('configuration', {debugEnabled, displayToasts, stepNumber});
 
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
@@ -22,11 +24,11 @@ function findDropArea(root) {
 		'[data-lfr-drop-zone-id], .page-editor__drop-zone'
 	);
 
-	return { container, dzTag, editorEmpty, editorZone };
+	return {container, dzTag, editorEmpty, editorZone};
 }
 
 function isDropAreaEmpty(root) {
-	const { container, dzTag, editorEmpty, editorZone } = findDropArea(root);
+	const {container, dzTag, editorEmpty, editorZone} = findDropArea(root);
 
 	if (layoutMode === 'edit') {
 		if (editorEmpty) {
@@ -45,7 +47,8 @@ function isDropAreaEmpty(root) {
 
 		const hasRealContent = Array.from(container.children).some(
 			(el) =>
-				el.nodeType === 1 && !el.classList.contains('trial-step__callToAction')
+				el.nodeType === 1 &&
+				!el.classList.contains('trial-step__callToAction')
 		);
 
 		return !hasRealContent;
@@ -56,46 +59,46 @@ function isDropAreaEmpty(root) {
 	}
 
 	const hasRealContent = Array.from(container.children).some(
-		(el) => el.nodeType === 1 && !el.classList.contains('trial-step__callToAction')
+		(el) =>
+			el.nodeType === 1 &&
+			!el.classList.contains('trial-step__callToAction')
 	);
 
 	return !hasRealContent;
 }
 
 function watchDropArea(root) {
-	const { container } = findDropArea(root);
+	const {container} = findDropArea(root);
 
 	if (!container) {
 		return;
 	}
 
-	const apply = () => root.classList.toggle('is-empty', isDropAreaEmpty(root));
+	const apply = () =>
+		root.classList.toggle('is-empty', isDropAreaEmpty(root));
 
 	apply();
 
 	const mutationObserver = new MutationObserver(apply);
 
-	mutationObserver.observe(
-		container, {
+	mutationObserver.observe(container, {
 		attributes: true,
 		characterData: true,
 		childList: true,
-		subtree: true
-	}
-	);
+		subtree: true,
+	});
 }
 
-function toast({ error, message, type = 'success' }) {
+function toast({error, message, type = 'success'}) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
-		Liferay.Util.openToast(
-			{
-				message,
-				toastProps: { autohide: true },
-				type,
-			}
-		);
-	} else {
-		debug(message, { type, error });
+		Liferay.Util.openToast({
+			message,
+			toastProps: {autohide: true},
+			type,
+		});
+	}
+	else {
+		debug(message, {type, error});
 		if (type === 'danger') {
 			return;
 		}
@@ -127,17 +130,19 @@ function setLoading(el, isLoading) {
 	spinner?.classList.toggle('is-hidden', !isLoading);
 }
 
-function hide(el){
+function hide(el) {
 	el?.classList.add('is-hidden');
 }
 
-function show(el){
+function show(el) {
 	el?.classList.remove('is-hidden');
 }
 
 function setField(root, key, value) {
 	const el = root.querySelector(`.trial-step__field[data-field="${key}"]`);
-	if (!el) { return; }
+	if (!el) {
+		return;
+	}
 	el.textContent = value ?? '';
 }
 
@@ -165,7 +170,9 @@ function hydrateFromModel(root, model) {
 
 function waitForSlideEnd(el, cb) {
 	const handler = (e) => {
-		if (e.propertyName !== 'grid-template-rows') { return; }
+		if (e.propertyName !== 'grid-template-rows') {
+			return;
+		}
 		el.removeEventListener('transitionend', handler);
 		cb?.();
 	};
@@ -193,9 +200,11 @@ function initTrialStep(hostEl, item) {
 		timeToComplete: item?.timeToComplete ?? '',
 		callToActionText: item?.callToActionText ?? null,
 		callToActionHref: item?.callToActionLink ?? null,
-		callToActionTarget: item?.callToActionTarget ? item?.callToActionTarget.key : null,
+		callToActionTarget: item?.callToActionTarget
+			? item?.callToActionTarget.key
+			: null,
 	};
-	
+
 	watchDropArea(root);
 
 	hydrateFromModel(root, model);
@@ -246,7 +255,9 @@ function initTrialStep(hostEl, item) {
 	}
 
 	function toggleHandler() {
-		if (isAnimating) { return; }
+		if (isAnimating) {
+			return;
+		}
 
 		const isExpanded = root.classList.contains('trial-step--expanded');
 
@@ -303,14 +314,14 @@ async function init() {
 			'?fields=id,stepNumber,done,title,timeToComplete,callToActionText,callToActionTarget,callToActionLink';
 		const filter = configuration.stepNumber
 			? '&filter=' +
-			encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
+				encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
 			: '';
 		response = await fetchJSON(
 			`/o/c/m2h8progresstrackers${fields}${filter}`
 		);
 	}
 	catch (error) {
-		toast({ message: 'Could not load data.', type: 'danger', error });
+		toast({message: 'Could not load data.', type: 'danger', error});
 
 		return;
 	}

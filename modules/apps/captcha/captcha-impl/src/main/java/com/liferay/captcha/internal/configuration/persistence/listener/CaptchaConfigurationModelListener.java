@@ -41,7 +41,7 @@ public class CaptchaConfigurationModelListener
 
 			if (Validator.isNotNull(captchaEngine)) {
 				if (captchaEngine.equals(ReCaptchaImpl.class.getName())) {
-					_validateReCaptchaKeys(properties);
+					_validateReCaptchaConfigurations(properties);
 				}
 				else if (captchaEngine.equals(
 							SimpleCaptchaImpl.class.getName())) {
@@ -69,7 +69,8 @@ public class CaptchaConfigurationModelListener
 		return _resourceBundle;
 	}
 
-	private void _validateReCaptchaKeys(Dictionary<String, Object> properties)
+	private void _validateReCaptchaConfigurations(
+			Dictionary<String, Object> properties)
 		throws CaptchaConfigurationException {
 
 		String reCaptchaNoScriptURL = (String)properties.get(

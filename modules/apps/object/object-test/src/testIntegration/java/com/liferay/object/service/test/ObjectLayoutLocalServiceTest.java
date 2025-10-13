@@ -13,7 +13,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.exception.DefaultObjectLayoutException;
 import com.liferay.object.exception.ObjectDefinitionModifiableException;
-import com.liferay.object.exception.ObjectLayoutBoxCategorizationTypeException;
+import com.liferay.object.exception.ObjectLayoutBoxTypeException;
 import com.liferay.object.exception.ObjectLayoutColumnSizeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -38,6 +38,7 @@ import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -142,164 +143,17 @@ public class ObjectLayoutLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			_objectDefinition.getObjectDefinitionId());
 
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+		_assertFailureObjectLayoutBoxType(
+			ObjectLayoutBoxConstants.TYPE_CATEGORIZATION, "Categorization");
 
-		_objectDefinition.setStorageType(RandomTestUtil.randomString());
-
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
-
-		AssertUtils.assertFailure(
-			ObjectLayoutBoxCategorizationTypeException.class,
-			"Categorization layout box can only be used in object " +
-				"definitions with a default storage type",
-			() -> {
-				ObjectLayoutTab objectLayoutTab =
-					_objectLayoutTabPersistence.create(0);
-
-				objectLayoutTab.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-				objectLayoutTab.setPriority(0);
-				objectLayoutTab.setObjectLayoutBoxes(
-					Arrays.asList(
-						_createObjectLayoutBox(),
-						_createObjectLayoutBox(
-							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
-
-				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Collections.singletonList(objectLayoutTab));
-			});
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-
-		_objectDefinition.setEnableCategorization(false);
-
-		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
-
-		AssertUtils.assertFailure(
-			ObjectLayoutBoxCategorizationTypeException.class,
-			"Categorization layout box must be enabled to be used",
-			() -> {
-				ObjectLayoutTab objectLayoutTab =
-					_objectLayoutTabPersistence.create(0);
-
-				objectLayoutTab.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-				objectLayoutTab.setPriority(0);
-				objectLayoutTab.setObjectLayoutBoxes(
-					Arrays.asList(
-						_createObjectLayoutBox(),
-						_createObjectLayoutBox(
-							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
-
-				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Collections.singletonList(objectLayoutTab));
-			});
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
+		_assertFailureObjectLayoutBoxType(
+			ObjectLayoutBoxConstants.TYPE_SEO, "SEO");
 
 		_objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		AssertUtils.assertFailure(
-			ObjectLayoutBoxCategorizationTypeException.class,
-			"Categorization layout box must not have layout rows",
-			() -> {
-				ObjectLayoutTab objectLayoutTab =
-					_objectLayoutTabPersistence.create(0);
-
-				objectLayoutTab.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-				objectLayoutTab.setPriority(0);
-
-				ObjectLayoutBox objectLayoutBox = _createObjectLayoutBox(
-					ObjectLayoutBoxConstants.TYPE_CATEGORIZATION);
-
-				objectLayoutBox.setObjectLayoutRows(
-					Collections.singletonList(_createObjectLayoutRow()));
-
-				objectLayoutTab.setObjectLayoutBoxes(
-					Arrays.asList(_createObjectLayoutBox(), objectLayoutBox));
-
-				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Collections.singletonList(objectLayoutTab));
-			});
-
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Edge object relationships cannot be associated with object " +
-				"layout tabs",
-			() -> {
-				ObjectLayoutTab objectLayoutTab = _createObjectLayoutTab();
-
-				objectLayoutTab.setObjectRelationshipId(
-					_objectRelationshipA_AA.getObjectRelationshipId());
-
-				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinitionA.getObjectDefinitionId(), false,
-					RandomTestUtil.randomLocaleStringMap(),
-					List.of(objectLayoutTab));
-			});
-		AssertUtils.assertFailure(
-			ObjectRelationshipEdgeException.class,
-			"Edge object relationship object fields cannot be associated " +
-				"with object layouts",
-			() -> {
-				ObjectLayoutTab objectLayoutTab = _createObjectLayoutTab();
-
-				ObjectLayoutBox objectLayoutBox = _createObjectLayoutBox();
-
-				ObjectLayoutRow objectLayoutRow = _createObjectLayoutRow();
-
-				ObjectLayoutColumn objectLayoutColumn =
-					_createObjectLayoutColumn(false);
-
-				objectLayoutColumn.setObjectFieldId(
-					_objectRelationshipA_AA.getObjectFieldId2());
-
-				objectLayoutRow.setObjectLayoutColumns(
-					List.of(objectLayoutColumn));
-
-				objectLayoutBox.setObjectLayoutRows(List.of(objectLayoutRow));
-
-				objectLayoutTab.setObjectLayoutBoxes(List.of(objectLayoutBox));
-
-				_objectLayoutLocalService.addObjectLayout(
-					TestPropsValues.getUserId(),
-					_objectDefinitionAA.getObjectDefinitionId(), true,
-					RandomTestUtil.randomLocaleStringMap(),
-					List.of(objectLayoutTab));
-			});
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition.getObjectDefinitionId());
-
-		_objectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-
-		AssertUtils.assertFailure(
-			ObjectLayoutBoxCategorizationTypeException.class,
+			ObjectLayoutBoxTypeException.class,
 			"Object layout box must have a type",
 			() -> {
 				ObjectLayoutTab objectLayoutTab =
@@ -361,40 +215,51 @@ public class ObjectLayoutLocalServiceTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		AssertUtils.assertFailure(
-			ObjectLayoutBoxCategorizationTypeException.class,
-			"There can only be one categorization layout box per layout",
+			ObjectRelationshipEdgeException.class,
+			"Edge object relationship object fields cannot be associated " +
+				"with object layouts",
 			() -> {
-				ObjectLayoutTab objectLayoutTab1 =
-					_objectLayoutTabPersistence.create(0);
+				ObjectLayoutTab objectLayoutTab = _createObjectLayoutTab();
 
-				objectLayoutTab1.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-				objectLayoutTab1.setPriority(0);
-				objectLayoutTab1.setObjectLayoutBoxes(
-					Arrays.asList(
-						_createObjectLayoutBox(),
-						_createObjectLayoutBox(
-							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
+				ObjectLayoutBox objectLayoutBox = _createObjectLayoutBox();
 
-				ObjectLayoutTab objectLayoutTab2 =
-					_objectLayoutTabPersistence.create(0);
+				ObjectLayoutRow objectLayoutRow = _createObjectLayoutRow();
 
-				objectLayoutTab2.setNameMap(
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()));
-				objectLayoutTab2.setObjectLayoutBoxes(
-					Arrays.asList(
-						_createObjectLayoutBox(),
-						_createObjectLayoutBox(
-							ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
+				ObjectLayoutColumn objectLayoutColumn =
+					_createObjectLayoutColumn(false);
+
+				objectLayoutColumn.setObjectFieldId(
+					_objectRelationshipA_AA.getObjectFieldId2());
+
+				objectLayoutRow.setObjectLayoutColumns(
+					List.of(objectLayoutColumn));
+
+				objectLayoutBox.setObjectLayoutRows(List.of(objectLayoutRow));
+
+				objectLayoutTab.setObjectLayoutBoxes(List.of(objectLayoutBox));
 
 				_objectLayoutLocalService.addObjectLayout(
 					TestPropsValues.getUserId(),
-					_objectDefinition.getObjectDefinitionId(), false,
-					LocalizedMapUtil.getLocalizedMap(
-						RandomTestUtil.randomString()),
-					Arrays.asList(objectLayoutTab1, objectLayoutTab2));
+					_objectDefinitionAA.getObjectDefinitionId(), true,
+					RandomTestUtil.randomLocaleStringMap(),
+					List.of(objectLayoutTab));
+			});
+
+		AssertUtils.assertFailure(
+			ObjectRelationshipEdgeException.class,
+			"Edge object relationships cannot be associated with object " +
+				"layout tabs",
+			() -> {
+				ObjectLayoutTab objectLayoutTab = _createObjectLayoutTab();
+
+				objectLayoutTab.setObjectRelationshipId(
+					_objectRelationshipA_AA.getObjectRelationshipId());
+
+				_objectLayoutLocalService.addObjectLayout(
+					TestPropsValues.getUserId(),
+					_objectDefinitionA.getObjectDefinitionId(), false,
+					RandomTestUtil.randomLocaleStringMap(),
+					List.of(objectLayoutTab));
 			});
 
 		_deleteObjectFields();
@@ -673,6 +538,88 @@ public class ObjectLayoutLocalServiceTest {
 			Collections.singletonList(_createObjectLayoutTab()));
 	}
 
+	private ObjectLayout _addObjectLayout(
+			long objectDefinitionId, List<ObjectLayoutTab> objectLayoutTabs)
+		throws PortalException {
+
+		return _objectLayoutLocalService.addObjectLayout(
+			TestPropsValues.getUserId(), objectDefinitionId, false,
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			objectLayoutTabs);
+	}
+
+	private void _assertFailureObjectLayoutBoxType(
+			String objectLayoutBoxType, String objectLayoutBoxTypeLabel)
+		throws Exception {
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		_objectDefinition.setStorageType(RandomTestUtil.randomString());
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
+
+		ObjectLayoutTab objectLayoutTab = _createObjectLayoutTab(
+			_createObjectLayoutBox(),
+			_createObjectLayoutBox(objectLayoutBoxType));
+
+		AssertUtils.assertFailure(
+			ObjectLayoutBoxTypeException.class,
+			objectLayoutBoxTypeLabel +
+				" layout box can only be used in object definitions with a " +
+					"default storage type",
+			() -> _addObjectLayout(
+				_objectDefinition.getObjectDefinitionId(),
+				List.of(objectLayoutTab)));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(
+			_objectDefinition.getObjectDefinitionId());
+
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		_setObjectLayoutBoxTypeEnabled(false, objectLayoutBoxType);
+
+		AssertUtils.assertFailure(
+			ObjectLayoutBoxTypeException.class,
+			objectLayoutBoxTypeLabel + " layout box must be enabled to be used",
+			() -> _addObjectLayout(
+				_objectDefinition.getObjectDefinitionId(),
+				List.of(objectLayoutTab)));
+
+		ObjectLayoutBox objectLayoutBox = _createObjectLayoutBox(
+			objectLayoutBoxType);
+
+		objectLayoutBox.setObjectLayoutRows(
+			Collections.singletonList(_createObjectLayoutRow()));
+
+		objectLayoutTab.setObjectLayoutBoxes(List.of(objectLayoutBox));
+
+		_setObjectLayoutBoxTypeEnabled(true, objectLayoutBoxType);
+
+		AssertUtils.assertFailure(
+			ObjectLayoutBoxTypeException.class,
+			objectLayoutBoxTypeLabel + " layout box must not have layout rows",
+			() -> _addObjectLayout(
+				_objectDefinition.getObjectDefinitionId(),
+				List.of(objectLayoutTab)));
+
+		objectLayoutTab.setObjectLayoutBoxes(
+			List.of(_createObjectLayoutBox(objectLayoutBoxType)));
+
+		AssertUtils.assertFailure(
+			ObjectLayoutBoxTypeException.class,
+			"There can only be one " + objectLayoutBoxType +
+				" layout box per layout",
+			() -> _addObjectLayout(
+				_objectDefinition.getObjectDefinitionId(),
+				Arrays.asList(
+					objectLayoutTab,
+					_createObjectLayoutTab(
+						_createObjectLayoutBox(),
+						_createObjectLayoutBox(objectLayoutBoxType)))));
+	}
+
 	private void _assertObjectLayout(ObjectLayout objectLayout) {
 		List<ObjectLayoutTab> objectLayoutTabs =
 			objectLayout.getObjectLayoutTabs();
@@ -778,6 +725,18 @@ public class ObjectLayoutLocalServiceTest {
 		return objectLayoutTab;
 	}
 
+	private ObjectLayoutTab _createObjectLayoutTab(
+		ObjectLayoutBox... objectLayoutBoxes) {
+
+		ObjectLayoutTab objectLayoutTab = _objectLayoutTabPersistence.create(0);
+
+		objectLayoutTab.setNameMap(
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()));
+		objectLayoutTab.setObjectLayoutBoxes(Arrays.asList(objectLayoutBoxes));
+
+		return objectLayoutTab;
+	}
+
 	private void _deleteObjectFields() throws Exception {
 		List<ObjectField> objectFields =
 			_objectFieldLocalService.getObjectFields(
@@ -786,6 +745,25 @@ public class ObjectLayoutLocalServiceTest {
 		for (ObjectField objectField : objectFields) {
 			_objectFieldLocalService.deleteObjectField(objectField);
 		}
+	}
+
+	private void _setObjectLayoutBoxTypeEnabled(
+		boolean enabled, String objectLayoutBoxType) {
+
+		if (StringUtil.equals(
+				objectLayoutBoxType,
+				ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)) {
+
+			_objectDefinition.setEnableCategorization(enabled);
+		}
+
+		if (StringUtil.equals(
+				objectLayoutBoxType, ObjectLayoutBoxConstants.TYPE_SEO)) {
+
+			_objectDefinition.setEnableFriendlyURLCustomization(enabled);
+		}
+
+		_objectDefinitionLocalService.updateObjectDefinition(_objectDefinition);
 	}
 
 	private static ObjectDefinition _objectDefinitionA;

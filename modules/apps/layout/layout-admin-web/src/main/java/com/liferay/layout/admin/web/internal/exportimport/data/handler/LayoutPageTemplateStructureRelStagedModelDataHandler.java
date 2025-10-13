@@ -22,6 +22,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -241,6 +243,15 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 				layoutJSONObject.put(
 					"groupId", portletDataContext.getScopeGroupId());
+
+				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+					layoutJSONObject.getString("layoutUuid"),
+					portletDataContext.getScopeGroupId(),
+					layoutJSONObject.getBoolean("privateLayout"));
+
+				if (layout != null) {
+					layoutJSONObject.put("layoutId", layout.getLayoutId());
+				}
 			}
 		}
 	}
@@ -283,6 +294,9 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

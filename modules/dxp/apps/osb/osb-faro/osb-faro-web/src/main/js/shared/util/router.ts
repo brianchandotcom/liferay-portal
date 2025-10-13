@@ -50,6 +50,7 @@ export const USERS = 'users';
 
 export const PERIOD = 'rangeKey';
 export const SEGMENT_STATE = 'state';
+export const SEGMENT_TYPE = 'segmentType';
 export const STATUSES = 'statuses';
 export const TYPES = 'types';
 

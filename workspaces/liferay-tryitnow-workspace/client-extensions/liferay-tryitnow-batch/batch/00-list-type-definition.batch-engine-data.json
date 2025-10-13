@@ -1,0 +1,42 @@
+{
+	"configuration": {
+		"className": "com.liferay.headless.admin.list.type.dto.v1_0.ListTypeDefinition",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "DEFAULT",
+			"updateStrategy": "UPDATE"
+		}
+	},
+	"items": [
+		{
+			"externalReferenceCode": "M2H8_CALL_TO_ACTION_TARGET",
+			"listTypeEntries": [
+				{
+					"externalReferenceCode": "TARGET_SELF",
+					"key": "self",
+					"name": "Same Tab / Window",
+					"name_i18n": {
+						"en-US": "Same Tab / Window"
+					},
+					"type": ""
+				},
+				{
+					"externalReferenceCode": "TARGET_BLANK",
+					"key": "blank",
+					"name": "New Tab / Window",
+					"name_i18n": {
+						"en-US": "New Tab / Window"
+					},
+					"type": ""
+				}
+			],
+			"name": "M2H8 Call to Action Targets",
+			"name_i18n": {
+				"en-US": "M2H8 Call to Action Targets"
+			},
+			"system": false
+		}
+	]
+}

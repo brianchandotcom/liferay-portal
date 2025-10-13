@@ -228,8 +228,7 @@ public class PLOEntryLocalServiceImpl extends PLOEntryLocalServiceBaseImpl {
 			throw new PLOEntryKeyException.MustBeShorter(keyMaxLength);
 		}
 
-		String[] availableLanguageIds = ArrayUtil.append(
-			PropsValues.LOCALES, PropsValues.LOCALES_BETA);
+		String[] availableLanguageIds = ArrayUtil.append(PropsValues.LOCALES);
 
 		if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
 			throw new PLOEntryLanguageIdException.MustBeAvailable(

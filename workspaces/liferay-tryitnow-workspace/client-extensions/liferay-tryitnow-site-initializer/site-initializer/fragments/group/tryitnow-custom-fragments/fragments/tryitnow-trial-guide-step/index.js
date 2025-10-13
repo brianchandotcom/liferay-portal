@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const { displayToasts, stepNumber } = configuration;
+const {displayToasts, stepNumber} = configuration;
 
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
@@ -16,11 +16,12 @@ function findDropArea(root) {
 		'[data-lfr-drop-zone-id], .page-editor__drop-zone'
 	);
 
-	return { container, dropzoneTag: dropzoneTag, editorEmpty, editorZone };
+	return {container, dropzoneTag, editorEmpty, editorZone};
 }
 
 function isDropAreaEmpty(root) {
-	const { container, dropzoneTag, editorEmpty, editorZone } = findDropArea(root);
+	const {container, dropzoneTag, editorEmpty, editorZone} =
+		findDropArea(root);
 
 	if (layoutMode === 'edit') {
 		if (editorEmpty) {
@@ -30,8 +31,12 @@ function isDropAreaEmpty(root) {
 		if (editorZone) {
 			const children = Array.from(editorZone.children).filter(
 				(targetElement) =>
-					!targetElement.classList.contains('page-editor__no-fragments-state') &&
-					!targetElement.classList.contains('-page-editor__no-fragments-state')
+					!targetElement.classList.contains(
+						'page-editor__no-fragments-state'
+					) &&
+					!targetElement.classList.contains(
+						'-page-editor__no-fragments-state'
+					)
 			);
 
 			return !children.length;
@@ -60,7 +65,7 @@ function isDropAreaEmpty(root) {
 }
 
 function watchDropArea(root) {
-	const { container } = findDropArea(root);
+	const {container} = findDropArea(root);
 
 	if (!container) {
 		return;
@@ -81,11 +86,11 @@ function watchDropArea(root) {
 	});
 }
 
-function toast({ error, message, type = 'success' }) {
+function toast({error, message, type = 'success'}) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
 		Liferay.Util.openToast({
 			message,
-			toastProps: { autohide: true },
+			toastProps: {autohide: true},
 			type,
 		});
 	}
@@ -125,7 +130,9 @@ function show(targetElement) {
 }
 
 function setField(root, key, value) {
-	const targetElement = root.querySelector(`.trial-step__field[data-field="${key}"]`);
+	const targetElement = root.querySelector(
+		`.trial-step__field[data-field="${key}"]`
+	);
 	if (!targetElement) {
 		return;
 	}
@@ -214,7 +221,9 @@ function initTrialStep(targetElement, item) {
 	}
 
 	async function update(done) {
-		const button = done ? elementReferences.btnComplete : elementReferences.btnIncomplete;
+		const button = done
+			? elementReferences.btnComplete
+			: elementReferences.btnIncomplete;
 
 		setLoading(button, true);
 		try {
@@ -257,8 +266,12 @@ function initTrialStep(targetElement, item) {
 			root.classList.remove('trial-step--expanded');
 			root.classList.add('trial-step--collapsed');
 
-			elementReferences.arrow.classList.remove('trial-step__arrow--expand');
-			elementReferences.arrow.classList.add('trial-step__arrow--collapse');
+			elementReferences.arrow.classList.remove(
+				'trial-step__arrow--expand'
+			);
+			elementReferences.arrow.classList.add(
+				'trial-step__arrow--collapse'
+			);
 			elementReferences.toggle.setAttribute('aria-expanded', 'false');
 			waitForSlideEnd(elementReferences.body, () => {
 				root.classList.remove('is-collapsing');
@@ -272,7 +285,9 @@ function initTrialStep(targetElement, item) {
 			root.classList.add('trial-step--expanded');
 
 			elementReferences.arrow.classList.add('trial-step__arrow--expand');
-			elementReferences.arrow.classList.remove('trial-step__arrow--collapse');
+			elementReferences.arrow.classList.remove(
+				'trial-step__arrow--collapse'
+			);
 			elementReferences.toggle.setAttribute('aria-expanded', 'true');
 			waitForSlideEnd(elementReferences.body, () => {
 				root.classList.remove('is-expanding');
@@ -281,8 +296,12 @@ function initTrialStep(targetElement, item) {
 		}
 	}
 
-	elementReferences.btnComplete?.addEventListener('click', () => update(true));
-	elementReferences.btnIncomplete?.addEventListener('click', () => update(false));
+	elementReferences.btnComplete?.addEventListener('click', () =>
+		update(true)
+	);
+	elementReferences.btnIncomplete?.addEventListener('click', () =>
+		update(false)
+	);
 	elementReferences.toggle?.addEventListener('click', toggleHandler);
 
 	root.classList.add('trial-step--collapsed');
@@ -298,14 +317,15 @@ async function init() {
 			'?fields=id,stepNumber,done,title,timeToComplete,callToActionText,callToActionTarget,callToActionLink';
 		const filter = configuration.stepNumber
 			? '&filter=' +
-			encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
+				encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
 			: '';
 		response = await fetchJSON(
 			`/o/c/m2h8progresstrackers${fields}${filter}`
 		);
 	}
 	catch (error) {
-		toast({ message: 'Could not load data.', type: 'danger', error });
+		toast({message: 'Could not load data.', type: 'danger', error});
+
 		return;
 	}
 

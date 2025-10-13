@@ -3,13 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const {debugEnabled, displayToasts, stepNumber} = configuration;
+const { debugEnabled, displayToasts, stepNumber } = configuration;
 
 const debug = (msg, ...args) => {
-	if (debugEnabled) {console.debug(`[Trial Step] ${msg}`, ...args);}
+	if (debugEnabled) { console.debug(`[Trial Step] ${msg}`, ...args); }
 };
 
-debug('configuration', {debugEnabled, displayToasts, stepNumber});
+debug('configuration', { debugEnabled, displayToasts, stepNumber });
 
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
@@ -22,14 +22,17 @@ function findDropArea(root) {
 		'[data-lfr-drop-zone-id], .page-editor__drop-zone'
 	);
 
-	return {container, dzTag, editorEmpty, editorZone};
+	return { container, dzTag, editorEmpty, editorZone };
 }
 
 function isDropAreaEmpty(root) {
-	const {container, dzTag, editorEmpty, editorZone} = findDropArea(root);
+	const { container, dzTag, editorEmpty, editorZone } = findDropArea(root);
 
 	if (layoutMode === 'edit') {
-		if (editorEmpty) {return true;}
+		if (editorEmpty) {
+			return true;
+		}
+
 		if (editorZone) {
 			const children = Array.from(editorZone.children).filter(
 				(el) =>
@@ -39,64 +42,80 @@ function isDropAreaEmpty(root) {
 
 			return !children.length;
 		}
+
 		const hasRealContent = Array.from(container.children).some(
 			(el) =>
-				el.nodeType === 1 && !el.classList.contains('trial-step__cta')
+				el.nodeType === 1 && !el.classList.contains('trial-step__callToAction')
 		);
 
 		return !hasRealContent;
 	}
 
-	if (dzTag) {return true;}
+	if (dzTag) {
+		return true;
+	}
+
 	const hasRealContent = Array.from(container.children).some(
-		(el) => el.nodeType === 1 && !el.classList.contains('trial-step__cta')
+		(el) => el.nodeType === 1 && !el.classList.contains('trial-step__callToAction')
 	);
 
 	return !hasRealContent;
 }
 
 function watchDropArea(root) {
-	const {container} = findDropArea(root);
-	const apply = () =>
-		root.classList.toggle('is-empty', isDropAreaEmpty(root));
+	const { container } = findDropArea(root);
+
+	if (!container) {
+		return;
+	}
+
+	const apply = () => root.classList.toggle('is-empty', isDropAreaEmpty(root));
+
 	apply();
 
-	if (!container) {return;}
+	const mutationObserver = new MutationObserver(apply);
 
-	const mo = new MutationObserver(apply);
-	mo.observe(container, {
-		childList: true,
-		subtree: true,
-		characterData: true,
+	mutationObserver.observe(
+		container, {
 		attributes: true,
-	});
+		characterData: true,
+		childList: true,
+		subtree: true
+	}
+	);
 }
 
-function toast({error, message, type = 'success'}) {
+function toast({ error, message, type = 'success' }) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
-		Liferay.Util.openToast({message, type, toastProps: {autohide: true}});
-	}
-	else {
+		Liferay.Util.openToast(
+			{
+				message,
+				toastProps: { autohide: true },
+				type,
+			}
+		);
+	} else {
+		debug(message, { type, error });
 		if (type === 'danger') {
-			console.error(message, error);
-
 			return;
 		}
-		debug(message, {type, error});
 	}
 }
 
 async function fetchJSON(url, options) {
-	const res = await Liferay.Util.fetch(url, {
+	const response = await Liferay.Util.fetch(url, {
 		headers: {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json',
 		},
 		...options,
 	});
-	if (!res.ok) {throw new Error(`HTTP ${res.status}`);}
 
-	return res.json();
+	if (!response.ok) {
+		throw new Error(`HTTP ${res.status}`);
+	}
+
+	return response.json();
 }
 
 function setLoading(el, isLoading) {
@@ -104,15 +123,21 @@ function setLoading(el, isLoading) {
 	const spinner =
 		el?.querySelector('[data-role^="spinner"]') ||
 		el?.querySelector('.trial-step__spinner');
+
 	spinner?.classList.toggle('is-hidden', !isLoading);
 }
 
-const show = (el) => el?.classList.remove('is-hidden');
-const hide = (el) => el?.classList.add('is-hidden');
+function hide(el){
+	el?.classList.add('is-hidden');
+}
+
+function show(el){
+	el?.classList.remove('is-hidden');
+}
 
 function setField(root, key, value) {
 	const el = root.querySelector(`.trial-step__field[data-field="${key}"]`);
-	if (!el) {return;}
+	if (!el) { return; }
 	el.textContent = value ?? '';
 }
 
@@ -124,18 +149,23 @@ function hydrateFromModel(root, model) {
 		'timeToComplete',
 		model.timeToComplete ?? model.timeToRead ?? ''
 	);
-	setField(root, 'ctaText', model.ctaText ?? '');
+	setField(root, 'callToActionText', model.callToActionText ?? '');
 
-	const cta = root.querySelector('.trial-step__cta');
-	if (cta) {
-		if (model.ctaHref) {cta.setAttribute('href', model.ctaHref);}
-		if (model.ctaTarget) {cta.setAttribute('target', `_${model.ctaTarget}`);}
+	const callToAction = root.querySelector('.trial-step__callToAction');
+	if (callToAction) {
+		if (model.callToActionHref) {
+			callToAction.setAttribute('href', model.callToActionHref);
+		}
+
+		if (model.callToActionTarget) {
+			callToAction.setAttribute('target', `_${model.callToActionTarget}`);
+		}
 	}
 }
 
 function waitForSlideEnd(el, cb) {
 	const handler = (e) => {
-		if (e.propertyName !== 'grid-template-rows') {return;}
+		if (e.propertyName !== 'grid-template-rows') { return; }
 		el.removeEventListener('transitionend', handler);
 		cb?.();
 	};
@@ -144,6 +174,7 @@ function waitForSlideEnd(el, cb) {
 
 function initTrialStep(hostEl, item) {
 	const root = hostEl.firstElementChild;
+
 	const els = {
 		stepIncomplete: root.querySelector('.trial-step__step--incomplete'),
 		stepComplete: root.querySelector('.trial-step__step--complete'),
@@ -153,21 +184,20 @@ function initTrialStep(hostEl, item) {
 		arrow: root.querySelector('.trial-step__arrow'),
 		body: root.querySelector('.trial-step__body'),
 	};
-
+	let isAnimating = false;
 	const model = {
 		id: item?.id,
 		stepNumber: item?.stepNumber,
 		done: !!item?.done,
 		title: item?.title ?? '',
 		timeToComplete: item?.timeToComplete ?? '',
-		ctaText: item?.cTAText ?? null,
-		ctaHref: item?.cTALink ?? null,
-		ctaTarget: item?.cTATarget ? item?.cTATarget.key : null,
+		callToActionText: item?.callToActionText ?? null,
+		callToActionHref: item?.callToActionLink ?? null,
+		callToActionTarget: item?.callToActionTarget ? item?.callToActionTarget.key : null,
 	};
-
-	let isAnimating = false;
-
+	
 	watchDropArea(root);
+
 	hydrateFromModel(root, model);
 
 	function render() {
@@ -216,7 +246,7 @@ function initTrialStep(hostEl, item) {
 	}
 
 	function toggleHandler() {
-		if (isAnimating) {return;}
+		if (isAnimating) { return; }
 
 		const isExpanded = root.classList.contains('trial-step--expanded');
 
@@ -270,17 +300,17 @@ async function init() {
 	let response;
 	try {
 		const fields =
-			'?fields=id,stepNumber,done,title,timeToComplete,cTAText,cTATarget,cTALink';
+			'?fields=id,stepNumber,done,title,timeToComplete,callToActionText,callToActionTarget,callToActionLink';
 		const filter = configuration.stepNumber
 			? '&filter=' +
-				encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
+			encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
 			: '';
 		response = await fetchJSON(
 			`/o/c/m2h8progresstrackers${fields}${filter}`
 		);
 	}
 	catch (error) {
-		toast({message: 'Could not load data.', type: 'danger', error});
+		toast({ message: 'Could not load data.', type: 'danger', error });
 
 		return;
 	}

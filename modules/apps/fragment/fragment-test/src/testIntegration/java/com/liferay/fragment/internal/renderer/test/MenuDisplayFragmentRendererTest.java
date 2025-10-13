@@ -161,8 +161,7 @@ public class MenuDisplayFragmentRendererTest {
 	}
 
 	private HttpServletRequest _getHttpServletRequest() throws Exception {
-		HttpServletRequest httpServletRequest =
-			new MockHttpServletRequest();
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
 			TilesUtil.DEFINITION,
@@ -173,8 +172,7 @@ public class MenuDisplayFragmentRendererTest {
 
 		themeDisplay.setRequest(httpServletRequest);
 
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		_serviceContext.setRequest(httpServletRequest);
 

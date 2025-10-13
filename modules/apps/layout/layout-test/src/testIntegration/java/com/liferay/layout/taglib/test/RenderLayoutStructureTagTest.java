@@ -2332,6 +2332,123 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67912")
+	public void testRenderEditionFormWithMappedLayoutReferencedByERC()
+		throws Exception {
+
+		MockObject mockObject = new MockObject(RandomTestUtil.randomLong());
+
+		InfoField<TextInfoFieldType> infoField1 = _getInfoField(false);
+
+		String infoField1Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField1, infoField1Value);
+
+		InfoField<TextInfoFieldType> infoField2 = _getInfoField(false);
+
+		String infoField2Value = RandomTestUtil.randomString();
+
+		mockObject.addInfoField(infoField2, infoField2Value);
+
+		try (MockInfoServiceRegistrationHolder
+				mockInfoServiceRegistrationHolder =
+					new MockInfoServiceRegistrationHolder(
+						InfoFieldSet.builder(
+						).infoFieldSetEntries(
+							ListUtil.fromArray(infoField1, infoField2)
+						).build(),
+						mockObject, _portal, _displayPageInfoItemCapability,
+						_editPageInfoItemCapability)) {
+
+			Layout layout1 = _addDisplayPageWithFormAndGetLayout(
+				infoField1, infoField2);
+
+			long segmentsExperienceId =
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(layout1.getPlid());
+
+			LayoutStructure layoutStructure =
+				_layoutStructureProvider.getLayoutStructure(
+					layout1.getPlid(), segmentsExperienceId);
+
+			Layout layout2 = LayoutTestUtil.addTypeContentLayout(_group);
+
+			List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+				layoutStructure.getFormStyledLayoutStructureItems();
+
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+				formStyledLayoutStructureItems.get(0);
+
+			formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"externalReferenceCode",
+						layout2.getExternalReferenceCode())));
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					layout1.getPlid(), segmentsExperienceId,
+					layoutStructure.toString());
+
+			MockHttpServletRequest mockHttpServletRequest =
+				_getMockHttpServletRequest(
+					layout1,
+					mockInfoServiceRegistrationHolder.
+						getMockObjectLayoutDisplayPageObjectProvider());
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)mockHttpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			themeDisplay.setRequest(mockHttpServletRequest);
+
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout1, mockHttpServletRequest);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(
+				content.contains(
+					"<input name=\"redirect\" type=\"hidden\" value=\"" +
+						_portal.getLayoutURL(layout2, themeDisplay)));
+
+			Group group = _groupLocalService.getGroup(
+				TestPropsValues.getGroupId());
+
+			layout2 = LayoutTestUtil.addTypeContentLayout(group);
+
+			formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"externalReferenceCode",
+						layout2.getExternalReferenceCode()
+					).put(
+						"scopeExternalReferenceCode",
+						group.getExternalReferenceCode()
+					)));
+
+			_layoutPageTemplateStructureLocalService.
+				updateLayoutPageTemplateStructureData(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					layout1.getPlid(), segmentsExperienceId,
+					layoutStructure.toString());
+
+			mockHttpServletResponse = _renderLayout(
+				layout1, mockHttpServletRequest);
+
+			content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertTrue(
+				content.contains(
+					"<input name=\"redirect\" type=\"hidden\" value=\"" +
+						_portal.getLayoutURL(layout2, themeDisplay)));
+		}
+	}
+
+	@Test
 	@TestInfo("LPS-169924")
 	public void testRenderEditionFormWithoutAddPermission() throws Exception {
 		MockObject mockObject = new MockObject(

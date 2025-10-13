@@ -76,8 +76,21 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 							PortalInstancePool.getCompanyIds()),
 				companyId -> {
 					try {
+						Company company = _companyLocalService.fetchCompany(
+							companyId);
+
+						if (company == null) {
+							if (_log.isDebugEnabled()) {
+								_log.debug(
+									"Unable to find company with ID " +
+										companyId);
+							}
+
+							return;
+						}
+
 						new CompanyUpgradeProcess(
-							_companyLocalService.fetchCompany(companyId)
+							company
 						).populateCompanyCountries();
 					}
 					catch (Exception exception) {

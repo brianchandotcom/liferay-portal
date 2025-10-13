@@ -250,7 +250,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString() + StringPool.PERIOD +
+				ContentTypes.IMAGE_JPEG,
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
 			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
@@ -364,7 +365,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + "." + ContentTypes.IMAGE_JPEG,
+			RandomTestUtil.randomString() + StringPool.PERIOD +
+				ContentTypes.IMAGE_JPEG,
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
 			new byte[0], null, null, null,
 			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));

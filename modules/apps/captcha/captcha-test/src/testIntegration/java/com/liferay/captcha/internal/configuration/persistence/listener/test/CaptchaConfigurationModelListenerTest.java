@@ -93,41 +93,47 @@ public class CaptchaConfigurationModelListenerTest {
 
 	@Test
 	public void test() throws Exception {
-		_testReCaptcha(
-			"the-recaptcha-no-script-url-is-not-valid", "reCaptchaNoScriptURL",
+		_test(
+			_reCaptchaProperties, "the-recaptcha-no-script-url-is-not-valid",
+			"reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=");
-		_testReCaptcha(
-			"the-recaptcha-private-key-is-not-valid", "reCaptchaPrivateKey",
-			StringPool.BLANK);
-		_testReCaptcha(
-			"the-recaptcha-public-key-is-not-valid", "reCaptchaPublicKey",
-			StringPool.BLANK);
-		_testReCaptcha(
-			"the-recaptcha-script-url-is-not-valid", "reCaptchaScriptURL",
-			"https://www.test.com/recaptcha/api.js");
-		_testReCaptcha(
-			"the-recaptcha-verify-url-is-not-valid", "reCaptchaVerifyURL",
+		_test(
+			_reCaptchaProperties, "the-recaptcha-private-key-is-not-valid",
+			"reCaptchaPrivateKey", StringPool.BLANK);
+		_test(
+			_reCaptchaProperties, "the-recaptcha-public-key-is-not-valid",
+			"reCaptchaPublicKey", StringPool.BLANK);
+		_test(
+			_reCaptchaProperties, "the-recaptcha-script-url-is-not-valid",
+			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js");
+		_test(
+			_reCaptchaProperties, "the-recaptcha-verify-url-is-not-valid",
+			"reCaptchaVerifyURL",
 			"https://www.test.com/recaptcha/api/siteverify");
-
-		_testSimpleCaptcha(
+		_test(
+			_simpleCaptchaProperties,
 			"the-simplecaptcha-background-producers-configuration-cannot-be-" +
 				"empty",
 			"simpleCaptchaBackgroundProducers", new String[0]);
-		_testSimpleCaptcha(
+		_test(
+			_simpleCaptchaProperties,
 			"the-simplecaptcha-gimpy-renderers-configuration-cannot-be-empty",
 			"simpleCaptchaGimpyRenderers", new String[0]);
-		_testSimpleCaptcha(
+		_test(
+			_simpleCaptchaProperties,
 			"the-simplecaptcha-noise-producers-configuration-cannot-be-empty",
 			"simpleCaptchaNoiseProducers", new String[0]);
-		_testSimpleCaptcha(
+		_test(
+			_simpleCaptchaProperties,
 			"the-simplecaptcha-text-producers-configuration-cannot-be-empty",
 			"simpleCaptchaTextProducers", new String[0]);
-		_testSimpleCaptcha(
+		_test(
+			_simpleCaptchaProperties,
 			"the-simplecaptcha-word-renderers-configuration-cannot-be-empty",
 			"simpleCaptchaWordRenderers", new String[0]);
 	}
 
-	private AutoCloseable _swapConfiguration(
+	private AutoCloseable _swapCaptchaConfiguration(
 		Dictionary<String, Object> configuration, String key, Object value) {
 
 		Object originalValue = configuration.put(key, value);
@@ -135,38 +141,16 @@ public class CaptchaConfigurationModelListenerTest {
 		return () -> configuration.put(key, originalValue);
 	}
 
-	private void _testReCaptcha(
+	private void _test(
+			Dictionary<String, Object> configuration,
 			String exceptionMessageKey, String key, Object value)
 		throws Exception {
 
-		try (AutoCloseable autoCloseable = _swapConfiguration(
-				_reCaptchaProperties, key, value)) {
+		try (AutoCloseable autoCloseable = _swapCaptchaConfiguration(
+				configuration, key, value)) {
 
 			_configurationModelListener.onBeforeSave(
-				StringPool.BLANK, _reCaptchaProperties);
-
-			Assert.fail();
-		}
-		catch (ConfigurationModelListenerException
-					configurationModelListenerException) {
-
-			String message = configurationModelListenerException.getMessage();
-
-			Assert.assertTrue(
-				message.contains(
-					_language.get(LocaleUtil.US, exceptionMessageKey)));
-		}
-	}
-
-	private void _testSimpleCaptcha(
-			String exceptionMessageKey, String key, Object value)
-		throws Exception {
-
-		try (AutoCloseable autoCloseable = _swapConfiguration(
-				_simpleCaptchaProperties, key, value)) {
-
-			_configurationModelListener.onBeforeSave(
-				StringPool.BLANK, _simpleCaptchaProperties);
+				StringPool.BLANK, configuration);
 
 			Assert.fail();
 		}

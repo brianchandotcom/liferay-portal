@@ -34,7 +34,7 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 			return getClass().getName();
 		}
 
-		public default String getLabel() {
+		public default String getLabelLanguageKey() {
 			return null;
 		}
 

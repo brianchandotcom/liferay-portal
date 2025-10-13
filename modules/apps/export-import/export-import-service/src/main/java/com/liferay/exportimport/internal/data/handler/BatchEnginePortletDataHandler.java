@@ -550,7 +550,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		return new PortletDataHandlerBoolean(
 			getPortletId(), exportImportDescriptor.getClassName(),
-			exportImportDescriptor.getLabel(), true, false, null,
+			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
 			exportImportDescriptor.getClassName(), null);
 	}
 

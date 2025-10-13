@@ -116,7 +116,7 @@ public class DisplayPageTemplateResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "display-page-templates";
 			}
 

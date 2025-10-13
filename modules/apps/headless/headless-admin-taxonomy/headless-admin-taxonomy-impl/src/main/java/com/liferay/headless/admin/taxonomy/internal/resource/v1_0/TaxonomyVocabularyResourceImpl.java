@@ -147,7 +147,7 @@ public class TaxonomyVocabularyResourceImpl
 			ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "vocabularies";
 			}
 

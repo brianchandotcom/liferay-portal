@@ -535,9 +535,14 @@ public class DataFactory {
 					 StringUtil.equals(
 						 objectFieldModel.getName(), "r_relatedTo_ticketId")) {
 
-				value =
-					(relatedTicketObjectEntryId > 0) ?
-						relatedTicketObjectEntryId : 0;
+				if ((relatedTicketObjectEntryId > 0) &&
+					(_relatedObjectEntryCounter.get() >
+						BenchmarksPropsValues.MAX_RELATED_OBJECT_ENTRY_COUNT)) {
+
+					relatedTicketObjectEntryId = 0;
+				}
+
+				value = relatedTicketObjectEntryId;
 			}
 			else if (StringUtil.equals(
 						objectFieldModel.getBusinessType(),
@@ -5692,6 +5697,8 @@ public class DataFactory {
 	public List<ObjectEntryModel> newObjectEntryModels(
 		long objectDefinitionId) {
 
+		_relatedObjectEntryCounter = new SimpleCounter();
+
 		List<ObjectEntryModel> objectEntryModels = new ArrayList<>(
 			BenchmarksPropsValues.MAX_OBJECT_ENTRY_COUNT);
 
@@ -9289,6 +9296,7 @@ public class DataFactory {
 	private RoleModel _ownerRoleModel;
 	private final SimpleCounter _portletPreferenceValueIdCounter;
 	private RoleModel _powerUserRoleModel;
+	private SimpleCounter _relatedObjectEntryCounter;
 	private final SimpleCounter _resourcePermissionIdCounter;
 	private long _sampleUserId;
 	private final SimpleCounter _segmentsExperienceCounter;

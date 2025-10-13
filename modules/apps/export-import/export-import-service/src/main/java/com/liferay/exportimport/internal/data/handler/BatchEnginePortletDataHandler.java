@@ -106,10 +106,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					registration.getDeletionsFileName(),
 					portletDataContext.getScopeGroupId()),
 				JSONUtil.toJSONArray(
-					TransformUtil.transform(
-						newPrimaryKeysMap.keySet(),
-						exportImportDescriptor.
-							filterApplicableExternalReferenceCode()),
+					ListUtil.filter(
+						ListUtil.fromCollection(newPrimaryKeysMap.keySet()),
+						exportImportDescriptor::
+							isApplicableExternalReferenceCode),
 					externalReferenceCode -> JSONUtil.put(
 						"externalReferenceCode", externalReferenceCode)
 				).toString());

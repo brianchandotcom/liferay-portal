@@ -6,7 +6,6 @@
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -56,25 +55,6 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 			ExportImportDescriptor() {
 
 			@Override
-			public UnsafeFunction<String, String, Exception>
-				filterApplicableExternalReferenceCode() {
-
-				return externalReferenceCode -> {
-					SharedInternalModelBatchTestEntity
-						sharedInternalModelBatchTestEntity =
-							_fetchSharedInternalModelBatchTestEntity(
-								externalReferenceCode);
-
-					if (sharedInternalModelBatchTestEntity == null) {
-						return null;
-					}
-
-					return sharedInternalModelBatchTestEntity.
-						getExternalReferenceCode();
-				};
-			}
-
-			@Override
 			public String getLabelLanguageKey() {
 				return "shared-internal-model-batch-test-entity";
 			}
@@ -97,6 +77,22 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 
 				return ExportImportVulcanBatchEngineTaskItemDelegate.Scope.
 					COMPANY;
+			}
+
+			@Override
+			public boolean isApplicableExternalReferenceCode(
+				String externalReferenceCode) {
+
+				SharedInternalModelBatchTestEntity
+					sharedInternalModelBatchTestEntity =
+						_fetchSharedInternalModelBatchTestEntity(
+							externalReferenceCode);
+
+				if (sharedInternalModelBatchTestEntity != null) {
+					return true;
+				}
+
+				return false;
 			}
 
 		};

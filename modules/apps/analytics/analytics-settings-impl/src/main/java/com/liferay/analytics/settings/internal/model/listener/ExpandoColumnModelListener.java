@@ -53,7 +53,7 @@ public class ExpandoColumnModelListener
 
 				_analyticsSettingsManager.updateCompanyConfiguration(
 					expandoColumn.getCompanyId(),
-					new HashMapBuilder<>().<String, Object>put(
+					HashMapBuilder.<String, Object>put(
 						"previousSyncedUserFieldNames", syncedUserFieldNames
 					).<String, Serializable>put(
 						"syncedUserFieldNames",

@@ -1,4 +1,4 @@
-# Checks for .expect, .sh, or .tpl
+# Checks for .expect or .sh
 
 Check | Category | Description
 ----- | -------- | -----------

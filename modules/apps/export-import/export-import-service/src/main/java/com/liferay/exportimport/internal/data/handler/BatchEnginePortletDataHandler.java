@@ -32,7 +32,6 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -102,20 +101,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					exportImportDescriptor.getModelClassName() +
 						BATCH_DELETE_CLASS_NAME_POSTFIX);
 
-			List<String> externalReferenceCodes = TransformUtil.transform(
-				newPrimaryKeysMap.keySet(),
-				exportImportDescriptor.filterApplicableExternalReferenceCode());
-
-			JSONArray jsonArray = JSONUtil.toJSONArray(
-				externalReferenceCodes,
-				externalReferenceCode -> JSONUtil.put(
-					"externalReferenceCode", externalReferenceCode));
-
 			portletDataContext.addZipEntry(
 				_normalize(
 					registration.getDeletionsFileName(),
 					portletDataContext.getScopeGroupId()),
-				jsonArray.toString());
+				JSONUtil.toJSONArray(
+					TransformUtil.transform(
+						newPrimaryKeysMap.keySet(),
+						exportImportDescriptor.
+							filterApplicableExternalReferenceCode()),
+					externalReferenceCode -> JSONUtil.put(
+						"externalReferenceCode", externalReferenceCode)
+				).toString());
 		}
 	}
 

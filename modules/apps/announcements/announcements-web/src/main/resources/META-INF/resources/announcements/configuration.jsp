@@ -89,8 +89,8 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentGroups = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> availableGroups = new ArrayList<KeyValuePair>();
 
 							for (Group curGroup : groups) {
 								if (!curGroup.isSite()) {
@@ -102,10 +102,10 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(curGroup.getExternalReferenceCode()), descriptiveName);
 
 								if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
-									leftList.add(keyValuePair);
+									currentGroups.add(keyValuePair);
 								}
 								else {
-									rightList.add(keyValuePair);
+									availableGroups.add(keyValuePair);
 								}
 							}
 							%>
@@ -114,13 +114,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeGroupExternalReferenceCodes"
-									leftList="<%= leftList %>"
-									leftReorder="<%= Boolean.TRUE.toString() %>"
-									leftTitle="current"
-									rightBoxName="availableScopeGroupExternalReferenceCodes"
-									rightList="<%= rightList %>"
-									rightTitle="available"
+									rightBoxName="currentScopeGroupExternalReferenceCodes"
+									rightList="<%= currentGroups %>"
+									rightReorder="<%= Boolean.TRUE.toString() %>"
+									rightTitle="current"
+									leftBoxName="availableScopeGroupExternalReferenceCodes"
+									leftList="<%= availableGroups %>"
+									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -130,21 +130,17 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentOrganizations = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> availableOrganizations = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
+
 								if (announcementsDisplayContext.isScopeOrganizationSelected(organization)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName()));
+									currentOrganizations.add(keyValuePair);
 								}
-							}
-
-							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-							for (Organization organization : organizations) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
-
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								else {
+									availableOrganizations.add(keyValuePair);
 								}
 							}
 							%>
@@ -153,13 +149,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeOrganizationExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeOrganizationExternalReferenceCodes"
-									leftList="<%= leftList %>"
-									leftReorder="<%= Boolean.TRUE.toString() %>"
-									leftTitle="current"
-									rightBoxName="availableScopeOrganizationExternalReferenceCodes"
-									rightList="<%= rightList %>"
-									rightTitle="available"
+									rightBoxName="currentScopeOrganizationExternalReferenceCodes"
+									rightList="<%= currentOrganizations %>"
+									rightReorder="<%= Boolean.TRUE.toString() %>"
+									rightTitle="current"
+									leftBoxName="availableScopeOrganizationExternalReferenceCodes"
+									leftList="<%= availableOrganizations %>"
+									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -169,21 +165,17 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentUserGroups = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> availableUserGroups = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
+
 								if (announcementsDisplayContext.isScopeUserGroupSelected(userGroup)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName()));
+									currentUserGroups.add(keyValuePair);
 								}
-							}
-
-							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-							for (UserGroup userGroup : userGroups) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
-
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								else {
+									availableUserGroups.add(keyValuePair);
 								}
 							}
 							%>
@@ -192,13 +184,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeUserGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeUserGroupExternalReferenceCodes"
-									leftList="<%= leftList %>"
-									leftReorder="<%= Boolean.TRUE.toString() %>"
-									leftTitle="current"
-									rightBoxName="availableScopeUserGroupExternalReferenceCodes"
-									rightList="<%= rightList %>"
-									rightTitle="available"
+									rightBoxName="currentScopeUserGroupExternalReferenceCodes"
+									rightList="<%= currentUserGroups %>"
+									rightReorder="<%= Boolean.TRUE.toString() %>"
+									rightTitle="current"
+									leftBoxName="availableScopeUserGroupExternalReferenceCodes"
+									leftList="<%= availableUserGroups %>"
+									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -208,21 +200,17 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentRoles = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> availableRoles = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));
+
 								if (announcementsDisplayContext.isScopeRoleSelected(role)) {
-									leftList.add(new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale)));
+									currentRoles.add(keyValuePair);
 								}
-							}
-
-							List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
-
-							for (Role role : roles) {
-								KeyValuePair tempKeyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));
-
-								if (!leftList.contains(tempKeyValuePair)) {
-									rightList.add(tempKeyValuePair);
+								else {
+									availableRoles.add(keyValuePair);
 								}
 							}
 							%>
@@ -231,13 +219,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeRoleExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
-									leftBoxName="currentScopeRoleExternalReferenceCodes"
-									leftList="<%= leftList %>"
-									leftReorder="<%= Boolean.TRUE.toString() %>"
-									leftTitle="current"
-									rightBoxName="availableScopeRoleExternalReferenceCodes"
-									rightList="<%= rightList %>"
-									rightTitle="available"
+									rightBoxName="currentScopeRoleExternalReferenceCodes"
+									rightList="<%= currentRoles %>"
+									rightReorder="<%= Boolean.TRUE.toString() %>"
+									rightTitle="current"
+									leftBoxName="availableScopeRoleExternalReferenceCodes"
+									leftList="<%= availableRoles %>"
+									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>

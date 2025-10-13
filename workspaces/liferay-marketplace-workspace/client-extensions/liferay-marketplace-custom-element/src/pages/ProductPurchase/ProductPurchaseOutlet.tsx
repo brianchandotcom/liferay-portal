@@ -229,7 +229,7 @@ const ProductPurchaseOutlet: React.FC<ProductPurchaseOutletProps> = ({
 				className={classNames('mt-7', {'mt-7': accounts.length === 1})}
 			>
 				{isTinyDisplay && (
-					<ProductPurchase.CircleSteps
+				<ProductPurchase.CircleSteps
 						className="my-5 px-8"
 						steps={steps}
 					/>

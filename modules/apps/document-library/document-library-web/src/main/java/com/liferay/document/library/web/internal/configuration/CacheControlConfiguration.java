@@ -27,9 +27,10 @@ public interface CacheControlConfiguration {
 	@Meta.AD(
 		deflt = "private, no-cache, no-store, must-revalidate",
 		description = "cache-control-description", name = "cache-control",
-		optionLabels = {"no-cache", "private", "public"},
+		optionLabels = {"must-revalidate", "no-cache", "private", "public"},
 		optionValues = {
-			"private, no-cache, no-store, must-revalidate", "private", "public"
+			"must-revalidate", "private, no-cache, no-store, must-revalidate", 
+			"private", "public"
 		},
 		required = false
 	)

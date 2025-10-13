@@ -5,6 +5,7 @@
 
 package com.liferay.fragment.util.configuration;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -62,7 +63,14 @@ public class FragmentEntryMenuDisplayConfiguration {
 			Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
 			(siteNavigationMenuId <= 0)) {
 
-			_source = _DEFAULT_SOURCE;
+			if (jsonObject.has("privateLayout")) {
+				_source = new SiteNavigationMenuSource(
+					jsonObject.getBoolean("privateLayout"), StringPool.BLANK,
+					siteNavigationMenuId);
+			}
+			else {
+				_source = _DEFAULT_SOURCE;
+			}
 
 			return;
 		}

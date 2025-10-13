@@ -58,11 +58,12 @@ public class AntiSamySanitizerImplTest {
 					"AntiSamySanitizerImpl",
 				LoggerTestUtil.WARN)) {
 
-			String sanitizedValue = _sanitizer.sanitize(
-				TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
-				ContentTypes.TEXT_HTML, new String[0], value, new HashMap<>());
-
-			Assert.assertEquals(expectedValue, sanitizedValue);
+			Assert.assertEquals(
+				expectedValue,
+				_sanitizer.sanitize(
+					TestPropsValues.getCompanyId(), 0, 0, StringPool.BLANK, 0,
+					ContentTypes.TEXT_HTML, new String[0], value,
+					new HashMap<>()));
 
 			Assert.assertTrue(ListUtil.isEmpty(logCapture.getLogEntries()));
 		}

@@ -108,6 +108,11 @@ export default function MergeTagsModalContent({
 			currentTag,
 		},
 		onSubmit: (values) => {
+			const mergeModel = document.querySelector(
+				'#mergeModal .modal-dialog'
+			);
+			mergeModel?.setAttribute('hidden', 'true');
+
 			if (selectedTags.length < 2) {
 				openModal({
 					bodyHTML: sub(
@@ -122,7 +127,9 @@ export default function MergeTagsModalContent({
 							type: 'cancel',
 						},
 					],
-					height: '30vh',
+					onClose: () => {
+						mergeModel?.removeAttribute('hidden');
+					},
 					status: 'warning',
 					title: Liferay.Language.get('merge-tags'),
 				});
@@ -141,13 +148,13 @@ export default function MergeTagsModalContent({
 				buttons: [
 					{
 						autoFocus: true,
-						displayType: 'warning',
+						displayType: 'secondary',
 						label: Liferay.Language.get('cancel'),
 						type: 'cancel',
 					},
 					{
 						displayType: 'warning',
-						label: Liferay.Language.get('ok'),
+						label: Liferay.Language.get('save'),
 						onClick: ({processClose}: {processClose: Function}) => {
 							processClose();
 
@@ -155,7 +162,9 @@ export default function MergeTagsModalContent({
 						},
 					},
 				],
-				height: '30vh',
+				onClose: () => {
+					mergeModel?.removeAttribute('hidden');
+				},
 				status: 'warning',
 				title: Liferay.Language.get('confirm-merge-tags'),
 			});

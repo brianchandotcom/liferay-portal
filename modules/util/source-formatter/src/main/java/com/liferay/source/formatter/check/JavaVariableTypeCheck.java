@@ -84,7 +84,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 				 (fieldType.equals("Log") &&
 				  !isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)))) {
 
-				classContent = _formatStaticableFieldType(
+				return _formatStaticableFieldType(
 					classContent, javaVariable.getContent(), fieldType);
 			}
 		}
@@ -101,7 +101,7 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 					classContent, javaVariableContent, newJavaVariableContent);
 			}
 
-			classContent = _formatFinalableFieldType(
+			return _formatFinalableFieldType(
 				classContent, javaClass, javaVariable, fieldType);
 		}
 

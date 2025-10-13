@@ -211,6 +211,17 @@ export class ContentsPage {
 		});
 	}
 
+	async saveContentAsDraft() {
+		await clickAndExpectToBeVisible({
+			target: this.newButton,
+			timeout: 5000,
+			trigger: this.page.getByRole('button', {
+				exact: true,
+				name: 'Save as Draft',
+			}),
+		});
+	}
+
 	async translateContent(title: string) {
 		const card = this.page
 			.locator('tr', {hasText: title})

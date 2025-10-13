@@ -689,38 +689,36 @@ test.describe('Categorization Panel', () => {
 });
 
 test(
-	'Check that the content shifts when the side panel opens',
-	{tag: '@LPD-62067'},
+	'Can save content as draft',
+	{tag: '@LPD-66942'},
 	async ({contentsPage, page}) => {
-		const getContainerRightPadding = async () =>
-			page
-				.locator('#content')
-				.evaluate(
-					(element: HTMLDivElement) =>
-						window.getComputedStyle(element).paddingRight
-				);
 
-		// Create new Knowledge Base content
+		// Create a content
 
 		await contentsPage.goto();
 
-		await contentsPage.createContent('Knowledge Base');
+		await contentsPage.createContent('Basic Content');
 
-		// Compare the container padding when the side panel is closed and opened
+		const title = getRandomString();
 
-		let containerWidth = await getContainerRightPadding();
+		await page.getByPlaceholder(`New Basic Web Content`).fill(title);
 
-		await contentsPage.openSidePanel();
+		// Save as draft
 
-		await page
-			.locator(
-				'.content-editor__side-panel .sidebar:not(.c-slideout-transition)'
-			)
-			.waitFor();
+		await contentsPage.saveContentAsDraft();
 
-		containerWidth = await getContainerRightPadding();
+		// Check that the content is saved as draft
 
-		expect(containerWidth).toBe('280px');
+		expect(
+			page
+				.locator('tr', {hasText: title})
+				.or(page.locator('.card-row', {hasText: title}))
+				.locator('.cell-embedded-status')
+		).toHaveText('Draft');
+
+		// Delete content
+
+		await contentsPage.deleteContent(title);
 	}
 );
 

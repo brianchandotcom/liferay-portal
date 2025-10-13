@@ -318,11 +318,11 @@ describe('DefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
+			allowPropagate: true,
 			apiURL: '',
 			classExternalReferenceCode: 'ERC1',
 			className: 'com.liferay.depot.model.DepotEntry',
 			closeModal: closeModalFn,
-			isEditAndPropagate: true,
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},

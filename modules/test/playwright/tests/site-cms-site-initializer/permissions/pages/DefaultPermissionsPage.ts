@@ -68,31 +68,6 @@ export class DefaultPermissionsPage {
 		}
 	}
 
-	async checkPermissionsAndSavePropagate(
-		permissions: Array<{action: string; role: string}>
-	) {
-		await expect(this.permissionsModal).toBeVisible();
-		for (const permission of permissions) {
-			await this.permissionsModal
-				.getByTestId(
-					`row-checkbox-${permission.role}_${permission.action}`
-				)
-				.check();
-		}
-
-		await expect(this.permissionsModalSaveButton).toBeDisabled();
-
-		await this.propagateCheckbox.check();
-
-		await this.permissionsModalSaveButton.click();
-
-		await waitForAlert(
-			this.page,
-			'Info:Default permissions update action started for all assets. Check the Task Report for details.',
-			{type: 'info'}
-		);
-	}
-
 	async verifyPermissions(
 		permissions: Array<{action: string; checked: boolean; role: string}>
 	) {

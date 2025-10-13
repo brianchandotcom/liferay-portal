@@ -38,7 +38,7 @@ export default function DefaultPermissionModalContent({
 		useState<AssetRoleSelectedActions>({});
 	const [loading, setLoading] = useState(false);
 	const [propagate, setPropagate] = useState(false);
-	const [saveActive, setSaveActive] = useState(!allowPropagate);
+	const saveActive = !allowPropagate || propagate;
 
 	const saveHandler = useCallback(
 		async (event: any) => {
@@ -182,7 +182,6 @@ export default function DefaultPermissionModalContent({
 								)}
 								onChange={() => {
 									setPropagate(!propagate);
-									setSaveActive(!saveActive);
 								}}
 							/>
 

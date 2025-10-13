@@ -46,13 +46,13 @@
 			<aui:input name="preferences--languageIds--" type="hidden" />
 
 			<liferay-ui:input-move-boxes
-				leftBoxName="currentLanguageIds"
-				leftList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
-				leftReorder="<%= Boolean.TRUE.toString() %>"
-				leftTitle="current"
-				rightBoxName="availableLanguageIds"
-				rightList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
-				rightTitle="available"
+				leftBoxName="availableLanguageIds"
+				leftList="<%= siteNavigationLanguageDisplayContext.getAvailableLanguageIdKVPs() %>"
+				leftTitle="available"
+				rightBoxName="currentLanguageIds"
+				rightList="<%= siteNavigationLanguageDisplayContext.getCurrentLanguageIdKVPs() %>"
+				rightReorder="<%= Boolean.TRUE.toString() %>"
+				rightTitle="current"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>
@@ -64,7 +64,7 @@
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
-		var form = document.<portlet:namespace />fm;
+		var form = document.<portlet:namespace />fm;rReo
 
 		var currentLanguageIdsInput = Liferay.Util.getFormElement(
 			form,

@@ -101,9 +101,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 		_serviceRegistration.unregister();
 
 		_serviceTrackerListDCLSingleton.destroy(ServiceTrackerList::close);
-
-		BatchEnginePortletDataHandlerRegistry.
-			deletionSystemEventClassNamePortletIds.clear();
 	}
 
 	private Dictionary<String, Object> _setEnabledCompanyIds(
@@ -143,8 +140,6 @@ public class BatchEnginePortletDataHandlerRegistrar {
 	@Reference
 	private BatchEngineImportTaskService _batchEngineImportTaskService;
 
-	private final Map<String, BatchEnginePortletDataHandler>
-		_batchEnginePortletDataHandlers = new HashMap<>();
 	private final List<Long> _enabledCompanyIds = new CopyOnWriteArrayList<>();
 
 	@Reference
@@ -189,13 +184,10 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 			String portletId = exportImportDescriptor.getPortletId();
 
-			BatchEnginePortletDataHandlerRegistry.
-				deletionSystemEventClassNamePortletIds.put(
-					exportImportDescriptor.getModelClassName(), portletId);
-
 			BatchEnginePortletDataHandler
 				previousBatchEnginePortletDataHandler =
-					_batchEnginePortletDataHandlers.get(portletId);
+					BatchEnginePortletDataHandlerRegistry.getByPortletId(
+						portletId);
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
 				previousBatchEnginePortletDataHandler;
@@ -212,7 +204,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 				batchEnginePortletDataHandler.setPortletId(
 					exportImportDescriptor.getPortletId());
 
-				_batchEnginePortletDataHandlers.put(
+				BatchEnginePortletDataHandlerRegistry.put(
 					portletId, batchEnginePortletDataHandler);
 			}
 
@@ -272,7 +264,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			String portletId = exportImportDescriptor.getPortletId();
 
 			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
-				_batchEnginePortletDataHandlers.get(portletId);
+				BatchEnginePortletDataHandlerRegistry.getByPortletId(portletId);
 
 			if (batchEnginePortletDataHandler == null) {
 				return;
@@ -293,7 +285,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 			if (classNames.length == 0) {
 				serviceRegistration.unregister();
 
-				_batchEnginePortletDataHandlers.remove(portletId);
+				BatchEnginePortletDataHandlerRegistry.remove(portletId);
 
 				_serviceRegistrations.remove(portletId);
 			}

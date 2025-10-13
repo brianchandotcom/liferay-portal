@@ -5,71 +5,70 @@
 
 package com.liferay.exportimport.internal.data.handler;
 
-import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Vendel Toreki
  */
 public class BatchEnginePortletDataHandlerRegistry {
 
-	public static BatchEnginePortletDataHandler
-		getBatchEnginePortletDataHandler(String deletionSystemEventClassName) {
+	public static BatchEnginePortletDataHandler getByModelClassName(
+		String modelClassName) {
 
-		String portletId = deletionSystemEventClassNamePortletIds.get(
-			deletionSystemEventClassName);
+		String portletId = _findPortletIdByClassName(modelClassName);
 
 		if (portletId == null) {
 			return null;
 		}
 
-		PortletDataHandler portletDataHandler = _serviceTrackerMap.getService(
-			portletId);
+		return _batchEnginePortletDataHandlers.get(portletId);
+	}
 
-		if (portletDataHandler instanceof
-				BatchEnginePortletDataHandler batchEnginePortletDataHandler) {
+	public static BatchEnginePortletDataHandler getByPortletId(
+		String portletId) {
 
-			return batchEnginePortletDataHandler;
+		return _batchEnginePortletDataHandlers.get(portletId);
+	}
+
+	public static boolean hasByModelClassName(String modelClassName) {
+		if (_findPortletIdByClassName(modelClassName) != null) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected static void put(
+		String portletId, BatchEnginePortletDataHandler handler) {
+
+		_batchEnginePortletDataHandlers.put(portletId, handler);
+	}
+
+	protected static void remove(String portletId) {
+		_batchEnginePortletDataHandlers.remove(portletId);
+	}
+
+	private static String _findPortletIdByClassName(String modelClassName) {
+		for (Map.Entry<String, BatchEnginePortletDataHandler> entry :
+				_batchEnginePortletDataHandlers.entrySet()) {
+
+			BatchEnginePortletDataHandler batchEnginePortletDataHandler =
+				entry.getValue();
+
+			String[] classNames = batchEnginePortletDataHandler.getClassNames();
+
+			for (String className : classNames) {
+				if (className.equals(modelClassName)) {
+					return entry.getKey();
+				}
+			}
 		}
 
 		return null;
 	}
 
-	public static boolean hasBatchEnginePortletDataHandler(
-		String deletionSystemEventClassName) {
-
-		String portletId = deletionSystemEventClassNamePortletIds.get(
-			deletionSystemEventClassName);
-
-		if (portletId == null) {
-			return false;
-		}
-
-		return _serviceTrackerMap.containsKey(portletId);
-	}
-
-	protected static final Map<String, String>
-		deletionSystemEventClassNamePortletIds = new ConcurrentHashMap<>();
-
-	private static final ServiceTrackerMap<String, PortletDataHandler>
-		_serviceTrackerMap;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			BatchEnginePortletDataHandlerRegistry.class);
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, PortletDataHandler.class, "jakarta.portlet.name");
-	}
+	private static final Map<String, BatchEnginePortletDataHandler>
+		_batchEnginePortletDataHandlers = new ConcurrentHashMap<>();
 
 }

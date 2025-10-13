@@ -396,13 +396,13 @@ public class BatchTestEntityExportImportTest {
 
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-				CompanyTestEntity.class,
+				CompanyTestEntity.class.getName(),
 			null, externalReferenceCode1,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-				CompanyTestEntity.class,
+				CompanyTestEntity.class.getName(),
 			null, externalReferenceCode2,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(1));
@@ -536,14 +536,12 @@ public class BatchTestEntityExportImportTest {
 
 		_assertEquals(
 			com.liferay.portal.tools.rest.builder.test.dto.v1_0.
-				CompanyTestEntity.class,
+				CompanyTestEntity.class.getName(),
 			null, externalReferenceCode1,
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
-			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
-				class,
-			errorMessage, externalReferenceCode2,
+			_PORTLET_KEY, errorMessage, externalReferenceCode2,
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(1));
 	}
@@ -624,9 +622,7 @@ public class BatchTestEntityExportImportTest {
 			exportImportReportEntries.size());
 
 		_assertEquals(
-			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
-				class,
-			"The properties [" + propertyName + "] are required",
+			_PORTLET_KEY, "The properties [" + propertyName + "] are required",
 			batchTestEntity.getExternalReferenceCode(),
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(0));
@@ -832,9 +828,8 @@ public class BatchTestEntityExportImportTest {
 			exportImportReportEntries.size());
 
 		_assertEquals(
-			com.liferay.portal.tools.rest.builder.test.dto.v1_0.BatchTestEntity.
-				class,
-			errorMessage, batchTestEntity.getExternalReferenceCode(),
+			_PORTLET_KEY, errorMessage,
+			batchTestEntity.getExternalReferenceCode(),
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(0));
 	}
@@ -873,7 +868,7 @@ public class BatchTestEntityExportImportTest {
 	}
 
 	private void _assertEquals(
-		Class<?> expectedClass, String expectedErrorMessage,
+		String expectedClassName, String expectedErrorMessage,
 		String expectedExternalReferenceCode, int expectedType,
 		ExportImportReportEntry exportImportReportEntry) {
 
@@ -881,7 +876,7 @@ public class BatchTestEntityExportImportTest {
 			expectedExternalReferenceCode,
 			exportImportReportEntry.getClassExternalReferenceCode());
 		Assert.assertEquals(
-			expectedClass.getName(), exportImportReportEntry.getClassName());
+			expectedClassName, exportImportReportEntry.getClassName());
 		Assert.assertEquals(
 			expectedErrorMessage, exportImportReportEntry.getErrorMessage());
 

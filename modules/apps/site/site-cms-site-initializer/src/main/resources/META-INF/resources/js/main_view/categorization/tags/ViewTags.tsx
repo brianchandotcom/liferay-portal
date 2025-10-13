@@ -187,6 +187,7 @@ export default function ViewTags({
 						{label: itemData.name, value: itemData.id},
 					],
 				}),
+			id: 'mergeModal',
 			size: 'md',
 		});
 	};

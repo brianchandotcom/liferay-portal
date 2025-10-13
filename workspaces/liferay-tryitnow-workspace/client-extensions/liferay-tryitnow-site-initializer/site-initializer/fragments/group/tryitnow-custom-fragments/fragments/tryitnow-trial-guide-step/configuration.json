@@ -1,0 +1,34 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "int",
+					"defaultValue": "1",
+					"label": "Step Number",
+					"name": "stepNumber",
+					"type": "text"
+				},
+				{
+					"defaultValue": false,
+					"label": "display-toasts",
+					"name": "displayToasts",
+					"type": "checkbox"
+				}
+			],
+			"label": "step-options"
+		},
+		{
+			"configurationRole": "advanced",
+			"fields": [
+				{
+					"defaultValue": false,
+					"label": "debug-enabled",
+					"name": "debugEnabled",
+					"type": "checkbox"
+				}
+			],
+			"label": "miscellaneous"
+		}
+	]
+}

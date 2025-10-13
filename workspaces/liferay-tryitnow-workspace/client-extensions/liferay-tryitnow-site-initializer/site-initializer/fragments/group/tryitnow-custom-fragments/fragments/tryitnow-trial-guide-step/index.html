@@ -1,0 +1,55 @@
+<section class="trial-step trial-step--${layoutMode}" data-panel-id="${configuration.stepNumber}"
+	data-layout-mode="${layoutMode}">
+	<header class="trial-step__header">
+		<div class="trial-step__header-left">
+			<div
+				class="trial-step__step trial-step__step--incomplete bg-brand-primary-darken-1 is-hidden animate__animated animate__fadeIn">
+				<span class="trial-step__field bg-brand-primary-darken-1" data-field="stepNumber">1</span>
+			</div>
+
+			<div class="trial-step__step trial-step__step--complete is-hidden animate__animated animate__fadeIn"
+				aria-hidden="true">
+				<img src="[resources:check.svg]" alt="" />
+			</div>
+
+			<h4 class="trial-step__title text-neutral-9">
+				<span class="trial-step__field" data-field="title"></span>
+			</h4>
+		</div>
+
+		<div class="trial-step__header-right">
+			<button class="trial-step__btn mark-as-incomplete is-hidden animate__animated animate__fadeIn" type="button"
+				data-action="mark-incomplete">
+					Mark as Incomplete
+				<img class="trial-step__spinner spinner is-hidden" data-role="spinner-incomplete"
+					src="[resources:loading.svg]" alt="" />
+			</button>
+
+			<button class="trial-step__btn mark-as-complete is-hidden animate__animated animate__fadeIn" type="button"
+				data-action="mark-complete">
+					Mark as Complete
+				<img class="trial-step__spinner spinner is-hidden" data-role="spinner-complete"
+					src="[resources:loading.svg]" alt="" />
+			</button>
+
+			<p class="trial-step__meta text-neutral-9">
+				<span class="trial-step__field" data-field="timeToComplete"></span>
+			</p>
+
+			<button class="trial-step__toggle" type="button" aria-expanded="false" data-action="toggle">
+				<span class="trial-step__arrow trial-step__arrow--collapse" aria-hidden="true">^</span>
+				<span class="sr-only">Toggle section</span>
+			</button>
+		</div>
+	</header>
+
+	<div class="trial-step__body">
+		<div class="trial-step__body-inner">
+			<lfr-drop-zone></lfr-drop-zone>
+
+			<a class="btn btn-nm btn-primary trial-step__cta" href="#" target="_self">
+				<span class="trial-step__field" data-field="ctaText">Start Guide</span>
+			</a>
+		</div>
+	</div>
+</section>

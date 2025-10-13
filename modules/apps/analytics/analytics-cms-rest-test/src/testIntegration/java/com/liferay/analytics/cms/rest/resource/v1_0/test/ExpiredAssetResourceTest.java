@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -43,6 +42,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -177,7 +177,7 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			_serviceContext);
 
 		_layoutClassedModelUsageLocalService.addLayoutClassedModelUsage(
-			testGroup.getGroupId(), StringPool.BLANK,
+			_depotEntry.getGroupId(), StringPool.BLANK,
 			_portal.getClassNameId(objectDefinition.getClassName()),
 			objectEntry.getObjectEntryId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
@@ -249,17 +249,17 @@ public class ExpiredAssetResourceTest extends BaseExpiredAssetResourceTestCase {
 			}
 		}
 
-		testGroup.setType(GroupConstants.TYPE_DEPOT);
-
-		testGroup = _groupLocalService.updateGroup(testGroup);
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testGroup.getGroupId(), TestPropsValues.getUserId());
-
-		_serviceContext.setAttribute("staging", Boolean.TRUE);
+		_serviceContext = new ServiceContext() {
+			{
+				setCompanyId(testGroup.getCompanyId());
+				setUserId(TestPropsValues.getUserId());
+			}
+		};
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
-			testGroup, _serviceContext);
+			Collections.singletonMap(
+				LocaleUtil.US, RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_ASSET_LIBRARY, _serviceContext);
 
 		_themeDisplay = _getThemeDisplay();
 	}

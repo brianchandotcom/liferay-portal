@@ -20,9 +20,6 @@ type VerticalNavItem = Item & {
 
 export default function VerticalNavLayout({items}: {items: Item[]}) {
 	const [active, setActive] = useState<string>(items[0].id);
-	const [children, setChildren] = useState<Item['component']>(
-		items[0].component
-	);
 
 	const verticalNavItems: VerticalNavItem[] = useMemo(
 		() =>
@@ -30,12 +27,17 @@ export default function VerticalNavLayout({items}: {items: Item[]}) {
 				...item,
 				active: active === item.id,
 				onClick: () => {
-					setChildren(item.component);
 					setActive(item.id);
 				},
 			})),
 		[active, items]
 	);
+
+	const activeComponent = useMemo(() => {
+		const activeItem = items.find((item) => item.id === active);
+
+		return activeItem?.component || items[0].component;
+	}, [active, items]);
 
 	return (
 		<ClayLayout.ContainerFluid size={false}>
@@ -51,7 +53,7 @@ export default function VerticalNavLayout({items}: {items: Item[]}) {
 				</ClayLayout.Col>
 
 				<ClayLayout.Col className="col-md" sm={12}>
-					{children}
+					{activeComponent}
 				</ClayLayout.Col>
 			</ClayLayout.Row>
 		</ClayLayout.ContainerFluid>

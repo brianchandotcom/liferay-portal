@@ -3,15 +3,31 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {State} from '../../../types/State';
+import {LayoutDataItem} from '../../../types/layout_data/LayoutData';
+import moveItemsAction from '../../actions/moveItems';
 import moveItems from '../../thunks/moveItems';
 
-function undoAction({action}) {
+function undoAction({
+	action,
+}: {
+	action: ReturnType<typeof moveItemsAction> & {
+		parentItemIds: LayoutDataItem['itemId'][];
+		positions: number[];
+	};
+}) {
 	const {itemIds, parentItemIds, positions} = action;
 
 	return moveItems({itemIds, parentItemIds, positions});
 }
 
-function getDerivedStateForUndo({action, state}) {
+function getDerivedStateForUndo({
+	action,
+	state,
+}: {
+	action: ReturnType<typeof moveItemsAction>;
+	state: State;
+}) {
 	const {itemIds} = action;
 	const {layoutData} = state;
 
@@ -33,4 +49,4 @@ function getDerivedStateForUndo({action, state}) {
 	};
 }
 
-export {undoAction, getDerivedStateForUndo};
+export {getDerivedStateForUndo, undoAction};

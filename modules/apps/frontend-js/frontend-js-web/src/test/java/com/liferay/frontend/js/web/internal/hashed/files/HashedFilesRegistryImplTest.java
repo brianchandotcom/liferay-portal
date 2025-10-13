@@ -49,30 +49,20 @@ public class HashedFilesRegistryImplTest {
 	public void testGetResource() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_hashedFilesRegistryImpl, "_portal", _mockPortal(StringPool.BLANK));
-
 		ReflectionTestUtil.setFieldValue(
 			_hashedFilesRegistryImpl, "_serviceTrackerMap",
 			_mockServiceTrackerMap("/main.css", "/o/frontend-js-web"));
 
-		URL url = _hashedFilesRegistryImpl.getResource(
-			"/o/frontend-js-web/main.css");
+		Assert.assertNotNull(
+			_hashedFilesRegistryImpl.getResource(
+				"/o/frontend-js-web/main.css"));
 
-		Assert.assertNotNull(url);
-	}
-
-	@Test
-	public void testGetResourceWithPortalContext() throws Exception {
 		ReflectionTestUtil.setFieldValue(
 			_hashedFilesRegistryImpl, "_portal", _mockPortal("liferay"));
 
-		ReflectionTestUtil.setFieldValue(
-			_hashedFilesRegistryImpl, "_serviceTrackerMap",
-			_mockServiceTrackerMap("/main.css", "/liferay/o/frontend-js-web"));
-
-		URL url = _hashedFilesRegistryImpl.getResource(
-			"/liferay/o/frontend-js-web/main.css");
-
-		Assert.assertNotNull(url);
+		Assert.assertNotNull(
+			_hashedFilesRegistryImpl.getResource(
+				"/liferay/o/frontend-js-web/main.css"));
 	}
 
 	private Portal _mockPortal(String pathContext) {

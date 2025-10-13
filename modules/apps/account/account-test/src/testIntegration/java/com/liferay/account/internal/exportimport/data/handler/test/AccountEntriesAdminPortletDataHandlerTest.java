@@ -352,7 +352,6 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), accountEntriesCount,
 			exportImportReportEntries.size());
-
 		Assert.assertTrue(
 			ListUtil.exists(
 				exportImportReportEntries,

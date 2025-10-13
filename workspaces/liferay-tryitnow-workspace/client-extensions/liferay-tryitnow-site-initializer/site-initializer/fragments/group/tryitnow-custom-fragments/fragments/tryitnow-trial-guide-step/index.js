@@ -3,20 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const {debugEnabled, displayToasts, stepNumber} = configuration;
-
-const debug = (msg, ...args) => {
-	if (debugEnabled) {
-		console.debug(`[Trial Step] ${msg}`, ...args);
-	}
-};
-
-debug('configuration', {debugEnabled, displayToasts, stepNumber});
+const { displayToasts, stepNumber } = configuration;
 
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
 
-	const dzTag = container.querySelector('lfr-drop-zone');
+	const dropzoneTag = container.querySelector('lfr-drop-zone');
 	const editorEmpty = container.querySelector(
 		'.page-editor__no-fragments-state, .-page-editor__no-fragments-state'
 	);
@@ -24,11 +16,11 @@ function findDropArea(root) {
 		'[data-lfr-drop-zone-id], .page-editor__drop-zone'
 	);
 
-	return {container, dzTag, editorEmpty, editorZone};
+	return { container, dropzoneTag: dropzoneTag, editorEmpty, editorZone };
 }
 
 function isDropAreaEmpty(root) {
-	const {container, dzTag, editorEmpty, editorZone} = findDropArea(root);
+	const { container, dropzoneTag, editorEmpty, editorZone } = findDropArea(root);
 
 	if (layoutMode === 'edit') {
 		if (editorEmpty) {
@@ -37,38 +29,38 @@ function isDropAreaEmpty(root) {
 
 		if (editorZone) {
 			const children = Array.from(editorZone.children).filter(
-				(el) =>
-					!el.classList.contains('page-editor__no-fragments-state') &&
-					!el.classList.contains('-page-editor__no-fragments-state')
+				(targetElement) =>
+					!targetElement.classList.contains('page-editor__no-fragments-state') &&
+					!targetElement.classList.contains('-page-editor__no-fragments-state')
 			);
 
 			return !children.length;
 		}
 
 		const hasRealContent = Array.from(container.children).some(
-			(el) =>
-				el.nodeType === 1 &&
-				!el.classList.contains('trial-step__callToAction')
+			(targetElement) =>
+				targetElement.nodeType === 1 &&
+				!targetElement.classList.contains('trial-step__callToAction')
 		);
 
 		return !hasRealContent;
 	}
 
-	if (dzTag) {
+	if (dropzoneTag) {
 		return true;
 	}
 
 	const hasRealContent = Array.from(container.children).some(
-		(el) =>
-			el.nodeType === 1 &&
-			!el.classList.contains('trial-step__callToAction')
+		(targetElement) =>
+			targetElement.nodeType === 1 &&
+			!targetElement.classList.contains('trial-step__callToAction')
 	);
 
 	return !hasRealContent;
 }
 
 function watchDropArea(root) {
-	const {container} = findDropArea(root);
+	const { container } = findDropArea(root);
 
 	if (!container) {
 		return;
@@ -89,19 +81,13 @@ function watchDropArea(root) {
 	});
 }
 
-function toast({error, message, type = 'success'}) {
+function toast({ error, message, type = 'success' }) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
 		Liferay.Util.openToast({
 			message,
-			toastProps: {autohide: true},
+			toastProps: { autohide: true },
 			type,
 		});
-	}
-	else {
-		debug(message, {type, error});
-		if (type === 'danger') {
-			return;
-		}
 	}
 }
 
@@ -121,29 +107,29 @@ async function fetchJSON(url, options) {
 	return response.json();
 }
 
-function setLoading(el, isLoading) {
-	el?.classList.toggle('is-loading', !!isLoading);
+function setLoading(targetElement, isLoading) {
+	targetElement?.classList.toggle('is-loading', !!isLoading);
 	const spinner =
-		el?.querySelector('[data-role^="spinner"]') ||
-		el?.querySelector('.trial-step__spinner');
+		targetElement?.querySelector('[data-role^="spinner"]') ||
+		targetElement?.querySelector('.trial-step__spinner');
 
 	spinner?.classList.toggle('is-hidden', !isLoading);
 }
 
-function hide(el) {
-	el?.classList.add('is-hidden');
+function hide(targetElement) {
+	targetElement?.classList.add('is-hidden');
 }
 
-function show(el) {
-	el?.classList.remove('is-hidden');
+function show(targetElement) {
+	targetElement?.classList.remove('is-hidden');
 }
 
 function setField(root, key, value) {
-	const el = root.querySelector(`.trial-step__field[data-field="${key}"]`);
-	if (!el) {
+	const targetElement = root.querySelector(`.trial-step__field[data-field="${key}"]`);
+	if (!targetElement) {
 		return;
 	}
-	el.textContent = value ?? '';
+	targetElement.textContent = value ?? '';
 }
 
 function hydrateFromModel(root, model) {
@@ -157,6 +143,7 @@ function hydrateFromModel(root, model) {
 	setField(root, 'callToActionText', model.callToActionText ?? '');
 
 	const callToAction = root.querySelector('.trial-step__callToAction');
+
 	if (callToAction) {
 		if (model.callToActionHref) {
 			callToAction.setAttribute('href', model.callToActionHref);
@@ -168,41 +155,43 @@ function hydrateFromModel(root, model) {
 	}
 }
 
-function waitForSlideEnd(el, cb) {
-	const handler = (e) => {
-		if (e.propertyName !== 'grid-template-rows') {
+function waitForSlideEnd(targetElement, callback) {
+	const handler = (event) => {
+		if (event.propertyName !== 'grid-template-rows') {
 			return;
 		}
-		el.removeEventListener('transitionend', handler);
-		cb?.();
+		targetElement.removeEventListener('transitionend', handler);
+		callback?.();
 	};
-	el.addEventListener('transitionend', handler);
+
+	targetElement.addEventListener('transitionend', handler);
 }
 
-function initTrialStep(hostEl, item) {
-	const root = hostEl.firstElementChild;
+function initTrialStep(targetElement, item) {
+	const root = targetElement.firstElementChild;
+	let isAnimating = false;
 
-	const els = {
-		stepIncomplete: root.querySelector('.trial-step__step--incomplete'),
-		stepComplete: root.querySelector('.trial-step__step--complete'),
-		btnComplete: root.querySelector('[data-action="mark-complete"]'),
-		btnIncomplete: root.querySelector('[data-action="mark-incomplete"]'),
-		toggle: root.querySelector('[data-action="toggle"]'),
+	const elementReferences = {
 		arrow: root.querySelector('.trial-step__arrow'),
 		body: root.querySelector('.trial-step__body'),
+		btnComplete: root.querySelector('[data-action="mark-complete"]'),
+		btnIncomplete: root.querySelector('[data-action="mark-incomplete"]'),
+		stepComplete: root.querySelector('.trial-step__step--complete'),
+		stepIncomplete: root.querySelector('.trial-step__step--incomplete'),
+		toggle: root.querySelector('[data-action="toggle"]'),
 	};
-	let isAnimating = false;
+
 	const model = {
-		id: item?.id,
-		stepNumber: item?.stepNumber,
-		done: !!item?.done,
-		title: item?.title ?? '',
-		timeToComplete: item?.timeToComplete ?? '',
-		callToActionText: item?.callToActionText ?? null,
 		callToActionHref: item?.callToActionLink ?? null,
 		callToActionTarget: item?.callToActionTarget
 			? item?.callToActionTarget.key
 			: null,
+		callToActionText: item?.callToActionText ?? null,
+		done: !!item?.done,
+		id: item?.id,
+		stepNumber: item?.stepNumber,
+		timeToComplete: item?.timeToComplete ?? '',
+		title: item?.title ?? '',
 	};
 
 	watchDropArea(root);
@@ -211,22 +200,23 @@ function initTrialStep(hostEl, item) {
 
 	function render() {
 		if (model.done) {
-			show(els.stepComplete);
-			hide(els.stepIncomplete);
-			show(els.btnIncomplete);
-			hide(els.btnComplete);
+			show(elementReferences.stepComplete);
+			hide(elementReferences.stepIncomplete);
+			show(elementReferences.btnIncomplete);
+			hide(elementReferences.btnComplete);
 		}
 		else {
-			show(els.stepIncomplete);
-			hide(els.stepComplete);
-			show(els.btnComplete);
-			hide(els.btnIncomplete);
+			show(elementReferences.stepIncomplete);
+			hide(elementReferences.stepComplete);
+			show(elementReferences.btnComplete);
+			hide(elementReferences.btnIncomplete);
 		}
 	}
 
 	async function update(done) {
-		const btn = done ? els.btnComplete : els.btnIncomplete;
-		setLoading(btn, true);
+		const button = done ? elementReferences.btnComplete : elementReferences.btnIncomplete;
+
+		setLoading(button, true);
 		try {
 			await fetchJSON(`/o/c/m2h8progresstrackers/${model.id}`, {
 				method: 'PATCH',
@@ -250,7 +240,7 @@ function initTrialStep(hostEl, item) {
 			});
 		}
 		finally {
-			setLoading(btn, false);
+			setLoading(button, false);
 		}
 	}
 
@@ -264,42 +254,36 @@ function initTrialStep(hostEl, item) {
 		if (isExpanded) {
 			isAnimating = true;
 			root.classList.add('is-collapsing');
-
 			root.classList.remove('trial-step--expanded');
 			root.classList.add('trial-step--collapsed');
 
-			els.arrow.classList.remove('trial-step__arrow--expand');
-			els.arrow.classList.add('trial-step__arrow--collapse');
-			els.toggle.setAttribute('aria-expanded', 'false');
-
-			waitForSlideEnd(els.body, () => {
+			elementReferences.arrow.classList.remove('trial-step__arrow--expand');
+			elementReferences.arrow.classList.add('trial-step__arrow--collapse');
+			elementReferences.toggle.setAttribute('aria-expanded', 'false');
+			waitForSlideEnd(elementReferences.body, () => {
 				root.classList.remove('is-collapsing');
 				isAnimating = false;
-				debug('Collapsed');
 			});
 		}
 		else {
 			isAnimating = true;
 			root.classList.add('is-expanding');
-
 			root.classList.remove('trial-step--collapsed');
 			root.classList.add('trial-step--expanded');
 
-			els.arrow.classList.add('trial-step__arrow--expand');
-			els.arrow.classList.remove('trial-step__arrow--collapse');
-			els.toggle.setAttribute('aria-expanded', 'true');
-
-			waitForSlideEnd(els.body, () => {
+			elementReferences.arrow.classList.add('trial-step__arrow--expand');
+			elementReferences.arrow.classList.remove('trial-step__arrow--collapse');
+			elementReferences.toggle.setAttribute('aria-expanded', 'true');
+			waitForSlideEnd(elementReferences.body, () => {
 				root.classList.remove('is-expanding');
 				isAnimating = false;
-				debug('Expanded');
 			});
 		}
 	}
 
-	els.btnComplete?.addEventListener('click', () => update(true));
-	els.btnIncomplete?.addEventListener('click', () => update(false));
-	els.toggle?.addEventListener('click', toggleHandler);
+	elementReferences.btnComplete?.addEventListener('click', () => update(true));
+	elementReferences.btnIncomplete?.addEventListener('click', () => update(false));
+	elementReferences.toggle?.addEventListener('click', toggleHandler);
 
 	root.classList.add('trial-step--collapsed');
 	root.classList.remove('trial-step--expanded');
@@ -314,22 +298,19 @@ async function init() {
 			'?fields=id,stepNumber,done,title,timeToComplete,callToActionText,callToActionTarget,callToActionLink';
 		const filter = configuration.stepNumber
 			? '&filter=' +
-				encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
+			encodeURIComponent(`stepNumber eq ${configuration.stepNumber}`)
 			: '';
 		response = await fetchJSON(
 			`/o/c/m2h8progresstrackers${fields}${filter}`
 		);
 	}
 	catch (error) {
-		toast({message: 'Could not load data.', type: 'danger', error});
-
+		toast({ message: 'Could not load data.', type: 'danger', error });
 		return;
 	}
 
 	const stepModel = response?.items?.[0];
 	if (!stepModel) {
-		debug('No step model returned for this fragment/stepNumber');
-
 		return;
 	}
 

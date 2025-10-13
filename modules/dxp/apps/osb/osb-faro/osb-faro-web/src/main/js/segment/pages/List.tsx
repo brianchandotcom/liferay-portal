@@ -1,4 +1,5 @@
 import * as API from 'shared/api';
+import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
@@ -13,6 +14,11 @@ import {
 	ActionType,
 	UnassignedSegmentsContext
 } from 'shared/context/unassignedSegments';
+import {
+	ActionTypes,
+	useSelectionContext,
+	withSelectionProvider
+} from 'shared/context/selection';
 import {addAlert} from 'shared/actions/alerts';
 import {Alert, FilterByType} from 'shared/types';
 import {ALERT_CONFIG_MAP, AlertTypes} from 'shared/components/Alert';
@@ -31,6 +37,7 @@ import {OrderParams} from 'shared/util/records';
 import {
 	Routes,
 	SEGMENT_STATE,
+	SEGMENT_TYPE,
 	SEGMENTS,
 	setUriQueryValue,
 	toRoute
@@ -38,13 +45,10 @@ import {
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
+import {useChannelContext} from 'shared/context/channel';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useQueryPagination} from 'shared/hooks/useQueryPagination';
 import {useRequest} from 'shared/hooks/useRequest';
-import {
-	useSelectionContext,
-	withSelectionProvider
-} from 'shared/context/selection';
 
 export interface FetchSegmentsParams {
 	channelId: string;
@@ -80,6 +84,32 @@ interface IListProps extends PropsFromRedux {
 	history: any;
 }
 
+export const SEGMENT_TYPES_LABEL_MAP = {
+	[SegmentTypes.Batch]: Liferay.Language.get('batch'),
+	[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
+};
+
+const FILTER_BY_OPTIONS = [
+	{
+		key: SEGMENT_TYPE,
+		label: Liferay.Language.get('segment-type'),
+		values: [
+			{
+				label: `${
+					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Dynamic]
+				} ${Liferay.Language.get('segment')}`,
+				value: SegmentTypes.Dynamic
+			},
+			{
+				label: `${
+					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.RealTime]
+				} ${Liferay.Language.get('segment')}`,
+				value: SegmentTypes.RealTime
+			}
+		]
+	}
+];
+
 export const List: React.FC<IListProps> = ({
 	addAlert,
 	channelId,
@@ -91,11 +121,12 @@ export const List: React.FC<IListProps> = ({
 	// TODO => Probably use this to get the update
 	// const {timeZoneId} = useTimeZone();
 	const currentUser = useCurrentUser();
+	const {selectedChannel} = useChannelContext();
 	const _tableRef = useRef<HTMLDivElement & SearchableEntityTable>();
 
-	const {selectedItems /* selectionDispatch */} = useSelectionContext();
-	const {delta, orderIOMap, page, query} = useQueryPagination({
-		filterFields: [SEGMENT_STATE],
+	const {selectedItems, selectionDispatch} = useSelectionContext();
+	const {delta, filterBy, orderIOMap, page, query} = useQueryPagination({
+		filterFields: [SEGMENT_TYPE],
 		initialDelta: paginationDefaults.delta,
 		initialOrderIOMap: createOrderIOMap(NAME, getDefaultSortOrder(NAME)),
 		initialPage: paginationDefaults.page,
@@ -123,7 +154,7 @@ export const List: React.FC<IListProps> = ({
 		};
 	}, []);
 
-	const {data, error, loading} = useRequest({
+	const {data, error, loading, refetch} = useRequest({
 		dataSourceFn: API.individualSegment.search,
 		variables: {
 			channelId,
@@ -259,6 +290,9 @@ export const List: React.FC<IListProps> = ({
 								)
 							);
 						}
+						selectionDispatch({type: ActionTypes.ClearAll});
+
+						refetch();
 					})
 					.catch(() => {
 						addAlert({
@@ -341,6 +375,7 @@ export const List: React.FC<IListProps> = ({
 	];
 
 	const pageActionsLabel = Liferay.Language.get('new-segment');
+
 	const renderNav = () => {
 		if (selectedItems.isEmpty()) {
 			return (
@@ -385,8 +420,8 @@ export const List: React.FC<IListProps> = ({
 				<ClayButton
 					aria-label={Liferay.Language.get('delete')}
 					borderless
-					className='button-root'
-					displayType='secondary'
+					className='button-root text-danger'
+					displayType='primary'
 					onClick={() =>
 						handleDeleteSegment({
 							id: undefined,
@@ -396,18 +431,28 @@ export const List: React.FC<IListProps> = ({
 					}
 					outline
 				>
-					<ClayIcon className='icon-root' symbol='trash' />
-					<span>{Liferay.Language.get('delete-segment')}</span>
+					<ClayIcon className='icon-root mr-2' symbol='trash' />
+					<span>{Liferay.Language.get('delete')}</span>
 				</ClayButton>
 			</Nav>
 		);
 	};
+
 	return (
 		<BasePage
 			className='segment-list-root'
 			documentTitle={Liferay.Language.get('segments')}
 		>
-			<BasePage.Header breadcrumbs={[]} groupId={groupId}>
+			<BasePage.Header
+				breadcrumbs={[
+					breadcrumbs.getHome({
+						channelId,
+						groupId,
+						label: selectedChannel && selectedChannel.name
+					})
+				]}
+				groupId={groupId}
+			>
 				<BasePage.Row>
 					<BasePage.Header.TitleSection
 						title={Liferay.Language.get('segments')}
@@ -457,6 +502,8 @@ export const List: React.FC<IListProps> = ({
 							]}
 							currentUser={currentUser}
 							delta={delta}
+							filterBy={filterBy}
+							filterByOptions={FILTER_BY_OPTIONS}
 							items={data?.items}
 							loading={loading}
 							orderByOptions={[

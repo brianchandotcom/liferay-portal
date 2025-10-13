@@ -50,7 +50,7 @@ public class ExportImportBatchEngineImportTaskExceptionHandler
 			groupId, batchEngineImportTask.getCompanyId(),
 			_getExternalReferenceCode(item),
 			_classNameLocalService.getClassNameId(
-				batchEngineImportTask.getParameterValue("className")),
+				batchEngineImportTask.getParameterValue("modelClassName")),
 			_getId(item),
 			GetterUtil.getLong(
 				ExportImportThreadLocal.getExportImportConfigurationId()),

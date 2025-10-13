@@ -94,13 +94,13 @@ public class MasterPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
-				return LayoutPageTemplateEntry.class.getName();
+			public String getLabel() {
+				return "master-pages";
 			}
 
 			@Override
-			public String getLabel() {
-				return "master-pages";
+			public String getModelClassName() {
+				return LayoutPageTemplateEntry.class.getName();
 			}
 
 			@Override

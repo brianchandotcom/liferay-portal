@@ -191,8 +191,7 @@ public class BatchEnginePortletDataHandlerRegistrar {
 
 			BatchEnginePortletDataHandlerRegistry.
 				deletionSystemEventClassNamePortletIds.put(
-					exportImportDescriptor.getDeletionSystemEventClassName(),
-					portletId);
+					exportImportDescriptor.getModelClassName(), portletId);
 
 			BatchEnginePortletDataHandler
 				previousBatchEnginePortletDataHandler =

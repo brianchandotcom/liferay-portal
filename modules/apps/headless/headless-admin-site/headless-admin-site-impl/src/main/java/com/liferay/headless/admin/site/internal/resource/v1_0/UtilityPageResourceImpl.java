@@ -95,13 +95,13 @@ public class UtilityPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
-				return LayoutUtilityPageEntry.class.getName();
+			public String getLabel() {
+				return "utility-pages";
 			}
 
 			@Override
-			public String getLabel() {
-				return "utility-pages";
+			public String getModelClassName() {
+				return LayoutUtilityPageEntry.class.getName();
 			}
 
 			@Override

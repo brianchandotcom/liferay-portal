@@ -322,7 +322,7 @@ public class AccountResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
+			public String getModelClassName() {
 				return com.liferay.mail.kernel.model.Account.class.getName();
 			}
 

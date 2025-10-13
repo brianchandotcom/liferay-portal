@@ -76,13 +76,13 @@ public class PageTemplateSetResourceImpl
 			ExportImportDescriptor() {
 
 			@Override
-			public String getDeletionSystemEventClassName() {
-				return LayoutPageTemplateCollection.class.getName();
+			public String getLabel() {
+				return "page-template-sets";
 			}
 
 			@Override
-			public String getLabel() {
-				return "page-template-sets";
+			public String getModelClassName() {
+				return LayoutPageTemplateCollection.class.getName();
 			}
 
 			@Override

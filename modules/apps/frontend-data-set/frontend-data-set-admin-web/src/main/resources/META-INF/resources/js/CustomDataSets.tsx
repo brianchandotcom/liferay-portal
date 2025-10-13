@@ -97,6 +97,7 @@ const NewDataSetModalContent = ({
 		noEnpointsRESTApplicationValidationError,
 		setNoEnpointsRESTApplicationValidationError,
 	] = useState(false);
+	const [restSchemaLoading, setRestSchemaLoading] = useState(false);
 	const [restSchemaValidationError, setRESTSchemaValidationError] =
 		useState(false);
 	const [restEndpointValidationError, setRESTEndpointValidationError] =
@@ -186,9 +187,13 @@ const NewDataSetModalContent = ({
 			return;
 		}
 
+		setRestSchemaLoading(true);
+
 		const response = await fetch(`/o${restApplication}/openapi.json`, {
 			headers: DEFAULT_FETCH_HEADERS,
 		});
+
+		setRestSchemaLoading(false);
 
 		if (!response.ok) {
 			openDefaultFailureToast();
@@ -245,15 +250,11 @@ const NewDataSetModalContent = ({
 			if (paths?.length === 1) {
 				setSelectedRESTEndpoint(paths[0]);
 			}
-
-			setNoEnpointsRESTApplicationValidationError(false);
 		}
 		else {
 			setSelectedRESTSchema(null);
 
 			setSelectedRESTEndpoint(null);
-
-			setNoEnpointsRESTApplicationValidationError(false);
 		}
 
 		setRESTSchemaEndpoints(schemaEndpoints);
@@ -300,6 +301,7 @@ const NewDataSetModalContent = ({
 				<ClayButton
 					aria-labelledby={`${namespace}restApplicationsLabel`}
 					className="form-control form-control-select form-control-select-secondary"
+					disabled={restSchemaLoading}
 					displayType="secondary"
 					id={`${namespace}restApplicationsSelect`}
 				>
@@ -317,6 +319,8 @@ const NewDataSetModalContent = ({
 			<RESTApplicationDropdownMenu
 				onItemClick={(item: string) => {
 					setSelectedRESTApplication(item);
+
+					setNoEnpointsRESTApplicationValidationError(false);
 
 					setRequiredRESTApplicationValidationError(false);
 
@@ -336,14 +340,21 @@ const NewDataSetModalContent = ({
 				<ClayButton
 					aria-labelledby={`${namespace}restSchema`}
 					className="form-control form-control-select form-control-select-secondary"
-					disabled={!selectedRESTApplication}
+					disabled={
+						!selectedRESTApplication ||
+						!restSchemaEndpoints.size ||
+						restSchemaLoading
+					}
 					displayType="secondary"
 					id={`${namespace}restSchemaSelect`}
 				>
-					{selectedRESTSchema ||
-						Liferay.Language.get(
-							'choose-a-rest-application-to-enable-this'
-						)}
+					{selectedRESTSchema
+						? selectedRESTSchema
+						: selectedRESTApplication
+							? Liferay.Language.get('choose-an-option')
+							: Liferay.Language.get(
+									'choose-a-rest-application-to-enable-this'
+								)}
 				</ClayButton>
 			}
 		>
@@ -376,12 +387,17 @@ const NewDataSetModalContent = ({
 				<ClayButton
 					aria-labelledby={`${namespace}restEndpoint`}
 					className="form-control form-control-select form-control-select-secondary"
-					disabled={!selectedRESTSchema}
+					disabled={!selectedRESTSchema || restSchemaLoading}
 					displayType="secondary"
 					id={`${namespace}restEndpointSelect`}
 				>
-					{selectedRESTEndpoint ||
-						Liferay.Language.get('choose-a-schema-to-enable-this')}
+					{selectedRESTEndpoint
+						? selectedRESTEndpoint
+						: selectedRESTSchema
+							? Liferay.Language.get('choose-an-option')
+							: Liferay.Language.get(
+									'choose-a-schema-to-enable-this'
+								)}
 				</ClayButton>
 			}
 		>

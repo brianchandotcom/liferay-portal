@@ -1,0 +1,111 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.rest.dto.v1_0.ObjectEntry",
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"onErrorFail": "false",
+			"taskItemDelegateName": "C_M2H8ProgressTracker",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "C_M2H8ProgressTracker"
+	},
+	"items": [
+		{
+			"callToActionLink": "/?pendo=lv7MhJvRleZ0LDxN6rO_sPhZ2X4&step=yna7hI_cKQNrxK4teay-0o8VF-E",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_1",
+			"stepNumber": 1,
+			"timeToComplete": "1 min",
+			"title": "Introduction"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=BxHhin9L66bv-E-Nsp012p7VuGM&step=Gvc0XzAudzC33z9qUTLtS7AULwE",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_2",
+			"stepNumber": 2,
+			"timeToComplete": "3 min",
+			"title": "Activating Users"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=-CqNmqlgWSTSKARtWHokWYpRZ0c&step=-sD1tOP89TtNEf5SBzioxcOO4o8",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_3",
+			"stepNumber": 3,
+			"timeToComplete": "4 min",
+			"title": "You as a Customer"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=tuhzgi25yZWOyyp8ETd8XcBLRnI&step=Xm-3paRNFmQbdDmffF0zNZLM-mM",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_4",
+			"stepNumber": 4,
+			"timeToComplete": "5 min",
+			"title": "You as a Customer Support Representative"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=RyAx8zNLVxKnbo5bvlAc783MxOI&step=GMyoewGFrlwdaG6g5MAXfkGkWzY",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_5",
+			"stepNumber": 5,
+			"timeToComplete": "30 min",
+			"title": "You as a Clarity Admin, Part I: Understanding Objects"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=5BDVfRvjR-p23Nihe-WdHc-6WHs&step=4H6ud_YWq3cqo_YUWi0E4k88rpA",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_6",
+			"stepNumber": 6,
+			"timeToComplete": "25 min",
+			"title": "You as a Clarity Admin, Part II: Building Pages With No-Code"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=B6vDG0qnWIZ3-oL4v2ijqT7VDys&step=rhhyCqniS-nDC3L55ql6XRhqJSE",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_7",
+			"stepNumber": 7,
+			"timeToComplete": "15 min",
+			"title": "You as a Clarity Admin, Part III: Client Extensions"
+		},
+		{
+			"callToActionLink": "/trialguide?pendo=GtKP4TMM64T4YVRUpjdvEk1SGD4&step=lFhSHcdRlOTGKXoz4t8Tqd2gwag",
+			"callToActionTarget": {
+				"key": "self"
+			},
+			"callToActionText": "Start Guide",
+			"done": false,
+			"externalReferenceCode": "STEP_8",
+			"stepNumber": 8,
+			"timeToComplete": "10 min",
+			"title": "You as a Clarity Admin, Part IV: Additional information"
+		}
+	]
+}

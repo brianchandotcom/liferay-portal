@@ -5,6 +5,7 @@
 
 import {State} from '../../../types/State';
 import {LayoutDataItem} from '../../../types/layout_data/LayoutData';
+import {FragmentEntryLink} from '../../actions/addFragmentEntryLinks';
 import moveItemsAction from '../../actions/moveItems';
 import moveItems from '../../thunks/moveItems';
 
@@ -14,11 +15,18 @@ function undoAction({
 	action: ReturnType<typeof moveItemsAction> & {
 		parentItemIds: LayoutDataItem['itemId'][];
 		positions: number[];
+		unmappedFragmentEntryLinks: FragmentEntryLink[];
 	};
 }) {
-	const {itemIds, parentItemIds, positions} = action;
+	const {itemIds, parentItemIds, positions, unmappedFragmentEntryLinks} =
+		action;
 
-	return moveItems({itemIds, parentItemIds, positions});
+	return moveItems({
+		itemIds,
+		parentItemIds,
+		positions,
+		unmappedFragmentEntryLinks,
+	});
 }
 
 function getDerivedStateForUndo({
@@ -29,7 +37,7 @@ function getDerivedStateForUndo({
 	state: State;
 }) {
 	const {itemIds} = action;
-	const {layoutData} = state;
+	const {fragmentEntryLinks, layoutData} = state;
 
 	const positions = [];
 	const parentItemIds = [];
@@ -42,10 +50,19 @@ function getDerivedStateForUndo({
 		positions.push(parent.children.indexOf(itemId));
 	}
 
+	const unmappedFragmentEntryLinks = [];
+
+	for (const {fragmentEntryLinkId} of action.fragmentEntryLinks) {
+		unmappedFragmentEntryLinks.push(
+			fragmentEntryLinks[fragmentEntryLinkId]
+		);
+	}
+
 	return {
 		itemIds,
 		parentItemIds,
 		positions,
+		unmappedFragmentEntryLinks,
 	};
 }
 

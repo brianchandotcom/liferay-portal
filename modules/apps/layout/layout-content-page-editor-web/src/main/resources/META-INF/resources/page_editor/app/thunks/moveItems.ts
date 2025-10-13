@@ -4,6 +4,7 @@
  */
 
 import {State} from '../../types/State';
+import {FragmentEntryLink} from '../actions/addFragmentEntryLinks';
 import moveItemsAction from '../actions/moveItems';
 import updateNetwork from '../actions/updateNetwork';
 import FragmentService from '../services/FragmentService';
@@ -17,9 +18,15 @@ type Props = {
 	itemIds: string[];
 	parentItemIds: string[];
 	positions: number[];
+	unmappedFragmentEntryLinks?: FragmentEntryLink[];
 };
 
-export default function moveItems({itemIds, parentItemIds, positions}: Props) {
+export default function moveItems({
+	itemIds,
+	parentItemIds,
+	positions,
+	unmappedFragmentEntryLinks,
+}: Props) {
 	return (
 		dispatch: (
 			action: ReturnType<typeof updateNetwork | typeof moveItemsAction>
@@ -45,19 +52,25 @@ export default function moveItems({itemIds, parentItemIds, positions}: Props) {
 			positions,
 			segmentsExperienceId,
 		}).then(async (updatedLayoutData) => {
-			const unmappedFragmentEntryLinks = getUnmappedFragmentEntryLinks({
-				fragmentEntryLinks,
-				layoutData,
-				movedIds: itemIds,
-				targetId: parentItemIds[0],
-			});
+
+			// Take unmappedFragmentEntryLinks from param
+			// for undo, otherwise calculate them now
+
+			const unmappedFragments =
+				unmappedFragmentEntryLinks ||
+				getUnmappedFragmentEntryLinks({
+					fragmentEntryLinks,
+					layoutData,
+					movedIds: itemIds,
+					targetId: parentItemIds[0],
+				});
 
 			const updatedFragmentEntryLinks = [];
 
 			for (const {
 				editableValues,
 				fragmentEntryLinkId,
-			} of unmappedFragmentEntryLinks) {
+			} of unmappedFragments) {
 				const {fragmentEntryLink} =
 					await FragmentService.updateEditableValues({
 						editableValues,

@@ -16,7 +16,6 @@ import java.util.Collections;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -68,19 +67,7 @@ public class ServletContextHelperDataContext {
 
 			@Override
 			public Object get(Object key) {
-				Object value = _attributesMap.get(key);
-
-				if (Objects.equals(
-						key, JavaConstants.JAKARTA_SERVLET_CONTEXT_TEMPDIR)) {
-
-					File servletContextTempDir = (File)value;
-
-					if (!servletContextTempDir.exists()) {
-						servletContextTempDir.mkdirs();
-					}
-				}
-
-				return value;
+				return _attributesMap.get(key);
 			}
 
 			@Override

@@ -72,16 +72,16 @@ definition {
 				configurationName = "Mail Settings",
 				configurationScope = "Virtual Instance Scope");
 
-			FormFields.editText(
-				fieldName = "pop3Port",
-				fieldValue = 995);
+			SystemSettings.editTextAreaSetting(
+				settingName = "Incoming Port",
+				settingValue = 995);
 
-			PortletEntry.save();
+			SystemSettings.saveConfiguration();
 		}
 
 		task ("Then the new configuration should now be displayed") {
-			FormFields.viewTextValue(
-				fieldName = "pop3Port",
+			SystemSettings.viewInputText(
+				fieldLabel = "Incoming Port",
 				fieldValue = 995);
 		}
 	}

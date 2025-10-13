@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -93,6 +94,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Rubén Pulido
  */
+@FeatureFlag("LPD-66179")
 @LanguageIds(
 	availableLanguageIds = {"en_US", "es_ES"}, defaultLanguageId = "en_US"
 )

@@ -115,13 +115,32 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
+		String systemAdditionalAPIURLParameters =
+			_systemFDSSerializer.serializeAdditionalAPIURLParameters(
+				fdsName, httpServletRequest, interpolate,
+				tokenResolutionsJSONObject);
+
+		String additionalAPIURLParameters = String.valueOf(
+			properties.get("additionalAPIURLParameters"));
+
+		if (Validator.isNotNull(systemAdditionalAPIURLParameters)) {
+			if (Validator.isNotNull(additionalAPIURLParameters)) {
+				additionalAPIURLParameters =
+					systemAdditionalAPIURLParameters + StringPool.AMPERSAND +
+						additionalAPIURLParameters;
+			}
+			else {
+				additionalAPIURLParameters = systemAdditionalAPIURLParameters;
+			}
+		}
+
 		return createFDSAPIURLBuilder(
 			httpServletRequest,
 			String.valueOf(properties.get("restApplication")),
 			String.valueOf(properties.get("restEndpoint")),
 			String.valueOf(properties.get("restSchema"))
 		).addQueryString(
-			String.valueOf(properties.get("additionalAPIURLParameters"))
+			additionalAPIURLParameters
 		).setTokenResolutions(
 			tokenResolutionsJSONObject
 		).buildQueryString(

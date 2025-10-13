@@ -7,6 +7,7 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -927,13 +928,15 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		long groupId = layoutJSONObject.getLong("groupId");
-		boolean privateLayout = layoutJSONObject.getBoolean("privateLayout");
-
-		Layout layout = LayoutLocalServiceUtil.fetchLayout(
-			groupId, privateLayout, layoutJSONObject.getLong("layoutId"));
+		Layout layout = LayoutReferenceResolverUtil.resolve(
+			_themeDisplay.getCompanyId(), layoutJSONObject,
+			_themeDisplay.getScopeGroupId());
 
 		if (layout == null) {
+			long groupId = layoutJSONObject.getLong("groupId");
+			boolean privateLayout = layoutJSONObject.getBoolean(
+				"privateLayout");
+
 			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 				layoutJSONObject.getString("layoutUuid"), groupId,
 				privateLayout);

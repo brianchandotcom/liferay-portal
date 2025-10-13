@@ -18,7 +18,7 @@ export enum AccountType {
 
 export enum AccountTypes {
 	BUSINESS = 'business',
-	GUEST = 'guest', 
+	GUEST = 'guest',
 	PERSON = 'person',
-	SUPPLIER = 'supplier'
+	SUPPLIER = 'supplier',
 }

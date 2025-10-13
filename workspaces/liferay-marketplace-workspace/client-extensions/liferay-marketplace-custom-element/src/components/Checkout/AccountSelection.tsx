@@ -118,9 +118,11 @@ const AccountSelection: React.FC<AccountSelectionProps> = ({
 						...account,
 						selected: selectedAccount?.id === account?.id,
 						title: (
-							<div className='pt-2'>
+							<div className="pt-2">
 								<p className="h5 mb-1">{account.title}</p>
-								<p className="h5 text-muted mb-0 text-capitalize">{account.type}</p>
+								<p className="h5 mb-0 text-capitalize text-muted">
+									{account.type}
+								</p>
 							</div>
 						),
 					}))}

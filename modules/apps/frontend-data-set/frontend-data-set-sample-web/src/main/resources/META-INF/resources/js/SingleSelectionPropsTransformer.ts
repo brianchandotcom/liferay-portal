@@ -20,7 +20,7 @@ export default function propsTransformer({...otherProps}: any) {
 
 	return {
 		...otherProps,
-		configInURLSettings: EConfigInURLBehavior.OFF,
+		configInURLBehavior: EConfigInURLBehavior.OFF,
 		customRenderers: {
 			tableCell: [customAuthorTableCellRenderer],
 		},

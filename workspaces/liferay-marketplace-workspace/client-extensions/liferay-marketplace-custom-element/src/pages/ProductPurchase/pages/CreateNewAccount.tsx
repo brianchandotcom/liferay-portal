@@ -3,15 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useModal} from '@clayui/modal';
 import Button from '@clayui/button';
+import {useModal} from '@clayui/modal';
 
-import {AccountTypes} from '../../../enums/Account';
-import {Liferay} from '../../../liferay/liferay';
-import businessSVG from '../../../assets/icons/business.svg';
 import userSVG from '../../../assets/icons/Icon-user.svg';
-import CreateAccountModalForm from './CreateAccountModalForm';
+import businessSVG from '../../../assets/icons/business.svg';
+import {AccountTypes} from '../../../enums/Account';
 import i18n from '../../../i18n';
+import {Liferay} from '../../../liferay/liferay';
+import CreateAccountModalForm from './CreateAccountModalForm';
 
 import './CreateNewAccount.scss';
 
@@ -21,7 +21,7 @@ type DisplayCardProps = {
 	title: string;
 };
 
-const DisplayCard = ({svg, description, title}: DisplayCardProps) => (
+const DisplayCard = ({description, svg, title}: DisplayCardProps) => (
 	<div className="align-items-center border create-new-account-card d-flex justify-content-center">
 		<div className="d-flex justify-content-center mr-3">
 			<img alt={title} draggable="false" src={svg} />
@@ -39,7 +39,7 @@ const Divider = () => (
 	<div className="align-items-center d-flex">
 		<hr className="w-50" />
 
-		<b className="mx-2 divider">OR</b>
+		<b className="divider mx-2">OR</b>
 
 		<hr className="w-50" />
 	</div>

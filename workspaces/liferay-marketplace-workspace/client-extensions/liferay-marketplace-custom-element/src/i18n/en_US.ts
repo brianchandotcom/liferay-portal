@@ -397,6 +397,7 @@ export default {
 	'name': 'Name',
 	'net-price': 'Net Price',
 	'never-expires': 'Never Expires',
+	'new-account': 'New Account',
 	'new-address': 'New Address',
 	'new-app': 'New App',
 	'new-potential-expiration-date': 'New Potential Expiration Date',

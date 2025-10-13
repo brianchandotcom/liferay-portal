@@ -4,11 +4,11 @@
  */
 
 import {ClayRadio} from '@clayui/form';
-import {ReactNode} from 'react';
-import classNames from 'classnames';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
+import classNames from 'classnames';
+import {ReactNode} from 'react';
 
 import './RadioCard.scss';
 

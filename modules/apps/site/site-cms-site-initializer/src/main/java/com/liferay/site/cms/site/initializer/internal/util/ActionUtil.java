@@ -1223,18 +1223,6 @@ public class ActionUtil {
 		throws Exception {
 
 		if (infoFieldSet.isRelationship()) {
-			FormRelationshipStyledLayoutStructureItem
-				formRelationshipStyledLayoutStructureItem =
-					(FormRelationshipStyledLayoutStructureItem)
-						layoutStructure.
-							addFormRelationshipStyledLayoutStructureItem(
-								PortalUUIDUtil.generate(),
-								layoutStructureItem.getItemId(), -1);
-
-			formRelationshipStyledLayoutStructureItem.setContentType(
-				infoFieldSet.getName());
-			formRelationshipStyledLayoutStructureItem.setRepeatable(repeatable);
-
 			FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
 				JSONUtil.toString(
 					JSONUtil.put(
@@ -1272,8 +1260,7 @@ public class ActionUtil {
 				LayoutStructureItem fragmentStyledLayoutStructureItem =
 					layoutStructure.addFragmentStyledLayoutStructureItem(
 						fragmentEntryLink.getFragmentEntryLinkId(),
-						formRelationshipStyledLayoutStructureItem.getItemId(),
-						0);
+						layoutStructureItem.getItemId(), -1);
 
 				fragmentStyledLayoutStructureItem.updateItemConfig(
 					JSONUtil.put("styles", stylesJSONObject));
@@ -1311,14 +1298,21 @@ public class ActionUtil {
 					layoutStructureItem =
 						layoutStructure.getLayoutStructureItem(childrenItemId);
 				}
-				else {
-					layoutStructureItem =
-						formRelationshipStyledLayoutStructureItem;
-				}
 			}
-			else {
-				layoutStructureItem = formRelationshipStyledLayoutStructureItem;
-			}
+
+			FormRelationshipStyledLayoutStructureItem
+				formRelationshipStyledLayoutStructureItem =
+					(FormRelationshipStyledLayoutStructureItem)
+						layoutStructure.
+							addFormRelationshipStyledLayoutStructureItem(
+								PortalUUIDUtil.generate(),
+								layoutStructureItem.getItemId(), -1);
+
+			formRelationshipStyledLayoutStructureItem.setContentType(
+				infoFieldSet.getName());
+			formRelationshipStyledLayoutStructureItem.setRepeatable(repeatable);
+
+			layoutStructureItem = formRelationshipStyledLayoutStructureItem;
 		}
 
 		for (InfoFieldSetEntry infoFieldSetEntry :

@@ -726,6 +726,7 @@ const testWithRepeatableFF = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-50377': {enabled: true},
+		'LPS-179669': {enabled: true},
 	})
 );
 

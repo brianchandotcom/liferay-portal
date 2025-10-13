@@ -140,7 +140,7 @@ public class TaxonomyCategoryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "categories";
 			}
 

@@ -95,7 +95,7 @@ public class UtilityPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "utility-pages";
 			}
 

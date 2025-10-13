@@ -75,8 +75,8 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 			}
 
 			@Override
-			public String getLabel() {
-				return "Shared Internal Model Batch Test Entity";
+			public String getLabelLanguageKey() {
+				return "shared-internal-model-batch-test-entity";
 			}
 
 			@Override

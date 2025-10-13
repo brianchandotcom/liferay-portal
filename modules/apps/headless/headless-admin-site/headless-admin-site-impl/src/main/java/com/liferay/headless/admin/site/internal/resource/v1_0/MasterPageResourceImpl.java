@@ -94,7 +94,7 @@ public class MasterPageResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "master-pages";
 			}
 

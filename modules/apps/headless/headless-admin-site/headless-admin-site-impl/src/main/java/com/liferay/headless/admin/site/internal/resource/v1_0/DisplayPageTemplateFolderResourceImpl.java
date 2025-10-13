@@ -79,7 +79,7 @@ public class DisplayPageTemplateFolderResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getLabel() {
+			public String getLabelLanguageKey() {
 				return "display-page-template-folders";
 			}
 

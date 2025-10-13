@@ -112,8 +112,8 @@ public class BatchTestEntityResourceImpl
 			}
 
 			@Override
-			public String getLabel() {
-				return "Batch Test Entity";
+			public String getLabelLanguageKey() {
+				return "batch-test-entity";
 			}
 
 			@Override

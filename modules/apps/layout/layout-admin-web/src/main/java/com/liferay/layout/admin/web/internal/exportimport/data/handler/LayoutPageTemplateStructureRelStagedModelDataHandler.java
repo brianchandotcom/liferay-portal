@@ -17,13 +17,9 @@ import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
@@ -164,9 +160,6 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 			LayoutStructure layoutStructure = LayoutStructure.of(data);
 
-			_processImportFormLayoutStructureItemsData(
-				layoutStructure, portletDataContext);
-
 			_processImportFragmentLayoutStructureItemsData(
 				layoutStructure, portletDataContext);
 
@@ -212,50 +205,6 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 		return _stagedModelRepository;
 	}
 
-	private void _processImportFormLayoutStructureItemsData(
-		LayoutStructure layoutStructure,
-		PortletDataContext portletDataContext) {
-
-		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
-			layoutStructure.getFormStyledLayoutStructureItems();
-
-		for (FormStyledLayoutStructureItem formStyledLayoutStructureItem :
-				formStyledLayoutStructureItems) {
-
-			JSONObject successMessageJSONObject =
-				formStyledLayoutStructureItem.getSuccessMessageJSONObject();
-
-			if (successMessageJSONObject == null) {
-				continue;
-			}
-
-			JSONObject layoutJSONObject =
-				successMessageJSONObject.getJSONObject("layout");
-
-			if ((layoutJSONObject == null) ||
-				(layoutJSONObject.length() == 0)) {
-
-				continue;
-			}
-
-			if (layoutJSONObject.getLong("groupId") ==
-					portletDataContext.getSourceGroupId()) {
-
-				layoutJSONObject.put(
-					"groupId", portletDataContext.getScopeGroupId());
-
-				Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					layoutJSONObject.getString("layoutUuid"),
-					portletDataContext.getScopeGroupId(),
-					layoutJSONObject.getBoolean("privateLayout"));
-
-				if (layout != null) {
-					layoutJSONObject.put("layoutId", layout.getLayoutId());
-				}
-			}
-		}
-	}
-
 	private void _processImportFragmentLayoutStructureItemsData(
 		LayoutStructure layoutStructure,
 		PortletDataContext portletDataContext) {
@@ -294,9 +243,6 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateStructureLocalService

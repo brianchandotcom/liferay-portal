@@ -64,7 +64,7 @@
 
 <aui:script>
 	function <portlet:namespace />saveConfiguration() {
-		var form = document.<portlet:namespace />fm;rReo
+		var form = document.<portlet:namespace />fm;
 
 		var currentLanguageIdsInput = Liferay.Util.getFormElement(
 			form,

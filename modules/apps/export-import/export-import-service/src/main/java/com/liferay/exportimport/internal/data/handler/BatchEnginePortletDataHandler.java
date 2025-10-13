@@ -119,14 +119,10 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String[] getClassNames() {
 		return TransformUtil.transformToArray(
-			_registrations,
-			registration -> {
-				ExportImportVulcanBatchEngineTaskItemDelegate.
-					ExportImportDescriptor exportImportDescriptor =
-						registration.getExportImportDescriptor();
-
-				return exportImportDescriptor.getModelClassName();
-			},
+			TransformUtil.transform(
+				_registrations, Registration::getExportImportDescriptor),
+			ExportImportVulcanBatchEngineTaskItemDelegate.
+				ExportImportDescriptor::getModelClassName,
 			String.class);
 	}
 

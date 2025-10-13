@@ -3121,45 +3121,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		return layout;
 	}
 
-	/**
-	 * Updates the layout replacing its type settings.
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  privateLayout whether the layout is private to the group
-	 * @param  layoutId the layout ID of the layout
-	 * @param  typeSettings the settings to load the unicode properties object.
-	 *         See {@link UnicodeProperties #fastLoad(String)}.
-	 * @return the updated layout
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			String typeSettings)
-		throws PortalException {
-
-		Date date = new Date();
-
-		UnicodeProperties typeSettingsUnicodeProperties =
-			UnicodePropertiesBuilder.fastLoad(
-				typeSettings
-			).build();
-
-		Layout layout = layoutPersistence.findByG_P_L(
-			groupId, privateLayout, layoutId);
-
-		validateTypeSettingsProperties(layout, typeSettingsUnicodeProperties);
-
-		layout.setModifiedDate(date);
-		layout.setTypeSettings(typeSettingsUnicodeProperties.toString());
-
-		if (layout.isSystem() && (layout.getClassPK() > 0)) {
-			layout.setPublishDate(date);
-		}
-
-		return layoutPersistence.update(layout);
-	}
-
 	@Override
 	public Layout updateLayout(
 			long groupId, boolean privateLayout, long layoutId,
@@ -3828,6 +3789,29 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		return layoutPersistence.update(layout);
+	}
+
+	/**
+	 * Updates the layout replacing its type settings.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutId the layout ID of the layout
+	 * @param  typeSettings the settings to load the unicode properties object.
+	 *         See {@link UnicodeProperties #fastLoad(String)}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	@Override
+	public Layout updateTypeSettings(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings)
+		throws PortalException {
+
+		Layout layout = layoutPersistence.findByG_P_L(
+			groupId, privateLayout, layoutId);
+
+		return updateTypeSettings(layout, typeSettings);
 	}
 
 	protected void validateTypeSettingsProperties(

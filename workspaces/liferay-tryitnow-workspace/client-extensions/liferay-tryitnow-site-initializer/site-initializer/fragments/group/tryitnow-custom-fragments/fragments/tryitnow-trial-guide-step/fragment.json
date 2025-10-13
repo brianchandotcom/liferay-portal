@@ -1,9 +1,9 @@
 {
 	"configurationPath": "configuration.json",
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"icon": "code",
 	"jsPath": "index.js",
-	"name": "Accordion",
+	"htmlPath": "index.html",
+	"cssPath": "index.css",
+	"icon": "code",
+	"name": "Trial Step",
 	"type": "component"
 }

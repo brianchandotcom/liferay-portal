@@ -25,11 +25,11 @@ public interface CacheControlConfiguration {
 
 	@ExtendedAttributeDefinition(requiredInput = true)
 	@Meta.AD(
-		deflt = "must-revalidate",
-		description = "cache-control-description", name = "cache-control",
+		deflt = "must-revalidate", description = "cache-control-description",
+		name = "cache-control",
 		optionLabels = {"must-revalidate", "no-cache", "private", "public"},
 		optionValues = {
-			"must-revalidate", "private, no-cache, no-store, must-revalidate", 
+			"must-revalidate", "private, no-cache, no-store, must-revalidate",
 			"private", "public"
 		},
 		required = false

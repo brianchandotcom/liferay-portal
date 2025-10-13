@@ -38,7 +38,9 @@ public class ExpandoColumnModelListener
 
 	@Override
 	public void onAfterRemove(ExpandoColumn expandoColumn) {
-		if (!FeatureFlagManagerUtil.isEnabled("LRAC-10757")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				expandoColumn.getCompanyId(), "LRAC-10757")) {
+
 			try {
 				AnalyticsConfiguration analyticsConfiguration =
 					_analyticsSettingsManager.getAnalyticsConfiguration(

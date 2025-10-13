@@ -31,17 +31,20 @@ import {
 	NAME,
 	paginationDefaults
 } from 'shared/util/pagination';
-import {Link} from 'react-router-dom';
-import {OrderedMap} from 'immutable';
-import {OrderParams} from 'shared/util/records';
 import {
+	LAST_MODIFIED_BY,
+	MODIFIED,
 	Routes,
 	SEGMENT_STATE,
 	SEGMENT_TYPE,
 	SEGMENTS,
+	SEGMENTS_MEMBERSHIP,
 	setUriQueryValue,
 	toRoute
 } from 'shared/util/router';
+import {Link} from 'react-router-dom';
+import {OrderedMap} from 'immutable';
+import {OrderParams} from 'shared/util/records';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
@@ -96,8 +99,9 @@ const FILTER_BY_OPTIONS = [
 		values: [
 			{
 				label: `${
-					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Dynamic]
+					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch]
 				} ${Liferay.Language.get('segment')}`,
+				/* TODO => Change this value to Batch, when available in BE*/
 				value: SegmentTypes.Dynamic
 			},
 			{
@@ -107,6 +111,29 @@ const FILTER_BY_OPTIONS = [
 				value: SegmentTypes.RealTime
 			}
 		]
+	}
+];
+
+const ORDER_BY_OPTIONS = [
+	{
+		label: Liferay.Language.get('name'),
+		value: NAME
+	},
+	{
+		label: Liferay.Language.get('type'),
+		value: SEGMENT_TYPE
+	},
+	{
+		label: Liferay.Language.get('segment-membership'),
+		value: SEGMENTS_MEMBERSHIP
+	},
+	{
+		label: Liferay.Language.get('modified'),
+		value: MODIFIED
+	},
+	{
+		label: Liferay.Language.get('last-modified-by'),
+		value: LAST_MODIFIED_BY
 	}
 ];
 
@@ -506,12 +533,7 @@ export const List: React.FC<IListProps> = ({
 							filterByOptions={FILTER_BY_OPTIONS}
 							items={data?.items}
 							loading={loading}
-							orderByOptions={[
-								{
-									label: Liferay.Language.get('name'),
-									value: NAME
-								}
-							]}
+							orderByOptions={ORDER_BY_OPTIONS}
 							orderIOMap={orderIOMap}
 							page={page}
 							query={query}

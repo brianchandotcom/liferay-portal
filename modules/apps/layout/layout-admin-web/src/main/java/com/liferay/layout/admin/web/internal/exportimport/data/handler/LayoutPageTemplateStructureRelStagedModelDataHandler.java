@@ -236,8 +236,12 @@ public class LayoutPageTemplateStructureRelStagedModelDataHandler
 				continue;
 			}
 
-			layoutJSONObject.put(
-				"groupId", portletDataContext.getScopeGroupId());
+			if (layoutJSONObject.getLong("groupId") ==
+					portletDataContext.getSourceGroupId()) {
+
+				layoutJSONObject.put(
+					"groupId", portletDataContext.getScopeGroupId());
+			}
 		}
 	}
 

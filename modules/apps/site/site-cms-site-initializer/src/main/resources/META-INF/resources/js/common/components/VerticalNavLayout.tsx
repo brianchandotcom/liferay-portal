@@ -41,7 +41,7 @@ export default function VerticalNavLayout({items}: {items: Item[]}) {
 
 	return (
 		<ClayLayout.ContainerFluid size={false}>
-			<ClayLayout.Row>
+			<ClayLayout.Row className="min-vh-100">
 				<ClayLayout.Col
 					className="cms-sidebar-nav sidebar-layout"
 					md="auto"

@@ -670,6 +670,9 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SearchResultResourceImpl.class);
 
+	private static final SearchResultEntityModel _searchResultEntityModel =
+		new SearchResultEntityModel();
+
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
 
@@ -690,9 +693,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 	@Reference
 	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	private final SearchResultEntityModel _searchResultEntityModel =
-		new SearchResultEntityModel();
 
 	@Reference
 	private VulcanCRUDItemDelegateBuilderRegistry

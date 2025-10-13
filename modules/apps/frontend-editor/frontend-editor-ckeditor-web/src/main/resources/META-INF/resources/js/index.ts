@@ -21,8 +21,6 @@ export * from '@ckeditor/ckeditor5-cloud-services/dist/index.js';
 export * from '@ckeditor/ckeditor5-code-block/dist/index.js';
 export * from '@ckeditor/ckeditor5-core/dist/index.js';
 export * from '@ckeditor/ckeditor5-easy-image/dist/index.js';
-export * from '@ckeditor/ckeditor5-editor-balloon/dist/index.js';
-export * from '@ckeditor/ckeditor5-editor-classic/dist/index.js';
 export * from '@ckeditor/ckeditor5-editor-decoupled/dist/index.js';
 export * from '@ckeditor/ckeditor5-editor-inline/dist/index.js';
 export * from '@ckeditor/ckeditor5-editor-multi-root/dist/index.js';
@@ -70,12 +68,10 @@ export * from '@ckeditor/ckeditor5-word-count/dist/index.js';
 
 export {default as BalloonEditor} from './ckeditor4/BalloonEditor';
 export {default as ClassicEditor} from './ckeditor4/ClassicEditor';
-
 export {Editor} from './ckeditor4/Editor';
 
 export {default as CKEditor5BalloonEditor} from './ckeditor5/BalloonEditor';
 export {default as CKEditor5ClassicEditor} from './ckeditor5/ClassicEditor';
-
 export {default as getIcon} from './ckeditor5/utils/getIcon';
 export {
 	EEditorConfigPreset,
@@ -84,3 +80,14 @@ export {
 } from './ckeditor5/utils/types';
 
 export {default as InputLocalized} from './input_localized/InputLocalized';
+
+export {
+	BalloonEditor as BaseCKEditor5BalloonEditor,
+	BalloonEditorUI,
+	BalloonEditorUIView,
+} from '@ckeditor/ckeditor5-editor-balloon/dist/index.js';
+export {
+	ClassicEditor as BaseCKEditor5ClassicEditor,
+	ClassicEditorUI,
+	ClassicEditorUIView,
+} from '@ckeditor/ckeditor5-editor-classic/dist/index.js';

@@ -37,19 +37,18 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 </#if>
 
 <#assign
+	generateDepotEntry = false
 	generatePermissionsJavaMethodSignatures = []
 	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 	properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-
-	hasExternalReferenceCodeProperty = properties?keys?seq_contains("externalReferenceCode")
-	hasIdProperty = properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")
-
-	generateDepotEntry = false
 	useDeleteAssetLibrary = false
 	useDeleteByExternalReferenceCode = false
 	useDeleteById = false
 	useDeleteSite = false
+
+	hasExternalReferenceCodeProperty = properties?keys?seq_contains("externalReferenceCode")
+	hasIdProperty = properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id")
 />
 
 <#list javaMethodSignatures as javaMethodSignature>

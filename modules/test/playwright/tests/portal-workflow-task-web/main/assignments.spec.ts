@@ -12,6 +12,7 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {messageBoardsPagesTest} from '../../../fixtures/messageBoardsTest';
+import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {userPersonalBarPagesTest} from '../../../fixtures/userPersonalBarPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -23,10 +24,7 @@ import performLogin, {
 } from '../../../utils/performLogin';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
-import {waitForAlert} from '../../../utils/waitForAlert';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
-import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -38,6 +36,7 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	loginTest(),
 	messageBoardsPagesTest,
+	objectPagesTest,
 	userPersonalBarPagesTest,
 	workflowPagesTest
 );
@@ -206,11 +205,8 @@ test('logged user must be able to see workflow task at least from a read-only pe
 	apiHelpers,
 	configurationTabPage,
 	diagramViewPage,
-	messageBoardsEditThreadPage,
-	messageBoardsWidgetPage,
 	page,
 	processBuilderPage,
-	site,
 	userPersonalBarPage,
 	workflowTaskDetailsPage,
 	workflowTasksPage,
@@ -227,19 +223,17 @@ test('logged user must be able to see workflow task at least from a read-only pe
 			'test@liferay.com'
 		);
 
-	const messageBoardWidget = getWidgetDefinition({
-		id: getRandomString(),
-		widgetName: 'com_liferay_message_boards_web_portlet_MBPortlet',
-	});
+	const objectDefinition =
+		await apiHelpers.objectAdmin.postRandomObjectDefinition({
+			scope: 'site',
+			status: {code: 0},
+			titleObjectFieldName: 'textField',
+		});
 
-	await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([messageBoardWidget]),
-		siteId: site.id,
-		title: getRandomString(),
+	apiHelpers.data.push({
+		id: objectDefinition.id,
+		type: 'objectDefinition',
 	});
-
-	const messageBoardPage =
-		await messageBoardsWidgetPage.addMessageBoardsPortlet(site);
 
 	workflowDefinitionName = 'MBWorkflowDefinition' + getRandomInt();
 	workflowXMLDefinition = readFileSync(
@@ -268,31 +262,28 @@ test('logged user must be able to see workflow task at least from a read-only pe
 
 	await configurationTabPage.assignWorkflowToAssetType(
 		workflowDefinitionName,
-		'Message Boards Message'
+		objectDefinition.name
 	);
 
 	await performUserSwitch(page, user.alternateName);
 
-	const threadTitle = 'ThreadTitle' + getRandomInt();
+	const objectEntryValue = getRandomString();
 
-	await page.goto(
-		`/web${site.friendlyUrlPath}${messageBoardPage.friendlyURL}`
+	const applicationName = 'c/' + objectDefinition.name.toLowerCase() + 's';
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{textField: objectEntryValue},
+		applicationName,
+		'Guest'
 	);
-
-	await messageBoardsEditThreadPage.publishNewThreadForWorkflow(
-		threadTitle,
-		'ThreadContent' + getRandomInt()
-	);
-
-	await waitForAlert(page);
 
 	await performUserSwitch(page, defaultUser.alternateName);
 
 	await workflowTasksPage.goToAssignedToMyRoles();
 
-	await workflowTasksPage.assignToMe(threadTitle);
+	await workflowTasksPage.assignToMe(objectEntryValue);
 
-	await workflowTasksPage.reject(threadTitle);
+	await workflowTasksPage.reject(objectEntryValue);
 
 	await performUserSwitch(page, user.alternateName);
 
@@ -318,11 +309,9 @@ test('logged user must be able to see workflow task at least from a read-only pe
 	await page.waitForLoadState('networkidle');
 
 	await workflowTaskDetailsPage.writeTaskComment(
-		threadTitle,
+		objectEntryValue,
 		getRandomString()
 	);
-
-	await page.waitForLoadState('networkidle');
 
 	await performUserSwitch(page, user.alternateName);
 
@@ -330,11 +319,15 @@ test('logged user must be able to see workflow task at least from a read-only pe
 
 	await page
 		.getByRole('link', {
-			name: `${defaultUser.name} added a new comment to ${threadTitle}.`,
+			name: `${defaultUser.name} added a new comment to ${objectEntryValue}.`,
 		})
 		.click();
 
-	await expect(workflowTaskDetailsPage.previewMessageBoards).toBeVisible();
+	await expect(page.getByLabel('textField').first()).toBeVisible();
+
+	await expect(page.getByLabel('textField').last()).toHaveValue(
+		objectEntryValue
+	);
 	await expect(workflowTaskDetailsPage.reviewActionMenu).toBeHidden();
 
 	await performUserSwitch(page, defaultUser.alternateName);
@@ -380,8 +373,6 @@ test('approve or reject modal appear even after doing a comment on the comments 
 	await page.waitForLoadState('networkidle');
 
 	await workflowTaskDetailsPage.addComment('This is a comment');
-
-	await page.waitForLoadState('networkidle');
 
 	await workflowTaskDetailsPage.reviewActionMenu.click();
 

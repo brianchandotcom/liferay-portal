@@ -16,9 +16,9 @@
 	border-radius: 10px;
 	box-shadow: 0 10px 30px 0 rgba(4, 21, 21, 0.09);
 	margin-bottom: 2rem !important;
+	overflow: hidden;
 	padding: 32px;
 	position: relative;
-	overflow: hidden;
 }
 
 .trial-step__header {
@@ -28,14 +28,14 @@
 }
 
 .trial-step__header-left {
-	display: flex;
 	align-items: center;
+	display: flex;
 	gap: 0.75rem;
 }
 
 .trial-step__header-right {
-	display: flex;
 	align-items: center;
+	display: flex;
 }
 
 .trial-step__meta {
@@ -44,16 +44,16 @@
 }
 
 .trial-step__step {
-	display: flex;
 	align-items: center;
-	justify-content: center;
 	border-radius: 72px;
-	text-align: center;
-	height: 48px;
-	width: 48px;
-	margin-right: 16px;
-	font-size: 18px;
 	color: #fff;
+	display: flex;
+	font-size: 18px;
+	height: 48px;
+	justify-content: center;
+	margin-right: 16px;
+	text-align: center;
+	width: 48px;
 }
 
 .trial-step__step--incomplete {
@@ -71,23 +71,23 @@
 }
 
 .trial-step__btn {
-	box-sizing: border-box;
-	display: inline-flex;
 	align-items: center;
-	line-height: 2.5;
-	margin-right: 24px;
-	padding: 6px 30px;
+	background: #fff;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	box-sizing: border-box;
+	cursor: pointer;
+	display: inline-flex;
 	font-size: 14px;
 	font-weight: 900;
-	cursor: pointer;
-	background: #fff;
-	border-radius: 5px;
-	border: 1px solid transparent;
+	gap: 0.5rem;
+	line-height: 2.5;
+	margin-right: 24px;
 	min-height: 40px;
 	min-width: 210px;
-	gap: 0.5rem;
-	position: relative;
+	padding: 6px 30px;
 	padding-right: 2.25rem;
+	position: relative;
 }
 
 .trial-step__btn.mark-as-complete {
@@ -105,27 +105,27 @@
 
 .trial-step__spinner,
 .spinner {
-	width: 18px;
 	height: 18px;
 	position: absolute;
 	right: 0.75rem;
 	top: 50%;
 	transform: translateY(-50%);
+	width: 18px;
 }
 
 .trial-step__toggle {
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	height: 48px;
-	width: 48px;
-	margin-left: 16px;
-	border-radius: 32px;
-	box-shadow: 0 2px 7px 0 rgba(29, 140, 140, 0.24);
-	font-size: 25px !important;
 	background: transparent;
 	border: 0;
+	border-radius: 32px;
+	box-shadow: 0 2px 7px 0 rgba(29, 140, 140, 0.24);
 	cursor: pointer;
+	display: flex;
+	font-size: 25px !important;
+	height: 48px;
+	justify-content: center;
+	margin-left: 16px;
+	width: 48px;
 }
 
 .trial-step__arrow {
@@ -156,8 +156,8 @@
 }
 
 .trial-step__title {
-	margin: 0;
 	line-height: 1.25;
+	margin: 0;
 }
 
 .trial-step.trial-step--edit.trial-step--expanded .trial-step__body-inner {
@@ -184,8 +184,8 @@
 }
 
 .is-loading {
-	pointer-events: none;
 	opacity: 0.65;
+	pointer-events: none;
 }
 
 .trial-step.trial-step--edit.is-empty .trial-step__cta {

@@ -6,7 +6,6 @@
 package com.liferay.exportimport.vulcan.batch.engine;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 
 import java.io.Serializable;
@@ -23,12 +22,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	public ExportImportDescriptor getExportImportDescriptor();
 
 	public interface ExportImportDescriptor {
-
-		public default UnsafeFunction<String, String, Exception>
-			filterApplicableExternalReferenceCode() {
-
-			return externalReferenceCode -> externalReferenceCode;
-		}
 
 		public default String getClassName() {
 			return getClass().getName();
@@ -59,6 +52,12 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		public Scope getScope();
 
 		public default boolean isActive(PortletDataContext portletDataContext) {
+			return true;
+		}
+
+		public default boolean isApplicableExternalReferenceCode(
+			String externalReferenceCode) {
+
 			return true;
 		}
 

@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -10,23 +10,20 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Marco Leo
  */
-public class ObjectLayoutBoxCategorizationTypeException
-	extends PortalException {
+public class ObjectLayoutBoxTypeException extends PortalException {
 
-	public ObjectLayoutBoxCategorizationTypeException() {
+	public ObjectLayoutBoxTypeException() {
 	}
 
-	public ObjectLayoutBoxCategorizationTypeException(String msg) {
+	public ObjectLayoutBoxTypeException(String msg) {
 		super(msg);
 	}
 
-	public ObjectLayoutBoxCategorizationTypeException(
-		String msg, Throwable throwable) {
-
+	public ObjectLayoutBoxTypeException(String msg, Throwable throwable) {
 		super(msg, throwable);
 	}
 
-	public ObjectLayoutBoxCategorizationTypeException(Throwable throwable) {
+	public ObjectLayoutBoxTypeException(Throwable throwable) {
 		super(throwable);
 	}
 

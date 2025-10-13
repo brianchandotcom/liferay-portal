@@ -197,7 +197,7 @@ export default function AssetsFDSPropsTransformer({
 		}) {
 			if (
 				action?.data?.id === 'default-permissions' ||
-				action.data.id === 'edit-and-propagate-default-permissions'
+				action?.data?.id === 'edit-and-propagate-default-permissions'
 			) {
 				openModal({
 					containerProps: {

@@ -278,18 +278,15 @@ public class BatchEnginePortletDataHandlerRegistrar {
 				return;
 			}
 
-			String className = GetterUtil.getObject(
-				(String)serviceReference.getProperty(
-					"batch.engine.task.item.delegate.class.name"),
-				() -> (String)serviceReference.getProperty(
-					"batch.engine.entity.class.name"));
-
-			String taskItemDelegateName = (String)serviceReference.getProperty(
-				"batch.engine.task.item.delegate.name");
-
 			batchEnginePortletDataHandler.
 				unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-					className, taskItemDelegateName);
+					GetterUtil.getObject(
+						(String)serviceReference.getProperty(
+							"batch.engine.task.item.delegate.class.name"),
+						() -> (String)serviceReference.getProperty(
+							"batch.engine.entity.class.name")),
+					(String)serviceReference.getProperty(
+						"batch.engine.task.item.delegate.name"));
 
 			String[] classNames = batchEnginePortletDataHandler.getClassNames();
 

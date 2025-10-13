@@ -122,7 +122,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String[] getClassNames() {
 		return TransformUtil.transformToArray(
-			_registrations, Registration::getClassName, String.class);
+			_registrations, Registration::getBatchEngineClassName,
+			String.class);
 	}
 
 	@Override
@@ -141,20 +142,20 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void registerExportImportVulcanBatchEngineTaskItemDelegate(
-		String className,
+		String batchEngineClassName,
 		ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
 			exportImportDescriptor,
 		String taskItemDelegateName) {
 
 		String fileNamePrefix = GetterUtil.getString(
-			taskItemDelegateName, className);
+			taskItemDelegateName, batchEngineClassName);
 
 		_registrations.add(
 			new Registration() {
 
 				@Override
-				public String getClassName() {
-					return className;
+				public String getBatchEngineClassName() {
+					return batchEngineClassName;
 				}
 
 				@Override
@@ -202,14 +203,16 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	public void unregisterExportImportVulcanBatchEngineTaskItemDelegate(
-		String className, String taskItemDelegateName) {
+		String batchEngineClassName, String taskItemDelegateName) {
 
 		Iterator<Registration> iterator = _registrations.iterator();
 
 		while (iterator.hasNext()) {
 			Registration registration = iterator.next();
 
-			if (Objects.equals(registration.getClassName(), className) &&
+			if (Objects.equals(
+					registration.getBatchEngineClassName(),
+					batchEngineClassName) &&
 				Objects.equals(
 					registration.getTaskItemDelegateName(),
 					taskItemDelegateName)) {
@@ -250,7 +253,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			BatchEngineImportTask batchEngineDeleteTask =
 				_batchEngineImportTaskService.addBatchEngineImportTask(
 					null, portletDataContext.getCompanyId(), _getUserId(), 100,
-					null, registration.getClassName(),
+					null, registration.getBatchEngineClassName(),
 					_getBytes(
 						_normalize(
 							registration.getFileName(),
@@ -365,7 +368,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			BatchEngineImportTask batchEngineImportTask =
 				_batchEngineImportTaskService.addBatchEngineImportTask(
 					null, portletDataContext.getCompanyId(), _getUserId(), 100,
-					null, registration.getClassName(),
+					null, registration.getBatchEngineClassName(),
 					_getBytes(normalizedFileName, inputStream), "JSON",
 					BatchEngineTaskExecuteStatus.INITIAL.name(),
 					Collections.emptyMap(),
@@ -471,7 +474,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return _batchEngineExportTaskExecutor.execute(
 			_batchEngineExportTaskLocalService.createBatchEngineExportTask(
 				0L, null, portletDataContext.getCompanyId(), _getUserId(), null,
-				registration.getClassName(), "JSON",
+				registration.getBatchEngineClassName(), "JSON",
 				BatchEngineTaskExecuteStatus.INITIAL.name(),
 				Collections.emptyList(),
 				BatchEnginePortletDataHandlerUtil.buildExportParameters(
@@ -612,7 +615,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	private interface Registration {
 
-		public String getClassName();
+		public String getBatchEngineClassName();
 
 		public String getDeletionsFileName();
 

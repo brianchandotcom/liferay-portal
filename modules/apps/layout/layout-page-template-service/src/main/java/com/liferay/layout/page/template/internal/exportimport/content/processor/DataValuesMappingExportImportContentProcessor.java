@@ -614,6 +614,50 @@ public class DataValuesMappingExportImportContentProcessor
 		}
 	}
 
+	private void _replaceFormSuccessMessageLayoutReferences(
+		JSONObject itemJSONObject, PortletDataContext portletDataContext) {
+
+		if (!itemJSONObject.has("config")) {
+			return;
+		}
+
+		JSONObject configJSONObject = itemJSONObject.getJSONObject("config");
+
+		if (!configJSONObject.has("successMessage")) {
+			return;
+		}
+
+		JSONObject successMessageJSONObject = configJSONObject.getJSONObject(
+			"successMessage");
+
+		if (successMessageJSONObject == null) {
+			return;
+		}
+
+		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
+			"layout");
+
+		if ((layoutJSONObject == null) || (layoutJSONObject.length() == 0)) {
+			return;
+		}
+
+		if (layoutJSONObject.getLong("groupId") ==
+				portletDataContext.getSourceGroupId()) {
+
+			layoutJSONObject.put(
+				"groupId", portletDataContext.getScopeGroupId());
+
+			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+				layoutJSONObject.getString("layoutUuid"),
+				portletDataContext.getScopeGroupId(),
+				layoutJSONObject.getBoolean("privateLayout"));
+
+			if (layout != null) {
+				layoutJSONObject.put("layoutId", layout.getLayoutId());
+			}
+		}
+	}
+
 	private void _replaceImportContentReferences(
 		JSONObject jsonObject, PortletDataContext portletDataContext,
 		StagedModel stagedModel) {
@@ -652,6 +696,8 @@ public class DataValuesMappingExportImportContentProcessor
 				_replaceFormImportContentReferences(
 					itemJSONObject, portletDataContext, stagedModel);
 				_replaceFormOrRowImportContentReferences(
+					itemJSONObject, portletDataContext);
+				_replaceFormSuccessMessageLayoutReferences(
 					itemJSONObject, portletDataContext);
 			}
 			else if (Objects.equals(

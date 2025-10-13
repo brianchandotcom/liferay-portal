@@ -6269,9 +6269,23 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			passwordPolicy.isChangeRequired() &&
 			(user.getLastLoginDate() == null)) {
 
-			user.setPasswordReset(true);
+			Company company = _companyLocalService.getCompany(
+				user.getCompanyId());
+			Contact contact = _contactLocalService.getContact(
+				user.getContactId());
 
-			user = userPersistence.update(user);
+			User guestUser = company.getGuestUser();
+
+			if (contact.getUserId() == guestUser.getUserId()) {
+				user.setPasswordReset(false);
+
+				user = userPersistence.update(user);
+			}
+			else {
+				user.setPasswordReset(true);
+
+				user = userPersistence.update(user);
+			}
 		}
 
 		return user;

@@ -1478,6 +1478,17 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/toolbar@^3.148.0":
+  version "3.148.0"
+  resolved "https://registry.yarnpkg.com/@clayui/toolbar/-/toolbar-3.148.0.tgz#617f746f0468afedebfe1927155b85e399430409"
+  integrity sha512-wfARGNYg82y9+SWW8WU6S1twp5Tn9cQ/TDcb7FLWLN1mIODOfqVuvxh0x7F0kDp41r618G87zvUZme+YmdC7EA==
+  dependencies:
+    "@clayui/form" "^3.148.0"
+    "@clayui/icon" "^3.144.1"
+    "@clayui/label" "^3.144.1"
+    "@clayui/link" "^3.144.1"
+    classnames "^2.2.6"
+
 "@clayui/tooltip@^3.148.0":
   version "3.148.0"
   resolved "https://registry.yarnpkg.com/@clayui/tooltip/-/tooltip-3.148.0.tgz#8602db80b7bcd7a91e199d9778a23481ba448715"

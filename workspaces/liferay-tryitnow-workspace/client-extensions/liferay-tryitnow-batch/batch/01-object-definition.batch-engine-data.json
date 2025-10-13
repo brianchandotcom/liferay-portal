@@ -23,8 +23,8 @@
 			"name": "M2H8ProgressTracker",
 			"objectFields": [
 				{
-					"businessType": "Boolean",
 					"DBType": "Boolean",
+					"businessType": "Boolean",
 					"externalReferenceCode": "DONE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -34,7 +34,8 @@
 					},
 					"localized": false,
 					"name": "done",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -44,8 +45,8 @@
 					"unique": false
 				},
 				{
-					"businessType": "Integer",
 					"DBType": "Integer",
+					"businessType": "Integer",
 					"externalReferenceCode": "STEP_NUMBER",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -70,8 +71,8 @@
 					"unique": true
 				},
 				{
-					"businessType": "Text",
 					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "TITLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -81,7 +82,8 @@
 					},
 					"localized": false,
 					"name": "title",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -91,8 +93,8 @@
 					"unique": false
 				},
 				{
-					"businessType": "Text",
 					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "TIME_TO_COMPLETE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -102,7 +104,8 @@
 					},
 					"localized": false,
 					"name": "timeToComplete",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -112,8 +115,8 @@
 					"unique": false
 				},
 				{
-					"businessType": "Text",
 					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "CALL_TO_ACTION_LINK",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -123,7 +126,8 @@
 					},
 					"localized": false,
 					"name": "callToActionLink",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -133,8 +137,8 @@
 					"unique": false
 				},
 				{
-					"businessType": "Text",
 					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "CALL_TO_ACTION_TEXT",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -144,7 +148,8 @@
 					},
 					"localized": false,
 					"name": "callToActionText",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -154,8 +159,8 @@
 					"unique": false
 				},
 				{
-					"businessType": "Picklist",
 					"DBType": "String",
+					"businessType": "Picklist",
 					"defaultValue": "self",
 					"externalReferenceCode": "CALL_TO_ACTION_TARGET",
 					"indexed": true,

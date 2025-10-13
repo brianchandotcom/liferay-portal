@@ -14,7 +14,8 @@ import org.osgi.service.component.annotations.Reference;
 public class LPD_7748 {
 
 	public void method(long companyId, String externalReferenceCode) {
-		AccountGroupLocalServiceUtil.fetchByExternalReferenceCode(123, externalReferenceCode);
+		AccountGroupLocalServiceUtil.fetchByExternalReferenceCode(
+			123, externalReferenceCode);
 		AccountGroupLocalServiceUtil.fetchAccountGroupByExternalReferenceCode(externalReferenceCode, companyId);
 		AccountGroupServiceUtil.fetchAccountGroupByExternalReferenceCode(externalReferenceCode, companyId);
 		_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(externalReferenceCode, companyId);

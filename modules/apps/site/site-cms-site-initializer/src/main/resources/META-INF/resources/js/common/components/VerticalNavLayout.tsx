@@ -47,7 +47,10 @@ export default function VerticalNavLayout({items}: {items: Item[]}) {
 					md="auto"
 					sm={12}
 				>
-					<div className="px-md-2 py-3 py-md-4">
+					<div
+						className="px-md-2 py-3 py-md-4"
+						data-testid="cms-vertical-nav"
+					>
 						<ClayVerticalNav items={verticalNavItems} />
 					</div>
 				</ClayLayout.Col>

@@ -243,8 +243,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementDefinition.Type.COLLECTION_ITEM, StringPool.BLANK));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", null, null, "FileEntry_fileName", null,
-				false, RandomTestUtil.randomString()));
+				null, RandomTestUtil.randomString(), null, null,
+				"FileEntry_fileName", null, false,
+				RandomTestUtil.randomString()));
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -256,7 +257,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", FileEntry.class.getName(),
+				null, RandomTestUtil.randomString(), FileEntry.class.getName(),
 				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
 				null, false, RandomTestUtil.randomString()));
 
@@ -266,7 +267,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", JournalArticle.class.getName(),
+				null, RandomTestUtil.randomString(),
+				JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", null, false,
 				RandomTestUtil.randomString()));
@@ -274,14 +276,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
 		_getContainerPageElement(
-			new String[] {"1", "2", "3"}, null, Layout.class.getName(),
-			layout.getExternalReferenceCode(), null, null, true,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)), null,
+			Layout.class.getName(), layout.getExternalReferenceCode(), null,
+			null, true, RandomTestUtil.randomString());
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "custom css 2", null,
-				null, null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), null, null, null,
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
 				).put(
@@ -323,17 +325,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "custom css 1", false,
-				false, 2, 6,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, false, 2, 6,
 				GridPageElementDefinition.VerticalAlignment.MIDDLE));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				null, "custom css 2", true, true, 1, 3,
+				null, RandomTestUtil.randomString(), true, true, 1, 3,
 				GridPageElementDefinition.VerticalAlignment.TOP));
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				new String[] {"cssClass3", "cssClass4"}, null, false, false, 6,
-				12, GridPageElementDefinition.VerticalAlignment.BOTTOM));
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				null, false, false, 6, 12,
+				GridPageElementDefinition.VerticalAlignment.BOTTOM));
 	}
 
 	@Ignore
@@ -355,8 +358,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", null, null, "FileEntry_fileName", null,
-				false, externalReferenceCode));
+				null, RandomTestUtil.randomString(), null, null,
+				"FileEntry_fileName", null, false, externalReferenceCode));
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
@@ -368,7 +371,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", FileEntry.class.getName(),
+				null, RandomTestUtil.randomString(), FileEntry.class.getName(),
 				fileEntry.getExternalReferenceCode(), "FileEntry_fileName",
 				null, false, externalReferenceCode));
 
@@ -378,7 +381,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				null, "custom css 1", JournalArticle.class.getName(),
+				null, RandomTestUtil.randomString(),
+				JournalArticle.class.getName(),
 				journalArticle.getExternalReferenceCode(),
 				"JournalArticle_title", null, false, externalReferenceCode));
 
@@ -386,14 +390,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"1", "2", "3"}, null, Layout.class.getName(),
-				layout.getExternalReferenceCode(), null, null, true,
-				externalReferenceCode));
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				null, Layout.class.getName(), layout.getExternalReferenceCode(),
+				null, null, true, externalReferenceCode));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "custom css 2", null,
-				null, null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), null, null, null,
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), "https://www.liferay.es"
 				).put(
@@ -411,20 +415,22 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				externalReferenceCode));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				new String[] {"cssClass1", "cssClass2"}, "custom css 1", false,
-				false, 2, 6, GridPageElementDefinition.VerticalAlignment.MIDDLE,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, false, 2, 6,
+				GridPageElementDefinition.VerticalAlignment.MIDDLE,
 				externalReferenceCode,
 				_getModulePageElements(externalReferenceCode, 6)));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				null, "custom css 2", true, true, 1, 3,
+				null, RandomTestUtil.randomString(), true, true, 1, 3,
 				GridPageElementDefinition.VerticalAlignment.TOP,
 				externalReferenceCode,
 				_getModulePageElements(externalReferenceCode, 3)));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
-				new String[] {"cssClass3", "cssClass4"}, null, false, false, 6,
-				12, GridPageElementDefinition.VerticalAlignment.BOTTOM,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				null, false, false, 6, 12,
+				GridPageElementDefinition.VerticalAlignment.BOTTOM,
 				externalReferenceCode,
 				_getModulePageElements(externalReferenceCode, 12)));
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -691,13 +697,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return new FragmentViewport[] {
 			new FragmentViewport() {
 				{
-					setCustomCSS("mobile custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setId(ViewportSize.MOBILE_LANDSCAPE::getViewportSizeId);
 				}
 			},
 			new FragmentViewport() {
 				{
-					setCustomCSS("tablet custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setId(ViewportSize.TABLET::getViewportSizeId);
 				}
 			}
@@ -780,7 +786,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return new GridViewport[] {
 			new GridViewport() {
 				{
-					setCustomCSS("landscape mobile custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setGridViewportDefinition(
 						() -> new GridViewportDefinition() {
 							{
@@ -795,7 +801,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			},
 			new GridViewport() {
 				{
-					setCustomCSS("portrait mobile custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setGridViewportDefinition(
 						() -> new GridViewportDefinition() {
 							{
@@ -810,7 +816,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			},
 			new GridViewport() {
 				{
-					setCustomCSS("tablet custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setGridViewportDefinition(
 						() -> new GridViewportDefinition() {
 							{
@@ -830,7 +836,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return new GridViewport[] {
 			new GridViewport() {
 				{
-					setCustomCSS("landscape mobile custom css");
+					setCustomCSS(RandomTestUtil.randomString());
 					setGridViewportDefinition(
 						() -> new GridViewportDefinition() {
 							{

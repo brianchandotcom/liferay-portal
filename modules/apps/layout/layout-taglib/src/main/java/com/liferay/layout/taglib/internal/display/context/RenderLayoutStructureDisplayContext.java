@@ -495,13 +495,12 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructureRulesResult;
 	}
 
-	public List<String> getMainChildrenItemIds() {
-		LayoutStructure layoutStructure = getLayoutStructure();
+	public String getMainItemId() {
+		if (Validator.isNotNull(_mainItemId)) {
+			return _mainItemId;
+		}
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(_getMainItemId());
-
-		return layoutStructureItem.getChildrenItemIds();
+		return _layoutStructure.getMainItemId();
 	}
 
 	public String getNotificationText(
@@ -1026,14 +1025,6 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return null;
-	}
-
-	private String _getMainItemId() {
-		if (Validator.isNotNull(_mainItemId)) {
-			return _mainItemId;
-		}
-
-		return _layoutStructure.getMainItemId();
 	}
 
 	private long _getPreviewClassNameId() {

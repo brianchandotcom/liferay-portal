@@ -47,6 +47,7 @@ import com.liferay.layout.taglib.internal.display.context.RenderLayoutStructureD
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.CollectionPaginationUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.ColumnLayoutStructureItem;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
@@ -57,6 +58,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.petra.string.StringBundler;
@@ -133,8 +135,7 @@ public class LayoutStructureRenderer {
 	}
 
 	public void render() throws Exception {
-		_renderLayoutStructure(
-			_renderLayoutStructureDisplayContext.getMainChildrenItemIds());
+		_renderLayoutStructure();
 
 		if (_renderActionHandler) {
 			_renderComponent(
@@ -1676,13 +1677,33 @@ public class LayoutStructureRenderer {
 		}
 	}
 
-	private void _renderLayoutStructure(List<String> childrenItemIds)
-		throws Exception {
-
+	private void _renderLayoutStructure() throws Exception {
 		_httpServletRequest.setAttribute(
 			LayoutWebKeys.LAYOUT_STRUCTURE, _layoutStructure);
 
-		_renderLayoutStructure(childrenItemIds, null);
+		LayoutStructureItem layoutStructureItem =
+			_layoutStructure.getLayoutStructureItem(
+				_renderLayoutStructureDisplayContext.getMainItemId());
+
+		if (layoutStructureItem == null) {
+			return;
+		}
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)LayoutStructureItemUtil.getAncestor(
+				layoutStructureItem.getItemId(),
+				LayoutDataItemTypeConstants.TYPE_FORM, _layoutStructure);
+
+		if (formStyledLayoutStructureItem != null) {
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(),
+				_renderLayoutStructureDisplayContext.getInfoForm(
+					formStyledLayoutStructureItem));
+		}
+		else {
+			_renderLayoutStructure(
+				layoutStructureItem.getChildrenItemIds(), null);
+		}
 	}
 
 	private void _renderLayoutStructure(

@@ -4,14 +4,13 @@
  */
 
 import {ClayRadio} from '@clayui/form';
+import {ReactNode} from 'react';
+import classNames from 'classnames';
+import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClaySticker from '@clayui/sticker';
-import classNames from 'classnames';
 
 import './RadioCard.scss';
-
-import ClayIcon from '@clayui/icon';
-import {ReactNode} from 'react';
 
 interface RadioCardProps {
 	activeRadio: boolean | undefined;

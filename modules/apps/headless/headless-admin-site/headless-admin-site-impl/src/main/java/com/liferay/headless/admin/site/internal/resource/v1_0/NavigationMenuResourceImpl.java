@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.internal.odata.entity.v1_0.NavigationMenu
 import com.liferay.headless.admin.site.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -80,6 +81,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Override
 	public void deleteNavigationMenu(Long navigationMenuId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		_siteNavigationMenuService.deleteSiteNavigationMenu(navigationMenuId);
 	}
 
@@ -87,6 +94,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	public void deleteSiteNavigationMenuByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		_siteNavigationMenuService.deleteSiteNavigationMenu(
 			externalReferenceCode, siteId);
@@ -101,6 +114,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	protected NavigationMenu doGetNavigationMenu(Long navigationMenuId)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _toNavigationMenu(
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
 				navigationMenuId));
@@ -110,6 +129,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	protected NavigationMenu doGetSiteNavigationMenuByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toNavigationMenu(
 			_siteNavigationMenuService.
@@ -122,6 +147,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return SearchUtil.search(
 			HashMapBuilder.put(
@@ -167,6 +198,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Long siteId, NavigationMenu navigationMenu)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _addNavigationMenu(
 			navigationMenu.getExternalReferenceCode(), siteId, navigationMenu);
 	}
@@ -175,6 +212,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	protected NavigationMenu doPutNavigationMenu(
 			Long navigationMenuId, NavigationMenu navigationMenu)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
@@ -188,6 +231,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Long siteId, String externalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-66179")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.

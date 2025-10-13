@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
-import com.liferay.batch.engine.exception.BatchEngineImportTaskItemConversionException;
+import com.liferay.batch.engine.exception.BatchEngineImportTaskExecutorException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -53,7 +53,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
 			Map<String, Object> fieldNameValueMap,
 			List<ItemReaderPostAction> itemReaderPostActions)
-		throws BatchEngineImportTaskItemConversionException {
+		throws BatchEngineImportTaskExecutorException {
 
 		T item = null;
 
@@ -163,8 +163,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			}
 		}
 		catch (Exception exception) {
-			throw new BatchEngineImportTaskItemConversionException(
-				item, exception);
+			throw new BatchEngineImportTaskExecutorException(item, exception);
 		}
 
 		return item;

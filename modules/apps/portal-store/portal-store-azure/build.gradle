@@ -1,5 +1,5 @@
 dependencies {
-	compileInclude 	group: "io.projectreactor.netty", name: "reactor-netty-core", version: "1.0.45"
+	compileInclude 	group: "io.projectreactor.netty", name: "reactor-netty-core", version: "1.2.10"
 	compileInclude 	group: "org.slf4j", name: "slf4j-api", version: "1.7.26"
 	compileInclude group: "com.azure", name: "azure-core", version: "1.50.0"
 	compileInclude group: "com.azure", name: "azure-core-http-netty", version: "1.15.2"

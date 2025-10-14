@@ -183,7 +183,9 @@ public class LayoutPersistenceTest {
 
 		newLayout.setPriority(RandomTestUtil.nextInt());
 
-		newLayout.setFaviconFileEntryId(RandomTestUtil.nextLong());
+		newLayout.setFaviconFileEntryERC(RandomTestUtil.randomString());
+
+		newLayout.setFaviconFileEntryScopeERC(RandomTestUtil.randomString());
 
 		newLayout.setMasterLayoutPageTemplateEntryERC(
 			RandomTestUtil.randomString());
@@ -272,8 +274,11 @@ public class LayoutPersistenceTest {
 		Assert.assertEquals(
 			existingLayout.getPriority(), newLayout.getPriority());
 		Assert.assertEquals(
-			existingLayout.getFaviconFileEntryId(),
-			newLayout.getFaviconFileEntryId());
+			existingLayout.getFaviconFileEntryERC(),
+			newLayout.getFaviconFileEntryERC());
+		Assert.assertEquals(
+			existingLayout.getFaviconFileEntryScopeERC(),
+			newLayout.getFaviconFileEntryScopeERC());
 		Assert.assertEquals(
 			existingLayout.getMasterLayoutPageTemplateEntryERC(),
 			newLayout.getMasterLayoutPageTemplateEntryERC());
@@ -664,9 +669,10 @@ public class LayoutPersistenceTest {
 			"classPK", true, "name", true, "keywords", true, "robots", true,
 			"type", true, "hidden", true, "system", true, "friendlyURL", true,
 			"iconImageId", true, "themeId", true, "colorSchemeId", true,
-			"styleBookEntryERC", true, "priority", true, "faviconFileEntryId",
-			true, "masterLayoutPageTemplateEntryERC", true,
-			"layoutPrototypeUuid", true, "layoutPrototypeLinkEnabled", true,
+			"styleBookEntryERC", true, "priority", true, "faviconFileEntryERC",
+			true, "faviconFileEntryScopeERC", true,
+			"masterLayoutPageTemplateEntryERC", true, "layoutPrototypeUuid",
+			true, "layoutPrototypeLinkEnabled", true,
 			"layoutSetPrototypeLayoutERC", true, "publishDate", true,
 			"lastPublishDate", true, "status", true, "statusByUserId", true,
 			"statusByUserName", true, "statusDate", true);
@@ -1050,7 +1056,9 @@ public class LayoutPersistenceTest {
 
 		layout.setPriority(RandomTestUtil.nextInt());
 
-		layout.setFaviconFileEntryId(RandomTestUtil.nextLong());
+		layout.setFaviconFileEntryERC(RandomTestUtil.randomString());
+
+		layout.setFaviconFileEntryScopeERC(RandomTestUtil.randomString());
 
 		layout.setMasterLayoutPageTemplateEntryERC(
 			RandomTestUtil.randomString());

@@ -67,7 +67,9 @@ public class LayoutWrapper
 		attributes.put("styleBookEntryERC", getStyleBookEntryERC());
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
-		attributes.put("faviconFileEntryId", getFaviconFileEntryId());
+		attributes.put("faviconFileEntryERC", getFaviconFileEntryERC());
+		attributes.put(
+			"faviconFileEntryScopeERC", getFaviconFileEntryScopeERC());
 		attributes.put(
 			"masterLayoutPageTemplateEntryERC",
 			getMasterLayoutPageTemplateEntryERC());
@@ -287,10 +289,18 @@ public class LayoutWrapper
 			setPriority(priority);
 		}
 
-		Long faviconFileEntryId = (Long)attributes.get("faviconFileEntryId");
+		String faviconFileEntryERC = (String)attributes.get(
+			"faviconFileEntryERC");
 
-		if (faviconFileEntryId != null) {
-			setFaviconFileEntryId(faviconFileEntryId);
+		if (faviconFileEntryERC != null) {
+			setFaviconFileEntryERC(faviconFileEntryERC);
+		}
+
+		String faviconFileEntryScopeERC = (String)attributes.get(
+			"faviconFileEntryScopeERC");
+
+		if (faviconFileEntryScopeERC != null) {
+			setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
 		}
 
 		String masterLayoutPageTemplateEntryERC = (String)attributes.get(
@@ -685,13 +695,23 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns the favicon file entry ID of this layout.
+	 * Returns the favicon file entry erc of this layout.
 	 *
-	 * @return the favicon file entry ID of this layout
+	 * @return the favicon file entry erc of this layout
 	 */
 	@Override
-	public long getFaviconFileEntryId() {
-		return model.getFaviconFileEntryId();
+	public String getFaviconFileEntryERC() {
+		return model.getFaviconFileEntryERC();
+	}
+
+	/**
+	 * Returns the favicon file entry scope erc of this layout.
+	 *
+	 * @return the favicon file entry scope erc of this layout
+	 */
+	@Override
+	public String getFaviconFileEntryScopeERC() {
+		return model.getFaviconFileEntryScopeERC();
 	}
 
 	@Override
@@ -2110,13 +2130,23 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the favicon file entry ID of this layout.
+	 * Sets the favicon file entry erc of this layout.
 	 *
-	 * @param faviconFileEntryId the favicon file entry ID of this layout
+	 * @param faviconFileEntryERC the favicon file entry erc of this layout
 	 */
 	@Override
-	public void setFaviconFileEntryId(long faviconFileEntryId) {
-		model.setFaviconFileEntryId(faviconFileEntryId);
+	public void setFaviconFileEntryERC(String faviconFileEntryERC) {
+		model.setFaviconFileEntryERC(faviconFileEntryERC);
+	}
+
+	/**
+	 * Sets the favicon file entry scope erc of this layout.
+	 *
+	 * @param faviconFileEntryScopeERC the favicon file entry scope erc of this layout
+	 */
+	@Override
+	public void setFaviconFileEntryScopeERC(String faviconFileEntryScopeERC) {
+		model.setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
 	}
 
 	/**

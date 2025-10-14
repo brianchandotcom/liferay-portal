@@ -92,8 +92,13 @@ public class LayoutTable extends BaseTable<LayoutTable> {
 		"css", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, Integer> priority = createColumn(
 		"priority", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
-	public final Column<LayoutTable, Long> faviconFileEntryId = createColumn(
-		"faviconFileEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String> faviconFileEntryERC = createColumn(
+		"faviconFileEntryERC", String.class, Types.VARCHAR,
+		Column.FLAG_DEFAULT);
+	public final Column<LayoutTable, String> faviconFileEntryScopeERC =
+		createColumn(
+			"faviconFileEntryScopeERC", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<LayoutTable, String> masterLayoutPageTemplateEntryERC =
 		createColumn(
 			"masterLPTEERC", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);

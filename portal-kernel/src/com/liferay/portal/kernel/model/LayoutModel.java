@@ -1028,18 +1028,34 @@ public interface LayoutModel
 	public void setPriority(int priority);
 
 	/**
-	 * Returns the favicon file entry ID of this layout.
+	 * Returns the favicon file entry erc of this layout.
 	 *
-	 * @return the favicon file entry ID of this layout
+	 * @return the favicon file entry erc of this layout
 	 */
-	public long getFaviconFileEntryId();
+	@AutoEscape
+	public String getFaviconFileEntryERC();
 
 	/**
-	 * Sets the favicon file entry ID of this layout.
+	 * Sets the favicon file entry erc of this layout.
 	 *
-	 * @param faviconFileEntryId the favicon file entry ID of this layout
+	 * @param faviconFileEntryERC the favicon file entry erc of this layout
 	 */
-	public void setFaviconFileEntryId(long faviconFileEntryId);
+	public void setFaviconFileEntryERC(String faviconFileEntryERC);
+
+	/**
+	 * Returns the favicon file entry scope erc of this layout.
+	 *
+	 * @return the favicon file entry scope erc of this layout
+	 */
+	@AutoEscape
+	public String getFaviconFileEntryScopeERC();
+
+	/**
+	 * Sets the favicon file entry scope erc of this layout.
+	 *
+	 * @param faviconFileEntryScopeERC the favicon file entry scope erc of this layout
+	 */
+	public void setFaviconFileEntryScopeERC(String faviconFileEntryScopeERC);
 
 	/**
 	 * Returns the master layout page template entry erc of this layout.

@@ -810,7 +810,8 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="priority" type="int" />
-		<field name="faviconFileEntryId" type="long" />
+		<field name="faviconFileEntryERC" type="String" />
+		<field name="faviconFileEntryScopeERC" type="String" />
 		<field name="masterLayoutPageTemplateEntryERC" type="String" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />

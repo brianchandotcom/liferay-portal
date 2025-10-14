@@ -67,7 +67,7 @@ public class LayoutCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(89);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -135,8 +135,10 @@ public class LayoutCacheModel
 		sb.append(css);
 		sb.append(", priority=");
 		sb.append(priority);
-		sb.append(", faviconFileEntryId=");
-		sb.append(faviconFileEntryId);
+		sb.append(", faviconFileEntryERC=");
+		sb.append(faviconFileEntryERC);
+		sb.append(", faviconFileEntryScopeERC=");
+		sb.append(faviconFileEntryScopeERC);
 		sb.append(", masterLayoutPageTemplateEntryERC=");
 		sb.append(masterLayoutPageTemplateEntryERC);
 		sb.append(", layoutPrototypeUuid=");
@@ -306,7 +308,20 @@ public class LayoutCacheModel
 		}
 
 		layoutImpl.setPriority(priority);
-		layoutImpl.setFaviconFileEntryId(faviconFileEntryId);
+
+		if (faviconFileEntryERC == null) {
+			layoutImpl.setFaviconFileEntryERC("");
+		}
+		else {
+			layoutImpl.setFaviconFileEntryERC(faviconFileEntryERC);
+		}
+
+		if (faviconFileEntryScopeERC == null) {
+			layoutImpl.setFaviconFileEntryScopeERC("");
+		}
+		else {
+			layoutImpl.setFaviconFileEntryScopeERC(faviconFileEntryScopeERC);
+		}
 
 		if (masterLayoutPageTemplateEntryERC == null) {
 			layoutImpl.setMasterLayoutPageTemplateEntryERC("");
@@ -421,8 +436,8 @@ public class LayoutCacheModel
 		css = (String)objectInput.readObject();
 
 		priority = objectInput.readInt();
-
-		faviconFileEntryId = objectInput.readLong();
+		faviconFileEntryERC = objectInput.readUTF();
+		faviconFileEntryScopeERC = objectInput.readUTF();
 		masterLayoutPageTemplateEntryERC = objectInput.readUTF();
 		layoutPrototypeUuid = objectInput.readUTF();
 
@@ -580,7 +595,19 @@ public class LayoutCacheModel
 
 		objectOutput.writeInt(priority);
 
-		objectOutput.writeLong(faviconFileEntryId);
+		if (faviconFileEntryERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(faviconFileEntryERC);
+		}
+
+		if (faviconFileEntryScopeERC == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(faviconFileEntryScopeERC);
+		}
 
 		if (masterLayoutPageTemplateEntryERC == null) {
 			objectOutput.writeUTF("");
@@ -655,7 +682,8 @@ public class LayoutCacheModel
 	public String styleBookEntryERC;
 	public String css;
 	public int priority;
-	public long faviconFileEntryId;
+	public String faviconFileEntryERC;
+	public String faviconFileEntryScopeERC;
 	public String masterLayoutPageTemplateEntryERC;
 	public String layoutPrototypeUuid;
 	public boolean layoutPrototypeLinkEnabled;

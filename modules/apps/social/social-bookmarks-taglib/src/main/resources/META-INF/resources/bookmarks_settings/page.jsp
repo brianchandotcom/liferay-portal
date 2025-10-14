@@ -17,21 +17,21 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
 }
 
-// Left list
+// Current social bookmark types list
 
-List<KeyValuePair> leftList = new ArrayList<>();
+List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
 
 for (int i = 0; i < types.length; i++) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
 
 	if (socialBookmark != null) {
-		leftList.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
+		currentSocialBookmarkTypes.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
 	}
 }
 
-// Right list
+// Available social bookmark types list
 
-List<KeyValuePair> rightList = new ArrayList<>();
+List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
@@ -39,23 +39,23 @@ for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(curType);
 
 	if (!typesSet.contains(curType)) {
-		rightList.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
+		availableSocialBookmarkTypes.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
 	}
 }
 
-rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+availableSocialBookmarkTypes = ListUtil.sort(availableSocialBookmarkTypes, new KeyValuePairComparator(false, true));
 %>
 
 <aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
 
 <liferay-ui:input-move-boxes
-	leftBoxName="currentTypes"
-	leftList="<%= leftList %>"
-	leftReorder="<%= Boolean.TRUE.toString() %>"
-	leftTitle="current"
-	rightBoxName="availableTypes"
-	rightList="<%= rightList %>"
-	rightTitle="available"
+	rightBoxName="currentTypes"
+	rightList="<%= currentSocialBookmarkTypes %>"
+	rightReorder="<%= Boolean.TRUE.toString() %>"
+	rightTitle="in-use"
+	leftBoxName="availableTypes"
+	leftList="<%= availableSocialBookmarkTypes %>"
+	leftTitle="available"
 />
 
 <label class="control-label" for="<portlet:namespace />typesOptions">

@@ -291,7 +291,7 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
-	@TestInfo("LPD-46179")
+	@TestInfo({"LPD-46179", "LPD-67554"})
 	public void testDeleteLayoutWithLayoutPageTemplateEntryAndUtilityPageTemplateEntry()
 		throws Exception {
 
@@ -303,6 +303,11 @@ public class LayoutStagedModelDataHandlerTest
 				group.getGroupId(), TestPropsValues.getUserId()));
 
 		Group stagingGroup = group.getStagingGroup();
+
+		LayoutPageTemplateEntry basicLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				group.getGroupId(), LayoutPageTemplateEntryTypeConstants.BASIC,
+				WorkflowConstants.STATUS_APPROVED);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
@@ -319,7 +324,25 @@ public class LayoutStagedModelDataHandlerTest
 				ServiceContextTestUtil.getServiceContext(
 					stagingGroup.getGroupId(), TestPropsValues.getUserId()));
 
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			LayoutPageTemplateTestUtil.addLayoutPageTemplateEntry(
+				group.getGroupId(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				WorkflowConstants.STATUS_APPROVED);
+
 		_publishLayouts(group, stagingGroup);
+
+		LayoutPageTemplateEntry liveBasicLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByUuidAndGroupId(
+					basicLayoutPageTemplateEntry.getUuid(), group.getGroupId());
+
+		Assert.assertEquals(
+			basicLayoutPageTemplateEntry.getName(),
+			liveBasicLayoutPageTemplateEntry.getName());
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			basicLayoutPageTemplateEntry);
 
 		LayoutPageTemplateEntry liveLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
@@ -345,14 +368,35 @@ public class LayoutStagedModelDataHandlerTest
 		_layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
 			layoutUtilityPageEntry);
 
+		LayoutPageTemplateEntry liveMasterLayoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByUuidAndGroupId(
+					masterLayoutPageTemplateEntry.getUuid(),
+					group.getGroupId());
+
+		Assert.assertEquals(
+			masterLayoutPageTemplateEntry.getName(),
+			liveMasterLayoutPageTemplateEntry.getName());
+
+		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
+			masterLayoutPageTemplateEntry);
+
 		_publishLayouts(group, stagingGroup);
 
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				liveBasicLayoutPageTemplateEntry.
+					getLayoutPageTemplateEntryId()));
 		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				liveLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		Assert.assertNull(
 			_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
 				liveLayoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
+		Assert.assertNull(
+			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
+				liveMasterLayoutPageTemplateEntry.
+					getLayoutPageTemplateEntryId()));
 	}
 
 	@Test

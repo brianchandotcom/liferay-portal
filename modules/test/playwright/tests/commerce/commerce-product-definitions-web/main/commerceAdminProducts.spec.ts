@@ -99,6 +99,100 @@ test(
 );
 
 test(
+	'Add a SKU with subscriptions',
+	{tag: '@COMMERCE-6024'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductDetailsSkusPage,
+		commerceAdminProductPage,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Master',
+			});
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Simple T-Shirt'},
+				productType: 'simple',
+			});
+
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+		await commerceAdminProductDetailsPage.goToProductSkus();
+
+		await commerceAdminProductDetailsSkusPage.skuAddButton.click();
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuInput.fill(
+			'BLACKSKU'
+		);
+
+		await commerceAdminProductDetailsSkusPage.skuAddModalSkuPublishButton.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.skuAddModalSuccessMessage
+		).toBeVisible();
+
+		await commerceAdminProductDetailsSkusPage
+			.skusTableRowLink('BLACKSKU')
+			.click();
+
+		await commerceAdminProductDetailsSkusPage.goToSkuTab('Subscriptions');
+
+		const overrideToggle =
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByLabel(
+				'Override Subscription Settings'
+			);
+
+		await overrideToggle.check();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Payment Subscription'
+			)
+		).toBeVisible();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Delivery Subscription'
+			)
+		).toBeVisible();
+
+		await commerceAdminProductDetailsSkusPage.sidePanelSaveButton.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Success:Your request completed successfully.'
+			)
+		).toBeVisible();
+
+		await overrideToggle.uncheck();
+
+		await commerceAdminProductDetailsSkusPage.sidePanelSaveButton.click();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Success:Your request completed successfully.'
+			)
+		).toBeVisible();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Payment Subscription'
+			)
+		).not.toBeVisible();
+
+		await expect(
+			commerceAdminProductDetailsSkusPage.sidePanelFrame.getByText(
+				'Delivery Subscription'
+			)
+		).not.toBeVisible();
+	}
+);
+
+test(
 	'Currency changes based on price lists',
 	{tag: '@LPD-52938'},
 	async ({

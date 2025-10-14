@@ -23,6 +23,80 @@
 			"name": "M2H8ProgressTracker",
 			"objectFields": [
 				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CALL_TO_ACTION_LINK",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Call to Action Link"
+					},
+					"localized": false,
+					"name": "callToActionLink",
+					"objectFieldSettings": [],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Picklist",
+					"defaultValue": "self",
+					"externalReferenceCode": "CALL_TO_ACTION_TARGET",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Call to Action Target"
+					},
+					"listTypeDefinitionExternalReferenceCode": "M2H8_CALL_TO_ACTION_TARGET",
+					"localized": false,
+					"name": "callToActionTarget",
+					"objectFieldSettings": [
+						{
+							"name": "defaultValueType",
+							"value": "inputAsValue"
+						},
+						{
+							"name": "defaultValue",
+							"value": "self"
+						}
+					],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
+					"externalReferenceCode": "CALL_TO_ACTION_TEXT",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"indexedLanguageId": "en_US",
+					"label": {
+						"en_US": "Call to Action Text"
+					},
+					"localized": false,
+					"name": "callToActionText",
+					"objectFieldSettings": [],
+					"readOnly": "false",
+					"readOnlyConditionExpression": "",
+					"required": false,
+					"state": false,
+					"system": false,
+					"type": "String",
+					"unique": false
+				},
+				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
 					"externalReferenceCode": "DONE",
@@ -34,8 +108,7 @@
 					},
 					"localized": false,
 					"name": "done",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -73,28 +146,6 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "TITLE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Title"
-					},
-					"localized": false,
-					"name": "title",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
 					"externalReferenceCode": "TIME_TO_COMPLETE",
 					"indexed": true,
 					"indexedAsKeyword": false,
@@ -104,8 +155,7 @@
 					},
 					"localized": false,
 					"name": "timeToComplete",
-					"objectFieldSettings": [
-					],
+					"objectFieldSettings": [],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -117,71 +167,16 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
-					"externalReferenceCode": "CALL_TO_ACTION_LINK",
+					"externalReferenceCode": "TITLE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Call to Action Link"
+						"en_US": "Title"
 					},
 					"localized": false,
-					"name": "callToActionLink",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Text",
-					"externalReferenceCode": "CALL_TO_ACTION_TEXT",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Call to Action Text"
-					},
-					"localized": false,
-					"name": "callToActionText",
-					"objectFieldSettings": [
-					],
-					"readOnly": "false",
-					"readOnlyConditionExpression": "",
-					"required": false,
-					"state": false,
-					"system": false,
-					"type": "String",
-					"unique": false
-				},
-				{
-					"DBType": "String",
-					"businessType": "Picklist",
-					"defaultValue": "self",
-					"externalReferenceCode": "CALL_TO_ACTION_TARGET",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"indexedLanguageId": "en_US",
-					"label": {
-						"en_US": "Call to Action Target"
-					},
-					"listTypeDefinitionExternalReferenceCode": "M2H8_CALL_TO_ACTION_TARGET",
-					"localized": false,
-					"name": "callToActionTarget",
-					"objectFieldSettings": [
-						{
-							"name": "defaultValueType",
-							"value": "inputAsValue"
-						},
-						{
-							"name": "defaultValue",
-							"value": "self"
-						}
-					],
+					"name": "title",
+					"objectFieldSettings": [],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,

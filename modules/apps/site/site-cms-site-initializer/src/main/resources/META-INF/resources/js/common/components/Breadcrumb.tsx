@@ -16,6 +16,7 @@ import {DefaultPermissionModalContentProps} from '../../main_view/default_permis
 import ApiHelper from '../services/ApiHelper';
 import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
+
 const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
 
 export interface ActionDropdownItemProps {

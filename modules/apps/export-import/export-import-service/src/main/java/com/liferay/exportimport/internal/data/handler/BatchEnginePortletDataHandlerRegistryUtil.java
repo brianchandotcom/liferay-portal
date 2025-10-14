@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Vendel Toreki
  */
-public class BatchEnginePortletDataHandlerRegistry {
+public class BatchEnginePortletDataHandlerRegistryUtil {
 
 	public static BatchEnginePortletDataHandler getByModelClassName(
 		String modelClassName) {

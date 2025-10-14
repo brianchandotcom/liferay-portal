@@ -282,9 +282,7 @@ public class ConfigurationPersistenceManager
 		lock.lock();
 
 		try {
-			if (!InMemoryOnlyConfigurationThreadLocal.isInMemoryOnly() &&
-				!isEphemeral(pid, newDictionary)) {
-
+			if (!InMemoryOnlyConfigurationThreadLocal.isInMemoryOnly()) {
 				_storeInDatabase(pid, newDictionary);
 			}
 

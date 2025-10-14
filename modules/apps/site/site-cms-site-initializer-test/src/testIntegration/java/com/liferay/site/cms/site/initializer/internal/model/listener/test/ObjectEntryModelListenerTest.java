@@ -17,16 +17,13 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.filter.factory.FilterFactory;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -52,15 +49,14 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
 import com.liferay.site.cms.site.initializer.util.CMSDefaultPermissionUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.Serializable;
 
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,10 +64,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Stefano Motta
@@ -96,40 +88,9 @@ public class ObjectEntryModelListenerTest {
 		_userRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
-		if (_isCMSSiteInitialized()) {
-			return;
-		}
-
-		// These tests require the instance to be created with the feature
-		// flag LPD-17564 enabled. On CI, feature flags are enabled on
-		// demand for each test, but not during instance initialization.
-		// Until the feature flag LPD-17564 is removed, run the batch
-		// engine unit processor manually so that the object definitions
-		// are created.
-
-		Bundle testBundle = FrameworkUtil.getBundle(
-			GroupModelListenerTest.class);
-
-		BundleContext bundleContext = testBundle.getBundleContext();
-
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (!Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
-
-				continue;
-			}
-
-			_deleteFile(bundle, "00.list.type.definition");
-			_deleteFile(bundle, "01.object.folder");
-			_deleteFile(bundle, "02.object.definition");
-
-			CompletableFuture<Void> completableFuture =
-				_batchEngineUnitProcessor.processBatchEngineUnits(
-					_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-			completableFuture.join();
-		}
+		_group = CMSGroupTestUtil.getCMSGroup(
+			ObjectEntryModelListenerTest.class, _batchEngineUnitProcessor,
+			_batchEngineUnitReader, _siteInitializerRegistry);
 	}
 
 	@Test
@@ -554,16 +515,6 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	private Role _getOrAddCMSAdministratorRole(long companyId, long userId)
 		throws Exception {
 
@@ -577,19 +528,6 @@ public class ObjectEntryModelListenerTest {
 		return _roleLocalService.addRole(
 			null, userId, null, 0, RoleConstants.CMS_ADMINISTRATOR, null, null,
 			RoleConstants.TYPE_REGULAR, null, null);
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	@Inject
@@ -614,6 +552,8 @@ public class ObjectEntryModelListenerTest {
 	)
 	private FilterFactory<Predicate> _filterFactory;
 
+	private Group _group;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
@@ -623,9 +563,6 @@ public class ObjectEntryModelListenerTest {
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@Inject
-	private ObjectFolderLocalService _objectFolderLocalService;
-
 	private Role _ownerRole;
 
 	@Inject
@@ -633,6 +570,9 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 	private Role _userRole;
 

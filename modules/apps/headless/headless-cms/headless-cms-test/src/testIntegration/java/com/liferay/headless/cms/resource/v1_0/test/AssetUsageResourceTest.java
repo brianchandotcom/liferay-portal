@@ -23,24 +23,22 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
@@ -66,27 +64,24 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Thiago Buarque
@@ -109,31 +104,11 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		if (!_isCMSSiteInitialized()) {
-			Bundle testBundle = FrameworkUtil.getBundle(
-				AssetUsageResourceTest.class);
+		_originalTestGroupId = testGroup.getGroupId();
 
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					_deleteFile(bundle, "00.list.type.definition");
-					_deleteFile(bundle, "01.object.folder");
-					_deleteFile(bundle, "02.object.definition");
-
-					CompletableFuture<Void> completableFuture =
-						_batchEngineUnitProcessor.processBatchEngineUnits(
-							_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-					completableFuture.join();
-
-					break;
-				}
-			}
-		}
+		testGroup = CMSGroupTestUtil.getCMSGroup(
+			AssetUsageResourceTest.class, _batchEngineUnitProcessor,
+			_batchEngineUnitReader, _siteInitializerRegistry);
 
 		_cmsBasicDocumentObjectDefinition =
 			_objectDefinitionLocalService.
@@ -164,6 +139,14 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 					testCompany.getCompanyId());
 
 		_themeDisplay = _getThemeDisplay();
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		testGroup = _groupLocalService.getGroup(_originalTestGroupId);
+
+		super.tearDown();
 	}
 
 	@Override
@@ -371,16 +354,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			objectRelationship.getObjectFieldId2());
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
@@ -397,19 +370,6 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 		themeDisplay.setUser(testCompany.getGuestUser());
 
 		return themeDisplay;
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final String _LANGUAGE_ID = "en_US";
@@ -431,6 +391,9 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private LayoutClassedModelUsageLocalService
@@ -458,16 +421,19 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject
-	private ObjectFolderLocalService _objectFolderLocalService;
-
-	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
+
+	private long _originalTestGroupId;
 
 	@Inject
 	private Portal _portal;
 
 	private ObjectField _relationshipObjectField;
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
+
 	private ThemeDisplay _themeDisplay;
 
 }

@@ -316,7 +316,7 @@ public class DownloadObjectEntryFolderServletTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_DOCUMENT", _group.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", _group.getCompanyId());
 		ObjectEntryFolder parentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(
@@ -383,7 +383,7 @@ public class DownloadObjectEntryFolderServletTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.
 				getObjectDefinitionByExternalReferenceCode(
-					"L_BASIC_DOCUMENT", _group.getCompanyId());
+					"L_CMS_BASIC_DOCUMENT", _group.getCompanyId());
 		ObjectEntryFolder parentObjectEntryFolder =
 			_objectEntryFolderLocalService.
 				getObjectEntryFolderByExternalReferenceCode(

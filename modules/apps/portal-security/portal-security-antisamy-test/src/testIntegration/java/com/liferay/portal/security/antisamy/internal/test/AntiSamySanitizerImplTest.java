@@ -39,15 +39,15 @@ public class AntiSamySanitizerImplTest {
 	@Test
 	public void testSanitize() throws Exception {
 		_testSanitize(
-			"This little text should not have a space removed but it happens " +
-				"right here.",
-			"This little text should not have a space removed but it happens " +
-				"right here.");
-		_testSanitize(
 			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
 				"target=\"_blank\"></a></p>",
 			"<p><a href=\"test\" rel=\"noopener noreferrer\" " +
 				"target=\"_blank\"></a></p>");
+		_testSanitize(
+			"This little text should not have a space removed but it happens " +
+				"right here.",
+			"This little text should not have a space removed but it happens " +
+				"right here.");
 	}
 
 	private void _testSanitize(String expectedValue, String value)

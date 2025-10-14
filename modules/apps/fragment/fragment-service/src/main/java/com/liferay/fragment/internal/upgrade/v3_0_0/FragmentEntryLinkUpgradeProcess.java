@@ -86,11 +86,9 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
 				"FragmentEntryLink",
-				"originalFragmentEntryLinkERC VARCHAR(75) null"),
-			UpgradeProcessFactory.addColumns(
-				"FragmentEntryLink", "fragmentEntryERC VARCHAR(75) null"),
-			UpgradeProcessFactory.addColumns(
-				"FragmentEntryLink", "fragmentEntryScopeERC VARCHAR(75) null")
+				"originalFragmentEntryLinkERC VARCHAR(75) null",
+				"fragmentEntryERC VARCHAR(75) null",
+				"fragmentEntryScopeERC VARCHAR(75) null")
 		};
 	}
 

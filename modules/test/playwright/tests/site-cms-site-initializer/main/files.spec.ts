@@ -108,6 +108,15 @@ test(
 
 			await expect(spaceSpan).toContainText('Default');
 		});
+
+		await test.step('Remove draft file created', async () => {
+			await assetsPage.gotoFiles();
+
+			await assetsPage.execItemAction({
+				action: 'Delete',
+				filter: 'Untitled Asset',
+			});
+		});
 	}
 );
 

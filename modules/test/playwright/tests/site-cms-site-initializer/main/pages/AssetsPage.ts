@@ -119,7 +119,13 @@ export class AssetsPage {
 		action,
 		filter,
 	}: {
-		action: 'Download' | 'Share' | 'Show Details' | 'View' | 'View History';
+		action:
+			| 'Delete'
+			| 'Download'
+			| 'Share'
+			| 'Show Details'
+			| 'View'
+			| 'View History';
 		filter: string;
 	}) {
 		await this.dataSetFragmentPage.execItemAction({

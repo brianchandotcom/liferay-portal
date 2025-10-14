@@ -5,25 +5,15 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
-import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -31,12 +21,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSpaceConstants;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
+import com.liferay.site.cms.site.initializer.internal.util.PermissionUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -98,7 +87,8 @@ public class BreadcrumbDisplayContext {
 				),
 				JSONUtil.put(
 					"defaultPermissionAdditionalProps",
-					_getDefaultPermissionAdditionalProps()
+					PermissionUtil.getDefaultPermissionAdditionalProps(
+						_httpServletRequest, _themeDisplay)
 				).put(
 					"href", StringPool.BLANK
 				).put(
@@ -161,123 +151,6 @@ public class BreadcrumbDisplayContext {
 			}
 		).put(
 			"size", _size
-		).build();
-	}
-
-	private Map<String, Object> _getDefaultPermissionAdditionalProps()
-		throws Exception {
-
-		return HashMapBuilder.<String, Object>put(
-			"actions",
-			() -> HashMapBuilder.put(
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS,
-				() -> {
-					ObjectDefinition objectDefinition =
-						ObjectDefinitionLocalServiceUtil.
-							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_WEB_CONTENT",
-								_themeDisplay.getCompanyId());
-
-					List<String> guestUnsupportedActions =
-						ResourceActionsUtil.getResourceGuestUnsupportedActions(
-							null, objectDefinition.getClassName());
-
-					return TransformUtil.transformToArray(
-						ResourceActionsUtil.getResourceActions(
-							objectDefinition.getClassName()),
-						resourceAction -> HashMapBuilder.<String, Object>put(
-							"guestUnsupported",
-							guestUnsupportedActions.contains(resourceAction)
-						).put(
-							"key", resourceAction
-						).put(
-							"label",
-							ResourceActionsUtil.getAction(
-								_httpServletRequest, resourceAction)
-						).build(),
-						Map.class);
-				}
-			).put(
-				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES,
-				() -> {
-					ObjectDefinition objectDefinition =
-						ObjectDefinitionLocalServiceUtil.
-							getObjectDefinitionByExternalReferenceCode(
-								"L_BASIC_DOCUMENT",
-								_themeDisplay.getCompanyId());
-
-					List<String> guestUnsupportedActions =
-						ResourceActionsUtil.getResourceGuestUnsupportedActions(
-							null, objectDefinition.getClassName());
-
-					return TransformUtil.transformToArray(
-						ResourceActionsUtil.getResourceActions(
-							objectDefinition.getClassName()),
-						resourceAction -> HashMapBuilder.<String, Object>put(
-							"guestUnsupported",
-							guestUnsupportedActions.contains(resourceAction)
-						).put(
-							"key", resourceAction
-						).put(
-							"label",
-							ResourceActionsUtil.getAction(
-								_httpServletRequest, resourceAction)
-						).build(),
-						Map.class);
-				}
-			).put(
-				"OBJECT_ENTRY_FOLDERS",
-				() -> {
-					List<String> guestUnsupportedActions =
-						ResourceActionsUtil.getResourceGuestUnsupportedActions(
-							null, ObjectEntryFolder.class.getName());
-
-					return TransformUtil.transformToArray(
-						ResourceActionsUtil.getResourceActions(
-							ObjectEntryFolder.class.getName()),
-						resourceAction -> HashMapBuilder.<String, Object>put(
-							"guestUnsupported",
-							guestUnsupportedActions.contains(resourceAction)
-						).put(
-							"key", resourceAction
-						).put(
-							"label",
-							ResourceActionsUtil.getAction(
-								_httpServletRequest, resourceAction)
-						).build(),
-						Map.class);
-				}
-			).build()
-		).put(
-			"apiURL", getAPIURL()
-		).put(
-			"classExternalReferenceCode",
-			() -> {
-				Group group = _getGroup();
-
-				return group.getExternalReferenceCode();
-			}
-		).put(
-			"roles",
-			() -> TransformUtil.transformToArray(
-				RoleLocalServiceUtil.getGroupRolesAndTeamRoles(
-					_themeDisplay.getCompanyId(), null,
-					Arrays.asList(
-						RoleConstants.ADMINISTRATOR,
-						DepotRolesConstants.ASSET_LIBRARY_OWNER),
-					null, null,
-					new int[] {
-						RoleConstants.TYPE_REGULAR, RoleConstants.TYPE_DEPOT
-					},
-					0, 0, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				role -> HashMapBuilder.put(
-					"key", role.getName()
-				).put(
-					"name", role.getTitle(_themeDisplay.getLocale())
-				).put(
-					"type", String.valueOf(role.getType())
-				).build(),
-				Map.class)
 		).build();
 	}
 

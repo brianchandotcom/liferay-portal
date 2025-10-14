@@ -32,6 +32,8 @@ public class ObjectWebKeys {
 	public static final String OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE =
 		"OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE";
 
+	public static final String OBJECT_ENTRY_GROUP_ID = "OBJECT_ENTRY_GROUP_ID";
+
 	public static final String OBJECT_ENTRY_READ_ONLY =
 		"OBJECT_ENTRY_READ_ONLY";
 

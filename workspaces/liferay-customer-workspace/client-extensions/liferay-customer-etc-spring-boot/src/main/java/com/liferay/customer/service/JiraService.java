@@ -467,8 +467,6 @@ public class JiraService extends BaseService {
 			).put(
 				new JSONObject(
 				).put(
-					"objectTypeAttributeId", businessEventsAttributeId
-				).put(
 					"objectAttributeValues",
 					new JSONArray(
 					).put(
@@ -477,6 +475,8 @@ public class JiraService extends BaseService {
 							"value", businessEvents
 						)
 					)
+				).put(
+					"objectTypeAttributeId", businessEventsAttributeId
 				)
 			)
 		);
@@ -698,16 +698,10 @@ public class JiraService extends BaseService {
 				"set",
 				new JSONObject(
 				).put(
-					"type", "doc"
-				).put(
-					"version", 1
-				).put(
 					"content",
 					new JSONArray(
 					).put(
 						new JSONObject(
-						).put(
-							"type", "paragraph"
 						).put(
 							"content",
 							new JSONArray(
@@ -719,8 +713,14 @@ public class JiraService extends BaseService {
 									"type", "text"
 								)
 							)
+						).put(
+							"type", "paragraph"
 						)
 					)
+				).put(
+					"type", "doc"
+				).put(
+					"version", 1
 				)
 			)
 		);

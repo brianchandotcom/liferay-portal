@@ -151,20 +151,20 @@ public class TicketAttachmentsCompleteUploadRestController
 				).put(
 					new JSONObject(
 					).put(
-						"type", "paragraph"
-					).put(
 						"content",
 						new JSONArray(
 						).put(
 							new JSONObject(
 							).put(
-								"type", "text"
-							).put(
 								"text",
 								_getCommentAuthorInfo(
 									jwt, ticketAttachment.getUserId())
+							).put(
+								"type", "text"
 							)
 						)
+					).put(
+						"type", "paragraph"
 					)
 				).put(
 					new JSONObject(
@@ -174,13 +174,13 @@ public class TicketAttachmentsCompleteUploadRestController
 						).put(
 							new JSONObject(
 							).put(
-								"type", "paragraph"
-							).put(
 								"content",
 								new JSONArray(
 								).putAll(
 									_getCommentBodyJSONArray(commentBody)
 								)
+							).put(
+								"type", "paragraph"
 							)
 						)
 					).put(
@@ -189,33 +189,33 @@ public class TicketAttachmentsCompleteUploadRestController
 				).put(
 					new JSONObject(
 					).put(
-						"type", "paragraph"
-					).put(
 						"content",
 						new JSONArray(
 						).put(
 							new JSONObject(
-							).put(
-								"type", "text"
-							).put(
-								"text", ticketAttachment.getFileName()
 							).put(
 								"marks",
 								new JSONArray(
 								).put(
 									new JSONObject(
 									).put(
-										"type", "link"
-									).put(
 										"attrs",
 										new JSONObject(
 										).put(
 											"href", sb.toString()
 										)
+									).put(
+										"type", "link"
 									)
 								)
+							).put(
+								"text", ticketAttachment.getFileName()
+							).put(
+								"type", "text"
 							)
 						)
+					).put(
+						"type", "paragraph"
 					)
 				)
 			).put(
@@ -290,24 +290,24 @@ public class TicketAttachmentsCompleteUploadRestController
 				jsonArray.put(
 					new JSONObject(
 					).put(
-						"type", "text"
-					).put(
-						"text", link
-					).put(
 						"marks",
 						new JSONArray(
 						).put(
 							new JSONObject(
-							).put(
-								"type", "link"
 							).put(
 								"attrs",
 								new JSONObject(
 								).put(
 									"href", link
 								)
+							).put(
+								"type", "link"
 							)
 						)
+					).put(
+						"text", link
+					).put(
+						"type", "text"
 					));
 			}
 		}

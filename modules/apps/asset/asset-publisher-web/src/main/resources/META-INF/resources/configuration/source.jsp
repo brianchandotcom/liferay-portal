@@ -19,19 +19,19 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<%
 	Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());
 
-	// Left list
+	// Current class names list
 
-	List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+	List<KeyValuePair> currentClassNameIdsList = new ArrayList<KeyValuePair>();
 
 	long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
 
 	for (long classNameId : classNameIds) {
-		typesLeftList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
+		currentClassNameIdsList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
 	}
 
-	// Right list
+	// Available class names list
 
-	List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+	List<KeyValuePair> availableClassNameIdsList = new ArrayList<KeyValuePair>();
 
 	Arrays.sort(classNameIds);
 	%>
@@ -47,7 +47,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 				ClassName className = ClassNameLocalServiceUtil.getClassName(classNameId);
 
 				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
-					typesRightList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
+					availableClassNameIdsList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, className.getValue())));
 				}
 			%>
 
@@ -63,18 +63,18 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<aui:input name="preferences--classNameIds--" type="hidden" />
 
 	<%
-	typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+	availableClassNameIdsList = ListUtil.sort(availableClassNameIdsList, new KeyValuePairComparator(false, true));
 	%>
 
 	<div class="<%= assetPublisherDisplayContext.isAnyAssetType() ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
 		<liferay-ui:input-move-boxes
-			leftBoxName="currentClassNameIds"
-			leftList="<%= typesLeftList %>"
-			leftReorder="<%= Boolean.TRUE.toString() %>"
-			leftTitle="selected"
-			rightBoxName="availableClassNameIds"
-			rightList="<%= typesRightList %>"
-			rightTitle="available"
+			rightBoxName="currentClassNameIds"
+			rightList="<%= currentClassNameIdsList %>"
+			rightReorder="<%= Boolean.TRUE.toString() %>"
+			rightTitle="in-use"
+			leftBoxName="availableClassNameIds"
+			leftList="<%= availableClassNameIdsList %>"
+			leftTitle="available"
 		/>
 	</div>
 
@@ -96,23 +96,23 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		Long[] assetSelectedClassTypeIds = assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes);
 
-		// Left list
+		// Current subtypes list
 
-		List<KeyValuePair> subtypesLeftList = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> currentSubtypesList = new ArrayList<KeyValuePair>();
 
 		for (long subtypeId : assetSelectedClassTypeIds) {
 			try {
 				ClassType classType = classTypeReader.getClassType(subtypeId, locale);
 
-				subtypesLeftList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
+				currentSubtypesList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
 			}
 			catch (NoSuchModelException nsme) {
 			}
 		}
 
-		// Right list
+		// Available subtypes list
 
-		List<KeyValuePair> subtypesRightList = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> availableSubtypesList = new ArrayList<KeyValuePair>();
 
 		boolean anyAssetSubtype = GetterUtil.getBoolean(portletPreferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
 	%>
@@ -127,7 +127,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 					<%
 					for (ClassType classType : classTypes) {
 						if (Arrays.binarySearch(assetSelectedClassTypeIds, classType.getClassTypeId()) < 0) {
-							subtypesRightList.add(new KeyValuePair(String.valueOf(classType.getClassTypeId()), HtmlUtil.escape(classType.getName())));
+							availableSubtypesList.add(new KeyValuePair(String.valueOf(classType.getClassTypeId()), HtmlUtil.escape(classType.getName())));
 						}
 					%>
 
@@ -184,7 +184,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 					<%
 					}
 
-					typesRightList = ListUtil.sort(typesRightList, new KeyValuePairComparator(false, true));
+					availableClassNameIdsList = ListUtil.sort(availableClassNameIdsList, new KeyValuePairComparator(false, true));
 					%>
 
 				</div>
@@ -192,13 +192,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 			<div class="<%= (assetSelectedClassTypeIds.length > 1) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 				<liferay-ui:input-move-boxes
-					leftBoxName='<%= className + "currentClassTypeIds" %>'
-					leftList="<%= subtypesLeftList %>"
-					leftReorder="<%= Boolean.TRUE.toString() %>"
-					leftTitle="selected"
-					rightBoxName='<%= className + "availableClassTypeIds" %>'
-					rightList="<%= subtypesRightList %>"
-					rightTitle="available"
+					rightBoxName='<%= className + "currentClassTypeIds" %>'
+					rightList="<%= currentSubtypesList %>"
+					rightReorder="<%= Boolean.TRUE.toString() %>"
+					rightTitle="in-use"
+					leftBoxName='<%= className + "availableClassTypeIds" %>'
+					leftList="<%= availableSubtypesList %>"
+					leftTitle="available"
 				/>
 			</div>
 		</div>

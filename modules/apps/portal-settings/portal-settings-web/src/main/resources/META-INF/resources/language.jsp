@@ -62,42 +62,42 @@
 
 		<%
 
-		// Left list
+		// Available language ids list
 
-		List<KeyValuePair> leftList = new ArrayList<>();
+		List<KeyValuePair> availableLanguageIdsList = new ArrayList<>();
 
 		for (String propsValuesLanguageId : SetUtil.fromArray(PropsValues.LOCALES)) {
 			if (!ArrayUtil.contains(availableLanguageIds, propsValuesLanguageId)) {
 				Locale propsValuesLocale = LocaleUtil.fromLanguageId(propsValuesLanguageId, false);
 
 				if (propsValuesLocale != null) {
-					leftList.add(new KeyValuePair(propsValuesLanguageId, propsValuesLocale.getDisplayName(locale)));
+					availableLanguageIdsList.add(new KeyValuePair(propsValuesLanguageId, propsValuesLocale.getDisplayName(locale)));
 				}
 			}
 		}
 
-		leftList = ListUtil.sort(leftList, new KeyValuePairComparator(false, true));
+		availableLanguageIdsList = ListUtil.sort(availableLanguageIdsList, new KeyValuePairComparator(false, true));
 
-		// Right list
+		// Current language ids list
 
-		List<KeyValuePair> rightList = new ArrayList<>();
+		List<KeyValuePair> currentLanguageIdsList = new ArrayList<>();
 
 		String[] currentLanguageIds = ArrayUtil.unique(PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED));
 
 		for (String currentLanguageId : currentLanguageIds) {
 			Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
 
-			rightList.add(new KeyValuePair(currentLanguageId, currentLocale.getDisplayName(locale)));
+			currentLanguageIdsList.add(new KeyValuePair(currentLanguageId, currentLocale.getDisplayName(locale)));
 		}
 		%>
 
 		<liferay-ui:input-move-boxes
 			leftBoxName="availableLanguageIds"
-			leftList="<%= leftList %>"
+			leftList="<%= availableLanguageIdsList %>"
 			leftTitle="available"
 			rightBoxName="currentLanguageIds"
-			rightList="<%= rightList %>"
-			rightTitle="current"
+			rightList="<%= currentLanguageIdsList %>"
+			rightTitle="in-use"
 		/>
 	</aui:fieldset>
 </aui:fieldset>

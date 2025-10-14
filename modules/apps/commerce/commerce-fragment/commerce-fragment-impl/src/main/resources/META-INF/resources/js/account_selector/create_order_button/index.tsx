@@ -5,28 +5,19 @@
 
 import ClayButton from '@clayui/button';
 
-//@ts-ignore
+// @ts-ignore
 
 import {CommerceFrontendUtils} from 'commerce-frontend-js';
 import React from 'react';
 
-interface CreateOrderProps {
-	addCommerceOrderURL: string;
-	commerceChannelId: number;
-	currencyCode: string;
-	currentCommerceAccountId: number;
-	hasAddCommerceOrderPermission: boolean;
-	label: string;
-}
-
-const CreateOrderAction = ({
+const CreateOrderButton = ({
 	addCommerceOrderURL: orderDetailURL,
 	commerceChannelId,
+	configuration,
 	currencyCode,
 	currentCommerceAccountId,
 	hasAddCommerceOrderPermission,
-	label,
-}: CreateOrderProps) => {
+}: TCreateOrderButtonProps) => {
 	return (
 		<ClayButton
 			className="btn-create-order"
@@ -44,9 +35,9 @@ const CreateOrderAction = ({
 				});
 			}}
 		>
-			{label}
+			{configuration.label}
 		</ClayButton>
 	);
 };
 
-export default CreateOrderAction;
+export default CreateOrderButton;

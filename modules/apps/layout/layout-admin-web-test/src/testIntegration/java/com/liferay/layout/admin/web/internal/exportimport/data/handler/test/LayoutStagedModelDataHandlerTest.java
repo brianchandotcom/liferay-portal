@@ -309,7 +309,7 @@ public class LayoutStagedModelDataHandlerTest
 				group.getGroupId(), LayoutPageTemplateEntryTypeConstants.BASIC,
 				WorkflowConstants.STATUS_APPROVED);
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
+		LayoutPageTemplateEntry displayPageLayoutPageTemplateEntry =
 			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
 				stagingGroup.getGroupId(),
 				_portal.getClassNameId(AssetCategory.class.getName()), 0, true,
@@ -344,17 +344,18 @@ public class LayoutStagedModelDataHandlerTest
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
 			basicLayoutPageTemplateEntry);
 
-		LayoutPageTemplateEntry liveLayoutPageTemplateEntry =
+		LayoutPageTemplateEntry liveDisplayPageLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
 				getLayoutPageTemplateEntryByUuidAndGroupId(
-					layoutPageTemplateEntry.getUuid(), group.getGroupId());
+					displayPageLayoutPageTemplateEntry.getUuid(),
+					group.getGroupId());
 
 		Assert.assertEquals(
-			layoutPageTemplateEntry.getName(),
-			liveLayoutPageTemplateEntry.getName());
+			displayPageLayoutPageTemplateEntry.getName(),
+			liveDisplayPageLayoutPageTemplateEntry.getName());
 
 		_layoutPageTemplateEntryLocalService.deleteLayoutPageTemplateEntry(
-			layoutPageTemplateEntry);
+			displayPageLayoutPageTemplateEntry);
 
 		LayoutUtilityPageEntry liveLayoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.
@@ -389,7 +390,8 @@ public class LayoutStagedModelDataHandlerTest
 					getLayoutPageTemplateEntryId()));
 		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-				liveLayoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+				liveDisplayPageLayoutPageTemplateEntry.
+					getLayoutPageTemplateEntryId()));
 		Assert.assertNull(
 			_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
 				liveLayoutUtilityPageEntry.getLayoutUtilityPageEntryId()));

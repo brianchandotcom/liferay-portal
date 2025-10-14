@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {zipFolder} from '../../../../../utils/zip';
+import {zipFolder} from '../../../../utils/zip';
 
 export class ExportImportPage {
 	readonly continueButton: Locator;
@@ -19,7 +19,6 @@ export class ExportImportPage {
 	readonly newExportTab: Locator;
 	readonly newImportTab: Locator;
 	readonly page: Page;
-	readonly taskSuccessLabel: (taskName: string) => Locator;
 	readonly title: Locator;
 
 	constructor(page: Page) {
@@ -44,13 +43,13 @@ export class ExportImportPage {
 			name: 'New Import Process',
 		});
 		this.page = page;
-		this.taskSuccessLabel = (taskName: string) =>
-			this.page
-				.locator('[data-qa-id="row"]', {
-					hasText: taskName,
-				})
-				.getByText('Successful');
 		this.title = page.getByLabel('Export the selected data to');
+	}
+
+	taskSuccessLabel(taskName: string) {
+		return this.page
+			.locator('[data-qa-id="row"]', {hasText: taskName})
+			.getByText('Successful');
 	}
 
 	async export(title: string) {

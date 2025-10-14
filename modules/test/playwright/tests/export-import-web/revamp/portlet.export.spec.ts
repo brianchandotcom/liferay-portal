@@ -10,8 +10,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import getRandomString from '../../../utils/getRandomString';
-import {exportImportPagesTest} from './fixtures/revamp/exportImportPagesTest';
-import {stagingPageTest} from './fixtures/stagingPageTest';
+import {stagingPageTest} from '../main/fixtures/stagingPageTest';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,

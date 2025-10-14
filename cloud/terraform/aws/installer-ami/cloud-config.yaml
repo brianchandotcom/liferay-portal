@@ -1,5 +1,9 @@
 #cloud-config
-# DO NOT REMOVE THE COMMENT ABOVE. It is the "shebang" line for AWS Cloud Init
+
+#
+# The first line/comment is the shebang line for AWS cloud-init
+#
+
 package_update: true
 package_upgrade: true
 runcmd:

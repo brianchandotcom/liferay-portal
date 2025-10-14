@@ -102,7 +102,7 @@ customInitContainers:
                                 {{- $liferayname := .liferayname }}
                                 {{- range $k, $v := .dependencies }}
                                     {{- if eq $v.source "statefulset" }}
-                                        until nc -vz -w 2 {{ $liferayname }}-{{ $k }} {{ (index $v.statefulset.service.ports 0).port }}
+                                        until timeout 2 bash -c '</dev/tcp/{{ $liferayname }}-{{ $k }}/{{ (index $v.statefulset.service.ports 0).port }}' 2>/dev/null
                                         do
                                             echo "Waiting for {{ $liferayname }}-{{ $k }}..."
 

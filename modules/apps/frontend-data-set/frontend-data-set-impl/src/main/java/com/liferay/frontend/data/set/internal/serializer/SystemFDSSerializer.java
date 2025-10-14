@@ -169,6 +169,20 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public Boolean serializeHideManagementBarInEmptyState(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return null;
+		}
+
+		return systemFDSEntry.getHideManagementBarInEmptyState();
+	}
+
+	@Override
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

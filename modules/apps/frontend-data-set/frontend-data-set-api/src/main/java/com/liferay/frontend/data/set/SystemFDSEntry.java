@@ -26,6 +26,10 @@ public interface SystemFDSEntry {
 
 	public String getDescription();
 
+	public default Boolean getHideManagementBarInEmptyState() {
+		return false;
+	}
+
 	public default int[] getListOfItemsPerPage() {
 		return PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES;
 	}

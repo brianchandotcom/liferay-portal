@@ -175,6 +175,7 @@ export default function Breadcrumb({
 								aria-label={Liferay.Language.get(
 									'more-actions'
 								)}
+								className="component-action"
 								displayType="unstyled"
 								size="sm"
 								symbol="ellipsis-v"

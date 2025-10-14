@@ -98,7 +98,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public NavigationMenu getNavigationMenu(Long navigationMenuId)
+	protected NavigationMenu doGetNavigationMenu(Long navigationMenuId)
 		throws Exception {
 
 		return _toNavigationMenu(
@@ -107,7 +107,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
+	protected NavigationMenu doGetSiteNavigationMenuByExternalReferenceCode(
 			Long siteId, String externalReferenceCode)
 		throws Exception {
 
@@ -118,7 +118,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public Page<NavigationMenu> getSiteNavigationMenusPage(
+	protected Page<NavigationMenu> doGetSiteNavigationMenusPage(
 			Long siteId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts)
 		throws Exception {
@@ -163,7 +163,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public NavigationMenu postSiteNavigationMenu(
+	protected NavigationMenu doPostSiteNavigationMenu(
 			Long siteId, NavigationMenu navigationMenu)
 		throws Exception {
 
@@ -172,7 +172,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public NavigationMenu putNavigationMenu(
+	protected NavigationMenu doPutNavigationMenu(
 			Long navigationMenuId, NavigationMenu navigationMenu)
 		throws Exception {
 
@@ -184,7 +184,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	public NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
+	protected NavigationMenu doPutSiteNavigationMenuByExternalReferenceCode(
 			Long siteId, String externalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {

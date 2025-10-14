@@ -19,7 +19,6 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectView;
 import com.liferay.object.admin.rest.dto.v1_0.Status;
 import com.liferay.object.admin.rest.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectDefinitionSettingUtil;
-import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldSettingUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.ObjectFieldUtil;
 import com.liferay.object.admin.rest.internal.dto.v1_0.util.WorkflowDefinitionLinkUtil;
 import com.liferay.object.admin.rest.internal.odata.entity.v1_0.ObjectDefinitionEntityModel;
@@ -525,7 +524,13 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
-					Collections.emptyList(),
+					ObjectFieldUtil.toObjectFields(
+						objectDefinition.getDefaultLanguageId(),
+						_listTypeDefinitionLocalService,
+						_objectFieldLocalService,
+						objectDefinition.getObjectFields(),
+						_objectFieldSettingLocalService,
+						_objectFilterLocalService),
 					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
 						contextUser.getCompanyId(), _groupLocalService,
 						contextUser.getUserId(),
@@ -591,7 +596,13 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
-					Collections.emptyList(),
+					ObjectFieldUtil.toObjectFields(
+						objectDefinition.getDefaultLanguageId(),
+						_listTypeDefinitionLocalService,
+						_objectFieldLocalService,
+						objectDefinition.getObjectFields(),
+						_objectFieldSettingLocalService,
+						_objectFilterLocalService),
 					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
 						contextUser.getCompanyId(), _groupLocalService,
 						contextUser.getUserId(),
@@ -682,10 +693,6 @@ public class ObjectDefinitionResourceImpl
 		}
 
 		for (ObjectField objectField : objectFields) {
-			long listTypeDefinitionId = ObjectFieldUtil.getListTypeDefinitionId(
-				serviceBuilderObjectDefinition.getCompanyId(),
-				_listTypeDefinitionLocalService, objectField);
-
 			if (objectField.getBusinessType() ==
 					ObjectField.BusinessType.RELATIONSHIP) {
 
@@ -707,35 +714,6 @@ public class ObjectDefinitionResourceImpl
 				serviceBuilderObjectField -> Objects.equals(
 					serviceBuilderObjectField.getName(),
 					objectField.getName()));
-
-			if (objectField.getBusinessType() ==
-					ObjectField.BusinessType.AGGREGATION) {
-
-				continue;
-			}
-
-			_objectFieldLocalService.updateObjectField(
-				objectField.getExternalReferenceCode(),
-				GetterUtil.getLong(objectField.getId()),
-				contextUser.getUserId(), listTypeDefinitionId,
-				objectDefinitionId, objectField.getBusinessTypeAsString(), null,
-				null, objectField.getDBTypeAsString(),
-				GetterUtil.getBoolean(objectField.getIndexed()),
-				GetterUtil.getBoolean(objectField.getIndexedAsKeyword()),
-				objectField.getIndexedLanguageId(),
-				LocalizedMapUtil.populateLocalizedMap(
-					objectDefinition.getDefaultLanguageId(),
-					objectField.getLabel(), objectField.getName()),
-				GetterUtil.getBoolean(objectField.getLocalized()),
-				objectField.getName(), objectField.getReadOnlyAsString(),
-				objectField.getReadOnlyConditionExpression(),
-				GetterUtil.getBoolean(objectField.getRequired()),
-				GetterUtil.getBoolean(objectField.getState()),
-				GetterUtil.getBoolean(objectField.getSystem()),
-				ObjectFieldSettingUtil.toObjectFieldSettings(
-					listTypeDefinitionId, objectField,
-					_objectFieldSettingLocalService,
-					_objectFilterLocalService));
 		}
 
 		for (com.liferay.object.model.ObjectField serviceBuilderObjectField :

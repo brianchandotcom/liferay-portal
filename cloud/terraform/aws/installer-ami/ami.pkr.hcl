@@ -5,7 +5,10 @@ build {
         strip_path=true
     }
 
-    # provisioner order must be maintained
+    #
+    # Provisioner order matters
+    #
+
     provisioner "shell" {
         inline=[
             "sudo mkdir --parents /opt/liferay/bin",

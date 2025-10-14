@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 /**
  * @author Georgel Pop
  */
-public class FragmentEntryLinkERCUpgradeProcess extends UpgradeProcess {
+public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

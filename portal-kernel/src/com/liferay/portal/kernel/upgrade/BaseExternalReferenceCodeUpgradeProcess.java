@@ -84,7 +84,7 @@ public abstract class BaseExternalReferenceCodeUpgradeProcess
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				StringBundler.concat(
-					"select ", useUUID ? "uuid_, " : StringPool.BLANK,
+					"select distinct ", useUUID ? "uuid_, " : StringPool.BLANK,
 					primaryKeyColumnName, " from ", tableName,
 					" where externalReferenceCode is null or ",
 					"externalReferenceCode = ''"),

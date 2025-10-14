@@ -15463,9 +15463,17 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<![CDATA[
 									#!/bin/bash
 
+									MYSQL_VERSION="${database.version}"
+
 									mysql --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
 
-									mysql_upgrade --force --password=${database.password} --user=${database.username}
+									if echo "$MYSQL_VERSION" | grep -Eq "^[0-7].*"; then
+										echo "MySQL version $MYSQL_VERSION is less than 8.0. Running mysql_upgrade."
+
+										mysql_upgrade --force --password=${database.password} --user=${database.username}
+									else
+										echo "MySQL version $MYSQL_VERSION is 8.0 or higher. Skipping mysql_upgrade."
+									fi
 								]]>
 							</echo>
 
@@ -15486,9 +15494,17 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								<![CDATA[
 									#!/bin/bash
 
+									MYSQL_VERSION="${database.version}"
+
 									mysql --database=${database.schema} --password=${database.password} --user=${database.username} < /tmp/${database.type}.sql
 
-									mysql_upgrade --force --password=${database.password} --user=${database.username}
+									if echo "$MYSQL_VERSION" | grep -Eq "^[0-7].*"; then
+										echo "MySQL version $MYSQL_VERSION is less than 8.0. Running mysql_upgrade."
+
+										mysql_upgrade --force --password=${database.password} --user=${database.username}
+									else
+										echo "MySQL version $MYSQL_VERSION is 8.0 or higher. Skipping mysql_upgrade."
+									fi
 								]]>
 							</echo>
 
@@ -15688,7 +15704,12 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 								</exec>
 							</retry>
 
-							<exec executable="mysql_upgrade" />
+							<if>
+								<matches pattern="^[0-7]\..*" string="${database.version}" />
+								<then>
+									<exec executable="mysql_upgrade" />
+								</then>
+							</if>
 
 							<get-testcase-property property.name="custom.mysql.sql.statement" />
 

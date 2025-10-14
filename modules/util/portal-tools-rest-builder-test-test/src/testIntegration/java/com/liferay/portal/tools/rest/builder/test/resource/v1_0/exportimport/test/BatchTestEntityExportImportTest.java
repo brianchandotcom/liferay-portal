@@ -541,7 +541,7 @@ public class BatchTestEntityExportImportTest {
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntries.get(0));
 		_assertEquals(
-			_PORTLET_KEY, errorMessage, externalReferenceCode2,
+			_CLASS_NAME, errorMessage, externalReferenceCode2,
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(1));
 	}
@@ -622,7 +622,7 @@ public class BatchTestEntityExportImportTest {
 			exportImportReportEntries.size());
 
 		_assertEquals(
-			_PORTLET_KEY, "The properties [" + propertyName + "] are required",
+			_CLASS_NAME, "The properties [" + propertyName + "] are required",
 			batchTestEntity.getExternalReferenceCode(),
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(0));
@@ -706,7 +706,7 @@ public class BatchTestEntityExportImportTest {
 
 		_systemEventLocalService.addSystemEvent(
 			TestPropsValues.getUserId(), _companyGroup.getGroupId(),
-			batchTestEntities1[0].getExternalReferenceCode(), _PORTLET_KEY,
+			batchTestEntities1[0].getExternalReferenceCode(), _CLASS_NAME,
 			RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
 			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
 			StringPool.BLANK);
@@ -714,7 +714,7 @@ public class BatchTestEntityExportImportTest {
 		_systemEventLocalService.addSystemEvent(
 			TestPropsValues.getUserId(), _companyGroup.getGroupId(),
 			sharedInternalModelBatchTestEntities[0].getExternalReferenceCode(),
-			_PORTLET_KEY, RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
+			_CLASS_NAME, RandomTestUtil.nextLong(), PortalUUIDUtil.generate(),
 			StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
 			StringPool.BLANK);
 
@@ -737,7 +737,7 @@ public class BatchTestEntityExportImportTest {
 								new String[] {Boolean.TRUE.toString()}
 							).put(
 								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									_PORTLET_KEY,
+									_CLASS_NAME,
 								new String[] {Boolean.TRUE.toString()}
 							).build())),
 			larFile);
@@ -828,7 +828,7 @@ public class BatchTestEntityExportImportTest {
 			exportImportReportEntries.size());
 
 		_assertEquals(
-			_PORTLET_KEY, errorMessage,
+			_CLASS_NAME, errorMessage,
 			batchTestEntity.getExternalReferenceCode(),
 			ExportImportReportEntryConstants.TYPE_ERROR,
 			exportImportReportEntries.get(0));
@@ -914,7 +914,7 @@ public class BatchTestEntityExportImportTest {
 								new String[] {Boolean.TRUE.toString()}
 							).put(
 								PortletDataHandlerKeys.PORTLET_DATA + "_" +
-									_PORTLET_KEY,
+									_CLASS_NAME,
 								new String[] {Boolean.TRUE.toString()}
 							).build())));
 	}
@@ -946,7 +946,7 @@ public class BatchTestEntityExportImportTest {
 									new String[] {Boolean.TRUE.toString()}
 								).put(
 									PortletDataHandlerKeys.PORTLET_DATA + "_" +
-										_PORTLET_KEY,
+										_CLASS_NAME,
 									new String[] {Boolean.TRUE.toString()}
 								).build()));
 
@@ -969,7 +969,7 @@ public class BatchTestEntityExportImportTest {
 		}
 	}
 
-	private static final String _PORTLET_KEY =
+	private static final String _CLASS_NAME =
 		"com_liferay_portal_tools_rest_builder_test_portlet_" +
 			"BatchTestEntityPortlet";
 

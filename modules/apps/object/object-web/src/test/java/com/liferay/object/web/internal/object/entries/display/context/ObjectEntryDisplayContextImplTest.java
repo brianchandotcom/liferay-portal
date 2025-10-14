@@ -111,17 +111,25 @@ public class ObjectEntryDisplayContextImplTest {
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);
 
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		Mockito.when(
+			httpServletRequest.getParameter("externalReferenceCode")
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		Mockito.when(
+			httpServletRequest.getParameter(ObjectWebKeys.OBJECT_ENTRY_GROUP_ID)
+		).thenReturn(
+			"20123"
+		);
+
 		Mockito.when(
 			httpServletRequest.getAttribute(
 				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
 		).thenReturn(
 			false
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
 		);
 
 		Mockito.when(
@@ -131,21 +139,21 @@ public class ObjectEntryDisplayContextImplTest {
 		);
 
 		Mockito.when(
-			httpServletRequest.getParameter("externalReferenceCode")
-		).thenReturn(
-			"ERC-123"
-		);
-
-		Mockito.when(
 			httpServletRequest.getParameter("objectRelationshipId")
 		).thenReturn(
 			"0"
 		);
 
 		Mockito.when(
-			httpServletRequest.getParameter("groupId")
+			objectDefinition.getStorageType()
 		).thenReturn(
-			"20123"
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+		);
+
+		Mockito.when(
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+		).thenReturn(
+			themeDisplay
 		);
 
 		Mockito.when(
@@ -164,12 +172,6 @@ public class ObjectEntryDisplayContextImplTest {
 			themeDisplay.getUser()
 		).thenReturn(
 			Mockito.mock(User.class)
-		);
-
-		Mockito.when(
-			objectDefinition.getStorageType()
-		).thenReturn(
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 		);
 
 		ObjectEntryManagerRegistry objectEntryManagerRegistry = Mockito.mock(
@@ -197,13 +199,13 @@ public class ObjectEntryDisplayContextImplTest {
 		Mockito.when(
 			objectEntry1.getId()
 		).thenReturn(
-			12345L
+			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(
 			objectEntryManager.getObjectEntry(
 				Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
-				Mockito.eq("ERC-123"), Mockito.eq(objectDefinition),
+				Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
 				Mockito.eq("20123"))
 		).thenReturn(
 			objectEntry1
@@ -246,7 +248,7 @@ public class ObjectEntryDisplayContextImplTest {
 			objectEntryManager, Mockito.times(1)
 		).getObjectEntry(
 			Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
-			Mockito.eq("ERC-123"), Mockito.eq(objectDefinition),
+			Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
 			Mockito.eq("20123")
 		);
 

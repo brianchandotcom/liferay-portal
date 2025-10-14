@@ -15,44 +15,48 @@
 		</li>
 	</ul>
 </nav>
+
 <div class="main-container my-3">
 	<div class="header">
 		<div class="asset-info d-flex">
 			<p class="title">
 				<@liferay_ui["message"] key="announcement" />
 			</p>
+
 			<p class="date">
 				<#if (ObjectEntry_createDate.getData())??>
-					<#assign rawDate=ObjectEntry_createDate.getData() />
 					<@liferay_ui["message"] key="published" />
-					<#assign dt="" />
+
+					<#assign dt = "" />
+					<#assign rawDate = ObjectEntry_createDate.getData() />
+
 					<#attempt>
-						<#assign dt=rawDate?datetime("M/d/yy h:mm a") />
-						<#recover>
-							<#attempt>
-								<#assign dt=rawDate?datetime("yy/MM/dd H:mm") />
-								<#recover>
-									<#assign dt=rawDate />
-								</#recover>
-							</#attempt>
-							<#if dt?is_date>
-								<span>
-									${dt?string("MMM. d, yyyy")}
-								</span>
-								<#else>
-									<span>
-										${dt}
-									</span>
-							</#if>
+						<#assign dt = rawDate?datetime("M/d/yy h:mm a") />
+					<#recover>
+						<#attempt>
+							<#assign dt = rawDate?datetime("yy/MM/dd H:mm") />
+							
+							<#recover>
+								<#assign dt = rawDate />
+							</#recover>
+					</#attempt>
+
+					<#if dt?is_date>
+						<span>${dt?string("MMM. d, yyyy")}</span>
+					<#else>
+						<span>${dt}</span>
+					</#if>
 				</#if>
 			</p>
 		</div>
+
 		<div class="content-info mt-2">
 			<h1>
 				<#if (ObjectField_title.getData())??>
 					${ObjectField_title.getData()}
 				</#if>
 			</h1>
+
 			<div>
 				<#if (ObjectField_description.getData())??>
 					<p class="description">
@@ -62,12 +66,13 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="content mt-3" id="content">
 		<#if (ObjectField_content.getData())??>
 			${ObjectField_content.getData()}
 		</#if>
 		<#if (.data_model["ObjectField_35642960#previewURL"].getData())?? && .data_model["ObjectField_35642960#previewURL"].getData() !="">
-			<img alt="Image Preview" src="${.data_model["ObjectField_35642960#previewURL"].getData()}" />
+			<img alt="Image Preview" src="${.data_model['ObjectField_35642960#previewURL'].getData()}" />
 		</#if>
 	</div>
 </div>
@@ -101,7 +106,7 @@
 	.admonion-type-info {
 		background-color: #EFF2FA;
 
-		admonion-title {
+		.admonion-title {
 			color: #4F6FB8;
 		}
 	}

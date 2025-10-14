@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (!contentHeadings.length) {
 		const sideContainer = document.querySelector('.side-container');
 		sideContainer.classList.remove('side-container');
+
 		return;
 	}
 
@@ -25,16 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	tocContainer.appendChild(tocList);
 	contentHeadings.forEach((heading) => {
 		heading.id = heading.textContent
-		.toLowerCase()
-		.replace(/\s+/g, '-')
-		.replace(/[^\w-]+/g, '')
-		.replace(/^-+|-+$/g, '');
-		
+			.toLowerCase()
+			.replace(/\s+/g, '-')
+			.replace(/[^\w-]+/g, '')
+			.replace(/^-+|-+$/g, '');
+
 		const link = document.createElement('a');
-		
+
 		link.href = '#' + heading.id;
 		link.textContent = heading.textContent.replace(/[^\w\s]+/g, '');
-		
+
 		const listItem = document.createElement('li');
 		const headingClass = 'toc-' + heading.tagName.toLowerCase();
 

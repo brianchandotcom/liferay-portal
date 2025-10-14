@@ -1495,13 +1495,14 @@ public class ObjectEntryDisplayContextImpl
 				ObjectWebKeys.OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE);
 		}
 
+		long groupId = ParamUtil.getLong(
+			_objectRequestHelper.getRequest(),
+			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.fetchObjectRelationship(
 				ParamUtil.getLong(
 					_objectRequestHelper.getRequest(), "objectRelationshipId"));
-
-		long groupId = ParamUtil.getLong(
-			_objectRequestHelper.getRequest(), "groupId");
 
 		if (_readOnly && (groupId == 0)) {
 			HttpServletRequest httpServletRequest =

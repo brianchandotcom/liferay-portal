@@ -644,6 +644,42 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeHideManagementBarInEmptyState() throws Exception {
+
+		// Different value
+
+		_mockSerializeHideManagementBarInEmptyState(FDS_NAMES[0], false);
+
+		_mockSerializeHideManagementBarInEmptyState(FDS_NAMES[1], true);
+
+		Assert.assertNotEquals(
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[0], httpServletRequest),
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[1], httpServletRequest));
+
+		Assert.assertFalse(
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[0], httpServletRequest));
+
+		Assert.assertTrue(
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[1], httpServletRequest));
+
+		_resetFDSSerializer();
+
+		// Null value
+
+		_mockSerializeHideManagementBarInEmptyState(FDS_NAMES[0], null);
+
+		Assert.assertNull(
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[0], httpServletRequest));
+
+		_resetFDSSerializer();
+	}
+
+	@Test
 	public void testSerializeItemsActions() throws Exception {
 
 		// Different items actions
@@ -1387,6 +1423,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		).thenReturn(
 			objectEntries
 		);
+	}
+
+	private void _mockSerializeHideManagementBarInEmptyState(
+		String fdsName, Boolean hideManagementBarInEmptyState) {
+
+		Mockito.when(
+			_customFDSSerializer.getDataSetObjectEntryProperties(
+				fdsName, httpServletRequest)
+		).thenReturn(
+			HashMapBuilder.<String, Object>put(
+				"hideManagementBarInEmptyState", hideManagementBarInEmptyState
+			).build()
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeHideManagementBarInEmptyState(
+				fdsName, httpServletRequest)
+		).thenCallRealMethod();
 	}
 
 	private void _mockSerializeItemsActions(String fdsName, String[] labels) {

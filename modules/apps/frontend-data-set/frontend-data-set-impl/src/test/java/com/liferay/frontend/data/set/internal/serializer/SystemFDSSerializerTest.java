@@ -794,6 +794,52 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeHideManagementBarInEmptyState() throws Exception {
+
+		// Different value
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withHideManagementBarInEmptyState(
+					false
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withHideManagementBarInEmptyState(
+					true
+				)));
+
+		Assert.assertFalse(
+			systemFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[0], httpServletRequest));
+
+		Assert.assertTrue(
+			systemFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[1], httpServletRequest));
+
+		_unregisterServices();
+
+		// Null value
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withHideManagementBarInEmptyState(
+					null
+				)));
+
+		Assert.assertNull(
+			systemFDSSerializer.serializeHideManagementBarInEmptyState(
+				FDS_NAMES[0], httpServletRequest));
+
+		_unregisterServices();
+	}
+
+	@Test
 	public void testSerializeItemsActions() throws Exception {
 
 		// Different items actions
@@ -1764,6 +1810,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 						return "";
 					}
 
+					@Override
+					public Boolean getHideManagementBarInEmptyState() {
+						return _hideManagementBarInEmptyState;
+					}
+
 					public int[] getListOfItemsPerPage() {
 						if (_listOfItemsPerPage != null) {
 							return _listOfItemsPerPage;
@@ -1819,6 +1870,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return this;
 		}
 
+		public SystemFDSEntryWrapper withHideManagementBarInEmptyState(
+			Boolean hideManagementBarInEmptyState) {
+
+			_hideManagementBarInEmptyState = hideManagementBarInEmptyState;
+
+			return this;
+		}
+
 		public SystemFDSEntryWrapper withPagination(
 			int defaultItemsPerPage, int[] listOfItemsPerPage) {
 
@@ -1839,6 +1898,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		private String _additionalURLParameters;
 		private int _defaultItemsPerPage = -1;
 		private final String _fdsName;
+		private Boolean _hideManagementBarInEmptyState;
 		private int[] _listOfItemsPerPage;
 		private String _propsTransformer;
 

@@ -5,6 +5,7 @@
 
 import * as FormSupport from '../../../src/main/resources/META-INF/resources/js/utils/FormSupport.es';
 import createElement from '../__mock__/createElement.es';
+import mockPageWithNested from '../__mock__/mockPageWithNested.es';
 import mockPages from '../__mock__/mockPages.es';
 
 let pages = null;
@@ -182,6 +183,42 @@ describe('FormSupport', () => {
 		expect(
 			FormSupport.removeRow(pages, pageIndex, rowIndex)
 		).toMatchSnapshot();
+	});
+
+	it('removes an empty column from nested fieldsets', () => {
+		pages = JSON.parse(JSON.stringify(mockPageWithNested));
+
+		const nestedFieldset =
+			pages[0].rows[0].columns[0].fields[0].nestedFields[0];
+
+		expect(nestedFieldset.rows).toEqual([
+			expect.objectContaining({
+				columns: [
+					expect.objectContaining({
+						fields: [],
+					}),
+				],
+			}),
+			expect.objectContaining({
+				columns: [
+					expect.objectContaining({
+						fields: ['Text67163348'],
+					}),
+				],
+			}),
+		]);
+
+		FormSupport.removeNestedEmptyRows(pages, 0);
+
+		expect(nestedFieldset.rows).toEqual([
+			expect.objectContaining({
+				columns: [
+					expect.objectContaining({
+						fields: ['Text67163348'],
+					}),
+				],
+			}),
+		]);
 	});
 
 	it('returns an implementation of a row for the pages', () => {

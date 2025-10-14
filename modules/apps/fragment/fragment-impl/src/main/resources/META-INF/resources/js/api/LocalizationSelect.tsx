@@ -25,6 +25,8 @@ import {fetch, sub} from 'frontend-js-web';
 export const EVENT_TRANSLATION_STATUS =
 	'localizationSelect:updateTranslationStatus';
 
+export const EVENT_INPUT_REGISTERED = 'localizedInput:registered';
+
 type Props = {
 	allowLocalizationManagement: boolean;
 	autoTranslateURL: string;
@@ -286,14 +288,20 @@ export function LocalizationSelect({
 			});
 		};
 
-		Liferay.on(EVENT_TRANSLATION_STATUS, updateTranslationStatus);
+		const updateStatusForAllLocales = () => {
+			for (const locale of locales) {
+				updateTranslationStatus({languageId: locale.id});
+			}
+		};
 
-		for (const locale of locales) {
-			updateTranslationStatus({languageId: locale.id});
-		}
+		updateStatusForAllLocales();
+
+		Liferay.on(EVENT_TRANSLATION_STATUS, updateTranslationStatus);
+		Liferay.on(EVENT_INPUT_REGISTERED, updateStatusForAllLocales);
 
 		return () => {
 			Liferay.detach(EVENT_TRANSLATION_STATUS, updateTranslationStatus);
+			Liferay.detach(EVENT_INPUT_REGISTERED, updateStatusForAllLocales);
 		};
 	}, [defaultLanguageId, form, locales]);
 

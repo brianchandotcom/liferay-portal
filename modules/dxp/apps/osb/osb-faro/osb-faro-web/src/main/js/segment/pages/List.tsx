@@ -101,7 +101,7 @@ const FILTER_BY_OPTIONS = [
 				label: `${
 					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch]
 				} ${Liferay.Language.get('segment')}`,
-				/* TODO => Change this value to Batch, when available in BE*/
+				/* TODO => Change this value to Batch, when available in BE */
 				value: SegmentTypes.Dynamic
 			},
 			{
@@ -192,6 +192,7 @@ export const List: React.FC<IListProps> = ({
 			query
 		}
 	});
+
 	const getDisabledSegmentsAlert = (abortSignal: AbortSignal) =>
 		fetchDisabledSegments(channelId, groupId, orderIOMap).then(
 			({total}) => {
@@ -356,6 +357,7 @@ export const List: React.FC<IListProps> = ({
 				label: Liferay.Language.get('edit')
 			},
 			{
+				className: 'text-danger',
 				iconSymbol: 'trash',
 				label: Liferay.Language.get('delete'),
 				onClick: () => handleDeleteSegment({id, items, name})
@@ -363,7 +365,8 @@ export const List: React.FC<IListProps> = ({
 		];
 
 		const actions = commonActions.map(
-			({href, iconSymbol, label, onClick}) => ({
+			({className, href, iconSymbol, label, onClick}) => ({
+				className,
 				href,
 				iconSymbol,
 				label,
@@ -375,8 +378,6 @@ export const List: React.FC<IListProps> = ({
 
 	const pageActions = [
 		{
-			// TODO => Check if disabled needs to be dynamic based on user authorization
-			disabled: false,
 			href: setUriQueryValues(
 				{type: SegmentTypes.Batch},
 				toRoute(Routes.CONTACTS_SEGMENT_CREATE, {
@@ -387,8 +388,6 @@ export const List: React.FC<IListProps> = ({
 			label: Liferay.Language.get('batch-segment')
 		},
 		{
-			// TODO => Check if disabled needs to be dynamic based on user authorization
-			disabled: false,
 			href: setUriQueryValues(
 				{type: SegmentTypes.RealTime},
 				// TODO => Change to real-time segment route when available
@@ -408,36 +407,34 @@ export const List: React.FC<IListProps> = ({
 			return (
 				<Nav>
 					<Nav.Item>
-						{pageActions.length > 1 && (
-							<ClayDropDown
-								alignmentPosition={Align.BottomRight}
-								trigger={
-									<ClayButton
-										aria-label={
-											pageActionsLabel &&
-											Liferay.Language.get('menu')
-										}
-										className='button-root nav-btn p-2'
-										disabled={/* disabled || */ false}
-										displayType='primary'
-									>
-										<>
-											<span>{pageActionsLabel}</span>
-											<ClayIcon
-												className='icon-root ml-2'
-												symbol='caret-bottom'
-											/>
-										</>
-									</ClayButton>
-								}
-							>
-								{pageActions.map(({label, ...props}) => (
-									<ClayDropDown.Item key={label} {...props}>
-										{label}
-									</ClayDropDown.Item>
-								))}
-							</ClayDropDown>
-						)}
+						<ClayDropDown
+							alignmentPosition={Align.BottomRight}
+							trigger={
+								<ClayButton
+									aria-label={
+										pageActionsLabel &&
+										Liferay.Language.get('menu')
+									}
+									className='button-root nav-btn p-2'
+									disabled={error || loading}
+									displayType='primary'
+								>
+									<>
+										<span>{pageActionsLabel}</span>
+										<ClayIcon
+											className='icon-root ml-2'
+											symbol='caret-bottom'
+										/>
+									</>
+								</ClayButton>
+							}
+						>
+							{pageActions.map(({label, ...props}) => (
+								<ClayDropDown.Item key={label} {...props}>
+									{label}
+								</ClayDropDown.Item>
+							))}
+						</ClayDropDown>
 					</Nav.Item>
 				</Nav>
 			);
@@ -449,13 +446,9 @@ export const List: React.FC<IListProps> = ({
 					borderless
 					className='button-root text-danger'
 					displayType='primary'
-					onClick={() =>
-						handleDeleteSegment({
-							id: undefined,
-							items: selectedItems,
-							name
-						})
-					}
+					onClick={() => {
+						// bulkDeleteSegments(ids);
+					}}
 					outline
 				>
 					<ClayIcon className='icon-root mr-2' symbol='trash' />

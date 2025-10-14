@@ -5,7 +5,6 @@
 
 package com.liferay.fragment.internal.upgrade.v3_0_0;
 
-import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -77,8 +76,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPostUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.dropColumns(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"originalFragmentEntryLinkId", "fragmentEntryId")
+				"FragmentEntryLink", "originalFragmentEntryLinkId",
+				"fragmentEntryId")
 		};
 	}
 
@@ -86,14 +85,12 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 	protected UpgradeStep[] getPreUpgradeSteps() {
 		return new UpgradeStep[] {
 			UpgradeProcessFactory.addColumns(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
+				"FragmentEntryLink",
 				"originalFragmentEntryLinkERC VARCHAR(75) null"),
 			UpgradeProcessFactory.addColumns(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"fragmentEntryERC VARCHAR(75) null"),
+				"FragmentEntryLink", "fragmentEntryERC VARCHAR(75) null"),
 			UpgradeProcessFactory.addColumns(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"fragmentEntryScopeERC VARCHAR(75) null")
+				"FragmentEntryLink", "fragmentEntryScopeERC VARCHAR(75) null")
 		};
 	}
 

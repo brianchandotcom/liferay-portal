@@ -5,53 +5,46 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {masterPagesPagesTest} from '../../../fixtures/masterPagesPagesTest';
-import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
 import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
-import {PageEditorPage} from '../../../pages/layout-content-page-editor-web/PageEditorPage';
-import {MasterPagesPage} from '../../../pages/layout-page-template-admin-web/MasterPagesPage';
 import getRandomString from '../../../utils/getRandomString';
 import {getTempDir} from '../../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
-	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: false},
 	}),
-	isolatedSiteTest,
 	loginTest(),
-	masterPagesPagesTest,
-	pageEditorPagesTest,
-	pageTemplatesPagesTest,
 	productMenuPageTest,
 	uiElementsPageTest
 );
 
 export const testWithExportImportAtInstanceLevelFF = mergeTests(
-	applicationsMenuPageTest,
-	exportImportPagesTest,
-	dataApiHelpersTest,
-    isolatedSiteTest,
-    masterPagesPagesTest,
-    pageEditorPagesTest,
-    pageTemplatesPagesTest,
-    productMenuPageTest,
-    uiElementsPageTest,
+	test,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true},
+	})
+);
+
+export const testWithHeadlessContentPagesFF = mergeTests(
+	testWithExportImportAtInstanceLevelFF,
+	featureFlagsTest({
+		'LPD-35443': {enabled: true},
 	}),
-	loginTest()
+	isolatedSiteTest,
+	masterPagesPagesTest,
+	pageTemplatesPagesTest,
+	productMenuPageTest,
+	uiElementsPageTest
 );
 
 async function expectExportName(exportImportPage, taskName: string) {
@@ -73,46 +66,6 @@ async function expectExportName(exportImportPage, taskName: string) {
 		await exportImportPage.downloadExportProcess(taskName);
 
 	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}${taskName}-`));
-}
-
-async function addMasterPage(
-	apiHelpers: ApiHelpers,
-	masterPageName: string,
-	masterPagesPage: MasterPagesPage,
-	pageEditorPage: PageEditorPage,
-	site: Site
-) {
-
-	// Add master page
-
-	const masterPage =
-		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addLayoutPageTemplateEntry(
-			{
-				groupId: site.id,
-				name: masterPageName,
-				type: 'master-layout',
-			}
-		);
-
-	// Edit master page
-
-	await masterPagesPage.goto(site.friendlyUrlPath);
-
-	await masterPagesPage.editMaster(masterPageName);
-
-	await pageEditorPage.addFragment('Basic Components', 'Heading');
-
-	const headingId = await pageEditorPage.getFragmentId('Heading');
-
-	await pageEditorPage.editTextEditable(
-		headingId,
-		'element-text',
-		`Master Page: ${masterPageName}`
-	);
-
-	await pageEditorPage.publishPage();
-
-	return masterPage;
 }
 
 test('can export at site level with custom export task name', async ({
@@ -187,63 +140,34 @@ test(
 	}
 );
 
-testWithExportImportAtInstanceLevelFF(
+testWithHeadlessContentPagesFF(
 	'can see the correct counts of master page templates at site level',
 	{tag: ['@LPD-67433']},
 	async ({
-		apiHelpers,
 		exportImportPage,
 		masterPagesPage,
-		pageEditorPage,
 		pageTemplatesPage,
 		productMenuPage,
 		site,
-        uiElementsPage
+		uiElementsPage,
 	}) => {
-		const masterPageName1 = getRandomString();
-
-		await addMasterPage(
-			apiHelpers,
-			masterPageName1,
-			masterPagesPage,
-			pageEditorPage,
-			site
-		);
-
-		const masterPageName2 = getRandomString();
-
-		await addMasterPage(
-			apiHelpers,
-			masterPageName2,
-			masterPagesPage,
-			pageEditorPage,
-			site
-		);
+		await masterPagesPage.goto(site.friendlyUrlPath);
+		await masterPagesPage.createNewMaster(getRandomString());
+		await masterPagesPage.createNewMaster(getRandomString());
 
 		await pageTemplatesPage.goto(site.friendlyUrlPath);
-
-		const pageTemplateCollectionName = getRandomString();
-
-		await pageTemplatesPage.addPageTemplateCollection(
-			pageTemplateCollectionName
-		);
-
-		const pageTemplateName1 = getRandomString();
-
-		await pageTemplatesPage.addWidgetPageTemplate(pageTemplateName1);
+		await pageTemplatesPage.addPageTemplateCollection(getRandomString());
+		await pageTemplatesPage.addWidgetPageTemplate(getRandomString());
 
 		await pageTemplatesPage.goto(site.friendlyUrlPath);
-
-		const pageTemplateName2 = getRandomString();
-
-		await pageTemplatesPage.addWidgetPageTemplate(pageTemplateName2);
+		await pageTemplatesPage.addWidgetPageTemplate(getRandomString());
 
 		await pageTemplatesPage.goto(site.friendlyUrlPath);
 
 		await productMenuPage.openProductMenuIfClosed();
 		await productMenuPage.goToPublishingExport();
 
-        uiElementsPage.clickNewButton();
+		uiElementsPage.clickNewButton();
 
 		await exportImportPage.page.getByLabel(`Pages ${7} Items`).check();
 		await exportImportPage.page

@@ -183,18 +183,8 @@ public class FDSRendererImpl implements FDSRenderer {
 					"id", fdsName
 				).put(
 					"hideManagementBarInEmptyState",
-					() -> {
-						Boolean hideManagementBarInEmptyState =
-							fdsSerializer.
-								serializeHideManagementBarInEmptyState(
-									fdsName, httpServletRequest);
-
-						if (hideManagementBarInEmptyState == null) {
-							return true;
-						}
-
-						return hideManagementBarInEmptyState;
-					}
+					() -> fdsSerializer.serializeHideManagementBarInEmptyState(
+						fdsName, httpServletRequest)
 				).put(
 					"itemsActions",
 					() -> {

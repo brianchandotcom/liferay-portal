@@ -88,8 +88,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				StagedModelType.REFERRER_CLASS_NAME_ALL),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "utility-pages", true, false, null,
-				LayoutUtilityPageEntry.class.getName(),
-				StagedModelType.REFERRER_CLASS_NAME_ALL));
+				LayoutUtilityPageEntry.class.getName()));
 		setPublishToLiveByDefault(true);
 		setStagingControls(getExportControls());
 	}

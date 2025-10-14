@@ -70,7 +70,9 @@ public class DefaultLayoutPrototypesUtil {
 		portletId = layoutTypePortlet.addPortletId(
 			0, portletId, columnId, -1, false);
 
-		updateLayout(layout);
+		LayoutLocalServiceUtil.updateTypeSettings(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 
 		addResourcePermissions(layout, portletId);
 
@@ -103,12 +105,6 @@ public class DefaultLayoutPrototypesUtil {
 
 		PortalUtil.addPortletDefaultResource(
 			layout.getCompanyId(), layout, portlet);
-	}
-
-	protected static void updateLayout(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.updateTypeSettings(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
 	}
 
 }

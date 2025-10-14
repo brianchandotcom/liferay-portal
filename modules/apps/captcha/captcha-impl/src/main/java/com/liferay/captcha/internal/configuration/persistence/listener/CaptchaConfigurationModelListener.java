@@ -36,18 +36,18 @@ public class CaptchaConfigurationModelListener
 	public void onBeforeSave(String pid, Dictionary<String, Object> properties)
 		throws ConfigurationModelListenerException {
 
+		String captchaEngine = (String)properties.get("captchaEngine");
+
+		if (Validator.isNull(captchaEngine)) {
+			return;
+		}
+
 		try {
-			String captchaEngine = (String)properties.get("captchaEngine");
-
-			if (Validator.isNotNull(captchaEngine)) {
-				if (captchaEngine.equals(ReCaptchaImpl.class.getName())) {
-					_validateReCaptchaConfigurations(properties);
-				}
-				else if (captchaEngine.equals(
-							SimpleCaptchaImpl.class.getName())) {
-
-					_validateSimpleCaptchaConfigurations(properties);
-				}
+			if (captchaEngine.equals(ReCaptchaImpl.class.getName())) {
+				_validateReCaptcha(properties);
+			}
+			else if (captchaEngine.equals(SimpleCaptchaImpl.class.getName())) {
+				_validateSimpleCaptcha(properties);
 			}
 		}
 		catch (CaptchaConfigurationException captchaConfigurationException) {
@@ -69,8 +69,7 @@ public class CaptchaConfigurationModelListener
 		return _resourceBundle;
 	}
 
-	private void _validateReCaptchaConfigurations(
-			Dictionary<String, Object> properties)
+	private void _validateReCaptcha(Dictionary<String, Object> properties)
 		throws CaptchaConfigurationException {
 
 		String reCaptchaNoScriptURL = (String)properties.get(
@@ -124,8 +123,7 @@ public class CaptchaConfigurationModelListener
 		}
 	}
 
-	private void _validateSimpleCaptchaConfigurations(
-			Dictionary<String, Object> properties)
+	private void _validateSimpleCaptcha(Dictionary<String, Object> properties)
 		throws CaptchaConfigurationException {
 
 		String[] simpleCaptchaBackgroundProducers = (String[])properties.get(

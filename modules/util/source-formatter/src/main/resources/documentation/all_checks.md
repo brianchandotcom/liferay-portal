@@ -293,7 +293,8 @@ JavaReferenceAnnotationsCheck | [Bug Prevention](bug_prevention_checks.md#bug-pr
 JavaReleaseInfoCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Validates information in `ReleaseInfo.java`. |
 [JavaResultSetCheck](check/java_result_set_check.md#javaresultsetcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks for correct use `java.sql.ResultSet.getInt(int)`. |
 JavaReturnStatementCheck | [Styling](styling_checks.md#styling-checks) | .java | Finds unnecessary `else` statement (when `if` and `else` statement both end with `return` statement). |
-JavaRunSqlStylingCheck | [Styling](styling_checks.md#styling-checks) | .java | Applies rules to enforce consistency in code style. |
+JavaRunSQLCheck | [Styling](styling_checks.md#styling-checks) | .java | Applies rules to enforce consistency in code style. |
+JavaSQLBooleanValuesCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Perform several checks on boolean values in SQL statements. |
 [JavaSeeAnnotationCheck](check/java_see_annotation_check.md#javaseeannotationcheck) | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Checks for nested annotations inside `@see`. |
 JavaServiceImplCheck | [Bug Prevention](bug_prevention_checks.md#bug-prevention-checks) | .java | Ensures that `afterPropertiesSet` and `destroy` methods in `*ServiceImpl` always call the method with the same name in the superclass. |
 JavaServiceImplErcUsageCheck | [Productivity](productivity_checks.md#productivity-checks) | .java | Automatically generates and ensures that `externalReferenceCode` is properly used in remote `*ServiceImpl` add method. |

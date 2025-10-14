@@ -76,7 +76,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 	protected void activate() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(LayoutPageTemplateCollection.class),
-			new StagedModelType(LayoutPageTemplateEntry.class),
+			new StagedModelType(LayoutPageTemplateEntry.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL),
 			new StagedModelType(LayoutUtilityPageEntry.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
@@ -240,7 +241,8 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 					new StagedModelType(
 						LayoutPageTemplateCollection.class.getName()),
 					new StagedModelType(
-						LayoutPageTemplateEntry.class.getName()),
+						LayoutPageTemplateEntry.class.getName(),
+						StagedModelType.REFERRER_CLASS_NAME_ALL),
 					new StagedModelType(LayoutUtilityPageEntry.class.getName())
 				});
 

@@ -13,8 +13,8 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 		accountNameDataRenderer: (itemProps) =>
 			AccountNameDataRenderer({
 				...itemProps,
-				setCurrentAccountURL:
-					props.additionalProps.setCurrentAccountURL,
+				currentAccountPostURL:
+					props.additionalProps.currentAccountPostURL,
 			}),
 	},
 	onActionDropdownItemClick: ({
@@ -26,7 +26,7 @@ const PendingOrdersFDSPropsTransformer = (props) => ({
 		if (actionId === 'view') {
 			changeAccount(
 				accountId,
-				props.additionalProps.setCurrentAccountURL
+				props.additionalProps.currentAccountPostURL
 			);
 		}
 	},

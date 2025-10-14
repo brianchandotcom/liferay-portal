@@ -9,8 +9,8 @@ import {openToast} from 'frontend-js-components-web';
 import {fetch} from 'frontend-js-web';
 import React from 'react';
 
-export function changeAccount(accountId, setCurrentAccountURL) {
-	selectAccount(accountId, setCurrentAccountURL)
+export function changeAccount(accountId, currentAccountPostURL) {
+	selectAccount(accountId, currentAccountPostURL)
 		.then(() => {
 			Liferay.fire(commerceEvents.CURRENT_ACCOUNT_UPDATED, {
 				id: accountId,
@@ -47,7 +47,7 @@ const selectAccount = (id, actionURL) => {
 	return fetch(endpointURL, {body, method: 'POST'});
 };
 
-const AccountNameDataRenderer = ({setCurrentAccountURL, ...props}) => {
+const AccountNameDataRenderer = ({currentAccountPostURL, ...props}) => {
 	return (
 		<div className="table-list-title">
 			<ClayLink
@@ -56,7 +56,7 @@ const AccountNameDataRenderer = ({setCurrentAccountURL, ...props}) => {
 				onClick={(event) => {
 					event.preventDefault();
 
-					changeAccount(props.itemId, setCurrentAccountURL);
+					changeAccount(props.itemId, currentAccountPostURL);
 				}}
 				role="button"
 			>

@@ -5,6 +5,8 @@
 
 package com.liferay.exportimport.kernel.lar;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -79,9 +81,67 @@ public class StagedModelTypeTest {
 		_testParse(new StagedModelType(className, referrerClassName));
 	}
 
+	@Test
+	@TestInfo("LPD-68492")
+	public void testToString() {
+		long classNameId = RandomTestUtil.randomLong();
+
+		String className = String.valueOf(classNameId);
+
+		_testToString(className, new StagedModelType(className));
+		_testToString(className, new StagedModelType(className, null));
+		_testToString(className, new StagedModelType(classNameId));
+		_testToString(className, new StagedModelType(classNameId, 0));
+
+		String expected = StringBundler.concat(
+			className, StringPool.POUND,
+			StagedModelType.REFERRER_CLASS_NAME_ALL);
+
+		_testToString(
+			expected,
+			new StagedModelType(
+				className, StagedModelType.REFERRER_CLASS_NAME_ALL));
+		_testToString(
+			expected,
+			new StagedModelType(
+				classNameId, StagedModelType.REFERRER_CLASS_NAME_ID_ALL));
+
+		expected = StringBundler.concat(
+			className, StringPool.POUND,
+			StagedModelType.REFERRER_CLASS_NAME_ANY);
+
+		_testToString(
+			expected,
+			new StagedModelType(
+				className, StagedModelType.REFERRER_CLASS_NAME_ANY));
+		_testToString(
+			expected,
+			new StagedModelType(
+				classNameId, StagedModelType.REFERRER_CLASS_NAME_ID_ANY));
+
+		long referrerClassNameId = RandomTestUtil.randomLong();
+
+		String referrerClassName = String.valueOf(referrerClassNameId);
+
+		expected = StringBundler.concat(
+			className, StringPool.POUND, referrerClassName);
+
+		_testToString(
+			expected, new StagedModelType(classNameId, referrerClassNameId));
+
+		_testToString(
+			expected, new StagedModelType(className, referrerClassName));
+	}
+
 	private void _testParse(StagedModelType stagedModelType) {
 		Assert.assertEquals(
 			stagedModelType, StagedModelType.parse(stagedModelType.toString()));
+	}
+
+	private void _testToString(
+		String expected, StagedModelType stagedModelType) {
+
+		Assert.assertEquals(expected, stagedModelType.toString());
 	}
 
 	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =

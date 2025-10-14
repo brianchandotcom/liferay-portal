@@ -11,7 +11,6 @@ import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.kernel.upgrade.UpgradeStep;
-import com.liferay.portal.kernel.util.LoggingTimer;
 
 /**
  * @author Georgel Pop
@@ -20,72 +19,58 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		if (hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"originalFragmentEntryLinkId") &&
-			hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME, "fragmentEntryId")) {
+		processConcurrently(
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"select FragmentEntryLink1.ctCollectionId, ",
+					"FragmentEntryLink1.fragmentEntryLinkId, ",
+					"FragmentEntryLink1.groupId, FragmentEntry.groupId, ",
+					"FragmentEntryLink2.externalReferenceCode, ",
+					"FragmentEntry.externalReferenceCode, ",
+					"Group_.externalReferenceCode from FragmentEntryLink ",
+					"FragmentEntryLink1 left join FragmentEntryLink ",
+					"FragmentEntryLink2 on ",
+					"FragmentEntryLink1.originalFragmentEntryLinkId = ",
+					"FragmentEntryLink2.fragmentEntryLinkId and ",
+					"FragmentEntryLink1.ctCollectionId = ",
+					"FragmentEntryLink2.ctCollectionId left join ",
+					"FragmentEntry on FragmentEntry.fragmentEntryId = ",
+					"FragmentEntryLink1.fragmentEntryId left join Group_ on ",
+					"Group_.groupId = FragmentEntry.groupId")),
+			StringBundler.concat(
+				"update FragmentEntryLink set originalFragmentEntryLinkERC = ",
+				"?, fragmentEntryERC = ?, fragmentEntryScopeERC = ? where ",
+				"ctCollectionId = ? and fragmentEntryLinkId = ?"),
+			resultSet -> new Object[] {
+				resultSet.getLong(1), resultSet.getLong(2),
+				resultSet.getLong(3), resultSet.getLong(4),
+				resultSet.getString(5), resultSet.getString(6),
+				resultSet.getString(7)
+			},
+			(values, preparedStatement) -> {
+				long ctCollectionId = (Long)values[0];
+				long fragmentEntryLinkId = (Long)values[1];
+				long fragmentEntryLinkGroupId = (Long)values[2];
+				long fragmentEntryGroupId = (Long)values[3];
+				String originalFragmentEntryLinkERC = (String)values[4];
+				String fragmentEntryERC = (String)values[5];
+				String fragmentEntryScopeERC = (String)values[6];
 
-			try (LoggingTimer loggingTimer = new LoggingTimer()) {
-				processConcurrently(
-					SQLTransformer.transform(
-						StringBundler.concat(
-							"select FragmentEntryLink1.ctCollectionId, ",
-							"FragmentEntryLink1.fragmentEntryLinkId, ",
-							"FragmentEntryLink1.groupId, ",
-							"FragmentEntry.groupId, ",
-							"FragmentEntryLink2.externalReferenceCode, ",
-							"FragmentEntry.externalReferenceCode, ",
-							"Group_.externalReferenceCode from ",
-							"FragmentEntryLink FragmentEntryLink1 left join ",
-							"FragmentEntryLink FragmentEntryLink2 on ",
-							"FragmentEntryLink1.originalFragmentEntryLinkId = ",
-							"FragmentEntryLink2.fragmentEntryLinkId and ",
-							"FragmentEntryLink1.ctCollectionId = ",
-							"FragmentEntryLink2.ctCollectionId left join ",
-							"FragmentEntry on FragmentEntry.fragmentEntryId = ",
-							"FragmentEntryLink1.fragmentEntryId left join ",
-							"Group_ on Group_.groupId = ",
-							"FragmentEntry.groupId")),
-					StringBundler.concat(
-						"update FragmentEntryLink set ",
-						"originalFragmentEntryLinkERC = ?,",
-						"fragmentEntryERC = ?, fragmentEntryScopeERC = ? ",
-						"where ctCollectionId = ? and fragmentEntryLinkId = ?"),
-					resultSet -> new Object[] {
-						resultSet.getLong(1), resultSet.getLong(2),
-						resultSet.getLong(3), resultSet.getLong(4),
-						resultSet.getString(5), resultSet.getString(6),
-						resultSet.getString(7)
-					},
-					(values, preparedStatement) -> {
-						long ctCollectionId = (Long)values[0];
-						long fragmentEntryLinkId = (Long)values[1];
-						long fragmentEntryLinkGroupId = (Long)values[2];
-						long fragmentEntryGroupId = (Long)values[3];
-						String originalFragmentEntryLinkERC = (String)values[4];
-						String fragmentEntryERC = (String)values[5];
-						String fragmentEntryScopeERC = (String)values[6];
+				if ((fragmentEntryERC == null) ||
+					(fragmentEntryGroupId == fragmentEntryLinkGroupId)) {
 
-						if ((fragmentEntryERC == null) ||
-							(fragmentEntryGroupId ==
-								fragmentEntryLinkGroupId)) {
+					fragmentEntryScopeERC = null;
+				}
 
-							fragmentEntryScopeERC = null;
-						}
+				preparedStatement.setString(1, originalFragmentEntryLinkERC);
+				preparedStatement.setString(2, fragmentEntryERC);
+				preparedStatement.setString(3, fragmentEntryScopeERC);
+				preparedStatement.setLong(4, ctCollectionId);
+				preparedStatement.setLong(5, fragmentEntryLinkId);
 
-						preparedStatement.setString(
-							1, originalFragmentEntryLinkERC);
-						preparedStatement.setString(2, fragmentEntryERC);
-						preparedStatement.setString(3, fragmentEntryScopeERC);
-						preparedStatement.setLong(4, ctCollectionId);
-						preparedStatement.setLong(5, fragmentEntryLinkId);
-
-						preparedStatement.addBatch();
-					},
-					null);
-			}
-		}
+				preparedStatement.addBatch();
+			},
+			null);
 	}
 
 	@Override

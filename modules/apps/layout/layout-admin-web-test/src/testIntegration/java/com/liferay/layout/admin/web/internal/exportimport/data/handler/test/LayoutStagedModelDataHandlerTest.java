@@ -292,7 +292,9 @@ public class LayoutStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-46179")
-	public void testDeleteLayoutWithLayoutPageTemplateEntry() throws Exception {
+	public void testDeleteLayoutWithLayoutPageTemplateEntryAndUtilityPageTemplateEntry()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		_stagingLocalService.enableLocalStaging(
@@ -2261,9 +2263,6 @@ public class LayoutStagedModelDataHandlerTest
 			ExportImportConfigurationParameterMapFactoryUtil.
 				buildParameterMap();
 
-		parameterMap.put(
-			PortletDataHandlerKeys.DELETIONS,
-			new String[] {Boolean.TRUE.toString()});
 		parameterMap.put(
 			PortletDataHandlerKeys.PORTLET_DATA,
 			new String[] {Boolean.TRUE.toString()});

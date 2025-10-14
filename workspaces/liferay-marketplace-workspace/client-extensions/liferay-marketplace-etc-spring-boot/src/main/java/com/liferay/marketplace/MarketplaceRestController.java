@@ -654,7 +654,7 @@ public class MarketplaceRestController extends BaseRestController {
 		MarketplaceRestController.class);
 
 	private static Long _accountAdministratorRoleId = GetterUtil.getLong(
-		System.getenv("_ACCOUNT_ADMINISTRATOR_ROLE_ID"));
+		System.getenv("THISISATERRIBLEENVNAME"));
 
 	private final Set<String> _europeanCountriesISOCode = Set.of(
 		"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",

@@ -11,7 +11,6 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.model.impl.FragmentEntryLinkModelImpl;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
@@ -180,8 +179,7 @@ public class FragmentEntryLinkUpgradeProcessTest
 		runUpgrade();
 
 		_assertFragmentEntryLinks(expectedValuesMap, fragmentEntryLinkIds);
-
-		_assertTableColumns();
+		_assertFragmentEntryLinkTableColumns();
 	}
 
 	@Override
@@ -253,9 +251,6 @@ public class FragmentEntryLinkUpgradeProcessTest
 				fragmentEntryLinkId);
 
 			Assert.assertEquals(
-				expectedValues.get("originalFragmentEntryLinkId"),
-				_getOriginalFragmentEntryLinkId(fragmentEntryLink));
-			Assert.assertEquals(
 				expectedValues.get("fragmentEntryId"),
 				_getFragmentEntryId(fragmentEntryLink));
 			Assert.assertEquals(
@@ -267,28 +262,26 @@ public class FragmentEntryLinkUpgradeProcessTest
 			Assert.assertEquals(
 				expectedValues.get("originalFragmentEntryLinkERC"),
 				fragmentEntryLink.getOriginalFragmentEntryLinkERC());
+			Assert.assertEquals(
+				expectedValues.get("originalFragmentEntryLinkId"),
+				_getOriginalFragmentEntryLinkId(fragmentEntryLink));
 		}
 	}
 
-	private void _assertTableColumns() throws Exception {
+	private void _assertFragmentEntryLinkTableColumns() throws Exception {
+		Assert.assertFalse(
+			_dbInspector.hasColumn("FragmentEntryLink", "fragmentEntryId"));
+		Assert.assertTrue(
+			_dbInspector.hasColumn("FragmentEntryLink", "fragmentEntryERC"));
+		Assert.assertTrue(
+			_dbInspector.hasColumn(
+				"FragmentEntryLink", "fragmentEntryScopeERC"));
+		Assert.assertTrue(
+			_dbInspector.hasColumn(
+				"FragmentEntryLink", "originalFragmentEntryLinkERC"));
 		Assert.assertFalse(
 			_dbInspector.hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"originalFragmentEntryLinkId"));
-		Assert.assertFalse(
-			_dbInspector.hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME, "fragmentEntryId"));
-		Assert.assertTrue(
-			_dbInspector.hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"originalFragmentEntryLinkERC"));
-		Assert.assertTrue(
-			_dbInspector.hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME, "fragmentEntryERC"));
-		Assert.assertTrue(
-			_dbInspector.hasColumn(
-				FragmentEntryLinkModelImpl.TABLE_NAME,
-				"fragmentEntryScopeERC"));
+				"FragmentEntryLink", "originalFragmentEntryLinkId"));
 	}
 
 	private Map<Long, Map<String, Object>> _getExpectedValues(
@@ -367,12 +360,11 @@ public class FragmentEntryLinkUpgradeProcessTest
 
 	private void _updateFragmentEntryLinks() throws Exception {
 		_db.alterTableAddColumn(
-			_connection, FragmentEntryLinkModelImpl.TABLE_NAME,
-			"originalFragmentEntryLinkId", "LONG");
+			_connection, "FragmentEntryLink", "originalFragmentEntryLinkId",
+			"LONG");
 
 		_db.alterTableAddColumn(
-			_connection, FragmentEntryLinkModelImpl.TABLE_NAME,
-			"fragmentEntryId", "LONG");
+			_connection, "FragmentEntryLink", "fragmentEntryId", "LONG");
 
 		Group guestGroup = GroupLocalServiceUtil.getFriendlyURLGroup(
 			PortalUtil.getDefaultCompanyId(),

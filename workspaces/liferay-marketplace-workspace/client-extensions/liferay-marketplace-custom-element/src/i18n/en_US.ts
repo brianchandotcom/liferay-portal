@@ -202,7 +202,7 @@ export default {
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s detail content.',
 	'design-the-storefront-for-your-solution-this-will-set-the-information-displayed-on-the-solutions-page-this-section-is-dedicated-to-creating-the-solutions-header':
 		'Design the storefront for your solution. This will set the information displayed on the solution’s page. This section is dedicated to creating the solution’s header.',
-	'designed-for-companies-with-a-taxvat-number-this-account-type-also-lets-you-manage-multiple-users-under-one-profile-click-the-button-below-to-create-your-first-business-account-today':
+	'designed-for-companies-with-a-tax-vat-number-this-account-type-also-lets-you-manage-multiple-users-under-one-profile-click-the-button-below-to-create-your-first-business-account-today':
 		'Designed for companies with a Tax/VAT number, this account type also lets you manage multiple users under one profile. Click the button below to create your first Business Account today!',
 	'details': 'Details',
 	'developer-license-prices': 'Developer License Prices',
@@ -275,9 +275,9 @@ export default {
 	'file-not-available-for-download': 'File not available for download.',
 	'filter': 'Filter',
 	'first-name': 'First Name',
-	'for-businesses-with-a-vattax-number-this-account-type-support-multiple-users-it-also-possible-to-join-an-already-existing-business-account':
+	'for-businesses-with-a-vat-tax-number-this-account-type-support-multiple-users-it-also-possible-to-join-an-already-existing-business-account':
 		'For businesses with a VAT/Tax number; this account type support multiple users. It also possible to join an already existing business account',
-	'for-individuals-without-a-vattax-number-this-account-support-single-user-only':
+	'for-individuals-without-a-vat-tax-number-this-account-support-single-user-only':
 		'For individuals without a VAT/Tax number; this account support single user only.',
 	'form': 'Form',
 	'fragment': 'Fragment',

@@ -1,6 +1,12 @@
 .create-new-account {
-	&-container {
-		gap: 24px;
+	&-button {
+		background-color: #fff;
+		border: 1px solid #0053f0 !important;
+		color: #0053f0 !important;
+	}
+
+	&-button:hover {
+		background-color: #edf3fe !important;
 	}
 
 	&-card {
@@ -12,14 +18,8 @@
 		}
 	}
 
-	&-button {
-		background-color: #fff;
-		border: 1px solid #0053f0 !important;
-		color: #0053f0 !important;
-	}
-
-	&-button:hover {
-		background-color: #edf3fe !important;
+	&-container {
+		gap: 24px;
 	}
 }
 

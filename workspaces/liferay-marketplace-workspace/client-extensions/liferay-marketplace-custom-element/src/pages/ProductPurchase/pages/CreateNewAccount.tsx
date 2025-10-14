@@ -6,8 +6,8 @@
 import Button from '@clayui/button';
 import {useModal} from '@clayui/modal';
 
-import userSVG from '../../../assets/icons/Icon-user.svg';
-import businessSVG from '../../../assets/icons/business.svg';
+import businessIcon from '../../../assets/icons/business.svg';
+import userIcon from '../../../assets/icons/user.svg';
 import {AccountTypes} from '../../../enums/Account';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -45,12 +45,17 @@ const Divider = () => (
 	</div>
 );
 
-const CreateNewAccount = ({accounts}: {accounts: any[]}) => {
+const CreateNewAccount = ({accounts}: {accounts: Account[]}) => {
 	const modal = useModal();
 
-	const content = (() => {
-		if (!accounts.length) {
-			return (
+	const hasAccounts = !!accounts.length;
+	const isBusinessAccount = accounts.some(
+		(account) => account.type === AccountTypes.BUSINESS
+	);
+
+	return (
+		<div className="create-new-account-container d-flex flex-column mt-5">
+			{!hasAccounts && (
 				<>
 					<div className="mr-1">
 						There are no Liferay Marketplace accounts available for
@@ -64,49 +69,39 @@ const CreateNewAccount = ({accounts}: {accounts: any[]}) => {
 
 					<DisplayCard
 						description={i18n.translate(
-							'for-businesses-with-a-vattax-number-this-account-type-support-multiple-users-it-also-possible-to-join-an-already-existing-business-account'
+							'for-businesses-with-a-vat-tax-number-this-account-type-support-multiple-users-it-also-possible-to-join-an-already-existing-business-account'
 						)}
-						svg={businessSVG}
+						svg={businessIcon}
 						title={i18n.translate('business-account')}
 					/>
 
 					<DisplayCard
 						description={i18n.translate(
-							'for-individuals-without-a-vattax-number-this-account-support-single-user-only'
+							'for-individuals-without-a-vat-tax-number-this-account-support-single-user-only'
 						)}
-						svg={userSVG}
+						svg={userIcon}
 						title={i18n.translate('personal-account')}
 					/>
 				</>
-			);
-		}
+			)}
 
-		if (
-			!accounts.some((account) => account.type === AccountTypes.BUSINESS)
-		) {
-			return (
+			{hasAccounts && !isBusinessAccount && (
 				<>
 					<Divider />
 
 					<DisplayCard
 						description={i18n.translate(
-							'designed-for-companies-with-a-taxvat-number-this-account-type-also-lets-you-manage-multiple-users-under-one-profile-click-the-button-below-to-create-your-first-business-account-today'
+							'designed-for-companies-with-a-tax-vat-number-this-account-type-also-lets-you-manage-multiple-users-under-one-profile-click-the-button-below-to-create-your-first-business-account-today'
 						)}
-						svg={businessSVG}
+						svg={businessIcon}
 						title={i18n.translate(
 							'unlock-exclusive-benefits-with-a-business-account'
 						)}
 					/>
 				</>
-			);
-		}
+			)}
 
-		return <Divider />;
-	})();
-
-	return (
-		<div className="create-new-account-container d-flex flex-column mt-5">
-			{content}
+			{hasAccounts && isBusinessAccount && <Divider />}
 
 			<Button
 				className="create-new-account-button"

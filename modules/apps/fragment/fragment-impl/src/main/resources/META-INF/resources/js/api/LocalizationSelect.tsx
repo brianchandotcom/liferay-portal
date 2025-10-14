@@ -22,7 +22,8 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 
-const EVENT_TRANSLATION_STATUS = 'localizationSelect:updateTranslationStatus';
+export const EVENT_TRANSLATION_STATUS =
+	'localizationSelect:updateTranslationStatus';
 
 type Props = {
 	allowLocalizationManagement: boolean;

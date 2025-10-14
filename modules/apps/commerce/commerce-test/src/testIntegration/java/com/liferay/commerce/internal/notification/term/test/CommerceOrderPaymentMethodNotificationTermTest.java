@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -9,12 +9,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.payment.model.CommercePaymentMethodGroupRel;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.notification.context.NotificationContextBuilder;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluatorTracker;
 import com.liferay.notification.type.util.NotificationTypeUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,10 +35,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * @author Matyas Wollner
+ * @author Crescenzo Rega
  */
 @RunWith(Arquillian.class)
-public class CommerceOrderAccountNotificationTermTest {
+public class CommerceOrderPaymentMethodNotificationTermTest {
 
 	@ClassRule
 	@Rule
@@ -47,6 +49,8 @@ public class CommerceOrderAccountNotificationTermTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_user = TestPropsValues.getUser();
+
 		CommerceCurrency commerceCurrency =
 			CommerceCurrencyTestUtil.addCommerceCurrency(
 				TestPropsValues.getCompanyId());
@@ -55,8 +59,14 @@ public class CommerceOrderAccountNotificationTermTest {
 			TestPropsValues.getGroupId(), commerceCurrency.getCode());
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			TestPropsValues.getUserId(), commerceChannel.getGroupId(),
-			commerceCurrency);
+			_user.getUserId(), commerceChannel.getGroupId(), commerceCurrency);
+
+		_commercePaymentMethodGroupRel =
+			CommerceTestUtil.addCommercePaymentMethodGroupRel(
+				_user.getUserId(), commerceChannel.getGroupId());
+
+		_commerceOrder.setCommercePaymentMethodKey(
+			_commercePaymentMethodGroupRel.getPaymentIntegrationKey());
 
 		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			_commerceOrder);
@@ -64,7 +74,7 @@ public class CommerceOrderAccountNotificationTermTest {
 
 	@Test
 	public void testEvaluateTerms() throws Exception {
-		String content = "[%COMMERCEORDER_ACCOUNT_NAME%]";
+		String content = "[%COMMERCEORDER_PAYMENT_METHOD_NAME%]";
 
 		Map<String, Object> termValues = HashMapBuilder.<String, Object>put(
 			"externalReferenceCode", _commerceOrder.getExternalReferenceCode()
@@ -90,7 +100,8 @@ public class CommerceOrderAccountNotificationTermTest {
 			).build(),
 			_notificationTermEvaluatorTracker);
 
-		Assert.assertEquals(_commerceOrder.getCommerceAccountName(), content);
+		Assert.assertEquals(
+			_commercePaymentMethodGroupRel.getName(_user.getLocale()), content);
 	}
 
 	private CommerceOrder _commerceOrder;
@@ -98,7 +109,11 @@ public class CommerceOrderAccountNotificationTermTest {
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
+	private CommercePaymentMethodGroupRel _commercePaymentMethodGroupRel;
+
 	@Inject
 	private NotificationTermEvaluatorTracker _notificationTermEvaluatorTracker;
+
+	private User _user;
 
 }

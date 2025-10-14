@@ -25,7 +25,6 @@ import aQute.lib.filter.Filter;
 import com.liferay.ant.bnd.jsp.JspAnalyzerPlugin;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
@@ -358,24 +357,12 @@ public class WabProcessor {
 							JSONFactoryUtil.createJSONObject(
 								new String(inputStream.readAllBytes()));
 
-						for (String key : jsonObject.keySet()) {
-							JSONObject configurationJSONObject =
-								jsonObject.getJSONObject(key);
-
-							configurationJSONObject.put(
-								ReloadablePersistenceManager.STORAGE_POLICY_KEY,
-								ReloadablePersistenceManager.
-									STORAGE_POLICY_VALUE_EPHEMERAL);
-						}
-
-						String json = jsonObject.toString();
-
 						Files.copy(
-							new ByteArrayInputStream(json.getBytes()),
+							new ByteArrayInputStream(
+								String.valueOf(
+									jsonObject
+								).getBytes()),
 							osgiInfConfiguratorPath.resolve(name));
-
-						_pluginPackageProperties.setProperty(
-							"Liferay-Configurator-Policy", "always");
 					}
 				}
 				else if (name.startsWith(batchPathString)) {

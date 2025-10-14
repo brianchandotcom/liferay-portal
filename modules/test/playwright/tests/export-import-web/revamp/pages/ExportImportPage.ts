@@ -68,8 +68,7 @@ export class ExportImportPage {
 
 		await this.continueButton.click();
 
-		await this.page.waitForLoadState('domcontentloaded');
-		await this.page.waitForTimeout(1000);
+		await this.importButton.waitFor({state: 'visible'});
 
 		await this.importButton.click();
 

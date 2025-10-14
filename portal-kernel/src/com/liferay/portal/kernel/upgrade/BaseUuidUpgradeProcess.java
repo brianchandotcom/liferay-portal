@@ -74,8 +74,8 @@ public abstract class BaseUuidUpgradeProcess extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			processConcurrently(
 				StringBundler.concat(
-					"select ", primaryKeyColumnName, " from ", tableName,
-					" where uuid_ is null or uuid_ = ''"),
+					"select distinct ", primaryKeyColumnName, " from ",
+					tableName, " where uuid_ is null or uuid_ = ''"),
 				StringBundler.concat(
 					"update ", tableName, " set uuid_ = ? where ",
 					primaryKeyColumnName, " = ?"),

@@ -89,8 +89,8 @@ public class LayoutImplTest {
 
 		value = RandomTestUtil.randomString();
 
-		_layout = _layoutLocalService.updateLayout(
-			_group.getGroupId(), false, _layout.getLayoutId(),
+		_layout = _layoutLocalService.updateTypeSettings(
+			_layout,
 			_addThemeSettingProperty(
 				key, _layout.getTypeSettingsProperties(), value));
 
@@ -105,8 +105,8 @@ public class LayoutImplTest {
 
 		value = RandomTestUtil.randomString();
 
-		masterLayout = _layoutLocalService.updateLayout(
-			_group.getGroupId(), false, masterLayout.getLayoutId(),
+		masterLayout = _layoutLocalService.updateTypeSettings(
+			masterLayout,
 			_addThemeSettingProperty(
 				key, masterLayout.getTypeSettingsProperties(), value));
 

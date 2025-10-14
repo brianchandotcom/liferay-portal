@@ -799,9 +799,8 @@ public class AssetPublisherConfigurationAction extends BaseConfigurationAction {
 			}
 		}
 
-		layout = layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
+		layout = layoutLocalService.updateTypeSettings(
+			layout, layout.getTypeSettings());
 
 		if (layout.isSupportsEmbeddedPortlets() &&
 			layout.isPortletEmbedded(portletResource, layout.getGroupId())) {

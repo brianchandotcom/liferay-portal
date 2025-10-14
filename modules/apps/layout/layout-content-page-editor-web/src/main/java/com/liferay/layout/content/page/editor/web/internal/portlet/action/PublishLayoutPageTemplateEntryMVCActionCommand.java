@@ -152,8 +152,8 @@ public class PublishLayoutPageTemplateEntryMVCActionCommand
 
 		layout = _layoutLocalService.updateLayout(layout);
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+		_layoutLocalService.updateTypeSettings(
+			layout,
 			_copySEOTypeSettingsUnicodeProperties(
 				previousLayouTypeSettingsUnicodeProperties,
 				layout.getTypeSettingsProperties()));

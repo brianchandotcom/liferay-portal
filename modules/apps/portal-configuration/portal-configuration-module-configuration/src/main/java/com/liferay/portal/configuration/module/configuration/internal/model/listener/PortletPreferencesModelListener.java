@@ -160,9 +160,8 @@ public class PortletPreferencesModelListener
 				else {
 					layout.setModifiedDate(new Date());
 
-					_layoutLocalService.updateLayout(
-						layout.getGroupId(), layout.isPrivateLayout(),
-						layout.getLayoutId(), layout.getTypeSettings());
+					_layoutLocalService.updateTypeSettings(
+						layout, layout.getTypeSettings());
 				}
 			}
 		}

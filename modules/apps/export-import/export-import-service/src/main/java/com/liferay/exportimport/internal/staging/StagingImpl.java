@@ -471,9 +471,8 @@ public class StagingImpl implements Staging {
 				typeSettingsUnicodeProperties.remove(key);
 			}
 
-			_layoutLocalService.updateLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId(), typeSettingsUnicodeProperties.toString());
+			_layoutLocalService.updateTypeSettings(
+				layout, typeSettingsUnicodeProperties.toString());
 		}
 	}
 

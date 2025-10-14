@@ -780,9 +780,8 @@ public class RenderLayoutStructureTagTest {
 			LayoutTypePortletConstants.LAYOUT_TEMPLATE_ID,
 			"removed-template-id");
 
-		layout = LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+		layout = LayoutLocalServiceUtil.updateTypeSettings(
+			layout, typeSettingsUnicodeProperties.toString());
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

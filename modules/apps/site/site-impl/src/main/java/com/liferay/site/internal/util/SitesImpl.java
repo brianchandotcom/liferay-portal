@@ -190,10 +190,8 @@ public class SitesImpl implements Sites {
 			LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 		}
 
-		targetLayout = _layoutLocalService.updateLayout(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(),
-			layoutPrototypeLayout.getTypeSettings());
+		targetLayout = _layoutLocalService.updateTypeSettings(
+			targetLayout, layoutPrototypeLayout.getTypeSettings());
 
 		copyExpandoBridgeAttributes(layoutPrototypeLayout, targetLayout);
 
@@ -220,9 +218,8 @@ public class SitesImpl implements Sites {
 		typeSettingsUnicodeProperties.setProperty(
 			LAST_MERGE_TIME, String.valueOf(modifiedDate.getTime()));
 
-		_layoutLocalService.updateLayout(
-			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
-			targetLayout.getLayoutId(), targetLayout.getTypeSettings());
+		_layoutLocalService.updateTypeSettings(
+			targetLayout, targetLayout.getTypeSettings());
 
 		UnicodeProperties prototypeTypeSettingsUnicodeProperties =
 			layoutPrototypeLayout.getTypeSettingsProperties();

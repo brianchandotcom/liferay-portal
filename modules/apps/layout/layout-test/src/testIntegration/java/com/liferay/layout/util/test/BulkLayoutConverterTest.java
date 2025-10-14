@@ -95,9 +95,7 @@ public class BulkLayoutConverterTest {
 
 		Assert.assertEquals(LayoutConstants.TYPE_PORTLET, layout.getType());
 
-		_layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			StringPool.BLANK);
+		_layoutLocalService.updateTypeSettings(layout, StringPool.BLANK);
 
 		_bulkLayoutConverter.convertLayout(layout.getPlid());
 	}
@@ -338,9 +336,8 @@ public class BulkLayoutConverterTest {
 
 		_corruptedLayout = LayoutTestUtil.addTypePortletLayout(_group);
 
-		_layoutLocalService.updateLayout(
-			_corruptedLayout.getGroupId(), _corruptedLayout.isPrivateLayout(),
-			_corruptedLayout.getLayoutId(), StringPool.BLANK);
+		_layoutLocalService.updateTypeSettings(
+			_corruptedLayout, StringPool.BLANK);
 
 		UnicodeProperties typeSettingsUnicodeProperties =
 			UnicodePropertiesBuilder.put(

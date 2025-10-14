@@ -144,10 +144,8 @@ public class LayoutWorkflowHandler extends BaseWorkflowHandler<Layout> {
 		typeSettingsUnicodeProperties.remove(
 			LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED);
 
-		draftLayout = _layoutLocalService.updateLayout(
-			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+		draftLayout = _layoutLocalService.updateTypeSettings(
+			draftLayout, typeSettingsUnicodeProperties.toString());
 
 		long originalUserId = PrincipalThreadLocal.getUserId();
 

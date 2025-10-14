@@ -1358,10 +1358,8 @@ public class PortletPreferencesLocalServiceTest
 			typeSettingsUnicodeProperties.setProperty(
 				propertyKey, propertyValue);
 
-			_layoutLocalService.updateLayout(
-				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-				draftLayout.getLayoutId(),
-				typeSettingsUnicodeProperties.toString());
+			_layoutLocalService.updateTypeSettings(
+				draftLayout, typeSettingsUnicodeProperties.toString());
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext();

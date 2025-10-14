@@ -105,9 +105,8 @@ public class SetupWizardSampleDataUtil {
 			LayoutConstants.TYPE_PORTLET, false, "/extranet",
 			new ServiceContext());
 
-		LayoutLocalServiceUtil.updateLayout(
-			extranetLayout.getGroupId(), false, extranetLayout.getLayoutId(),
-			extranetLayout.getTypeSettings());
+		LayoutLocalServiceUtil.updateTypeSettings(
+			extranetLayout, extranetLayout.getTypeSettings());
 
 		Layout intranetLayout = LayoutLocalServiceUtil.addLayout(
 			null, guestUser.getUserId(), organization.getGroupId(), true,
@@ -116,9 +115,8 @@ public class SetupWizardSampleDataUtil {
 			LayoutConstants.TYPE_PORTLET, false, "/intranet",
 			new ServiceContext());
 
-		LayoutLocalServiceUtil.updateLayout(
-			intranetLayout.getGroupId(), true, intranetLayout.getLayoutId(),
-			intranetLayout.getTypeSettings());
+		LayoutLocalServiceUtil.updateTypeSettings(
+			intranetLayout, intranetLayout.getTypeSettings());
 
 		OrganizationLocalServiceUtil.addUserOrganization(
 			adminUser.getUserId(), organization);

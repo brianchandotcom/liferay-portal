@@ -451,9 +451,8 @@ public class SitemapManagerTest {
 		typeSettingsUnicodeProperties.setProperty(
 			"sitemap-include-child-layouts", "false");
 
-		_layoutLocalService.updateLayout(
-			childLayout.getGroupId(), false, childLayout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+		_layoutLocalService.updateTypeSettings(
+			childLayout, typeSettingsUnicodeProperties.toString());
 
 		_testSitemapIncludePagesCompanyEnabledGroupEnabled(
 			childLayout.getUuid(), childLayoutCanonicalURL);
@@ -466,9 +465,8 @@ public class SitemapManagerTest {
 		typeSettingsUnicodeProperties.setProperty(
 			"sitemap-include-child-layouts", "false");
 
-		_layoutLocalService.updateLayout(
-			_layout.getGroupId(), false, _layout.getLayoutId(),
-			typeSettingsUnicodeProperties.toString());
+		_layoutLocalService.updateTypeSettings(
+			_layout, typeSettingsUnicodeProperties.toString());
 
 		_testEmptySitemapIncludePagesCompanyEnabledGroupEnabled(
 			childLayout.getUuid());

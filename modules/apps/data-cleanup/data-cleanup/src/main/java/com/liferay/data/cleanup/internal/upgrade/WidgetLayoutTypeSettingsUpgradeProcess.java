@@ -59,10 +59,8 @@ public class WidgetLayoutTypeSettingsUpgradeProcess extends UpgradeProcess {
 				layout.getTypeSettingsProperties();
 
 			if (_isWidgetLayoutSettingsCleared(typeSettingsUnicodeProperties)) {
-				_layoutLocalService.updateLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					layout.getLayoutId(),
-					typeSettingsUnicodeProperties.toString());
+				_layoutLocalService.updateTypeSettings(
+					layout, typeSettingsUnicodeProperties.toString());
 			}
 		}
 	}

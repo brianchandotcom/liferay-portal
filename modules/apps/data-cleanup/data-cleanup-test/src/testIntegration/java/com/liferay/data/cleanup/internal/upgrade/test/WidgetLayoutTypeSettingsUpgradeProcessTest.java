@@ -53,8 +53,8 @@ public class WidgetLayoutTypeSettingsUpgradeProcessTest {
 
 		String key = RandomTestUtil.randomString();
 
-		layout = _layoutLocalService.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+		layout = _layoutLocalService.updateTypeSettings(
+			layout,
 			UnicodePropertiesBuilder.put(
 				key, "true"
 			).put(

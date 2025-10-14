@@ -44,7 +44,7 @@
 					rightBoxName="currentAssetVocabularyIds"
 					rightList="<%= assetCategoriesNavigationDisplayContext.getCurrentVocabularyNames() %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
-					rightTitle="current"
+					rightTitle="in-use"
 					leftBoxName="availableAssetVocabularyIds"
 					leftList="<%= assetCategoriesNavigationDisplayContext.getAvailableVocabularyNames() %>"
 					leftTitle="available"

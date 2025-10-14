@@ -39,7 +39,7 @@ availableMetadataFields = ListUtil.sort(availableMetadataFields, new KeyValuePai
 <liferay-ui:input-move-boxes
 	rightBoxName="currentMetadataFields"
 	rightList="<%= currentMetadataFields %>"
-	rightTitle="current"
+	rightTitle="in-use"
 	leftBoxName="availableMetadataFields"
 	leftList="<%= availableMetadataFields %>"
 	leftTitle="available"

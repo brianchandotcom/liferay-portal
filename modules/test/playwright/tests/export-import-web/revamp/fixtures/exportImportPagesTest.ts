@@ -5,7 +5,7 @@
 
 import {test} from '@playwright/test';
 
-import {ExportImportPage} from '../../pages/revamp/ExportImportPage';
+import {ExportImportPage} from '../pages/ExportImportPage';
 
 const exportImportPagesTest = test.extend<{
 	exportImportPage: ExportImportPage;

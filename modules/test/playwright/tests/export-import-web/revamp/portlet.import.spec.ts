@@ -10,8 +10,8 @@ import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.f
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {productMenuPageTest} from '../../../fixtures/productMenuPageTest';
-import {exportImportPagesTest} from './fixtures/revamp/exportImportPagesTest';
-import {stagingPageTest} from './fixtures/stagingPageTest';
+import {stagingPageTest} from '../main/fixtures/stagingPageTest';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	documentLibraryPagesTest,
@@ -37,6 +37,6 @@ test('Can import using the new navigation buttons', async ({
 	await expect(exportImportPage.currentAndPreviousTab).toBeVisible();
 
 	await exportImportPage.import(
-		path.join(__dirname, 'dependencies', 'folder.portlet.lar')
+		path.join(__dirname, '../main/dependencies', 'folder.portlet.lar')
 	);
 });

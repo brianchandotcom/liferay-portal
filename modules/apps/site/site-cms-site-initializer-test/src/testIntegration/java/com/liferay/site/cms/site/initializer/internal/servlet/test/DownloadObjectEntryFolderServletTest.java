@@ -17,15 +17,12 @@ import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
-import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
-import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -40,7 +37,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -55,18 +51,17 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.site.cms.site.initializer.test.util.CMSGroupTestUtil;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.Servlet;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -74,10 +69,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -98,7 +89,10 @@ public class DownloadObjectEntryFolderServletTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = CMSGroupTestUtil.getCMSGroup(
+			DownloadObjectEntryFolderServletTest.class,
+			_batchEngineUnitProcessor, _batchEngineUnitReader,
+			_siteInitializerRegistry);
 
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			Collections.singletonMap(
@@ -110,40 +104,6 @@ public class DownloadObjectEntryFolderServletTest {
 					setUserId(TestPropsValues.getUserId());
 				}
 			});
-
-		if (!_isCMSSiteInitialized()) {
-
-			// These tests require the instance to be created with the feature
-			// flag LPD-17564 enabled. On CI, feature flags are enabled on
-			// demand for each test, but not during instance initialization.
-			// Until the feature flag LPD-17564 is removed, run the batch
-			// engine unit processor manually so that the object definitions
-			// are created.
-
-			Bundle testBundle = FrameworkUtil.getBundle(
-				DownloadObjectEntryFolderServletTest.class);
-
-			BundleContext bundleContext = testBundle.getBundleContext();
-
-			for (Bundle bundle : bundleContext.getBundles()) {
-				if (!Objects.equals(
-						bundle.getSymbolicName(),
-						"com.liferay.site.initializer.cms")) {
-
-					continue;
-				}
-
-				_deleteFile(bundle, "00.list.type.definition");
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
-
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
-
-				completableFuture.join();
-			}
-		}
 	}
 
 	@Test
@@ -233,16 +193,6 @@ public class DownloadObjectEntryFolderServletTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _deleteFile(Bundle bundle, String fileName) {
-		File file = bundle.getDataFile(
-			".com.liferay.site.initializer.cms.internal.batch." + fileName +
-				".batch.engine.data.json.0.processed");
-
-		if ((file != null) && file.exists()) {
-			file.delete();
-		}
-	}
-
 	private MockHttpServletRequest _getMockHttpServletRequest(
 			byte[] content, String method, long objectEntryFolderId)
 		throws Exception {
@@ -288,19 +238,6 @@ public class DownloadObjectEntryFolderServletTest {
 		themeDisplay.setRequest(mockHttpServletRequest);
 
 		return themeDisplay;
-	}
-
-	private boolean _isCMSSiteInitialized() throws Exception {
-		ObjectFolder objectFolder =
-			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
-				TestPropsValues.getCompanyId());
-
-		if (objectFolder != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	private void _testDownloadBulkActionWithBulkActionItems() throws Exception {
@@ -462,7 +399,6 @@ public class DownloadObjectEntryFolderServletTest {
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
 
 	@Inject
@@ -478,14 +414,14 @@ public class DownloadObjectEntryFolderServletTest {
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
-	private ObjectFolderLocalService _objectFolderLocalService;
-
-	@Inject
 	private Portal _portal;
 
 	@Inject(
 		filter = "osgi.http.whiteboard.servlet.name=com.liferay.site.cms.site.initializer.internal.servlet.DownloadObjectEntryFolderServlet"
 	)
 	private Servlet _servlet;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

@@ -169,11 +169,9 @@ testWithHeadlessContentPagesFF(
 
 		uiElementsPage.clickNewButton();
 
-		await exportImportPage.page.getByLabel(`Pages ${7} Items`).check();
+		await exportImportPage.page.getByLabel(/Pages\s+\d+\s+Items/i).check();
 		await exportImportPage.page
-			.locator(
-				'[id="_com_liferay_exportimport_web_portlet_ExportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
-			)
+			.locator('button.content-link[data-portlettitle="Pages"]')
 			.click();
 
 		expect(

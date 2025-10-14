@@ -156,6 +156,11 @@ describe('Breadcrumb', () => {
 				screen.getByRole('menuitem', {name: 'Space Settings'})
 			).toBeInTheDocument();
 		});
+
+		expect(screen.getByLabelText('more-actions')).toHaveAttribute(
+			'aria-expanded',
+			'true'
+		);
 	});
 
 	it('renders custom confirm modal when delete action is clicked', async () => {

@@ -12,7 +12,6 @@ import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryLinkTable;
 import com.liferay.fragment.internal.upgrade.v2_0_0.util.FragmentEntryTable;
 import com.liferay.fragment.internal.upgrade.v2_1_0.SchemaUpgradeProcess;
 import com.liferay.fragment.internal.upgrade.v2_4_0.FragmentEntryLinkUpgradeProcess;
-import com.liferay.fragment.internal.upgrade.v3_0_0.FragmentEntryLinkERCUpgradeProcess;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -262,7 +261,9 @@ public class FragmentServiceUpgradeStepRegistrator
 				"FragmentCollection", "marketplace BOOLEAN"));
 
 		registry.register(
-			"2.15.0", "3.0.0", new FragmentEntryLinkERCUpgradeProcess());
+			"2.15.0", "3.0.0",
+			new com.liferay.fragment.internal.upgrade.v3_0_0.
+				FragmentEntryLinkUpgradeProcess());
 	}
 
 	@Reference

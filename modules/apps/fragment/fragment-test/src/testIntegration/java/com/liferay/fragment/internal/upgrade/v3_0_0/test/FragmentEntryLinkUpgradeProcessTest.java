@@ -79,7 +79,7 @@ import org.junit.runner.RunWith;
  * @author Georgel Pop
  */
 @RunWith(Arquillian.class)
-public class FragmentEntryLinkERCUpgradeProcessTest
+public class FragmentEntryLinkUpgradeProcessTest
 	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule

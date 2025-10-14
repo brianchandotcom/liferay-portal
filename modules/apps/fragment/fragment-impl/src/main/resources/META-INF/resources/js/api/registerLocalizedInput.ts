@@ -6,6 +6,7 @@
 import {
 	EVENT_INPUT_REGISTERED,
 	EVENT_TRANSLATION_STATUS,
+	getSelectedLanguageId,
 } from './LocalizationSelect';
 import {getTranslationInput} from './getTranslationInput';
 
@@ -67,7 +68,7 @@ export function registerLocalizedInput({
 		});
 	}
 
-	let currentLanguageId = defaultLanguageId;
+	let currentLanguageId = getSelectedLanguageId() || defaultLanguageId;
 
 	if (changeTextDirection) {
 		inputElement?.setAttribute(

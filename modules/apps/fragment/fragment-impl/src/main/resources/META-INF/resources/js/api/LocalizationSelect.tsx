@@ -19,6 +19,8 @@ import React, {
 import './LocalizationSelect.scss';
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {State} from '@liferay/frontend-js-state-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, sub} from 'frontend-js-web';
 
@@ -26,6 +28,11 @@ export const EVENT_TRANSLATION_STATUS =
 	'localizationSelect:updateTranslationStatus';
 
 export const EVENT_INPUT_REGISTERED = 'localizedInput:registered';
+
+const selectedLocaleAtom = State.atom(
+	'LocalizationSelect:selectedLocaleId',
+	Liferay.ThemeDisplay.getDefaultLanguageId()
+);
 
 type Props = {
 	allowLocalizationManagement: boolean;
@@ -63,7 +70,8 @@ export function LocalizationSelect({
 	const [translations, setTranslations] = useState<Translations>({});
 	const [form, setForm] = useState<HTMLFormElement>();
 
-	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
+	const [selectedLocaleId, setSelectedLocaleId] =
+		useLiferayState(selectedLocaleAtom);
 
 	const selectedLocaleLabel = useMemo(() => {
 		return locales.find(({id}) => id === selectedLocaleId)?.label;
@@ -334,7 +342,7 @@ export function LocalizationSelect({
 		return () => {
 			Liferay.detach('localizationSelect:localeChanged', onLocaleChanged);
 		};
-	}, [form, selectedLocaleId]);
+	}, [form, selectedLocaleId, setSelectedLocaleId]);
 
 	return (
 		<div className="align-items-center c-gap-2 d-flex" ref={containerRef}>
@@ -501,4 +509,8 @@ function hasValue(input: HTMLInputElement) {
 	}
 
 	return Boolean(input.getAttribute('value')?.length);
+}
+
+export function getSelectedLanguageId() {
+	return State.readAtom(selectedLocaleAtom);
 }

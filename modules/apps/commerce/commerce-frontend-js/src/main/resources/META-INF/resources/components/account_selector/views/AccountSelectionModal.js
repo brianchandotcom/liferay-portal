@@ -105,7 +105,9 @@ function AccountSelectionModal({
 								{isCreate ? (
 									<AccountCreationModalBody
 										accountData={accountFields}
-										accountEntryAllowedTypes={accountEntryAllowedTypes}
+										accountEntryAllowedTypes={
+											accountEntryAllowedTypes
+										}
 										quickCreate={true}
 										setAccountData={setAccountFields}
 									/>

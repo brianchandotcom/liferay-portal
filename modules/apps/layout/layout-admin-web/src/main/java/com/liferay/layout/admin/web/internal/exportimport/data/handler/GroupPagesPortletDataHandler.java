@@ -74,11 +74,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 
 	@Activate
 	protected void activate() {
-		setDeletionSystemEventStagedModelTypes(
-			new StagedModelType(LayoutPageTemplateCollection.class),
-			new StagedModelType(LayoutPageTemplateEntry.class.getName(),
-				StagedModelType.REFERRER_CLASS_NAME_ALL),
-			new StagedModelType(LayoutUtilityPageEntry.class));
+		setDeletionSystemEventStagedModelTypes(_getStagedModelTypes());
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "page-template-sets", true, true, null,
@@ -236,15 +232,7 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext)) {
 
 			_staging.populateLastPublishDateCounts(
-				portletDataContext,
-				new StagedModelType[] {
-					new StagedModelType(
-						LayoutPageTemplateCollection.class.getName()),
-					new StagedModelType(
-						LayoutPageTemplateEntry.class.getName(),
-						StagedModelType.REFERRER_CLASS_NAME_ALL),
-					new StagedModelType(LayoutUtilityPageEntry.class.getName())
-				});
+				portletDataContext, _getStagedModelTypes());
 
 			return;
 		}
@@ -269,6 +257,16 @@ public class GroupPagesPortletDataHandler extends BasePortletDataHandler {
 					getExportActionableDynamicQuery(portletDataContext);
 
 		layoutUtilityPageEntryExportActionableDynamicQuery.performCount();
+	}
+
+	private StagedModelType[] _getStagedModelTypes() {
+		return new StagedModelType[] {
+			new StagedModelType(LayoutPageTemplateCollection.class),
+			new StagedModelType(
+				LayoutPageTemplateEntry.class.getName(),
+				StagedModelType.REFERRER_CLASS_NAME_ALL),
+			new StagedModelType(LayoutUtilityPageEntry.class)
+		};
 	}
 
 	@Reference(

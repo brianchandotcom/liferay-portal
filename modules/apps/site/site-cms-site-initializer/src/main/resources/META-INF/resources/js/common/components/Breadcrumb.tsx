@@ -17,8 +17,6 @@ import ApiHelper from '../services/ApiHelper';
 import {displayErrorToast} from '../utils/toastUtil';
 import SpaceSticker from './SpaceSticker';
 
-const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
-
 export interface ActionDropdownItemProps {
 	confirmationMessage?: string;
 	confirmationTitle?: string;
@@ -100,7 +98,6 @@ function ActionDropdownItem({
 				contentComponent: ({closeModal}: {closeModal: () => void}) =>
 					DefaultPermissionModalContent({
 						...defaultPermissionAdditionalProps,
-						className: DEPOT_CLASS_NAME,
 						closeModal,
 					}),
 				size: 'full-screen',

@@ -87,8 +87,15 @@ public class BreadcrumbDisplayContext {
 				),
 				JSONUtil.put(
 					"defaultPermissionAdditionalProps",
-					PermissionUtil.getDefaultPermissionAdditionalProps(
-						_httpServletRequest, _themeDisplay)
+					HashMapBuilder.putAll(
+						PermissionUtil.getDefaultPermissionAdditionalProps(
+							_httpServletRequest, _themeDisplay)
+					).put(
+						"classExternalReferenceCode",
+						group.getExternalReferenceCode()
+					).put(
+						"className", DepotEntry.class.getName()
+					).build()
 				).put(
 					"href", StringPool.BLANK
 				).put(

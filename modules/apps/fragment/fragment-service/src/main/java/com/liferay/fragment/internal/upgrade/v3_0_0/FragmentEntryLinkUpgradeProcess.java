@@ -25,8 +25,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					"select FragmentEntryLink1.ctCollectionId, ",
 					"FragmentEntryLink1.fragmentEntryLinkId, ",
 					"FragmentEntryLink1.groupId, FragmentEntry.groupId, ",
-					"FragmentEntryLink2.externalReferenceCode, ",
 					"FragmentEntry.externalReferenceCode, ",
+					"FragmentEntryLink2.externalReferenceCode, ",
 					"Group_.externalReferenceCode from FragmentEntryLink ",
 					"FragmentEntryLink1 left join FragmentEntryLink ",
 					"FragmentEntryLink2 on ",
@@ -52,8 +52,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 				long fragmentEntryLinkId = (Long)values[1];
 				long fragmentEntryLinkGroupId = (Long)values[2];
 				long fragmentEntryGroupId = (Long)values[3];
-				String originalFragmentEntryLinkERC = (String)values[4];
-				String fragmentEntryERC = (String)values[5];
+				String fragmentEntryERC = (String)values[4];
+				String fragmentEntryLinkERC = (String)values[5];
 				String fragmentEntryScopeERC = (String)values[6];
 
 				if ((fragmentEntryERC == null) ||
@@ -62,7 +62,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 					fragmentEntryScopeERC = null;
 				}
 
-				preparedStatement.setString(1, originalFragmentEntryLinkERC);
+				preparedStatement.setString(1, fragmentEntryLinkERC);
 				preparedStatement.setString(2, fragmentEntryERC);
 				preparedStatement.setString(3, fragmentEntryScopeERC);
 				preparedStatement.setLong(4, ctCollectionId);

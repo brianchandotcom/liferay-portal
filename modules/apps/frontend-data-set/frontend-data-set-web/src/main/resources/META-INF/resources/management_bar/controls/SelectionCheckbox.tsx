@@ -4,6 +4,7 @@
  */
 
 import {ClayCheckbox} from '@clayui/form';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -25,8 +26,18 @@ const SelectionCheckbox = ({
 		<ClayCheckbox
 			aria-label={
 				selectedItemsValue.length
-					? Liferay.Language.get('clear-selection')
-					: Liferay.Language.get('select-items')
+					? sub(
+							Liferay.Language.get(
+								'clear-selection.-there-are-currently-x-of-x-x-selected'
+							),
+							selectedItemsValue.length.toString(),
+							items.length.toString(),
+							Liferay.Language.get('items')
+						)
+					: sub(
+							Liferay.Language.get('select-all-x-on-the-page'),
+							Liferay.Language.get('items')
+						)
 			}
 			checked={allItemsSelectedActive || !!selectedItemsValue.length}
 			indeterminate={

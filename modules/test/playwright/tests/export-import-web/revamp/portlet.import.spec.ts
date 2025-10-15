@@ -27,16 +27,22 @@ export const test = mergeTests(
 test('Can import using the new navigation buttons', async ({
 	documentLibraryPage,
 	exportImportPage,
+	productMenuPage,
 }) => {
 	await documentLibraryPage.goto();
 	await documentLibraryPage.openOptionsMenu();
 	await exportImportPage.importMenuItem.click();
 
 	await expect(exportImportPage.newImportTab).toBeVisible();
-
 	await expect(exportImportPage.currentAndPreviousTab).toBeVisible();
 
 	await exportImportPage.import(
 		path.join(__dirname, '../main/dependencies', 'folder.portlet.lar')
 	);
+
+	await productMenuPage.backButton.click();
+
+	await expect(
+		documentLibraryPage.page.getByRole('link', {name: 'LPS-205933'})
+	).toBeVisible();
 });

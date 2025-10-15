@@ -398,7 +398,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public JenkinsSlave getJenkinsSlave(String jenkinsSlaveName) {
-		if (_jenkinsSlavesMap.isEmpty()) {
+		if (_jenkinsSlavesMap.isEmpty() ||
+			JenkinsResultsParserUtil.isCloudCINode()) {
+
 			update();
 		}
 
@@ -418,7 +420,9 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public List<JenkinsSlave> getJenkinsSlaves() {
-		if (_jenkinsSlavesMap.isEmpty()) {
+		if (_jenkinsSlavesMap.isEmpty() ||
+			JenkinsResultsParserUtil.isCloudCINode()) {
+
 			update();
 		}
 

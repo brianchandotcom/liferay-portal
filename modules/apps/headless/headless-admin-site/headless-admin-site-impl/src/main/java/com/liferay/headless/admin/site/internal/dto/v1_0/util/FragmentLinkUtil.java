@@ -510,11 +510,21 @@ public class FragmentLinkUtil {
 			fragmentMappedValueItemExternalReference,
 		long scopeGroupId) {
 
+		JSONObject jsonObject = JSONUtil.put(
+			"externalReferenceCode",
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
+		).put(
+			"scopeExternalReferenceCode",
+			() -> ScopeUtil.getScopeExternalReferenceCode(
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId)
+		);
+
 		Long groupId = _getGroupId(
 			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 
 		if (groupId == null) {
-			return null;
+			return jsonObject;
 		}
 
 		Layout layout =
@@ -524,10 +534,10 @@ public class FragmentLinkUtil {
 				groupId);
 
 		if (layout == null) {
-			throw new UnsupportedOperationException();
+			return jsonObject;
 		}
 
-		return JSONUtil.put(
+		return jsonObject.put(
 			"groupId", String.valueOf(layout.getGroupId())
 		).put(
 			"id", layout.getUuid()

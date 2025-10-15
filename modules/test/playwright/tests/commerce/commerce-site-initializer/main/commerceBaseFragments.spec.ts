@@ -56,16 +56,15 @@ test(
 		await page.getByLabel('Commerce Classic Master').click();
 		await page.getByLabel('Publish', {exact: true}).click();
 
-		const commerceHeaderTagFragments = page.locator(
-			'#commerce-components-group'
-		);
-
-		await expect(commerceHeaderTagFragments).toBeVisible();
 		await expect(
-			commerceHeaderTagFragments.locator('.account-selector-root')
-		).toHaveClass(/mr-2/);
+			page.locator(
+				'.lfr-layout-structure-item-commerce-account-selector-fragments-account-selector-fragment'
+			)
+		).toBeVisible();
 		await expect(
-			commerceHeaderTagFragments.locator('.cart-root')
+			page.locator(
+				'.lfr-layout-structure-item-commerce-cart-fragments-mini-cart'
+			)
 		).toBeVisible();
 		await expect(page.locator('header .portlet-search-bar')).toBeVisible();
 	}

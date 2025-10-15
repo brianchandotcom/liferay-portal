@@ -444,7 +444,9 @@ public class FragmentLinkUtil {
 			infoItemServiceRegistry, scopeGroupId);
 	}
 
-	private static Long _getGroupId(Scope scope, long scopeGroupId) {
+	private static Long _getGroupId(Scope scope, long scopeGroupId)
+		throws PortalException {
+
 		if ((scope == null) ||
 			Validator.isNull(scope.getExternalReferenceCode())) {
 
@@ -457,7 +459,7 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			scope.getExternalReferenceCode(), companyId);
 
 		if (group == null) {
@@ -475,7 +477,7 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			itemExternalReferenceCode, companyId);
 
 		if ((group == null) || (group.getGroupId() == scopeGroupId)) {

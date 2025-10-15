@@ -141,18 +141,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	public Page<Permission> getAssetLibraryPermissionsPage(
-			String externalReferenceCode, String roleNames)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return getAssetLibraryPermissionsPage(externalReferenceCode, roleNames);
-	}
-
-	@Override
 	public EntityModel getEntityModel(MultivaluedMap multivaluedMap) {
 		return _assetLibraryEntityModel;
 	}
@@ -223,19 +211,6 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		return updatedAssetLibrary;
-	}
-
-	@Override
-	public Page<Permission> putAssetLibraryPermissionsPage(
-			String externalReferenceCode, Permission[] permissions)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			throw new UnsupportedOperationException();
-		}
-
-		return putAssetLibraryPermissionsPage(
-			externalReferenceCode, permissions);
 	}
 
 	@Override
@@ -341,6 +316,35 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				_getServiceContext(),
 				_putUnicodeProperties(assetLibrary.getSettings()),
 				new LinkedHashMap<>()));
+	}
+
+	@Override
+	protected Long getPermissionCheckerGroupId(
+			String groupExternalReferenceCode)
+		throws Exception {
+
+		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+			groupExternalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getGroupId();
+	}
+
+	@Override
+	protected Long getPermissionCheckerResourceId(String externalReferenceCode)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
+			getPermissionCheckerGroupId(externalReferenceCode));
+
+		return depotEntry.getDepotEntryId();
+	}
+
+	@Override
+	protected String getPermissionCheckerResourceName(
+			String externalReferenceCode)
+		throws Exception {
+
+		return DepotEntry.class.getName();
 	}
 
 	private DepotEntry _addOrUpdateDepotEntry(

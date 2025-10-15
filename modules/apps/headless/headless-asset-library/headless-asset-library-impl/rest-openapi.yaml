@@ -388,11 +388,41 @@ paths:
                     description:
                         default response
             tags: ["AssetLibrary"]
+    "/asset-libraries/pinned-by-me":
+        get:
+            description:
+                Retrieves the pinned asset libraries.
+            operationId: getAssetLibrariesPinnedByMePage
+            parameters:
+                -   in: query
+                    name: page
+                    schema:
+                        type: integer
+                -   in: query
+                    name: pageSize
+                    schema:
+                        type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetLibrary"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/AssetLibrary"
+                                type: array
+                    description:
+                        default response
+            tags: ["AssetLibrary"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/connected-sites/{connectedSiteExternalReferenceCode}":
         delete:
             description:
                 Disconnects the site with the given external reference code from the asset library.
-            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode
+            operationId: deleteAssetLibraryConnectedSite
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -415,7 +445,7 @@ paths:
         get:
             description:
                 Gets a connected site from the asset library using the provided external reference codes.
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode
+            operationId: getAssetLibraryConnectedSite
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -442,7 +472,7 @@ paths:
         put:
             description:
                 Connects the site with the given external reference code to the asset library.
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode
+            operationId: putAssetLibraryConnectedSite
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -478,7 +508,7 @@ paths:
         delete:
             description:
                 Removes the user account from the asset library using the provided external reference codes.
-            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
+            operationId: deleteAssetLibraryUserAccount
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -501,7 +531,7 @@ paths:
         get:
             description:
                 Gets a user account connected to the asset library using the provided external reference codes.
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
+            operationId: getAssetLibraryUserAccount
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -528,7 +558,7 @@ paths:
         put:
             description:
                 Adds the user account to the asset library using the provided external reference codes.
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode
+            operationId: putAssetLibraryUserAccount
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -554,7 +584,7 @@ paths:
             tags: ["UserAccount"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts/{userAccountExternalReferenceCode}/roles":
         get:
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage
+            operationId: getAssetLibraryUserAccountRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -581,7 +611,7 @@ paths:
                                 type: array
             tags: ["Role"]
         put:
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage
+            operationId: putAssetLibraryUserAccountRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -623,7 +653,7 @@ paths:
         delete:
             description:
                 Removes a user group from the asset library using the provided external reference codes.
-            operationId: deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode
+            operationId: deleteAssetLibraryUserGroup
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -646,7 +676,7 @@ paths:
         get:
             description:
                 Gets a user group from the asset library.
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode
+            operationId: getAssetLibraryUserGroup
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -673,7 +703,7 @@ paths:
         put:
             description:
                 Associates the user group with the given external reference code to the asset library.
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCode
+            operationId: putAssetLibraryUserGroup
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -699,7 +729,7 @@ paths:
             tags: ["UserGroup"]
     "/asset-libraries/{assetLibraryExternalReferenceCode}/user-groups/{userGroupExternalReferenceCode}/roles":
         get:
-            operationId: getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage
+            operationId: getAssetLibraryUserGroupRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -726,7 +756,7 @@ paths:
                                 type: array
             tags: ["Role"]
         put:
-            operationId: putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage
+            operationId: putAssetLibraryUserGroupRolesPage
             parameters:
                 -   in: path
                     name: assetLibraryExternalReferenceCode
@@ -768,7 +798,7 @@ paths:
         delete:
             description:
                 Deletes the asset library by external reference code.
-            operationId: deleteAssetLibraryByExternalReferenceCode
+            operationId: deleteAssetLibrary
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -786,7 +816,7 @@ paths:
         get:
             description:
                 Retrieves the asset library by external reference code.
-            operationId: getAssetLibraryByExternalReferenceCode
+            operationId: getAssetLibrary
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -821,7 +851,7 @@ paths:
             description:
                 Updates the asset library using only the fields received in the request body with the given external
                 reference code. Any other fields are left untouched.
-            operationId: patchAssetLibraryByExternalReferenceCode
+            operationId: patchAssetLibrary
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -852,7 +882,7 @@ paths:
             description:
                 Replaces the asset library with information sent in the request body with the given external reference
                 code. Any missing fields are deleted unless they are required.
-            operationId: putAssetLibraryByExternalReferenceCode
+            operationId: putAssetLibrary
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -884,7 +914,7 @@ paths:
             description:
                 Get the asset library's with the provided external reference code connected sites. Results can be
                 paginated.
-            operationId: getAssetLibraryByExternalReferenceCodeConnectedSitesPage
+            operationId: getAssetLibraryConnectedSitesPage
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -921,7 +951,7 @@ paths:
             tags: ["ConnectedSite"]
     "/asset-libraries/{externalReferenceCode}/permissions":
         get:
-            operationId: getAssetLibraryByExternalReferenceCodePermissionsPage
+            operationId: getAssetLibraryPermissionsPage
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -947,7 +977,7 @@ paths:
                         application/xml: {}
             tags: ["AssetLibrary"]
         put:
-            operationId: putAssetLibraryByExternalReferenceCodePermissionsPage
+            operationId: putAssetLibraryPermissionsPage
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -968,7 +998,7 @@ paths:
         delete:
             description:
                 Unpins the asset library.
-            operationId: deleteAssetLibraryByExternalReferenceCodePin
+            operationId: deleteAssetLibraryPin
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -986,7 +1016,7 @@ paths:
         put:
             description:
                 Pins the asset library.
-            operationId: putAssetLibraryByExternalReferenceCodePin
+            operationId: putAssetLibraryPin
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1010,7 +1040,7 @@ paths:
             description:
                 Get the asset library with the provided external reference code associated user accounts. Results can be
                 paginated, filtered, searched, and sorted.
-            operationId: getAssetLibraryByExternalReferenceCodeUserAccountsPage
+            operationId: getAssetLibraryUserAccountsPage
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1062,7 +1092,7 @@ paths:
             description:
                 Get the asset library associated with the provided external reference code user groups. Results can be
                 paginated, filtered, searched, and sorted.
-            operationId: getAssetLibraryByExternalReferenceCodeUserGroupsPage
+            operationId: getAssetLibraryUserGroupsPage
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1109,33 +1139,3 @@ paths:
                     description:
                         default response
             tags: ["UserGroup"]
-    "/asset-libraries/pinned-by-me":
-        get:
-            description:
-                Retrieves the pinned asset libraries.
-            operationId: getAssetLibrariesPinnedByMePage
-            parameters:
-                -   in: query
-                    name: page
-                    schema:
-                        type: integer
-                -   in: query
-                    name: pageSize
-                    schema:
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AssetLibrary"
-                                type: array
-                        application/xml:
-                            schema:
-                                items:
-                                    $ref: "#/components/schemas/AssetLibrary"
-                                type: array
-                    description:
-                        default response
-            tags: ["AssetLibrary"]

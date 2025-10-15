@@ -733,7 +733,7 @@ const testWithRepeatableFF = mergeTests(
 testWithRepeatableFF(
 	'Create item with repeatable groups',
 	{
-		tag: '@LPD-50378',
+		tag: ['@LPD-50378', '@LPD-68645'],
 	},
 	async ({contentsPage, page, structureBuilderPage}) => {
 
@@ -816,6 +816,22 @@ testWithRepeatableFF(
 		// Save content
 
 		await contentsPage.saveContent();
+
+		// View content and check that the repeatable buttons are not showed
+
+		await contentsPage.viewContent(title);
+
+		expect(
+			page
+				.getByRole('dialog', {name: title})
+				.frameLocator('iframe')
+				.getByLabel('Add new')
+		).not.toBeVisible();
+
+		await page
+			.getByRole('dialog', {name: title})
+			.getByRole('button', {name: 'close'})
+			.click();
 
 		// Edit the content again and check values
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -206,6 +205,57 @@ public class FragmentLinkUtil {
 		return null;
 	}
 
+	private static ERCInfoItemIdentifier _getERCInfoItemIdentifier(
+		String className, long classPK,
+		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+
+		InfoItemObjectProvider<Object> infoItemObjectProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		InfoItemDetailsProvider<Object> infoItemDetailsProvider =
+			infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, className,
+				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		if ((infoItemObjectProvider == null) ||
+			(infoItemDetailsProvider == null)) {
+
+			return null;
+		}
+
+		try {
+			Object infoItem = infoItemObjectProvider.getInfoItem(
+				scopeGroupId, new ClassPKInfoItemIdentifier(classPK));
+
+			InfoItemDetails infoItemDetails =
+				infoItemDetailsProvider.getInfoItemDetails(
+					scopeGroupId, ERCInfoItemIdentifier.class, infoItem);
+
+			if (infoItemDetails == null) {
+				return null;
+			}
+
+			InfoItemReference infoItemReference =
+				infoItemDetails.getInfoItemReference();
+
+			if (infoItemReference == null) {
+				return null;
+			}
+
+			return (ERCInfoItemIdentifier)
+				infoItemReference.getInfoItemIdentifier();
+		}
+		catch (PortalException portalException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			throw new UnsupportedOperationException();
+		}
+	}
+
 	private static String _getFieldKey(JSONObject jsonObject) {
 		String fieldId = jsonObject.getString("fieldId");
 
@@ -223,9 +273,10 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentMappedValueItemExternalReference
-		_getFragmentMappedValueItemExternalReference(
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId) {
+			_getFragmentMappedValueItemExternalReference(
+				InfoItemServiceRegistry infoItemServiceRegistry,
+				JSONObject jsonObject, long scopeGroupId)
+		throws PortalException {
 
 		String fieldId = jsonObject.getString("fieldId");
 		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
@@ -240,10 +291,8 @@ public class FragmentLinkUtil {
 		}
 
 		String className = _toItemClassName(jsonObject);
-		String externalReferenceCode = jsonObject.getString(
-			"externalReferenceCode");
 
-		if ((className == null) || (externalReferenceCode == null)) {
+		if (className == null) {
 			return null;
 		}
 
@@ -253,48 +302,66 @@ public class FragmentLinkUtil {
 
 		fragmentMappedValueItemExternalReference.setClassName(() -> className);
 
-		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
-			() -> externalReferenceCode);
+		if (jsonObject.has("classPK")) {
+			ERCInfoItemIdentifier ercInfoItemIdentifier =
+				_getERCInfoItemIdentifier(
+					className, jsonObject.getLong("classPK"),
+					infoItemServiceRegistry, scopeGroupId);
 
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		if (infoItemObjectProvider != null) {
-			try {
-				GroupedModel groupedModel =
-					(GroupedModel)infoItemObjectProvider.getInfoItem(
-						new ERCInfoItemIdentifier(
-							externalReferenceCode,
-							GroupUtil.getExternalReferenceCode(
-								jsonObject.getString(
-									"scopeExternalReferenceCode"),
-								scopeGroupId)));
-
+			if (ercInfoItemIdentifier != null) {
+				fragmentMappedValueItemExternalReference.
+					setExternalReferenceCode(
+						ercInfoItemIdentifier::getExternalReferenceCode);
 				fragmentMappedValueItemExternalReference.setScope(
-					() -> ScopeUtil.getScope(
-						groupedModel.getGroupId(), scopeGroupId));
-			}
-			catch (PortalException portalException) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Item external reference could not be set since no " +
-							"item could be obtained",
-						portalException);
-				}
+					() -> {
+						Long companyId = _getCompanyId(scopeGroupId);
 
-				throw new UnsupportedOperationException();
+						if (companyId == null) {
+							return null;
+						}
+
+						return ScopeUtil.getScope(
+							companyId,
+							ercInfoItemIdentifier.
+								getScopeExternalReferenceCode(),
+							scopeGroupId);
+					});
+
+				return fragmentMappedValueItemExternalReference;
 			}
 		}
+
+		String externalReferenceCode = jsonObject.getString(
+			"externalReferenceCode");
+
+		if (externalReferenceCode == null) {
+			return null;
+		}
+
+		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
+			() -> externalReferenceCode);
+		fragmentMappedValueItemExternalReference.setScope(
+			() -> {
+				Long companyId = _getCompanyId(scopeGroupId);
+
+				if (companyId == null) {
+					return null;
+				}
+
+				return ScopeUtil.getScope(
+					companyId,
+					jsonObject.getString("scopeExternalReferenceCode"),
+					scopeGroupId);
+			});
 
 		return fragmentMappedValueItemExternalReference;
 	}
 
 	private static FragmentMappedValueItemReference
-		_getFragmentMappedValueItemReference(
-			InfoItemServiceRegistry infoItemServiceRegistry,
-			JSONObject jsonObject, long scopeGroupId) {
+			_getFragmentMappedValueItemReference(
+				InfoItemServiceRegistry infoItemServiceRegistry,
+				JSONObject jsonObject, long scopeGroupId)
+		throws PortalException {
 
 		if (!jsonObject.has("mappedField")) {
 			return _getFragmentMappedValueItemExternalReference(
@@ -518,11 +585,9 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long scopeGroupId) {
-
-		FragmentLinkMappedValue fragmentLinkMappedValue =
-			new FragmentLinkMappedValue();
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, long scopeGroupId)
+		throws PortalException {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
 			_getFragmentMappedValueItemReference(
@@ -532,11 +597,14 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
+		FragmentLinkMappedValue fragmentLinkMappedValue =
+			new FragmentLinkMappedValue();
+
 		fragmentLinkMappedValue.setMapping(
 			() -> new Mapping() {
 				{
 					setFieldKey(() -> _getFieldKey(jsonObject));
-					setItemReference(fragmentMappedValueItemReference);
+					setItemReference(() -> fragmentMappedValueItemReference);
 				}
 			});
 
@@ -544,8 +612,9 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkValue _toFragmentLinkValue(
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		boolean mappedValue, long scopeGroupId) {
+			InfoItemServiceRegistry infoItemServiceRegistry,
+			JSONObject jsonObject, boolean mappedValue, long scopeGroupId)
+		throws PortalException {
 
 		if (mappedValue) {
 			return _toFragmentLinkMappedValue(

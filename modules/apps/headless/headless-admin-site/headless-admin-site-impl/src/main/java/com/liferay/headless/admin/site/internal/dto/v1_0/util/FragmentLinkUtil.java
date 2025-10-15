@@ -571,8 +571,6 @@ public class FragmentLinkUtil {
 		return jsonObject.put(
 			"groupId", String.valueOf(layout.getGroupId())
 		).put(
-			"id", layout.getUuid()
-		).put(
 			"layoutId", String.valueOf(layout.getLayoutId())
 		).put(
 			"layoutUuid", layout.getUuid()
@@ -580,8 +578,6 @@ public class FragmentLinkUtil {
 			"privateLayout", layout.isPrivateLayout()
 		).put(
 			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
-		).put(
-			"value", layout.getFriendlyURL()
 		);
 	}
 

@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {PORTLET_URLS} from '../../utils/portletUrls';
 
 export class ProductMenuPage {
+	readonly backButton: Locator;
 	readonly blogsButton: Locator;
 	readonly closeProductMenuButton: Locator;
 	readonly configurationButton: Locator;
@@ -30,6 +31,7 @@ export class ProductMenuPage {
 	readonly webContentButton: Locator;
 
 	constructor(page: Page) {
+		this.backButton = page.getByRole('link', {name: 'Back'});
 		this.blogsButton = page.getByRole('menuitem', {
 			name: 'Blogs',
 		});

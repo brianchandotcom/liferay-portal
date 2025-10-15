@@ -302,7 +302,6 @@ pre[class*='language-'] {
 
 .landing-page,
 .learn-card-container {
-	border-bottom: 1px solid var(--color-neutral-2, #e2e2e4);
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--spacer-3);
@@ -665,6 +664,7 @@ pre[class*='language-'] {
 	.learn-article-nav-content {
 		background-color: var(--color-neutral-1, #f7f7f8);
 		border-radius: var(--border-radius, 0.5rem);
+		margin-bottom: 40px;
 
 		&::-webkit-scrollbar {
 			background: transparent;
@@ -718,8 +718,6 @@ pre[class*='language-'] {
 		}
 
 		.learn-article-nav-parent {
-			border-bottom: solid;
-			border-color: var(--color-action-neutral-hover-10, #eaecee);
 			color: var(--color-neutral-10, #282934);
 			justify-content: flex-start;
 
@@ -1607,11 +1605,13 @@ pre[class*='language-'] {
 
 .liferay-nav-item,
 .liferay-nav-item a {
+	align-items: center;
 	border: 1px solid transparent;
 	border-radius: var(--border-radius, 0.5rem);
 	color: var(--color-neutral-10);
-	display: block;
-	padding: var(--spacer-2) var(--spacer-2);
+	display: flex;
+	justify-content: space-between;
+	padding: 12px;
 	position: relative;
 
 	&:hover,

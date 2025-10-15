@@ -63,13 +63,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 	<div class="<%= assetPublisherDisplayContext.isAnyAssetType() ? "hide" : "" %>" id="<portlet:namespace />classNamesBoxes">
 		<liferay-ui:input-move-boxes
+			leftBoxName="availableClassNameIds"
+			leftList="<%= availableClassNameIdsList %>"
+			leftTitle="available"
 			rightBoxName="currentClassNameIds"
 			rightList="<%= currentClassNameIdsList %>"
 			rightReorder="<%= Boolean.TRUE.toString() %>"
 			rightTitle="in-use"
-			leftBoxName="availableClassNameIds"
-			leftList="<%= availableClassNameIdsList %>"
-			leftTitle="available"
 		/>
 	</div>
 
@@ -182,13 +182,13 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 			<div class="<%= (assetSelectedClassTypeIds.length > 1) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace /><%= className %>Boxes">
 				<liferay-ui:input-move-boxes
+					leftBoxName='<%= className + "availableClassTypeIds" %>'
+					leftList="<%= availableSubtypesList %>"
+					leftTitle="available"
 					rightBoxName='<%= className + "currentClassTypeIds" %>'
 					rightList="<%= currentSubtypesList %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
 					rightTitle="in-use"
-					leftBoxName='<%= className + "availableClassTypeIds" %>'
-					leftList="<%= availableSubtypesList %>"
-					leftTitle="available"
 				/>
 			</div>
 		</div>

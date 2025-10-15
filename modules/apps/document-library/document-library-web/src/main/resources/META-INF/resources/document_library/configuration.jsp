@@ -63,13 +63,13 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			<aui:field-wrapper label="display-style-views">
 				<liferay-ui:input-move-boxes
+					leftBoxName="availableDisplayViews"
+					leftList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
+					leftTitle="available"
 					rightBoxName="currentDisplayViews"
 					rightList="<%= dlPortletInstanceSettingsHelper.getCurrentDisplayViews() %>"
 					rightReorder="<%= Boolean.TRUE.toString() %>"
 					rightTitle="in-use"
-					leftBoxName="availableDisplayViews"
-					leftList="<%= dlPortletInstanceSettingsHelper.getAvailableDisplayViews() %>"
-					leftTitle="available"
 				/>
 			</aui:field-wrapper>
 		</liferay-frontend:fieldset>
@@ -112,13 +112,13 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 			<liferay-frontend:fieldset>
 				<aui:field-wrapper label="show-columns">
 					<liferay-ui:input-move-boxes
+						leftBoxName="availableEntryColumns"
+						leftList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"
+						leftTitle="available"
 						rightBoxName="currentEntryColumns"
 						rightList="<%= dlPortletInstanceSettingsHelper.getCurrentEntryColumns() %>"
 						rightReorder="<%= Boolean.TRUE.toString() %>"
 						rightTitle="in-use"
-						leftBoxName="availableEntryColumns"
-						leftList="<%= dlPortletInstanceSettingsHelper.getAvailableEntryColumns() %>"
-						leftTitle="available"
 					/>
 				</aui:field-wrapper>
 			</liferay-frontend:fieldset>

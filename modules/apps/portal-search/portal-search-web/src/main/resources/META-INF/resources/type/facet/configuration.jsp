@@ -91,12 +91,12 @@ TypeFacetPortletPreferences typeFacetPortletPreferences = new com.liferay.portal
 			<aui:input name="<%= PortletPreferencesJspUtil.getInputName(TypeFacetPortletPreferences.PREFERENCE_KEY_ASSET_TYPES) %>" type="hidden" value="<%= typeFacetPortletPreferences.getAssetTypes() %>" />
 
 			<liferay-ui:input-move-boxes
-				rightBoxName="currentAssetTypes"
-				rightList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
-				rightTitle="in-use"
 				leftBoxName="availableAssetTypes"
 				leftList="<%= typeFacetPortletPreferences.getAvailableAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
 				leftTitle="available"
+				rightBoxName="currentAssetTypes"
+				rightList="<%= typeFacetPortletPreferences.getCurrentAssetTypes(themeDisplay.getCompanyId(), themeDisplay.getLocale()) %>"
+				rightTitle="in-use"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

@@ -120,9 +120,17 @@ public class ObjectEntryDisplayContextImplTest {
 		);
 
 		Mockito.when(
+			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_DEFINITION)
+		).thenReturn(
+			objectDefinition
+		);
+
+		String groupId = String.valueOf(RandomTestUtil.randomLong());
+
+		Mockito.when(
 			httpServletRequest.getParameter(ObjectWebKeys.OBJECT_ENTRY_GROUP_ID)
 		).thenReturn(
-			"20123"
+			groupId
 		);
 
 		Mockito.when(
@@ -130,12 +138,6 @@ public class ObjectEntryDisplayContextImplTest {
 				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
 		).thenReturn(
 			false
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_DEFINITION)
-		).thenReturn(
-			objectDefinition
 		);
 
 		Mockito.when(
@@ -156,10 +158,12 @@ public class ObjectEntryDisplayContextImplTest {
 			themeDisplay
 		);
 
+		long companyId = RandomTestUtil.randomLong();
+
 		Mockito.when(
 			themeDisplay.getCompanyId()
 		).thenReturn(
-			2500L
+			companyId
 		);
 
 		Mockito.when(
@@ -204,27 +208,17 @@ public class ObjectEntryDisplayContextImplTest {
 
 		Mockito.when(
 			objectEntryManager.getObjectEntry(
-				Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
+				Mockito.eq(companyId), Mockito.any(DTOConverterContext.class),
 				Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
-				Mockito.eq("20123"))
+				Mockito.eq(groupId))
 		).thenReturn(
 			objectEntry1
 		);
 
 		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
-			new ObjectEntryDisplayContextImpl(
-				Mockito.mock(DDMExpressionFactory.class),
-				Mockito.mock(DDMFormRenderer.class), httpServletRequest,
-				Mockito.mock(ItemSelector.class),
-				Mockito.mock(ObjectDefinitionLocalService.class),
-				objectEntryManagerRegistry,
-				Mockito.mock(ObjectEntryLocalService.class),
-				Mockito.mock(ObjectEntryService.class),
-				Mockito.mock(ObjectFieldBusinessTypeRegistry.class),
-				Mockito.mock(ObjectFieldLocalService.class),
-				Mockito.mock(ObjectLayoutLocalService.class),
-				objectRelationshipLocalService,
-				Mockito.mock(ObjectScopeProviderRegistry.class));
+			_createObjectEntryDisplayContextImpl(
+				httpServletRequest, objectEntryManagerRegistry,
+				objectRelationshipLocalService);
 
 		ObjectEntry objectEntry2 = ReflectionTestUtil.invoke(
 			objectEntryDisplayContextImpl, "_getObjectEntry", new Class<?>[0],
@@ -247,9 +241,9 @@ public class ObjectEntryDisplayContextImplTest {
 		Mockito.verify(
 			objectEntryManager, Mockito.times(1)
 		).getObjectEntry(
-			Mockito.eq(2500L), Mockito.any(DTOConverterContext.class),
+			Mockito.eq(companyId), Mockito.any(DTOConverterContext.class),
 			Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
-			Mockito.eq("20123")
+			Mockito.eq(groupId)
 		);
 
 		Mockito.verifyNoMoreInteractions(
@@ -301,13 +295,16 @@ public class ObjectEntryDisplayContextImplTest {
 		HttpServletRequest httpServletRequest) {
 
 		return _createObjectEntryDisplayContextImpl(
-			httpServletRequest,
-			Mockito.mock(ObjectFieldBusinessTypeRegistry.class));
+			httpServletRequest, Mockito.mock(ObjectEntryManagerRegistry.class),
+			Mockito.mock(ObjectFieldBusinessTypeRegistry.class),
+			Mockito.mock(ObjectRelationshipLocalService.class));
 	}
 
 	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
 		HttpServletRequest httpServletRequest,
-		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry) {
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
 		Mockito.when(
 			httpServletRequest.getAttribute(
@@ -321,14 +318,25 @@ public class ObjectEntryDisplayContextImplTest {
 			Mockito.mock(DDMFormRenderer.class), httpServletRequest,
 			Mockito.mock(ItemSelector.class),
 			Mockito.mock(ObjectDefinitionLocalService.class),
-			Mockito.mock(ObjectEntryManagerRegistry.class),
+			objectEntryManagerRegistry,
 			Mockito.mock(ObjectEntryLocalService.class),
 			Mockito.mock(ObjectEntryService.class),
 			objectFieldBusinessTypeRegistry,
 			Mockito.mock(ObjectFieldLocalService.class),
 			Mockito.mock(ObjectLayoutLocalService.class),
-			Mockito.mock(ObjectRelationshipLocalService.class),
+			objectRelationshipLocalService,
 			Mockito.mock(ObjectScopeProviderRegistry.class));
+	}
+
+	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
+		HttpServletRequest httpServletRequest,
+		ObjectEntryManagerRegistry objectEntryManagerRegistry,
+		ObjectRelationshipLocalService objectRelationshipLocalService) {
+
+		return _createObjectEntryDisplayContextImpl(
+			httpServletRequest, objectEntryManagerRegistry,
+			Mockito.mock(ObjectFieldBusinessTypeRegistry.class),
+			objectRelationshipLocalService);
 	}
 
 	private ObjectEntryDisplayContextImpl _createObjectEntryDisplayContextImpl(
@@ -336,7 +344,9 @@ public class ObjectEntryDisplayContextImplTest {
 
 		return _createObjectEntryDisplayContextImpl(
 			Mockito.mock(HttpServletRequest.class),
-			objectFieldBusinessTypeRegistry);
+			Mockito.mock(ObjectEntryManagerRegistry.class),
+			objectFieldBusinessTypeRegistry,
+			Mockito.mock(ObjectRelationshipLocalService.class));
 	}
 
 }

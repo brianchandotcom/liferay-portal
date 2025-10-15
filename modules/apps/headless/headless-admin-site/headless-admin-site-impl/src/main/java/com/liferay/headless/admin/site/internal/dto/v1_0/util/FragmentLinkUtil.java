@@ -335,7 +335,7 @@ public class FragmentLinkUtil {
 		String externalReferenceCode = jsonObject.getString(
 			"externalReferenceCode");
 
-		if (externalReferenceCode == null) {
+		if (Validator.isNull(externalReferenceCode)) {
 			return null;
 		}
 
@@ -417,10 +417,11 @@ public class FragmentLinkUtil {
 		String className =
 			fragmentMappedValueItemExternalReference.getClassName();
 
-		String externalReferenceCode =
-			fragmentMappedValueItemExternalReference.getExternalReferenceCode();
+		if (Validator.isNull(className) ||
+			Validator.isNull(
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode())) {
 
-		if ((className == null) || (externalReferenceCode == null)) {
 			return null;
 		}
 
@@ -443,7 +444,9 @@ public class FragmentLinkUtil {
 	}
 
 	private static Long _getGroupId(Scope scope, long scopeGroupId) {
-		if ((scope == null) || (scope.getExternalReferenceCode() == null)) {
+		if ((scope == null) ||
+			Validator.isNull(scope.getExternalReferenceCode())) {
+
 			return scopeGroupId;
 		}
 

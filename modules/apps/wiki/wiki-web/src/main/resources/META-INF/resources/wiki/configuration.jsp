@@ -58,7 +58,7 @@
 			<%
 			List<KeyValuePair> currentVisibleNodesList = new ArrayList<KeyValuePair>();
 			List<KeyValuePair> availableVisibleNodesList = new ArrayList<KeyValuePair>();
-			
+
 			Set<String> currentVisibleNodes = new HashSet<String>(wikiPortletInstanceSettingsHelper.getAllNodeNames());
 			String[] visibleNodeNames = wikiPortletInstanceSettingsHelper.getVisibleNodeNames();
 

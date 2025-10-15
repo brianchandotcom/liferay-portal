@@ -60,7 +60,7 @@
 
 		<aui:input name='<%= "settings--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= StringUtil.merge(availableLanguageIds) %>" />
 
-		<%		
+		<%
 		List<KeyValuePair> availableLanguageIdsList = new ArrayList<>();
 
 		for (String propsValuesLanguageId : SetUtil.fromArray(PropsValues.LOCALES)) {

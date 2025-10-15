@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.fragment.internal.renderer;
 
+import com.liferay.account.constants.AccountActionKeys;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
@@ -16,7 +17,11 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Cart;
 import com.liferay.headless.commerce.delivery.catalog.dto.v1_0.Account;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
@@ -98,6 +103,9 @@ public class AccountSelectorButtonFragmentRenderer
 			"currentAccountPostURL",
 			CommerceFragmentUtil.getCurrentAccountPostURL(httpServletRequest)
 		).put(
+			"hasManageAccountsPermission",
+			_hasManageAccountsPermission(httpServletRequest)
+		).put(
 			"order",
 			() -> {
 				CommerceOrder commerceOrder =
@@ -117,6 +125,23 @@ public class AccountSelectorButtonFragmentRenderer
 		).build();
 	}
 
+	private boolean _hasManageAccountsPermission(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay == null) {
+			return false;
+		}
+
+		return _userModelResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getUser(),
+			AccountActionKeys.MANAGE_ACCOUNTS);
+	}
+
 	@Reference(
 		target = "(component.name=com.liferay.headless.commerce.delivery.catalog.internal.dto.v1_0.converter.AccountDTOConverter)"
 	)
@@ -129,5 +154,10 @@ public class AccountSelectorButtonFragmentRenderer
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.kernel.model.User)"
+	)
+	private ModelResourcePermission<User> _userModelResourcePermission;
 
 }

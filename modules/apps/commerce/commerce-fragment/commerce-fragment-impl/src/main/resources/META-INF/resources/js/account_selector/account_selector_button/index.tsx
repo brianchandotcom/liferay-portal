@@ -30,6 +30,7 @@ function AccountSelectorButton({
 	account,
 	configuration,
 	currentAccountPostURL,
+	hasManageAccountsPermission,
 	order,
 	...props
 }: TAccountSelectorButtonProps) {
@@ -220,6 +221,7 @@ function AccountSelectorButton({
 					changeAccount={changeAccount}
 					commerceChannelId={commerceChannelId}
 					hasCreatePermission={!!currentUser.actions?.create}
+					hasManagePermission={hasManageAccountsPermission}
 				/>
 			) : null}
 		</>

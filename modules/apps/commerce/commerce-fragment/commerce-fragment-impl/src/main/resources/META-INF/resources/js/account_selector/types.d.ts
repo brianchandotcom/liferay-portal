@@ -6,6 +6,7 @@
 interface IAccountSelectorButton {
 	account?: commerceTypes.TAccount;
 	currentAccountPostURL: string;
+	hasManageAccountsPermission?: boolean | false;
 	order?: commerceTypes.TOrder;
 }
 

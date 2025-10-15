@@ -182,7 +182,8 @@ public class FragmentLinkUtilTest {
 
 	@Test
 	public void testToFragmentLinkMappedJournalArticle() throws Exception {
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		InfoItemReference infoItemReference = _mockInfoItemReference();
 
@@ -198,7 +199,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			ercInfoItemIdentifier.getExternalReferenceCode()
 		).thenReturn(
-			journalArticleExternalReference
+			journalArticleExternalReferenceCode
 		);
 
 		_portalUtilMockedStatic.when(
@@ -209,8 +210,9 @@ public class FragmentLinkUtilTest {
 
 		Assert.assertEquals(
 			_getFragmentLink(
-				JournalArticle.class.getName(), journalArticleExternalReference,
-				"JournalArticle_title", null, null),
+				JournalArticle.class.getName(),
+				journalArticleExternalReferenceCode, "JournalArticle_title",
+				null, null),
 			FragmentLinkUtil.toFragmentLink(
 				_infoItemServiceRegistry,
 				JSONUtil.put(
@@ -220,7 +222,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classPK", RandomTestUtil.randomLong()
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -236,12 +238,13 @@ public class FragmentLinkUtilTest {
 		ERCInfoItemIdentifier ercInfoItemIdentifier = Mockito.mock(
 			ERCInfoItemIdentifier.class);
 
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		Mockito.when(
 			ercInfoItemIdentifier.getExternalReferenceCode()
 		).thenReturn(
-			journalArticleExternalReference
+			journalArticleExternalReferenceCode
 		);
 
 		Mockito.when(
@@ -266,8 +269,9 @@ public class FragmentLinkUtilTest {
 
 		Assert.assertEquals(
 			_getFragmentLink(
-				JournalArticle.class.getName(), journalArticleExternalReference,
-				"JournalArticle_title", null,
+				JournalArticle.class.getName(),
+				journalArticleExternalReferenceCode, "JournalArticle_title",
+				null,
 				new Scope() {
 					{
 						setExternalReferenceCode(_scopeExternalReferenceCode);
@@ -283,7 +287,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classPK", RandomTestUtil.randomLong()
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -445,12 +449,14 @@ public class FragmentLinkUtilTest {
 			JournalArticle.class.getName()
 		);
 
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			_getFragmentLink(
-				JournalArticle.class.getName(), journalArticleExternalReference,
-				"JournalArticle_title", null, null),
+				JournalArticle.class.getName(),
+				journalArticleExternalReferenceCode, "JournalArticle_title",
+				null, null),
 			FragmentLinkUtil.toFragmentLink(
 				_infoItemServiceRegistry,
 				JSONUtil.put(
@@ -460,7 +466,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classPK", RandomTestUtil.randomLong()
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -576,7 +582,8 @@ public class FragmentLinkUtilTest {
 			classPKInfoItemIdentifier
 		);
 
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -588,7 +595,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classPK", classPK
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -598,7 +605,7 @@ public class FragmentLinkUtilTest {
 			FragmentLinkUtil.toJSONObject(
 				_getFragmentLink(
 					JournalArticle.class.getName(),
-					journalArticleExternalReference, "JournalArticle_title",
+					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null, null),
 				_infoItemServiceRegistry, _scopeGroupId
 			).toString());
@@ -627,7 +634,8 @@ public class FragmentLinkUtilTest {
 			classPKInfoItemIdentifier
 		);
 
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		String journalArticleScopeExternalReferenceCode =
 			RandomTestUtil.randomString();
@@ -642,7 +650,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classPK", classPK
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -655,7 +663,7 @@ public class FragmentLinkUtilTest {
 			FragmentLinkUtil.toJSONObject(
 				_getFragmentLink(
 					JournalArticle.class.getName(),
-					journalArticleExternalReference, "JournalArticle_title",
+					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null,
 					new Scope() {
 						{
@@ -850,7 +858,8 @@ public class FragmentLinkUtilTest {
 			null
 		);
 
-		String journalArticleExternalReference = RandomTestUtil.randomString();
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
 
 		Assert.assertEquals(
 			JSONUtil.put(
@@ -860,7 +869,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"classNameId", _classNameId
 				).put(
-					"externalReferenceCode", journalArticleExternalReference
+					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
@@ -870,7 +879,7 @@ public class FragmentLinkUtilTest {
 			FragmentLinkUtil.toJSONObject(
 				_getFragmentLink(
 					JournalArticle.class.getName(),
-					journalArticleExternalReference, "JournalArticle_title",
+					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null, null),
 				_infoItemServiceRegistry, _scopeGroupId
 			).toString());

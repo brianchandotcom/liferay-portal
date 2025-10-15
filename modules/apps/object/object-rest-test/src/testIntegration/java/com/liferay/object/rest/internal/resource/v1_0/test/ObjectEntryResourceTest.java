@@ -187,6 +187,7 @@ import com.liferay.portal.spring.transaction.TransactionInterceptor;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -5865,7 +5866,9 @@ public class ObjectEntryResourceTest {
 		Assert.assertEquals(1, itemsJSONArray.length());
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testGetObjectEntriesSystemProperties() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
@@ -6014,7 +6017,9 @@ public class ObjectEntryResourceTest {
 		_testGetObjectEntryActions(false);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	@TestInfo("LPD-62553")
 	public void testGetObjectEntryActionsWithCompanySharingDisabled()
@@ -6034,7 +6039,9 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	@TestInfo("LPD-62553")
 	public void testGetObjectEntryActionsWithGroupSharingDisabled()
@@ -6060,14 +6067,18 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	@TestInfo("LPD-62553")
 	public void testGetObjectEntryActionsWithSharingEnabled() throws Exception {
 		_testGetObjectEntryActions(true);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	@TestInfo("LPD-62553")
 	public void testGetObjectEntryActionsWithSystemSharingDisabled()
@@ -7815,7 +7826,9 @@ public class ObjectEntryResourceTest {
 		}
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testGetObjectEntryWithTaxonomyCategories() throws Exception {
 		_addCMSGroup();
@@ -8709,7 +8722,9 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, _objectDefinition2, _siteScopedObjectDefinition2);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testPatchPutCustomObjectEntryWithScheduleDates()
 		throws Exception {

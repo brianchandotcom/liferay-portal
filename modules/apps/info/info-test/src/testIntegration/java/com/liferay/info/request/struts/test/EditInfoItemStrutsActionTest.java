@@ -96,6 +96,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upload.test.util.UploadTestUtil;
@@ -218,7 +219,9 @@ public class EditInfoItemStrutsActionTest {
 			objectEntry.getURLTitle(_objectDefinition.getDefaultLocale()));
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testAddAndUpdateInfoItemWithEnableObjectEntrySchedule()
 		throws Exception {
@@ -529,7 +532,9 @@ public class EditInfoItemStrutsActionTest {
 			WorkflowConstants.STATUS_APPROVED);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testUpdateInfoItem() throws Exception {
 		MockHttpServletResponse mockHttpServletResponse =

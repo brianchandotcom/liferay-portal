@@ -130,6 +130,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -1325,7 +1326,9 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 		}
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testSendNotificationToSubscribers() throws Exception {
 		ObjectDefinition objectDefinition =

@@ -21,6 +21,7 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.IdEntityField;
 import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,7 +35,9 @@ import org.junit.runner.RunWith;
 /**
  * @author Roberto Díaz
  */
-@FeatureFlag("LPD-17564")
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+)
 @RunWith(Arquillian.class)
 public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 

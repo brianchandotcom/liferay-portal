@@ -741,7 +741,9 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectFolderLocalService.deleteObjectFolder(objectFolder);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testAddObjectDefinitionWithMissingWorkflowDefinitionReference()
 		throws Exception {
@@ -2392,7 +2394,9 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectEntryLocalService, _objectRelationshipLocalService);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testDeleteObjectDefinitionWithObjectEntries() throws Exception {
 		String objectFieldName = StringUtil.randomId();
@@ -2837,7 +2841,9 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getCompanyId(), "C_Test"));
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testSystemObjectFields() throws Exception {
 		ObjectDefinition objectDefinition =
@@ -2870,7 +2876,9 @@ public class ObjectDefinitionLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	@FeatureFlag("LPD-17564")
+	@FeatureFlags(
+		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+	)
 	@Test
 	public void testUpdateCustomObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =

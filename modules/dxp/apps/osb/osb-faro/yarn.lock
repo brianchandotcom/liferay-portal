@@ -1465,6 +1465,13 @@
   dependencies:
     classnames "^2.2.6"
 
+"@clayui/sticker@^3.147.0":
+  version "3.147.0"
+  resolved "https://registry.yarnpkg.com/@clayui/sticker/-/sticker-3.147.0.tgz#649b5550ad508ec7560beeefbb031cc8e6ae6989"
+  integrity sha512-dP3/zE8Pi7w+vY212/yejZ6NNChCPmtjufdXXaLSsIcqcSViJf0gf009pV+DNfL1Qn167Lb1wyPatGq8AQNtrA==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/table@^3.111.0":
   version "3.111.0"
   resolved "https://registry.yarnpkg.com/@clayui/table/-/table-3.111.0.tgz#50a0ece07a3ce40ffb0265d8585ff0792299cafe"

@@ -539,12 +539,14 @@ public class FragmentLinkUtil {
 				layout.getGroupId(), scopeGroupId);
 		}
 
+		if (companyId == null) {
+			return null;
+		}
+
 		String scopeExternalReferenceCode = layoutJSONObject.getString(
 			"scopeExternalReferenceCode");
 
-		if (Validator.isNull(scopeExternalReferenceCode) ||
-			(companyId == null)) {
-
+		if (Validator.isNull(scopeExternalReferenceCode)) {
 			return null;
 		}
 

@@ -5,11 +5,16 @@ import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
+import LinkCell from 'shared/components/table/cell-components/LinkCell';
 import Nav from 'shared/components/Nav';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
+import ToThousandsCell from 'shared/components/table/cell-components/ToThousandsCell';
+import URLConstants from 'shared/util/url-constants';
+import UserCell from 'shared/components/table/cell-components/UserCell';
 import {
 	ActionType,
 	UnassignedSegmentsContext
@@ -26,6 +31,8 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {createOrderIOMap} from 'shared/util/pagination';
+import {DateCell} from 'shared/components/table/cell-components';
+import {formatDateToTimeZone} from 'shared/util/date';
 import {
 	getDefaultSortOrder,
 	NAME,
@@ -87,7 +94,7 @@ interface IListProps extends PropsFromRedux {
 	history: any;
 }
 
-export const SEGMENT_TYPES_LABEL_MAP = {
+const SEGMENT_TYPES_LABEL_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch'),
 	[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
 };
@@ -490,9 +497,18 @@ export const List: React.FC<IListProps> = ({
 							alerts={getAlerts()}
 							className='segment-list-root'
 							columns={[
-								// TODO => This is probably wrong. We probably need to use cell renderers here
 								{
 									accessor: 'name',
+									cellRenderer: LinkCell,
+									cellRendererProps: {
+										hrefFormatter: data =>
+											toRoute(Routes.CONTACTS_SEGMENT, {
+												channelId,
+												groupId,
+												id: data.id,
+												type: SEGMENTS
+											})
+									},
 									className: 'table-cell-expand',
 									label: Liferay.Language.get('segment-name'),
 									title: true
@@ -502,19 +518,41 @@ export const List: React.FC<IListProps> = ({
 									label: Liferay.Language.get('type')
 								},
 								{
-									acessor: 'segmentMembership',
+									accessor: 'individualCount',
+									cellRenderer: ToThousandsCell,
 									label: Liferay.Language.get(
 										'segment-membership'
 									)
 								},
 								{
-									acessor: 'lastModifiedBy',
+									accessor: 'lastMembershipUpdate',
+									cellRenderer: DateCell,
+									cellRendererProps: {
+										dateFormatter: date =>
+											formatDateToTimeZone(date, 'lll'),
+										datePath: 'lastMembershipUpdate'
+									},
+									className: 'table-column-text-end',
+									label: Liferay.Language.get(
+										'last-membership-update'
+									)
+								},
+								{
+									accessor: 'lastModifiedBy',
+									cellRenderer: UserCell,
 									label: Liferay.Language.get(
 										'last-modified-by'
 									)
 								},
 								{
-									acessor: 'modifiedDate',
+									accessor: 'dateModified',
+									cellRenderer: DateCell,
+									cellRendererProps: {
+										dateFormatter: date =>
+											formatDateToTimeZone(date, 'll'),
+										datePath: 'dateModified'
+									},
+									className: 'table-column-text-end',
 									label: Liferay.Language.get('modified-date')
 								}
 							]}

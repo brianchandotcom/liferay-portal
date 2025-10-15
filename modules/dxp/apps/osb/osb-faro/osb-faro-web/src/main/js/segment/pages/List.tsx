@@ -101,8 +101,7 @@ const FILTER_BY_OPTIONS = [
 				label: `${
 					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch]
 				} ${Liferay.Language.get('segment')}`,
-				/* TODO => Change this value to Batch, when available in BE */
-				value: SegmentTypes.Dynamic
+				value: SegmentTypes.Batch
 			},
 			{
 				label: `${
@@ -390,7 +389,6 @@ export const List: React.FC<IListProps> = ({
 		{
 			href: setUriQueryValues(
 				{type: SegmentTypes.RealTime},
-				// TODO => Change to real-time segment route when available
 				toRoute(Routes.CONTACTS_SEGMENT_CREATE, {
 					channelId,
 					groupId

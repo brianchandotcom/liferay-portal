@@ -98,8 +98,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	_formRef = React.createRef<Formik>();
 
 	@autobind
-	// TODO => Change this function name
-	createDynamicSegment({criteria, includeAnonymousUsers, name}) {
+	createBatchSegment({criteria, includeAnonymousUsers, name}) {
 		const {
 			channelId,
 			groupId,
@@ -138,7 +137,7 @@ class SegmentEditor extends React.Component<ISegmentEditorProps> {
 	handleSubmit(form) {
 		const {onSubmit} = this.props;
 
-		onSubmit(form, this._formRef, this.createDynamicSegment);
+		onSubmit(form, this._formRef, this.createBatchSegment);
 	}
 
 	render() {

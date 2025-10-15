@@ -102,13 +102,13 @@ public class ConnectedSiteResourceTest
 		throws Exception {
 
 		return connectedSiteResource.putAssetLibraryConnectedSite(
-			testGetAssetLibraryConnectedSitesPage_getExternalReferenceCode(),
+			testGetAssetLibraryConnectedSitesPage_getAssetLibraryExternalReferenceCode(),
 			connectedSite.getExternalReferenceCode(), new ConnectedSite());
 	}
 
 	@Override
 	protected String
-			testGetAssetLibraryConnectedSitesPage_getExternalReferenceCode()
+			testGetAssetLibraryConnectedSitesPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		Group group = testDepotEntry.getGroup();

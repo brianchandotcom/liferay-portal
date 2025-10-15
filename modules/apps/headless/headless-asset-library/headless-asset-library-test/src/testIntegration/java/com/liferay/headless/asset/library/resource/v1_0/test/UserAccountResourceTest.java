@@ -187,14 +187,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	@Override
-	protected String
-			testGetAssetLibraryUserAccountsPage_getAssetLibraryExternalReferenceCode()
-		throws Exception {
-
-		return _getGroupExternalReferenceCode();
-	}
-
-	@Override
 	protected UserAccount testPutAssetLibraryUserAccount_addUserAccount()
 		throws Exception {
 

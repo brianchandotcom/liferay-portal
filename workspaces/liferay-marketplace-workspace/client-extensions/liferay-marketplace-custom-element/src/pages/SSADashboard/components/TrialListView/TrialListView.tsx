@@ -75,7 +75,7 @@ export default function TrialListView({
 
 	const authorFilterValue = isFilterByAuthorIdEnabled
 		? myUserAccount?.id
-		: myUserAccount.name;
+		: myUserAccount?.name;
 
 	const searchBuilder = useMemo(() => {
 		const searchBuilder = new SearchBuilder().eq(

@@ -34,7 +34,7 @@ const SSADashboardOutlet = () => {
 
 	const authorFilterValue = isFilterByAuthorIdEnabled
 		? myUserAccount?.id
-		: myUserAccount.name;
+		: myUserAccount?.name;
 
 	const {data: inProgressTrialResponse = {totalCount: 0}} = usePlacedOrders({
 		accountId: ssaAccount?.id as number,

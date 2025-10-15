@@ -76,6 +76,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Jürgen Kappler
  * @author Roberto Díaz
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryFolderModelListenerTest {
 
@@ -151,7 +152,6 @@ public class ObjectEntryFolderModelListenerTest {
 				ServiceContextTestUtil.getServiceContext());
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryFolder() throws Exception {
 		Map<Long, Set<String>> sourceRoleIdsToActionIds =
@@ -276,7 +276,6 @@ public class ObjectEntryFolderModelListenerTest {
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testDeleteObjectEntryFolder() throws Exception {
 		int sharingEntriesCount =

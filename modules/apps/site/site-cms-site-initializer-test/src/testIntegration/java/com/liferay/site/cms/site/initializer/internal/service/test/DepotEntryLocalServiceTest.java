@@ -41,6 +41,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Jürgen Kappler
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class DepotEntryLocalServiceTest {
 
@@ -51,7 +52,6 @@ public class DepotEntryLocalServiceTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddDepotEntry() throws Exception {
 		_assertObjectEntryFolders(

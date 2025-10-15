@@ -76,6 +76,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Stefano Motta
  */
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryModelListenerTest {
 
@@ -129,7 +130,6 @@ public class ObjectEntryModelListenerTest {
 		}
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(

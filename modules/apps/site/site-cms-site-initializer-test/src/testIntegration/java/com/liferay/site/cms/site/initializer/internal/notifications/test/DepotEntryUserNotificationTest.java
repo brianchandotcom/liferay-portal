@@ -44,6 +44,7 @@ import org.junit.runner.RunWith;
  * @author Balázs Sáfrány-Kovalik
  */
 @DataGuard(scope = DataGuard.Scope.METHOD)
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class DepotEntryUserNotificationTest {
 
@@ -65,7 +66,6 @@ public class DepotEntryUserNotificationTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddGroupUser() throws Exception {
 		User user = UserTestUtil.addUser();
@@ -76,7 +76,6 @@ public class DepotEntryUserNotificationTest {
 		_assertUserNotificationEvent(user);
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddUserUserGroup() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
@@ -91,7 +90,6 @@ public class DepotEntryUserNotificationTest {
 		_assertUserNotificationEvent(user);
 	}
 
-	@FeatureFlag("LPD-17564")
 	@Test
 	public void testInterpret() throws Exception {
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();

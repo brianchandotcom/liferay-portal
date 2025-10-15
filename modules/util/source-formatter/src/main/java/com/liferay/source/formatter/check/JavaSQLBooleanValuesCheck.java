@@ -113,7 +113,12 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					sqlString = getParameterList.get(1);
 				}
 			}
-			else if (methodName.equals("StringBundler.concat")) {
+
+			if (sqlString.startsWith("StringBundler.concat(")) {
+				continue;
+			}
+
+			if (methodName.equals("StringBundler.concat")) {
 				for (String parameter : getParameterList) {
 					sqlString = sqlString + StringUtil.unquote(parameter);
 				}
@@ -163,10 +168,16 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					lineNumber);
 			}
 
-			if (methodName.equals("runSQL") ||
-				methodName.equals("StringBundler.concat")) {
+			if (methodName.equals("runSQL")) {
+				continue;
+			}
 
-				return;
+			if (methodName.equals("StringBundler.concat")) {
+				String s = StringUtil.trimTrailing(content.substring(0, x));
+
+				if (s.endsWith("=")) {
+					continue;
+				}
 			}
 
 			_checkMissingTransformCall(fileName, sqlString, lineNumber);

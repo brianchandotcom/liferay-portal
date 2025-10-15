@@ -1938,10 +1938,8 @@ public abstract class Base${schemaName}ResourceImpl
 							description = "${stringUtil.upperCaseFirstLetter(schemaName)}", format = "binary", type = "string"
 						)
 						public String ${schemaName};
-				   <#elseif stringUtil.equals(propertySchema.type, "array") && propertySchema.items.reference??>
-						public ${freeMarkerTool.getReferenceName(propertySchema.items.reference)}[] ${schemaName};
 					<#else>
-						public ${stringUtil.upperCaseFirstLetter(schemaName)} ${schemaName};
+						public ${freeMarkerTool.getPropertyType(configYAML, openAPIYAML, propertySchema, schemaName)} ${schemaName};
 					</#if>
 				</#list>
 

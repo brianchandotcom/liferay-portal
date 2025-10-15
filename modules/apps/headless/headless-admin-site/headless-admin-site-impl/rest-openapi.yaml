@@ -2932,6 +2932,11 @@ components:
                     items:
                         $ref: "#/components/schemas/ItemExternalReference"
                     type: array
+                thumbnail:
+                    $ref: "#/components/schemas/URLReference"
+                    # @review
+                    description:
+                        The display page template's thumbnail.
                 type:
                     # @review
                     description:

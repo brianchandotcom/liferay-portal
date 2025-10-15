@@ -67,4 +67,25 @@ public class SQLBooleanValues {
 		return preparedStatement.executeQuery();
 	}
 
+	protected ResultSet method6(Connection connection) throws SQLException {
+		String s = StringBundler.concat(
+			"update AssetListEntryUsage set containerKey = portletId, key_ = ",
+			"CAST_TEXT(assetListEntryId), plid = classPK, enabledForUpdate = ",
+			"false");
+
+		PreparedStatement preparedStatement = connection.prepareStatement(s);
+
+		return preparedStatement.executeQuery();
+	}
+
+	protected ResultSet method7(Connection connection) throws SQLException {
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			StringBundler.concat(
+				"update AssetListEntryUsage set containerKey = portletId, ",
+				"key_ = CAST_TEXT(assetListEntryId), plid = classPK, enabled ",
+				"= [$FALSE$]"));
+
+		return preparedStatement.executeQuery();
+	}
+
 }

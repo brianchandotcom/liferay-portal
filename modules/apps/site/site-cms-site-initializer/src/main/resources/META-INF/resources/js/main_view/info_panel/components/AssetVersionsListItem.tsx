@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import Label from '@clayui/label';
 import List from '@clayui/list';
 import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
-import {IAssetObjectEntry} from '../../../common/types/AssetType';
 import StatusLabel from '../../../common/components/StatusLabel';
+import {IAssetObjectEntry} from '../../../common/types/AssetType';
 
 const AssetVersionsListItem = ({items}: {items: IAssetObjectEntry[]}) => {
 	return (

@@ -110,7 +110,7 @@ export default function AssetsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: ({value}) => StatusLabel(value),
+					component: ({value}) => <StatusLabel label={value} />,
 					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

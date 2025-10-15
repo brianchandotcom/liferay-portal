@@ -37,7 +37,8 @@ build {
     }
     provisioner "shell" {
         inline=[
-            "sudo mv /tmp/cloud-config.yaml /etc/cloud/cloud.cfg.d/99-cloud-config.cfg"
+            "sudo mv /tmp/cloud-config.yaml /etc/cloud/cloud.cfg.d/99-cloud-config.cfg",
+            "tree -a /opt/liferay"
         ]
     }
 

@@ -134,13 +134,13 @@ portletDisplay.setURLBackTitle("bookmarks");
 									%>
 
 									<liferay-ui:input-move-boxes
+										leftBoxName="availableFolderColumns"
+										leftList="<%= availableItemsList %>"
+										leftTitle="available"
 										rightBoxName="currentFolderColumns"
 										rightList="<%= currentItemsList %>"
 										rightReorder="<%= Boolean.TRUE.toString() %>"
 										rightTitle="in-use"
-										leftBoxName="availableFolderColumns"
-										leftList="<%= availableItemsList %>"
-										leftTitle="available"
 									/>
 								</aui:field-wrapper>
 							</div>
@@ -231,13 +231,13 @@ portletDisplay.setURLBackTitle("bookmarks");
 								%>
 
 								<liferay-ui:input-move-boxes
+									leftBoxName="availableEntryColumns"
+									leftList="<%= availableItemsList %>"
+									leftTitle="available"
 									rightBoxName="currentEntryColumns"
 									rightList="<%= currentItemsList %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
-									leftBoxName="availableEntryColumns"
-									leftList="<%= availableItemsList %>"
-									leftTitle="available"
 								/>
 							</aui:field-wrapper>
 						</div>

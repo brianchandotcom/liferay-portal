@@ -44,13 +44,13 @@ availableSocialBookmarkTypes = ListUtil.sort(availableSocialBookmarkTypes, new K
 <aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />
 
 <liferay-ui:input-move-boxes
+	leftBoxName="availableTypes"
+	leftList="<%= availableSocialBookmarkTypes %>"
+	leftTitle="available"
 	rightBoxName="currentTypes"
 	rightList="<%= currentSocialBookmarkTypes %>"
 	rightReorder="<%= Boolean.TRUE.toString() %>"
 	rightTitle="in-use"
-	leftBoxName="availableTypes"
-	leftList="<%= availableSocialBookmarkTypes %>"
-	leftTitle="available"
 />
 
 <label class="control-label" for="<portlet:namespace />typesOptions">

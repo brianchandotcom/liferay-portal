@@ -90,13 +90,13 @@
 			%>
 
 			<liferay-ui:input-move-boxes
+				leftBoxName="availableVisibleNodes"
+				leftList="<%= availableVisibleNodesList %>"
+				leftTitle="hidden"
 				rightBoxName="currentVisibleNodes"
 				rightList="<%= currentVisibleNodesList %>"
 				rightReorder="<%= Boolean.TRUE.toString() %>"
 				rightTitle="visible"
-				leftBoxName="availableVisibleNodes"
-				leftList="<%= availableVisibleNodesList %>"
-				leftTitle="hidden"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

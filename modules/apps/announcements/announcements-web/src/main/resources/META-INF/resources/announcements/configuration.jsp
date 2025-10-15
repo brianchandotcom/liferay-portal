@@ -114,13 +114,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
+									leftBoxName="availableScopeGroupExternalReferenceCodes"
+									leftList="<%= availableGroups %>"
+									leftTitle="available"
 									rightBoxName="currentScopeGroupExternalReferenceCodes"
 									rightList="<%= currentGroups %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
-									leftBoxName="availableScopeGroupExternalReferenceCodes"
-									leftList="<%= availableGroups %>"
-									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -149,13 +149,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeOrganizationExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
+									leftBoxName="availableScopeOrganizationExternalReferenceCodes"
+									leftList="<%= availableOrganizations %>"
+									leftTitle="available"
 									rightBoxName="currentScopeOrganizationExternalReferenceCodes"
 									rightList="<%= currentOrganizations %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
-									leftBoxName="availableScopeOrganizationExternalReferenceCodes"
-									leftList="<%= availableOrganizations %>"
-									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -184,13 +184,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeUserGroupExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
+									leftBoxName="availableScopeUserGroupExternalReferenceCodes"
+									leftList="<%= availableUserGroups %>"
+									leftTitle="available"
 									rightBoxName="currentScopeUserGroupExternalReferenceCodes"
 									rightList="<%= currentUserGroups %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
-									leftBoxName="availableScopeUserGroupExternalReferenceCodes"
-									leftList="<%= availableUserGroups %>"
-									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>
@@ -219,13 +219,13 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 
 							<div id="<portlet:namespace />ScopeRoleExternalReferenceCodesBoxes">
 								<liferay-ui:input-move-boxes
+									leftBoxName="availableScopeRoleExternalReferenceCodes"
+									leftList="<%= availableRoles %>"
+									leftTitle="available"
 									rightBoxName="currentScopeRoleExternalReferenceCodes"
 									rightList="<%= currentRoles %>"
 									rightReorder="<%= Boolean.TRUE.toString() %>"
 									rightTitle="in-use"
-									leftBoxName="availableScopeRoleExternalReferenceCodes"
-									leftList="<%= availableRoles %>"
-									leftTitle="available"
 								/>
 							</div>
 						</liferay-ui:section>

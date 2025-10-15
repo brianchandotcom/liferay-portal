@@ -522,14 +522,11 @@ public class FragmentLinkUtil {
 	private static String _getLayoutExternalReferenceCode(
 		Layout layout, JSONObject layoutJSONObject) {
 
-		String externalReferenceCode = layoutJSONObject.getString(
-			"externalReferenceCode");
-
 		if (layout != null) {
-			externalReferenceCode = layout.getExternalReferenceCode();
+			return layout.getExternalReferenceCode();
 		}
 
-		return externalReferenceCode;
+		return layoutJSONObject.getString("externalReferenceCode");
 	}
 
 	private static Scope _getLayoutScope(

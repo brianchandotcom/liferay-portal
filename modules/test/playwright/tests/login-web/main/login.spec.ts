@@ -127,12 +127,13 @@ test('LPD-55426 Test sign in button is disabled until page is fully loaded', asy
 	await page.goto(liferayConfig.environment.baseUrl + '/c/portal/login', {
 		waitUntil: 'commit',
 	});
-	await expect(page.getByRole('button', {name: 'Sign In'})).toHaveAttribute(
-		'disabled'
-	);
+	await expect(
+		page.getByRole('button', {name: 'Sign In'}).last()
+	).toHaveAttribute('disabled');
 	await page.waitForLoadState('domcontentloaded');
-	await expect(page.getByRole('button', {name: 'Sign In'})).toBeEnabled();
-
+	await expect(
+		page.getByRole('button', {name: 'Sign In'}).last()
+	).toBeEnabled();
 	await page.goto(liferayConfig.environment.baseUrl, {
 		waitUntil: 'domcontentloaded',
 	});

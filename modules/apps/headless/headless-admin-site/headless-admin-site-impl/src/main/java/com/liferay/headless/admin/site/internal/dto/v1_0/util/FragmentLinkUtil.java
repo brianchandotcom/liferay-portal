@@ -184,9 +184,9 @@ public class FragmentLinkUtil {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-
-			throw new UnsupportedOperationException();
 		}
+
+		return null;
 	}
 
 	private static Long _getCompanyId(long scopeGroupId) {
@@ -251,9 +251,9 @@ public class FragmentLinkUtil {
 			if (_log.isWarnEnabled()) {
 				_log.warn(portalException);
 			}
-
-			throw new UnsupportedOperationException();
 		}
+
+		return null;
 	}
 
 	private static String _getFieldKey(JSONObject jsonObject) {

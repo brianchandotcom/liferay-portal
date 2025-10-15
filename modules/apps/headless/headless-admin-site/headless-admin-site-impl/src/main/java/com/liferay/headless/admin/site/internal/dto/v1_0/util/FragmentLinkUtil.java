@@ -159,7 +159,7 @@ public class FragmentLinkUtil {
 				new ERCInfoItemIdentifier(
 					fragmentMappedValueItemExternalReference.
 						getExternalReferenceCode(),
-					ScopeUtil.getScopeExternalReferenceCode(
+					ItemScopeUtil.getItemScopeExternalReferenceCode(
 						fragmentMappedValueItemExternalReference.getScope(),
 						scopeGroupId)));
 
@@ -321,7 +321,7 @@ public class FragmentLinkUtil {
 							return null;
 						}
 
-						return ScopeUtil.getScope(
+						return ItemScopeUtil.getItemScope(
 							companyId,
 							ercInfoItemIdentifier.
 								getScopeExternalReferenceCode(),
@@ -347,7 +347,7 @@ public class FragmentLinkUtil {
 					return null;
 				}
 
-				return ScopeUtil.getScope(
+				return ItemScopeUtil.getItemScope(
 					companyId,
 					jsonObject.getString("scopeExternalReferenceCode"),
 					scopeGroupId);
@@ -485,7 +485,8 @@ public class FragmentLinkUtil {
 		throws Exception {
 
 		if (layout != null) {
-			return ScopeUtil.getScope(layout.getGroupId(), scopeGroupId);
+			return ItemScopeUtil.getItemScope(
+				layout.getGroupId(), scopeGroupId);
 		}
 
 		String scopeExternalReferenceCode = layoutJSONObject.getString(
@@ -497,7 +498,7 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		return ScopeUtil.getScope(
+		return ItemScopeUtil.getItemScope(
 			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
 			scopeGroupId);
 	}
@@ -535,7 +536,7 @@ public class FragmentLinkUtil {
 			"fieldId", fieldKey
 		).put(
 			"scopeExternalReferenceCode",
-			() -> ScopeUtil.getScopeExternalReferenceCode(
+			() -> ItemScopeUtil.getItemScopeExternalReferenceCode(
 				fragmentMappedValueItemExternalReference.getScope(),
 				scopeGroupId)
 		);
@@ -548,7 +549,7 @@ public class FragmentLinkUtil {
 		throws PortalException {
 
 		String scopeExternalReferenceCode =
-			ScopeUtil.getScopeExternalReferenceCode(
+			ItemScopeUtil.getItemScopeExternalReferenceCode(
 				fragmentMappedValueItemExternalReference.getScope(),
 				scopeGroupId);
 

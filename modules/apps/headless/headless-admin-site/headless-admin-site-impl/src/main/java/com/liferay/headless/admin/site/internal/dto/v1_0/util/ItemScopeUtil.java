@@ -16,57 +16,57 @@ import com.liferay.portal.kernel.util.Validator;
 /**
  * @author Rubén Pulido
  */
-public class ScopeUtil {
+public class ItemScopeUtil {
 
-	public static Scope getScope(long groupId, long scopeGroupId)
+	public static Scope getItemScope(long itemScopeGroupId, long scopeGroupId)
 		throws Exception {
 
-		if (groupId == scopeGroupId) {
+		if (itemScopeGroupId == scopeGroupId) {
 			return null;
 		}
 
-		return _getScope(GroupLocalServiceUtil.getGroup(scopeGroupId));
+		return _getItemScope(GroupLocalServiceUtil.getGroup(itemScopeGroupId));
 	}
 
-	public static Scope getScope(
-			long companyId, String externalReferenceCode, long scopeGroupId)
+	public static Scope getItemScope(
+			long companyId, String itemExternalReferenceCode, long scopeGroupId)
 		throws PortalException {
 
-		if (Validator.isNull(externalReferenceCode)) {
+		if (Validator.isNull(itemExternalReferenceCode)) {
 			return null;
 		}
 
 		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			externalReferenceCode, companyId);
+			itemExternalReferenceCode, companyId);
 
 		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
 			return null;
 		}
 
-		return _getScope(group);
+		return _getItemScope(group);
 	}
 
-	public static String getScopeExternalReferenceCode(
-			Scope scope, long scopeGroupId)
+	public static String getItemScopeExternalReferenceCode(
+			Scope itemScope, long scopeGroupId)
 		throws PortalException {
 
-		if (scope == null) {
+		if (itemScope == null) {
 			return null;
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
 		if (StringUtil.equals(
-				scope.getExternalReferenceCode(),
+				itemScope.getExternalReferenceCode(),
 				group.getExternalReferenceCode())) {
 
 			return null;
 		}
 
-		return scope.getExternalReferenceCode();
+		return itemScope.getExternalReferenceCode();
 	}
 
-	private static Scope _getScope(Group group) {
+	private static Scope _getItemScope(Group group) {
 		return new Scope() {
 			{
 				setExternalReferenceCode(group::getExternalReferenceCode);

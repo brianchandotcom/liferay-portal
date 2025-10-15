@@ -31,7 +31,9 @@ interface StatusLabelProps {
 }
 
 const StatusLabel = ({label}: StatusLabelProps) => (
-	<Label displayType={mapLabelToLabelDisplayType[label]}>{label}</Label>
+	<Label displayType={mapLabelToLabelDisplayType[label]}>
+		{Liferay.Language.get(label)}
+	</Label>
 );
 
 export default StatusLabel;

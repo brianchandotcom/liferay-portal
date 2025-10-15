@@ -36,10 +36,10 @@ public class ScopeUtil {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 			externalReferenceCode, companyId);
 
-		if (group.getGroupId() == scopeGroupId) {
+		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
 			return null;
 		}
 

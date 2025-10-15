@@ -10,20 +10,14 @@
 <aui:input name="preferences--metadataFields--" type="hidden" />
 
 <%
-
-// Current metadata fields list
-
 List<KeyValuePair> currentMetadataFields = new ArrayList<>();
+List<KeyValuePair> availableMetadataFields = new ArrayList<>();
 
 String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
 
 for (String metadataField : metadataFields) {
 	currentMetadataFields.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
 }
-
-// Available metadata fields list
-
-List<KeyValuePair> availableMetadataFields = new ArrayList<>();
 
 String[] allMetadataFields = {"author", "categories", "create-date", "expiration-date", "modified-date", "priority", "publish-date", "tags", "view-count"};
 

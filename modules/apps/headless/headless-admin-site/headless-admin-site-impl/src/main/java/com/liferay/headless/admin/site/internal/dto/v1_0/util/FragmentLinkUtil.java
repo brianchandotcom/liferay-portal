@@ -427,6 +427,12 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		if (classNameId == 0) {
+			return null;
+		}
+
 		String fieldKey = mapping.getFieldKey();
 
 		if (Validator.isNotNull(fieldKey)) {
@@ -441,7 +447,7 @@ public class FragmentLinkUtil {
 		}
 		else {
 			_setMappedItemJSONObject(
-				fragmentMappedValueItemExternalReference,
+				classNameId, fragmentMappedValueItemExternalReference,
 				infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
@@ -574,43 +580,25 @@ public class FragmentLinkUtil {
 	}
 
 	private static void _setMappedItemJSONObject(
+		long classNameId,
 		FragmentMappedValueItemExternalReference
 			fragmentMappedValueItemExternalReference,
 		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
 		long scopeGroupId) {
 
-		String className =
-			fragmentMappedValueItemExternalReference.getClassName();
-		String classNameId = null;
-
-		try {
-			classNameId = String.valueOf(PortalUtil.getClassNameId(className));
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to process mapping because class name ID could " +
-						"not be obtained for class name " + className,
-					exception);
-			}
-		}
-
-		if (classNameId == null) {
-			return;
-		}
-
-		ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-			_getClassPKInfoItemIdentifier(
-				className, fragmentMappedValueItemExternalReference,
-				infoItemServiceRegistry, scopeGroupId);
-
 		jsonObject.put(
-			"className", className
+			"className", fragmentMappedValueItemExternalReference.getClassName()
 		).put(
 			"classNameId", classNameId
 		).put(
 			"classPK",
 			() -> {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					_getClassPKInfoItemIdentifier(
+						fragmentMappedValueItemExternalReference.getClassName(),
+						fragmentMappedValueItemExternalReference,
+						infoItemServiceRegistry, scopeGroupId);
+
 				if (classPKInfoItemIdentifier == null) {
 					return null;
 				}

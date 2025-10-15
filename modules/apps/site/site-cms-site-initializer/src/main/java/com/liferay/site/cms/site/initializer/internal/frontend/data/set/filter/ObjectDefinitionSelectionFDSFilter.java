@@ -59,7 +59,7 @@ public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
 		List<SelectionFDSFilterItem> selectionFDSFilterItems =
 			new ArrayList<>();
 
-		List<ObjectDefinition> cmsObjectDefinitions =
+		List<ObjectDefinition> objectDefinitions =
 			_objectDefinitionService.getCMSObjectDefinitions(
 				CompanyThreadLocal.getCompanyId(),
 				new String[] {
@@ -68,11 +68,11 @@ public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
 					ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES
 				});
 
-		if (cmsObjectDefinitions.isEmpty()) {
+		if (objectDefinitions.isEmpty()) {
 			return selectionFDSFilterItems;
 		}
 
-		for (ObjectDefinition objectDefinition : cmsObjectDefinitions) {
+		for (ObjectDefinition objectDefinition : objectDefinitions) {
 			objectDefinition.getLabel(locale);
 
 			selectionFDSFilterItems.add(

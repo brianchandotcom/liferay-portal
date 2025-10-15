@@ -119,14 +119,14 @@ public class FragmentLinkUtilTest {
 		);
 
 		_groupLocalServiceUtilMockedStatic.when(
-			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				Mockito.anyString(), Mockito.anyLong())
+			() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong())
 		).thenReturn(
 			_group
 		);
 
 		_groupLocalServiceUtilMockedStatic.when(
-			() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong())
+			() -> GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				Mockito.anyString(), Mockito.anyLong())
 		).thenReturn(
 			_group
 		);

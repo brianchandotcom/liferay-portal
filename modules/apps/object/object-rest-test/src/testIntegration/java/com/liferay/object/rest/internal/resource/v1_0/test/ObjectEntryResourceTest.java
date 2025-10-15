@@ -5808,7 +5808,7 @@ public class ObjectEntryResourceTest {
 		Assert.assertFalse(actionsJSONObject1.isNull("create"));
 		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
 		Assert.assertFalse(actionsJSONObject1.isNull("deleteBatch"));
-		Assert.assertTrue(actionsJSONObject1.isNull("get"));
+		Assert.assertFalse(actionsJSONObject1.isNull("get"));
 		Assert.assertFalse(actionsJSONObject1.isNull("updateBatch"));
 
 		HTTPTestUtil.customize(
@@ -5827,6 +5827,63 @@ public class ObjectEntryResourceTest {
 				Assert.assertTrue(actionsJSONObject2.isNull("deleteBatch"));
 				Assert.assertTrue(actionsJSONObject2.isNull("get"));
 				Assert.assertTrue(actionsJSONObject2.isNull("updateBatch"));
+			}
+		);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition4.getResourceName(), role);
+		_addResourcePermission(
+			ActionKeys.VIEW, _objectDefinition4.getClassName(), role);
+
+		User user = _addUser("test1", "test1");
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() -> {
+				JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
+					null, _objectDefinition4.getRESTContextPath(),
+					Http.Method.GET);
+
+				JSONObject actionsJSONObject3 = jsonObject3.getJSONObject(
+					"actions");
+
+				Assert.assertFalse(actionsJSONObject3.isNull("create"));
+				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
+				Assert.assertTrue(actionsJSONObject3.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject3.isNull("get"));
+				Assert.assertTrue(actionsJSONObject3.isNull("updateBatch"));
+			}
+		);
+
+		_addResourcePermission(
+			ActionKeys.DELETE, _objectDefinition4.getClassName(), role);
+		_addResourcePermission(
+			ActionKeys.UPDATE, _objectDefinition4.getClassName(), role);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			"test1@liferay.com", "test1"
+		).apply(
+			() -> {
+				JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
+					null, _objectDefinition4.getRESTContextPath(),
+					Http.Method.GET);
+
+				JSONObject actionsJSONObject4 = jsonObject4.getJSONObject(
+					"actions");
+
+				Assert.assertFalse(actionsJSONObject4.isNull("create"));
+				Assert.assertFalse(actionsJSONObject4.isNull("createBatch"));
+				Assert.assertFalse(actionsJSONObject4.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject4.isNull("get"));
+				Assert.assertFalse(actionsJSONObject4.isNull("updateBatch"));
 			}
 		);
 	}

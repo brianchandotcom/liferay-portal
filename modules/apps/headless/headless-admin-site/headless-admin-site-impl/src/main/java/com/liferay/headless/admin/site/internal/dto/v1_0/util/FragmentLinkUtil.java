@@ -395,12 +395,12 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 		String fieldKey = mapping.getFieldKey();
 
 		if (fragmentMappedValueItemReference instanceof
 				FragmentMappedValueItemContextReference) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			if (Validator.isNotNull(fieldKey)) {
 				jsonObject.put("mappedField", fieldKey);
@@ -430,23 +430,16 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		if (Validator.isNotNull(fieldKey)) {
-			jsonObject.put("fieldId", fieldKey);
-		}
-
 		if (Objects.equals(className, Layout.class.getName())) {
-			jsonObject.put(
+			return JSONUtil.put(
 				"layout",
 				_getMappedLayoutJSONObject(
 					fragmentMappedValueItemExternalReference, scopeGroupId));
 		}
-		else {
-			_setMappedItemJSONObject(
-				classNameId, fragmentMappedValueItemExternalReference,
-				infoItemServiceRegistry, jsonObject, scopeGroupId);
-		}
 
-		return jsonObject;
+		return _getMappedItemJSONObject(
+			classNameId, fragmentMappedValueItemExternalReference, fieldKey,
+			infoItemServiceRegistry, scopeGroupId);
 	}
 
 	private static Long _getGroupId(Scope scope, long scopeGroupId) {
@@ -504,6 +497,45 @@ public class FragmentLinkUtil {
 		return ScopeUtil.getScope(
 			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
 			scopeGroupId);
+	}
+
+	private static JSONObject _getMappedItemJSONObject(
+		long classNameId,
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference,
+		String fieldKey, InfoItemServiceRegistry infoItemServiceRegistry,
+		long scopeGroupId) {
+
+		return JSONUtil.put(
+			"className", fragmentMappedValueItemExternalReference.getClassName()
+		).put(
+			"classNameId", classNameId
+		).put(
+			"classPK",
+			() -> {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					_getClassPKInfoItemIdentifier(
+						fragmentMappedValueItemExternalReference.getClassName(),
+						fragmentMappedValueItemExternalReference,
+						infoItemServiceRegistry, scopeGroupId);
+
+				if (classPKInfoItemIdentifier == null) {
+					return null;
+				}
+
+				return classPKInfoItemIdentifier.getClassPK();
+			}
+		).put(
+			"externalReferenceCode",
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
+		).put(
+			"fieldId", fieldKey
+		).put(
+			"scopeExternalReferenceCode",
+			() -> ScopeUtil.getScopeExternalReferenceCode(
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId)
+		);
 	}
 
 	private static JSONObject _getMappedLayoutJSONObject(
@@ -572,43 +604,6 @@ public class FragmentLinkUtil {
 		}
 
 		return false;
-	}
-
-	private static void _setMappedItemJSONObject(
-		long classNameId,
-		FragmentMappedValueItemExternalReference
-			fragmentMappedValueItemExternalReference,
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long scopeGroupId) {
-
-		jsonObject.put(
-			"className", fragmentMappedValueItemExternalReference.getClassName()
-		).put(
-			"classNameId", classNameId
-		).put(
-			"classPK",
-			() -> {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					_getClassPKInfoItemIdentifier(
-						fragmentMappedValueItemExternalReference.getClassName(),
-						fragmentMappedValueItemExternalReference,
-						infoItemServiceRegistry, scopeGroupId);
-
-				if (classPKInfoItemIdentifier == null) {
-					return null;
-				}
-
-				return classPKInfoItemIdentifier.getClassPK();
-			}
-		).put(
-			"externalReferenceCode",
-			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
-		).put(
-			"scopeExternalReferenceCode",
-			() -> ScopeUtil.getScopeExternalReferenceCode(
-				fragmentMappedValueItemExternalReference.getScope(),
-				scopeGroupId)
-		);
 	}
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(

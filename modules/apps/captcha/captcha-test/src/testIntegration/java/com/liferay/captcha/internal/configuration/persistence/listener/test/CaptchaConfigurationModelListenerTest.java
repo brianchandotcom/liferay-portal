@@ -61,7 +61,6 @@ public class CaptchaConfigurationModelListenerTest {
 			"reCaptchaVerifyURL",
 			"https://www.google.com/recaptcha/api/siteverify"
 		).build();
-
 		_simpleCaptchaProperties = HashMapDictionaryBuilder.<String, Object>put(
 			"captchaEngine", SimpleCaptchaImpl.class.getName()
 		).put(

@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.PortletConstants;
@@ -67,7 +65,6 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.util.JS;
 import com.liferay.whip.util.ReflectionUtil;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
@@ -305,10 +302,10 @@ public class WabProcessor {
 
 			Path metatInfBatchPath = _createPath(
 				clientExtensionBundlePath, "META-INF/batch");
+			Path metaInfClientExtensionConfigBundlePath = _createPath(
+				clientExtensionBundlePath, "META-INF/client-extension-config");
 			Path metatInfResourcesPath = _createPath(
 				clientExtensionBundlePath, "META-INF/resources");
-			Path osgiInfConfiguratorPath = _createPath(
-				clientExtensionBundlePath, "OSGI-INF/configurator");
 			Path siteInitializerResourcesPath = _createPath(
 				clientExtensionBundlePath, "site-initializer");
 
@@ -350,20 +347,9 @@ public class WabProcessor {
 				if (!name.contains("/") &&
 					name.endsWith(".client-extension-config.json")) {
 
-					try (InputStream inputStream = zipFile.getInputStream(
-							zipEntry)) {
-
-						JSONObject jsonObject =
-							JSONFactoryUtil.createJSONObject(
-								new String(inputStream.readAllBytes()));
-
-						Files.copy(
-							new ByteArrayInputStream(
-								String.valueOf(
-									jsonObject
-								).getBytes()),
-							osgiInfConfiguratorPath.resolve(name));
-					}
+					Files.copy(
+						zipFile.getInputStream(zipEntry),
+						metaInfClientExtensionConfigBundlePath.resolve(name));
 				}
 				else if (name.startsWith(batchPathString)) {
 					Files.copy(
@@ -1022,20 +1008,6 @@ public class WabProcessor {
 		_formatDocument(file, document);
 	}
 
-	private void _processOSGiConfigurator(Jar jar, Builder analyzer) {
-		Map<String, Resource> resources = jar.getResources();
-
-		for (String resourceName : resources.keySet()) {
-			if (resourceName.startsWith("OSGI-INF/configurator/")) {
-				_appendProperty(
-					analyzer, Constants.REQUIRE_CAPABILITY,
-					_REQUIRE_CAPABILITY_OSGI_CONFIGURATOR);
-
-				break;
-			}
-		}
-	}
-
 	private void _processPackageNames(Analyzer analyzer) {
 		_processExportPackageNames(analyzer);
 		_processImportPackageNames(analyzer);
@@ -1583,8 +1555,6 @@ public class WabProcessor {
 
 			_processBeans(analyzer);
 
-			_processOSGiConfigurator(jar, analyzer);
-
 			for (String stringPropertyName :
 					pluginPackageProperties.stringPropertyNames()) {
 
@@ -1696,10 +1666,6 @@ public class WabProcessor {
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=aries.cdi.el.jsp)',",
 		"osgi.cdi.extension;filter:='(osgi.cdi.extension=",
 		"com.liferay.bean.portlet.cdi.extension)'");
-
-	private static final String _REQUIRE_CAPABILITY_OSGI_CONFIGURATOR =
-		"osgi.extender;filter:=\"(&(osgi.extender=osgi.configurator)" +
-			"(version>=1.0)(!(version>=2.0)))\"";
 
 	private static final String _XPATHS_HOOK = StringUtil.merge(
 		new String[] {

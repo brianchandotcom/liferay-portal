@@ -15,6 +15,7 @@ import com.liferay.portal.k8s.agent.PortalK8sConfigMapModifier;
 import com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration;
 import com.liferay.portal.k8s.agent.custodian.VirtualInstanceCustodian;
 import com.liferay.portal.k8s.agent.internal.thread.local.AgentPortalK8sThreadLocal;
+import com.liferay.portal.k8s.agent.internal.util.ConfigurationUtil;
 import com.liferay.portal.k8s.agent.mutator.PortalK8sConfigurationPropertiesMutator;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
@@ -37,11 +38,7 @@ import io.fabric8.kubernetes.client.informers.SharedIndexInformer;
 import io.fabric8.kubernetes.client.informers.SharedInformerEventListener;
 import io.fabric8.kubernetes.client.informers.SharedInformerFactory;
 
-import java.net.URL;
-
-import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -56,8 +53,6 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
-import org.apache.felix.configurator.impl.json.BinUtil;
-import org.apache.felix.configurator.impl.json.BinaryManager;
 import org.apache.felix.configurator.impl.json.JSONUtil;
 import org.apache.felix.configurator.impl.model.ConfigurationFile;
 
@@ -299,33 +294,6 @@ public class AgentPortalK8sConfigMapModifier
 		}
 
 		return result;
-	}
-
-	private Configuration _getConfiguration(String pid) throws Exception {
-		if (pid.endsWith(_FILE_EXTENSION)) {
-			pid = pid.substring(0, pid.length() - _FILE_EXTENSION.length());
-		}
-
-		int index = pid.indexOf(CharPool.TILDE);
-
-		if (index <= 0) {
-			index = pid.indexOf(CharPool.UNDERLINE);
-
-			if (index <= 0) {
-				index = pid.indexOf(CharPool.DASH);
-			}
-		}
-
-		if (index > 0) {
-			String name = pid.substring(index + 1);
-
-			pid = pid.substring(0, index);
-
-			return _configurationAdmin.getFactoryConfiguration(
-				pid, name, StringPool.QUESTION);
-		}
-
-		return _configurationAdmin.getConfiguration(pid, StringPool.QUESTION);
 	}
 
 	private Map<String, String> _getMap(Map<String, String> map) {
@@ -619,7 +587,8 @@ public class AgentPortalK8sConfigMapModifier
 				}
 			}
 			else {
-				configuration = _getConfiguration(virtualInstancePid);
+				configuration = ConfigurationUtil.getConfiguration(
+					_configurationAdmin, virtualInstancePid);
 			}
 
 			Set<Configuration.ConfigurationAttribute> configurationAttributes =
@@ -666,43 +635,11 @@ public class AgentPortalK8sConfigMapModifier
 			ConfigMap configMap, String fileName, String json)
 		throws Exception {
 
-		if (!fileName.endsWith(_FILE_EXTENSION)) {
-			throw new IllegalArgumentException("Invalid file " + fileName);
-		}
-
 		JSONUtil.Report report = new JSONUtil.Report();
 
-		BinaryManager binaryManager = new BinaryManager(
-			new BinUtil.ResourceProvider() {
-
-				@Override
-				public Enumeration<URL> findEntries(
-					String path, String pattern) {
-
-					return Collections.emptyEnumeration();
-				}
-
-				@Override
-				public long getBundleId() {
-					return _bundle.getBundleId();
-				}
-
-				@Override
-				public URL getEntry(String path) {
-					return null;
-				}
-
-				@Override
-				public String getIdentifier() {
-					return fileName;
-				}
-
-			},
-			report);
-
-		ConfigurationFile configurationFile = JSONUtil.readJSON(
-			binaryManager, fileName, new URL("file", null, fileName),
-			_bundle.getBundleId(), json, report);
+		ConfigurationFile configurationFile =
+			ConfigurationUtil.getConfigurationFile(
+				_bundle, fileName, json, report);
 
 		for (String error : report.errors) {
 			_log.error(error);
@@ -1027,9 +964,6 @@ public class AgentPortalK8sConfigMapModifier
 	private static final String _ERROR_MESSAGE =
 		"Configured service account does not have access. Service account " +
 			"may have been revoked.";
-
-	private static final String _FILE_EXTENSION =
-		".client-extension-config.json";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AgentPortalK8sConfigMapModifier.class);

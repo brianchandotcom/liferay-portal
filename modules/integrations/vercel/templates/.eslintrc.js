@@ -6,5 +6,6 @@
 module.exports = {
 	rules: {
 		'@liferay/portal/no-global-fetch': 'off',
+		'@liferay/portal/no-localhost-reference': 'off',
 	},
 };

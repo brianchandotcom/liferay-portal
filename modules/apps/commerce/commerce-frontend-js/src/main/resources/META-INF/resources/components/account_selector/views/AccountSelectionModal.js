@@ -22,7 +22,7 @@ function AccountSelectionModal({
 	changeAccount,
 	commerceChannelId,
 	hasCreatePermission,
-	hasManagePermission = true,
+	hasManagePermission,
 }) {
 	const [accountFields, setAccountFields] = useState({
 		description: '',

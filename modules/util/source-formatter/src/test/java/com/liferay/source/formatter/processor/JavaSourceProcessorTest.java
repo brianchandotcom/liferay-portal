@@ -940,7 +940,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 41
 			).addExpectedMessage(
-				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 53
+				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 52
 			).addExpectedMessage(
 				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
 					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
@@ -950,7 +950,7 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			).addExpectedMessage(
 				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
 					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-				83
+				82
 			));
 	}
 

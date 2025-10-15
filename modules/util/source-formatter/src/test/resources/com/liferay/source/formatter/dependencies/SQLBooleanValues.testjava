@@ -88,4 +88,20 @@ public class SQLBooleanValues {
 		return preparedStatement.executeQuery();
 	}
 
+	protected ResultSet method8(Connection connection, long classNameId)
+		throws SQLException {
+
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			SQLTransformer.transform(
+				StringBundler.concat(
+					"update Subscription set classNameId = ? where ",
+					"classNameId = ? and classPK not in (select groupId from ",
+					"Group_ where site = [$TRUE$])")));
+
+		preparedStatement.setLong(1, classNameId);
+		preparedStatement.setLong(2, classNameId);
+
+		return preparedStatement.executeQuery();
+	}
+
 }

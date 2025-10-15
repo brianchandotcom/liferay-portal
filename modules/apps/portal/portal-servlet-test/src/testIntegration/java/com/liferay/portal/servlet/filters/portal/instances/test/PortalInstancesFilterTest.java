@@ -8,6 +8,7 @@ package com.liferay.portal.servlet.filters.portal.instances.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.NoSuchVirtualHostException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -27,8 +28,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.servlet.filters.portal.instances.PortalInstancesFilter;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -108,13 +115,29 @@ public class PortalInstancesFilterTest {
 	public void testNonexistingVirtualHostWithStrictAccessEnabled()
 		throws Exception {
 
-		try (SafeCloseable safeCloseable =
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PortalInstancesFilter.class.getName(), LoggerTestUtil.ERROR);
+			SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"VIRTUAL_HOSTS_STRICT_ACCESS", true)) {
 
-			_test(
-				null, StringUtil.toLowerCase(RandomTestUtil.randomString()),
-				null, true);
+			String hostName = StringUtil.toLowerCase(
+				RandomTestUtil.randomString());
+
+			_test(null, hostName, null, true);
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Throwable throwable = logEntry.getThrowable();
+
+			Assert.assertEquals(
+				NoSuchVirtualHostException.class, throwable.getClass());
+
+			Assert.assertEquals(hostName, throwable.getMessage());
 		}
 	}
 

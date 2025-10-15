@@ -237,4 +237,23 @@ export class ContentsPage {
 			this.page.locator('.management-bar').getByText('Publish')
 		).toBeVisible();
 	}
+
+	async viewContent(title: string) {
+		const card = this.page
+			.locator('tr', {hasText: title})
+			.or(this.page.locator('.card-row', {hasText: title}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'View',
+			}),
+			trigger: card.locator('button'),
+		});
+
+		await expect(
+			this.page.getByRole('dialog', {name: title})
+		).toBeVisible();
+	}
 }

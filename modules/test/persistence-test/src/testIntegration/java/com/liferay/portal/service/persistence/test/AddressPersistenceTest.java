@@ -317,6 +317,14 @@ public class AddressPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCN_CPK() throws Exception {
+		_persistence.countByCN_CPK(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+
+		_persistence.countByCN_CPK(0L, 0L);
+	}
+
+	@Test
 	public void testCountByC_C_C() throws Exception {
 		_persistence.countByC_C_C(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

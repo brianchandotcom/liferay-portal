@@ -1305,6 +1305,190 @@ public class AddressUtil {
 	}
 
 	/**
+	 * Returns all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the matching addresses
+	 */
+	public static List<Address> findByCN_CPK(long classNameId, long classPK) {
+		return getPersistence().findByCN_CPK(classNameId, classPK);
+	}
+
+	/**
+	 * Returns a range of all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @return the range of matching addresses
+	 */
+	public static List<Address> findByCN_CPK(
+		long classNameId, long classPK, int start, int end) {
+
+		return getPersistence().findByCN_CPK(classNameId, classPK, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByCN_CPK(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().findByCN_CPK(
+			classNameId, classPK, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>AddressModelImpl</code>.
+	 * </p>
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param start the lower bound of the range of addresses
+	 * @param end the upper bound of the range of addresses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching addresses
+	 */
+	public static List<Address> findByCN_CPK(
+		long classNameId, long classPK, int start, int end,
+		OrderByComparator<Address> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByCN_CPK(
+			classNameId, classPK, start, end, orderByComparator,
+			useFinderCache);
+	}
+
+	/**
+	 * Returns the first address in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public static Address findByCN_CPK_First(
+			long classNameId, long classPK,
+			OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByCN_CPK_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the first address in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public static Address fetchByCN_CPK_First(
+		long classNameId, long classPK,
+		OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().fetchByCN_CPK_First(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last address in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address
+	 * @throws NoSuchAddressException if a matching address could not be found
+	 */
+	public static Address findByCN_CPK_Last(
+			long classNameId, long classPK,
+			OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByCN_CPK_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the last address in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching address, or <code>null</code> if a matching address could not be found
+	 */
+	public static Address fetchByCN_CPK_Last(
+		long classNameId, long classPK,
+		OrderByComparator<Address> orderByComparator) {
+
+		return getPersistence().fetchByCN_CPK_Last(
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Returns the addresses before and after the current address in the ordered set where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param addressId the primary key of the current address
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next address
+	 * @throws NoSuchAddressException if a address with the primary key could not be found
+	 */
+	public static Address[] findByCN_CPK_PrevAndNext(
+			long addressId, long classNameId, long classPK,
+			OrderByComparator<Address> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchAddressException {
+
+		return getPersistence().findByCN_CPK_PrevAndNext(
+			addressId, classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	 * Removes all the addresses where classNameId = &#63; and classPK = &#63; from the database.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 */
+	public static void removeByCN_CPK(long classNameId, long classPK) {
+		getPersistence().removeByCN_CPK(classNameId, classPK);
+	}
+
+	/**
+	 * Returns the number of addresses where classNameId = &#63; and classPK = &#63;.
+	 *
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @return the number of matching addresses
+	 */
+	public static int countByCN_CPK(long classNameId, long classPK) {
+		return getPersistence().countByCN_CPK(classNameId, classPK);
+	}
+
+	/**
 	 * Returns all the addresses where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param companyId the company ID

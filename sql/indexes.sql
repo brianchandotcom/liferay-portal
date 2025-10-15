@@ -1,3 +1,4 @@
+create index IX_3957B56F on Address (classNameId, classPK);
 create index IX_FEAFC68A on Address (companyId, classNameId, classPK, listTypeId);
 create index IX_923BD178 on Address (companyId, classNameId, classPK, mailing);
 create index IX_9226DBB4 on Address (companyId, classNameId, classPK, primary_);
@@ -78,7 +79,8 @@ create index IX_791914FA on Contact_ (classNameId, classPK);
 create index IX_FD2E9BDD on Contact_ (companyId, userId);
 create index IX_42F94F9F on Contact_ (userId);
 
-create index IX_25D734CD on Country (active_);
+create index IX_7242E897 on Country (active_, countryId, billingAllowed, groupFilterEnabled, shippingAllowed);
+create index IX_FB4928D8 on Country (active_, countryId, groupFilterEnabled, shippingAllowed);
 create index IX_F9CD867E on Country (companyId, active_, billingAllowed);
 create index IX_54E98CCD on Country (companyId, active_, shippingAllowed);
 create unique index IX_7DA11A6F on Country (companyId, ctCollectionId, a2[$COLUMN_LENGTH:75$]);

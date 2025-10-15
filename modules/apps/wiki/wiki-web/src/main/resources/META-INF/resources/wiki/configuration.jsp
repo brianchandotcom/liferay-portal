@@ -56,17 +56,15 @@
 			<aui:input name="preferences--hiddenNodes--" type="hidden" />
 
 			<%
+			List<KeyValuePair> currentVisibleNodesList = new ArrayList<KeyValuePair>();
+			List<KeyValuePair> availableVisibleNodesList = new ArrayList<KeyValuePair>();
+			
 			Set<String> currentVisibleNodes = new HashSet<String>(wikiPortletInstanceSettingsHelper.getAllNodeNames());
-
-			// Left list
-
-			List<KeyValuePair> leftList = new ArrayList<KeyValuePair>();
-
 			String[] visibleNodeNames = wikiPortletInstanceSettingsHelper.getVisibleNodeNames();
 
 			for (String folderColumn : visibleNodeNames) {
 				if (currentVisibleNodes.contains(folderColumn)) {
-					leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
+					currentVisibleNodesList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 				}
 			}
 
@@ -78,31 +76,27 @@
 
 			for (String folderColumn : currentVisibleNodes) {
 				if ((Arrays.binarySearch(hiddenNodes, folderColumn) < 0) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
-					leftList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
+					currentVisibleNodesList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 				}
 			}
-
-			// Right list
-
-			List<KeyValuePair> rightList = new ArrayList<KeyValuePair>();
 
 			for (String folderColumn : hiddenNodes) {
 				if (currentVisibleNodes.contains(folderColumn) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {
-					rightList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
+					availableVisibleNodesList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 				}
 			}
 
-			rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
+			availableVisibleNodesList = ListUtil.sort(availableVisibleNodesList, new KeyValuePairComparator(false, true));
 			%>
 
 			<liferay-ui:input-move-boxes
-				leftBoxName="currentVisibleNodes"
-				leftList="<%= leftList %>"
-				leftReorder="<%= Boolean.TRUE.toString() %>"
-				leftTitle="visible"
-				rightBoxName="availableVisibleNodes"
-				rightList="<%= rightList %>"
-				rightTitle="hidden"
+				rightBoxName="currentVisibleNodes"
+				rightList="<%= currentVisibleNodesList %>"
+				rightReorder="<%= Boolean.TRUE.toString() %>"
+				rightTitle="visible"
+				leftBoxName="availableVisibleNodes"
+				leftList="<%= availableVisibleNodesList %>"
+				leftTitle="hidden"
 			/>
 		</liferay-frontend:fieldset>
 	</liferay-frontend:edit-form-body>

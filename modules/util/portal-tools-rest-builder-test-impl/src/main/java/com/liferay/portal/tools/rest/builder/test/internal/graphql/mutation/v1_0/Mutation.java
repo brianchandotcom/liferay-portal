@@ -1529,6 +1529,22 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	@GraphQLName(
+		description = "null",
+		value = "postTestEntityMultipartImageMultipartBody"
+	)
+	public Response createTestEntityMultipartImage(
+			@GraphQLName("multipartBody") MultipartBody multipartBody)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_testEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			testEntityResource ->
+				testEntityResource.postTestEntityMultipartImage(multipartBody));
+	}
+
+	@GraphQLField
 	public TestEntity updateTestEntity(
 			@GraphQLName("testEntityId") Long testEntityId,
 			@GraphQLName("optionalParameter") Long optionalParameter,

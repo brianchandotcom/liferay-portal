@@ -397,10 +397,10 @@ public class FragmentLinkUtil {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		String fieldKey = mapping.getFieldKey();
+
 		if (fragmentMappedValueItemReference instanceof
 				FragmentMappedValueItemContextReference) {
-
-			String fieldKey = mapping.getFieldKey();
 
 			if (Validator.isNotNull(fieldKey)) {
 				jsonObject.put("mappedField", fieldKey);
@@ -429,8 +429,6 @@ public class FragmentLinkUtil {
 		if (classNameId == 0) {
 			return null;
 		}
-
-		String fieldKey = mapping.getFieldKey();
 
 		if (Validator.isNotNull(fieldKey)) {
 			jsonObject.put("fieldId", fieldKey);

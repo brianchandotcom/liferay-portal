@@ -13,7 +13,7 @@ import deleteAssetEntriesBulkAction from './actions/deleteAssetEntriesBulkAction
 import restoreItemAction from './actions/restoreItemAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
-import SpaceRenderer from './cell_renderers/SpaceRenderer';
+import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 
 const OBJECT_ENTRY_FOLDER_CLASSNAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -41,7 +41,10 @@ export default function RecycleBinFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: SpaceRenderer,
+					component: ({itemData}) =>
+						SpaceRendererWithCache({
+							spaceId: itemData.embedded.scopeId,
+						}),
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

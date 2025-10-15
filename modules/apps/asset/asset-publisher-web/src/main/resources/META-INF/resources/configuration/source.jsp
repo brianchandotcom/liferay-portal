@@ -19,19 +19,14 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 	<%
 	Set<Long> availableClassNameIdsSet = SetUtil.fromArray(assetPublisherDisplayContext.getAvailableClassNameIds());
 
-	// Current class names list
-
 	List<KeyValuePair> currentClassNameIdsList = new ArrayList<KeyValuePair>();
+	List<KeyValuePair> availableClassNameIdsList = new ArrayList<KeyValuePair>();
 
 	long[] classNameIds = assetPublisherDisplayContext.getClassNameIds();
 
 	for (long classNameId : classNameIds) {
 		currentClassNameIdsList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
 	}
-
-	// Available class names list
-
-	List<KeyValuePair> availableClassNameIdsList = new ArrayList<KeyValuePair>();
 
 	Arrays.sort(classNameIds);
 	%>
@@ -96,9 +91,8 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 		Long[] assetSelectedClassTypeIds = assetPublisherWebHelper.getClassTypeIds(portletPreferences, className, classTypes);
 
-		// Current subtypes list
-
 		List<KeyValuePair> currentSubtypesList = new ArrayList<KeyValuePair>();
+		List<KeyValuePair> availableSubtypesList = new ArrayList<KeyValuePair>();
 
 		for (long subtypeId : assetSelectedClassTypeIds) {
 			try {
@@ -109,10 +103,6 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 			catch (NoSuchModelException nsme) {
 			}
 		}
-
-		// Available subtypes list
-
-		List<KeyValuePair> availableSubtypesList = new ArrayList<KeyValuePair>();
 
 		boolean anyAssetSubtype = GetterUtil.getBoolean(portletPreferences.getValue("anyClassType" + className, Boolean.TRUE.toString()));
 	%>

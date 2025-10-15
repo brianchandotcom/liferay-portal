@@ -61,9 +61,7 @@
 		<aui:input name='<%= "settings--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= StringUtil.merge(availableLanguageIds) %>" />
 
 		<%
-
-		// Available language ids list
-
+		List<KeyValuePair> currentLanguageIdsList = new ArrayList<>();
 		List<KeyValuePair> availableLanguageIdsList = new ArrayList<>();
 
 		for (String propsValuesLanguageId : SetUtil.fromArray(PropsValues.LOCALES)) {
@@ -77,10 +75,6 @@
 		}
 
 		availableLanguageIdsList = ListUtil.sort(availableLanguageIdsList, new KeyValuePairComparator(false, true));
-
-		// Current language ids list
-
-		List<KeyValuePair> currentLanguageIdsList = new ArrayList<>();
 
 		String[] currentLanguageIds = ArrayUtil.unique(PrefsPropsUtil.getStringArray(company.getCompanyId(), PropsKeys.LOCALES, StringPool.COMMA, PropsValues.LOCALES_ENABLED));
 

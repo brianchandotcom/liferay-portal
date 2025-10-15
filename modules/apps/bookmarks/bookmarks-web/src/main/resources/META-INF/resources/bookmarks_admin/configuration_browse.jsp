@@ -118,13 +118,9 @@ portletDisplay.setURLBackTitle("bookmarks");
 									List<KeyValuePair> availableItemsList = new ArrayList<>();
 									Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
 
-									// Current items list
-
 									for (String folderColumn : folderColumns) {
 										currentItemsList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 									}
-
-									// Available items list
 
 									Arrays.sort(folderColumns);
 

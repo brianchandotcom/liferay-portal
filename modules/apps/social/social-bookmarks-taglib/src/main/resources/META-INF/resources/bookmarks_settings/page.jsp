@@ -17,9 +17,8 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
 }
 
-// Current social bookmark types list
-
 List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
+List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 
 for (int i = 0; i < types.length; i++) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
@@ -28,10 +27,6 @@ for (int i = 0; i < types.length; i++) {
 		currentSocialBookmarkTypes.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
 	}
 }
-
-// Available social bookmark types list
-
-List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 

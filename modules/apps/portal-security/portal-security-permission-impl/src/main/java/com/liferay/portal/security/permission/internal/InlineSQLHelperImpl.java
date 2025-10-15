@@ -96,8 +96,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Set<Long> disabledGroupIds = new HashSet<>();
 
 		if (_isSkipReplace(
-				permissionChecker, baseModel.getModelClassName(), groupIds,
-				disabledGroupIds)) {
+				baseModel.getModelClassName(), disabledGroupIds, groupIds,
+				permissionChecker)) {
 
 			return list;
 		}
@@ -123,8 +123,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		}
 
 		_collectSharingEntryClassPKs(
-			baseModel.getModelClassName(), permissionChecker.getUserId(),
-			groupIds, permittedClassPKs);
+			baseModel.getModelClassName(), groupIds, permittedClassPKs,
+			permissionChecker.getUserId());
 
 		Map<String, Function<T, Object>> attributeGetterFunctions =
 			baseModel.getAttributeGetterFunctions();
@@ -174,15 +174,15 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		Set<Long> disabledGroupIds = new HashSet<>();
 
 		if (_isSkipReplace(
-				permissionChecker, modelClassName, groupIds,
-				disabledGroupIds)) {
+				modelClassName, disabledGroupIds, groupIds,
+				permissionChecker)) {
 
 			return null;
 		}
 
 		return _getPermissionWherePredicate(
-			permissionChecker, modelClassName, classPKColumn, groupIds,
-			disabledGroupIds);
+			classPKColumn, disabledGroupIds, groupIds, modelClassName,
+			permissionChecker);
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 
 		if ((sql == null) ||
 			_isSkipReplace(
-				permissionChecker, className, groupIds, disabledGroupIds)) {
+				className, disabledGroupIds, groupIds, permissionChecker)) {
 
 			return sql;
 		}
@@ -304,11 +304,11 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 		groupIdField = groupIdField.concat(".groupId");
 
 		String resourcePermissionSQL = _getResourcePermissionSQL(
-			permissionChecker, className, groupIds);
+			className, groupIds, permissionChecker);
 
 		return _insertResourcePermissionSQL(
-			sql, className, classPKField, groupIdField, groupIds,
-			resourcePermissionSQL, disabledGroupIds);
+			className, classPKField, disabledGroupIds, groupIdField, groupIds,
+			resourcePermissionSQL, sql);
 	}
 
 	@Activate
@@ -333,9 +333,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private void _appendPermissionSQL(
-		StringBundler sb, String className, String classPKField,
+		String className, String classPKField, Set<Long> disabledGroupIds,
 		String groupIdField, long[] groupIds, String permissionSQL,
-		Set<Long> disabledGroupIds) {
+		StringBundler sb) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_serviceTrackerMap.getService(className);
@@ -411,8 +411,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private void _collectSharingEntryClassPKs(
-		String className, long userId, long[] groupIds,
-		Set<Long> permittedClassPKs) {
+		String className, long[] groupIds, Set<Long> permittedClassPKs,
+		long userId) {
 
 		List<PermissionSQLContributor> permissionSQLContributors =
 			_serviceTrackerMap.getService(className);
@@ -430,12 +430,12 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private <T extends Table<T>> Predicate _getPermissionWherePredicate(
-		PermissionChecker permissionChecker, String modelClassName,
-		Column<T, Long> classPKColumn, long[] groupIds,
-		Set<Long> disabledGroupIds) {
+		Column<T, Long> classPKColumn, Set<Long> disabledGroupIds,
+		long[] groupIds, String modelClassName,
+		PermissionChecker permissionChecker) {
 
 		DSLQuery resourcePermissionDSLQuery = _getResourcePermissionQuery(
-			permissionChecker, modelClassName, groupIds);
+			groupIds, modelClassName, permissionChecker);
 
 		Predicate permissionWherePredicate = classPKColumn.in(
 			resourcePermissionDSLQuery);
@@ -499,8 +499,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private DSLQuery _getResourcePermissionQuery(
-		PermissionChecker permissionChecker, String modelClassName,
-		long[] groupIds) {
+		long[] groupIds, String modelClassName,
+		PermissionChecker permissionChecker) {
 
 		Predicate roleIdsOrOwnerIdsPredicate = null;
 
@@ -554,8 +554,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private String _getResourcePermissionSQL(
-		PermissionChecker permissionChecker, String className,
-		long[] groupIds) {
+		String className, long[] groupIds,
+		PermissionChecker permissionChecker) {
 
 		String resourcePermissionSQL = _customSQL.get(
 			getClass(), FIND_BY_RESOURCE_PERMISSION);
@@ -713,8 +713,9 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private String _insertResourcePermissionSQL(
-		String sql, String className, String classPKField, String groupIdField,
-		long[] groupIds, String permissionSQL, Set<Long> disabledGroupIds) {
+		String className, String classPKField, Set<Long> disabledGroupIds,
+		String groupIdField, long[] groupIds, String permissionSQL,
+		String sql) {
 
 		StringBundler sb = new StringBundler(11);
 
@@ -737,8 +738,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(_WHERE_CLAUSE);
 
 			_appendPermissionSQL(
-				sb, className, classPKField, groupIdField, groupIds,
-				permissionSQL, disabledGroupIds);
+				className, classPKField, disabledGroupIds, groupIdField,
+				groupIds, permissionSQL, sb);
 
 			if (pos != -1) {
 				sb.append(sql.substring(pos));
@@ -750,8 +751,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 			sb.append(sql.substring(0, pos));
 
 			_appendPermissionSQL(
-				sb, className, classPKField, groupIdField, groupIds,
-				permissionSQL, disabledGroupIds);
+				className, classPKField, disabledGroupIds, groupIdField,
+				groupIds, permissionSQL, sb);
 
 			sb.append("AND ");
 
@@ -762,8 +763,8 @@ public class InlineSQLHelperImpl implements InlineSQLHelper {
 	}
 
 	private boolean _isSkipReplace(
-		PermissionChecker permissionChecker, String className, long[] groupIds,
-		Set<Long> disabledGroupIds) {
+		String className, Set<Long> disabledGroupIds, long[] groupIds,
+		PermissionChecker permissionChecker) {
 
 		if (!_inlinePermissionConfiguration.sqlCheckEnabled()) {
 			return true;

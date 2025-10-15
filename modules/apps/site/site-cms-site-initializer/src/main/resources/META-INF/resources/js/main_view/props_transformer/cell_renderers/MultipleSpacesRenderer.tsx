@@ -72,7 +72,13 @@ export default function MultipleSpacesRenderer({
 	}, [assetLibraries]);
 
 	if (loading) {
-		return <LoadingIndicator displayType="secondary" size="sm" />;
+		return (
+			<LoadingIndicator
+				data-testid="space-renderer-loading"
+				displayType="secondary"
+				size="sm"
+			/>
+		);
 	}
 
 	return <SpacesDisplay spaces={spaces} />;

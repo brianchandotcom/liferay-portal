@@ -64,6 +64,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 		</finder>
+		<finder name="CN_CPK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="C_C_C" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
@@ -326,6 +330,25 @@
 		<finder name="C_A_S" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="active" />
+			<finder-column name="shippingAllowed" />
+		</finder>
+		<finder name="C_A_B_G" return-type="Collection">
+			<finder-column name="countryId" />
+			<finder-column name="active" />
+			<finder-column name="billingAllowed" />
+			<finder-column name="groupFilterEnabled" />
+		</finder>
+		<finder name="C_A_G_S" return-type="Collection">
+			<finder-column name="countryId" />
+			<finder-column name="active" />
+			<finder-column name="groupFilterEnabled" />
+			<finder-column name="shippingAllowed" />
+		</finder>
+		<finder name="C_A_B_G_S" return-type="Collection">
+			<finder-column name="countryId" />
+			<finder-column name="active" />
+			<finder-column name="billingAllowed" />
+			<finder-column name="groupFilterEnabled" />
 			<finder-column name="shippingAllowed" />
 		</finder>
 	</entity>

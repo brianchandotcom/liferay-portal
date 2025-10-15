@@ -12,10 +12,7 @@ import SpaceRenderer from '../../../../../src/main/resources/META-INF/resources/
 describe('SpaceRenderer', () => {
 	it('renders the default space', () => {
 		const {container} = render(
-			<SpaceRenderer
-				itemData={{settings: {logoColor: 'outline-0'}}}
-				value="Test Space"
-			/>
+			<SpaceRenderer logoColor="outline-0" value="Test Space" />
 		);
 
 		expect(screen.getByText('Test Space')).toBeInTheDocument();
@@ -27,11 +24,7 @@ describe('SpaceRenderer', () => {
 
 	it('renders the correct size prop', () => {
 		const {container} = render(
-			<SpaceRenderer
-				itemData={{settings: {logoColor: 'outline-0'}}}
-				size="sm"
-				value="Test Space"
-			/>
+			<SpaceRenderer logoColor="outline-0" size="sm" value="Test Space" />
 		);
 
 		expect(container.querySelectorAll('.sticker')[0]).toHaveClass(
@@ -43,7 +36,7 @@ describe('SpaceRenderer', () => {
 		render(
 			<SpaceRenderer
 				href="http://www.test.com/space"
-				itemData={{settings: {logoColor: 'outline-0'}}}
+				logoColor="outline-0"
 				size="sm"
 				value="Test Space"
 			/>

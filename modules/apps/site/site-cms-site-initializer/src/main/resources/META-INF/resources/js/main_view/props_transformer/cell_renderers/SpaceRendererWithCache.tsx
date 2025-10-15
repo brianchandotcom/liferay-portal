@@ -23,6 +23,12 @@ const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
 					setSpace(space);
 				}
 			})
+			.catch((error) => {
+				console.error(
+					`Failed to fetch space data for spaceId: ${spaceId}`,
+					error
+				);
+			})
 			.finally(() => {
 				if (isMounted) {
 					setLoading(false);

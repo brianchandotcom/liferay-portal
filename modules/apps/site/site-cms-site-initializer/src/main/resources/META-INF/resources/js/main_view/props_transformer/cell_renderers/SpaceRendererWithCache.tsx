@@ -35,7 +35,13 @@ const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
 	}, [spaceId]);
 
 	if (loading) {
-		return <LoadingIndicator displayType="secondary" size="sm" />;
+		return (
+			<LoadingIndicator
+				data-testid="space-renderer-loading"
+				displayType="secondary"
+				size="sm"
+			/>
+		);
 	}
 
 	if (!space) {

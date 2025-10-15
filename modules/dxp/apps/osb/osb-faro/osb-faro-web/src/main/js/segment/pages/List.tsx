@@ -9,6 +9,7 @@ import ClayLink from '@clayui/link';
 import CrossPageSelect from 'shared/hoc/CrossPageSelect';
 import LinkCell from 'shared/components/table/cell-components/LinkCell';
 import Nav from 'shared/components/Nav';
+import NoResultsDisplay from 'shared/components/NoResultsDisplay';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import RowActions from 'shared/components/RowActions';
 import SearchableEntityTable from 'shared/components/SearchableEntityTable';
@@ -52,7 +53,7 @@ import {
 import {Link} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
-import {SegmentStates, SegmentTypes} from 'shared/util/constants';
+import {SegmentStates, SegmentTypes, Sizes} from 'shared/util/constants';
 import {setUriQueryValues} from 'shared/util/router';
 import {sub} from 'shared/util/lang';
 import {useChannelContext} from 'shared/context/channel';
@@ -562,6 +563,38 @@ export const List: React.FC<IListProps> = ({
 							filterByOptions={FILTER_BY_OPTIONS}
 							items={data?.items}
 							loading={loading}
+							noResultsRenderer={
+								<NoResultsDisplay
+									description={
+										<>
+											{Liferay.Language.get(
+												'create-a-segment-to-get-started'
+											)}
+
+											<ClayLink
+												className='d-block mb-3'
+												href={
+													URLConstants.SegmentsDocumentationLink
+												}
+												key='DOCUMENTATION'
+												target='_blank'
+											>
+												{Liferay.Language.get(
+													'access-our-documentation-to-learn-more'
+												)}
+											</ClayLink>
+										</>
+									}
+									icon={{
+										border: false,
+										size: Sizes.XXXLarge,
+										symbol: 'ac_satellite'
+									}}
+									title={Liferay.Language.get(
+										'there-are-no-segments-found'
+									)}
+								/>
+							}
 							orderByOptions={ORDER_BY_OPTIONS}
 							orderIOMap={orderIOMap}
 							page={page}

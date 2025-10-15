@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Rubén Pulido
@@ -24,21 +25,25 @@ public class ScopeUtil {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+		return _getScope(GroupLocalServiceUtil.getGroup(scopeGroupId));
+	}
 
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
+	public static Scope getScope(
+			long companyId, String externalReferenceCode, long scopeGroupId)
+		throws PortalException {
 
-						return Type.SITE;
-					});
-			}
-		};
+		if (Validator.isNull(externalReferenceCode)) {
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+			externalReferenceCode, companyId);
+
+		if (group.getGroupId() == scopeGroupId) {
+			return null;
+		}
+
+		return _getScope(group);
 	}
 
 	public static String getScopeExternalReferenceCode(
@@ -59,6 +64,22 @@ public class ScopeUtil {
 		}
 
 		return scope.getExternalReferenceCode();
+	}
+
+	private static Scope _getScope(Group group) {
+		return new Scope() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Type.ASSET_LIBRARY;
+						}
+
+						return Type.SITE;
+					});
+			}
+		};
 	}
 
 }

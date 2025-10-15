@@ -7,11 +7,11 @@ package com.liferay.object.internal.security.permission.resource;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryOrganizationRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.internal.security.permission.util.ObjectEntryPermissionUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -20,14 +20,9 @@ import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -52,11 +47,8 @@ import com.liferay.portal.security.permission.UserBagFactoryUtil;
 
 import java.io.Serializable;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.Supplier;
 
 /**
@@ -235,67 +227,9 @@ public class ObjectEntryModelResourcePermission
 				accountEntryId);
 		}
 
-		Set<Long> rolesIds = new HashSet<>();
-
-		rolesIds.addAll(
-			TransformUtil.transform(
-				_userGroupRoleLocalService.getUserGroupRoles(
-					permissionChecker.getUserId(),
-					accountEntry.getAccountEntryGroupId()),
-				UserGroupRole::getRoleId));
-
-		List<AccountEntryOrganizationRel> accountEntryOrganizationRels =
-			_accountEntryOrganizationRelLocalService.
-				getAccountEntryOrganizationRels(accountEntryId);
-
-		for (AccountEntryOrganizationRel accountEntryOrganizationRel :
-				accountEntryOrganizationRels) {
-
-			Organization organization =
-				accountEntryOrganizationRel.getOrganization();
-
-			Group group = _groupLocalService.getOrganizationGroup(
-				objectDefinition.getCompanyId(),
-				organization.getOrganizationId());
-
-			rolesIds.addAll(
-				TransformUtil.transform(
-					_userGroupRoleLocalService.getUserGroupRoles(
-						permissionChecker.getUserId(), group.getGroupId()),
-					UserGroupRole::getRoleId));
-
-			for (Organization ancestorOrganization :
-					organization.getAncestors()) {
-
-				group = _groupLocalService.getOrganizationGroup(
-					objectDefinition.getCompanyId(),
-					ancestorOrganization.getOrganizationId());
-
-				rolesIds.addAll(
-					TransformUtil.transform(
-						_userGroupRoleLocalService.getUserGroupRoles(
-							permissionChecker.getUserId(), group.getGroupId()),
-						UserGroupRole::getRoleId));
-			}
-		}
-
-		for (Long roleId : rolesIds) {
-			ResourcePermission resourcePermission =
-				_resourcePermissionLocalService.fetchResourcePermission(
-					objectDefinition.getCompanyId(),
-					objectDefinition.getClassName(),
-					ResourceConstants.SCOPE_GROUP_TEMPLATE, "0", roleId);
-
-			if (resourcePermission == null) {
-				continue;
-			}
-
-			if (resourcePermission.hasActionId(actionId)) {
-				return true;
-			}
-		}
-
-		return false;
+		return ObjectEntryPermissionUtil.hasAccountEntryPermission(
+			accountEntry, actionId, objectDefinition.getClassName(),
+			permissionChecker);
 	}
 
 	@Override

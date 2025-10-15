@@ -1499,17 +1499,18 @@ public class ObjectEntryDisplayContextImpl
 			_objectRequestHelper.getRequest(),
 			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
 
-		ObjectRelationship objectRelationship =
-			_objectRelationshipLocalService.fetchObjectRelationship(
-				ParamUtil.getLong(
-					_objectRequestHelper.getRequest(), "objectRelationshipId"));
-
 		if (_readOnly && (groupId == 0)) {
 			HttpServletRequest httpServletRequest =
 				_objectRequestHelper.getRequest();
 
-			groupId = (long)httpServletRequest.getAttribute("groupId");
+			groupId = (long)httpServletRequest.getAttribute(
+				ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
 		}
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.fetchObjectRelationship(
+				ParamUtil.getLong(
+					_objectRequestHelper.getRequest(), "objectRelationshipId"));
 
 		try {
 			if ((objectRelationship != null) && objectRelationship.isEdge()) {

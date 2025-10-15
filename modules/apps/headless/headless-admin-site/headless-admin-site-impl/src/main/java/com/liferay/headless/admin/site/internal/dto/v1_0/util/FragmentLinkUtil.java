@@ -86,8 +86,9 @@ public class FragmentLinkUtil {
 	}
 
 	public static JSONObject toJSONObject(
-		FragmentLink fragmentLink,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+			FragmentLink fragmentLink,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws PortalException {
 
 		if ((fragmentLink == null) || (fragmentLink.getValue() == null)) {
 			return null;
@@ -379,8 +380,9 @@ public class FragmentLinkUtil {
 	}
 
 	private static JSONObject _getFragmentMappedValueJSONObject(
-		FragmentLinkMappedValue fragmentLinkMappedValue,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
+			FragmentLinkMappedValue fragmentLinkMappedValue,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws PortalException {
 
 		Mapping mapping = fragmentLinkMappedValue.getMapping();
 
@@ -537,22 +539,25 @@ public class FragmentLinkUtil {
 	}
 
 	private static JSONObject _getMappedLayoutJSONObject(
-		FragmentMappedValueItemExternalReference
-			fragmentMappedValueItemExternalReference,
-		long scopeGroupId) {
+			FragmentMappedValueItemExternalReference
+				fragmentMappedValueItemExternalReference,
+			long scopeGroupId)
+		throws PortalException {
+
+		String scopeExternalReferenceCode =
+			ScopeUtil.getScopeExternalReferenceCode(
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId);
+
+		Long groupId = _getGroupId(
+			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 
 		JSONObject jsonObject = JSONUtil.put(
 			"externalReferenceCode",
 			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
 		).put(
-			"scopeExternalReferenceCode",
-			() -> ScopeUtil.getScopeExternalReferenceCode(
-				fragmentMappedValueItemExternalReference.getScope(),
-				scopeGroupId)
+			"scopeExternalReferenceCode", scopeExternalReferenceCode
 		);
-
-		Long groupId = _getGroupId(
-			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 
 		if (groupId == null) {
 			return jsonObject;
@@ -568,7 +573,10 @@ public class FragmentLinkUtil {
 			return jsonObject;
 		}
 
-		return jsonObject.put(
+		return JSONUtil.put(
+			"externalReferenceCode",
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
+		).put(
 			"groupId", String.valueOf(layout.getGroupId())
 		).put(
 			"layoutId", String.valueOf(layout.getLayoutId())
@@ -576,6 +584,8 @@ public class FragmentLinkUtil {
 			"layoutUuid", layout.getUuid()
 		).put(
 			"privateLayout", layout.isPrivateLayout()
+		).put(
+			"scopeExternalReferenceCode", scopeExternalReferenceCode
 		).put(
 			"title", layout.getName(LocaleUtil.getMostRelevantLocale())
 		);

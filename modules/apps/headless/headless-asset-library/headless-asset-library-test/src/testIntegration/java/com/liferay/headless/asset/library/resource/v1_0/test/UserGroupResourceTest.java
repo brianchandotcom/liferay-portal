@@ -116,7 +116,7 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
 	protected String
-			testGetAssetLibraryUserGroupsPage_getExternalReferenceCode()
+			testGetAssetLibraryUserGroupsPage_getAssetLibraryExternalReferenceCode()
 		throws Exception {
 
 		Group group = testDepotEntry.getGroup();

@@ -400,13 +400,11 @@ public class FragmentLinkUtil {
 		if (fragmentMappedValueItemReference instanceof
 				FragmentMappedValueItemContextReference) {
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
 			if (Validator.isNotNull(fieldKey)) {
-				jsonObject.put("mappedField", fieldKey);
+				return JSONUtil.put("mappedField", fieldKey);
 			}
 
-			return jsonObject;
+			return null;
 		}
 
 		FragmentMappedValueItemExternalReference

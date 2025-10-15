@@ -198,6 +198,13 @@ public class PageTemplateSerDes {
 					pageTemplate.getTaxonomyCategoryItemExternalReferences()));
 		}
 
+		if (pageTemplate.getThumbnail() == null) {
+			map.put("thumbnail", null);
+		}
+		else {
+			map.put("thumbnail", String.valueOf(pageTemplate.getThumbnail()));
+		}
+
 		if (pageTemplate.getType() == null) {
 			map.put("type", null);
 		}
@@ -276,6 +283,9 @@ public class PageTemplateSerDes {
 						jsonParserFieldName,
 						"taxonomyCategoryItemExternalReferences")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -445,6 +455,12 @@ public class PageTemplateSerDes {
 
 					pageTemplate.setTaxonomyCategoryItemExternalReferences(
 						taxonomyCategoryItemExternalReferencesArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "thumbnail")) {
+				if (jsonParserFieldValue != null) {
+					pageTemplate.setThumbnail(
+						URLReferenceSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

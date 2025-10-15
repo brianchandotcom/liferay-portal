@@ -308,6 +308,18 @@ public class ContentPageTemplate extends PageTemplate implements Serializable {
 			sb.append("]");
 		}
 
+		URLReference thumbnail = getThumbnail();
+
+		if (thumbnail != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"thumbnail\": ");
+
+			sb.append(String.valueOf(thumbnail));
+		}
+
 		Type type = getType();
 
 		if (type != null) {

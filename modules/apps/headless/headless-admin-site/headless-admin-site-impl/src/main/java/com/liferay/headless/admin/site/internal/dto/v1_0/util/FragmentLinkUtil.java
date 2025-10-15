@@ -551,8 +551,7 @@ public class FragmentLinkUtil {
 		}
 
 		return _getItemScope(
-			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
-			scopeGroupId);
+			companyId, scopeExternalReferenceCode, scopeGroupId);
 	}
 
 	private static JSONObject _getMappedItemJSONObject(

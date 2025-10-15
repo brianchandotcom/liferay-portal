@@ -524,13 +524,19 @@ public class FragmentLinkUtil {
 		FragmentLinkMappedValue fragmentLinkMappedValue =
 			new FragmentLinkMappedValue();
 
+		FragmentMappedValueItemReference fragmentMappedValueItemReference =
+			_getFragmentMappedValueItemReference(
+				infoItemServiceRegistry, jsonObject, scopeGroupId);
+
+		if (fragmentMappedValueItemReference == null) {
+			return null;
+		}
+
 		fragmentLinkMappedValue.setMapping(
 			() -> new Mapping() {
 				{
 					setFieldKey(() -> _getFieldKey(jsonObject));
-					setItemReference(
-						() -> _getFragmentMappedValueItemReference(
-							infoItemServiceRegistry, jsonObject, scopeGroupId));
+					setItemReference(fragmentMappedValueItemReference);
 				}
 			});
 

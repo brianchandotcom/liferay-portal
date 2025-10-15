@@ -168,8 +168,6 @@ function main {
     oci_endpoint="oci://${chart_repo}/${chart_name}${dxp_aws_chart_version}"
 
     helm pull --untar --untardir "${chart_dir}" "${oci_endpoint}"
-
-    tree -a /opt/liferay
 }
 
 main

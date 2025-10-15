@@ -391,17 +391,14 @@ public class FragmentLinkUtil {
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
 			mapping.getItemReference();
 
-		if ((fragmentMappedValueItemReference == null) ||
-			(fragmentMappedValueItemReference.getType() == null)) {
-
+		if (fragmentMappedValueItemReference == null) {
 			return null;
 		}
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (Objects.equals(
-				fragmentMappedValueItemReference.getType(),
-				FragmentMappedValueItemReference.Type.CONTEXT_REFERENCE)) {
+		if (fragmentMappedValueItemReference instanceof
+				FragmentMappedValueItemContextReference) {
 
 			String fieldKey = mapping.getFieldKey();
 

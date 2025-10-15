@@ -9,6 +9,7 @@ import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
 import {IAssetObjectEntry} from '../../../common/types/AssetType';
+import StatusLabel from '../../../common/components/StatusLabel';
 
 const AssetVersionsListItem = ({items}: {items: IAssetObjectEntry[]}) => {
 	return (
@@ -36,9 +37,7 @@ const AssetVersionsListItem = ({items}: {items: IAssetObjectEntry[]}) => {
 						</List.ItemText>
 
 						<List.ItemText>
-							<Label displayType="success">
-								{item.status.label_i18n}
-							</Label>
+							<StatusLabel label={item.status.label} />
 						</List.ItemText>
 					</List.ItemField>
 				</List.Item>

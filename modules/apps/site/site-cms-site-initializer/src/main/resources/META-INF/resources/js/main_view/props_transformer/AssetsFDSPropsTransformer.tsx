@@ -29,10 +29,11 @@ import {triggerAssetBulkAction} from './actions/triggerAssetBulkAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRenderer from './cell_renderers/SpaceRenderer';
-import StatusRenderer from './cell_renderers/StatusRenderer';
+import StatusRenderer from '../../common/components/StatusLabel';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
+import StatusLabel from '../../common/components/StatusLabel';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -110,7 +111,7 @@ export default function AssetsFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: StatusRenderer,
+					component: ({value}) => StatusLabel(value),
 					name: 'statusTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,

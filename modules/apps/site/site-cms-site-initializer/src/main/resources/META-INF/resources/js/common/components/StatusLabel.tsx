@@ -26,17 +26,12 @@ const mapLabelToLabelDisplayType: {[key: string]: LabelDisplayType} = {
 	'scheduled': 'info',
 };
 
-interface StatusRendererProps {
-	value: {
-		label: string;
-		label_i18n: string;
-	};
+interface StatusLabelProps {
+	label: string;
 }
 
-const StatusRenderer = ({value}: StatusRendererProps) => (
-	<Label displayType={mapLabelToLabelDisplayType[value.label]}>
-		{value.label_i18n}
-	</Label>
+const StatusLabel = ({label}: StatusLabelProps) => (
+	<Label displayType={mapLabelToLabelDisplayType[label]}>{label}</Label>
 );
 
-export default StatusRenderer;
+export default StatusLabel;

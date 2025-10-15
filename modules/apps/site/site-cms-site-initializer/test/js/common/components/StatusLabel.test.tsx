@@ -6,10 +6,9 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
+import StatusLabel from '../../../../src/main/resources/META-INF/resources/js/common/components/StatusLabel';
 
-import StatusRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/StatusRenderer';
-
-describe('StatusRenderer', () => {
+describe('StatusLabel', () => {
 	it.each([
 		['approved', 'success'],
 		['denied', 'danger'],
@@ -21,14 +20,9 @@ describe('StatusRenderer', () => {
 		['pending', 'info'],
 		['scheduled', 'info'],
 	])('renders with the "%s" status', (label, displayType) => {
-		const value = {
-			label,
-			label_i18n: 'i18n-key-for-' + label,
-		};
+		render(<StatusLabel label={label} />);
 
-		render(<StatusRenderer value={value} />);
-
-		const labelElement = screen.getByText(value.label_i18n);
+		const labelElement = screen.getByText(label);
 
 		expect(labelElement).toBeInTheDocument();
 		expect(labelElement.parentElement).toHaveClass(

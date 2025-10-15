@@ -204,7 +204,7 @@ public class AccountGroupsAdminPortletDataHandlerTest {
 			ClassUtil.getClassName(portletDataHandler),
 			CoreMatchers.containsString("BatchEnginePortletDataHandler"));
 		Assert.assertEquals(
-			"com.liferay.headless.admin.user.dto.v1_0.AccountGroup",
+			AccountGroup.class.getName(),
 			portletDataHandler.getClassNames()[0]);
 		Assert.assertEquals(
 			AccountPortletKeys.ACCOUNT_GROUPS_ADMIN,

@@ -154,20 +154,21 @@ function main {
 
     chart_name="liferay-aws"
 
-    local dxp_aws_chart_version
+    local oci_endpoint
+
+    oci_endpoint="oci://${chart_repo}/${chart_name}"
 
     if [ "${DXP_AWS_CHART_VERSION}" != "" ]
     then
-        dxp_aws_chart_version=":${DXP_AWS_CHART_VERSION}"
+        helm \
+            pull \
+            --untar \
+            --untardir "${chart_dir}" \
+            --version "${DXP_AWS_CHART_VERSION}" \
+            "${oci_endpoint}"
     else
-        dxp_aws_chart_version=""
+        helm pull --untar --untardir "${chart_dir}" "${oci_endpoint}"
     fi
-
-    local oci_endpoint
-
-    oci_endpoint="oci://${chart_repo}/${chart_name}${dxp_aws_chart_version}"
-
-    helm pull --untar --untardir "${chart_dir}" "${oci_endpoint}"
 }
 
 main

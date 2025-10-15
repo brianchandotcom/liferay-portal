@@ -85,11 +85,17 @@ async function getSpaceWithCache({
 		if (data) {
 			return data;
 		}
-		spaceCache.delete(url);
+
 		throw new Error(error || 'Failed to fetch space data.');
 	})();
 
 	spaceCache.set(url, fetchPromise);
+
+	fetchPromise.catch(() => {
+		if (spaceCache.get(url) === fetchPromise) {
+			spaceCache.delete(url);
+		}
+	});
 
 	return fetchPromise;
 }

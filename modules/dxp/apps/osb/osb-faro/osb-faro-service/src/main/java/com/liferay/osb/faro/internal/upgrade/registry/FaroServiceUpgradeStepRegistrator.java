@@ -165,7 +165,8 @@ public class FaroServiceUpgradeStepRegistrator
 		registry.register(
 			"20.0.0", "21.0.0",
 			UpgradeProcessFactory.runSQL(
-				"update OSBFaro_FaroProject set dataSourceConnected = true"));
+				"update OSBFaro_FaroProject set dataSourceConnected = " +
+					"[$TRUE$]"));
 	}
 
 }

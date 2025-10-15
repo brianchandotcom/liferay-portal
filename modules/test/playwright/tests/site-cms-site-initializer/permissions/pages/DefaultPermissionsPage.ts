@@ -89,5 +89,7 @@ export class DefaultPermissionsPage {
 				).not.toBeChecked();
 			}
 		}
+
+		await this.permissionsModalCancelButton.click();
 	}
 }

@@ -68,13 +68,14 @@ export class ExportImportPage {
 
 		await this.continueButton.click();
 
-		await this.importButton.waitFor({state: 'visible'});
+		await this.importButton.waitFor();
 
 		await this.importButton.click();
 
-		await this.page.waitForSelector(
-			'[data-qa-id=row]:nth-of-type(1) .background-task-status-successful',
-			{state: 'visible'}
-		);
+		await this.page
+			.locator(
+				'[data-qa-id=row]:nth-of-type(1) .background-task-status-successful'
+			)
+			.waitFor();
 	}
 }

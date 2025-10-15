@@ -47,6 +47,12 @@ public class ObjectLayoutResourceTest extends BaseObjectLayoutResourceTestCase {
 		_objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
+		_objectDefinition.setEnableFriendlyURLCustomization(true);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
 		_objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(
 			).userId(

@@ -709,21 +709,21 @@ public class DefaultObjectEntryManagerImpl
 					ActionKeys.DELETE, ObjectEntryResourceImpl.class, 0L,
 					"deleteObjectEntryBatch", null,
 					objectDefinition.getUserId(),
-					objectDefinition.getResourceName(), groupId,
+					objectDefinition.getClassName(), groupId,
 					dtoConverterContext.getUriInfo())
 			).put(
 				"get",
 				ActionUtil.addAction(
 					ActionKeys.VIEW, ObjectEntryResourceImpl.class, 0L,
 					"getObjectEntriesPage", null, objectDefinition.getUserId(),
-					objectDefinition.getResourceName(), groupId,
+					objectDefinition.getClassName(), groupId,
 					dtoConverterContext.getUriInfo())
 			).put(
 				"updateBatch",
 				ActionUtil.addAction(
 					ActionKeys.UPDATE, ObjectEntryResourceImpl.class, 0L,
 					"putObjectEntryBatch", null, objectDefinition.getUserId(),
-					objectDefinition.getResourceName(), groupId,
+					objectDefinition.getClassName(), groupId,
 					dtoConverterContext.getUriInfo())
 			).build(),
 			_getFacets(

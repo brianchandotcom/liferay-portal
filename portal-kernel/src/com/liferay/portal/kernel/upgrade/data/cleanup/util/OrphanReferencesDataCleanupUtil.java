@@ -136,7 +136,8 @@ public class OrphanReferencesDataCleanupUtil {
 		sb.append(")");
 
 		if (StringUtil.equalsIgnoreCase("Company", targetTableName) &&
-			PropsValues.DATABASE_PARTITION_ENABLED) {
+			PropsValues.DATABASE_PARTITION_ENABLED &&
+			!dbInspector.isControlTable(sourceTableName)) {
 
 			sb.append(" and companyId = ");
 			sb.append(CompanyThreadLocal.getCompanyId());

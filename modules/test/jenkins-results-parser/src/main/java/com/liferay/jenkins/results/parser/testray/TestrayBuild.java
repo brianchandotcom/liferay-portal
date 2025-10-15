@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TimeZone;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,19 +37,19 @@ import org.json.JSONObject;
  */
 public class TestrayBuild implements Comparable<TestrayBuild> {
 
-	public static final String[] CASE_RESULT_FIELD_NAMES = {
-		"attachments", "caseToCaseResult", "componentToCaseResult",
-		"dateCreated", "dateModified", "dueStatus { key name }", "errors", "id",
-		"startDate"
-	};
-
 	public static final String[] FIELD_NAMES = {
 		"dateCreated", "dateModified", "description", "dueDate",
 		"dueStatus {key name}", "githubCompareURLs", "gitHash", "id", "name",
 		"productVersionToBuilds", "projectToBuilds", "routineToBuilds"
 	};
 
-	public static final String[] TESTRAY_REPORT_CASE_RESULT_FIELD_NAMES = {
+	public static final String[] FIELD_NAMES_CASE_RESULT = {
+		"attachments", "caseToCaseResult", "componentToCaseResult",
+		"dateCreated", "dateModified", "dueStatus { key name }", "errors", "id",
+		"startDate"
+	};
+
+	public static final String[] FIELD_NAMES_CASE_RESULT_TESTRAY_REPORT = {
 		"caseToCaseResult", "componentToCaseResult", "dateCreated",
 		"dateModified", "dueStatus { key name }", "errors", "id", "startDate"
 	};
@@ -184,7 +183,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		try {
 			Set<JSONObject> entityJSONObjects = _testrayServer.requestGraphQL(
-				"caseResults", TestrayBuild.CASE_RESULT_FIELD_NAMES,
+				"caseResults", TestrayBuild.FIELD_NAMES_CASE_RESULT,
 				sb.toString(), null, 1, 1);
 
 			if (entityJSONObjects.isEmpty()) {
@@ -211,7 +210,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 
 		List<TestrayCaseResult> testrayCaseResults = new ArrayList<>();
 
-		String[] fieldNames = TestrayBuild.CASE_RESULT_FIELD_NAMES;
+		String[] fieldNames = TestrayBuild.FIELD_NAMES_CASE_RESULT;
 		int pageSize = 500;
 
 		StringBuilder sb = new StringBuilder();
@@ -227,7 +226,7 @@ public class TestrayBuild implements Comparable<TestrayBuild> {
 		sb.append("'");
 
 		if (filterbyFailures) {
-			fieldNames = TestrayBuild.TESTRAY_REPORT_CASE_RESULT_FIELD_NAMES;
+			fieldNames = TestrayBuild.FIELD_NAMES_CASE_RESULT_TESTRAY_REPORT;
 			pageSize = 50;
 
 			sb.append(" ");

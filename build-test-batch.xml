@@ -4395,11 +4395,11 @@ information. Make sure to commit in all build-lib-versions results.
 	</target>
 
 	<target name="empty-osgi-core-dir-postgresql163">
-		<run-empty-osgi-core-dir-test database.type="postgresql" />
+		<run-empty-osgi-core-dir-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="empty-osgi-core-dir-postgresql163-jdk21_zulu">
-		<run-empty-osgi-core-dir-test database.type="postgresql" />
+		<run-empty-osgi-core-dir-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="format-javadoc-test">
@@ -7646,7 +7646,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="lpkg-container-postgresql163">
-		<run-lpkg-container-test database.type="postgresql" />
+		<run-lpkg-container-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="lpkg-controller-mysql80">
@@ -7658,7 +7658,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="lpkg-controller-postgresql163">
-		<run-lpkg-controller-test database.type="postgresql" />
+		<run-lpkg-controller-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="lpkg-override-mysql80">
@@ -7670,7 +7670,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="lpkg-override-postgresql163">
-		<run-lpkg-override-test database.type="postgresql" />
+		<run-lpkg-override-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="lpkg-persistence-mysql80">
@@ -7682,7 +7682,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="lpkg-persistence-postgresql163">
-		<run-lpkg-persistence-test database.type="postgresql" />
+		<run-lpkg-persistence-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="lpkg-startup-mysql80">
@@ -7694,7 +7694,7 @@ information. Make sure to commit in all format-javadoc results.
 	</target>
 
 	<target name="lpkg-startup-postgresql163">
-		<run-lpkg-startup-test database.type="postgresql" />
+		<run-lpkg-startup-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="modules-compile">
@@ -10079,7 +10079,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="release-osgi-state-exploded-test-postgresql155">
-		<run-release-osgi-state-exploded-test database.type="postgresql" />
+		<run-release-osgi-state-exploded-test database.type="postgresql" database.version="15.5" />
 	</target>
 
 	<target name="release-osgi-state-lpkg-change-directory-test-mysql80">
@@ -10091,7 +10091,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="release-osgi-state-lpkg-change-directory-test-postgresql155">
-		<run-release-osgi-state-lpkg-change-directory-test database.type="postgresql" />
+		<run-release-osgi-state-lpkg-change-directory-test database.type="postgresql" database.version="15.5" />
 	</target>
 
 	<target name="release-osgi-state-lpkg-test-mysql80">
@@ -10103,7 +10103,7 @@ ${output.content}</echo>
 	</target>
 
 	<target name="release-osgi-state-lpkg-test-postgresql155">
-		<run-release-osgi-state-lpkg-test database.type="postgresql" />
+		<run-release-osgi-state-lpkg-test database.type="postgresql" database.version="15.5" />
 	</target>
 
 	<target name="rest-builder">

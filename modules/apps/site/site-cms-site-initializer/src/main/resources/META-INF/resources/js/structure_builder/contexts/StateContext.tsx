@@ -51,10 +51,6 @@ import {
 	validateStructure,
 } from '../utils/validation';
 
-const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get(
-	'untitled-content-structure'
-);
-
 type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
@@ -84,11 +80,8 @@ const INITIAL_STATE: State = {
 	structure: {
 		children: new Map(),
 		erc: '',
-		label: {
-			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
-				DEFAULT_STRUCTURE_LABEL,
-		},
-		name: normalizeName(DEFAULT_STRUCTURE_LABEL),
+		label: {},
+		name: '',
 		spaces: 'all',
 		status: 'new',
 		uuid: getUuid(),

@@ -15,7 +15,6 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -95,7 +94,6 @@ public interface ObjectFieldBusinessType {
 
 		return HashMapBuilder.<String, Object>put(
 			"editOnlyInDefaultLanguage",
-			FeatureFlagManagerUtil.isEnabled("LPD-32050") &&
 			!GetterUtil.getBoolean(objectField.getReadOnly()) &&
 			!objectField.isLocalized()
 		).put(
@@ -162,13 +160,7 @@ public interface ObjectFieldBusinessType {
 	}
 
 	public default boolean isLocalizationSupported(ObjectField objectField) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32050") ||
-			objectField.isMetadata()) {
-
-			return false;
-		}
-
-		return true;
+		return !objectField.isMetadata();
 	}
 
 	public default boolean isVisible(ObjectDefinition objectDefinition) {

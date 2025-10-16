@@ -506,8 +506,31 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			String roleNames)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Long groupId = getPermissionCheckerGroupId(
+			ercScopedTestEntityExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
+			ercScopedTestEntityExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			ercScopedTestEntityExternalReferenceCode);
+
+		PermissionServiceUtil.checkPermission(
+			groupId, resourceName, resourceId);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS, resourceId,
+					"getERCScopedTestEntityPermissionsPage", null, resourceName,
+					groupId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, resourceId,
+					"putERCScopedTestEntityPermissionsPage", null, resourceName,
+					groupId)
+			).build(),
+			resourceId, resourceName, roleNames);
 	}
 
 	protected abstract Page<ERCScopedTestEntity>
@@ -1421,8 +1444,68 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			Permission[] permissions)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		Long groupId = getPermissionCheckerGroupId(
+			ercScopedTestEntityExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
+			ercScopedTestEntityExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			ercScopedTestEntityExternalReferenceCode);
+
+		PermissionServiceUtil.checkPermission(
+			groupId, resourceName, resourceId);
+
+		ModelPermissions modelPermissions =
+			ModelPermissionsUtil.toModelPermissions(
+				contextCompany.getCompanyId(), permissions, resourceId,
+				resourceName, resourceActionLocalService,
+				resourcePermissionLocalService, roleLocalService);
+
+		Collection<String> roleNames = modelPermissions.getRoleNames();
+
+		for (ResourcePermission resourcePermission :
+				resourcePermissionLocalService.getResourcePermissions(
+					contextCompany.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(resourceId))) {
+
+			com.liferay.portal.kernel.model.Role role =
+				roleLocalService.fetchRole(resourcePermission.getRoleId());
+
+			if ((role == null) || roleNames.contains(role.getName())) {
+				continue;
+			}
+
+			for (ResourceAction resourceAction :
+					resourceActionLocalService.getResourceActions(
+						resourceName)) {
+
+				resourcePermissionLocalService.removeResourcePermission(
+					contextCompany.getCompanyId(), resourceName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(resourceId), role.getRoleId(),
+					resourceAction.getActionId());
+			}
+		}
+
+		resourcePermissionLocalService.updateResourcePermissions(
+			contextCompany.getCompanyId(), groupId, resourceName,
+			String.valueOf(resourceId), modelPermissions);
+
+		return toPermissionPage(
+			HashMapBuilder.put(
+				"get",
+				addAction(
+					ActionKeys.PERMISSIONS, resourceId,
+					"getERCScopedTestEntityPermissionsPage", null, resourceName,
+					groupId)
+			).put(
+				"replace",
+				addAction(
+					ActionKeys.PERMISSIONS, resourceId,
+					"putERCScopedTestEntityPermissionsPage", null, resourceName,
+					groupId)
+			).build(),
+			resourceId, resourceName, null);
 	}
 
 	protected abstract ERCScopedTestEntity doPutSiteERCScopedTestEntity(
@@ -1847,6 +1930,21 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 				groupExternalReferenceCode, contextCompany.getCompanyId());
 
 		return group.getGroupId();
+	}
+
+	protected Long getPermissionCheckerResourceId(String externalReferenceCode)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String getPermissionCheckerResourceName(
+			String externalReferenceCode)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	protected Long getPermissionCheckerResourceId(

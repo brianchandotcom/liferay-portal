@@ -81,57 +81,27 @@ public class FragmentLinkUtilTest {
 	@Before
 	public void setUp() throws Exception {
 		_classNameId = RandomTestUtil.randomLong();
+		_companyId = RandomTestUtil.randomLong();
+		_infoItemServiceRegistry = Mockito.mock(InfoItemServiceRegistry.class);
+
+		_itemGroupExternalReferenceCode = RandomTestUtil.randomString();
+		_itemGroupId = RandomTestUtil.randomLong();
+
+		_mockGroup(
+			_itemGroupExternalReferenceCode, _itemGroupId,
+			GroupConstants.TYPE_DEPOT);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getClassNameId(Mockito.anyString())
 		).thenReturn(
 			_classNameId
 		);
-
-		_group = Mockito.mock(Group.class);
-
-		Mockito.when(
-			_group.getCompanyId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
-
 		_scopeExternalReferenceCode = RandomTestUtil.randomString();
-
-		Mockito.when(
-			_group.getExternalReferenceCode()
-		).thenReturn(
-			_scopeExternalReferenceCode
-		);
-
 		_scopeGroupId = RandomTestUtil.randomLong();
 
-		Mockito.when(
-			_group.getGroupId()
-		).thenReturn(
-			_scopeGroupId
-		);
-
-		Mockito.when(
-			_group.getType()
-		).thenReturn(
-			GroupConstants.TYPE_SITE_OPEN
-		);
-
-		_groupLocalServiceUtilMockedStatic.when(
-			() -> GroupLocalServiceUtil.getGroup(Mockito.anyLong())
-		).thenReturn(
-			_group
-		);
-
-		_groupLocalServiceUtilMockedStatic.when(
-			() -> GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-				Mockito.anyString(), Mockito.anyLong())
-		).thenReturn(
-			_group
-		);
-
-		_infoItemServiceRegistry = Mockito.mock(InfoItemServiceRegistry.class);
+		_mockGroup(
+			_scopeExternalReferenceCode, _scopeGroupId,
+			GroupConstants.TYPE_SITE_OPEN);
 	}
 
 	@Test
@@ -991,6 +961,62 @@ public class FragmentLinkUtilTest {
 		return fragmentMappedValueItemExternalReference;
 	}
 
+	private void _mockGroup(
+		String externalReferenceCode, long groupId, int type) {
+
+		Group group = Mockito.mock(Group.class);
+
+		Mockito.when(
+			group.getCompanyId()
+		).thenReturn(
+			_companyId
+		);
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			externalReferenceCode
+		);
+
+		Mockito.when(
+			group.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			group.getType()
+		).thenReturn(
+			type
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.fetchGroup(groupId)
+		).thenReturn(
+			group
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+				externalReferenceCode, _companyId)
+		).thenReturn(
+			group
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.getGroup(groupId)
+		).thenReturn(
+			group
+		);
+
+		_groupLocalServiceUtilMockedStatic.when(
+			() -> GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				externalReferenceCode, _companyId)
+		).thenReturn(
+			group
+		);
+	}
+
 	private InfoItemReference _mockInfoItemReference() throws Exception {
 		InfoItemObjectProvider<Object> infoItemObjectProvider = Mockito.mock(
 			InfoItemObjectProvider.class);
@@ -1035,11 +1061,13 @@ public class FragmentLinkUtilTest {
 	}
 
 	private static long _classNameId;
-	private static Group _group;
+	private static long _companyId;
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
 	private static InfoItemServiceRegistry _infoItemServiceRegistry;
+	private static String _itemGroupExternalReferenceCode;
+	private static long _itemGroupId;
 	private static final MockedStatic<LayoutLocalServiceUtil>
 		_layoutLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			LayoutLocalServiceUtil.class);

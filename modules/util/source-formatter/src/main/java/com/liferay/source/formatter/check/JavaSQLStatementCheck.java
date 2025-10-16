@@ -19,17 +19,11 @@ import java.util.regex.Pattern;
 /**
  * @author Alan Huang
  */
-public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
-
-	@Override
-	public boolean isLiferaySourceCheck() {
-		return true;
-	}
+public class JavaSQLStatementCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String content)
-		throws Exception {
+		String fileName, String absolutePath, String content) {
 
 		for (String methodName : _METHOD_NAMES) {
 			_checkSQLBooleanValues(fileName, content, methodName);

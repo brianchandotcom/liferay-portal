@@ -24,7 +24,9 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 	public interface ExportImportDescriptor {
 
 		public default String getClassName() {
-			return getClass().getName();
+			return getClass(
+			).getEnclosingClass(
+			).getName();
 		}
 
 		public default String getLabelLanguageKey() {

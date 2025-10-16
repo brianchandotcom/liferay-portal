@@ -17,6 +17,13 @@
 				"type": "layout"
 			},
 			{
+				"displayIcon": "users",
+				"externalReferenceCode": "CMSPRIMARYNAVIGATION7",
+				"friendlyURL": "/shared-with-me",
+				"privateLayout": false,
+				"type": "layout"
+			},
+			{
 				"externalReferenceCode": "CMSPRIMARYNAVIGATION3",
 				"menuItems": [
 					{
@@ -45,13 +52,6 @@
 					"en_US": "Assets"
 				},
 				"type": "node"
-			},
-			{
-				"displayIcon": "users",
-				"externalReferenceCode": "CMSPRIMARYNAVIGATION7",
-				"friendlyURL": "/shared-with-me",
-				"privateLayout": false,
-				"type": "layout"
 			},
 			{
 				"externalReferenceCode": "CMSPRIMARYNAVIGATION8",

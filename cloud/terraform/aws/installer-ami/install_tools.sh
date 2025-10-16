@@ -25,11 +25,7 @@ function main {
 
 	rm awscliv2.zip
 
-	local terraform_version
-
-	terraform_version="1.13.1"
-
-	download "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip" "terraform.zip"
+	download "https://releases.hashicorp.com/terraform/1.13.1/terraform_1.13.1_linux_amd64.zip" "terraform.zip"
 
 	unzip terraform.zip
 
@@ -37,11 +33,7 @@ function main {
 
 	rm terraform.zip
 
-	local kubernetes_version
-
-	kubernetes_version="1.23.6"
-
-	download "https://dl.k8s.io/release/v${kubernetes_version}/bin/linux/amd64/kubectl" "kubectl"
+	download "https://dl.k8s.io/release/v1.23.6/bin/linux/amd64/kubectl" "kubectl"
 
 	chmod +x kubectl
 
@@ -55,11 +47,7 @@ function main {
 
 	rm eksctl.tar.gz
 
-	local oras_version
-
-	oras_version="1.3.0"
-
-	download "https://github.com/oras-project/oras/releases/download/v${oras_version}/oras_${oras_version}_linux_amd64.tar.gz" "oras.tar.gz"
+	download "https://github.com/oras-project/oras/releases/download/v1.3.0/oras_1.3.0_linux_amd64.tar.gz" "oras.tar.gz"
 
 	tar --extract --file=oras.tar.gz --gzip
 
@@ -111,10 +99,6 @@ function main {
 
 	popd
 
-	local container_registry
-
-	container_registry="docker.io"
-
 	local dxp_image_tag
 
 	if [ "${DXP_IMAGE_TAG}" != "" ]
@@ -133,30 +117,18 @@ function main {
 				| head -1)
 	fi
 
-	local liferay_dxp_repository
-
-	liferay_dxp_repository="liferay/dxp"
-
 	mkdir "${image_dir}/dxp"
 
 	oras \
 		cp \
 		--no-tty \
 		--to-oci-layout \
-		"${container_registry}/${liferay_dxp_repository}:${dxp_image_tag}" \
+		"docker.io/liferay/dxp:${dxp_image_tag}" \
 		"${image_dir}/dxp:${dxp_image_tag}"
-
-	local chart_repo
-
-	chart_repo="us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart"
-
-	local chart_name
-
-	chart_name="liferay-aws"
 
 	local oci_endpoint
 
-	oci_endpoint="oci://${chart_repo}/${chart_name}"
+	oci_endpoint="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws"
 
 	if [ "${DXP_AWS_CHART_VERSION}" != "" ]
 	then

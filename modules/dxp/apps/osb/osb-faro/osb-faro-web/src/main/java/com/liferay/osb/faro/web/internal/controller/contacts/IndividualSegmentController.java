@@ -333,12 +333,11 @@ public class IndividualSegmentController extends BaseFaroController {
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
 		if (Validator.isNull(contactsEntityId)) {
-			List<String> fieldNames = List.of("name", "author/name");
-
 			results = contactsEngineClient.getIndividualSegments(
-				faroProject, channelId, dataSourceId, query, fieldNames, null,
-				segmentTypes, state, IndividualSegment.Status.ACTIVE.name(),
-				cur, delta, orderByFields);
+				faroProject, channelId, dataSourceId, query,
+				List.of("authorName", "name"), null, segmentTypes, state,
+				IndividualSegment.Status.ACTIVE.name(), cur, delta,
+				orderByFields);
 		}
 		else if (contactsEntityType == FaroConstants.TYPE_ACCOUNT) {
 			results = contactsEngineClient.getAccountIndividualSegments(

@@ -12,11 +12,7 @@ function download {
 		"${1}"
 }
 
-function main {
-	sudo yum update --assumeyes
-
-	sudo yum install --assumeyes git jq tree shadow-utils unzip yum-utils
-
+function install_awscli {
 	download "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" "awscliv2.zip"
 
 	unzip awscliv2.zip -x "aws/dist/awscli/examples/*"
@@ -24,21 +20,9 @@ function main {
 	sudo ./aws/install
 
 	rm awscliv2.zip
+}
 
-	download "https://releases.hashicorp.com/terraform/1.13.1/terraform_1.13.1_linux_amd64.zip" "terraform.zip"
-
-	unzip terraform.zip
-
-	sudo mv terraform /usr/local/bin/
-
-	rm terraform.zip
-
-	download "https://dl.k8s.io/release/v1.23.6/bin/linux/amd64/kubectl" "kubectl"
-
-	chmod +x kubectl
-
-	sudo mv kubectl /usr/local/bin/
-
+function install_eksctl {
 	download "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" "eksctl.tar.gz"
 
 	tar --extract --file=eksctl.tar.gz --gzip
@@ -46,7 +30,27 @@ function main {
 	sudo mv eksctl /usr/local/bin
 
 	rm eksctl.tar.gz
+}
 
+function install_helm {
+	download "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3" "get_helm.sh"
+
+	chmod 700 get_helm.sh
+
+	./get_helm.sh
+
+	rm get_helm.sh
+}
+
+function install_kubectl {
+	download "https://dl.k8s.io/release/v1.23.6/bin/linux/amd64/kubectl" "kubectl"
+
+	chmod +x kubectl
+
+	sudo mv kubectl /usr/local/bin/
+}
+
+function install_oras {
 	download "https://github.com/oras-project/oras/releases/download/v1.3.0/oras_1.3.0_linux_amd64.tar.gz" "oras.tar.gz"
 
 	tar --extract --file=oras.tar.gz --gzip
@@ -56,14 +60,38 @@ function main {
 	sudo chmod +x /usr/local/bin/oras
 
 	rm oras.tar.gz
+}
 
-	download "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3" "get_helm.sh"
+function install_required_packages {
+	sudo yum update --assumeyes
 
-	chmod 700 get_helm.sh
+	sudo yum install --assumeyes git jq tree shadow-utils unzip yum-utils
+}
 
-	./get_helm.sh
+function install_terraform {
+	download "https://releases.hashicorp.com/terraform/1.13.1/terraform_1.13.1_linux_amd64.zip" "terraform.zip"
 
-	rm get_helm.sh
+	unzip terraform.zip
+
+	sudo mv terraform /usr/local/bin/
+
+	rm terraform.zip
+}
+
+function main {
+	install_required_packages
+
+	install_awscli
+
+	install_terraform
+
+	install_kubectl
+
+	install_eksctl
+
+	install_oras
+
+	install_helm
 
 	local chart_dir
 

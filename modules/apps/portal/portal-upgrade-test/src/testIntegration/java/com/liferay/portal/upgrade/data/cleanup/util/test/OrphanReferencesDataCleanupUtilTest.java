@@ -8,12 +8,15 @@ package com.liferay.portal.upgrade.data.cleanup.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.instance.PortalInstancePool;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
@@ -53,6 +56,31 @@ public class OrphanReferencesDataCleanupUtilTest {
 		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(_connection);
+	}
+
+	@Test
+	public void testCleanUpTableDoesNotAffectControlTablesWithDatabasePartitionEnabled()
+		throws Exception {
+
+		Assume.assumeTrue(PropsValues.DATABASE_PARTITION_ENABLED);
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					PortalInstancePool.getDefaultCompanyId())) {
+
+			_testCleanUpTable(
+				logCapture -> {
+					List<LogEntry> logEntries = logCapture.getLogEntries();
+
+					Assert.assertTrue(
+						logEntries.toString(), logEntries.isEmpty());
+				},
+				() -> {
+				},
+				() -> {
+				},
+				null, "companyId", "VirtualHost", "companyId", "Company");
+		}
 	}
 
 	@Test

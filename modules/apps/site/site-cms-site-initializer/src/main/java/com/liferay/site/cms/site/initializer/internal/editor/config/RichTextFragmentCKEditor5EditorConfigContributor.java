@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Map;
 
@@ -39,6 +40,10 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 			return;
 		}
 
+		String placeholder = LanguageUtil.format(
+				themeDisplay.getLocale(), "start-writing-content",
+				false);
+
 		jsonObject.put(
 			"toolbar",
 			JSONUtil.put(
@@ -54,7 +59,9 @@ public class RichTextFragmentCKEditor5EditorConfigContributor
 				}
 			).put(
 				"shouldNotGroupWhenFull", true
-			));
+			)).put(
+				"placeholder", placeholder
+			);
 	}
 
 }

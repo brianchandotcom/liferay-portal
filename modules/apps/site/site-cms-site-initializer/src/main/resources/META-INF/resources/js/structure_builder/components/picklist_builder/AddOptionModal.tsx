@@ -47,6 +47,9 @@ export default function AddOptionModal({
 
 	const onSaveAndAddAnother = () => {
 		addOption({erc, key, name});
+
+		setKey(getRandomKey());
+		setErc(getRandomId());
 	};
 
 	return (
@@ -75,6 +78,7 @@ export default function AddOptionModal({
 
 					<Input
 						disabled={Boolean(option?.key)}
+						key={key}
 						label={Liferay.Language.get('key')}
 						onValueChange={(key) => setKey(key)}
 						required
@@ -88,6 +92,7 @@ export default function AddOptionModal({
 							),
 							Liferay.Language.get('option')
 						)}
+						key={erc}
 						onValueChange={(erc) => setErc(erc)}
 						value={erc}
 					/>

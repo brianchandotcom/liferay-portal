@@ -39,18 +39,12 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingTransformCall(
-		String fileName, String sqlString, int lineNumber) {
+		String fileName, String methodCall, String sqlString, int lineNumber) {
 
 		int index = StringUtil.indexOfAny(
 			sqlString, new String[] {"[$FALSE$]", "[$TRUE$]"});
 
-		if (index == -1) {
-			return;
-		}
-
-		index = sqlString.lastIndexOf("SQLTransformer.transform(", index);
-
-		if (index != -1) {
+		if ((index == -1) || methodCall.contains("SQLTransformer.transform(")) {
 			return;
 		}
 
@@ -63,6 +57,8 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 
 	private void _checkSQLBooleanValues(
 		String fileName, String content, String methodName) {
+
+		String sqlString = StringPool.BLANK;
 
 		int x = -1;
 
@@ -77,14 +73,14 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 				continue;
 			}
 
+			String methodCall = JavaSourceUtil.getMethodCall(content, x);
+
 			List<String> getParameterList = JavaSourceUtil.getParameterList(
-				JavaSourceUtil.getMethodCall(content, x));
+				methodCall);
 
 			if (getParameterList.isEmpty()) {
 				return;
 			}
-
-			String sqlString = StringPool.BLANK;
 
 			int parameterSize = getParameterList.size();
 
@@ -96,21 +92,21 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					return;
 				}
 
-				sqlString = getParameterList.get(1);
+				sqlString = _stripOuterMethod(getParameterList.get(1));
 			}
 			else if (methodName.equals("connection.prepareStatement")) {
 				if (parameterSize != 1) {
 					return;
 				}
 
-				sqlString = getParameterList.get(0);
+				sqlString = _stripOuterMethod(getParameterList.get(0));
 			}
 			else if (methodName.equals("runSQL")) {
 				if (parameterSize == 1) {
-					sqlString = getParameterList.get(0);
+					sqlString = _stripOuterMethod(getParameterList.get(0));
 				}
 				else if (parameterSize == 2) {
-					sqlString = getParameterList.get(1);
+					sqlString = _stripOuterMethod(getParameterList.get(1));
 				}
 			}
 			else if (methodName.equals("StringBundler.concat")) {
@@ -120,18 +116,18 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				for (String parameter : getParameterList) {
-					sqlString = sqlString + StringUtil.unquote(parameter);
-				}
+				String firstParameter = getParameterList.get(0);
 
-				if (!sqlString.startsWith("delete ") &&
-					!sqlString.startsWith("insert into ") &&
-					!sqlString.startsWith("select ") &&
-					!sqlString.startsWith("update ") &&
-					!sqlString.startsWith("where ")) {
+				if (!firstParameter.startsWith("\"delete ") &&
+					!firstParameter.startsWith("\"insert into ") &&
+					!firstParameter.startsWith("\"select ") &&
+					!firstParameter.startsWith("\"update ") &&
+					!firstParameter.startsWith("\"where ")) {
 
 					continue;
 				}
+
+				sqlString = _stripOuterMethod(methodCall);
 			}
 
 			if (sqlString.equals(StringPool.BLANK)) {
@@ -175,8 +171,31 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 				continue;
 			}
 
-			_checkMissingTransformCall(fileName, sqlString, lineNumber);
+			_checkMissingTransformCall(
+				fileName, methodCall, sqlString, lineNumber);
 		}
+	}
+
+	private String _stripOuterMethod(String parameter) {
+		String trimmedParameter = parameter.trim();
+
+		if (trimmedParameter.endsWith(")") &&
+			trimmedParameter.startsWith("SQLTransformer.transform(")) {
+
+			trimmedParameter = trimmedParameter.substring(
+				25, trimmedParameter.length() - 1);
+		}
+
+		trimmedParameter = trimmedParameter.trim();
+
+		if (trimmedParameter.endsWith(")") &&
+			trimmedParameter.startsWith("StringBundler.concat(")) {
+
+			trimmedParameter = trimmedParameter.substring(
+				21, trimmedParameter.length() - 1);
+		}
+
+		return trimmedParameter;
 	}
 
 	private static final String[] _METHOD_NAMES = {

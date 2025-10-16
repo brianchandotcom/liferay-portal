@@ -62,6 +62,7 @@ const config = {
 		'@liferay/no-extraneous-dependencies': [
 			'error',
 			[
+				'@eslint/eslintrc',
 				'@testing-library/dom',
 				'@testing-library/jest-dom',
 				'@testing-library/react-hooks',
@@ -72,6 +73,7 @@ const config = {
 				'fs',
 				'path',
 				'process',
+				'url',
 				'~',
 			],
 		],

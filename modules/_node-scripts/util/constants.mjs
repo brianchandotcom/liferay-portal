@@ -60,6 +60,7 @@ const NO_RECURSE_PROJECT_DIRS = [
 	'osb-faro',
 	'sdk',
 	'test',
+	'vercel',
 ];
 
 export async function getBuildPropertiesPath() {

@@ -8,8 +8,8 @@ package_update: true
 package_upgrade: true
 runcmd:
     -   [chown, --recursive, "liferay:liferay", /opt/liferay]
-    -   [chmod, +x, /opt/liferay/bin/run-on-boot.sh]
-    -   [su, "-", liferay, -c, /opt/liferay/bin/run-on-boot.sh]
+    -   [chmod, +x, /opt/liferay/bin/run_on_boot.sh]
+    -   [su, "-", liferay, -c, /opt/liferay/bin/run_on_boot.sh]
 users:
     -   default
     -   homedir: /opt/liferay

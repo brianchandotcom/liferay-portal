@@ -3,7 +3,7 @@
 set -eux
 
 function main {
-	echo "Executing run-on-boot.sh at $(date) by $(id)"
+	echo "Executing run_on_boot.sh at $(date) by $(id)"
 
 	local token
 

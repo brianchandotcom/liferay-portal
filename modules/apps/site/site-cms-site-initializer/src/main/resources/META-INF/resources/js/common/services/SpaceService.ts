@@ -31,10 +31,7 @@ function getSpaceEndpoint(spaceId: number | string): string;
 function getSpaceEndpoint(externalReferenceCode: string): string;
 
 function getSpaceEndpoint(id: number | string): string {
-	if (
-		typeof id === 'number' ||
-		(typeof id === 'string' && !isNaN(Number(id)))
-	) {
+	if (typeof id === 'number') {
 		return `/o/headless-asset-library/v1.0/asset-libraries/${id}`;
 	}
 
@@ -53,31 +50,19 @@ async function getSpace(id: number | string): Promise<Space> {
 	throw new Error(error || 'Failed to fetch space data.');
 }
 
-const resolvedSpaceCache = new Map<number | string, Space>();
-const pendingSpacePromises = new Map<number | string, Promise<Space>>();
+const spaceCache = new Map<number | string, Promise<Space>>();
 
 async function getSpaceWithCache(id: number | string): Promise<Space> {
-	if (resolvedSpaceCache.has(id)) {
-		return Promise.resolve(resolvedSpaceCache.get(id)!);
+	if (spaceCache.has(id)) {
+		return spaceCache.get(id)!;
 	}
 
-	if (pendingSpacePromises.has(id)) {
-		return pendingSpacePromises.get(id)!;
-	}
+	const fetchPromise = getSpace(id).catch((error) => {
+		spaceCache.delete(id);
+		throw error;
+	});
 
-	const fetchPromise = getSpace(id)
-		.then((space) => {
-			resolvedSpaceCache.set(id, space);
-			pendingSpacePromises.delete(id);
-
-			return space;
-		})
-		.catch((error) => {
-			pendingSpacePromises.delete(id);
-			throw error;
-		});
-
-	pendingSpacePromises.set(id, fetchPromise);
+	spaceCache.set(id, fetchPromise);
 
 	return fetchPromise;
 }

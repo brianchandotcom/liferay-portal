@@ -78,7 +78,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 		try {
 			OpenSSOConfiguration openSSOConfiguration =
-				_getOpenSSOConfiguration(CompanyThreadLocal.getCompanyId());
+				_getOpenSSOConfiguration();
 
 			if (openSSOConfiguration.enabled() &&
 				Validator.isNotNull(openSSOConfiguration.loginURL()) &&
@@ -106,8 +106,7 @@ public class OpenSSOFilter extends BaseFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration(
-			CompanyThreadLocal.getCompanyId());
+		OpenSSOConfiguration openSSOConfiguration = _getOpenSSOConfiguration();
 
 		String requestURI = GetterUtil.getString(
 			httpServletRequest.getRequestURI());
@@ -203,13 +202,12 @@ public class OpenSSOFilter extends BaseFilter {
 		httpServletResponse.sendRedirect(redirect);
 	}
 
-	private OpenSSOConfiguration _getOpenSSOConfiguration(long companyId)
-		throws Exception {
-
+	private OpenSSOConfiguration _getOpenSSOConfiguration() throws Exception {
 		return _configurationProvider.getConfiguration(
 			OpenSSOConfiguration.class,
 			new CompanyServiceSettingsLocator(
-				companyId, OpenSSOConstants.SERVICE_NAME));
+				CompanyThreadLocal.getCompanyId(),
+				OpenSSOConstants.SERVICE_NAME));
 	}
 
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";

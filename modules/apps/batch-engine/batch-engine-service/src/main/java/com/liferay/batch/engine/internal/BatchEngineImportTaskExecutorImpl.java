@@ -39,6 +39,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -380,6 +381,35 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
+	private <T> void _importItem(
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate, T item,
+			UnsafeFunction<T, T, Exception> unsafeFunction)
+		throws Exception {
+
+		ImportTaskContext importTaskContext = new ImportTaskContext();
+
+		for (ImportTaskPreAction importTaskPreAction : _importTaskPreActions) {
+			importTaskPreAction.run(
+				batchEngineImportTask, batchEngineTaskItemDelegate,
+				importTaskContext, item);
+		}
+
+		T persistedItem = unsafeFunction.apply(item);
+
+		if (persistedItem == null) {
+			return;
+		}
+
+		for (ImportTaskPostAction importTaskPostAction :
+				_importTaskPostActions) {
+
+			importTaskPostAction.run(
+				batchEngineImportTask, batchEngineTaskItemDelegate,
+				importTaskContext, item, persistedItem);
+		}
+	}
+
 	private <T> void _importItems(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
@@ -387,35 +417,30 @@ public class BatchEngineImportTaskExecutorImpl
 		throws Exception {
 
 		for (T item : items) {
-
-			// hook transactionality
-
 			try {
-				ImportTaskContext importTaskContext = new ImportTaskContext();
+				if (LazyReferencingThreadLocal.isEnabled()) {
+					TransactionInvokerUtil.invoke(
+						_transactionConfig,
+						() -> {
+							_importItem(
+								batchEngineImportTask,
+								batchEngineTaskItemDelegate, item,
+								unsafeFunction);
 
-				for (ImportTaskPreAction importTaskPreAction :
-						_importTaskPreActions) {
-
-					importTaskPreAction.run(
-						batchEngineImportTask, batchEngineTaskItemDelegate,
-						importTaskContext, item);
+							return null;
+						});
 				}
-
-				T persistedItem = unsafeFunction.apply(item);
-
-				if (persistedItem == null) {
-					continue;
-				}
-
-				for (ImportTaskPostAction importTaskPostAction :
-						_importTaskPostActions) {
-
-					importTaskPostAction.run(
+				else {
+					_importItem(
 						batchEngineImportTask, batchEngineTaskItemDelegate,
-						importTaskContext, item, persistedItem);
+						item, unsafeFunction);
 				}
 			}
-			catch (Exception exception) {
+			catch (Throwable throwable) {
+				Exception exception =
+					throwable instanceof Exception ? (Exception)throwable :
+						new Exception(throwable.getMessage(), throwable);
+
 				_log.error(exception);
 
 				addBatchEngineImportTaskError(

@@ -95,9 +95,15 @@ interface IListProps extends PropsFromRedux {
 	history: any;
 }
 
+<<<<<<< HEAD
 const SEGMENT_TYPES_LABEL_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch'),
 	[SegmentTypes.RealTime]: Liferay.Language.get('real-time')
+=======
+export const SEGMENT_TYPES_LABEL_MAP = {
+	[SegmentTypes.Batch]: Liferay.Language.get('batch-segment'),
+	[SegmentTypes.RealTime]: Liferay.Language.get('real-time-segment')
+>>>>>>> 859ae6c (LPD-67872 Update Language keys)
 };
 
 const FILTER_BY_OPTIONS = [
@@ -106,15 +112,11 @@ const FILTER_BY_OPTIONS = [
 		label: Liferay.Language.get('segment-type'),
 		values: [
 			{
-				label: `${
-					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch]
-				} ${Liferay.Language.get('segment')}`,
+				label: SEGMENT_TYPES_LABEL_MAP[SegmentTypes.Batch],
 				value: SegmentTypes.Batch
 			},
 			{
-				label: `${
-					SEGMENT_TYPES_LABEL_MAP[SegmentTypes.RealTime]
-				} ${Liferay.Language.get('segment')}`,
+				label: SEGMENT_TYPES_LABEL_MAP[SegmentTypes.RealTime],
 				value: SegmentTypes.RealTime
 			}
 		]

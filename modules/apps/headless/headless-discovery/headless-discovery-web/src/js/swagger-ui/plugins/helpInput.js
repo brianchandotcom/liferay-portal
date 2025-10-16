@@ -26,52 +26,43 @@ function FilterableFieldsHelp({filterableFields, messageDetails}) {
 				</ClayLink>
 			)}
 
+			{filterableFields && <hr />}
+
 			{filterableFields && (
-				<>
-					<hr />
-					<ul className="c-mb-0 c-pl-0">
-						{Object.keys(filterableFields).map(
-							(filterableField) => (
-								<ClayLayout.ContentRow
-									className="c-mr-2 c-my-2"
-									containerElement="li"
-									key={filterableField}
+				<ul className="c-mb-0 c-pl-0">
+					{Object.keys(filterableFields).map((filterableField) => (
+						<ClayLayout.ContentRow
+							className="c-mr-2 c-my-2"
+							containerElement="li"
+							key={filterableField}
+						>
+							<ClayLayout.ContentCol expand>
+								{filterableField}{' '}
+
+								<small>
+									({filterableFields[filterableField].type})
+								</small>
+							</ClayLayout.ContentCol>
+
+							<ClayLayout.ContentCol>
+								<ClayButton
+									aria-label="Copy to Clipboard"
+									displayType="secondary"
+									monospaced
+									onClick={() => {
+										navigator.clipboard.writeText(
+											filterableField
+										);
+									}}
+									size="xs"
+									title="Copy to Clipboard"
 								>
-									<ClayLayout.ContentCol expand>
-										{filterableField}{' '}
-
-										<small>
-											(
-											{
-												filterableFields[
-													filterableField
-												].type
-											}
-											)
-										</small>
-									</ClayLayout.ContentCol>
-
-									<ClayLayout.ContentCol>
-										<ClayButton
-											aria-label="Copy to Clipboard"
-											displayType="secondary"
-											monospaced
-											onClick={() => {
-												navigator.clipboard.writeText(
-													filterableField
-												);
-											}}
-											size="xs"
-											title="Copy to Clipboard"
-										>
-											<Icon symbol="copy" />
-										</ClayButton>
-									</ClayLayout.ContentCol>
-								</ClayLayout.ContentRow>
-							)
-						)}
-					</ul>
-				</>
+									<Icon symbol="copy" />
+								</ClayButton>
+							</ClayLayout.ContentCol>
+						</ClayLayout.ContentRow>
+					))}
+				</ul>
 			)}
 		</>
 	);

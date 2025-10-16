@@ -75,7 +75,6 @@ import com.liferay.object.model.ObjectDefinitionSetting;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.model.ObjectFieldModel;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.impl.ObjectDefinitionImpl;
@@ -706,13 +705,7 @@ public class ObjectDefinitionLocalServiceImpl
 
 			_dropTable(objectDefinition.getDBTableName());
 			_dropTable(objectDefinition.getExtensionDBTableName());
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					objectDefinition.getCompanyId(), "LPD-32050") ||
-				objectDefinition.isEnableLocalization()) {
-
-				_dropTable(objectDefinition.getLocalizationDBTableName());
-			}
+			_dropTable(objectDefinition.getLocalizationDBTableName());
 
 			undeployObjectDefinition(objectDefinition);
 
@@ -1475,8 +1468,7 @@ public class ObjectDefinitionLocalServiceImpl
 		_validateEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization, friendlyURLSeparator, modifiable,
 			storageType, system);
-		_validateEnableLocalization(
-			user.getCompanyId(), enableLocalization, modifiable);
+		_validateEnableLocalization(enableLocalization, modifiable);
 		_validateEnableObjectEntrySchedule(
 			enableObjectEntrySchedule, modifiable, null, system);
 		_validateEnableObjectEntrySubscription(
@@ -2387,22 +2379,6 @@ public class ObjectDefinitionLocalServiceImpl
 			_objectFieldPersistence.findByObjectDefinitionId(
 				objectDefinition.getObjectDefinitionId());
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-32050") &&
-			!objectDefinition.isEnableLocalization() &&
-			ListUtil.exists(objectFields, ObjectFieldModel::isLocalized)) {
-
-			_handleException(
-				new ObjectDefinitionEnableLocalizationException(
-					"You cannot disable entry translation for the object " +
-						"definition because translation is enabled for " +
-							"custom fields",
-					"you-cannot-disable-entry-translation-for-the-object-" +
-						"definition-because-translation-is-enabled-for-" +
-							"custom-fields"),
-				"enableLocalization", false);
-		}
-
 		if (!ListUtil.exists(
 				objectFields, objectField -> !objectField.isMetadata())) {
 
@@ -2625,8 +2601,7 @@ public class ObjectDefinitionLocalServiceImpl
 			objectDefinition.isModifiable(), objectDefinition.getStorageType(),
 			objectDefinition.isSystem());
 		_validateEnableLocalization(
-			objectDefinition.getCompanyId(), enableLocalization,
-			objectDefinition.isModifiable());
+			enableLocalization, objectDefinition.isModifiable());
 		_validateEnableObjectEntryHistory(
 			objectDefinition.isEnableObjectEntryHistory() !=
 				enableObjectEntryHistory,
@@ -3123,21 +3098,17 @@ public class ObjectDefinitionLocalServiceImpl
 	}
 
 	private void _validateEnableLocalization(
-			long companyId, boolean enableLocalization, boolean modifiable)
+			boolean enableLocalization, boolean modifiable)
 		throws PortalException {
 
 		if (enableLocalization && !modifiable) {
 			return;
 		}
 
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-32050") &&
-			!enableLocalization && modifiable) {
-
-			_handleException(
-				new ObjectDefinitionEnableLocalizationException(
-					"Enable localization must be true for modifiable object " +
-						"definitions"),
-				"enableLocalization", false);
+		if (!enableLocalization && modifiable) {
+			throw new ObjectDefinitionEnableLocalizationException(
+				"Enable localization must be true for modifiable object " +
+					"definitions");
 		}
 	}
 

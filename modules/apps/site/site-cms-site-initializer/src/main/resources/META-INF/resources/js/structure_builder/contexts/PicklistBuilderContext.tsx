@@ -115,7 +115,9 @@ const useAddOption = () => {
 			return;
 		}
 
-		return setOptions((options) => {
+		return setOptions((previousOptions) => {
+			const options = new Map(previousOptions);
+
 			options.set(erc, {key, name});
 
 			return options;

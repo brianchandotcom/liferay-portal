@@ -127,7 +127,8 @@ public class PageTemplateResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of("friendlyUrlHistory", "pageSpecifications", "thumbnail");
+				return List.of(
+					"friendlyUrlHistory", "pageSpecifications", "thumbnail");
 			}
 
 			@Override
@@ -404,14 +405,15 @@ public class PageTemplateResourceImpl
 					layoutPageTemplateCollectionId);
 		}
 
-		ServiceContext serviceContext = _getServiceContext(groupId, pageTemplate);
+		ServiceContext serviceContext = _getServiceContext(
+			groupId, pageTemplate);
 
 		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
 			groupId, getResourceName(), serviceContext,
 			pageTemplate.getThumbnail(), contextUser);
 
 		if (previewFileEntryId !=
-			layoutPageTemplateEntry.getPreviewFileEntryId()) {
+				layoutPageTemplateEntry.getPreviewFileEntryId()) {
 
 			layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
@@ -477,8 +479,7 @@ public class PageTemplateResourceImpl
 		}
 
 		if (pageTemplate.getThumbnail() != null) {
-			existingPageTemplate.setThumbnail(
-				pageTemplate::getThumbnail);
+			existingPageTemplate.setThumbnail(pageTemplate::getThumbnail);
 		}
 
 		if (Objects.equals(
@@ -512,9 +513,11 @@ public class PageTemplateResourceImpl
 				contentPageTemplate.getExternalReferenceCode(), groupId,
 				layoutPageTemplateCollectionId, contentPageTemplate.getKey(), 0,
 				0, contentPageTemplate.getName(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, FileEntryUtil.getPreviewFileEntryId(
+				LayoutPageTemplateEntryTypeConstants.BASIC,
+				FileEntryUtil.getPreviewFileEntryId(
 					groupId, getResourceName(), serviceContext,
-					contentPageTemplate.getThumbnail(), contextUser), false, 0,
+					contentPageTemplate.getThumbnail(), contextUser),
+				false, 0,
 				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
 					contentPageTemplate.getPageSpecifications()),
@@ -598,8 +601,24 @@ public class PageTemplateResourceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
-				getFirstLayoutPageTemplateEntry(
+				fetchFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
+
+		if (layoutPageTemplateEntry == null) {
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
+					widgetPageTemplate.getExternalReferenceCode(), groupId,
+					layoutPageTemplateCollectionId, widgetPageTemplate.getKey(),
+					0, 0, widgetPageTemplate.getName(),
+					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
+					FileEntryUtil.getPreviewFileEntryId(
+						groupId, getResourceName(), serviceContext,
+						widgetPageTemplate.getThumbnail(), contextUser),
+					false, 0, 0L, 0,
+					PageSpecificationUtil.getPublishedStatus(
+						widgetPageTemplate.getPageSpecifications()),
+					serviceContext);
+		}
 
 		if (widgetPageTemplate.getExternalReferenceCode() != null) {
 			layoutPageTemplateEntry.setExternalReferenceCode(
@@ -607,10 +626,10 @@ public class PageTemplateResourceImpl
 		}
 
 		if (widgetPageTemplate.getThumbnail() != null) {
-			layoutPageTemplateEntry.setPreviewFileEntryId(FileEntryUtil.getPreviewFileEntryId(
-				groupId, getResourceName(), serviceContext,
-				widgetPageTemplate.getThumbnail(), contextUser));
-
+			layoutPageTemplateEntry.setPreviewFileEntryId(
+				FileEntryUtil.getPreviewFileEntryId(
+					groupId, getResourceName(), serviceContext,
+					widgetPageTemplate.getThumbnail(), contextUser));
 		}
 
 		layoutPageTemplateEntry.setGroupId(groupId);

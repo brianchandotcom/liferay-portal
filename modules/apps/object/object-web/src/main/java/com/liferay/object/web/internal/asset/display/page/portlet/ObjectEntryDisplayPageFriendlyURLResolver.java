@@ -24,6 +24,11 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 	extends BaseAssetDisplayPageFriendlyURLResolver {
 
 	@Override
+	public long getCompanyId() {
+		return _objectDefinition.getCompanyId();
+	}
+
+	@Override
 	public String getDefaultURLSeparator() {
 		if (_objectDefinition == null) {
 			return FriendlyURLResolverConstants.URL_SEPARATOR_OBJECT_ENTRY;

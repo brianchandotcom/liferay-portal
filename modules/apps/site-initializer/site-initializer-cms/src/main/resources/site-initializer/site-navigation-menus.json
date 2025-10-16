@@ -18,31 +18,31 @@
 			},
 			{
 				"displayIcon": "users",
-				"externalReferenceCode": "CMSPRIMARYNAVIGATION7",
+				"externalReferenceCode": "CMSPRIMARYNAVIGATION3",
 				"friendlyURL": "/shared-with-me",
 				"privateLayout": false,
 				"type": "layout"
 			},
 			{
-				"externalReferenceCode": "CMSPRIMARYNAVIGATION3",
+				"externalReferenceCode": "CMSPRIMARYNAVIGATION4",
 				"menuItems": [
 					{
 						"displayIcon": "sheets",
-						"externalReferenceCode": "CMSPRIMARYNAVIGATION4",
+						"externalReferenceCode": "CMSPRIMARYNAVIGATION5",
 						"friendlyURL": "/all",
 						"privateLayout": false,
 						"type": "layout"
 					},
 					{
 						"displayIcon": "catalog",
-						"externalReferenceCode": "CMSPRIMARYNAVIGATION5",
+						"externalReferenceCode": "CMSPRIMARYNAVIGATION6",
 						"friendlyURL": "/contents",
 						"privateLayout": false,
 						"type": "layout"
 					},
 					{
 						"displayIcon": "documents-and-media",
-						"externalReferenceCode": "CMSPRIMARYNAVIGATION6",
+						"externalReferenceCode": "CMSPRIMARYNAVIGATION7",
 						"friendlyURL": "/files",
 						"privateLayout": false,
 						"type": "layout"

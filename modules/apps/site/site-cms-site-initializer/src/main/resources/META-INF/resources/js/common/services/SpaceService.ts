@@ -27,37 +27,22 @@ async function addSpace({
 	);
 }
 
-interface GetSpaceEndpointArgs {
-	externalReferenceCode?: string;
-	spaceId?: number | string;
+function getSpaceEndpoint(spaceId: number | string): string;
+function getSpaceEndpoint(externalReferenceCode: string): string;
+
+function getSpaceEndpoint(id: number | string): string {
+	if (
+		typeof id === 'number' ||
+		(typeof id === 'string' && !isNaN(Number(id)))
+	) {
+		return `/o/headless-asset-library/v1.0/asset-libraries/${id}`;
+	}
+
+	return `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${id}`;
 }
 
-function getSpaceEndpoint({
-	externalReferenceCode,
-	spaceId,
-}: GetSpaceEndpointArgs) {
-	let url: string;
-
-	if (spaceId) {
-		url = `/o/headless-asset-library/v1.0/asset-libraries/${spaceId}`;
-	}
-	else if (externalReferenceCode) {
-		url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`;
-	}
-	else {
-		throw new Error(
-			'Either spaceId or externalReferenceCode must be provided.'
-		);
-	}
-
-	return url;
-}
-
-async function getSpace({
-	externalReferenceCode,
-	spaceId,
-}: GetSpaceEndpointArgs): Promise<Space> {
-	const url = getSpaceEndpoint({externalReferenceCode, spaceId});
+async function getSpace(id: number | string): Promise<Space> {
+	const url = getSpaceEndpoint(id);
 
 	const {data, error} = await ApiHelper.get<Space>(url);
 
@@ -65,37 +50,34 @@ async function getSpace({
 		return data;
 	}
 
-	throw new Error(error);
+	throw new Error(error || 'Failed to fetch space data.');
 }
 
-const spaceCache = new Map<string, Promise<Space>>();
-async function getSpaceWithCache({
-	externalReferenceCode,
-	spaceId,
-}: GetSpaceEndpointArgs): Promise<Space> {
-	const url = getSpaceEndpoint({externalReferenceCode, spaceId});
+const resolvedSpaceCache = new Map<number | string, Space>();
+const pendingSpacePromises = new Map<number | string, Promise<Space>>();
 
-	if (spaceCache.has(url)) {
-		return spaceCache.get(url)!;
+async function getSpaceWithCache(id: number | string): Promise<Space> {
+	if (resolvedSpaceCache.has(id)) {
+		return Promise.resolve(resolvedSpaceCache.get(id)!);
 	}
 
-	const fetchPromise = (async () => {
-		const {data, error} = await ApiHelper.get<Space>(url);
+	if (pendingSpacePromises.has(id)) {
+		return pendingSpacePromises.get(id)!;
+	}
 
-		if (data) {
-			return data;
-		}
+	const fetchPromise = getSpace(id)
+		.then((space) => {
+			resolvedSpaceCache.set(id, space);
+			pendingSpacePromises.delete(id);
 
-		throw new Error(error || 'Failed to fetch space data.');
-	})();
+			return space;
+		})
+		.catch((error) => {
+			pendingSpacePromises.delete(id);
+			throw error;
+		});
 
-	spaceCache.set(url, fetchPromise);
-
-	fetchPromise.catch(() => {
-		if (spaceCache.get(url) === fetchPromise) {
-			spaceCache.delete(url);
-		}
-	});
+	pendingSpacePromises.set(id, fetchPromise);
 
 	return fetchPromise;
 }

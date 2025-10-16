@@ -40,11 +40,7 @@ export default function MultipleSpacesRenderer({
 
 			const spacePromises = assetLibraries.map(async (assetLib) => {
 				try {
-					const space = await SpaceService.getSpaceWithCache({
-						spaceId: assetLib.id,
-					});
-
-					return space;
+					return await SpaceService.getSpaceWithCache(assetLib.id);
 				}
 				catch (error) {
 					return {

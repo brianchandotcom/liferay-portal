@@ -97,17 +97,18 @@ function main {
 
 	chart_dir=/opt/liferay/chart
 
+	sudo mkdir --parents "${chart_dir}"
+
 	local image_dir
 
 	image_dir=/opt/liferay/image
 
+	sudo mkdir --parents "${image_dir}"
+	sudo chown --recursive 1000:1000 /opt/liferay
+
 	local terraform_dir
 
 	terraform_dir=/opt/liferay/terraform
-
-	sudo mkdir --parents "${chart_dir}"
-	sudo mkdir --parents "${image_dir}"
-	sudo chown --recursive 1000:1000 /opt/liferay
 
 	pushd "${terraform_dir}/ecr"
 

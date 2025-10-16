@@ -39,10 +39,11 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.io.File;
+import java.io.Serializable;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
@@ -178,10 +179,17 @@ public class InventoryAnalysisResourceTest
 				getObjectDefinitionByExternalReferenceCode(
 					"L_CMS_BASIC_WEB_CONTENT", testCompany.getCompanyId());
 
+		Map<String, Serializable> objectEntryValues =
+			HashMapBuilder.<String, Serializable>put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
+			).build();
+
 		_objectEntries.add(
 			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry.getGroupId(), objectDefinition,
-				Collections.emptyMap()));
+				_depotEntry.getGroupId(), objectDefinition, objectEntryValues));
 
 		_assetVocabulary = _assetVocabularyLocalService.addVocabulary(
 			TestPropsValues.getUserId(), _depotEntry.getGroupId(),
@@ -192,7 +200,7 @@ public class InventoryAnalysisResourceTest
 			"My Category", _assetVocabulary.getVocabularyId(), _serviceContext);
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
-			_depotEntry.getGroupId(), objectDefinition, Collections.emptyMap());
+			_depotEntry.getGroupId(), objectDefinition, objectEntryValues);
 
 		_objectEntries.add(objectEntry);
 
@@ -206,8 +214,8 @@ public class InventoryAnalysisResourceTest
 
 		_objectEntries.add(
 			ObjectEntryTestUtil.addObjectEntry(
-				_depotEntry.getGroupId(), objectDefinition,
-				Collections.emptyMap(), RandomTestUtil.randomString()));
+				_depotEntry.getGroupId(), objectDefinition, objectEntryValues,
+				RandomTestUtil.randomString()));
 	}
 
 	@DeleteAfterTestRun

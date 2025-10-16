@@ -28,16 +28,16 @@ build {
         script="install_tools.sh"
     }
     provisioner "file" {
-        destination="/opt/liferay/bin/run-on-boot.sh"
-        source="run-on-boot.sh"
+        destination="/opt/liferay/bin/run_on_boot.sh"
+        source="run_on_boot.sh"
     }
     provisioner "file" {
-        destination="/tmp/cloud-config.yaml"
-        source="cloud-config.yaml"
+        destination="/tmp/cloud_config.yaml"
+        source="cloud_config.yaml"
     }
     provisioner "shell" {
         inline=[
-            "sudo mv /tmp/cloud-config.yaml /etc/cloud/cloud.cfg.d/99-cloud-config.cfg",
+            "sudo mv /tmp/cloud_config.yaml /etc/cloud/cloud.cfg.d/99-cloud-config.cfg",
             "tree -a /opt/liferay"
         ]
     }

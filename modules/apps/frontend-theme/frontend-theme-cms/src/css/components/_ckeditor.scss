@@ -2,25 +2,28 @@
 	> .ck.ck-editor__top {
 		> .ck.ck-sticky-panel {
 			> .ck.ck-sticky-panel__content {
-				border-color: #e7e7ed;
-				border-radius: 0.5rem;
 				border-bottom-left-radius: 0 !important;
 				border-bottom-right-radius: 0 !important;
+				border-color: #e7e7ed;
+				border-top-left-radius: 0.5rem;
+				border-top-right-radius: 0.5rem;
 			}
 		}
 	}
 
 	.ck.ck-toolbar {
-		border-color: #e7e7ed;
-		border-radius: 0.5rem;
 		border-bottom-left-radius: 0 !important;
 		border-bottom-right-radius: 0 !important;
+		border-color: #e7e7ed;
+		border-top-left-radius: 0.5rem;
+		border-top-right-radius: 0.5rem;
 	}
 
 	.ck.ck-editor__main > .ck-editor__editable {
 		background-color: #f1f2f5;
+		border-bottom-left-radius: 0.5rem;
+		border-bottom-right-radius: 0.5rem;
 		border-color: #e7e7ed;
-		border-radius: 0.5rem;
 		border-top-left-radius: 0 !important;
 		border-top-right-radius: 0 !important;
 	}

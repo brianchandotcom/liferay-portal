@@ -1184,6 +1184,8 @@ test(
 		let layout: any;
 		let product1;
 		let product2;
+		let shippingOption1;
+		let shippingOption2;
 		let sku1;
 		let sku2;
 
@@ -1213,6 +1215,13 @@ test(
 			).toBeVisible({visible: true});
 
 			await commerceAdminChannelDetailsTypePage.selectSiteButton.click();
+
+			await expect(
+				await commerceAdminChannelDetailsTypePage.typeTableRowAction(
+					site.name
+				)
+			).toBeVisible();
+
 			await (
 				await commerceAdminChannelDetailsTypePage.typeTableRowAction(
 					site.name
@@ -1262,15 +1271,16 @@ test(
 
 			await waitForAlert(commerceAdminChannelsPage.sidePanelFrameLocator);
 
+			shippingOption1 = getRandomString();
+			shippingOption2 = getRandomString();
+
 			await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
 				channel.name,
 				'Flat Rate',
-				[getRandomString(), getRandomString()],
+				[shippingOption1, shippingOption2],
 				true,
 				true
 			);
-
-			await page.waitForLoadState('domcontentloaded');
 		});
 
 		await test.step('Create an Account and a buyer', async () => {
@@ -1315,6 +1325,10 @@ test(
 			product1 =
 				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 					catalogId: catalog.id,
+					shippingConfiguration: {
+						freeShipping: false,
+						shippable: true,
+					},
 					skus: [
 						{
 							cost: 0,
@@ -1337,6 +1351,10 @@ test(
 			product2 =
 				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 					catalogId: catalog.id,
+					shippingConfiguration: {
+						freeShipping: false,
+						shippable: true,
+					},
 					skus: [
 						{
 							cost: 0,
@@ -1458,7 +1476,9 @@ test(
 
 			await productDetailsPage.addToCartButton.click();
 
-			await page.waitForLoadState('domcontentloaded');
+			await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+				'has-badge mini-cart-opener'
+			);
 		});
 
 		await test.step('Open the Mini cart and assert that two product are visible and submit', async () => {
@@ -1494,6 +1514,11 @@ test(
 				street: 'testStreet',
 				zip: '12345',
 			});
+
+			await checkoutPage.continueButton.click();
+
+			await expect(page.getByText(shippingOption1)).toBeVisible();
+			await expect(page.getByText(shippingOption2)).toBeVisible();
 
 			await checkoutPage.continueButton.click();
 
@@ -1566,11 +1591,19 @@ test(
 					.locator('div .payment-method')
 					.locator('.shipping-description')
 			).toContainText('Money Order');
+			await expect(checkoutPage.shippingMethod).toContainText(
+				shippingOption1
+			);
+			await expect(checkoutPage.shippingMethod).toContainText('$ 10.00');
+
 			await expect(page.locator('.commerce-subtotal')).toContainText(
 				'$ 30.00'
 			);
+			await expect(page.locator('.commerce-delivery')).toContainText(
+				'$ 10.00'
+			);
 			await expect(page.locator('.commerce-total')).toContainText(
-				'$ 30.00'
+				'$ 40.00'
 			);
 
 			await checkoutPage.continueButton.click();
@@ -1873,6 +1906,11 @@ test(
 				await page.waitForLoadState('networkidle');
 
 				await commerceThemeMiniumCatalogPage.firstCardItemAddToCartButton.click();
+
+				await expect(
+					commerceThemeMiniumPage.miniCartButton
+				).toHaveClass('has-badge mini-cart-opener');
+
 				await commerceThemeMiniumPage.miniCartButton.click();
 
 				await expect(
@@ -2077,7 +2115,12 @@ test(
 		await editAccountChannelDefaultsPage.setDefaultBillingAddressFrameBillingAddressDropdownMenu.selectOption(
 			billingAddress.name
 		);
-		await editAccountChannelDefaultsPage.setDefaultAddressFrameSaveButton.click();
+		await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+		await expect(
+			editAccountChannelDefaultsPage.addDefaultShippingAddressButton
+		).toBeVisible();
+
 		await editAccountChannelDefaultsPage.addDefaultShippingAddressButton.click();
 
 		await expect(
@@ -2090,7 +2133,7 @@ test(
 		await editAccountChannelDefaultsPage.setDefaultShippingAddressFrameBillingAddressDropdownMenu.selectOption(
 			shippingAddress.name
 		);
-		await editAccountChannelDefaultsPage.setDefaultAddressFrameSaveButton.click();
+		await editAccountChannelDefaultsPage.modalSaveButton.click();
 
 		await expect(
 			await editAccountChannelDefaultsPage.addressTableRowColumn(
@@ -2153,5 +2196,331 @@ test(
 				}
 			}
 		}
+	}
+);
+
+test(
+	'User without permission cannot select the shipping method during checkout',
+	{tag: ['@LPD-68397']},
+	async ({
+		accountsPage,
+		apiHelpers,
+		checkoutPage,
+		commerceAdminChannelsPage,
+		commerceMiniCartPage,
+		editAccountChannelDefaultsPage,
+		editAccountPage,
+		page,
+		site,
+	}) => {
+		let account;
+		let catalog;
+		let channel;
+		let layout: any;
+		let product;
+		let user;
+
+		await test.step('Create a Catalog', async () => {
+			catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog(
+				{
+					name: getRandomString(),
+				}
+			);
+		});
+
+		await test.step('Create a channel and a Flat Rate shipping option with amount set to 10', async () => {
+			channel = await apiHelpers.headlessCommerceAdminChannel.postChannel(
+				{
+					siteGroupId: site.id,
+				}
+			);
+
+			await commerceAdminChannelsPage.changeCommerceChannelSiteType(
+				channel.name,
+				'B2B'
+			);
+
+			await waitForAlert(page);
+
+			await commerceAdminChannelsPage.setupCommerceChannelShippingMethod(
+				channel.name,
+				'Flat Rate',
+				['Test Shipping Option', getRandomString()],
+				true,
+				true
+			);
+		});
+
+		await test.step('Create a buyer user without manage commerce order shipping option permission', async () => {
+			account = await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
+
+			const companyId = await page.evaluate(() => {
+				return Liferay.ThemeDisplay.getCompanyId();
+			});
+
+			const role = await apiHelpers.headlessAdminUser.postRole({
+				name: 'Buyer ' + getRandomString(),
+				rolePermissions: [
+					{
+						actionIds: ['MANAGE_ADDRESSES', 'VIEW_ADDRESSES'],
+						primaryKey: '0',
+						resourceName: 'com.liferay.account.model.AccountEntry',
+						scope: 3,
+					},
+					{
+						actionIds: ['VIEW'],
+						primaryKey: companyId,
+						resourceName:
+							'com.liferay.commerce.model.CommerceOrderType',
+						scope: 1,
+					},
+					{
+						actionIds: [
+							'ADD_COMMERCE_ORDER',
+							'CHECKOUT_OPEN_COMMERCE_ORDERS',
+							'MANAGE_COMMERCE_ORDER_DELIVERY_TERMS',
+							'MANAGE_COMMERCE_ORDER_PAYMENT_METHODS',
+							'MANAGE_COMMERCE_ORDER_PAYMENT_TERMS',
+							'VIEW_BILLING_ADDRESS',
+							'VIEW_COMMERCE_ORDERS',
+							'VIEW_OPEN_COMMERCE_ORDERS',
+						],
+						primaryKey: '0',
+						resourceName: 'com.liferay.commerce.order',
+						scope: 3,
+					},
+				],
+			});
+
+			user =
+				await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+					'demo.unprivileged@liferay.com'
+				);
+
+			await apiHelpers.headlessAdminUser.assignUserToRole(
+				role.externalReferenceCode,
+				user.id
+			);
+
+			const siteMemberRole =
+				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				siteMemberRole.id,
+				site.id,
+				user.id
+			);
+
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				[user.emailAddress]
+			);
+		});
+
+		await test.step('Set default shipping option in account channel default', async () => {
+			await accountsPage.gotoAccountAdmin();
+
+			const accountLink = await accountsPage.accountsTable.cellLink(
+				account.name
+			);
+
+			await expect(accountLink).toBeVisible();
+
+			await accountLink.click();
+
+			await expect(editAccountPage.channelDefaultsLink).toBeVisible();
+
+			await editAccountPage.channelDefaultsLink.click();
+
+			await expect(
+				editAccountChannelDefaultsPage.defaultShippingOptionsTable
+			).toBeVisible();
+
+			await editAccountChannelDefaultsPage.defaultShippingOptionsTable
+				.getByRole('button', {name: 'Edit'})
+				.click();
+
+			await editAccountChannelDefaultsPage.modalContainer
+				.getByLabel('Flat Rate / Test Shipping Option')
+				.check();
+
+			await editAccountChannelDefaultsPage.modalSaveButton.click();
+
+			await expect(
+				editAccountChannelDefaultsPage.defaultShippingOptionsTable.getByText(
+					'Test Shipping Option'
+				)
+			).toBeVisible();
+		});
+
+		await test.step('Create a product via API', async () => {
+			product = await apiHelpers.headlessCommerceAdminCatalog.postProduct(
+				{
+					catalogId: catalog.id,
+					shippingConfiguration: {
+						freeShipping: false,
+						shippable: true,
+					},
+					skus: [
+						{
+							cost: 0,
+							price: 10,
+							published: true,
+							purchasable: true,
+							sku: 'Sku' + getRandomInt(),
+						},
+					],
+				}
+			);
+
+			const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+				.getProduct(product.productId)
+				.then((product) => {
+					return product.skus;
+				});
+
+			await apiHelpers.headlessCommerceAdminOrder.postOrder({
+				accountId: account.id,
+				channelId: channel.id,
+				name: 'order',
+				orderItems: [
+					{
+						quantity: 1,
+						skuId: productSkus[0].id,
+					},
+				],
+				orderStatus: '2',
+			});
+		});
+
+		await test.step('Create three different page with Commerce Mini Cart Fragment and Commerce Checkout', async () => {
+			layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getFragmentDefinition({
+						id: getRandomString(),
+						key: 'COMMERCE_CART_FRAGMENTS-mini-cart',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+			await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					getWidgetDefinition({
+						id: getRandomString(),
+						widgetName:
+							'com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet',
+					}),
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+		});
+
+		await test.step('Login as a Buyer, place an order and assert that during checkout the shipping method is not editable', async () => {
+			await performLogout(page);
+			await performLoginViaApi({
+				page,
+				screenName: user.alternateName,
+			});
+
+			await page.goto(
+				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+				'has-badge mini-cart-opener'
+			);
+
+			await commerceMiniCartPage.miniCartButton.click();
+
+			await expect(
+				commerceMiniCartPage.miniCartItem(product.name.en_US)
+			).toHaveCount(1);
+			await expect(
+				commerceMiniCartPage.miniCartItem(product.name.en_US)
+			).toBeVisible();
+			await expect(commerceMiniCartPage.miniCartTotalPrice).toHaveText(
+				'$ 10.00'
+			);
+
+			await commerceMiniCartPage.submitButton.click();
+
+			await expect(commerceMiniCartPage.submitButton).toBeHidden();
+
+			await checkoutPage.addAddress({
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: 'John Doe',
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			});
+
+			await checkoutPage.continueButton.click();
+
+			await expect(
+				(
+					await checkoutPage.orderSummaryTableRow(
+						1,
+						product.name.en_US,
+						true
+					)
+				).row
+			).toBeVisible();
+			await expect(
+				(await checkoutPage.orderSummaryTableRow(4, '$ 10.00')).row
+			).toBeVisible();
+			await expect(
+				(await checkoutPage.orderSummaryTableRow(6, '$ 10.00')).row
+			).toBeVisible();
+			await expect(checkoutPage.commerceShippingAddress).toContainText(
+				'John Doe'
+			);
+			await expect(checkoutPage.commerceShippingAddress).toContainText(
+				'testStreet'
+			);
+			await expect(checkoutPage.commerceShippingAddress).toContainText(
+				'testCity'
+			);
+			await expect(checkoutPage.commerceShippingAddress).toContainText(
+				'United States'
+			);
+			await expect(checkoutPage.commerceBillingAddress).toContainText(
+				'John Doe'
+			);
+			await expect(checkoutPage.commerceBillingAddress).toContainText(
+				'testStreet'
+			);
+			await expect(checkoutPage.commerceBillingAddress).toContainText(
+				'testCity'
+			);
+			await expect(checkoutPage.commerceBillingAddress).toContainText(
+				'United States'
+			);
+			await expect(checkoutPage.shippingMethod).toContainText(
+				'Test Shipping Option'
+			);
+			await expect(checkoutPage.shippingMethod).toContainText('$ 10.00');
+
+			await expect(page.locator('.commerce-subtotal')).toContainText(
+				'$ 10.00'
+			);
+			await expect(page.locator('.commerce-delivery')).toContainText(
+				'$ 10.00'
+			);
+			await expect(page.locator('.commerce-total')).toContainText(
+				'$ 20.00'
+			);
+
+			await checkoutPage.continueButton.click();
+
+			await expect(page.getByLabel('Checkout')).toContainText(
+				'Success! Your order has been processed.'
+			);
+		});
 	}
 );

@@ -3,14 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page} from '@playwright/test';
 
 export class EditAccountChannelDefaultsPage {
 	readonly addDefaultBillingAddressButton: Locator;
 	readonly addDefaultShippingAddressButton: Locator;
 	readonly addDefaultPaymentTermButton: Locator;
 	readonly addDefaultPaymentTermSelector: Locator;
-	readonly addDefaultTermSaveButton: Locator;
+	readonly modalContainer: FrameLocator;
+	readonly modalSaveButton: Locator;
 	readonly addressTableRowColumn: (
 		columnIndex: number,
 		tableName: string,
@@ -20,6 +21,7 @@ export class EditAccountChannelDefaultsPage {
 	readonly billingAddressAllOtherChannelsText: Locator;
 	readonly defaultBillingAddressesTable: Locator;
 	readonly defaultShippingAddressesTable: Locator;
+	readonly defaultShippingOptionsTable: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly getRowByTextFromTable: (
 		tableName: string,
@@ -28,7 +30,6 @@ export class EditAccountChannelDefaultsPage {
 	readonly page: Page;
 	readonly setDefaultBillingAddressFrameBillingAddressDropdownMenu: Locator;
 	readonly setDefaultAddressFrameChannelDropdownMenu: Locator;
-	readonly setDefaultAddressFrameSaveButton: Locator;
 	readonly setDefaultShippingAddressFrameBillingAddressDropdownMenu: Locator;
 	readonly shippingAddressAllChannelsText: Locator;
 	readonly shippingAddressAllOtherChannelsText: Locator;
@@ -44,12 +45,12 @@ export class EditAccountChannelDefaultsPage {
 			)
 			.getByRole('button', {name: 'Add Default Term'})
 			.first();
-		this.addDefaultPaymentTermSelector = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByLabel('Term');
-		this.addDefaultTermSaveButton = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByRole('button', {name: 'Save'});
+		this.modalContainer = page.frameLocator('.fds-modal-body > iframe');
+		this.addDefaultPaymentTermSelector =
+			this.modalContainer.getByLabel('Term');
+		this.modalSaveButton = this.modalContainer.getByRole('button', {
+			name: 'Save',
+		});
 		this.addDefaultShippingAddressButton = page
 			.getByTestId('defaultShippingCommerceAddresses')
 			.getByRole('button', {name: 'Add Default Address'})
@@ -76,6 +77,9 @@ export class EditAccountChannelDefaultsPage {
 		this.defaultShippingAddressesTable = page.getByTestId(
 			'defaultShippingCommerceAddresses'
 		);
+		this.defaultShippingOptionsTable = page.getByTestId(
+			'defaultCommerceShippingOption'
+		);
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.getRowByTextFromTable = (
 			tableName: string,
@@ -90,18 +94,12 @@ export class EditAccountChannelDefaultsPage {
 				});
 		};
 		this.page = page;
-		this.setDefaultBillingAddressFrameBillingAddressDropdownMenu = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByLabel('Billing Address');
-		this.setDefaultAddressFrameChannelDropdownMenu = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByLabel('Channel');
-		this.setDefaultAddressFrameSaveButton = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByRole('button', {name: 'Save'});
-		this.setDefaultShippingAddressFrameBillingAddressDropdownMenu = page
-			.frameLocator('.fds-modal-body > iframe')
-			.getByLabel('Shipping Address');
+		this.setDefaultBillingAddressFrameBillingAddressDropdownMenu =
+			this.modalContainer.getByLabel('Billing Address');
+		this.setDefaultAddressFrameChannelDropdownMenu =
+			this.modalContainer.getByLabel('Channel');
+		this.setDefaultShippingAddressFrameBillingAddressDropdownMenu =
+			this.modalContainer.getByLabel('Shipping Address');
 		this.shippingAddressAllChannelsText =
 			this.defaultShippingAddressesTable.getByText('All Channels');
 		this.shippingAddressAllOtherChannelsText =
@@ -113,7 +111,7 @@ export class EditAccountChannelDefaultsPage {
 		await this.addDefaultPaymentTermSelector.selectOption(
 			paymentTermId.toString()
 		);
-		await this.addDefaultTermSaveButton.click();
+		await this.modalSaveButton.click();
 		await this.page.waitForTimeout(200);
 	}
 }

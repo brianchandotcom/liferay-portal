@@ -297,7 +297,7 @@ export async function initializerSetUp(
 			channelName
 		);
 
-	apiHelpers.data.push({id: channels.items[0].id, type: 'channel'});
+	apiHelpers.data.push({id: channels.items.at(-1).id, type: 'channel'});
 
 	const catalogs =
 		await apiHelpers.headlessCommerceAdminCatalog.getCatalogsPage(

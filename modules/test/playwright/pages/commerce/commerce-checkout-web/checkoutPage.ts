@@ -61,6 +61,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 	readonly saveButton: Locator;
 	readonly shippingAddressSelect: Locator;
 	readonly shippingCost: Locator;
+	readonly shippingMethod: Locator;
 	readonly subtypeErrorMessage: Locator;
 	readonly subtypeInput: Locator;
 	readonly subtypeMenuItem: (name: string) => Locator;
@@ -168,6 +169,7 @@ export class CheckoutPage extends CommerceDNDTablePage {
 		this.saveButton = page.getByLabel('Save');
 		this.shippingAddressSelect = page.getByText('Choose Shipping Address');
 		this.shippingCost = page.locator('.shipping-cost');
+		this.shippingMethod = page.locator('.shipping-method');
 		this.subtypeErrorMessage = page.getByText(
 			'previous selection is not valid anymore'
 		);

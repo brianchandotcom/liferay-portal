@@ -10,7 +10,7 @@ package com.liferay.exportimport.constants;
  */
 public class ExportImportConstants {
 
-	public static final String EXPORT_IMPORT_MODEL_NAME =
+	public static final String CLASS_NAME_EXPORT_IMPORT =
 		"com.liferay.exportimport.kernel.model.ExportImportConfiguration";
 
 	public static final String EXPORT_IMPORT_SCHEMA_VERSION = "4.0.0";

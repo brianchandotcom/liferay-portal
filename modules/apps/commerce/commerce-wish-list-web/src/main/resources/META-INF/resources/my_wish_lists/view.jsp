@@ -27,14 +27,13 @@ CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishLis
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
-				<liferay-ui:icon
+				<clay:link
+					aria-label='<%= LanguageUtil.get(request, "add-wish-list") %>'
+					displayType="primary"
+					href="<%= addCommerceWishListActionURL.toString() %>"
 					icon="plus"
-					label="<%= false %>"
-					linkCssClass="btn btn-monospaced btn-primary"
-					markupView="lexicon"
-					message="add-wish-list"
-					toolTip="<%= true %>"
-					url="<%= addCommerceWishListActionURL %>"
+					monospaced="<%= true %>"
+					type="button"
 				/>
 			</div>
 		</div>

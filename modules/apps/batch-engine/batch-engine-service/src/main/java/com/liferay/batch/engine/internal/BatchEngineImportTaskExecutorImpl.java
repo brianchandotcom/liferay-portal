@@ -153,7 +153,7 @@ public class BatchEngineImportTaskExecutorImpl
 
 			BatchEngineTaskExecutorUtil.execute(
 				checkPermissions,
-				() -> _importItems(
+				() -> _importFile(
 					batchEngineImportTask, batchEngineTaskItemDelegate, file),
 				_userLocalService.getUser(batchEngineImportTask.getUserId()));
 
@@ -381,6 +381,76 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
+	private <T> Void _importFile(
+			BatchEngineImportTask batchEngineImportTask,
+			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
+			File file)
+		throws Throwable {
+
+		Map<String, Serializable> parameters = _getParameters(
+			batchEngineImportTask);
+
+		try (InputStream inputStream = new FileInputStream(file);
+			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
+				_getBatchEngineImportTaskItemReader(
+					batchEngineImportTask, inputStream, parameters)) {
+
+			List<T> items = new ArrayList<>();
+
+			Class<?> itemClass = _itemClassRegistry.getItemClass(
+				batchEngineTaskItemDelegate);
+
+			int processedItemsCount = 0;
+
+			while (true) {
+				if (Thread.interrupted()) {
+					throw new InterruptedException();
+				}
+
+				try {
+					T item = _readItem(
+						batchEngineImportTask, batchEngineImportTaskItemReader,
+						batchEngineImportTask.getFieldNameMapping(), itemClass);
+
+					if (item == null) {
+						break;
+					}
+
+					items.add(item);
+
+					processedItemsCount++;
+
+					ItemIndexThreadLocal.add(processedItemsCount);
+				}
+				catch (Exception exception) {
+					processedItemsCount++;
+
+					_handleException(
+						batchEngineImportTask, batchEngineTaskItemDelegate,
+						exception, processedItemsCount);
+				}
+
+				if (items.size() == batchEngineImportTask.getBatchSize()) {
+					_commitItems(
+						batchEngineImportTask, batchEngineTaskItemDelegate,
+						items, parameters, processedItemsCount);
+
+					items.clear();
+
+					ItemIndexThreadLocal.clear();
+				}
+			}
+
+			if (!items.isEmpty()) {
+				_commitItems(
+					batchEngineImportTask, batchEngineTaskItemDelegate, items,
+					parameters, processedItemsCount);
+			}
+		}
+
+		return null;
+	}
+
 	private <T> void _importItem(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate, T item,
@@ -458,76 +528,6 @@ public class BatchEngineImportTaskExecutorImpl
 				ItemIndexThreadLocal.remove();
 			}
 		}
-	}
-
-	private <T> Void _importItems(
-			BatchEngineImportTask batchEngineImportTask,
-			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
-			File file)
-		throws Throwable {
-
-		Map<String, Serializable> parameters = _getParameters(
-			batchEngineImportTask);
-
-		try (InputStream inputStream = new FileInputStream(file);
-			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
-				_getBatchEngineImportTaskItemReader(
-					batchEngineImportTask, inputStream, parameters)) {
-
-			List<T> items = new ArrayList<>();
-
-			Class<?> itemClass = _itemClassRegistry.getItemClass(
-				batchEngineTaskItemDelegate);
-
-			int processedItemsCount = 0;
-
-			while (true) {
-				if (Thread.interrupted()) {
-					throw new InterruptedException();
-				}
-
-				try {
-					T item = _readItem(
-						batchEngineImportTask, batchEngineImportTaskItemReader,
-						batchEngineImportTask.getFieldNameMapping(), itemClass);
-
-					if (item == null) {
-						break;
-					}
-
-					items.add(item);
-
-					processedItemsCount++;
-
-					ItemIndexThreadLocal.add(processedItemsCount);
-				}
-				catch (Exception exception) {
-					processedItemsCount++;
-
-					_handleException(
-						batchEngineImportTask, batchEngineTaskItemDelegate,
-						exception, processedItemsCount);
-				}
-
-				if (items.size() == batchEngineImportTask.getBatchSize()) {
-					_commitItems(
-						batchEngineImportTask, batchEngineTaskItemDelegate,
-						items, parameters, processedItemsCount);
-
-					items.clear();
-
-					ItemIndexThreadLocal.clear();
-				}
-			}
-
-			if (!items.isEmpty()) {
-				_commitItems(
-					batchEngineImportTask, batchEngineTaskItemDelegate, items,
-					parameters, processedItemsCount);
-			}
-		}
-
-		return null;
 	}
 
 	private <T> T _readItem(

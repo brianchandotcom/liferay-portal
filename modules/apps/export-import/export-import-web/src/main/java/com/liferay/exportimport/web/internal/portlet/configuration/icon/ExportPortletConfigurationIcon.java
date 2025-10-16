@@ -74,7 +74,7 @@ public class ExportPortletConfigurationIcon
 			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
 					portletRequest,
-					ExportImportConstants.EXPORT_IMPORT_MODEL_NAME,
+					ExportImportConstants.EXPORT_IMPORT_CONFIGURATION,
 					PortletProvider.Action.VIEW)
 			).setMVCPath(
 				"/export_portlet.jsp"

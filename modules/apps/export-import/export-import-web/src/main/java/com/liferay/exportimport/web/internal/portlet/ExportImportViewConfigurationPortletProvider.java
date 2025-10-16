@@ -24,10 +24,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Jaime León Rosado
  */
 @Component(
-	property = "model.class.name=" + ExportImportConstants.EXPORT_IMPORT_MODEL_NAME,
+	property = "model.class.name=" + ExportImportConstants.EXPORT_IMPORT_CONFIGURATION,
 	service = PortletProvider.class
 )
-public class ExportImportViewPortletProvider extends BasePortletProvider {
+public class ExportImportViewConfigurationPortletProvider
+	extends BasePortletProvider {
 
 	@Override
 	public String getPortletName() {

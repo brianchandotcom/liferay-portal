@@ -104,7 +104,11 @@ export default function AddOptionModal({
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>
-						<ClayButton displayType="secondary" onClick={onClose}>
+						<ClayButton
+							borderless
+							displayType="secondary"
+							onClick={onClose}
+						>
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 

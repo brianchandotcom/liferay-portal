@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.PageTemplateEntityModel;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.FileEntryUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.PageSpecificationUtil;
@@ -126,7 +127,7 @@ public class PageTemplateResourceImpl
 
 			@Override
 			public List<String> getNestedFields() {
-				return List.of("friendlyUrlHistory", "pageSpecifications");
+				return List.of("friendlyUrlHistory", "pageSpecifications", "thumbnail");
 			}
 
 			@Override
@@ -403,6 +404,21 @@ public class PageTemplateResourceImpl
 					layoutPageTemplateCollectionId);
 		}
 
+		ServiceContext serviceContext = _getServiceContext(groupId, pageTemplate);
+
+		long previewFileEntryId = FileEntryUtil.getPreviewFileEntryId(
+			groupId, getResourceName(), serviceContext,
+			pageTemplate.getThumbnail(), contextUser);
+
+		if (previewFileEntryId !=
+			layoutPageTemplateEntry.getPreviewFileEntryId()) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					previewFileEntryId);
+		}
+
 		if (Objects.equals(
 				layoutPageTemplateEntry.getType(),
 				LayoutPageTemplateEntryTypeConstants.BASIC)) {
@@ -460,6 +476,11 @@ public class PageTemplateResourceImpl
 				pageTemplate::getTaxonomyCategoryItemExternalReferences);
 		}
 
+		if (pageTemplate.getThumbnail() != null) {
+			existingPageTemplate.setThumbnail(
+				pageTemplate::getThumbnail);
+		}
+
 		if (Objects.equals(
 				existingPageTemplate.getType(),
 				PageTemplate.Type.CONTENT_PAGE_TEMPLATE)) {
@@ -491,7 +512,9 @@ public class PageTemplateResourceImpl
 				contentPageTemplate.getExternalReferenceCode(), groupId,
 				layoutPageTemplateCollectionId, contentPageTemplate.getKey(), 0,
 				0, contentPageTemplate.getName(),
-				LayoutPageTemplateEntryTypeConstants.BASIC, 0L, false, 0,
+				LayoutPageTemplateEntryTypeConstants.BASIC, FileEntryUtil.getPreviewFileEntryId(
+					groupId, getResourceName(), serviceContext,
+					contentPageTemplate.getThumbnail(), contextUser), false, 0,
 				_getLayoutPlid(contentPageTemplate, groupId, serviceContext), 0,
 				PageSpecificationUtil.getPublishedStatus(
 					contentPageTemplate.getPageSpecifications()),
@@ -581,6 +604,13 @@ public class PageTemplateResourceImpl
 		if (widgetPageTemplate.getExternalReferenceCode() != null) {
 			layoutPageTemplateEntry.setExternalReferenceCode(
 				widgetPageTemplate.getExternalReferenceCode());
+		}
+
+		if (widgetPageTemplate.getThumbnail() != null) {
+			layoutPageTemplateEntry.setPreviewFileEntryId(FileEntryUtil.getPreviewFileEntryId(
+				groupId, getResourceName(), serviceContext,
+				widgetPageTemplate.getThumbnail(), contextUser));
+
 		}
 
 		layoutPageTemplateEntry.setGroupId(groupId);

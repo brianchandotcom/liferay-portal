@@ -12,6 +12,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplate;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageTemplateSettings;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.AssetUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ThumbnailUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.NavigationSettingsUtil;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import org.osgi.service.component.annotations.Component;
@@ -115,6 +117,13 @@ public class PageTemplateDTOConverter
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
+				setThumbnail(
+					() -> NestedFieldsSupplier.supply(
+						"thumbnail",
+						fieldName ->
+							ThumbnailUtil.getPortletFileEntryURLReference(
+								layoutPageTemplateEntry.
+									getPreviewFileEntryId())));
 				setType(() -> Type.CONTENT_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}
@@ -204,6 +213,13 @@ public class PageTemplateDTOConverter
 						Layout.class.getName(),
 						layoutPageTemplateEntry.getPlid(),
 						layoutPageTemplateEntry.getGroupId()));
+				setThumbnail(
+					() -> NestedFieldsSupplier.supply(
+						"thumbnail",
+						fieldName ->
+							ThumbnailUtil.getPortletFileEntryURLReference(
+								layoutPageTemplateEntry.
+									getPreviewFileEntryId())));
 				setType(() -> Type.WIDGET_PAGE_TEMPLATE);
 				setUuid(layoutPageTemplateEntry::getUuid);
 			}

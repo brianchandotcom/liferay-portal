@@ -38,7 +38,17 @@ function FilterableFieldsHelp({filterableFields, messageDetails}) {
 									key={filterableField}
 								>
 									<ClayLayout.ContentCol expand>
-										{filterableField}
+										{filterableField}{' '}
+
+										<small>
+											(
+											{
+												filterableFields[
+													filterableField
+												].type
+											}
+											)
+										</small>
 									</ClayLayout.ContentCol>
 
 									<ClayLayout.ContentCol>

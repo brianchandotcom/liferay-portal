@@ -5804,96 +5804,6 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testGetObjectEntriesPageActions() throws Exception {
-		JSONObject jsonObject1 = HTTPTestUtil.invokeToJSONObject(
-			null, _objectDefinition4.getRESTContextPath(), Http.Method.GET);
-
-		JSONObject actionsJSONObject1 = jsonObject1.getJSONObject("actions");
-
-		Assert.assertFalse(actionsJSONObject1.isNull("create"));
-		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
-		Assert.assertFalse(actionsJSONObject1.isNull("deleteBatch"));
-		Assert.assertFalse(actionsJSONObject1.isNull("get"));
-		Assert.assertFalse(actionsJSONObject1.isNull("updateBatch"));
-
-		HTTPTestUtil.customize(
-		).withGuest(
-		).apply(
-			() -> {
-				JSONObject jsonObject2 = HTTPTestUtil.invokeToJSONObject(
-					null, _objectDefinition4.getRESTContextPath(),
-					Http.Method.GET);
-
-				JSONObject actionsJSONObject2 = jsonObject2.getJSONObject(
-					"actions");
-
-				Assert.assertTrue(actionsJSONObject2.isNull("create"));
-				Assert.assertTrue(actionsJSONObject2.isNull("createBatch"));
-				Assert.assertTrue(actionsJSONObject2.isNull("deleteBatch"));
-				Assert.assertTrue(actionsJSONObject2.isNull("get"));
-				Assert.assertTrue(actionsJSONObject2.isNull("updateBatch"));
-			}
-		);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_addResourcePermission(
-			ObjectActionKeys.ADD_OBJECT_ENTRY,
-			_objectDefinition4.getResourceName(), role);
-		_addResourcePermission(
-			ActionKeys.VIEW, _objectDefinition4.getClassName(), role);
-
-		User user = _addUser("test1", "test1");
-
-		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
-
-		HTTPTestUtil.customize(
-		).withCredentials(
-			"test1@liferay.com", "test1"
-		).apply(
-			() -> {
-				JSONObject jsonObject3 = HTTPTestUtil.invokeToJSONObject(
-					null, _objectDefinition4.getRESTContextPath(),
-					Http.Method.GET);
-
-				JSONObject actionsJSONObject3 = jsonObject3.getJSONObject(
-					"actions");
-
-				Assert.assertFalse(actionsJSONObject3.isNull("create"));
-				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
-				Assert.assertTrue(actionsJSONObject3.isNull("deleteBatch"));
-				Assert.assertFalse(actionsJSONObject3.isNull("get"));
-				Assert.assertTrue(actionsJSONObject3.isNull("updateBatch"));
-			}
-		);
-
-		_addResourcePermission(
-			ActionKeys.DELETE, _objectDefinition4.getClassName(), role);
-		_addResourcePermission(
-			ActionKeys.UPDATE, _objectDefinition4.getClassName(), role);
-
-		HTTPTestUtil.customize(
-		).withCredentials(
-			"test1@liferay.com", "test1"
-		).apply(
-			() -> {
-				JSONObject jsonObject4 = HTTPTestUtil.invokeToJSONObject(
-					null, _objectDefinition4.getRESTContextPath(),
-					Http.Method.GET);
-
-				JSONObject actionsJSONObject4 = jsonObject4.getJSONObject(
-					"actions");
-
-				Assert.assertFalse(actionsJSONObject4.isNull("create"));
-				Assert.assertFalse(actionsJSONObject4.isNull("createBatch"));
-				Assert.assertFalse(actionsJSONObject4.isNull("deleteBatch"));
-				Assert.assertFalse(actionsJSONObject4.isNull("get"));
-				Assert.assertFalse(actionsJSONObject4.isNull("updateBatch"));
-			}
-		);
-	}
-
-	@Test
 	public void testGetObjectEntriesPageWithLocalizedObjectField()
 		throws Exception {
 
@@ -5931,6 +5841,83 @@ public class ObjectEntryResourceTest {
 	@FeatureFlags(
 		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
 	)
+	@Test
+	public void testGetObjectEntriesPageWithObjectActions() throws Exception {
+		JSONObject actionsJSONObject1 = _getActionsJSONObject(
+			_objectDefinition4);
+
+		Assert.assertFalse(actionsJSONObject1.isNull("create"));
+		Assert.assertFalse(actionsJSONObject1.isNull("createBatch"));
+		Assert.assertFalse(actionsJSONObject1.isNull("deleteBatch"));
+		Assert.assertFalse(actionsJSONObject1.isNull("get"));
+		Assert.assertFalse(actionsJSONObject1.isNull("updateBatch"));
+
+		HTTPTestUtil.customize(
+		).withGuest(
+		).apply(
+			() -> {
+				JSONObject actionsJSONObject2 = _getActionsJSONObject(
+					_objectDefinition4);
+
+				Assert.assertTrue(
+					actionsJSONObject2.keySet(
+					).isEmpty());
+			}
+		);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_addResourcePermission(
+			ObjectActionKeys.ADD_OBJECT_ENTRY,
+			_objectDefinition4.getResourceName(), role);
+		_addResourcePermission(
+			ActionKeys.VIEW, _objectDefinition4.getClassName(), role);
+
+		String userName = RandomTestUtil.randomString();
+
+		User user = _addUser(userName, "test1");
+
+		_roleLocalService.addUserRole(user.getUserId(), role.getRoleId());
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			userName + "@liferay.com", "test1"
+		).apply(
+			() -> {
+				JSONObject actionsJSONObject3 = _getActionsJSONObject(
+					_objectDefinition4);
+
+				Assert.assertFalse(actionsJSONObject3.isNull("create"));
+				Assert.assertFalse(actionsJSONObject3.isNull("createBatch"));
+				Assert.assertTrue(actionsJSONObject3.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject3.isNull("get"));
+				Assert.assertTrue(actionsJSONObject3.isNull("updateBatch"));
+			}
+		);
+
+		_addResourcePermission(
+			ActionKeys.DELETE, _objectDefinition4.getClassName(), role);
+		_addResourcePermission(
+			ActionKeys.UPDATE, _objectDefinition4.getClassName(), role);
+
+		HTTPTestUtil.customize(
+		).withCredentials(
+			userName + "@liferay.com", "test1"
+		).apply(
+			() -> {
+				JSONObject actionsJSONObject4 = _getActionsJSONObject(
+					_objectDefinition4);
+
+				Assert.assertFalse(actionsJSONObject4.isNull("create"));
+				Assert.assertFalse(actionsJSONObject4.isNull("createBatch"));
+				Assert.assertFalse(actionsJSONObject4.isNull("deleteBatch"));
+				Assert.assertFalse(actionsJSONObject4.isNull("get"));
+				Assert.assertFalse(actionsJSONObject4.isNull("updateBatch"));
+			}
+		);
+	}
+
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntriesSystemProperties() throws Exception {
 		ObjectEntryTestUtil.addObjectEntry(
@@ -15445,6 +15432,21 @@ public class ObjectEntryResourceTest {
 
 	private String _escape(String string) {
 		return URLCodec.encodeURL(string);
+	}
+
+	private JSONObject _getActionsJSONObject(ObjectDefinition objectDefinition)
+		throws Exception {
+
+		JSONObject responseJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null, objectDefinition.getRESTContextPath(), Http.Method.GET);
+
+		if ((responseJSONObject == null) ||
+			!responseJSONObject.has("actions")) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		return responseJSONObject.getJSONObject("actions");
 	}
 
 	private Map<String, String> _getActionValue(String href, String method) {

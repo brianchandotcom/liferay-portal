@@ -62,7 +62,7 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 		(event) => {
 			apiRef.current
 				.validate()
-				.then((validForm) => {
+				.then(([ddmFormSubmitButton, validForm]) => {
 					if (validForm) {
 						AUI().use('liferay-form', () => {
 							const liferayForm =
@@ -74,6 +74,10 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 							).length;
 
 							if (!validLiferayForm) {
+								if (ddmFormSubmitButton) {
+									ddmFormSubmitButton.disabled = false;
+								}
+
 								Liferay.fire('ddmFormError', {
 									formWrapperId: event.target.id,
 								});
@@ -103,6 +107,10 @@ const useFormSubmit = ({apiRef, containerRef}) => {
 						});
 					}
 					else {
+						if (ddmFormSubmitButton) {
+							ddmFormSubmitButton.disabled = false;
+						}
+
 						Liferay.fire('ddmFormError', {
 							formWrapperId: event.target.id,
 						});

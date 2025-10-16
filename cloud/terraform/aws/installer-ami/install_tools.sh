@@ -2,18 +2,22 @@
 
 set -eux
 
+function download {
+	curl \
+		--fail-with-body \
+		--location \
+		--output "${2}" \
+		--show-error \
+		--silent \
+		"${1}"
+}
+
 function main {
 	sudo yum update --assumeyes
 
 	sudo yum install --assumeyes git jq tree shadow-utils unzip yum-utils
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "awscliv2.zip" \
-		--show-error \
-		--silent \
-		"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+	download "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" "awscliv2.zip"
 
 	unzip awscliv2.zip -x "aws/dist/awscli/examples/*"
 
@@ -25,13 +29,7 @@ function main {
 
 	terraform_version="1.13.1"
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "terraform.zip" \
-		--show-error \
-		--silent \
-		"https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
+	download "https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip" "terraform.zip"
 
 	unzip terraform.zip
 
@@ -43,25 +41,13 @@ function main {
 
 	kubernetes_version="1.23.6"
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "kubectl" \
-		--show-error \
-		--silent \
-		"https://dl.k8s.io/release/v${kubernetes_version}/bin/linux/amd64/kubectl"
+	download "https://dl.k8s.io/release/v${kubernetes_version}/bin/linux/amd64/kubectl" "kubectl"
 
 	chmod +x kubectl
 
 	sudo mv kubectl /usr/local/bin/
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "eksctl.tar.gz" \
-		--show-error \
-		--silent \
-		"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
+	download "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz" "eksctl.tar.gz"
 
 	tar --extract --file=eksctl.tar.gz --gzip
 
@@ -73,13 +59,7 @@ function main {
 
 	oras_version="1.3.0"
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "oras.tar.gz" \
-		--show-error \
-		--silent \
-		"https://github.com/oras-project/oras/releases/download/v${oras_version}/oras_${oras_version}_linux_amd64.tar.gz"
+	download "https://github.com/oras-project/oras/releases/download/v${oras_version}/oras_${oras_version}_linux_amd64.tar.gz" "oras.tar.gz"
 
 	tar --extract --file=oras.tar.gz --gzip
 
@@ -89,13 +69,7 @@ function main {
 
 	rm oras.tar.gz
 
-	curl \
-		--fail-with-body \
-		--location \
-		--output "get_helm.sh" \
-		--show-error \
-		--silent \
-		https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+	download "https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3" "get_helm.sh"
 
 	chmod 700 get_helm.sh
 

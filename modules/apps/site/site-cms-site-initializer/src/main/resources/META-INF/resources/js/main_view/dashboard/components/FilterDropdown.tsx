@@ -9,7 +9,7 @@ import ClayDropdown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {debounce} from 'frontend-js-web';
+import {debounce, sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 export type Item = {
@@ -137,6 +137,10 @@ const FilterDropdown: React.FC<IFilterDropdown> = ({
 					)}
 
 					<ClayDropdown.Search
+						aria-label={sub(
+							Liferay.Language.get('search-x'),
+							`${title}`
+						)}
 						className="my-2"
 						onChange={(value: string) => {
 							setValue(value);

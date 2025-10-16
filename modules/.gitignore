@@ -1,5 +1,3 @@
-**/docroot/WEB-INF/tld/
-*.iml
 .classpath
 .gh.json
 .gradle/
@@ -8,9 +6,12 @@
 .sass-cache/
 .settings/
 .tsc/
+*.iml
+**/docroot/WEB-INF/tld/
 bin/
 build/
 classes/
+integrations/vercel/**/.next
 ivy.xml.MD5
 lib/
 liferay-hook.xml.processed

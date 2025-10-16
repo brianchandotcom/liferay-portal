@@ -43,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -261,7 +262,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return Collections.emptyMap();
 		}
 
-		Map<String, Object> filterableFieldMapping = new HashMap<>();
+		Map<String, Object> filterableFieldMapping = new TreeMap<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 

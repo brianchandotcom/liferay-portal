@@ -7,7 +7,7 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {FieldFeedback, useId} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export default function Input({
 	className,
@@ -35,6 +35,10 @@ export default function Input({
 	const id = useId();
 	const helpMessageId = useId();
 	const [value, setValue] = useState(initialValue);
+
+	useEffect(() => {
+		setValue(initialValue);
+	}, [initialValue]);
 
 	const hasError = error || (required && !value);
 

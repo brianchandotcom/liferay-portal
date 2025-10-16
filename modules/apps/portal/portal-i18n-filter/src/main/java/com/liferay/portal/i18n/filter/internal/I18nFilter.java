@@ -77,9 +77,10 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getDefaultLanguageId(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, long companyId) {
 
-		String defaultLanguageId = getSiteDefaultLanguageId(httpServletRequest);
+		String defaultLanguageId = getSiteDefaultLanguageId(
+			httpServletRequest, companyId);
 
 		if (Validator.isNull(defaultLanguageId)) {
 			defaultLanguageId = LocaleUtil.toLanguageId(
@@ -105,12 +106,12 @@ public class I18nFilter extends BasePortalFilter {
 		return friendlyURL;
 	}
 
-	protected String getRedirect(HttpServletRequest httpServletRequest)
+	protected String getRedirect(
+			HttpServletRequest httpServletRequest, long companyId)
 		throws Exception {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
-			CompanyThreadLocal.getCompanyId(),
-			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+			companyId, PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (localePrependFriendlyURLStyle == 0) {
 			String virtualHostLanguageId =
@@ -142,7 +143,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		String i18nLanguageId = prependI18nLanguageId(
-			httpServletRequest, localePrependFriendlyURLStyle);
+			httpServletRequest, localePrependFriendlyURLStyle, companyId);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -182,7 +183,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		Group friendlyURLGroup = _groupLocalService.fetchFriendlyURLGroup(
-			CompanyThreadLocal.getCompanyId(), groupFriendlyURL);
+			companyId, groupFriendlyURL);
 
 		if ((friendlyURLGroup != null) &&
 			!_language.isAvailableLocale(
@@ -280,11 +281,9 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getSiteDefaultLanguageId(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, long companyId) {
 
 		String friendlyURL = getFriendlyURL(httpServletRequest);
-
-		long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
 			Group group = _groupLocalService.getFriendlyURLGroup(
@@ -332,7 +331,8 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String prependI18nLanguageId(
-		HttpServletRequest httpServletRequest, int prependFriendlyUrlStyle) {
+		HttpServletRequest httpServletRequest, int prependFriendlyUrlStyle,
+		long companyId) {
 
 		User user = (User)httpServletRequest.getAttribute(WebKeys.USER);
 
@@ -345,7 +345,8 @@ public class I18nFilter extends BasePortalFilter {
 		String requestedLanguageId = getRequestedLanguageId(
 			httpServletRequest, userLanguageId);
 
-		String defaultLanguageId = getDefaultLanguageId(httpServletRequest);
+		String defaultLanguageId = getDefaultLanguageId(
+			httpServletRequest, companyId);
 
 		if (Validator.isNull(requestedLanguageId)) {
 			requestedLanguageId = defaultLanguageId;
@@ -392,7 +393,9 @@ public class I18nFilter extends BasePortalFilter {
 
 		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
 
-		String redirect = getRedirect(httpServletRequest);
+		long companyId = CompanyThreadLocal.getCompanyId();
+
+		String redirect = getRedirect(httpServletRequest, companyId);
 
 		if (redirect == null) {
 			processFilter(
@@ -402,7 +405,7 @@ public class I18nFilter extends BasePortalFilter {
 			return;
 		}
 
-		if (_isPermanentRedirect(CompanyThreadLocal.getCompanyId())) {
+		if (_isPermanentRedirect(companyId)) {
 			httpServletResponse.setHeader("Location", redirect);
 			httpServletResponse.setStatus(
 				HttpServletResponse.SC_MOVED_PERMANENTLY);

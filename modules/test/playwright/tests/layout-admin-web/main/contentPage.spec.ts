@@ -695,7 +695,7 @@ test(
 			page.locator('.control-menu-nav').getByLabel('Page Audit')
 		).not.toBeVisible();
 
-		performLogout(page);
+		await performLogout(page);
 	}
 );
 
@@ -794,6 +794,6 @@ test(
 			page.getByRole('menuitem', {name: 'Preview'})
 		).toBeVisible();
 
-		performLogout(page);
+		await performLogout(page);
 	}
 );

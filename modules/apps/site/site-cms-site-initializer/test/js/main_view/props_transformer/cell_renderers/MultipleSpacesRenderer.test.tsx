@@ -92,7 +92,7 @@ describe('MultipleSpacesRenderer', () => {
 
 	it('renders correctly after fetching space data', async () => {
 		jest.spyOn(SpaceService, 'getSpaceWithCache').mockImplementation(
-			({spaceId}) => {
+			(spaceId) => {
 				return Promise.resolve(
 					mockSpaces.find((space) => space.id === spaceId)!
 				);

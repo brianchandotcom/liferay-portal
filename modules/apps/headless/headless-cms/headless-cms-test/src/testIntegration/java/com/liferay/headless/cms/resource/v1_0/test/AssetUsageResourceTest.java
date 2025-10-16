@@ -307,6 +307,11 @@ public class AssetUsageResourceTest extends BaseAssetUsageResourceTestCase {
 			_objectEntryFolder.getObjectEntryFolderId(), _LANGUAGE_ID,
 			HashMapBuilder.<String, Serializable>put(
 				"file", String.valueOf(dlFileEntry.getFileEntryId())
+			).put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
 			).build(),
 			_serviceContext);
 

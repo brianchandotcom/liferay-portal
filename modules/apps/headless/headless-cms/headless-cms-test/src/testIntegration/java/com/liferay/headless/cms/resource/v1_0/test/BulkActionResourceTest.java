@@ -239,13 +239,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		return _objectEntryLocalService.addObjectEntry(
 			groupId, _user.getUserId(),
 			_cmsBasicWebContentObjectDefinition.getObjectDefinitionId(),
-			objectEntryFolderId, _LANGUAGE_ID,
-			HashMapBuilder.<String, Serializable>put(
-				"title_i18n",
-				HashMapBuilder.<String, Serializable>put(
-					_LANGUAGE_ID, RandomTestUtil.randomString()
-				).build()
-			).build(),
+			objectEntryFolderId, _LANGUAGE_ID, _getObjectEntryValuesWithTitle(),
 			_serviceContext);
 	}
 
@@ -367,6 +361,15 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		ObjectEntry objectEntry = objectEntries.get(0);
 
 		return objectEntry.getValues();
+	}
+
+	private Map<String, Serializable> _getObjectEntryValuesWithTitle() {
+		return HashMapBuilder.<String, Serializable>put(
+			"title_i18n",
+			HashMapBuilder.put(
+				_LANGUAGE_ID, RandomTestUtil.randomString()
+			).build()
+		).build();
 	}
 
 	private boolean _isCMSSiteInitialized() throws Exception {
@@ -823,7 +826,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			Collections.emptyMap());
+			_getObjectEntryValuesWithTitle());
 
 		bulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
@@ -839,7 +842,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			Collections.emptyMap());
+			_getObjectEntryValuesWithTitle());
 
 		keywordBulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
@@ -870,7 +873,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			Collections.emptyMap());
+			_getObjectEntryValuesWithTitle());
 
 		permissionBulkAction.setBulkActionItems(
 			_toBulkActionItems(objectEntry));
@@ -910,7 +913,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			Collections.emptyMap());
+			_getObjectEntryValuesWithTitle());
 
 		taxonomyCategoryBulkAction.setBulkActionItems(
 			_toBulkActionItems(objectEntry));

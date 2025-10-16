@@ -25,6 +25,7 @@ export async function checkPackageJSONFiles() {
 			'**/build',
 			'**/classes',
 			'**/frontend-js-jquery-web',
+			'**/integrations/vercel',
 			'**/node_modules',
 			'**/osb-faro-theme',
 			'**/osb-faro-web',

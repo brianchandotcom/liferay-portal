@@ -151,7 +151,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 		stagedModel = _fragmentEntryLinkLocalService.updateFragmentEntryLink(
 			TestPropsValues.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			fragmentEntryLink.getFragmentEntryLinkId(),
+			fragmentEntryLink.getOriginalFragmentEntryLinkId(),
 			fragmentEntryLink.getFragmentEntryId(), fragmentEntryLink.getPlid(),
 			"css", "html", "js", fragmentEntryLink.getConfiguration(),
 			fragmentEntryLink.getEditableValues(),
@@ -374,7 +374,7 @@ public class FragmentEntryLinkStagedModelDataHandlerTest
 				fragmentEntryLink.getFragmentEntryId()));
 
 		try {
-			_exportImportStagedModel(stagedModel, true);
+			_exportImportStagedModel(stagedModel, false);
 		}
 		finally {
 			ExportImportThreadLocal.setPortletImportInProcess(false);

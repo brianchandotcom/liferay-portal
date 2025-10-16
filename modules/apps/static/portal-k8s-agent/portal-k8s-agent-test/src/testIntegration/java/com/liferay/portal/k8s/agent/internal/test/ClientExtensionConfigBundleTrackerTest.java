@@ -129,18 +129,12 @@ public class ClientExtensionConfigBundleTrackerTest {
 			StringBundler.concat("(.cx.config.bundle.id=", bundleId, ")"));
 
 		if (expectedCount == 0) {
-			Assert.assertNull(
-				"Did not expect to find any configurations for bundleId " +
-					bundleId,
-				configurations);
+			Assert.assertNull(configurations);
 
 			return;
 		}
 
-		Assert.assertNotNull(
-			"Unable to find configuration for bundleId " + bundleId,
-			configurations);
-
+		Assert.assertNotNull(configurations);
 		Assert.assertEquals(
 			Arrays.toString(configurations), expectedPids.size(),
 			configurations.length);
@@ -168,25 +162,20 @@ public class ClientExtensionConfigBundleTrackerTest {
 					StringBundler.concat(
 						"(.cx.config.key=", virtualInstanceId, ")"));
 
-			Assert.assertNotNull(
-				"Unable to find configuration for virtualInstanceId " +
-					virtualInstanceId,
-				configurations);
-
+			Assert.assertNotNull(configurations);
 			Assert.assertEquals(
 				Arrays.toString(configurations), 1, configurations.length);
 		}
 	}
 
 	private Bundle _installTestBundle(String dirName) throws Exception {
-		String basePath = StringBundler.concat(
-			"com/liferay/portal/k8s/agent/internal/test/dependencies/", dirName,
-			StringPool.SLASH);
-
 		return _bundleContext.installBundle(
 			RandomTestUtil.randomString(),
 			ZipFileTestUtil.toInputStream(
-				basePath, _bundle, _zipWriterFactory.getZipWriter()));
+				StringBundler.concat(
+					"com/liferay/portal/k8s/agent/internal/test/dependencies/",
+					dirName, StringPool.SLASH),
+				_bundle, _zipWriterFactory.getZipWriter()));
 	}
 
 	private static final String _FACTORY_PID =

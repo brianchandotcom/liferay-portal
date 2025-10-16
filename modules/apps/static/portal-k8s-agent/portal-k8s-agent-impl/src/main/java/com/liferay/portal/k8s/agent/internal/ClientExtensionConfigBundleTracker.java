@@ -145,7 +145,7 @@ public class ClientExtensionConfigBundleTracker {
 
 					if (_log.isInfoEnabled()) {
 						_log.info(
-							"Configuration and Bundle resource versions are " +
+							"Configuration and bundle resource versions are " +
 								"identical");
 					}
 

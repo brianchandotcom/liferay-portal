@@ -60,7 +60,7 @@ public class PortalInstancesFilterTest {
 	public void testExistingVirtualHost() throws Exception {
 		String hostName = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		_layoutSetLocalService.updateVirtualHosts(
+		LayoutSet layoutSet = _layoutSetLocalService.updateVirtualHosts(
 			TestPropsValues.getGroupId(), false,
 			TreeMapBuilder.put(
 				hostName, StringPool.BLANK
@@ -68,9 +68,6 @@ public class PortalInstancesFilterTest {
 
 		VirtualHost virtualHost = _virtualHostLocalService.getVirtualHost(
 			hostName);
-
-		LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
-			virtualHost.getLayoutSetId());
 
 		try {
 			_test(virtualHost.getCompanyId(), hostName, layoutSet, null);

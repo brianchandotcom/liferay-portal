@@ -106,9 +106,9 @@ CommerceWishListDisplayContext commerceWishListDisplayContext = (CommerceWishLis
 										<portlet:param name="commerceWishListItemId" value="<%= String.valueOf(commerceWishListItem.getCommerceWishListItemId()) %>" />
 									</portlet:actionURL>
 
-									<liferay-ui:icon-delete
-										label="<%= true %>"
-										url="<%= deleteURL %>"
+									<clay:link
+										href="<%= deleteURL.toString() %>"
+										label="delete"
 									/>
 								</liferay-ui:search-container-column-text>
 

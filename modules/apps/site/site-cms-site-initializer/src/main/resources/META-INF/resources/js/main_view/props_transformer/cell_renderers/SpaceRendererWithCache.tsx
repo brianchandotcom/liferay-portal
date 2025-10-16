@@ -17,7 +17,7 @@ const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
 	useEffect(() => {
 		let isMounted = true;
 
-		SpaceService.getSpaceWithCache({spaceId})
+		SpaceService.getSpaceWithCache(spaceId)
 			.then((space) => {
 				if (isMounted) {
 					setSpace(space);

@@ -49,9 +49,7 @@ describe('SpaceRendererWithCache', () => {
 
 		expect(await screen.findByText('Test Space')).toBeInTheDocument();
 
-		expect(SpaceService.getSpaceWithCache).toHaveBeenCalledWith({
-			spaceId: 123,
-		});
+		expect(SpaceService.getSpaceWithCache).toHaveBeenCalledWith(123);
 
 		expect(container.querySelector('.sticker')).toHaveClass(
 			'sticker-outline-0'

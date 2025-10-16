@@ -29,7 +29,6 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.notification.term.util.ObjectDefinitionNotificationTermUtil;
-import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.BooleanObjectFieldBuilder;
 import com.liferay.object.field.builder.DateObjectFieldBuilder;
@@ -56,6 +55,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectActionTestUtil;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -604,28 +604,10 @@ public class BaseNotificationTypeTest {
 			ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
-	protected ObjectDefinition
-			addObjectDefinitionWithNotificationTemplateObjectAction(
-				List<NotificationRecipientSetting>
-					notificationRecipientSettings,
-				String subject, String type)
+	protected void addNotificationTemplateObjectAction(
+			List<NotificationRecipientSetting> notificationRecipientSettings,
+			ObjectDefinition objectDefinition, String subject, String type)
 		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			ObjectDefinitionTestUtil.publishObjectDefinition(
-				Arrays.asList(
-					new AssigneeObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"assignee"
-					).build(),
-					new TextObjectFieldBuilder(
-					).labelMap(
-						RandomTestUtil.randomLocaleStringMap()
-					).name(
-						"textObjectField"
-					).build()));
 
 		resourcePermissionLocalService.addResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getResourceName(),
@@ -651,8 +633,6 @@ public class BaseNotificationTypeTest {
 			notificationTemplateLocalService.addNotificationTemplate(
 				notificationContext),
 			objectDefinition);
-
-		return objectDefinition;
 	}
 
 	protected void addViewResourcePermission(
@@ -745,6 +725,16 @@ public class BaseNotificationTypeTest {
 
 		objectActionLocalService.deleteObjectAction(
 			objectAction.getObjectActionId());
+	}
+
+	protected String getObjectFieldTermName(
+		ObjectDefinition objectDefinition, String objectFieldName) {
+
+		return StringBundler.concat(
+			"[%",
+			StringUtil.toUpperCase(
+				objectDefinition.getShortName() + "_" + objectFieldName),
+			"%]");
 	}
 
 	protected String getObjectRelationshipObjectField2Name()

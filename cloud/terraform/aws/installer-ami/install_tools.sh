@@ -104,6 +104,7 @@ function main {
 	image_dir=/opt/liferay/image
 
 	sudo mkdir --parents "${image_dir}"
+
 	sudo chown --recursive 1000:1000 /opt/liferay
 
 	local terraform_dir

@@ -72,17 +72,16 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return;
 		}
 
-		Map<String, Map<String, Object>> schemaNameFilterableFieldMapping =
+		Map<String, Map<String, Object>> schemaNameFilterableFields =
 			new HashMap<>();
 
 		for (Schema schema : schemas.values()) {
-			Map<String, Object> filterableFieldMapping =
-				_getFilterableFieldMapping(openAPIContext, schema);
+			Map<String, Object> filterableFields = _getFilterableFields(
+				openAPIContext, schema);
 
-			schema.addExtension("x-filterable", filterableFieldMapping);
+			schema.addExtension("x-filterable", filterableFields);
 
-			schemaNameFilterableFieldMapping.put(
-				schema.getName(), filterableFieldMapping);
+			schemaNameFilterableFields.put(schema.getName(), filterableFields);
 		}
 
 		Paths paths = openAPI.getPaths();
@@ -92,22 +91,14 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		for (PathItem pathItem : paths.values()) {
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getDelete());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getGet());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getHead());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getOptions());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getPatch());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getPost());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getPut());
-			_setXFilterable(
-				schemaNameFilterableFieldMapping, pathItem.getTrace());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getDelete());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getGet());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getHead());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getOptions());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getPatch());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getPost());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getPut());
+			_setXFilterable(schemaNameFilterableFields, pathItem.getTrace());
 		}
 	}
 
@@ -251,7 +242,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		return null;
 	}
 
-	private Map<String, Object> _getFilterableFieldMapping(
+	private Map<String, Object> _getFilterableFields(
 			OpenAPIContext openAPIContext, Schema schema)
 		throws Exception {
 
@@ -262,7 +253,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			return Collections.emptyMap();
 		}
 
-		Map<String, Object> filterableFieldMapping = new TreeMap<>();
+		Map<String, Object> filterableFields = new TreeMap<>();
 
 		Set<EntityField> visitedEntityFields = new HashSet<>();
 
@@ -286,7 +277,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				EntityField internalEntityField =
 					collectionEntityField.getEntityField();
 
-				filterableFieldMapping.put(
+				filterableFields.put(
 					fieldName,
 					HashMapBuilder.put(
 						"items",
@@ -299,7 +290,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 				continue;
 			}
 			else if (!(entityField instanceof ComplexEntityField)) {
-				filterableFieldMapping.put(
+				filterableFields.put(
 					fieldName,
 					HashMapBuilder.put(
 						"type",
@@ -330,11 +321,11 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 			}
 		}
 
-		return filterableFieldMapping;
+		return filterableFields;
 	}
 
 	private void _setXFilterable(
-		Map<String, Map<String, Object>> filterableFieldMapping,
+		Map<String, Map<String, Object>> schemaNameFilterableFields,
 		Operation operation) {
 
 		if (operation == null) {
@@ -374,7 +365,7 @@ public class FilterableFieldsOpenAPIContributor implements OpenAPIContributor {
 		}
 
 		schema.addExtension(
-			"x-filterable", filterableFieldMapping.get(tags.get(0)));
+			"x-filterable", schemaNameFilterableFields.get(tags.get(0)));
 	}
 
 	private BundleContext _bundleContext;

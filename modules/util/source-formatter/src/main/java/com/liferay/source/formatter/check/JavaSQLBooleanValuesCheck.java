@@ -39,10 +39,11 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingTransformCall(
-		String fileName, String methodCall, String sqlString, int lineNumber) {
+		String fileName, String methodCall, String parametersString,
+		int lineNumber) {
 
 		int index = StringUtil.indexOfAny(
-			sqlString, new String[] {"[$FALSE$]", "[$TRUE$]"});
+			parametersString, new String[] {"[$FALSE$]", "[$TRUE$]"});
 
 		if ((index == -1) || methodCall.contains("SQLTransformer.transform(")) {
 			return;
@@ -56,9 +57,40 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 	}
 
 	private void _checkSQLBooleanValues(
-		String fileName, String content, String methodName) {
+		String fileName, List<String> parameterList, int lineNumber) {
 
-		String sqlString = StringPool.BLANK;
+		for (String parameter : parameterList) {
+			if (!parameter.endsWith("\"") || !parameter.startsWith("\"")) {
+				continue;
+			}
+
+			Matcher matcher = _falseTruePattern.matcher(parameter);
+
+			while (matcher.find()) {
+				String match = matcher.group(1);
+
+				String s1 = parameter.substring(0, matcher.start(1));
+				String s2 = parameter.substring(matcher.start(1));
+
+				int count1 = StringUtil.count(s1, CharPool.APOSTROPHE) % 2;
+				int count2 = StringUtil.count(s2, CharPool.APOSTROPHE) % 2;
+
+				if ((count1 == 1) && (count2 == 1)) {
+					continue;
+				}
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Use \"[$", StringUtil.toUpperCase(match),
+						"$]\" instead of \"", match, "\" in SQL statements"),
+					lineNumber);
+			}
+		}
+	}
+
+	private void _checkSQLBooleanValues(
+		String fileName, String content, String methodName) {
 
 		int x = -1;
 
@@ -75,14 +107,16 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 
 			String methodCall = JavaSourceUtil.getMethodCall(content, x);
 
-			List<String> getParameterList = JavaSourceUtil.getParameterList(
+			List<String> parameterList = JavaSourceUtil.getParameterList(
 				methodCall);
 
-			if (getParameterList.isEmpty()) {
+			if (parameterList.isEmpty()) {
 				return;
 			}
 
-			int parameterSize = getParameterList.size();
+			int parameterSize = parameterList.size();
+
+			String parametersString = StringPool.BLANK;
 
 			if (methodName.equals("AutoBatchPreparedStatementUtil.autoBatch") ||
 				methodName.equals(
@@ -92,21 +126,21 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					return;
 				}
 
-				sqlString = _stripOuterMethods(getParameterList.get(1));
+				parametersString = _stripOuterMethods(parameterList.get(1));
 			}
 			else if (methodName.equals("connection.prepareStatement")) {
 				if (parameterSize != 1) {
 					return;
 				}
 
-				sqlString = _stripOuterMethods(getParameterList.get(0));
+				parametersString = _stripOuterMethods(parameterList.get(0));
 			}
 			else if (methodName.equals("runSQL")) {
 				if (parameterSize == 1) {
-					sqlString = _stripOuterMethods(getParameterList.get(0));
+					parametersString = _stripOuterMethods(parameterList.get(0));
 				}
 				else if (parameterSize == 2) {
-					sqlString = _stripOuterMethods(getParameterList.get(1));
+					parametersString = _stripOuterMethods(parameterList.get(1));
 				}
 			}
 			else if (methodName.equals("StringBundler.concat")) {
@@ -116,7 +150,7 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				String firstParameter = getParameterList.get(0);
+				String firstParameter = parameterList.get(0);
 
 				if (!firstParameter.startsWith("\"delete ") &&
 					!firstParameter.startsWith("\"insert into ") &&
@@ -127,43 +161,26 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				sqlString = _stripOuterMethods(methodCall);
+				parametersString = _stripOuterMethods(methodCall);
 			}
 
-			if (sqlString.equals(StringPool.BLANK)) {
+			if (parametersString.equals(StringPool.BLANK)) {
 				continue;
 			}
 
 			int lineNumber = getLineNumber(content, x);
 
-			sqlString = sqlString.replaceAll("\n", "");
-			sqlString = sqlString.replaceAll("\\s{2,}", " ");
+			parametersString = parametersString.replaceAll("\n", "");
+			parametersString = parametersString.replaceAll("\\s{2,}", " ");
 
-			sqlString = StringUtil.removeSubstring(sqlString, "\" + \"");
-			sqlString = StringUtil.removeSubstring(sqlString, "\", \"");
+			parametersString = StringUtil.removeSubstring(
+				parametersString, "\" + \"");
+			parametersString = StringUtil.removeSubstring(
+				parametersString, "\", \"");
 
-			Matcher matcher = _falseTruePattern.matcher(sqlString);
+			parameterList = JavaSourceUtil.splitParameters(parametersString);
 
-			while (matcher.find()) {
-				String match = matcher.group(1);
-
-				String s1 = sqlString.substring(0, matcher.start(1));
-				String s2 = sqlString.substring(matcher.start(1));
-
-				int count1 = StringUtil.count(s1, CharPool.APOSTROPHE) % 2;
-				int count2 = StringUtil.count(s2, CharPool.APOSTROPHE) % 2;
-
-				if ((count1 == 1) && (count2 == 1)) {
-					continue;
-				}
-
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Use \"[$", StringUtil.toUpperCase(match),
-						"$]\" instead of \"", match, "\" in SQL statements"),
-					lineNumber);
-			}
+			_checkSQLBooleanValues(fileName, parameterList, lineNumber);
 
 			if (methodName.equals("runSQL") ||
 				methodName.equals("StringBundler.concat")) {
@@ -172,7 +189,7 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 			}
 
 			_checkMissingTransformCall(
-				fileName, methodCall, sqlString, lineNumber);
+				fileName, methodCall, parametersString, lineNumber);
 		}
 	}
 

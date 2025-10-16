@@ -4,10 +4,11 @@
  */
 
 export function deactivateFilter(filter: any) {
+	filter.active = false;
+	filter.odataFilterString = undefined;
+	filter.selectedData = undefined;
+
 	return {
 		...filter,
-		active: false,
-		odataFilterString: undefined,
-		selectedData: undefined,
 	};
 }

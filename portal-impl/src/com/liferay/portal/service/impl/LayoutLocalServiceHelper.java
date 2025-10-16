@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolver;
 import com.liferay.portal.kernel.portlet.FriendlyURLResolverRegistryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLEntryValidator;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -464,7 +465,8 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 
 		for (FriendlyURLResolver friendlyURLResolver :
 				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
+					getFriendlyURLResolversAsCollection(
+						CompanyThreadLocal.getCompanyId())) {
 
 			String urlSeparator = friendlyURLResolver.getURLSeparator();
 

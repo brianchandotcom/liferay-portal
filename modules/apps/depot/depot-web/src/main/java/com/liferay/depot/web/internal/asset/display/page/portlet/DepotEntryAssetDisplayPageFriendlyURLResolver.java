@@ -46,18 +46,18 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		String[] parts = StringUtil.split(
@@ -65,13 +65,13 @@ public class DepotEntryAssetDisplayPageFriendlyURLResolver
 			CharPool.SLASH);
 
 		if (parts.length == 1) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		DepotEntry depotEntry = _fetchDepotEntry(GetterUtil.getLong(parts[0]));
 
 		if (depotEntry == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		return layoutDisplayPageProviderRegistry.

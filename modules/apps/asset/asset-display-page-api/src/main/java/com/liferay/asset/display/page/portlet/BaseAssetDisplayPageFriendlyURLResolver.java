@@ -89,7 +89,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 			(HttpServletRequest)requestContext.get("request");
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			getLayoutDisplayPageProvider(friendlyURL);
+			getLayoutDisplayPageProvider(companyId, friendlyURL);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			getLayoutDisplayPageObjectProvider(
@@ -177,7 +177,7 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 		throws PortalException {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			getLayoutDisplayPageProvider(friendlyURL);
+			getLayoutDisplayPageProvider(companyId, friendlyURL);
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			getLayoutDisplayPageObjectProvider(
@@ -271,10 +271,10 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws PortalException {
 
-		return _getLayoutDisplayPageProvider(friendlyURL);
+		return _getLayoutDisplayPageProvider(companyId, friendlyURL);
 	}
 
 	protected Locale getLocale(Map<String, Object> requestContext) {
@@ -477,14 +477,14 @@ public abstract class BaseAssetDisplayPageFriendlyURLResolver
 	}
 
 	private LayoutDisplayPageProvider<?> _getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws PortalException {
 
 		String urlSeparator = _getURLSeparator(friendlyURL);
 
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				urlSeparator);
+				companyId, urlSeparator);
 
 		if ((friendlyURLResolver != null) &&
 			friendlyURLResolver.isURLSeparatorConfigurable()) {

@@ -68,8 +68,8 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContext {
 			_httpServletRequest.getParameterMap();
 
 		List<JSONObject> jsonObjects = TransformUtil.transform(
-			FriendlyURLResolverRegistryUtil.
-				getFriendlyURLResolversAsCollection(),
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolversAsCollection(
+				_themeDisplay.getCompanyId()),
 			friendlyURLResolver -> {
 				if (!friendlyURLResolver.isURLSeparatorConfigurable() ||
 					Validator.isNull(friendlyURLResolver.getKey())) {

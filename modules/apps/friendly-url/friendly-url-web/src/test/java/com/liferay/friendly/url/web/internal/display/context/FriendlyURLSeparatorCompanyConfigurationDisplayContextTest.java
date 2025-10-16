@@ -63,7 +63,9 @@ public class FriendlyURLSeparatorCompanyConfigurationDisplayContextTest {
 			FriendlyURLResolverRegistryUtil.class);
 
 		_friendlyURLResolverRegistryUtilMockedStatic.when(
-			FriendlyURLResolverRegistryUtil::getFriendlyURLResolversAsCollection
+			() ->
+				FriendlyURLResolverRegistryUtil.
+					getFriendlyURLResolversAsCollection(Mockito.anyLong())
 		).thenReturn(
 			ListUtil.fromArray(
 				new FriendlyURLResolverImpl(

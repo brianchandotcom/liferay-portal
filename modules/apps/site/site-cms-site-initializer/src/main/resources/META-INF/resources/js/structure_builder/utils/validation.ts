@@ -99,9 +99,14 @@ export function validateStructure({
 	}
 
 	if (!isNullOrUndefined(label)) {
-		Object.values(label ?? {}).every(Boolean)
-			? errors.delete('no-label')
-			: errors.add('no-label');
+		const values = Object.values(label ?? {});
+
+		if (!!values.length && values.every(Boolean)) {
+			errors.delete('no-label');
+		}
+		else {
+			errors.add('no-label');
+		}
 	}
 
 	if (!isNullOrUndefined(spaces)) {

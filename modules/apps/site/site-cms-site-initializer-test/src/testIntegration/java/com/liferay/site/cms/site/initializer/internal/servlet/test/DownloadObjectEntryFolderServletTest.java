@@ -218,7 +218,10 @@ public class DownloadObjectEntryFolderServletTest {
 			HashMapBuilder.<String, Serializable>put(
 				"file", String.valueOf(_addFileEntry())
 			).put(
-				"text", RandomTestUtil.randomString()
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
 			).build(),
 			serviceContext);
 	}

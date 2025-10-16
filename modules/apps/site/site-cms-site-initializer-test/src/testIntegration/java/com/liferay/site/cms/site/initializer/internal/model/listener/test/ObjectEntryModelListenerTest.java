@@ -210,7 +210,10 @@ public class ObjectEntryModelListenerTest {
 			objectDefinition.getObjectDefinitionId(),
 			objectEntryFolder2.getObjectEntryFolderId(), "en_US",
 			HashMapBuilder.<String, Serializable>put(
-				"text", RandomTestUtil.randomString()
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
 			).build(),
 			serviceContext);
 
@@ -302,6 +305,11 @@ public class ObjectEntryModelListenerTest {
 			objectEntryFolder2.getObjectEntryFolderId(), "en_US",
 			HashMapBuilder.<String, Serializable>put(
 				"file", dlFileEntry.getFileEntryId()
+			).put(
+				"title_i18n",
+				HashMapBuilder.put(
+					"en_US", RandomTestUtil.randomString()
+				).build()
 			).build(),
 			serviceContext);
 

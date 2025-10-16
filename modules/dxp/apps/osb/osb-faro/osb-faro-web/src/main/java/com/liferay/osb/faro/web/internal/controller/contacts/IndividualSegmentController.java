@@ -282,29 +282,6 @@ public class IndividualSegmentController extends BaseFaroController {
 			delta, orderByFieldsFaroParam.getValue());
 	}
 
-	@Path("/search")
-	@POST
-	@RolesAllowed(RoleConstants.SITE_MEMBER)
-	public FaroResultsDisplay searchByForm(
-			@PathParam("groupId") long groupId,
-			@FormParam("channelId") String channelId,
-			@FormParam("contactsEntityId") String contactsEntityId,
-			@FormParam("contactsEntityType") int contactsEntityType,
-			@FormParam("dataSourceId") String dataSourceId,
-			@FormParam("query") String query,
-			@FormParam("segmentType") String segmentType,
-			@FormParam("state") String state, @FormParam("cur") int cur,
-			@FormParam("delta") int delta,
-			@DefaultValue(StringPool.BLANK) @FormParam("orderByFields")
-				FaroParam<List<OrderByField>> orderByFieldsFaroParam)
-		throws Exception {
-
-		return search(
-			groupId, channelId, contactsEntityId, contactsEntityType,
-			dataSourceId, query, state, segmentType, cur, delta,
-			orderByFieldsFaroParam.getValue());
-	}
-
 	@Path("/{id}")
 	@PUT
 	@RolesAllowed(RoleConstants.SITE_MEMBER)

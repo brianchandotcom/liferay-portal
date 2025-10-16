@@ -14,6 +14,7 @@ import React, {
 
 import {Space} from '../../common/types/Space';
 import {Workflow} from '../../common/types/Workflow';
+import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import {ObjectDefinitions} from '../types/ObjectDefinition';
 import {
 	ReferencedStructure,
@@ -58,6 +59,7 @@ type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
 	deletedChildren: boolean;
+	modifiedNames: Set<Uuid>;
 };
 
 export type State = {
@@ -74,6 +76,7 @@ const INITIAL_STATE: State = {
 	error: null,
 	history: {
 		deletedChildren: false,
+		modifiedNames: new Set(),
 	},
 	invalids: new Map(),
 	publishedChildren: new Set(),
@@ -587,12 +590,28 @@ function reducer(state: State, action: Action): State {
 				uuid,
 			} = action;
 
-			const {structure} = state;
+			const {history, publishedChildren, structure} = state;
 
 			const field = findChild({root: structure, uuid}) as Field;
 
 			if (!field) {
 				return state;
+			}
+
+			// If name is being updated manually, mark it
+
+			const modifiedNames = new Set(history.modifiedNames);
+
+			if (name && name !== field.name) {
+				modifiedNames.add(field.uuid);
+			}
+
+			// Calculate new name
+
+			let nextName = field.name;
+
+			if (!publishedChildren.has(field.uuid)) {
+				nextName = getNextName({action, item: field, modifiedNames});
 			}
 
 			// Prepare updated field
@@ -603,7 +622,7 @@ function reducer(state: State, action: Action): State {
 				indexableConfig: indexableConfig ?? field.indexableConfig,
 				label: label ?? field.label,
 				localized: localized ?? field.localized,
-				name: name ?? field.name,
+				name: nextName,
 				required: required ?? field.required,
 				settings: settings ?? field.settings,
 			};
@@ -626,7 +645,10 @@ function reducer(state: State, action: Action): State {
 
 			const errors = validateField({
 				currentErrors: invalids.get(nextField.uuid),
-				data,
+				data: {
+					...data,
+					name: nextName,
+				},
 			});
 
 			if (errors.size) {
@@ -640,6 +662,10 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
+				history: {
+					...history,
+					modifiedNames,
+				},
 				invalids,
 				selection: [nextField.uuid],
 				structure: {
@@ -706,15 +732,39 @@ function reducer(state: State, action: Action): State {
 
 			const {erc, label, name, spaces} = action;
 
-			const {structure} = state;
+			const {history, structure} = state;
+
+			// If name is being updated manually, mark it
+
+			const modifiedNames = new Set(history.modifiedNames);
+
+			if (name && name !== structure.name) {
+				modifiedNames.add(structure.uuid);
+			}
+
+			// Calculate new name
+
+			let nextName = structure.name;
+
+			if (structure.status !== 'published') {
+				nextName = getNextName({
+					action,
+					item: structure,
+					modifiedNames,
+				});
+			}
 
 			const nextState: State = {
 				...state,
+				history: {
+					...history,
+					modifiedNames,
+				},
 				structure: {
 					...state.structure,
 					erc: erc ?? structure.erc,
 					label: label ?? structure.label,
-					name: name ?? structure.name,
+					name: nextName,
 					spaces: spaces ?? structure.spaces,
 				},
 			};
@@ -725,7 +775,7 @@ function reducer(state: State, action: Action): State {
 
 			const errors = validateStructure({
 				currentErrors: invalids.get(structure.uuid),
-				data: {erc, label, name, spaces},
+				data: {erc, label, name: nextName, spaces},
 			});
 
 			if (errors.size) {
@@ -846,6 +896,30 @@ function getDefaultChildren(structureUuid: Uuid) {
 	}
 
 	return children;
+}
+
+function getNextName({
+	action,
+	item,
+	modifiedNames,
+}: {
+	action: UpdateStructureAction | UpdateFieldAction;
+	item: Structure | Field;
+	modifiedNames: State['history']['modifiedNames'];
+}): string {
+	if ('name' in action) {
+		return action.name!;
+	}
+
+	if (!action.label || modifiedNames.has(item.uuid)) {
+		return item.name;
+	}
+
+	const localizedLabel = getLocalizedValue(action.label);
+
+	return normalizeName(localizedLabel, {
+		style: 'type' in item ? 'camel' : 'pascal',
+	});
 }
 
 function getUndeletableItems(

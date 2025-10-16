@@ -89,6 +89,11 @@
 				"scope": 1
 			},
 			{
+				"actionId": "MANAGE_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 1
+			},
+			{
 				"actionId": "VIEW_COMMERCE_ORDERS",
 				"resource": "com.liferay.commerce.order",
 				"scope": 1

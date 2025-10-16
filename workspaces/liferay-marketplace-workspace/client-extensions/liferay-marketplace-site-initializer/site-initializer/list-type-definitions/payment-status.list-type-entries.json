@@ -1,7 +1,7 @@
 [
 	{
 		"externalReferenceCode": "PAID",
-		"key": "0",
+		"key": "paid",
 		"name": "Paid",
 		"name_i18n": {
 			"en-US": "Paid"
@@ -10,7 +10,7 @@
 	},
 	{
 		"externalReferenceCode": "UNPAID",
-		"key": "1",
+		"key": "unpaid",
 		"name": "Unpaid",
 		"name_i18n": {
 			"en-US": "Unpaid"

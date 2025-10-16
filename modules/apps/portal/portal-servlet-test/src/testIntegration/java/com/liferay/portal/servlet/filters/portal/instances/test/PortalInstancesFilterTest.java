@@ -131,7 +131,7 @@ public class PortalInstancesFilterTest {
 
 			Throwable throwable = logEntry.getThrowable();
 
-			Assert.assertEquals(
+			Assert.assertSame(
 				NoSuchVirtualHostException.class, throwable.getClass());
 
 			Assert.assertEquals(hostName, throwable.getMessage());

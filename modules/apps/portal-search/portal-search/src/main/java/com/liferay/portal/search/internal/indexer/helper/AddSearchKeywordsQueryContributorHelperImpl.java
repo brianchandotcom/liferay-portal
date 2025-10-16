@@ -53,8 +53,7 @@ public class AddSearchKeywordsQueryContributorHelperImpl
 	protected void activate(BundleContext bundleContext) {
 		_highlightFieldNamesQueryConfigContributors =
 			ServiceTrackerListFactory.open(
-				bundleContext, HighlightFieldNamesQueryConfigContributor.class,
-				"(indexer.class.name=*)");
+				bundleContext, HighlightFieldNamesQueryConfigContributor.class);
 		_keywordQueryContributors = ServiceTrackerListFactory.open(
 			bundleContext, KeywordQueryContributor.class,
 			"(!(indexer.class.name=*))");

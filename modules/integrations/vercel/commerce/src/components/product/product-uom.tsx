@@ -5,8 +5,16 @@
 
 import {Card} from '../ui/card';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function ProductUOM({uom}: {uom: any[]}) {
+export default function ProductUOM({
+	uom,
+}: {
+	uom: {
+		incrementalOrderQuantity: number;
+		key: string;
+		name: string;
+		price: {priceFormatted: string};
+	}[];
+}) {
 	return (
 		<Card className="p-4">
 			<h3 className="font-semibold mb-3">UOM</h3>

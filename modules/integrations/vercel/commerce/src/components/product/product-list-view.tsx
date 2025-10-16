@@ -59,10 +59,7 @@ export default function ProductListView({product}: ProductListViewProps) {
 									{product.name}
 								</h3>
 
-								<p className="text-sm">
-									{product.description ||
-										'Short description duis semper tellus egestas ex porttitor scelerisque. Donec scelerisque suscipit massa, et pellentesque tortor cursus sed...'}
-								</p>
+								<p className="text-sm">{product.description}</p>
 							</div>
 
 							<div className="text-right">

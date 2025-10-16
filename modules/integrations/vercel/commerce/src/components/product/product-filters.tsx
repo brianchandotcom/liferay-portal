@@ -49,8 +49,8 @@ const baseFilters = {
 type FilterCategory = (typeof baseFilters)[keyof typeof baseFilters];
 
 export function ProductFilters() {
-	const searchParams = useSearchParams();
 	const router = useRouter();
+	const searchParams = useSearchParams();
 	const specificationValues = searchParams.getAll('specificationValues');
 
 	const [expandedSections, setExpandedSections] = useState<
@@ -61,11 +61,18 @@ export function ProductFilters() {
 		priceRange: true,
 	});
 
-	const toggleSection = (section: string) => {
-		setExpandedSections((prev) => ({
-			...prev,
-			[section]: !(prev[section] ?? true),
-		}));
+	const clearAllFilters = (filterCategory: FilterCategory) => {
+		const _searchParams = new URLSearchParams(searchParams);
+
+		for (const option of filterCategory.options) {
+			const value = typeof option === 'object' ? option.value : option;
+
+			if (_searchParams.has('specificationValues', value)) {
+				_searchParams.delete('specificationValues', value);
+			}
+		}
+
+		router.replace(`/?${_searchParams.toString()}`);
 	};
 
 	const handleCategoryChange = (
@@ -86,20 +93,6 @@ export function ProductFilters() {
 		router.replace(`./?${_searchParams.toString()}`);
 	};
 
-	const clearAllFilters = (filterCategory: FilterCategory) => {
-		const _searchParams = new URLSearchParams(searchParams);
-
-		for (const option of filterCategory.options) {
-			const value = typeof option === 'object' ? option.value : option;
-
-			if (_searchParams.has('specificationValues', value)) {
-				_searchParams.delete('specificationValues', value);
-			}
-		}
-
-		router.replace(`/?${_searchParams.toString()}`);
-	};
-
 	const selectAllFilters = (filterCategory: FilterCategory) => {
 		const _searchParams = new URLSearchParams(searchParams);
 
@@ -112,6 +105,13 @@ export function ProductFilters() {
 		}
 
 		router.replace(`/?${_searchParams.toString()}`);
+	};
+
+	const toggleSection = (section: string) => {
+		setExpandedSections((prev) => ({
+			...prev,
+			[section]: !(prev[section] ?? true),
+		}));
 	};
 
 	return (

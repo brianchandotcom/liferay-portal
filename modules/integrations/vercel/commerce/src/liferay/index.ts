@@ -20,8 +20,6 @@ export const liferay = {
 
 		const response = await fetch(endpoint, {
 			headers: {
-				'accept': '*/*',
-				'accept-language': 'en-US,en;q=0.5',
 				'content-type': 'application/json',
 				...init?.headers,
 			},

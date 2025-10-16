@@ -210,8 +210,11 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid())));
 		mockLiferayPortletActionRequest.setParameter(
-			"fragmentEntryId",
-			String.valueOf(_fragmentEntry.getFragmentEntryId()));
+			"fragmentEntryERC",
+			String.valueOf(_fragmentEntry.getExternalReferenceCode()));
+		mockLiferayPortletActionRequest.setParameter(
+			"fragmentEntryScopeERC",
+			String.valueOf(_fragmentEntry.getScopeERC()));
 		mockLiferayPortletActionRequest.setParameter(
 			"rowIds", new String[] {String.valueOf(_group.getGroupId())});
 

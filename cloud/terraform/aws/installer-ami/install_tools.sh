@@ -93,23 +93,17 @@ function main {
 
 	install_helm
 
-	local chart_dir
-
-	chart_dir=/opt/liferay/chart
+	local chart_dir="/opt/liferay/chart"
 
 	sudo mkdir --parents "${chart_dir}"
 
-	local image_dir
-
-	image_dir=/opt/liferay/image
+	local image_dir="/opt/liferay/image"
 
 	sudo mkdir --parents "${image_dir}"
 
 	sudo chown --recursive 1000:1000 /opt/liferay
 
-	local terraform_dir
-
-	terraform_dir=/opt/liferay/terraform
+	local terraform_dir="/opt/liferay/terraform"
 
 	pushd "${terraform_dir}/ecr"
 
@@ -156,9 +150,7 @@ function main {
 		"docker.io/liferay/dxp:${dxp_image_tag}" \
 		"${image_dir}/dxp:${dxp_image_tag}"
 
-	local oci_endpoint
-
-	oci_endpoint="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws"
+	local oci_endpoint="oci://us-central1-docker.pkg.dev/liferay-artifact-registry/liferay-helm-chart/liferay-aws"
 
 	if [ "${DXP_AWS_CHART_VERSION}" != "" ]
 	then

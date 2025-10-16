@@ -211,6 +211,10 @@ public class DLFileEntryModelResourcePermissionWrapper
 
 			DLFileVersion fileVersion = dlFileEntry.getFileVersion();
 
+			if (actionId.equals(ActionKeys.DOWNLOAD)) {
+				actionId = ActionKeys.VIEW;
+			}
+
 			if (fileVersion.isDraft() || fileVersion.isScheduled()) {
 				if (actionId.equals(ActionKeys.VIEW) &&
 					!_modelResourcePermission.contains(

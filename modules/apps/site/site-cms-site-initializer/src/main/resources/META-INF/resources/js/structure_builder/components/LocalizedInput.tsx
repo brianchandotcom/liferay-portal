@@ -17,6 +17,7 @@ export function LocalizedInput({
 	id,
 	label = '',
 	onSave,
+	placeholder,
 	required,
 	translations: initialTranslations,
 	...otherProps
@@ -27,6 +28,7 @@ export function LocalizedInput({
 	id?: string;
 	label?: string;
 	onSave: (translations: Translations) => void;
+	placeholder?: string;
 	required?: boolean;
 	translations: Translations;
 }) {
@@ -72,6 +74,7 @@ export function LocalizedInput({
 
 					setTranslations(translations);
 				}}
+				placeholder={placeholder}
 				required={required}
 				translations={translations}
 			/>

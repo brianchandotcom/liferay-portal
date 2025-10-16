@@ -71,6 +71,7 @@ export default function StructureSettings() {
 						type: 'update-structure',
 					});
 				}}
+				placeholder={Liferay.Language.get('content-structure-label')}
 				required
 				translations={structureLabel}
 			/>
@@ -115,6 +116,7 @@ function GeneralTab() {
 				onValueChange={(value) =>
 					dispatch({name: value, type: 'update-structure'})
 				}
+				placeholder={Liferay.Language.get('content-structure-name')}
 				required
 				value={name}
 			/>

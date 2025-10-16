@@ -92,21 +92,21 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					return;
 				}
 
-				sqlString = _stripOuterMethod(getParameterList.get(1));
+				sqlString = _stripOuterMethods(getParameterList.get(1));
 			}
 			else if (methodName.equals("connection.prepareStatement")) {
 				if (parameterSize != 1) {
 					return;
 				}
 
-				sqlString = _stripOuterMethod(getParameterList.get(0));
+				sqlString = _stripOuterMethods(getParameterList.get(0));
 			}
 			else if (methodName.equals("runSQL")) {
 				if (parameterSize == 1) {
-					sqlString = _stripOuterMethod(getParameterList.get(0));
+					sqlString = _stripOuterMethods(getParameterList.get(0));
 				}
 				else if (parameterSize == 2) {
-					sqlString = _stripOuterMethod(getParameterList.get(1));
+					sqlString = _stripOuterMethods(getParameterList.get(1));
 				}
 			}
 			else if (methodName.equals("StringBundler.concat")) {
@@ -127,7 +127,7 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				sqlString = _stripOuterMethod(methodCall);
+				sqlString = _stripOuterMethods(methodCall);
 			}
 
 			if (sqlString.equals(StringPool.BLANK)) {
@@ -176,7 +176,7 @@ public class JavaSQLBooleanValuesCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _stripOuterMethod(String parameter) {
+	private String _stripOuterMethods(String parameter) {
 		String trimmedParameter = parameter.trim();
 
 		if (trimmedParameter.endsWith(")") &&

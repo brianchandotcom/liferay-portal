@@ -390,7 +390,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommandTest {
 
 		for (FriendlyURLResolver friendlyURLResolver :
 				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
+					getFriendlyURLResolversAsCollection(
+						_company.getCompanyId())) {
 
 			if (!friendlyURLResolver.isURLSeparatorConfigurable()) {
 				continue;

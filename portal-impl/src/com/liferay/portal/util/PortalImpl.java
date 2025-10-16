@@ -1160,7 +1160,7 @@ public class PortalImpl implements Portal {
 				try {
 					FriendlyURLResolver friendlyURLResolver =
 						FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-							urlSeparator);
+							companyId, urlSeparator);
 
 					actualURL = friendlyURLResolver.getActualURL(
 						companyId, groupId, privateLayout, mainPath,
@@ -1380,7 +1380,7 @@ public class PortalImpl implements Portal {
 
 					FriendlyURLResolver friendlyURLResolver =
 						FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-							urlSeparator);
+							themeDisplay.getCompanyId(), urlSeparator);
 
 					HttpServletRequest httpServletRequest =
 						themeDisplay.getRequest();
@@ -2731,7 +2731,7 @@ public class PortalImpl implements Portal {
 				try {
 					FriendlyURLResolver friendlyURLResolver =
 						FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-							urlSeparator);
+							companyId, urlSeparator);
 
 					layoutFriendlyURLSeparatorComposite =
 						friendlyURLResolver.

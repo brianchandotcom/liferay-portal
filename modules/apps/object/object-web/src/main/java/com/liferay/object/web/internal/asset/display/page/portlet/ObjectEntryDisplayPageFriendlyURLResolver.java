@@ -25,7 +25,11 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 
 	@Override
 	public long getCompanyId() {
-		return _objectDefinition.getCompanyId();
+		if (_objectDefinition != null) {
+			return _objectDefinition.getCompanyId();
+		}
+
+		return 0;
 	}
 
 	@Override

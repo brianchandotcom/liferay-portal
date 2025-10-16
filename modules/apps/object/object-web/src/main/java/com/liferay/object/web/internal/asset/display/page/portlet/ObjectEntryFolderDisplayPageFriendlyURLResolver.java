@@ -46,18 +46,18 @@ public class ObjectEntryFolderDisplayPageFriendlyURLResolver
 
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-			String friendlyURL)
+			long companyId, String friendlyURL)
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		String[] parts = StringUtil.split(
@@ -65,7 +65,7 @@ public class ObjectEntryFolderDisplayPageFriendlyURLResolver
 			CharPool.SLASH);
 
 		if (parts.length == 1) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		ObjectEntryFolder objectEntryFolder =
@@ -73,7 +73,7 @@ public class ObjectEntryFolderDisplayPageFriendlyURLResolver
 				GetterUtil.getLong(parts[0]));
 
 		if (objectEntryFolder == null) {
-			return super.getLayoutDisplayPageProvider(friendlyURL);
+			return super.getLayoutDisplayPageProvider(companyId, friendlyURL);
 		}
 
 		return layoutDisplayPageProviderRegistry.

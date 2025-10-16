@@ -106,7 +106,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 
 		for (FriendlyURLResolver friendlyURLResolver :
 				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
+					getFriendlyURLResolversAsCollection(
+						themeDisplay.getCompanyId())) {
 
 			if (!friendlyURLResolver.isURLSeparatorConfigurable()) {
 				continue;
@@ -195,7 +196,8 @@ public class FriendlyURLSeparatorSaveCompanyConfigurationMVCActionCommand
 
 		for (FriendlyURLResolver friendlyURLResolver :
 				FriendlyURLResolverRegistryUtil.
-					getFriendlyURLResolversAsCollection()) {
+					getFriendlyURLResolversAsCollection(
+						themeDisplay.getCompanyId())) {
 
 			if (!friendlyURLResolver.isURLSeparatorConfigurable()) {
 				continue;

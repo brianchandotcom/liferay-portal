@@ -87,7 +87,7 @@ public class FriendlyURLSeparatorUtil {
 						keywordConflict);
 			FriendlyURLResolver friendlyURLResolver2 =
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-					keywordConflict);
+					companyId, keywordConflict);
 
 			if (((friendlyURLResolver1 == null) &&
 				 (friendlyURLResolver2 == null)) ||

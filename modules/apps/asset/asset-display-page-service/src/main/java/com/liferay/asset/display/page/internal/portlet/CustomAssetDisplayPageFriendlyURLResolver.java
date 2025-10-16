@@ -125,7 +125,7 @@ public class CustomAssetDisplayPageFriendlyURLResolver
 
 	@Override
 	protected LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider(
-		String friendlyURL) {
+		long companyId, String friendlyURL) {
 
 		String[] parts = _getPathParts(friendlyURL);
 

@@ -75,7 +75,7 @@ const ProductDetail = ({product}: {product: Product}) => {
 							{images.map((image, index) => (
 								<button
 									className={clsx(
-										'flex-shrink-0 w-16 h-16 rounded-md overflow-hidden border-2',
+										'border-2 flex-shrink-0 h-16 overflow-hidden rounded-md w-16',
 										{
 											'border-primary':
 												selectedImageIndex === index,

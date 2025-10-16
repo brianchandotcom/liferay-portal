@@ -8,7 +8,7 @@ import {cn} from '../../utils/css-classes';
 function Skeleton({className, ...props}: React.HTMLAttributes<HTMLDivElement>) {
 	return (
 		<div
-			className={cn('animate-pulse rounded-md bg-muted', className)}
+			className={cn('animate-pulse bg-muted rounded-md', className)}
 			{...props}
 		/>
 	);

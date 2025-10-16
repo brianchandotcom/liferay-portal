@@ -1,3 +1,5 @@
+*.iml
+**/docroot/WEB-INF/tld/
 .classpath
 .gh.json
 .gradle/
@@ -6,8 +8,6 @@
 .sass-cache/
 .settings/
 .tsc/
-*.iml
-**/docroot/WEB-INF/tld/
 bin/
 build/
 classes/

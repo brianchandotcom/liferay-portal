@@ -68,8 +68,8 @@ export function PaginationBar({
 			<div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
 				<div className="flex gap-4 items-center text-sm">
 					<Select
-						onValueChange={(val: string) =>
-							onPageSizeChange(Number(val))
+						onValueChange={(value: string) =>
+							onPageSizeChange(Number(value))
 						}
 						value={String(pageSize)}
 					>
@@ -103,7 +103,7 @@ export function PaginationBar({
 								<PaginationPrevious
 									className={cn(
 										currentPage === 1 &&
-											'pointer-events-none opacity-50'
+											'opacity-50 pointer-events-none'
 									)}
 									onClick={(event) => {
 										event.preventDefault();
@@ -126,6 +126,7 @@ export function PaginationBar({
 											isActive={page === currentPage}
 											onClick={(event) => {
 												event.preventDefault();
+
 												onPageChange(page as number);
 											}}
 											size="sm"
@@ -140,10 +141,11 @@ export function PaginationBar({
 								<PaginationNext
 									className={cn(
 										currentPage === totalPages &&
-											'pointer-events-none opacity-50'
+											'opacity-50 pointer-events-none'
 									)}
 									onClick={(event) => {
 										event.preventDefault();
+
 										if (currentPage < totalPages) {
 											onPageChange(currentPage + 1);
 										}

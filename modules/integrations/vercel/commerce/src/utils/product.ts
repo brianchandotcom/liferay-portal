@@ -59,6 +59,6 @@ export function handleImageError(event: React.ChangeEvent<HTMLImageElement>) {
 		);
 	}
 	else {
-		event.currentTarget.src = '/images/dxp-logo.svg';
+		event.currentTarget.src = '/images/dxp_logo.svg';
 	}
 }

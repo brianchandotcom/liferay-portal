@@ -10,7 +10,7 @@ import {forwardRef} from 'react';
 import {cn} from '../../utils/css-classes';
 
 const labelVariants = cva(
-	'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+	'font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm'
 );
 
 const Label = forwardRef<

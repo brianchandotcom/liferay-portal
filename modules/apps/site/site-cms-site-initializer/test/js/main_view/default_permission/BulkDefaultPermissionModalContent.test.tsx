@@ -8,6 +8,7 @@ import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import CMSDefaultPermissionService from '../../../../src/main/resources/META-INF/resources/js/common/services/CMSDefaultPermissionService';
+import SpaceService from '../../../../src/main/resources/META-INF/resources/js/common/services/SpaceService';
 import BulkDefaultPermissionModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/BulkDefaultPermissionModalContent';
 import {BulkDefaultPermissionModalContentProps} from '../../../../src/main/resources/META-INF/resources/js/main_view/default_permission/DefaultPermissionTypes';
 import * as BulkActionTrigger from '../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/actions/triggerAssetBulkAction';
@@ -77,15 +78,13 @@ describe('BulkDefaultPermissionModalContent', () => {
 				});
 			});
 
-		getSpaceSpy = jest
-			.spyOn(CMSDefaultPermissionService, 'getSpace')
-			.mockResolvedValue({
-				creatorUserId: '20103',
-				description: 'This is a test space',
-				externalReferenceCode: 'ERC2',
-				id: 1,
-				name: 'Test Space',
-			});
+		getSpaceSpy = jest.spyOn(SpaceService, 'getSpace').mockResolvedValue({
+			creatorUserId: '20103',
+			description: 'This is a test space',
+			externalReferenceCode: 'ERC2',
+			id: 1,
+			name: 'Test Space',
+		});
 
 		batchUpdateSpy = jest.spyOn(
 			BulkActionTrigger,

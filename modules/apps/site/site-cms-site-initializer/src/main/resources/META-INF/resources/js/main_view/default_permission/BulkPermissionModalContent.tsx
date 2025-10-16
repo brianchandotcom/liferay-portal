@@ -12,6 +12,7 @@ import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
+import SpaceService from '../../common/services/SpaceService';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {
 	DEFAULT_PERMISSIONS,
@@ -149,10 +150,9 @@ export default function BulkPermissionModalContent({
 							return;
 						}
 						else {
-							const space =
-								await CMSDefaultPermissionService.getSpace(
-									firstItem.embedded.scopeId
-								);
+							const space = await SpaceService.getSpace(
+								firstItem.embedded.scopeId
+							);
 
 							entryClassExternalReferenceCode =
 								space.externalReferenceCode;

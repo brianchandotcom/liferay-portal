@@ -68,11 +68,7 @@ async function getEntriesSpaces(
 ): Promise<any[]> {
 	const promises = items
 		.filter((item) => item.embedded.scopeId)
-		.map((item) =>
-			SpaceService.getSpace({
-				spaceId: item.embedded.scopeId as number,
-			})
-		);
+		.map((item) => SpaceService.getSpace(item.embedded.scopeId!));
 
 	return (await Promise.all(promises)).filter(Boolean);
 }

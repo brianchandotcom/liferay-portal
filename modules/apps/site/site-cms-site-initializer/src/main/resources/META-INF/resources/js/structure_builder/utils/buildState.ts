@@ -25,6 +25,7 @@ export default function buildState({
 		error: null,
 		history: {
 			deletedChildren: false,
+			modifiedNames: new Set(),
 		},
 		invalids: new Map(),
 		publishedChildren:

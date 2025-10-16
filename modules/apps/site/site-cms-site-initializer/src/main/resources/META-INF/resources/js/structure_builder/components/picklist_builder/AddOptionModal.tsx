@@ -40,13 +40,13 @@ export default function AddOptionModal({
 	});
 
 	const onSave = () => {
-		if (!erc || !key || !name) {
-			return;
-		}
-
 		addOption({erc, key, name});
 
 		onClose();
+	};
+
+	const onSaveAndAddAnother = () => {
+		addOption({erc, key, name});
 	};
 
 	return (
@@ -99,6 +99,13 @@ export default function AddOptionModal({
 					<ClayButton.Group spaced>
 						<ClayButton displayType="secondary" onClick={onClose}>
 							{Liferay.Language.get('cancel')}
+						</ClayButton>
+
+						<ClayButton
+							displayType="secondary"
+							onClick={onSaveAndAddAnother}
+						>
+							{Liferay.Language.get('save-and-add-another')}
 						</ClayButton>
 
 						<ClayButton onClick={onSave}>

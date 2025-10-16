@@ -597,7 +597,6 @@ public class ObjectLayoutLocalServiceImpl
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
-
 		Set<String> objectLayoutBoxTypes = new HashSet<>();
 
 		for (ObjectLayoutTab objectLayoutTab : objectLayoutTabs) {

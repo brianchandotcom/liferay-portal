@@ -26,6 +26,10 @@ public interface FriendlyURLResolver {
 			Map<String, Object> requestContext)
 		throws PortalException;
 
+	public default long getCompanyId() {
+		return 0;
+	}
+
 	public default String getDefaultURLSeparator() {
 		return StringPool.BLANK;
 	}

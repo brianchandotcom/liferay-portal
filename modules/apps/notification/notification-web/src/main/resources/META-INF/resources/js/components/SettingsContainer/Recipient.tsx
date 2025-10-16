@@ -163,7 +163,7 @@ export function Recipient({
 								Liferay.Language.get(
 									'use-terms-to-configure-recipients-x'
 								),
-								'[%OBJECT_ENTRY_ASSIGNEE%]'
+								'[%CURRENT_USER_EMAIL_ADDRESS%]'
 							)}
 							id={id}
 							label={label}

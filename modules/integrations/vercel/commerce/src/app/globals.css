@@ -74,7 +74,7 @@
 }
 
 body {
-	@apply min-h-screen flex flex-col gap-4 md:gap-8;
+	@apply flex flex-col gap-4 md:gap-8 min-h-screen;
 	@apply text-foreground;
 
 	&::before {
@@ -91,7 +91,7 @@ body {
 
 @layer components {
 	.button {
-		@apply bg-blue-600 text-white rounded-md py-2 px-4 inline-block font-bold text-center;
+		@apply bg-blue-600 font-bold inline-block px-4 py-2 rounded-md text-center text-white;
 	}
 
 	.button:not(.button--active) {
@@ -103,15 +103,15 @@ body {
 	}
 
 	.card {
-		@apply h-full shadow-md rounded-md overflow-hidden bg-white;
+		@apply bg-white h-full overflow-hidden rounded-md shadow-md;
 	}
 
 	.layout-header {
-		@apply bg-white py-4 px-4 shadow;
+		@apply bg-white px-4 py-4 shadow;
 	}
 
 	.layout-header__container {
-		@apply container mx-auto sm:max-w-4xl flex flex-row items-center justify-between gap-4;
+		@apply container flex flex-row items-center justify-between gap-4 mx-auto sm:max-w-4xl;
 	}
 
 	.layout-main {

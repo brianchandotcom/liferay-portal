@@ -43,7 +43,6 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -334,11 +333,12 @@ public class IndividualSegmentController extends BaseFaroController {
 			faroProjectLocalService.getFaroProjectByGroupId(groupId);
 
 		if (Validator.isNull(contactsEntityId)) {
+			List<String> fieldNames = List.of("name", "author/name");
+
 			results = contactsEngineClient.getIndividualSegments(
-				faroProject, channelId, dataSourceId, query,
-				Collections.singletonList("name"), null, segmentTypes, state,
-				IndividualSegment.Status.ACTIVE.name(), cur, delta,
-				orderByFields);
+				faroProject, channelId, dataSourceId, query, fieldNames, null,
+				segmentTypes, state, IndividualSegment.Status.ACTIVE.name(),
+				cur, delta, orderByFields);
 		}
 		else if (contactsEntityType == FaroConstants.TYPE_ACCOUNT) {
 			results = contactsEngineClient.getAccountIndividualSegments(

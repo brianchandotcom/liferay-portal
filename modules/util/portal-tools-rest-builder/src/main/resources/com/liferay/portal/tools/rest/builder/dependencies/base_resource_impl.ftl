@@ -417,22 +417,23 @@ public abstract class Base${schemaName}ResourceImpl
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
+				<#assign schemaKey = "" />
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-					<#assign generateGetPermissionCheckerMethods = true />
-
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName}Id);
-					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
-					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
-
-					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
-
-					return toPermissionPage(${getActions("groupId", "resourceId", "resourceName", schemaName)}, resourceId, resourceName, roleNames);
+					<#assign
+						generateGetPermissionCheckerMethods = true
+						schemaKey = schemaVarName + "Id"
+					/>
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
-					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+					<#assign
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+						schemaKey = schemaVarName + "ExternalReferenceCode"
+					/>
+				</#if>
 
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName}ExternalReferenceCode);
-					String resourceName = getPermissionCheckerResourceName(${schemaVarName}ExternalReferenceCode);
-					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}ExternalReferenceCode);
+				<#if schemaKey?has_content>
+					Long groupId = getPermissionCheckerGroupId(${schemaKey});
+					String resourceName = getPermissionCheckerResourceName(${schemaKey});
+					Long resourceId = getPermissionCheckerResourceId(${schemaKey});
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
 
@@ -491,25 +492,23 @@ public abstract class Base${schemaName}ResourceImpl
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
+				<#assign schemaKey = "" />
 				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-					<#assign generateGetPermissionCheckerMethods = true />
-
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName}Id);
-					String resourceName = getPermissionCheckerResourceName(${schemaVarName}Id);
-					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}Id);
-
-					<@updateResourcePermissions
-						actions = getActions("groupId", "resourceId", "resourceName", schemaName)
-						groupId = "groupId"
-						resourceId = "resourceId"
-						resourceName = "resourceName"
+					<#assign
+						generateGetPermissionCheckerMethods = true
+						schemaKey = schemaVarName + "Id"
 					/>
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
-					<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+					<#assign
+						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
+						schemaKey = schemaVarName + "ExternalReferenceCode"
+					/>
+				</#if>
 
-					Long groupId = getPermissionCheckerGroupId(${schemaVarName}ExternalReferenceCode);
-					String resourceName = getPermissionCheckerResourceName(${schemaVarName}ExternalReferenceCode);
-					Long resourceId = getPermissionCheckerResourceId(${schemaVarName}ExternalReferenceCode);
+				<#if schemaKey??>
+					Long groupId = getPermissionCheckerGroupId(${schemaKey});
+					String resourceName = getPermissionCheckerResourceName(${schemaKey});
+					Long resourceId = getPermissionCheckerResourceId(${schemaKey});
 
 					<@updateResourcePermissions
 						actions = getActions("groupId", "resourceId", "resourceName", schemaName)

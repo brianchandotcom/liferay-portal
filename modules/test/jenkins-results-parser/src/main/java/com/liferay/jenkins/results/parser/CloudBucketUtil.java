@@ -754,6 +754,10 @@ public class CloudBucketUtil {
 			File destinationFile, String s3SourcePath)
 		throws IOException {
 
+		if (!_VALIDATE_CHECKSUM) {
+			return;
+		}
+
 		File destinationChecksumFile = new File(
 			destinationFile.getParentFile(),
 			destinationFile.getName() + _CHECKSUM_FILE_EXTENSION);
@@ -803,6 +807,8 @@ public class CloudBucketUtil {
 
 	private static final String _CHECKSUM_FILE_EXTENSION = ".sha512";
 
+	private static final boolean _VALIDATE_CHECKSUM;
+
 	private static final Pattern _awsCommandPattern = Pattern.compile(
 		"aws s3 (?<command>[^\\s]+)\\s+(?<options>.+)");
 	private static final Properties _buildProperties;
@@ -824,6 +830,10 @@ public class CloudBucketUtil {
 				}
 			}
 		};
+
+		_VALIDATE_CHECKSUM = Boolean.parseBoolean(
+			_buildProperties.getProperty(
+				"cloud.ci.s3.bucket.validate.checksum.enabled"));
 	}
 
 }

@@ -5,7 +5,8 @@
 
 package com.liferay.batch.engine;
 
-import com.liferay.batch.engine.strategy.BatchEngineImportStrategy;
+import com.liferay.petra.function.UnsafeBiConsumer;
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -33,8 +34,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		batchEngineImportStrategy.apply(
-			this, items, item -> createItem(item, parameters));
+		importUnsafeBiConsumer.accept(
+			items, item -> createItem(item, parameters));
 	}
 
 	public T createItem(T item, Map<String, Serializable> parameters)
@@ -48,8 +49,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		batchEngineImportStrategy.apply(
-			this, items,
+		importUnsafeBiConsumer.accept(
+			items,
 			item -> {
 				deleteItem(item, parameters);
 
@@ -89,13 +90,6 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setBatchEngineImportStrategy(
-		BatchEngineImportStrategy batchEngineImportStrategy) {
-
-		this.batchEngineImportStrategy = batchEngineImportStrategy;
-	}
-
-	@Override
 	public void setContextCompany(Company contextCompany) {
 		this.contextCompany = contextCompany;
 	}
@@ -108,6 +102,15 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	@Override
 	public void setContextUser(User contextUser) {
 		this.contextUser = contextUser;
+	}
+
+	@Override
+	public void setImportUnsafeBiConsumer(
+		UnsafeBiConsumer
+			<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
+				unsafeBiConsumer) {
+
+		importUnsafeBiConsumer = unsafeBiConsumer;
 	}
 
 	@Override
@@ -129,9 +132,11 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 	}
 
-	protected BatchEngineImportStrategy batchEngineImportStrategy;
 	protected Company contextCompany;
 	protected User contextUser;
+	protected UnsafeBiConsumer
+		<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
+			importUnsafeBiConsumer;
 	protected String languageId;
 	protected UriInfo uriInfo;
 

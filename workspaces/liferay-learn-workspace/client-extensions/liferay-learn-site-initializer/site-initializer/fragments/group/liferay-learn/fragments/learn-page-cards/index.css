@@ -15,11 +15,42 @@
 		border: 1px solid var(--color-brand-primary-darken-1, #0053f0) !important;
 		border-radius: 10px !important;
 	}
-	
+
 	.learn-card__content{
 		display: flex;
 		flex-direction: column;
 		row-gap: 1.5rem;
+	}
+
+	.learn-card__cta {
+		align-items: center;
+		color: #0053f0;
+		display: flex;
+		gap: 0.5rem;
+		justify-content: flex-start;
+		margin: 0;
+
+		.learn-card__cta-text {
+			font-size: 1.25rem;
+			font-weight: 600;
+		}
+
+		.learn-card__cta-icon * {
+			margin-top: 0;
+		}
+	}
+
+	.learn-card__description {
+		color: var(--color-neutral-7);
+		font-size: 1rem;
+		font-weight: 400;
+		margin: 0;
+	}
+	
+	.learn-card__title {
+		color: var(--color-neutral-10) !important;
+		font-weight: 700;
+		margin: 0;
 	}
 
 	.learn-card__icon {
@@ -41,40 +72,7 @@
 			background: linear-gradient(135deg, #0a0c23, #0d1a50, #103b9e, #179fbe, #3be6b3);
 		}
 	}
-
-	.learn-card__title {
-		color: var(--color-neutral-10) !important;
-		font-weight: 700;
-		margin: 0;
-	}
-
-	.learn-card__description {
-		color: var(--color-neutral-7);
-		font-size: 1rem;
-		font-weight: 400;
-		margin: 0;
-	}
-
-	.learn-card__cta {
-		align-items: center;
-		color: #0053f0;
-		display: flex;
-		gap: 0.5rem;
-		justify-content: flex-start;
-		margin: 0;
-
-		.learn-card__cta-text {
-			font-size: 1.25rem;
-			font-weight: 600;
-		}
-
-		.learn-card__cta-icon * {
-			margin-top: 0;
-		}
-	}
 }
-
-/*documentation*/
 
 .learn-card--documentation {
 	background-color: var(--color-neutral-1);
@@ -92,6 +90,13 @@
 	&:hover {
 		background-color: var(--color-action-primary-hover-10, #edf3fe) !important;
 		border: 1px solid var(--color-brand-primary-darken-1, #0053f0) !important;
+	}
+
+	.learn-card__content {
+		display:flex;
+		flex-direction: column;
+		margin-left: 1rem;
+		row-gap: 0.5rem;
 	}
 
 	.learn-card__cta {
@@ -114,20 +119,11 @@
 
 	}
 
-	.learn-card__image {
-		align-items: center;
-		display: flex;
-		height: 40px;
-		justify-content: center;
-		margin-left: -0.5rem;
-		width: 40px;
-	}
-
 	.learn-card__description {
 		color: #272833;
 		display: -webkit-box;
-		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 2;
 		font-size: 1rem;
 		font-weight: 400;
 		margin: 0;
@@ -138,6 +134,15 @@
 		word-break: break-word;
 	}
 
+	.learn-card__image {
+		align-items: center;
+		display: flex;
+		height: 40px;
+		justify-content: center;
+		margin-left: -0.5rem;
+		width: 40px;
+	}
+
 	.learn-card__title {
 		color: var(--color-neutral-10) !important;
 		font-size: 24px;
@@ -145,13 +150,4 @@
 		margin: 0;
 		max-width: 288px;
 	}
-
-	.learn-card__content {
-		display:flex;
-		flex-direction: column;
-		margin-left: 1rem;
-		row-gap: 0.5rem;
-
-	}
-
 }

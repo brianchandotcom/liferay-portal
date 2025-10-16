@@ -4,6 +4,7 @@ set -eux
 
 function main {
 	sudo yum update --assumeyes
+
 	sudo yum install --assumeyes git jq tree shadow-utils unzip yum-utils
 
 	curl \
@@ -13,8 +14,11 @@ function main {
 		--show-error \
 		--silent \
 		"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+
 	unzip awscliv2.zip -x "aws/dist/awscli/examples/*"
+
 	sudo ./aws/install
+
 	rm awscliv2.zip
 
 	local terraform_version
@@ -28,8 +32,11 @@ function main {
 		--show-error \
 		--silent \
 		"https://releases.hashicorp.com/terraform/${terraform_version}/terraform_${terraform_version}_linux_amd64.zip"
+
 	unzip terraform.zip
+
 	sudo mv terraform /usr/local/bin/
+
 	rm terraform.zip
 
 	local kubernetes_version
@@ -43,7 +50,9 @@ function main {
 		--show-error \
 		--silent \
 		"https://dl.k8s.io/release/v${kubernetes_version}/bin/linux/amd64/kubectl"
+
 	chmod +x kubectl
+
 	sudo mv kubectl /usr/local/bin/
 
 	curl \
@@ -53,8 +62,11 @@ function main {
 		--show-error \
 		--silent \
 		"https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_Linux_amd64.tar.gz"
+
 	tar --extract --file=eksctl.tar.gz --gzip
+
 	sudo mv eksctl /usr/local/bin
+
 	rm eksctl.tar.gz
 
 	local oras_version
@@ -68,9 +80,13 @@ function main {
 		--show-error \
 		--silent \
 		"https://github.com/oras-project/oras/releases/download/v${oras_version}/oras_${oras_version}_linux_amd64.tar.gz"
+
 	tar --extract --file=oras.tar.gz --gzip
+
 	sudo mv oras /usr/local/bin/
+
 	sudo chmod +x /usr/local/bin/oras
+
 	rm oras.tar.gz
 
 	curl \
@@ -80,8 +96,11 @@ function main {
 		--show-error \
 		--silent \
 		https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+
 	chmod 700 get_helm.sh
+
 	./get_helm.sh
+
 	rm get_helm.sh
 
 	local chart_dir
@@ -101,15 +120,21 @@ function main {
 	sudo chown --recursive 1000:1000 /opt/liferay
 
 	pushd "${terraform_dir}/ecr"
+
 	terraform init -upgrade
+
 	popd
 
 	pushd "${terraform_dir}/eks"
+
 	terraform init -upgrade
+
 	popd
 
 	pushd "${terraform_dir}/dependencies"
+
 	terraform init -upgrade
+
 	popd
 
 	local container_registry
@@ -139,6 +164,7 @@ function main {
 	liferay_dxp_repository="liferay/dxp"
 
 	mkdir "${image_dir}/dxp"
+
 	oras \
 		cp \
 		--no-tty \

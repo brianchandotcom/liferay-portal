@@ -31,7 +31,6 @@ import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.object.web.internal.model.ProxyObjectEntry;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -153,19 +152,6 @@ public class ObjectEntryUtil {
 	public static ObjectEntry toObjectEntry(
 		ObjectDefinition objectDefinition,
 		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry) {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-32050")) {
-
-			ObjectEntry serviceBuilderObjectEntry =
-				ObjectEntryLocalServiceUtil.fetchObjectEntry(
-					GetterUtil.getLong(objectEntry.getId()));
-
-			if (serviceBuilderObjectEntry != null) {
-				return new ProxyObjectEntry(
-					serviceBuilderObjectEntry, objectEntry);
-			}
-		}
 
 		ObjectEntry serviceBuilderObjectEntry =
 			ObjectEntryLocalServiceUtil.createObjectEntry(0L);

@@ -95,6 +95,14 @@ public class CommerceOrderConstants {
 		ORDER_STATUS_PARTIALLY_SHIPPED, ORDER_STATUS_SHIPPED
 	};
 
+	public static final String ORDER_VISIBILITY_SCOPE_ACCOUNT = "account";
+
+	public static final String ORDER_VISIBILITY_SCOPE_USER = "user";
+
+	public static final String[] ORDER_VISIBILITY_SCOPES = {
+		ORDER_VISIBILITY_SCOPE_ACCOUNT, ORDER_VISIBILITY_SCOPE_USER
+	};
+
 	public static final String RESOURCE_NAME = "com.liferay.commerce.order";
 
 	public static final long TYPE_PK_APPROVAL = 0;

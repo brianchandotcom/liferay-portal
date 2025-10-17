@@ -283,7 +283,11 @@ const AssetUsageListModal: React.FC<IAssetUsageListModalProps> = ({
 	return (
 		<ClayTooltipProvider>
 			<div className="cms-asset-usage-list-modal">
-				<ClayModal.Header>{modalProps.title}</ClayModal.Header>
+				<ClayModal.Header
+					closeButtonAriaLabel={Liferay.Language.get('close')}
+				>
+					{modalProps.title}
+				</ClayModal.Header>
 
 				<ClayModal.Body>
 					{cachedData.length === 1 && (

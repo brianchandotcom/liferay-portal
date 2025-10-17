@@ -245,7 +245,9 @@ export default function BulkDefaultPermissionModalContent({
 
 	return (
 		<>
-			<ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
 				{sub(
 					Liferay.Language.get('edit-x'),
 					Liferay.Language.get('default-permissions')

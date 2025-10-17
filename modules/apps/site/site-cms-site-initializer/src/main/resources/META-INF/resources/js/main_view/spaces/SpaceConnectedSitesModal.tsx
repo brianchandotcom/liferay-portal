@@ -264,7 +264,9 @@ export default function SpaceConnectedSitesModal({
 
 	return (
 		<>
-			<ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
 				{Liferay.Language.get('all-sites')}
 			</ClayModal.Header>
 

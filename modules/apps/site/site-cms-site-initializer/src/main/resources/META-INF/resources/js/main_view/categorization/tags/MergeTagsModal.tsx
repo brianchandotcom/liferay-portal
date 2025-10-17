@@ -215,7 +215,9 @@ export default function MergeTagsModalContent({
 		return (
 			<>
 				<div className="categorization-section">
-					<ClayModal.Header>
+					<ClayModal.Header
+						closeButtonAriaLabel={Liferay.Language.get('close')}
+					>
 						{Liferay.Language.get('merge-tags')}
 					</ClayModal.Header>
 
@@ -321,7 +323,9 @@ export default function MergeTagsModalContent({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
 				{Liferay.Language.get('merge-tags')}
 			</ClayModal.Header>
 

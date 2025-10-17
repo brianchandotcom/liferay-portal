@@ -704,7 +704,11 @@ const ApplicationsMenu = ({
 					observer={observer}
 					status="info"
 				>
-					<ClayModal.Header className="sr-only" withTitle={false}>
+					<ClayModal.Header
+						className="sr-only"
+						closeButtonAriaLabel={Liferay.Language.get('close')}
+						withTitle={false}
+					>
 						<ClayModal.Title>
 							{Liferay.Language.get('applications-menu')}
 						</ClayModal.Title>

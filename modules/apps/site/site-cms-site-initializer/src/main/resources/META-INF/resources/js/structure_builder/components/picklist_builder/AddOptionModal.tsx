@@ -51,7 +51,9 @@ export default function AddOptionModal({
 
 	return (
 		<ClayModal observer={observer}>
-			<ClayModal.Header>
+			<ClayModal.Header
+				closeButtonAriaLabel={Liferay.Language.get('close')}
+			>
 				{Liferay.Language.get('add-option')}
 			</ClayModal.Header>
 

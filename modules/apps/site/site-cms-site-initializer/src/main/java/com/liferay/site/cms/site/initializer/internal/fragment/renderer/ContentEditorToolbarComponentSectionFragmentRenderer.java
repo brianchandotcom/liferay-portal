@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sandro Chinea
  */
 @Component(service = FragmentRenderer.class)
-public class ContentEditorManagementBarComponentSectionFragmentRenderer
+public class ContentEditorToolbarComponentSectionFragmentRenderer
 	extends BaseComponentSectionFragmentRenderer {
 
 	@Override
@@ -73,7 +73,7 @@ public class ContentEditorManagementBarComponentSectionFragmentRenderer
 
 	@Override
 	protected String getModuleName() {
-		return "ContentEditorManagementBar";
+		return "ContentEditorToolbar";
 	}
 
 	@Override

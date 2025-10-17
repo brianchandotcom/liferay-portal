@@ -18,7 +18,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {Comment} from '../services/CommentService';
-import {EVENT_VALIDATE_FORM} from './ContentEditorManagementBar';
+import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
 import CategorizationPanel from './panels/CategorizationPanel';
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';

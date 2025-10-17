@@ -138,7 +138,7 @@ export default function ContentEditorToolbar({
 
 				<ClayInput
 					form={formId}
-					name="displayDate"
+					name="ObjectEntry_displayDate"
 					type="hidden"
 					value={displayDate}
 				/>

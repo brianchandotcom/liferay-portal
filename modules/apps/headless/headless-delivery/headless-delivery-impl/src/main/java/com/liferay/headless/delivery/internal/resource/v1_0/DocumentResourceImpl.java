@@ -5,6 +5,8 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.depot.group.provider.SiteConnectedGroupGroupProvider;
@@ -45,6 +47,7 @@ import com.liferay.journal.service.JournalArticleService;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.ServicePreAction;
 import com.liferay.portal.events.ThemeServicePreAction;
@@ -87,6 +90,7 @@ import com.liferay.portal.vulcan.custom.field.CustomFieldsUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import com.liferay.portal.vulcan.multipart.BinaryFile;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -102,7 +106,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
+import java.io.Serializable;
+
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -354,6 +362,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 	public Document patchDocument(Long documentId, MultipartBody multipartBody)
 		throws Exception {
 
+		multipartBody = _getMultipartBodyFromDocument(
+			documentId, multipartBody);
+
 		FileEntry existingFileEntry = _dlAppService.getFileEntry(documentId);
 
 		BinaryFile binaryFile = multipartBody.getBinaryFile("file");
@@ -488,7 +499,8 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 		throws Exception {
 
 		return _updateDocument(
-			_dlAppService.getFileEntry(documentId), multipartBody);
+			_dlAppService.getFileEntry(documentId),
+			_getMultipartBodyFromDocument(documentId, multipartBody));
 	}
 
 	@Override
@@ -517,6 +529,23 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 		return _addDocument(
 			externalReferenceCode, siteId, siteId, null, multipartBody);
+	}
+
+	@Override
+	public void update(
+			Collection<Document> documents,
+			Map<String, Serializable> parameters)
+		throws Exception {
+
+		Map<Long, Object> batchDocuments = new HashMap<>();
+
+		for (Document document : documents) {
+			batchDocuments.put(document.getId(), document);
+		}
+
+		_batchDocuments.set(batchDocuments);
+
+		super.update(documents, parameters);
 	}
 
 	@Override
@@ -862,6 +891,34 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			pagination, _dlFileEntryService.getFileEntriesCount(groupId, 0.1));
 	}
 
+	private MultipartBody _getMultipartBodyFromDocument(
+			Long documentId, MultipartBody multipartBody)
+		throws Exception {
+
+		if (multipartBody != null) {
+			return multipartBody;
+		}
+
+		Map<Long, Object> batchDocuments = _batchDocuments.get();
+
+		if (batchDocuments == null) {
+			return null;
+		}
+
+		Document document = (Document)batchDocuments.get(documentId);
+
+		if (document == null) {
+			return null;
+		}
+
+		ObjectMapper objectMapper = ObjectMapperProviderUtil.getObjectMapper();
+
+		String documentJSON = objectMapper.writeValueAsString(document);
+
+		return MultipartBody.of(
+			Map.of(), clazz -> objectMapper, Map.of("document", documentJSON));
+	}
+
 	private SPIRatingResource<Rating> _getSPIRatingResource() {
 		return new SPIRatingResource<>(
 			DLFileEntry.class.getName(), _ratingsEntryLocalService,
@@ -1073,6 +1130,10 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DocumentResourceImpl.class);
+
+	private static final ThreadLocal<Map<Long, Object>> _batchDocuments =
+		new CentralizedThreadLocal<>(
+			DocumentResourceImpl.class + "._batchDocuments", () -> null);
 
 	@Reference
 	private Aggregations _aggregations;

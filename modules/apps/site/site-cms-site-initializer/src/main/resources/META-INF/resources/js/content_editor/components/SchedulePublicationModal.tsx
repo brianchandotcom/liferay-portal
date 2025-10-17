@@ -7,16 +7,22 @@ import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React from 'react';
+import {flushSync} from 'react-dom';
 
-import ScheduleField, {dateConfig} from './ScheduleField';
+import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
+import ScheduleField, {dateConfig, toServerISOFormat} from './ScheduleField';
 
 export default function SchedulePublicationModal({
 	date,
+	formId,
 	onCloseModal,
+	onUpdateDate,
 	type,
 }: {
 	date: string;
+	formId: string;
 	onCloseModal: () => void;
+	onUpdateDate: (date: string) => void;
 	type: string;
 }) {
 	const {observer, onClose} = useModal({
@@ -24,11 +30,24 @@ export default function SchedulePublicationModal({
 	});
 
 	const onCancel = () => {
+		onUpdateDate('');
 		onClose();
 	};
 
-	const onSchedule = () => {
+	const onSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
+		flushSync(() => {
+			onUpdateDate(toServerISOFormat(date));
+		});
+
 		onClose();
+
+		Liferay.fire(EVENT_VALIDATE_FORM, {event});
+	};
+
+	const onUpdate = ({error, value}: {error: string; value: string}) => {
+		if (!error) {
+			onUpdateDate(toServerISOFormat(value));
+		}
 	};
 
 	return (
@@ -52,7 +71,7 @@ export default function SchedulePublicationModal({
 					dateConfig={dateConfig}
 					label={Liferay.Language.get('date-and-time')}
 					name="displayDate"
-					updateFieldData={() => null}
+					updateFieldData={onUpdate}
 				/>
 			</ClayModal.Body>
 
@@ -63,7 +82,11 @@ export default function SchedulePublicationModal({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton onClick={onSchedule}>
+						<ClayButton
+							form={formId}
+							onClick={onSchedule}
+							type="submit"
+						>
 							{Liferay.Language.get('schedule')}
 						</ClayButton>
 					</ClayButton.Group>

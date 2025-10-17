@@ -21,7 +21,7 @@ const STATUS_DRAFT_CODE = 2;
 
 export default function ContentEditorToolbar({
 	backURL,
-	displayDate,
+	displayDate: initialDisplayDate,
 	hasWorkflow,
 	headerTitle,
 	type,
@@ -32,6 +32,7 @@ export default function ContentEditorToolbar({
 	headerTitle: string;
 	type: string;
 }) {
+	const [displayDate, setDisplayDate] = useState<string>('');
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -134,12 +135,21 @@ export default function ContentEditorToolbar({
 					type="hidden"
 					value={backURL}
 				/>
+
+				<ClayInput
+					form={formId}
+					name="displayDate"
+					type="hidden"
+					value={displayDate}
+				/>
 			</Toolbar.Item>
 
 			{showModal ? (
 				<SchedulePublicationModal
-					date={toMomentDate(displayDate)}
+					date={toMomentDate(displayDate || initialDisplayDate)}
+					formId={formId!}
 					onCloseModal={() => setShowModal(false)}
+					onUpdateDate={setDisplayDate}
 					type={type}
 				/>
 			) : null}

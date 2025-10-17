@@ -39,20 +39,65 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "Represents the common navigation settings that can apply to a site page or to a widget page template.",
-	value = "NavigationSettings"
+	description = "The navigation settings of a site page.",
+	value = "SitePageNavigationSettings"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "NavigationSettings")
-public class NavigationSettings implements Serializable {
+@XmlRootElement(name = "SitePageNavigationSettings")
+public class SitePageNavigationSettings implements Serializable {
 
-	public static NavigationSettings toDTO(String json) {
-		return ObjectMapperUtil.readValue(NavigationSettings.class, json);
+	public static SitePageNavigationSettings toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			SitePageNavigationSettings.class, json);
 	}
 
-	public static NavigationSettings unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(NavigationSettings.class, json);
+	public static SitePageNavigationSettings unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			SitePageNavigationSettings.class, json);
 	}
+
+	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The default parameter for a page."
+	)
+	public String getQueryString() {
+		if (_queryStringSupplier != null) {
+			queryString = _queryStringSupplier.get();
+
+			_queryStringSupplier = null;
+		}
+
+		return queryString;
+	}
+
+	public void setQueryString(String queryString) {
+		this.queryString = queryString;
+
+		_queryStringSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setQueryString(
+		UnsafeSupplier<String, Exception> queryStringUnsafeSupplier) {
+
+		_queryStringSupplier = () -> {
+			try {
+				return queryStringUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The default parameter for a page.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String queryString;
+
+	@JsonIgnore
+	private Supplier<String> _queryStringSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The ID of the target specific frame."
@@ -161,13 +206,15 @@ public class NavigationSettings implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof NavigationSettings)) {
+		if (!(object instanceof SitePageNavigationSettings)) {
 			return false;
 		}
 
-		NavigationSettings navigationSettings = (NavigationSettings)object;
+		SitePageNavigationSettings sitePageNavigationSettings =
+			(SitePageNavigationSettings)object;
 
-		return Objects.equals(toString(), navigationSettings.toString());
+		return Objects.equals(
+			toString(), sitePageNavigationSettings.toString());
 	}
 
 	@Override
@@ -181,6 +228,22 @@ public class NavigationSettings implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String queryString = getQueryString();
+
+		if (queryString != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"queryString\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(queryString));
+
+			sb.append("\"");
+		}
 
 		String target = getTarget();
 
@@ -221,7 +284,7 @@ public class NavigationSettings implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.NavigationSettings",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SitePageNavigationSettings",
 		name = "x-class-name"
 	)
 	public String xClassName;

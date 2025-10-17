@@ -155,25 +155,6 @@ export function useValidate() {
 
 	return useCallback(() => {
 
-		// Check at least one child is added
-
-		const fields = Array.from(children.values()).filter(
-			(field) =>
-				field.type !== 'referenced-structure' &&
-				field.type !== 'repeatable-group'
-		);
-
-		if (!fields.length) {
-			dispatch({
-				error: Liferay.Language.get(
-					'at-least-one-field-must-be-added-to-save-or-publish-the-content-structure'
-				),
-				type: 'set-error',
-			});
-
-			return false;
-		}
-
 		// Validate structure
 
 		let errors: Set<ValidationError> = new Set();

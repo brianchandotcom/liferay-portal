@@ -456,17 +456,18 @@ public class FragmentLinkUtil {
 	}
 
 	private static Scope _getItemScope(
-			Long companyId, String itemExternalReferenceCode, long scopeGroupId)
+			Long companyId, String itemGroupExternalReferenceCode,
+			long scopeGroupId)
 		throws PortalException {
 
 		if ((companyId == null) ||
-			Validator.isNull(itemExternalReferenceCode)) {
+			Validator.isNull(itemGroupExternalReferenceCode)) {
 
 			return null;
 		}
 
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-			itemExternalReferenceCode, companyId);
+			itemGroupExternalReferenceCode, companyId);
 
 		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
 			return null;

@@ -60,25 +60,25 @@ test(
 				objectFolderExternalReferenceCode: 'L_CMS_FILE_TYPES',
 				status: {code: 0},
 			})) as ObjectDefinition;
-		const stucctureName = objectDefinition.name;
+		const stuctureName = objectDefinition.name;
 
 		await structuresPage.goto();
 
 		await structuresPage.execItemAction({
 			action: 'Delete',
-			filter: stucctureName,
+			filter: stuctureName,
 		});
 
 		await page
-			.getByPlaceholder('Confirm Structure Name')
-			.fill(stucctureName);
+			.getByPlaceholder('Confirm Content Structure Name')
+			.fill(stuctureName);
 		await page.getByRole('button', {name: 'Delete'}).click();
 
-		await waitForAlert(page, `${stucctureName} was deleted successfully`, {
+		await waitForAlert(page, `${stuctureName} was deleted successfully`, {
 			type: 'success',
 		});
 
-		await expect(structuresPage.getItem(stucctureName)).toBeHidden();
+		await expect(structuresPage.getItem(stuctureName)).toBeHidden();
 	}
 );
 

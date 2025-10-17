@@ -323,7 +323,10 @@ test.describe('Comments Panel', () => {
 
 		await page.keyboard.type(content);
 
-		const saveButton = rootComment.getByRole('button', {name: 'Save'});
+		const saveButton = rootComment.getByRole('button', {
+			exact: true,
+			name: 'Save',
+		});
 
 		await expect(saveButton).toBeEnabled();
 
@@ -504,7 +507,10 @@ test.describe('Comments Panel', () => {
 
 		await page.keyboard.type('New Comment');
 
-		const saveButton = page.getByRole('button', {name: 'Save'});
+		const saveButton = page.getByRole('button', {
+			exact: true,
+			name: 'Save',
+		});
 
 		await saveButton.click();
 
@@ -709,12 +715,12 @@ test(
 
 		// Check that the content is saved as draft
 
-		expect(
+		await expect(
 			page
 				.locator('tr', {hasText: title})
 				.or(page.locator('.card-row', {hasText: title}))
 				.locator('.cell-embedded-status')
-		).toHaveText('Draft');
+		).toHaveText('draft');
 
 		// Delete content
 

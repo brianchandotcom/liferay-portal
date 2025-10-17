@@ -722,6 +722,165 @@ test(
 	}
 );
 
+test.describe('Schedule Publication', () => {
+	test(
+		'Allow scheduling a publication',
+		{tag: '@LPD-68099'},
+		async ({contentsPage, page}) => {
+
+			// Create a content
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Content');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			// Try to schedule the publication
+
+			await contentsPage.openSchedulePublication();
+
+			await expect(
+				page.getByRole('heading', {name: 'Schedule Publication'})
+			).toBeAttached();
+
+			// Validate the empty display date
+
+			const displayDateHiddenInput = page.locator(
+				'[name="ObjectEntry_displayDate"]'
+			);
+
+			await expect(displayDateHiddenInput).toHaveValue('');
+
+			await page.getByRole('button', {name: 'Schedule'}).click();
+
+			await expect(
+				page.getByText('This field is required')
+			).toBeAttached();
+
+			// Fill the display date field
+
+			const displayDateInput = page.getByRole('textbox', {
+				name: 'Date and Time',
+			});
+
+			const nextYear = new Date().getFullYear() + 1;
+
+			await displayDateInput.fill(`10/31/${nextYear} 01:00 PM`);
+
+			await page.keyboard.press('Tab');
+
+			await expect(displayDateHiddenInput).toHaveValue(
+				`${nextYear}-10-31T13:00`
+			);
+
+			await expect(
+				page.getByText('This field is required')
+			).not.toBeAttached();
+
+			// Cancel the schedule publication
+
+			await page.getByRole('button', {name: 'Cancel'}).click();
+
+			await expect(displayDateHiddenInput).toHaveValue('');
+
+			// Schedule the publication
+
+			await contentsPage.openSchedulePublication();
+
+			await displayDateInput.fill(`10/31/${nextYear} 12:30 PM`);
+
+			await page.getByRole('button', {name: 'Schedule'}).click();
+
+			// Check that the content is scheduled
+
+			expect(
+				page
+					.locator('tr', {hasText: title})
+					.or(page.locator('.card-row', {hasText: title}))
+					.locator('.cell-embedded-status')
+			).toHaveText('scheduled');
+
+			// Delete content
+
+			await contentsPage.deleteContent(title);
+		}
+	);
+
+	test(
+		'Do not allow scheduling a publication if there are errors in the fields',
+		{tag: '@LPD-68099'},
+		async ({contentsPage, page}) => {
+
+			// Create a content
+
+			await contentsPage.goto();
+
+			await contentsPage.createContent('Basic Content');
+
+			await contentsPage.openSidePanel('Schedule');
+
+			const title = getRandomString();
+
+			await page.getByPlaceholder('New Basic Web Content').fill(title);
+
+			// Fill the expiration date input with an error
+
+			const expireCheckbox = page.getByLabel('Never Expire').first();
+
+			await expireCheckbox.uncheck();
+
+			const expirationDateField = page.getByRole('textbox', {
+				name: 'Expiration Date',
+			});
+
+			await expirationDateField.fill('05/12/2025');
+
+			// Try to schedule the publication
+
+			await contentsPage.openSchedulePublication();
+
+			const displayDateInput = page.getByRole('textbox', {
+				name: 'Date and Time',
+			});
+
+			const nextYear = new Date().getFullYear() + 1;
+
+			await displayDateInput.fill(`10/31/${nextYear} 12:30 PM`);
+
+			await page.getByRole('button', {name: 'Schedule'}).click();
+
+			// Check that it remains on the page and the error is shown
+
+			await expect(
+				page.getByRole('heading', {name: 'Edit Basic Web Content'})
+			).toBeAttached();
+
+			await expect(
+				page.getByText('The field value is invalid.')
+			).toBeVisible();
+
+			// Schedule the publication
+
+			await expireCheckbox.check();
+
+			await contentsPage.openSchedulePublication();
+
+			await page.getByRole('button', {name: 'Schedule'}).click();
+
+			// Delete content
+
+			await expect(
+				page.locator('.table-list-title a', {hasText: title})
+			).toBeAttached();
+
+			await contentsPage.deleteContent(title);
+		}
+	);
+});
+
 const testWithRepeatableFF = mergeTests(
 	test,
 	featureFlagsTest({

@@ -13,12 +13,12 @@ import {datetimeUtils} from '@liferay/object-js-components-web';
 import {LiferayEditorConfig} from 'frontend-editor-ckeditor-web';
 import {openToast} from 'frontend-js-components-web';
 import {fetch, objectToFormData} from 'frontend-js-web';
-import moment from 'moment';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {Comment} from '../services/CommentService';
 import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
+import {dateConfig, toMomentDate, toServerISOFormat} from './ScheduleField';
 import CategorizationPanel from './panels/CategorizationPanel';
 import CommentsPanel from './panels/CommentsPanel';
 import GeneralPanel from './panels/GeneralPanel';
@@ -114,12 +114,6 @@ const items: Item[] = [
 	},
 ];
 
-const dateConfig = datetimeUtils.generateDateConfigurations({
-	defaultLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
-	locale: Liferay.ThemeDisplay.getLanguageId(),
-	type: 'DateTime',
-});
-
 export default function ContentEditorSidePanel(props: Props) {
 	const [formId, setFormId] = useState<string | undefined>();
 	const [scheduleFields, setScheduleFields] = useState<ScheduleFields>({
@@ -161,7 +155,7 @@ export default function ContentEditorSidePanel(props: Props) {
 		const values = neverExpire
 			? {serverValue: ''}
 			: {
-					serverValue: toServerFormat(value).replace(' ', 'T'),
+					serverValue: toServerISOFormat(value),
 					value,
 				};
 
@@ -386,15 +380,5 @@ function SubscribeButton({
 			symbol={subscribed ? 'bell-off' : 'bell-on'}
 			title={title}
 		/>
-	);
-}
-
-function toMomentDate(value: string) {
-	return value ? moment(value).format(dateConfig.momentFormat) : '';
-}
-
-export function toServerFormat(value: string) {
-	return moment(value, dateConfig.momentFormat, true).format(
-		dateConfig.serverFormat
 	);
 }

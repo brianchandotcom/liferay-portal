@@ -592,7 +592,7 @@ export class TestEntityAPI {
 		}> {
 				let body;
 						const formData = new FormData();
-								formData.append("file", requestBody.parameters.file);
+								formData.append("file", file);
 								formData.append("imageName", JSON.stringify(ObjectSerializer.serialize(imageName, "string")));
 						body = formData;
 

@@ -43,7 +43,9 @@ const BusinessEventsItemDetails = () => {
 	const {loading: loadingTickets, tickets} = useAccountsTickets(
 		businessEvent,
 		accountKey,
-		loading
+		loading ||
+			!businessEvent?.associatedTickets ||
+			businessEvent?.associatedTickets === '[]'
 	);
 
 	const location = useLocation();
@@ -319,32 +321,18 @@ const BusinessEventsItemDetails = () => {
 					)}
 
 					{!loadingTickets ? (
-						!tickets ? (
-							<p
-								dangerouslySetInnerHTML={{
-									__html: i18n.sub(
-										'we-apologize-for-the-inconvenience-but-we-ve-detected-a-system-error-with-this-project',
-										[
-											'<a href="https://liferay.atlassian.net/servicedesk/customer/portals">',
-											'</a>',
-										]
-									),
-								}}
-							/>
-						) : (
-							Boolean(ticketOptions.length) && (
-								<div className="event-detail-item mb-4">
-									<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
-										{i18n.translate('associated-tickets')}
-									</div>
-
-									<div className="w-50">
-										<AssociatedTicketsContainer
-											ticketOptions={ticketOptions}
-										/>
-									</div>
+						Boolean(ticketOptions.length) && (
+							<div className="event-detail-item mb-4">
+								<div className="event-detail-title font-weight-semi-bold mb-1 text-neutral-8">
+									{i18n.translate('associated-tickets')}
 								</div>
-							)
+
+								<div className="w-50">
+									<AssociatedTicketsContainer
+										ticketOptions={ticketOptions}
+									/>
+								</div>
+							</div>
 						)
 					) : (
 						<div className="w-25">

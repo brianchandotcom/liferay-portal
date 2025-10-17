@@ -94,6 +94,7 @@ export default function ScheduleField({
 					}}
 					placeholder={placeholder}
 					time
+					timezone={Liferay.ThemeDisplay.getTimeZone()}
 					use12Hours={dateConfig.use12Hours}
 					value={date}
 					weekdaysShort={dateUtils.getWeekdaysShort(locale)}

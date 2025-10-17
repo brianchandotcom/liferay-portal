@@ -122,20 +122,10 @@ components:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         layout:
+                            $ref: "#/components/schemas/Layout"
                             # @review
                             description:
                                 the collection page element's layout.
-                            properties:
-                                align:
-                                    enum: [Baseline, Center, End, None, Start, Stretch]
-                                    type: string
-                                flexWrap:
-                                    enum: [NoWrap, Wrap, WrapReverse]
-                                    type: string
-                                justify:
-                                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
-                                    type: string
-                            type: object
                         listItemStyle:
                             # @review
                             description:
@@ -280,26 +270,10 @@ components:
                                 A flag that indicates whether the container page element is indexed or not.
                             type: boolean
                         layout:
+                            $ref: "#/components/schemas/LayoutExpanded"
                             # @review
                             description:
                                 the container page element's layout.
-                            properties:
-                                align:
-                                    enum: [Baseline, Center, End, None, Start, Stretch]
-                                    type: string
-                                contentDisplay:
-                                    enum: [Block, FlexColumn, FlexRow]
-                                    type: string
-                                flexWrap:
-                                    enum: [NoWrap, Wrap, WrapReverse]
-                                    type: string
-                                justify:
-                                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
-                                    type: string
-                                widthType:
-                                    enum: [Fixed, Fluid]
-                                    type: string
-                            type: object
                         name:
                             # @review
                             description:
@@ -794,29 +768,10 @@ components:
                                 A flag that indicates whether the page fragment instance is indexed or not.
                             type: boolean
                         layout:
+                            $ref: "#/components/schemas/LayoutExpanded"
                             # @review
                             description:
                                 The form page element's layout.
-                            properties:
-                                align:
-                                    enum: [Baseline, Center, End, None, Start, Stretch]
-                                    type: string
-                                contentDisplay:
-                                    enum: [Block, FlexColumn, FlexRow]
-                                    type: string
-                                flexWrap:
-                                    enum: [NoWrap, Wrap, WrapReverse]
-                                    type: string
-                                justify:
-                                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
-                                    type: string
-                                widthType:
-                                    # @review
-                                    description:
-                                        The width's type (fixed or fluid).
-                                    enum: [Fixed, Fluid]
-                                    type: string
-                            type: object
                         name:
                             # @review
                             description:
@@ -862,29 +817,10 @@ components:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         layout:
+                            $ref: "#/components/schemas/LayoutExpanded"
                             # @review
                             description:
                                 The form step container page element's layout.
-                            properties:
-                                align:
-                                    enum: [Baseline, Center, End, None, Start, Stretch]
-                                    type: string
-                                contentDisplay:
-                                    enum: [Block, FlexColumn, FlexRow]
-                                    type: string
-                                flexWrap:
-                                    enum: [NoWrap, Wrap, WrapReverse]
-                                    type: string
-                                justify:
-                                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
-                                    type: string
-                                widthType:
-                                    # @review
-                                    description:
-                                        The width's type (fixed or fluid).
-                                    enum: [Fixed, Fluid]
-                                    type: string
-                            type: object
                         name:
                             # @review
                             description:
@@ -1909,6 +1845,29 @@ components:
             required:
                 -   externalReferenceCode
             type: object
+        Layout:
+            properties:
+                align:
+                    enum: [Baseline, Center, End, None, Start, Stretch]
+                    type: string
+                flexWrap:
+                    enum: [NoWrap, Wrap, WrapReverse]
+                    type: string
+                justify:
+                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                    type: string
+        LayoutExpanded:
+            allOf:
+                -   $ref: "#/components/schemas/Layout"
+                -   properties:
+                        contentDisplay:
+                            enum: [Block, FlexColumn, FlexRow]
+                            type: string
+                        widthType:
+                            description:
+                                The width's type (fixed or fluid).
+                            enum: [Fixed, Fluid]
+                            type: string
         MasterPage:
             # @review
             description:

@@ -2055,7 +2055,7 @@ components:
         NavigationSettings:
             # @review
             description:
-                Represents settings related with the site navigation of a page.
+                Represents the common navigation settings that can apply to a site page or to a widget page template.
             properties:
                 target:
                     # @review

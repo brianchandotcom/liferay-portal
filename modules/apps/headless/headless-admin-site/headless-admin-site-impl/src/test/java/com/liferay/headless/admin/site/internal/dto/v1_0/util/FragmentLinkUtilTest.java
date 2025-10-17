@@ -456,6 +456,60 @@ public class FragmentLinkUtilTest {
 	}
 
 	@Test
+	public void testToFragmentLinkMappedNonexistingJournalArticleDifferentScope()
+		throws Exception {
+
+		InfoItemReference infoItemReference = _mockInfoItemReference();
+
+		Mockito.when(
+			infoItemReference.getInfoItemIdentifier()
+		).thenReturn(
+			null
+		);
+
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getClassName(Mockito.any(long.class))
+		).thenReturn(
+			JournalArticle.class.getName()
+		);
+
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_getFragmentLink(
+				JournalArticle.class.getName(),
+				journalArticleExternalReferenceCode, "JournalArticle_title",
+				null,
+				new Scope() {
+					{
+						setExternalReferenceCode(
+							_itemGroupExternalReferenceCode);
+						setType(Type.ASSET_LIBRARY);
+					}
+				}),
+			FragmentLinkUtil.toFragmentLink(
+				_infoItemServiceRegistry,
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId", RandomTestUtil.randomLong()
+				).put(
+					"classPK", RandomTestUtil.randomLong()
+				).put(
+					"externalReferenceCode", journalArticleExternalReferenceCode
+				).put(
+					"fieldId", "JournalArticle_title"
+				).put(
+					"scopeExternalReferenceCode",
+					_itemGroupExternalReferenceCode
+				).put(
+					"target", "_blank"
+				),
+				_scopeGroupId));
+	}
+
+	@Test
 	public void testToFragmentLinkMappedNonexistingLayout() throws Exception {
 		_layoutLocalServiceUtilMockedStatic.when(
 			() -> LayoutLocalServiceUtil.fetchLayout(
@@ -482,6 +536,51 @@ public class FragmentLinkUtilTest {
 					"layout",
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode)
+				).put(
+					"target", "_blank"
+				),
+				_scopeGroupId));
+	}
+
+	@Test
+	public void testToFragmentLinkMappedNonexistingLayoutDifferentScope()
+		throws Exception {
+
+		_layoutLocalServiceUtilMockedStatic.when(
+			() -> LayoutLocalServiceUtil.fetchLayout(
+				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyLong())
+		).thenReturn(
+			null
+		);
+
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.getClassName(Mockito.any(long.class))
+		).thenReturn(
+			Layout.class.getName()
+		);
+
+		String layoutExternalReferenceCode = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			_getFragmentLink(
+				Layout.class.getName(), layoutExternalReferenceCode, null, null,
+				new Scope() {
+					{
+						setExternalReferenceCode(
+							_itemGroupExternalReferenceCode);
+						setType(Type.ASSET_LIBRARY);
+					}
+				}),
+			FragmentLinkUtil.toFragmentLink(
+				_infoItemServiceRegistry,
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"externalReferenceCode", layoutExternalReferenceCode
+					).put(
+						"scopeExternalReferenceCode",
+						_itemGroupExternalReferenceCode
+					)
 				).put(
 					"target", "_blank"
 				),
@@ -864,6 +963,55 @@ public class FragmentLinkUtilTest {
 	}
 
 	@Test
+	public void testToJSONObjectMappedNonexistingJournalArticleDifferentScope()
+		throws Exception {
+
+		InfoItemReference infoItemReference = _mockInfoItemReference();
+
+		Mockito.when(
+			infoItemReference.getInfoItemIdentifier()
+		).thenReturn(
+			null
+		);
+
+		String journalArticleExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"link",
+				JSONUtil.put(
+					"className", JournalArticle.class.getName()
+				).put(
+					"classNameId", _classNameId
+				).put(
+					"externalReferenceCode", journalArticleExternalReferenceCode
+				).put(
+					"fieldId", "JournalArticle_title"
+				).put(
+					"scopeExternalReferenceCode",
+					_itemGroupExternalReferenceCode
+				).put(
+					"target", "_blank"
+				)
+			).toString(),
+			FragmentLinkUtil.toJSONObject(
+				_getFragmentLink(
+					JournalArticle.class.getName(),
+					journalArticleExternalReferenceCode, "JournalArticle_title",
+					null,
+					new Scope() {
+						{
+							setExternalReferenceCode(
+								_itemGroupExternalReferenceCode);
+							setType(Type.ASSET_LIBRARY);
+						}
+					}),
+				_infoItemServiceRegistry, _scopeGroupId
+			).toString());
+	}
+
+	@Test
 	public void testToJSONObjectMappedNonexistingLayout() throws Exception {
 		_layoutLocalServiceUtilMockedStatic.when(
 			() -> LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
@@ -889,6 +1037,49 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null, null),
+				_infoItemServiceRegistry, _scopeGroupId
+			).toString());
+	}
+
+	@Test
+	public void testToJSONObjectMappedNonexistingLayoutDifferentScope()
+		throws Exception {
+
+		_layoutLocalServiceUtilMockedStatic.when(
+			() -> LayoutLocalServiceUtil.fetchLayoutByExternalReferenceCode(
+				Mockito.anyString(), Mockito.anyLong())
+		).thenReturn(
+			null
+		);
+
+		String layoutExternalReferenceCode = RandomTestUtil.randomString();
+
+		Assert.assertEquals(
+			JSONUtil.put(
+				"link",
+				JSONUtil.put(
+					"layout",
+					JSONUtil.put(
+						"externalReferenceCode", layoutExternalReferenceCode
+					).put(
+						"scopeExternalReferenceCode",
+						_itemGroupExternalReferenceCode
+					)
+				).put(
+					"target", "_blank"
+				)
+			).toString(),
+			FragmentLinkUtil.toJSONObject(
+				_getFragmentLink(
+					Layout.class.getName(), layoutExternalReferenceCode, null,
+					null,
+					new Scope() {
+						{
+							setExternalReferenceCode(
+								_itemGroupExternalReferenceCode);
+							setType(Type.ASSET_LIBRARY);
+						}
+					}),
 				_infoItemServiceRegistry, _scopeGroupId
 			).toString());
 	}

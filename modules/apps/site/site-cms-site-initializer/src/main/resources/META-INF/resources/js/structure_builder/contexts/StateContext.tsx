@@ -45,7 +45,9 @@ import sortChildren from '../utils/sortChildren';
 import ungroup from '../utils/ungroup';
 import updateChild from '../utils/updateChild';
 import {
+	ErrorMap,
 	ValidationError,
+	ValidationProperty,
 	validateField,
 	validateRepeatableGroup,
 	validateStructure,
@@ -59,9 +61,8 @@ type History = {
 };
 
 export type State = {
-	error: string | null;
 	history: History;
-	invalids: Map<Uuid, Set<ValidationError>>;
+	invalids: Map<Uuid, ErrorMap>;
 	publishedChildren: Set<Uuid>;
 	selection: Uuid[];
 	structure: Structure;
@@ -69,7 +70,6 @@ export type State = {
 };
 
 const INITIAL_STATE: State = {
-	error: null,
 	history: {
 		deletedChildren: false,
 		modifiedNames: new Set(),
@@ -104,12 +104,13 @@ type AddRepeatableGroup = {
 
 type AddValidationError = {
 	error: ValidationError;
+	property: ValidationProperty;
 	type: 'add-validation-error';
 	uuid: Uuid;
 };
 
-type ClearErrorAction = {
-	type: 'clear-error';
+type ClearErrorsAction = {
+	type: 'clear-errors';
 };
 
 type CreateStructureAction = {
@@ -127,8 +128,6 @@ type RefreshReferencedStructuresAction = {
 	objectDefinitions: ObjectDefinitions;
 	type: 'refresh-referenced-structures';
 };
-
-type SetErrorAction = {error: string | null; type: 'set-error'};
 
 type SetSelection = {
 	selection: State['selection'];
@@ -184,13 +183,12 @@ export type Action =
 	| AddReferencedStructuresAction
 	| AddRepeatableGroup
 	| AddValidationError
-	| ClearErrorAction
+	| ClearErrorsAction
 	| CreateStructureAction
 	| DeleteChildAction
 	| DeleteSelectionAction
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
-	| SetErrorAction
 	| SetSelection
 	| SetWorkflowAction
 	| UngroupAction
@@ -361,25 +359,25 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'add-validation-error': {
-			const {error, uuid} = action;
+			const {error, property, uuid} = action;
 
 			const invalids = new Map(state.invalids);
 
-			const currentErrors = new Set(invalids.get(uuid));
+			const errors = new Map(invalids.get(uuid));
 
-			currentErrors.add(error);
+			errors.set(property, error);
 
-			invalids.set(uuid, currentErrors);
+			invalids.set(uuid, errors);
 
 			return {
 				...state,
 				invalids,
 			};
 		}
-		case 'clear-error': {
+		case 'clear-errors': {
 			return {
 				...state,
-				error: INITIAL_STATE.error,
+				invalids: new Map(),
 			};
 		}
 		case 'create-structure': {
@@ -387,7 +385,7 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				error: INITIAL_STATE.error,
+				invalids: new Map(),
 				structure: {
 					...structure,
 					id: action.id,
@@ -494,8 +492,8 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				error: INITIAL_STATE.error,
 				history: INITIAL_STATE.history,
+				invalids: new Map(),
 				publishedChildren: getChildrenUuids({root: structure}),
 				structure: nextStructure,
 				unsavedChanges: false,
@@ -518,12 +516,6 @@ function reducer(state: State, action: Action): State {
 
 			return {...state, structure: nextStructure};
 		}
-		case 'set-error':
-			return {
-				...state,
-				error: action.error,
-				selection: [state.structure.uuid],
-			};
 		case 'set-selection': {
 			const {selection} = action;
 
@@ -792,7 +784,6 @@ function reducer(state: State, action: Action): State {
 
 			return {
 				...state,
-				error: INITIAL_STATE.error,
 				invalids,
 				selection: [firstUuid],
 			};

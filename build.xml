@@ -1105,6 +1105,22 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 					</replace>
 
 					<touch file="${app.server.weblogic.portal.dir}/WEB-INF/REDEPLOY" />
+
+					<!-- Temporary workaround for LPD-68782 -->
+
+					<unjar
+						dest="temp-unjar"
+						src="${app.server.shielded-container-lib.portal.dir}/portal-kernel.jar"
+					/>
+
+					<jar
+						basedir="temp-unjar"
+						destfile="${app.server.shielded-container-lib.portal.dir}/portal-kernel.jar"
+						excludes="jakarta/**/*.class"
+						manifest="temp-unjar/META-INF/MANIFEST.MF"
+					/>
+
+					<delete dir="temp-unjar" />
 				</then>
 			</elseif>
 		</if>

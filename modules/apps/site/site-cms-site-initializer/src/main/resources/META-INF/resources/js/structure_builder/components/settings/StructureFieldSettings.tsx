@@ -13,6 +13,7 @@ import React, {useEffect, useMemo} from 'react';
 
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import selectErrors from '../../selectors/selectErrors';
 import selectPublishedChildren from '../../selectors/selectPublishedChildren';
 import {FIELD_TYPE_LABEL, Field} from '../../utils/field';
 import getFieldComponents from '../../utils/getFieldComponents';
@@ -65,6 +66,7 @@ export default function StructureFieldSettings({
 function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 	const dispatch = useStateDispatch();
 
+	const errors = useSelector(selectErrors(field.uuid));
 	const publishedChildren = useSelector(selectPublishedChildren);
 
 	const isPublished = publishedChildren.has(field.uuid);
@@ -90,6 +92,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 			<div className="mt-4 pb-2">
 				<LocalizedInput
 					disabled={disabled}
+					error={errors.get('label')}
 					id={labelInputId}
 					label={Liferay.Language.get('label')}
 					onSave={(translations) => {
@@ -105,6 +108,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 
 				<Input
 					disabled={disabled || isPublished}
+					error={errors.get('name')}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {
 						dispatch({
@@ -157,6 +161,7 @@ function GeneralTab({disabled, field}: {disabled?: boolean; field: Field}) {
 			<div>
 				<ERCInput
 					disabled={disabled || isPublished}
+					error={errors.get('erc')}
 					onValueChange={(value) => {
 						dispatch({
 							erc: value,

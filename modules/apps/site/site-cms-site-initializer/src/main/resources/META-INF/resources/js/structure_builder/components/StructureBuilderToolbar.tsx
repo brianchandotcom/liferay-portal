@@ -30,6 +30,7 @@ import selectStructureLocalizedLabel from '../selectors/selectStructureLocalized
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureSpaces from '../selectors/selectStructureSpaces';
 import selectStructureStatus from '../selectors/selectStructureStatus';
+import selectStructureUuid from '../selectors/selectStructureUuid';
 import selectStructureWorkflows from '../selectors/selectStructureWorkflows';
 import selectUnsavedChanges from '../selectors/selectUnsavedChanges';
 import DisplayPageService from '../services/DisplayPageService';
@@ -178,15 +179,14 @@ function SaveButton() {
 	const spaces = useSelector(selectStructureSpaces);
 	const status = useSelector(selectStructureStatus);
 	const workflows = useSelector(selectStructureWorkflows);
+	const uuid = useSelector(selectStructureUuid);
 
-	const onError = (error: string) =>
+	const onError = () =>
 		dispatch({
-			error:
-				error ||
-				Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-				),
-			type: 'set-error',
+			error: 'unexpected',
+			property: 'global',
+			type: 'add-validation-error',
+			uuid,
 		});
 
 	const onSave = async () => {
@@ -208,7 +208,7 @@ function SaveButton() {
 			});
 
 			if (error) {
-				onError(error);
+				onError();
 
 				return;
 			}
@@ -229,12 +229,12 @@ function SaveButton() {
 			});
 
 			if (error) {
-				onError(error);
+				onError();
 
 				return;
 			}
 			else {
-				dispatch({type: 'clear-error'});
+				dispatch({type: 'clear-errors'});
 			}
 		}
 
@@ -372,6 +372,7 @@ async function publishStructure({
 	const status = selectStructureStatus(state);
 	const structureId = selectStructureId(state);
 	const workflows = selectStructureWorkflows(state);
+	const uuid = selectStructureUuid(state);
 
 	const onSuccess = async () => {
 		staleCache('object-definitions');
@@ -426,14 +427,12 @@ async function publishStructure({
 		});
 	};
 
-	const onError = (error: string) =>
+	const onError = () =>
 		dispatch({
-			error:
-				error ||
-				Liferay.Language.get(
-					'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
-				),
-			type: 'set-error',
+			error: 'unexpected',
+			property: 'global',
+			type: 'add-validation-error',
+			uuid,
 		});
 
 	if (status === 'new') {
@@ -448,7 +447,7 @@ async function publishStructure({
 		});
 
 		if (error) {
-			onError(error);
+			onError();
 
 			return;
 		}
@@ -469,7 +468,7 @@ async function publishStructure({
 		});
 
 		if (error) {
-			onError(error);
+			onError();
 
 			return;
 		}
@@ -490,7 +489,7 @@ async function publishStructure({
 		});
 
 		if (error) {
-			onError(error);
+			onError();
 
 			return;
 		}

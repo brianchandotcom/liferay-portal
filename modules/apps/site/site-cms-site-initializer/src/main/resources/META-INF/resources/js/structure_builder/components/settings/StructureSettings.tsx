@@ -11,13 +11,9 @@ import React, {useEffect, useState} from 'react';
 
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
-import selectInvalids from '../../selectors/selectInvalids';
-import selectState from '../../selectors/selectState';
-import selectStructureERC from '../../selectors/selectStructureERC';
-import selectStructureError from '../../selectors/selectStructureError';
+import selectErrors from '../../selectors/selectErrors';
+import selectStructure from '../../selectors/selectStructure';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
-import selectStructureName from '../../selectors/selectStructureName';
-import selectStructureStatus from '../../selectors/selectStructureStatus';
 import selectStructureUuid from '../../selectors/selectStructureUuid';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
@@ -27,11 +23,10 @@ import WorkflowTab from './WorkflowTab';
 
 export default function StructureSettings() {
 	const dispatch = useStateDispatch();
-	const error = useSelector(selectStructureError);
-	const invalids = useSelector(selectInvalids);
-	const structureError = useSelector(selectStructureError);
+
 	const structureLabel = useSelector(selectStructureLabel);
 	const structureUuid = useSelector(selectStructureUuid);
+	const errors = useSelector(selectErrors(structureUuid));
 
 	const [activeTab, setActiveTab] = useState(0);
 
@@ -40,20 +35,20 @@ export default function StructureSettings() {
 	}, []);
 
 	useEffect(() => {
-		if (structureError || invalids.has(structureUuid)) {
+		if (errors.size) {
 			setActiveTab(0);
 		}
-	}, [invalids, structureError, structureUuid]);
+	}, [errors]);
 
 	return (
 		<ClayLayout.ContainerFluid className="px-4" size="md" view>
-			{error ? (
+			{errors.get('global') ? (
 				<ClayAlert
 					displayType="danger"
 					role={null}
 					title={Liferay.Language.get('error')}
 				>
-					{error}
+					{errors.get('global')}
 				</ClayAlert>
 			) : null}
 
@@ -64,6 +59,7 @@ export default function StructureSettings() {
 			<LocalizedInput
 				aria-label={Liferay.Language.get('content-structure-label')}
 				className="form-control-inline structure-builder__title-input"
+				error={errors.get('label')}
 				formGroupClassName="ml-n3"
 				onSave={(translations) => {
 					dispatch({
@@ -103,15 +99,16 @@ export default function StructureSettings() {
 
 function GeneralTab() {
 	const dispatch = useStateDispatch();
-	const name = useSelector(selectStructureName);
-	const erc = useSelector(selectStructureERC);
-	const status = useSelector(selectStructureStatus);
-	const state = useSelector(selectState);
+	const structure = useSelector(selectStructure);
+	const errors = useSelector(selectErrors(structure.uuid));
+
+	const {erc, name, status} = structure;
 
 	return (
 		<div>
 			<Input
 				disabled={status === 'published'}
+				error={errors.get('name')}
 				label={Liferay.Language.get('content-structure-name')}
 				onValueChange={(value) =>
 					dispatch({name: value, type: 'update-structure'})
@@ -122,13 +119,14 @@ function GeneralTab() {
 			/>
 
 			<ERCInput
+				error={errors.get('erc')}
 				onValueChange={(value) =>
 					dispatch({erc: value, type: 'update-structure'})
 				}
 				value={erc}
 			/>
 
-			<SpacesSelector structure={state.structure} />
+			<SpacesSelector structure={structure} />
 		</div>
 	);
 }

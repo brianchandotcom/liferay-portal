@@ -187,6 +187,42 @@ Map<String, String> contextParams = HashMapBuilder.<String, String>put(
 					<div class="col-lg-6">
 						<aui:input checked="<%= commerceChannelDisplayContext.isUndoCartItemDeletionDisabled() %>" helpMessage="configures-whether-a-buyer-can-undo-the-deletion-of-an-item-from-the-mini-cart" label="undo-cart-item-deletion-disabled" labelOff="disabled" labelOn="enabled" name="settings--undoCartItemDeletionDisabled--" type="toggle-switch" />
 					</div>
+
+					<div class="col-lg-6">
+						<aui:select label="open-orders-visibility-scope" name="settings--openOrdersVisibilityScope--">
+
+							<%
+							String openOrdersVisibilityScope = commerceChannelDisplayContext.getOpenOrdersVisibilityScope();
+
+							for (String orderVisibilityScope : CommerceOrderConstants.ORDER_VISIBILITY_SCOPES) {
+							%>
+
+								<aui:option label="<%= orderVisibilityScope %>" selected="<%= openOrdersVisibilityScope.equals(orderVisibilityScope) %>" value="<%= orderVisibilityScope %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+
+					<div class="col-lg-6">
+						<aui:select label="placed-orders-visibility-scope" name="settings--placedOrdersVisibilityScope--">
+
+							<%
+							String placedOrdersVisibilityScope = commerceChannelDisplayContext.getPlacedOrdersVisibilityScope();
+
+							for (String orderVisibilityScope : CommerceOrderConstants.ORDER_VISIBILITY_SCOPES) {
+							%>
+
+								<aui:option label="<%= orderVisibilityScope %>" selected="<%= placedOrdersVisibilityScope.equals(orderVisibilityScope) %>" value="<%= orderVisibilityScope %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
 				</div>
 
 				<div class="row">

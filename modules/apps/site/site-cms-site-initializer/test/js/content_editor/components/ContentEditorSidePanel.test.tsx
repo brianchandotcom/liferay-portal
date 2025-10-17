@@ -47,6 +47,12 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 };
 
 describe('ContentEditorSidePanel', () => {
+	beforeEach(() => {
+		global.Liferay.ThemeDisplay.getTimeZone = jest
+			.fn()
+			.mockReturnValue('utc');
+	});
+
 	it('renders ContentEditorSidePanel', () => {
 		renderComponent();
 
@@ -158,10 +164,10 @@ describe('ContentEditorSidePanel', () => {
 		renderComponent();
 
 		const expirationInput: HTMLInputElement | null = document.querySelector(
-			'[name="expirationDate"]'
+			'[name="ObjectEntry_expirationDate"]'
 		);
 		const reviewInput: HTMLInputElement | null = document.querySelector(
-			'[name="reviewDate"]'
+			'[name="ObjectEntry_reviewDate"]'
 		);
 
 		expect(expirationInput?.value).toBe(EXPIRATION_DATE);

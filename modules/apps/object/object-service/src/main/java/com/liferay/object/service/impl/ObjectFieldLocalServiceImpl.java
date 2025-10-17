@@ -1388,9 +1388,7 @@ public class ObjectFieldLocalServiceImpl
 			return objectField;
 		}
 
-		if (objectDefinition.isEnableLocalization() &&
-			objectField.isLocalized()) {
-
+		if (objectField.isLocalized()) {
 			_alterTableDropColumn(
 				objectDefinition.getLocalizationDBTableName(),
 				objectField.getDBColumnName());

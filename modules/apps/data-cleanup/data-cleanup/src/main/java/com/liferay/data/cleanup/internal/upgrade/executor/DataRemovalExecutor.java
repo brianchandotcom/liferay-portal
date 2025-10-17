@@ -16,14 +16,12 @@ import com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUp
 import com.liferay.data.cleanup.internal.upgrade.PublishedCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.WidgetLayoutTypeSettingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
-import com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.manager.ContentManager;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Release;
@@ -48,16 +46,11 @@ import com.liferay.portal.upgrade.data.cleanup.QuartzJobDetailsDataCleanupPreupg
 import com.liferay.portal.upgrade.data.cleanup.UserDataCleanupPreupgradeProcess;
 import com.liferay.portal.verify.VerifyProcess;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.function.Supplier;
 
 import org.apache.felix.cm.PersistenceManager;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -142,27 +135,7 @@ public class DataRemovalExecutor {
 		}
 
 		if (dataRemovalConfiguration.removeServiceComponentOrphanData()) {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			BundleContext bundleContext = bundle.getBundleContext();
-
-			Collection<ServiceReference<VerifyProcess>> serviceReferences =
-				bundleContext.getServiceReferences(
-					VerifyProcess.class,
-					StringBundler.concat(
-						"(component.name=",
-						ServiceComponentDataCleanupVerifyProcess.class.
-							getName(),
-						")"));
-
-			for (ServiceReference<VerifyProcess> serviceReference :
-					serviceReferences) {
-
-				VerifyProcess verifyProcess = bundleContext.getService(
-					serviceReference);
-
-				verifyProcess.verify();
-			}
+			_serviceComponentDataCleanupVerifyProcess.verify();
 		}
 	}
 
@@ -289,5 +262,10 @@ public class DataRemovalExecutor {
 
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
+
+	@Reference(
+		target = "(component.name=com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess)"
+	)
+	private VerifyProcess _serviceComponentDataCleanupVerifyProcess;
 
 }

@@ -127,6 +127,10 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 		).put(
 			"hasWorkflow",
 			() -> {
+				if (objectDefinition == null) {
+					return null;
+				}
+
 				long assetLibraryId = InfoItemUtil.getGroupId(
 					httpServletRequest);
 
@@ -166,7 +170,14 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 					themeDisplay.getLocale(), "new-x", title);
 			}
 		).put(
-			"type", objectDefinition.getLabel(themeDisplay.getLocale())
+			"type",
+			() -> {
+				if (objectDefinition == null) {
+					return null;
+				}
+
+				return objectDefinition.getLabel(themeDisplay.getLocale());
+			}
 		).build();
 	}
 

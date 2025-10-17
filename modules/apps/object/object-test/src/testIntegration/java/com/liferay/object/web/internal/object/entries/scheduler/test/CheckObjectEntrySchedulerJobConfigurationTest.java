@@ -255,7 +255,7 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, true, false, true,
-				false, true, false, false, true, "-",
+				true, true, false, false, true, "_",
 				RandomTestUtil.randomLocaleStringMap(),
 				"A" + StringUtil.randomString(), null, null,
 				RandomTestUtil.randomLocaleStringMap(), true,

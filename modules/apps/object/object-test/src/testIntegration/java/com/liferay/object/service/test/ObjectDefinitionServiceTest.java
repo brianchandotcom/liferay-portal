@@ -419,7 +419,7 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			user.getUserId(), 0, null, false, true, false, true, false, false,
+			user.getUserId(), 0, null, false, true, false, true, true, false,
 			false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -540,8 +540,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					objectFolderId, null, false, true, false, true, false,
-					false, false, false, false, null,
+					objectFolderId, null, false, true, false, true, true, false,
+					false, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionTestUtil.getRandomName(), null, null,

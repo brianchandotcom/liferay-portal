@@ -1017,7 +1017,7 @@ public class EditInfoItemStrutsActionTest {
 				_user.getUserId(), 0, null, false, true,
 				enableFriendlyURLCustomization, true,
 				FeatureFlagManagerUtil.isEnabled(
-					TestPropsValues.getCompanyId(), "LPD-21926"),
+					TestPropsValues.getCompanyId(), "LPD-32050"),
 				true, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,

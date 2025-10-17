@@ -102,7 +102,9 @@ public class ObjectDefinitionTestUtil {
 
 		return ObjectDefinitionLocalServiceUtil.addCustomObjectDefinition(
 			TestPropsValues.getUserId(), 0, null, false, false, true, false,
-			false, false, false, false, false, null,
+			FeatureFlagManagerUtil.isEnabled(
+				TestPropsValues.getCompanyId(), "LPD-32050"),
+			false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(name), name, null, null,
 			LocalizedMapUtil.getLocalizedMap(name), true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,

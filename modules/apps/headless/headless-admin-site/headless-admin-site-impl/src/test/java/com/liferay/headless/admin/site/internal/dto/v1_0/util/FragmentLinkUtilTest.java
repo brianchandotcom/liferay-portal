@@ -71,16 +71,15 @@ public class FragmentLinkUtilTest {
 		_mockGroup(
 			_ITEM_GROUP_EXTERNAL_REFERENCE_CODE, _ITEM_GROUP_ID,
 			GroupConstants.TYPE_DEPOT);
+		_mockGroup(
+			_SCOPE_EXTERNAL_REFERENCE_CODE, _SCOPE_GROUP_ID,
+			GroupConstants.TYPE_SITE_OPEN);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getClassNameId(Mockito.anyString())
 		).thenReturn(
 			_CLASS_NAME_ID
 		);
-
-		_mockGroup(
-			_SCOPE_EXTERNAL_REFERENCE_CODE, _SCOPE_GROUP_ID,
-			GroupConstants.TYPE_SITE_OPEN);
 	}
 
 	@AfterClass

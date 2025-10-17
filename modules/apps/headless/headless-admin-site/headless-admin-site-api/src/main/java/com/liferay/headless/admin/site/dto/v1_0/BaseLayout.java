@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -38,17 +38,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Layout")
+@GraphQLName("BaseLayout")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Layout")
-public class Layout implements Serializable {
+@XmlRootElement(name = "BaseLayout")
+public class BaseLayout implements Serializable {
 
-	public static Layout toDTO(String json) {
-		return ObjectMapperUtil.readValue(Layout.class, json);
+	public static BaseLayout toDTO(String json) {
+		return ObjectMapperUtil.readValue(BaseLayout.class, json);
 	}
 
-	public static Layout unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Layout.class, json);
+	public static BaseLayout unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(BaseLayout.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -102,61 +102,6 @@ public class Layout implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Align> _alignSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("contentDisplay")
-	@Valid
-	public ContentDisplay getContentDisplay() {
-		if (_contentDisplaySupplier != null) {
-			contentDisplay = _contentDisplaySupplier.get();
-
-			_contentDisplaySupplier = null;
-		}
-
-		return contentDisplay;
-	}
-
-	@JsonIgnore
-	public String getContentDisplayAsString() {
-		ContentDisplay contentDisplay = getContentDisplay();
-
-		if (contentDisplay == null) {
-			return null;
-		}
-
-		return contentDisplay.toString();
-	}
-
-	public void setContentDisplay(ContentDisplay contentDisplay) {
-		this.contentDisplay = contentDisplay;
-
-		_contentDisplaySupplier = null;
-	}
-
-	@JsonIgnore
-	public void setContentDisplay(
-		UnsafeSupplier<ContentDisplay, Exception>
-			contentDisplayUnsafeSupplier) {
-
-		_contentDisplaySupplier = () -> {
-			try {
-				return contentDisplayUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ContentDisplay contentDisplay;
-
-	@JsonIgnore
-	private Supplier<ContentDisplay> _contentDisplaySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@JsonGetter("flexWrap")
@@ -266,75 +211,19 @@ public class Layout implements Serializable {
 	@JsonIgnore
 	private Supplier<Justify> _justifySupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The width's type (fixed or fluid)."
-	)
-	@JsonGetter("widthType")
-	@Valid
-	public WidthType getWidthType() {
-		if (_widthTypeSupplier != null) {
-			widthType = _widthTypeSupplier.get();
-
-			_widthTypeSupplier = null;
-		}
-
-		return widthType;
-	}
-
-	@JsonIgnore
-	public String getWidthTypeAsString() {
-		WidthType widthType = getWidthType();
-
-		if (widthType == null) {
-			return null;
-		}
-
-		return widthType.toString();
-	}
-
-	public void setWidthType(WidthType widthType) {
-		this.widthType = widthType;
-
-		_widthTypeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setWidthType(
-		UnsafeSupplier<WidthType, Exception> widthTypeUnsafeSupplier) {
-
-		_widthTypeSupplier = () -> {
-			try {
-				return widthTypeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The width's type (fixed or fluid).")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected WidthType widthType;
-
-	@JsonIgnore
-	private Supplier<WidthType> _widthTypeSupplier;
-
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
 			return true;
 		}
 
-		if (!(object instanceof Layout)) {
+		if (!(object instanceof BaseLayout)) {
 			return false;
 		}
 
-		Layout layout = (Layout)object;
+		BaseLayout baseLayout = (BaseLayout)object;
 
-		return Objects.equals(toString(), layout.toString());
+		return Objects.equals(toString(), baseLayout.toString());
 	}
 
 	@Override
@@ -361,22 +250,6 @@ public class Layout implements Serializable {
 			sb.append("\"");
 
 			sb.append(align);
-
-			sb.append("\"");
-		}
-
-		ContentDisplay contentDisplay = getContentDisplay();
-
-		if (contentDisplay != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"contentDisplay\": ");
-
-			sb.append("\"");
-
-			sb.append(contentDisplay);
 
 			sb.append("\"");
 		}
@@ -413,22 +286,6 @@ public class Layout implements Serializable {
 			sb.append("\"");
 		}
 
-		WidthType widthType = getWidthType();
-
-		if (widthType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"widthType\": ");
-
-			sb.append("\"");
-
-			sb.append(widthType);
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -436,7 +293,7 @@ public class Layout implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.Layout",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BaseLayout",
 		name = "x-class-name"
 	)
 	public String xClassName;
@@ -473,44 +330,6 @@ public class Layout implements Serializable {
 		}
 
 		private Align(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("ContentDisplay")
-	public static enum ContentDisplay {
-
-		BLOCK("Block"), FLEX_COLUMN("FlexColumn"), FLEX_ROW("FlexRow");
-
-		@JsonCreator
-		public static ContentDisplay create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (ContentDisplay contentDisplay : values()) {
-				if (Objects.equals(contentDisplay.getValue(), value)) {
-					return contentDisplay;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private ContentDisplay(String value) {
 			_value = value;
 		}
 
@@ -588,44 +407,6 @@ public class Layout implements Serializable {
 		}
 
 		private Justify(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
-	@GraphQLName("WidthType")
-	public static enum WidthType {
-
-		FIXED("Fixed"), FLUID("Fluid");
-
-		@JsonCreator
-		public static WidthType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (WidthType widthType : values()) {
-				if (Objects.equals(widthType.getValue(), value)) {
-					return widthType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private WidthType(String value) {
 			_value = value;
 		}
 

@@ -10,7 +10,10 @@ import com.liferay.customer.exception.TicketAttachmentAlreadyApprovedException;
 import com.liferay.customer.exception.TicketAttachmentNotFoundException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.net.URI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -129,28 +132,27 @@ public class TicketAttachmentService extends BaseService {
 			String md5Checksum)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("fileName eq '");
 		sb.append(fileName);
+		sb.append("'");
 
 		if (!md5Checksum.equals("")) {
-			sb.append("' and md5Checksum eq '");
+			sb.append(" and md5Checksum eq '");
 			sb.append(md5Checksum);
+			sb.append("'");
 		}
 
-		sb.append("' and jiraIssueKey eq '");
+		sb.append(" and jiraIssueKey eq '");
 		sb.append(jiraIssueKey);
 		sb.append("'");
 
 		String response = get(
 			authorization,
-			UriComponentsBuilder.fromPath(
-				"/o/c/ticketattachments"
-			).queryParam(
-				"filter", sb.toString()
-			).build(
-			).toUri());
+			new URI(
+				"/o/c/ticketattachments?filter=" +
+					URLCodec.encodeURL(sb.toString())));
 
 		if (Validator.isNull(response)) {
 			return null;

@@ -511,6 +511,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			Matcher matcher = pattern.matcher(javaContent);
 
 			while (matcher.find()) {
+				if (_isCommentLine(newContent, index + matcher.start())) {
+					continue;
+				}
+
 				String methodCall = matcher.group();
 
 				String[] classNames = JSONUtil.toStringArray(
@@ -571,6 +575,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
+			if (_isCommentLine(content, matcher.start())) {
+				continue;
+			}
+
 			String methodCall = matcher.group();
 
 			String from = jsonObject.getString("from");
@@ -679,10 +687,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		if (!_hasValidMethodCall(
 				fileName, from, javaMethodContent, jsonObject, newContent,
 				parameterNames,
-				getLineNumber(
-					newContent,
-					newContent.indexOf(javaMethodContent) + matcher.start()),
-				to)) {
+				newContent.indexOf(javaMethodContent) + matcher.start(), to)) {
 
 			return newContent;
 		}
@@ -713,6 +718,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
+			if (_isCommentLine(content, matcher.start())) {
+				continue;
+			}
+
 			if (from.startsWith("regex:")) {
 				return content.replaceAll(pattern.toString(), to);
 			}
@@ -828,7 +837,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 	private boolean _hasValidMethodCall(
 		String fileName, String from, String javaMethodContent,
 		JSONObject jsonObject, String newContent, List<String> parameterNames,
-		int lineNumber, String to) {
+		int position, String to) {
 
 		List<String> fromParameters = JavaSourceUtil.getParameterNames(from);
 
@@ -850,7 +859,10 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		boolean hasMessage = false;
 		boolean valid = true;
 
-		if (fileName.endsWith(".java")) {
+		if (_isCommentLine(newContent, position)) {
+			valid = false;
+		}
+		else if (fileName.endsWith(".java")) {
 			if (!to.isEmpty() && _isAlreadyReplaced(parameterNames, to)) {
 				valid = false;
 			}
@@ -882,7 +894,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		Set<String> keys = jsonObject.keySet();
 
 		if (valid && (hasMessage || keys.contains("hasMessage"))) {
-			addMessage(fileName, _getMessage(jsonObject), lineNumber);
+			addMessage(
+				fileName, _getMessage(jsonObject),
+				getLineNumber(newContent, position));
 
 			_newMessage = true;
 
@@ -1028,6 +1042,39 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		return newFileContentSB.toString();
 	}
 
+	private boolean _isCommentLine(String content, int position) {
+		int lineNumber = getLineNumber(content, position);
+
+		String line = getLine(content, lineNumber);
+
+		line = line.trim();
+
+		if (line.startsWith("//") || line.startsWith("<%--")) {
+			return true;
+		}
+
+		int lastBlockStart = content.lastIndexOf("/*", position);
+		int lastBlockEnd = content.lastIndexOf("*/", position);
+
+		if ((lastBlockStart != -1) &&
+			((lastBlockEnd == -1) || (lastBlockEnd < lastBlockStart))) {
+
+			return true;
+		}
+
+		int lastJspCommentStart = content.lastIndexOf("<%--", position);
+		int lastJspCommentEnd = content.lastIndexOf("--%>", position);
+
+		if ((lastJspCommentStart != -1) &&
+			((lastJspCommentEnd == -1) ||
+			 (lastJspCommentEnd < lastJspCommentStart))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private String _processReplacementOrMessage(
 		String content, String fileName, JSONObject jsonObject,
 		String newContent) {
@@ -1044,7 +1091,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 				Matcher matcher = pattern.matcher(content);
 
-				if (matcher.find()) {
+				if (matcher.find() &&
+					!_isCommentLine(content, matcher.start())) {
+
 					addMessage(
 						fileName, _getMessage(jsonObject),
 						getLineNumber(content, matcher.start()));

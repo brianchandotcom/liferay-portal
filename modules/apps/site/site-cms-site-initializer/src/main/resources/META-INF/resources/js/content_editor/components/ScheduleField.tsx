@@ -25,6 +25,7 @@ export default function ScheduleField({
 	label,
 	name,
 	neverExpire,
+	required = false,
 	updateFieldData,
 }: {
 	date: string | undefined;
@@ -33,6 +34,7 @@ export default function ScheduleField({
 	label: string;
 	name: string;
 	neverExpire?: boolean;
+	required?: boolean;
 	updateFieldData: any;
 }) {
 	const [checked, setChecked] = useState<boolean>(Boolean(neverExpire));
@@ -47,7 +49,10 @@ export default function ScheduleField({
 		let error = '';
 		const isValid = moment(value, dateConfig.momentFormat, true).isValid();
 
-		if (value && !isValid) {
+		if (required && !value) {
+			error = Liferay.Language.get('this-field-is-required');
+		}
+		else if (value && !isValid) {
 			error = Liferay.Language.get('the-field-value-is-invalid');
 		}
 		else if (isPastDate(value)) {
@@ -74,6 +79,7 @@ export default function ScheduleField({
 				errorMessage={!hasNeverExpire || !checked ? error : ''}
 				fieldId={id}
 				label={label}
+				required={required}
 			>
 				<ClayDatePicker
 					aria-describedby={error}

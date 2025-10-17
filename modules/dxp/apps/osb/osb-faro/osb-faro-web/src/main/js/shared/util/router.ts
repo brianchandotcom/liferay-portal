@@ -51,9 +51,10 @@ export const USERS = 'users';
 export const PERIOD = 'rangeKey';
 export const SEGMENT_STATE = 'state';
 export const SEGMENT_TYPE = 'segmentType';
-export const SEGMENTS_MEMBERSHIP = 'segmentsMembership';
-export const MODIFIED = 'modified';
-export const LAST_MODIFIED_BY = 'lastModifiedBy';
+export const INDIVIDUAL_COUNT = 'individualCount';
+export const DATE_MODIFIED = 'dateModified';
+export const LAST_MEMBERSHIP_UPDATE = 'lastMembershipUpdate';
+export const USER_NAME = 'userName';
 export const STATUSES = 'statuses';
 export const TYPES = 'types';
 

@@ -32,6 +32,18 @@ import {close, modalTypes, open} from 'shared/actions/modals';
 import {compose} from 'shared/hoc';
 import {connect, ConnectedProps} from 'react-redux';
 import {createOrderIOMap} from 'shared/util/pagination';
+import {
+	DATE_MODIFIED,
+	INDIVIDUAL_COUNT,
+	LAST_MEMBERSHIP_UPDATE,
+	Routes,
+	SEGMENT_STATE,
+	SEGMENT_TYPE,
+	SEGMENTS,
+	setUriQueryValue,
+	toRoute,
+	USER_NAME
+} from 'shared/util/router';
 import {DateCell} from 'shared/components/table/cell-components';
 import {formatDateToTimeZone} from 'shared/util/date';
 import {
@@ -39,17 +51,6 @@ import {
 	NAME,
 	paginationDefaults
 } from 'shared/util/pagination';
-import {
-	LAST_MODIFIED_BY,
-	MODIFIED,
-	Routes,
-	SEGMENT_STATE,
-	SEGMENT_TYPE,
-	SEGMENTS,
-	SEGMENTS_MEMBERSHIP,
-	setUriQueryValue,
-	toRoute
-} from 'shared/util/router';
 import {Link} from 'react-router-dom';
 import {OrderedMap} from 'immutable';
 import {OrderParams} from 'shared/util/records';
@@ -134,15 +135,19 @@ const ORDER_BY_OPTIONS = [
 	},
 	{
 		label: Liferay.Language.get('segment-membership'),
-		value: SEGMENTS_MEMBERSHIP
+		value: INDIVIDUAL_COUNT
 	},
 	{
 		label: Liferay.Language.get('modified'),
-		value: MODIFIED
+		value: DATE_MODIFIED
 	},
 	{
 		label: Liferay.Language.get('last-modified-by'),
-		value: LAST_MODIFIED_BY
+		value: USER_NAME
+	},
+	{
+		label: Liferay.Language.get('last-membership-update'),
+		value: LAST_MEMBERSHIP_UPDATE
 	}
 ];
 
@@ -154,8 +159,6 @@ export const List: React.FC<IListProps> = ({
 	history,
 	open
 }) => {
-	// TODO => Probably use this to get the update
-	// const {timeZoneId} = useTimeZone();
 	const currentUser = useCurrentUser();
 	const {selectedChannel} = useChannelContext();
 	const _tableRef = useRef<HTMLDivElement & SearchableEntityTable>();
@@ -546,7 +549,7 @@ export const List: React.FC<IListProps> = ({
 									)
 								},
 								{
-									accessor: 'lastModifiedBy',
+									accessor: 'userName',
 									cellRenderer: UserCell,
 									label: Liferay.Language.get(
 										'last-modified-by'

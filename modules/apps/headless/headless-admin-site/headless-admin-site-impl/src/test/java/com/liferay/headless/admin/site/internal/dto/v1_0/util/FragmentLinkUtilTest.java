@@ -68,24 +68,6 @@ public class FragmentLinkUtilTest {
 		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
 
 		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_groupLocalServiceUtilMockedStatic.close();
-		_layoutLocalServiceUtilMockedStatic.close();
-		_localizedValueUtilMockedStatic.close();
-		_portalUtilMockedStatic.close();
-	}
-
-	@Before
-	public void setUp() throws Exception {
-		_CLASS_NAME_ID = RandomTestUtil.randomLong();
-		_COMPANY_ID = RandomTestUtil.randomLong();
-		_infoItemServiceRegistry = Mockito.mock(InfoItemServiceRegistry.class);
-
-		_ITEM_GROUP_EXTERNAL_REFERENCE_CODE = RandomTestUtil.randomString();
-		_ITEM_GROUP_ID = RandomTestUtil.randomLong();
 
 		_mockGroup(
 			_ITEM_GROUP_EXTERNAL_REFERENCE_CODE, _ITEM_GROUP_ID,
@@ -96,13 +78,20 @@ public class FragmentLinkUtilTest {
 		).thenReturn(
 			_CLASS_NAME_ID
 		);
-		_SCOPE_EXTERNAL_REFERENCE_CODE = RandomTestUtil.randomString();
-		_SCOPE_GROUP_ID = RandomTestUtil.randomLong();
 
 		_mockGroup(
 			_SCOPE_EXTERNAL_REFERENCE_CODE, _SCOPE_GROUP_ID,
 			GroupConstants.TYPE_SITE_OPEN);
 	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_groupLocalServiceUtilMockedStatic.close();
+		_layoutLocalServiceUtilMockedStatic.close();
+		_localizedValueUtilMockedStatic.close();
+		_portalUtilMockedStatic.close();
+	}
+
 
 	@Test
 	public void testToFragmentLinkInlineValue() throws Exception {
@@ -1160,7 +1149,7 @@ public class FragmentLinkUtilTest {
 		return fragmentMappedValueItemExternalReference;
 	}
 
-	private void _mockGroup(
+	private static void _mockGroup(
 		String externalReferenceCode, long groupId, int type) {
 
 		Group group = Mockito.mock(Group.class);
@@ -1259,14 +1248,16 @@ public class FragmentLinkUtilTest {
 		return infoItemReference;
 	}
 
-	private static long _CLASS_NAME_ID;
-	private static long _COMPANY_ID;
+	private static final long _CLASS_NAME_ID = RandomTestUtil.randomLong();
+	private static final long _COMPANY_ID = RandomTestUtil.randomLong();
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
-	private static InfoItemServiceRegistry _infoItemServiceRegistry;
-	private static String _ITEM_GROUP_EXTERNAL_REFERENCE_CODE;
-	private static long _ITEM_GROUP_ID;
+	private static final InfoItemServiceRegistry _infoItemServiceRegistry =
+		Mockito.mock(InfoItemServiceRegistry.class);
+	private static final String _ITEM_GROUP_EXTERNAL_REFERENCE_CODE =
+		RandomTestUtil.randomString();
+	private static final long _ITEM_GROUP_ID = RandomTestUtil.randomLong();
 	private static final MockedStatic<LayoutLocalServiceUtil>
 		_layoutLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			LayoutLocalServiceUtil.class);
@@ -1275,7 +1266,8 @@ public class FragmentLinkUtilTest {
 			LocalizedValueUtil.class);
 	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
 		Mockito.mockStatic(PortalUtil.class);
-	private static String _SCOPE_EXTERNAL_REFERENCE_CODE;
-	private static long _SCOPE_GROUP_ID;
+	private static final String _SCOPE_EXTERNAL_REFERENCE_CODE =
+		RandomTestUtil.randomString();
+	private static final long _SCOPE_GROUP_ID = RandomTestUtil.randomLong();
 
 }

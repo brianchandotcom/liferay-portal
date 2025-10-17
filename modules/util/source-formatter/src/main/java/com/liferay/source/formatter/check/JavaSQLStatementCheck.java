@@ -26,7 +26,107 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		for (String methodName : _METHOD_NAMES) {
-			_checkSQLBooleanValues(fileName, content, methodName);
+			int x = -1;
+
+			while (true) {
+				x = content.indexOf(methodName + "(", x + 1);
+
+				if (x == -1) {
+					break;
+				}
+
+				if (ToolsUtil.isInsideQuotes(content, x)) {
+					continue;
+				}
+
+				String methodCall = JavaSourceUtil.getMethodCall(content, x);
+
+				List<String> parameterList = JavaSourceUtil.getParameterList(
+					methodCall);
+
+				if (parameterList.isEmpty()) {
+					continue;
+				}
+
+				int parameterSize = parameterList.size();
+
+				String parametersString = StringPool.BLANK;
+
+				if (methodName.equals(
+						"AutoBatchPreparedStatementUtil.autoBatch") ||
+					methodName.equals(
+						"AutoBatchPreparedStatementUtil.concurrentAutoBatch")) {
+
+					if (parameterSize != 2) {
+						continue;
+					}
+
+					parametersString = _stripOuterMethods(parameterList.get(1));
+				}
+				else if (methodName.equals("connection.prepareStatement")) {
+					if (parameterSize != 1) {
+						continue;
+					}
+
+					parametersString = _stripOuterMethods(parameterList.get(0));
+				}
+				else if (methodName.equals("runSQL")) {
+					if (parameterSize == 1) {
+						parametersString = _stripOuterMethods(
+							parameterList.get(0));
+					}
+					else if (parameterSize == 2) {
+						parametersString = _stripOuterMethods(
+							parameterList.get(1));
+					}
+				}
+				else if (methodName.equals("StringBundler.concat")) {
+					String s = StringUtil.trimTrailing(content.substring(0, x));
+
+					if (!s.endsWith("=")) {
+						continue;
+					}
+
+					String firstParameter = parameterList.get(0);
+
+					if (!firstParameter.startsWith("\"delete ") &&
+						!firstParameter.startsWith("\"insert into ") &&
+						!firstParameter.startsWith("\"select ") &&
+						!firstParameter.startsWith("\"update ") &&
+						!firstParameter.startsWith("\"where ")) {
+
+						continue;
+					}
+
+					parametersString = _stripOuterMethods(methodCall);
+				}
+
+				if (parametersString.equals(StringPool.BLANK)) {
+					continue;
+				}
+
+				int lineNumber = getLineNumber(content, x);
+
+				parametersString = parametersString.replaceAll("\n", "");
+				parametersString = parametersString.replaceAll("\\s{2,}", " ");
+
+				parametersString = StringUtil.removeSubstring(
+					parametersString, "\" + \"");
+				parametersString = StringUtil.removeSubstring(
+					parametersString, "\", \"");
+
+				parameterList = JavaSourceUtil.splitParameters(
+					parametersString);
+
+				_checkSQLBooleanValues(fileName, parameterList, lineNumber);
+
+				if (!methodName.equals("runSQL") &&
+					!methodName.equals("StringBundler.concat")) {
+
+					_checkMissingTransformCall(
+						fileName, methodCall, parametersString, lineNumber);
+				}
+			}
 		}
 
 		return content;
@@ -80,110 +180,6 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 						"$]\" instead of \"", match, "\" in SQL statements"),
 					lineNumber);
 			}
-		}
-	}
-
-	private void _checkSQLBooleanValues(
-		String fileName, String content, String methodName) {
-
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf(methodName + "(", x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			if (ToolsUtil.isInsideQuotes(content, x)) {
-				continue;
-			}
-
-			String methodCall = JavaSourceUtil.getMethodCall(content, x);
-
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				methodCall);
-
-			if (parameterList.isEmpty()) {
-				return;
-			}
-
-			int parameterSize = parameterList.size();
-
-			String parametersString = StringPool.BLANK;
-
-			if (methodName.equals("AutoBatchPreparedStatementUtil.autoBatch") ||
-				methodName.equals(
-					"AutoBatchPreparedStatementUtil.concurrentAutoBatch")) {
-
-				if (parameterSize != 2) {
-					return;
-				}
-
-				parametersString = _stripOuterMethods(parameterList.get(1));
-			}
-			else if (methodName.equals("connection.prepareStatement")) {
-				if (parameterSize != 1) {
-					return;
-				}
-
-				parametersString = _stripOuterMethods(parameterList.get(0));
-			}
-			else if (methodName.equals("runSQL")) {
-				if (parameterSize == 1) {
-					parametersString = _stripOuterMethods(parameterList.get(0));
-				}
-				else if (parameterSize == 2) {
-					parametersString = _stripOuterMethods(parameterList.get(1));
-				}
-			}
-			else if (methodName.equals("StringBundler.concat")) {
-				String s = StringUtil.trimTrailing(content.substring(0, x));
-
-				if (!s.endsWith("=")) {
-					continue;
-				}
-
-				String firstParameter = parameterList.get(0);
-
-				if (!firstParameter.startsWith("\"delete ") &&
-					!firstParameter.startsWith("\"insert into ") &&
-					!firstParameter.startsWith("\"select ") &&
-					!firstParameter.startsWith("\"update ") &&
-					!firstParameter.startsWith("\"where ")) {
-
-					continue;
-				}
-
-				parametersString = _stripOuterMethods(methodCall);
-			}
-
-			if (parametersString.equals(StringPool.BLANK)) {
-				continue;
-			}
-
-			int lineNumber = getLineNumber(content, x);
-
-			parametersString = parametersString.replaceAll("\n", "");
-			parametersString = parametersString.replaceAll("\\s{2,}", " ");
-
-			parametersString = StringUtil.removeSubstring(
-				parametersString, "\" + \"");
-			parametersString = StringUtil.removeSubstring(
-				parametersString, "\", \"");
-
-			parameterList = JavaSourceUtil.splitParameters(parametersString);
-
-			_checkSQLBooleanValues(fileName, parameterList, lineNumber);
-
-			if (methodName.equals("runSQL") ||
-				methodName.equals("StringBundler.concat")) {
-
-				continue;
-			}
-
-			_checkMissingTransformCall(
-				fileName, methodCall, parametersString, lineNumber);
 		}
 	}
 

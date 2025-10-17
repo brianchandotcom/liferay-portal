@@ -35,7 +35,7 @@ import {createOrderIOMap} from 'shared/util/pagination';
 import {
 	DATE_MODIFIED,
 	INDIVIDUAL_COUNT,
-	LAST_MEMBERSHIP_UPDATE,
+	LAST_MEMBERSHIP_UPDATE_DATE,
 	Routes,
 	SEGMENT_STATE,
 	SEGMENT_TYPE,
@@ -147,7 +147,7 @@ const ORDER_BY_OPTIONS = [
 	},
 	{
 		label: Liferay.Language.get('last-membership-update'),
-		value: LAST_MEMBERSHIP_UPDATE
+		value: LAST_MEMBERSHIP_UPDATE_DATE
 	}
 ];
 
@@ -536,12 +536,12 @@ export const List: React.FC<IListProps> = ({
 									)
 								},
 								{
-									accessor: 'lastMembershipUpdate',
+									accessor: 'lastMembershipUpdateDate',
 									cellRenderer: DateCell,
 									cellRendererProps: {
 										dateFormatter: date =>
 											formatDateToTimeZone(date, 'lll'),
-										datePath: 'lastMembershipUpdate'
+										datePath: 'lastMembershipUpdateDate'
 									},
 									className: 'table-column-text-end',
 									label: Liferay.Language.get(

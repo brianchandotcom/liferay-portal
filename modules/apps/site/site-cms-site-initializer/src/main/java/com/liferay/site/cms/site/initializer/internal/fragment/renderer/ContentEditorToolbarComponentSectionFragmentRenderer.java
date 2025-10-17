@@ -14,11 +14,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +30,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
@@ -85,30 +87,43 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
+		if (layoutDisplayPageObjectProvider == null) {
+			return Collections.emptyMap();
+		}
+
+		Object displayObject =
+			layoutDisplayPageObjectProvider.getDisplayObject();
+
+		if (!(displayObject instanceof ObjectEntry)) {
+			return Collections.emptyMap();
+		}
+
+		ObjectEntry objectEntry = (ObjectEntry)displayObject;
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		return HashMapBuilder.<String, Object>put(
 			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
 		).put(
+			"displayDate",
+			() -> {
+				Date displayDate = objectEntry.getDisplayDate();
+
+				if (displayDate == null) {
+					return null;
+				}
+
+				return DateUtil.getDate(
+					displayDate, "yyyy-MM-dd'T'HH:mm",
+					themeDisplay.getLocale());
+			}
+		).put(
 			"hasWorkflow",
 			() -> {
-				if (layoutDisplayPageObjectProvider == null) {
-					return StringPool.BLANK;
-				}
-
-				Object displayObject =
-					layoutDisplayPageObjectProvider.getDisplayObject();
-
-				if (!(displayObject instanceof ObjectEntry)) {
-					return StringPool.BLANK;
-				}
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				long assetLibraryId = InfoItemUtil.getGroupId(
 					httpServletRequest);
-
-				ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
 				ObjectDefinition objectDefinition =
 					_objectDefinitionLocalService.fetchObjectDefinition(
@@ -122,23 +137,6 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 		).put(
 			"headerTitle",
 			() -> {
-				if (layoutDisplayPageObjectProvider == null) {
-					return StringPool.BLANK;
-				}
-
-				Object displayObject =
-					layoutDisplayPageObjectProvider.getDisplayObject();
-
-				if (!(displayObject instanceof ObjectEntry)) {
-					return StringPool.BLANK;
-				}
-
-				ObjectEntry objectEntry = (ObjectEntry)displayObject;
-
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)httpServletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
-
 				String title = _getTitle(
 					layoutDisplayPageObjectProvider, objectEntry, themeDisplay);
 

@@ -19,6 +19,7 @@ import {
 	ReferencedStructure,
 	RepeatableGroup,
 	Structure,
+	StructureChild,
 } from '../types/Structure';
 import {Uuid} from '../types/Uuid';
 import actionGeneratesChanges from '../utils/actionGeneratesChanges';
@@ -52,6 +53,8 @@ import {
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get(
 	'untitled-content-structure'
 );
+
+type UndeletableReason = 'is-locked' | 'is-referenced' | 'causes-invalid-group';
 
 type History = {
 	deletedChildren: boolean;
@@ -445,42 +448,27 @@ function reducer(state: State, action: Action): State {
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			if (items.some((item) => isLocked(item))) {
+			const undeletables = getUndeletableItems(items, structure);
+
+			if (undeletables.size) {
 				showWarning({
 					text: Liferay.Language.get(
-						'system-fields-cannot-be-deleted'
+						'one-or-more-selected-fields-are-system-or-referenced-fields'
 					),
 					title: Liferay.Language.get(
-						'some-fields-cannot-be-deleted'
-					),
-				});
-			}
-			else if (
-				items.some((item) => isReferenced({item, root: structure}))
-			) {
-				showWarning({
-					text: Liferay.Language.get(
-						'referenced-content-structure-fields-cannot-be-deleted'
-					),
-					title: Liferay.Language.get(
-						'some-fields-cannot-be-deleted'
+						'some-fields-could-not-be-deleted'
 					),
 				});
 			}
 
 			const nextChildren = deleteChildren({
 				root: structure,
-				uuids: selection,
+				uuids: selection.filter((uuid) => !undeletables.has(uuid)),
 			});
-
-			const undeletableItems = items.filter(
-				(item) =>
-					isLocked(item) || isReferenced({item, root: structure})
-			);
 
 			return {
 				...state,
-				selection: undeletableItems.map(({uuid}) => uuid),
+				selection: [...undeletables.keys()],
 				structure: {
 					...structure,
 					children: nextChildren,
@@ -845,6 +833,54 @@ function getDefaultChildren(structureUuid: Uuid) {
 	}
 
 	return children;
+}
+
+function getUndeletableItems(
+	items: StructureChild[],
+	structure: Structure
+): Map<Uuid, UndeletableReason> {
+	const undeletables = new Map<Uuid, UndeletableReason>();
+
+	for (const item of items) {
+		if (isLocked(item)) {
+			undeletables.set(item.uuid, 'is-locked');
+		}
+
+		if (isReferenced({item, root: structure})) {
+			undeletables.set(item.uuid, 'is-referenced');
+		}
+
+		const parent = findChild({
+			root: structure,
+			uuid: item.parent,
+		});
+
+		if (parent?.type === 'repeatable-group') {
+			const groupFields = Array.from(parent.children.values()).filter(
+				(child) =>
+					child.type !== 'referenced-structure' &&
+					child.type !== 'repeatable-group'
+			);
+
+			const fields = items.filter(
+				(item) =>
+					item.type !== 'referenced-structure' &&
+					item.type !== 'repeatable-group'
+			);
+
+			if (
+				groupFields.every(({uuid}) =>
+					fields.some((field) => field.uuid === uuid)
+				)
+			) {
+				groupFields.forEach((field) => {
+					undeletables.set(field.uuid, 'causes-invalid-group');
+				});
+			}
+		}
+	}
+
+	return undeletables;
 }
 
 function showWarning({text, title}: {text: string; title: string}) {

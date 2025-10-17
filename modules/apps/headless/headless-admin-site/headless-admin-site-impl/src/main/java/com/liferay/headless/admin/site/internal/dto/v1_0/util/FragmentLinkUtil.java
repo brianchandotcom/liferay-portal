@@ -527,15 +527,9 @@ public class FragmentLinkUtil {
 				layout.getGroupId(), scopeGroupId);
 		}
 
-		String scopeExternalReferenceCode = layoutJSONObject.getString(
-			"scopeExternalReferenceCode");
-
-		if (Validator.isNull(scopeExternalReferenceCode)) {
-			return null;
-		}
-
 		return _getItemScope(
-			companyId, scopeExternalReferenceCode, scopeGroupId);
+			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
+			scopeGroupId);
 	}
 
 	private static JSONObject _getMappedItemJSONObject(

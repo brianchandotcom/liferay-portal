@@ -4,9 +4,9 @@
 			> .ck.ck-sticky-panel__content {
 				border-bottom-left-radius: 0 !important;
 				border-bottom-right-radius: 0 !important;
-				border-color: #e7e7ed;
-				border-top-left-radius: 0.5rem;
-				border-top-right-radius: 0.5rem;
+				border-color: $gray-300;
+				border-top-left-radius: $border-radius;
+				border-top-right-radius: $border-radius;
 			}
 		}
 	}
@@ -14,16 +14,16 @@
 	.ck.ck-toolbar {
 		border-bottom-left-radius: 0 !important;
 		border-bottom-right-radius: 0 !important;
-		border-color: #e7e7ed;
-		border-top-left-radius: 0.5rem;
-		border-top-right-radius: 0.5rem;
+		border-color: $gray-300;
+		border-top-left-radius: $border-radius;
+		border-top-right-radius: $border-radius;
 	}
 
 	.ck.ck-editor__main > .ck-editor__editable {
-		background-color: #f1f2f5;
-		border-bottom-left-radius: 0.5rem;
-		border-bottom-right-radius: 0.5rem;
-		border-color: #e7e7ed;
+		background-color: $gray-200;
+		border-bottom-left-radius: $border-radius;
+		border-bottom-right-radius: $border-radius;
+		border-color: $gray-300;
 		border-top-left-radius: 0 !important;
 		border-top-right-radius: 0 !important;
 	}

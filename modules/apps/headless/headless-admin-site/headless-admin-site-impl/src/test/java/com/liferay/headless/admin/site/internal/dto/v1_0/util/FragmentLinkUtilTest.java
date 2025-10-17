@@ -264,7 +264,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				RandomTestUtil.randomLong()));
+				_scopeGroupId));
 	}
 
 	@Test
@@ -347,7 +347,15 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			RandomTestUtil.randomLong()
+			_itemGroupId
+		);
+
+		long layoutId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			layout.getLayoutId()
+		).thenReturn(
+			layoutId
 		);
 
 		String layoutExternalReferenceCode = RandomTestUtil.randomString();
@@ -360,7 +368,7 @@ public class FragmentLinkUtilTest {
 
 		_layoutLocalServiceUtilMockedStatic.when(
 			() -> LayoutLocalServiceUtil.fetchLayout(
-				Mockito.anyLong(), Mockito.anyBoolean(), Mockito.anyLong())
+				_itemGroupId, false, layoutId)
 		).thenReturn(
 			layout
 		);
@@ -388,11 +396,11 @@ public class FragmentLinkUtilTest {
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
-						"groupId", RandomTestUtil.randomLong()
+						"groupId", _itemGroupId
 					).put(
-						"layoutId", RandomTestUtil.randomLong()
+						"layoutId", layoutId
 					).put(
-						"privateLayout", true
+						"privateLayout", false
 					).put(
 						"scopeExternalReferenceCode",
 						_scopeExternalReferenceCode
@@ -1042,7 +1050,7 @@ public class FragmentLinkUtilTest {
 
 		Mockito.when(
 			infoItemDetailsProvider.getInfoItemDetails(
-				Mockito.any(long.class), Mockito.any(Class.class),
+				Mockito.eq(_scopeGroupId), Mockito.any(Class.class),
 				Mockito.any())
 		).thenReturn(
 			infoItemDetails

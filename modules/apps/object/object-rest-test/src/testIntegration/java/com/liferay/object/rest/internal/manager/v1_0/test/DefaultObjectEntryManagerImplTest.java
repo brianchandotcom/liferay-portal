@@ -3206,12 +3206,16 @@ public class DefaultObjectEntryManagerImplTest
 				"listTypeEntryKey1", objectDefinition,
 				"picklistObjectFieldName");
 
-			Assert.assertEquals(
-				StringPool.BLANK,
-				_getListEntryKey(
-					_defaultObjectEntryManager.getObjectEntry(
-						_simpleDTOConverterContext, objectDefinition,
-						objectEntryId2)));
+			ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
+				_simpleDTOConverterContext, objectDefinition, objectEntryId2);
+
+			Map<String, Object> properties = objectEntry.getProperties();
+
+			ListEntry listEntry = (ListEntry)properties.get(
+				"picklistObjectFieldName");
+
+			Assert.assertEquals(StringPool.BLANK, listEntry.getKey());
+			Assert.assertEquals(StringPool.BLANK, listEntry.getName());
 
 			_updateAndAssertObjectEntryWithPicklistObjectField(
 				StringPool.BLANK, StringPool.BLANK, objectDefinition,
@@ -3225,6 +3229,13 @@ public class DefaultObjectEntryManagerImplTest
 			_updateAndAssertObjectEntryWithPicklistObjectField(
 				"listTypeEntryKey2", "listTypeEntryKey2", objectDefinition,
 				objectEntryId4);
+
+			Assert.assertEquals(
+				StringPool.BLANK,
+				_getListEntryName(
+					_defaultObjectEntryManager.getObjectEntry(
+						_simpleDTOConverterContext, objectDefinition,
+						objectEntryId1)));
 
 			_addAndAssertObjectEntryWithPicklistObjectField(
 				null, "listTypeEntryKey1", objectDefinition);
@@ -10004,13 +10015,22 @@ public class DefaultObjectEntryManagerImplTest
 			objectDefinition, null);
 	}
 
-	private String _getListEntryKey(ObjectEntry objectEntry) {
+	private ListEntry _getListEntry(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		ListEntry listEntry = (ListEntry)properties.get(
-			"picklistObjectFieldName");
+		return (ListEntry)properties.get("picklistObjectFieldName");
+	}
+
+	private String _getListEntryKey(ObjectEntry objectEntry) {
+		ListEntry listEntry = _getListEntry(objectEntry);
 
 		return listEntry.getKey();
+	}
+
+	private String _getListEntryName(ObjectEntry objectEntry) {
+		ListEntry listEntry = _getListEntry(objectEntry);
+
+		return listEntry.getName();
 	}
 
 	private LocalDateTime _getLocalDateTime(String dateTimeString) {

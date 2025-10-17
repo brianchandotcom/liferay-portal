@@ -50,18 +50,12 @@ public class ObjectEntryFolderLayoutDisplayPageProviderTest {
 	}
 
 	@Test
-	public void testGetLayoutDisplayPageObjectProviderWithClassPKInfoItemIdentifier()
+	public void testGetLayoutDisplayPageObjectProvider()
 		throws Exception {
 
 		_testGetLayoutDisplayPageObjectProvider(
 			new ClassPKInfoItemIdentifier(
 				_objectEntryFolder.getObjectEntryFolderId()));
-	}
-
-	@Test
-	public void testGetLayoutDisplayPageObjectProviderWithERCInfoItemIdentifier()
-		throws Exception {
-
 		_testGetLayoutDisplayPageObjectProvider(
 			new ERCInfoItemIdentifier(
 				_objectEntryFolder.getExternalReferenceCode()));

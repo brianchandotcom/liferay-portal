@@ -100,6 +100,10 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 
 		ObjectEntry objectEntry = (ObjectEntry)displayObject;
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -124,10 +128,6 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 			() -> {
 				long assetLibraryId = InfoItemUtil.getGroupId(
 					httpServletRequest);
-
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.fetchObjectDefinition(
-						objectEntry.getObjectDefinitionId());
 
 				return _workflowDefinitionLinkLocalService.
 					hasWorkflowDefinitionLink(
@@ -164,6 +164,8 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 				return language.format(
 					themeDisplay.getLocale(), "new-x", title);
 			}
+		).put(
+			"type", objectDefinition.getLabel(themeDisplay.getLocale())
 		).build();
 	}
 

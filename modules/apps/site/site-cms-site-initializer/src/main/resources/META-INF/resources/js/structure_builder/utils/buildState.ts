@@ -22,7 +22,6 @@ export default function buildState({
 	const structure = buildStructure({mainObjectDefinition, objectDefinitions});
 
 	return {
-		error: null,
 		history: {
 			deletedChildren: false,
 			modifiedNames: new Set(),

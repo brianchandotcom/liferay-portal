@@ -80,6 +80,11 @@ export default function AddOptionModal({
 
 					<Input
 						disabled={Boolean(option?.key)}
+						error={
+							key
+								? ''
+								: Liferay.Language.get('this-field-is-required')
+						}
 						key={key}
 						label={Liferay.Language.get('key')}
 						onValueChange={(key) => setKey(key)}
@@ -88,6 +93,11 @@ export default function AddOptionModal({
 					/>
 
 					<ERCInput
+						error={
+							erc
+								? ''
+								: Liferay.Language.get('this-field-is-required')
+						}
 						helpText={sub(
 							Liferay.Language.get(
 								'unique-key-for-referencing-the-x'

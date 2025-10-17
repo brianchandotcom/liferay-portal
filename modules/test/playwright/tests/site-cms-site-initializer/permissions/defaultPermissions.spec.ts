@@ -551,7 +551,7 @@ test(
 
 			let childPermissions = [
 				{action: 'UPDATE', checked: true, role: 'Power User'},
-				{action: 'VIEW', checked: true, role: 'User'},
+				{action: 'ADD_ENTRY', checked: true, role: 'User'},
 			];
 
 			await permissionsPage.checkPermissionsAndSave(childPermissions);
@@ -567,7 +567,7 @@ test(
 
 			childPermissions = [
 				{action: 'UPDATE', checked: false, role: 'Power User'},
-				{action: 'VIEW', checked: false, role: 'User'},
+				{action: 'ADD_ENTRY', checked: false, role: 'User'},
 			];
 
 			await verifyPermissions({

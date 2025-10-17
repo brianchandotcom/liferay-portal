@@ -20,7 +20,7 @@ components:
                         -   $ref: "#/components/schemas/SitePageActionExecutionResult"
                         -   $ref: "#/components/schemas/URLActionExecutionResult"
             type: object
-        BaseLayout:
+        BasicLayout:
             properties:
                 align:
                     enum: [Baseline, Center, End, None, Start, Stretch]
@@ -133,7 +133,7 @@ components:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         layout:
-                            $ref: "#/components/schemas/BaseLayout"
+                            $ref: "#/components/schemas/BasicLayout"
                             # @review
                             description:
                                 the collection page element's layout.
@@ -1858,7 +1858,7 @@ components:
             type: object
         Layout:
             allOf:
-                -   $ref: "#/components/schemas/BaseLayout"
+                -   $ref: "#/components/schemas/BasicLayout"
                 -   properties:
                         contentDisplay:
                             enum: [Block, FlexColumn, FlexRow]

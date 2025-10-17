@@ -322,7 +322,7 @@ closeTemplate()
 				export USER_MEM_ARGS="${app.server.weblogic.jvm.mem}"
 				export WL_HOME="${app.server.weblogic.wlserver.dir}"
 
-				${source.command} ${MW_HOME}/oracle/oracle_common/common/bin/commEnv.sh
+				${source.command} ${MW_HOME}/oracle_common/common/bin/commEnv.sh
 
 				export CLASSPATH=${FMWCONFIG_CLASSPATH}
 
@@ -462,13 +462,17 @@ JDK_JAVA_OPTIONS="${JDK_JAVA_OPTIONS} ${app.server.tomcat.jdk.java.options}"</ec
 set "JDK_JAVA_OPTIONS=%JDK_JAVA_OPTIONS% ${app.server.tomcat.jdk.java.options}"</echo>
 	</target>
 
-	<target name="install-weblogic14-setup-files">
-		<echo file="${app.server.weblogic.dir}/oraInst.loc">
-inventory_loc=${app.server.weblogic.dir}/oraInventory
-inst_group=appserver
+	<target name="install-weblogic-setup-files">
+		<echo file="${app.server.weblogic.dir}-temp/responseFile.rsp">
+[ENGINE]
+Response File Version=1.0.0.0.0
+[GENERIC]
+ORACLE_HOME=${app.server.weblogic.dir}
+INSTALL_TYPE=WebLogic Server
+DECLINE_SECURITY_UPDATES=true
 		</echo>
 
-		<echo file="${app.server.weblogic.dir}/create_swap.sh">
+		<echo file="${app.server.weblogic.dir}-temp/create_swap.sh">
 			<![CDATA[
 #!/bin/sh
 
@@ -493,10 +497,10 @@ fi
 
 cat /proc/swaps
 cat /proc/meminfo | grep Swap
-]]>
+			]]>
 		</echo>
 
-		<echo file="${app.server.weblogic.dir}/create_user.sh">
+		<echo file="${app.server.weblogic.dir}-temp/create_user.sh">
 			<![CDATA[
 #!/bin/bash
 
@@ -511,40 +515,70 @@ fi
 			]]>
 		</echo>
 
-		<echo file="${app.server.weblogic.dir}/install_weblogic.sh">
+		<echo file="${app.server.weblogic.dir}-temp/install_weblogic.sh">
 			<![CDATA[
 #!/bin/bash
 
-export JAVA_HOME=/opt/java/jdk8-x64
+export JAVA_HOME=/opt/java/jdk
 export PATH=$JAVA_HOME/bin:$PATH
 
-java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysPrereqs -silent ORACLE_BASE=${app.server.weblogic.dir} ORACLE_HOME=${app.server.weblogic.dir}/oracle JAVA_HOME=/opt/java/jdk8-x64 INVENTORY_LOCATION=${app.server.weblogic.dir}/oraInventory INSTALL_TYPE='Complete with Examples' -invPtrLoc ${app.server.weblogic.dir}/oraInst.loc
+java -jar ${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name} -ignoreSysPrereqs -invPtrLoc ${app.server.weblogic.dir}-temp/oraInst.loc -responseFile ${app.server.weblogic.dir}-temp/responseFile.rsp -silent
 			]]>
 		</echo>
 
-		<exec executable="/bin/bash">
-			<arg value="${app.server.weblogic.dir}/create_swap.sh" />
-		</exec>
-
-		<exec executable="/bin/bash">
-			<arg value="${app.server.weblogic.dir}/create_user.sh" />
-		</exec>
-
-		<execute dir="${app.server.weblogic.dir}">
+		<execute dir="${app.server.parent.dir}">
 			<![CDATA[
-				rm -fr ${app.server.weblogic.dir}/oraInventory
+				rm -fr oraInventory
 
-				mkdir ${app.server.weblogic.dir}/oraInventory
+				mkdir oraInventory
 
-				rm -fr ${app.server.weblogic.dir}/oracle
+				rm -fr ${app.server.weblogic.dir}
 
-				mkdir ${app.server.weblogic.dir}/oracle
-
-				sudo chown -R appserver: ${app.server.weblogic.dir}
-
-				su appserver -c "/bin/sh install_weblogic.sh"
+				mkdir ${app.server.weblogic.dir}
 			]]>
 		</execute>
+
+		<if>
+			<isset property="env.JENKINS_HOME" />
+			<then>
+				<exec executable="/bin/bash">
+					<arg value="${app.server.weblogic.dir}-temp/create_swap.sh" />
+				</exec>
+
+				<exec executable="/bin/bash">
+					<arg value="${app.server.weblogic.dir}-temp/create_user.sh" />
+				</exec>
+
+				<echo file="${app.server.weblogic.dir}-temp/oraInst.loc">
+inventory_loc=${app.server.parent.dir}/oraInventory
+inst_group=appserver
+				</echo>
+
+				<execute dir="${app.server.weblogic.dir}-temp">
+					<![CDATA[
+						sudo chown -R appserver: ${app.server.weblogic.dir}
+
+						su appserver -c "/bin/sh install_weblogic.sh"
+					]]>
+				</execute>
+			</then>
+			<else>
+				<exec executable="id" outputproperty="user.group">
+					<arg value="-gn" />
+				</exec>
+
+				<echo file="${app.server.weblogic.dir}-temp/oraInst.loc">
+inventory_loc=${app.server.parent.dir}/oraInventory
+inst_group=${user.group}
+				</echo>
+
+				<execute dir="${app.server.weblogic.dir}-temp">
+					<![CDATA[
+						/bin/sh install_weblogic.sh
+					]]>
+				</execute>
+			</else>
+		</if>
 	</target>
 
 	<target name="prepare-generated-files">
@@ -1308,10 +1342,10 @@ closeTemplate()
 		<antcall target="unzip-weblogic-custom-${app.server.weblogic.version.build}" />
 	</target>
 
-	<target name="unzip-weblogic-custom-14110">
+	<target name="unzip-weblogic-custom-15110">
 		<antcall target="unzip-weblogic-zip-files" />
 
-		<antcall target="install-weblogic14-setup-files" />
+		<antcall target="install-weblogic-setup-files" />
 
 		<antcall target="create-weblogic-domain" />
 
@@ -1414,10 +1448,10 @@ this task.
 			</then>
 		</if>
 
-		<delete dir="${app.server.weblogic.dir}" />
+		<delete dir="${app.server.weblogic.dir}-temp" />
 
 		<unzip
-			dest="${app.server.weblogic.dir}"
+			dest="${app.server.weblogic.dir}-temp"
 			src="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
 		/>
 	</target>

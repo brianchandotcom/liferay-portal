@@ -1259,14 +1259,14 @@ public class FragmentLinkUtilTest {
 		return infoItemReference;
 	}
 
-	private static long _classNameId;
-	private static long _companyId;
+	private static long _CLASS_NAME_ID;
+	private static long _COMPANY_ID;
 	private static final MockedStatic<GroupLocalServiceUtil>
 		_groupLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			GroupLocalServiceUtil.class);
 	private static InfoItemServiceRegistry _infoItemServiceRegistry;
-	private static String _itemGroupExternalReferenceCode;
-	private static long _itemGroupId;
+	private static String _ITEM_GROUP_EXTERNAL_REFERENCE_CODE;
+	private static long _ITEM_GROUP_ID;
 	private static final MockedStatic<LayoutLocalServiceUtil>
 		_layoutLocalServiceUtilMockedStatic = Mockito.mockStatic(
 			LayoutLocalServiceUtil.class);
@@ -1275,7 +1275,7 @@ public class FragmentLinkUtilTest {
 			LocalizedValueUtil.class);
 	private static final MockedStatic<PortalUtil> _portalUtilMockedStatic =
 		Mockito.mockStatic(PortalUtil.class);
-	private static String _scopeExternalReferenceCode;
-	private static long _scopeGroupId;
+	private static String _SCOPE_EXTERNAL_REFERENCE_CODE;
+	private static long _SCOPE_GROUP_ID;
 
 }

@@ -18,12 +18,11 @@ export default function actionGeneratesChanges(actionType: Action['type']) {
 		case 'update-structure':
 			return true;
 		case 'add-validation-error':
-		case 'clear-error':
+		case 'clear-errors':
 		case 'create-structure':
 		case 'delete-selection':
 		case 'publish-structure':
 		case 'refresh-referenced-structures':
-		case 'set-error':
 		case 'set-selection':
 		case 'validate':
 			return false;

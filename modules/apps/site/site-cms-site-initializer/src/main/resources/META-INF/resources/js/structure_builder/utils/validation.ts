@@ -13,18 +13,24 @@ import selectStructureChildren from '../selectors/selectStructureChildren';
 import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
 
-export type ValidationError =
-	| 'no-erc'
-	| 'no-label'
-	| 'no-name'
-	| 'no-picklist'
-	| 'no-space';
+export type ValidationProperty =
+	| 'erc'
+	| 'global'
+	| 'name'
+	| 'label'
+	| 'max-length'
+	| 'picklist'
+	| 'spaces';
+
+export type ValidationError = 'empty' | 'unexpected';
+
+export type ErrorMap = Map<ValidationProperty, ValidationError>;
 
 export function validateField({
 	currentErrors,
 	data,
 }: {
-	currentErrors?: Set<ValidationError>;
+	currentErrors?: ErrorMap;
 	data: {
 		erc?: Field['erc'];
 		label?: Field['label'];
@@ -32,28 +38,41 @@ export function validateField({
 		picklistId?:
 			| SingleSelectField['picklistId']
 			| MultiselectField['picklistId'];
+		settings?: Field['settings'];
 	};
-}): Set<ValidationError> {
-	const {erc, label, name, picklistId} = data;
+}): ErrorMap {
+	const {erc, label, name, picklistId, settings} = data;
 
-	const errors = new Set(currentErrors);
+	const errors = new Map(currentErrors);
 
 	if (!isNullOrUndefined(erc)) {
-		erc ? errors.delete('no-erc') : errors.add('no-erc');
+		erc ? errors.delete('erc') : errors.set('erc', 'empty');
 	}
 
 	if (!isNullOrUndefined(name)) {
-		name ? errors.delete('no-name') : errors.add('no-name');
+		name ? errors.delete('name') : errors.set('name', 'empty');
 	}
 
 	if (!isNullOrUndefined(label)) {
 		Object.values(label ?? {}).every(Boolean)
-			? errors.delete('no-label')
-			: errors.add('no-label');
+			? errors.delete('label')
+			: errors.set('label', 'empty');
 	}
 
 	if (!isNullOrUndefined(picklistId)) {
-		picklistId ? errors.delete('no-picklist') : errors.add('no-picklist');
+		picklistId
+			? errors.delete('picklist')
+			: errors.set('picklist', 'empty');
+	}
+
+	if (
+		settings &&
+		'maxLength' in settings &&
+		!isNullOrUndefined(settings.maxLength)
+	) {
+		settings.maxLength
+			? errors.delete('max-length')
+			: errors.set('max-length', 'empty');
 	}
 
 	return errors;
@@ -63,17 +82,17 @@ export function validateRepeatableGroup({
 	currentErrors,
 	data,
 }: {
-	currentErrors?: Set<ValidationError>;
+	currentErrors?: ErrorMap;
 	data: Partial<RepeatableGroup>;
-}): Set<ValidationError> {
+}): ErrorMap {
 	const {label} = data;
 
-	const errors = new Set(currentErrors);
+	const errors = new Map(currentErrors);
 
 	if (!isNullOrUndefined(label)) {
 		Object.values(label ?? {}).every(Boolean)
-			? errors.delete('no-label')
-			: errors.add('no-label');
+			? errors.delete('label')
+			: errors.set('label', 'empty');
 	}
 
 	return errors;
@@ -83,34 +102,34 @@ export function validateStructure({
 	currentErrors,
 	data,
 }: {
-	currentErrors?: Set<ValidationError>;
+	currentErrors?: ErrorMap;
 	data: Partial<Structure>;
-}): Set<ValidationError> {
+}): ErrorMap {
 	const {erc, label, name, spaces} = data;
 
-	const errors = new Set(currentErrors);
+	const errors = new Map(currentErrors);
 
 	if (!isNullOrUndefined(erc)) {
-		erc ? errors.delete('no-erc') : errors.add('no-erc');
+		erc ? errors.delete('erc') : errors.set('erc', 'empty');
 	}
 
 	if (!isNullOrUndefined(name)) {
-		name ? errors.delete('no-name') : errors.add('no-name');
+		name ? errors.delete('name') : errors.set('name', 'empty');
 	}
 
 	if (!isNullOrUndefined(label)) {
 		const values = Object.values(label ?? {});
 
 		if (!!values.length && values.every(Boolean)) {
-			errors.delete('no-label');
+			errors.delete('label');
 		}
 		else {
-			errors.add('no-label');
+			errors.set('label', 'empty');
 		}
 	}
 
 	if (!isNullOrUndefined(spaces)) {
-		spaces.length ? errors.delete('no-space') : errors.add('no-space');
+		spaces.length ? errors.delete('spaces') : errors.set('spaces', 'empty');
 	}
 
 	return errors;
@@ -125,7 +144,7 @@ export function useValidate() {
 
 	const validateChild = useCallback(
 		(child: StructureChild, invalids: State['invalids']) => {
-			let errors: Set<ValidationError> = new Set();
+			let errors: ErrorMap = new Map();
 
 			if (child.type === 'repeatable-group') {
 				errors = validateRepeatableGroup({data: child});
@@ -157,7 +176,7 @@ export function useValidate() {
 
 		// Validate structure
 
-		let errors: Set<ValidationError> = new Set();
+		let errors: ErrorMap = new Map();
 
 		const invalids = new Map(state.invalids);
 

@@ -108,7 +108,7 @@ public class FDSSamplePortlet extends MVCPortlet {
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, user.getUserId(), 0, null, false, true, false, true, true,
+				null, user.getUserId(), 0, null, false, true, false, true,
 				false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap("Frontend Data Set Sample"),
 				"FDSSample", "100", null,

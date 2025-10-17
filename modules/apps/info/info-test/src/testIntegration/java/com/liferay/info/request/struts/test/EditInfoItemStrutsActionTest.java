@@ -50,7 +50,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -1014,10 +1013,8 @@ public class EditInfoItemStrutsActionTest {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, _user.getUserId(), 0, null, false, true,
-				enableFriendlyURLCustomization, true,
-				FeatureFlagManagerUtil.isEnabled(
-					TestPropsValues.getCompanyId(), "LPD-32050"),
-				true, false, false, false, null,
+				enableFriendlyURLCustomization, true, true, false, false, false,
+				null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionTestUtil.getRandomName(), null,
 				"control_panel.sites",

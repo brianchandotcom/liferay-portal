@@ -250,7 +250,7 @@ public class ObjectViewLocalServiceTest {
 
 		_objectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -446,7 +446,6 @@ public class ObjectViewLocalServiceTest {
 			listTypeDefinition.getListTypeDefinitionId());
 
 		return ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Arrays.asList(
 				objectField,
 				ObjectFieldUtil.createObjectField(

@@ -239,7 +239,6 @@ public class AttachmentManagerTest {
 		throws Exception {
 
 		return ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,

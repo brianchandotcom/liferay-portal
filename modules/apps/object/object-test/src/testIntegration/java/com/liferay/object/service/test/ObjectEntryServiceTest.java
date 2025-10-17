@@ -131,7 +131,7 @@ public class ObjectEntryServiceTest {
 			TestPropsValues.getCompanyId());
 
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
-			true, ObjectDefinitionTestUtil.getRandomName(),
+			ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,

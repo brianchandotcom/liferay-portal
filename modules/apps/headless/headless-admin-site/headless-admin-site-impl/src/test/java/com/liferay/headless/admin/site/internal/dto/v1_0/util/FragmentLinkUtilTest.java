@@ -220,7 +220,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			ercInfoItemIdentifier.getScopeExternalReferenceCode()
 		).thenReturn(
-			_scopeExternalReferenceCode
+			_itemGroupExternalReferenceCode
 		);
 
 		InfoItemReference infoItemReference = _mockInfoItemReference();
@@ -244,8 +244,9 @@ public class FragmentLinkUtilTest {
 				null,
 				new Scope() {
 					{
-						setExternalReferenceCode(_scopeExternalReferenceCode);
-						setType(Type.SITE);
+						setExternalReferenceCode(
+							_itemGroupExternalReferenceCode);
+						setType(Type.ASSET_LIBRARY);
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
@@ -375,8 +376,9 @@ public class FragmentLinkUtilTest {
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
 				new Scope() {
 					{
-						setExternalReferenceCode(_scopeExternalReferenceCode);
-						setType(Type.SITE);
+						setExternalReferenceCode(
+							_itemGroupExternalReferenceCode);
+						setType(Type.ASSET_LIBRARY);
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
@@ -732,7 +734,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			_scopeGroupId
+			_itemGroupId
 		);
 
 		long layoutId = RandomTestUtil.randomLong();
@@ -774,8 +776,6 @@ public class FragmentLinkUtilTest {
 
 		String layoutExternalReferenceCode = RandomTestUtil.randomString();
 
-		String layoutScopeExternalReferenceCode = RandomTestUtil.randomString();
-
 		Assert.assertEquals(
 			JSONUtil.put(
 				"link",
@@ -784,7 +784,7 @@ public class FragmentLinkUtilTest {
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
-						"groupId", _scopeGroupId
+						"groupId", _itemGroupId
 					).put(
 						"layoutId", layoutId
 					).put(
@@ -793,7 +793,7 @@ public class FragmentLinkUtilTest {
 						"privateLayout", true
 					).put(
 						"scopeExternalReferenceCode",
-						layoutScopeExternalReferenceCode
+						_itemGroupExternalReferenceCode
 					).put(
 						"title", title
 					)
@@ -808,8 +808,8 @@ public class FragmentLinkUtilTest {
 					new Scope() {
 						{
 							setExternalReferenceCode(
-								layoutScopeExternalReferenceCode);
-							setType(Type.SITE);
+								_itemGroupExternalReferenceCode);
+							setType(Type.ASSET_LIBRARY);
 						}
 					}),
 				_infoItemServiceRegistry, _scopeGroupId

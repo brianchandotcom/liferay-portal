@@ -20,6 +20,17 @@ components:
                         -   $ref: "#/components/schemas/SitePageActionExecutionResult"
                         -   $ref: "#/components/schemas/URLActionExecutionResult"
             type: object
+        BaseLayout:
+            properties:
+                align:
+                    enum: [Baseline, Center, End, None, Start, Stretch]
+                    type: string
+                flexWrap:
+                    enum: [NoWrap, Wrap, WrapReverse]
+                    type: string
+                justify:
+                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                    type: string
         ClassNameReference:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
@@ -1845,17 +1856,6 @@ components:
             required:
                 -   externalReferenceCode
             type: object
-        BaseLayout:
-            properties:
-                align:
-                    enum: [Baseline, Center, End, None, Start, Stretch]
-                    type: string
-                flexWrap:
-                    enum: [NoWrap, Wrap, WrapReverse]
-                    type: string
-                justify:
-                    enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
-                    type: string
         Layout:
             allOf:
                 -   $ref: "#/components/schemas/BaseLayout"

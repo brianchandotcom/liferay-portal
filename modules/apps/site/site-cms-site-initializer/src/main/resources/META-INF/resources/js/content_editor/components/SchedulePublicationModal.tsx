@@ -71,6 +71,7 @@ export default function SchedulePublicationModal({
 					dateConfig={dateConfig}
 					label={Liferay.Language.get('date-and-time')}
 					name="displayDate"
+					required
 					updateFieldData={onUpdate}
 				/>
 			</ClayModal.Body>

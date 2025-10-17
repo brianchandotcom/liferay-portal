@@ -59,6 +59,40 @@ public class UserSearchPermissionFilterContributorTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
+	public void testWhenHasOrganizationManageSuborganizationsPermissionSearch()
+		throws Exception {
+
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		User userA = _addOrganizationUser(organization);
+
+		Assert.assertEquals(1, _performUserSearchCount(userA));
+
+		Role organizationRole = RoleTestUtil.addRole(
+			RoleConstants.TYPE_ORGANIZATION);
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
+			organizationRole.getRoleId(),
+			ActionKeys.MANAGE_SUBORGANIZATIONS_USERS);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			userA.getUserId(), organization.getGroupId(),
+			organizationRole.getRoleId());
+
+		Organization suborganization = OrganizationTestUtil.addOrganization(
+			organization.getOrganizationId(), RandomTestUtil.randomString(),
+			true);
+
+		_addOrganizationUser(suborganization);
+
+		Assert.assertEquals(2, _performUserSearchCount(userA));
+	}
+
+	@Test
 	public void testWhenHasOrganizationManageUsersPermissionSearch()
 		throws Exception {
 

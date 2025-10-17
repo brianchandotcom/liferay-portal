@@ -101,12 +101,12 @@ class OAuth2Client {
 
 	protected post<T>(
 		resource: RequestInfo,
-		data?: unknown,
+		data?: FormData | unknown,
 		options?: Options<T>
 	) {
 		return this.fetcher(resource, {
 			...options,
-			body: JSON.stringify(data),
+			body: data instanceof FormData ? data : JSON.stringify(data),
 			method: 'POST',
 		});
 	}

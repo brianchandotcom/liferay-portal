@@ -99,6 +99,30 @@ const zodSchema = {
 			.string()
 			.min(1, {message: 'Please enter a phone number to continue.'}),
 	}),
+	accountForm: z.object({
+		accountImage: z.any(),
+		accountName: z
+			.string()
+			.min(1, {message: 'Please enter a company name to continue'}),
+		billingAddress: z.object({
+			city: z.string().min(1),
+			country: z.string().min(1),
+			countryISOCode: z.string().optional(),
+			regionISOCode: z.string().optional(),
+			street1: z.string().min(1),
+			street2: z.string().optional(),
+			zip: z.string().min(1),
+		}),
+		emailAddress: z
+			.string()
+			.email(i18n.translate('this-field-is-required')),
+		taxNumber: z
+			.string()
+			.min(1, {message: 'Please enter a company name to continue'}),
+		type: z
+			.string()
+			.min(1, {message: 'Please enter a company name to continue'}),
+	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),
 		_refIncidentReportContacts: z.array(z.any()),

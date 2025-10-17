@@ -1194,6 +1194,8 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setRelationshipType(relationshipType);
 		objectField.setRequired(required);
 
+		_validateRelationshipNameForDBColumnLimit(name, objectDefinition1);
+
 		objectField = _objectFieldLocalService.updateObjectField(objectField);
 
 		_objectFieldSettingLocalService.addObjectFieldSetting(
@@ -2063,6 +2065,23 @@ public class ObjectRelationshipLocalServiceImpl
 					"Parameter object field ID " + parameterObjectFieldId +
 						" does not belong to a relationship object field");
 			}
+		}
+	}
+
+	private void _validateRelationshipNameForDBColumnLimit(String name, ObjectDefinition objectDefinition)
+		throws ObjectRelationshipNameException {
+
+		String prefix =
+			ObjectRelationshipConstants.OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX;
+		String pkFieldName = objectDefinition.getPKObjectFieldName();
+
+		int maxLength = 64;
+		int usedLength = prefix.length() + StringPool.UNDERLINE.length() + pkFieldName.length();
+		int availableLength = maxLength - usedLength;
+
+		if (name.length() > availableLength) {
+			throw new ObjectRelationshipNameException.MustBeShorterThanAvailable(
+				availableLength);
 		}
 	}
 

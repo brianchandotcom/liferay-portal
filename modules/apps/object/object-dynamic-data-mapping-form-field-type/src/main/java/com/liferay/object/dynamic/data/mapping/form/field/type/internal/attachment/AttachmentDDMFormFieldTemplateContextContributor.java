@@ -30,7 +30,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -88,7 +87,12 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			GetterUtil.getLong(ddmFormField.getProperty("objectFieldId")),
 			themeDisplay.isSignedIn());
 
-		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
+
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+
+		return HashMapBuilder.<String, Object>put(
 			"acceptedFileExtensions",
 			ddmFormField.getProperty("acceptedFileExtensions")
 		).put(
@@ -114,7 +118,14 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				).buildString();
 			}
 		).put(
+			"fileEntryProperties",
+			_getFileEntryProperties(
+				ddmFormField, ddmFormFieldRenderingContext,
+				localizedObjectField, themeDisplay)
+		).put(
 			"fileSource", ddmFormField.getProperty("fileSource")
+		).put(
+			"localizedObjectField", localizedObjectField
 		).put(
 			"maximumFileSize", maximumFileSize
 		).put(
@@ -136,38 +147,14 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"url",
 			_getURL(
 				ddmFormField, ddmFormFieldRenderingContext, httpServletRequest)
+		).put(
+			"value",
+			_getValue(ddmFormFieldRenderingContext, localizedObjectField)
+		).putAll(
+			DDMFormFieldTemplateContextContributorUtil.
+				getLocalizationParameters(
+					ddmFormField, ddmForm.getDefaultLocale())
 		).build();
-
-		if (FeatureFlagManagerUtil.isEnabled("LPD-32050")) {
-			boolean localizedObjectField = GetterUtil.getBoolean(
-				ddmFormField.getProperty("localizedObjectField"));
-
-			parameters.put(
-				"fileEntryProperties",
-				_getFileEntryProperties(
-					ddmFormField, ddmFormFieldRenderingContext,
-					localizedObjectField, themeDisplay));
-			parameters.put("localizedObjectField", localizedObjectField);
-			parameters.put(
-				"value",
-				_getValue(ddmFormFieldRenderingContext, localizedObjectField));
-
-			DDMForm ddmForm = ddmFormField.getDDMForm();
-
-			parameters.putAll(
-				DDMFormFieldTemplateContextContributorUtil.
-					getLocalizationParameters(
-						ddmFormField, ddmForm.getDefaultLocale()));
-		}
-		else {
-			parameters.putAll(
-				_getFileEntryProperties(
-					ddmFormField, themeDisplay,
-					GetterUtil.getLong(
-						ddmFormFieldRenderingContext.getValue())));
-		}
-
-		return parameters;
 	}
 
 	@Activate

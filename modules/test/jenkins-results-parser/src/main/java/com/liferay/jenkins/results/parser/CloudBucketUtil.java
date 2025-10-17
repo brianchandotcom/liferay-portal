@@ -454,7 +454,7 @@ public class CloudBucketUtil {
 	}
 
 	private static void _executeAWSCommands(String... commands) {
-		final List<String> awsCommands = new ArrayList<>();
+		List<String> awsCommands = new ArrayList<>();
 
 		Retryable retryable = new Retryable(3, 30, true) {
 

@@ -21,7 +21,7 @@ const useAccountsTickets = (
 		if (skip || !externalReferenceCode) {
 			setLoading(false);
 
-			return {loading, tickets};
+			return;
 		}
 
 		try {
@@ -55,14 +55,7 @@ const useAccountsTickets = (
 
 			setLoading(false);
 		}
-	}, [
-		businessEvent,
-		externalReferenceCode,
-		featureFlags,
-		loading,
-		skip,
-		tickets,
-	]);
+	}, [businessEvent, externalReferenceCode, featureFlags, skip]);
 
 	useEffect(() => {
 		setLoading(true);

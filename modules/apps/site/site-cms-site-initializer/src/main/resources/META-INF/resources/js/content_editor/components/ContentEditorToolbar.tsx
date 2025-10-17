@@ -9,7 +9,9 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
-import React, {useEffect, useState} from 'react';
+import {isCtrlOrMeta} from '@liferay/layout-js-components-web';
+import {sub} from 'frontend-js-web';
+import React, {useEffect, useId, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
 import {toMomentDate} from './ScheduleField';
@@ -36,6 +38,9 @@ export default function ContentEditorToolbar({
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 
+	const submitLabelId = useId();
+	const submitTitle = getSubmitTitle(type);
+
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');
 
@@ -45,10 +50,25 @@ export default function ContentEditorToolbar({
 
 		if (form) {
 			setFormId(form.id);
+
+			const handlePublishShortcut = (event: KeyboardEvent) => {
+				if (
+					event.altKey &&
+					event.key === 'Enter' &&
+					isCtrlOrMeta(event)
+				) {
+					(form as HTMLFormElement).submit();
+				}
+			};
+
+			window.addEventListener('keydown', handlePublishShortcut);
+
+			return () =>
+				window.removeEventListener('keydown', handlePublishShortcut);
 		}
 	}, []);
 
-	const SubmitButton = ({label}: {label: string}) => (
+	const SubmitButton = ({label, ...props}: {label: string}) => (
 		<ClayButton
 			form={formId}
 			onClick={(event) => {
@@ -56,6 +76,7 @@ export default function ContentEditorToolbar({
 			}}
 			size="sm"
 			type="submit"
+			{...props}
 		>
 			{label}
 		</ClayButton>
@@ -100,7 +121,18 @@ export default function ContentEditorToolbar({
 					/>
 				) : (
 					<ClayButton.Group>
-						<SubmitButton label={Liferay.Language.get('publish')} />
+						<SubmitButton
+							aria-labelledby={submitLabelId}
+							data-title={submitTitle}
+							data-title-set-as-html
+							label={Liferay.Language.get('publish')}
+						/>
+
+						<span
+							className="sr-only"
+							dangerouslySetInnerHTML={{__html: submitTitle}}
+							id={submitLabelId}
+						/>
 
 						<ClayDropDownWithItems
 							className="btn-group"
@@ -155,4 +187,22 @@ export default function ContentEditorToolbar({
 			) : null}
 		</Toolbar>
 	);
+}
+
+function getSubmitTitle(type: string) {
+	const isMac = Liferay.Browser?.isMac();
+
+	return `
+		<span class="d-block">
+			${sub(Liferay.Language.get('publish-x'), type)}
+		</span>
+		<kbd class="c-kbd c-kbd-dark mt-1">
+			<kbd class="c-kbd">${isMac ? '⌘' : 'Ctrl'}</kbd>
+			<span class="c-kbd-separator"> + </span>
+			<kbd class="c-kbd">${isMac ? '⌥' : 'Alt'}</kbd>
+			<span class="c-kbd-separator"> + </span>
+			<kbd class="c-kbd">${Liferay.Language.get('enter')}</kbd>
+		</kbd>`
+		.replaceAll('\n', '')
+		.replaceAll('\t', '');
 }

@@ -9893,6 +9893,8 @@ go</echo>
 	</target>
 
 	<target name="build-sql-file-playwright">
+		<var name="databases.size" unset="true" />
+		<var name="databases.size" value="1" />
 		<if>
 			<not>
 				<equals arg1="${database.type}" arg2="hypersonic" />
@@ -15273,15 +15275,7 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 			<try>
 				<retry retrycount="2">
 					<sequential>
-						<if>
-							<equals arg1="${skip.delete.liferay.home}" arg2="true" />
-							<then>
-								<rebuild-database skip.delete.liferay.home="true" />
-							</then>
-							<else>
-								<rebuild-database />
-							</else>
-						</if>
+						<rebuild-database skip.delete.liferay.home="true" />
 					</sequential>
 				</retry>
 			</try>

@@ -27,4 +27,15 @@ public class ObjectRelationshipNameException extends PortalException {
 		super(throwable);
 	}
 
+	public static class MustBeShorterThanAvailable
+		extends ObjectRelationshipNameException {
+
+		public MustBeShorterThanAvailable(int availableLength) {
+			super(
+				String.format(
+					"The relationship name is too long. Maximum allowed: %d characters (total must not exceed 64).",
+					availableLength));
+		}
+
+}
 }

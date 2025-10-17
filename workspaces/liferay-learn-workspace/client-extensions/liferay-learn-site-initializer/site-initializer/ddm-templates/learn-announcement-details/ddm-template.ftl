@@ -27,15 +27,17 @@
 				<#if (ObjectEntry_createDate.getData())??>
 					<@liferay_ui["message"] key="published" />
 
-					<#assign dt = "" />
-					<#assign rawDate = ObjectEntry_createDate.getData() />
+					<#assign
+						dt = ""
+						rawDate = ObjectEntry_createDate.getData()
+					/>
 
 					<#attempt>
 						<#assign dt = rawDate?datetime("M/d/yy h:mm a") />
 					<#recover>
 						<#attempt>
 							<#assign dt = rawDate?datetime("yy/MM/dd H:mm") />
-							
+
 							<#recover>
 								<#assign dt = rawDate />
 							</#recover>

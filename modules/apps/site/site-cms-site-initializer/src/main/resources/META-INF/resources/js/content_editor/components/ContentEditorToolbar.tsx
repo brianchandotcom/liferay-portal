@@ -12,6 +12,8 @@ import ClayLink from '@clayui/link';
 import React, {useEffect, useState} from 'react';
 
 import Toolbar from '../../common/components/Toolbar';
+import {toMomentDate} from './ScheduleField';
+import SchedulePublicationModal from './SchedulePublicationModal';
 
 export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
@@ -19,14 +21,17 @@ const STATUS_DRAFT_CODE = 2;
 
 export default function ContentEditorToolbar({
 	backURL,
+	displayDate,
 	hasWorkflow,
 	headerTitle,
 }: {
 	backURL: string;
+	displayDate: string;
 	hasWorkflow: boolean;
 	headerTitle: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
+	const [showModal, setShowModal] = useState<boolean>(false);
 
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');
@@ -101,6 +106,7 @@ export default function ContentEditorToolbar({
 									label: Liferay.Language.get(
 										'schedule-publication'
 									),
+									onClick: () => setShowModal(true),
 									symbolLeft: 'date-time',
 								},
 							]}
@@ -127,6 +133,13 @@ export default function ContentEditorToolbar({
 					value={backURL}
 				/>
 			</Toolbar.Item>
+
+			{showModal ? (
+				<SchedulePublicationModal
+					date={toMomentDate(displayDate)}
+					onCloseModal={() => setShowModal(false)}
+				/>
+			) : null}
 		</Toolbar>
 	);
 }

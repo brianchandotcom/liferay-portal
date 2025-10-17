@@ -346,8 +346,7 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		ObjectContentHelper objectContentHelper = new ObjectContentHelper(
-			objectDefinition.isEnableLocalization(), objectEntry, objectFields,
-			_textEmbeddingDocumentContributor);
+			objectEntry, objectFields, _textEmbeddingDocumentContributor);
 
 		for (ObjectField objectField : objectFields) {
 			if (objectField.isLocalized()) {
@@ -416,7 +415,7 @@ public class ObjectEntryModelDocumentContributor
 				objectEntry.getCompanyId(), "LPS-122920")) {
 
 			_contributeTextEmbeddings(
-				document, objectContentHelper, objectDefinition, objectEntry);
+				document, objectContentHelper, objectEntry);
 		}
 	}
 
@@ -466,14 +465,7 @@ public class ObjectEntryModelDocumentContributor
 
 	private void _contributeTextEmbeddings(
 		Document document, ObjectContentHelper objectContentHelper,
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry) {
-
-		if (!objectDefinition.isEnableLocalization()) {
-			_textEmbeddingDocumentContributor.contribute(
-				document, objectEntry, objectContentHelper.getContent());
-
-			return;
-		}
+		ObjectEntry objectEntry) {
 
 		Map<String, String> localizedContentMap =
 			objectContentHelper.getLocalizedContentMap();
@@ -631,14 +623,12 @@ public class ObjectEntryModelDocumentContributor
 		}
 
 		private ObjectContentHelper(
-			boolean localizationEnabled, ObjectEntry objectEntry,
-			List<ObjectField> objectFields,
+			ObjectEntry objectEntry, List<ObjectField> objectFields,
 			TextEmbeddingDocumentContributor textEmbeddingDocumentContributor) {
 
 			_contentSB = new StringBundler(objectFields.size());
 
-			if (!localizationEnabled ||
-				!FeatureFlagManagerUtil.isEnabled(
+			if (!FeatureFlagManagerUtil.isEnabled(
 					objectEntry.getCompanyId(), "LPS-122920")) {
 
 				return;

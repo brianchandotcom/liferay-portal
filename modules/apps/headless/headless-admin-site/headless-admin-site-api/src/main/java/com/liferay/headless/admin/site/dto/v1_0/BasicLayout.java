@@ -38,17 +38,17 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("BaseLayout")
+@GraphQLName("BasicLayout")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "BaseLayout")
-public class BaseLayout implements Serializable {
+@XmlRootElement(name = "BasicLayout")
+public class BasicLayout implements Serializable {
 
-	public static BaseLayout toDTO(String json) {
-		return ObjectMapperUtil.readValue(BaseLayout.class, json);
+	public static BasicLayout toDTO(String json) {
+		return ObjectMapperUtil.readValue(BasicLayout.class, json);
 	}
 
-	public static BaseLayout unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(BaseLayout.class, json);
+	public static BasicLayout unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(BasicLayout.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema
@@ -217,13 +217,13 @@ public class BaseLayout implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof BaseLayout)) {
+		if (!(object instanceof BasicLayout)) {
 			return false;
 		}
 
-		BaseLayout baseLayout = (BaseLayout)object;
+		BasicLayout basicLayout = (BasicLayout)object;
 
-		return Objects.equals(toString(), baseLayout.toString());
+		return Objects.equals(toString(), basicLayout.toString());
 	}
 
 	@Override
@@ -293,7 +293,7 @@ public class BaseLayout implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BaseLayout",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.BasicLayout",
 		name = "x-class-name"
 	)
 	public String xClassName;

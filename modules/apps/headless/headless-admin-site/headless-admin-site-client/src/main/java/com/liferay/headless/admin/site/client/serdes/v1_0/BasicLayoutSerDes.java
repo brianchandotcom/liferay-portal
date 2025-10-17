@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.BaseLayout;
+import com.liferay.headless.admin.site.client.dto.v1_0.BasicLayout;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,22 +21,24 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class BaseLayoutSerDes {
+public class BasicLayoutSerDes {
 
-	public static BaseLayout toDTO(String json) {
-		BaseLayoutJSONParser baseLayoutJSONParser = new BaseLayoutJSONParser();
+	public static BasicLayout toDTO(String json) {
+		BasicLayoutJSONParser basicLayoutJSONParser =
+			new BasicLayoutJSONParser();
 
-		return baseLayoutJSONParser.parseToDTO(json);
+		return basicLayoutJSONParser.parseToDTO(json);
 	}
 
-	public static BaseLayout[] toDTOs(String json) {
-		BaseLayoutJSONParser baseLayoutJSONParser = new BaseLayoutJSONParser();
+	public static BasicLayout[] toDTOs(String json) {
+		BasicLayoutJSONParser basicLayoutJSONParser =
+			new BasicLayoutJSONParser();
 
-		return baseLayoutJSONParser.parseToDTOs(json);
+		return basicLayoutJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(BaseLayout baseLayout) {
-		if (baseLayout == null) {
+	public static String toJSON(BasicLayout basicLayout) {
+		if (basicLayout == null) {
 			return "null";
 		}
 
@@ -44,7 +46,7 @@ public class BaseLayoutSerDes {
 
 		sb.append("{");
 
-		if (baseLayout.getAlign() != null) {
+		if (basicLayout.getAlign() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -53,12 +55,12 @@ public class BaseLayoutSerDes {
 
 			sb.append("\"");
 
-			sb.append(baseLayout.getAlign());
+			sb.append(basicLayout.getAlign());
 
 			sb.append("\"");
 		}
 
-		if (baseLayout.getFlexWrap() != null) {
+		if (basicLayout.getFlexWrap() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -67,12 +69,12 @@ public class BaseLayoutSerDes {
 
 			sb.append("\"");
 
-			sb.append(baseLayout.getFlexWrap());
+			sb.append(basicLayout.getFlexWrap());
 
 			sb.append("\"");
 		}
 
-		if (baseLayout.getJustify() != null) {
+		if (basicLayout.getJustify() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -81,7 +83,7 @@ public class BaseLayoutSerDes {
 
 			sb.append("\"");
 
-			sb.append(baseLayout.getJustify());
+			sb.append(basicLayout.getJustify());
 
 			sb.append("\"");
 		}
@@ -92,53 +94,54 @@ public class BaseLayoutSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		BaseLayoutJSONParser baseLayoutJSONParser = new BaseLayoutJSONParser();
+		BasicLayoutJSONParser basicLayoutJSONParser =
+			new BasicLayoutJSONParser();
 
-		return baseLayoutJSONParser.parseToMap(json);
+		return basicLayoutJSONParser.parseToMap(json);
 	}
 
-	public static Map<String, String> toMap(BaseLayout baseLayout) {
-		if (baseLayout == null) {
+	public static Map<String, String> toMap(BasicLayout basicLayout) {
+		if (basicLayout == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (baseLayout.getAlign() == null) {
+		if (basicLayout.getAlign() == null) {
 			map.put("align", null);
 		}
 		else {
-			map.put("align", String.valueOf(baseLayout.getAlign()));
+			map.put("align", String.valueOf(basicLayout.getAlign()));
 		}
 
-		if (baseLayout.getFlexWrap() == null) {
+		if (basicLayout.getFlexWrap() == null) {
 			map.put("flexWrap", null);
 		}
 		else {
-			map.put("flexWrap", String.valueOf(baseLayout.getFlexWrap()));
+			map.put("flexWrap", String.valueOf(basicLayout.getFlexWrap()));
 		}
 
-		if (baseLayout.getJustify() == null) {
+		if (basicLayout.getJustify() == null) {
 			map.put("justify", null);
 		}
 		else {
-			map.put("justify", String.valueOf(baseLayout.getJustify()));
+			map.put("justify", String.valueOf(basicLayout.getJustify()));
 		}
 
 		return map;
 	}
 
-	public static class BaseLayoutJSONParser
-		extends BaseJSONParser<BaseLayout> {
+	public static class BasicLayoutJSONParser
+		extends BaseJSONParser<BasicLayout> {
 
 		@Override
-		protected BaseLayout createDTO() {
-			return new BaseLayout();
+		protected BasicLayout createDTO() {
+			return new BasicLayout();
 		}
 
 		@Override
-		protected BaseLayout[] createDTOArray(int size) {
-			return new BaseLayout[size];
+		protected BasicLayout[] createDTOArray(int size) {
+			return new BasicLayout[size];
 		}
 
 		@Override
@@ -158,26 +161,26 @@ public class BaseLayoutSerDes {
 
 		@Override
 		protected void setField(
-			BaseLayout baseLayout, String jsonParserFieldName,
+			BasicLayout basicLayout, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "align")) {
 				if (jsonParserFieldValue != null) {
-					baseLayout.setAlign(
-						BaseLayout.Align.create((String)jsonParserFieldValue));
+					basicLayout.setAlign(
+						BasicLayout.Align.create((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "flexWrap")) {
 				if (jsonParserFieldValue != null) {
-					baseLayout.setFlexWrap(
-						BaseLayout.FlexWrap.create(
+					basicLayout.setFlexWrap(
+						BasicLayout.FlexWrap.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "justify")) {
 				if (jsonParserFieldValue != null) {
-					baseLayout.setJustify(
-						BaseLayout.Justify.create(
+					basicLayout.setJustify(
+						BasicLayout.Justify.create(
 							(String)jsonParserFieldValue));
 				}
 			}

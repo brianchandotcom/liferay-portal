@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.BaseLayoutSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.BasicLayoutSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,10 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class BaseLayout implements Cloneable, Serializable {
+public class BasicLayout implements Cloneable, Serializable {
 
-	public static BaseLayout toDTO(String json) {
-		return BaseLayoutSerDes.toDTO(json);
+	public static BasicLayout toDTO(String json) {
+		return BasicLayoutSerDes.toDTO(json);
 	}
 
 	public Align getAlign() {
@@ -111,8 +111,8 @@ public class BaseLayout implements Cloneable, Serializable {
 	protected Justify justify;
 
 	@Override
-	public BaseLayout clone() throws CloneNotSupportedException {
-		return (BaseLayout)super.clone();
+	public BasicLayout clone() throws CloneNotSupportedException {
+		return (BasicLayout)super.clone();
 	}
 
 	@Override
@@ -121,13 +121,13 @@ public class BaseLayout implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof BaseLayout)) {
+		if (!(object instanceof BasicLayout)) {
 			return false;
 		}
 
-		BaseLayout baseLayout = (BaseLayout)object;
+		BasicLayout basicLayout = (BasicLayout)object;
 
-		return Objects.equals(toString(), baseLayout.toString());
+		return Objects.equals(toString(), basicLayout.toString());
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public class BaseLayout implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return BaseLayoutSerDes.toJSON(this);
+		return BasicLayoutSerDes.toJSON(this);
 	}
 
 	public static enum Align {

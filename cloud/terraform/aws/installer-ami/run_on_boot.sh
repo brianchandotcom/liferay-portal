@@ -22,8 +22,6 @@ function main {
 
 	tree -a /opt/liferay
 
-	local image_dir=/opt/liferay/image
-
 	local terraform_dir=/opt/liferay/terraform
 
 	pushd "${terraform_dir}/ecr"
@@ -47,6 +45,8 @@ function main {
 		get-login-password \
 		--region "${region}" \
 		| oras login --username AWS --password-stdin "${ecr_registry_url}"
+
+	local image_dir=/opt/liferay/image
 
 	local dxp_image_tag=$(oras repo tags --oci-layout "${image_dir}/dxp")
 

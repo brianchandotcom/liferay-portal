@@ -24,11 +24,13 @@ export default function ContentEditorToolbar({
 	displayDate,
 	hasWorkflow,
 	headerTitle,
+	type,
 }: {
 	backURL: string;
 	displayDate: string;
 	hasWorkflow: boolean;
 	headerTitle: string;
+	type: string;
 }) {
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -138,6 +140,7 @@ export default function ContentEditorToolbar({
 				<SchedulePublicationModal
 					date={toMomentDate(displayDate)}
 					onCloseModal={() => setShowModal(false)}
+					type={type}
 				/>
 			) : null}
 		</Toolbar>

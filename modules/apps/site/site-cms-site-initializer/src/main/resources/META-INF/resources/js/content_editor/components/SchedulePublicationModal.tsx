@@ -13,9 +13,11 @@ import ScheduleField, {dateConfig} from './ScheduleField';
 export default function SchedulePublicationModal({
 	date,
 	onCloseModal,
+	type,
 }: {
 	date: string;
 	onCloseModal: () => void;
+	type: string;
 }) {
 	const {observer, onClose} = useModal({
 		onClose: () => onCloseModal(),
@@ -41,7 +43,7 @@ export default function SchedulePublicationModal({
 						Liferay.Language.get(
 							'set-the-date-and-time-for-publishing-the-x'
 						),
-						'content'
+						type
 					)}
 				</p>
 

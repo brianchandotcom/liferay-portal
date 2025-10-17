@@ -131,12 +131,10 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 					return null;
 				}
 
-				long assetLibraryId = InfoItemUtil.getGroupId(
-					httpServletRequest);
-
 				return _workflowDefinitionLinkLocalService.
 					hasWorkflowDefinitionLink(
-						themeDisplay.getCompanyId(), assetLibraryId,
+						themeDisplay.getCompanyId(),
+						InfoItemUtil.getGroupId(httpServletRequest),
 						objectDefinition.getClassName());
 			}
 		).put(

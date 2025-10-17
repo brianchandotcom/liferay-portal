@@ -13,6 +13,7 @@ import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,71 +50,14 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 					continue;
 				}
 
-				int parameterSize = parameterList.size();
-
-				String parametersString = StringPool.BLANK;
-
-				if (methodName.startsWith("AutoBatchPreparedStatementUtil")) {
-					if (parameterSize != 2) {
-						continue;
-					}
-
-					parametersString = _stripOuterMethods(parameterList.get(1));
-				}
-				else if (methodName.equals("connection.prepareStatement")) {
-					if (parameterSize != 1) {
-						continue;
-					}
-
-					parametersString = _stripOuterMethods(parameterList.get(0));
-				}
-				else if (methodName.equals("runSQL")) {
-					if (parameterSize == 1) {
-						parametersString = _stripOuterMethods(
-							parameterList.get(0));
-					}
-					else if (parameterSize == 2) {
-						parametersString = _stripOuterMethods(
-							parameterList.get(1));
-					}
-				}
-				else if (methodName.equals("StringBundler.concat")) {
-					String s = StringUtil.trimTrailing(content.substring(0, x));
-
-					if (!s.endsWith("=")) {
-						continue;
-					}
-
-					String firstParameter = parameterList.get(0);
-
-					if (!firstParameter.startsWith("\"delete ") &&
-						!firstParameter.startsWith("\"insert into ") &&
-						!firstParameter.startsWith("\"select ") &&
-						!firstParameter.startsWith("\"update ") &&
-						!firstParameter.startsWith("\"where ")) {
-
-						continue;
-					}
-
-					parametersString = _stripOuterMethods(methodCall);
-				}
-
-				if (parametersString.equals(StringPool.BLANK)) {
-					continue;
-				}
-
 				int lineNumber = getLineNumber(content, x);
 
-				parametersString = parametersString.replaceAll("\n", "");
-				parametersString = parametersString.replaceAll("\\s{2,}", " ");
+				List<String> sqlStatementParts = _splitSQLStatementParts(
+					content, methodCall, methodName, parameterList, x);
 
-				parametersString = StringUtil.removeSubstring(
-					parametersString, "\" + \"");
-				parametersString = StringUtil.removeSubstring(
-					parametersString, "\", \"");
-
-				List<String> sqlStatementParts = _splitParameters(
-					parametersString, CharPool.COMMA);
+				if (sqlStatementParts.isEmpty()) {
+					continue;
+				}
 
 				_checkSQLBooleanValues(fileName, sqlStatementParts, lineNumber);
 
@@ -222,7 +166,42 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 		}
 	}
 
-	private List<String> _splitParameters(String parameters, char delimiter) {
+	private List<String> _splitSQLStatementParts(String s) {
+		String parametersString = s.trim();
+
+		parametersString = parametersString.replaceAll("\n", "");
+		parametersString = parametersString.replaceAll("\\s{2,}", " ");
+
+		if (parametersString.endsWith(")") &&
+			parametersString.startsWith("SQLTransformer.transform(")) {
+
+			parametersString = parametersString.substring(
+				25, parametersString.length() - 1);
+		}
+
+		parametersString = parametersString.trim();
+
+		if (parametersString.endsWith(")") &&
+			parametersString.startsWith("StringBundler.concat(")) {
+
+			parametersString = parametersString.substring(
+				21, parametersString.length() - 1);
+
+			parametersString = StringUtil.removeSubstring(
+				parametersString, "\", \"");
+
+			return _splitSQLStatementParts(parametersString, CharPool.COMMA);
+		}
+
+		parametersString = StringUtil.removeSubstring(
+			parametersString, "\" + \"");
+
+		return _splitSQLStatementParts(parametersString, CharPool.PLUS);
+	}
+
+	private List<String> _splitSQLStatementParts(
+		String parameters, char delimiter) {
+
 		List<String> parametersList = new ArrayList<>();
 
 		parameters = StringUtil.trim(parameters);
@@ -260,26 +239,56 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 		}
 	}
 
-	private String _stripOuterMethods(String parameter) {
-		String trimmedParameter = parameter.trim();
+	private List<String> _splitSQLStatementParts(
+		String content, String methodCall, String methodName,
+		List<String> parameterList, int index) {
 
-		if (trimmedParameter.endsWith(")") &&
-			trimmedParameter.startsWith("SQLTransformer.transform(")) {
+		int parameterSize = parameterList.size();
 
-			trimmedParameter = trimmedParameter.substring(
-				25, trimmedParameter.length() - 1);
+		if (methodName.startsWith("AutoBatchPreparedStatementUtil")) {
+			if (parameterSize != 2) {
+				return Collections.emptyList();
+			}
+
+			return _splitSQLStatementParts(parameterList.get(1));
+		}
+		else if (methodName.equals("connection.prepareStatement")) {
+			if (parameterSize != 1) {
+				return Collections.emptyList();
+			}
+
+			return _splitSQLStatementParts(parameterList.get(0));
+		}
+		else if (methodName.equals("runSQL")) {
+			if (parameterSize == 1) {
+				return _splitSQLStatementParts(parameterList.get(0));
+			}
+			else if (parameterSize == 2) {
+				return _splitSQLStatementParts(parameterList.get(1));
+			}
+		}
+		else if (methodName.equals("StringBundler.concat")) {
+			String s = StringUtil.trimTrailing(content.substring(0, index));
+
+			if (!s.endsWith("=")) {
+				return Collections.emptyList();
+			}
+
+			String firstParameter = parameterList.get(0);
+
+			if (!firstParameter.startsWith("\"delete ") &&
+				!firstParameter.startsWith("\"insert into ") &&
+				!firstParameter.startsWith("\"select ") &&
+				!firstParameter.startsWith("\"update ") &&
+				!firstParameter.startsWith("\"where ")) {
+
+				return Collections.emptyList();
+			}
+
+			return _splitSQLStatementParts(methodCall);
 		}
 
-		trimmedParameter = trimmedParameter.trim();
-
-		if (trimmedParameter.endsWith(")") &&
-			trimmedParameter.startsWith("StringBundler.concat(")) {
-
-			trimmedParameter = trimmedParameter.substring(
-				21, trimmedParameter.length() - 1);
-		}
-
-		return trimmedParameter;
+		return Collections.emptyList();
 	}
 
 	private static final String[] _METHOD_NAMES = {

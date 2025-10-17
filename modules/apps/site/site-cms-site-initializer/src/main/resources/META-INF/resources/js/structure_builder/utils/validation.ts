@@ -135,6 +135,29 @@ export function validateStructure({
 	return errors;
 }
 
+export function getErrorMessage(
+	property: ValidationProperty,
+	error: ValidationError
+) {
+	if (property === 'global') {
+		if (error === 'unexpected') {
+			return Liferay.Language.get(
+				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+			);
+		}
+	}
+
+	if (property === 'spaces' && error === 'empty') {
+		return Liferay.Language.get('spaces-must-be-selected');
+	}
+
+	if (error === 'empty') {
+		return Liferay.Language.get('this-field-is-required');
+	}
+
+	return Liferay.Language.get('an-unexpected-error-occurred');
+}
+
 export function useValidate() {
 	const dispatch = useStateDispatch();
 	const children = useSelector(selectStructureChildren);

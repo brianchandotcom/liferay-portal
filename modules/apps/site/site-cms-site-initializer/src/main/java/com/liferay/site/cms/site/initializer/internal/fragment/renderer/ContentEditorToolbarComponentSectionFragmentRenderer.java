@@ -30,7 +30,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
@@ -83,19 +82,23 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 		FragmentRendererContext fragmentRendererContext,
 		HttpServletRequest httpServletRequest) {
 
+		HashMapBuilder.HashMapWrapper<String, Object> hashMapWrapper =
+			HashMapBuilder.<String, Object>put(
+				"backURL", ParamUtil.getString(httpServletRequest, "redirect"));
+
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			(LayoutDisplayPageObjectProvider<?>)httpServletRequest.getAttribute(
 				LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER);
 
 		if (layoutDisplayPageObjectProvider == null) {
-			return Collections.emptyMap();
+			return hashMapWrapper.build();
 		}
 
 		Object displayObject =
 			layoutDisplayPageObjectProvider.getDisplayObject();
 
 		if (!(displayObject instanceof ObjectEntry)) {
-			return Collections.emptyMap();
+			return hashMapWrapper.build();
 		}
 
 		ObjectEntry objectEntry = (ObjectEntry)displayObject;
@@ -108,9 +111,7 @@ public class ContentEditorToolbarComponentSectionFragmentRenderer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		return HashMapBuilder.<String, Object>put(
-			"backURL", ParamUtil.getString(httpServletRequest, "redirect")
-		).put(
+		return hashMapWrapper.put(
 			"displayDate",
 			() -> {
 				Date displayDate = objectEntry.getDisplayDate();

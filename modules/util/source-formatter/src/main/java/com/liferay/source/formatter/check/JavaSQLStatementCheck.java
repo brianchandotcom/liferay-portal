@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ToolsUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -111,8 +112,8 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 				parametersString = StringUtil.removeSubstring(
 					parametersString, "\", \"");
 
-				parameterList = JavaSourceUtil.splitParameters(
-					parametersString);
+				parameterList = _splitParameters(
+					parametersString, CharPool.COMMA);
 
 				_checkSQLBooleanValues(fileName, parameterList, lineNumber);
 
@@ -120,7 +121,7 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 					!methodName.equals("StringBundler.concat")) {
 
 					_checkMissingTransformCall(
-						fileName, methodCall, parametersString, lineNumber);
+						fileName, methodCall, parameterList, lineNumber);
 				}
 
 				if (methodName.equals("connection.prepareStatement") ||
@@ -158,21 +159,29 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingTransformCall(
-		String fileName, String methodCall, String parametersString,
+		String fileName, String methodCall, List<String> parameterList,
 		int lineNumber) {
 
-		int index = StringUtil.indexOfAny(
-			parametersString, new String[] {"[$FALSE$]", "[$TRUE$]"});
+		for (String parameter : parameterList) {
+			if (!parameter.endsWith("\"") || !parameter.startsWith("\"")) {
+				continue;
+			}
 
-		if ((index == -1) || methodCall.contains("SQLTransformer.transform(")) {
-			return;
+			int index = StringUtil.indexOfAny(
+				parameter, new String[] {"[$FALSE$]", "[$TRUE$]"});
+
+			if ((index == -1) ||
+				methodCall.contains("SQLTransformer.transform(")) {
+
+				return;
+			}
+
+			addMessage(
+				fileName,
+				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
+					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
+				lineNumber);
 		}
-
-		addMessage(
-			fileName,
-			"Use \"SQLTransformer.transform\" to wrap SQL statement if it " +
-				"contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-			lineNumber);
 	}
 
 	private void _checkSQLBooleanValues(
@@ -204,6 +213,44 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 						"Use \"[$", StringUtil.toUpperCase(match),
 						"$]\" instead of \"", match, "\" in SQL statements"),
 					lineNumber);
+			}
+		}
+	}
+
+	private List<String> _splitParameters(String parameters, char delimiter) {
+		List<String> parametersList = new ArrayList<>();
+
+		parameters = StringUtil.trim(parameters);
+
+		if (parameters.equals(StringPool.BLANK)) {
+			return parametersList;
+		}
+
+		int x = -1;
+
+		while (true) {
+			x = parameters.indexOf(delimiter, x + 1);
+
+			if (x == -1) {
+				parametersList.add(StringUtil.trim(parameters));
+
+				return parametersList;
+			}
+
+			if (ToolsUtil.isInsideQuotes(parameters, x)) {
+				continue;
+			}
+
+			String linePart = parameters.substring(0, x);
+
+			if ((ToolsUtil.getLevel(linePart, "(", ")") == 0) &&
+				(ToolsUtil.getLevel(linePart, "{", "}") == 0)) {
+
+				parametersList.add(StringUtil.trim(linePart));
+
+				parameters = parameters.substring(x + 1);
+
+				x = -1;
 			}
 		}
 	}

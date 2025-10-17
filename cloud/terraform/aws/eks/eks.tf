@@ -30,7 +30,7 @@ module "eks" {
 	create_cloudwatch_log_group=true
 	create_kms_key=false
 	eks_managed_node_groups={
-		liferay_dxp={
+		"${var.deployment_name}"={
 			ami_type=var.node_group_ami_type
 			block_device_mappings={
 				xvda={
@@ -55,7 +55,7 @@ module "eks" {
 			tags={
 				DeploymentName=var.deployment_name
 				"kubernetes.io/cluster/${module.eks.cluster_name}"="owned"
-				"liferay.cloud/nodegroup/name"="liferay-dxp"
+				"liferay.cloud/nodegroup/name"=var.deployment_name
 				"liferay.cloud/nodegroup/type"=var.node_instance_type
 			}
 			vpc_security_group_ids=[

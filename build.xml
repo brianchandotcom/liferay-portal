@@ -1087,6 +1087,26 @@ This target has been renamed to "snapshot-bundle". Please call "snapshot-bundle"
 					</then>
 				</if>
 			</then>
+			<elseif>
+				<equals arg1="${app.server.type}" arg2="weblogic" />
+				<then>
+					<replace
+						file="${app.server.weblogic.portal.dir}/WEB-INF/web.xml"
+					>
+						<replacetoken><![CDATA[version="6.0"]]></replacetoken>
+						<replacevalue><![CDATA[version="5.0"]]></replacevalue>
+					</replace>
+
+					<replace
+						file="${app.server.weblogic.portal.dir}/WEB-INF/web.xml"
+					>
+						<replacetoken><![CDATA[https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd]]></replacetoken>
+						<replacevalue><![CDATA[https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd]]></replacevalue>
+					</replace>
+
+					<touch file="${app.server.weblogic.portal.dir}/WEB-INF/REDEPLOY" />
+				</then>
+			</elseif>
 		</if>
 	</target>
 

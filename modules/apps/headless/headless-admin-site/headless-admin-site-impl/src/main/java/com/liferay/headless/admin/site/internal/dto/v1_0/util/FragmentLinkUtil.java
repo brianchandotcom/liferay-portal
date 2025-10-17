@@ -317,17 +317,10 @@ public class FragmentLinkUtil {
 					setExternalReferenceCode(
 						ercInfoItemIdentifier::getExternalReferenceCode);
 				fragmentMappedValueItemExternalReference.setScope(
-					() -> {
-						if (companyId == null) {
-							return null;
-						}
-
-						return _getItemScope(
-							companyId,
-							ercInfoItemIdentifier.
-								getScopeExternalReferenceCode(),
-							scopeGroupId);
-					});
+					() -> _getItemScope(
+						companyId,
+						ercInfoItemIdentifier.getScopeExternalReferenceCode(),
+						scopeGroupId));
 
 				return fragmentMappedValueItemExternalReference;
 			}
@@ -343,16 +336,9 @@ public class FragmentLinkUtil {
 		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
 			() -> externalReferenceCode);
 		fragmentMappedValueItemExternalReference.setScope(
-			() -> {
-				if (companyId == null) {
-					return null;
-				}
-
-				return _getItemScope(
-					companyId,
-					jsonObject.getString("scopeExternalReferenceCode"),
-					scopeGroupId);
-			});
+			() -> _getItemScope(
+				companyId, jsonObject.getString("scopeExternalReferenceCode"),
+				scopeGroupId));
 
 		return fragmentMappedValueItemExternalReference;
 	}
@@ -470,10 +456,12 @@ public class FragmentLinkUtil {
 	}
 
 	private static Scope _getItemScope(
-			long companyId, String itemExternalReferenceCode, long scopeGroupId)
+			Long companyId, String itemExternalReferenceCode, long scopeGroupId)
 		throws PortalException {
 
-		if (Validator.isNull(itemExternalReferenceCode)) {
+		if ((companyId == null) ||
+			Validator.isNull(itemExternalReferenceCode)) {
+
 			return null;
 		}
 
@@ -537,10 +525,6 @@ public class FragmentLinkUtil {
 		if (layout != null) {
 			return ItemScopeUtil.getItemScope(
 				layout.getGroupId(), scopeGroupId);
-		}
-
-		if (companyId == null) {
-			return null;
 		}
 
 		String scopeExternalReferenceCode = layoutJSONObject.getString(

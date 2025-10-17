@@ -168,11 +168,11 @@ public class ObjectFolderLocalServiceTest {
 			objectFolder = _addObjectFolder(user);
 
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId(), false,
+				objectFolder.getObjectFolderId(),
 				ObjectDefinitionTestUtil.getRandomName(),
 				Collections.emptyList(), user.getUserId());
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				objectFolder.getObjectFolderId(), false,
+				objectFolder.getObjectFolderId(),
 				ObjectDefinitionTestUtil.getRandomName(),
 				Collections.emptyList(), user.getUserId());
 

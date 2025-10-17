@@ -94,7 +94,6 @@ public class ObjectEntrySitemapURLProviderTest {
 		_initThemeDisplay();
 
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Collections.singletonList(
 				new TextObjectFieldBuilder(
 				).labelMap(

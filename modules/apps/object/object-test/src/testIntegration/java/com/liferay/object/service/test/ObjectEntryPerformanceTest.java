@@ -105,7 +105,6 @@ public class ObjectEntryPerformanceTest {
 	public void testGetObjectEntries() throws Exception {
 		_customObjectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				false,
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,

@@ -67,7 +67,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, true,
+				TestPropsValues.getUserId(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"FDSEntry", pkObjectFieldDBColumnName, pkObjectFieldName,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -119,7 +119,7 @@ public class ObjectDefinitionUpgradeProcessTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null,
 				RandomTestUtil.randomLocaleStringMap(),
 				"Test" + RandomTestUtil.randomString(), null, null,
 				RandomTestUtil.randomLocaleStringMap(),

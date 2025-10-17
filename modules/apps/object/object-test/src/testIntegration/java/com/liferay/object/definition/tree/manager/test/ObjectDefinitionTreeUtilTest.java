@@ -2388,7 +2388,7 @@ public class ObjectDefinitionTreeUtilTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition(
-				0, false, name,
+				0, name,
 				List.of(
 					new TextObjectFieldBuilder(
 					).labelMap(

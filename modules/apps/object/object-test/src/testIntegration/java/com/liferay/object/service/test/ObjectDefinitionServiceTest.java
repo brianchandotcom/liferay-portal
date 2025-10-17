@@ -54,7 +54,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -155,9 +154,7 @@ public class ObjectDefinitionServiceTest {
 			_objectFolder.getObjectFolderId(), _adminUser);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	@TestInfo("LPD-66895")
 	public void testAddCustomObjectDefinitionByCMSAdministratorRole()
@@ -297,9 +294,7 @@ public class ObjectDefinitionServiceTest {
 			_addCustomObjectDefinition(_adminUser), _adminUser);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	@TestInfo("LPD-66895")
 	public void testPublishCustomObjectDefinitionByCMSAdministratorRole()
@@ -419,8 +414,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			null, user.getUserId(), 0, null, false, true, false, true, true,
-			false, false, false, false, null,
+			null, user.getUserId(), 0, null, false, true, false, true, false,
+			false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -443,8 +438,7 @@ public class ObjectDefinitionServiceTest {
 
 		return _objectDefinitionService.addSystemObjectDefinition(
 			RandomTestUtil.randomString(), user.getUserId(), objectFolderId,
-			null, false, true, false, true, false, false, false, false, false,
-			null,
+			null, false, true, false, true, false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			"Test", null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -540,8 +534,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					null, objectFolderId, null, false, true, false, true, true,
-					false, false, false, false, null,
+					null, objectFolderId, null, false, true, false, true, false,
+					false, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -678,9 +672,9 @@ public class ObjectDefinitionServiceTest {
 					null, objectDefinition.getObjectDefinitionId(), 0, 0,
 					objectFolderId, 0, false, objectDefinition.isActive(), null,
 					true, false, true, false, true, false, false, false, false,
-					false, false, null,
-					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
-					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
+					false, null, LocalizedMapUtil.getLocalizedMap("Able"),
+					"Able", null, null, false,
+					LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope(), objectDefinition.getStatus(),
 					Collections.emptyList(), Collections.emptyList(),
 					Collections.emptyList());

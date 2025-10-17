@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfig
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +44,6 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Pedro Leite
  */
-@FeatureFlag("LPD-32050")
 public class AttachmentDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 

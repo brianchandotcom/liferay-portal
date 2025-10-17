@@ -48,6 +48,7 @@ import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -98,9 +99,9 @@ public class ObjectLayoutLocalServiceTest {
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 		_modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
-				RandomTestUtil.randomLocaleStringMap(), "TestA", null, null,
-				RandomTestUtil.randomLocaleStringMap(),
+				TestPropsValues.getUserId(), null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				"TestA", null, null, RandomTestUtil.randomLocaleStringMap(),
 				ObjectDefinitionConstants.SCOPE_SITE, null, 1,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(

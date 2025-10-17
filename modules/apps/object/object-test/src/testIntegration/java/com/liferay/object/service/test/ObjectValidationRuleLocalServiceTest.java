@@ -100,7 +100,7 @@ public class ObjectValidationRuleLocalServiceTest {
 	public void setUp() throws Exception {
 		_modifiableSystemObjectDefinition =
 			ObjectDefinitionTestUtil.addModifiableSystemObjectDefinition(
-				TestPropsValues.getUserId(), null, false,
+				TestPropsValues.getUserId(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"Test", null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -108,7 +108,6 @@ public class ObjectValidationRuleLocalServiceTest {
 				Collections.emptyList());
 
 		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			false,
 			Arrays.asList(
 				new DateObjectFieldBuilder(
 				).labelMap(

@@ -52,11 +52,7 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 
 				String parametersString = StringPool.BLANK;
 
-				if (methodName.equals(
-						"AutoBatchPreparedStatementUtil.autoBatch") ||
-					methodName.equals(
-						"AutoBatchPreparedStatementUtil.concurrentAutoBatch")) {
-
+				if (methodName.startsWith("AutoBatchPreparedStatementUtil")) {
 					if (parameterSize != 2) {
 						continue;
 					}
@@ -126,10 +122,39 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 					_checkMissingTransformCall(
 						fileName, methodCall, parametersString, lineNumber);
 				}
+
+				if (methodName.equals("connection.prepareStatement") ||
+					methodName.startsWith("AutoBatchPreparedStatementUtil")) {
+
+					_checkMissingParameterizedStatement(
+						fileName, parameterList, lineNumber);
+				}
 			}
 		}
 
 		return content;
+	}
+
+	private void _checkMissingParameterizedStatement(
+		String fileName, List<String> parameterList, int lineNumber) {
+
+		for (int i = 0; i < (parameterList.size() - 1); i++) {
+			String parameter = parameterList.get(i);
+
+			if (!parameter.endsWith("\"") || !parameter.startsWith("\"") ||
+				!parameter.matches("\".+ *= \"")) {
+
+				continue;
+			}
+
+			String nextParameter = parameterList.get(i + 1);
+
+			addMessage(
+				fileName,
+				"Use \"PreparedStatement.set*\" to parameterize \"" +
+					nextParameter + "\"",
+				lineNumber);
+		}
 	}
 
 	private void _checkMissingTransformCall(

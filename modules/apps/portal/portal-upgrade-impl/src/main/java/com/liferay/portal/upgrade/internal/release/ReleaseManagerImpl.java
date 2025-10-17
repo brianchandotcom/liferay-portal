@@ -404,6 +404,7 @@ public class ReleaseManagerImpl implements ReleaseManager {
 						"0.0.0");
 
 					release.setVerified(false);
+					release.setState(ReleaseConstants.STATE_GOOD);
 				}
 				catch (Exception exception) {
 					release = _releaseLocalService.addRelease(

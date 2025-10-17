@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -83,6 +84,42 @@ public class PreupgradeVerifyDatabaseStateTest
 			if (_safeCloseable != null) {
 				_safeCloseable.close();
 			}
+		}
+	}
+
+	@Test
+	public void testVerifyPreupgradeIsCaseInsensitive() throws Exception {
+		ServiceComponent serviceComponent =
+			_serviceComponentLocalService.createServiceComponent(
+				RandomTestUtil.nextLong());
+
+		String tableName = "TestTable";
+
+		serviceComponent.setMvccVersion(0);
+		serviceComponent.setBuildNamespace("com.liferay.test.service.impl");
+		serviceComponent.setData(
+			StringBundler.concat(
+				"<![CDATA[create table ", StringUtil.toUpperCase(tableName),
+				" ("));
+
+		_serviceComponentLocalService.addServiceComponent(serviceComponent);
+
+		DB db = DBManagerUtil.getDB();
+
+		try {
+			db.runSQL(
+				"create table " + StringUtil.toLowerCase("testtable") +
+					"(id LONG)");
+
+			testVerify();
+		}
+		finally {
+			_serviceComponentLocalService.deleteServiceComponent(
+				serviceComponent);
+
+			db.runSQL(
+				"DROP_TABLE_IF_EXISTS(" + StringUtil.toLowerCase("testtable") +
+					")");
 		}
 	}
 

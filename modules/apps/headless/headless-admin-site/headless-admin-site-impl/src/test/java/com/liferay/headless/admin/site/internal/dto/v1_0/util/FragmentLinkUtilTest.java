@@ -80,27 +80,27 @@ public class FragmentLinkUtilTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_classNameId = RandomTestUtil.randomLong();
-		_companyId = RandomTestUtil.randomLong();
+		_CLASS_NAME_ID = RandomTestUtil.randomLong();
+		_COMPANY_ID = RandomTestUtil.randomLong();
 		_infoItemServiceRegistry = Mockito.mock(InfoItemServiceRegistry.class);
 
-		_itemGroupExternalReferenceCode = RandomTestUtil.randomString();
-		_itemGroupId = RandomTestUtil.randomLong();
+		_ITEM_GROUP_EXTERNAL_REFERENCE_CODE = RandomTestUtil.randomString();
+		_ITEM_GROUP_ID = RandomTestUtil.randomLong();
 
 		_mockGroup(
-			_itemGroupExternalReferenceCode, _itemGroupId,
+			_ITEM_GROUP_EXTERNAL_REFERENCE_CODE, _ITEM_GROUP_ID,
 			GroupConstants.TYPE_DEPOT);
 
 		_portalUtilMockedStatic.when(
 			() -> PortalUtil.getClassNameId(Mockito.anyString())
 		).thenReturn(
-			_classNameId
+			_CLASS_NAME_ID
 		);
-		_scopeExternalReferenceCode = RandomTestUtil.randomString();
-		_scopeGroupId = RandomTestUtil.randomLong();
+		_SCOPE_EXTERNAL_REFERENCE_CODE = RandomTestUtil.randomString();
+		_SCOPE_GROUP_ID = RandomTestUtil.randomLong();
 
 		_mockGroup(
-			_scopeExternalReferenceCode, _scopeGroupId,
+			_SCOPE_EXTERNAL_REFERENCE_CODE, _SCOPE_GROUP_ID,
 			GroupConstants.TYPE_SITE_OPEN);
 	}
 
@@ -133,7 +133,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -147,7 +147,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -198,7 +198,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -220,7 +220,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			ercInfoItemIdentifier.getScopeExternalReferenceCode()
 		).thenReturn(
-			_itemGroupExternalReferenceCode
+			_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 		);
 
 		InfoItemReference infoItemReference = _mockInfoItemReference();
@@ -245,7 +245,7 @@ public class FragmentLinkUtilTest {
 				new Scope() {
 					{
 						setExternalReferenceCode(
-							_itemGroupExternalReferenceCode);
+							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 						setType(Type.ASSET_LIBRARY);
 					}
 				}),
@@ -264,7 +264,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -293,7 +293,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			_scopeGroupId
+			_SCOPE_GROUP_ID
 		);
 
 		Mockito.when(
@@ -335,7 +335,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -347,7 +347,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			_itemGroupId
+			_ITEM_GROUP_ID
 		);
 
 		long layoutId = RandomTestUtil.randomLong();
@@ -368,7 +368,7 @@ public class FragmentLinkUtilTest {
 
 		_layoutLocalServiceUtilMockedStatic.when(
 			() -> LayoutLocalServiceUtil.fetchLayout(
-				_itemGroupId, false, layoutId)
+				_ITEM_GROUP_ID, false, layoutId)
 		).thenReturn(
 			layout
 		);
@@ -385,7 +385,7 @@ public class FragmentLinkUtilTest {
 				new Scope() {
 					{
 						setExternalReferenceCode(
-							_itemGroupExternalReferenceCode);
+							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 						setType(Type.ASSET_LIBRARY);
 					}
 				}),
@@ -396,19 +396,19 @@ public class FragmentLinkUtilTest {
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
-						"groupId", _itemGroupId
+						"groupId", _ITEM_GROUP_ID
 					).put(
 						"layoutId", layoutId
 					).put(
 						"privateLayout", false
 					).put(
 						"scopeExternalReferenceCode",
-						_scopeExternalReferenceCode
+						_SCOPE_EXTERNAL_REFERENCE_CODE
 					)
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -452,7 +452,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -484,7 +484,7 @@ public class FragmentLinkUtilTest {
 				new Scope() {
 					{
 						setExternalReferenceCode(
-							_itemGroupExternalReferenceCode);
+							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 						setType(Type.ASSET_LIBRARY);
 					}
 				}),
@@ -502,11 +502,11 @@ public class FragmentLinkUtilTest {
 					"fieldId", "JournalArticle_title"
 				).put(
 					"scopeExternalReferenceCode",
-					_itemGroupExternalReferenceCode
+					_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -539,7 +539,7 @@ public class FragmentLinkUtilTest {
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -567,7 +567,7 @@ public class FragmentLinkUtilTest {
 				new Scope() {
 					{
 						setExternalReferenceCode(
-							_itemGroupExternalReferenceCode);
+							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 						setType(Type.ASSET_LIBRARY);
 					}
 				}),
@@ -579,12 +579,12 @@ public class FragmentLinkUtilTest {
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
 						"scopeExternalReferenceCode",
-						_itemGroupExternalReferenceCode
+						_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 					)
 				).put(
 					"target", "_blank"
 				),
-				_scopeGroupId));
+				_SCOPE_GROUP_ID));
 	}
 
 	@Test
@@ -619,7 +619,7 @@ public class FragmentLinkUtilTest {
 						LocaleUtil.US.toString(), "https://www.liferay.com"
 					).build(),
 					null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -636,7 +636,7 @@ public class FragmentLinkUtilTest {
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
 				_getFragmentLink(null, null, "FileEntry_fileName", null, null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -670,7 +670,7 @@ public class FragmentLinkUtilTest {
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classNameId", _classNameId
+					"classNameId", _CLASS_NAME_ID
 				).put(
 					"classPK", classPK
 				).put(
@@ -686,7 +686,7 @@ public class FragmentLinkUtilTest {
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null, null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -725,7 +725,7 @@ public class FragmentLinkUtilTest {
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classNameId", _classNameId
+					"classNameId", _CLASS_NAME_ID
 				).put(
 					"classPK", classPK
 				).put(
@@ -751,7 +751,7 @@ public class FragmentLinkUtilTest {
 							setType(Type.SITE);
 						}
 					}),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -762,7 +762,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			_scopeGroupId
+			_SCOPE_GROUP_ID
 		);
 
 		long layoutId = RandomTestUtil.randomLong();
@@ -812,7 +812,7 @@ public class FragmentLinkUtilTest {
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
-						"groupId", _scopeGroupId
+						"groupId", _SCOPE_GROUP_ID
 					).put(
 						"layoutId", layoutId
 					).put(
@@ -830,7 +830,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null, null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -841,7 +841,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			layout.getGroupId()
 		).thenReturn(
-			_itemGroupId
+			_ITEM_GROUP_ID
 		);
 
 		long layoutId = RandomTestUtil.randomLong();
@@ -891,7 +891,7 @@ public class FragmentLinkUtilTest {
 					JSONUtil.put(
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
-						"groupId", _itemGroupId
+						"groupId", _ITEM_GROUP_ID
 					).put(
 						"layoutId", layoutId
 					).put(
@@ -900,7 +900,7 @@ public class FragmentLinkUtilTest {
 						"privateLayout", true
 					).put(
 						"scopeExternalReferenceCode",
-						_itemGroupExternalReferenceCode
+						_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 					).put(
 						"title", title
 					)
@@ -915,11 +915,11 @@ public class FragmentLinkUtilTest {
 					new Scope() {
 						{
 							setExternalReferenceCode(
-								_itemGroupExternalReferenceCode);
+								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 							setType(Type.ASSET_LIBRARY);
 						}
 					}),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -944,7 +944,7 @@ public class FragmentLinkUtilTest {
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classNameId", _classNameId
+					"classNameId", _CLASS_NAME_ID
 				).put(
 					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
@@ -958,7 +958,7 @@ public class FragmentLinkUtilTest {
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null, null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -983,14 +983,14 @@ public class FragmentLinkUtilTest {
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
-					"classNameId", _classNameId
+					"classNameId", _CLASS_NAME_ID
 				).put(
 					"externalReferenceCode", journalArticleExternalReferenceCode
 				).put(
 					"fieldId", "JournalArticle_title"
 				).put(
 					"scopeExternalReferenceCode",
-					_itemGroupExternalReferenceCode
+					_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 				).put(
 					"target", "_blank"
 				)
@@ -1003,11 +1003,11 @@ public class FragmentLinkUtilTest {
 					new Scope() {
 						{
 							setExternalReferenceCode(
-								_itemGroupExternalReferenceCode);
+								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 							setType(Type.ASSET_LIBRARY);
 						}
 					}),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -1037,7 +1037,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null, null),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -1063,7 +1063,7 @@ public class FragmentLinkUtilTest {
 						"externalReferenceCode", layoutExternalReferenceCode
 					).put(
 						"scopeExternalReferenceCode",
-						_itemGroupExternalReferenceCode
+						_ITEM_GROUP_EXTERNAL_REFERENCE_CODE
 					)
 				).put(
 					"target", "_blank"
@@ -1076,11 +1076,11 @@ public class FragmentLinkUtilTest {
 					new Scope() {
 						{
 							setExternalReferenceCode(
-								_itemGroupExternalReferenceCode);
+								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
 							setType(Type.ASSET_LIBRARY);
 						}
 					}),
-				_infoItemServiceRegistry, _scopeGroupId
+				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
 
@@ -1168,7 +1168,7 @@ public class FragmentLinkUtilTest {
 		Mockito.when(
 			group.getCompanyId()
 		).thenReturn(
-			_companyId
+			_COMPANY_ID
 		);
 
 		Mockito.when(
@@ -1197,7 +1197,7 @@ public class FragmentLinkUtilTest {
 
 		_groupLocalServiceUtilMockedStatic.when(
 			() -> GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-				externalReferenceCode, _companyId)
+				externalReferenceCode, _COMPANY_ID)
 		).thenReturn(
 			group
 		);
@@ -1210,7 +1210,7 @@ public class FragmentLinkUtilTest {
 
 		_groupLocalServiceUtilMockedStatic.when(
 			() -> GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-				externalReferenceCode, _companyId)
+				externalReferenceCode, _COMPANY_ID)
 		).thenReturn(
 			group
 		);
@@ -1241,7 +1241,7 @@ public class FragmentLinkUtilTest {
 
 		Mockito.when(
 			infoItemDetailsProvider.getInfoItemDetails(
-				Mockito.eq(_scopeGroupId), Mockito.any(Class.class),
+				Mockito.eq(_SCOPE_GROUP_ID), Mockito.any(Class.class),
 				Mockito.any())
 		).thenReturn(
 			infoItemDetails

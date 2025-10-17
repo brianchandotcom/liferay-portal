@@ -5,7 +5,8 @@
 
 import '../../../css/content_editor/ContentEditorToolbar.scss';
 
-import ClayButton from '@clayui/button';
+import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {ClayInput} from '@clayui/form';
 import ClayLink from '@clayui/link';
 import React, {useEffect, useState} from 'react';
@@ -38,6 +39,19 @@ export default function ContentEditorToolbar({
 			setFormId(form.id);
 		}
 	}, []);
+
+	const SubmitButton = ({label}: {label: string}) => (
+		<ClayButton
+			form={formId}
+			onClick={(event) => {
+				Liferay.fire(EVENT_VALIDATE_FORM, {event});
+			}}
+			size="sm"
+			type="submit"
+		>
+			{label}
+		</ClayButton>
+	);
 
 	return (
 		<Toolbar
@@ -72,19 +86,39 @@ export default function ContentEditorToolbar({
 			</Toolbar.Item>
 
 			<Toolbar.Item>
-				<ClayButton
-					displayType="primary"
-					form={formId}
-					onClick={(event) => {
-						Liferay.fire(EVENT_VALIDATE_FORM, {event});
-					}}
-					size="sm"
-					type="submit"
-				>
-					{hasWorkflow
-						? Liferay.Language.get('submit-for-workflow')
-						: Liferay.Language.get('publish')}
-				</ClayButton>
+				{hasWorkflow ? (
+					<SubmitButton
+						label={Liferay.Language.get('submit-for-workflow')}
+					/>
+				) : (
+					<ClayButton.Group>
+						<SubmitButton label={Liferay.Language.get('publish')} />
+
+						<ClayDropDownWithItems
+							className="btn-group"
+							items={[
+								{
+									label: Liferay.Language.get(
+										'schedule-publication'
+									),
+									symbolLeft: 'date-time',
+								},
+							]}
+							trigger={
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'publish-options'
+									)}
+									size="sm"
+									symbol="caret-bottom"
+									title={Liferay.Language.get(
+										'publish-options'
+									)}
+								/>
+							}
+						/>
+					</ClayButton.Group>
+				)}
 
 				<ClayInput
 					form={formId}

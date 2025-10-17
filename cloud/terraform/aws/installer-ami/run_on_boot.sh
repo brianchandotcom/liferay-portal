@@ -86,9 +86,8 @@ function main {
 		values_file_arg="--values /opt/liferay/values.yaml"
 	fi
 
-	local namespace=$(terraform output -raw deployment_namespace)
-
 	local liferay_sa_role=$(terraform output -raw liferay_sa_role)
+	local namespace=$(terraform output -raw deployment_namespace)
 
 	helm \
 		upgrade \

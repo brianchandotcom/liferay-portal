@@ -8,7 +8,6 @@ package com.liferay.object.petra.sql.dsl;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import java.util.List;
 
@@ -38,11 +37,7 @@ public class DynamicObjectDefinitionLocalizationTableFactory {
 					objectDefinition.getObjectDefinitionId());
 		}
 
-		if (!objectDefinition.isEnableLocalization() ||
-			(FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-32050") &&
-			 localizedObjectFields.isEmpty())) {
-
+		if (localizedObjectFields.isEmpty()) {
 			return null;
 		}
 

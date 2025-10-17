@@ -41,10 +41,9 @@ const Settings = ({
 	const [defaultVisualizationMode, setDefaultVisualizationMode] = useState<
 		string | undefined
 	>(NOT_CONFIGURED_VISUALIZATION_MODE.type);
-	const [loading, setLoading] = useState(true);
 	const [hideManagementBarInEmptyState, setHideManagementBarInEmptyState] =
 		useState(dataSet.hideManagementBarInEmptyState ?? true);
-
+	const [loading, setLoading] = useState(true);
 	const [visualizationModes, setVisualizationModes] = useState<
 		Array<TVisualizationMode>
 	>([]);

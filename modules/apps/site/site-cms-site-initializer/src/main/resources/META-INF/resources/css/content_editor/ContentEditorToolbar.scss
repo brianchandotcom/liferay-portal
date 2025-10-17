@@ -5,11 +5,11 @@
 
 body {
 	#wrapper {
-		&:has(.content-editor__management-bar) {
-			margin-top: $contentEditorManagementBarHeight;
+		&:has(.content-editor__toolbar) {
+			margin-top: $contentEditorToolbarHeight;
 		}
 
-		.content-editor__management-bar {
+		.content-editor__toolbar {
 			left: 0;
 			top: var(--control-menu-container-height);
 			transition: padding-left ease 0.5s;
@@ -18,7 +18,7 @@ body {
 		}
 	}
 
-	&.product-menu-open #wrapper .content-editor__management-bar {
+	&.product-menu-open #wrapper .content-editor__toolbar {
 		padding-left: $productMenuWidth;
 	}
 }
@@ -27,11 +27,11 @@ body {
 
 html#{$cadmin-selector} {
 	.page-editor__wrapper {
-		&:has(.content-editor__management-bar) {
-			margin-top: $contentEditorManagementBarHeight;
+		&:has(.content-editor__toolbar) {
+			margin-top: $contentEditorToolbarHeight;
 		}
 
-		.content-editor__management-bar {
+		.content-editor__toolbar {
 			left: 0;
 			opacity: 50%;
 			top: calc(
@@ -46,26 +46,23 @@ html#{$cadmin-selector} {
 			z-index: $pageEditorTopperZIndex;
 		}
 
-		&:not(.page-editor__wrapper--sidebar--hidden)
-			.content-editor__management-bar {
+		&:not(.page-editor__wrapper--sidebar--hidden) .content-editor__toolbar {
 			width: calc(100% - $pageEditorSidebarWidth);
 		}
 
 		&--padded-start {
-			.content-editor__management-bar {
+			.content-editor__toolbar {
 				padding-left: $pageEditorSidebarWidth +
 					$pageEditorSidebarButtonsWidth;
 			}
 		}
 	}
 
-	.master-page .content-editor__management-bar {
+	.master-page .content-editor__toolbar {
 		opacity: 50%;
 	}
 
-	body.product-menu-open
-		.page-editor__wrapper
-		.content-editor__management-bar {
+	body.product-menu-open .page-editor__wrapper .content-editor__toolbar {
 		padding-left: $productMenuWidth;
 	}
 }

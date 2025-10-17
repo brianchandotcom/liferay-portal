@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import '../../../css/content_editor/ContentEditorManagementBar.scss';
+import '../../../css/content_editor/ContentEditorToolbar.scss';
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
@@ -16,7 +16,7 @@ export const EVENT_VALIDATE_FORM = 'contentEditor:validateForm';
 
 const STATUS_DRAFT_CODE = 2;
 
-export default function ContentEditorManagementBar({
+export default function ContentEditorToolbar({
 	backURL,
 	hasWorkflow,
 	headerTitle,
@@ -40,7 +40,7 @@ export default function ContentEditorManagementBar({
 	}, []);
 
 	return (
-		<ManagementToolbar.Container className="border content-editor__management-bar position-fixed">
+		<ManagementToolbar.Container className="border content-editor__toolbar position-fixed">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
 				<ManagementToolbar.Item>
 					<ClayLink

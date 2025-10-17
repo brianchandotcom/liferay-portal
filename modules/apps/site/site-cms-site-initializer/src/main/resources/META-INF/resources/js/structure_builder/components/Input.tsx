@@ -40,12 +40,8 @@ export default function Input({
 		setValue(initialValue);
 	}, [initialValue]);
 
-	const hasError = error || (required && !value);
-
 	return (
-		<ClayForm.Group
-			className={classNames(className, {'has-error': hasError})}
-		>
+		<ClayForm.Group className={classNames(className, {'has-error': error})}>
 			<label htmlFor={id}>
 				{label}
 
@@ -72,13 +68,7 @@ export default function Input({
 				{...inputProps}
 			/>
 
-			{hasError ? (
-				<FieldFeedback
-					errorMessage={
-						error || Liferay.Language.get('this-field-is-required')
-					}
-				/>
-			) : null}
+			{error ? <FieldFeedback errorMessage={error} /> : null}
 
 			{helpMessage ? (
 				<FieldFeedback helpMessage={helpMessage} id={helpMessageId} />

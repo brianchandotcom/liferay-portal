@@ -13,6 +13,7 @@ type Translations = Liferay.Language.LocalizedValue<string>;
 export function LocalizedInput({
 	className,
 	disabled,
+	error,
 	formGroupClassName,
 	id,
 	label = '',
@@ -24,6 +25,7 @@ export function LocalizedInput({
 }: {
 	className?: string;
 	disabled?: boolean;
+	error?: string;
 	formGroupClassName?: string;
 	id?: string;
 	label?: string;
@@ -39,22 +41,17 @@ export function LocalizedInput({
 		Liferay.ThemeDisplay.getDefaultLanguageId()
 	);
 
-	const hasError =
-		required && locale in translations && !translations[locale];
-
 	return (
 		<ClayForm.Group
-			className={classNames(formGroupClassName, {'has-error': hasError})}
+			className={classNames(formGroupClassName, {
+				'has-error': error,
+			})}
 		>
 			<InputLocalized
 				{...otherProps}
 				className={className}
 				disabled={disabled}
-				error={
-					hasError
-						? Liferay.Language.get('this-field-is-required')
-						: ''
-				}
+				error={error}
 				id={id}
 				label={label}
 				onBlur={() => onSave(translations)}

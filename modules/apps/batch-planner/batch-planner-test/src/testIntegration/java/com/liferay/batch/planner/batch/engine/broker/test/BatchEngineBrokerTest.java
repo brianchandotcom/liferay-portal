@@ -154,12 +154,14 @@ import java.security.Key;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
 
 import javax.crypto.KeyGenerator;
@@ -697,44 +699,29 @@ public class BatchEngineBrokerTest {
 			String externalReferenceCode)
 		throws Exception {
 
-		CSVFormat csvFormat = CSVFormat.Builder.create(
-		).setDelimiter(
-			_DELIMITER_VALUE
-		).setIgnoreEmptyLines(
-			true
-		).setQuote(
-			_ENCLOSING_CHARACTER_VALUE.charAt(0)
-		).build();
-
-		CSVParser actualCSVParser = CSVParser.parse(actualCSVString, csvFormat);
-
-		List<CSVRecord> actualCSVRecords = actualCSVParser.getRecords();
-
-		CSVParser expectedCSVParser = CSVParser.parse(
-			expectedCSVString, csvFormat);
-
-		List<CSVRecord> expectedCSVRecords = expectedCSVParser.getRecords();
+		List<CSVRecord> actualCSVRecords = _parseCSV(
+			actualCSVString
+		).getRecords();
+		List<List<String>> expectedCSVRecords = _normalizeCSVRecords(
+			_parseCSV(
+				expectedCSVString
+			).getRecords());
 
 		Assert.assertEquals(
-			_toList(expectedCSVRecords.get(0)),
-			_toList(actualCSVRecords.get(0)));
+			expectedCSVRecords.get(0), _toList(actualCSVRecords.get(0)));
 
-		List<String> expectedCSVRecordStrings = _toList(
-			expectedCSVRecords.get(1));
+		List<String> expectedRecord = expectedCSVRecords.get(1);
 
 		boolean found = false;
 
 		for (int i = 1; i < actualCSVRecords.size(); i++) {
-			List<String> actualCSVRecordStrings = _toList(
-				actualCSVRecords.get(i));
+			List<String> actualRecord = _toList(actualCSVRecords.get(i));
 
-			if (!actualCSVRecordStrings.contains(externalReferenceCode)) {
+			if (!actualRecord.contains(externalReferenceCode)) {
 				continue;
 			}
 
-			Assert.assertEquals(
-				expectedCSVRecordStrings, actualCSVRecordStrings);
-
+			Assert.assertEquals(expectedRecord, actualRecord);
 			found = true;
 		}
 
@@ -1152,6 +1139,54 @@ public class BatchEngineBrokerTest {
 		zipInputStream.getNextEntry();
 
 		return zipInputStream;
+	}
+
+	private List<List<String>> _normalizeCSVRecords(
+		List<CSVRecord> csvRecords) {
+
+		List<List<String>> normalizedRecords = new ArrayList<>(
+			csvRecords.size());
+
+		for (CSVRecord csvRecord : csvRecords) {
+			normalizedRecords.add(_normalizeValues(csvRecord.toList()));
+		}
+
+		return normalizedRecords;
+	}
+
+	private List<String> _normalizeValues(List<String> values) {
+		List<String> normalizedValues = new ArrayList<>(values.size());
+
+		for (String value : values) {
+			if (Validator.isNotNull(value) &&
+				_htmlTagPattern.matcher(
+					value
+				).find()) {
+
+				value = _htmlBreakPattern.matcher(
+					value
+				).replaceAll(
+					"$1\n\n$3"
+				);
+			}
+
+			normalizedValues.add(value);
+		}
+
+		return normalizedValues;
+	}
+
+	private CSVParser _parseCSV(String csvString) throws Exception {
+		return CSVParser.parse(
+			csvString,
+			CSVFormat.Builder.create(
+			).setDelimiter(
+				_DELIMITER_VALUE
+			).setIgnoreEmptyLines(
+				true
+			).setQuote(
+				_ENCLOSING_CHARACTER_VALUE.charAt(0)
+			).build());
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
@@ -1585,6 +1620,10 @@ public class BatchEngineBrokerTest {
 
 	private static final String _OBJECT_ENTRY_ERC_3 = "TEST-OBJECT-ENTRY-3";
 
+	private static final Pattern _htmlBreakPattern = Pattern.compile(
+		"(?m)(</([A-Za-z][A-Za-z0-9]*)>)\\r?\\n(<\\2>)");
+	private static final Pattern _htmlTagPattern = Pattern.compile(
+		"<([A-Za-z][A-Za-z0-9]*)\\b[^>]*>(.*?)</\\1>", Pattern.DOTALL);
 	private static final List<String> _objectDefinitionExportCSVFieldNames =
 		Arrays.asList(
 			"accountEntryRestrictedObjectFieldName", "dateCreated",

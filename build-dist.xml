@@ -515,11 +515,13 @@ fi
 			]]>
 		</echo>
 
+		<property name="weblogic.java.jdk.home" value="${env.JAVA_HOME}" />
+
 		<echo file="${app.server.weblogic.dir}-temp/install_weblogic.sh">
 			<![CDATA[
 #!/bin/bash
 
-export JAVA_HOME=/opt/java/jdk
+export JAVA_HOME=${weblogic.java.jdk.home}
 export PATH=$JAVA_HOME/bin:$PATH
 
 java -jar ${app.server.weblogic.dir}-temp/${app.server.weblogic.jar.name} -ignoreSysPrereqs -invPtrLoc ${app.server.weblogic.dir}-temp/oraInst.loc -responseFile ${app.server.weblogic.dir}-temp/responseFile.rsp -silent

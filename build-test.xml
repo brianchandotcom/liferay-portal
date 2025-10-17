@@ -5213,11 +5213,17 @@ tell application "Safari" to quit
 
 	<macrodef name="prepare-test-app-server-custom">
 		<sequential>
-			<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
-
 			<if>
 				<equals arg1="${app.server.type}" arg2="weblogic" />
 				<then>
+					<local name="java.jdk.home" />
+
+					<get-java-jdk-home type="oracle" version="17" />
+
+					<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom">
+						<property name="weblogic.java.jdk.home" value="${java.jdk.home}" />
+					</ant>
+
 					<chmod
 						perm="a+x"
 					>
@@ -5286,6 +5292,9 @@ tell application "Safari" to quit
 
 					<delete file="${weblogic.fix.sh}" />
 				</then>
+				<else>
+					<ant antfile="build-dist.xml" inheritAll="false" target="unzip-${app.server.type}-custom" />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>
@@ -5398,7 +5407,13 @@ tell application "Safari" to quit
 							app.server.type=weblogic
 						</app-server-properties-update>
 
-						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom" />
+						<local name="java.jdk.home" />
+
+						<get-java-jdk-home type="oracle" version="17" />
+
+						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic-custom">
+							<property name="weblogic.java.jdk.home" value="${java.jdk.home}" />
+						</ant>
 
 						<antcall inheritAll="false" target="deploy" />
 

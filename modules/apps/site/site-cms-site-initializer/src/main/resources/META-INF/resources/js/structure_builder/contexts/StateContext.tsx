@@ -273,70 +273,44 @@ function reducer(state: State, action: Action): State {
 
 			const uuids = uuid ? [uuid] : selection;
 
-			const groupChildren = uuids.map(
+			const items = uuids.map(
 				(uuid) => findChild({root: structure, uuid})!
 			);
 
-			let parent: Structure | RepeatableGroup = structure;
+			const undeletables = getUndeletableItems(items, structure);
 
-			if (groupChildren[0].parent !== structure.uuid) {
-				parent = findChild({
-					root: structure,
-					uuid: groupChildren[0].parent,
-				})! as RepeatableGroup;
+			const reasons = [...undeletables.values()];
+
+			if (reasons.includes('is-locked')) {
+				showWarning({
+					text: Liferay.Language.get(
+						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-system-fields'
+					),
+					title: Liferay.Language.get(
+						'repeatable-group-creation-not-allowed'
+					),
+				});
+
+				return state;
 			}
 
-			for (const child of groupChildren) {
-				if (isLocked(child)) {
-					showWarning({
-						text: Liferay.Language.get(
-							'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-system-fields'
-						),
-						title: Liferay.Language.get(
-							'repeatable-group-creation-not-allowed'
-						),
-					});
+			if (
+				reasons.includes('is-referenced') ||
+				items.some(({uuid}) => publishedChildren.has(uuid))
+			) {
+				showWarning({
+					text: Liferay.Language.get(
+						'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'
+					),
+					title: Liferay.Language.get(
+						'repeatable-group-creation-not-allowed'
+					),
+				});
 
-					return state;
-				}
-
-				if (
-					publishedChildren.has(child.uuid) ||
-					isReferenced({item: child, root: structure})
-				) {
-					showWarning({
-						text: Liferay.Language.get(
-							'the-repeatable-group-cannot-be-created-because-one-or-more-fields-of-the-selection-are-already-published'
-						),
-						title: Liferay.Language.get(
-							'repeatable-group-creation-not-allowed'
-						),
-					});
-
-					return state;
-				}
-
-				if (child.parent !== parent.uuid) {
-					showWarning({
-						text: Liferay.Language.get(
-							'a-repeatable-group-requires-all-selected-items-to-be-at-the-same-hierarchy-level'
-						),
-						title: Liferay.Language.get(
-							'repeatable-group-creation-not-allowed'
-						),
-					});
-
-					return state;
-				}
+				return state;
 			}
 
-			const parentFields = Array.from(parent.children.values()).filter(
-				(child) =>
-					child.type !== 'referenced-structure' &&
-					child.type !== 'repeatable-group'
-			);
-
-			if (parentFields.length === groupChildren.length) {
+			if (reasons.includes('causes-invalid-group')) {
 				showWarning({
 					text: Liferay.Language.get(
 						'the-repeatable-group-cannot-be-created-because-at-least-one-field-is-required'
@@ -349,11 +323,34 @@ function reducer(state: State, action: Action): State {
 				return state;
 			}
 
+			const parents = items.map(
+				(item) =>
+					findChild({
+						root: structure,
+						uuid: item.parent,
+					}) || structure
+			);
+
+			const isSameParent = new Set(parents).size === 1;
+
+			if (!isSameParent) {
+				showWarning({
+					text: Liferay.Language.get(
+						'a-repeatable-group-requires-all-selected-items-to-be-at-the-same-hierarchy-level'
+					),
+					title: Liferay.Language.get(
+						'repeatable-group-creation-not-allowed'
+					),
+				});
+
+				return state;
+			}
+
 			const groupUuid = getUuid();
 
 			const children = insertGroup({
-				groupChildren,
-				groupParent: parent.uuid,
+				groupChildren: items,
+				groupParent: parents[0].uuid,
 				groupUuid,
 				root: structure,
 			});
@@ -407,6 +404,19 @@ function reducer(state: State, action: Action): State {
 			const child = findChild({root: structure, uuid});
 
 			if (!child) {
+				return state;
+			}
+
+			const undeletables = getUndeletableItems([child], structure);
+
+			if (undeletables.get(child.uuid) === 'causes-invalid-group') {
+				showWarning({
+					text: Liferay.Language.get(
+						'you-must-keep-at-least-one-field-in-a-repeatable-group'
+					),
+					title: Liferay.Language.get('deletion-not-allowed'),
+				});
+
 				return state;
 			}
 

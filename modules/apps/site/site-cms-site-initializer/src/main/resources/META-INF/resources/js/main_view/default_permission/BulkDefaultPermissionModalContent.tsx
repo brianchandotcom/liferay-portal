@@ -278,6 +278,7 @@ export default function BulkDefaultPermissionModalContent({
 			<ClayModal.Body className="p-0">
 				<DefaultPermissionFormContainer
 					actions={actions}
+					apiURL={apiURL}
 					disabled={loading}
 					infoBoxMessage={Liferay.Language.get(
 						'please-be-aware-that-the-configuration-shown-at-the-beginning-is-the-default-of-the-parent-level'

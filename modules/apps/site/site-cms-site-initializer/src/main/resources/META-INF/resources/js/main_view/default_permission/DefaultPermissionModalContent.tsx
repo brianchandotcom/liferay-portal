@@ -161,6 +161,7 @@ export default function DefaultPermissionModalContent({
 			<ClayModal.Body className="p-0">
 				<DefaultPermissionFormContainer
 					actions={actions}
+					apiURL={apiURL}
 					disabled={loading}
 					onChange={onChangeHandler}
 					roles={roles}

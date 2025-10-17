@@ -35,13 +35,14 @@ const DEFAULT_ASSET_TYPES: Array<AssetType> = [
 
 export default function DefaultPermissionFormContainer({
 	actions,
+	apiURL,
 	disabled,
 	infoBoxMessage,
 	onChange,
 	roles,
 	types,
 	values,
-}: DefaultPermissionFormContainerProps) {
+}: DefaultPermissionFormContainerProps & {apiURL?: string}) {
 	const [activeIndex, setActiveIndex] = useState(0);
 	const [activeActions, setActiveActions] = useState<Action[]>([]);
 	const [activeValues, setActiveValues] = useState({});
@@ -91,8 +92,28 @@ export default function DefaultPermissionFormContainer({
 	}, [actions, activeIndex, data, tabs]);
 
 	useEffect(() => {
-		setTabs(types || DEFAULT_ASSET_TYPES);
-	}, [types]);
+		if (apiURL?.includes('contents')) {
+			setTabs(
+				DEFAULT_ASSET_TYPES.filter(
+					(tab) =>
+						tab.key === DefaultAssetTypes.L_CONTENTS ||
+						tab.key === DefaultAssetTypes.OBJECT_ENTRY_FOLDERS
+				)
+			);
+		}
+		else if (apiURL?.includes('files')) {
+			setTabs(
+				DEFAULT_ASSET_TYPES.filter(
+					(tab) =>
+						tab.key === DefaultAssetTypes.L_FILES ||
+						tab.key === DefaultAssetTypes.OBJECT_ENTRY_FOLDERS
+				)
+			);
+		}
+		else {
+			setTabs(types || DEFAULT_ASSET_TYPES);
+		}
+	}, [types, apiURL]);
 
 	useEffect(() => {
 		setData(values || {});

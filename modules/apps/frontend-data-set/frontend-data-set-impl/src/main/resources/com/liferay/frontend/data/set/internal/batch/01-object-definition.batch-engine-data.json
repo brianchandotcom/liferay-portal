@@ -129,6 +129,22 @@
 					"type": "Clob"
 				},
 				{
+					"DBType": "Boolean",
+					"businessType": "Boolean",
+					"defaultValue": false,
+					"externalReferenceCode": "HIDE_MANAGEMENT_BAR_IN_EMPTY_STATE",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Hide Management Bar in Empty State"
+					},
+					"name": "hideManagementBarInEmptyState",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "Boolean"
+				},
+				{
 					"DBType": "Clob",
 					"businessType": "LongText",
 					"externalReferenceCode": "ITEM_ACTIONS_ORDER",
@@ -262,22 +278,6 @@
 					"state": false,
 					"system": true,
 					"type": "Clob"
-				},
-				{
-					"DBType": "Boolean",
-					"businessType": "Boolean",
-					"defaultValue": false,
-					"externalReferenceCode": "HIDE_MANAGEMENT_BAR_IN_EMPTY_STATE",
-					"indexed": true,
-					"indexedAsKeyword": false,
-					"label": {
-						"en_US": "Hide Management Bar in Empty State"
-					},
-					"name": "hideManagementBarInEmptyState",
-					"required": false,
-					"state": false,
-					"system": true,
-					"type": "Boolean"
 				}
 			],
 			"objectRelationships": [

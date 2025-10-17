@@ -6,11 +6,15 @@
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useRef} from 'react';
 import {flushSync} from 'react-dom';
 
 import {EVENT_VALIDATE_FORM} from './ContentEditorToolbar';
 import ScheduleField, {dateConfig, toServerISOFormat} from './ScheduleField';
+
+type HTMLScheduleField = {
+	validate: () => boolean;
+};
 
 export default function SchedulePublicationModal({
 	date,
@@ -25,6 +29,7 @@ export default function SchedulePublicationModal({
 	onUpdateDate: (date: string) => void;
 	type: string;
 }) {
+	const fieldRef = useRef<HTMLScheduleField>(null);
 	const {observer, onClose} = useModal({
 		onClose: () => onCloseModal(),
 	});
@@ -35,6 +40,14 @@ export default function SchedulePublicationModal({
 	};
 
 	const onSchedule = (event: React.MouseEvent<HTMLButtonElement>) => {
+		const isValid = fieldRef.current?.validate();
+
+		if (!isValid) {
+			event.preventDefault();
+
+			return;
+		}
+
 		flushSync(() => {
 			onUpdateDate(toServerISOFormat(date));
 		});
@@ -71,6 +84,7 @@ export default function SchedulePublicationModal({
 					dateConfig={dateConfig}
 					label={Liferay.Language.get('date-and-time')}
 					name="displayDate"
+					ref={fieldRef}
 					required
 					updateFieldData={onUpdate}
 				/>

@@ -8,7 +8,7 @@ import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {datetimeUtils} from '@liferay/object-js-components-web';
 import {dateUtils} from 'frontend-js-web';
 import moment from 'moment';
-import React, {useId, useState} from 'react';
+import React, {useId, useImperativeHandle, useState} from 'react';
 
 import FieldWrapper from '../../common/components/forms/FieldWrapper';
 
@@ -18,25 +18,28 @@ export const dateConfig = datetimeUtils.generateDateConfigurations({
 	type: 'DateTime',
 });
 
-export default function ScheduleField({
-	date: initialDate = '',
-	dateConfig,
-	error: initialError = '',
-	label,
-	name,
-	neverExpire,
-	required = false,
-	updateFieldData,
-}: {
-	date: string | undefined;
-	dateConfig: datetimeUtils.DateConfig;
-	error?: string;
-	label: string;
-	name: string;
-	neverExpire?: boolean;
-	required?: boolean;
-	updateFieldData: any;
-}) {
+export default React.forwardRef(function ScheduleField(
+	{
+		date: initialDate = '',
+		dateConfig,
+		error: initialError = '',
+		label,
+		name,
+		neverExpire,
+		required = false,
+		updateFieldData,
+	}: {
+		date: string | undefined;
+		dateConfig: datetimeUtils.DateConfig;
+		error?: string;
+		label: string;
+		name: string;
+		neverExpire?: boolean;
+		required?: boolean;
+		updateFieldData: any;
+	},
+	ref
+) {
 	const [checked, setChecked] = useState<boolean>(Boolean(neverExpire));
 	const [date, setDate] = useState<string>(initialDate);
 	const [error, setError] = useState<string>(initialError);
@@ -71,6 +74,14 @@ export default function ScheduleField({
 	const placeholder = dateConfig.momentFormat
 		.replace(/hh:mm|HH:mm/g, '--:--')
 		.replace('A', '--');
+
+	useImperativeHandle(ref, () => ({
+		validate: () => {
+			onBlur(date);
+
+			return required ? date && !error : !error;
+		},
+	}));
 
 	return (
 		<div aria-label={label} role="group">
@@ -131,7 +142,7 @@ export default function ScheduleField({
 			) : null}
 		</div>
 	);
-}
+});
 
 function isPastDate(value: string) {
 	const languageId = Liferay.ThemeDisplay.getBCP47LanguageId();

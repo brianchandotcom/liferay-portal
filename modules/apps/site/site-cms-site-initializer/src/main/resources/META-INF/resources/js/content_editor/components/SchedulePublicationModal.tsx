@@ -19,12 +19,14 @@ type HTMLScheduleField = {
 export default function SchedulePublicationModal({
 	date,
 	formId,
+	hasWorkflow,
 	onCloseModal,
 	onUpdateDate,
 	type,
 }: {
 	date: string;
 	formId: string;
+	hasWorkflow: boolean;
 	onCloseModal: () => void;
 	onUpdateDate: (date: string) => void;
 	type: string;
@@ -66,17 +68,28 @@ export default function SchedulePublicationModal({
 	return (
 		<ClayModal observer={observer}>
 			<ClayModal.Header>
-				{Liferay.Language.get('schedule-publication')}
+				{hasWorkflow
+					? Liferay.Language.get(
+							'schedule-publication-and-submit-for-workflow'
+						)
+					: Liferay.Language.get('schedule-publication')}
 			</ClayModal.Header>
 
 			<ClayModal.Body>
 				<p className="text-secondary">
-					{sub(
-						Liferay.Language.get(
-							'set-the-date-and-time-for-publishing-the-x'
-						),
-						type
-					)}
+					{hasWorkflow
+						? sub(
+								Liferay.Language.get(
+									'set-the-date-and-time-for-publishing-the-x-and-submit-it-for-workflow'
+								),
+								type
+							)
+						: sub(
+								Liferay.Language.get(
+									'set-the-date-and-time-for-publishing-the-x'
+								),
+								type
+							)}
 				</p>
 
 				<ScheduleField
@@ -102,7 +115,9 @@ export default function SchedulePublicationModal({
 							onClick={onSchedule}
 							type="submit"
 						>
-							{Liferay.Language.get('schedule')}
+							{hasWorkflow
+								? Liferay.Language.get('submit-for-workflow')
+								: Liferay.Language.get('schedule')}
 						</ClayButton>
 					</ClayButton.Group>
 				}

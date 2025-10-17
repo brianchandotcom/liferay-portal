@@ -38,8 +38,15 @@ export default function ContentEditorToolbar({
 	const [formId, setFormId] = useState<string | undefined>();
 	const [showModal, setShowModal] = useState<boolean>(false);
 
+	const optionsTitle = hasWorkflow
+		? Liferay.Language.get('submit-for-workflow-options')
+		: Liferay.Language.get('publish-options');
 	const submitLabelId = useId();
-	const submitTitle = getSubmitTitle(type);
+	const submitTitle = getSubmitTitle(
+		hasWorkflow
+			? sub(Liferay.Language.get('submit-x-for-workflow'), type)
+			: sub(Liferay.Language.get('publish-x'), type)
+	);
 
 	useEffect(() => {
 		let form = document.querySelector('.lfr-main-form-container');
@@ -67,20 +74,6 @@ export default function ContentEditorToolbar({
 				window.removeEventListener('keydown', handlePublishShortcut);
 		}
 	}, []);
-
-	const SubmitButton = ({label, ...props}: {label: string}) => (
-		<ClayButton
-			form={formId}
-			onClick={(event) => {
-				Liferay.fire(EVENT_VALIDATE_FORM, {event});
-			}}
-			size="sm"
-			type="submit"
-			{...props}
-		>
-			{label}
-		</ClayButton>
-	);
 
 	return (
 		<Toolbar
@@ -115,51 +108,54 @@ export default function ContentEditorToolbar({
 			</Toolbar.Item>
 
 			<Toolbar.Item>
-				{hasWorkflow ? (
-					<SubmitButton
-						label={Liferay.Language.get('submit-for-workflow')}
+				<ClayButton.Group>
+					<ClayButton
+						aria-labelledby={submitLabelId}
+						data-title={submitTitle}
+						data-title-set-as-html
+						form={formId}
+						onClick={(event) => {
+							Liferay.fire(EVENT_VALIDATE_FORM, {event});
+						}}
+						size="sm"
+						type="submit"
+					>
+						{hasWorkflow
+							? Liferay.Language.get('submit-for-workflow')
+							: Liferay.Language.get('publish')}
+					</ClayButton>
+
+					<span
+						className="sr-only"
+						dangerouslySetInnerHTML={{__html: submitTitle}}
+						id={submitLabelId}
 					/>
-				) : (
-					<ClayButton.Group>
-						<SubmitButton
-							aria-labelledby={submitLabelId}
-							data-title={submitTitle}
-							data-title-set-as-html
-							label={Liferay.Language.get('publish')}
-						/>
 
-						<span
-							className="sr-only"
-							dangerouslySetInnerHTML={{__html: submitTitle}}
-							id={submitLabelId}
-						/>
-
-						<ClayDropDownWithItems
-							className="btn-group"
-							items={[
-								{
-									label: Liferay.Language.get(
-										'schedule-publication'
-									),
-									onClick: () => setShowModal(true),
-									symbolLeft: 'date-time',
-								},
-							]}
-							trigger={
-								<ClayButtonWithIcon
-									aria-label={Liferay.Language.get(
-										'publish-options'
-									)}
-									size="sm"
-									symbol="caret-bottom"
-									title={Liferay.Language.get(
-										'publish-options'
-									)}
-								/>
-							}
-						/>
-					</ClayButton.Group>
-				)}
+					<ClayDropDownWithItems
+						className="btn-group"
+						items={[
+							{
+								label: hasWorkflow
+									? Liferay.Language.get(
+											'schedule-publication-and-submit-for-workflow'
+										)
+									: Liferay.Language.get(
+											'schedule-publication'
+										),
+								onClick: () => setShowModal(true),
+								symbolLeft: 'date-time',
+							},
+						]}
+						trigger={
+							<ClayButtonWithIcon
+								aria-label={optionsTitle}
+								size="sm"
+								symbol="caret-bottom"
+								title={optionsTitle}
+							/>
+						}
+					/>
+				</ClayButton.Group>
 
 				<ClayInput
 					form={formId}
@@ -180,6 +176,7 @@ export default function ContentEditorToolbar({
 				<SchedulePublicationModal
 					date={toMomentDate(displayDate || initialDisplayDate)}
 					formId={formId!}
+					hasWorkflow={hasWorkflow}
 					onCloseModal={() => setShowModal(false)}
 					onUpdateDate={setDisplayDate}
 					type={type}
@@ -189,12 +186,12 @@ export default function ContentEditorToolbar({
 	);
 }
 
-function getSubmitTitle(type: string) {
+function getSubmitTitle(title: string) {
 	const isMac = Liferay.Browser?.isMac();
 
 	return `
 		<span class="d-block">
-			${sub(Liferay.Language.get('publish-x'), type)}
+			${title}
 		</span>
 		<kbd class="c-kbd c-kbd-dark mt-1">
 			<kbd class="c-kbd">${isMac ? '⌘' : 'Ctrl'}</kbd>

@@ -915,6 +915,7 @@ public class ObjectEntryDTOConverter
 			return new ListEntry() {
 				{
 					setKey(() -> StringPool.BLANK);
+					setName(() -> StringPool.BLANK);
 				}
 			};
 		}

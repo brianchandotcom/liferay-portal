@@ -377,8 +377,11 @@ public class I18nFilterTest {
 
 			return ReflectionTestUtil.invoke(
 				_i18nFilter, "prependI18nLanguageId",
-				new Class<?>[] {HttpServletRequest.class, int.class},
-				mockHttpServletRequest, localePrependFriendlyURLStyle);
+				new Class<?>[] {
+					HttpServletRequest.class, int.class, long.class
+				},
+				mockHttpServletRequest, localePrependFriendlyURLStyle,
+				_group.getCompanyId());
 		}
 	}
 
@@ -404,8 +407,8 @@ public class I18nFilterTest {
 				redirect,
 				ReflectionTestUtil.invoke(
 					_i18nFilter, "getRedirect",
-					new Class<?>[] {HttpServletRequest.class},
-					mockHttpServletRequest));
+					new Class<?>[] {HttpServletRequest.class, long.class},
+					mockHttpServletRequest, companyId));
 		}
 
 		Assert.assertEquals(

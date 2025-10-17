@@ -79,13 +79,11 @@ function main {
 
 	terraform apply -auto-approve
 
-	local values_file_arg
+	local values_file_arg=""
 
 	if [ -f /opt/liferay/values.yaml ]
 	then
 		values_file_arg="--values /opt/liferay/values.yaml"
-	else
-		values_file_arg=""
 	fi
 
 	local namespace=$(terraform output -raw deployment_namespace)

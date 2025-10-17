@@ -1327,14 +1327,14 @@ app.server.type=@{app.server.type}]]></echo>
 
 			<antcall inheritAll="false" target="compile" />
 
-			<antcall inheritAll="false" target="install-portal-snapshots" />
-
 			<if>
 				<and>
 					<equals arg1="@{app.server.type}" arg2="tomcat" />
 					<equals arg1="@{dist.type}" arg2="release" />
 				</and>
 				<then>
+					<antcall inheritAll="false" target="install-portal-snapshots" />
+
 					<lstopwatch action="start" name="prepare-test-build-dist.bundles.@{app.server.type}.dist" />
 
 					<ant antfile="build-test.xml" target="prepare-release-bundle" />
@@ -1344,6 +1344,8 @@ app.server.type=@{app.server.type}]]></echo>
 				<elseif>
 					<equals arg1="@{app.server.type}" arg2="weblogic" />
 					<then>
+						<antcall inheritAll="false" target="install-portal-snapshots" />
+
 						<antcall inheritAll="false" target="prepare-test-build-custom">
 							<param name="app.server.type" value="@{app.server.type}" />
 						</antcall>

@@ -706,10 +706,10 @@ function reducer(state: State, action: Action): State {
 			});
 
 			if (errors.size) {
-				invalids.set(structure.uuid, errors);
+				invalids.set(group.uuid, errors);
 			}
 			else {
-				invalids.delete(structure.uuid);
+				invalids.delete(group.uuid);
 			}
 
 			// Return new state

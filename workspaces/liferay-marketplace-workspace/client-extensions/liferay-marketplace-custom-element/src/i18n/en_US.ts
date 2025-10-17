@@ -275,6 +275,8 @@ export default {
 	'file-not-available-for-download': 'File not available for download.',
 	'filter': 'Filter',
 	'first-name': 'First Name',
+	'for-businesses-with-a-vat-tax-number-this-account-type-support-multiple-users':
+		'For businesses with a VAT/Tax number; this account type support multiple users.',
 	'for-businesses-with-a-vat-tax-number-this-account-type-support-multiple-users-it-also-possible-to-join-an-already-existing-business-account':
 		'For businesses with a VAT/Tax number; this account type support multiple users. It also possible to join an already existing business account',
 	'for-individuals-without-a-vat-tax-number-this-account-support-single-user-only':
@@ -329,6 +331,9 @@ export default {
 	'insufficient-resource-requirements': 'Insufficient Resource Requirements',
 	'intl-code': 'Intl. Code',
 	'ip-addresses': 'IP Addresses',
+	'join-an-existing-business-account-e-g-your-company-and-gain-full-access':
+		'Join an existing business account (e.g., your company) and gain full access.',
+	'join-existing-business-account': 'Join Existing Business Account',
 	'key-activations-available-x-of-x':
 		'Key activations available: {0} of {1}.',
 	'key-deactivation-requested-succesfully':
@@ -607,6 +612,7 @@ export default {
 		'Tags help to describe your solution in the Marketplace. Select the tags most relevant to your solution. They can be changed if needed.',
 	'tax-id': 'Tax ID',
 	'tax-vat': 'Tax/VAT',
+	'tax-vat-number': 'Tax/VAT Number',
 	'terms-of-service': 'Terms of Service',
 	'terms-privacy-returns-or-contact-support-all-costs-are-in-us-dollars':
 		'Terms, privacy, returns, or contact support. All costs are in US Dollars',

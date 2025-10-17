@@ -407,8 +407,10 @@ public class ReleaseManagerImpl implements ReleaseManager {
 					release.setState(ReleaseConstants.STATE_GOOD);
 				}
 				catch (Exception exception) {
-					release = _releaseLocalService.addRelease(
-						bundleSymbolicName, "0.0.0");
+					if (release == null) {
+						release = _releaseLocalService.addRelease(
+							bundleSymbolicName, "0.0.0");
+					}
 
 					release.setState(ReleaseConstants.STATE_UPGRADE_FAILURE);
 

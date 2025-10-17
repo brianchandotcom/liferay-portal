@@ -32,13 +32,14 @@ export default function ScheduleField({
 	error?: string;
 	label: string;
 	name: string;
-	neverExpire: boolean;
+	neverExpire?: boolean;
 	updateFieldData: any;
 }) {
-	const [checked, setChecked] = useState<boolean>(neverExpire);
+	const [checked, setChecked] = useState<boolean>(Boolean(neverExpire));
 	const [date, setDate] = useState<string>(initialDate);
 	const [error, setError] = useState<string>(initialError);
 
+	const hasNeverExpire = neverExpire !== undefined;
 	const id = useId();
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
@@ -70,7 +71,7 @@ export default function ScheduleField({
 		<div aria-label={label} role="group">
 			<FieldWrapper
 				disabled={checked}
-				errorMessage={!checked ? error : ''}
+				errorMessage={!hasNeverExpire || !checked ? error : ''}
 				fieldId={id}
 				label={label}
 			>
@@ -103,22 +104,24 @@ export default function ScheduleField({
 				/>
 			</FieldWrapper>
 
-			<ClayForm.Group>
-				<ClayCheckbox
-					checked={checked}
-					label={Liferay.Language.get('never-expire')}
-					onChange={({target: {checked}}) => {
-						setChecked(checked);
+			{hasNeverExpire ? (
+				<ClayForm.Group>
+					<ClayCheckbox
+						checked={checked}
+						label={Liferay.Language.get('never-expire')}
+						onChange={({target: {checked}}) => {
+							setChecked(checked);
 
-						updateFieldData({
-							error,
-							name,
-							neverExpire: checked,
-							value: checked ? '' : date,
-						});
-					}}
-				/>
-			</ClayForm.Group>
+							updateFieldData({
+								error,
+								name,
+								neverExpire: checked,
+								value: checked ? '' : date,
+							});
+						}}
+					/>
+				</ClayForm.Group>
+			) : null}
 		</div>
 	);
 }

@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.DataCleanupLoggingUtil;
+import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -23,6 +25,7 @@ import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Properties;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +44,9 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 		List<ServiceComponent> serviceComponents =
 			_serviceComponentLocalService.getServiceComponents(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		List<ServiceComponent> latestServiceComponents =
+			_serviceComponentLocalService.getLatestServiceComponents();
 
 		for (ServiceComponent serviceComponent : serviceComponents) {
 			String buildNamespace = serviceComponent.getBuildNamespace();
@@ -71,7 +77,20 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 					continue;
 				}
 
-				if (!Objects.equals(
+				if (!latestServiceComponents.contains(serviceComponent)) {
+					continue;
+				}
+
+				Properties properties = PropertiesUtil.load(
+					bundle.getResource("service.properties"));
+
+				String buildNumberServiceProperties = properties.getProperty(
+					"build.number");
+
+				if (!StringUtil.equals(
+						buildNumberServiceProperties,
+						String.valueOf(serviceComponent.getBuildNumber())) ||
+					!Objects.equals(
 						serviceComponent.getData(), _generateXML(bundle))) {
 
 					_log.error(

@@ -31,7 +31,7 @@
 						(CommerceOrder.userId = ?) AND
 						(CommerceOrder.status != 0)
 					) OR
-					(CommerceOrder.status = 0)
+					([$STATUS$])
 				)
 			ORDER BY
 				CommerceOrder.modifieddate DESC

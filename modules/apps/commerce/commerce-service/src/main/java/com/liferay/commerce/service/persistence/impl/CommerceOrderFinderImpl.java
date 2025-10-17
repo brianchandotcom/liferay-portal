@@ -5,16 +5,24 @@
 
 package com.liferay.commerce.service.persistence.impl;
 
+import com.liferay.commerce.configuration.CommerceOrderConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.impl.CommerceOrderImpl;
 import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
@@ -50,6 +58,8 @@ public class CommerceOrderFinderImpl
 			session = openSession();
 
 			String sql = _customSQL.get(getClass(), FIND_BY_G_U_C_O_S);
+
+			sql = replaceStatus(groupId, sql, userId);
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
 
@@ -170,6 +180,41 @@ public class CommerceOrderFinderImpl
 
 		return StringUtil.replace(sql, "[$ORDER_STATUS$]", sb.toString());
 	}
+
+	protected String replaceStatus(long groupId, String sql, long userId) {
+		try {
+			CommerceOrderConfiguration commerceOrderConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceOrderConfiguration.class,
+					new GroupServiceSettingsLocator(
+						groupId,
+						CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+			if (CommerceOrderConstants.ORDER_VISIBILITY_SCOPE_USER.equals(
+					commerceOrderConfiguration.openOrdersVisibilityScope())) {
+
+				return StringUtil.replace(
+					sql, "[$STATUS$]",
+					StringBundler.concat(
+						"(CommerceOrder.status = 0) AND (CommerceOrder.userId ",
+						"= ", userId, ")"));
+			}
+		}
+		catch (ConfigurationException configurationException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(configurationException);
+			}
+		}
+
+		return StringUtil.replace(
+			sql, "[$STATUS$]", "CommerceOrder.status = 0");
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommerceOrderFinderImpl.class);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CustomSQL _customSQL;

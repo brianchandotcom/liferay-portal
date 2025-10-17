@@ -112,23 +112,23 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 				parametersString = StringUtil.removeSubstring(
 					parametersString, "\", \"");
 
-				parameterList = _splitParameters(
+				List<String> sqlStatementParts = _splitParameters(
 					parametersString, CharPool.COMMA);
 
-				_checkSQLBooleanValues(fileName, parameterList, lineNumber);
+				_checkSQLBooleanValues(fileName, sqlStatementParts, lineNumber);
 
 				if (!methodName.equals("runSQL") &&
 					!methodName.equals("StringBundler.concat")) {
 
 					_checkMissingTransformCall(
-						fileName, methodCall, parameterList, lineNumber);
+						fileName, methodCall, sqlStatementParts, lineNumber);
 				}
 
 				if (methodName.equals("connection.prepareStatement") ||
 					methodName.startsWith("AutoBatchPreparedStatementUtil")) {
 
 					_checkMissingParameterizedStatement(
-						fileName, parameterList, lineNumber);
+						fileName, sqlStatementParts, lineNumber);
 				}
 			}
 		}
@@ -137,38 +137,41 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 	}
 
 	private void _checkMissingParameterizedStatement(
-		String fileName, List<String> parameterList, int lineNumber) {
+		String fileName, List<String> sqlStatementParts, int lineNumber) {
 
-		for (int i = 0; i < (parameterList.size() - 1); i++) {
-			String parameter = parameterList.get(i);
+		for (int i = 0; i < (sqlStatementParts.size() - 1); i++) {
+			String sqlStatementPart = sqlStatementParts.get(i);
 
-			if (!parameter.endsWith("\"") || !parameter.startsWith("\"") ||
-				!parameter.matches("\".+ *= \"")) {
+			if (!sqlStatementPart.endsWith("\"") ||
+				!sqlStatementPart.startsWith("\"") ||
+				!sqlStatementPart.matches("\".+ *= \"")) {
 
 				continue;
 			}
 
-			String nextParameter = parameterList.get(i + 1);
+			String nextSQLStatementPart = sqlStatementParts.get(i + 1);
 
 			addMessage(
 				fileName,
 				"Use \"PreparedStatement.set*\" to parameterize \"" +
-					nextParameter + "\"",
+					nextSQLStatementPart + "\"",
 				lineNumber);
 		}
 	}
 
 	private void _checkMissingTransformCall(
-		String fileName, String methodCall, List<String> parameterList,
+		String fileName, String methodCall, List<String> sqlStatementParts,
 		int lineNumber) {
 
-		for (String parameter : parameterList) {
-			if (!parameter.endsWith("\"") || !parameter.startsWith("\"")) {
+		for (String sqlStatementPart : sqlStatementParts) {
+			if (!sqlStatementPart.endsWith("\"") ||
+				!sqlStatementPart.startsWith("\"")) {
+
 				continue;
 			}
 
 			int index = StringUtil.indexOfAny(
-				parameter, new String[] {"[$FALSE$]", "[$TRUE$]"});
+				sqlStatementPart, new String[] {"[$FALSE$]", "[$TRUE$]"});
 
 			if ((index == -1) ||
 				methodCall.contains("SQLTransformer.transform(")) {
@@ -185,20 +188,22 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 	}
 
 	private void _checkSQLBooleanValues(
-		String fileName, List<String> parameterList, int lineNumber) {
+		String fileName, List<String> sqlStatementParts, int lineNumber) {
 
-		for (String parameter : parameterList) {
-			if (!parameter.endsWith("\"") || !parameter.startsWith("\"")) {
+		for (String sqlStatementPart : sqlStatementParts) {
+			if (!sqlStatementPart.endsWith("\"") ||
+				!sqlStatementPart.startsWith("\"")) {
+
 				continue;
 			}
 
-			Matcher matcher = _falseTruePattern.matcher(parameter);
+			Matcher matcher = _falseTruePattern.matcher(sqlStatementPart);
 
 			while (matcher.find()) {
 				String match = matcher.group(1);
 
-				String s1 = parameter.substring(0, matcher.start(1));
-				String s2 = parameter.substring(matcher.start(1));
+				String s1 = sqlStatementPart.substring(0, matcher.start(1));
+				String s2 = sqlStatementPart.substring(matcher.start(1));
 
 				int count1 = StringUtil.count(s1, CharPool.APOSTROPHE) % 2;
 				int count2 = StringUtil.count(s2, CharPool.APOSTROPHE) % 2;

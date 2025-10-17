@@ -15,7 +15,13 @@
 				<isset property="build.app.server" />
 			</not>
 			<then>
-				<ant antfile="build-dist.xml" target="unzip-weblogic" />
+				<local name="java.jdk.home" />
+
+				<get-java-jdk-home type="oracle" version="17" />
+
+				<ant antfile="build-dist.xml" inheritAll="false" target="unzip-weblogic">
+					<property name="weblogic.java.jdk.home" value="${java.jdk.home}" />
+				</ant>
 
 				<ant target="all" />
 			</then>

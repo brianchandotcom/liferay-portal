@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -957,31 +955,29 @@ public class FragmentEntryLocalServiceImpl
 
 		actionableDynamicQuery.setAddCriteriaMethod(
 			dynamicQuery -> {
-				Group group = _groupLocalService.fetchGroup(
-					fragmentEntry.getGroupId());
-
-				Criterion groupIdRestriction = RestrictionsFactoryUtil.eq(
-					"groupId", fragmentEntry.getGroupId());
-
 				Criterion fragmentEntryERCRestriction =
 					RestrictionsFactoryUtil.eq(
 						"fragmentEntryERC",
 						fragmentEntry.getExternalReferenceCode());
 
-				Criterion scopeERCRestriction = RestrictionsFactoryUtil.or(
-					RestrictionsFactoryUtil.eq(
-						"fragmentEntryScopeERC",
-						group.getExternalReferenceCode()),
-					RestrictionsFactoryUtil.isNull("fragmentEntryScopeERC"));
+				String fragmentEntryScopeERC = fragmentEntry.getScopeERC();
 
-				Criterion fragmentEntryAndScopeERCRestriction =
-					RestrictionsFactoryUtil.and(
-						fragmentEntryERCRestriction, scopeERCRestriction);
+				Criterion scopeERCRestriction;
+
+				if (Validator.isNotNull(fragmentEntryScopeERC)) {
+					scopeERCRestriction = RestrictionsFactoryUtil.eq(
+						"fragmentEntryScopeERC", fragmentEntryScopeERC);
+				}
+				else {
+					scopeERCRestriction = RestrictionsFactoryUtil.and(
+						RestrictionsFactoryUtil.isNull("fragmentEntryScopeERC"),
+						RestrictionsFactoryUtil.eq(
+							"groupId", fragmentEntry.getGroupId()));
+				}
 
 				dynamicQuery.add(
 					RestrictionsFactoryUtil.and(
-						groupIdRestriction,
-						fragmentEntryAndScopeERCRestriction));
+						fragmentEntryERCRestriction, scopeERCRestriction));
 			});
 
 		actionableDynamicQuery.setPerformActionMethod(
@@ -1104,9 +1100,6 @@ public class FragmentEntryLocalServiceImpl
 
 	@Reference
 	private FragmentEntryValidator _fragmentEntryValidator;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

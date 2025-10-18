@@ -20,7 +20,6 @@ import java.sql.Connection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Jorge Avalos
@@ -62,11 +61,14 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		Set<String> databaseTableNames = new HashSet<>(
-			dbInspector.getTableNames(null));
+		Set<String> databaseTableNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
+
+		databaseTableNames.addAll(dbInspector.getTableNames(null));
 
 		if (!databaseTableNames.containsAll(serviceComponentTableNames)) {
-			Set<String> missingTableNames = ConcurrentHashMap.newKeySet();
+			Set<String> missingTableNames = new TreeSet<>(
+				String.CASE_INSENSITIVE_ORDER);
 
 			missingTableNames.addAll(serviceComponentTableNames);
 
@@ -148,10 +150,11 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 
 		for (String missingTableName : missingTableNames) {
 			if (dbInspector.isControlTable(missingTableName)) {
-				missingTableNames.remove(missingTableName);
 				viewNames.add(missingTableName);
 			}
 		}
+
+		missingTableNames.removeAll(viewNames);
 
 		return viewNames;
 	}

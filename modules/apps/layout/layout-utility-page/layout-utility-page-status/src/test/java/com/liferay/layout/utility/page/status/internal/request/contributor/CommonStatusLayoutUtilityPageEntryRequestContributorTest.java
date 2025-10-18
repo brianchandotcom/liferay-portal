@@ -441,12 +441,10 @@ public class CommonStatusLayoutUtilityPageEntryRequestContributorTest {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setContextPath(contextPath);
-
 		mockHttpServletRequest.setAttribute(WebKeys.COMPANY_ID, companyId);
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, layoutSet);
+		mockHttpServletRequest.setContextPath(contextPath);
 
 		return new DynamicServletRequest(mockHttpServletRequest);
 	}

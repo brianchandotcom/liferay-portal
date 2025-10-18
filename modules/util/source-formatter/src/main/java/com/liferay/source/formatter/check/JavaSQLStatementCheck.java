@@ -95,6 +95,16 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 
 			String nextSQLStatementPart = sqlStatementParts.get(i + 1);
 
+			if (i < (sqlStatementParts.size() - 2)) {
+				String nextNextSQLStatementPart = sqlStatementParts.get(i + 2);
+
+				if (nextNextSQLStatementPart.endsWith("\"") &&
+					nextNextSQLStatementPart.startsWith("\".")) {
+
+						continue;
+				}
+			}
+
 			addMessage(
 				fileName,
 				"Use \"PreparedStatement.set*\" to parameterize \"" +

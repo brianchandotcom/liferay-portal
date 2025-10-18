@@ -217,17 +217,6 @@ public class DBInspector {
 		return _hasElement(tableName, "TABLE");
 	}
 
-	/**
-	 * @deprecated As of Cavanaugh (7.4.x), replaced by {@link
-	 *             DBInspector#hasTable(String)}
-	 */
-	@Deprecated
-	public boolean hasTable(String tableName, boolean caseSensitive)
-		throws Exception {
-
-		return _hasElement(tableName, "TABLE");
-	}
-
 	public boolean hasView(String viewName) throws Exception {
 		return _hasElement(viewName, "VIEW");
 	}

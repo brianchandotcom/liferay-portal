@@ -701,7 +701,6 @@ public class FragmentLinkUtilTest {
 
 		String journalArticleExternalReferenceCode =
 			RandomTestUtil.randomString();
-
 		String journalArticleScopeExternalReferenceCode =
 			RandomTestUtil.randomString();
 

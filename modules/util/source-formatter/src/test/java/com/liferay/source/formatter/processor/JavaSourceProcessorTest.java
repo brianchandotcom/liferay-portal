@@ -724,6 +724,22 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testMissingParameterizedSQLStatement() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"MissingParameterizedSQLStatement.testjava"
+			).addExpectedMessage(
+				"Use \"PreparedStatement.set*\" to parameterize \"" +
+					"dlFileEntryClassNameId\"",
+				24
+			).addExpectedMessage(
+				"Use \"PreparedStatement.set*\" to parameterize \"" +
+					"fileEntryClassNameId\"",
+				24
+			));
+	}
+
+	@Test
 	public void testMissingSerialVersionUID() throws Exception {
 		test(
 			"MissingSerialVersionUID.testjava",
@@ -934,23 +950,23 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 			SourceProcessorTestParameters.create(
 				"SQLBooleanValues.testjava"
 			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 20
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 21
 			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 27
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 28
 			).addExpectedMessage(
-				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 41
+				"Use \"[$TRUE$]\" instead of \"true\" in SQL statements", 42
 			).addExpectedMessage(
-				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 52
-			).addExpectedMessage(
-				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
-					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-				62
-			).addExpectedMessage(
-				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 71
+				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 53
 			).addExpectedMessage(
 				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
 					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
-				82
+				63
+			).addExpectedMessage(
+				"Use \"[$FALSE$]\" instead of \"false\" in SQL statements", 72
+			).addExpectedMessage(
+				"Use \"SQLTransformer.transform\" to wrap SQL statement if " +
+					"it contains \"[$FALSE$]\" or \"[$TRUE$]\"",
+				83
 			));
 	}
 

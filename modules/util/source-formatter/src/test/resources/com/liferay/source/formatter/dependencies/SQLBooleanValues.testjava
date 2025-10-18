@@ -8,6 +8,7 @@ package com.liferay.source.formatter.dependencies;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -48,7 +49,7 @@ public class SQLBooleanValues {
 		return preparedStatement.executeQuery();
 	}
 
-	protected boolean method4(Connection connection) throws SQLException {
+	protected ResultSet method4(Connection connection) throws SQLException {
 		PreparedStatement preparedStatement = connection.prepareStatement(
 			StringBundler.concat(
 				"update AssetListEntryUsage set containerKey = portletId, ",

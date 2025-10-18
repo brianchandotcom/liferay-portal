@@ -1,0 +1,38 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies;
+
+import com.liferay.petra.string.StringBundler;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+/**
+ * @author Alan Huang
+ */
+public class SQLBooleanValues {
+
+	protected ResultSet method(
+			Connection connection, long dlFileEntryClassNameId,
+			long fileEntryClassNameId)
+		throws Exception {
+
+		PreparedStatement preparedStatement = connection.prepareStatement(
+			StringBundler.concat(
+				"select assetDisplayPageEntry1.assetDisplayPageEntryId from ",
+				"AssetDisplayPageEntry assetDisplayPageEntry1 inner join ",
+				"AssetDisplayPageEntry assetDisplayPageEntry2 on ",
+				"assetDisplayPageEntry1.groupId = assetDisplayPageEntry2.and ",
+				"assetDisplayPageEntry2.classNameId = ", fileEntryClassNameId,
+				" and assetDisplayPageEntry1.classPK = assetDisplayPageEntry2.",
+				"classPK where assetDisplayPageEntry1.classNameId = ",
+				dlFileEntryClassNameId));
+
+		return preparedStatement.executeQuery();
+	}
+
+}

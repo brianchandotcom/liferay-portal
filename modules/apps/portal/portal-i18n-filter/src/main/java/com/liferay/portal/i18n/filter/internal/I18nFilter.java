@@ -77,10 +77,10 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getDefaultLanguageId(
-		HttpServletRequest httpServletRequest, long companyId) {
+		long companyId, HttpServletRequest httpServletRequest) {
 
 		String defaultLanguageId = getSiteDefaultLanguageId(
-			httpServletRequest, companyId);
+			companyId, httpServletRequest);
 
 		if (Validator.isNull(defaultLanguageId)) {
 			defaultLanguageId = LocaleUtil.toLanguageId(
@@ -107,7 +107,7 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getRedirect(
-			HttpServletRequest httpServletRequest, long companyId)
+			long companyId, HttpServletRequest httpServletRequest)
 		throws Exception {
 
 		int localePrependFriendlyURLStyle = PrefsPropsUtil.getInteger(
@@ -143,7 +143,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 
 		String i18nLanguageId = prependI18nLanguageId(
-			httpServletRequest, localePrependFriendlyURLStyle, companyId);
+			companyId, httpServletRequest, localePrependFriendlyURLStyle);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -281,7 +281,7 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String getSiteDefaultLanguageId(
-		HttpServletRequest httpServletRequest, long companyId) {
+		long companyId, HttpServletRequest httpServletRequest) {
 
 		String friendlyURL = getFriendlyURL(httpServletRequest);
 
@@ -331,8 +331,8 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String prependI18nLanguageId(
-		HttpServletRequest httpServletRequest, int prependFriendlyUrlStyle,
-		long companyId) {
+		long companyId, HttpServletRequest httpServletRequest,
+		int prependFriendlyUrlStyle) {
 
 		User user = (User)httpServletRequest.getAttribute(WebKeys.USER);
 
@@ -346,7 +346,7 @@ public class I18nFilter extends BasePortalFilter {
 			httpServletRequest, userLanguageId);
 
 		String defaultLanguageId = getDefaultLanguageId(
-			httpServletRequest, companyId);
+			companyId, httpServletRequest);
 
 		if (Validator.isNull(requestedLanguageId)) {
 			requestedLanguageId = defaultLanguageId;
@@ -391,11 +391,11 @@ public class I18nFilter extends BasePortalFilter {
 			HttpServletResponse httpServletResponse, FilterChain filterChain)
 		throws Exception {
 
-		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
-
 		long companyId = CompanyThreadLocal.getCompanyId();
 
-		String redirect = getRedirect(httpServletRequest, companyId);
+		httpServletRequest.setAttribute(SKIP_FILTER, Boolean.TRUE);
+
+		String redirect = getRedirect(companyId, httpServletRequest);
 
 		if (redirect == null) {
 			processFilter(

@@ -45,11 +45,10 @@ public class RoleUpgradeProcess extends UpgradeProcess {
 
 				try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 					while (resultSet.next()) {
-						long roleId = resultSet.getLong("roleId");
-
 						preparedStatement2.setInt(
 							1, RoleConstants.TYPE_ACCOUNT);
-						preparedStatement2.setLong(2, roleId);
+						preparedStatement2.setLong(
+							2, resultSet.getLong("roleId"));
 
 						preparedStatement2.addBatch();
 					}

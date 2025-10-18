@@ -170,14 +170,13 @@ public class PortalInstancesFilterTest {
 			}
 
 			Assert.assertEquals(
-				layoutSet,
-				mockHttpServletRequest.getAttribute(
-					WebKeys.VIRTUAL_HOST_LAYOUT_SET));
-
-			Assert.assertEquals(
 				unknownVirtualHost,
 				mockHttpServletRequest.getAttribute(
 					WebKeys.UNKNOWN_VIRTUAL_HOST));
+			Assert.assertEquals(
+				layoutSet,
+				mockHttpServletRequest.getAttribute(
+					WebKeys.VIRTUAL_HOST_LAYOUT_SET));
 		}
 	}
 

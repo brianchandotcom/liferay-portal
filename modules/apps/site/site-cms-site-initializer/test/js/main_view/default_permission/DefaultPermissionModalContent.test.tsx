@@ -115,6 +115,76 @@ describe('DefaultPermissionModalContent', () => {
 		).toBeInTheDocument();
 	});
 
+	it('Display only relevant tabs when apiURL contains "contents"', async () => {
+		const props = {
+			actions: {
+				L_CONTENTS: [
+					{key: 'UPDATE1', label: 'Update1'},
+					{key: 'VIEW1', label: 'View1'},
+				],
+				L_FILES: [
+					{key: 'UPDATE2', label: 'Update2'},
+					{key: 'VIEW2', label: 'View2'},
+				],
+				OBJECT_ENTRY_FOLDERS: [
+					{key: 'UPDATE3', label: 'Update3'},
+					{key: 'VIEW3', label: 'View3'},
+				],
+			},
+			apiURL: '/o/headless-cms-delivery/v1.0/contents',
+			classExternalReferenceCode: 'ERC1',
+			className: 'com.liferay.depot.model.DepotEntry',
+			closeModal: jest.fn(() => {}),
+			roles: [
+				{key: 'admin', name: 'Administrator', type: '1'},
+				{key: 'guest', name: 'Guest', type: '2'},
+			],
+		};
+
+		renderComponent(props);
+
+		expect(screen.getByRole('tab', {name: /folder/i})).toBeInTheDocument();
+		expect(screen.getByRole('tab', {name: /content/i})).toBeInTheDocument();
+		expect(
+			screen.queryByRole('tab', {name: /file/i})
+		).not.toBeInTheDocument();
+	});
+
+	it('Display only relevant tabs when apiURL contains "files"', async () => {
+		const props = {
+			actions: {
+				L_CONTENTS: [
+					{key: 'UPDATE1', label: 'Update1'},
+					{key: 'VIEW1', label: 'View1'},
+				],
+				L_FILES: [
+					{key: 'UPDATE2', label: 'Update2'},
+					{key: 'VIEW2', label: 'View2'},
+				],
+				OBJECT_ENTRY_FOLDERS: [
+					{key: 'UPDATE3', label: 'Update3'},
+					{key: 'VIEW3', label: 'View3'},
+				],
+			},
+			apiURL: '/o/headless-cms-delivery/v1.0/files',
+			classExternalReferenceCode: 'ERC1',
+			className: 'com.liferay.depot.model.DepotEntry',
+			closeModal: jest.fn(() => {}),
+			roles: [
+				{key: 'admin', name: 'Administrator', type: '1'},
+				{key: 'guest', name: 'Guest', type: '2'},
+			],
+		};
+
+		renderComponent(props);
+
+		expect(screen.getByRole('tab', {name: /folder/i})).toBeInTheDocument();
+		expect(
+			screen.queryByRole('tab', {name: /content/i})
+		).not.toBeInTheDocument();
+		expect(screen.getByRole('tab', {name: /file/i})).toBeInTheDocument();
+	});
+
 	it('Load data from API', async () => {
 		const props = {
 			actions: {

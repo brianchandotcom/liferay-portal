@@ -76,8 +76,8 @@ public class DepotAssetRendererFactoryWrapper<T>
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(T entry) throws PortalException {
-		return _assetRendererFactory.getAssetEntry(entry);
+	public long getAssetEntryClassPK(T entry) {
+		return _assetRendererFactory.getAssetEntryClassPK(entry);
 	}
 
 	@Override

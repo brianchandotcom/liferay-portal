@@ -41,7 +41,16 @@ public class LayoutAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(Layout layout) throws PortalException {
+	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
+		return getAssetEntry(getClassName(), assetEntryId);
+	}
+
+	@Override
+	public AssetEntry getAssetEntry(String className, long classPK)
+		throws PortalException {
+
+		Layout layout = _layoutLocalService.getLayout(classPK);
+
 		AssetEntry assetEntry = _assetEntryLocalService.createAssetEntry(
 			layout.getPlid());
 
@@ -59,15 +68,8 @@ public class LayoutAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
-		return getAssetEntry(getClassName(), assetEntryId);
-	}
-
-	@Override
-	public AssetEntry getAssetEntry(String className, long classPK)
-		throws PortalException {
-
-		return getAssetEntry(_layoutLocalService.getLayout(classPK));
+	public long getAssetEntryClassPK(Layout layout) {
+		return layout.getPlid();
 	}
 
 	@Override

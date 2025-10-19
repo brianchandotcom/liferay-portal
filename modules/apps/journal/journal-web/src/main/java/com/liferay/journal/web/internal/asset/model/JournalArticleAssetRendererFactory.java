@@ -83,14 +83,14 @@ public class JournalArticleAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(JournalArticle journalArticle)
-		throws PortalException {
+	public long getAssetEntryClassPK(JournalArticle journalArticle) {
+		//		throws PortalException {
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			getClassName(), journalArticle.getId());
 
 		if (assetEntry != null) {
-			return assetEntry;
+			return assetEntry.getClassPK();
 		}
 
 		JournalArticle latestJournalArticle =
@@ -105,11 +105,17 @@ public class JournalArticleAssetRendererFactory
 			!Objects.equals(
 				journalArticle.getId(), latestJournalArticle.getId())) {
 
-			return null;
+			return 0;
 		}
 
-		return _assetEntryLocalService.fetchEntry(
+		assetEntry = _assetEntryLocalService.fetchEntry(
 			getClassName(), journalArticle.getResourcePrimKey());
+
+		if (assetEntry == null) {
+			return 0;
+		}
+
+		return assetEntry.getClassPK();
 	}
 
 	@Override

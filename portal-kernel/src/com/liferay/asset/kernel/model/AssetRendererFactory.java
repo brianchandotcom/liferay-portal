@@ -38,22 +38,20 @@ public interface AssetRendererFactory<T> {
 	public AssetEntry getAssetEntry(String classNameId, long classPK)
 		throws PortalException;
 
-	public default AssetEntry getAssetEntry(T entry) throws PortalException {
+	public default long getAssetEntryClassPK(T entry) {
 		if (entry instanceof ResourcedModel) {
 			ResourcedModel resourcedModel = (ResourcedModel)entry;
 
-			return getAssetEntry(
-				getClassName(), resourcedModel.getResourcePrimKey());
+			return resourcedModel.getResourcePrimKey();
 		}
 
 		if (entry instanceof BaseModel<?>) {
 			BaseModel<?> baseModel = (BaseModel<?>)entry;
 
-			return getAssetEntry(
-				getClassName(), (Long)baseModel.getPrimaryKeyObj());
+			return (Long)baseModel.getPrimaryKeyObj();
 		}
 
-		return null;
+		return 0;
 	}
 
 	public AssetRenderer<T> getAssetRenderer(long classPK)

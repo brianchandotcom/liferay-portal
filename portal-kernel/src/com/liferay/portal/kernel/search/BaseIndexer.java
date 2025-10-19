@@ -1470,22 +1470,7 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 			return classPK;
 		}
 
-		try {
-			AssetEntry assetEntry = assetRendererFactory.getAssetEntry(entry);
-
-			if (assetEntry != null) {
-				return assetEntry.getClassPK();
-			}
-
-			return 0;
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(portalException);
-			}
-		}
-
-		return classPK;
+		return assetRendererFactory.getAssetEntryClassPK(entry);
 	}
 
 	private SearchResultPermissionFilter _getSearchResultPermissionFilter(

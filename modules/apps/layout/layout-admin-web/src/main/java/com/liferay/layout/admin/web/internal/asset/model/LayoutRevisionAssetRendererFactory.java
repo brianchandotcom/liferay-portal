@@ -47,8 +47,16 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(LayoutRevision layoutRevision)
+	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
+		return getAssetEntry(getClassName(), assetEntryId);
+	}
+
+	@Override
+	public AssetEntry getAssetEntry(String className, long classPK)
 		throws PortalException {
+
+		LayoutRevision layoutRevision =
+			_layoutRevisionLocalService.getLayoutRevision(classPK);
 
 		LayoutSetBranch layoutSetBranch =
 			_layoutSetBranchLocalService.getLayoutSetBranch(
@@ -76,16 +84,8 @@ public class LayoutRevisionAssetRendererFactory
 	}
 
 	@Override
-	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
-		return getAssetEntry(getClassName(), assetEntryId);
-	}
-
-	@Override
-	public AssetEntry getAssetEntry(String className, long classPK)
-		throws PortalException {
-
-		return getAssetEntry(
-			_layoutRevisionLocalService.getLayoutRevision(classPK));
+	public long getAssetEntryClassPK(LayoutRevision layoutRevision) {
+		return layoutRevision.getLayoutRevisionId();
 	}
 
 	@Override

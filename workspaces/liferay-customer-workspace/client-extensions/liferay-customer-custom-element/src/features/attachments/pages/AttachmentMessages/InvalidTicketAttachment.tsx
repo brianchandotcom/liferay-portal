@@ -5,14 +5,14 @@
 
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
-const ForbiddenAccess = () => {
+const InvalidTicketAttachment = () => {
 	return (
 		<AttachmentMessage
 			icon="warning-full"
-			subtitle="you-need-administrator-or-requester-role-on-this-project-to-upload-a-file"
-			title="you-do-not-have-access-to-upload-files"
+			subtitle="make-sure-the-attachment-id-is-correct"
+			title="invalid-or-non-existent-attachment-id"
 		/>
 	);
 };
 
-export default ForbiddenAccess;
+export default InvalidTicketAttachment;

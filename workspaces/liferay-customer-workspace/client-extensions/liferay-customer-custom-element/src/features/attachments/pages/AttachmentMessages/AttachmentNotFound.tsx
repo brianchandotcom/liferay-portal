@@ -9,7 +9,7 @@ import routerPath from '~/utils/routerPath';
 import AttachmentMessage from '../../components/AttachmentMessage/AttachmentMessage';
 
 interface IProps {
-	uploadAccountKey: string;
+	uploadAccountKey?: string;
 }
 
 const AttachmentNotFound = ({uploadAccountKey}: IProps) => {

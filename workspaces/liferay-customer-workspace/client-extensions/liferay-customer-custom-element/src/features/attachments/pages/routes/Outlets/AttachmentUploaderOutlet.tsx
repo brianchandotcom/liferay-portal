@@ -5,18 +5,18 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useState} from 'react';
-import useCheckUploadAccess from '~/features/attachment-uploader/hooks/useCheckUploadAccess';
+import useCheckAttachmentAccess from '~/features/attachments/hooks/useCheckAttachmentAccess';
 import {IUpload} from '~/utils/types';
 
-import AttachmentUploader from '../../AttachmentUploader';
 import {
 	AttachmentAlreadyExists,
 	AttachmentNotFound,
-	ForbiddenAccess,
+	ForbiddenAccessUpload,
 	InvalidTicketNumber,
 	UnexpectedError,
-} from '../../AttachmentUploaderMessages';
-import TicketIsClosed from '../../AttachmentUploaderMessages/TicketIsClosed';
+} from '../../AttachmentMessages';
+import TicketIsClosed from '../../AttachmentMessages/TicketIsClosed';
+import AttachmentUploader from '../../AttachmentUploader';
 
 const renderErrorComponent = (
 	errorCode: string | null,
@@ -24,7 +24,7 @@ const renderErrorComponent = (
 ) => {
 	switch (errorCode) {
 		case 'FORBIDDEN_ACCESS':
-			return <ForbiddenAccess />;
+			return <ForbiddenAccessUpload />;
 		case 'INVALID_TICKET_NUMBER':
 			return <InvalidTicketNumber />;
 		case 'JIRA_ORGANIZATION_ERROR': {
@@ -51,8 +51,8 @@ const renderErrorComponent = (
 	}
 };
 
-const AttachmentOutlet = () => {
-	const {errorCode, hasAccess, loading} = useCheckUploadAccess();
+const AttachmentUploaderOutlet = () => {
+	const {errorCode, hasAccess, loading} = useCheckAttachmentAccess();
 	const [uploadStateData, setUploadStateData] = useState<IUpload | null>(
 		null
 	);
@@ -81,4 +81,4 @@ const AttachmentOutlet = () => {
 	return renderErrorComponent(errorCode, uploadStateData);
 };
 
-export default AttachmentOutlet;
+export default AttachmentUploaderOutlet;

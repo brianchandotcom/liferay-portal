@@ -239,7 +239,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		return _objectEntryLocalService.addObjectEntry(
 			groupId, _user.getUserId(),
 			_cmsBasicWebContentObjectDefinition.getObjectDefinitionId(),
-			objectEntryFolderId, _LANGUAGE_ID, _getObjectEntryValuesWithTitle(),
+			objectEntryFolderId, _LANGUAGE_ID, _getObjectEntryValues(),
 			_serviceContext);
 	}
 
@@ -363,7 +363,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 		return objectEntry.getValues();
 	}
 
-	private Map<String, Serializable> _getObjectEntryValuesWithTitle() {
+	private Map<String, Serializable> _getObjectEntryValues() {
 		return HashMapBuilder.<String, Serializable>put(
 			"title_i18n",
 			HashMapBuilder.put(
@@ -826,7 +826,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			_getObjectEntryValuesWithTitle());
+			_getObjectEntryValues());
 
 		bulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
@@ -842,7 +842,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			_getObjectEntryValuesWithTitle());
+			_getObjectEntryValues());
 
 		keywordBulkAction.setBulkActionItems(_toBulkActionItems(objectEntry));
 
@@ -873,7 +873,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			_getObjectEntryValuesWithTitle());
+			_getObjectEntryValues());
 
 		permissionBulkAction.setBulkActionItems(
 			_toBulkActionItems(objectEntry));
@@ -913,7 +913,7 @@ public class BulkActionResourceTest extends BaseBulkActionResourceTestCase {
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_depotEntry2.getGroupId(), _cmsBasicWebContentObjectDefinition,
-			_getObjectEntryValuesWithTitle());
+			_getObjectEntryValues());
 
 		taxonomyCategoryBulkAction.setBulkActionItems(
 			_toBulkActionItems(objectEntry));

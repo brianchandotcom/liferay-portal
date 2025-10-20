@@ -56,7 +56,7 @@ public class ProductNavigationControlMenuManagerImpl
 		Group group = themeDisplay.getScopeGroup();
 		Layout layout = themeDisplay.getLayout();
 
-		if (!group.isSite() || layout.isDraftLayout() ||
+		if ((!group.isCMS() && !group.isSite()) || layout.isDraftLayout() ||
 			layout.isTypeControlPanel()) {
 
 			return true;

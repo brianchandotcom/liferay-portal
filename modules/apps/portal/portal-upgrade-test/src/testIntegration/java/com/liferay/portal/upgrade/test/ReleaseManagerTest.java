@@ -90,8 +90,6 @@ public class ReleaseManagerTest {
 				},
 				null);
 
-			// Wait for the ServiceTracker to be processed
-
 			Thread.sleep(2000);
 
 			release = _releaseLocalService.fetchRelease(

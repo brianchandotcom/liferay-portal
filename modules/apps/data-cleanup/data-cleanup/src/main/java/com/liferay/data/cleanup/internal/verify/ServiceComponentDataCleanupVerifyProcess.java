@@ -10,6 +10,7 @@ import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.model.ServiceComponent;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.BundleUtil;
@@ -52,7 +53,8 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 			String buildNamespace = serviceComponent.getBuildNamespace();
 
 			if (!buildNamespace.contains(StringPool.PERIOD) &&
-				!buildNamespace.equals("portal")) {
+				!buildNamespace.equals(
+					ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME)) {
 
 				_serviceComponentLocalService.deleteServiceComponent(
 					serviceComponent);

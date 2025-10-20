@@ -180,7 +180,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	public void testGetSiteUtilityPagesPage() throws Exception {
 		super.testGetSiteUtilityPagesPage();
 
-		_testGetSiteUtilityPagesPageWithNestedFields();
+		_testGetSiteUtilityPagesPageWithPageSpecificationsAsNestedFields();
+		_testGetSiteUtilityPagesPageWithThumbnailAsNestedField();
 	}
 
 	@Ignore
@@ -647,11 +648,11 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "friendlyUrlHistory,pageSpecifications"
+			"nestedFields", "friendlyUrlHistory,pageSpecifications,thumbnail"
 		).build();
 	}
 
-	private void _testGetSiteUtilityPagesPageWithNestedFields()
+	private void _testGetSiteUtilityPagesPageWithPageSpecificationsAsNestedFields()
 		throws Exception {
 
 		Page<UtilityPage> page = utilityPageResource.getSiteUtilityPagesPage(
@@ -702,6 +703,53 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			_getUtilityPage(
 				utilityPage.getExternalReferenceCode(),
 				(List<UtilityPage>)page.getItems()));
+	}
+
+	private void _testGetSiteUtilityPagesPageWithThumbnailAsNestedField()
+		throws Exception {
+
+		UtilityPage random = randomUtilityPage();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		String thumbnailURL = RandomTestUtil.randomString();
+
+		random.setThumbnail(
+			() -> new URLReference() {
+				{
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+					setUrl(thumbnailURL);
+				}
+			});
+
+		UtilityPage postUtilityPage = testPostSiteUtilityPage_addUtilityPage(
+			random);
+
+		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		Page<UtilityPage> page = utilityPageResource.getSiteUtilityPagesPage(
+			testGroup.getExternalReferenceCode(), null, null, null, null, null);
+
+		for (UtilityPage utilityPage : page.getItems()) {
+			if (StringUtil.equals(
+					postUtilityPage.getExternalReferenceCode(),
+					utilityPage.getExternalReferenceCode())) {
+
+				_assertThumbnailURLReference(
+					false, postUtilityPage.getExternalReferenceCode(),
+					utilityPage.getThumbnail(
+					).getExternalReferenceCode());
+			}
+			else {
+				Assert.assertNull(utilityPage.getThumbnail());
+			}
+		}
 	}
 
 	private void _testPatchSiteUtilityPage(

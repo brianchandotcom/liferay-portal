@@ -1670,13 +1670,16 @@ public class ObjectEntryLocalServiceTest {
 				StringBundler.concat(
 					"select ", objectField.getSortableDBColumnName(), " from ",
 					objectField.getDBTableName(), " where ",
-					_objectDefinition.getPKObjectFieldDBColumnName(), " = ",
-					objectEntry1.getObjectEntryId()));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					_objectDefinition.getPKObjectFieldDBColumnName(),
+					" = ?"))) {
 
-			resultSet.next();
+			preparedStatement.setLong(1, objectEntry1.getObjectEntryId());
 
-			Assert.assertEquals(200, resultSet.getLong(1));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				resultSet.next();
+
+				Assert.assertEquals(200, resultSet.getLong(1));
+			}
 		}
 
 		// Auto increment object field value must always be unique
@@ -1914,16 +1917,19 @@ public class ObjectEntryLocalServiceTest {
 				StringBundler.concat(
 					"select ", objectField.getDBColumnName(), " from ",
 					_objectDefinition.getExtensionDBTableName(), " where ",
-					_objectDefinition.getPKObjectFieldDBColumnName(), " = ",
-					objectEntry.getObjectEntryId()));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					_objectDefinition.getPKObjectFieldDBColumnName(),
+					" = ?"))) {
 
-			resultSet.next();
+			preparedStatement.setLong(1, objectEntry.getObjectEntryId());
 
-			Assert.assertEquals(
-				_encryptor.encrypt(
-					new SecretKeySpec(Base64.decode(key), "AES"), "test"),
-				resultSet.getString(1));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				resultSet.next();
+
+				Assert.assertEquals(
+					_encryptor.encrypt(
+						new SecretKeySpec(Base64.decode(key), "AES"), "test"),
+					resultSet.getString(1));
+			}
 		}
 
 		_objectFieldLocalService.deleteObjectField(objectField);

@@ -1,9 +1,10 @@
 <#assign
-	navigationJSONObject=jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
-	breadcrumbJSONArray=navigationJSONObject.getJSONArray("breadcrumb")
-	childrenJSONArray=navigationJSONObject.getJSONArray("children")
-	parentJSONObject=navigationJSONObject.getJSONObject("parent")
-	siblingsJSONArray=navigationJSONObject.getJSONArray("siblings")
+	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
+
+	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
+	childrenJSONArray = navigationJSONObject.getJSONArray("children")
+	parentJSONObject = navigationJSONObject.getJSONObject("parent")
+	siblingsJSONArray = navigationJSONObject.getJSONArray("siblings")
 />
 
 <div class="learn-article-nav">
@@ -25,7 +26,6 @@
 					<span>
 						${parentJSONObject.getString("title")}
 					</span>
-
 					<span class="liferay-nav-item-right-arrow"></span>
 				</div>
 			</#if>
@@ -95,7 +95,7 @@
 					targetMenu.classList.toggle('show');
 				}
 
-				trigger.classList.toggle('liferay-nav-item-border', 
+				trigger.classList.toggle('liferay-nav-item-border',
 				trigger.classList.contains('show'));
 			}
 		});

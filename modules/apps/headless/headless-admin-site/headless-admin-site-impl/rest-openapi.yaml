@@ -3156,7 +3156,7 @@ components:
                         indexed:
                             # @review
                             description:
-                                A flag that indicates whether the widget instande page element is indexed or not.
+                                A flag that indicates whether the widget instance page element is indexed or not.
                             type: boolean
                         name:
                             # @review

@@ -151,16 +151,16 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 		Assert.assertNull(
 			_layoutUtilityPageEntryLocalService.fetchLayoutUtilityPageEntry(
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
+				layoutUtilityPageEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
 				_group.getGroupId(),
 				_portal.getClassNameId(LayoutUtilityPageEntry.class),
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				SystemEventConstants.TYPE_DELETE));
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), _portal.getClassNameId(Layout.class),
-				layoutUtilityPageEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 	}
 

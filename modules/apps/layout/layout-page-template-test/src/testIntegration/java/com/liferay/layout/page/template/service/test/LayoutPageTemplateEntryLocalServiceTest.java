@@ -344,16 +344,16 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Assert.assertNull(
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
+		Assert.assertNull(
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
+				layoutPageTemplateEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
 				_group.getGroupId(),
 				_portal.getClassNameId(LayoutPageTemplateEntry.class),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				SystemEventConstants.TYPE_DELETE));
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), _portal.getClassNameId(Layout.class),
-				layoutPageTemplateEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 	}
 

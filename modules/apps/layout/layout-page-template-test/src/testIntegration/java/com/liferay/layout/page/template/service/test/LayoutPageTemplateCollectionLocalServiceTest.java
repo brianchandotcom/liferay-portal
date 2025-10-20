@@ -219,6 +219,8 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				externalReferenceCode, _group.getGroupId());
 
 		Assert.assertNull(
+			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()));
+		Assert.assertNull(
 			_layoutPageTemplateCollectionLocalService.
 				fetchLayoutPageTemplateCollectionByExternalReferenceCode(
 					externalReferenceCode, _group.getGroupId()));
@@ -226,18 +228,16 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 			_layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId()));
 		Assert.assertNull(
-			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()));
+			_systemEventLocalService.fetchSystemEvent(
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
+				layoutPageTemplateEntry.getPlid(),
+				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
 				_group.getGroupId(),
 				_portal.getClassNameId(LayoutPageTemplateCollection.class),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				SystemEventConstants.TYPE_DELETE));
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), _portal.getClassNameId(Layout.class),
-				layoutPageTemplateEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNull(
 			_systemEventLocalService.fetchSystemEvent(

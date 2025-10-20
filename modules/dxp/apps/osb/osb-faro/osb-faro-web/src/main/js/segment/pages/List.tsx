@@ -285,21 +285,37 @@ export const List: React.FC<IListProps> = ({
 		};
 	};
 
-	const handleDeleteSegment = ({id, items, name}) => {
+	const handleDeleteSegments = ({ids, items, name = undefined}) => {
+		const isMultiple = ids.length > 1;
+
+		const MODAL_MESSAGES = {
+			confirmation: isMultiple
+				? Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-the-selected-segments'
+					)
+				: Liferay.Language.get(
+						'are-you-sure-you-want-to-delete-this-segment'
+					),
+			subtitle: isMultiple
+				? Liferay.Language.get(
+						'you-will-lose-all-data-related-to-these-segments.-you-will-not-be-able-to-undo-this-operation'
+					)
+				: Liferay.Language.get(
+						'you-will-lose-all-data-related-to-this-segment.-you-will-not-be-able-to-undo-this-operation'
+					),
+			title: isMultiple
+				? Liferay.Language.get('delete-segments')
+				: sub(Liferay.Language.get('deleting-x'), [name])
+		};
+
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
 				<div>
 					<div className='h4 text-secondary'>
-						{Liferay.Language.get(
-							'are-you-sure-you-want-to-delete-this-segment'
-						)}
+						{MODAL_MESSAGES.confirmation}
 					</div>
 
-					<p>
-						{Liferay.Language.get(
-							'you-will-lose-all-data-related-to-this-segment.-you-will-not-be-able-to-undo-this-operation'
-						)}
-					</p>
+					<p>{MODAL_MESSAGES.subtitle}</p>
 				</div>
 			),
 			modalVariant: 'modal-warning',
@@ -308,7 +324,7 @@ export const List: React.FC<IListProps> = ({
 				API.individualSegment
 					.delete({
 						groupId,
-						ids: [id]
+						ids
 					})
 					.then(() => {
 						_tableRef?.current?.reload();
@@ -341,7 +357,7 @@ export const List: React.FC<IListProps> = ({
 					}),
 			submitButtonDisplay: 'warning',
 			submitMessage: Liferay.Language.get('delete'),
-			title: sub(Liferay.Language.get('deleting-x'), [name]),
+			title: MODAL_MESSAGES.title,
 			titleIcon: 'warning-full'
 		});
 	};
@@ -371,7 +387,7 @@ export const List: React.FC<IListProps> = ({
 				className: 'text-danger',
 				iconSymbol: 'trash',
 				label: Liferay.Language.get('delete'),
-				onClick: () => handleDeleteSegment({id, items, name})
+				onClick: () => handleDeleteSegments({ids: [id], items, name})
 			}
 		];
 
@@ -457,7 +473,14 @@ export const List: React.FC<IListProps> = ({
 					className='button-root text-danger'
 					displayType='primary'
 					onClick={() => {
-						// bulkDeleteSegments(ids);
+						handleDeleteSegments({
+							ids: selectedItems.map(item => item.id).toArray(),
+							items: selectedItems.toArray(),
+							name:
+								selectedItems.size === 1
+									? selectedItems.first().name
+									: undefined
+						});
 					}}
 					outline
 				>
@@ -525,9 +548,10 @@ export const List: React.FC<IListProps> = ({
 											BATCH: Liferay.Language.get(
 												'batch'
 											),
-											REAL_TIME: Liferay.Language.get(
-												'real-time'
-											)
+											REAL_TIME:
+												Liferay.Language.get(
+													'real-time'
+												)
 										};
 
 										return (

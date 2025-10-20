@@ -15,6 +15,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.URLReference;
+import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.MasterPageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.AssetTestUtil;
@@ -146,6 +147,55 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		_enableLocalStaging();
 
 		_testGetSiteMasterPage(masterPage);
+	}
+
+	@Override
+	@Test
+	public void testGetSiteMasterPagesPage() throws Exception {
+		super.testGetSiteMasterPagesPage();
+
+		MasterPage random = randomMasterPage();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		String thumbnailURL = RandomTestUtil.randomString();
+
+		random.setThumbnail(
+			() -> new URLReference() {
+				{
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+					setUrl(thumbnailURL);
+				}
+			});
+
+		MasterPage postMasterPage = testPostSiteMasterPage_addMasterPage(
+			random);
+
+		MasterPageResource masterPageResource = _getMasterPageResource();
+
+		Page<MasterPage> page = masterPageResource.getSiteMasterPagesPage(
+			testGroup.getExternalReferenceCode(), null, null, null, null, null);
+
+		for (MasterPage masterPage : page.getItems()) {
+			if (StringUtil.equals(
+					postMasterPage.getExternalReferenceCode(),
+					masterPage.getExternalReferenceCode())) {
+
+				_assertThumbnailURLReference(
+					false, postMasterPage.getExternalReferenceCode(),
+					masterPage.getThumbnail(
+					).getExternalReferenceCode());
+			}
+			else {
+				Assert.assertNull(masterPage.getThumbnail());
+			}
+		}
 	}
 
 	@Ignore
@@ -594,7 +644,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).parameters(
-			"nestedFields", "pageSpecifications"
+			"nestedFields", "pageSpecifications,thumbnail"
 		).build();
 	}
 
@@ -656,6 +706,11 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		PageSpecificationsTestUtil.assertPageSpecifications(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
 			getMasterPage.getPageSpecifications());
+
+		_assertThumbnailURLReference(
+			false, masterPage.getExternalReferenceCode(),
+			masterPage.getThumbnail(
+			).getExternalReferenceCode());
 	}
 
 	private void _testPatchSiteMasterPage(
@@ -671,10 +726,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		Assert.assertEquals(
 			expectedMarkedAsDefault, patchMasterPage.getMarkedAsDefault());
-
-		//		_assertThumbnailURLReference(
-		//			expectedExternalReferenceCode, expectedURL,
-		//			patchMasterPage.getThumbnail());
 	}
 
 	private void _testPatchSiteMasterPageWithPageSpecifications()

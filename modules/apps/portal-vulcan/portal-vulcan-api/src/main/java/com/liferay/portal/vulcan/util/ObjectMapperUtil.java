@@ -25,11 +25,25 @@ public class ObjectMapperUtil {
 
 	public static <T> T readValue(Class<?> clazz, Object object) {
 		try {
-			return readValue(clazz, _objectMapper.writeValueAsString(object));
+			T result = readValue(
+				clazz, _objectMapper.writeValueAsString(object));
+
+			if (result != null) {
+				return result;
+			}
 		}
 		catch (JsonProcessingException jsonProcessingException) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(jsonProcessingException);
+			}
+		}
+
+		try {
+			return (T)_objectMapper.convertValue(object, clazz);
+		}
+		catch (IllegalArgumentException illegalArgumentException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(illegalArgumentException);
 			}
 
 			return null;

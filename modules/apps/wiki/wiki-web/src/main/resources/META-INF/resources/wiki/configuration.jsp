@@ -56,10 +56,10 @@
 			<aui:input name="preferences--hiddenNodes--" type="hidden" />
 
 			<%
-			List<KeyValuePair> currentVisibleNodesList = new ArrayList<KeyValuePair>();
-			List<KeyValuePair> availableVisibleNodesList = new ArrayList<KeyValuePair>();
-
 			Set<String> currentVisibleNodes = new HashSet<String>(wikiPortletInstanceSettingsHelper.getAllNodeNames());
+
+			List<KeyValuePair> currentVisibleNodesList = new ArrayList<KeyValuePair>();
+			
 			String[] visibleNodeNames = wikiPortletInstanceSettingsHelper.getVisibleNodeNames();
 
 			for (String folderColumn : visibleNodeNames) {
@@ -79,6 +79,8 @@
 					currentVisibleNodesList.add(new KeyValuePair(folderColumn, HtmlUtil.escape(LanguageUtil.get(request, folderColumn))));
 				}
 			}
+
+			List<KeyValuePair> availableVisibleNodesList = new ArrayList<KeyValuePair>();
 
 			for (String folderColumn : hiddenNodes) {
 				if (currentVisibleNodes.contains(folderColumn) && (Arrays.binarySearch(visibleNodeNames, folderColumn) < 0)) {

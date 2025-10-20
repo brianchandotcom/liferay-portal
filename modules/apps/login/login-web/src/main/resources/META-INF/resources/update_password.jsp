@@ -35,6 +35,26 @@ if (Validator.isNull(titlePage)) {
 				<liferay-ui:message key="<%= titlePage %>" />
 			</h2>
 		</div>
+
+		<div class="autofit-col">
+			<div class="float-right">
+
+				<%
+				String updateLanguageFormAction = HttpComponentsUtil.addParameter(themeDisplay.getPathMain() + "/portal/update_language", "p_l_id", themeDisplay.getPlid());
+
+				String updateLanguageRedirect = HttpComponentsUtil.addParameters(PortalUtil.getCurrentURL(originalHttpServletRequest), "ticketId", ParamUtil.getString(originalHttpServletRequest, "ticketId"), "ticketKey", ParamUtil.getString(originalHttpServletRequest, "ticketKey"));
+
+				updateLanguageFormAction = HttpComponentsUtil.addParameter(updateLanguageFormAction, "redirect", updateLanguageRedirect);
+				%>
+
+				<liferay-site-navigation:language
+					formAction="<%= updateLanguageFormAction %>"
+					languageId="<%= themeDisplay.getLanguageId() %>"
+					languageIds="<%= LocaleUtil.toLanguageIds(LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId())) %>"
+					useNamespace="<%= false %>"
+				/>
+			</div>
+		</div>
 	</div>
 </div>
 

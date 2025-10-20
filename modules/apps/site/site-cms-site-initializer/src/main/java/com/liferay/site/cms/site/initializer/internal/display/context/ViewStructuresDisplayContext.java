@@ -105,8 +105,7 @@ public class ViewStructuresDisplayContext {
 		return List.of(
 			new FDSActionDropdownItem(
 				ActionUtil.getBaseStructureBuilderURL(_themeDisplay) +
-					"?objectDefinitionExternalReferenceCode=" +
-						"{externalReferenceCode}",
+					"?objectDefinitionId={id}",
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
 				"get", "update", null, Map.of("system", false)),
 			new FDSActionDropdownItem(

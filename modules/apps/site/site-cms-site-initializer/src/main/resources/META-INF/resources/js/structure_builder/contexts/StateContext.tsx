@@ -117,6 +117,7 @@ type ClearErrorAction = {
 };
 
 type CreateStructureAction = {
+	id: number;
 	type: 'create-structure';
 };
 
@@ -124,7 +125,7 @@ type DeleteChildAction = {type: 'delete-child'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
-type PublishStructureAction = {type: 'publish-structure'};
+type PublishStructureAction = {id?: number; type: 'publish-structure'};
 
 type RefreshReferencedStructuresAction = {
 	objectDefinitions: ObjectDefinitions;
@@ -393,6 +394,7 @@ function reducer(state: State, action: Action): State {
 				error: INITIAL_STATE.error,
 				structure: {
 					...structure,
+					id: action.id,
 					status: 'draft' as Structure['status'],
 				},
 			};
@@ -490,6 +492,7 @@ function reducer(state: State, action: Action): State {
 
 			const nextStructure = {
 				...structure,
+				id: action.id || structure.id,
 				status: 'published' as Structure['status'],
 			};
 

@@ -13,19 +13,22 @@ const InfoPanelToggleButton = ({symbol}: {symbol: string}) => {
 	const {infoPanelId, infoPanelOpen, onInfoPanelToggleButtonClick} =
 		useContext(FrontendDataSetContext);
 
+	const tooltipText = infoPanelOpen
+		? `${Liferay.Language.get('hide')} ${Liferay.Language.get('info-panel')}`
+		: `${Liferay.Language.get('show')} ${Liferay.Language.get('info-panel')}`;
+
 	return (
 		<ClayButtonWithIcon
 			aria-controls={infoPanelId}
-			aria-label={Liferay.Language.get('toggle-info-panel')}
+			aria-label={tooltipText}
 			className={classnames('nav-link nav-link-monospaced', {
 				active: infoPanelOpen,
 			})}
 			displayType="unstyled"
-			onClick={() => {
-				onInfoPanelToggleButtonClick();
-			}}
+			onClick={() => onInfoPanelToggleButtonClick()}
 			size="sm"
 			symbol={symbol}
+			title={tooltipText}
 		/>
 	);
 };

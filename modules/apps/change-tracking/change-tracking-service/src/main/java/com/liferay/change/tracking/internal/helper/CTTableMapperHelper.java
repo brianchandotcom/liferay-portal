@@ -48,9 +48,8 @@ public class CTTableMapperHelper {
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							StringBundler.concat(
-								"delete from ", _tableName,
-								" where ctCollectionId = ?"))) {
+							"delete from " + _tableName +
+								" where ctCollectionId = ?")) {
 
 					preparedStatement.setLong(1, ctCollectionId);
 

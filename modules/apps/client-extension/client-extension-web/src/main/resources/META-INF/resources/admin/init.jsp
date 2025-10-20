@@ -34,7 +34,6 @@ page import="com.liferay.client.extension.web.internal.display.context.EditClien
 page import="com.liferay.client.extension.web.internal.display.context.ViewClientExtensionEntryDisplayContext" %><%@
 page import="com.liferay.learn.LearnMessageUtil" %><%@
 page import="com.liferay.portal.kernel.exception.PortalException" %><%@
-page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.HashMapBuilder" %><%@

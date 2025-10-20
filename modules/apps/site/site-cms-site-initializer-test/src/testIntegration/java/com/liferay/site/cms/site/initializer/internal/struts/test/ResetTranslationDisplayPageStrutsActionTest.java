@@ -135,8 +135,8 @@ public class ResetTranslationDisplayPageStrutsActionTest {
 				_group, _layout);
 
 		mockHttpServletRequest.setParameter(
-			"objectDefinitionExternalReferenceCode",
-			String.valueOf(_objectDefinition.getExternalReferenceCode()));
+			"objectDefinitionId",
+			String.valueOf(_objectDefinition.getObjectDefinitionId()));
 		mockHttpServletRequest.setParameter(
 			"redirect", RandomTestUtil.randomString());
 		mockHttpServletRequest.setRequestURI(_layout.getFriendlyURL());

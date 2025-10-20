@@ -74,11 +74,11 @@ public class JiraService extends BaseService {
 			sb.append(_jiraSecurityVulnerabilityProject);
 			sb.append("' AND ");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldPublishingStatus));
 			sb.append(" = 'Ready for Publishing' AND ");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
 			sb.append(" <= now()");
 
@@ -220,6 +220,12 @@ public class JiraService extends BaseService {
 		return null;
 	}
 
+	public String getJQLCustomField(String customField) {
+		int pos = customField.indexOf(StringPool.UNDERLINE);
+
+		return "cf[" + customField.substring(pos + 1) + "]";
+	}
+
 	@CacheEvict(allEntries = true, value = "affectedVersions")
 	@Scheduled(
 		cron = "${liferay.customer.jira.service.affected.versions.cache.eviction.cron}"
@@ -298,21 +304,20 @@ public class JiraService extends BaseService {
 		sb.append(_jiraSecurityVulnerabilityProject);
 		sb.append("' AND ");
 		sb.append(
-			_getJQLCustomField(
-				_jiraSecurityVulnerabilityFieldPublishingStatus));
+			getJQLCustomField(_jiraSecurityVulnerabilityFieldPublishingStatus));
 		sb.append(" = 'Ready for Publishing'");
 
 		if (hasEarlyPublishAccess) {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
 			sb.append(" <= now()");
 		}
 		else {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldCustomerPublishingDate));
 			sb.append(" <= now()");
 		}
@@ -328,7 +333,7 @@ public class JiraService extends BaseService {
 		if (ArrayUtil.isNotEmpty(filterCategories)) {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(_jiraSecurityVulnerabilityFieldCategories));
+				getJQLCustomField(_jiraSecurityVulnerabilityFieldCategories));
 			sb.append(" in ('");
 			sb.append(StringUtil.merge(filterCategories, "','"));
 			sb.append("')");
@@ -337,7 +342,7 @@ public class JiraService extends BaseService {
 		if (ArrayUtil.isNotEmpty(filterClassifications)) {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldIssueClassification));
 			sb.append(" in ('");
 			sb.append(StringUtil.merge(filterClassifications, "','"));
@@ -347,7 +352,7 @@ public class JiraService extends BaseService {
 		if (ArrayUtil.isNotEmpty(filterFixVersions)) {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(_jiraSecurityVulnerabilityFieldFixVersions));
+				getJQLCustomField(_jiraSecurityVulnerabilityFieldFixVersions));
 			sb.append(" in ('");
 			sb.append(StringUtil.merge(filterFixVersions, "','"));
 			sb.append("')");
@@ -356,7 +361,7 @@ public class JiraService extends BaseService {
 		if (ArrayUtil.isNotEmpty(filterSeverities)) {
 			sb.append(" AND ");
 			sb.append(
-				_getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
+				getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
 			sb.append(" in ('");
 			sb.append(StringUtil.merge(filterSeverities, "','"));
 			sb.append("')");
@@ -365,13 +370,12 @@ public class JiraService extends BaseService {
 		if (Validator.isNotNull(keywords)) {
 			sb.append(" AND (");
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldCustomerPortalSummary));
 			sb.append(" ~ ");
 			sb.append(StringUtil.quote(keywords));
 			sb.append(" OR ");
-			sb.append(
-				_getJQLCustomField(_jiraSecurityVulnerabilityFieldCVEIds));
+			sb.append(getJQLCustomField(_jiraSecurityVulnerabilityFieldCVEIds));
 			sb.append(" ~ ");
 			sb.append(StringUtil.quote(keywords));
 			sb.append(")");
@@ -381,19 +385,19 @@ public class JiraService extends BaseService {
 
 		if (hasEarlyPublishAccess) {
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldPartnerPublishingDate));
 		}
 		else {
 			sb.append(
-				_getJQLCustomField(
+				getJQLCustomField(
 					_jiraSecurityVulnerabilityFieldCustomerPublishingDate));
 		}
 
 		sb.append(" ");
 		sb.append(sortOrder);
 		sb.append(", ");
-		sb.append(_getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
+		sb.append(getJQLCustomField(_jiraSecurityVulnerabilityFieldSeverity));
 		sb.append(" ASC");
 
 		String[] securityVulnerabilitiesIssueFields = {
@@ -594,12 +598,6 @@ public class JiraService extends BaseService {
 
 		return "Basic " +
 			encoder.encodeToString(jiraUserNameAndJiraApiToken.getBytes());
-	}
-
-	private String _getJQLCustomField(String customField) {
-		int pos = customField.indexOf(StringPool.UNDERLINE);
-
-		return "cf[" + customField.substring(pos + 1) + "]";
 	}
 
 	private String _getJSONObjectFieldValue(JSONObject jsonObject, String key) {

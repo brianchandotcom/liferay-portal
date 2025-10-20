@@ -31,4 +31,6 @@ public interface JiraIssueConstants {
 		STATUS_SOLUTION_ACCEPTED, STATUS_SOLUTION_PROPOSED
 	};
 
+	public static final String TYPE_GENERAL_REQUEST = "General Request";
+
 }

@@ -456,7 +456,7 @@ public class AccountsSyncBusinessEventsRestController
 			Map<String, String> associatedTicketsHeatTags)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("Organization in aqlFunction('\"External Key\" = \"");
 		sb.append(koroneikiAccountKey);
@@ -464,7 +464,12 @@ public class AccountsSyncBusinessEventsRestController
 		sb.append(
 			StringUtil.merge(
 				JiraIssueConstants.STATUSES_SOLVED_AND_CLOSED, "','"));
-		sb.append("'))");
+		sb.append("')) and ");
+		sb.append(
+			_jiraService.getJQLCustomField(_jiraSupportHCFieldRequestType));
+		sb.append(" = '");
+		sb.append(JiraIssueConstants.TYPE_GENERAL_REQUEST);
+		sb.append("'");
 
 		List<JiraSupportIssue> jiraSupportIssues = _jiraService.search(
 			sb.toString(), new String[] {"key", "labels", "status", "summary"});
@@ -626,6 +631,9 @@ public class AccountsSyncBusinessEventsRestController
 
 	@Value("${liferay.customer.jira.support.enabled}")
 	private boolean _jiraSupportEnabled;
+
+	@Value("${liferay.customer.jira.support.hc.field.request.type}")
+	private String _jiraSupportHCFieldRequestType;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

@@ -238,7 +238,8 @@ public class DisplayPageTemplateResourceTest
 	public void testGetSiteDisplayPageTemplatesPage() throws Exception {
 		super.testGetSiteDisplayPageTemplatesPage();
 
-		_testGetSiteDisplayPageTemplatesPageWithNestedFields();
+		_testGetSiteDisplayPageTemplatesPageWithPageSpecificationsAsNestedFields();
+		_testGetSiteDisplayPageTemplatesPageWithThumbnailAsNestedField();
 	}
 
 	@Ignore
@@ -697,28 +698,6 @@ public class DisplayPageTemplateResourceTest
 		}
 	}
 
-	/*	private void _assertThumbnailURLReference(
-			String expectedExternalReferenceCode, String expectedURL,
-			URLReference urlReference) {
-
-			if (expectedExternalReferenceCode != null) {
-				Assert.assertEquals(expectedURL, urlReference.getUrl());
-				Assert.assertEquals(
-					expectedExternalReferenceCode,
-					urlReference.getExternalReferenceCode());
-			}
-			else {
-				Assert.assertNull(urlReference);
-			}
-		}
-	 */
-	private void _enableLocalStaging() throws Exception {
-		_stagingLocalService.enableLocalStaging(
-			TestPropsValues.getUserId(), testGroup, true, false,
-			ServiceContextTestUtil.getServiceContext(
-				testGroup, TestPropsValues.getUserId()));
-	}
-
 	private void _assertThumbnailURLReference(
 			Boolean defaultValue, String expectedExternalReferenceCode,
 			String thumbnailExternalReferenceCode)
@@ -742,6 +721,28 @@ public class DisplayPageTemplateResourceTest
 
 		Assert.assertEquals(
 			layoutPageTemplate.getPreviewFileEntryId(), fileEntryId);
+	}
+
+	/*	private void _assertThumbnailURLReference(
+			String expectedExternalReferenceCode, String expectedURL,
+			URLReference urlReference) {
+
+			if (expectedExternalReferenceCode != null) {
+				Assert.assertEquals(expectedURL, urlReference.getUrl());
+				Assert.assertEquals(
+					expectedExternalReferenceCode,
+					urlReference.getExternalReferenceCode());
+			}
+			else {
+				Assert.assertNull(urlReference);
+			}
+		}
+	 */
+	private void _enableLocalStaging() throws Exception {
+		_stagingLocalService.enableLocalStaging(
+			TestPropsValues.getUserId(), testGroup, true, false,
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
 	}
 
 	private ClassSubtypeReference _getClassSubtypeReference(
@@ -1023,7 +1024,7 @@ public class DisplayPageTemplateResourceTest
 		assertValid(getDisplayPageTemplate);
 	}
 
-	private void _testGetSiteDisplayPageTemplatesPageWithNestedFields()
+	private void _testGetSiteDisplayPageTemplatesPageWithPageSpecificationsAsNestedFields()
 		throws Exception {
 
 		Page<DisplayPageTemplate> page =
@@ -1076,6 +1077,56 @@ public class DisplayPageTemplateResourceTest
 			_getDisplayPageTemplate(
 				(List<DisplayPageTemplate>)page.getItems(),
 				displayPageTemplate.getExternalReferenceCode()));
+	}
+
+	private void _testGetSiteDisplayPageTemplatesPageWithThumbnailAsNestedField()
+		throws Exception {
+
+		DisplayPageTemplate random = randomDisplayPageTemplate();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		String thumbnailURL = RandomTestUtil.randomString();
+
+		random.setThumbnail(
+			() -> new URLReference() {
+				{
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+					setUrl(thumbnailURL);
+				}
+			});
+
+		DisplayPageTemplate postDisplayPageTemplate =
+			testPostSiteDisplayPageTemplate_addDisplayPageTemplate(random);
+
+		DisplayPageTemplateResource displayPageTemplateResource =
+			_getDisplayPageTemplateResource("thumbnail");
+
+		Page<DisplayPageTemplate> page =
+			displayPageTemplateResource.getSiteDisplayPageTemplatesPage(
+				testGroup.getExternalReferenceCode(), null, null, null, null,
+				null);
+
+		for (DisplayPageTemplate displayPageTemplate : page.getItems()) {
+			if (StringUtil.equals(
+					postDisplayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate.getExternalReferenceCode())) {
+
+				_assertThumbnailURLReference(
+					false, postDisplayPageTemplate.getExternalReferenceCode(),
+					displayPageTemplate.getThumbnail(
+					).getExternalReferenceCode());
+			}
+			else {
+				Assert.assertNull(displayPageTemplate.getThumbnail());
+			}
+		}
 	}
 
 	private void _testGetSiteDisplayPageTemplateWithNestedFields(
@@ -1236,7 +1287,7 @@ public class DisplayPageTemplateResourceTest
 			});
 
 		DisplayPageTemplateResource displayPageTemplateResource =
-			_getDisplayPageTemplateResource();
+			_getDisplayPageTemplateResource("thumbnail");
 
 		DisplayPageTemplate postDisplayPageTemplate =
 			displayPageTemplateResource.postSiteDisplayPageTemplate(

@@ -5,6 +5,7 @@
 
 import {State} from '../contexts/StateContext';
 import {Uuid} from '../types/Uuid';
+import findChild from '../utils/findChild';
 import {ValidationProperty, getErrorMessage} from '../utils/validation';
 
 export default function selectErrors(uuid: Uuid) {
@@ -17,8 +18,23 @@ export default function selectErrors(uuid: Uuid) {
 			return messages;
 		}
 
+		let item;
+
+		if (uuid === state.structure.uuid) {
+			item = state.structure;
+		}
+		else {
+			item = findChild({root: state.structure, uuid});
+		}
+
+		if (!item) {
+			return messages;
+		}
+
+		const {erc, name} = item;
+
 		for (const [property, error] of errors.entries()) {
-			const message = getErrorMessage(property, error);
+			const message = getErrorMessage(property, error, {erc, name});
 
 			if (message) {
 				messages.set(property, message);

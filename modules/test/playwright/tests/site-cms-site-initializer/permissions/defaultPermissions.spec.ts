@@ -550,8 +550,8 @@ test(
 			await clickMenuItem('Permissions', page, folderName);
 
 			let childPermissions = [
-				{action: 'UPDATE', checked: true, role: 'Power User'},
 				{action: 'ADD_ENTRY', checked: true, role: 'User'},
+				{action: 'UPDATE', checked: true, role: 'Power User'},
 			];
 
 			await permissionsPage.checkPermissionsAndSave(childPermissions);
@@ -566,8 +566,8 @@ test(
 			await resetPermissions(page, folderName);
 
 			childPermissions = [
-				{action: 'UPDATE', checked: false, role: 'Power User'},
 				{action: 'ADD_ENTRY', checked: false, role: 'User'},
+				{action: 'UPDATE', checked: false, role: 'Power User'},
 			];
 
 			await verifyPermissions({

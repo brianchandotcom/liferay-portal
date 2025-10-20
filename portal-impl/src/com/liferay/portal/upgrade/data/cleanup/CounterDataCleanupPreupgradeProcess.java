@@ -60,7 +60,6 @@ public class CounterDataCleanupPreupgradeProcess
 			DBInspector dbInspector = new DBInspector(connection);
 			List<String> excludedTableNames = new ArrayList<>();
 			String kernelCounterName = "";
-			long kernelCounterValue = 0;
 
 			while (resultSet.next()) {
 				String counterName = resultSet.getString(1);
@@ -73,16 +72,15 @@ public class CounterDataCleanupPreupgradeProcess
 					continue;
 				}
 
-				long counterValue = resultSet.getLong(2);
-
 				if (counterName.equals(Counter.class.getName()) ||
 					counterName.equals("com.liferay.counter.model.Counter")) {
 
 					kernelCounterName = counterName;
-					kernelCounterValue = counterValue;
 
 					continue;
 				}
+
+				long counterValue = resultSet.getLong(2);
 
 				Matcher matcher = _layoutSpecificCounterNamePattern.matcher(
 					counterName);
@@ -148,13 +146,12 @@ public class CounterDataCleanupPreupgradeProcess
 			}
 
 			_checkKernelCounter(
-				kernelCounterName, kernelCounterValue, dbInspector,
-				excludedTableNames);
+				kernelCounterName, dbInspector, excludedTableNames);
 		}
 	}
 
 	private void _checkKernelCounter(
-			String counterName, long counterValue, DBInspector dbInspector,
+			String counterName, DBInspector dbInspector,
 			List<String> excludedTableNames)
 		throws Exception {
 
@@ -188,6 +185,20 @@ public class CounterDataCleanupPreupgradeProcess
 			if (maxValue > latestCounterValue) {
 				latestCounterValue = maxValue;
 				maxValueTableName = tableName;
+			}
+		}
+
+		long counterValue = 0L;
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select currentId from Counter where name = ?")) {
+
+			preparedStatement.setString(1, counterName);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					counterValue = resultSet.getLong(1);
+				}
 			}
 		}
 

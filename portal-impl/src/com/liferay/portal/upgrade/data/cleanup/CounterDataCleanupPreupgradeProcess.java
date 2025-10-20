@@ -17,9 +17,11 @@ import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.PreparedStatement;
@@ -62,6 +64,15 @@ public class CounterDataCleanupPreupgradeProcess
 
 			while (resultSet.next()) {
 				String counterName = resultSet.getString(1);
+
+				if (counterName.equals(Company.class.getName()) &&
+					!PropsValues.COMPANY_PREDICTABLE_COMPANY_IDS_ENABLED) {
+
+					_deleteCounter(counterName);
+
+					continue;
+				}
+
 				long counterValue = resultSet.getLong(2);
 
 				if (counterName.equals(Counter.class.getName()) ||
@@ -214,19 +225,7 @@ public class CounterDataCleanupPreupgradeProcess
 				long maxValue = resultSet.getLong(1);
 
 				if (resultSet.wasNull()) {
-					try (PreparedStatement preparedStatement2 =
-							connection.prepareStatement(
-								"delete from Counter where name = '" +
-									counterName + "'")) {
-
-						preparedStatement2.executeUpdate();
-
-						if (_log.isInfoEnabled()) {
-							_log.info(
-								"Deleted counter " + counterName +
-									" because it is unused");
-						}
-					}
+					_deleteCounter(counterName);
 
 					return;
 				}
@@ -269,6 +268,19 @@ public class CounterDataCleanupPreupgradeProcess
 
 		if (_log.isInfoEnabled()) {
 			_log.info(_getLogMessage(counterName, maxValue, null));
+		}
+	}
+
+	private void _deleteCounter(String counterName) throws Exception {
+		try (PreparedStatement preparedStatement2 = connection.prepareStatement(
+				"delete from Counter where name = '" + counterName + "'")) {
+
+			preparedStatement2.executeUpdate();
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Deleted counter " + counterName + " because it is unused");
+			}
 		}
 	}
 

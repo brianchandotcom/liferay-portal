@@ -97,12 +97,6 @@ public abstract class BaseDynamicInclude implements DynamicInclude {
 				printWriter);
 		}
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-30371")) {
-
-			return;
-		}
-
 		try {
 			List<CET> cets = cetManager.getCETs(
 				themeDisplay.getCompanyId(), null,

@@ -32,9 +32,6 @@ const test = mergeTests(
 const testSample = mergeTests(loginTest());
 const testSampleInstanceScoped = mergeTests(
 	editJSClientExtensionsPageTest,
-	featureFlagsTest({
-		'LPD-30371': {enabled: true},
-	}),
 	loginTest(),
 	styleBookPageTest
 );

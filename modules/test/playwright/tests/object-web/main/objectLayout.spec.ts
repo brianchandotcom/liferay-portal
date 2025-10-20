@@ -13,6 +13,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../../fixtures/editObjectDefinitionPagesTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {objectPagesTest} from '../../../fixtures/objectPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -26,6 +27,9 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	editObjectDefinitionPagesTest,
+	featureFlagsTest({
+		'LPD-21926': {enabled: true},
+	}),
 	loginTest(),
 	objectPagesTest
 );

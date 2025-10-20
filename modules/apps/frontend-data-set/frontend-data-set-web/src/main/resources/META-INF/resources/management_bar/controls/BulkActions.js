@@ -230,9 +230,9 @@ function BulkActions({
 								</span>
 
 								<ClayButton
-									className="c-ml-3"
+									className="c-ml-1"
 									displayType="link"
-									onClick={() => onClear()}
+									onClick={onClear}
 									size="sm"
 								>
 									{Liferay.Language.get('clear')}
@@ -243,7 +243,7 @@ function BulkActions({
 									showSelectAll &&
 									!allItemsSelectedActive && (
 										<ClayButton
-											className="c-ml-3"
+											className="c-ml-1"
 											displayType="link"
 											onClick={() =>
 												handleSelectAll(true)

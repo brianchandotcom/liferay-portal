@@ -27,6 +27,7 @@ import com.liferay.portal.upgrade.util.PortalUpgradeProcessRegistry;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -451,11 +452,12 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 								"buildDate, versionDisplayName, state_, ",
 								"testString, (", sql,
 								") as caseSensitive from Release_ where ",
-								"releaseId = ", ReleaseConstants.DEFAULT_ID))) {
+								"releaseId = ?"))) {
 
 					preparedStatement.setString(
 						1,
 						StringUtil.toUpperCase(ReleaseConstants.TEST_STRING));
+					preparedStatement.setLong(2, ReleaseConstants.DEFAULT_ID);
 
 					try (ResultSet resultSet =
 							preparedStatement.executeQuery()) {
@@ -527,11 +529,17 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			connection);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"update Release_ set ", sqlSetClause, " where releaseId = ",
-					ReleaseConstants.DEFAULT_ID))) {
+				"update Release_ set " + sqlSetClause +
+					" where releaseId = ?")) {
 
 			consumer.accept(preparedStatement);
+
+			ParameterMetaData parameterMetaData =
+				preparedStatement.getParameterMetaData();
+
+			preparedStatement.setLong(
+				parameterMetaData.getParameterCount(),
+				ReleaseConstants.DEFAULT_ID);
 
 			if (preparedStatement.executeUpdate() > 0) {
 				_currentPortalReleaseDTODCLSingleton.destroy(null);
@@ -547,14 +555,13 @@ public class PortalUpgradeProcess extends UpgradeProcess {
 			connection);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"update Release_ set schemaVersion = ?, buildNumber = ? ",
-					"where releaseId = ", ReleaseConstants.DEFAULT_ID,
-					" and buildNumber < ?"))) {
+				"update Release_ set schemaVersion = ?, buildNumber = ? " +
+					"where releaseId = ? and buildNumber < ?")) {
 
 			preparedStatement.setString(1, _initialSchemaVersion.toString());
 			preparedStatement.setInt(2, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
-			preparedStatement.setInt(3, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
+			preparedStatement.setLong(3, ReleaseConstants.DEFAULT_ID);
+			preparedStatement.setInt(4, ReleaseInfo.RELEASE_7_1_0_BUILD_NUMBER);
 
 			if (preparedStatement.executeUpdate() > 0) {
 				_currentPortalReleaseDTODCLSingleton.destroy(null);

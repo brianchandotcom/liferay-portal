@@ -17,7 +17,6 @@ int frequencyThreshold = dataJSONObject.getInt("frequencyThreshold");
 String[] assetTypes = new String[0];
 
 List<KeyValuePair> currentAssetTypes = new ArrayList<KeyValuePair>();
-List<KeyValuePair> availableAssetTypes = new ArrayList<KeyValuePair>();
 
 if (dataJSONObject.has("values")) {
 	JSONArray valuesJSONArray = dataJSONObject.getJSONArray("values");
@@ -30,6 +29,8 @@ if (dataJSONObject.has("values")) {
 		currentAssetTypes.add(new KeyValuePair(assetTypes[i], ResourceActionsUtil.getModelResource(locale, assetTypes[i])));
 	}
 }
+
+List<KeyValuePair> availableAssetTypes = new ArrayList<KeyValuePair>();
 
 for (AssetRendererFactory<?> assetRendererFactory : assetEntriesSearchFacet.getAssetRendererFactories(company.getCompanyId())) {
 	String className = assetRendererFactory.getClassName();

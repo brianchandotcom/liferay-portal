@@ -210,7 +210,7 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 			_portletPermissionsExporter.getPortletPermissions(plid, portletId);
 
 		if (MapUtil.isEmpty(permissionsMap)) {
-			return null;
+			return new WidgetPermission[0];
 		}
 
 		return TransformUtil.transformToArray(

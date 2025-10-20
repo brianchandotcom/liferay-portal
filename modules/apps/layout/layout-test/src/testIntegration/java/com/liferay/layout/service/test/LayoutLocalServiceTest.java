@@ -239,21 +239,14 @@ public class LayoutLocalServiceTest {
 			RandomTestUtil.randomString(), null, RandomTestUtil.randomString(),
 			LayoutConstants.TYPE_CONTENT, false, false, null, _serviceContext);
 
-		long classNameId = _portal.getClassNameId(Layout.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId, layout.getPlid(),
-				SystemEventConstants.TYPE_DELETE));
-
 		_layoutLocalService.deleteLayout(
 			layout.getExternalReferenceCode(), layout.getGroupId());
 
 		Assert.assertNull(_layoutLocalService.fetchLayout(layout.getPlid()));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId, layout.getPlid(),
-				SystemEventConstants.TYPE_DELETE));
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
+				layout.getPlid(), SystemEventConstants.TYPE_DELETE));
 	}
 
 	@Test

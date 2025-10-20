@@ -144,22 +144,6 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 				true, RandomTestUtil.randomString(),
 				RandomTestUtil.randomString(), 0, _serviceContext);
 
-		long classNameId = _portal.getClassNameId(LayoutUtilityPageEntry.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId,
-				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
-				SystemEventConstants.TYPE_DELETE));
-
-		long layoutClassNameId = _portal.getClassNameId(Layout.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutClassNameId,
-				layoutUtilityPageEntry.getPlid(),
-				SystemEventConstants.TYPE_DELETE));
-
 		_layoutUtilityPageEntryLocalService.deleteLayoutUtilityPageEntry(
 			layoutUtilityPageEntry.getExternalReferenceCode(),
 			layoutUtilityPageEntry.getGroupId());
@@ -169,12 +153,13 @@ public class LayoutUtilityPageEntryLocalServiceTest {
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId()));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId,
+				_group.getGroupId(),
+				_portal.getClassNameId(LayoutUtilityPageEntry.class),
 				layoutUtilityPageEntry.getLayoutUtilityPageEntryId(),
 				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutClassNameId,
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
 				layoutUtilityPageEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 	}

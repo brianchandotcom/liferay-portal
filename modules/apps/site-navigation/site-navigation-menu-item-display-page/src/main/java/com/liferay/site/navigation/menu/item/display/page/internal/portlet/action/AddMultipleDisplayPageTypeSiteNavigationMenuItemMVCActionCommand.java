@@ -18,9 +18,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -129,6 +131,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 						infoItemReferences.get(i);
 
 					_addSiteNavigationMenuItem(
+						themeDisplay.getCompanyId(),
 						themeDisplay.getScopeGroupId(), infoItemReference,
 						jsonObjects, order + i, parentSiteNavigationMenuItemId,
 						serviceContext, siteNavigationMenuId,
@@ -194,7 +197,7 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 	}
 
 	private void _addSiteNavigationMenuItem(
-			long groupId, InfoItemReference infoItemReference,
+			long companyId, long groupId, InfoItemReference infoItemReference,
 			Map<Long, JSONObject> jsonObjects, int order,
 			long parentSiteNavigationMenuItemId, ServiceContext serviceContext,
 			long siteNavigationMenuId, String siteNavigationMenuItemType)
@@ -224,6 +227,25 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					"externalReferenceCode",
 					jsonObject.getString("externalReferenceCode")
 				).put(
+					"scopeExternalReferenceCode",
+					() -> {
+						String scopeExternalReferenceCode =
+							jsonObject.getString("scopeExternalReferenceCode");
+
+						Group group =
+							_groupLocalService.
+								fetchGroupByExternalReferenceCode(
+									scopeExternalReferenceCode, companyId);
+
+						if ((group == null) ||
+							(group.getGroupId() == groupId)) {
+
+							return null;
+						}
+
+						return scopeExternalReferenceCode;
+					}
+				).put(
 					"title", jsonObject.getString("title")
 				).put(
 					"type", jsonObject.getString("type")
@@ -248,7 +270,8 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					getChildrenHierarchicalInfoItemReferences()) {
 
 			_addSiteNavigationMenuItem(
-				groupId, childHierarchicalInfoItemReference, jsonObjects, -1,
+				companyId, groupId, childHierarchicalInfoItemReference,
+				jsonObjects, -1,
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				serviceContext, siteNavigationMenuId,
 				siteNavigationMenuItemType);
@@ -271,6 +294,9 @@ public class AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddMultipleDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

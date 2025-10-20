@@ -8,15 +8,22 @@ package com.liferay.site.navigation.menu.item.display.page.internal.portlet.acti
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -35,6 +42,7 @@ import jakarta.portlet.ActionRequest;
 import jakarta.portlet.ActionResponse;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -100,6 +108,63 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							"externalReferenceCode",
 							ParamUtil.getString(
 								actionRequest, "externalReferenceCode")
+						).put(
+							"scopeExternalReferenceCode",
+							() -> {
+								String scopeExternalReferenceCode =
+									ParamUtil.getString(
+										actionRequest,
+										"scopeExternalReferenceCode");
+
+								if (siteNavigationMenuItemType.contains(
+										"ObjectDefinition")) {
+
+									if (Validator.isNotNull(
+											scopeExternalReferenceCode)) {
+
+										return scopeExternalReferenceCode;
+									}
+
+									ObjectDefinition objectDefinition =
+										_objectDefinitionLocalService.
+											getObjectDefinitionByClassName(
+												themeDisplay.getCompanyId(),
+												siteNavigationMenuItemType);
+
+									if (Objects.equals(
+											objectDefinition.getScope(),
+											ObjectDefinitionConstants.
+												SCOPE_SITE)) {
+
+										ObjectEntry objectEntry =
+											_objectEntryLocalService.
+												getObjectEntry(classPK);
+
+										Group group =
+											_groupLocalService.getGroup(
+												objectEntry.getGroupId());
+
+										return group.getExternalReferenceCode();
+									}
+
+									return null;
+								}
+
+								Group group =
+									_groupLocalService.
+										fetchGroupByExternalReferenceCode(
+											scopeExternalReferenceCode,
+											themeDisplay.getCompanyId());
+
+								if ((group == null) ||
+									(group.getGroupId() ==
+										themeDisplay.getScopeGroupId())) {
+
+									return null;
+								}
+
+								return scopeExternalReferenceCode;
+							}
 						).put(
 							"title", ParamUtil.getString(actionRequest, "title")
 						).put(
@@ -171,6 +236,9 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 		AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand.class);
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	@Reference
@@ -178,6 +246,12 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Reference
 	private Portal _portal;

@@ -12,9 +12,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -96,8 +98,21 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 							assetVocabularyJSONObject.getString(
 								"externalReferenceCode")
 						).put(
-							"groupId",
-							assetVocabularyJSONObject.getString("groupId")
+							"scopeExternalReferenceCode",
+							() -> {
+								Group group = _groupLocalService.fetchGroup(
+									assetVocabularyJSONObject.getLong(
+										"groupId"));
+
+								if ((group == null) ||
+									(group.getGroupId() ==
+										themeDisplay.getScopeGroupId())) {
+
+									return null;
+								}
+
+								return group.getExternalReferenceCode();
+							}
 						).put(
 							"title",
 							assetVocabularyJSONObject.getString("title")
@@ -152,6 +167,9 @@ public class AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		AddAssetVocabularySiteNavigationMenuItemsMVCActionCommand.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

@@ -1,0 +1,85 @@
+[#assign numberOfSlides = configuration.numberOfSlides?number]
+
+<div class="carousel-main-container" aria-label="Featured products carousel" role="region" tabindex="0">
+	<div class="carousel-live-region visually-hidden" aria-live="polite" aria-atomic="true"></div>
+	<div class="carousel-group-container swiper">
+		<div class="carousel-slides-container swiper-wrapper">
+			[#list 1..numberOfSlides as slideIndex]
+			<div class="swiper-slide">
+				<lfr-drop-zone
+					class="carousel-slide"
+					data-lfr-drop-zone-id="${slideIndex}"
+					data-lfr-priority="${slideIndex}"
+				>
+				</lfr-drop-zone>
+			</div>
+			[/#list]
+		</div>
+	</div>
+
+	[#if numberOfSlides != 1]
+		<div class="carousel-container-navigation">
+			<div class="carousel-nav-button carousel-nav-button-prev">
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<mask
+						id="mask0_2095_11027"
+						style="mask-type: alpha"
+						maskUnits="userSpaceOnUse"
+						x="1"
+						y="4"
+						width="13"
+						height="8"
+					>
+						<path
+							d="M4.49582 4.83369L2.25613 7.2365C1.9183 7.63586 1.90579 8.34059 2.25613 8.7735L4.49582 11.1763C5.54684 12.1764 6.83872 10.6461 5.92846 9.63932L5.40608 9.07889H13.001C14.3304 9.07889 14.3304 6.93112 13.001 6.93112H5.40608L5.92846 6.37068C6.86375 5.30351 5.46238 3.83699 4.49582 4.83369Z"
+							fill="#6B6C7E"
+						/>
+					</mask>
+					<g mask="url(#mask0_2095_11027)">
+						<rect width="16" height="16" fill="#0B5FFF" />
+					</g>
+				</svg>
+			</div>
+			<div class="carousel-nav-container-indicators"></div>
+			<div class="carousel-nav-button carousel-nav-button-next">
+				<svg
+					width="16"
+					height="16"
+					viewBox="0 0 16 16"
+					fill="none"
+					xmlns="http://www.w3.org/2000/svg"
+				>
+					<mask
+						id="mask0_2095_8820"
+						style="mask-type: alpha"
+						maskUnits="userSpaceOnUse"
+						x="1"
+						y="4"
+						width="13"
+						height="8"
+					>
+						<path
+							d="M11.243 10.9888L13.4805 8.75127C13.818 8.3794 13.8305 7.72315 13.4805 7.32002L11.243 5.08252C10.193 4.15127 8.90234 5.57627 9.81172 6.51377L10.3336 7.03565H2.74609C1.41797 7.03565 1.41797 9.03565 2.74609 9.03565H10.3336L9.81172 9.55752C8.87734 10.5513 10.2773 11.9169 11.243 10.9888Z"
+							fill="#6B6C7E"
+						/>
+					</mask>
+					<g mask="url(#mask0_2095_8820)">
+						<rect width="16" height="16" fill="#0B5FFF" />
+					</g>
+				</svg>
+			</div>
+		</div>
+	[/#if]
+</div>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+	rel="stylesheet"
+/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

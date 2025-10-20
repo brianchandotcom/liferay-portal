@@ -134,7 +134,7 @@ describe('viewReducer ADD_OBJECT_LAYOUT_BOX', () => {
 			type: TYPES.ADD_OBJECT_LAYOUT_BOX,
 		};
 
-		result = layoutReducer(state, regularBox2);
+		result = layoutReducer(result, regularBox2);
 
 		expect(layoutBoxes[0].name.en_US).toBe('Regular Box 1');
 		expect(layoutBoxes[1].name.en_US).toBe('Regular Box 2');

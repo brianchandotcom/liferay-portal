@@ -3136,13 +3136,6 @@ components:
                             description:
                                 Custom CSS that is applied on the widget instance page element.
                             type: string
-                        customCSSViewports:
-                            # @review
-                            description:
-                                The custom CSS viewports of the widget instance page element.
-                            items:
-                                $ref: "#/components/schemas/CustomCSSViewport"
-                            type: array
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review

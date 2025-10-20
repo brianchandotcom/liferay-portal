@@ -136,7 +136,10 @@ public class AccountsSyncBusinessEventsRestController
 				if (!syncedAccountExternalReferenceCodes.contains(
 						externalReferenceCode)) {
 
-					_updateAccountHeatTags(externalReferenceCode);
+					_updateAccountHeatTags(
+						businessEventJSONObject.getLong(
+							"r_accountEntryToBusinessEvents_accountEntryId"),
+						externalReferenceCode);
 
 					syncedAccountExternalReferenceCodes.add(
 						externalReferenceCode);
@@ -361,7 +364,8 @@ public class AccountsSyncBusinessEventsRestController
 				LocalDate.parse(targetGoLiveDateTime.substring(0, 10))));
 	}
 
-	private void _updateAccountHeatTags(String externalReferenceCode)
+	private void _updateAccountHeatTags(
+			Long accountId, String externalReferenceCode)
 		throws Exception {
 
 		int page = 1;
@@ -370,8 +374,8 @@ public class AccountsSyncBusinessEventsRestController
 			JSONObject jsonObject = _getBusinessEventsJSONObject(
 				StringBundler.concat(
 					"eventStatus ne 'canceled' and eventStatus ne 'completed' ",
-					"and r_accountEntryToBusinessEvents_accountEntryERC eq '",
-					externalReferenceCode, "'"),
+					"and r_accountEntryToBusinessEvents_accountEntryId eq '",
+					accountId, "'"),
 				page, 500, "targetGoLiveDateTime:asc");
 
 			if (_jiraSupportEnabled) {

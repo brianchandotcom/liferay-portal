@@ -242,6 +242,14 @@ public class JournalArticleItemSelectorViewDisplayContext {
 				return group.getDescriptiveName(_themeDisplay.getLocale());
 			}
 		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				Group group = GroupLocalServiceUtil.getGroup(
+					assetEntry.getGroupId());
+
+				return group.getExternalReferenceCode();
+			}
+		).put(
 			"subtype", _getSubtype(ddmStructure)
 		).put(
 			"title", journalArticle.getTitle(_themeDisplay.getLocale(), true)

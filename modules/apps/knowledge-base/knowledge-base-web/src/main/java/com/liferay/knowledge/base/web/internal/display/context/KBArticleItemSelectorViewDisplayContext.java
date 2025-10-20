@@ -114,6 +114,14 @@ public class KBArticleItemSelectorViewDisplayContext {
 		).put(
 			"externalReferenceCode", kbArticle.getExternalReferenceCode()
 		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				Group group = GroupLocalServiceUtil.getGroup(
+					kbArticle.getGroupId());
+
+				return group.getExternalReferenceCode();
+			}
+		).put(
 			"title", kbArticle.getTitle()
 		).put(
 			"type",

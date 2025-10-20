@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -102,6 +104,9 @@ public class CPDefinitionItemSelectorView
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
 
@@ -163,6 +168,14 @@ public class CPDefinitionItemSelectorView
 					CProduct cProduct = _cpDefinition.getCProduct();
 
 					return cProduct.getExternalReferenceCode();
+				}
+			).put(
+				"scopeExternalReferenceCode",
+				() -> {
+					Group group = _groupLocalService.getGroup(
+						_cpDefinition.getGroupId());
+
+					return group.getExternalReferenceCode();
 				}
 			).put(
 				"title", _cpDefinition.getName(themeDisplay.getLanguageId())

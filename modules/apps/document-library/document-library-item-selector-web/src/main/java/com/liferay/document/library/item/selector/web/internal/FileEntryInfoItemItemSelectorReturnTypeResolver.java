@@ -19,8 +19,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -68,6 +70,14 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 			"classTypeId", (classType != null) ? classType.getClassTypeId() : 0
 		).put(
 			"externalReferenceCode", fileEntry.getExternalReferenceCode()
+		).put(
+			"scopeExternalReferenceCode",
+			() -> {
+				Group group = _groupLocalService.getGroup(
+					fileEntry.getGroupId());
+
+				return group.getExternalReferenceCode();
+			}
 		).put(
 			"subtype",
 			(classType != null) ? classType.getName() : StringPool.BLANK
@@ -119,6 +129,9 @@ public class FileEntryInfoItemItemSelectorReturnTypeResolver
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FileEntryInfoItemItemSelectorReturnTypeResolver.class);
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

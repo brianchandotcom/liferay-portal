@@ -83,6 +83,7 @@ export function AssetCategoryTree({
 				classPK: item.id,
 				externalReferenceCode: item.externalReferenceCode,
 				nodePath: item.nodePath,
+				scopeExternalReferenceCode: item.scopeExternalReferenceCode,
 				title: item.name,
 				value: item.name,
 				vocabularyId: item.vocabulary ? item.id : 0,

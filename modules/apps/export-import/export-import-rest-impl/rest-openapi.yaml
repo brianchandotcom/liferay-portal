@@ -315,10 +315,10 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/ImportProcess"
             tags: ["ImportProcess"]
-    "/import-processes/{importProcessId}/errors":
+    "/import-processes/{importProcessId}/report-entries":
         get:
             description:
-                Retrieves the errors report entries associated with the specified import process ID.
+                Retrieves the report entries associated with the specified import process ID.
             operationId: getImportProcessErrorsPage
             parameters:
                 -   in: path

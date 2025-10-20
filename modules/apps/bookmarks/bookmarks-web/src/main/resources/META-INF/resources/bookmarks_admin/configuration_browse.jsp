@@ -114,13 +114,15 @@ portletDisplay.setURLBackTitle("bookmarks");
 								<aui:field-wrapper label="show-columns">
 
 									<%
-									List<KeyValuePair> currentItemsList = new ArrayList<>();
-									List<KeyValuePair> availableItemsList = new ArrayList<>();
 									Set<String> availableFolderColumns = SetUtil.fromArray(StringUtil.split(allFolderColumns));
+
+									List<KeyValuePair> currentItemsList = new ArrayList<>();
 
 									for (String folderColumn : folderColumns) {
 										currentItemsList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 									}
+
+									List<KeyValuePair> availableItemsList = new ArrayList<>();
 
 									Arrays.sort(folderColumns);
 
@@ -205,11 +207,9 @@ portletDisplay.setURLBackTitle("bookmarks");
 							<aui:field-wrapper label="show-columns">
 
 								<%
-								List<KeyValuePair> currentItemsList = new ArrayList<>();
-								List<KeyValuePair> availableItemsList = new ArrayList<>();
 								Set<String> availableEntryColumns = SetUtil.fromArray(StringUtil.split(allEntryColumns));
 
-								// Current items list
+								List<KeyValuePair> currentItemsList = new ArrayList<>();
 
 								for (int i = 0; i < entryColumns.length; i++) {
 									String entryColumn = entryColumns[i];
@@ -217,7 +217,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 									currentItemsList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 								}
 
-								// Available items list
+								List<KeyValuePair> availableItemsList = new ArrayList<>();
 
 								Arrays.sort(entryColumns);
 

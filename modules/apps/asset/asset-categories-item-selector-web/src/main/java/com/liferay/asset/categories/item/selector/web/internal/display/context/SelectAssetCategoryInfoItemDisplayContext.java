@@ -257,6 +257,14 @@ public class SelectAssetCategoryInfoItemDisplayContext {
 			).put(
 				"nodePath",
 				assetCategory.getPath(_themeDisplay.getLocale(), true)
+			).put(
+				"scopeExternalReferenceCode",
+				() -> {
+					Group group = GroupLocalServiceUtil.getGroup(
+						assetCategory.getGroupId());
+
+					return group.getExternalReferenceCode();
+				}
 			));
 	}
 

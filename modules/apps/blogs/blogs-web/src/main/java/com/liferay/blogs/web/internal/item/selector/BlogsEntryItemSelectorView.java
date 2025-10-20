@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
@@ -108,6 +110,9 @@ public class BlogsEntryItemSelectorView
 	private BlogsEntryService _blogsEntryService;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private ItemSelectorViewDescriptorRenderer<InfoItemItemSelectorCriterion>
 		_itemSelectorViewDescriptorRenderer;
 
@@ -179,6 +184,14 @@ public class BlogsEntryItemSelectorView
 				"classPK", _blogsEntry.getEntryId()
 			).put(
 				"externalReferenceCode", _blogsEntry.getExternalReferenceCode()
+			).put(
+				"scopeExternalReferenceCode",
+				() -> {
+					Group group = _groupLocalService.getGroup(
+						_blogsEntry.getGroupId());
+
+					return group.getExternalReferenceCode();
+				}
 			).put(
 				"title",
 				BlogsEntryUtil.getDisplayTitle(_resourceBundle, _blogsEntry)

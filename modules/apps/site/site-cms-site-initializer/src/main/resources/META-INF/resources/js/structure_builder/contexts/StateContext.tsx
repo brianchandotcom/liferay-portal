@@ -102,10 +102,10 @@ type AddRepeatableGroup = {
 	uuid?: Uuid;
 };
 
-type AddValidationError = {
+type AddErrorAction = {
 	error: ValidationError;
 	property: ValidationProperty;
-	type: 'add-validation-error';
+	type: 'add-error';
 	uuid: Uuid;
 };
 
@@ -183,7 +183,7 @@ export type Action =
 	| AddFieldAction
 	| AddReferencedStructuresAction
 	| AddRepeatableGroup
-	| AddValidationError
+	| AddErrorAction
 	| ClearErrorsAction
 	| CreateStructureAction
 	| DeleteChildAction
@@ -359,7 +359,7 @@ function reducer(state: State, action: Action): State {
 				structure: {...structure, children: sortedChildren},
 			};
 		}
-		case 'add-validation-error': {
+		case 'add-error': {
 			const {error, property, uuid} = action;
 
 			const invalids = new Map(state.invalids);

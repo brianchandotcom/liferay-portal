@@ -103,7 +103,7 @@ export default function SpacesSelector({
 								dispatch({
 									error: 'empty',
 									property: 'spaces',
-									type: 'add-validation-error',
+									type: 'add-error',
 									uuid: structureUuid,
 								});
 							}

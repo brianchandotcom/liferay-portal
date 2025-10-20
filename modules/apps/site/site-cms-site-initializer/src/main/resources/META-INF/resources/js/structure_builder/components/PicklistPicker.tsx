@@ -78,7 +78,7 @@ export default function PicklistPicker({
 								dispatch({
 									error: 'empty',
 									property: 'picklist',
-									type: 'add-validation-error',
+									type: 'add-error',
 									uuid: field.uuid,
 								});
 							}

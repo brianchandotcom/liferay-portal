@@ -4960,6 +4960,17 @@
 		"to": "\"xml\""
 	},
 	{
+		"classNames": [
+			"CommercePriceEntryLocalServiceUtil"
+		],
+		"from": "fetchCommercePriceEntry(long paramName, long paramName)",
+		"issueKey": "LPD-62914",
+		"newImports": [
+			"com.liferay.petra.string.StringPool"
+		],
+		"to": "fetchCommercePriceEntry(param#1#, null, StringPool.BLANK)"
+	},
+	{
 		"from": "PropsFiles.CAPTCHA",
 		"issueKey": "LPD-66321",
 		"to": "\"captcha\""

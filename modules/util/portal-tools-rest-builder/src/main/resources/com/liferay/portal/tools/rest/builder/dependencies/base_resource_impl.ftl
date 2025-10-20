@@ -132,9 +132,9 @@ public abstract class Base${schemaName}ResourceImpl
 	<#assign
 		generateGetPermissionCheckerMethods = false
 		generateGetPermissionCheckerMethodsByExternalReferenceCode = false
-		generateScopedGetPermissionCheckerMethodsByExternalReferenceCode = false
 		generateMultipartBodyClasses = []
 		generatePatchMethods = false
+		generateScopedGetPermissionCheckerMethodsByExternalReferenceCode = false
 		getParentBatchJavaMethodSignatures = []
 		getParentByExternalReferenceCodeBatchJavaMethodSignatures = []
 		postParentBatchJavaMethodSignatures = []

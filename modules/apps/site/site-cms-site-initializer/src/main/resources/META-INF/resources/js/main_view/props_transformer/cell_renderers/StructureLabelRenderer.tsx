@@ -28,7 +28,10 @@ const StructureLabelRenderer = ({
 					aria-label={Liferay.Language.get(
 						'system-default-structure'
 					)}
-					className="c-ml-2 text-secondary"
+					className="c-ml-2 lfr-portal-tooltip text-secondary"
+					data-title={Liferay.Language.get(
+						'system-default-structure'
+					)}
 					symbol="lock"
 				/>
 			</>

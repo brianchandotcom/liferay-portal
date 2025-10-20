@@ -12,7 +12,6 @@ taglib uri="http://liferay.com/tld/react" prefix="react" %>
 
 <%@ page import="com.liferay.client.extension.exception.ClientExtensionEntryNameException" %><%@
 page import="com.liferay.client.extension.exception.ClientExtensionEntryTypeSettingsException" %><%@
-page import="com.liferay.client.extension.type.CET" %><%@
 page import="com.liferay.client.extension.type.CommerceCheckoutStepCET" %><%@
 page import="com.liferay.client.extension.type.CustomElementCET" %><%@
 page import="com.liferay.client.extension.type.EditorConfigContributorCET" %><%@

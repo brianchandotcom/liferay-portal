@@ -1,7 +1,7 @@
 <#assign
-	navigationJSONObject=jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
+	navigationJSONObject = jsonFactoryUtil.createJSONObject(htmlUtil.unescape(navigation.getData()?trim))
 
-	breadcrumbJSONArray=navigationJSONObject.getJSONArray("breadcrumb")
+	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 />
 
 <div class="learn-article-nav learn-article-nav-breadcrumb-container">
@@ -17,7 +17,7 @@
 							</li>
 
 							<#list 0..(breadcrumbJSONArray.length() - 1) as i>
-								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"">
+								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"" />
 
 								<#if breadcrumbItem?? && breadcrumbItem?has_content>
 									<li>
@@ -35,7 +35,7 @@
 							</li>
 
 							<#list (0..1)?reverse as i>
-								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!>
+								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)! />
 
 								<#if breadcrumbItem?? && breadcrumbItem?has_content>
 									<li>
@@ -54,7 +54,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="submit-feedback-button">
 		<a class="text-decoration-none" href="https://discuss.liferay.com/">
 			${languageUtil.get(locale, "submit-feedback", "Submit Feedback")}

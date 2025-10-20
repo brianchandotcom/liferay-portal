@@ -94,7 +94,8 @@ public class CheckObjectEntrySchedulerJobConfigurationTest {
 						RandomTestUtil.randomString())
 				).name(
 					_OBJECT_FIELD_NAME
-				).build()));
+				).build()),
+			false);
 
 		_configurationProvider.saveCompanyConfiguration(
 			ObjectEntryVersionConfiguration.class,

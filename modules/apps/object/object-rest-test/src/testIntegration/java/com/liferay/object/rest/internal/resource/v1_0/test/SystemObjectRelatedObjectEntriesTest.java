@@ -91,7 +91,8 @@ public class SystemObjectRelatedObjectEntriesTest {
 					ObjectFieldConstants.BUSINESS_TYPE_INTEGER,
 					ObjectFieldConstants.DB_TYPE_INTEGER, true, true, null,
 					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_2,
-					false)));
+					false)),
+			false);
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE);

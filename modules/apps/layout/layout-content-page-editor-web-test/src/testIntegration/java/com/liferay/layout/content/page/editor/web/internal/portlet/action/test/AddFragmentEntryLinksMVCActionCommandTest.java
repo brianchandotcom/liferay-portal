@@ -234,7 +234,8 @@ public class AddFragmentEntryLinksMVCActionCommandTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
+						"firstName")),
+				false);
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 			false,

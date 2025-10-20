@@ -69,7 +69,8 @@ public class FragmentCollectionManagerTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
+						"firstName")),
+				false);
 
 		User user = UserTestUtil.addUser();
 
@@ -108,7 +109,8 @@ public class FragmentCollectionManagerTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
+						"firstName")),
+				false);
 
 		try {
 			Map<String, List<Map<String, Object>>> layoutElementMapsListMap =

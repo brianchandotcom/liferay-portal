@@ -69,7 +69,8 @@ public class ObjectFieldInfoFieldConverterTest {
 						RandomTestUtil.randomString())
 				).name(
 					"integerObjectField"
-				).build()));
+				).build()),
+			false);
 
 		_objectField = ObjectFieldUtil.addCustomObjectField(
 			new TextObjectFieldBuilder(

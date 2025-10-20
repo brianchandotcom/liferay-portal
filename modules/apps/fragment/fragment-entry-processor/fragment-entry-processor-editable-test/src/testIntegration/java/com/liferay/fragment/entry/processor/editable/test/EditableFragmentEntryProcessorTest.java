@@ -908,7 +908,8 @@ public class EditableFragmentEntryProcessorTest {
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"Text", "String", true, true, null,
-						RandomTestUtil.randomString(), "title", false)));
+						RandomTestUtil.randomString(), "title", false)),
+				false);
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, "title", "titleValue");
@@ -980,7 +981,8 @@ public class EditableFragmentEntryProcessorTest {
 				Collections.singletonList(
 					ObjectFieldUtil.createObjectField(
 						"LongText", "Clob", true, true, null,
-						RandomTestUtil.randomString(), "content", false)));
+						RandomTestUtil.randomString(), "content", false)),
+				false);
 
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			objectDefinition, "content", "contentValue");

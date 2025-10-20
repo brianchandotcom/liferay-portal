@@ -60,7 +60,6 @@ public class ObjectEntryAssetEntryTitleUpgradeProcessTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(

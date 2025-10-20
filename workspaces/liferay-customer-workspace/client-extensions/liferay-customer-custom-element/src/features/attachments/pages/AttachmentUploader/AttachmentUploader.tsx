@@ -17,7 +17,7 @@ import {IUpload} from '~/utils/types';
 
 import DropzoneUpload from '../../components/DropzoneUpload';
 import FileList from '../../components/FileList';
-import useCheckUploadAccess from '../../hooks/useCheckUploadAccess';
+import useCheckAttachmentAccess from '../../hooks/useCheckAttachmentAccess';
 import useGCSUploadFile from '../../hooks/useGCSUploadFile';
 import useGenerateFileMd5 from '../../hooks/useGenerateFileMd5';
 import useTicketAttachmentsDelete from '../../hooks/useTicketAttachmentsDelete';
@@ -26,7 +26,7 @@ import {
 	CommentPostFailed,
 	ServerUnavailable,
 	UploadConfirmation,
-} from '../AttachmentUploaderMessages';
+} from '../AttachmentMessages';
 
 interface IProps {
 	setUploadStateData: React.Dispatch<React.SetStateAction<IUpload | null>>;
@@ -34,7 +34,7 @@ interface IProps {
 }
 
 const AttachmentUploader = ({setUploadStateData, uploadStateData}: IProps) => {
-	const {loading: accessCheckLoading} = useCheckUploadAccess();
+	const {loading: accessCheckLoading} = useCheckAttachmentAccess();
 
 	const [comment, setComment] = useState<string>('');
 	const [file, setFile] = useState<File>();

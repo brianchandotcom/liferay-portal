@@ -6,7 +6,9 @@
 export {default as AttachmentAlreadyExists} from './AttachmentAlreadyExists';
 export {default as AttachmentNotFound} from './AttachmentNotFound';
 export {default as CommentPostFailed} from './CommentPostFailed';
-export {default as ForbiddenAccess} from './ForbiddenAccess';
+export {default as ForbiddenAccessDownload} from './ForbiddenAccessDownload';
+export {default as ForbiddenAccessUpload} from './ForbiddenAccessUpload';
+export {default as InvalidTicketAttachment} from './InvalidTicketAttachment';
 export {default as InvalidTicketNumber} from './InvalidTicketNumber';
 export {default as ServerUnavailable} from './ServerUnavailable';
 export {default as UnexpectedError} from './UnexpectedError';

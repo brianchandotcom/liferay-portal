@@ -12,7 +12,7 @@ interface IProps {
 	children?: React.ReactNode;
 	icon?: string;
 	subtitle?: string;
-	title: string;
+	title?: string;
 }
 
 const AttachmentMessage: React.FC<IProps> = ({
@@ -32,11 +32,13 @@ const AttachmentMessage: React.FC<IProps> = ({
 					</div>
 				)}
 
-				<div className="d-flex justify-content-center pb-4 text-neutral-10">
-					<h3 className="mb-0 text-center">
-						{i18n.translate(title)}
-					</h3>
-				</div>
+				{title && (
+					<div className="d-flex justify-content-center pb-4 text-neutral-10">
+						<h3 className="mb-0 text-center">
+							{i18n.translate(title)}
+						</h3>
+					</div>
+				)}
 
 				{subtitle && (
 					<div className="d-flex justify-content-center pb-5">

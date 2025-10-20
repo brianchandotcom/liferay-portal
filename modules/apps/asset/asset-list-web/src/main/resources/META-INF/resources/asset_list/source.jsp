@@ -108,7 +108,7 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 				currentSubtypesList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
 			}
 			catch (NoSuchModelException nsme) {
-				}
+			}
 		}
 
 		Arrays.sort(assetSelectedClassTypeIds);

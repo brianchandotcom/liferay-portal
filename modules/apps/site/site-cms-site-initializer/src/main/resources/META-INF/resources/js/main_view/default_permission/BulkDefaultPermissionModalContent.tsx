@@ -48,11 +48,13 @@ export function defaultPermissionsBulkAction({
 	apiURL,
 	className,
 	defaultPermissionAdditionalProps,
+	section,
 	selectedData,
 }: {
 	apiURL?: string;
 	className: string;
 	defaultPermissionAdditionalProps: any;
+	section?: string;
 	selectedData: any;
 }) {
 	if (
@@ -91,6 +93,7 @@ export function defaultPermissionsBulkAction({
 				apiURL,
 				className,
 				closeModal,
+				section,
 				selectedData,
 			}),
 		size: 'full-screen',
@@ -103,8 +106,12 @@ export default function BulkDefaultPermissionModalContent({
 	className,
 	closeModal,
 	roles,
+	section,
 	selectedData,
-}: BulkDefaultPermissionModalContentProps & {apiURL?: string}) {
+}: BulkDefaultPermissionModalContentProps & {
+	apiURL?: string;
+	section?: string;
+}) {
 	const [currentValues, setCurrentValues] =
 		useState<AssetRoleSelectedActions>({});
 	const [loading, setLoading] = useState(false);
@@ -278,13 +285,13 @@ export default function BulkDefaultPermissionModalContent({
 			<ClayModal.Body className="p-0">
 				<DefaultPermissionFormContainer
 					actions={actions}
-					apiURL={apiURL}
 					disabled={loading}
 					infoBoxMessage={Liferay.Language.get(
 						'please-be-aware-that-the-configuration-shown-at-the-beginning-is-the-default-of-the-parent-level'
 					)}
 					onChange={onChangeHandler}
 					roles={roles}
+					section={section}
 					values={currentValues}
 				/>
 			</ClayModal.Body>

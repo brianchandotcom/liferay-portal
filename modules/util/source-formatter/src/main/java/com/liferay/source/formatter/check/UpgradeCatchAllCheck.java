@@ -859,34 +859,32 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		boolean hasMessage = false;
 		boolean valid = true;
 
-		if (_isCommentLine(newContent, position)) {
+		if (_isCommentLine(newContent, position) ||
+			(fileName.endsWith(".java") && !to.isEmpty() &&
+			 _isAlreadyReplaced(parameterNames, to))) {
+
 			valid = false;
 		}
 		else if (fileName.endsWith(".java")) {
-			if (!to.isEmpty() && _isAlreadyReplaced(parameterNames, to)) {
-				valid = false;
-			}
-			else {
-				for (int i = 0; i < fromParameters.size(); i++) {
-					String parameterName = parameterNames.get(i);
+			for (int i = 0; i < fromParameters.size(); i++) {
+				String parameterName = parameterNames.get(i);
 
-					String variableTypeName = getVariableTypeName(
-						javaMethodContent, null, newContent, fileName,
-						StringParser.escapeRegex(parameterName.trim()), true,
-						false);
+				String variableTypeName = getVariableTypeName(
+					javaMethodContent, null, newContent, fileName,
+					StringParser.escapeRegex(parameterName.trim()), true,
+					false);
 
-					if ((variableTypeName == null) ||
-						parameterName.contains(StringPool.OPEN_BRACKET)) {
+				if ((variableTypeName == null) ||
+					parameterName.contains(StringPool.OPEN_BRACKET)) {
 
-						hasMessage = true;
-					}
-					else if (!StringUtil.equals(
-								fromParameters.get(i), variableTypeName)) {
+					hasMessage = true;
+				}
+				else if (!StringUtil.equals(
+							fromParameters.get(i), variableTypeName)) {
 
-						valid = false;
+					valid = false;
 
-						break;
-					}
+					break;
 				}
 			}
 		}

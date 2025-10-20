@@ -131,6 +131,12 @@
 						>
 							<clay:content-col>
 								<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+								<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY %>">
+									<clay:label
+										displayType="warning"
+										label='<%= LanguageUtil.get(request, "empty") %>'
+									/>
+								</c:if>
 							</clay:content-col>
 
 							<clay:content-col

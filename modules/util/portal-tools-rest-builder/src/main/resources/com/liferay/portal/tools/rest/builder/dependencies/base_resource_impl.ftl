@@ -417,20 +417,19 @@ public abstract class Base${schemaName}ResourceImpl
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
-				<#assign schemaKey = "" />
-				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-					<#assign
-						generateGetPermissionCheckerMethods = true
-						schemaKey = schemaVarName + "Id"
-					/>
-				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
-					<#assign
-						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
-						schemaKey = schemaVarName + "ExternalReferenceCode"
-					/>
-				</#if>
+				<#assign schemaKey>
+					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+						<#assign generateGetPermissionCheckerMethods = true />
 
-				<#if schemaKey?has_content>
+						${schemaVarName}Id
+					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+
+						${schemaVarName}ExternalReferenceCode
+					</#if>
+				</#assign>
+
+				<#if schemaKey??>
 					<@getPermissionMethodVariables schemaKey = schemaKey />
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
@@ -467,18 +466,17 @@ public abstract class Base${schemaName}ResourceImpl
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
-				<#assign schemaKey = "" />
-				<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-					<#assign
-						generateGetPermissionCheckerMethods = true
-						schemaKey = schemaVarName + "Id"
-					/>
-				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
-					<#assign
-						generateGetPermissionCheckerMethodsByExternalReferenceCode = true
-						schemaKey = schemaVarName + "ExternalReferenceCode"
-					/>
-				</#if>
+				<#assign schemaKey>
+					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+						<#assign generateGetPermissionCheckerMethods = true />
+
+						${schemaVarName}Id
+					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
+
+						${schemaVarName}ExternalReferenceCode
+					</#if>
+				</#assign>
 
 				<#if schemaKey??>
 					<@getPermissionMethodVariables schemaKey = schemaKey />

@@ -36,7 +36,7 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"edit"
 			).setContentRenderer(
-				"actionLink"
+				"structureLabelTableCellRenderer"
 			).setSortable(
 				true
 			)

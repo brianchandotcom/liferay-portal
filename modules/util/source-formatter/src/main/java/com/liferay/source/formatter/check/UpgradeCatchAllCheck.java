@@ -1053,22 +1053,17 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			return true;
 		}
 
-		int lastBlockStart = content.lastIndexOf("/*", position);
-		int lastBlockEnd = content.lastIndexOf("*/", position);
+		int lastStart = content.lastIndexOf("/*", position);
+		int lastEnd = content.lastIndexOf("*/", position);
 
-		if ((lastBlockStart != -1) &&
-			((lastBlockEnd == -1) || (lastBlockEnd < lastBlockStart))) {
-
+		if ((lastStart != -1) && ((lastEnd == -1) || (lastEnd < lastStart))) {
 			return true;
 		}
 
-		int lastJspCommentStart = content.lastIndexOf("<%--", position);
-		int lastJspCommentEnd = content.lastIndexOf("--%>", position);
+		lastStart = content.lastIndexOf("<%--", position);
+		lastEnd = content.lastIndexOf("--%>", position);
 
-		if ((lastJspCommentStart != -1) &&
-			((lastJspCommentEnd == -1) ||
-			 (lastJspCommentEnd < lastJspCommentStart))) {
-
+		if ((lastStart != -1) && ((lastEnd == -1) || (lastEnd < lastStart))) {
 			return true;
 		}
 

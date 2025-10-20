@@ -131,7 +131,6 @@ describe('DefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			apiURL: '/o/headless-cms-delivery/v1.0/contents',
 			classExternalReferenceCode: 'ERC1',
 			className: 'com.liferay.depot.model.DepotEntry',
 			closeModal: jest.fn(() => {}),
@@ -139,6 +138,7 @@ describe('DefaultPermissionModalContent', () => {
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},
 			],
+			section: 'L_CONTENTS',
 		};
 
 		renderComponent(props);
@@ -166,7 +166,6 @@ describe('DefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			apiURL: '/o/headless-cms-delivery/v1.0/files',
 			classExternalReferenceCode: 'ERC1',
 			className: 'com.liferay.depot.model.DepotEntry',
 			closeModal: jest.fn(() => {}),
@@ -174,6 +173,7 @@ describe('DefaultPermissionModalContent', () => {
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},
 			],
+			section: 'L_FILES',
 		};
 
 		renderComponent(props);

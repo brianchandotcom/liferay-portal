@@ -178,13 +178,13 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			apiURL: '/o/headless-cms-delivery/v1.0/contents',
 			className: 'com.liferay.object.model.ObjectEntryFolder',
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},
 			],
+			section: 'L_CONTENTS',
 			selectedData: {
 				items: [
 					{
@@ -229,13 +229,13 @@ describe('BulkDefaultPermissionModalContent', () => {
 					{key: 'VIEW3', label: 'View3'},
 				],
 			},
-			apiURL: '/o/headless-cms-delivery/v1.0/files',
 			className: 'com.liferay.object.model.ObjectEntryFolder',
 			closeModal: jest.fn(() => {}),
 			roles: [
 				{key: 'admin', name: 'Administrator', type: '1'},
 				{key: 'guest', name: 'Guest', type: '2'},
 			],
+			section: 'L_FILES',
 			selectedData: {
 				items: [
 					{

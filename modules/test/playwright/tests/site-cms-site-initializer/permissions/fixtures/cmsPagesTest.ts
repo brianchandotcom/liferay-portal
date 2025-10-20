@@ -6,10 +6,10 @@
 import {test} from '@playwright/test';
 
 import {ContentsPage} from '../../main/pages/ContentsPage';
-import {FilesPage} from '../../main/pages/FilesPage';
 import {FolderPage} from '../../main/pages/FolderPage';
 import {SpaceSummaryPage} from '../../main/pages/SpaceSummaryPage';
 import {DefaultPermissionsPage} from '../pages/DefaultPermissionsPage';
+import {FilesPage} from '../pages/FilesPage';
 import {PermissionsPage} from '../pages/PermissionsPage';
 
 const cmsPagesTest = test.extend<{

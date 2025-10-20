@@ -19,13 +19,14 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 
 	<%
 	List<KeyValuePair> currentTypesList = new ArrayList<KeyValuePair>();
-	List<KeyValuePair> availableTypesList = new ArrayList<KeyValuePair>();
 
 	long[] classNameIds = editAssetListDisplayContext.getClassNameIds();
 
 	for (long classNameId : classNameIds) {
 		currentTypesList.add(new KeyValuePair(String.valueOf(classNameId), ResourceActionsUtil.getModelResource(locale, PortalUtil.getClassName(classNameId))));
 	}
+
+	List<KeyValuePair> availableTypesList = new ArrayList<KeyValuePair>();
 
 	Arrays.sort(classNameIds);
 	%>
@@ -99,7 +100,6 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 		Long[] assetSelectedClassTypeIds = editAssetListDisplayContext.getClassTypeIds(unicodeProperties, className, classTypes);
 
 		List<KeyValuePair> currentSubtypesList = new ArrayList<KeyValuePair>();
-		List<KeyValuePair> availableSubtypesList = new ArrayList<KeyValuePair>();
 
 		for (long subtypeId : assetSelectedClassTypeIds) {
 			try {
@@ -108,10 +108,12 @@ List<Map<String, Object>> classTypesList = new ArrayList<>();
 				currentSubtypesList.add(new KeyValuePair(String.valueOf(subtypeId), HtmlUtil.escape(classType.getName())));
 			}
 			catch (NoSuchModelException nsme) {
-			}
+				}
 		}
 
 		Arrays.sort(assetSelectedClassTypeIds);
+
+		List<KeyValuePair> availableSubtypesList = new ArrayList<KeyValuePair>();
 
 		boolean noAssetSubtypeSelected = false;
 

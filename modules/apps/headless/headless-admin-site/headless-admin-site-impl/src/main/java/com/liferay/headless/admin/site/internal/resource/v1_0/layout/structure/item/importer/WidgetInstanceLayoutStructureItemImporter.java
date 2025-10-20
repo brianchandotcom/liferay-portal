@@ -89,7 +89,8 @@ public class WidgetInstanceLayoutStructureItemImporter
 			layout, portletId, widgetInstance.getWidgetConfig());
 
 		_importPortletPermissions(
-			layout, portletId, widgetInstance.getWidgetPermissions());
+			layout, portletId, widgetInstance.getWidgetName(),
+			widgetInstance.getWidgetPermissions());
 
 		FragmentEntryLink fragmentEntryLink =
 			FragmentEntryLinkLocalServiceUtil.
@@ -247,7 +248,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	}
 
 	private void _importPortletPermissions(
-			Layout layout, String portletId,
+			Layout layout, String portletId, String portletName,
 			WidgetPermission[] widgetPermissions)
 		throws Exception {
 
@@ -255,6 +256,16 @@ public class WidgetInstanceLayoutStructureItemImporter
 			_portletPermissionsImporterServiceTracker.getService();
 
 		if (portletPermissionsImporter == null) {
+			return;
+		}
+
+		if ((widgetPermissions != null) && (widgetPermissions.length == 0)) {
+			ResourcePermissionLocalServiceUtil.deleteResourcePermissions(
+				layout.getCompanyId(), portletName,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				PortletPermissionUtil.getPrimaryKey(
+					layout.getPlid(), portletId));
+
 			return;
 		}
 

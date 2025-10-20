@@ -418,14 +418,14 @@ public abstract class Base${schemaName}ResourceImpl
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
 				<#assign identifierArgument>
-					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-						<#assign generateGetPermissionCheckerMethods = true />
-
-						${schemaVarName}Id
-					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
 						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
 						${schemaVarName}ExternalReferenceCode
+					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+						<#assign generateGetPermissionCheckerMethods = true />
+
+						${schemaVarName}Id
 					</#if>
 				</#assign>
 
@@ -467,14 +467,14 @@ public abstract class Base${schemaName}ResourceImpl
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
 				<#assign identifierArgument>
-					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
-						<#assign generateGetPermissionCheckerMethods = true />
-
-						${schemaVarName}Id
-					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
+					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
 						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
 						${schemaVarName}ExternalReferenceCode
+					<#elseif freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "Id")>
+						<#assign generateGetPermissionCheckerMethods = true />
+
+						${schemaVarName}Id
 					</#if>
 				</#assign>
 

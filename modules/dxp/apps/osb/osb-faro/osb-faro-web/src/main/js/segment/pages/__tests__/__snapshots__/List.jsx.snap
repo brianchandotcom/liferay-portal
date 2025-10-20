@@ -110,44 +110,89 @@ exports[`List should render 1`] = `
                       role="presentation"
                     >
                       <div
-                        class="dropdown dropdown-root filter-and-order-root"
+                        class="dropdown dropdown-root mr-2"
                       >
                         <button
                           aria-controls="clay-dropdown-menu-1"
                           aria-expanded="false"
                           aria-haspopup="true"
-                          class="dropdown-toggle d-flex align-items-center btn btn-outline-borderless btn-sm btn-outline-secondary"
+                          class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                          data-testid="filter-button"
                           type="button"
                         >
-                          Filter and Order
-                          <svg
-                            class="lexicon-icon lexicon-icon-caret-bottom ml-2 mt-0"
-                            role="presentation"
+                          <span
+                            class="caret-root"
                           >
-                            <use
-                              href="#caret-bottom"
-                            />
-                          </svg>
+                            <svg
+                              class="lexicon-icon lexicon-icon-filter"
+                              role="presentation"
+                            >
+                              <use
+                                href="#filter"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            Filter
+                          </span>
+                          <span
+                            class="caret-root"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-caret-bottom"
+                              role="presentation"
+                            >
+                              <use
+                                href="#caret-bottom"
+                              />
+                            </svg>
+                          </span>
                         </button>
                       </div>
-                    </li>
-                    <li
-                      class="nav-item"
-                      role="presentation"
-                    >
-                      <a
-                        class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                        href="/?field=name&page=1&sortOrder=DESC"
+                      <div
+                        class="dropdown dropdown-root"
                       >
-                        <svg
-                          class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                          role="presentation"
+                        <button
+                          aria-controls="clay-dropdown-menu-3"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          class="dropdown-toggle btn btn-outline-borderless btn-sm btn-outline-secondary"
+                          data-testid="order-button"
+                          type="button"
                         >
-                          <use
-                            href="#order_arrow_ascending"
-                          />
-                        </svg>
-                      </a>
+                          <span
+                            class="caret-root"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-order-list-down"
+                              role="presentation"
+                            >
+                              <use
+                                href="#order-list-down"
+                              />
+                            </svg>
+                          </span>
+                          <span
+                            class="mx-2"
+                          >
+                            Order
+                          </span>
+                          <span
+                            class="caret-root"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-caret-bottom"
+                              role="presentation"
+                            >
+                              <use
+                                href="#caret-bottom"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
                     </li>
                   </ul>
                   <div
@@ -198,7 +243,7 @@ exports[`List should render 1`] = `
                         class="dropdown"
                       >
                         <button
-                          aria-controls="clay-dropdown-menu-3"
+                          aria-controls="clay-dropdown-menu-4"
                           aria-expanded="false"
                           aria-haspopup="true"
                           aria-label="Menu"
@@ -224,270 +269,390 @@ exports[`List should render 1`] = `
               </nav>
             </div>
             <div
-              class="table-responsive table-root flex-grow-1 segment-list-root"
+              class="flex-grow-1 mx-4 table-root segment-list-root"
             >
-              <table
-                class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+              <div
+                class="table-responsive"
               >
-                <thead>
-                  <tr>
-                    <th />
-                    <th
-                      class="table-head-title table-cell-expand"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=name&page=1&sortOrder=DESC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Segment Name
-                        </span>
-                        <span
-                          class="inline-item inline-item-after"
-                        >
-                          <svg
-                            class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
-                            role="presentation"
-                          >
-                            <use
-                              href="#order-arrow-up"
-                            />
-                          </svg>
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      class="table-head-title"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=segmentType&page=1&sortOrder=ASC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Type
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      class="table-head-title"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=individualCount&page=1&sortOrder=DESC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Segment Membership
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      class="table-head-title table-column-text-end"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=lastMembershipUpdateDate&page=1&sortOrder=ASC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Last Membership Update
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      class="table-head-title"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=author%2Fname&page=1&sortOrder=ASC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Last Modified By
-                        </span>
-                      </a>
-                    </th>
-                    <th
-                      class="table-head-title table-column-text-end"
-                    >
-                      <a
-                        class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                        href="/?field=dateModified&page=1&sortOrder=ASC"
-                      >
-                        <span
-                          class="text-truncate"
-                        >
-                          Modified Date
-                        </span>
-                      </a>
-                    </th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody
-                  class="segment-list-root"
+                <table
+                  class="table table-autofit table-striped table-list table-nowrap table-bordered"
                 >
-                  <tr
-                    class="clickable"
-                  >
-                    <td>
-                      <div
-                        class="custom-control custom-checkbox"
-                      >
-                        <label>
-                          <input
-                            class="custom-control-input"
-                            type="checkbox"
-                            value="false"
-                          />
-                          <span
-                            class="custom-control-label"
-                          />
-                        </label>
-                      </div>
-                    </td>
-                    <td
-                      class="table-cell-expand"
-                    >
-                      <div
-                        class="table-title text-truncate"
+                  <thead>
+                    <tr>
+                      <th />
+                      <th
+                        class="table-head-title table-cell-expand"
                       >
                         <a
-                          href="/workspace/23/123/contacts/segments/0"
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=name&page=1&sortOrder=DESC"
                         >
-                          <span
-                            class="text-truncate"
-                            data-tooltip="false"
-                            title=""
+                          <div
+                            class="align-items-center d-flex justify-content-between"
                           >
-                            Seattle0
-                          </span>
+                            <div
+                              class="text-truncate"
+                            >
+                              Segment Name
+                            </div>
+                            <button
+                              aria-label="Ascending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#order_arrow_ascending"
+                                />
+                              </svg>
+                            </button>
+                          </div>
                         </a>
-                      </div>
-                    </td>
-                    <td />
-                    <td
-                      class="table-cell-expand "
-                    >
-                      <div
-                        class="text-truncate text-right mr-5"
+                      </th>
+                      <th
+                        class="table-head-title"
                       >
-                        10
-                      </div>
-                    </td>
-                    <td
-                      class="table-column-text-end"
+                        <a
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=segmentType&page=1&sortOrder=ASC"
+                        >
+                          <div
+                            class="align-items-center d-flex justify-content-between"
+                          >
+                            <div
+                              class="text-truncate"
+                            >
+                              Type
+                            </div>
+                            <button
+                              aria-label="Descending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <span
+                                class="opacity-25"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-arrow"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </a>
+                      </th>
+                      <th
+                        class="table-head-title"
+                      >
+                        <a
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=individualCount&page=1&sortOrder=DESC"
+                        >
+                          <div
+                            class="align-items-center d-flex justify-content-between"
+                          >
+                            <div
+                              class="text-truncate"
+                            >
+                              Segment Membership
+                            </div>
+                            <button
+                              aria-label="Descending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <span
+                                class="opacity-25"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-arrow"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </a>
+                      </th>
+                      <th
+                        class="table-head-title table-column-text-end"
+                      >
+                        <a
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=lastMembershipUpdateDate&page=1&sortOrder=ASC"
+                        >
+                          <div
+                            class="align-items-center d-flex justify-content-between"
+                          >
+                            <div
+                              class="text-truncate"
+                            >
+                              Last Membership Update
+                            </div>
+                            <button
+                              aria-label="Descending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <span
+                                class="opacity-25"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-arrow"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </a>
+                      </th>
+                      <th
+                        class="table-head-title"
+                      >
+                        <a
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=author%2Fname&page=1&sortOrder=ASC"
+                        >
+                          <div
+                            class="align-items-center d-flex justify-content-between"
+                          >
+                            <div
+                              class="text-truncate"
+                            >
+                              Last Modified By
+                            </div>
+                            <button
+                              aria-label="Descending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <span
+                                class="opacity-25"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-arrow"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </a>
+                      </th>
+                      <th
+                        class="table-head-title table-column-text-end"
+                      >
+                        <a
+                          class="button-root w-100 btn btn-unstyled"
+                          href="/?field=dateModified&page=1&sortOrder=ASC"
+                        >
+                          <div
+                            class="align-items-center d-flex justify-content-between"
+                          >
+                            <div
+                              class="text-truncate"
+                            >
+                              Modified Date
+                            </div>
+                            <button
+                              aria-label="Descending"
+                              class="component-action ml-4 btn btn-sm btn-primary"
+                              type="button"
+                            >
+                              <span
+                                class="opacity-25"
+                              >
+                                <svg
+                                  class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                  role="presentation"
+                                >
+                                  <use
+                                    href="#order-arrow"
+                                  />
+                                </svg>
+                              </span>
+                            </button>
+                          </div>
+                        </a>
+                      </th>
+                      <th />
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="segment-list-root"
+                  >
+                    <tr
+                      class="clickable"
                     >
-                      -
-                    </td>
-                    <td
-                      class="table-cell-expand"
-                    >
-                      <span
-                        class="sticker sticker-user-icon sticker-secondary sticker-sm"
+                      <td>
+                        <div
+                          class="custom-control custom-checkbox"
+                        >
+                          <label>
+                            <input
+                              class="custom-control-input"
+                              type="checkbox"
+                              value="false"
+                            />
+                            <span
+                              class="custom-control-label"
+                            />
+                          </label>
+                        </div>
+                      </td>
+                      <td
+                        class="table-cell-expand"
+                      >
+                        <div
+                          class="table-title text-truncate"
+                        >
+                          <a
+                            href="/workspace/23/123/contacts/segments/0"
+                          >
+                            <span
+                              class="text-truncate"
+                              data-tooltip="false"
+                              title=""
+                            >
+                              Seattle0
+                            </span>
+                          </a>
+                        </div>
+                      </td>
+                      <td />
+                      <td
+                        class="table-cell-expand "
+                      >
+                        <div
+                          class="text-truncate text-right mr-5"
+                        >
+                          10
+                        </div>
+                      </td>
+                      <td
+                        class="table-column-text-end"
+                      >
+                        -
+                      </td>
+                      <td
+                        class="table-cell-expand"
                       >
                         <span
-                          class="sticker-overlay"
+                          class="sticker sticker-user-icon sticker-secondary sticker-sm"
+                        >
+                          <span
+                            class="sticker-overlay"
+                          />
+                        </span>
+                        <span
+                          class="ml-2"
                         />
-                      </span>
-                      <span
-                        class="ml-2"
-                      />
-                    </td>
-                    <td
-                      class="table-column-text-end"
-                    >
-                      Jul 10, 2018
-                    </td>
-                    <td
-                      class="row-inline-actions"
-                    >
-                      <span>
-                        <div
-                          class="quick-action-menu"
-                        >
-                          <a
-                            aria-label="View"
-                            class="button-root component-action quick-action-item btn btn-unstyled"
-                            data-tooltip="true"
-                            href="/workspace/23/123/contacts/segments/0"
-                            title="View"
+                      </td>
+                      <td
+                        class="table-column-text-end"
+                      >
+                        Jul 10, 2018
+                      </td>
+                      <td
+                        class="row-inline-actions"
+                      >
+                        <span>
+                          <div
+                            class="quick-action-menu"
                           >
-                            <svg
-                              class="lexicon-icon lexicon-icon-view icon-root"
-                              role="presentation"
+                            <a
+                              aria-label="View"
+                              class="button-root component-action quick-action-item btn btn-unstyled"
+                              data-tooltip="true"
+                              href="/workspace/23/123/contacts/segments/0"
+                              title="View"
                             >
-                              <use
-                                href="#view"
-                              />
-                            </svg>
-                          </a>
-                          <a
-                            aria-label="Edit"
-                            class="button-root component-action quick-action-item btn btn-unstyled"
-                            data-tooltip="true"
-                            href="/workspace/23/123/contacts/segments/0/edit"
-                            title="Edit"
+                              <svg
+                                class="lexicon-icon lexicon-icon-view icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#view"
+                                />
+                              </svg>
+                            </a>
+                            <a
+                              aria-label="Edit"
+                              class="button-root component-action quick-action-item btn btn-unstyled"
+                              data-tooltip="true"
+                              href="/workspace/23/123/contacts/segments/0/edit"
+                              title="Edit"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-pencil icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#pencil"
+                                />
+                              </svg>
+                            </a>
+                            <button
+                              aria-label="Delete"
+                              class="button-root component-action quick-action-item btn btn-unstyled"
+                              data-tooltip="true"
+                              title="Delete"
+                              type="button"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-trash icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#trash"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                          <div
+                            class="dropdown dropdown-action"
                           >
-                            <svg
-                              class="lexicon-icon lexicon-icon-pencil icon-root"
-                              role="presentation"
+                            <button
+                              aria-controls="clay-dropdown-menu-5"
+                              aria-expanded="false"
+                              aria-haspopup="true"
+                              aria-label="Menu"
+                              class="dropdown-toggle component-action btn btn-unstyled"
+                              type="button"
                             >
-                              <use
-                                href="#pencil"
-                              />
-                            </svg>
-                          </a>
-                          <button
-                            aria-label="Delete"
-                            class="button-root component-action quick-action-item btn btn-unstyled"
-                            data-tooltip="true"
-                            title="Delete"
-                            type="button"
-                          >
-                            <svg
-                              class="lexicon-icon lexicon-icon-trash icon-root"
-                              role="presentation"
-                            >
-                              <use
-                                href="#trash"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                        <div
-                          class="dropdown dropdown-action"
-                        >
-                          <button
-                            aria-controls="clay-dropdown-menu-4"
-                            aria-expanded="false"
-                            aria-haspopup="true"
-                            aria-label="Menu"
-                            class="dropdown-toggle component-action btn btn-unstyled"
-                            type="button"
-                          >
-                            <svg
-                              class="lexicon-icon lexicon-icon-ellipsis-v"
-                              role="presentation"
-                            >
-                              <use
-                                href="#ellipsis-v"
-                              />
-                            </svg>
-                          </button>
-                        </div>
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+                              <svg
+                                class="lexicon-icon lexicon-icon-ellipsis-v"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#ellipsis-v"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
             <nav
               class="navbar navbar-root pagination-bar-root"
@@ -499,7 +664,7 @@ exports[`List should render 1`] = `
                   class="dropdown dropdown-root pagination-items-per-page"
                 >
                   <button
-                    aria-controls="clay-dropdown-menu-5"
+                    aria-controls="clay-dropdown-menu-6"
                     aria-expanded="false"
                     aria-haspopup="true"
                     class="dropdown-toggle button-root btn btn-sm btn-secondary"

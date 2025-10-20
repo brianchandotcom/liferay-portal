@@ -122,203 +122,235 @@ exports[`IndividualAttributes should render 1`] = `
             </nav>
           </div>
           <div
-            class="table-responsive table-root flex-grow-1"
+            class="flex-grow-1 mx-4 table-root"
           >
-            <table
-              class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+            <div
+              class="table-responsive"
             >
-              <thead>
-                <tr>
-                  <th
-                    class="table-head-title table-cell-expand"
-                  >
-                    <button
-                      class="inline-item text-truncate-inline btn btn-unstyled"
-                      type="button"
+              <table
+                class="table table-autofit table-striped table-list table-nowrap table-bordered"
+              >
+                <thead>
+                  <tr>
+                    <th
+                      class="table-head-title table-cell-expand"
                     >
-                      <span
-                        class="text-truncate"
+                      <button
+                        class="inline-item text-truncate-inline btn btn-unstyled"
+                        type="button"
                       >
-                        Attribute
-                      </span>
-                      <span
-                        class="inline-item inline-item-after"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
-                          role="presentation"
+                        <div
+                          class="align-items-center d-flex justify-content-between"
                         >
-                          <use
-                            href="#order-arrow-up"
-                          />
-                        </svg>
-                      </span>
-                    </button>
-                  </th>
-                  <th
-                    class="table-head-title pr-6"
-                  >
-                    <button
-                      class="inline-item text-truncate-inline btn btn-unstyled"
-                      type="button"
-                    >
-                      <span
-                        class="text-truncate"
-                      >
-                        Sources
-                      </span>
-                    </button>
-                  </th>
-                  <th
-                    class="table-head-title pr-5"
-                  >
-                    Last Synced
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  class=""
-                >
-                  <td
-                    class="table-cell-expand"
-                  >
-                    <div
-                      class="content-container"
+                          <div
+                            class="text-truncate"
+                          >
+                            Attribute
+                          </div>
+                          <button
+                            aria-label="Ascending"
+                            class="component-action ml-4 btn btn-sm btn-primary"
+                            type="button"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
+                              role="presentation"
+                            >
+                              <use
+                                href="#order_arrow_ascending"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </button>
+                    </th>
+                    <th
+                      class="table-head-title pr-6"
                     >
                       <button
-                        class="button-root btn btn-unstyled"
+                        class="inline-item text-truncate-inline btn btn-unstyled"
                         type="button"
                       >
-                        testFildName0
+                        <div
+                          class="align-items-center d-flex justify-content-between"
+                        >
+                          <div
+                            class="text-truncate"
+                          >
+                            Sources
+                          </div>
+                          <button
+                            aria-label="Descending"
+                            class="component-action ml-4 btn btn-sm btn-primary"
+                            type="button"
+                          >
+                            <span
+                              class="opacity-25"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#order-arrow"
+                                />
+                              </svg>
+                            </span>
+                          </button>
+                        </div>
                       </button>
-                    </div>
-                  </td>
-                  <td
-                    class="pr-6"
-                  >
-                    LIFERAY-DATASOURCE-FARO-EXAMPLE-0
-                  </td>
-                  <td
-                    class="pr-5"
-                  >
-                    a few seconds ago
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                >
-                  <td
-                    class="table-cell-expand"
-                  >
-                    <div
-                      class="content-container"
+                    </th>
+                    <th
+                      class="table-head-title pr-5"
                     >
-                      <button
-                        class="button-root btn btn-unstyled"
-                        type="button"
-                      >
-                        testFildName1
-                      </button>
-                    </div>
-                  </td>
-                  <td
-                    class="pr-6"
+                      Last Synced
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    class=""
                   >
-                    2 Sources
-                  </td>
-                  <td
-                    class="pr-5"
-                  >
-                    a few seconds ago
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                >
-                  <td
-                    class="table-cell-expand"
-                  >
-                    <div
-                      class="content-container"
+                    <td
+                      class="table-cell-expand"
                     >
-                      <button
-                        class="button-root btn btn-unstyled"
-                        type="button"
+                      <div
+                        class="content-container"
                       >
-                        testFildName2
-                      </button>
-                    </div>
-                  </td>
-                  <td
-                    class="pr-6"
-                  >
-                    3 Sources
-                  </td>
-                  <td
-                    class="pr-5"
-                  >
-                    a few seconds ago
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                >
-                  <td
-                    class="table-cell-expand"
-                  >
-                    <div
-                      class="content-container"
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          testFildName0
+                        </button>
+                      </div>
+                    </td>
+                    <td
+                      class="pr-6"
                     >
-                      <button
-                        class="button-root btn btn-unstyled"
-                        type="button"
-                      >
-                        testFildName3
-                      </button>
-                    </div>
-                  </td>
-                  <td
-                    class="pr-6"
-                  >
-                    4 Sources
-                  </td>
-                  <td
-                    class="pr-5"
-                  >
-                    a few seconds ago
-                  </td>
-                </tr>
-                <tr
-                  class=""
-                >
-                  <td
-                    class="table-cell-expand"
-                  >
-                    <div
-                      class="content-container"
+                      LIFERAY-DATASOURCE-FARO-EXAMPLE-0
+                    </td>
+                    <td
+                      class="pr-5"
                     >
-                      <button
-                        class="button-root btn btn-unstyled"
-                        type="button"
+                      a few seconds ago
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
+                  >
+                    <td
+                      class="table-cell-expand"
+                    >
+                      <div
+                        class="content-container"
                       >
-                        testFildName4
-                      </button>
-                    </div>
-                  </td>
-                  <td
-                    class="pr-6"
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          testFildName1
+                        </button>
+                      </div>
+                    </td>
+                    <td
+                      class="pr-6"
+                    >
+                      2 Sources
+                    </td>
+                    <td
+                      class="pr-5"
+                    >
+                      a few seconds ago
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
                   >
-                    5 Sources
-                  </td>
-                  <td
-                    class="pr-5"
+                    <td
+                      class="table-cell-expand"
+                    >
+                      <div
+                        class="content-container"
+                      >
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          testFildName2
+                        </button>
+                      </div>
+                    </td>
+                    <td
+                      class="pr-6"
+                    >
+                      3 Sources
+                    </td>
+                    <td
+                      class="pr-5"
+                    >
+                      a few seconds ago
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
                   >
-                    a few seconds ago
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    <td
+                      class="table-cell-expand"
+                    >
+                      <div
+                        class="content-container"
+                      >
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          testFildName3
+                        </button>
+                      </div>
+                    </td>
+                    <td
+                      class="pr-6"
+                    >
+                      4 Sources
+                    </td>
+                    <td
+                      class="pr-5"
+                    >
+                      a few seconds ago
+                    </td>
+                  </tr>
+                  <tr
+                    class=""
+                  >
+                    <td
+                      class="table-cell-expand"
+                    >
+                      <div
+                        class="content-container"
+                      >
+                        <button
+                          class="button-root btn btn-unstyled"
+                          type="button"
+                        >
+                          testFildName4
+                        </button>
+                      </div>
+                    </td>
+                    <td
+                      class="pr-6"
+                    >
+                      5 Sources
+                    </td>
+                    <td
+                      class="pr-5"
+                    >
+                      a few seconds ago
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

@@ -111,24 +111,6 @@ exports[`InterestTopics should render 1`] = `
                     </label>
                   </div>
                 </li>
-                <li
-                  class="nav-item"
-                  role="presentation"
-                >
-                  <a
-                    class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                    href="/?field=keyword&page=1&sortOrder=DESC"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#order_arrow_ascending"
-                      />
-                    </svg>
-                  </a>
-                </li>
               </ul>
               <div
                 class="navbar-form navbar-form-autofit"
@@ -187,112 +169,144 @@ exports[`InterestTopics should render 1`] = `
           </nav>
         </div>
         <div
-          class="table-responsive table-root flex-grow-1"
+          class="flex-grow-1 mx-4 table-root"
         >
-          <table
-            class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+          <div
+            class="table-responsive"
           >
-            <thead>
-              <tr>
-                <th />
-                <th
-                  class="table-head-title table-cell-expand"
-                >
-                  <a
-                    class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                    href="/?field=keyword&page=1&sortOrder=DESC"
+            <table
+              class="table table-autofit table-striped table-list table-nowrap table-bordered"
+            >
+              <thead>
+                <tr>
+                  <th />
+                  <th
+                    class="table-head-title table-cell-expand"
                   >
-                    <span
-                      class="text-truncate"
+                    <a
+                      class="button-root w-100 btn btn-unstyled"
+                      href="/?field=keyword&page=1&sortOrder=DESC"
                     >
-                      Keyword
-                    </span>
-                    <span
-                      class="inline-item inline-item-after"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-order-arrow-up icon-root"
-                        role="presentation"
+                      <div
+                        class="align-items-center d-flex justify-content-between"
                       >
-                        <use
-                          href="#order-arrow-up"
-                        />
-                      </svg>
-                    </span>
-                  </a>
-                </th>
-                <th
-                  class="table-head-title"
-                >
-                  <a
-                    class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                    href="/?field=createDate&page=1&sortOrder=DESC"
+                        <div
+                          class="text-truncate"
+                        >
+                          Keyword
+                        </div>
+                        <button
+                          aria-label="Ascending"
+                          class="component-action ml-4 btn btn-sm btn-primary"
+                          type="button"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#order_arrow_ascending"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </a>
+                  </th>
+                  <th
+                    class="table-head-title"
                   >
-                    <span
-                      class="text-truncate"
+                    <a
+                      class="button-root w-100 btn btn-unstyled"
+                      href="/?field=createDate&page=1&sortOrder=DESC"
                     >
-                      Added
-                    </span>
-                  </a>
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="clickable"
-              >
-                <td>
-                  <div
-                    class="custom-control custom-checkbox"
-                  >
-                    <label>
-                      <input
-                        class="custom-control-input"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <span
-                        class="custom-control-label"
-                      />
-                    </label>
-                  </div>
-                </td>
-                <td
-                  class="table-cell-expand"
-                >
-                  <div
-                    class="h4 table-title text-truncate"
-                  >
-                    bar-0
-                  </div>
-                </td>
-                <td>
-                  Dec 3, 2019
-                </td>
-                <td
-                  class="row-inline-actions"
-                >
-                  <span>
-                    <button
-                      aria-label="Delete"
-                      class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
-                      type="button"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-trash icon-root"
-                        role="presentation"
+                      <div
+                        class="align-items-center d-flex justify-content-between"
                       >
-                        <use
-                          href="#trash"
+                        <div
+                          class="text-truncate"
+                        >
+                          Added
+                        </div>
+                        <button
+                          aria-label="Descending"
+                          class="component-action ml-4 btn btn-sm btn-primary"
+                          type="button"
+                        >
+                          <span
+                            class="opacity-25"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                              role="presentation"
+                            >
+                              <use
+                                href="#order-arrow"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
+                    </a>
+                  </th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="clickable"
+                >
+                  <td>
+                    <div
+                      class="custom-control custom-checkbox"
+                    >
+                      <label>
+                        <input
+                          class="custom-control-input"
+                          type="checkbox"
+                          value="false"
                         />
-                      </svg>
-                    </button>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                        <span
+                          class="custom-control-label"
+                        />
+                      </label>
+                    </div>
+                  </td>
+                  <td
+                    class="table-cell-expand"
+                  >
+                    <div
+                      class="h4 table-title text-truncate"
+                    >
+                      bar-0
+                    </div>
+                  </td>
+                  <td>
+                    Dec 3, 2019
+                  </td>
+                  <td
+                    class="row-inline-actions"
+                  >
+                    <span>
+                      <button
+                        aria-label="Delete"
+                        class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+                        type="button"
+                      >
+                        <svg
+                          class="lexicon-icon lexicon-icon-trash icon-root"
+                          role="presentation"
+                        >
+                          <use
+                            href="#trash"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <nav
           class="navbar navbar-root pagination-bar-root"

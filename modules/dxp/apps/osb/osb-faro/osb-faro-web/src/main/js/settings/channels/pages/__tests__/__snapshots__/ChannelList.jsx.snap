@@ -81,24 +81,6 @@ exports[`Channels List should render 1`] = `
                     </label>
                   </div>
                 </li>
-                <li
-                  class="nav-item"
-                  role="presentation"
-                >
-                  <a
-                    class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                    href="/?field=createTime&page=1&sortOrder=ASC"
-                  >
-                    <svg
-                      class="lexicon-icon lexicon-icon-order_arrow_descending icon-root"
-                      role="presentation"
-                    >
-                      <use
-                        href="#order_arrow_descending"
-                      />
-                    </svg>
-                  </a>
-                </li>
               </ul>
               <div
                 class="navbar-form navbar-form-autofit"
@@ -157,203 +139,235 @@ exports[`Channels List should render 1`] = `
           </nav>
         </div>
         <div
-          class="table-responsive table-root flex-grow-1"
+          class="flex-grow-1 mx-4 table-root"
         >
-          <table
-            class="table table-autofit table-hover show-quick-actions-on-hover table-heading-nowrap table-nowrap"
+          <div
+            class="table-responsive"
           >
-            <thead>
-              <tr>
-                <th />
-                <th
-                  class="table-head-title table-cell-expand"
-                >
-                  <a
-                    class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                    href="/?field=name&page=1&sortOrder=ASC"
-                  >
-                    <span
-                      class="text-truncate"
-                    >
-                      Property Name
-                    </span>
-                  </a>
-                </th>
-                <th
-                  class="table-head-title text-right"
-                >
-                  Sites
-                </th>
-                <th
-                  class="table-head-title text-right"
-                >
-                  Channels
-                </th>
-                <th
-                  class="table-head-title text-right"
-                >
-                  Property ID
-                </th>
-                <th
-                  class="table-head-title"
-                >
-                  Access Setting
-                </th>
-                <th
-                  class="table-head-title"
-                >
-                  <a
-                    class="button-root inline-item text-truncate-inline btn btn-unstyled"
-                    href="/?field=createTime&page=1&sortOrder=ASC"
-                  >
-                    <span
-                      class="text-truncate"
-                    >
-                      Date Added
-                    </span>
-                    <span
-                      class="inline-item inline-item-after"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-order-arrow-down icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#order-arrow-down"
-                        />
-                      </svg>
-                    </span>
-                  </a>
-                </th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                class="clickable"
-              >
-                <td>
-                  <div
-                    class="custom-control custom-checkbox"
-                  >
-                    <label>
-                      <input
-                        class="custom-control-input"
-                        type="checkbox"
-                        value="false"
-                      />
-                      <span
-                        class="custom-control-label"
-                      />
-                    </label>
-                  </div>
-                </td>
-                <td
-                  class="table-cell-expand"
-                >
-                  <div
-                    class="table-title text-truncate"
+            <table
+              class="table table-autofit table-striped table-list table-nowrap table-bordered show-quick-actions-on-hover"
+            >
+              <thead>
+                <tr>
+                  <th />
+                  <th
+                    class="table-head-title table-cell-expand"
                   >
                     <a
-                      href="/workspace/23/settings/properties/0"
+                      class="button-root w-100 btn btn-unstyled"
+                      href="/?field=name&page=1&sortOrder=ASC"
                     >
-                      <span
-                        class="text-truncate"
-                        data-tooltip="false"
-                        title=""
+                      <div
+                        class="align-items-center d-flex justify-content-between"
                       >
-                        Channel 0
-                      </span>
+                        <div
+                          class="text-truncate"
+                        >
+                          Property Name
+                        </div>
+                        <button
+                          aria-label="Descending"
+                          class="component-action ml-4 btn btn-sm btn-primary"
+                          type="button"
+                        >
+                          <span
+                            class="opacity-25"
+                          >
+                            <svg
+                              class="lexicon-icon lexicon-icon-order-arrow icon-root"
+                              role="presentation"
+                            >
+                              <use
+                                href="#order-arrow"
+                              />
+                            </svg>
+                          </span>
+                        </button>
+                      </div>
                     </a>
-                  </div>
-                </td>
-                <td
-                  class="text-right"
-                >
-                  -
-                </td>
-                <td
-                  class="text-right"
-                >
-                  -
-                </td>
-                <td
-                  class="text-right"
-                >
-                  0
-                </td>
-                <td>
-                  All Users
-                </td>
-                <td>
-                  Feb 14, 2020
-                </td>
-                <td
-                  class="row-actions"
-                >
-                  <span>
-                    <div
-                      class="quick-action-menu"
+                  </th>
+                  <th
+                    class="table-head-title text-right"
+                  >
+                    Sites
+                  </th>
+                  <th
+                    class="table-head-title text-right"
+                  >
+                    Channels
+                  </th>
+                  <th
+                    class="table-head-title text-right"
+                  >
+                    Property ID
+                  </th>
+                  <th
+                    class="table-head-title"
+                  >
+                    Access Setting
+                  </th>
+                  <th
+                    class="table-head-title"
+                  >
+                    <a
+                      class="button-root w-100 btn btn-unstyled"
+                      href="/?field=createTime&page=1&sortOrder=ASC"
                     >
-                      <button
-                        aria-label="Clear Data"
-                        class="button-root component-action quick-action-item btn btn-unstyled"
-                        data-tooltip="true"
-                        title="Clear Data"
-                        type="button"
+                      <div
+                        class="align-items-center d-flex justify-content-between"
                       >
-                        <svg
-                          class="lexicon-icon lexicon-icon-magic icon-root"
-                          role="presentation"
+                        <div
+                          class="text-truncate"
                         >
-                          <use
-                            href="#magic"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        aria-label="Delete"
-                        class="button-root component-action quick-action-item btn btn-unstyled"
-                        data-tooltip="true"
-                        title="Delete"
-                        type="button"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-trash icon-root"
-                          role="presentation"
+                          Date Added
+                        </div>
+                        <button
+                          aria-label="Descending"
+                          class="component-action ml-4 btn btn-sm btn-primary"
+                          type="button"
                         >
-                          <use
-                            href="#trash"
-                          />
-                        </svg>
-                      </button>
-                    </div>
+                          <svg
+                            class="lexicon-icon lexicon-icon-order_arrow_descending icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#order_arrow_descending"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </a>
+                  </th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="clickable"
+                >
+                  <td>
                     <div
-                      class="dropdown dropdown-action"
+                      class="custom-control custom-checkbox"
                     >
-                      <button
-                        aria-controls="clay-dropdown-menu-1"
-                        aria-expanded="false"
-                        aria-haspopup="true"
-                        aria-label="Menu"
-                        class="dropdown-toggle component-action btn btn-unstyled"
-                        type="button"
-                      >
-                        <svg
-                          class="lexicon-icon lexicon-icon-ellipsis-v"
-                          role="presentation"
-                        >
-                          <use
-                            href="#ellipsis-v"
-                          />
-                        </svg>
-                      </button>
+                      <label>
+                        <input
+                          class="custom-control-input"
+                          type="checkbox"
+                          value="false"
+                        />
+                        <span
+                          class="custom-control-label"
+                        />
+                      </label>
                     </div>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td
+                    class="table-cell-expand"
+                  >
+                    <div
+                      class="table-title text-truncate"
+                    >
+                      <a
+                        href="/workspace/23/settings/properties/0"
+                      >
+                        <span
+                          class="text-truncate"
+                          data-tooltip="false"
+                          title=""
+                        >
+                          Channel 0
+                        </span>
+                      </a>
+                    </div>
+                  </td>
+                  <td
+                    class="text-right"
+                  >
+                    -
+                  </td>
+                  <td
+                    class="text-right"
+                  >
+                    -
+                  </td>
+                  <td
+                    class="text-right"
+                  >
+                    0
+                  </td>
+                  <td>
+                    All Users
+                  </td>
+                  <td>
+                    Feb 14, 2020
+                  </td>
+                  <td
+                    class="row-actions"
+                  >
+                    <span>
+                      <div
+                        class="quick-action-menu"
+                      >
+                        <button
+                          aria-label="Clear Data"
+                          class="button-root component-action quick-action-item btn btn-unstyled"
+                          data-tooltip="true"
+                          title="Clear Data"
+                          type="button"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-magic icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#magic"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          aria-label="Delete"
+                          class="button-root component-action quick-action-item btn btn-unstyled"
+                          data-tooltip="true"
+                          title="Delete"
+                          type="button"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-trash icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#trash"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                      <div
+                        class="dropdown dropdown-action"
+                      >
+                        <button
+                          aria-controls="clay-dropdown-menu-1"
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-label="Menu"
+                          class="dropdown-toggle component-action btn btn-unstyled"
+                          type="button"
+                        >
+                          <svg
+                            class="lexicon-icon lexicon-icon-ellipsis-v"
+                            role="presentation"
+                          >
+                            <use
+                              href="#ellipsis-v"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
         <nav
           class="navbar navbar-root pagination-bar-root"

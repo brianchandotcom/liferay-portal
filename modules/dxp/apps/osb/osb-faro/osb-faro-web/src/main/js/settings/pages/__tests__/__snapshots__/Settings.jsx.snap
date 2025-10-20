@@ -5,41 +5,53 @@ exports[`Setttings should render 1`] = `
   <div
     class="settings-root"
   >
-    <div
-      class="settings-header"
+    <nav
+      class="bg-white mb-4 tbar component-tbar"
     >
-      <div
-        class="section-side"
+      <ul
+        class="mx-4 tbar-nav"
       >
-        <a
-          class="back-arrow"
-          href="/workspace/23"
+        <li
+          class="tbar-item"
         >
-          <span
-            class="icon-wrapper"
+          <div
+            class="component-action"
           >
-            <svg
-              class="lexicon-icon lexicon-icon-angle-left-small icon-root"
-              role="presentation"
+            <a
+              aria-label="Back"
+              class="text-secondary"
+              href="/workspace/23"
             >
-              <use
-                href="#angle-left-small"
-              />
-            </svg>
-          </span>
-          Exit Settings
-        </a>
-      </div>
-      <div
-        class="section-main"
-      >
-        <h2
-          class="title"
+              <svg
+                class="lexicon-icon lexicon-icon-angle-left mb-1"
+                role="presentation"
+              >
+                <use
+                  href="#angle-left"
+                />
+              </svg>
+            </a>
+          </div>
+        </li>
+        <li
+          class="pl-0 tbar-item"
         >
-          Settings
-        </h2>
-      </div>
-    </div>
+          <div
+            class="tbar-section"
+          >
+            <span
+              class="text-dark"
+            >
+              <span
+                class="text-5 font-weight-bold"
+              >
+                Settings
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+    </nav>
     <div
       class="content-wrapper"
     >

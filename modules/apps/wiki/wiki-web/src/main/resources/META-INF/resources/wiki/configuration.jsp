@@ -59,7 +59,7 @@
 			Set<String> currentVisibleNodes = new HashSet<String>(wikiPortletInstanceSettingsHelper.getAllNodeNames());
 
 			List<KeyValuePair> currentVisibleNodesList = new ArrayList<KeyValuePair>();
-			
+
 			String[] visibleNodeNames = wikiPortletInstanceSettingsHelper.getVisibleNodeNames();
 
 			for (String folderColumn : visibleNodeNames) {

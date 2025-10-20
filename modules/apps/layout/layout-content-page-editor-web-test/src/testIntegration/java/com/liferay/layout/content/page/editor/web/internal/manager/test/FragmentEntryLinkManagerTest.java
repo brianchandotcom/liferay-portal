@@ -211,7 +211,8 @@ public class FragmentEntryLinkManagerTest {
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
-						"firstName")));
+						"firstName")),
+				false);
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 

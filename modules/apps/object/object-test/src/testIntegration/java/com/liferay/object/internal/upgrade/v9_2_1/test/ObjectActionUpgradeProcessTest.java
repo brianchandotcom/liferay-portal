@@ -63,7 +63,8 @@ public class ObjectActionUpgradeProcessTest {
 							RandomTestUtil.randomString())
 					).name(
 						"a" + RandomTestUtil.randomString()
-					).build()));
+					).build()),
+				false);
 
 		ObjectAction objectAction1 = _addObjectAction(
 			ObjectActionExecutorConstants.KEY_NOTIFICATION,

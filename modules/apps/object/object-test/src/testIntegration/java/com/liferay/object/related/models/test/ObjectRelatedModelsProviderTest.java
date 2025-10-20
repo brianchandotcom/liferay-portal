@@ -114,7 +114,6 @@ public class ObjectRelatedModelsProviderTest {
 	public void setUp() throws Exception {
 		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition();
 		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			true,
 			Arrays.asList(
 				new LongTextObjectFieldBuilder(
 				).labelMap(

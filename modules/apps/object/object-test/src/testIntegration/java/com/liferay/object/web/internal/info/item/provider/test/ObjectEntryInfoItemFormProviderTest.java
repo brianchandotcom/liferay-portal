@@ -217,7 +217,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 							RandomTestUtil.randomString())
 					).name(
 						"parentTextObjectFieldName"
-					).build()));
+					).build()),
+				false);
 
 		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
 

@@ -107,7 +107,8 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_RICH_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "myRichText",
-					"myRichText", false)));
+					"myRichText", false)),
+			false);
 	}
 
 	@Test
@@ -117,7 +118,8 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
-					false)));
+					false)),
+			false);
 
 		ObjectRelationship objectRelationship =
 			ObjectRelationshipTestUtil.addObjectRelationship(
@@ -250,7 +252,8 @@ public class InfoFieldItemSelectorViewDescriptorTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "myText", "myText",
-					false)));
+					false)),
+			false);
 
 		ObjectRelationshipTestUtil.addObjectRelationship(
 			_objectRelationshipLocalService, _objectDefinition2,

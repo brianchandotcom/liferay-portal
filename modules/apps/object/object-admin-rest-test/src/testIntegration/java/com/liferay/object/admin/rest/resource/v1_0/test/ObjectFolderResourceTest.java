@@ -63,7 +63,7 @@ public class ObjectFolderResourceTest extends BaseObjectFolderResourceTestCase {
 		super.testPatchObjectFolder();
 
 		ObjectDefinition finalObjectDefinition =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition(true);
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		ObjectFolder postObjectFolder = testPostObjectFolder_addObjectFolder(
 			new ObjectFolder() {

@@ -50,7 +50,8 @@ public class PlanResourceTest extends BasePlanResourceTestCase {
 							RandomTestUtil.randomString())
 					).name(
 						fieldName
-					).build()));
+					).build()),
+				false);
 
 		HttpInvoker.HttpResponse httpResponse =
 			planResource.getPlanTemplateHttpResponse(

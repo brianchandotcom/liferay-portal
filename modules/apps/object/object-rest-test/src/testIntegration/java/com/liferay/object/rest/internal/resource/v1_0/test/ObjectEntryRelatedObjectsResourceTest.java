@@ -102,7 +102,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					_OBJECT_FIELD_NAME_1
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
-				).build()));
+				).build()),
+			false);
 
 		_objectDefinitions.add(_objectDefinition1);
 
@@ -120,7 +121,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					_OBJECT_FIELD_NAME_2
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
-				).build()));
+				).build()),
+			false);
 
 		_objectDefinitions.add(_objectDefinition2);
 
@@ -140,7 +142,8 @@ public class ObjectEntryRelatedObjectsResourceTest {
 					_OBJECT_FIELD_NAME_2
 				).labelMap(
 					RandomTestUtil.randomLocaleStringMap()
-				).build()));
+				).build()),
+			false);
 
 		_objectDefinitions.add(_objectDefinition3);
 

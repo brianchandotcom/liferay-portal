@@ -48,8 +48,8 @@ public class ObjectFieldResourceTest extends BaseObjectFieldResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_objectDefinition = ObjectDefinitionTestUtil.addCustomObjectDefinition(
-			true);
+		_objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 	}
 
 	@After

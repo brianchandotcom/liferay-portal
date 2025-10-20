@@ -576,7 +576,8 @@ public class ObjectDefinitionGraphQLTest {
 						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 						ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
 						RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
-						false)));
+						false)),
+				false);
 
 		String pluralName = TextFormatter.formatPlural(
 			StringUtil.lowerCaseFirstLetter(objectDefinition.getShortName()));

@@ -59,7 +59,6 @@ public class ObjectEntryInfoItemFieldValuesUpdaterTest
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true,
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(

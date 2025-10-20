@@ -97,7 +97,7 @@ type AddReferencedStructuresAction = {
 	type: 'add-referenced-structures';
 };
 
-type AddRepeatableGroup = {
+type AddRepeatableGroupAction = {
 	type: 'add-repeatable-group';
 	uuid?: Uuid;
 };
@@ -129,7 +129,7 @@ type RefreshReferencedStructuresAction = {
 	type: 'refresh-referenced-structures';
 };
 
-type SetSelection = {
+type SetSelectionAction = {
 	selection: State['selection'];
 	type: 'set-selection';
 };
@@ -182,7 +182,7 @@ type ValidateAction = {
 export type Action =
 	| AddFieldAction
 	| AddReferencedStructuresAction
-	| AddRepeatableGroup
+	| AddRepeatableGroupAction
 	| AddErrorAction
 	| ClearErrorsAction
 	| CreateStructureAction
@@ -190,7 +190,7 @@ export type Action =
 	| DeleteSelectionAction
 	| PublishStructureAction
 	| RefreshReferencedStructuresAction
-	| SetSelection
+	| SetSelectionAction
 	| SetWorkflowAction
 	| UngroupAction
 	| UpdateFieldAction

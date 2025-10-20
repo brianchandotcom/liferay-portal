@@ -266,7 +266,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			testGroup.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		_testPutSitePageSpecificationPageExperiencePageElement(
+		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				null, RandomTestUtil.randomString(),
 				JournalArticle.class.getName(),
@@ -276,12 +276,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
-		_getContainerPageElement(
-			RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)), null,
-			Layout.class.getName(), layout.getExternalReferenceCode(), null,
-			null, true, RandomTestUtil.randomString());
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getContainerPageElement(
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				null, Layout.class.getName(), layout.getExternalReferenceCode(),
+				null, null, true, RandomTestUtil.randomString()));
 
-		_testPutSitePageSpecificationPageExperiencePageElement(
+		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				RandomTestUtil.randomString(), null, null, null,

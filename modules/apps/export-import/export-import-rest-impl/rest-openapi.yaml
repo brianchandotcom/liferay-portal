@@ -319,7 +319,7 @@ paths:
         get:
             description:
                 Retrieves the report entries associated with the specified import process ID.
-            operationId: getImportProcessErrorsPage
+            operationId: getImportProcessReportEntriesPage
             parameters:
                 -   in: path
                     name: importProcessId

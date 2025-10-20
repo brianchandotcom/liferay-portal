@@ -214,23 +214,24 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPage() throws Exception {
+	public void testGetImportProcessReportEntriesPage() throws Exception {
 		Long importProcessId =
-			testGetImportProcessErrorsPage_getImportProcessId();
+			testGetImportProcessReportEntriesPage_getImportProcessId();
 		Long irrelevantImportProcessId =
-			testGetImportProcessErrorsPage_getIrrelevantImportProcessId();
+			testGetImportProcessReportEntriesPage_getIrrelevantImportProcessId();
 
-		Page<ReportEntry> page = reportEntryResource.getImportProcessErrorsPage(
-			importProcessId, null, null, Pagination.of(1, 10), null);
+		Page<ReportEntry> page =
+			reportEntryResource.getImportProcessReportEntriesPage(
+				importProcessId, null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
 		if (irrelevantImportProcessId != null) {
 			ReportEntry irrelevantReportEntry =
-				testGetImportProcessErrorsPage_addReportEntry(
+				testGetImportProcessReportEntriesPage_addReportEntry(
 					irrelevantImportProcessId, randomIrrelevantReportEntry());
 
-			page = reportEntryResource.getImportProcessErrorsPage(
+			page = reportEntryResource.getImportProcessReportEntriesPage(
 				irrelevantImportProcessId, null, null,
 				Pagination.of(1, (int)totalCount + 1), null);
 
@@ -240,19 +241,19 @@ public abstract class BaseReportEntryResourceTestCase {
 				irrelevantReportEntry, (List<ReportEntry>)page.getItems());
 			assertValid(
 				page,
-				testGetImportProcessErrorsPage_getExpectedActions(
+				testGetImportProcessReportEntriesPage_getExpectedActions(
 					irrelevantImportProcessId));
 		}
 
 		ReportEntry reportEntry1 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		ReportEntry reportEntry2 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
-		page = reportEntryResource.getImportProcessErrorsPage(
+		page = reportEntryResource.getImportProcessReportEntriesPage(
 			importProcessId, null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
@@ -261,11 +262,12 @@ public abstract class BaseReportEntryResourceTestCase {
 		assertContains(reportEntry2, (List<ReportEntry>)page.getItems());
 		assertValid(
 			page,
-			testGetImportProcessErrorsPage_getExpectedActions(importProcessId));
+			testGetImportProcessReportEntriesPage_getExpectedActions(
+				importProcessId));
 	}
 
 	protected Map<String, Map<String, String>>
-			testGetImportProcessErrorsPage_getExpectedActions(
+			testGetImportProcessReportEntriesPage_getExpectedActions(
 				Long importProcessId)
 		throws Exception {
 
@@ -275,7 +277,7 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithFilterDateTimeEquals()
+	public void testGetImportProcessReportEntriesPageWithFilterDateTimeEquals()
 		throws Exception {
 
 		List<EntityField> entityFields = getEntityFields(
@@ -286,16 +288,16 @@ public abstract class BaseReportEntryResourceTestCase {
 		}
 
 		Long importProcessId =
-			testGetImportProcessErrorsPage_getImportProcessId();
+			testGetImportProcessReportEntriesPage_getImportProcessId();
 
 		ReportEntry reportEntry1 = randomReportEntry();
 
-		reportEntry1 = testGetImportProcessErrorsPage_addReportEntry(
+		reportEntry1 = testGetImportProcessReportEntriesPage_addReportEntry(
 			importProcessId, reportEntry1);
 
 		for (EntityField entityField : entityFields) {
 			Page<ReportEntry> page =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null,
 					getFilterString(entityField, "between", reportEntry1),
 					Pagination.of(1, 2), null);
@@ -307,36 +309,38 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithFilterDoubleEquals()
+	public void testGetImportProcessReportEntriesPageWithFilterDoubleEquals()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithFilter("eq", EntityField.Type.DOUBLE);
+		testGetImportProcessReportEntriesPageWithFilter(
+			"eq", EntityField.Type.DOUBLE);
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithFilterStringContains()
+	public void testGetImportProcessReportEntriesPageWithFilterStringContains()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithFilter(
+		testGetImportProcessReportEntriesPageWithFilter(
 			"contains", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithFilterStringEquals()
+	public void testGetImportProcessReportEntriesPageWithFilterStringEquals()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithFilter("eq", EntityField.Type.STRING);
+		testGetImportProcessReportEntriesPageWithFilter(
+			"eq", EntityField.Type.STRING);
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithFilterStringStartsWith()
+	public void testGetImportProcessReportEntriesPageWithFilterStringStartsWith()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithFilter(
+		testGetImportProcessReportEntriesPageWithFilter(
 			"startswith", EntityField.Type.STRING);
 	}
 
-	protected void testGetImportProcessErrorsPageWithFilter(
+	protected void testGetImportProcessReportEntriesPageWithFilter(
 			String operator, EntityField.Type type)
 		throws Exception {
 
@@ -347,20 +351,20 @@ public abstract class BaseReportEntryResourceTestCase {
 		}
 
 		Long importProcessId =
-			testGetImportProcessErrorsPage_getImportProcessId();
+			testGetImportProcessReportEntriesPage_getImportProcessId();
 
 		ReportEntry reportEntry1 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		ReportEntry reportEntry2 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		for (EntityField entityField : entityFields) {
 			Page<ReportEntry> page =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null,
 					getFilterString(entityField, operator, reportEntry1),
 					Pagination.of(1, 2), null);
@@ -372,29 +376,29 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithPagination()
+	public void testGetImportProcessReportEntriesPageWithPagination()
 		throws Exception {
 
 		Long importProcessId =
-			testGetImportProcessErrorsPage_getImportProcessId();
+			testGetImportProcessReportEntriesPage_getImportProcessId();
 
 		Page<ReportEntry> reportEntriesPage =
-			reportEntryResource.getImportProcessErrorsPage(
+			reportEntryResource.getImportProcessReportEntriesPage(
 				importProcessId, null, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			reportEntriesPage.getTotalCount());
 
 		ReportEntry reportEntry1 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		ReportEntry reportEntry2 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		ReportEntry reportEntry3 =
-			testGetImportProcessErrorsPage_addReportEntry(
+			testGetImportProcessReportEntriesPage_addReportEntry(
 				importProcessId, randomReportEntry());
 
 		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
@@ -403,7 +407,7 @@ public abstract class BaseReportEntryResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<ReportEntry> page1 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
@@ -415,7 +419,7 @@ public abstract class BaseReportEntryResourceTestCase {
 			assertContains(reportEntry1, (List<ReportEntry>)page1.getItems());
 
 			Page<ReportEntry> page2 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
@@ -425,7 +429,7 @@ public abstract class BaseReportEntryResourceTestCase {
 			assertContains(reportEntry2, (List<ReportEntry>)page2.getItems());
 
 			Page<ReportEntry> page3 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
@@ -436,7 +440,7 @@ public abstract class BaseReportEntryResourceTestCase {
 		}
 		else {
 			Page<ReportEntry> page1 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(1, totalCount + 2), null);
 
@@ -448,7 +452,7 @@ public abstract class BaseReportEntryResourceTestCase {
 				reportEntries1.size());
 
 			Page<ReportEntry> page2 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(2, totalCount + 2), null);
 
@@ -461,7 +465,7 @@ public abstract class BaseReportEntryResourceTestCase {
 				reportEntries2.toString(), 1, reportEntries2.size());
 
 			Page<ReportEntry> page3 =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(1, (int)totalCount + 3), null);
 
@@ -472,10 +476,10 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithSortDateTime()
+	public void testGetImportProcessReportEntriesPageWithSortDateTime()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithSort(
+		testGetImportProcessReportEntriesPageWithSort(
 			EntityField.Type.DATE_TIME,
 			(entityField, reportEntry1, reportEntry2) -> {
 				BeanTestUtil.setProperty(
@@ -485,10 +489,10 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithSortDouble()
+	public void testGetImportProcessReportEntriesPageWithSortDouble()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithSort(
+		testGetImportProcessReportEntriesPageWithSort(
 			EntityField.Type.DOUBLE,
 			(entityField, reportEntry1, reportEntry2) -> {
 				BeanTestUtil.setProperty(
@@ -499,10 +503,10 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithSortInteger()
+	public void testGetImportProcessReportEntriesPageWithSortInteger()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithSort(
+		testGetImportProcessReportEntriesPageWithSort(
 			EntityField.Type.INTEGER,
 			(entityField, reportEntry1, reportEntry2) -> {
 				BeanTestUtil.setProperty(
@@ -513,10 +517,10 @@ public abstract class BaseReportEntryResourceTestCase {
 	}
 
 	@Test
-	public void testGetImportProcessErrorsPageWithSortString()
+	public void testGetImportProcessReportEntriesPageWithSortString()
 		throws Exception {
 
-		testGetImportProcessErrorsPageWithSort(
+		testGetImportProcessReportEntriesPageWithSort(
 			EntityField.Type.STRING,
 			(entityField, reportEntry1, reportEntry2) -> {
 				Class<?> clazz = reportEntry1.getClass();
@@ -565,7 +569,7 @@ public abstract class BaseReportEntryResourceTestCase {
 			});
 	}
 
-	protected void testGetImportProcessErrorsPageWithSort(
+	protected void testGetImportProcessReportEntriesPageWithSort(
 			EntityField.Type type,
 			UnsafeTriConsumer<EntityField, ReportEntry, ReportEntry, Exception>
 				unsafeTriConsumer)
@@ -578,7 +582,7 @@ public abstract class BaseReportEntryResourceTestCase {
 		}
 
 		Long importProcessId =
-			testGetImportProcessErrorsPage_getImportProcessId();
+			testGetImportProcessReportEntriesPage_getImportProcessId();
 
 		ReportEntry reportEntry1 = randomReportEntry();
 		ReportEntry reportEntry2 = randomReportEntry();
@@ -587,18 +591,19 @@ public abstract class BaseReportEntryResourceTestCase {
 			unsafeTriConsumer.accept(entityField, reportEntry1, reportEntry2);
 		}
 
-		reportEntry1 = testGetImportProcessErrorsPage_addReportEntry(
+		reportEntry1 = testGetImportProcessReportEntriesPage_addReportEntry(
 			importProcessId, reportEntry1);
 
-		reportEntry2 = testGetImportProcessErrorsPage_addReportEntry(
+		reportEntry2 = testGetImportProcessReportEntriesPage_addReportEntry(
 			importProcessId, reportEntry2);
 
-		Page<ReportEntry> page = reportEntryResource.getImportProcessErrorsPage(
-			importProcessId, null, null, null, null);
+		Page<ReportEntry> page =
+			reportEntryResource.getImportProcessReportEntriesPage(
+				importProcessId, null, null, null, null);
 
 		for (EntityField entityField : entityFields) {
 			Page<ReportEntry> ascPage =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":asc");
@@ -607,7 +612,7 @@ public abstract class BaseReportEntryResourceTestCase {
 			assertContains(reportEntry2, (List<ReportEntry>)ascPage.getItems());
 
 			Page<ReportEntry> descPage =
-				reportEntryResource.getImportProcessErrorsPage(
+				reportEntryResource.getImportProcessReportEntriesPage(
 					importProcessId, null, null,
 					Pagination.of(1, (int)page.getTotalCount() + 1),
 					entityField.getName() + ":desc");
@@ -619,7 +624,7 @@ public abstract class BaseReportEntryResourceTestCase {
 		}
 	}
 
-	protected ReportEntry testGetImportProcessErrorsPage_addReportEntry(
+	protected ReportEntry testGetImportProcessReportEntriesPage_addReportEntry(
 			Long importProcessId, ReportEntry reportEntry)
 		throws Exception {
 
@@ -627,14 +632,15 @@ public abstract class BaseReportEntryResourceTestCase {
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetImportProcessErrorsPage_getImportProcessId()
+	protected Long testGetImportProcessReportEntriesPage_getImportProcessId()
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long testGetImportProcessErrorsPage_getIrrelevantImportProcessId()
+	protected Long
+			testGetImportProcessReportEntriesPage_getIrrelevantImportProcessId()
 		throws Exception {
 
 		return null;

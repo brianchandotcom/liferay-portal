@@ -34,20 +34,34 @@ public interface ReportEntryResource {
 		return new Builder();
 	}
 
-	public Page<ReportEntry> getImportProcessErrorsPage(
+	public Page<ReportEntry> getImportProcessReportEntriesPage(
 			Long importProcessId, String search, String filterString,
 			Pagination pagination, String sortString)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse getImportProcessErrorsPageHttpResponse(
-			Long importProcessId, String search, String filterString,
-			Pagination pagination, String sortString)
+	public HttpInvoker.HttpResponse
+			getImportProcessReportEntriesPageHttpResponse(
+				Long importProcessId, String search, String filterString,
+				Pagination pagination, String sortString)
 		throws Exception;
 
 	public ReportEntry getReportEntry(Long reportEntryId) throws Exception;
 
 	public HttpInvoker.HttpResponse getReportEntryHttpResponse(
 			Long reportEntryId)
+		throws Exception;
+
+	public void postImportProcessReportEntriesPageExportBatch(
+			Long importProcessId, String search, String filterString,
+			String sortString, String callbackURL, String contentType,
+			String fieldNames)
+		throws Exception;
+
+	public HttpInvoker.HttpResponse
+			postImportProcessReportEntriesPageExportBatchHttpResponse(
+				Long importProcessId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
 		throws Exception;
 
 	public static class Builder {
@@ -158,13 +172,13 @@ public interface ReportEntryResource {
 
 	public static class ReportEntryResourceImpl implements ReportEntryResource {
 
-		public Page<ReportEntry> getImportProcessErrorsPage(
+		public Page<ReportEntry> getImportProcessReportEntriesPage(
 				Long importProcessId, String search, String filterString,
 				Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getImportProcessErrorsPageHttpResponse(
+				getImportProcessReportEntriesPageHttpResponse(
 					importProcessId, search, filterString, pagination,
 					sortString);
 
@@ -227,9 +241,10 @@ public interface ReportEntryResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getImportProcessErrorsPageHttpResponse(
-				Long importProcessId, String search, String filterString,
-				Pagination pagination, String sortString)
+		public HttpInvoker.HttpResponse
+				getImportProcessReportEntriesPageHttpResponse(
+					Long importProcessId, String search, String filterString,
+					Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -275,7 +290,7 @@ public interface ReportEntryResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/export-import/v1.0/import-processes/{importProcessId}/errors");
+						"/o/export-import/v1.0/import-processes/{importProcessId}/report-entries");
 
 			httpInvoker.path("importProcessId", importProcessId);
 
@@ -381,6 +396,136 @@ public interface ReportEntryResource {
 						"/o/export-import/v1.0/report-entry/{reportEntryId}");
 
 			httpInvoker.path("reportEntryId", reportEntryId);
+
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
+
+			return httpInvoker.invoke();
+		}
+
+		public void postImportProcessReportEntriesPageExportBatch(
+				Long importProcessId, String search, String filterString,
+				String sortString, String callbackURL, String contentType,
+				String fieldNames)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse =
+				postImportProcessReportEntriesPageExportBatchHttpResponse(
+					importProcessId, search, filterString, sortString,
+					callbackURL, contentType, fieldNames);
+
+			String content = httpResponse.getContent();
+
+			if ((httpResponse.getStatusCode() / 100) != 2) {
+				_logger.log(
+					Level.WARNING,
+					"Unable to process HTTP response content: " + content);
+				_logger.log(
+					Level.WARNING,
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.log(
+					Level.WARNING,
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+
+				Problem.ProblemException problemException = null;
+
+				if (Objects.equals(
+						httpResponse.getContentType(), "application/json")) {
+
+					problemException = new Problem.ProblemException(
+						Problem.toDTO(content));
+				}
+				else {
+					_logger.log(
+						Level.WARNING,
+						"Unable to process content type: " +
+							httpResponse.getContentType());
+
+					Problem problem = new Problem();
+
+					problem.setStatus(
+						String.valueOf(httpResponse.getStatusCode()));
+
+					problemException = new Problem.ProblemException(problem);
+				}
+
+				throw problemException;
+			}
+			else {
+				_logger.fine("HTTP response content: " + content);
+				_logger.fine(
+					"HTTP response message: " + httpResponse.getMessage());
+				_logger.fine(
+					"HTTP response status code: " +
+						httpResponse.getStatusCode());
+			}
+		}
+
+		public HttpInvoker.HttpResponse
+				postImportProcessReportEntriesPageExportBatchHttpResponse(
+					Long importProcessId, String search, String filterString,
+					String sortString, String callbackURL, String contentType,
+					String fieldNames)
+			throws Exception {
+
+			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+			httpInvoker.body("[]", "application/json");
+
+			if (_builder._locale != null) {
+				httpInvoker.header(
+					"Accept-Language", _builder._locale.toLanguageTag());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._headers.entrySet()) {
+
+				httpInvoker.header(entry.getKey(), entry.getValue());
+			}
+
+			for (Map.Entry<String, String> entry :
+					_builder._parameters.entrySet()) {
+
+				httpInvoker.parameter(entry.getKey(), entry.getValue());
+			}
+
+			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (search != null) {
+				httpInvoker.parameter("search", String.valueOf(search));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
+			if (sortString != null) {
+				httpInvoker.parameter("sort", sortString);
+			}
+
+			if (callbackURL != null) {
+				httpInvoker.parameter(
+					"callbackURL", String.valueOf(callbackURL));
+			}
+
+			if (contentType != null) {
+				httpInvoker.parameter(
+					"contentType", String.valueOf(contentType));
+			}
+
+			if (fieldNames != null) {
+				httpInvoker.parameter("fieldNames", String.valueOf(fieldNames));
+			}
+
+			httpInvoker.path(
+				_builder._scheme + "://" + _builder._host + ":" +
+					_builder._port + _builder._contextPath +
+						"/o/export-import/v1.0/import-processes/{importProcessId}/report-entries/export-batch");
+
+			httpInvoker.path("importProcessId", importProcessId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

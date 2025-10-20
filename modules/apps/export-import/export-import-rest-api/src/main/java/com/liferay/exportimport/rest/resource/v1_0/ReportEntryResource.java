@@ -24,6 +24,7 @@ import jakarta.annotation.Generated;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
 import java.util.Collections;
@@ -45,7 +46,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ReportEntryResource {
 
-	public Page<ReportEntry> getImportProcessErrorsPage(
+	public Page<ReportEntry> getImportProcessReportEntriesPage(
 			Long importProcessId, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
@@ -53,6 +54,13 @@ public interface ReportEntryResource {
 		throws Exception;
 
 	public ReportEntry getReportEntry(Long reportEntryId) throws Exception;
+
+	public Response postImportProcessReportEntriesPageExportBatch(
+			Long importProcessId, String search,
+			com.liferay.portal.kernel.search.filter.Filter filter,
+			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
+			String contentType, String fieldNames)
+		throws Exception;
 
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {

@@ -3206,13 +3206,10 @@ public class DefaultObjectEntryManagerImplTest
 				"listTypeEntryKey1", objectDefinition,
 				"picklistObjectFieldName");
 
-			ObjectEntry objectEntry = _defaultObjectEntryManager.getObjectEntry(
-				_simpleDTOConverterContext, objectDefinition, objectEntryId2);
-
-			Map<String, Object> properties = objectEntry.getProperties();
-
-			ListEntry listEntry = (ListEntry)properties.get(
-				"picklistObjectFieldName");
+			ListEntry listEntry = _getListEntry(
+				_defaultObjectEntryManager.getObjectEntry(
+					_simpleDTOConverterContext, objectDefinition,
+					objectEntryId2));
 
 			Assert.assertEquals(StringPool.BLANK, listEntry.getKey());
 			Assert.assertEquals(StringPool.BLANK, listEntry.getName());

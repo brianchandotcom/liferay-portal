@@ -31,7 +31,8 @@ export default function DefaultPermissionModalContent({
 	className,
 	closeModal,
 	roles,
-}: DefaultPermissionModalContentProps & {apiURL?: string}) {
+	section,
+}: DefaultPermissionModalContentProps & {apiURL?: string; section?: string}) {
 	const [currentObjectEntry, setCurrentObjectEntry] =
 		useState<CMSDefaultPermissionObjectEntryDTO | null>(null);
 	const [currentValues, setCurrentValues] =
@@ -161,10 +162,10 @@ export default function DefaultPermissionModalContent({
 			<ClayModal.Body className="p-0">
 				<DefaultPermissionFormContainer
 					actions={actions}
-					apiURL={apiURL}
 					disabled={loading}
 					onChange={onChangeHandler}
 					roles={roles}
+					section={section}
 					values={currentValues}
 				/>
 			</ClayModal.Body>

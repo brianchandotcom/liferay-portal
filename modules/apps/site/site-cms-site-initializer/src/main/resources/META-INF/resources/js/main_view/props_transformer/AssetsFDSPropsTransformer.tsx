@@ -55,7 +55,9 @@ export type AdditionalProps = {
 	fileMimeTypeIcons: Record<string, string>;
 	objectDefinitionCssClasses: Record<string, string>;
 	objectDefinitionIcons: Record<string, string>;
+	parentObjectEntryFolderExternalReferenceCode: string;
 	redirect: string;
+	rootObjectEntryFolderExternalReferenceCode: string;
 };
 
 export default function AssetsFDSPropsTransformer({
@@ -220,6 +222,9 @@ export default function AssetsFDSPropsTransformer({
 								itemData.embedded.externalReferenceCode,
 							className: itemData.entryClassName,
 							closeModal,
+							section:
+								additionalProps.rootObjectEntryFolderExternalReferenceCode ||
+								additionalProps.parentObjectEntryFolderExternalReferenceCode,
 						}),
 					size: 'full-screen',
 				});
@@ -331,6 +336,9 @@ export default function AssetsFDSPropsTransformer({
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
+					section:
+						additionalProps.rootObjectEntryFolderExternalReferenceCode ||
+						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 					selectedData,
 				});
 			}
@@ -380,6 +388,9 @@ export default function AssetsFDSPropsTransformer({
 					className: OBJECT_ENTRY_FOLDER_CLASS_NAME,
 					defaultPermissionAdditionalProps:
 						additionalProps.defaultPermissionAdditionalProps || {},
+					section:
+						additionalProps.rootObjectEntryFolderExternalReferenceCode ||
+						additionalProps.parentObjectEntryFolderExternalReferenceCode,
 					selectedData,
 				});
 			}

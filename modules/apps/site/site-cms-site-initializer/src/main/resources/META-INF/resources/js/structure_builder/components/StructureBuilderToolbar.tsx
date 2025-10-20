@@ -185,7 +185,7 @@ function SaveButton() {
 		dispatch({
 			error: 'unexpected',
 			property: 'global',
-			type: 'add-validation-error',
+			type: 'add-error',
 			uuid,
 		});
 
@@ -431,7 +431,7 @@ async function publishStructure({
 		dispatch({
 			error: 'unexpected',
 			property: 'global',
-			type: 'add-validation-error',
+			type: 'add-error',
 			uuid,
 		});
 

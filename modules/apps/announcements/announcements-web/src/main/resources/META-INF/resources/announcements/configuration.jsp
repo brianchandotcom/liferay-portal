@@ -89,8 +89,8 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> currentGroups = new ArrayList<KeyValuePair>();
 							List<KeyValuePair> availableGroups = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentGroups = new ArrayList<KeyValuePair>();
 
 							for (Group curGroup : groups) {
 								if (!curGroup.isSite()) {
@@ -130,8 +130,8 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> currentOrganizations = new ArrayList<KeyValuePair>();
 							List<KeyValuePair> availableOrganizations = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentOrganizations = new ArrayList<KeyValuePair>();
 
 							for (Organization organization : organizations) {
 								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(organization.getExternalReferenceCode()), organization.getName());
@@ -165,8 +165,8 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> currentUserGroups = new ArrayList<KeyValuePair>();
 							List<KeyValuePair> availableUserGroups = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentUserGroups = new ArrayList<KeyValuePair>();
 
 							for (UserGroup userGroup : userGroups) {
 								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(userGroup.getExternalReferenceCode()), userGroup.getName());
@@ -200,8 +200,8 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 						<liferay-ui:section>
 
 							<%
-							List<KeyValuePair> currentRoles = new ArrayList<KeyValuePair>();
 							List<KeyValuePair> availableRoles = new ArrayList<KeyValuePair>();
+							List<KeyValuePair> currentRoles = new ArrayList<KeyValuePair>();
 
 							for (Role role : roles) {
 								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(role.getExternalReferenceCode()), role.getTitle(locale));

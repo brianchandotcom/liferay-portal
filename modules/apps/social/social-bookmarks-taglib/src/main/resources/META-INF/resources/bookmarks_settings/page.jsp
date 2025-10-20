@@ -18,7 +18,6 @@ if (Validator.isNull(displayStyle)) {
 }
 
 List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
-List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 
 for (int i = 0; i < types.length; i++) {
 	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
@@ -28,6 +27,7 @@ for (int i = 0; i < types.length; i++) {
 	}
 }
 
+List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
 for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {

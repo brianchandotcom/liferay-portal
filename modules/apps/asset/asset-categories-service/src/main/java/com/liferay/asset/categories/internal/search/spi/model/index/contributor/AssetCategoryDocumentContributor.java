@@ -5,12 +5,17 @@
 
 package com.liferay.asset.categories.internal.search.spi.model.index.contributor;
 
+import com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRelTable;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetCategoryTable;
+import com.liferay.asset.kernel.model.AssetEntryTable;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +26,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentContributor;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -31,11 +38,16 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -65,8 +77,12 @@ public class AssetCategoryDocumentContributor
 			return;
 		}
 
-		List<AssetCategory> assetCategories =
-			_assetCategoryLocalService.getCategories(className, classPK);
+		Collection<AssetCategory> assetCategories = _lookupAssetCategories(
+			_classNameLocalService.getClassNameId(className), classPK);
+
+		if ((assetCategories == null) || assetCategories.isEmpty()) {
+			return;
+		}
 
 		Map<Integer, Map<Long, List<AssetCategory>>>
 			assetVocabularyVisibilityTypeMap =
@@ -212,7 +228,7 @@ public class AssetCategoryDocumentContributor
 
 	private Map<Integer, Map<Long, List<AssetCategory>>>
 		_getAssetVocabularyVisibilityTypeMap(
-			List<AssetCategory> assetCategories) {
+			Collection<AssetCategory> assetCategories) {
 
 		Map<Integer, Map<Long, List<AssetCategory>>>
 			assetVocabularyVisibilityTypeMap = new HashMap<>();
@@ -305,6 +321,93 @@ public class AssetCategoryDocumentContributor
 		return groupExternalReferenceCode;
 	}
 
+	private Collection<AssetCategory> _lookupAssetCategories(
+		long classNameId, long classPK) {
+
+		Map<Long, Map<Long, Set<Serializable>>> indexedAssetCategoryIds =
+			ReindexCacheThreadLocal.getReindexCache(
+				AssetCategoryDocumentContributor.class.getName(),
+				() -> {
+					int count = _assetCategoryLocalService.dslQueryCount(
+						DSLQueryFactoryUtil.count(
+						).from(
+							AssetCategoryTable.INSTANCE
+						),
+						false);
+
+					if (count > ReindexCacheThreadLocal.SIZE_LIMIT) {
+						return null;
+					}
+
+					Map<Long, Map<Long, Set<Serializable>>>
+						localIndexedAssetCategoryIds = new HashMap<>();
+
+					if (count == 0) {
+						return localIndexedAssetCategoryIds;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						AssetEntryTable.INSTANCE.classNameId,
+						AssetEntryTable.INSTANCE.classPK,
+						AssetCategoryTable.INSTANCE.categoryId
+					).from(
+						AssetCategoryTable.INSTANCE
+					).innerJoinON(
+						AssetEntryAssetCategoryRelTable.INSTANCE,
+						AssetCategoryTable.INSTANCE.categoryId.eq(
+							AssetEntryAssetCategoryRelTable.INSTANCE.
+								assetCategoryId)
+					).innerJoinON(
+						AssetEntryTable.INSTANCE,
+						AssetEntryAssetCategoryRelTable.INSTANCE.assetEntryId.
+							eq(AssetEntryTable.INSTANCE.entryId)
+					);
+
+					for (Object[] values :
+							(List<Object[]>)_assetCategoryLocalService.dslQuery(
+								dslQuery, false)) {
+
+						Map<Long, Set<Serializable>>
+							classNameIdAssetCategoryIds =
+								localIndexedAssetCategoryIds.computeIfAbsent(
+									(Long)values[0], key -> new HashMap<>());
+
+						Set<Serializable> classPKAssetCategoryIds =
+							classNameIdAssetCategoryIds.computeIfAbsent(
+								(Long)values[1], key -> new HashSet<>());
+
+						classPKAssetCategoryIds.add((Serializable)values[2]);
+					}
+
+					return localIndexedAssetCategoryIds;
+				});
+
+		if (indexedAssetCategoryIds == null) {
+			return _assetCategoryLocalService.getCategories(
+				classNameId, classPK);
+		}
+
+		Map<Long, Set<Serializable>> classNameIdAssetCategories =
+			indexedAssetCategoryIds.get(classNameId);
+
+		if (classNameIdAssetCategories == null) {
+			return null;
+		}
+
+		Set<Serializable> classPKAssetCategoryIds =
+			classNameIdAssetCategories.get(classPK);
+
+		if (classPKAssetCategoryIds == null) {
+			return null;
+		}
+
+		Map<Serializable, AssetCategory> assetCategories =
+			_assetCategoryLocalService.fetchPersistedModels(
+				classPKAssetCategoryIds);
+
+		return assetCategories.values();
+	}
+
 	private static final String _DELIMITER =
 		StringPool.AMPERSAND + StringPool.AMPERSAND;
 
@@ -316,6 +419,9 @@ public class AssetCategoryDocumentContributor
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -210,13 +210,13 @@ public class PageElementDTOConverter
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-			if (!_isWidgetInstance(fragmentStyledLayoutStructureItem)) {
-				return _fragmentInstancePageElementDefinitionDTOConverter.toDTO(
-					fragmentStyledLayoutStructureItem);
+			if (_isWidgetInstance(fragmentStyledLayoutStructureItem)) {
+				return _widgetInstancePageElementDefinitionDTOConverter.toDTO(
+					dtoConverterContext, fragmentStyledLayoutStructureItem);
 			}
 
-			return _widgetInstancePageElementDefinitionDTOConverter.toDTO(
-				dtoConverterContext, fragmentStyledLayoutStructureItem);
+			return _fragmentInstancePageElementDefinitionDTOConverter.toDTO(
+				fragmentStyledLayoutStructureItem);
 		}
 
 		if (Objects.equals(

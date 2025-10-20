@@ -2,75 +2,79 @@
 
 exports[`AccessTokenList should display the "Generate Token" card  above the table if the token is expired 1`] = `
 <div
-  class="table-responsive table-root flex-grow-1 mb-0"
+  class="flex-grow-1 mx-4 table-root mb-0"
 >
-  <table
-    class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+  <div
+    class="table-responsive"
   >
-    <thead>
-      <tr>
-        <th
-          class="table-head-title"
-        >
-          Token
-        </th>
-        <th
-          class="table-head-title"
-        >
-          Date Created
-        </th>
-        <th
-          class="table-head-title"
-        >
-          Expiration
-        </th>
-        <th />
-      </tr>
-    </thead>
-    <tbody
-      class="mb-0"
+    <table
+      class="table table-autofit table-striped table-list table-nowrap table-bordered"
     >
-      <tr
-        class=""
+      <thead>
+        <tr>
+          <th
+            class="table-head-title"
+          >
+            Token
+          </th>
+          <th
+            class="table-head-title"
+          >
+            Date Created
+          </th>
+          <th
+            class="table-head-title"
+          >
+            Expiration
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody
+        class="mb-0"
       >
-        <td
+        <tr
           class=""
-          data-testid="row-token-4ABC"
         >
-          <span
-            class="text-secondary mr-1"
-          >
-            Token ending in
-          </span>
-          <strong
-            class="font-weight-bold"
-          >
-            4ABC
-          </strong>
-          <div
-            class="label label-root ml-2 label-danger label-lg label-uppercase"
+          <td
+            class=""
+            data-testid="row-token-4ABC"
           >
             <span
-              class="label-item"
+              class="text-secondary mr-1"
             >
-              Expired
+              Token ending in
             </span>
-          </div>
-        </td>
-        <td>
-          Jul 10, 2018
-        </td>
-        <td>
-          Jul 09, 2018
-        </td>
-        <td
-          class="row-inline-actions"
-        >
-          <span />
-        </td>
-      </tr>
-    </tbody>
-  </table>
+            <strong
+              class="font-weight-bold"
+            >
+              4ABC
+            </strong>
+            <div
+              class="label label-root ml-2 label-danger label-lg label-uppercase"
+            >
+              <span
+                class="label-item"
+              >
+                Expired
+              </span>
+            </div>
+          </td>
+          <td>
+            Jul 10, 2018
+          </td>
+          <td>
+            Jul 09, 2018
+          </td>
+          <td
+            class="row-inline-actions"
+          >
+            <span />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;
 
@@ -158,89 +162,93 @@ exports[`AccessTokenList should render 1`] = `
             </div>
           </div>
           <div
-            class="table-responsive table-root flex-grow-1 mb-0"
+            class="flex-grow-1 mx-4 table-root mb-0"
           >
-            <table
-              class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+            <div
+              class="table-responsive"
             >
-              <thead>
-                <tr>
-                  <th
-                    class="table-head-title"
-                  >
-                    Token
-                  </th>
-                  <th
-                    class="table-head-title"
-                  >
-                    Date Created
-                  </th>
-                  <th
-                    class="table-head-title"
-                  >
-                    Expiration
-                  </th>
-                  <th />
-                </tr>
-              </thead>
-              <tbody
-                class="mb-0"
+              <table
+                class="table table-autofit table-striped table-list table-nowrap table-bordered"
               >
-                <tr
-                  class=""
+                <thead>
+                  <tr>
+                    <th
+                      class="table-head-title"
+                    >
+                      Token
+                    </th>
+                    <th
+                      class="table-head-title"
+                    >
+                      Date Created
+                    </th>
+                    <th
+                      class="table-head-title"
+                    >
+                      Expiration
+                    </th>
+                    <th />
+                  </tr>
+                </thead>
+                <tbody
+                  class="mb-0"
                 >
-                  <td
+                  <tr
                     class=""
-                    data-testid="row-token-4ABC"
                   >
-                    <span
-                      class="text-secondary mr-1"
+                    <td
+                      class=""
+                      data-testid="row-token-4ABC"
                     >
-                      Token ending in
-                    </span>
-                    <strong
-                      class="font-weight-bold"
-                    >
-                      4ABC
-                    </strong>
-                  </td>
-                  <td>
-                    Jul 10, 2018
-                  </td>
-                  <td>
-                    Aug 09, 2018
-                  </td>
-                  <td
-                    class="row-inline-actions"
-                  >
-                    <span>
-                      <button
-                        aria-label="Click to Copy"
-                        class="button-root btn btn-secondary"
-                        data-clipboard-text="1234ABC"
-                        title="Click to Copy"
-                        type="button"
+                      <span
+                        class="text-secondary mr-1"
                       >
-                        <svg
-                          class="lexicon-icon lexicon-icon-copy icon-root"
-                          role="presentation"
+                        Token ending in
+                      </span>
+                      <strong
+                        class="font-weight-bold"
+                      >
+                        4ABC
+                      </strong>
+                    </td>
+                    <td>
+                      Jul 10, 2018
+                    </td>
+                    <td>
+                      Aug 09, 2018
+                    </td>
+                    <td
+                      class="row-inline-actions"
+                    >
+                      <span>
+                        <button
+                          aria-label="Click to Copy"
+                          class="button-root btn btn-secondary"
+                          data-clipboard-text="1234ABC"
+                          title="Click to Copy"
+                          type="button"
                         >
-                          <use
-                            href="#copy"
-                          />
-                        </svg>
-                      </button>
-                      <button
-                        class="button-root btn btn-secondary"
-                        type="button"
-                      >
-                        Revoke
-                      </button>
-                    </span>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                          <svg
+                            class="lexicon-icon lexicon-icon-copy icon-root"
+                            role="presentation"
+                          >
+                            <use
+                              href="#copy"
+                            />
+                          </svg>
+                        </button>
+                        <button
+                          class="button-root btn btn-secondary"
+                          type="button"
+                        >
+                          Revoke
+                        </button>
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -275,88 +283,92 @@ exports[`AccessTokenList should render the correct date on expiration date colum
 
 exports[`AccessTokenList should show the generated token in a list and the "Generate Token" button should no longer be visible 1`] = `
 <div
-  class="table-responsive table-root flex-grow-1 mb-0"
+  class="flex-grow-1 mx-4 table-root mb-0"
 >
-  <table
-    class="table table-autofit table-hover table-heading-nowrap table-nowrap"
+  <div
+    class="table-responsive"
   >
-    <thead>
-      <tr>
-        <th
-          class="table-head-title"
-        >
-          Token
-        </th>
-        <th
-          class="table-head-title"
-        >
-          Date Created
-        </th>
-        <th
-          class="table-head-title"
-        >
-          Expiration
-        </th>
-        <th />
-      </tr>
-    </thead>
-    <tbody
-      class="mb-0"
+    <table
+      class="table table-autofit table-striped table-list table-nowrap table-bordered"
     >
-      <tr
-        class=""
+      <thead>
+        <tr>
+          <th
+            class="table-head-title"
+          >
+            Token
+          </th>
+          <th
+            class="table-head-title"
+          >
+            Date Created
+          </th>
+          <th
+            class="table-head-title"
+          >
+            Expiration
+          </th>
+          <th />
+        </tr>
+      </thead>
+      <tbody
+        class="mb-0"
       >
-        <td
+        <tr
           class=""
-          data-testid="row-token-4ABC"
         >
-          <span
-            class="text-secondary mr-1"
+          <td
+            class=""
+            data-testid="row-token-4ABC"
           >
-            Token ending in
-          </span>
-          <strong
-            class="font-weight-bold"
-          >
-            4ABC
-          </strong>
-        </td>
-        <td>
-          Jul 10, 2018
-        </td>
-        <td>
-          Aug 09, 2018
-        </td>
-        <td
-          class="row-inline-actions"
-        >
-          <span>
-            <button
-              aria-label="Click to Copy"
-              class="button-root btn btn-secondary"
-              data-clipboard-text="1234ABC"
-              title="Click to Copy"
-              type="button"
+            <span
+              class="text-secondary mr-1"
             >
-              <svg
-                class="lexicon-icon lexicon-icon-copy icon-root"
-                role="presentation"
+              Token ending in
+            </span>
+            <strong
+              class="font-weight-bold"
+            >
+              4ABC
+            </strong>
+          </td>
+          <td>
+            Jul 10, 2018
+          </td>
+          <td>
+            Aug 09, 2018
+          </td>
+          <td
+            class="row-inline-actions"
+          >
+            <span>
+              <button
+                aria-label="Click to Copy"
+                class="button-root btn btn-secondary"
+                data-clipboard-text="1234ABC"
+                title="Click to Copy"
+                type="button"
               >
-                <use
-                  href="#copy"
-                />
-              </svg>
-            </button>
-            <button
-              class="button-root btn btn-secondary"
-              type="button"
-            >
-              Revoke
-            </button>
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+                <svg
+                  class="lexicon-icon lexicon-icon-copy icon-root"
+                  role="presentation"
+                >
+                  <use
+                    href="#copy"
+                  />
+                </svg>
+              </button>
+              <button
+                class="button-root btn btn-secondary"
+                type="button"
+              >
+                Revoke
+              </button>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 `;

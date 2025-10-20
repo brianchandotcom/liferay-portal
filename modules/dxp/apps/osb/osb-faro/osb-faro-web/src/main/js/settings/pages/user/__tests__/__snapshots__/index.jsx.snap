@@ -51,6 +51,7 @@ exports[`UserRoutes should render 1`] = `
           >
             <button
               aria-expanded="false"
+              aria-label="Open Menu, Current Page: Manage Users"
               class="navbar-toggler navbar-toggler-link collapsed btn btn-unstyled"
               type="button"
             >
@@ -84,9 +85,7 @@ exports[`UserRoutes should render 1`] = `
                       class="nav-link"
                       href="/workspace/23/settings/users"
                     >
-                      <span
-                        class="navbar-text-truncate"
-                      >
+                      <span>
                         Manage Users
                       </span>
                     </a>
@@ -98,9 +97,7 @@ exports[`UserRoutes should render 1`] = `
                       class="nav-link"
                       href="/workspace/23/settings/users/requests"
                     >
-                      <span
-                        class="navbar-text-truncate"
-                      >
+                      <span>
                         Requests
                       </span>
                     </a>

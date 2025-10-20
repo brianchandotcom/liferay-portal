@@ -65,27 +65,7 @@ exports[`SelectItemsModal should render 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -105,16 +85,16 @@ exports[`SelectItemsModal should render 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -204,27 +184,7 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -244,16 +204,16 @@ exports[`SelectItemsModal should render items as an entity list 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -343,27 +303,7 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -383,16 +323,16 @@ exports[`SelectItemsModal should render with a blank submit 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -494,27 +434,7 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -534,16 +454,16 @@ exports[`SelectItemsModal should render with a custom submit message 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -633,27 +553,7 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -673,16 +573,16 @@ exports[`SelectItemsModal should render with a custom title 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -772,27 +672,7 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -812,16 +692,16 @@ exports[`SelectItemsModal should render with a successful submit 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -919,27 +799,7 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -959,16 +819,16 @@ exports[`SelectItemsModal should render with an unsuccessful submit 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -1070,27 +930,7 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -1110,16 +950,16 @@ exports[`SelectItemsModal should render with selectedItems 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -1209,27 +1049,7 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
             <ul
               class="nav-root front-nav navbar-nav"
               role="tablist"
-            >
-              <li
-                class="nav-item"
-                role="presentation"
-              >
-                <button
-                  aria-label="Ascending"
-                  class="btn-root nav-link nav-link-monospaced btn btn-outline-borderless btn-outline-unstyled"
-                  type="button"
-                >
-                  <svg
-                    class="lexicon-icon lexicon-icon-order_arrow_ascending icon-root"
-                    role="presentation"
-                  >
-                    <use
-                      href="#order_arrow_ascending"
-                    />
-                  </svg>
-                </button>
-              </li>
-            </ul>
+            />
             <div
               class="navbar-form navbar-form-autofit"
             >
@@ -1249,16 +1069,16 @@ exports[`SelectItemsModal should render with selectedItems with the disable sele
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>
@@ -1444,16 +1264,16 @@ exports[`SelectItemsModal should render without the sort button 1`] = `
                     class="input-group-inset-item input-group-inset-item-after"
                   >
                     <button
-                      aria-label="Clear"
+                      aria-label="Search"
                       class="button-root btn btn-unstyled"
                       type="button"
                     >
                       <svg
-                        class="lexicon-icon lexicon-icon-times icon-root"
+                        class="lexicon-icon lexicon-icon-search icon-root"
                         role="presentation"
                       >
                         <use
-                          href="#times"
+                          href="#search"
                         />
                       </svg>
                     </button>

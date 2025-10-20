@@ -148,6 +148,8 @@ export default {
 	'contact-sales': 'Contact Sales',
 	'contact-support': 'Contact Support',
 	'contact-us': 'Contact Us',
+	'contact-your-administrator-to-become-part-of-an-account':
+		'Contact your administrator to become part of an account.',
 	'content-media-type': 'Content Media Type',
 	'content-policy': 'Content Policy',
 	'continue': 'Continue',
@@ -162,6 +164,8 @@ export default {
 		'Create a Cloud App to be delivered as a live service.',
 	'create-a-dxp-app-to-be-delivered-as-a-download':
 		'Create a DXP App to be delivered as a download.',
+	'create-a-new-marketplace-acccount-or-join-an-already-existing-one':
+		'Create a new Marketplace acccount or join an already existing one',
 	'create-license-key': 'Create License Key',
 	'create-new-licenses-and-they-will-show-up-here':
 		'Create new licenses and they will show up here.',
@@ -670,6 +674,8 @@ export default {
 	'times-already-extended': 'Times Already Extended',
 	'timezone': 'Timezone',
 	'title': 'Title',
+	'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace':
+		'To join an existing business account, please contact your administrator, who can add you. Once added, you will automatically become part of that account and will be able to manage it and make purchases on Markeplace.',
 	'total': 'Total',
 	'transaction-details': 'Transaction Details',
 	'transaction-id': 'Transaction ID',

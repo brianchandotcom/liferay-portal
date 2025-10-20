@@ -10,8 +10,6 @@
 <%
 ViewClientExtensionEntryDisplayContext viewClientExtensionEntryDisplayContext = (ViewClientExtensionEntryDisplayContext)renderRequest.getAttribute(ClientExtensionAdminWebKeys.VIEW_CLIENT_EXTENSION_ENTRY_DISPLAY_CONTEXT);
 
-CET cet = viewClientExtensionEntryDisplayContext.getCET();
-
 Collection<Method> methods = viewClientExtensionEntryDisplayContext.getMethods();
 
 for (Method method : methods) {

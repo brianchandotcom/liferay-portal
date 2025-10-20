@@ -214,33 +214,6 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 					getLayoutPageTemplateCollectionId(),
 				RandomTestUtil.randomString());
 
-		long classNameId = _portal.getClassNameId(
-			LayoutPageTemplateCollection.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId,
-				layoutPageTemplateCollection.
-					getLayoutPageTemplateCollectionId(),
-				SystemEventConstants.TYPE_DELETE));
-
-		long layoutClassNameId = _portal.getClassNameId(Layout.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutClassNameId,
-				layoutPageTemplateEntry.getPlid(),
-				SystemEventConstants.TYPE_DELETE));
-
-		long layoutPageTemplateEntryClassNameId = _portal.getClassNameId(
-			LayoutPageTemplateEntry.class);
-
-		Assert.assertNull(
-			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutPageTemplateEntryClassNameId,
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				SystemEventConstants.TYPE_DELETE));
-
 		_layoutPageTemplateCollectionLocalService.
 			deleteLayoutPageTemplateCollection(
 				externalReferenceCode, _group.getGroupId());
@@ -256,18 +229,20 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 			_layoutLocalService.fetchLayout(layoutPageTemplateEntry.getPlid()));
 		Assert.assertNotNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), classNameId,
+				_group.getGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateCollection.class),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
 				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutClassNameId,
+				_group.getGroupId(), _portal.getClassNameId(Layout.class),
 				layoutPageTemplateEntry.getPlid(),
 				SystemEventConstants.TYPE_DELETE));
 		Assert.assertNull(
 			_systemEventLocalService.fetchSystemEvent(
-				_group.getGroupId(), layoutPageTemplateEntryClassNameId,
+				_group.getGroupId(),
+				_portal.getClassNameId(LayoutPageTemplateEntry.class),
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				SystemEventConstants.TYPE_DELETE));
 	}

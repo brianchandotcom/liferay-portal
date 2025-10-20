@@ -693,8 +693,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		}
 
 		if (to.isEmpty()) {
-			String newJavaMethodContent = StringUtil.removeFirst(
-				javaMethodContent, methodCall);
+			String newJavaMethodContent = StringUtil.replaceFirst(
+				javaMethodContent, methodCall, "", matcher.start());
 
 			String line = getLine(newJavaMethodContent, lineNumber);
 
@@ -704,7 +704,9 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 					newJavaMethodContent, line + CharPool.NEW_LINE));
 		}
 
-		return _formatParameters(methodCall, newContent, parameterNames, to);
+		return _formatParameters(
+			methodCall, newContent, parameterNames, to,
+			newContent.indexOf(javaMethodContent) + matcher.start());
 	}
 
 	private String _formatMethodSignature(
@@ -742,7 +744,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 	private String _formatParameters(
 		String methodCall, String newContent, List<String> parameterNames,
-		String to) {
+		String to, int index) {
 
 		String newMethodCall = to.substring(
 			0, to.indexOf(CharPool.OPEN_PARENTHESIS) + 1);
@@ -763,7 +765,8 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 
 		newMethodCall = newMethodCall + removedFirstMethodCall;
 
-		return StringUtil.replaceFirst(newContent, methodCall, newMethodCall);
+		return StringUtil.replaceFirst(
+			newContent, methodCall, newMethodCall, index);
 	}
 
 	private String _formatTypeParameters(

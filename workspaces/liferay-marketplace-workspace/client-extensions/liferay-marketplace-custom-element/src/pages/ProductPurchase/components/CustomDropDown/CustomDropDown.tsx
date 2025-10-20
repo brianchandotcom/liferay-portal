@@ -4,7 +4,9 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+
+import './CustomDropDown.scss';
 
 interface Option {
 	key: string;
@@ -47,22 +49,9 @@ export default function CustomDropdown({
 		onChange(option.key);
 	}
 
-	console.log('rerender');
 	return (
-		<div ref={dropdownRef} style={{position: 'relative'}}>
-			<button
-				onClick={() => setIsOpen((prev) => !prev)}
-				style={{
-					backgroundColor: 'white',
-					border: '1px solid #ccc',
-					borderRadius: '8px',
-					color: '#282934',
-					cursor: 'pointer',
-					padding: '10px 14px',
-					textAlign: 'left',
-					width: '100%',
-				}}
-			>
+		<div className="custom-drop-down-container" ref={dropdownRef}>
+			<button onClick={() => setIsOpen((prev) => !prev)}>
 				<div className="align-items-center d-flex justify-content-between">
 					{value?.name}
 					<ClayIcon symbol="caret-bottom" />
@@ -70,22 +59,7 @@ export default function CustomDropdown({
 			</button>
 
 			{isOpen && (
-				<ul
-					style={{
-						background: 'white',
-						border: '1px solid #ccc',
-						borderRadius: '8px',
-						boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-						left: 0,
-						listStyle: 'none',
-						margin: 0,
-						padding: '4px 0',
-						position: 'absolute',
-						right: 0,
-						top: '110%',
-						zIndex: 10,
-					}}
-				>
+				<ul>
 					{options.map((option) => (
 						<li
 							key={option.key}
@@ -99,9 +73,6 @@ export default function CustomDropdown({
 									selected?.key === option.key
 										? '#004AD7'
 										: '#54555F',
-								cursor: 'pointer',
-
-								padding: '10px 12px',
 							}}
 							onMouseEnter={(e) =>
 								((

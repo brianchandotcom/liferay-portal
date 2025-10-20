@@ -20,10 +20,12 @@ import zodSchema, {z} from '../../../schema/zod';
 import {AccountType} from '../constants';
 import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import ClayIcon from '@clayui/icon';
-import CustomDropdown from '../../../components/CustomDropDown/CustomDropDown';
+import CustomDropdown from '../components/CustomDropDown/CustomDropDown';
 import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
+
+import './CreateAccountModalForm.scss';
 
 type CreateAccountModalFormProps = {
 	modal: {
@@ -164,14 +166,15 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 			size={'md' as Size}
 			visible={modal.open}
 		>
-			<div style={{minHeight: '400px'}}>
+			<div className="create-account-modal-form-container">
 				<div>
-					<h1 style={{fontSize: '32px'}}>
+					<h1 className="create-account-modal-form-title">
 						{i18n.translate('new-account')}
 					</h1>
 					<p className="text-muted">
-						Create a new Marketplace acccount or join an already
-						existing one
+						{i18n.translate(
+							'create-a-new-marketplace-acccount-or-join-an-already-existing-one'
+						)}
 					</p>
 				</div>
 				<ClayForm.Group className="mb-3 pr-2 w-100">
@@ -188,7 +191,6 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 
 				{isTypeExistingBusiness ? (
 					<div className="d-flex c-gap-2 my-5">
-						{' '}
 						<div>
 							<ClayIcon
 								className="text-muted"
@@ -197,19 +199,22 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 						</div>
 						<div>
 							<strong>
-								Contact your administrator to become part of an
-								account.
-							</strong>{' '}
-							<br /> To join an existing business account, please
-							contact your administrator, who can add you. Once
-							added, you will automatically become part of that
-							account and will be able to manage it and make
-							purchases on Markeplace.
+								{i18n.translate(
+									'contact-your-administrator-to-become-part-of-an-account'
+								)}
+							</strong>
+							<br />
+							{i18n.translate(
+								'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace'
+							)}
 							<p>
 								<br />
 								<strong>
-									Any questions?{' '}
-									<a href="mailto:marketplace-admin@liferay.com">
+									Any questions?
+									<a
+										className="ml-1"
+										href="mailto:marketplace-admin@liferay.com"
+									>
 										marketplace-admin@liferay.com
 									</a>
 								</strong>
@@ -219,37 +224,18 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 				) : (
 					<>
 						<div className="mt-6">
-							<h3>Account Details</h3>
+							<h3>{i18n.translate('account-details')}</h3>
 							<hr className="mb-6 mt-2" />
 						</div>
 						<ClayForm.Group className="pr-2 w-100">
-							<div
-								style={{
-									alignItems: 'center',
-									display: 'flex',
-									gap: '1rem',
-									marginBottom: '1.5rem',
-								}}
-							>
+							<div className="account-image-container">
 								{accountImage ? (
 									<img
-										style={{
-											borderRadius: '999px',
-											height: '4.5rem',
-											width: '4.5rem',
-										}}
+										className="account-image"
 										src={previewImg}
 									/>
 								) : (
-									<div
-										className="align-items-center  d-flex justify-content-center py-5"
-										style={{
-											borderRadius: '999px',
-											backgroundColor: '#ebeef2',
-											height: '4.5rem',
-											width: '4.5rem',
-										}}
-									>
+									<div className="align-items-center  d-flex  account-image-default justify-content-center py-5">
 										<ClayIcon
 											className="text-muted"
 											aria-label="New App logo"
@@ -278,7 +264,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										className="btn btn-secondary btn-sm m-0"
 										onClick={handleDeleteImage}
 									>
-										Delete
+										{i18n.translate('delete')}
 									</Button>
 								)}
 							</div>
@@ -329,7 +315,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 
 						<ClayForm.Group className="mb-3 mt-2 pr-2 w-100">
 							<div>
-								<h3>Billing Address</h3>
+								<h3>{i18n.translate('billing-address')}</h3>
 								<hr className="mb-3" />
 							</div>
 

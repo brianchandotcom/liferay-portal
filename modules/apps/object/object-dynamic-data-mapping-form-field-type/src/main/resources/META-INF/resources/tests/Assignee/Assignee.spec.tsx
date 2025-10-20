@@ -19,12 +19,10 @@ import Assignee from '../../js/Assignee/Assignee';
 const mockResourceWithImage = {
 	items: [
 		{
-			embedded: {
-				externalReferenceCode: '456',
-				image: '/image.jpg',
-				name: 'Test Test',
-			},
-			entryClassName: 'com.liferay.portal.kernel.model.User',
+			externalReferenceCode: '456',
+			image: '/image.jpg',
+			name: 'Test Test',
+			type: 'User',
 		},
 	],
 };
@@ -32,11 +30,9 @@ const mockResourceWithImage = {
 const mockResourceWithoutImage = {
 	items: [
 		{
-			embedded: {
-				externalReferenceCode: '789',
-				name: 'Publications Admin',
-			},
-			entryClassName: 'com.liferay.portal.kernel.model.Role',
+			externalReferenceCode: '789',
+			name: 'Publications Admin',
+			type: 'Role',
 		},
 	],
 };

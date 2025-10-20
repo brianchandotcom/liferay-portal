@@ -33,7 +33,7 @@ public class ImportErrorsDisplayContext {
 	public String getAPIURL(String importProcessId) {
 		return StringBundler.concat(
 			"/o/export-import/v1.0/import-processes/", importProcessId,
-			"/errors");
+			"/report-entries");
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {

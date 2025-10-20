@@ -11,16 +11,14 @@ import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class FilesPage {
+	readonly apiHelpers: ApiHelpers;
+	readonly newButton: Locator;
 	readonly page: Page;
 
-	readonly newButton: Locator;
-	readonly publishButton: Locator;
-	readonly apiHelpers: ApiHelpers;
 	constructor(page: Page) {
-		this.page = page;
-
 		this.apiHelpers = new ApiHelpers(page);
 		this.newButton = page.getByTestId('fdsCreationActionButton').first();
+		this.page = page;
 	}
 
 	async goto() {

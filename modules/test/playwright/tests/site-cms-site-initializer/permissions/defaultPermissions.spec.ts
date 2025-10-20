@@ -586,7 +586,7 @@ test(
 );
 
 test(
-	'Display only relevant permission tabs based on apiURL',
+	'Display only relevant permission tabs based on the section',
 	{tag: '@LPD-67530'},
 	async ({contentsPage, defaultPermissionsPage, filesPage, page}) => {
 		const spaceName = 'Space' + getRandomInt();

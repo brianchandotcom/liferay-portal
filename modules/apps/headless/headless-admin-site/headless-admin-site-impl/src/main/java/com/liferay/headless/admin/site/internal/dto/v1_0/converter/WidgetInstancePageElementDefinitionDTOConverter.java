@@ -71,56 +71,59 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 			throw new UnsupportedOperationException();
 		}
 
-		return new WidgetInstancePageElementDefinition() {
-			{
-				setCssClasses(
-					() -> {
-						Set<String> cssClasses =
-							fragmentStyledLayoutStructureItem.getCssClasses();
+		WidgetInstancePageElementDefinition
+			widgetInstancePageElementDefinition =
+				new WidgetInstancePageElementDefinition();
 
-						if (SetUtil.isEmpty(cssClasses)) {
-							return null;
-						}
+		widgetInstancePageElementDefinition.setCssClasses(
+			() -> {
+				Set<String> cssClasses =
+					fragmentStyledLayoutStructureItem.getCssClasses();
 
-						return ArrayUtil.toStringArray(cssClasses);
-					});
-				setCustomCSS(
-					() -> {
-						String customCSS =
-							fragmentStyledLayoutStructureItem.getCustomCSS();
+				if (SetUtil.isEmpty(cssClasses)) {
+					return null;
+				}
 
-						if (Validator.isNotNull(customCSS)) {
-							return customCSS;
-						}
+				return ArrayUtil.toStringArray(cssClasses);
+			});
+		widgetInstancePageElementDefinition.setCustomCSS(
+			() -> {
+				String customCSS =
+					fragmentStyledLayoutStructureItem.getCustomCSS();
 
+				if (Validator.isNotNull(customCSS)) {
+					return customCSS;
+				}
+
+				return null;
+			});
+		widgetInstancePageElementDefinition.
+			setDraftWidgetInstanceExternalReferenceCode(
+				() -> {
+					FragmentEntryLink originalFragmentEntryLink =
+						_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+							fragmentEntryLink.getOriginalFragmentEntryLinkId());
+
+					if (originalFragmentEntryLink == null) {
 						return null;
-					});
-				setDraftWidgetInstanceExternalReferenceCode(
-					() -> {
-						FragmentEntryLink originalFragmentEntryLink =
-							_fragmentEntryLinkLocalService.
-								fetchFragmentEntryLink(
-									fragmentEntryLink.
-										getOriginalFragmentEntryLinkId());
+					}
 
-						if (originalFragmentEntryLink == null) {
-							return null;
-						}
+					return originalFragmentEntryLink.getExternalReferenceCode();
+				});
+		widgetInstancePageElementDefinition.setFragmentViewports(
+			() -> FragmentViewportUtil.toFragmentViewports(
+				fragmentStyledLayoutStructureItem.getItemConfigJSONObject()));
+		widgetInstancePageElementDefinition.setIndexed(
+			fragmentStyledLayoutStructureItem::isIndexed);
+		widgetInstancePageElementDefinition.setName(
+			fragmentStyledLayoutStructureItem::getName);
+		widgetInstancePageElementDefinition.setWidgetInstance(
+			() -> _getWidgetInstance(fragmentEntryLink));
+		widgetInstancePageElementDefinition.
+			setWidgetInstanceExternalReferenceCode(
+				fragmentEntryLink::getExternalReferenceCode);
 
-						return originalFragmentEntryLink.
-							getExternalReferenceCode();
-					});
-				setFragmentViewports(
-					() -> FragmentViewportUtil.toFragmentViewports(
-						fragmentStyledLayoutStructureItem.
-							getItemConfigJSONObject()));
-				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
-				setName(fragmentStyledLayoutStructureItem::getName);
-				setWidgetInstance(() -> _getWidgetInstance(fragmentEntryLink));
-				setWidgetInstanceExternalReferenceCode(
-					fragmentEntryLink::getExternalReferenceCode);
-			}
-		};
+		return widgetInstancePageElementDefinition;
 	}
 
 	private Map<String, Object> _getWidgetConfig(long plid, String portletId) {

@@ -336,7 +336,7 @@ export function useValidate() {
 					validateChild(grandChild, invalids);
 				}
 			}
-			else {
+			else if (child.type !== 'referenced-structure') {
 				errors = validateField({data: child as Field});
 
 				if (errors.size) {

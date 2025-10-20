@@ -70,7 +70,7 @@ test(
 		});
 
 		await page
-			.getByPlaceholder('Confirm Structure Name')
+			.getByPlaceholder('Confirm Content Structure Name')
 			.fill(structureName);
 		await page.getByRole('button', {name: 'Delete'}).click();
 

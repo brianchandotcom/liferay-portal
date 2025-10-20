@@ -10,10 +10,12 @@ import com.liferay.customer.exception.TicketAttachmentAlreadyApprovedException;
 import com.liferay.customer.exception.TicketAttachmentNotFoundException;
 import com.liferay.customer.model.TicketAttachment;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URI;
+import java.net.URLEncoder;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,11 +150,11 @@ public class TicketAttachmentService extends BaseService {
 		sb.append(jiraIssueKey);
 		sb.append("'");
 
-		String response = get(
-			authorization,
-			new URI(
-				"/o/c/ticketattachments?filter=" +
-					URLCodec.encodeURL(sb.toString())));
+		String uriString =
+			"/o/c/ticketattachments?filter=" +
+				URLEncoder.encode(sb.toString(), StandardCharsets.UTF_8.name());
+
+		String response = get(authorization, new URI(uriString));
 
 		if (Validator.isNull(response)) {
 			return null;

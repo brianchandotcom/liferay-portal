@@ -2455,12 +2455,10 @@ war.path=${app.server.portal.dir}/</echo>
 		<sequential>
 			<beanshell>
                 <![CDATA[
-                    Float num1 = Float.parseFloat("@{arg1}");
-                    Float num2 = Float.parseFloat("@{arg2}");
+                    Float float1 = Float.parseFloat("@{arg1}");
+                    Float float2 = Float.parseFloat("@{arg2}");
 
-                    boolean isLessThan = num1 < num2;
-
-                    project.setProperty("@{property.name}", String.valueOf(isLessThan));
+                    project.setProperty("@{property.name}", String.valueOf(float1 < float2));
                 ]]>
 			</beanshell>
 		</sequential>

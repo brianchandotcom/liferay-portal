@@ -1,9 +1,7 @@
 #cloud-config
-
 #
 # The first line/comment is the shebang line for AWS cloud-init
 #
-
 package_update: true
 package_upgrade: true
 runcmd:

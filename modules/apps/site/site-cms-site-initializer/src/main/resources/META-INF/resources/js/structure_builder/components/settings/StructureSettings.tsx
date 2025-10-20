@@ -10,6 +10,7 @@ import ClayTabs from '@clayui/tabs';
 import React, {useEffect, useState} from 'react';
 
 import focusInvalidElement from '../../../common/utils/focusInvalidElement';
+import {useCache} from '../../contexts/CacheContext';
 import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectErrors from '../../selectors/selectErrors';
 import selectStructure from '../../selectors/selectStructure';
@@ -27,6 +28,8 @@ export default function StructureSettings() {
 	const structureLabel = useSelector(selectStructureLabel);
 	const structureUuid = useSelector(selectStructureUuid);
 	const errors = useSelector(selectErrors(structureUuid));
+
+	const {data: objectDefinitions} = useCache('object-definitions');
 
 	const [activeTab, setActiveTab] = useState(0);
 
@@ -64,6 +67,7 @@ export default function StructureSettings() {
 				onSave={(translations) => {
 					dispatch({
 						label: translations,
+						objectDefinitions,
 						type: 'update-structure',
 					});
 				}}
@@ -102,6 +106,8 @@ function GeneralTab() {
 	const structure = useSelector(selectStructure);
 	const errors = useSelector(selectErrors(structure.uuid));
 
+	const {data: objectDefinitions} = useCache('object-definitions');
+
 	const {erc, name, status} = structure;
 
 	return (
@@ -111,7 +117,11 @@ function GeneralTab() {
 				error={errors.get('name')}
 				label={Liferay.Language.get('content-structure-name')}
 				onValueChange={(value) =>
-					dispatch({name: value, type: 'update-structure'})
+					dispatch({
+						name: value,
+						objectDefinitions,
+						type: 'update-structure',
+					})
 				}
 				placeholder={Liferay.Language.get('content-structure-name')}
 				required

@@ -169,6 +169,7 @@ type UpdateStructureAction = {
 	erc?: string;
 	label?: Liferay.Language.LocalizedValue<string>;
 	name?: string;
+	objectDefinitions?: ObjectDefinitions;
 	spaces?: Structure['spaces'];
 	type: 'update-structure';
 };
@@ -629,11 +630,13 @@ function reducer(state: State, action: Action): State {
 			const {type: _, ...data} = action;
 
 			const errors = validateField({
+				children: structure.children,
 				currentErrors: invalids.get(nextField.uuid),
 				data: {
 					...data,
 					name: nextName,
 				},
+				uuid: nextField.uuid,
 			});
 
 			if (errors.size) {
@@ -715,7 +718,7 @@ function reducer(state: State, action: Action): State {
 
 			// Prepare updated state
 
-			const {erc, label, name, spaces} = action;
+			const {erc, label, name, objectDefinitions, spaces} = action;
 
 			const {history, structure} = state;
 
@@ -761,6 +764,7 @@ function reducer(state: State, action: Action): State {
 			const errors = validateStructure({
 				currentErrors: invalids.get(structure.uuid),
 				data: {erc, label, name: nextName, spaces},
+				objectDefinitions,
 			});
 
 			if (errors.size) {

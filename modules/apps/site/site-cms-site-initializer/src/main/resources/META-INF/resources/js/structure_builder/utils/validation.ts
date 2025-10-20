@@ -4,14 +4,19 @@
  */
 
 import {isNullOrUndefined} from '@liferay/layout-js-components-web';
+import {sub} from 'frontend-js-web';
 import {useCallback} from 'react';
 
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectState from '../selectors/selectState';
 import selectStructureChildren from '../selectors/selectStructureChildren';
+import {ObjectDefinitions} from '../types/ObjectDefinition';
 import {RepeatableGroup, Structure, StructureChild} from '../types/Structure';
 import {Field, MultiselectField, SingleSelectField} from './field';
+
+const NAME_MAX_LENGTH = 41;
+const ERC_MAX_LENGTH = 75;
 
 export type ValidationProperty =
 	| 'erc'
@@ -22,14 +27,25 @@ export type ValidationProperty =
 	| 'picklist'
 	| 'spaces';
 
-export type ValidationError = 'empty' | 'unexpected';
+export type ValidationError =
+	| 'empty'
+	| 'invalid-character'
+	| 'in-use'
+	| 'lowercase'
+	| 'max-length'
+	| 'prefix-reserved'
+	| 'unexpected'
+	| 'uppercase';
 
 export type ErrorMap = Map<ValidationProperty, ValidationError>;
 
 export function validateField({
+	children,
 	currentErrors,
 	data,
+	uuid,
 }: {
+	children?: Structure['children'];
 	currentErrors?: ErrorMap;
 	data: {
 		erc?: Field['erc'];
@@ -40,17 +56,48 @@ export function validateField({
 			| MultiselectField['picklistId'];
 		settings?: Field['settings'];
 	};
+	uuid?: Field['uuid'];
 }): ErrorMap {
 	const {erc, label, name, picklistId, settings} = data;
 
 	const errors = new Map(currentErrors);
 
 	if (!isNullOrUndefined(erc)) {
-		erc ? errors.delete('erc') : errors.set('erc', 'empty');
+		if (!erc) {
+			errors.set('erc', 'empty');
+		}
+		else if (erc.length > ERC_MAX_LENGTH) {
+			errors.set('erc', 'max-length');
+		}
+		else if (erc.startsWith('L_')) {
+			errors.set('erc', 'prefix-reserved');
+		}
+		else {
+			errors.delete('erc');
+		}
 	}
 
 	if (!isNullOrUndefined(name)) {
-		name ? errors.delete('name') : errors.set('name', 'empty');
+		const names = getSiblingFieldNames(uuid, children);
+
+		if (!name) {
+			errors.set('name', 'empty');
+		}
+		else if (names.includes(name)) {
+			errors.set('name', 'in-use');
+		}
+		else if (!/^[a-z]$/.test(name[0])) {
+			errors.set('name', 'lowercase');
+		}
+		else if (!/^[a-zA-Z0-9]+$/.test(name)) {
+			errors.set('name', 'invalid-character');
+		}
+		else if (name.length > NAME_MAX_LENGTH) {
+			errors.set('name', 'max-length');
+		}
+		else {
+			errors.delete('name');
+		}
 	}
 
 	if (!isNullOrUndefined(label)) {
@@ -101,20 +148,52 @@ export function validateRepeatableGroup({
 export function validateStructure({
 	currentErrors,
 	data,
+	objectDefinitions,
 }: {
 	currentErrors?: ErrorMap;
 	data: Partial<Structure>;
+	objectDefinitions?: ObjectDefinitions;
 }): ErrorMap {
 	const {erc, label, name, spaces} = data;
 
 	const errors = new Map(currentErrors);
 
 	if (!isNullOrUndefined(erc)) {
-		erc ? errors.delete('erc') : errors.set('erc', 'empty');
+		if (!erc) {
+			errors.set('erc', 'empty');
+		}
+		else if (erc.length > ERC_MAX_LENGTH) {
+			errors.set('erc', 'max-length');
+		}
+		else if (erc.startsWith('L_')) {
+			errors.set('erc', 'prefix-reserved');
+		}
+		else {
+			errors.delete('erc');
+		}
 	}
 
 	if (!isNullOrUndefined(name)) {
-		name ? errors.delete('name') : errors.set('name', 'empty');
+		const names = getStructureNames(objectDefinitions);
+
+		if (!name) {
+			errors.set('name', 'empty');
+		}
+		else if (names.includes(name)) {
+			errors.set('name', 'in-use');
+		}
+		else if (!/^[A-Z]$/.test(name[0])) {
+			errors.set('name', 'uppercase');
+		}
+		else if (!/^[a-zA-Z0-9]+$/.test(name)) {
+			errors.set('name', 'invalid-character');
+		}
+		else if (name.length > NAME_MAX_LENGTH) {
+			errors.set('name', 'max-length');
+		}
+		else {
+			errors.delete('name');
+		}
 	}
 
 	if (!isNullOrUndefined(label)) {
@@ -137,12 +216,57 @@ export function validateStructure({
 
 export function getErrorMessage(
 	property: ValidationProperty,
-	error: ValidationError
+	error: ValidationError,
+	values: {
+		erc: string;
+		name: string;
+	}
 ) {
+	const {erc, name} = values;
+
 	if (property === 'global') {
 		if (error === 'unexpected') {
 			return Liferay.Language.get(
 				'an-unexpected-error-occurred-while-saving-or-publishing-the-content-structure'
+			);
+		}
+	}
+
+	if (property === 'erc') {
+		if (error === 'max-length' && erc) {
+			return `${Liferay.Language.get(
+				'maximum-number-of-characters-exceeded'
+			)}: ${erc.length}/${ERC_MAX_LENGTH}`;
+		}
+		else if (error === 'prefix-reserved') {
+			return sub(Liferay.Language.get('the-prefix-x-is-reserved'), 'L_');
+		}
+	}
+
+	if (property === 'name') {
+		if (error === 'uppercase') {
+			return Liferay.Language.get(
+				'the-first-character-must-be-an-uppercase-letter'
+			);
+		}
+		else if (error === 'lowercase') {
+			return Liferay.Language.get(
+				'the-first-character-must-be-a-lowercase-letter'
+			);
+		}
+		else if (error === 'max-length' && name) {
+			return `${Liferay.Language.get(
+				'maximum-number-of-characters-exceeded'
+			)}: ${name.length}/${NAME_MAX_LENGTH}`;
+		}
+		else if (error === 'invalid-character') {
+			return Liferay.Language.get(
+				'this-field-must-only-contain-letters-and-digits'
+			);
+		}
+		else if (error === 'in-use') {
+			return Liferay.Language.get(
+				'this-name-is-already-in-use-try-another-one'
 			);
 		}
 	}
@@ -156,6 +280,34 @@ export function getErrorMessage(
 	}
 
 	return Liferay.Language.get('an-unexpected-error-occurred');
+}
+
+function getSiblingFieldNames(
+	uuid?: Field['uuid'],
+	children?: Structure['children']
+) {
+	if (!uuid || !children) {
+		return [];
+	}
+
+	return Array.from(children.values())
+		.filter(
+			(child) =>
+				child.type !== 'referenced-structure' &&
+				child.type !== 'repeatable-group' &&
+				child.uuid !== uuid
+		)
+		.map((child) => child.name);
+}
+
+function getStructureNames(objectDefinitions?: ObjectDefinitions) {
+	if (!objectDefinitions) {
+		return [];
+	}
+
+	return Object.values(objectDefinitions).map(
+		(ObjectDefinition) => ObjectDefinition.name
+	);
 }
 
 export function useValidate() {

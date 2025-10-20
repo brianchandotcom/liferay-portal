@@ -1557,7 +1557,8 @@ public class LayoutsImporterTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, "myTextField",
-					"myTextField", false)));
+					"myTextField", false)),
+			false);
 	}
 
 	private StyleBookEntry _addStyleBookEntry(

@@ -61,7 +61,8 @@ public class RelatedObjectEntryResourceTest {
 			Collections.singletonList(
 				ObjectFieldUtil.createObjectField(
 					"Text", "String", true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)));
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false)),
+			false);
 
 		_objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition, _OBJECT_FIELD_NAME, _OBJECT_FIELD_VALUE);

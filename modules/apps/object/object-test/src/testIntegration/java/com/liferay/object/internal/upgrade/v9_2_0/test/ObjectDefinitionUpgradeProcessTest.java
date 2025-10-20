@@ -53,7 +53,8 @@ public class ObjectDefinitionUpgradeProcessTest {
 						RandomTestUtil.randomString())
 				).name(
 					"a" + RandomTestUtil.randomString()
-				).build()));
+				).build()),
+			false);
 	}
 
 	@After

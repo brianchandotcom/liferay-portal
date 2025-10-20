@@ -77,7 +77,8 @@ public abstract class BaseObjectEntryInfoItemTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"name"
-				).build()));
+				).build()),
+			false);
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition1.getObjectDefinitionId(),
@@ -93,7 +94,8 @@ public abstract class BaseObjectEntryInfoItemTestCase {
 						RandomTestUtil.randomString())
 				).name(
 					"name"
-				).build()));
+				).build()),
+			false);
 
 		objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			0, objectDefinition2.getObjectDefinitionId(),

@@ -3136,6 +3136,11 @@ components:
                             description:
                                 Custom CSS that is applied on the widget instance page element.
                             type: string
+                        draftWidgetInstanceExternalReferenceCode:
+                            # @review
+                            description:
+                                The draft widget instance external reference code.
+                            type: string
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
@@ -3148,6 +3153,11 @@ components:
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
+                        indexed:
+                            # @review
+                            description:
+                                A flag that indicates whether the widget instande page element is indexed or not.
+                            type: boolean
                         name:
                             # @review
                             description:
@@ -3158,6 +3168,11 @@ components:
                             # @review
                             description:
                                 The widget instance.
+                        widgetInstanceExternalReferenceCode:
+                            # @review
+                            description:
+                                The widget instance external reference code.
+                            type: string
             # @review
             description:
                 The page element definition of a widget instance.

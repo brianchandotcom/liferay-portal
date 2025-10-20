@@ -283,10 +283,10 @@ public class CounterDataCleanupPreupgradeProcess
 	}
 
 	private void _deleteCounter(String counterName) throws Exception {
-		try (PreparedStatement preparedStatement2 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"delete from Counter where name = '" + counterName + "'")) {
 
-			preparedStatement2.executeUpdate();
+			preparedStatement.executeUpdate();
 
 			if (_log.isInfoEnabled()) {
 				_log.info(

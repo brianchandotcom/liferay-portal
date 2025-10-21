@@ -98,7 +98,7 @@ async function fetchJSON(url, options) {
 	const response = await Liferay.Util.fetch(url, {
 		headers: {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
 		},
 		...options,
 	});

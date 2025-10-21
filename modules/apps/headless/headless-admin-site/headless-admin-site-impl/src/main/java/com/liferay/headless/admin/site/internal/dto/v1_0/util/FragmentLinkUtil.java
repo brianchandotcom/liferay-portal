@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalR
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -416,6 +417,11 @@ public class FragmentLinkUtil {
 		);
 
 		if (groupId == null) {
+			LogUtil.logOptionalReference(
+				fragmentMappedValueItemExternalReference.getClassName(),
+				fragmentMappedValueItemExternalReference.getExternalReferenceCode(),
+				fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+
 			return jsonObject;
 		}
 
@@ -426,6 +432,11 @@ public class FragmentLinkUtil {
 				groupId);
 
 		if (layout == null) {
+			LogUtil.logOptionalReference(
+				fragmentMappedValueItemExternalReference.getClassName(),
+				fragmentMappedValueItemExternalReference.getExternalReferenceCode(),
+				fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+
 			return jsonObject;
 		}
 

@@ -9688,7 +9688,7 @@ public class ObjectEntryResourceTest {
 		ObjectFieldTestUtil.addCustomObjectField(
 			TestPropsValues.getUserId(), objectField);
 
-		byte[] data = new byte[60000000];
+		byte[] data = new byte[60_000_000];
 
 		Random random = new Random();
 

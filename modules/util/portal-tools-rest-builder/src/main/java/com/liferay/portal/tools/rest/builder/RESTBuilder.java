@@ -192,6 +192,7 @@ public class RESTBuilder {
 			_createClientPaginationFile(context);
 			_createClientPermissionFile(context);
 			_createClientProblemFile(context);
+			_createClientScopeFile(context);
 			_createClientUnsafeSupplierFile(context);
 		}
 
@@ -729,6 +730,12 @@ public class RESTBuilder {
 		_createClientFile(
 			context, escapedVersion, "resource", schemaName + "Resource",
 			"client_resource");
+	}
+
+	private void _createClientScopeFile(Map<String, Object> context)
+		throws Exception {
+
+		_createClientFile(context, "", "scope", "Scope", "client_scope");
 	}
 
 	private void _createClientSerDesFile(

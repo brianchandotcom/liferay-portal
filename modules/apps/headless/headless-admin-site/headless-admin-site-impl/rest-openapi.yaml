@@ -10184,14 +10184,14 @@ paths:
                     description:
                         default response
             tags: ["Site"]
-    /sites/{externalReferenceCode}:
+    /sites/{siteExternalReferenceCode}:
         delete:
             description:
                 Deletes a site and all of its associated content.
             operationId: deleteSite
             parameters:
                 -   in: path
-                    name: externalReferenceCode
+                    name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -10205,7 +10205,7 @@ paths:
             operationId: getSite
             parameters:
                 -   in: path
-                    name: externalReferenceCode
+                    name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -10227,7 +10227,7 @@ paths:
             operationId: putSite
             parameters:
                 -   in: path
-                    name: externalReferenceCode
+                    name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -10249,12 +10249,12 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Site"
             tags: ["Site"]
-    /sites/{externalReferenceCode}/site-initializer:
+    /sites/{siteExternalReferenceCode}/site-initializer:
         get:
             operationId: getSiteSiteInitializer
             parameters:
                 -   in: path
-                    name: externalReferenceCode
+                    name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -10272,7 +10272,7 @@ paths:
             operationId: putSiteSiteInitializer
             parameters:
                 -   in: path
-                    name: externalReferenceCode
+                    name: siteExternalReferenceCode
                     required: true
                     schema:
                         type: string

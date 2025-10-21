@@ -14,7 +14,7 @@
 		{
 			"callToActionLink": "/?pendo=lv7MhJvRleZ0LDxN6rO_sPhZ2X4&step=yna7hI_cKQNrxK4teay-0o8VF-E",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -26,7 +26,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=BxHhin9L66bv-E-Nsp012p7VuGM&step=Gvc0XzAudzC33z9qUTLtS7AULwE",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -38,7 +38,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=-CqNmqlgWSTSKARtWHokWYpRZ0c&step=-sD1tOP89TtNEf5SBzioxcOO4o8",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -50,7 +50,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=tuhzgi25yZWOyyp8ETd8XcBLRnI&step=Xm-3paRNFmQbdDmffF0zNZLM-mM",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -62,7 +62,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=RyAx8zNLVxKnbo5bvlAc783MxOI&step=GMyoewGFrlwdaG6g5MAXfkGkWzY",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -74,7 +74,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=5BDVfRvjR-p23Nihe-WdHc-6WHs&step=4H6ud_YWq3cqo_YUWi0E4k88rpA",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -86,7 +86,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=B6vDG0qnWIZ3-oL4v2ijqT7VDys&step=rhhyCqniS-nDC3L55ql6XRhqJSE",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,
@@ -98,7 +98,7 @@
 		{
 			"callToActionLink": "/trialguide?pendo=GtKP4TMM64T4YVRUpjdvEk1SGD4&step=lFhSHcdRlOTGKXoz4t8Tqd2gwag",
 			"callToActionTarget": {
-				"key": "self"
+				"key": "targetSelf"
 			},
 			"callToActionText": "Start Guide",
 			"done": false,

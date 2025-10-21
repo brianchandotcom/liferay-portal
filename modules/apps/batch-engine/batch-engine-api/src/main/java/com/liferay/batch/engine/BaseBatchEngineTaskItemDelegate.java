@@ -34,8 +34,10 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		importUnsafeBiConsumer.accept(
-			items, item -> createItem(item, parameters));
+		for (T item : items) {
+			importUnsafeBiConsumer.accept(
+				item, currentItem -> createItem(currentItem, parameters));
+		}
 	}
 
 	public T createItem(T item, Map<String, Serializable> parameters)
@@ -49,13 +51,15 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		importUnsafeBiConsumer.accept(
-			items,
-			item -> {
-				deleteItem(item, parameters);
+		for (T item : items) {
+			importUnsafeBiConsumer.accept(
+				item,
+				currentItem -> {
+					deleteItem(currentItem, parameters);
 
-				return item;
-			});
+					return currentItem;
+				});
+		}
 	}
 
 	public void deleteItem(T item, Map<String, Serializable> parameters)
@@ -106,9 +110,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 	@Override
 	public void setImportUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
-				unsafeBiConsumer) {
+		UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
+			unsafeBiConsumer) {
 
 		importUnsafeBiConsumer = unsafeBiConsumer;
 	}
@@ -134,9 +137,8 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 
 	protected Company contextCompany;
 	protected User contextUser;
-	protected UnsafeBiConsumer
-		<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
-			importUnsafeBiConsumer;
+	protected UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
+		importUnsafeBiConsumer;
 	protected String languageId;
 	protected UriInfo uriInfo;
 

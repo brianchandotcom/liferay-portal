@@ -615,7 +615,7 @@
 		<column name="css" type="String" />
 		<column name="priority" type="int" />
 		<column name="faviconFileEntryId" type="long" />
-		<column name="masterLayoutPlid" type="long" />
+		<column name="masterLayoutPageTemplateEntryERC" type="String" />
 		<column name="layoutPrototypeUuid" type="String" />
 		<column name="layoutPrototypeLinkEnabled" type="boolean" />
 		<column name="layoutSetPrototypeLayoutERC" type="String" />
@@ -661,9 +661,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
-		<finder name="G_MLP" return-type="Collection">
+		<finder name="G_MLPTEERC" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="masterLayoutPlid" />
+			<finder-column name="masterLayoutPageTemplateEntryERC" />
 		</finder>
 		<finder name="C_L" return-type="Collection" where="system = [$FALSE$]">
 			<finder-column name="companyId" />

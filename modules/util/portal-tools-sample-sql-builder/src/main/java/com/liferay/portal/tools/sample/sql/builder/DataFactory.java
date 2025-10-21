@@ -549,9 +549,7 @@ public class DataFactory {
 					 StringUtil.equals(
 						 objectFieldModel.getName(), "r_userTicket_userId")) {
 
-				value =
-					(relatedUserObjectEntryId > 0) ? relatedUserObjectEntryId :
-						0;
+				value = relatedUserObjectEntryId;
 			}
 
 			sb.append(", '");

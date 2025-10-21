@@ -1042,18 +1042,20 @@ public interface LayoutModel
 	public void setFaviconFileEntryId(long faviconFileEntryId);
 
 	/**
-	 * Returns the master layout plid of this layout.
+	 * Returns the master layout page template entry erc of this layout.
 	 *
-	 * @return the master layout plid of this layout
+	 * @return the master layout page template entry erc of this layout
 	 */
-	public long getMasterLayoutPlid();
+	@AutoEscape
+	public String getMasterLayoutPageTemplateEntryERC();
 
 	/**
-	 * Sets the master layout plid of this layout.
+	 * Sets the master layout page template entry erc of this layout.
 	 *
-	 * @param masterLayoutPlid the master layout plid of this layout
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc of this layout
 	 */
-	public void setMasterLayoutPlid(long masterLayoutPlid);
+	public void setMasterLayoutPageTemplateEntryERC(
+		String masterLayoutPageTemplateEntryERC);
 
 	/**
 	 * Returns the layout prototype uuid of this layout.

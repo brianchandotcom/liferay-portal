@@ -767,6 +767,66 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public ObjectEntry postObjectEntryByObjectEntryFolderCopy(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.copyObjectEntry(
+			_getDTOConverterContext(objectEntryId), objectEntryId,
+			objectEntryFolderId, false);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryByObjectEntryFolderCopyReplace(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.copyObjectEntry(
+			_getDTOConverterContext(objectEntryId), objectEntryId,
+			objectEntryFolderId, true);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryByObjectEntryFolderMove(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.moveObjectEntry(
+			_getDTOConverterContext(objectEntryId), objectEntryId,
+			objectEntryFolderId, false);
+	}
+
+	@Override
+	public ObjectEntry postObjectEntryByObjectEntryFolderMoveReplace(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception {
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getStorageType()));
+
+		return defaultObjectEntryManager.moveObjectEntry(
+			_getDTOConverterContext(objectEntryId), objectEntryId,
+			objectEntryFolderId, true);
+	}
+
+	@Override
 	public ObjectEntry postObjectEntryByVersionCopy(
 			Long objectEntryId, Integer version)
 		throws Exception {

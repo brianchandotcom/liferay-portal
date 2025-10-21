@@ -141,7 +141,7 @@ const SitesSelector = ({
 						Liferay.Language.get(
 							'site-x-was-successfully-connected-to-the-space'
 						),
-						`<strong>${siteSelected.name}</strong>`
+						`<strong>${site.name}</strong>`
 					)
 				);
 			}

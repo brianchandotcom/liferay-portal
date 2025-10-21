@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -151,11 +152,15 @@ public class BatchEngineImportTaskExecutorImpl
 			_batchEngineImportTaskLocalService.updateBatchEngineImportTask(
 				batchEngineImportTask);
 
+			User user = _userLocalService.getUser(
+				batchEngineImportTask.getUserId());
+
 			BatchEngineTaskExecutorUtil.execute(
 				checkPermissions,
 				() -> _importFile(
-					batchEngineImportTask, batchEngineTaskItemDelegate, file),
-				_userLocalService.getUser(batchEngineImportTask.getUserId()));
+					batchEngineImportTask, batchEngineTaskItemDelegate, file,
+					user),
+				user);
 
 			_updateBatchEngineImportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineImportTask,
@@ -252,16 +257,6 @@ public class BatchEngineImportTaskExecutorImpl
 			List<T> items1, Map<String, Serializable> parameters,
 			int processedItemsCount)
 		throws Throwable {
-
-		BatchEngineTaskExecutorUtil.setContextFields(
-			batchEngineImportTask.getCompanyId(), batchEngineTaskItemDelegate,
-			parameters,
-			_userLocalService.getUser(batchEngineImportTask.getUserId()));
-
-		batchEngineTaskItemDelegate.setImportUnsafeBiConsumer(
-			(item, unsafeFunction) -> _importItem(
-				batchEngineImportTask, batchEngineTaskItemDelegate, item,
-				unsafeFunction));
 
 		BatchEngineTaskOperation batchEngineTaskOperation =
 			BatchEngineTaskOperation.valueOf(
@@ -418,7 +413,7 @@ public class BatchEngineImportTaskExecutorImpl
 	private <T> Void _importFile(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
-			File file)
+			File file, User user)
 		throws Throwable {
 
 		Map<String, Serializable> parameters = _getParameters(
@@ -428,6 +423,15 @@ public class BatchEngineImportTaskExecutorImpl
 			BatchEngineImportTaskItemReader batchEngineImportTaskItemReader =
 				_getBatchEngineImportTaskItemReader(
 					batchEngineImportTask, inputStream, parameters)) {
+
+			BatchEngineTaskExecutorUtil.setContextFields(
+				batchEngineImportTask.getCompanyId(),
+				batchEngineTaskItemDelegate, parameters, user);
+
+			batchEngineTaskItemDelegate.setImportUnsafeBiConsumer(
+				(item, unsafeFunction) -> _importItem(
+					batchEngineImportTask, batchEngineTaskItemDelegate, item,
+					unsafeFunction));
 
 			List<T> items = new ArrayList<>();
 

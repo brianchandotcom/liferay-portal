@@ -6367,6 +6367,7 @@ ${custom.upgrade.properties}</echo>
 					import com.liferay.jenkins.results.parser.test.clazz.group.BatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.JUnitBatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.NPMTestBatchTestClassGroup;
+					import com.liferay.jenkins.results.parser.test.clazz.group.PlaywrightBatchTestClassGroup;
 					import com.liferay.jenkins.results.parser.test.clazz.group.TestClassGroupFactory;
 
 					public Job.BuildProfile getBuildProfile() {
@@ -6458,7 +6459,7 @@ ${custom.upgrade.properties}</echo>
 
 						BatchTestClassGroup batchTestClassGroup = TestClassGroupFactory.newBatchTestClassGroup(project.getProperty("test.batch.name"), job);
 
-						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup || batchTestClassGroup instanceof NPMTestBatchTestClassGroup) {
+						if (batchTestClassGroup instanceof JUnitBatchTestClassGroup || batchTestClassGroup instanceof NPMTestBatchTestClassGroup || batchTestClassGroup instanceof PlaywrightBatchTestClassGroup) {
 							batchTestClassGroup.writeTestCSVReportFile();
 						}
 					}

@@ -125,10 +125,9 @@ export default function DatePicker({
 		onChange({}, date);
 	};
 
-	const Component =
-		Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
-			? DatePickerLocalizedObjectField
-			: DatePickerBase;
+	const Component = localizedObjectField
+		? DatePickerLocalizedObjectField
+		: DatePickerBase;
 
 	return (
 		<FieldBase
@@ -152,11 +151,7 @@ export default function DatePicker({
 				localizedObjectField={localizedObjectField}
 				localizedValue={localizedValue}
 				name={name}
-				onChange={
-					Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
-						? onChange
-						: handleDateChange
-				}
+				onChange={localizedObjectField ? onChange : handleDateChange}
 				predefinedValue={predefinedValue}
 				setValidField={setValidField}
 				type={type}

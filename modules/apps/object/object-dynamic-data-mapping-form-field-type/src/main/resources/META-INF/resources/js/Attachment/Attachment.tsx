@@ -42,20 +42,12 @@ export default function Attachment({
 	value,
 	...otherProps
 }: AttachmentProps) {
-	const isLocalizedObjectField: boolean =
-		Liferay.FeatureFlags['LPD-32050'] && !!localizedObjectField;
+	const isLocalizedObjectField: boolean = !!localizedObjectField;
 
 	const {portletNamespace} = useConfig();
 
 	const getAttachment = () => {
-		if (Liferay.FeatureFlags['LPD-32050']) {
-			return fileEntryProperties;
-		}
-		else if (contentURL && title) {
-			return {contentURL, title};
-		}
-
-		return null;
+		return fileEntryProperties;
 	};
 
 	const [attachment, setAttachment] = useState<AttachmentFile | null>(

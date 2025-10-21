@@ -16,8 +16,7 @@ export type MultipleSelectionProps = MultipleSelectBaseProps<string[] | string>;
 const Main = (
 	props: MultipleSelectionProps | MultipleSelectLocalizedObjectFieldProps
 ) => {
-	const isLocalizedObjectField: boolean =
-		Liferay.FeatureFlags['LPD-32050'] && !!props.localizedObjectField;
+	const isLocalizedObjectField: boolean = !!props.localizedObjectField;
 
 	return !isLocalizedObjectField ? (
 		<MultipleSelectBase {...(props as MultipleSelectionProps)} />

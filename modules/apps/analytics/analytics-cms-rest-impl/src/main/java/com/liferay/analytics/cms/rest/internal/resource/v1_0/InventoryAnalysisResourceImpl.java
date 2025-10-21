@@ -138,6 +138,7 @@ public class InventoryAnalysisResourceImpl
 						"InventoryAnalysisItems"
 					)
 				)));
+
 		return inventoryAnalysis;
 	}
 

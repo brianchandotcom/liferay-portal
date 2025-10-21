@@ -120,18 +120,6 @@ components:
                         emptyCollectionConfig:
                             $ref: "#/components/schemas/EmptyCollectionConfig"
                             type: object
-                        fragmentStyle:
-                            $ref: "#/components/schemas/FragmentStyle"
-                            # @review
-                            description:
-                                The fragment style of the collection page element.
-                        fragmentViewports:
-                            # @review
-                            description:
-                                The fragment viewports of the collection page element.
-                            items:
-                                $ref: "#/components/schemas/FragmentViewport"
-                            type: array
                         layout:
                             $ref: "#/components/schemas/BasicLayout"
                             # @review

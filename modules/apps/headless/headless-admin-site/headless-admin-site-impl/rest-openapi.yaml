@@ -102,51 +102,29 @@ components:
             description:
                 The page element definition of a Collection Item.
             type: object
+        CollectionListStyle:
+            # @review
+            description:
+                The page collection's list style.
+            discriminator:
+                mapping:
+                    ListStyle: "#/components/schemas/ListStyle"
+                    Template: "#/components/schemas/TemplateListStyle"
+                propertyName: collectionListStyleType
+            properties:
+                collectionListStyleType:
+                    # @review
+                    description:
+                        The collection's list style (ListStyle, Template).
+                    enum: [ListStyle, Template]
+                    type: string
+            type: object
         CollectionPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        collectionLayout:
-                            allOf:
-                                -   $ref: "#/components/schemas/BasicLayout"
-                                -   properties:
-                                        gutters:
-                                            # @review
-                                            description:
-                                                A flag that indicates whether the collection page element has gutters if
-                                                a grid list style is selected.
-                                            type: boolean
-                                        listItemStyle:
-                                            # @review
-                                            description:
-                                                The style of a list of items in the collection page element.
-                                            type: string
-                                        listStyle:
-                                            # @review
-                                            description:
-                                                The style of a list in the collection page element.
-                                            type: string
-                                        numberOfColumns:
-                                            # @review
-                                            description:
-                                                The number of columns in the collection page element.
-                                            type: integer
-                                        templateKey:
-                                            # @review
-                                            description:
-                                                The collection page element's template key.
-                                            type: string
-                                        verticalAlignment:
-                                            # @review
-                                            description:
-                                                The vertical alignment property of the collection page element if a grid
-                                                list style is selected..
-                                            enum: [Bottom, Middle, Top]
-                                            type: string
-                            # @review
-                            description:
-                                The collection page element's layout.
-                            type: object
+                        collectionListStyle:
+                            $ref: "#/components/schemas/CollectionListStyle"
                         collectionReference:
                             $ref: "#/components/schemas/CollectionReference"
                         collectionViewports:
@@ -1898,6 +1876,41 @@ components:
                                 The width's type (fixed or fluid).
                             enum: [Fixed, Fluid]
                             type: string
+        ListStyle:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/CollectionListStyle"
+                -   properties:
+                        listStyleDefinition:
+                            allOf:
+                                -   $ref: "#/components/schemas/BasicLayout"
+                                -   properties:
+                                        gutters:
+                                            # @review
+                                            description:
+                                                A flag that indicates whether the collection page element has gutters if
+                                                a grid list style is selected.
+                                            type: boolean
+                                        numberOfColumns:
+                                            # @review
+                                            description:
+                                                The number of columns in the collection page element.
+                                            type: integer
+                                        verticalAlignment:
+                                            # @review
+                                            description:
+                                                The vertical alignment property of the collection page element if a grid
+                                                list style is selected..
+                                            enum: [Bottom, Middle, Top]
+                                            type: string
+                            type: object
+                        listStyleType:
+                            enum: [Grid, FlexColumn, FlexRow]
+                            type: string
+            # @review
+            description:
+                The page collection's list style.
+            type: object
         MasterPage:
             # @review
             description:
@@ -1982,7 +1995,6 @@ components:
                     description:
                         A valid external identifier to reference this page.
                     type: string
-            type: object
         MessageFormSubmissionResult:
             # @review
             description:
@@ -3130,6 +3142,29 @@ components:
                     maximum: 1
                     minimum: 0
                     type: number
+            type: object
+        TemplateListStyle:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/CollectionListStyle"
+                -   properties:
+                        listItemStyleClassName:
+                            # @review
+                            description:
+                                The style className of a list of items in the collection page element.
+                            type: string
+                        listStyleClassName:
+                            # @review
+                            description:
+                                The style className of a list in the collection page element.
+                            type: string
+                        templateKey:
+                            # @review
+                            description:
+                                The collection page element's template key.
+                            type: string
+            description:
+                The page collection's template list style.
             type: object
         URLActionExecutionResult:
             # @review

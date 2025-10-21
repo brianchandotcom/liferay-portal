@@ -4,8 +4,8 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {useEffect, useRef, useState} from 'react';
 import classNames from 'classnames';
+import {useEffect, useRef, useState} from 'react';
 
 import './AccountSelectDropDown.scss';
 

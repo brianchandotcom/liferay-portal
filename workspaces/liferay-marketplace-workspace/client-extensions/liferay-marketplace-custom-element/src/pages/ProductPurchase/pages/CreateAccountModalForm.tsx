@@ -9,7 +9,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Size} from '@clayui/modal/lib/types';
 import {zodResolver} from '@hookform/resolvers/zod';
-import {ChangeEvent, useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import {useForm} from 'react-hook-form';
 
 import {Input} from '../../../components/Input/Input';
@@ -122,8 +122,6 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 				},
 			};
 
-			debugger;
-
 			const account = await marketplaceOAuth2.createAccount(payload);
 			await CommerceSelectAccount.selectAccount(account.id);
 			window.location.reload();
@@ -149,6 +147,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 
 		if (!file) {
 			setValue('accountImage', undefined);
+
 			return;
 		}
 		setValue('accountImage', file);

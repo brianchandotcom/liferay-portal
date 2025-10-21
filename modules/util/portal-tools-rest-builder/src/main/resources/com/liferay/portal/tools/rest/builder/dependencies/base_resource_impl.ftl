@@ -417,7 +417,7 @@ public abstract class Base${schemaName}ResourceImpl
 					vulcanBatchEngineImportTaskResource.putImportTask(${javaDataType}.class.getName(), callbackURL, object)
 				).build();
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "PermissionsPage")>
-				<#assign identifierArgument>
+				<#assign identifierParameter>
 					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
 						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
@@ -429,8 +429,8 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 				</#assign>
 
-				<#if identifierArgument??>
-					<@defineCheckPermissionMethodVariables identifierArgument = identifierArgument />
+				<#if identifierParameter??>
+					<@defineCheckPermissionMethodVariables identifierParameter = identifierParameter />
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
 
@@ -444,8 +444,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign generateScopedGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
 					<@defineCheckPermissionMethodVariables
-						identifierArgument = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
-						parentIdentifierArgument = parentSchemaVarName + "ExternalReferenceCode"
+						identifierParameter = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						parentIdentifierParameter = parentSchemaVarName + "ExternalReferenceCode"
 					/>
 
 					PermissionServiceUtil.checkPermission(groupId, resourceName, resourceId);
@@ -454,19 +454,19 @@ public abstract class Base${schemaName}ResourceImpl
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, parentSchemaVarName + "Id")>
 					<#assign
 						generateGetPermissionCheckerMethods = true
-						parentIdentifierArgument = parentSchemaVarName + "Id"
+						parentIdentifierParameter = parentSchemaVarName + "Id"
 					/>
 
-					String portletName = getPermissionCheckerPortletName(${parentIdentifierArgument});
+					String portletName = getPermissionCheckerPortletName(${parentIdentifierParameter});
 
-					PermissionServiceUtil.checkPermission(${parentIdentifierArgument}, portletName, ${parentIdentifierArgument});
+					PermissionServiceUtil.checkPermission(${parentIdentifierParameter}, portletName, ${parentIdentifierParameter});
 
-					return toPermissionPage(${getActions(parentIdentifierArgument, parentIdentifierArgument, "portletName", parentSchemaName + schemaName)}, ${parentIdentifierArgument}, portletName, roleNames);
+					return toPermissionPage(${getActions(parentIdentifierParameter, parentIdentifierParameter, "portletName", parentSchemaName + schemaName)}, ${parentIdentifierParameter}, portletName, roleNames);
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			<#elseif stringUtil.equals(javaMethodSignature.methodName, "put" + schemaName + "PermissionsPage")>
-				<#assign identifierArgument>
+				<#assign identifierParameter>
 					<#if freeMarkerTool.hasParameter(javaMethodSignature, schemaVarName + "ExternalReferenceCode")>
 						<#assign generateGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
@@ -478,8 +478,8 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 				</#assign>
 
-				<#if identifierArgument??>
-					<@defineCheckPermissionMethodVariables identifierArgument = identifierArgument />
+				<#if identifierParameter??>
+					<@defineCheckPermissionMethodVariables identifierParameter = identifierParameter />
 
 					<@updateResourcePermissions
 						actions = getActions("groupId", "resourceId", "resourceName", schemaName)
@@ -496,8 +496,8 @@ public abstract class Base${schemaName}ResourceImpl
 					<#assign generateScopedGetPermissionCheckerMethodsByExternalReferenceCode = true />
 
 					<@defineCheckPermissionMethodVariables
-						identifierArgument = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
-						parentIdentifierArgument = parentSchemaVarName + "ExternalReferenceCode"
+						identifierParameter = freeMarkerTool.getExternalReferenceCodeParameterName(javaMethodSignature, schemaName)
+						parentIdentifierParameter = parentSchemaVarName + "ExternalReferenceCode"
 					/>
 
 					<@updateResourcePermissions
@@ -509,15 +509,15 @@ public abstract class Base${schemaName}ResourceImpl
 				<#elseif freeMarkerTool.hasParameter(javaMethodSignature, parentSchemaVarName + "Id")>
 					<#assign
 						generateGetPermissionCheckerMethods = true
-						parentIdentifierArgument = parentSchemaVarName + "Id"
+						parentIdentifierParameter = parentSchemaVarName + "Id"
 					/>
 
-					String portletName = getPermissionCheckerPortletName(${parentIdentifierArgument});
+					String portletName = getPermissionCheckerPortletName(${parentIdentifierParameter});
 
 					<@updateResourcePermissions
-						actions = getActions(parentIdentifierArgument, parentIdentifierArgument, "portletName", parentSchemaName + schemaName)
-						groupId = parentIdentifierArgument
-						resourceId = parentIdentifierArgument
+						actions = getActions(parentIdentifierParameter, parentIdentifierParameter, "portletName", parentSchemaName + schemaName)
+						groupId = parentIdentifierParameter
+						resourceId = parentIdentifierParameter
 						resourceName = "portletName"
 					/>
 				<#else>
@@ -2004,14 +2004,14 @@ public abstract class Base${schemaName}ResourceImpl
 </#function>
 
 <#macro defineCheckPermissionMethodVariables
-	identifierArgument
-	parentIdentifierArgument=""
+	identifierParameter
+	parentIdentifierParameter=""
 >
-	<#assign hasParentSchema = parentIdentifierArgument?has_content />
+	<#assign hasParentSchema = parentIdentifierParameter?has_content />
 
-	Long groupId = getPermissionCheckerGroupId(${hasParentSchema?then(parentIdentifierArgument, identifierArgument)});
-	String resourceName = getPermissionCheckerResourceName(${hasParentSchema?then(parentIdentifierArgument + ", ", "") + identifierArgument});
-	Long resourceId = getPermissionCheckerResourceId(${hasParentSchema?then(parentIdentifierArgument + ", ", "") + identifierArgument});
+	Long groupId = getPermissionCheckerGroupId(${hasParentSchema?then(parentIdentifierParameter, identifierParameter)});
+	String resourceName = getPermissionCheckerResourceName(${hasParentSchema?then(parentIdentifierParameter + ", ", "") + identifierParameter});
+	Long resourceId = getPermissionCheckerResourceId(${hasParentSchema?then(parentIdentifierParameter + ", ", "") + identifierParameter});
 </#macro>
 
 <#macro getCreateBatchJavaMethodParameters

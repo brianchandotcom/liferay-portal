@@ -122,7 +122,22 @@ public class InventoryAnalysisResourceImpl
 						ObjectEntryTable.INSTANCE.objectEntryId),
 					groupIds, languageId, rangeEnd, rangeKey, rangeStart,
 					structureId, tagId, vocabularyId)));
-
+		inventoryAnalysis.setTotalItems(
+			() -> (long)_objectEntryLocalService.dslQueryCount(
+				DSLQueryFactoryUtil.count(
+				).from(
+					_getGroupByStep(
+						categoryId,
+						DSLQueryFactoryUtil.select(
+							_getSelectExpressions(groupBy)),
+						groupIds, languageId, rangeEnd, rangeKey, rangeStart,
+						structureId, tagId, vocabularyId
+					).groupBy(
+						_getGroupByExpressions(groupBy)
+					).as(
+						"InventoryAnalysisItems"
+					)
+				)));
 		return inventoryAnalysis;
 	}
 

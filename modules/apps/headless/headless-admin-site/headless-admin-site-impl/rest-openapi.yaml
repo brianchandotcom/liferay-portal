@@ -10094,43 +10094,6 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["UtilityPage"]
-    "/sites/{siteId}":
-        delete:
-            description:
-                Deletes a site and all of its associated content.
-            operationId: deleteSite
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["Site"]
-        get:
-            operationId: getSite
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-            tags: ["Site"]
     /sites:
         get:
             description:
@@ -10215,11 +10178,39 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Site"
             tags: ["Site"]
-    /sites/by-external-reference-code/{externalReferenceCode}:
+    /sites/site-initializer:
+        post:
+            description:
+                Adds a new site based on a multipart/form-data
+            operationId: postSiteSiteInitializer
+            requestBody:
+                content:
+                    multipart/form-data:
+                        schema:
+                            properties:
+                                file:
+                                    format: binary
+                                    type: string
+                                site:
+                                    $ref: "#/components/schemas/Site"
+                            type: object
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Site"
+                    description:
+                        default response
+            tags: ["Site"]
+    /sites/{externalReferenceCode}:
         delete:
             description:
                 Deletes a site and all of its associated content.
-            operationId: deleteSiteByExternalReferenceCode
+            operationId: deleteSite
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -10233,7 +10224,7 @@ paths:
                         application/xml: {}
             tags: ["Site"]
         get:
-            operationId: getSiteByExternalReferenceCode
+            operationId: getSite
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -10283,9 +10274,9 @@ paths:
                     description:
                         default response
             tags: ["Site"]
-    /sites/by-external-reference-code/{externalReferenceCode}/site-initializer:
+    /sites/{externalReferenceCode}/site-initializer:
         get:
-            operationId: getSiteByExternalReferenceCodeSiteInitializer
+            operationId: getSiteSiteInitializer
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -10299,32 +10290,4 @@ paths:
                             schema:
                                 format: binary
                                 type: string
-            tags: ["Site"]
-    /sites/site-initializer:
-        post:
-            description:
-                Adds a new site based on a multipart/form-data
-            operationId: postSiteSiteInitializer
-            requestBody:
-                content:
-                    multipart/form-data:
-                        schema:
-                            properties:
-                                file:
-                                    format: binary
-                                    type: string
-                                site:
-                                    $ref: "#/components/schemas/Site"
-                            type: object
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/Site"
-                    description:
-                        default response
             tags: ["Site"]

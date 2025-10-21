@@ -10243,10 +10243,27 @@ paths:
                     description:
                         default response
             tags: ["Site"]
+    /sites/{externalReferenceCode}/site-initializer:
+        get:
+            operationId: getSiteSiteInitializer
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/zip:
+                            schema:
+                                format: binary
+                                type: string
+            tags: ["Site"]
         put:
             description:
                 Adds or update a new site
-            operationId: putSiteByExternalReferenceCode
+            operationId: putSiteSiteInitializer
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -10273,21 +10290,4 @@ paths:
                                 $ref: "#/components/schemas/Site"
                     description:
                         default response
-            tags: ["Site"]
-    /sites/{externalReferenceCode}/site-initializer:
-        get:
-            operationId: getSiteSiteInitializer
-            parameters:
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/zip:
-                            schema:
-                                format: binary
-                                type: string
             tags: ["Site"]

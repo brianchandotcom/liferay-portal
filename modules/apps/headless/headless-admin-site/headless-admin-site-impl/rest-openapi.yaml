@@ -173,7 +173,6 @@ components:
                             enum: [
                                 None,
                                 Numeric,
-                                Regular,
                                 Simple]
                             type: string
                         templateKey:

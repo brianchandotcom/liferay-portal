@@ -312,8 +312,7 @@ public class FragmentLinkUtil {
 			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 	}
 
-	private static Long _getGroupId(Scope scope, long scopeGroupId)
-		throws PortalException {
+	private static Long _getGroupId(Scope scope, long scopeGroupId) {
 
 		if ((scope == null) ||
 			Validator.isNull(scope.getExternalReferenceCode())) {

@@ -125,6 +125,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
 			return _collectionPageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(CollectionStyledLayoutStructureItem)layoutStructureItem);
 		}
 
@@ -132,14 +133,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLLECTION_ITEM)) {
 
-			CollectionItemPageElementDefinition
-				collectionItemPageElementDefinition =
-					new CollectionItemPageElementDefinition();
-
-			collectionItemPageElementDefinition.setType(
-				PageElementDefinition.Type.COLLECTION_ITEM);
-
-			return collectionItemPageElementDefinition;
+			return new CollectionItemPageElementDefinition();
 		}
 
 		if (Objects.equals(

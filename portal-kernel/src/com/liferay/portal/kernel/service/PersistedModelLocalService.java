@@ -27,9 +27,27 @@ public interface PersistedModelLocalService {
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	public <T> T dslQuery(DSLQuery dslQuery);
+	public default <T> T dslQuery(DSLQuery dslQuery) {
+		return dslQuery(dslQuery, true);
+	}
 
-	public int dslQueryCount(DSLQuery dslQuery);
+	public default <T> T dslQuery(DSLQuery dslQuery, boolean useFinderCache) {
+		BasePersistence<?> basePersistence = getBasePersistence();
+
+		return (T)basePersistence.dslQuery(dslQuery, useFinderCache);
+	}
+
+	public default int dslQueryCount(DSLQuery dslQuery) {
+		return dslQueryCount(dslQuery, true);
+	}
+
+	public default int dslQueryCount(
+		DSLQuery dslQuery, boolean useFinderCache) {
+
+		Long count = dslQuery(dslQuery, useFinderCache);
+
+		return count.intValue();
+	}
 
 	public default PersistedModel fetchPersistedModel(
 		Serializable primaryKeyObj) {

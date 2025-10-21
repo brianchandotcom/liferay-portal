@@ -117,6 +117,16 @@ public class ObjectEntryLocalServiceUtil {
 		getService().checkObjectEntries(companyId);
 	}
 
+	public static ObjectEntry copyObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *
@@ -700,6 +710,16 @@ public class ObjectEntryLocalServiceUtil {
 
 		getService().moveObjectEntriesToTrash(
 			userId, objectEntryFolder, serviceContext);
+	}
+
+	public static ObjectEntry moveObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	public static ObjectEntry moveObjectEntryToTrash(

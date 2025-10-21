@@ -107,10 +107,33 @@ components:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         collectionLayout:
-                            $ref: "#/components/schemas/BasicLayout"
+                            allOf:
+                                -   $ref: "#/components/schemas/BasicLayout"
+                                -   properties:
+                                        listItemStyle:
+                                            # @review
+                                            description:
+                                                The style of a list of items in the collection page element.
+                                            type: string
+                                        listStyle:
+                                            # @review
+                                            description:
+                                                The style of a list in the collection page element.
+                                            type: string
+                                        numberOfColumns:
+                                            # @review
+                                            description:
+                                                The number of columns in the collection page element.
+                                            type: integer
+                                        templateKey:
+                                            # @review
+                                            description:
+                                                The collection page element's template key.
+                                            type: string
                             # @review
                             description:
-                                the collection page element's layout.
+                                The collection page element's layout.
+                            type: object
                         collectionReference:
                             $ref: "#/components/schemas/CollectionReference"
                         collectionViewports:
@@ -138,26 +161,11 @@ components:
                             description:
                                 Specifies if the collection is hidden to the user.
                             type: boolean
-                        listItemStyle:
-                            # @review
-                            description:
-                                The style of a list of items in the collection page element.
-                            type: string
-                        listStyle:
-                            # @review
-                            description:
-                                The style of a list in the collection page element.
-                            type: string
                         name:
                             # @review
                             description:
                                 The custom name of a collection page element.
                             type: string
-                        numberOfColumns:
-                            # @review
-                            description:
-                                The number of columns in the collection page element.
-                            type: integer
                         numberOfItems:
                             # @review
                             description:
@@ -184,11 +192,6 @@ components:
                                 None,
                                 Numeric,
                                 Simple]
-                            type: string
-                        templateKey:
-                            # @review
-                            description:
-                                The collection page element's template key.
                             type: string
             # @review
             description:

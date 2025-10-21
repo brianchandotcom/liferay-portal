@@ -57,8 +57,10 @@ public class VerifyUUID extends VerifyProcess {
 					connection.prepareStatement(
 						StringBundler.concat(
 							"update ", verifiableUUIDModel.getTableName(),
-							" set uuid_ = ", db.getNewUuidFunctionName(),
-							" where uuid_ is null or uuid_ = ''"))) {
+							" set uuid_ = ? where uuid_ is null or uuid_ = ",
+							"''"))) {
+
+				preparedStatement.setString(1, db.getNewUuidFunctionName());
 
 				preparedStatement.executeUpdate();
 

@@ -159,12 +159,14 @@ components:
                         numberOfItemsPerPage:
                             # @review
                             description:
-                                The number of items per page in the collection page element.
+                                The maximum number of items per page to display in the collection page element when
+                                pagination is enabled.
                             type: integer
                         numberOfPages:
                             # @review
                             description:
-                                The maximum number of pages to show when pagination is enabled.
+                                The maximum number of pages to display in the collection page element when pagination is
+                                enabled.
                             type: integer
                         paginationType:
                             # @review

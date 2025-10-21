@@ -93,6 +93,7 @@ components:
                 enableIndexSearch:
                     type: boolean
                 enableLocalization:
+                    readOnly: true
                     type: boolean
                 enableObjectEntryDraft:
                     type: boolean

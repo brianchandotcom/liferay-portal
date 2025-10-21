@@ -34,7 +34,8 @@
 					},
 					"localized": false,
 					"name": "callToActionLink",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -87,7 +88,8 @@
 					},
 					"localized": false,
 					"name": "callToActionText",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -108,7 +110,8 @@
 					},
 					"localized": false,
 					"name": "done",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -155,7 +158,8 @@
 					},
 					"localized": false,
 					"name": "timeToComplete",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,
@@ -176,7 +180,8 @@
 					},
 					"localized": false,
 					"name": "title",
-					"objectFieldSettings": [],
+					"objectFieldSettings": [
+					],
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,

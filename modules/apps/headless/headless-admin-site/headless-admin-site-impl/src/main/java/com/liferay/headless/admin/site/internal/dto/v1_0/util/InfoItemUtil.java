@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -70,9 +71,12 @@ public class InfoItemUtil {
 				infoItemReference.getInfoItemIdentifier();
 		}
 		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
 			}
+
+			LogUtil.logOptionalReference(
+				className, externalReferenceCode, scope, scopeGroupId);
 		}
 
 		return null;

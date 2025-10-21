@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -42,8 +41,8 @@ import java.util.Objects;
 public class FragmentLinkUtil {
 
 	public static FragmentLink toFragmentLink(
-		InfoItemServiceRegistry infoItemServiceRegistry, JSONObject jsonObject,
-		long scopeGroupId) {
+		long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
+		JSONObject jsonObject, long scopeGroupId) {
 
 		if (jsonObject == null) {
 			return null;
@@ -76,14 +75,14 @@ public class FragmentLinkUtil {
 					});
 				setValue(
 					() -> _toFragmentLinkValue(
-						infoItemServiceRegistry, jsonObject, mappedValue,
-						scopeGroupId));
+						companyId, infoItemServiceRegistry, jsonObject,
+						mappedValue, scopeGroupId));
 			}
 		};
 	}
 
 	public static JSONObject toJSONObject(
-			FragmentLink fragmentLink,
+			long companyId, FragmentLink fragmentLink,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
 		throws PortalException {
 
@@ -110,7 +109,7 @@ public class FragmentLinkUtil {
 		}
 		else {
 			jsonObject = _getFragmentMappedValueJSONObject(
-				(FragmentLinkMappedValue)fragmentLinkValue,
+				companyId, (FragmentLinkMappedValue)fragmentLinkValue,
 				infoItemServiceRegistry, scopeGroupId);
 
 			if (jsonObject == null) {
@@ -126,22 +125,6 @@ public class FragmentLinkUtil {
 		}
 
 		return JSONUtil.put("link", jsonObject);
-	}
-
-	private static Long _getCompanyId(long scopeGroupId) {
-		Group group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
-
-		if (group != null) {
-			return group.getCompanyId();
-		}
-
-		Long companyId = CompanyThreadLocal.getCompanyId();
-
-		if (companyId != null) {
-			return companyId;
-		}
-
-		return null;
 	}
 
 	private static String _getFieldKey(JSONObject jsonObject) {
@@ -162,7 +145,7 @@ public class FragmentLinkUtil {
 
 	private static FragmentMappedValueItemExternalReference
 			_getFragmentMappedValueItemExternalReference(
-				InfoItemServiceRegistry infoItemServiceRegistry,
+				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 				JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
@@ -172,8 +155,6 @@ public class FragmentLinkUtil {
 		if (Validator.isNull(fieldId) && (layoutJSONObject == null)) {
 			return null;
 		}
-
-		Long companyId = _getCompanyId(scopeGroupId);
 
 		if (layoutJSONObject != null) {
 			return _toLayoutFragmentMappedValueItemExternalReference(
@@ -231,13 +212,13 @@ public class FragmentLinkUtil {
 
 	private static FragmentMappedValueItemReference
 			_getFragmentMappedValueItemReference(
-				InfoItemServiceRegistry infoItemServiceRegistry,
+				long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 				JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		if (!jsonObject.has("mappedField")) {
 			return _getFragmentMappedValueItemExternalReference(
-				infoItemServiceRegistry, jsonObject, scopeGroupId);
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
 		FragmentMappedValueItemContextReference
@@ -253,7 +234,7 @@ public class FragmentLinkUtil {
 	}
 
 	private static JSONObject _getFragmentMappedValueJSONObject(
-			FragmentLinkMappedValue fragmentLinkMappedValue,
+			long companyId, FragmentLinkMappedValue fragmentLinkMappedValue,
 			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
 		throws PortalException {
 
@@ -302,7 +283,8 @@ public class FragmentLinkUtil {
 			return JSONUtil.put(
 				"layout",
 				_getMappedLayoutJSONObject(
-					fragmentMappedValueItemExternalReference, scopeGroupId));
+					companyId, fragmentMappedValueItemExternalReference,
+					scopeGroupId));
 		}
 
 		return InfoItemUtil.getMappedItemJSONObject(
@@ -312,18 +294,13 @@ public class FragmentLinkUtil {
 			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 	}
 
-	private static Long _getGroupId(Scope scope, long scopeGroupId) {
+	private static Long _getGroupId(
+		long companyId, Scope scope, long scopeGroupId) {
 
 		if ((scope == null) ||
 			Validator.isNull(scope.getExternalReferenceCode())) {
 
 			return scopeGroupId;
-		}
-
-		Long companyId = _getCompanyId(scopeGroupId);
-
-		if (companyId == null) {
-			return null;
 		}
 
 		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
@@ -337,13 +314,11 @@ public class FragmentLinkUtil {
 	}
 
 	private static Scope _getItemScope(
-			Long companyId, String itemGroupExternalReferenceCode,
+			long companyId, String itemGroupExternalReferenceCode,
 			long scopeGroupId)
 		throws PortalException {
 
-		if ((companyId == null) ||
-			Validator.isNull(itemGroupExternalReferenceCode)) {
-
+		if (Validator.isNull(itemGroupExternalReferenceCode)) {
 			return null;
 		}
 
@@ -380,7 +355,7 @@ public class FragmentLinkUtil {
 	}
 
 	private static Scope _getLayoutScope(
-			Long companyId, Layout layout, JSONObject layoutJSONObject,
+			long companyId, Layout layout, JSONObject layoutJSONObject,
 			long scopeGroupId)
 		throws Exception {
 
@@ -395,6 +370,7 @@ public class FragmentLinkUtil {
 	}
 
 	private static JSONObject _getMappedLayoutJSONObject(
+			long companyId,
 			FragmentMappedValueItemExternalReference
 				fragmentMappedValueItemExternalReference,
 			long scopeGroupId)
@@ -406,7 +382,8 @@ public class FragmentLinkUtil {
 				scopeGroupId);
 
 		Long groupId = _getGroupId(
-			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+			companyId, fragmentMappedValueItemExternalReference.getScope(),
+			scopeGroupId);
 
 		JSONObject jsonObject = JSONUtil.put(
 			"externalReferenceCode",
@@ -418,8 +395,10 @@ public class FragmentLinkUtil {
 		if (groupId == null) {
 			LogUtil.logOptionalReference(
 				fragmentMappedValueItemExternalReference.getClassName(),
-				fragmentMappedValueItemExternalReference.getExternalReferenceCode(),
-				fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode(),
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId);
 
 			return jsonObject;
 		}
@@ -433,8 +412,10 @@ public class FragmentLinkUtil {
 		if (layout == null) {
 			LogUtil.logOptionalReference(
 				fragmentMappedValueItemExternalReference.getClassName(),
-				fragmentMappedValueItemExternalReference.getExternalReferenceCode(),
-				fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
+				fragmentMappedValueItemExternalReference.
+					getExternalReferenceCode(),
+				fragmentMappedValueItemExternalReference.getScope(),
+				scopeGroupId);
 
 			return jsonObject;
 		}
@@ -477,13 +458,13 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkMappedValue _toFragmentLinkMappedValue(
-			InfoItemServiceRegistry infoItemServiceRegistry,
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, long scopeGroupId)
 		throws Exception {
 
 		FragmentMappedValueItemReference fragmentMappedValueItemReference =
 			_getFragmentMappedValueItemReference(
-				infoItemServiceRegistry, jsonObject, scopeGroupId);
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 
 		if (fragmentMappedValueItemReference == null) {
 			return null;
@@ -504,13 +485,13 @@ public class FragmentLinkUtil {
 	}
 
 	private static FragmentLinkValue _toFragmentLinkValue(
-			InfoItemServiceRegistry infoItemServiceRegistry,
+			long companyId, InfoItemServiceRegistry infoItemServiceRegistry,
 			JSONObject jsonObject, boolean mappedValue, long scopeGroupId)
 		throws Exception {
 
 		if (mappedValue) {
 			return _toFragmentLinkMappedValue(
-				infoItemServiceRegistry, jsonObject, scopeGroupId);
+				companyId, infoItemServiceRegistry, jsonObject, scopeGroupId);
 		}
 
 		FragmentLinkInlineValue fragmentLinkInlineValue =
@@ -569,7 +550,7 @@ public class FragmentLinkUtil {
 
 	private static FragmentMappedValueItemExternalReference
 			_toLayoutFragmentMappedValueItemExternalReference(
-				Long companyId, JSONObject layoutJSONObject, long scopeGroupId)
+				long companyId, JSONObject layoutJSONObject, long scopeGroupId)
 		throws Exception {
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayout(

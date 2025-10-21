@@ -188,6 +188,22 @@ public interface ObjectEntryResource {
 	public Response postObjectEntryBatch(String callbackURL, Object object)
 		throws Exception;
 
+	public ObjectEntry postObjectEntryByObjectEntryFolderCopy(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryByObjectEntryFolderCopyReplace(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryByObjectEntryFolderMove(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception;
+
+	public ObjectEntry postObjectEntryByObjectEntryFolderMoveReplace(
+			Long objectEntryId, Long objectEntryFolderId)
+		throws Exception;
+
 	public ObjectEntry postObjectEntryByVersionCopy(
 			Long objectEntryId, Integer version)
 		throws Exception;

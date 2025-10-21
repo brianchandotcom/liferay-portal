@@ -75,15 +75,7 @@ async function performLogin(
 	await page.getByLabel('Password').fill(password);
 	await page.getByLabel('Remember Me').setChecked(rememberMe);
 
-	if ((await signInButton.count()) === 1) {
-		await signInButton.click();
-	}
-	else {
-		await page
-			.getByLabel('Sign In- Loading')
-			.getByRole('button', {name: 'Sign In'})
-			.click();
-	}
+	await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 	await expect(page.getByLabel(`${name} ${surname}`)).toBeVisible({
 		timeout: 30 * 1000,

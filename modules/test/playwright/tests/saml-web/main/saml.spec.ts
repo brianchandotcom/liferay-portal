@@ -800,7 +800,7 @@ test('LPD-32187 AC2 TC2: Verify unsuccessful IdP initiated SSO with provided Rel
 		.getByLabel('Email Address')
 		.fill('invalidEmail@liferay.com');
 	await idpInstancePage.getByLabel('Password').fill('test');
-	await idpInstancePage.getByRole('button', {name: 'Sign In'}).click();
+	await idpInstancePage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	// Assert failed authentication and still on IdP login page
 
@@ -954,7 +954,7 @@ test('LPD-32208 AC1 TC2 and TC3: Verify SP initiated SSO with RelayState and inv
 	await expect(await spInstancePage.getByText('Error:')).toBeVisible();
 
 	await expect(
-		await spInstancePage.getByRole('button', {name: 'Sign In'})
+		await spInstancePage.getByRole('button', {name: 'Sign In'}).last()
 	).toBeVisible();
 
 	expect(await spInstancePage.url()).toContain(DEFAULT_IDP_URL);
@@ -965,7 +965,7 @@ test('LPD-32208 AC1 TC2 and TC3: Verify SP initiated SSO with RelayState and inv
 		.getByLabel('Email Address')
 		.fill(userAccount.emailAddress);
 	await spInstancePage.getByLabel('Password').fill('test');
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	// Assert authentication and SP redirection
 
@@ -1193,7 +1193,7 @@ test('LPD-32210 AC1 TC2: Verify IdP initiated SSO with different instance redire
 
 	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
 	await newPage.getByLabel('Password').fill('test');
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 	await newPage.waitForTimeout(5000);
 
 	// Verify we have been redirected to SP instance
@@ -1403,7 +1403,7 @@ test('LPD-32210 AC1 TC5: Verify unsuccessful IdP initiated SSO with any redirect
 
 	await newPage.getByLabel('Email Address').fill('invalid@liferay.com');
 	await newPage.getByLabel('Password').fill('invalid');
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 	await newPage.waitForTimeout(5000);
 
 	// Verify unsuccessful authentication
@@ -1509,7 +1509,7 @@ test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resou
 
 	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
 	await newPage.getByLabel('Password').fill('invalid');
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 	await newPage.waitForTimeout(2000);
 
 	// Expect to remain unauthenticated on IdP
@@ -1522,7 +1522,7 @@ test('LPD-32213 AC1 TC1 and TC5: Verify SP initiated SSO from a restricted resou
 
 	await newPage.getByLabel('Email Address').fill(userAccount.emailAddress);
 	await newPage.getByLabel('Password').fill('test');
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	// Verify user is logged in
 
@@ -2738,7 +2738,7 @@ test('Verify during SP initiated SSO, RelayState is correct and present regardle
 		.fill(userAccount.emailAddress);
 	await spInstancePage.getByLabel('Password').fill('test');
 	await spInstancePage.getByLabel('Remember Me').check();
-	await spInstancePage.getByRole('button', {name: 'Sign In'}).click();
+	await spInstancePage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	await spInstancePage
 		.getByTitle('User Profile Menu')

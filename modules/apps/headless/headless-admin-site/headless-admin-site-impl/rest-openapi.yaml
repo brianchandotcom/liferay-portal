@@ -875,13 +875,6 @@ components:
                             description:
                                 Custom CSS that is applied on the form page element.
                             type: string
-                        customCSSViewports:
-                            # @review
-                            description:
-                                The custom CSS viewports of the page form.
-                            items:
-                                $ref: "#/components/schemas/CustomCSSViewport"
-                            type: array
                         formConfig:
                             $ref: "#/components/schemas/FormConfig"
                             type: object

@@ -28,7 +28,6 @@ import com.liferay.marketplace.service.KoroneikiService;
 import com.liferay.marketplace.service.MarketplaceService;
 import com.liferay.marketplace.util.MarketplaceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.io.BufferedWriter;
@@ -152,7 +151,7 @@ public class MarketplaceRestController extends BaseRestController {
 	@PostMapping("/account")
 	public ResponseEntity<Account> postAccount(
 			@RequestPart("account") String accountJSON,
-			@RequestPart("file") MultipartFile file,
+			@RequestPart(name = "file", required = false) MultipartFile file,
 			@AuthenticationPrincipal Jwt jwt)
 		throws Exception {
 
@@ -460,10 +459,6 @@ public class MarketplaceRestController extends BaseRestController {
 	private Long _getAccountAdministratorRoleId(long accountId)
 		throws Exception {
 
-		if (_accountAdministratorRoleId != null) {
-			return _accountAdministratorRoleId;
-		}
-
 		AccountRoleResource accountRoleResource =
 			_marketplaceService.getAccountRoleResource();
 
@@ -480,9 +475,7 @@ public class MarketplaceRestController extends BaseRestController {
 			return null;
 		}
 
-		_accountAdministratorRoleId = accountRole.getId();
-
-		return _accountAdministratorRoleId;
+		return accountRole.getId();
 	}
 
 	private void _sendOrderPurchasedNotification(Order order) throws Exception {
@@ -675,9 +668,6 @@ public class MarketplaceRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		MarketplaceRestController.class);
-
-	private static Long _accountAdministratorRoleId = GetterUtil.getLong(
-		System.getenv("THISISATERRIBLEENVNAME"));
 
 	private final Set<String> _europeanCountriesISOCode = Set.of(
 		"AT", "BE", "BG", "CY", "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GR",

@@ -11,11 +11,31 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Rubén Pulido
  */
 public class ItemScopeUtil {
+
+	public static Long getGroupId(
+		long companyId, Scope scope, long scopeGroupId) {
+
+		if ((scope == null) ||
+			Validator.isNull(scope.getExternalReferenceCode())) {
+
+			return scopeGroupId;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			scope.getExternalReferenceCode(), companyId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return group.getGroupId();
+	}
 
 	public static Scope getItemScope(long itemScopeGroupId, long scopeGroupId)
 		throws Exception {
@@ -25,6 +45,37 @@ public class ItemScopeUtil {
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(itemScopeGroupId);
+
+		return new Scope() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Type.ASSET_LIBRARY;
+						}
+
+						return Type.SITE;
+					});
+			}
+		};
+	}
+
+	public static Scope getItemScope(
+			long companyId, String itemGroupExternalReferenceCode,
+			long scopeGroupId)
+		throws PortalException {
+
+		if (Validator.isNull(itemGroupExternalReferenceCode)) {
+			return null;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+			itemGroupExternalReferenceCode, companyId);
+
+		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
+			return null;
+		}
 
 		return new Scope() {
 			{

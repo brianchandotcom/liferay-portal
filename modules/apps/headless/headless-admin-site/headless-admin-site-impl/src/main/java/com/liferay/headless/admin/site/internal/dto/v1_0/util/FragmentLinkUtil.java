@@ -23,10 +23,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -184,7 +181,7 @@ public class FragmentLinkUtil {
 					setExternalReferenceCode(
 						ercInfoItemIdentifier::getExternalReferenceCode);
 				fragmentMappedValueItemExternalReference.setScope(
-					() -> _getItemScope(
+					() -> ItemScopeUtil.getItemScope(
 						companyId,
 						ercInfoItemIdentifier.getScopeExternalReferenceCode(),
 						scopeGroupId));
@@ -203,7 +200,7 @@ public class FragmentLinkUtil {
 		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
 			() -> externalReferenceCode);
 		fragmentMappedValueItemExternalReference.setScope(
-			() -> _getItemScope(
+			() -> ItemScopeUtil.getItemScope(
 				companyId, jsonObject.getString("scopeExternalReferenceCode"),
 				scopeGroupId));
 
@@ -294,56 +291,6 @@ public class FragmentLinkUtil {
 			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 	}
 
-	private static Long _getGroupId(
-		long companyId, Scope scope, long scopeGroupId) {
-
-		if ((scope == null) ||
-			Validator.isNull(scope.getExternalReferenceCode())) {
-
-			return scopeGroupId;
-		}
-
-		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
-			scope.getExternalReferenceCode(), companyId);
-
-		if (group == null) {
-			return null;
-		}
-
-		return group.getGroupId();
-	}
-
-	private static Scope _getItemScope(
-			long companyId, String itemGroupExternalReferenceCode,
-			long scopeGroupId)
-		throws PortalException {
-
-		if (Validator.isNull(itemGroupExternalReferenceCode)) {
-			return null;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-			itemGroupExternalReferenceCode, companyId);
-
-		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
-			return null;
-		}
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
-	}
-
 	private static String _getLayoutExternalReferenceCode(
 		Layout layout, JSONObject layoutJSONObject) {
 
@@ -364,7 +311,7 @@ public class FragmentLinkUtil {
 				layout.getGroupId(), scopeGroupId);
 		}
 
-		return _getItemScope(
+		return ItemScopeUtil.getItemScope(
 			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
 			scopeGroupId);
 	}
@@ -381,7 +328,7 @@ public class FragmentLinkUtil {
 				fragmentMappedValueItemExternalReference.getScope(),
 				scopeGroupId);
 
-		Long groupId = _getGroupId(
+		Long groupId = ItemScopeUtil.getGroupId(
 			companyId, fragmentMappedValueItemExternalReference.getScope(),
 			scopeGroupId);
 

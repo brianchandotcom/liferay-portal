@@ -7,7 +7,7 @@ import {openModal} from 'frontend-js-components-web';
 
 import {executeAsyncItemAction} from '../utils/executeAsyncItemAction';
 
-export default function deleteStructureAction({
+export default function confirmAndDeleteEntryAction({
 	bodyHTML,
 	deleteAction,
 	loadData,

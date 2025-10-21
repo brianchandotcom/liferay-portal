@@ -407,7 +407,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.TimeZone;
@@ -6029,19 +6028,16 @@ public class DataFactory {
 		return objectFolderModel;
 	}
 
-	public ObjectRelationshipModel newObjectRelationshipModel(
-		String objectDefinition1Name, long objectDefinitionId2) {
+	public List<ObjectRelationshipModel> newObjectRelationshipModels(
+		long objectDefinitionId2) {
 
-		long objectDefinitionId1 = _userObjectDefinitionId;
-		long objectFieldId2 = _userObjectFieldId;
-
-		if (Objects.equals(objectDefinition1Name, "Ticket")) {
-			objectDefinitionId1 = _ticketObjectDefinitionId;
-			objectFieldId2 = _ticketObjectFieldId;
-		}
-
-		return newObjectRelationshipModel(
-			objectDefinitionId1, objectDefinitionId2, objectFieldId2);
+		return ListUtil.fromArray(
+			newObjectRelationshipModel(
+				_userObjectDefinitionId, objectDefinitionId2,
+				_userObjectFieldId),
+			newObjectRelationshipModel(
+				_ticketObjectDefinitionId, objectDefinitionId2,
+				_ticketObjectDefinitionId));
 	}
 
 	public ObjectStateFlowModel newObjectStateFlowModel(long objectFieldId) {

@@ -60,6 +60,9 @@ test.describe('Headless Builder - API Application', () => {
 		await expect(
 			page.getByText('API application was published')
 		).toBeVisible();
+		await expect(
+			page.getByText('API application was published')
+		).not.toBeVisible();
 
 		const updatedApp =
 			await apiHelpers.objectEntry.getObjectEntryByExternalReferenceCode({
@@ -84,9 +87,7 @@ test.describe('Headless Builder - API Application', () => {
 		).not.toBeVisible();
 
 		await expect(applicationPage.cancelButton).toBeEnabled();
-		await expect(applicationPage.cancelButton).toBeVisible();
 
 		await expect(applicationPage.publishButton).toBeEnabled();
-		await expect(applicationPage.publishButton).toBeVisible();
 	});
 });

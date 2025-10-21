@@ -363,10 +363,10 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 
 		Long groupId = getPermissionCheckerGroupId(
 			assetLibraryExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
+		Long resourceId = getPermissionCheckerResourceId(
 			assetLibraryExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
-		Long resourceId = getPermissionCheckerResourceId(
+		String resourceName = getPermissionCheckerResourceName(
 			assetLibraryExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
 
@@ -508,9 +508,9 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 
 		Long groupId = getPermissionCheckerGroupId(
 			ercScopedTestEntityExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
-			ercScopedTestEntityExternalReferenceCode);
 		Long resourceId = getPermissionCheckerResourceId(
+			ercScopedTestEntityExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
 			ercScopedTestEntityExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
@@ -723,10 +723,10 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
+		Long resourceId = getPermissionCheckerResourceId(
 			siteExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
-		Long resourceId = getPermissionCheckerResourceId(
+		String resourceName = getPermissionCheckerResourceName(
 			siteExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
 
@@ -1345,10 +1345,10 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 
 		Long groupId = getPermissionCheckerGroupId(
 			assetLibraryExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
+		Long resourceId = getPermissionCheckerResourceId(
 			assetLibraryExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
-		Long resourceId = getPermissionCheckerResourceId(
+		String resourceName = getPermissionCheckerResourceName(
 			assetLibraryExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
 
@@ -1446,9 +1446,9 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 
 		Long groupId = getPermissionCheckerGroupId(
 			ercScopedTestEntityExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
-			ercScopedTestEntityExternalReferenceCode);
 		Long resourceId = getPermissionCheckerResourceId(
+			ercScopedTestEntityExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
 			ercScopedTestEntityExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
@@ -1629,10 +1629,10 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
-		String resourceName = getPermissionCheckerResourceName(
+		Long resourceId = getPermissionCheckerResourceId(
 			siteExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
-		Long resourceId = getPermissionCheckerResourceId(
+		String resourceName = getPermissionCheckerResourceName(
 			siteExternalReferenceCode,
 			ercScopedTestEntityExternalReferenceCode);
 

@@ -743,12 +743,13 @@ test('can import CSV file with multiple site scoped object entries', async ({
 		page.getByText('The import process completed successfully.')
 	).toBeVisible();
 
-	const items = (
+	const {items} =
 		await apiHelpers.objectEntry.getObjectDefinitionObjectEntriesByScope(
 			'c/tests',
 			'Guest'
-		)
-	).items;
+		);
+
+	expect(items).toHaveLength(2);
 
 	expect(items).toEqual(
 		expect.arrayContaining([
@@ -767,7 +768,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 					'This is a long text to test testLongTextField. The first entry',
 				testPrecisionDecimalField: 321.123,
 				testRichTextField:
-					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry.\n</p>',
+					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The first entry.\n </p>',
 				testRichTextFieldRawText:
 					'This is a long text with some fomatting to text testRichTextField. The first entry.',
 				testTextField: 'Test_FirstEntry',
@@ -787,7 +788,7 @@ test('can import CSV file with multiple site scoped object entries', async ({
 					'This is a long text to test testLongTextField. The second entry',
 				testPrecisionDecimalField: 123.321,
 				testRichTextField:
-					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry.\n</p>',
+					'<p>This is a long text <strong>with some fomatting</strong> to text testRichTextField. The second entry.\n </p>',
 				testRichTextFieldRawText:
 					'This is a long text with some fomatting to text testRichTextField. The second entry.',
 				testTextField: 'Test_SecondEntry',

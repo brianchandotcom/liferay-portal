@@ -98,10 +98,9 @@ const Main = ({
 	localizedValue,
 	...otherProps
 }: NumericProps) => {
-	const Component =
-		Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
-			? NumericLocalizedObjectField
-			: Numeric;
+	const Component = localizedObjectField
+		? NumericLocalizedObjectField
+		: Numeric;
 
 	return (
 		<FieldBase

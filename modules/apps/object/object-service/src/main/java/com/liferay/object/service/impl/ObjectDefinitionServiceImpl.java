@@ -48,10 +48,11 @@ public class ObjectDefinitionServiceImpl
 
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long objectFolderId, String className, boolean enableComments,
-			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
+			String externalReferenceCode, long objectFolderId, String className,
+			boolean enableComments, boolean enableFormContainer,
+			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
+			boolean enableLocalization, boolean enableObjectEntryDraft,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
@@ -71,8 +72,8 @@ public class ObjectDefinitionServiceImpl
 			ObjectActionKeys.ADD_OBJECT_DEFINITION);
 
 		return objectDefinitionLocalService.addCustomObjectDefinition(
-			getUserId(), objectFolderId, className, enableComments,
-			enableFormContainer, enableFriendlyURLCustomization,
+			externalReferenceCode, getUserId(), objectFolderId, className,
+			enableComments, enableFormContainer, enableFriendlyURLCustomization,
 			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,

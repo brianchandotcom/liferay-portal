@@ -234,11 +234,11 @@ public class ObjectDefinitionLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ObjectDefinition addCustomObjectDefinition(
-			long userId, long objectFolderId, String className,
-			boolean enableComments, boolean enableFormContainer,
-			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			String externalReferenceCode, long userId, long objectFolderId,
+			String className, boolean enableComments,
+			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
+			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<Locale, String> labelMap, String name, String panelAppOrder,
@@ -250,8 +250,8 @@ public class ObjectDefinitionLocalServiceImpl
 		throws PortalException {
 
 		return _addObjectDefinition(
-			null, userId, objectFolderId, className, null, enableComments,
-			enableFormContainer, enableFriendlyURLCustomization,
+			externalReferenceCode, userId, objectFolderId, className, null,
+			enableComments, enableFormContainer, enableFriendlyURLCustomization,
 			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, true,

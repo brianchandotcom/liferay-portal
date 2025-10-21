@@ -15,21 +15,19 @@
 			"listTypeEntries": [
 				{
 					"externalReferenceCode": "TARGET_BLANK",
-					"key": "blank",
-					"name": "New Tab / Window",
+					"key": "targetBlank",
+					"name": "targetBlank",
 					"name_i18n": {
 						"en-US": "New Tab / Window"
-					},
-					"type": ""
+					}
 				},
 				{
 					"externalReferenceCode": "TARGET_SELF",
-					"key": "self",
-					"name": "Same Tab / Window",
+					"key": "targetSelf",
+					"name": "targetSelf",
 					"name_i18n": {
 						"en-US": "Same Tab / Window"
-					},
-					"type": ""
+					}
 				}
 			],
 			"name": "M2H8 Call to Action Targets",

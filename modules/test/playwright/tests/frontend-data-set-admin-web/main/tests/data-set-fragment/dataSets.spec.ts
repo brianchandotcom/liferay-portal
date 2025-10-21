@@ -90,11 +90,14 @@ test(
 	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
 		const dataSetERC1 = getRandomString();
 		const dataSetERC2 = getRandomString();
+		const dataSetERC3 = getRandomString();
 		const dataSetLabel1 = getRandomString();
 		const dataSetLabel2 = getRandomString();
+		const dataSetLabel3 = getRandomString();
 
 		dataSetERCs.push(dataSetERC1);
 		dataSetERCs.push(dataSetERC2);
+		dataSetERCs.push(dataSetERC3);
 
 		const dataSetInput1 =
 			dataSetFragmentPage.selectDataSetModalFrame.locator(
@@ -103,6 +106,10 @@ test(
 		const dataSetInput2 =
 			dataSetFragmentPage.selectDataSetModalFrame.locator(
 				`li:has-text("${dataSetLabel2}") input.custom-control-input`
+			);
+		const dataSetInput3 =
+			dataSetFragmentPage.selectDataSetModalFrame.locator(
+				`li:has-text("${dataSetLabel3}")`
 			);
 
 		await test.step('Create data sets', async () => {
@@ -114,6 +121,11 @@ test(
 			await dataSetManagerApiHelpers.createDataSet({
 				erc: dataSetERC2,
 				label: dataSetLabel2,
+			});
+
+			await dataSetManagerApiHelpers.createDataSet({
+				erc: dataSetERC3,
+				label: dataSetLabel3,
 			});
 		});
 
@@ -141,7 +153,7 @@ test(
 			await dataSetFragmentPage.addDataSetFragment(layout);
 		});
 
-		await test.step('Check that only one data set can be selected', async () => {
+		await test.step('Open Data Set selection list', async () => {
 			await dataSetFragmentPage.selectDataSetButton.click();
 
 			await page.getByRole('dialog').isVisible();
@@ -149,7 +161,17 @@ test(
 			await page.getByRole('heading', {name: 'Select'}).isVisible();
 
 			await dataSetFragmentPage.selectionListContainer.waitFor();
+		});
 
+		await test.step('Check that data set without visualization modes are marked', async () => {
+			const warningIcon = dataSetInput3.locator(
+				'svg.lexicon-icon-exclamation-circle'
+			);
+
+			await expect(warningIcon).toBeVisible();
+		});
+
+		await test.step('Check that only one data set can be selected', async () => {
 			await dataSetInput1.setChecked(true);
 
 			await expect(dataSetInput1).toBeChecked();

@@ -169,7 +169,9 @@ public class DTOOpenAPIParser {
 					name,
 					"com.liferay.portal.vulcan.custom.field.CustomField") &&
 				!StringUtil.equals(
-					name, "com.liferay.portal.vulcan.permission.Permission")) {
+					name, "com.liferay.portal.vulcan.permission.Permission") &&
+				!StringUtil.equals(
+					name, "com.liferay.portal.vulcan.scope.Scope")) {
 
 				name = name.substring(name.lastIndexOf(".") + 1);
 			}
@@ -198,7 +200,9 @@ public class DTOOpenAPIParser {
 				"com.liferay.portal.vulcan.custom.field.CustomField") &&
 			!StringUtil.equals(
 				propertyType,
-				"com.liferay.portal.vulcan.permission.Permission")) {
+				"com.liferay.portal.vulcan.permission.Permission") &&
+			!StringUtil.equals(
+				propertyType, "com.liferay.portal.vulcan.scope.Scope")) {
 
 			propertyType = propertyType.substring(
 				propertyType.lastIndexOf(".") + 1);

@@ -14,12 +14,14 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -156,9 +158,18 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 				return true;
 			}
 
+			Group group = _groupLocalService.fetchGroup(groupId);
+
+			if (group == null) {
+				return false;
+			}
+
+			if (_isCMSAdministrator(group.getCompanyId())) {
+				return true;
+			}
+
 			return _isOrAddToPermissionCache(
-				_groupLocalService.fetchGroup(groupId),
-				DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
+				group, DepotRolesConstants.ASSET_LIBRARY_ADMINISTRATOR,
 				this::_isGroupAdmin);
 		}
 		catch (Exception exception) {
@@ -248,6 +259,21 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		}
 
 		return false;
+	}
+
+	private boolean _isCMSAdministrator(long companyId) throws Exception {
+		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
+			getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR);
+
+		if (value == null) {
+			value = RoleLocalServiceUtil.hasUserRole(
+				getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR, true);
+
+			PermissionCacheUtil.putUserPrimaryKeyRole(
+				getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR, value);
+		}
+
+		return value;
 	}
 
 	private boolean _isContentReviewer(Group group) throws PortalException {

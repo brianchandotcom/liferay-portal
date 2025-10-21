@@ -30,9 +30,9 @@
 					}
 				}
 			],
-			"name": "M2H8 Call to Action Targets",
+			"name": "M2H8CallToActionTarget",
 			"name_i18n": {
-				"en-US": "M2H8 Call to Action Targets"
+				"en-US": "M2H8 Call to Action Target"
 			},
 			"system": false
 		}

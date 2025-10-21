@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.resource.v1_0.test;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
@@ -116,6 +117,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
@@ -135,9 +137,11 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
@@ -148,6 +152,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
+import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -5962,6 +5967,158 @@ public class ObjectEntryResourceTest {
 			() -> objectEntryResource2.getObjectEntriesVersionsPage(
 				objectEntry.getObjectEntryId(),
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
+	}
+
+	@FeatureFlag("LPD-6233")
+	@Test
+	public void testGetObjectEntriesWithAssigneeObjectField() throws Exception {
+		ObjectFieldUtil.addCustomObjectField(
+			new AssigneeObjectFieldBuilder(
+			).labelMap(
+				RandomTestUtil.randomLocaleStringMap()
+			).name(
+				"assignee"
+			).objectDefinitionId(
+				_objectDefinition1.getObjectDefinitionId()
+			).userId(
+				TestPropsValues.getUserId()
+			).build());
+
+		User user1 = UserTestUtil.addUser();
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode",
+					() -> {
+						Role role = _roleLocalService.getRole(
+							TestPropsValues.getCompanyId(),
+							AccountRoleConstants.
+								REQUIRED_ROLE_NAME_ACCOUNT_MANAGER);
+
+						Organization organization =
+							OrganizationTestUtil.addOrganization();
+
+						_organizationLocalService.addUserOrganization(
+							user1.getUserId(),
+							organization.getOrganizationId());
+
+						Group group = _groupLocalService.getOrganizationGroup(
+							TestPropsValues.getCompanyId(),
+							organization.getOrganizationId());
+
+						_userGroupRoleLocalService.addUserGroupRole(
+							user1.getUserId(), group.getGroupId(),
+							role.getRoleId());
+
+						return role.getExternalReferenceCode();
+					}
+				).put(
+					"type", "Role"
+				).build()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode", user1.getExternalReferenceCode()
+				).put(
+					"type", "User"
+				).build()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		User user2 = UserTestUtil.addUser();
+
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode",
+					() -> {
+						Role role = RoleTestUtil.addRole(
+							"Regular Role", RoleConstants.TYPE_REGULAR);
+
+						_userLocalService.addRoleUser(role.getRoleId(), user2);
+
+						return role.getExternalReferenceCode();
+					}
+				).put(
+					"type", "Role"
+				).build()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+		HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"assignee",
+				HashMapBuilder.put(
+					"externalReferenceCode", user2.getExternalReferenceCode()
+				).put(
+					"type", "User"
+				).build()
+			).toString(),
+			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"?assigneeUserExternalReferenceCode=",
+				user1.getExternalReferenceCode(), "&sort=",
+				URLCodec.encodeURL("id:asc")),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(2, itemsJSONArray.length());
+
+		Assert.assertEquals(
+			AccountRoleConstants.REQUIRED_ROLE_NAME_ACCOUNT_MANAGER,
+			JSONUtil.getValue(
+				itemsJSONArray.getJSONObject(0), "JSONObject/assignee",
+				"Object/name"));
+		Assert.assertEquals(
+			user1.getFullName(),
+			JSONUtil.getValue(
+				itemsJSONArray.getJSONObject(1), "JSONObject/assignee",
+				"Object/name"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"?assigneeUserExternalReferenceCode=",
+				user2.getExternalReferenceCode(), "&sort=",
+				URLCodec.encodeURL("id:asc")),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(2, itemsJSONArray.length());
+
+		Assert.assertEquals(
+			"Regular Role",
+			JSONUtil.getValue(
+				itemsJSONArray.getJSONObject(0), "JSONObject/assignee",
+				"Object/name"));
+		Assert.assertEquals(
+			user2.getFullName(),
+			JSONUtil.getValue(
+				itemsJSONArray.getJSONObject(1), "JSONObject/assignee",
+				"Object/name"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_objectDefinition1.getRESTContextPath() +
+				"?assigneeUserExternalReferenceCode=" +
+					RandomTestUtil.randomString(),
+			Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(0, itemsJSONArray.length());
 	}
 
 	@Test
@@ -19835,6 +19992,9 @@ public class ObjectEntryResourceTest {
 	private ObjectValidationRuleLocalService _objectValidationRuleLocalService;
 
 	@Inject
+	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
 	private PortletFileRepository _portletFileRepository;
 
 	@Inject
@@ -19853,6 +20013,9 @@ public class ObjectEntryResourceTest {
 		_systemObjectDefinitionManagerRegistry;
 
 	private JSONObject _userAccountJSONObject;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

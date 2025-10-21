@@ -110,6 +110,12 @@ components:
                             allOf:
                                 -   $ref: "#/components/schemas/BasicLayout"
                                 -   properties:
+                                        gutters:
+                                            # @review
+                                            description:
+                                                A flag that indicates whether the collection page element has gutters if
+                                                a grid list style is selected.
+                                            type: boolean
                                         listItemStyle:
                                             # @review
                                             description:
@@ -129,6 +135,13 @@ components:
                                             # @review
                                             description:
                                                 The collection page element's template key.
+                                            type: string
+                                        verticalAlignment:
+                                            # @review
+                                            description:
+                                                The vertical alignment property of the collection page element if a grid
+                                                list style is selected..
+                                            enum: [Bottom, Middle, Top]
                                             type: string
                             # @review
                             description:

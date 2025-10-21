@@ -1,0 +1,11 @@
+.picklist-builder__options {
+	.fds .management-bar-wrapper {
+		border: 0;
+	}
+
+	&.empty {
+		.fds .management-bar-wrapper {
+			display: none;
+		}
+	}
+}

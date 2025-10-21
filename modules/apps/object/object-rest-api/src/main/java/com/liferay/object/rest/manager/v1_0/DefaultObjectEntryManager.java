@@ -49,6 +49,11 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			long primaryKey2)
 		throws Exception;
 
+	public ObjectEntry copyObjectEntry(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			long objectEntryFolderId, boolean replace)
+		throws Exception;
+
 	public ObjectEntry copyObjectEntryByVersion(
 			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition, long objectEntryId, int version)
@@ -218,6 +223,11 @@ public interface DefaultObjectEntryManager extends ObjectEntryManager {
 			DTOConverterContext dtoConverterContext,
 			String externalReferenceCode, ObjectDefinition objectDefinition,
 			String scopeKey, Pagination pagination)
+		throws Exception;
+
+	public ObjectEntry moveObjectEntry(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			long objectEntryFolderId, boolean replace)
 		throws Exception;
 
 	public ObjectEntry partialUpdateObjectEntry(

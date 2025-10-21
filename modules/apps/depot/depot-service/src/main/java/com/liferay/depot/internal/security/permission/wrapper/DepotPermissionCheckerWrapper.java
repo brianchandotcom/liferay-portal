@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.wrapper.PermissionCheckerWrapper;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -266,7 +265,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 			getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR);
 
 		if (value == null) {
-			value = RoleLocalServiceUtil.hasUserRole(
+			value = _roleLocalService.hasUserRole(
 				getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR, true);
 
 			PermissionCacheUtil.putUserPrimaryKeyRole(

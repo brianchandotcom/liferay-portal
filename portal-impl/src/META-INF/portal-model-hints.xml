@@ -811,7 +811,7 @@
 		</field>
 		<field name="priority" type="int" />
 		<field name="faviconFileEntryId" type="long" />
-		<field name="masterLayoutPlid" type="long" />
+		<field name="masterLayoutPageTemplateEntryERC" type="String" />
 		<field name="layoutPrototypeUuid" type="String" />
 		<field name="layoutPrototypeLinkEnabled" type="boolean" />
 		<field name="layoutSetPrototypeLayoutERC" type="String" />

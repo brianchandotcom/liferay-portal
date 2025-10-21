@@ -6997,76 +6997,81 @@ public class LayoutPersistenceImpl
 	private static final String _FINDER_COLUMN_G_T_TYPE_3_SQL =
 		"(layout.type_ IS NULL OR layout.type_ = '') AND layout.system_ = [$FALSE$]";
 
-	private FinderPath _finderPathWithPaginationFindByG_MLP;
-	private FinderPath _finderPathWithoutPaginationFindByG_MLP;
-	private FinderPath _finderPathCountByG_MLP;
+	private FinderPath _finderPathWithPaginationFindByG_MLPTEERC;
+	private FinderPath _finderPathWithoutPaginationFindByG_MLPTEERC;
+	private FinderPath _finderPathCountByG_MLPTEERC;
 
 	/**
-	 * Returns all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @return the matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_MLP(long groupId, long masterLayoutPlid) {
-		return findByG_MLP(
-			groupId, masterLayoutPlid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+	public List<Layout> findByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC) {
+
+		return findByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns a range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_MLP(
-		long groupId, long masterLayoutPlid, int start, int end) {
+	public List<Layout> findByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC, int start,
+		int end) {
 
-		return findByG_MLP(groupId, masterLayoutPlid, start, end, null);
+		return findByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_MLP(
-		long groupId, long masterLayoutPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
+	public List<Layout> findByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
 
-		return findByG_MLP(
-			groupId, masterLayoutPlid, start, end, orderByComparator, true);
+		return findByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns an ordered range of all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -7074,13 +7079,17 @@ public class LayoutPersistenceImpl
 	 * @return the ordered range of matching layouts
 	 */
 	@Override
-	public List<Layout> findByG_MLP(
-		long groupId, long masterLayoutPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator, boolean useFinderCache) {
+	public List<Layout> findByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC, int start,
+		int end, OrderByComparator<Layout> orderByComparator,
+		boolean useFinderCache) {
 
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
+
+			masterLayoutPageTemplateEntryERC = Objects.toString(
+				masterLayoutPageTemplateEntryERC, "");
 
 			FinderPath finderPath = null;
 			Object[] finderArgs = null;
@@ -7089,14 +7098,17 @@ public class LayoutPersistenceImpl
 				(orderByComparator == null)) {
 
 				if (useFinderCache) {
-					finderPath = _finderPathWithoutPaginationFindByG_MLP;
-					finderArgs = new Object[] {groupId, masterLayoutPlid};
+					finderPath = _finderPathWithoutPaginationFindByG_MLPTEERC;
+					finderArgs = new Object[] {
+						groupId, masterLayoutPageTemplateEntryERC
+					};
 				}
 			}
 			else if (useFinderCache) {
-				finderPath = _finderPathWithPaginationFindByG_MLP;
+				finderPath = _finderPathWithPaginationFindByG_MLPTEERC;
 				finderArgs = new Object[] {
-					groupId, masterLayoutPlid, start, end, orderByComparator
+					groupId, masterLayoutPageTemplateEntryERC, start, end,
+					orderByComparator
 				};
 			}
 
@@ -7109,8 +7121,8 @@ public class LayoutPersistenceImpl
 				if ((list != null) && !list.isEmpty()) {
 					for (Layout layout : list) {
 						if ((groupId != layout.getGroupId()) ||
-							(masterLayoutPlid !=
-								layout.getMasterLayoutPlid())) {
+							!masterLayoutPageTemplateEntryERC.equals(
+								layout.getMasterLayoutPageTemplateEntryERC())) {
 
 							list = null;
 
@@ -7133,9 +7145,20 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-				sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-				sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+				boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+				if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3);
+				}
+				else {
+					bindMasterLayoutPageTemplateEntryERC = true;
+
+					sb.append(
+						_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2);
+				}
 
 				if (orderByComparator != null) {
 					appendOrderByComparator(
@@ -7158,7 +7181,9 @@ public class LayoutPersistenceImpl
 
 					queryPos.add(groupId);
 
-					queryPos.add(masterLayoutPlid);
+					if (bindMasterLayoutPageTemplateEntryERC) {
+						queryPos.add(masterLayoutPageTemplateEntryERC);
+					}
 
 					list = (List<Layout>)QueryUtil.list(
 						query, getDialect(), start, end);
@@ -7182,22 +7207,22 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the first layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_MLP_First(
-			long groupId, long masterLayoutPlid,
+	public Layout findByG_MLPTEERC_First(
+			long groupId, String masterLayoutPageTemplateEntryERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_MLP_First(
-			groupId, masterLayoutPlid, orderByComparator);
+		Layout layout = fetchByG_MLPTEERC_First(
+			groupId, masterLayoutPageTemplateEntryERC, orderByComparator);
 
 		if (layout != null) {
 			return layout;
@@ -7210,8 +7235,8 @@ public class LayoutPersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", masterLayoutPlid=");
-		sb.append(masterLayoutPlid);
+		sb.append(", masterLayoutPageTemplateEntryERC=");
+		sb.append(masterLayoutPageTemplateEntryERC);
 
 		sb.append("}");
 
@@ -7219,20 +7244,20 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the first layout in the ordered set where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the first layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_MLP_First(
-		long groupId, long masterLayoutPlid,
+	public Layout fetchByG_MLPTEERC_First(
+		long groupId, String masterLayoutPageTemplateEntryERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		List<Layout> list = findByG_MLP(
-			groupId, masterLayoutPlid, 0, 1, orderByComparator);
+		List<Layout> list = findByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7242,22 +7267,22 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the last layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout
 	 * @throws NoSuchLayoutException if a matching layout could not be found
 	 */
 	@Override
-	public Layout findByG_MLP_Last(
-			long groupId, long masterLayoutPlid,
+	public Layout findByG_MLPTEERC_Last(
+			long groupId, String masterLayoutPageTemplateEntryERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
-		Layout layout = fetchByG_MLP_Last(
-			groupId, masterLayoutPlid, orderByComparator);
+		Layout layout = fetchByG_MLPTEERC_Last(
+			groupId, masterLayoutPageTemplateEntryERC, orderByComparator);
 
 		if (layout != null) {
 			return layout;
@@ -7270,8 +7295,8 @@ public class LayoutPersistenceImpl
 		sb.append("groupId=");
 		sb.append(groupId);
 
-		sb.append(", masterLayoutPlid=");
-		sb.append(masterLayoutPlid);
+		sb.append(", masterLayoutPageTemplateEntryERC=");
+		sb.append(masterLayoutPageTemplateEntryERC);
 
 		sb.append("}");
 
@@ -7279,26 +7304,28 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the last layout in the ordered set where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the last layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching layout, or <code>null</code> if a matching layout could not be found
 	 */
 	@Override
-	public Layout fetchByG_MLP_Last(
-		long groupId, long masterLayoutPlid,
+	public Layout fetchByG_MLPTEERC_Last(
+		long groupId, String masterLayoutPageTemplateEntryERC,
 		OrderByComparator<Layout> orderByComparator) {
 
-		int count = countByG_MLP(groupId, masterLayoutPlid);
+		int count = countByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<Layout> list = findByG_MLP(
-			groupId, masterLayoutPlid, count - 1, count, orderByComparator);
+		List<Layout> list = findByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, count - 1, count,
+			orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -7308,20 +7335,23 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	@Override
-	public Layout[] findByG_MLP_PrevAndNext(
-			long plid, long groupId, long masterLayoutPlid,
+	public Layout[] findByG_MLPTEERC_PrevAndNext(
+			long plid, long groupId, String masterLayoutPageTemplateEntryERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
+
+		masterLayoutPageTemplateEntryERC = Objects.toString(
+			masterLayoutPageTemplateEntryERC, "");
 
 		Layout layout = findByPrimaryKey(plid);
 
@@ -7332,15 +7362,15 @@ public class LayoutPersistenceImpl
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = getByG_MLP_PrevAndNext(
-				session, layout, groupId, masterLayoutPlid, orderByComparator,
-				true);
+			array[0] = getByG_MLPTEERC_PrevAndNext(
+				session, layout, groupId, masterLayoutPageTemplateEntryERC,
+				orderByComparator, true);
 
 			array[1] = layout;
 
-			array[2] = getByG_MLP_PrevAndNext(
-				session, layout, groupId, masterLayoutPlid, orderByComparator,
-				false);
+			array[2] = getByG_MLPTEERC_PrevAndNext(
+				session, layout, groupId, masterLayoutPageTemplateEntryERC,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -7352,8 +7382,9 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	protected Layout getByG_MLP_PrevAndNext(
-		Session session, Layout layout, long groupId, long masterLayoutPlid,
+	protected Layout getByG_MLPTEERC_PrevAndNext(
+		Session session, Layout layout, long groupId,
+		String masterLayoutPageTemplateEntryERC,
 		OrderByComparator<Layout> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -7369,9 +7400,20 @@ public class LayoutPersistenceImpl
 
 		sb.append(_SQL_SELECT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+		boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+		if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3);
+		}
+		else {
+			bindMasterLayoutPageTemplateEntryERC = true;
+
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2);
+		}
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -7444,7 +7486,9 @@ public class LayoutPersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(masterLayoutPlid);
+		if (bindMasterLayoutPageTemplateEntryERC) {
+			queryPos.add(masterLayoutPageTemplateEntryERC);
+		}
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -7465,72 +7509,80 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @return the matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_MLP(long groupId, long masterLayoutPlid) {
-		return filterFindByG_MLP(
-			groupId, masterLayoutPlid, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null);
+	public List<Layout> filterFindByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC) {
+
+		return filterFindByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns a range of all the layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @return the range of matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_MLP(
-		long groupId, long masterLayoutPlid, int start, int end) {
+	public List<Layout> filterFindByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC, int start,
+		int end) {
 
-		return filterFindByG_MLP(groupId, masterLayoutPlid, start, end, null);
+		return filterFindByG_MLPTEERC(
+			groupId, masterLayoutPageTemplateEntryERC, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns an ordered range of all the layouts that the user has permissions to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LayoutModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param start the lower bound of the range of layouts
 	 * @param end the upper bound of the range of layouts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching layouts that the user has permission to view
 	 */
 	@Override
-	public List<Layout> filterFindByG_MLP(
-		long groupId, long masterLayoutPlid, int start, int end,
-		OrderByComparator<Layout> orderByComparator) {
+	public List<Layout> filterFindByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC, int start,
+		int end, OrderByComparator<Layout> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_MLP(
-				groupId, masterLayoutPlid, start, end, orderByComparator);
+			return findByG_MLPTEERC(
+				groupId, masterLayoutPageTemplateEntryERC, start, end,
+				orderByComparator);
 		}
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			isPermissionsInMemoryFilterEnabled()) {
 
 			return InlineSQLHelperUtil.filter(
-				findByG_MLP(
-					groupId, masterLayoutPlid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, orderByComparator),
+				findByG_MLPTEERC(
+					groupId, masterLayoutPageTemplateEntryERC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, orderByComparator),
 				groupId);
 		}
+
+		masterLayoutPageTemplateEntryERC = Objects.toString(
+			masterLayoutPageTemplateEntryERC, "");
 
 		StringBundler sb = null;
 
@@ -7549,9 +7601,20 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+		boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+		if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3_SQL);
+		}
+		else {
+			bindMasterLayoutPageTemplateEntryERC = true;
+
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2_SQL);
+		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -7598,7 +7661,9 @@ public class LayoutPersistenceImpl
 
 			queryPos.add(groupId);
 
-			queryPos.add(masterLayoutPlid);
+			if (bindMasterLayoutPageTemplateEntryERC) {
+				queryPos.add(masterLayoutPageTemplateEntryERC);
+			}
 
 			return (List<Layout>)QueryUtil.list(
 				sqlQuery, getDialect(), start, end);
@@ -7612,25 +7677,29 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the layouts before and after the current layout in the ordered set of layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param plid the primary key of the current layout
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next layout
 	 * @throws NoSuchLayoutException if a layout with the primary key could not be found
 	 */
 	@Override
-	public Layout[] filterFindByG_MLP_PrevAndNext(
-			long plid, long groupId, long masterLayoutPlid,
+	public Layout[] filterFindByG_MLPTEERC_PrevAndNext(
+			long plid, long groupId, String masterLayoutPageTemplateEntryERC,
 			OrderByComparator<Layout> orderByComparator)
 		throws NoSuchLayoutException {
 
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return findByG_MLP_PrevAndNext(
-				plid, groupId, masterLayoutPlid, orderByComparator);
+			return findByG_MLPTEERC_PrevAndNext(
+				plid, groupId, masterLayoutPageTemplateEntryERC,
+				orderByComparator);
 		}
+
+		masterLayoutPageTemplateEntryERC = Objects.toString(
+			masterLayoutPageTemplateEntryERC, "");
 
 		Layout layout = findByPrimaryKey(plid);
 
@@ -7641,15 +7710,15 @@ public class LayoutPersistenceImpl
 
 			Layout[] array = new LayoutImpl[3];
 
-			array[0] = filterGetByG_MLP_PrevAndNext(
-				session, layout, groupId, masterLayoutPlid, orderByComparator,
-				true);
+			array[0] = filterGetByG_MLPTEERC_PrevAndNext(
+				session, layout, groupId, masterLayoutPageTemplateEntryERC,
+				orderByComparator, true);
 
 			array[1] = layout;
 
-			array[2] = filterGetByG_MLP_PrevAndNext(
-				session, layout, groupId, masterLayoutPlid, orderByComparator,
-				false);
+			array[2] = filterGetByG_MLPTEERC_PrevAndNext(
+				session, layout, groupId, masterLayoutPageTemplateEntryERC,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -7661,8 +7730,9 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	protected Layout filterGetByG_MLP_PrevAndNext(
-		Session session, Layout layout, long groupId, long masterLayoutPlid,
+	protected Layout filterGetByG_MLPTEERC_PrevAndNext(
+		Session session, Layout layout, long groupId,
+		String masterLayoutPageTemplateEntryERC,
 		OrderByComparator<Layout> orderByComparator, boolean previous) {
 
 		StringBundler sb = null;
@@ -7683,9 +7753,20 @@ public class LayoutPersistenceImpl
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+		boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+		if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3_SQL);
+		}
+		else {
+			bindMasterLayoutPageTemplateEntryERC = true;
+
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2_SQL);
+		}
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(_FILTER_SQL_SELECT_LAYOUT_NO_INLINE_DISTINCT_WHERE_2);
@@ -7794,7 +7875,9 @@ public class LayoutPersistenceImpl
 
 		queryPos.add(groupId);
 
-		queryPos.add(masterLayoutPlid);
+		if (bindMasterLayoutPageTemplateEntryERC) {
+			queryPos.add(masterLayoutPageTemplateEntryERC);
+		}
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
@@ -7815,38 +7898,47 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Removes all the layouts where groupId = &#63; and masterLayoutPlid = &#63; from the database.
+	 * Removes all the layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 */
 	@Override
-	public void removeByG_MLP(long groupId, long masterLayoutPlid) {
+	public void removeByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC) {
+
 		for (Layout layout :
-				findByG_MLP(
-					groupId, masterLayoutPlid, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null)) {
+				findByG_MLPTEERC(
+					groupId, masterLayoutPageTemplateEntryERC,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			remove(layout);
 		}
 	}
 
 	/**
-	 * Returns the number of layouts where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the number of layouts where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @return the number of matching layouts
 	 */
 	@Override
-	public int countByG_MLP(long groupId, long masterLayoutPlid) {
+	public int countByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC) {
+
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					Layout.class)) {
 
-			FinderPath finderPath = _finderPathCountByG_MLP;
+			masterLayoutPageTemplateEntryERC = Objects.toString(
+				masterLayoutPageTemplateEntryERC, "");
 
-			Object[] finderArgs = new Object[] {groupId, masterLayoutPlid};
+			FinderPath finderPath = _finderPathCountByG_MLPTEERC;
+
+			Object[] finderArgs = new Object[] {
+				groupId, masterLayoutPageTemplateEntryERC
+			};
 
 			Long count = (Long)FinderCacheUtil.getResult(
 				finderPath, finderArgs, this);
@@ -7856,9 +7948,20 @@ public class LayoutPersistenceImpl
 
 				sb.append(_SQL_COUNT_LAYOUT_WHERE);
 
-				sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+				sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-				sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+				boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+				if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+					sb.append(
+						_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3);
+				}
+				else {
+					bindMasterLayoutPageTemplateEntryERC = true;
+
+					sb.append(
+						_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2);
+				}
 
 				String sql = sb.toString();
 
@@ -7873,7 +7976,9 @@ public class LayoutPersistenceImpl
 
 					queryPos.add(groupId);
 
-					queryPos.add(masterLayoutPlid);
+					if (bindMasterLayoutPageTemplateEntryERC) {
+						queryPos.add(masterLayoutPageTemplateEntryERC);
+					}
 
 					count = (Long)query.uniqueResult();
 
@@ -7892,33 +7997,50 @@ public class LayoutPersistenceImpl
 	}
 
 	/**
-	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and masterLayoutPlid = &#63;.
+	 * Returns the number of layouts that the user has permission to view where groupId = &#63; and masterLayoutPageTemplateEntryERC = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param masterLayoutPlid the master layout plid
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc
 	 * @return the number of matching layouts that the user has permission to view
 	 */
 	@Override
-	public int filterCountByG_MLP(long groupId, long masterLayoutPlid) {
+	public int filterCountByG_MLPTEERC(
+		long groupId, String masterLayoutPageTemplateEntryERC) {
+
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
-			return countByG_MLP(groupId, masterLayoutPlid);
+			return countByG_MLPTEERC(groupId, masterLayoutPageTemplateEntryERC);
 		}
 
 		if (isPermissionsInMemoryFilterEnabled()) {
-			List<Layout> layouts = findByG_MLP(groupId, masterLayoutPlid);
+			List<Layout> layouts = findByG_MLPTEERC(
+				groupId, masterLayoutPageTemplateEntryERC);
 
 			layouts = InlineSQLHelperUtil.filter(layouts, groupId);
 
 			return layouts.size();
 		}
 
+		masterLayoutPageTemplateEntryERC = Objects.toString(
+			masterLayoutPageTemplateEntryERC, "");
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append(_FILTER_SQL_COUNT_LAYOUT_WHERE);
 
-		sb.append(_FINDER_COLUMN_G_MLP_GROUPID_2);
+		sb.append(_FINDER_COLUMN_G_MLPTEERC_GROUPID_2);
 
-		sb.append(_FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2);
+		boolean bindMasterLayoutPageTemplateEntryERC = false;
+
+		if (masterLayoutPageTemplateEntryERC.isEmpty()) {
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3_SQL);
+		}
+		else {
+			bindMasterLayoutPageTemplateEntryERC = true;
+
+			sb.append(
+				_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2_SQL);
+		}
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), Layout.class.getName(),
@@ -7938,7 +8060,9 @@ public class LayoutPersistenceImpl
 
 			queryPos.add(groupId);
 
-			queryPos.add(masterLayoutPlid);
+			if (bindMasterLayoutPageTemplateEntryERC) {
+				queryPos.add(masterLayoutPageTemplateEntryERC);
+			}
 
 			Long count = (Long)sqlQuery.uniqueResult();
 
@@ -7952,11 +8076,24 @@ public class LayoutPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_G_MLP_GROUPID_2 =
+	private static final String _FINDER_COLUMN_G_MLPTEERC_GROUPID_2 =
 		"layout.groupId = ? AND ";
 
-	private static final String _FINDER_COLUMN_G_MLP_MASTERLAYOUTPLID_2 =
-		"layout.masterLayoutPlid = ?";
+	private static final String
+		_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2 =
+			"layout.masterLayoutPageTemplateEntryERC = ?";
+
+	private static final String
+		_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3 =
+			"(layout.masterLayoutPageTemplateEntryERC IS NULL OR layout.masterLayoutPageTemplateEntryERC = '')";
+
+	private static final String
+		_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_2_SQL =
+			"layout.MLayoutPageTemplateEntryERC = ?";
+
+	private static final String
+		_FINDER_COLUMN_G_MLPTEERC_MASTERLAYOUTPAGETEMPLATEENTRYERC_3_SQL =
+			"(layout.MLayoutPageTemplateEntryERC IS NULL OR layout.MLayoutPageTemplateEntryERC = '')";
 
 	private FinderPath _finderPathWithPaginationFindByC_L;
 	private FinderPath _finderPathWithoutPaginationFindByC_L;
@@ -21498,6 +21635,8 @@ public class LayoutPersistenceImpl
 		dbColumnNames.put("type", "type_");
 		dbColumnNames.put("hidden", "hidden_");
 		dbColumnNames.put("system", "system_");
+		dbColumnNames.put(
+			"masterLayoutPageTemplateEntryERC", "MLayoutPageTemplateEntryERC");
 
 		setDBColumnNames(dbColumnNames);
 
@@ -22418,7 +22557,7 @@ public class LayoutPersistenceImpl
 		ctMergeColumnNames.add("css");
 		ctMergeColumnNames.add("priority");
 		ctMergeColumnNames.add("faviconFileEntryId");
-		ctMergeColumnNames.add("masterLayoutPlid");
+		ctMergeColumnNames.add("MLayoutPageTemplateEntryERC");
 		ctMergeColumnNames.add("layoutPrototypeUuid");
 		ctMergeColumnNames.add("layoutPrototypeLinkEnabled");
 		ctMergeColumnNames.add("layoutSetPrototypeLayoutERC");
@@ -22667,24 +22806,24 @@ public class LayoutPersistenceImpl
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"groupId", "type_"}, false);
 
-		_finderPathWithPaginationFindByG_MLP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_MLP",
+		_finderPathWithPaginationFindByG_MLPTEERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_MLPTEERC",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			},
-			new String[] {"groupId", "masterLayoutPlid"}, true);
+			new String[] {"groupId", "MLayoutPageTemplateEntryERC"}, true);
 
-		_finderPathWithoutPaginationFindByG_MLP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_MLP",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "masterLayoutPlid"}, true);
+		_finderPathWithoutPaginationFindByG_MLPTEERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_MLPTEERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "MLayoutPageTemplateEntryERC"}, true);
 
-		_finderPathCountByG_MLP = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_MLP",
-			new String[] {Long.class.getName(), Long.class.getName()},
-			new String[] {"groupId", "masterLayoutPlid"}, false);
+		_finderPathCountByG_MLPTEERC = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_MLPTEERC",
+			new String[] {Long.class.getName(), String.class.getName()},
+			new String[] {"groupId", "MLayoutPageTemplateEntryERC"}, false);
 
 		_finderPathWithPaginationFindByC_L = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_L",
@@ -23074,7 +23213,10 @@ public class LayoutPersistenceImpl
 		LayoutPersistenceImpl.class);
 
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(
-		new String[] {"uuid", "type", "hidden", "system"});
+		new String[] {
+			"uuid", "type", "hidden", "system",
+			"masterLayoutPageTemplateEntryERC"
+		});
 
 	@Override
 	protected FinderCache getFinderCache() {

@@ -89,7 +89,7 @@ public class LayoutModelImpl
 		{"themeId", Types.VARCHAR}, {"colorSchemeId", Types.VARCHAR},
 		{"styleBookEntryERC", Types.VARCHAR}, {"css", Types.CLOB},
 		{"priority", Types.INTEGER}, {"faviconFileEntryId", Types.BIGINT},
-		{"masterLayoutPlid", Types.BIGINT},
+		{"MLayoutPageTemplateEntryERC", Types.VARCHAR},
 		{"layoutPrototypeUuid", Types.VARCHAR},
 		{"layoutPrototypeLinkEnabled", Types.BOOLEAN},
 		{"layoutSetPrototypeLayoutERC", Types.VARCHAR},
@@ -136,7 +136,7 @@ public class LayoutModelImpl
 		TABLE_COLUMNS_MAP.put("css", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("priority", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("faviconFileEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("masterLayoutPlid", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("MLayoutPageTemplateEntryERC", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPrototypeUuid", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("layoutPrototypeLinkEnabled", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("layoutSetPrototypeLayoutERC", Types.VARCHAR);
@@ -149,7 +149,7 @@ public class LayoutModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryId LONG,masterLayoutPlid LONG,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
+		"create table Layout (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,plid LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentPlid LONG,privateLayout BOOLEAN,layoutId LONG,parentLayoutId LONG,classNameId LONG,classPK LONG,name STRING null,title TEXT null,description TEXT null,keywords STRING null,robots STRING null,type_ VARCHAR(75) null,typeSettings TEXT null,hidden_ BOOLEAN,system_ BOOLEAN,friendlyURL VARCHAR(255) null,iconImageId LONG,themeId VARCHAR(75) null,colorSchemeId VARCHAR(75) null,styleBookEntryERC VARCHAR(75) null,css TEXT null,priority INTEGER,faviconFileEntryId LONG,MLayoutPageTemplateEntryERC VARCHAR(75) null,layoutPrototypeUuid VARCHAR(75) null,layoutPrototypeLinkEnabled BOOLEAN,layoutSetPrototypeLayoutERC VARCHAR(75) null,publishDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (plid, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Layout";
 
@@ -256,7 +256,8 @@ public class LayoutModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MASTERLAYOUTPLID_COLUMN_BITMASK = 2048L;
+	public static final long MASTERLAYOUTPAGETEMPLATEENTRYERC_COLUMN_BITMASK =
+		2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
@@ -444,7 +445,8 @@ public class LayoutModelImpl
 			attributeGetterFunctions.put(
 				"faviconFileEntryId", Layout::getFaviconFileEntryId);
 			attributeGetterFunctions.put(
-				"masterLayoutPlid", Layout::getMasterLayoutPlid);
+				"masterLayoutPageTemplateEntryERC",
+				Layout::getMasterLayoutPageTemplateEntryERC);
 			attributeGetterFunctions.put(
 				"layoutPrototypeUuid", Layout::getLayoutPrototypeUuid);
 			attributeGetterFunctions.put(
@@ -561,8 +563,9 @@ public class LayoutModelImpl
 				"faviconFileEntryId",
 				(BiConsumer<Layout, Long>)Layout::setFaviconFileEntryId);
 			attributeSetterBiConsumers.put(
-				"masterLayoutPlid",
-				(BiConsumer<Layout, Long>)Layout::setMasterLayoutPlid);
+				"masterLayoutPageTemplateEntryERC",
+				(BiConsumer<Layout, String>)
+					Layout::setMasterLayoutPageTemplateEntryERC);
 			attributeSetterBiConsumers.put(
 				"layoutPrototypeUuid",
 				(BiConsumer<Layout, String>)Layout::setLayoutPrototypeUuid);
@@ -1848,17 +1851,24 @@ public class LayoutModelImpl
 
 	@JSON
 	@Override
-	public long getMasterLayoutPlid() {
-		return _masterLayoutPlid;
+	public String getMasterLayoutPageTemplateEntryERC() {
+		if (_masterLayoutPageTemplateEntryERC == null) {
+			return "";
+		}
+		else {
+			return _masterLayoutPageTemplateEntryERC;
+		}
 	}
 
 	@Override
-	public void setMasterLayoutPlid(long masterLayoutPlid) {
+	public void setMasterLayoutPageTemplateEntryERC(
+		String masterLayoutPageTemplateEntryERC) {
+
 		if (_columnOriginalValues == Collections.EMPTY_MAP) {
 			_setColumnOriginalValues();
 		}
 
-		_masterLayoutPlid = masterLayoutPlid;
+		_masterLayoutPageTemplateEntryERC = masterLayoutPageTemplateEntryERC;
 	}
 
 	/**
@@ -1866,9 +1876,8 @@ public class LayoutModelImpl
 	 *             #getColumnOriginalValue(String)}
 	 */
 	@Deprecated
-	public long getOriginalMasterLayoutPlid() {
-		return GetterUtil.getLong(
-			this.<Long>getColumnOriginalValue("masterLayoutPlid"));
+	public String getOriginalMasterLayoutPageTemplateEntryERC() {
+		return getColumnOriginalValue("MLayoutPageTemplateEntryERC");
 	}
 
 	@JSON
@@ -2401,7 +2410,8 @@ public class LayoutModelImpl
 		layoutImpl.setCss(getCss());
 		layoutImpl.setPriority(getPriority());
 		layoutImpl.setFaviconFileEntryId(getFaviconFileEntryId());
-		layoutImpl.setMasterLayoutPlid(getMasterLayoutPlid());
+		layoutImpl.setMasterLayoutPageTemplateEntryERC(
+			getMasterLayoutPageTemplateEntryERC());
 		layoutImpl.setLayoutPrototypeUuid(getLayoutPrototypeUuid());
 		layoutImpl.setLayoutPrototypeLinkEnabled(
 			isLayoutPrototypeLinkEnabled());
@@ -2474,8 +2484,8 @@ public class LayoutModelImpl
 			this.<Integer>getColumnOriginalValue("priority"));
 		layoutImpl.setFaviconFileEntryId(
 			this.<Long>getColumnOriginalValue("faviconFileEntryId"));
-		layoutImpl.setMasterLayoutPlid(
-			this.<Long>getColumnOriginalValue("masterLayoutPlid"));
+		layoutImpl.setMasterLayoutPageTemplateEntryERC(
+			this.<String>getColumnOriginalValue("MLayoutPageTemplateEntryERC"));
 		layoutImpl.setLayoutPrototypeUuid(
 			this.<String>getColumnOriginalValue("layoutPrototypeUuid"));
 		layoutImpl.setLayoutPrototypeLinkEnabled(
@@ -2764,7 +2774,17 @@ public class LayoutModelImpl
 
 		layoutCacheModel.faviconFileEntryId = getFaviconFileEntryId();
 
-		layoutCacheModel.masterLayoutPlid = getMasterLayoutPlid();
+		layoutCacheModel.masterLayoutPageTemplateEntryERC =
+			getMasterLayoutPageTemplateEntryERC();
+
+		String masterLayoutPageTemplateEntryERC =
+			layoutCacheModel.masterLayoutPageTemplateEntryERC;
+
+		if ((masterLayoutPageTemplateEntryERC != null) &&
+			(masterLayoutPageTemplateEntryERC.length() == 0)) {
+
+			layoutCacheModel.masterLayoutPageTemplateEntryERC = null;
+		}
 
 		layoutCacheModel.layoutPrototypeUuid = getLayoutPrototypeUuid();
 
@@ -2930,7 +2950,7 @@ public class LayoutModelImpl
 	private String _css;
 	private int _priority;
 	private long _faviconFileEntryId;
-	private long _masterLayoutPlid;
+	private String _masterLayoutPageTemplateEntryERC;
 	private String _layoutPrototypeUuid;
 	private boolean _layoutPrototypeLinkEnabled;
 	private String _layoutSetPrototypeLayoutERC;
@@ -3006,7 +3026,8 @@ public class LayoutModelImpl
 		_columnOriginalValues.put("css", _css);
 		_columnOriginalValues.put("priority", _priority);
 		_columnOriginalValues.put("faviconFileEntryId", _faviconFileEntryId);
-		_columnOriginalValues.put("masterLayoutPlid", _masterLayoutPlid);
+		_columnOriginalValues.put(
+			"MLayoutPageTemplateEntryERC", _masterLayoutPageTemplateEntryERC);
 		_columnOriginalValues.put("layoutPrototypeUuid", _layoutPrototypeUuid);
 		_columnOriginalValues.put(
 			"layoutPrototypeLinkEnabled", _layoutPrototypeLinkEnabled);
@@ -3029,6 +3050,8 @@ public class LayoutModelImpl
 		attributeNames.put("type_", "type");
 		attributeNames.put("hidden_", "hidden");
 		attributeNames.put("system_", "system");
+		attributeNames.put(
+			"MLayoutPageTemplateEntryERC", "masterLayoutPageTemplateEntryERC");
 
 		_attributeNames = Collections.unmodifiableMap(attributeNames);
 	}
@@ -3112,7 +3135,7 @@ public class LayoutModelImpl
 
 		columnBitmasks.put("faviconFileEntryId", 8589934592L);
 
-		columnBitmasks.put("masterLayoutPlid", 17179869184L);
+		columnBitmasks.put("MLayoutPageTemplateEntryERC", 17179869184L);
 
 		columnBitmasks.put("layoutPrototypeUuid", 34359738368L);
 

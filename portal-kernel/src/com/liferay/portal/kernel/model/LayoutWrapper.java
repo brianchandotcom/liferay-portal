@@ -68,7 +68,9 @@ public class LayoutWrapper
 		attributes.put("css", getCss());
 		attributes.put("priority", getPriority());
 		attributes.put("faviconFileEntryId", getFaviconFileEntryId());
-		attributes.put("masterLayoutPlid", getMasterLayoutPlid());
+		attributes.put(
+			"masterLayoutPageTemplateEntryERC",
+			getMasterLayoutPageTemplateEntryERC());
 		attributes.put("layoutPrototypeUuid", getLayoutPrototypeUuid());
 		attributes.put(
 			"layoutPrototypeLinkEnabled", isLayoutPrototypeLinkEnabled());
@@ -291,10 +293,12 @@ public class LayoutWrapper
 			setFaviconFileEntryId(faviconFileEntryId);
 		}
 
-		Long masterLayoutPlid = (Long)attributes.get("masterLayoutPlid");
+		String masterLayoutPageTemplateEntryERC = (String)attributes.get(
+			"masterLayoutPageTemplateEntryERC");
 
-		if (masterLayoutPlid != null) {
-			setMasterLayoutPlid(masterLayoutPlid);
+		if (masterLayoutPageTemplateEntryERC != null) {
+			setMasterLayoutPageTemplateEntryERC(
+				masterLayoutPageTemplateEntryERC);
 		}
 
 		String layoutPrototypeUuid = (String)attributes.get(
@@ -983,13 +987,13 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Returns the master layout plid of this layout.
+	 * Returns the master layout page template entry erc of this layout.
 	 *
-	 * @return the master layout plid of this layout
+	 * @return the master layout page template entry erc of this layout
 	 */
 	@Override
-	public long getMasterLayoutPlid() {
-		return model.getMasterLayoutPlid();
+	public String getMasterLayoutPageTemplateEntryERC() {
+		return model.getMasterLayoutPageTemplateEntryERC();
 	}
 
 	/**
@@ -2275,13 +2279,16 @@ public class LayoutWrapper
 	}
 
 	/**
-	 * Sets the master layout plid of this layout.
+	 * Sets the master layout page template entry erc of this layout.
 	 *
-	 * @param masterLayoutPlid the master layout plid of this layout
+	 * @param masterLayoutPageTemplateEntryERC the master layout page template entry erc of this layout
 	 */
 	@Override
-	public void setMasterLayoutPlid(long masterLayoutPlid) {
-		model.setMasterLayoutPlid(masterLayoutPlid);
+	public void setMasterLayoutPageTemplateEntryERC(
+		String masterLayoutPageTemplateEntryERC) {
+
+		model.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntryERC);
 	}
 
 	/**

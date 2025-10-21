@@ -29,6 +29,15 @@
 		li {
 			cursor: pointer;
 			padding: 10px 12px;
+
+			&:hover {
+				background-color: #f8f9fa;
+			}
 		}
+	}
+
+	.drop-down-item-selected {
+		background-color: #f0f8ff;
+		color: #004ad7;
 	}
 }

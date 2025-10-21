@@ -38,6 +38,7 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 						accountData.billingAddress.regionISOCode ?? '',
 
 					addressType: 'billing',
+					name: accountData.billingAddress.name,
 					postalCode: accountData.billingAddress.zip,
 					primary: true,
 					streetAddressLine1: accountData.billingAddress.street1,

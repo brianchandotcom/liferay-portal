@@ -5,8 +5,9 @@
 
 import ClayIcon from '@clayui/icon';
 import {useEffect, useRef, useState} from 'react';
+import classNames from 'classnames';
 
-import './CustomDropDown.scss';
+import './AccountSelectDropDown.scss';
 
 interface Option {
 	key: string;
@@ -15,25 +16,25 @@ interface Option {
 }
 
 interface DropdownProps {
+	onChange: (value: string) => void;
 	options: Option[];
 	value?: Option;
-	onChange: (value: string) => void;
 }
 
-export default function CustomDropdown({
+export default function AcountSelectDropDown({
+	onChange,
 	options,
 	value,
-	onChange,
 }: DropdownProps) {
 	const [isOpen, setIsOpen] = useState(false);
-	const [selected, setSelected] = useState<Option | null>(null);
-	const dropdownRef = useRef<HTMLDivElement>(null);
+	const [selected, setSelected] = useState<Option | undefined>(value);
+	const dropDownRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {
 			if (
-				dropdownRef.current &&
-				!dropdownRef.current.contains(event.target as Node)
+				dropDownRef.current &&
+				!dropDownRef.current.contains(event.target as Node)
 			) {
 				setIsOpen(false);
 			}
@@ -50,7 +51,7 @@ export default function CustomDropdown({
 	}
 
 	return (
-		<div className="custom-drop-down-container" ref={dropdownRef}>
+		<div className="custom-drop-down-container" ref={dropDownRef}>
 			<button onClick={() => setIsOpen((prev) => !prev)}>
 				<div className="align-items-center d-flex justify-content-between">
 					{value?.name}
@@ -62,31 +63,12 @@ export default function CustomDropdown({
 				<ul>
 					{options.map((option) => (
 						<li
+							className={classNames({
+								'drop-down-item-selected':
+									selected?.key === option.key,
+							})}
 							key={option.key}
 							onClick={() => handleSelect(option)}
-							style={{
-								background:
-									selected?.key === option.key
-										? '#f0f8ff'
-										: 'transparent',
-								color:
-									selected?.key === option.key
-										? '#004AD7'
-										: '#54555F',
-							}}
-							onMouseEnter={(e) =>
-								((
-									e.target as HTMLLIElement
-								).style.backgroundColor = '#f8f9fa')
-							}
-							onMouseLeave={(e) =>
-								((
-									e.target as HTMLLIElement
-								).style.backgroundColor =
-									selected?.key === option.key
-										? '#f0f8ff'
-										: 'transparent')
-							}
 						>
 							<b>{option.name}</b>
 							<div>

@@ -204,7 +204,7 @@ const zodSchema = {
 		country: z.string().min(1),
 		countryISOCode: z.string().optional(),
 		name: z.string().min(1),
-		phoneNumber: z.string().min(1),
+		phoneNumber: z.string().optional(),
 		regionISOCode: z.string().optional(),
 		street1: z.string().min(1),
 		street2: z.string().optional(),

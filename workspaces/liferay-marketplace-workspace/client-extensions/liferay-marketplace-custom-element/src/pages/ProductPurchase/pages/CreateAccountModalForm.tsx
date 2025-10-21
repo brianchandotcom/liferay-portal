@@ -5,25 +5,26 @@
 
 import Button from '@clayui/button';
 import ClayForm from '@clayui/form';
+import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {Size} from '@clayui/modal/lib/types';
 import {zodResolver} from '@hookform/resolvers/zod';
 import {ChangeEvent, useCallback, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
+
 import {Input} from '../../../components/Input/Input';
 import Form from '../../../components/MarketplaceForm';
 import Modal from '../../../components/Modal';
 import Select from '../../../components/Select/Select';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import zodSchema, {z} from '../../../schema/zod';
-import {AccountType} from '../constants';
-import useCommerceRegions from '../../../hooks/useCommerceRegions';
-import ClayIcon from '@clayui/icon';
-import CustomDropdown from '../components/CustomDropDown/CustomDropDown';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import marketplaceOAuth2 from '../../../services/oauth/Marketplace';
 import CommerceSelectAccount from '../../../services/rest/CommerceSelectAccount';
+import AcountSelectDropDown from '../components/AccountSelectDropDown/AccountSelectDropDown';
+import {AccountType} from '../constants';
 
 import './CreateAccountModalForm.scss';
 
@@ -47,7 +48,6 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 		handleSubmit,
 		register,
 		reset,
-		setError,
 		setValue,
 		watch,
 	} = useForm<FormFields>({
@@ -71,7 +71,9 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 	});
 
 	const [previewImg, setPreviewImg] = useState('');
-	const {accountImage, billingAddress, type} = watch();
+	const {accountImage, accountName, billingAddress, type} = watch();
+
+	const billingAddressName = accountName + ' Address';
 
 	const {data: regionsResponse} = useCommerceRegions();
 
@@ -110,33 +112,33 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 		modal.onClose();
 	};
 
-	useEffect(() => {
-		if (!modal.open) {
-			handleOnClose();
+	const onSubmit = async (data: FormFields) => {
+		try {
+			const payload = {
+				...data,
+				billingAddress: {
+					...data.billingAddress,
+					name: billingAddressName,
+				},
+			};
+
+			debugger;
+
+			const account = await marketplaceOAuth2.createAccount(payload);
+			await CommerceSelectAccount.selectAccount(account.id);
+			window.location.reload();
 		}
-	}, [modal.open]);
+		catch (error) {
+			console.error(error);
 
-	const onSubmit = useCallback(
-		async (data: FormFields) => {
-			try {
-				const account = await marketplaceOAuth2.createAccount(data);
-				CommerceSelectAccount.selectAccount(account.id).then(() => {
-					window.location.reload();
-				});
-			}
-			catch (error) {
-				console.error(error);
+			Liferay.Util.openToast({
+				message: i18n.translate('an-unexpected-error-occurred'),
+				type: 'danger',
+			});
+		}
 
-				Liferay.Util.openToast({
-					message: i18n.translate('an-unexpected-error-occurred'),
-					type: 'danger',
-				});
-			}
-
-			handleOnClose();
-		},
-		[modal, setError]
-	);
+		handleOnClose();
+	};
 
 	if (!modal.open) {
 		return null;
@@ -182,15 +184,15 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 						{i18n.translate('account-type')}
 					</Form.Label>
 
-					<CustomDropdown
+					<AcountSelectDropDown
+						onChange={(value: string) => setValue('type', value)}
 						options={AccountType}
 						value={getAccountType(type)}
-						onChange={(value: string) => setValue('type', value)}
 					/>
 				</ClayForm.Group>
 
 				{isTypeExistingBusiness ? (
-					<div className="d-flex c-gap-2 my-5">
+					<div className="c-gap-2 d-flex my-5">
 						<div>
 							<ClayIcon
 								className="text-muted"
@@ -225,7 +227,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 					<>
 						<div className="mt-6">
 							<h3>{i18n.translate('account-details')}</h3>
-							<hr className="mb-6 mt-2" />
+							<hr className="mb-2 mt-2" />
 						</div>
 						<ClayForm.Group className="pr-2 w-100">
 							<div className="account-image-container">
@@ -235,10 +237,10 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										src={previewImg}
 									/>
 								) : (
-									<div className="align-items-center  d-flex  account-image-default justify-content-center py-5">
+									<div className="account-image account-image-default align-items-center d-flex justify-content-center py-5">
 										<ClayIcon
-											className="text-muted"
 											aria-label="New App logo"
+											className="text-muted"
 											symbol="picture"
 										/>
 									</div>

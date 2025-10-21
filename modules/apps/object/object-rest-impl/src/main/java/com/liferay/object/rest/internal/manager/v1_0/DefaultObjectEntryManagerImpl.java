@@ -31,6 +31,7 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
@@ -59,6 +60,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
@@ -99,6 +101,7 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -107,6 +110,9 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.transaction.TransactionConfig;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -172,6 +178,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -284,6 +291,73 @@ public class DefaultObjectEntryManagerImpl
 				primaryKey2),
 			_objectEntryService.getObjectEntry(primaryKey1),
 			systemObjectDefinitionManager);
+	}
+
+	@Override
+	public ObjectEntry copyObjectEntry(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			long objectEntryFolderId, boolean replace)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		_checkObjectEntryStatus(serviceBuilderObjectEntry);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
+
+		Group group = _groupLocalService.getGroup(
+			objectEntryFolder.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry,
+			group.getGroupKey());
+
+		Map<String, Serializable> values = _toObjectValues(
+			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+			group.getGroupKey(), serviceContext);
+
+		if (!_isUniqueTitle(objectEntry.getId(), objectEntryFolderId, values)) {
+			if (replace) {
+				try {
+					Callable<com.liferay.object.model.ObjectEntry>
+						objectEntryReplaceCallable =
+							new ObjectEntryReplaceCallable(
+								"copy", serviceBuilderObjectEntry,
+								objectEntryFolder, serviceContext, values);
+
+					return _objectEntryDTOConverter.toDTO(
+						dtoConverterContext,
+						TransactionInvokerUtil.invoke(
+							_transactionConfig, objectEntryReplaceCallable));
+				}
+				catch (Throwable throwable) {
+					throw new Exception(throwable);
+				}
+			}
+			else {
+				ObjectField titleObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getTitleObjectFieldId());
+
+				_replaceValues(
+					objectDefinition, group.getGroupKey(), titleObjectField,
+					values);
+			}
+		}
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext,
+			_objectEntryService.copyObjectEntry(
+				objectEntryId, objectEntryFolderId, values, serviceContext));
 	}
 
 	@Override
@@ -1120,6 +1194,75 @@ public class DefaultObjectEntryManagerImpl
 		return getVersionedObjectEntries(
 			dtoConverterContext, objectDefinition,
 			serviceBuilderObjectEntry.getObjectEntryId(), pagination);
+	}
+
+	@Override
+	public ObjectEntry moveObjectEntry(
+			DTOConverterContext dtoConverterContext, long objectEntryId,
+			long objectEntryFolderId, boolean replace)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		_checkObjectEntryStatus(serviceBuilderObjectEntry);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				serviceBuilderObjectEntry.getObjectDefinitionId());
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
+
+		Group group = _groupLocalService.getGroup(
+			objectEntryFolder.getGroupId());
+
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry,
+			group.getGroupKey());
+
+		Map<String, Serializable> values = _toObjectValues(
+			0L, dtoConverterContext.getLocale(), objectDefinition,
+			_objectEntryDTOConverter.toDTO(
+				dtoConverterContext, serviceBuilderObjectEntry),
+			group.getGroupKey(), serviceContext);
+
+		if (!_isUniqueTitle(objectEntryId, objectEntryFolderId, values)) {
+			if (replace) {
+				try {
+					Callable<com.liferay.object.model.ObjectEntry>
+						objectEntryReplaceCallable =
+							new ObjectEntryReplaceCallable(
+								"move", serviceBuilderObjectEntry,
+								objectEntryFolder, serviceContext, values);
+
+					return _objectEntryDTOConverter.toDTO(
+						dtoConverterContext,
+						TransactionInvokerUtil.invoke(
+							_transactionConfig, objectEntryReplaceCallable));
+				}
+				catch (Throwable throwable) {
+					throw new Exception(throwable);
+				}
+			}
+			else {
+				ObjectField titleObjectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectDefinition.getTitleObjectFieldId());
+
+				_replaceValues(
+					objectDefinition, group.getGroupKey(), titleObjectField,
+					values);
+			}
+		}
+
+		return _objectEntryDTOConverter.toDTO(
+			dtoConverterContext,
+			_objectEntryService.moveObjectEntry(
+				objectEntryId, objectEntryFolderId, values, serviceContext));
 	}
 
 	@Override
@@ -2777,6 +2920,23 @@ public class DefaultObjectEntryManagerImpl
 				objectEntryId, null));
 	}
 
+	private String _getTitleValue(
+			ObjectField titleObjectField, Map<String, Serializable> values)
+		throws Exception {
+
+		if (titleObjectField.isLocalized()) {
+			Map<String, Object> i18nValues = (Map<String, Object>)values.get(
+				titleObjectField.getI18nObjectFieldName());
+
+			String languageId = LocaleUtil.toLanguageId(
+				LocaleUtil.getSiteDefault());
+
+			return GetterUtil.getString(i18nValues.get(languageId));
+		}
+
+		return GetterUtil.getString(values.get(titleObjectField.getName()));
+	}
+
 	private Serializable _getValue(
 		Locale locale, ObjectField objectField, Object value) {
 
@@ -2816,6 +2976,54 @@ public class DefaultObjectEntryManagerImpl
 		}
 
 		return false;
+	}
+
+	private boolean _isUniqueTitle(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry objectEntry =
+			_objectEntryService.getObjectEntry(objectEntryId);
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.getObjectDefinition(
+				objectEntry.getObjectDefinitionId());
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinition.getObjectDefinitionId(),
+			titleObjectField.getName());
+
+		Column<?, String> objectFieldColumn =
+			(Column<?, String>)table.getColumn(
+				titleObjectField.getDBColumnName());
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
+
+		String value = _getTitleValue(titleObjectField, values);
+
+		long count = objectEntryLocalService.getValuesListCount(
+			new Long[] {objectEntryFolder.getGroupId()},
+			objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectFieldColumn.eq(
+				value
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+					objectEntryFolder.getObjectEntryFolderId())
+			),
+			false, null);
+
+		if (count > 0) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private long _processAttachment(
@@ -3548,6 +3756,10 @@ public class DefaultObjectEntryManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultObjectEntryManagerImpl.class);
 
+	private static final TransactionConfig _transactionConfig =
+		TransactionConfig.Factory.create(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
 	@Reference
 	private Aggregations _aggregations;
 
@@ -3572,6 +3784,9 @@ public class DefaultObjectEntryManagerImpl
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
 	private Http _http;
 
 	@Reference
@@ -3591,6 +3806,10 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Reference(
 		target = "(component.name=com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter)"
@@ -3675,5 +3894,66 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
+
+	private class ObjectEntryReplaceCallable
+		implements Callable<com.liferay.object.model.ObjectEntry> {
+
+		@Override
+		public com.liferay.object.model.ObjectEntry call() throws Exception {
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.getObjectDefinition(
+					_objectEntry.getObjectDefinitionId());
+
+			ObjectField titleObjectField =
+				_objectFieldLocalService.fetchObjectField(
+					objectDefinition.getTitleObjectFieldId());
+
+			for (com.liferay.object.model.ObjectEntry folderObjectEntry :
+					objectEntryLocalService.getObjectEntries(
+						_objectEntryFolder.getGroupId(),
+						_objectEntryFolder.getCompanyId(),
+						_objectEntryFolder.getObjectEntryFolderId())) {
+
+				if (StringUtil.equals(
+						folderObjectEntry.getTitleValue(),
+						_getTitleValue(titleObjectField, _values))) {
+
+					_objectEntryService.deleteObjectEntry(
+						folderObjectEntry.getObjectEntryId());
+				}
+			}
+
+			if (_action.equals("copy")) {
+				return _objectEntryService.copyObjectEntry(
+					_objectEntry.getObjectEntryId(),
+					_objectEntryFolder.getObjectEntryFolderId(), _values,
+					_serviceContext);
+			}
+
+			return _objectEntryService.moveObjectEntry(
+				_objectEntry.getObjectEntryId(),
+				_objectEntryFolder.getObjectEntryFolderId(), _values,
+				_serviceContext);
+		}
+
+		private ObjectEntryReplaceCallable(
+			String action, com.liferay.object.model.ObjectEntry objectEntry,
+			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext,
+			Map<String, Serializable> values) {
+
+			_action = action;
+			_objectEntry = objectEntry;
+			_objectEntryFolder = objectEntryFolder;
+			_serviceContext = serviceContext;
+			_values = values;
+		}
+
+		private final String _action;
+		private final com.liferay.object.model.ObjectEntry _objectEntry;
+		private final ObjectEntryFolder _objectEntryFolder;
+		private final ServiceContext _serviceContext;
+		private final Map<String, Serializable> _values;
+
+	}
 
 }

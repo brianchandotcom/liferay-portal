@@ -170,12 +170,15 @@ public class VulcanBatchEngineTaskItemDelegateAdaptor<T>
 
 	@Override
 	public void setImportUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
-				unsafeBiConsumer) {
+		UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
+			unsafeBiConsumer) {
 
 		_vulcanBatchEngineTaskItemDelegate.setContextBatchUnsafeBiConsumer(
-			unsafeBiConsumer);
+			(collection, unsafeFunction) -> {
+				for (T item : collection) {
+					unsafeBiConsumer.accept(item, unsafeFunction);
+				}
+			});
 	}
 
 	@Override

@@ -67,9 +67,8 @@ public interface BatchEngineTaskItemDelegate<T> {
 	public void setContextUser(User contextUser);
 
 	public void setImportUnsafeBiConsumer(
-		UnsafeBiConsumer
-			<Collection<T>, UnsafeFunction<T, T, Exception>, Exception>
-				unsafeBiConsumer);
+		UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
+			unsafeBiConsumer);
 
 	public void setLanguageId(String languageId);
 

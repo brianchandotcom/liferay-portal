@@ -35,6 +35,7 @@ import com.liferay.batch.engine.thread.local.BatchEngineThreadLocal;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -64,6 +65,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -259,8 +261,8 @@ public class BatchEngineImportTaskExecutorImpl
 			_userLocalService.getUser(batchEngineImportTask.getUserId()));
 
 		batchEngineTaskItemDelegate.setImportUnsafeBiConsumer(
-			(items2, unsafeFunction) -> _importItems(
-				batchEngineImportTask, batchEngineTaskItemDelegate, items2,
+			(item, unsafeFunction) -> _importItem(
+				batchEngineImportTask, batchEngineTaskItemDelegate, item,
 				unsafeFunction));
 
 		BatchEngineTaskOperation batchEngineTaskOperation =
@@ -451,82 +453,79 @@ public class BatchEngineImportTaskExecutorImpl
 		return null;
 	}
 
-	private <T> void _importItem(
+	private <T> Callable<Void> _getImportItemCallable(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate, T item,
-			UnsafeFunction<T, T, Exception> unsafeFunction)
-		throws Exception {
+			UnsafeFunction<T, T, Exception> unsafeFunction) {
 
-		ImportTaskContext importTaskContext = new ImportTaskContext();
+		return () -> {
+			ImportTaskContext importTaskContext = new ImportTaskContext();
 
-		for (ImportTaskPreAction importTaskPreAction : _importTaskPreActions) {
-			importTaskPreAction.run(
-				batchEngineImportTask, batchEngineTaskItemDelegate,
-				importTaskContext, item);
-		}
+			for (ImportTaskPreAction importTaskPreAction : _importTaskPreActions) {
+				importTaskPreAction.run(
+					batchEngineImportTask, batchEngineTaskItemDelegate,
+					importTaskContext, item);
+			}
 
-		T persistedItem = unsafeFunction.apply(item);
+			T persistedItem = unsafeFunction.apply(item);
 
-		if (persistedItem == null) {
-			return;
-		}
+			if (persistedItem == null) {
+				return null;
+			}
 
-		for (ImportTaskPostAction importTaskPostAction :
+			for (ImportTaskPostAction importTaskPostAction :
 				_importTaskPostActions) {
 
-			importTaskPostAction.run(
-				batchEngineImportTask, batchEngineTaskItemDelegate,
-				importTaskContext, item, persistedItem);
-		}
+				importTaskPostAction.run(
+					batchEngineImportTask, batchEngineTaskItemDelegate,
+					importTaskContext, item, persistedItem);
+			}
+
+			return null;
+		};
 	}
 
-	private <T> void _importItems(
+	private <T> void _importItem(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
-			Collection<T> items, UnsafeFunction<T, T, Exception> unsafeFunction)
+			T item, UnsafeFunction<T, T, Exception> unsafeFunction)
 		throws Exception {
 
-		for (T item : items) {
-			try {
-				if (LazyReferencingThreadLocal.isEnabled()) {
-					TransactionInvokerUtil.invoke(
-						_transactionConfig,
-						() -> {
-							_importItem(
-								batchEngineImportTask,
-								batchEngineTaskItemDelegate, item,
-								unsafeFunction);
+		Callable<Void> importItemCallable =
+			_getImportItemCallable(
+				batchEngineImportTask,
+				batchEngineTaskItemDelegate, item,
+				unsafeFunction);
 
-							return null;
-						});
-				}
-				else {
-					_importItem(
-						batchEngineImportTask, batchEngineTaskItemDelegate,
-						item, unsafeFunction);
-				}
+		try {
+			if (LazyReferencingThreadLocal.isEnabled()) {
+				TransactionInvokerUtil.invoke(
+					_transactionConfig, importItemCallable);
 			}
-			catch (Throwable throwable) {
-				Exception exception =
-					throwable instanceof Exception ? (Exception)throwable :
-						new Exception(throwable.getMessage(), throwable);
-
-				_log.error(exception);
-
-				addBatchEngineImportTaskError(
-					batchEngineImportTask, batchEngineTaskItemDelegate,
-					exception, item, ItemIndexThreadLocal.get());
-
-				if (batchEngineImportTask.getImportStrategy() ==
-						BatchEngineImportTaskConstants.
-							IMPORT_STRATEGY_ON_ERROR_FAIL) {
-
-					throw exception;
-				}
+			else {
+				importItemCallable.call();
 			}
-			finally {
-				ItemIndexThreadLocal.remove();
+		}
+		catch (Throwable throwable) {
+			Exception exception =
+				throwable instanceof Exception ? (Exception)throwable :
+					new Exception(throwable.getMessage(), throwable);
+
+			_log.error(exception);
+
+			addBatchEngineImportTaskError(
+				batchEngineImportTask, batchEngineTaskItemDelegate,
+				exception, item, ItemIndexThreadLocal.get());
+
+			if (batchEngineImportTask.getImportStrategy() ==
+					BatchEngineImportTaskConstants.
+						IMPORT_STRATEGY_ON_ERROR_FAIL) {
+
+				throw exception;
 			}
+		}
+		finally {
+			ItemIndexThreadLocal.remove();
 		}
 	}
 

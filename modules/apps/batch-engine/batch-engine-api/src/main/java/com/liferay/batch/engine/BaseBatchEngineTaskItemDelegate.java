@@ -34,9 +34,9 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (T item : items) {
+		for (T currentItem : items) {
 			importUnsafeBiConsumer.accept(
-				item, currentItem -> createItem(currentItem, parameters));
+				currentItem, item -> createItem(item, parameters));
 		}
 	}
 
@@ -51,13 +51,13 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (T item : items) {
+		for (T currentItem : items) {
 			importUnsafeBiConsumer.accept(
-				item,
-				currentItem -> {
-					deleteItem(currentItem, parameters);
+				currentItem,
+				item -> {
+					deleteItem(item, parameters);
 
-					return currentItem;
+					return item;
 				});
 		}
 	}

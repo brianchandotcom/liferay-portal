@@ -120,7 +120,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  masterLayoutPlid the primary key of the master layout
+	 * @param  masterLayoutPageTemplateEntryERC the external reference code key
+	 *         of the master layout page template entry
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -139,7 +140,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
 			boolean hidden, boolean system, Map<Locale, String> friendlyURLMap,
-			long masterLayoutPlid, ServiceContext serviceContext)
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
@@ -158,8 +160,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			externalReferenceCode, getUserId(), groupId, privateLayout,
 			parentLayoutId, classNameId, classPK, localeNamesMap,
 			localeTitlesMap, descriptionMap, keywordsMap, robotsMap, type,
-			typeSettings, hidden, system, friendlyURLMap, masterLayoutPlid,
-			serviceContext);
+			typeSettings, hidden, system, friendlyURLMap,
+			masterLayoutPageTemplateEntryERC, serviceContext);
 
 		checkLayoutTypeSettings(layout, StringPool.BLANK, typeSettings);
 
@@ -197,7 +199,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  masterLayoutPlid the primary key of the master layout
+	 * @param  masterLayoutPageTemplateEntryERC the external reference code key
+	 *         of the master layout page template entry
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -215,14 +218,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			Map<Locale, String> descriptionMap, Map<Locale, String> keywordsMap,
 			Map<Locale, String> robotsMap, String type, String typeSettings,
 			boolean hidden, Map<Locale, String> friendlyURLMap,
-			long masterLayoutPlid, ServiceContext serviceContext)
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addLayout(
 			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
 			robotsMap, type, typeSettings, hidden, false, friendlyURLMap,
-			masterLayoutPlid, serviceContext);
+			masterLayoutPageTemplateEntryERC, serviceContext);
 	}
 
 	/**
@@ -279,7 +283,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return addLayout(
 			externalReferenceCode, groupId, privateLayout, parentLayoutId, 0, 0,
 			localeNamesMap, localeTitlesMap, descriptionMap, keywordsMap,
-			robotsMap, type, typeSettings, hidden, false, friendlyURLMap, 0,
+			robotsMap, type, typeSettings, hidden, false, friendlyURLMap, null,
 			serviceContext);
 	}
 

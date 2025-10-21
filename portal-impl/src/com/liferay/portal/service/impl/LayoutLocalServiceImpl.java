@@ -213,7 +213,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 *         To see how the URL is normalized when accessed, see {@link
 	 *         com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 *         String)}.
-	 * @param  masterLayoutPlid the primary key of the master layout
+	 * @param  masterLayoutPageTemplateEntryERC the external reference code of
+	 *         the master layout page template entry
 	 * @param  serviceContext the service context to be applied. Must set the
 	 *         UUID for the layout. Can set the creation date, modification
 	 *         date, and expando bridge attributes for the layout. For layouts
@@ -239,7 +240,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String type, String typeSettings, boolean hidden, boolean system,
-			Map<Locale, String> friendlyURLMap, long masterLayoutPlid,
+			Map<Locale, String> friendlyURLMap,
+			String masterLayoutPageTemplateEntryERC,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -352,7 +354,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setSystem(system);
 		layout.setFriendlyURL(friendlyURL);
 		layout.setPriority(priority);
-		layout.setMasterLayoutPlid(masterLayoutPlid);
+		layout.setMasterLayoutPageTemplateEntryERC(
+			masterLayoutPageTemplateEntryERC);
 
 		String layoutPrototypeUuid = ParamUtil.getString(
 			serviceContext, "layoutPrototypeUuid");

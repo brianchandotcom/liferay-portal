@@ -77,6 +77,14 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
                 -   $ref: "#/components/schemas/ItemExternalReference"
+                -   properties:
+                        collectionConfiguration:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The configuration keys and values of the collection.
+                            type: object
             # @review
             description:
                 A unique reference to a collection which remains constant across environments.
@@ -98,6 +106,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        collectionLayout:
+                            $ref: "#/components/schemas/BasicLayout"
+                            # @review
+                            description:
+                                the collection page element's layout.
                         collectionReference:
                             $ref: "#/components/schemas/CollectionReference"
                         collectionViewports:
@@ -125,11 +138,6 @@ components:
                             description:
                                 Specifies if the collection is hidden to the user.
                             type: boolean
-                        layout:
-                            $ref: "#/components/schemas/BasicLayout"
-                            # @review
-                            description:
-                                the collection page element's layout.
                         listItemStyle:
                             # @review
                             description:

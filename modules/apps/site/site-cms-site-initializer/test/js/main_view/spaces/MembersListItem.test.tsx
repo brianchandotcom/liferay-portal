@@ -119,6 +119,13 @@ describe('MemberListItem', () => {
 
 		const image = within(listItemElement).getByAltText(anotherUser.name);
 		expect(image).toHaveAttribute('src', '/image/user_portrait');
+
+		expect(SpaceMembersPermissionSelect).toHaveBeenCalledWith(
+			expect.objectContaining({
+				selectedRoles: [SPACE_MEMBER_ROLE_NAME],
+			}),
+			{}
+		);
 	});
 
 	it('renders the word owner and hides the remove button with permission select when the user is the owner', () => {
@@ -187,6 +194,13 @@ describe('MemberListItem', () => {
 			testUserGroupWithoutMembers.name
 		);
 		expect(listItemElement).toHaveTextContent('(0-members)');
+
+		expect(SpaceMembersPermissionSelect).toHaveBeenCalledWith(
+			expect.objectContaining({
+				selectedRoles: [SPACE_MEMBER_ROLE_NAME],
+			}),
+			{}
+		);
 	});
 
 	it('does not render the remove button when hasAssignMembersPermission is false', () => {

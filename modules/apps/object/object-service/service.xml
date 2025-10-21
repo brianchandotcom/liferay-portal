@@ -101,7 +101,6 @@
 		<column name="enableFormContainer" type="boolean" />
 		<column name="enableFriendlyURLCustomization" type="boolean" />
 		<column name="enableIndexSearch" type="boolean" />
-		<column name="enableLocalization" type="boolean" />
 		<column name="enableObjectEntryDraft" type="boolean" />
 		<column name="enableObjectEntryHistory" type="boolean" />
 		<column name="enableObjectEntrySchedule" type="boolean" />

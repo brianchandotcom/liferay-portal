@@ -32,7 +32,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</div>
 
 	<c:choose>
-		<c:when test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-57655") %>'>
+		<c:when test='<%= !FeatureFlagManagerUtil.isEnabled(scopeGroupId, "LPD-57655") %>'>
 			<aui:button-row>
 				<aui:button name="continueButton" type="submit" value="continue" />
 			</aui:button-row>

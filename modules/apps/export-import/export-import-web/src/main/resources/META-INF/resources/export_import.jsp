@@ -32,7 +32,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 		</div>
 	</c:when>
 	<c:otherwise>
-		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled("LPD-57655") %>'>
+		<c:if test='<%= !FeatureFlagManagerUtil.isEnabled(themeDisplay.getCompanyId(), "LPD-57655") %>'>
 			<clay:navigation-bar
 				navigationItems='<%=
 					new JSPNavigationItemList(pageContext) {

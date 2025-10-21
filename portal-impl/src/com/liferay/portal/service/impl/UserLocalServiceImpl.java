@@ -6269,23 +6269,12 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			passwordPolicy.isChangeRequired() &&
 			(user.getLastLoginDate() == null)) {
 
-			Company company = _companyLocalService.getCompany(
-				user.getCompanyId());
-			Contact contact = _contactLocalService.getContact(
-				user.getContactId());
+			Contact contact = user.getContact();
+			User guestUser = getGuestUser(user.getCompanyId());
 
-			User guestUser = company.getGuestUser();
+			user.setPasswordReset(contact.getUserId() != guestUser.getUserId());
 
-			if (contact.getUserId() == guestUser.getUserId()) {
-				user.setPasswordReset(false);
-
-				user = userPersistence.update(user);
-			}
-			else {
-				user.setPasswordReset(true);
-
-				user = userPersistence.update(user);
-			}
+			user = userPersistence.update(user);
 		}
 
 		return user;

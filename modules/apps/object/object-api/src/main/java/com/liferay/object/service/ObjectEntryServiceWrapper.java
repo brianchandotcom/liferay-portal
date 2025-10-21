@@ -61,6 +61,17 @@ public class ObjectEntryServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntry copyObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.copyObjectEntry(
+			objectEntryId, objectEntryFolderId, values, serviceContext);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntry deleteObjectEntry(
 			long objectEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -236,6 +247,17 @@ public class ObjectEntryServiceWrapper
 
 		return _objectEntryService.hasPortletResourcePermission(
 			groupId, objectDefinitionId, actionId);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry moveObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			java.util.Map<String, java.io.Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryService.moveObjectEntry(
+			objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	@Override

@@ -12,6 +12,8 @@ import createAssetAction, {
 	AssetData,
 } from '../props_transformer/actions/createAssetAction';
 
+import '../../../css/home/QuickActions.scss';
+
 export type QuickActionAssetData = {
 	action: 'createAsset' | 'createVocabulary';
 	assetLibraries?: AssetLibrary[];
@@ -41,7 +43,7 @@ export default function QuickActions({
 	};
 
 	return (
-		<div className="cms-section">
+		<div className="quick-actions">
 			<div className="pb-2 pt-2 row">
 				<div className="col">
 					<span className="font-weight-semi-bold text-4">
@@ -54,7 +56,7 @@ export default function QuickActions({
 				{quickActions.map((quickAction: any) => (
 					<div className="col pb-2" key={quickAction.href}>
 						<button
-							className="btn btn-secondary text-left w-100"
+							className="btn pb-3 pl-4 pr-4 pt-3 quick-action text-left w-100"
 							onClick={(event) =>
 								handleActionClick(event, quickAction)
 							}

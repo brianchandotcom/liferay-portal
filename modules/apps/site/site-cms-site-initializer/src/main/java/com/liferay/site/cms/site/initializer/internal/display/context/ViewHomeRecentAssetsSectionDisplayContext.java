@@ -66,6 +66,8 @@ public class ViewHomeRecentAssetsSectionDisplayContext
 	@Override
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
+			"description", ""
+		).put(
 			"image", "/states/cms_empty_state.svg"
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")

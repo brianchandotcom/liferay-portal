@@ -14,7 +14,6 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalR
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -305,9 +304,11 @@ public class FragmentLinkUtil {
 					fragmentMappedValueItemExternalReference, scopeGroupId));
 		}
 
-		return _getMappedItemJSONObject(
-			fragmentMappedValueItemExternalReference, fieldKey,
-			infoItemServiceRegistry, scopeGroupId);
+		return InfoItemUtil.getMappedItemJSONObject(
+			fragmentMappedValueItemExternalReference.getClassName(),
+			fragmentMappedValueItemExternalReference.getExternalReferenceCode(),
+			fieldKey, infoItemServiceRegistry,
+			fragmentMappedValueItemExternalReference.getScope(), scopeGroupId);
 	}
 
 	private static Long _getGroupId(Scope scope, long scopeGroupId)
@@ -391,47 +392,6 @@ public class FragmentLinkUtil {
 		return _getItemScope(
 			companyId, layoutJSONObject.getString("scopeExternalReferenceCode"),
 			scopeGroupId);
-	}
-
-	private static JSONObject _getMappedItemJSONObject(
-		FragmentMappedValueItemExternalReference
-			fragmentMappedValueItemExternalReference,
-		String fieldKey, InfoItemServiceRegistry infoItemServiceRegistry,
-		long scopeGroupId) {
-
-		return JSONUtil.put(
-			"className", fragmentMappedValueItemExternalReference.getClassName()
-		).put(
-			"classNameId", PortalUtil.getClassNameId(
-				fragmentMappedValueItemExternalReference.getClassName())
-		).put(
-			"classPK",
-			() -> {
-				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					InfoItemUtil.getClassPKInfoItemIdentifier(
-						fragmentMappedValueItemExternalReference.getClassName(),
-						fragmentMappedValueItemExternalReference.
-							getExternalReferenceCode(),
-						fragmentMappedValueItemExternalReference.getScope(),
-						infoItemServiceRegistry, scopeGroupId);
-
-				if (classPKInfoItemIdentifier == null) {
-					return null;
-				}
-
-				return classPKInfoItemIdentifier.getClassPK();
-			}
-		).put(
-			"externalReferenceCode",
-			fragmentMappedValueItemExternalReference.getExternalReferenceCode()
-		).put(
-			"fieldId", fieldKey
-		).put(
-			"scopeExternalReferenceCode",
-			() -> ItemScopeUtil.getItemScopeExternalReferenceCode(
-				fragmentMappedValueItemExternalReference.getScope(),
-				scopeGroupId)
-		);
 	}
 
 	private static JSONObject _getMappedLayoutJSONObject(

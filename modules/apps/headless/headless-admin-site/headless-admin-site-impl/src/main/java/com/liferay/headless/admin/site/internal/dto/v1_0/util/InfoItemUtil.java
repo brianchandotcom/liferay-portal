@@ -15,8 +15,11 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
 import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 
 /**
  * @author Lourdes Fernández Besada
@@ -131,6 +134,40 @@ public class InfoItemUtil {
 		}
 
 		return null;
+	}
+
+	public static JSONObject getMappedItemJSONObject(
+		String className, String externalReferenceCode, String fieldKey,
+		InfoItemServiceRegistry infoItemServiceRegistry, Scope scope,
+		long scopeGroupId) {
+
+		return JSONUtil.put(
+			"className", className
+		).put(
+			"classNameId", PortalUtil.getClassNameId(className)
+		).put(
+			"classPK",
+			() -> {
+				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
+					getClassPKInfoItemIdentifier(
+						className, externalReferenceCode,
+						infoItemServiceRegistry, scope, scopeGroupId);
+
+				if (classPKInfoItemIdentifier == null) {
+					return null;
+				}
+
+				return classPKInfoItemIdentifier.getClassPK();
+			}
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		).put(
+			"fieldId", fieldKey
+		).put(
+			"scopeExternalReferenceCode",
+			() -> ItemScopeUtil.getItemScopeExternalReferenceCode(
+				scope, scopeGroupId)
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(InfoItemUtil.class);

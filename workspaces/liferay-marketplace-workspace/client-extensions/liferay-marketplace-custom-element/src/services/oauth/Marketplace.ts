@@ -36,9 +36,8 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 					addressLocality: accountData.billingAddress.city,
 					addressRegion:
 						accountData.billingAddress.regionISOCode ?? '',
-
-					addressType: 'billing',
 					name: accountData.billingAddress.name,
+					phoneNumber: accountData.billingAddress.phoneNumber,
 					postalCode: accountData.billingAddress.zip,
 					primary: true,
 					streetAddressLine1: accountData.billingAddress.street1,
@@ -47,7 +46,7 @@ class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
 				},
 			],
 			taxId: accountData.taxNumber,
-			type: accountData.type,
+			type: accountData.accountType,
 		};
 
 		formData.append('account', JSON.stringify(data));

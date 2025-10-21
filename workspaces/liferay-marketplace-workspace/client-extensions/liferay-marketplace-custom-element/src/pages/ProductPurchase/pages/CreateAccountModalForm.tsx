@@ -54,10 +54,13 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 		defaultValues: {
 			accountImage: undefined,
 			accountName: '',
+			accountType: 'business',
 			billingAddress: {
 				city: '',
 				country: '',
 				countryISOCode: '',
+				name: '',
+				phoneNumber: '',
 				regionISOCode: '',
 				street1: '',
 				street2: '',
@@ -65,16 +68,12 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 			},
 			emailAddress: myUserAccount.emailAddress,
 			taxNumber: '',
-			type: 'business',
 		},
 		resolver: zodResolver(zodSchema.accountForm),
 	});
 
 	const [previewImg, setPreviewImg] = useState('');
-	const {accountImage, accountName, billingAddress, type} = watch();
-
-	const billingAddressName = accountName + ' Address';
-
+	const {accountImage, accountType, billingAddress} = watch();
 	const {data: regionsResponse} = useCommerceRegions();
 
 	const regions = regionsResponse?.items || [];
@@ -83,22 +82,23 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 		regions.find((region) => region.a2 === billingAddress?.country)
 			?.regions ?? [];
 
-	const isTypeExistingBusiness = type === 'existing-business';
+	const isTypeExistingBusiness = accountType === 'existing-business';
 
 	const getAccountType = (key: string) => {
-		const accountType = AccountType.find((option) => option.key === key);
-
-		return accountType;
+		return AccountType.find((option) => option.key === key);
 	};
 
 	const handleOnClose = () => {
 		reset({
 			accountImage: undefined,
 			accountName: '',
+			accountType: 'business',
 			billingAddress: {
 				city: '',
 				country: '',
 				countryISOCode: '',
+				name: '',
+				phoneNumber: '',
 				regionISOCode: '',
 				street1: '',
 				street2: '',
@@ -106,7 +106,6 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 			},
 			emailAddress: myUserAccount.emailAddress,
 			taxNumber: '',
-			type: 'business',
 		});
 
 		modal.onClose();
@@ -114,15 +113,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 
 	const onSubmit = async (data: FormFields) => {
 		try {
-			const payload = {
-				...data,
-				billingAddress: {
-					...data.billingAddress,
-					name: billingAddressName,
-				},
-			};
-
-			const account = await marketplaceOAuth2.createAccount(payload);
+			const account = await marketplaceOAuth2.createAccount(data);
 			await CommerceSelectAccount.selectAccount(account.id);
 			window.location.reload();
 		}
@@ -184,9 +175,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 					</Form.Label>
 
 					<AcountSelectDropDown
-						onChange={(value: string) => setValue('type', value)}
+						onChange={(value: string) =>
+							setValue('accountType', value)
+						}
 						options={AccountType}
-						value={getAccountType(type)}
+						value={getAccountType(accountType)}
 					/>
 				</ClayForm.Group>
 
@@ -245,7 +238,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 									</div>
 								)}
 								<input
-									accept="image/jpeg, image/png, image/gif"
+									accept="image/jpeg, image/png"
 									hidden
 									id="file"
 									name="file"
@@ -276,7 +269,6 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 									<Form.Label className="mb-2" required>
 										{i18n.translate('account-name')}
 									</Form.Label>
-
 									<Input
 										{...register('accountName')}
 										errorMessage={
@@ -320,6 +312,39 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 								<hr className="mb-3" />
 							</div>
 
+							<div className="c-gap-4 d-flex">
+								<div className="pr-2 w-100">
+									<Form.Label className="mb-2" required>
+										{i18n.translate('address-name')}
+									</Form.Label>
+
+									<Input
+										{...register('billingAddress.name')}
+										errorMessage={
+											errors.billingAddress?.name?.message
+										}
+										name="billingAddress.name"
+										required
+										type="text"
+									/>
+								</div>
+
+								<div className="pr-2 w-100">
+									<Form.Label className="mb-2" required>
+										Phone
+									</Form.Label>
+									<Input
+										{...register(
+											'billingAddress.phoneNumber'
+										)}
+										errorMessage={
+											errors.billingAddress?.phoneNumber
+												?.message
+										}
+										type="text"
+									/>
+								</div>
+							</div>
 							<div className="c-gap-4 d-flex">
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2" required>

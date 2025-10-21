@@ -29,6 +29,7 @@ export default {
 	'additional-admin': 'Additional Admin',
 	'additional-apps-requested': 'Additional Apps Requested',
 	'address': 'Address',
+	'address-name': 'Address Name',
 	'admin-dashboard': 'Admin Dashboard',
 	'agreements': 'Agreements',
 	'all-orders': 'All Orders',

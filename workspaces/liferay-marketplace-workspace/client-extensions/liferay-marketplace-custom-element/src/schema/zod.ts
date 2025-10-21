@@ -24,6 +24,18 @@ const baseContentSchema = z.object({
 	title: z.string().min(1),
 });
 
+const billingAddress = z.object({
+	city: z.string().min(1),
+	country: z.string().min(1),
+	countryISOCode: z.string().optional(),
+	name: z.string().min(1),
+	phoneNumber: z.string().min(1),
+	regionISOCode: z.string().optional(),
+	street1: z.string().min(1),
+	street2: z.string().optional(),
+	zip: z.string().min(1),
+});
+
 const blocksContentSchemas = {
 	textBlock: baseContentSchema,
 	textImages: baseContentSchema.extend({
@@ -104,24 +116,12 @@ const zodSchema = {
 		accountName: z
 			.string()
 			.min(1, {message: 'Please enter a company name to continue'}),
-		billingAddress: z.object({
-			city: z.string().min(1),
-			country: z.string().min(1),
-			countryISOCode: z.string().optional(),
-			regionISOCode: z.string().optional(),
-			street1: z.string().min(1),
-			street2: z.string().optional(),
-			zip: z.string().min(1),
-		}),
-		emailAddress: z
-			.string()
-			.email(i18n.translate('this-field-is-required')),
+		accountType: z.string().min(1),
+		billingAddress,
+		emailAddress: z.string().email('Please fill in valid email'),
 		taxNumber: z
 			.string()
-			.min(1, {message: 'Please enter a company name to continue'}),
-		type: z
-			.string()
-			.min(1, {message: 'Please enter a company name to continue'}),
+			.min(1, {message: 'Please enter a Tax/VAT number to continue'}),
 	}),
 	analyticsProvisioning: z.object({
 		_refAllowedEmailDomains: z.array(z.any()),
@@ -199,17 +199,7 @@ const zodSchema = {
 			.string()
 			.min(3, {message: 'Request Description is required'}),
 	}),
-	billingAddress: z.object({
-		city: z.string().min(1),
-		country: z.string().min(1),
-		countryISOCode: z.string().optional(),
-		name: z.string().min(1),
-		phoneNumber: z.string().optional(),
-		regionISOCode: z.string().optional(),
-		street1: z.string().min(1),
-		street2: z.string().optional(),
-		zip: z.string().min(1),
-	}),
+	billingAddress,
 	contactSales: z.object({
 		accountName: z
 			.string()

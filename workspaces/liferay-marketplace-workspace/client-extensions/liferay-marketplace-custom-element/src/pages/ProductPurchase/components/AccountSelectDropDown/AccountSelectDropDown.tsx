@@ -70,9 +70,21 @@ export default function AcountSelectDropDown({
 							key={option.key}
 							onClick={() => handleSelect(option)}
 						>
-							<b>{option.name}</b>
-							<div>
-								<small>{option.text}</small>
+							<div className="align-items-center d-flex justify-content-between">
+								<div className="d-flex flex-column">
+									<b>{option.name}</b>
+									<small>{option.text}</small>
+								</div>
+								{selected?.key === option.key && (
+									<div>
+										<ClayIcon
+											className="ml-2"
+											color="##004AD7"
+											fontSize={14}
+											symbol="check"
+										/>
+									</div>
+								)}
 							</div>
 						</li>
 					))}

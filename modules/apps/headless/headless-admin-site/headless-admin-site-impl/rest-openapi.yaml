@@ -120,6 +120,11 @@ components:
                         emptyCollectionConfig:
                             $ref: "#/components/schemas/EmptyCollectionConfig"
                             type: object
+                        hidden:
+                            # @review
+                            description:
+                                Specifies if the collection is hidden to the user.
+                            type: boolean
                         layout:
                             $ref: "#/components/schemas/BasicLayout"
                             # @review
@@ -207,6 +212,11 @@ components:
                     description:
                         The definition of the collection viewport.
                     properties:
+                        hidden:
+                            # @review
+                            description:
+                                Specifies if the collection is hidden to the user for the viewport.
+                            type: boolean
                         numberOfColumns:
                             # @review
                             description:

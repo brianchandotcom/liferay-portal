@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const {stepNumber} = configuration;
-
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
 
@@ -86,7 +84,7 @@ function watchDropArea(root) {
 	});
 }
 
-function toast({ message, type = 'success'}) {
+function toast({message, type = 'success'}) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
 		Liferay.Util.openToast({
 			message,
@@ -99,14 +97,14 @@ function toast({ message, type = 'success'}) {
 async function fetchJSON(url, options) {
 	const response = await Liferay.Util.fetch(url, {
 		headers: {
-			'Content-Type': 'application/json',
 			'Accept': 'application/json',
+			'Content-Type': 'application/json'
 		},
 		...options,
 	});
 
 	if (!response.ok) {
-		throw new Error(`HTTP ${res.status}`);
+		throw new Error(`HTTP ${response.status}`);
 	}
 
 	return response.json();
@@ -244,7 +242,7 @@ function initTrialStep(targetElement, item) {
 		catch (error) {
 			toast({
 				message: 'Something went wrong, please try again later.',
-				type: 'danger'
+				type: 'danger',
 			});
 		}
 		finally {
@@ -323,7 +321,7 @@ async function init() {
 		);
 	}
 	catch (error) {
-		toast({message: 'Could not load data.', type: 'danger', error});
+		toast({message: 'Could not load data.', type: 'danger'});
 
 		return;
 	}

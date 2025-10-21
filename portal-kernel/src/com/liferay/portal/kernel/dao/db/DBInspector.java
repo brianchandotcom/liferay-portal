@@ -64,20 +64,13 @@ public class DBInspector {
 	public List<String> getTableNames(String tableNamePattern)
 		throws SQLException {
 
-		List<String> tableNames = new ArrayList<>();
+		return _getElementNames(tableNamePattern, "TABLE");
+	}
 
-		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+	public List<String> getViewNames(String viewNamePattern)
+		throws SQLException {
 
-		try (ResultSet resultSet = databaseMetaData.getTables(
-				_connection.getCatalog(), _connection.getSchema(),
-				tableNamePattern, new String[] {"TABLE"})) {
-
-			while (resultSet.next()) {
-				tableNames.add(resultSet.getString("TABLE_NAME"));
-			}
-		}
-
-		return tableNames;
+		return _getElementNames(viewNamePattern, "VIEW");
 	}
 
 	public boolean hasColumn(String tableName, String columnName)
@@ -425,6 +418,26 @@ public class DBInspector {
 		return databaseMetaData.getColumns(
 			getCatalog(), getSchema(),
 			normalizeName(tableName, databaseMetaData), columnName);
+	}
+
+	private List<String> _getElementNames(
+			String elementNamePattern, String elementType)
+		throws SQLException {
+
+		List<String> elementNames = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				_connection.getCatalog(), _connection.getSchema(),
+				elementNamePattern, new String[] {elementType})) {
+
+			while (resultSet.next()) {
+				elementNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return elementNames;
 	}
 
 	private boolean _hasElement(String elementName, String elementType)

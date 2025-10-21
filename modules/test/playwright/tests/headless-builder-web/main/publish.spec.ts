@@ -17,7 +17,7 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test('can get  updated title in response after publish', async ({
+test('Can get  updated title in response after publish', async ({
 	apiHelpers,
 	applicationPage,
 	headlessBuilderPage,
@@ -62,4 +62,48 @@ test('can get  updated title in response after publish', async ({
 			})
 		).title
 	).toEqual(`${application.title} 1`);
+});
+
+test('Can see cancel and publish buttons enabled after publish application', async ({
+	apiHelpers,
+	applicationPage,
+	headlessBuilderPage,
+	page,
+}) => {
+	const application = await apiHelpers.objectEntry.postObjectEntry(
+		{
+			apiApplicationToAPISchemas: [
+				{
+					description: 'API Application Schema',
+					externalReferenceCode: 'api-application-schema',
+					mainObjectDefinitionERC: 'L_API_APPLICATION',
+					name: 'API Application Schema',
+				},
+			],
+			applicationStatus: 'unpublished',
+			baseURL: 'basic-application',
+			description: 'Test API Application',
+			externalReferenceCode: 'basic-application',
+			title: 'Basic application',
+		},
+		'headless-builder/applications'
+	);
+
+	apiHelpers.data.push({id: application.id, type: 'apiApplication'});
+
+	await headlessBuilderPage.goto();
+	await headlessBuilderPage.openApplicationActions(application.title);
+	await page.getByRole('menuitem', {name: 'Edit'}).click();
+	await applicationPage.publishButton.click();
+
+	await expect(page.getByText('API application was published')).toBeVisible();
+	await expect(
+		page.getByText('API application was published')
+	).not.toBeVisible();
+
+	await expect(applicationPage.cancelButton).toBeEnabled();
+	await expect(applicationPage.cancelButton).toBeVisible();
+
+	await expect(applicationPage.publishButton).toBeEnabled();
+	await expect(applicationPage.publishButton).toBeVisible();
 });

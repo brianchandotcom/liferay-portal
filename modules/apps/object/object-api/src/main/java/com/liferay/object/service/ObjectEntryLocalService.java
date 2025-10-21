@@ -109,6 +109,11 @@ public interface ObjectEntryLocalService
 
 	public void checkObjectEntries(long companyId) throws PortalException;
 
+	public ObjectEntry copyObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *
@@ -333,6 +338,11 @@ public interface ObjectEntryLocalService
 	public List<ObjectEntry> getObjectEntries(
 		long groupId, long objectDefinitionId, int status, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntry> getObjectEntries(
+			long groupId, long companyId, long objectEntryFolderId)
+		throws PortalException;
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *
@@ -514,6 +524,11 @@ public interface ObjectEntryLocalService
 	public void moveObjectEntriesToTrash(
 			long userId, ObjectEntryFolder objectEntryFolder,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public ObjectEntry moveObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

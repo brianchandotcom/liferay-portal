@@ -169,7 +169,7 @@ public class SystemFDSSerializer
 	}
 
 	@Override
-	public Boolean serializeHideManagementBarInEmptyState(
+	public boolean serializeHideManagementBarInEmptyState(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		SystemFDSEntry systemFDSEntry =

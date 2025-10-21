@@ -26,7 +26,7 @@ public interface SystemFDSEntry {
 
 	public String getDescription();
 
-	public default Boolean getHideManagementBarInEmptyState() {
+	public default boolean getHideManagementBarInEmptyState() {
 		return false;
 	}
 

@@ -1811,7 +1811,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					}
 
 					@Override
-					public Boolean getHideManagementBarInEmptyState() {
+					public boolean getHideManagementBarInEmptyState() {
 						return _hideManagementBarInEmptyState;
 					}
 
@@ -1871,7 +1871,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		}
 
 		public SystemFDSEntryWrapper withHideManagementBarInEmptyState(
-			Boolean hideManagementBarInEmptyState) {
+			boolean hideManagementBarInEmptyState) {
 
 			_hideManagementBarInEmptyState = hideManagementBarInEmptyState;
 
@@ -1898,7 +1898,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		private String _additionalURLParameters;
 		private int _defaultItemsPerPage = -1;
 		private final String _fdsName;
-		private Boolean _hideManagementBarInEmptyState;
+		private boolean _hideManagementBarInEmptyState;
 		private int[] _listOfItemsPerPage;
 		private String _propsTransformer;
 

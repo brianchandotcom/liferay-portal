@@ -320,13 +320,13 @@ public class CustomFDSSerializer
 	}
 
 	@Override
-	public Boolean serializeHideManagementBarInEmptyState(
+	public boolean serializeHideManagementBarInEmptyState(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		return (Boolean)properties.get("hideManagementBarInEmptyState");
+		return (boolean)properties.get("hideManagementBarInEmptyState");
 	}
 
 	@Override
@@ -950,13 +950,13 @@ public class CustomFDSSerializer
 		return GetterUtil.getString(properties.get("type"));
 	}
 
-	private Boolean _isActive(ObjectEntry objectEntry) {
+	private boolean _isActive(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
-		return (Boolean)properties.get("active");
+		return (boolean)properties.get("active");
 	}
 
-	private Boolean _isCollection(String fieldName, String sourceType) {
+	private boolean _isCollection(String fieldName, String sourceType) {
 		return fieldName.contains(StringPool.OPEN_BRACKET) &&
 			   Objects.equals(sourceType, "OBJECT_PICKLIST");
 	}

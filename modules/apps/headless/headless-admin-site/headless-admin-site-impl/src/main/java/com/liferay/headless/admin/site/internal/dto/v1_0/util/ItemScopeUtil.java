@@ -44,21 +44,7 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(itemScopeGroupId);
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
+		return _getScope(GroupLocalServiceUtil.getGroup(itemScopeGroupId));
 	}
 
 	public static Scope getItemScope(
@@ -77,19 +63,7 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
+		return _getScope(group);
 	}
 
 	public static String getItemScopeExternalReferenceCode(
@@ -110,6 +84,22 @@ public class ItemScopeUtil {
 		}
 
 		return itemScope.getExternalReferenceCode();
+	}
+
+	private static Scope _getScope(Group group) {
+		return new Scope() {
+			{
+				setExternalReferenceCode(group::getExternalReferenceCode);
+				setType(
+					() -> {
+						if (group.getType() == GroupConstants.TYPE_DEPOT) {
+							return Type.ASSET_LIBRARY;
+						}
+
+						return Type.SITE;
+					});
+			}
+		};
 	}
 
 }

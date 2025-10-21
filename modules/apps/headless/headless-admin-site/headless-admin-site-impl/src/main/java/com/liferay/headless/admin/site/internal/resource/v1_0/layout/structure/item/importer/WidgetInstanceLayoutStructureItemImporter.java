@@ -102,11 +102,15 @@ public class WidgetInstanceLayoutStructureItemImporter
 		if (fragmentEntryLink == null) {
 			fragmentEntryLink = _addFragmentEntryLink(
 				widgetInstancePageElementDefinition.
+					getDraftWidgetInstanceExternalReferenceCode(),
+				widgetInstancePageElementDefinition.
 					getWidgetInstanceExternalReferenceCode(),
 				layoutStructureItemImporterContext, widgetInstance);
 		}
 		else {
 			fragmentEntryLink = _updateFragmentEntryLink(
+				widgetInstancePageElementDefinition.
+					getDraftWidgetInstanceExternalReferenceCode(),
 				fragmentEntryLink, layoutStructureItemImporterContext,
 				widgetInstance);
 		}
@@ -146,6 +150,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
+			String draftWidgetInstanceExternalReferenceCode,
 			String externalReferenceCode,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
@@ -160,8 +165,11 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			externalReferenceCode,
 			layoutStructureItemImporterContext.getUserId(),
-			layoutStructureItemImporterContext.getGroupId(), 0, 0,
-			layoutStructureItemImporterContext.getSegmentsExperienceId(),
+			layoutStructureItemImporterContext.getGroupId(),
+			_getOriginalFragmentEntryLinkId(
+				draftWidgetInstanceExternalReferenceCode,
+				layoutStructureItemImporterContext),
+			0, layoutStructureItemImporterContext.getSegmentsExperienceId(),
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
 			editableValueJSONObject.toString(), _getNamespace(widgetInstance),
@@ -224,6 +232,27 @@ public class WidgetInstanceLayoutStructureItemImporter
 		}
 
 		return namespace;
+	}
+
+	private long _getOriginalFragmentEntryLinkId(
+		String draftWidgetInstanceExternalReferenceCode,
+		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
+
+		if (Validator.isNull(draftWidgetInstanceExternalReferenceCode)) {
+			return 0;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			FragmentEntryLinkLocalServiceUtil.
+				fetchFragmentEntryLinkByExternalReferenceCode(
+					draftWidgetInstanceExternalReferenceCode,
+					layoutStructureItemImporterContext.getGroupId());
+
+		if (fragmentEntryLink == null) {
+			return 0;
+		}
+
+		return fragmentEntryLink.getFragmentEntryLinkId();
 	}
 
 	private List<Map<String, Object>> _getWidgetPermissionsMaps(
@@ -293,6 +322,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _updateFragmentEntryLink(
+			String draftWidgetInstanceExternalReferenceCode,
 			FragmentEntryLink fragmentEntryLink,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
@@ -331,10 +361,15 @@ public class WidgetInstanceLayoutStructureItemImporter
 		editableValuesJSONObject = _getEditableValuesJSONObject(
 			fragmentEntryLink, widgetInstance);
 
-		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
-			layoutStructureItemImporterContext.getUserId(),
-			fragmentEntryLink.getFragmentEntryLinkId(),
+		fragmentEntryLink.setOriginalFragmentEntryLinkId(
+			_getOriginalFragmentEntryLinkId(
+				draftWidgetInstanceExternalReferenceCode,
+				layoutStructureItemImporterContext));
+		fragmentEntryLink.setEditableValues(
 			editableValuesJSONObject.toString());
+
+		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
+			fragmentEntryLink);
 	}
 
 	private static final ServiceTracker

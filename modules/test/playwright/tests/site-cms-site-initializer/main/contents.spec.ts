@@ -23,7 +23,6 @@ const test = mergeTests(
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-17564': {enabled: true},
-		'LPD-32050': {enabled: true},
 	}),
 	loginTest(),
 	fragmentsPagesTest,

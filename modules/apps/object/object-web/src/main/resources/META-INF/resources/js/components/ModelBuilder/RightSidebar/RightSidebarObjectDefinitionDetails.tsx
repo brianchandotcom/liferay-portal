@@ -324,11 +324,7 @@ export function RightSidebarObjectDefinitionDetails({
 				/>
 			</div>
 			<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">
-				<TranslationsContainer
-					onSubmit={onSubmit}
-					setValues={setValues}
-					values={values}
-				/>
+				<TranslationsContainer />
 			</div>
 			{showSeoSection && (
 				<div className="lfr-objects__model-builder-right-sidebar-object-definition-node-content">

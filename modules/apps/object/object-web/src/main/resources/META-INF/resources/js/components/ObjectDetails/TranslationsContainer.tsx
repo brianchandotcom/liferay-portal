@@ -4,23 +4,11 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayForm from '@clayui/form';
-import {Toggle} from '@liferay/object-js-components-web';
 import React from 'react';
 
 import './TranslationsContainer.scss';
 
-interface TranslationsContainerProps {
-	onSubmit?: (editedObjectDefinition?: Partial<ObjectDefinition>) => void;
-	setValues: (values: Partial<ObjectDefinition>) => void;
-	values: Partial<ObjectDefinition>;
-}
-
-export function TranslationsContainer({
-	onSubmit,
-	setValues,
-	values,
-}: TranslationsContainerProps) {
+export function TranslationsContainer() {
 	return (
 		<ClayAlert
 			displayType="info"

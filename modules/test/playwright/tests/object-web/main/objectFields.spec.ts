@@ -29,7 +29,6 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
-		'LPD-32050': {enabled: true},
 		'LPD-46451': {enabled: true},
 	}),
 	loginTest(),

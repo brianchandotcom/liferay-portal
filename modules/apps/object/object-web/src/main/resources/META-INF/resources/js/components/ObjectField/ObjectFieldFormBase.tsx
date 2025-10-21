@@ -335,11 +335,7 @@ export default function ObjectFieldFormBase({
 			return true;
 		}
 
-		return (
-			values.businessType === 'Relationship' ||
-			(!Liferay.FeatureFlags['LPD-32050'] && values.localized) ||
-			values.state
-		);
+		return values.businessType === 'Relationship' || values.state;
 	};
 
 	const handleStateToggleChange = (toggled: boolean) => {

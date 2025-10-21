@@ -182,7 +182,8 @@ public class ObjectEntryLayoutDisplayPageProvider
 						serviceContext.getLocale(), null,
 						_userLocalService.fetchUser(userId)),
 					ercInfoItemIdentifier.getExternalReferenceCode(),
-					_objectDefinition, null);
+					_objectDefinition,
+					ercInfoItemIdentifier.getScopeExternalReferenceCode());
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(

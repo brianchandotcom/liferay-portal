@@ -73,6 +73,122 @@ components:
                         The client extension's external reference code.
                     type: string
             type: object
+        CollectionDisplayListStyle:
+            # @review
+            description:
+                The collection display's list style.
+            discriminator:
+                mapping:
+                    ListStyle: "#/components/schemas/ListStyle"
+                    Template: "#/components/schemas/TemplateListStyle"
+                propertyName: collectionDisplayListStyleType
+            properties:
+                collectionDisplayListStyleType:
+                    # @review
+                    description:
+                        The collection display's list style type (ListStyle, Template).
+                    enum: [ListStyle, Template]
+                    type: string
+            type: object
+        CollectionDisplayPageElementDefinition:
+            allOf:
+                -   $ref: "#/components/schemas/PageElementDefinition"
+                -   properties:
+                        collectionDisplayListStyle:
+                            $ref: "#/components/schemas/CollectionDisplayListStyle"
+                        collectionDisplayViewports:
+                            # @review
+                            description:
+                                A list of viewports of the collection display page element.
+                            items:
+                                $ref: "#/components/schemas/CollectionDisplayViewport"
+                            type: array
+                        collectionReference:
+                            $ref: "#/components/schemas/CollectionReference"
+                        displayAllItems:
+                            # @review
+                            description:
+                                Whether to show all items when pagination is disabled.
+                            type: boolean
+                        displayAllPages:
+                            # @review
+                            description:
+                                Whether to show all pages when pagination is enabled.
+                            type: boolean
+                        emptyCollectionConfig:
+                            $ref: "#/components/schemas/EmptyCollectionConfig"
+                            type: object
+                        hidden:
+                            # @review
+                            description:
+                                Specifies if the collection display is hidden to the user.
+                            type: boolean
+                        name:
+                            # @review
+                            description:
+                                The custom name of a collection display page element.
+                            type: string
+                        numberOfItems:
+                            # @review
+                            description:
+                                The maximum number of items to display in the collection display page element when
+                                pagination is disabled.
+                            type: integer
+                        numberOfItemsPerPage:
+                            # @review
+                            description:
+                                The maximum number of items per page to display in the collection display page element
+                                when pagination is enabled.
+                            type: integer
+                        numberOfPages:
+                            # @review
+                            description:
+                                The maximum number of pages to display in the collection display page element when
+                                pagination is enabled.
+                            type: integer
+                        paginationType:
+                            # @review
+                            description:
+                                The type of pagination.
+                            enum: [
+                                None,
+                                Numeric,
+                                Simple]
+                            type: string
+            # @review
+            description:
+                The page element definition of a Collection.
+            type: object
+        CollectionDisplayViewport:
+            # @review
+            description:
+                A collection display viewport.
+            properties:
+                collectionDisplayViewportDefinition:
+                    # @review
+                    allOf:
+                        -   $ref: "#/components/schemas/BasicLayout"
+                        -   properties:
+                                hidden:
+                                    # @review
+                                    description:
+                                        Specifies if the collection display is hidden to the user for the viewport.
+                                    type: boolean
+                                numberOfColumns:
+                                    # @review
+                                    description:
+                                        The number of columns of the collection viewport.
+                                    type: integer
+                    description:
+                        The definition of the collection display viewport.
+                    type: object
+                id:
+                    enum: [LandscapeMobile, PortraitMobile, Tablet]
+                    type: string
+            required:
+                -   collectionDisplayViewportDefinition
+                -   id
+            type: object
         CollectionItemExternalReference:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
@@ -94,92 +210,6 @@ components:
             description:
                 The page element definition of a Collection Item.
             type: object
-        CollectionListStyle:
-            # @review
-            description:
-                The page collection's list style.
-            discriminator:
-                mapping:
-                    ListStyle: "#/components/schemas/ListStyle"
-                    Template: "#/components/schemas/TemplateListStyle"
-                propertyName: collectionListStyleType
-            properties:
-                collectionListStyleType:
-                    # @review
-                    description:
-                        The collection's list style (ListStyle, Template).
-                    enum: [ListStyle, Template]
-                    type: string
-            type: object
-        CollectionPageElementDefinition:
-            allOf:
-                -   $ref: "#/components/schemas/PageElementDefinition"
-                -   properties:
-                        collectionListStyle:
-                            $ref: "#/components/schemas/CollectionListStyle"
-                        collectionReference:
-                            $ref: "#/components/schemas/CollectionReference"
-                        collectionViewports:
-                            # @review
-                            description:
-                                A list of viewports of the collection page element.
-                            items:
-                                $ref: "#/components/schemas/CollectionViewport"
-                            type: array
-                        displayAllItems:
-                            # @review
-                            description:
-                                Whether to show all items when pagination is disabled.
-                            type: boolean
-                        displayAllPages:
-                            # @review
-                            description:
-                                Whether to show all pages when pagination is enabled.
-                            type: boolean
-                        emptyCollectionConfig:
-                            $ref: "#/components/schemas/EmptyCollectionConfig"
-                            type: object
-                        hidden:
-                            # @review
-                            description:
-                                Specifies if the collection is hidden to the user.
-                            type: boolean
-                        name:
-                            # @review
-                            description:
-                                The custom name of a collection page element.
-                            type: string
-                        numberOfItems:
-                            # @review
-                            description:
-                                The maximum number of items to display in the collection page element when pagination is
-                                disabled.
-                            type: integer
-                        numberOfItemsPerPage:
-                            # @review
-                            description:
-                                The maximum number of items per page to display in the collection page element when
-                                pagination is enabled.
-                            type: integer
-                        numberOfPages:
-                            # @review
-                            description:
-                                The maximum number of pages to display in the collection page element when pagination is
-                                enabled.
-                            type: integer
-                        paginationType:
-                            # @review
-                            description:
-                                The type of pagination.
-                            enum: [
-                                None,
-                                Numeric,
-                                Simple]
-                            type: string
-            # @review
-            description:
-                The page element definition of a Collection.
-            type: object
         CollectionReference:
             # @review
             description:
@@ -196,36 +226,6 @@ components:
                         The collection's type (Collection, CollectionProvider).
                     enum: [Collection, CollectionProvider]
                     type: string
-            type: object
-        CollectionViewport:
-            # @review
-            description:
-                A collection viewport.
-            properties:
-                collectionViewportDefinition:
-                    # @review
-                    allOf:
-                        -   $ref: "#/components/schemas/BasicLayout"
-                        -   properties:
-                                hidden:
-                                    # @review
-                                    description:
-                                        Specifies if the collection is hidden to the user for the viewport.
-                                    type: boolean
-                                numberOfColumns:
-                                    # @review
-                                    description:
-                                        The number of columns of the collection viewport.
-                                    type: integer
-                    description:
-                        The definition of the collection viewport.
-                    type: object
-                id:
-                    enum: [LandscapeMobile, PortraitMobile, Tablet]
-                    type: string
-            required:
-                -   id
-                -   collectionViewportDefinition
             type: object
         ContainerPageElementDefinition:
             allOf:
@@ -1864,7 +1864,7 @@ components:
         ListStyle:
             # @review
             allOf:
-                -   $ref: "#/components/schemas/CollectionListStyle"
+                -   $ref: "#/components/schemas/CollectionDisplayListStyle"
                 -   properties:
                         listStyleDefinition:
                             allOf:
@@ -1873,19 +1873,19 @@ components:
                                         gutters:
                                             # @review
                                             description:
-                                                A flag that indicates whether the collection page element has gutters if
-                                                a grid list style is selected.
+                                                A flag that indicates whether the collection display page element has
+                                                gutters if a grid list style is selected.
                                             type: boolean
                                         numberOfColumns:
                                             # @review
                                             description:
-                                                The number of columns in the collection page element.
+                                                The number of columns in the collection display page element.
                                             type: integer
                                         verticalAlignment:
                                             # @review
                                             description:
-                                                The vertical alignment property of the collection page element if a grid
-                                                list style is selected..
+                                                The vertical alignment property of the collection display page element
+                                                if a grid list style is selected..
                                             enum: [Bottom, Middle, Top]
                                             type: string
                             type: object
@@ -1894,7 +1894,7 @@ components:
                             type: string
             # @review
             description:
-                The page collection's list style.
+                The collection display's list style.
             type: object
         MasterPage:
             # @review
@@ -2320,7 +2320,7 @@ components:
                 The page element definition.
             discriminator:
                 mapping:
-                    Collection: "#/components/schemas/CollectionPageElementDefinition"
+                    CollectionDisplay: "#/components/schemas/CollectionDisplayPageElementDefinition"
                     CollectionItem: "#/components/schemas/CollectionItemPageElementDefinition"
                     Container: "#/components/schemas/ContainerPageElementDefinition"
                     DropZone: "#/components/schemas/DropZonePageElementDefinition"
@@ -2338,11 +2338,11 @@ components:
                 type:
                     # @review
                     description:
-                        The page element definition's type (collection, collection item, container, drop zone, form,
-                        form step, form step container, fragment, fragment composition, fragment drop zone, grid, 
+                        The page element definition's type (collection display, collection item, container, drop zone,
+                        form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, 
                         module or widget).
                     enum:
-                        -   Collection
+                        -   CollectionDisplay
                         -   CollectionItem
                         -   Container
                         -   DropZone
@@ -3131,25 +3131,25 @@ components:
         TemplateListStyle:
             # @review
             allOf:
-                -   $ref: "#/components/schemas/CollectionListStyle"
+                -   $ref: "#/components/schemas/CollectionDisplayListStyle"
                 -   properties:
                         listItemStyleClassName:
                             # @review
                             description:
-                                The style className of a list of items in the collection page element.
+                                The style className of a list of items in the collection display page element.
                             type: string
                         listStyleClassName:
                             # @review
                             description:
-                                The style className of a list in the collection page element.
+                                The style className of a list in the collection display page element.
                             type: string
                         templateKey:
                             # @review
                             description:
-                                The collection page element's template key.
+                                The collection display page element's template key.
                             type: string
             description:
-                The page collection's template list style.
+                The collection display's template list style.
             type: object
         URLActionExecutionResult:
             # @review

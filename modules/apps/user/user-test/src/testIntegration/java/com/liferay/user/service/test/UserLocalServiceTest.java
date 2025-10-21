@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.auth.Authenticator;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
@@ -615,14 +616,20 @@ public class UserLocalServiceTest {
 	public void testGetCompanyUsers() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		List<User> companyUsers = _userLocalService.getCompanyUsers(
-			_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
-		Assert.assertEquals(companyUsers.toString(), 1, companyUsers.size());
+			List<User> companyUsers = _userLocalService.getCompanyUsers(
+				_company.getCompanyId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		User user = companyUsers.get(0);
+			Assert.assertEquals(
+				companyUsers.toString(), 1, companyUsers.size());
 
-		Assert.assertFalse(user.isGuestUser());
+			User user = companyUsers.get(0);
+
+			Assert.assertFalse(user.isGuestUser());
+		}
 	}
 
 	@Test

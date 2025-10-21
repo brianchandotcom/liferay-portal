@@ -48,6 +48,9 @@ components:
                 totalCount:
                     format: int64
                     type: integer
+                totalItems:
+                    format: int64
+                    type: integer
         InventoryAnalysisItem:
             properties:
                 count:

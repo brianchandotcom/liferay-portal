@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const {displayToasts, stepNumber} = configuration;
+const {stepNumber} = configuration;
 
 function findDropArea(root) {
 	const container = root.querySelector('.trial-step__body-inner') || root;
@@ -86,7 +86,7 @@ function watchDropArea(root) {
 	});
 }
 
-function toast({error, message, type = 'success'}) {
+function toast({ message, type = 'success'}) {
 	if (configuration.displayToasts && Liferay?.Util?.openToast) {
 		Liferay.Util.openToast({
 			message,
@@ -228,12 +228,12 @@ function initTrialStep(targetElement, item) {
 		setLoading(button, true);
 		try {
 			await fetchJSON(`/o/c/m2h8progresstrackers/${model.id}`, {
-				method: 'PATCH',
 				body: JSON.stringify({
-					id: model.id,
 					done,
+					id: model.id,
 					stepNumber: model.stepNumber,
 				}),
+				method: 'PATCH',
 			});
 			model.done = done;
 			render();
@@ -244,8 +244,7 @@ function initTrialStep(targetElement, item) {
 		catch (error) {
 			toast({
 				message: 'Something went wrong, please try again later.',
-				type: 'danger',
-				error,
+				type: 'danger'
 			});
 		}
 		finally {

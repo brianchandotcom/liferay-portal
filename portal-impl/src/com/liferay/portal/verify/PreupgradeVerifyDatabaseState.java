@@ -8,7 +8,6 @@ package com.liferay.portal.verify;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.dao.db.DBInspector;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -83,15 +82,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 						new TreeSet<>(missingTableNames));
 			}
 
-			viewNames.removeIf(
-				viewName -> {
-					try {
-						return dbInspector.hasView(viewName);
-					}
-					catch (Exception exception) {
-						throw new SystemException(exception);
-					}
-				});
+			viewNames.removeAll(dbInspector.getViewNames(null));
 
 			if (!viewNames.isEmpty()) {
 				throw new VerifyException(
@@ -140,7 +131,8 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			DBInspector dbInspector, Set<String> missingTableNames)
 		throws Exception {
 
-		Set<String> viewNames = new HashSet<>();
+		TreeSet<String> viewNames = new TreeSet<>(
+			String.CASE_INSENSITIVE_ORDER);
 
 		if (CompanyThreadLocal.getNonsystemCompanyId() ==
 				PortalInstancePool.getDefaultCompanyId()) {

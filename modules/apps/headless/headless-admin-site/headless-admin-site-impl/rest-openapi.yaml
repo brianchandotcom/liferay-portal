@@ -224,11 +224,20 @@ components:
                     description:
                         The definition of the collection viewport.
                     properties:
+                        align:
+                            enum: [Baseline, Center, End, None, Start, Stretch]
+                            type: string
+                        flexWrap:
+                            enum: [NoWrap, Wrap, WrapReverse]
+                            type: string
                         hidden:
                             # @review
                             description:
                                 Specifies if the collection is hidden to the user for the viewport.
                             type: boolean
+                        justify:
+                            enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
+                            type: string
                         numberOfColumns:
                             # @review
                             description:

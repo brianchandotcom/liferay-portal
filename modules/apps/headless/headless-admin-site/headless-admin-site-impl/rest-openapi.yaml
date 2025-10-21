@@ -236,9 +236,7 @@ components:
                             type: integer
                     type: object
                 id:
-                    # @review
-                    description:
-                        The collection viewport's ID.
+                    enum: [LandscapeMobile, PortraitMobile, Tablet]
                     type: string
             required:
                 -   id

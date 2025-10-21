@@ -48,126 +48,52 @@ const renderComponent = (props = {}) => {
 	render(<TranslationOptionsContainer {...defaultProps} {...props} />);
 };
 
-describe('When the feature flag LPD-32050 is enabled', () => {
-	beforeAll(() => {
-		global.Liferay = {
-			...global.Liferay,
-			FeatureFlags: {
-				...global.Liferay?.FeatureFlags,
-				'LPD-32050': true,
-			},
-		};
-	});
+test.each`
+	businessType             | system   | shouldRenderAlert
+	${'Aggregation'}         | ${false} | ${'render'}
+	${'Attachment'}          | ${false} | ${'not render'}
+	${'AutoIncrement'}       | ${false} | ${'render'}
+	${'Boolean'}             | ${false} | ${'not render'}
+	${'Date'}                | ${false} | ${'not render'}
+	${'DateTime'}            | ${false} | ${'not render'}
+	${'Decimal'}             | ${false} | ${'not render'}
+	${'Encrypted'}           | ${false} | ${'render'}
+	${'Formula'}             | ${false} | ${'render'}
+	${'Integer'}             | ${false} | ${'not render'}
+	${'LongInteger'}         | ${false} | ${'not render'}
+	${'LongText'}            | ${false} | ${'not render'}
+	${'MultiselectPicklist'} | ${false} | ${'not render'}
+	${'RichText'}            | ${false} | ${'not render'}
+	${'Picklist'}            | ${false} | ${'not render'}
+	${'PrecisionDecimal'}    | ${false} | ${'not render'}
+	${'Text'}                | ${false} | ${'not render'}
+	${'Aggregation'}         | ${true}  | ${'render'}
+	${'Attachment'}          | ${true}  | ${'render'}
+	${'AutoIncrement'}       | ${true}  | ${'render'}
+	${'Boolean'}             | ${true}  | ${'render'}
+	${'Date'}                | ${true}  | ${'render'}
+	${'DateTime'}            | ${true}  | ${'render'}
+	${'Decimal'}             | ${true}  | ${'render'}
+	${'Encrypted'}           | ${true}  | ${'render'}
+	${'Formula'}             | ${true}  | ${'render'}
+	${'Integer'}             | ${true}  | ${'render'}
+	${'LongInteger'}         | ${true}  | ${'render'}
+	${'LongText'}            | ${true}  | ${'render'}
+	${'MultiselectPicklist'} | ${true}  | ${'render'}
+	${'RichText'}            | ${true}  | ${'render'}
+	${'Picklist'}            | ${true}  | ${'render'}
+	${'PrecisionDecimal'}    | ${true}  | ${'render'}
+	${'Text'}                | ${true}  | ${'render'}
+`(
+	'the object field $businessType system $system should $shouldRenderAlert the translation alert',
+	({businessType, shouldRenderAlert, system}) => {
+		renderComponent({values: {businessType, system}});
 
-	test.each`
-		businessType             | system   | shouldRenderAlert
-		${'Aggregation'}         | ${false} | ${'render'}
-		${'Attachment'}          | ${false} | ${'not render'}
-		${'AutoIncrement'}       | ${false} | ${'render'}
-		${'Boolean'}             | ${false} | ${'not render'}
-		${'Date'}                | ${false} | ${'not render'}
-		${'DateTime'}            | ${false} | ${'not render'}
-		${'Decimal'}             | ${false} | ${'not render'}
-		${'Encrypted'}           | ${false} | ${'render'}
-		${'Formula'}             | ${false} | ${'render'}
-		${'Integer'}             | ${false} | ${'not render'}
-		${'LongInteger'}         | ${false} | ${'not render'}
-		${'LongText'}            | ${false} | ${'not render'}
-		${'MultiselectPicklist'} | ${false} | ${'not render'}
-		${'RichText'}            | ${false} | ${'not render'}
-		${'Picklist'}            | ${false} | ${'not render'}
-		${'PrecisionDecimal'}    | ${false} | ${'not render'}
-		${'Text'}                | ${false} | ${'not render'}
-		${'Aggregation'}         | ${true}  | ${'render'}
-		${'Attachment'}          | ${true}  | ${'render'}
-		${'AutoIncrement'}       | ${true}  | ${'render'}
-		${'Boolean'}             | ${true}  | ${'render'}
-		${'Date'}                | ${true}  | ${'render'}
-		${'DateTime'}            | ${true}  | ${'render'}
-		${'Decimal'}             | ${true}  | ${'render'}
-		${'Encrypted'}           | ${true}  | ${'render'}
-		${'Formula'}             | ${true}  | ${'render'}
-		${'Integer'}             | ${true}  | ${'render'}
-		${'LongInteger'}         | ${true}  | ${'render'}
-		${'LongText'}            | ${true}  | ${'render'}
-		${'MultiselectPicklist'} | ${true}  | ${'render'}
-		${'RichText'}            | ${true}  | ${'render'}
-		${'Picklist'}            | ${true}  | ${'render'}
-		${'PrecisionDecimal'}    | ${true}  | ${'render'}
-		${'Text'}                | ${true}  | ${'render'}
-	`(
-		'the object field $businessType system $system should $shouldRenderAlert the translation alert',
-		({businessType, shouldRenderAlert, system}) => {
-			renderComponent({values: {businessType, system}});
-
-			if (shouldRenderAlert === 'render') {
-				alertIsRendered();
-			}
-			else {
-				alertNotRendered();
-			}
+		if (shouldRenderAlert === 'render') {
+			alertIsRendered();
 		}
-	);
-});
-
-describe('When the feature flag LPD-32050 is disabled', () => {
-	beforeAll(() => {
-		global.Liferay = {
-			...global.Liferay,
-			FeatureFlags: {
-				...global.Liferay?.FeatureFlags,
-				'LPD-32050': false,
-			},
-		};
-	});
-
-	test.each`
-		businessType             | system   | shouldRenderAlert
-		${'Aggregation'}         | ${false} | ${'render'}
-		${'Attachment'}          | ${false} | ${'render'}
-		${'AutoIncrement'}       | ${false} | ${'render'}
-		${'Boolean'}             | ${false} | ${'render'}
-		${'Date'}                | ${false} | ${'render'}
-		${'DateTime'}            | ${false} | ${'render'}
-		${'Decimal'}             | ${false} | ${'render'}
-		${'Encrypted'}           | ${false} | ${'render'}
-		${'Formula'}             | ${false} | ${'render'}
-		${'Integer'}             | ${false} | ${'render'}
-		${'LongInteger'}         | ${false} | ${'render'}
-		${'LongText'}            | ${false} | ${'not render'}
-		${'MultiselectPicklist'} | ${false} | ${'render'}
-		${'RichText'}            | ${false} | ${'not render'}
-		${'Picklist'}            | ${false} | ${'render'}
-		${'PrecisionDecimal'}    | ${false} | ${'render'}
-		${'Text'}                | ${false} | ${'not render'}
-		${'Aggregation'}         | ${true}  | ${'render'}
-		${'Attachment'}          | ${true}  | ${'render'}
-		${'AutoIncrement'}       | ${true}  | ${'render'}
-		${'Boolean'}             | ${true}  | ${'render'}
-		${'Date'}                | ${true}  | ${'render'}
-		${'DateTime'}            | ${true}  | ${'render'}
-		${'Decimal'}             | ${true}  | ${'render'}
-		${'Encrypted'}           | ${true}  | ${'render'}
-		${'Formula'}             | ${true}  | ${'render'}
-		${'Integer'}             | ${true}  | ${'render'}
-		${'LongInteger'}         | ${true}  | ${'render'}
-		${'LongText'}            | ${true}  | ${'render'}
-		${'MultiselectPicklist'} | ${true}  | ${'render'}
-		${'RichText'}            | ${true}  | ${'render'}
-		${'Picklist'}            | ${true}  | ${'render'}
-		${'PrecisionDecimal'}    | ${true}  | ${'render'}
-		${'Text'}                | ${true}  | ${'render'}
-	`(
-		'the object field $businessType system $system should $shouldRenderAlert the translation alert',
-		({businessType, shouldRenderAlert, system}) => {
-			renderComponent({values: {businessType, system}});
-
-			if (shouldRenderAlert === 'render') {
-				alertIsRendered();
-			}
-			else {
-				alertNotRendered();
-			}
+		else {
+			alertNotRendered();
 		}
-	);
-});
+	}
+);

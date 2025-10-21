@@ -213,7 +213,7 @@ export function getDefaultField({
 			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 				label ?? FIELD_TYPE_LABEL[type],
 		},
-		localized: Liferay.FeatureFlags['LPD-32050'],
+		localized: true,
 		locked,
 		name: name ?? normalizeName(FIELD_TYPE_LABEL[type], {style: 'camel'}),
 		parent,

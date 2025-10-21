@@ -103,17 +103,16 @@ export function ModalAddObjectField({
 		values.businessType === 'LongText' ||
 		values.businessType === 'RichText' ||
 		values.businessType === 'Text' ||
-		(Liferay.FeatureFlags['LPD-32050'] &&
-			(values.businessType === 'Attachment' ||
-				values.businessType === 'Boolean' ||
-				values.businessType === 'Date' ||
-				values.businessType === 'DateTime' ||
-				values.businessType === 'Decimal' ||
-				values.businessType === 'Integer' ||
-				values.businessType === 'LongInteger' ||
-				values.businessType === 'MultiselectPicklist' ||
-				values.businessType === 'Picklist' ||
-				values.businessType === 'PrecisionDecimal'));
+		values.businessType === 'Attachment' ||
+		values.businessType === 'Boolean' ||
+		values.businessType === 'Date' ||
+		values.businessType === 'DateTime' ||
+		values.businessType === 'Decimal' ||
+		values.businessType === 'Integer' ||
+		values.businessType === 'LongInteger' ||
+		values.businessType === 'MultiselectPicklist' ||
+		values.businessType === 'Picklist' ||
+		values.businessType === 'PrecisionDecimal';
 
 	useEffect(() => {
 		const makeFetch = async () => {
@@ -205,11 +204,7 @@ export function ModalAddObjectField({
 									<div className="lfr-objects__modal-add-object-field-enable-translations-toggle">
 										<Toggle
 											disabled={
-												!objectDefinition?.enableLocalization ||
-												(!Liferay.FeatureFlags[
-													'LPD-32050'
-												] &&
-													values.required)
+												!objectDefinition?.enableLocalization
 											}
 											label={Liferay.Language.get(
 												'enable-entry-translations'

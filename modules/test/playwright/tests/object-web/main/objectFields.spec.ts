@@ -28,9 +28,6 @@ import {postListTypeDefinitionListTypeEntries} from './utils/postListTypeDefinit
 const test = mergeTests(
 	apiHelpersTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-32050': {enabled: true},
-	}),
 	loginTest(),
 	objectPagesTest
 );

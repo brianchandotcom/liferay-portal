@@ -110,8 +110,7 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 		throws Exception {
 
 		return userGroupResource.putAssetLibraryUserGroup(
-			testDepotEntryGroup.getExternalReferenceCode(),
-			userGroup.getExternalReferenceCode());
+			externalReferenceCode, userGroup.getExternalReferenceCode());
 	}
 
 	@Override

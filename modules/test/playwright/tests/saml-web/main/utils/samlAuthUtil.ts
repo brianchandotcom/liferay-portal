@@ -61,7 +61,7 @@ export async function performSpInitiatedSSO(
 	await newPage.getByLabel('Email Address').fill(emailAddress);
 	await newPage.getByLabel('Password').fill('test');
 	await newPage.getByLabel('Remember Me').check();
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	if (assertSuccessful) {
 
@@ -97,7 +97,7 @@ export async function performIdpInitiatedSSO(
 	await newPage.waitForTimeout(1000);
 	await newPage.getByLabel('Email Address').fill(emailAddress);
 	await newPage.getByLabel('Password').fill('test');
-	await newPage.getByRole('button', {name: 'Sign In'}).click();
+	await newPage.getByRole('button', {name: 'Sign In'}).last().click();
 
 	// Wait for authentication and redirection to complete
 

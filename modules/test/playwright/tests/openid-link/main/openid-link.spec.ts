@@ -104,7 +104,7 @@ test.describe('OpenID connect link', () => {
 			.getByRole('button', {name: 'Search'})
 			.waitFor({state: 'visible'});
 
-		await page.getByRole('button', {name: 'Sign In'}).click();
+		await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 		await expect(page.getByText(openIdConfig.openIdLink)).toBeVisible();
 	});
@@ -131,7 +131,7 @@ test.describe('OpenID connect link', () => {
 
 		await page.goto('/web' + site.friendlyUrlPath);
 
-		await page.getByRole('button', {name: 'Sign In'}).click();
+		await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 		await expect(page.getByText(openIdConfig.openIdLink)).toBeHidden();
 	});

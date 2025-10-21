@@ -134,6 +134,47 @@ public class InventoryAnalysis implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _totalCountSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	public Long getTotalItems() {
+		if (_totalItemsSupplier != null) {
+			totalItems = _totalItemsSupplier.get();
+
+			_totalItemsSupplier = null;
+		}
+
+		return totalItems;
+	}
+
+	public void setTotalItems(Long totalItems) {
+		this.totalItems = totalItems;
+
+		_totalItemsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTotalItems(
+		UnsafeSupplier<Long, Exception> totalItemsUnsafeSupplier) {
+
+		_totalItemsSupplier = () -> {
+			try {
+				return totalItemsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long totalItems;
+
+	@JsonIgnore
+	private Supplier<Long> _totalItemsSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -194,6 +235,18 @@ public class InventoryAnalysis implements Serializable {
 			sb.append("\"totalCount\": ");
 
 			sb.append(totalCount);
+		}
+
+		Long totalItems = getTotalItems();
+
+		if (totalItems != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"totalItems\": ");
+
+			sb.append(totalItems);
 		}
 
 		sb.append("}");

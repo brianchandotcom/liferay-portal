@@ -280,6 +280,14 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("totalItems", additionalAssertFieldName)) {
+				if (inventoryAnalysis.getTotalItems() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -425,6 +433,17 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("totalItems", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						inventoryAnalysis1.getTotalItems(),
+						inventoryAnalysis2.getTotalItems())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -543,6 +562,11 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("totalItems")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -589,6 +613,7 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 		return new InventoryAnalysis() {
 			{
 				totalCount = RandomTestUtil.randomLong();
+				totalItems = RandomTestUtil.randomLong();
 			}
 		};
 	}

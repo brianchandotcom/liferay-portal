@@ -70,6 +70,27 @@ public class InventoryAnalysis implements Cloneable, Serializable {
 
 	protected Long totalCount;
 
+	public Long getTotalItems() {
+		return totalItems;
+	}
+
+	public void setTotalItems(Long totalItems) {
+		this.totalItems = totalItems;
+	}
+
+	public void setTotalItems(
+		UnsafeSupplier<Long, Exception> totalItemsUnsafeSupplier) {
+
+		try {
+			totalItems = totalItemsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long totalItems;
+
 	@Override
 	public InventoryAnalysis clone() throws CloneNotSupportedException {
 		return (InventoryAnalysis)super.clone();

@@ -11371,7 +11371,7 @@ org.apache.catalina.ha.session.level=INFO]]>
 
 	<target name="deploy-sql-zip">
 		<if>
-			<matches pattern="https?://" string="${test.sql.zip.url}" />
+			<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
 			<then>
 				<mirrors-get
 					dest="sql/release-sql.zip"

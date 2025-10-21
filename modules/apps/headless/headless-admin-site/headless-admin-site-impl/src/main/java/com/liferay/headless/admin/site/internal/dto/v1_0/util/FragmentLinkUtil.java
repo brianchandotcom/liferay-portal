@@ -16,11 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.Mapping;
 import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
-import com.liferay.info.item.InfoItemDetails;
-import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemDetailsProvider;
-import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -132,65 +128,6 @@ public class FragmentLinkUtil {
 		return JSONUtil.put("link", jsonObject);
 	}
 
-	private static ClassPKInfoItemIdentifier _getClassPKInfoItemIdentifier(
-		String className,
-		FragmentMappedValueItemExternalReference
-			fragmentMappedValueItemExternalReference,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		InfoItemDetailsProvider<Object> infoItemDetailsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		if ((infoItemObjectProvider == null) ||
-			(infoItemDetailsProvider == null)) {
-
-			return null;
-		}
-
-		try {
-			Object infoItem = infoItemObjectProvider.getInfoItem(
-				scopeGroupId,
-				new ERCInfoItemIdentifier(
-					fragmentMappedValueItemExternalReference.
-						getExternalReferenceCode(),
-					ItemScopeUtil.getItemScopeExternalReferenceCode(
-						fragmentMappedValueItemExternalReference.getScope(),
-						scopeGroupId)));
-
-			InfoItemDetails infoItemDetails =
-				infoItemDetailsProvider.getInfoItemDetails(
-					scopeGroupId, ClassPKInfoItemIdentifier.class, infoItem);
-
-			if (infoItemDetails == null) {
-				return null;
-			}
-
-			InfoItemReference infoItemReference =
-				infoItemDetails.getInfoItemReference();
-
-			if (infoItemReference == null) {
-				return null;
-			}
-
-			return (ClassPKInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-		}
-
-		return null;
-	}
-
 	private static Long _getCompanyId(long scopeGroupId) {
 		Group group = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
 
@@ -202,57 +139,6 @@ public class FragmentLinkUtil {
 
 		if (companyId != null) {
 			return companyId;
-		}
-
-		return null;
-	}
-
-	private static ERCInfoItemIdentifier _getERCInfoItemIdentifier(
-		String className, long classPK,
-		InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId) {
-
-		InfoItemObjectProvider<Object> infoItemObjectProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemObjectProvider.class, className,
-				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		InfoItemDetailsProvider<Object> infoItemDetailsProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemDetailsProvider.class, className,
-				ERCInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
-
-		if ((infoItemObjectProvider == null) ||
-			(infoItemDetailsProvider == null)) {
-
-			return null;
-		}
-
-		try {
-			Object infoItem = infoItemObjectProvider.getInfoItem(
-				scopeGroupId, new ClassPKInfoItemIdentifier(classPK));
-
-			InfoItemDetails infoItemDetails =
-				infoItemDetailsProvider.getInfoItemDetails(
-					scopeGroupId, ERCInfoItemIdentifier.class, infoItem);
-
-			if (infoItemDetails == null) {
-				return null;
-			}
-
-			InfoItemReference infoItemReference =
-				infoItemDetails.getInfoItemReference();
-
-			if (infoItemReference == null) {
-				return null;
-			}
-
-			return (ERCInfoItemIdentifier)
-				infoItemReference.getInfoItemIdentifier();
-		}
-		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
 		}
 
 		return null;
@@ -308,7 +194,7 @@ public class FragmentLinkUtil {
 
 		if (jsonObject.has("classPK")) {
 			ERCInfoItemIdentifier ercInfoItemIdentifier =
-				_getERCInfoItemIdentifier(
+				InfoItemUtil.getERCInfoItemIdentifier(
 					className, jsonObject.getLong("classPK"),
 					infoItemServiceRegistry, scopeGroupId);
 
@@ -528,9 +414,11 @@ public class FragmentLinkUtil {
 			"classPK",
 			() -> {
 				ClassPKInfoItemIdentifier classPKInfoItemIdentifier =
-					_getClassPKInfoItemIdentifier(
+					InfoItemUtil.getClassPKInfoItemIdentifier(
 						fragmentMappedValueItemExternalReference.getClassName(),
-						fragmentMappedValueItemExternalReference,
+						fragmentMappedValueItemExternalReference.
+							getExternalReferenceCode(),
+						fragmentMappedValueItemExternalReference.getScope(),
 						infoItemServiceRegistry, scopeGroupId);
 
 				if (classPKInfoItemIdentifier == null) {

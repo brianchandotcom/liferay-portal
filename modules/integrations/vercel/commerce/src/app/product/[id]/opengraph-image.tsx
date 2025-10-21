@@ -9,12 +9,14 @@ import {liferay} from '../../../liferay/index';
 import {getSkuDetails} from '../../../utils/product';
 import {getProductDetails} from './data';
 
+export const contentType = 'image/png';
+
 export const runtime = 'nodejs';
+
 export const size = {
 	height: 630,
 	width: 1200,
 };
-export const contentType = 'image/png';
 
 export default async function OGImage({params}: {params: {id: string}}) {
 	const {data: product, error} = await getProductDetails({
@@ -33,91 +35,39 @@ export default async function OGImage({params}: {params: {id: string}}) {
 
 	return new ImageResponse(
 		(
-			<div
-				style={{
-					backgroundColor: 'white',
-					borderBottom: '10px',
-					borderBottomColor: '#80ACFF',
-					display: 'flex',
-					flexDirection: 'column',
-					fontFamily: 'system-ui, sans-serif',
-					height: '100%',
-					padding: '48px',
-					width: '100%',
-				}}
-			>
-				<div
-					style={{
-						alignItems: 'center',
-						display: 'flex',
-						gap: '24px',
-					}}
-				>
+			<div tw="bg-white border-[#80ACFF] border-b-[10px] flex flex-col font-sans h-full p-12 w-full">
+				<div tw="flex items-center gap-6">
 					<img
 						alt={product.name}
 						src={product.urlImage}
-						style={{
-							borderRadius: '12px',
-							height: 96,
-							objectFit: 'cover',
-							width: 96,
-						}}
+						tw=" h-24 mr-4 object-cover rounded-xl w-24"
 					/>
 
-					<div style={{display: 'flex', flexDirection: 'column'}}>
-						<span
-							style={{
-								color: '#111827',
-								fontSize: 42,
-								fontWeight: 700,
-								lineHeight: 1.2,
-							}}
-						>
+					<div tw="flex flex-col">
+						<span tw="font-bold leading-tight text-[42px] text-gray-900">
 							{product.name}
 						</span>
 
-						<span
-							style={{
-								color: '#4B5563',
-								fontSize: 28,
-								marginTop: '8px',
-							}}
-						>
+						<span tw="mt-2 text-[28px] text-gray-600">
 							{product.catalogName}
 						</span>
 					</div>
 				</div>
 
-				<div
-					style={{
-						color: '#374151',
-						display: 'flex',
-						fontSize: 28,
-						marginTop: '32px',
-						maxWidth: '90%',
-					}}
-				>
+				<div tw="max-w-[90%] mt-8 text-[28px] text-gray-700">
 					{product.description}
 				</div>
 
-				<div
-					style={{
-						color: '#4B5563',
-						display: 'flex',
-						fontSize: 24,
-						gap: '32px',
-						marginTop: 'auto',
-					}}
-				>
-					<div style={{display: 'flex'}}>
+				<div tw="flex gap-8 mt-auto text-[24px] text-gray-600">
+					<div tw="flex mr-2">
 						💲 {price?.finalPrice?.replace('$', '')}
 					</div>
 
-					<div style={{display: 'flex'}}>
+					<div tw="flex mr-2">
 						📦 {availability?.stockQuantity ?? 0} Available
 					</div>
 
-					<div style={{display: 'flex'}}>⭐ {100} Stars</div>
+					<div tw="flex">⭐ 100 Stars</div>
 				</div>
 			</div>
 		),

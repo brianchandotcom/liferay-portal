@@ -21,6 +21,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.base.ObjectEntryServiceBaseImpl;
@@ -153,6 +154,40 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		_checkPermission(
 			actionId, objectDefinitionId,
 			objectEntryLocalService.getObjectEntry(objectEntryId));
+	}
+
+	@Override
+	public ObjectEntry copyObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
+		checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.UPDATE);
+
+		if (objectEntryFolderId !=
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					objectEntryFolderId);
+
+			ModelResourcePermissionUtil.check(
+				_objectEntryFolderModelResourcePermission, permissionChecker,
+				objectEntryFolder.getGroupId(), objectEntryFolderId,
+				ActionKeys.ADD_ENTRY);
+		}
+
+		return objectEntryLocalService.copyObjectEntry(
+			getUserId(), objectEntryId, objectEntryFolderId, values,
+			serviceContext);
 	}
 
 	@Override
@@ -428,6 +463,40 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return portletResourcePermission.contains(
 			getPermissionChecker(), groupId, actionId);
+	}
+
+	@Override
+	public ObjectEntry moveObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException {
+
+		ObjectEntry objectEntry = objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
+		checkModelResourcePermission(
+			objectEntry.getObjectDefinitionId(), objectEntry.getObjectEntryId(),
+			ActionKeys.UPDATE);
+
+		if (objectEntryFolderId !=
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			ObjectEntryFolder objectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					objectEntryFolderId);
+
+			ModelResourcePermissionUtil.check(
+				_objectEntryFolderModelResourcePermission, permissionChecker,
+				objectEntryFolder.getGroupId(), objectEntryFolderId,
+				ActionKeys.ADD_ENTRY);
+		}
+
+		return objectEntryLocalService.moveObjectEntry(
+			getUserId(), objectEntryId, objectEntryFolderId, values,
+			serviceContext);
 	}
 
 	@Override
@@ -869,6 +938,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 	)
 	private ModelResourcePermission<ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+
+	@Reference
+	private ObjectEntryFolderService _objectEntryFolderService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

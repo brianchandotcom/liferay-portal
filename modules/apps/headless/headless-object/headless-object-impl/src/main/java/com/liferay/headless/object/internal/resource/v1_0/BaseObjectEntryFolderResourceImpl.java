@@ -325,9 +325,9 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(objectEntryFolderId);
+		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			objectEntryFolderId);
-		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -977,9 +977,9 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(objectEntryFolderId);
+		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 		String resourceName = getPermissionCheckerResourceName(
 			objectEntryFolderId);
-		Long resourceId = getPermissionCheckerResourceId(objectEntryFolderId);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);

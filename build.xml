@@ -389,14 +389,20 @@ message.
 				<if>
 					<equals arg1="${marker.files.lfrbuild.ci.enabled}" arg2="true" />
 					<then>
-						<dirset id="lfrbuild-ci.dirs" dir="${project.dir}/modules">
+						<dirset
+							dir="${project.dir}/modules"
+							id="lfrbuild-ci.dirs"
+						>
 							<present targetdir="${project.dir}/modules">
-								<globmapper from="*" to="*/.lfrbuild-ci"/>
+								<globmapper
+									from="*"
+									to="*/.lfrbuild-ci"
+								/>
 							</present>
 						</dirset>
 
-						<pathconvert property="ci.build.module.deploy.tasks" refid="lfrbuild-ci.dirs" pathsep=" ">
-							<regexpmapper from=".*modules/([^/]+)/([^/]+)$" to=":\1:\2:deploy"/>
+						<pathconvert pathsep=" " property="ci.build.module.deploy.tasks" refid="lfrbuild-ci.dirs">
+							<regexpmapper from=".*modules/([^/]+)/([^/]+)$" to=":\1:\2:deploy" />
 						</pathconvert>
 
 						<gradle-execute dir="${project.dir}/modules" task="${ci.build.module.deploy.tasks}">

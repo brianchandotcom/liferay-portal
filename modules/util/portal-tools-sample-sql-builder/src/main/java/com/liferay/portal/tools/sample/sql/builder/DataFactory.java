@@ -6035,7 +6035,7 @@ public class DataFactory {
 				_userObjectFieldId),
 			newObjectRelationshipModel(
 				_ticketObjectDefinitionId, objectDefinitionId2,
-				_ticketObjectDefinitionId));
+				_ticketObjectFieldId));
 	}
 
 	public ObjectStateFlowModel newObjectStateFlowModel(long objectFieldId) {

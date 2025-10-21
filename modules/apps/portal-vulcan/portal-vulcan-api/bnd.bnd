@@ -39,6 +39,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.problem,\
 	com.liferay.portal.vulcan.resource,\
 	com.liferay.portal.vulcan.resource.locator,\
+	com.liferay.portal.vulcan.scope,\
 	com.liferay.portal.vulcan.status,\
 	com.liferay.portal.vulcan.util,\
 	com.liferay.portal.vulcan.yaml,\

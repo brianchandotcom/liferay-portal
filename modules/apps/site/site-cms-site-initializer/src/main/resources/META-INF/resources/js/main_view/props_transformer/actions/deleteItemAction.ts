@@ -69,60 +69,56 @@ export default async function deleteItemAction(
 ) {
 	const {actions, embedded} = itemData;
 
-	const itemSpace = await SpaceService.getSpace({
-		spaceId: embedded.scopeId as number,
-	});
-
-	if (!itemSpace.settings?.trashEnabled) {
-		confirmAndDeleteEntryAction({
-			bodyHTML:
-				itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
-					? sub(
-							Liferay.Language.get(
-								'delete-folder-confirmation-body'
-							),
-							itemData.title
-						)
-					: sub(
-							Liferay.Language.get(
-								'delete-asset-confirmation-body'
-							),
-							itemData.title
-						),
-			deleteAction: actions.delete,
-			loadData,
-			successMessage: sub(
-				Liferay.Language.get('x-was-successfully-deleted'),
-				`<strong>${itemData.title}</strong>`
-			),
-			title: sub(
-				Liferay.Language.get('delete-asset-confirmation-title'),
-				itemData.title
-			),
+	if (embedded) {
+		const itemSpace = await SpaceService.getSpace({
+			spaceId: embedded.scopeId as number,
 		});
 
-		return;
-	}
-
-	if (actions && embedded) {
-		try {
-			await fetch(actions.delete.href, {
-				headers: DEFAULT_HEADERS,
-				method: actions.delete.method,
-			});
-
-			showSuccessToast(
-				actions.get.href,
-				embedded.title,
+		if (!itemSpace.settings?.trashEnabled) {
+			confirmAndDeleteEntryAction({
+				bodyHTML:
+					itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
+						? sub(
+								Liferay.Language.get(
+									'delete-folder-confirmation-body'
+								),
+								itemData.title
+							)
+						: sub(
+								Liferay.Language.get(
+									'delete-asset-confirmation-body'
+								),
+								itemData.title
+							),
+				deleteAction: actions.delete,
 				loadData,
-				actions.get.method
-			);
+				successMessage: sub(
+					Liferay.Language.get('x-was-successfully-deleted'),
+					`<strong>${itemData.title}</strong>`
+				),
+				title: sub(
+					Liferay.Language.get('delete-asset-confirmation-title'),
+					itemData.title
+				),
+			});
 		}
-		catch {
-			displayErrorToast();
+		else {
+			try {
+				await fetch(actions.delete.href, {
+					headers: DEFAULT_HEADERS,
+					method: actions.delete.method,
+				});
+
+				showSuccessToast(
+					actions.get.href,
+					embedded.title,
+					loadData,
+					actions.get.method
+				);
+			}
+			catch (error) {
+				displayErrorToast();
+			}
 		}
-	}
-	else {
-		displayErrorToast();
 	}
 }

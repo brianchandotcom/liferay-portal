@@ -59,7 +59,7 @@ public class ItemScopeUtil {
 		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
 			itemGroupExternalReferenceCode, companyId);
 
-		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
+		if (group.getGroupId() == scopeGroupId) {
 			return null;
 		}
 

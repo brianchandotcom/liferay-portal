@@ -63,6 +63,16 @@ public class ObjectEntryServiceUtil {
 			objectDefinitionId, objectEntryId, actionId);
 	}
 
+	public static ObjectEntry copyObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyObjectEntry(
+			objectEntryId, objectEntryFolderId, values, serviceContext);
+	}
+
 	public static ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException {
 
@@ -212,6 +222,16 @@ public class ObjectEntryServiceUtil {
 
 		return getService().hasPortletResourcePermission(
 			groupId, objectDefinitionId, actionId);
+	}
+
+	public static ObjectEntry moveObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntry(
+			objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	public static ObjectEntry moveObjectEntryToTrash(

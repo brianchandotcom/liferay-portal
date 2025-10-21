@@ -117,6 +117,16 @@ public class ObjectEntryLocalServiceUtil {
 		getService().checkObjectEntries(companyId);
 	}
 
+	public static ObjectEntry copyObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
+	}
+
 	/**
 	 * Creates a new object entry with the primary key. Does not add the object entry to the database.
 	 *
@@ -431,6 +441,14 @@ public class ObjectEntryLocalServiceUtil {
 			groupId, objectDefinitionId, status, start, end);
 	}
 
+	public static List<ObjectEntry> getObjectEntries(
+			long groupId, long companyId, long objectEntryFolderId)
+		throws PortalException {
+
+		return getService().getObjectEntries(
+			groupId, companyId, objectEntryFolderId);
+	}
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *
@@ -692,6 +710,16 @@ public class ObjectEntryLocalServiceUtil {
 			userId, objectDefinitionId, primaryKey, values);
 	}
 
+	public static void moveObjectEntries(
+			long userId,
+			com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		getService().moveObjectEntries(
+			userId, objectEntryFolder, serviceContext);
+	}
+
 	public static void moveObjectEntriesToTrash(
 			long userId,
 			com.liferay.object.model.ObjectEntryFolder objectEntryFolder,
@@ -700,6 +728,16 @@ public class ObjectEntryLocalServiceUtil {
 
 		getService().moveObjectEntriesToTrash(
 			userId, objectEntryFolder, serviceContext);
+	}
+
+	public static ObjectEntry moveObjectEntry(
+			long userId, long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntry(
+			userId, objectEntryId, objectEntryFolderId, values, serviceContext);
 	}
 
 	public static ObjectEntry moveObjectEntryToTrash(

@@ -67,6 +67,11 @@ public interface ObjectEntryService extends BaseService {
 			long objectDefinitionId, long objectEntryId, String actionId)
 		throws PortalException;
 
+	public ObjectEntry copyObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
+		throws PortalException;
+
 	public ObjectEntry deleteObjectEntry(long objectEntryId)
 		throws PortalException;
 
@@ -157,6 +162,11 @@ public interface ObjectEntryService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasPortletResourcePermission(
 			long groupId, long objectDefinitionId, String actionId)
+		throws PortalException;
+
+	public ObjectEntry moveObjectEntry(
+			long objectEntryId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	public ObjectEntry moveObjectEntryToTrash(

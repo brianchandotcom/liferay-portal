@@ -26,7 +26,7 @@
 		"tw-animate-css": "1.3.8",
 		"typescript": "5.9.2"
 	},
-	"name": "@liferay/liferay-headless-commerce",
+	"name": "liferay-headless-commerce",
 	"private": true,
 	"scripts": {
 		"build": "next build --turbopack",

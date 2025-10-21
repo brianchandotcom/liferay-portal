@@ -37,10 +37,9 @@ export default function Main({
 	required,
 	...otherProps
 }: IProps) {
-	const Component =
-		Liferay.FeatureFlags['LPD-32050'] && localizedObjectField
-			? CheckboxLocalizedObjectField
-			: Checkbox;
+	const Component = localizedObjectField
+		? CheckboxLocalizedObjectField
+		: Checkbox;
 
 	return (
 		<FieldBase showLabel={false} {...otherProps}>

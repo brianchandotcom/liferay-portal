@@ -237,7 +237,7 @@ export default function ActionBuilder({
 				</ClayAlert>
 			)}
 
-			{Liferay.FeatureFlags['LPD-32050'] && hasLocalizedField && (
+			{hasLocalizedField && (
 				<ClayAlert
 					className="lfr-objects__side-panel-content-container"
 					displayType="info"

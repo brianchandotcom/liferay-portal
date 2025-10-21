@@ -187,8 +187,7 @@ const Select = ({
 };
 
 const Main = (props: SelectMainProps | SelectLocalizedObjectFieldProps) => {
-	const isLocalizedObjectField: boolean =
-		Liferay.FeatureFlags['LPD-32050'] && !!props.localizedObjectField;
+	const isLocalizedObjectField: boolean = !!props.localizedObjectField;
 
 	return !isLocalizedObjectField ? (
 		<Select {...(props as SelectMainProps)} />

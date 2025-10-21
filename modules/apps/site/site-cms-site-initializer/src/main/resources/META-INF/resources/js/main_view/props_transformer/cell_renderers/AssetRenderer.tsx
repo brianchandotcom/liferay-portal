@@ -92,7 +92,7 @@ export default function AssetRenderer({
 					</ClayLink>
 				</div>
 
-				<div className="text-2 text-muted">
+				<div className="text-2 text-secondary">
 					{sub(
 						Liferay.Language.get('modified-at-x-by-x'),
 						formatDate(itemData.dateModified),

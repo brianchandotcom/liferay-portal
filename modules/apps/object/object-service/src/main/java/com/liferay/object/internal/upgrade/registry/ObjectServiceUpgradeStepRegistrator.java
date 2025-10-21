@@ -678,6 +678,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			"10.25.0", "10.25.1",
 			UpgradeProcessFactory.alterColumnType(
 				"ObjectDefinitionSetting", "value", "TEXT"));
+
+		registry.register(
+			"10.25.1", "10.26.0",
+			UpgradeProcessFactory.dropColumns(
+				"ObjectDefinition", "enableLocalization"));
 	}
 
 	@Reference

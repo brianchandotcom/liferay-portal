@@ -3,14 +3,19 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {fetch} from 'frontend-js-web';
+import {fetch, sub} from 'frontend-js-web';
 
+import SpaceService from '../../../common/services/SpaceService';
 import {
 	displayDeleteSuccessToast,
 	displayErrorToast,
 } from '../../../common/utils/toastUtil';
 import {DEFAULT_HEADERS} from '../utils/constants';
 import displayUndoDeleteSuccessToast from '../utils/displayUndoDeleteSuccessToast';
+import confirmAndDeleteEntryAction from './confirmAndDeleteEntryAction';
+
+const OBJECT_ENTRY_FOLDER_CLASS_NAME =
+	'com.liferay.object.model.ObjectEntryFolder';
 
 /**
  * Shows different success messages by having Recycle Bin enabled or not
@@ -63,6 +68,41 @@ export default async function deleteItemAction(
 	loadData: () => {}
 ) {
 	const {actions, embedded} = itemData;
+
+	const itemSpace = await SpaceService.getSpace({
+		spaceId: embedded.scopeId as number,
+	});
+
+	if (!itemSpace.settings?.trashEnabled) {
+		confirmAndDeleteEntryAction({
+			bodyHTML:
+				itemData.entryClassName === OBJECT_ENTRY_FOLDER_CLASS_NAME
+					? sub(
+							Liferay.Language.get(
+								'delete-folder-confirmation-body'
+							),
+							itemData.title
+						)
+					: sub(
+							Liferay.Language.get(
+								'delete-asset-confirmation-body'
+							),
+							itemData.title
+						),
+			deleteAction: actions.delete,
+			loadData,
+			successMessage: sub(
+				Liferay.Language.get('x-was-successfully-deleted'),
+				`<strong>${itemData.title}</strong>`
+			),
+			title: sub(
+				Liferay.Language.get('delete-asset-confirmation-title'),
+				itemData.title
+			),
+		});
+
+		return;
+	}
 
 	if (actions && embedded) {
 		try {

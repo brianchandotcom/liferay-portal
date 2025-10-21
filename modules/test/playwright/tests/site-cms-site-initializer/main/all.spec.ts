@@ -26,6 +26,69 @@ const test = mergeTests(
 );
 
 test(
+	'Confirmation modal is shown when delete a single content in a space with recycle bin disabled',
+	{tag: '@LPD-64867'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const spaceName = `Space ${getRandomString()}`;
+		const file1Title = `Content ${getRandomString()}`;
+		let space = null;
+
+		await test.step('Create a new Space with recycle bin disabled', async () => {
+			space = await apiHelpers.headlessAssetLibrary.createAssetLibrary({
+				name: spaceName,
+				settings: {
+					trashEnabled: false,
+				},
+				type: 'Space',
+			});
+		});
+
+		await test.step('Create a content for that space', async () => {
+			await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+		});
+
+		await test.step('Delete content', async () => {
+			await assetsPage.gotoAll();
+
+			await assetsPage.execItemAction({
+				action: 'Delete',
+				filter: file1Title,
+			});
+		});
+
+		await test.step('Accept confirmation modal', async () => {
+			await expect(
+				page.getByRole('heading', {name: `Delete "${file1Title}"`})
+			).toBeVisible();
+
+			await expect(
+				page.getByText('You are about to delete the asset')
+			).toBeVisible();
+
+			await page.getByRole('button', {name: 'Delete'}).click();
+
+			await waitForAlert(page, `${file1Title} was successfully deleted.`);
+
+			await expect(
+				page.getByRole('cell', {name: file1Title})
+			).not.toBeVisible();
+		});
+
+		await test.step('delete created space', async () => {
+			await apiHelpers.headlessAssetLibrary.deleteAssetLibrary(space.id);
+		});
+	}
+);
+
+test(
 	'Can delete multiple contents across spaces with and without recycle bin enabled',
 	{tag: '@LPD-62787'},
 	async ({apiHelpers, assetsPage, page, recycleBinPage}) => {

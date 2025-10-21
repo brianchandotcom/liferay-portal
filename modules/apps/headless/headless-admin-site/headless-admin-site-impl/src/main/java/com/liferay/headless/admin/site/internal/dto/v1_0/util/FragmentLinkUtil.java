@@ -298,12 +298,6 @@ public class FragmentLinkUtil {
 			return null;
 		}
 
-		long classNameId = PortalUtil.getClassNameId(className);
-
-		if (classNameId == 0) {
-			return null;
-		}
-
 		if (Objects.equals(className, Layout.class.getName())) {
 			return JSONUtil.put(
 				"layout",
@@ -312,7 +306,7 @@ public class FragmentLinkUtil {
 		}
 
 		return _getMappedItemJSONObject(
-			classNameId, fragmentMappedValueItemExternalReference, fieldKey,
+			fragmentMappedValueItemExternalReference, fieldKey,
 			infoItemServiceRegistry, scopeGroupId);
 	}
 
@@ -400,7 +394,6 @@ public class FragmentLinkUtil {
 	}
 
 	private static JSONObject _getMappedItemJSONObject(
-		long classNameId,
 		FragmentMappedValueItemExternalReference
 			fragmentMappedValueItemExternalReference,
 		String fieldKey, InfoItemServiceRegistry infoItemServiceRegistry,
@@ -409,7 +402,8 @@ public class FragmentLinkUtil {
 		return JSONUtil.put(
 			"className", fragmentMappedValueItemExternalReference.getClassName()
 		).put(
-			"classNameId", classNameId
+			"classNameId", PortalUtil.getClassNameId(
+				fragmentMappedValueItemExternalReference.getClassName())
 		).put(
 			"classPK",
 			() -> {

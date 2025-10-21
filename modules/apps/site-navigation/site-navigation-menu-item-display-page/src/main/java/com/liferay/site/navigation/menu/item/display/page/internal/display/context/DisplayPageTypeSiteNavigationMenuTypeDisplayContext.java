@@ -114,6 +114,21 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).build();
 	}
 
+	public String getClassName() {
+		if (_className != null) {
+			return _className;
+		}
+
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				_siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		_className = typeSettingsUnicodeProperties.get("className");
+
+		return _className;
+	}
+
 	public long getClassNameId() {
 		if (_classNameId != null) {
 			return _classNameId;
@@ -186,6 +201,8 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		).put(
 			"item",
 			HashMapBuilder.<String, Object>put(
+				"className", getClassName()
+			).put(
 				"classNameId", getClassNameId()
 			).put(
 				"classPK", getClassPK()
@@ -404,6 +421,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 		return _layoutDisplayPageObjectProvider;
 	}
 
+	private String _className;
 	private Long _classNameId;
 	private Long _classPK;
 	private Long _classTypeId;

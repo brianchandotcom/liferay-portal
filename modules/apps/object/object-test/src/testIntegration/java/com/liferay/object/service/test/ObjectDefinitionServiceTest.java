@@ -419,8 +419,8 @@ public class ObjectDefinitionServiceTest {
 			user.getUserId(), objectDefinition.getObjectDefinitionId());*/
 
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			user.getUserId(), 0, null, false, true, false, true, true, false,
-			false, false, false, null,
+			null, user.getUserId(), 0, null, false, true, false, true, true,
+			false, false, false, false, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 			ObjectDefinitionTestUtil.getRandomName(), null, null,
 			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
@@ -540,8 +540,8 @@ public class ObjectDefinitionServiceTest {
 
 			objectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
-					objectFolderId, null, false, true, false, true, true, false,
-					false, false, false, null,
+					null, objectFolderId, null, false, true, false, true, true,
+					false, false, false, false, null,
 					LocalizedMapUtil.getLocalizedMap(
 						RandomTestUtil.randomString()),
 					ObjectDefinitionTestUtil.getRandomName(), null, null,
@@ -682,7 +682,8 @@ public class ObjectDefinitionServiceTest {
 					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
 					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
 					objectDefinition.getScope(), objectDefinition.getStatus(),
-					Collections.emptyList(), Collections.emptyList());
+					Collections.emptyList(), Collections.emptyList(),
+					Collections.emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {
@@ -704,7 +705,8 @@ public class ObjectDefinitionServiceTest {
 					RandomTestUtil.randomString(),
 					objectDefinition.getObjectDefinitionId(), objectFolderId,
 					objectDefinition.getTitleObjectFieldId(),
-					Collections.emptyList(), Collections.emptyList());
+					Collections.emptyList(), Collections.emptyList(),
+					Collections.emptyList());
 		}
 		finally {
 			if (objectDefinition != null) {

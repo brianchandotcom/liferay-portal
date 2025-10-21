@@ -317,6 +317,7 @@ public class ObjectDefinitionResourceImpl
 		else {
 			serviceBuilderObjectDefinition =
 				_objectDefinitionService.addCustomObjectDefinition(
+					objectDefinition.getExternalReferenceCode(),
 					_getObjectFolderId(
 						objectDefinition.
 							getObjectFolderExternalReferenceCode()),
@@ -524,6 +525,7 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
+					Collections.emptyList(),
 					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
 						contextUser.getCompanyId(), _groupLocalService,
 						contextUser.getUserId(),
@@ -589,6 +591,7 @@ public class ObjectDefinitionResourceImpl
 						contextUser.getCompanyId(), _groupLocalService,
 						objectDefinition.getObjectDefinitionSettings(),
 						_objectDefinitionSettingLocalService),
+					Collections.emptyList(),
 					WorkflowDefinitionLinkUtil.toWorkflowDefinitionLinks(
 						contextUser.getCompanyId(), _groupLocalService,
 						contextUser.getUserId(),

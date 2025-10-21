@@ -1014,7 +1014,7 @@ public class EditInfoItemStrutsActionTest {
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				_user.getUserId(), 0, null, false, true,
+				null, _user.getUserId(), 0, null, false, true,
 				enableFriendlyURLCustomization, true,
 				FeatureFlagManagerUtil.isEnabled(
 					TestPropsValues.getCompanyId(), "LPD-32050"),

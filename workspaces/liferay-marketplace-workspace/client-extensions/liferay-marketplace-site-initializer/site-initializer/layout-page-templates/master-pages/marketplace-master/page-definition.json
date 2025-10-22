@@ -30,7 +30,8 @@
 								"definition": {
 									"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
@@ -80,7 +81,8 @@
 																		"height": "40px"
 																	},
 																	"indexed": true,
-																	"layout": {}
+																	"layout": {
+																	}
 																},
 																"pageElements": [
 																	{
@@ -89,13 +91,16 @@
 																				"key": "liferay-sites",
 																				"siteKey": "[$GROUP_KEY$]"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"pageElements": [
 																			{
-																				"definition": {},
+																				"definition": {
+																				},
 																				"pageElements": [
 																					{
 																						"definition": {
@@ -103,48 +108,56 @@
 																								"key": "sites",
 																								"siteKey": "[$GROUP_KEY$]"
 																							},
-																							"fragmentConfig": {},
+																							"fragmentConfig": {
+																							},
 																							"fragmentFields": [
 																								{
 																									"id": "menuItemTextcommunity",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextLiferay",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextLiferayLearn",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextCustomerPortal",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextHelpCenter",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextMarketplace",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								},
 																								{
 																									"id": "menuItemTextpartner",
 																									"value": {
-																										"fragmentLink": {}
+																										"fragmentLink": {
+																										}
 																									}
 																								}
 																							],
@@ -167,7 +180,8 @@
 																		"height": "40px"
 																	},
 																	"indexed": true,
-																	"layout": {}
+																	"layout": {
+																	}
 																},
 																"pageElements": [
 																	{
@@ -209,8 +223,10 @@
 																			"fragment": {
 																				"key": "currency-selector"
 																			},
-																			"fragmentConfig": {},
-																			"fragmentFields": [],
+																			"fragmentConfig": {
+																			},
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -230,7 +246,8 @@
 															"fragmentConfig": {
 																"siteNavigationMenuId": 0
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"fragmentViewports": [
 																{
 																	"fragmentViewportStyle": {
@@ -515,7 +532,8 @@
 																		"source": "{}",
 																		"sublevels": "-1"
 																	},
-																	"fragmentFields": [],
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -549,19 +567,22 @@
 																		"key": "account-selection-dropdown",
 																		"siteKey": "[$GROUP_KEY$]"
 																	},
-																	"fragmentConfig": {},
-																	"fragmentFields": [],
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
 																					"widgetInstance": {
 																						"widgetConfig": {
-																							"properties": "path=new-account-button"
+																							"properties": "path=new-account-trigger"
 																						},
 																						"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 																					}
@@ -626,8 +647,10 @@
 																		"key": "marketplace-mobile-menu",
 																		"siteKey": "[$GROUP_KEY$]"
 																	},
-																	"fragmentConfig": {},
-																	"fragmentFields": [],
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
 																	"fragmentViewports": [
 																		{
 																			"fragmentViewportStyle": {
@@ -652,7 +675,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -660,7 +684,8 @@
 																						"mobile-menu-container"
 																					],
 																					"indexed": true,
-																					"layout": {}
+																					"layout": {
+																					}
 																				},
 																				"pageElements": [
 																					{
@@ -676,7 +701,8 @@
 																								"source": "{}",
 																								"sublevels": "1"
 																							},
-																							"fragmentFields": [],
+																							"fragmentFields": [
+																							],
 																							"indexed": true
 																						},
 																						"type": "Fragment"
@@ -708,7 +734,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -717,13 +744,15 @@
 										"minHeight": "50vh"
 									},
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentSettings": {
-												"unallowedFragments": []
+												"unallowedFragments": [
+												]
 											}
 										},
 										"type": "DropZone"
@@ -737,7 +766,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -746,17 +776,20 @@
 										"key": "marketplace-footer",
 										"siteKey": "[$GROUP_KEY$]"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "image-editable-product-linkedin",
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -764,10 +797,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -775,10 +810,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -786,10 +823,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -797,10 +836,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -808,10 +849,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										},
 										{
@@ -819,10 +862,12 @@
 											"value": {
 												"fragmentImage": {
 													"url": {
-														"value_i18n": {}
+														"value_i18n": {
+														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										}
 									],

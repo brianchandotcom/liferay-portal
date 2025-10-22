@@ -22,7 +22,7 @@ const lazyRoutes = {
 	'license-agreement': React.lazy(
 		() => import('./pages/LicenseAgreementPage')
 	),
-	'new-account-button': React.lazy(
+	'new-account-trigger': React.lazy(
 		() => import('./pages/NewAccount/NewAccountButton')
 	),
 	'next-steps': React.lazy(() => import('./pages/NextSteps')),

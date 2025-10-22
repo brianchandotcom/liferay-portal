@@ -3,20 +3,24 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": ["marketplace-header"],
+					"cssClasses": [
+						"marketplace-header"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\n\nposition:sticky;\ntop:-48px;\nz-index:970;\n}",
 					"fragmentStyle": {
 						"backgroundColor": "#FFFFFF"
 					},
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"pageElements": [
 					{
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -87,7 +91,8 @@
 																"height": "40px"
 															},
 															"indexed": true,
-															"layout": {}
+															"layout": {
+															}
 														},
 														"pageElements": [
 															{
@@ -96,13 +101,16 @@
 																		"key": "liferay-sites",
 																		"siteKey": "[$GROUP_KEY$]"
 																	},
-																	"fragmentConfig": {},
-																	"fragmentFields": [],
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -110,48 +118,56 @@
 																						"key": "sites",
 																						"siteKey": "[$GROUP_KEY$]"
 																					},
-																					"fragmentConfig": {},
+																					"fragmentConfig": {
+																					},
 																					"fragmentFields": [
 																						{
 																							"id": "menuItemTextcommunity",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextLiferay",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextLiferayLearn",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextCustomerPortal",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextHelpCenter",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextMarketplace",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						},
 																						{
 																							"id": "menuItemTextpartner",
 																							"value": {
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -174,7 +190,8 @@
 																"height": "40px"
 															},
 															"indexed": true,
-															"layout": {}
+															"layout": {
+															}
 														},
 														"pageElements": [
 															{
@@ -216,8 +233,10 @@
 																	"fragment": {
 																		"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer"
 																	},
-																	"fragmentConfig": {},
-																	"fragmentFields": [],
+																	"fragmentConfig": {
+																	},
+																	"fragmentFields": [
+																	],
 																	"indexed": true
 																},
 																"type": "Fragment"
@@ -237,7 +256,8 @@
 													"fragmentConfig": {
 														"siteNavigationMenuId": 0
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
@@ -263,7 +283,8 @@
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] {\nborder-bottom: solid 1px var(--neutral-02, #E2E2E4);\n}",
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -487,7 +508,8 @@
 												}
 											],
 											"indexed": true,
-											"layout": {}
+											"layout": {
+											}
 										},
 										"pageElements": [
 											{
@@ -503,7 +525,8 @@
 														"source": "{}",
 														"sublevels": "-1"
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -537,19 +560,22 @@
 														"key": "account-selection-dropdown",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
 																	"widgetInstance": {
 																		"widgetConfig": {
-																			"properties": "path=new-account-button"
+																			"properties": "path=new-account-trigger"
 																		},
 																		"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_[$COMPANY_ID$]_LXC_liferay_marketplace_custom_element"
 																	}
@@ -614,8 +640,10 @@
 														"key": "marketplace-mobile-menu",
 														"siteKey": "[$GROUP_KEY$]"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"fragmentViewports": [
 														{
 															"fragmentViewportStyle": {
@@ -640,7 +668,8 @@
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
@@ -648,7 +677,8 @@
 																		"mobile-menu-container"
 																	],
 																	"indexed": true,
-																	"layout": {}
+																	"layout": {
+																	}
 																},
 																"pageElements": [
 																	{
@@ -664,7 +694,8 @@
 																				"source": "{}",
 																				"sublevels": "1"
 																			},
-																			"fragmentFields": [],
+																			"fragmentFields": [
+																			],
 																			"indexed": true
 																		},
 																		"type": "Fragment"
@@ -706,7 +737,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -715,13 +747,15 @@
 										"minHeight": "50vh"
 									},
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentSettings": {
-												"unallowedFragments": []
+												"unallowedFragments": [
+												]
 											}
 										},
 										"type": "DropZone"
@@ -735,7 +769,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {}
+							"layout": {
+							}
 						},
 						"pageElements": [
 							{
@@ -744,8 +779,10 @@
 										"key": "marketplace-footer-private",
 										"siteKey": "[$GROUP_KEY$]"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"type": "Fragment"

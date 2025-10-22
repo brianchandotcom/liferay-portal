@@ -216,7 +216,7 @@ public class EditableFragmentEntryProcessorTest {
 								"mapperType", "link"
 							)
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						))
 				).put(
 					FragmentEntryProcessorConstants.
@@ -261,7 +261,7 @@ public class EditableFragmentEntryProcessorTest {
 							"mapperType", "link"
 						)
 					).put(
-						"defaultValue", "test"
+						"defaultValue", RandomTestUtil.randomString()
 					))
 			).put(
 				FragmentEntryProcessorConstants.
@@ -971,7 +971,7 @@ public class EditableFragmentEntryProcessorTest {
 						).put(
 							"classPK", journalArticle.getResourcePrimKey()
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						).put(
 							"fieldId", "smallImage"
 						))
@@ -1042,7 +1042,7 @@ public class EditableFragmentEntryProcessorTest {
 						).put(
 							"classPK", objectEntry.getPrimaryKey()
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						).put(
 							"fieldId", "title"
 						))
@@ -1114,7 +1114,7 @@ public class EditableFragmentEntryProcessorTest {
 						).put(
 							"classPK", objectEntry.getPrimaryKey()
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						).put(
 							"fieldId", "content"
 						))
@@ -1177,7 +1177,7 @@ public class EditableFragmentEntryProcessorTest {
 						).put(
 							"classPK", journalArticle.getResourcePrimKey()
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						).put(
 							"fieldId", "title"
 						))
@@ -1227,7 +1227,7 @@ public class EditableFragmentEntryProcessorTest {
 						).put(
 							"classPK", journalArticle.getResourcePrimKey()
 						).put(
-							"defaultValue", "test"
+							"defaultValue", RandomTestUtil.randomString()
 						).put(
 							"fieldId", "title"
 						))

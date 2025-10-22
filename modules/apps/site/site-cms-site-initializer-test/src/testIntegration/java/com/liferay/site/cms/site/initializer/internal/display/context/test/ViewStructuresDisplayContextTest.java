@@ -78,7 +78,7 @@ public class ViewStructuresDisplayContextTest
 
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(0), "pencil", "edit", "edit", "get",
-			Map.of("system", false));
+			null);
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(1), "list-ul", "viewUsages",
 			"view-usages", "get", null);
@@ -87,10 +87,10 @@ public class ViewStructuresDisplayContextTest
 			null);
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(3), "export", "export", "export-as-json",
-			"get", Map.of("system", false));
+			"get", null);
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(4), "import", "import",
-			"import-and-override", "get", Map.of("system", false));
+			"import-and-override", "get", null);
 		_assertFDSActionDropdownItem(
 			fdsActionDropdownItems.get(5), "password-policies", "permissions",
 			"permissions", "get", null);

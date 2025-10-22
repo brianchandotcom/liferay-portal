@@ -53,6 +53,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
@@ -1416,6 +1417,29 @@ public class UserLocalServiceTest {
 	@Test
 	public void testUpdateLastLogin() throws Throwable {
 		_testUpdateLastLogin(UserTestUtil.addUser());
+
+		_company = CompanyTestUtil.addCompany();
+
+		User user = null;
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
+
+			Group group = GroupLocalServiceUtil.getGroup(
+				_company.getCompanyId(), GroupConstants.GUEST);
+
+			user = UserTestUtil.addUser(
+				_company.getCompanyId(), _company.getUserId(),
+				RandomTestUtil.randomString(
+					NumericStringRandomizerBumper.INSTANCE,
+					UniqueStringRandomizerBumper.INSTANCE),
+				LocaleUtil.getDefault(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), new long[] {group.getGroupId()},
+				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+		}
+
+		_testUpdateLastLogin(user);
 	}
 
 	@Test

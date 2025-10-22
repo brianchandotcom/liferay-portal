@@ -221,11 +221,17 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 
 		return TransformUtil.transformToArray(
 			permissionsMap.entrySet(),
-			entry -> new WidgetPermission() {
-				{
-					setActionIds(entry::getValue);
-					setRoleName(entry::getKey);
+			entry -> {
+				if (ArrayUtil.isEmpty(entry.getValue())) {
+					return null;
 				}
+
+				return new WidgetPermission() {
+					{
+						setActionIds(entry::getValue);
+						setRoleName(entry::getKey);
+					}
+				};
 			},
 			WidgetPermission.class);
 	}

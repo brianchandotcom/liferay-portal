@@ -746,8 +746,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
-				null, TestPropsValues.getUserId(), 0, null, false, true, false, true,
-				true, false, false, false, null,
+				null, TestPropsValues.getUserId(), 0, null, false, true, false,
+				true, true, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				"CustomObjectDefinition", null, "control_panel.sites",
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

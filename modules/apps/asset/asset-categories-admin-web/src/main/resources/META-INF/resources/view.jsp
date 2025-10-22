@@ -130,13 +130,17 @@
 							verticalAlign="center"
 						>
 							<clay:content-col>
-								<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
-								<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY %>">
-									<clay:label
-										displayType="warning"
-										label='<%= LanguageUtil.get(request, "empty") %>'
-									/>
-								</c:if>
+								<div class="inline-item">
+									<%= HtmlUtil.escape(vocabulary.getTitle(locale)) %>
+
+									<c:if test="<%= vocabulary.getVisibilityType() == AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY %>">
+										<clay:label
+											cssClass="c-ml-3"
+											displayType="warning"
+											label='<%= LanguageUtil.get(request, "empty") %>'
+										/>
+									</c:if>
+								</div>
 							</clay:content-col>
 
 							<clay:content-col

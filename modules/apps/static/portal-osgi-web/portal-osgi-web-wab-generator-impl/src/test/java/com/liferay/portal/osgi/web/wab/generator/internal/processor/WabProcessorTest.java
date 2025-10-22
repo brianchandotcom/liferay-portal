@@ -443,8 +443,8 @@ public class WabProcessorTest {
 
 			// Now that we've established CDI discovery would kick
 			// in, check to see if the WAB opted-out of integration by
-			// having the "-cdiannotations" instruction set to the empty
-			// value in liferay-plugin-package.properties.
+			// not having the "-cdiannotations" instruction set in
+			// liferay-plugin-package.properties.
 
 			Resource packageProperties = jar.getResource(
 				"WEB-INF/liferay-plugin-package.properties");

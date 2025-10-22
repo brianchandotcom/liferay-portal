@@ -65,6 +65,10 @@ public class CollectionLayoutStructureItemImporter
 
 		PageElement[] pageElements = pageElement.getPageElements();
 
+		if ((pageElements != null) && (pageElements.length > 1)) {
+			throw new UnsupportedOperationException();
+		}
+
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)

@@ -336,16 +336,15 @@ public class DataValuesMappingExportImportContentProcessor
 		JSONObject successMessageJSONObject = _getSuccessMessageJSONObject(
 			itemJSONObject);
 
-		if (successMessageJSONObject == null) {
+		if ((successMessageJSONObject == null) ||
+			JSONUtil.isEmpty(
+				successMessageJSONObject.getJSONObject("layout"))) {
+
 			return;
 		}
 
 		JSONObject layoutJSONObject = successMessageJSONObject.getJSONObject(
 			"layout");
-
-		if ((layoutJSONObject == null) || (layoutJSONObject.length() == 0)) {
-			return;
-		}
 
 		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutJSONObject.getString("layoutUuid"),

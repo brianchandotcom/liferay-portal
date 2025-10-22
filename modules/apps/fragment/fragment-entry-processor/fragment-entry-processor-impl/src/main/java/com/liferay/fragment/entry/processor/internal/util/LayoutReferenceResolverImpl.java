@@ -50,9 +50,11 @@ public class LayoutReferenceResolverImpl implements LayoutReferenceResolver {
 					_groupLocalService.fetchGroupByExternalReferenceCode(
 						scopeExternalReferenceCode, companyId);
 
-				if (group != null) {
-					groupId = group.getGroupId();
+				if (group == null) {
+					return null;
 				}
+
+				groupId = group.getGroupId();
 			}
 
 			return _layoutLocalService.fetchLayoutByExternalReferenceCode(

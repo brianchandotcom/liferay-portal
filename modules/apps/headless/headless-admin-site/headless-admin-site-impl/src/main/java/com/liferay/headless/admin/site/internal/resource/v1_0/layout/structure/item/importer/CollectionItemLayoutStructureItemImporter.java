@@ -7,7 +7,6 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
-import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 
@@ -25,11 +24,8 @@ public class CollectionItemLayoutStructureItemImporter
 			PageElement pageElement)
 		throws Exception {
 
-		return layoutStructure.addCollectionItemLayoutStructureItem(
-			pageElement.getExternalReferenceCode(),
-			LayoutStructureUtil.getParentExternalReferenceCode(
-				pageElement, layoutStructure),
-			pageElement.getPosition());
+		return layoutStructure.getLayoutStructureItem(
+			pageElement.getExternalReferenceCode());
 	}
 
 }

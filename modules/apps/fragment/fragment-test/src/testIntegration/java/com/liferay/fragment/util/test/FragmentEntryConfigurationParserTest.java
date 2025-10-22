@@ -119,7 +119,7 @@ public class FragmentEntryConfigurationParserTest {
 								"fields",
 								JSONUtil.put(
 									JSONUtil.put(
-										"label", "My URL"
+										"label", RandomTestUtil.randomString()
 									).put(
 										"name", name
 									).put(
@@ -158,7 +158,7 @@ public class FragmentEntryConfigurationParserTest {
 								"fields",
 								JSONUtil.put(
 									JSONUtil.put(
-										"label", "My URL"
+										"label", RandomTestUtil.randomString()
 									).put(
 										"name", name
 									).put(

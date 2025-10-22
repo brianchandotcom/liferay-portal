@@ -58,11 +58,15 @@ public class DBUpgradeClientTest {
 		_tomcatDir.mkdirs();
 
 		File extraLibDir = new File(_tomcatDir, "bin");
-		File globalLibDir = new File(_tomcatDir, "lib");
-		File portalDir = new File(_tomcatDir, "webapps/ROOT");
 
 		extraLibDir.mkdirs();
+
+		File globalLibDir = new File(_tomcatDir, "lib");
+
 		globalLibDir.mkdirs();
+
+		File portalDir = new File(_tomcatDir, "webapps/ROOT");
+
 		portalDir.mkdirs();
 
 		ReflectionTestUtil.setFieldValue(
@@ -122,11 +126,11 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_appServer");
 
 		Assert.assertNotNull(appServer);
-		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 		Assert.assertEquals(_tomcatDir, appServer.getDir());
 		Assert.assertEquals("bin", appServer.getExtraLibDirNames());
 		Assert.assertEquals("lib", appServer.getGlobalLibDirName());
 		Assert.assertEquals("webapps/ROOT", appServer.getPortalDirName());
+		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 	}
 
 	@Test
@@ -149,12 +153,12 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_appServer");
 
 		Assert.assertNotNull(appServer);
-		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 		Assert.assertEquals(
 			new File(_liferayHomeDir, "tomcat"), appServer.getDir());
 		Assert.assertEquals("/bin", appServer.getExtraLibDirNames());
 		Assert.assertEquals("/lib", appServer.getGlobalLibDirName());
 		Assert.assertEquals("/webapps/ROOT", appServer.getPortalDirName());
+		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 	}
 
 	@Test

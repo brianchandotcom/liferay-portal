@@ -12,7 +12,6 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 
 import SpaceSticker from '../../../common/components/SpaceSticker';
 import SpaceService from '../../../common/services/SpaceService';
-import {LogoColor} from '../../../common/types/Space';
 
 type Space = {
 	displayType?: string;
@@ -30,7 +29,6 @@ const ALL_SPACES: Space[] = [
 export default function CategorizationSpaces({
 	assetLibraries,
 	checkboxText,
-	selectedSpaces,
 	setSelectedSpaces,
 	setSpaceChange,
 	setSpaceInputError,
@@ -38,7 +36,6 @@ export default function CategorizationSpaces({
 }: {
 	assetLibraries?: any;
 	checkboxText: string;
-	selectedSpaces: number[];
 	setSelectedSpaces: (value: any) => void;
 	setSpaceChange?: (value: boolean) => void;
 	setSpaceInputError: (value: string) => void;
@@ -144,21 +141,6 @@ export default function CategorizationSpaces({
 		setSelectedSpaces(items.map((item) => item.value));
 	};
 
-	const isChecked = (itemValue: number) => {
-		return selectedSpaces.includes(itemValue);
-	};
-
-	const _handleCheckboxChange = (itemValue: any) => {
-		setSelectedSpaces((prevSelectedSpaces: number[]) => {
-			if (isChecked(itemValue)) {
-				return prevSelectedSpaces.filter((id) => id !== itemValue);
-			}
-			else {
-				return [...prevSelectedSpaces, itemValue];
-			}
-		});
-	};
-
 	return (
 		<div className="categorization-spaces">
 			<label htmlFor="multiSelect">
@@ -187,24 +169,8 @@ export default function CategorizationSpaces({
 							textValue={item.label}
 						>
 							<div className="autofit-row autofit-row-center">
-								<div className="autofit-col">
-									<ClayCheckbox
-										aria-label={item.label}
-										checked={isChecked(item.value)}
-										onChange={() => {
-											_handleCheckboxChange(item.value);
-										}}
-									/>
-								</div>
-
 								<span className="align-items-center d-flex space-renderer-sticker">
-									<SpaceSticker
-										displayType={
-											item.displayType as LogoColor
-										}
-										name={item.label}
-										size="sm"
-									/>
+									<SpaceSticker name={item.label} />
 								</span>
 							</div>
 						</ClayMultiSelect.Item>

@@ -160,7 +160,6 @@ export default function CreateTagsModalContent({
 
 				<CategorizationSpaces
 					checkboxText="tag"
-					selectedSpaces={selectedSpaces}
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceInputError={setSpaceInputError}
 					spaceInputError={spaceInputError}

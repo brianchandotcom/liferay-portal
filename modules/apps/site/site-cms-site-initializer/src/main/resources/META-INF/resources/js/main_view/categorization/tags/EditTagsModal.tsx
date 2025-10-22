@@ -172,7 +172,6 @@ export default function EditTagsModalContent({
 				<CategorizationSpaces
 					assetLibraries={assetLibraries}
 					checkboxText="tag"
-					selectedSpaces={selectedSpaces}
 					setSelectedSpaces={setSelectedSpaces}
 					setSpaceChange={setSpaceChange}
 					setSpaceInputError={setSpaceInputError}

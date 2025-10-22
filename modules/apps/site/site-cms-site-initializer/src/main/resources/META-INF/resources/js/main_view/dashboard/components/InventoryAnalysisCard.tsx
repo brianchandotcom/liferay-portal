@@ -33,6 +33,7 @@ export type InventoryAnalysisDataType = {
 	page: number;
 	pageSize: number;
 	totalCount: number;
+	totalItems: number;
 };
 
 export const initialFilters = {

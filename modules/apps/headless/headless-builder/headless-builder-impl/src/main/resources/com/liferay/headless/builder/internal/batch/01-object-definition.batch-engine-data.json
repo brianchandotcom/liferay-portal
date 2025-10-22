@@ -15,6 +15,7 @@
 		{
 			"enableCategorization": true,
 			"externalReferenceCode": "L_API_SORT",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Sort"
 			},
@@ -60,6 +61,7 @@
 		{
 			"enableCategorization": true,
 			"externalReferenceCode": "L_API_FILTER",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Filter"
 			},
@@ -105,6 +107,7 @@
 		{
 			"enableCategorization": true,
 			"externalReferenceCode": "L_API_ENDPOINT",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Endpoint"
 			},
@@ -288,6 +291,7 @@
 			"enableCategorization": true,
 			"enableComments": false,
 			"externalReferenceCode": "L_API_PROPERTY",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Property"
 			},
@@ -405,6 +409,7 @@
 		{
 			"enableCategorization": true,
 			"externalReferenceCode": "L_API_SCHEMA",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Schema"
 			},
@@ -522,6 +527,7 @@
 		{
 			"enableCategorization": true,
 			"externalReferenceCode": "L_API_APPLICATION",
+			"friendlyURLSeparator": "l",
 			"label": {
 				"en_US": "API Application"
 			},

@@ -152,7 +152,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		String customFieldValue = RandomTestUtil.randomString();
 
 		PlacedOrder placedOrder1 = _addPlacedOrder(
-			randomPlacedOrder(), expandoColumn.getName(), customFieldValue);
+			expandoColumn.getName(), customFieldValue, randomPlacedOrder());
 
 		Page<PlacedOrder> page = placedOrderResource.getChannelPlacedOrdersPage(
 			_commerceChannel.getCommerceChannelId(), null,
@@ -424,8 +424,8 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	}
 
 	private PlacedOrder _addPlacedOrder(
-			PlacedOrder placedOrder, String expandoAttributeName,
-			String expandoAttributeValue)
+			String expandoAttributeName,
+			String expandoAttributeValue, PlacedOrder placedOrder)
 		throws Exception {
 
 		DateConfig orderDateConfig = DateConfig.toDisplayDateConfig(

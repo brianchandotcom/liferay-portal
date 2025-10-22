@@ -155,7 +155,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "Clob",
 					"unique": false
 				},
@@ -236,7 +236,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "Clob",
 					"unique": false
 				},
@@ -273,7 +273,7 @@
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "Long",
 					"unique": false
 				},
@@ -294,7 +294,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				},
@@ -866,7 +866,7 @@
 					"readOnlyConditionExpression": "",
 					"required": false,
 					"state": false,
-					"system": false,
+					"system": true,
 					"type": "String",
 					"unique": false
 				}

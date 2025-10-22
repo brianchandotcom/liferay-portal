@@ -424,8 +424,8 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 	}
 
 	private PlacedOrder _addPlacedOrder(
-			PlacedOrder placedOrder, String expandoColumn,
-			String customFieldValue)
+			PlacedOrder placedOrder, String expandoAttributeName,
+			String expandoAttributeValue)
 		throws Exception {
 
 		DateConfig orderDateConfig = DateConfig.toDisplayDateConfig(
@@ -450,7 +450,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				BigDecimal.ZERO, BigDecimal.ZERO, _serviceContext);
 
 		_serviceContext.setExpandoBridgeAttributes(
-			Collections.singletonMap(expandoColumn, customFieldValue));
+			Collections.singletonMap(expandoAttributeName, expandoAttributeValue));
 
 		commerceOrder.setRequestedDeliveryDate(
 			placedOrder.getRequestedDeliveryDate());

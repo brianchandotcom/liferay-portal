@@ -48,6 +48,20 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-sm-12 form-group">
+		<div class="form-group__inner">
+			<aui:input disabled="<%= !cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" id='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' label="cookie-consent-renewal-period" max="12" min="1" name='<%= liferayPortletResponse.getNamespace() + "consentRenewalPeriod" %>' required="<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>" type="number" useNamespace="<%= false %>" value="<%= (cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() == 0) ? 12 : cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingConsentRenewalPeriod() %>" />
+
+			<div aria-hidden="true" class="form-feedback-group">
+				<div class="form-text text-weight-normal">
+					<liferay-ui:message key="cookie-consent-renewal-period-help" />
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <liferay-frontend:component
 	module="{ConfigurationFormEventHandler} from cookies-banner-web"
 />

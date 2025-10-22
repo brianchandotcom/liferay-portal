@@ -43,6 +43,14 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 		_unmapPid(pid);
 	}
 
+	public int getCompanyConsentRenewalPeriod(long companyId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getCompanyCookiesPreferenceHandlingConfiguration(companyId);
+
+		return cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
+	}
+
 	public boolean getCompanyEnabled(long companyId) {
 		CookiesPreferenceHandlingConfiguration
 			cookiesPreferenceHandlingConfiguration =
@@ -57,6 +65,14 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 				_getCompanyCookiesPreferenceHandlingConfiguration(companyId);
 
 		return cookiesPreferenceHandlingConfiguration.explicitConsentMode();
+	}
+
+	public int getGroupConsentRenewalPeriod(long companyId) {
+		CookiesPreferenceHandlingConfiguration
+			cookiesPreferenceHandlingConfiguration =
+				_getGroupCookiesPreferenceHandlingConfiguration(companyId);
+
+		return cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
 	}
 
 	public boolean getGroupEnabled(long companyId) {
@@ -79,6 +95,11 @@ public class CookiesPreferenceHandlingManagedServiceFactory
 	public String getName() {
 		return "com.liferay.cookies.configuration." +
 			"CookiesPreferenceHandlingConfiguration.scoped";
+	}
+
+	public int getSystemConsentRenewalPeriod() {
+		return _systemCookiesPreferenceHandlingConfiguration.
+			consentRenewalPeriod();
 	}
 
 	public boolean getSystemEnabled() {

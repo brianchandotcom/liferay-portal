@@ -11,17 +11,27 @@ export default function ({namespace}) {
 		'change',
 		'input[type="checkbox"]',
 		(event) => {
+			const consentRenewalPeriod = document.querySelector(
+				`input[type='number'][name='${namespace}consentRenewalPeriod']`
+			);
+
 			const explicitConsentMode = document.querySelector(
 				`input[type='checkbox'][name='${namespace}explicitConsentMode']`
 			);
 
 			if (event.delegateTarget.id === `${namespace}enabled`) {
 				if (event.delegateTarget.checked) {
+					consentRenewalPeriod.removeAttribute('disabled');
+					consentRenewalPeriod.required = true;
+
 					explicitConsentMode.removeAttribute('disabled');
 				}
 				else {
-					explicitConsentMode.checked = true;
+					consentRenewalPeriod.required = false;
+					consentRenewalPeriod.setAttribute('disabled', '');
+					consentRenewalPeriod.value = 12;
 
+					explicitConsentMode.checked = true;
 					explicitConsentMode.setAttribute('disabled', '');
 				}
 			}

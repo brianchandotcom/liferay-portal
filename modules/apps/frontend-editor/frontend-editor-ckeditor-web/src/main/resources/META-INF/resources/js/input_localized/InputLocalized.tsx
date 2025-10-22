@@ -22,6 +22,8 @@ interface IInputLocalizedProps extends Translations {
 	componentId: string;
 	contents: string;
 	editorConfig?: LiferayEditorConfig;
+	fieldPrefix?: string;
+	fieldPrefixSeparator?: string;
 	languagesDropdownVisible: boolean;
 	name: string;
 	onBlur?: (event: EventInfo, editor: TEditor) => void;
@@ -42,6 +44,8 @@ function InputLocalized({
 	componentId,
 	defaultLanguageId,
 	editorConfig,
+	fieldPrefix = '',
+	fieldPrefixSeparator = '',
 	languagesDropdownVisible,
 	name,
 	onBlur,
@@ -400,7 +404,7 @@ function InputLocalized({
 					data-languageid={languageId}
 					id={`${portletNamespace}${name}_${languageId}`}
 					key={languageId}
-					name={`${portletNamespace}${name}_${languageId}`}
+					name={`${portletNamespace}${fieldPrefix}${fieldPrefixSeparator}${name}_${languageId}${fieldPrefixSeparator}`}
 					type="hidden"
 					value={
 						translations?.[languageId as Liferay.Language.Locale]

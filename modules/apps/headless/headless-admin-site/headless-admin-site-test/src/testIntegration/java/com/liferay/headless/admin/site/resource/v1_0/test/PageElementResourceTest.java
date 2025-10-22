@@ -9,6 +9,8 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
@@ -49,6 +51,7 @@ import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -352,14 +355,23 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
 				null, false, false, 6, 12,
 				GridPageElementDefinition.VerticalAlignment.BOTTOM));
+
+		String draftWidgetInstanceExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		String widgetInstanceId = RandomTestUtil.randomString();
+
+		_addFragmentEntryLink(
+			draftWidgetInstanceExternalReferenceCode, layout, widgetInstanceId);
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(),
+				draftWidgetInstanceExternalReferenceCode, false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 				_getWidgetConfig(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString(),
-				JournalContentPortletKeys.JOURNAL_CONTENT,
+				widgetInstanceId, JournalContentPortletKeys.JOURNAL_CONTENT,
 				_getWidgetPermissions()));
 	}
 
@@ -467,26 +479,33 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(), null, false,
 				RandomTestUtil.randomString(), externalReferenceCode,
 				_getWidgetConfig(), widgetInstanceExternalReferenceCode,
 				RandomTestUtil.randomString(),
 				JournalContentPortletKeys.JOURNAL_CONTENT,
 				_getWidgetPermissions()));
 
+		String draftWidgetInstanceExternalReferenceCode =
+			RandomTestUtil.randomString();
+
 		String widgetInstanceId = RandomTestUtil.randomString();
+
+		_addFragmentEntryLink(
+			draftWidgetInstanceExternalReferenceCode, layout, widgetInstanceId);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
-				RandomTestUtil.randomString(), false,
+				RandomTestUtil.randomString(),
+				draftWidgetInstanceExternalReferenceCode, false,
 				RandomTestUtil.randomString(), externalReferenceCode,
 				_getWidgetConfig(), widgetInstanceExternalReferenceCode,
 				widgetInstanceId, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				_getWidgetPermissions()));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
-				null, null, false, RandomTestUtil.randomString(),
+				null, null, null, false, RandomTestUtil.randomString(),
 				externalReferenceCode, new HashMap<>(),
 				widgetInstanceExternalReferenceCode, widgetInstanceId,
 				AssetPublisherPortletKeys.ASSET_PUBLISHER,
@@ -624,6 +643,19 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				_draftLayout.getExternalReferenceCode(),
 				segmentsExperience.getExternalReferenceCode(), pageElement);
+	}
+
+	private void _addFragmentEntryLink(
+			String externalReferenceCode, Layout layout,
+			String widgetInstanceId)
+		throws Exception {
+
+		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
+			externalReferenceCode, TestPropsValues.getUserId(),
+			testGroup.getGroupId(), null, null, null, 0, layout.getPlid(),
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, widgetInstanceId, 0, null,
+			FragmentConstants.TYPE_PORTLET, new ServiceContext());
 	}
 
 	private String[] _getActionIds(String roleName) {
@@ -1104,8 +1136,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private PageElement _getWidgetPageElement(
-			String[] cssClasses, String customCss, boolean indexed, String name,
-			String pageElementExternalReferenceCode,
+			String[] cssClasses, String customCss,
+			String draftWidgetInstanceExternalReferenceCode, boolean indexed,
+			String name, String pageElementExternalReferenceCode,
 			Map<String, Object> widgetConfig,
 			String widgetInstanceExternalReferenceCode, String widgetInstanceId,
 			String widgetName, WidgetPermission[] widgetPermissions)
@@ -1117,6 +1150,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		widgetInstancePageElementDefinition.setCssClasses(cssClasses);
 		widgetInstancePageElementDefinition.setCustomCSS(customCss);
+		widgetInstancePageElementDefinition.
+			setDraftWidgetInstanceExternalReferenceCode(
+				draftWidgetInstanceExternalReferenceCode);
 		widgetInstancePageElementDefinition.setIndexed(indexed);
 		widgetInstancePageElementDefinition.setName(name);
 		widgetInstancePageElementDefinition.setType(

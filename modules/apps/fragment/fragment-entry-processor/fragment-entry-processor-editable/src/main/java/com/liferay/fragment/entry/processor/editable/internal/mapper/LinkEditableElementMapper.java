@@ -7,7 +7,7 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -208,7 +208,7 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 			return StringPool.POUND;
 		}
 
-		Layout layout = LayoutReferenceResolverUtil.resolve(
+		Layout layout = _layoutReferenceResolver.resolve(
 			themeDisplay.getCompanyId(), layoutJSONObject,
 			themeDisplay.getScopeGroupId());
 
@@ -259,6 +259,9 @@ public class LinkEditableElementMapper implements EditableElementMapper {
 
 	@Reference
 	private FragmentEntryProcessorHelper _fragmentEntryProcessorHelper;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 	@Reference
 	private Portal _portal;

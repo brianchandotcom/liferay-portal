@@ -7,7 +7,7 @@ package com.liferay.fragment.internal.util.configuration;
 
 import com.liferay.fragment.constants.FragmentConfigurationFieldDataType;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
-import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.fragment.util.configuration.FragmentEntryMenuDisplayConfiguration;
@@ -802,7 +802,7 @@ public class FragmentEntryConfigurationParserImpl
 			return jsonObject.getString("href");
 		}
 
-		Layout layout = LayoutReferenceResolverUtil.resolve(
+		Layout layout = _layoutReferenceResolver.resolve(
 			themeDisplay.getCompanyId(), layoutJSONObject,
 			themeDisplay.getScopeGroupId());
 
@@ -913,6 +913,9 @@ public class FragmentEntryConfigurationParserImpl
 
 	@Reference
 	private LayoutListRetrieverRegistry _layoutListRetrieverRegistry;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 	@Reference
 	private LayoutSetLocalService _layoutSetLocalService;

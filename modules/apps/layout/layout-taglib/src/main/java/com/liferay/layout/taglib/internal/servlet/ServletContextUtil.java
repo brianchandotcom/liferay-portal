@@ -6,6 +6,7 @@
 package com.liferay.layout.taglib.internal.servlet;
 
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.helper.FragmentEntryLinkHelper;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
@@ -95,6 +96,10 @@ public class ServletContextUtil {
 		return _layoutListRetrieverRegistrySnapshot.get();
 	}
 
+	public static LayoutReferenceResolver getLayoutReferenceResolverRegistry() {
+		return _layoutReferenceResolverRegistrySnapshot.get();
+	}
+
 	public static LayoutsTree getLayoutsTree() {
 		return _layoutsTreeSnapshot.get();
 	}
@@ -168,6 +173,9 @@ public class ServletContextUtil {
 	private static final Snapshot<LayoutListRetrieverRegistry>
 		_layoutListRetrieverRegistrySnapshot = new Snapshot<>(
 			ServletContextUtil.class, LayoutListRetrieverRegistry.class);
+	private static final Snapshot<LayoutReferenceResolver>
+		_layoutReferenceResolverRegistrySnapshot = new Snapshot<>(
+			ServletContextUtil.class, LayoutReferenceResolver.class);
 	private static final Snapshot<LayoutsTree> _layoutsTreeSnapshot =
 		new Snapshot<>(ServletContextUtil.class, LayoutsTree.class);
 	private static final Snapshot<LayoutStructureProvider>

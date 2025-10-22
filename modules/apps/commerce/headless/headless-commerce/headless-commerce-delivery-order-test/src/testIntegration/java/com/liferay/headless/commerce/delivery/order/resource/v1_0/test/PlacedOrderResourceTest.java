@@ -423,47 +423,6 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		return _addPlacedOrder(commerceOrder);
 	}
 
-	private PlacedOrder _addPlacedOrder(
-			String expandoAttributeName,
-			String expandoAttributeValue, PlacedOrder placedOrder)
-		throws Exception {
-
-		DateConfig orderDateConfig = DateConfig.toDisplayDateConfig(
-			placedOrder.getCreateDate(), _user.getTimeZone());
-
-		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.addCommerceOrder(
-				_user.getUserId(), _commerceChannel.getGroupId(),
-				placedOrder.getPlacedOrderBillingAddressId(),
-				placedOrder.getAccountId(), _commerceCurrency.getCode(),
-				placedOrder.getOrderTypeId(), 0,
-				placedOrder.getPlacedOrderShippingAddressId(),
-				placedOrder.getPaymentMethod(), placedOrder.getName(),
-				orderDateConfig.getMonth(), orderDateConfig.getDay(),
-				orderDateConfig.getYear(), orderDateConfig.getHour(),
-				orderDateConfig.getMinute(),
-				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
-				placedOrder.getPaymentStatus(),
-				placedOrder.getPurchaseOrderNumber(), BigDecimal.ZERO,
-				placedOrder.getShippingOption(), BigDecimal.ZERO,
-				BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
-				BigDecimal.ZERO, BigDecimal.ZERO, _serviceContext);
-
-		_serviceContext.setExpandoBridgeAttributes(
-			Collections.singletonMap(expandoAttributeName, expandoAttributeValue));
-
-		commerceOrder.setRequestedDeliveryDate(
-			placedOrder.getRequestedDeliveryDate());
-		commerceOrder.setExpandoBridgeAttributes(_serviceContext);
-
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
-
-		_commerceOrders.add(commerceOrder);
-
-		return _addPlacedOrder(commerceOrder);
-	}
-
 	private PlacedOrder _addPlacedOrder(CommerceOrder commerceOrder)
 		throws Exception {
 
@@ -504,6 +463,48 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 				valid = true;
 			}
 		};
+	}
+
+	private PlacedOrder _addPlacedOrder(
+			String expandoAttributeName, String expandoAttributeValue,
+			PlacedOrder placedOrder)
+		throws Exception {
+
+		DateConfig orderDateConfig = DateConfig.toDisplayDateConfig(
+			placedOrder.getCreateDate(), _user.getTimeZone());
+
+		CommerceOrder commerceOrder =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				placedOrder.getPlacedOrderBillingAddressId(),
+				placedOrder.getAccountId(), _commerceCurrency.getCode(),
+				placedOrder.getOrderTypeId(), 0,
+				placedOrder.getPlacedOrderShippingAddressId(),
+				placedOrder.getPaymentMethod(), placedOrder.getName(),
+				orderDateConfig.getMonth(), orderDateConfig.getDay(),
+				orderDateConfig.getYear(), orderDateConfig.getHour(),
+				orderDateConfig.getMinute(),
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED,
+				placedOrder.getPaymentStatus(),
+				placedOrder.getPurchaseOrderNumber(), BigDecimal.ZERO,
+				placedOrder.getShippingOption(), BigDecimal.ZERO,
+				BigDecimal.ZERO, BigDecimal.ZERO, BigDecimal.ZERO,
+				BigDecimal.ZERO, BigDecimal.ZERO, _serviceContext);
+
+		_serviceContext.setExpandoBridgeAttributes(
+			Collections.singletonMap(
+				expandoAttributeName, expandoAttributeValue));
+
+		commerceOrder.setRequestedDeliveryDate(
+			placedOrder.getRequestedDeliveryDate());
+		commerceOrder.setExpandoBridgeAttributes(_serviceContext);
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		_commerceOrders.add(commerceOrder);
+
+		return _addPlacedOrder(commerceOrder);
 	}
 
 	private PlacedOrderAddress _addPlacedOrderAddress() throws Exception {

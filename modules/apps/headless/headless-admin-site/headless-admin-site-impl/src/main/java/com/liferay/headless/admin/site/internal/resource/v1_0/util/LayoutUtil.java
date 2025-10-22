@@ -110,7 +110,7 @@ public class LayoutUtil {
 				parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type,
 				typeSettingsUnicodeProperties.toString(), hidden, system,
-				friendlyURLMap, 0L, serviceContext);
+				friendlyURLMap, null, serviceContext);
 
 			return LayoutLocalServiceUtil.updateStatus(
 				serviceContext.getUserId(), layout.getPlid(), status,
@@ -166,7 +166,7 @@ public class LayoutUtil {
 				Boolean.FALSE.toString());
 		}
 
-		long masterLayoutPlid = 0;
+		String masterLayoutPageTemplateEntryERC = null;
 
 		if ((settings != null) &&
 			(settings.getMasterPageItemExternalReference() != null)) {
@@ -196,10 +196,14 @@ public class LayoutUtil {
 							groupId);
 
 				if (layoutPageTemplateEntry == null) {
-					throw new UnsupportedOperationException();
+					LogUtil.logOptionalReference(
+						LayoutPageTemplateEntry.class,
+						itemExternalReference.getExternalReferenceCode(),
+						groupId);
 				}
 
-				masterLayoutPlid = layoutPageTemplateEntry.getPlid();
+				masterLayoutPageTemplateEntryERC =
+					itemExternalReference.getExternalReferenceCode();
 			}
 		}
 
@@ -242,7 +246,7 @@ public class LayoutUtil {
 			serviceContext.getUserId(), groupId, privateLayout, parentLayoutId,
 			0, 0, nameMap, titleMap, descriptionMap, keywordsMap, robotsMap,
 			type, typeSettingsUnicodeProperties.toString(), hidden, system,
-			friendlyURLMap, masterLayoutPlid, serviceContext);
+			friendlyURLMap, masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
@@ -332,7 +336,7 @@ public class LayoutUtil {
 			externalReferenceCode, groupId, false, parentLayoutId, nameMap,
 			titleMap, descriptionMap, keywordsMap, robotsMap,
 			LayoutConstants.TYPE_PORTLET, typeSettings, hiddenFromNavigation,
-			friendlyURLMap, 0, serviceContext);
+			friendlyURLMap, null, serviceContext);
 
 		layout = updateLayout(
 			cetManager, null, infoItemServiceRegistry, layout,
@@ -431,8 +435,9 @@ public class LayoutUtil {
 			return _updateLayout(
 				layout, nameMap, titleMap, descriptionMap, keywordsMap,
 				robotsMap, layout.getStyleBookEntryERC(),
-				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
-				friendlyURLMap, serviceContext);
+				layout.getFaviconFileEntryId(),
+				layout.getMasterLayoutPageTemplateEntryERC(), friendlyURLMap,
+				serviceContext);
 		}
 
 		if (pageSpecifications.length != 2) {
@@ -680,12 +685,12 @@ public class LayoutUtil {
 		return dlFileEntry.getFileEntryId();
 	}
 
-	private static long _getMasterLayoutPlid(
+	private static String _getMasterLayoutPageTemplateEntryERC(
 			long groupId, Layout layout, Settings settings)
 		throws Exception {
 
 		if (settings == null) {
-			return 0;
+			return null;
 		}
 
 		ItemExternalReference itemExternalReference =
@@ -695,7 +700,7 @@ public class LayoutUtil {
 			Validator.isNull(
 				itemExternalReference.getExternalReferenceCode())) {
 
-			return 0;
+			return null;
 		}
 
 		if (itemExternalReference.getScope() != null) {
@@ -719,7 +724,7 @@ public class LayoutUtil {
 				fetchLayoutPageTemplateEntryByExternalReferenceCode(
 					itemExternalReference.getExternalReferenceCode(), groupId);
 
-		if ((layoutPageTemplateEntry == null) ||
+		if ((layoutPageTemplateEntry != null) &&
 			!Objects.equals(
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 				layoutPageTemplateEntry.getType())) {
@@ -727,7 +732,13 @@ public class LayoutUtil {
 			throw new UnsupportedOperationException();
 		}
 
-		return layoutPageTemplateEntry.getPlid();
+		if (layoutPageTemplateEntry == null) {
+			LogUtil.logOptionalReference(
+				LayoutPageTemplateEntry.class,
+				itemExternalReference.getExternalReferenceCode(), groupId);
+		}
+
+		return itemExternalReference.getExternalReferenceCode();
 	}
 
 	private static String _getStyleBookEntryERC(
@@ -961,7 +972,7 @@ public class LayoutUtil {
 			_getStyleBookEntryERC(
 				layout.getCompanyId(), layout.getGroupId(), settings),
 			_getFaviconFileEntryId(settings, serviceContext),
-			_getMasterLayoutPlid(
+			_getMasterLayoutPageTemplateEntryERC(
 				serviceContext.getScopeGroupId(), layout, settings),
 			friendlyURLMap, serviceContext);
 	}
@@ -971,8 +982,8 @@ public class LayoutUtil {
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
 			Map<Locale, String> keywordsMap, Map<Locale, String> robotsMap,
 			String styleBookEntryERC, long faviconFileEntryId,
-			long masterLayoutPlid, Map<Locale, String> friendlyURLMap,
-			ServiceContext serviceContext)
+			String masterLayoutPageTemplateEntryERC,
+			Map<Locale, String> friendlyURLMap, ServiceContext serviceContext)
 		throws Exception {
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeUtility()) {
@@ -990,7 +1001,8 @@ public class LayoutUtil {
 			GetterUtil.getBoolean(
 				serviceContext.getAttribute("hidden"), layout.isHidden()),
 			friendlyURLMap, layout.getIconImage(), null, styleBookEntryERC,
-			faviconFileEntryId, masterLayoutPlid, serviceContext);
+			faviconFileEntryId, masterLayoutPageTemplateEntryERC,
+			serviceContext);
 	}
 
 	private static Layout _updateLookAndFeel(Layout layout, Settings settings)

@@ -214,9 +214,7 @@ public class DepotAssetRendererFactoryWrapperTest {
 		}
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetAssetRendererByDepotEntryType() throws Exception {
 		AssetRenderer<Object> assetRenderer = Mockito.mock(AssetRenderer.class);

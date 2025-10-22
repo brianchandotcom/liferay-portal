@@ -160,7 +160,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			externalReferenceCode,
 			layoutStructureItemImporterContext.getUserId(),
-			layoutStructureItemImporterContext.getGroupId(), 0, 0,
+			layoutStructureItemImporterContext.getGroupId(), null, null, null,
 			layoutStructureItemImporterContext.getSegmentsExperienceId(),
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
@@ -334,7 +334,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
 			layoutStructureItemImporterContext.getUserId(),
 			fragmentEntryLink.getFragmentEntryLinkId(),
-			editableValuesJSONObject.toString());
+			editableValuesJSONObject.toString(), true);
 	}
 
 	private static final ServiceTracker

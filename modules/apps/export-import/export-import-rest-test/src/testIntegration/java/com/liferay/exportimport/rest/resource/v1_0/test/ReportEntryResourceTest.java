@@ -69,14 +69,14 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 
 	@Override
 	@Test
-	public void testGetImportProcessErrorsPage() throws Exception {
-		super.testGetImportProcessErrorsPage();
+	public void testGetImportProcessReportEntriesPage() throws Exception {
+		super.testGetImportProcessReportEntriesPage();
 
-		_testGetImportProcessErrorsPageWithEmptyExportImportReportEntry();
+		_testGetImportProcessReportEntriesPageWithEmptyExportImportReportEntry();
 	}
 
 	@Override
-	protected ReportEntry testGetImportProcessErrorsPage_addReportEntry(
+	protected ReportEntry testGetImportProcessReportEntriesPage_addReportEntry(
 			Long importProcessId, ReportEntry reportEntry)
 		throws Exception {
 
@@ -84,7 +84,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 	}
 
 	@Override
-	protected Long testGetImportProcessErrorsPage_getImportProcessId()
+	protected Long testGetImportProcessReportEntriesPage_getImportProcessId()
 		throws Exception {
 
 		return _backgroundTask.getBackgroundTaskId();
@@ -155,12 +155,13 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		};
 	}
 
-	private void _testGetImportProcessErrorsPageWithEmptyExportImportReportEntry()
+	private void _testGetImportProcessReportEntriesPageWithEmptyExportImportReportEntry()
 		throws Exception {
 
-		Page<ReportEntry> page = reportEntryResource.getImportProcessErrorsPage(
-			testGetImportProcessErrorsPage_getImportProcessId(), null, null,
-			Pagination.of(1, 10), null);
+		Page<ReportEntry> page =
+			reportEntryResource.getImportProcessReportEntriesPage(
+				testGetImportProcessReportEntriesPage_getImportProcessId(),
+				null, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -174,9 +175,9 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 
 		_addReportEntry(reportEntry);
 
-		page = reportEntryResource.getImportProcessErrorsPage(
-			testGetImportProcessErrorsPage_getImportProcessId(), null, null,
-			Pagination.of(1, 10), null);
+		page = reportEntryResource.getImportProcessReportEntriesPage(
+			testGetImportProcessReportEntriesPage_getImportProcessId(), null,
+			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 	}

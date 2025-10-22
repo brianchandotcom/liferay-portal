@@ -75,7 +75,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 	}
 
 	@Override
-	public Page<ReportEntry> getImportProcessErrorsPage(
+	public Page<ReportEntry> getImportProcessReportEntriesPage(
 			Long importProcessId, String search, Filter filter,
 			Pagination pagination, Sort[] sorts)
 		throws Exception {

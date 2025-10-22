@@ -131,6 +131,7 @@ const mockData: InventoryAnalysisDataType = {
 	page: 1,
 	pageSize: 20,
 	totalCount: 4050,
+	totalItems: 4050,
 };
 
 const deltas = [{label: 20}, {label: 40}, {label: 60}];

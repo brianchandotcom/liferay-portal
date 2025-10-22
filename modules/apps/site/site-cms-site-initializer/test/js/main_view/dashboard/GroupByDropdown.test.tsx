@@ -67,6 +67,7 @@ describe('[CMS Dashboard] Components: GroupByDropdown - All Options', () => {
 		page: 1,
 		pageSize: 20,
 		totalCount: 30,
+		totalItems: 30,
 	};
 
 	test.each(structureTypes)(

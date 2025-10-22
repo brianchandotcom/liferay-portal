@@ -10,15 +10,9 @@
 <aui:input name="preferences--metadataFields--" type="hidden" />
 
 <%
-List<KeyValuePair> currentMetadataFields = new ArrayList<>();
+List<KeyValuePair> availableMetadataFields = new ArrayList<>();
 
 String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
-for (String metadataField : metadataFields) {
-	currentMetadataFields.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
-}
-
-List<KeyValuePair> availableMetadataFields = new ArrayList<>();
 
 String[] allMetadataFields = {"author", "categories", "create-date", "expiration-date", "modified-date", "priority", "publish-date", "tags", "view-count"};
 
@@ -29,6 +23,12 @@ for (String metadataField : allMetadataFields) {
 }
 
 availableMetadataFields = ListUtil.sort(availableMetadataFields, new KeyValuePairComparator(false, true));
+
+List<KeyValuePair> currentMetadataFields = new ArrayList<>();
+
+for (String metadataField : metadataFields) {
+	currentMetadataFields.add(new KeyValuePair(metadataField, LanguageUtil.get(request, metadataField)));
+}
 %>
 
 <liferay-ui:input-move-boxes

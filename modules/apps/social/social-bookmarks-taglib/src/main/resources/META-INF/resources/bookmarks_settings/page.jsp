@@ -17,16 +17,6 @@ if (Validator.isNull(displayStyle)) {
 	displayStyle = displayStyles[0];
 }
 
-List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
-
-for (int i = 0; i < types.length; i++) {
-	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
-
-	if (socialBookmark != null) {
-		currentSocialBookmarkTypes.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
-	}
-}
-
 List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
@@ -39,6 +29,16 @@ for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
 }
 
 availableSocialBookmarkTypes = ListUtil.sort(availableSocialBookmarkTypes, new KeyValuePairComparator(false, true));
+
+List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
+
+for (int i = 0; i < types.length; i++) {
+	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+
+	if (socialBookmark != null) {
+		currentSocialBookmarkTypes.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
+	}
+}
 %>
 
 <aui:input name="preferences--socialBookmarksTypes--" type="hidden" value="<%= StringUtil.merge(types) %>" />

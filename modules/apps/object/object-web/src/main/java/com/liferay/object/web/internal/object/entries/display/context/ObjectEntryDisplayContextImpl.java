@@ -1495,19 +1495,13 @@ public class ObjectEntryDisplayContextImpl
 				ObjectWebKeys.OBJECT_ENTRY_EXTERNAL_REFERENCE_CODE);
 		}
 
-		long groupId = ParamUtil.getLong(
-			_objectRequestHelper.getRequest(),
+		HttpServletRequest httpServletRequest =
+			_objectRequestHelper.getRequest();
+
+		Long groupId = (Long)httpServletRequest.getAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
 
-		if (_readOnly && (groupId == 0)) {
-			HttpServletRequest httpServletRequest =
-				_objectRequestHelper.getRequest();
-
-			groupId = (long)httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
-		}
-
-		if (groupId == 0) {
+		if (groupId == null) {
 			groupId = _getGroupId();
 		}
 

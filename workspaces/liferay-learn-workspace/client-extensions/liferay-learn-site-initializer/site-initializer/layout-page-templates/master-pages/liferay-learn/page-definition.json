@@ -3227,7 +3227,7 @@
 																							"value": {
 																								"href": {
 																									"value_i18n": {
-																										"en_US": "https://liferay.dev/c/portal/login?redirect=https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+																										"en_US": "http://discuss.liferay.com/"
 																									}
 																								}
 																							}

@@ -710,18 +710,20 @@ public class BatchEngineBrokerTest {
 		Assert.assertEquals(
 			expectedCSVRecords.get(0), _toList(actualCSVRecords.get(0)));
 
-		List<String> expectedRecord = expectedCSVRecords.get(1);
+		List<String> expectedCSVRecordStrings = expectedCSVRecords.get(1);
 
 		boolean found = false;
 
 		for (int i = 1; i < actualCSVRecords.size(); i++) {
-			List<String> actualRecord = _toList(actualCSVRecords.get(i));
+			List<String> actualCSVRecordStrings = _toList(
+				actualCSVRecords.get(i));
 
-			if (!actualRecord.contains(externalReferenceCode)) {
+			if (!actualCSVRecordStrings.contains(externalReferenceCode)) {
 				continue;
 			}
 
-			Assert.assertEquals(expectedRecord, actualRecord);
+			Assert.assertEquals(
+				expectedCSVRecordStrings, actualCSVRecordStrings);
 			found = true;
 		}
 

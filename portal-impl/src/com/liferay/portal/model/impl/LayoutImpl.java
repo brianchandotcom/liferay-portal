@@ -6,6 +6,7 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.layout.page.template.kernel.provider.util.LayoutPageTemplateEntryLayoutProviderUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -433,7 +434,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return layoutSet.getCss();
 		}
 
-		Layout masterLayout = _getMasterLayout();
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
 
 		if (masterLayout != null) {
 			return masterLayout.getCssText();
@@ -916,7 +920,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			getTypeSettingsProperties();
 
-		Layout masterLayout = _getMasterLayout();
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
 
 		if (masterLayout != null) {
 			typeSettingsUnicodeProperties =
@@ -1181,7 +1188,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 */
 	@Override
 	public boolean isInheritLookAndFeel() {
-		Layout masterLayout = _getMasterLayout();
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
 
 		if (masterLayout != null) {
 			return masterLayout.isInheritLookAndFeel();
@@ -1639,7 +1649,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return layoutSet.getColorScheme();
 		}
 
-		Layout masterLayout = _getMasterLayout();
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
 
 		if (masterLayout != null) {
 			return ThemeLocalServiceUtil.getColorScheme(
@@ -1740,26 +1753,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 		return layoutTypePortlet;
 	}
 
-	private Layout _getMasterLayout() {
-		if (_masterLayout != null) {
-			return _masterLayout;
-		}
-
-		if (getMasterLayoutPlid() <= 0) {
-			return null;
-		}
-
-		if (getMasterLayoutPlid() == getPlid()) {
-			throw new UnsupportedOperationException(
-				"Master page cannot point to itself");
-		}
-
-		_masterLayout = LayoutLocalServiceUtil.fetchLayout(
-			getMasterLayoutPlid());
-
-		return _masterLayout;
-	}
-
 	private List<PortletPreferences> _getPortletPreferences(long groupId) {
 		List<PortletPreferences> portletPreferences =
 			PortletPreferencesLocalServiceUtil.getPortletPreferences(
@@ -1795,7 +1788,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 			return layoutSet.getTheme();
 		}
 
-		Layout masterLayout = _getMasterLayout();
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
 
 		if (masterLayout != null) {
 			return ThemeLocalServiceUtil.getTheme(
@@ -1906,7 +1902,6 @@ public class LayoutImpl extends LayoutBaseImpl {
 	private String _faviconURL;
 	private LayoutSet _layoutSet;
 	private transient LayoutType _layoutType;
-	private Layout _masterLayout;
 	private Theme _theme;
 	private UnicodeProperties _typeSettingsUnicodeProperties;
 

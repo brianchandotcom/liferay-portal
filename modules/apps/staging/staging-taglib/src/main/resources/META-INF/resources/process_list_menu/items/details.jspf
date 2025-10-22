@@ -16,4 +16,13 @@
 			<liferay-ui:message key="view-details" />
 		</a>
 	</li>
+	<li>
+		<button class="dropdown-item">
+			<liferay-ui:message key="export-errors-report" />
+		</button>
+
+		<react:component
+			module="{ExportErrorsReport} from staging-taglib"
+		/>
+	</li>
 </c:if>

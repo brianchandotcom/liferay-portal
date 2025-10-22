@@ -108,7 +108,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(null, null, null, localizedValues, null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"href",
 					JSONUtil.put(
@@ -127,7 +127,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(null, null, "FileEntry_fileName", null, null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"mappedField", "FileEntry_fileName"
 				).put(
@@ -170,7 +170,7 @@ public class FragmentLinkUtilTest {
 				journalArticleExternalReferenceCode, "JournalArticle_title",
 				null, null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
@@ -236,7 +236,7 @@ public class FragmentLinkUtilTest {
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
@@ -306,7 +306,7 @@ public class FragmentLinkUtilTest {
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
 				null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"layout",
 					JSONUtil.put(
@@ -376,7 +376,7 @@ public class FragmentLinkUtilTest {
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"layout",
 					JSONUtil.put(
@@ -424,7 +424,7 @@ public class FragmentLinkUtilTest {
 				journalArticleExternalReferenceCode, "JournalArticle_title",
 				null, null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
@@ -475,7 +475,7 @@ public class FragmentLinkUtilTest {
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"className", JournalArticle.class.getName()
 				).put(
@@ -517,7 +517,7 @@ public class FragmentLinkUtilTest {
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
 				null),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"layout",
 					JSONUtil.put(
@@ -558,7 +558,7 @@ public class FragmentLinkUtilTest {
 					}
 				}),
 			FragmentLinkUtil.toFragmentLink(
-				_infoItemServiceRegistry,
+				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
 					"layout",
 					JSONUtil.put(
@@ -597,6 +597,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					null, null, null,
 					HashMapBuilder.put(
@@ -621,6 +622,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(null, null, "FileEntry_fileName", null, null),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
@@ -668,6 +670,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
@@ -725,6 +728,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
@@ -812,6 +816,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null, null),
@@ -894,6 +899,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null,
@@ -939,6 +945,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
@@ -981,6 +988,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
@@ -1019,6 +1027,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null, null),
@@ -1055,6 +1064,7 @@ public class FragmentLinkUtilTest {
 				)
 			).toString(),
 			FragmentLinkUtil.toJSONObject(
+				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null,
@@ -1073,12 +1083,6 @@ public class FragmentLinkUtilTest {
 		String externalReferenceCode, long groupId, int type) {
 
 		Group group = Mockito.mock(Group.class);
-
-		Mockito.when(
-			group.getCompanyId()
-		).thenReturn(
-			_COMPANY_ID
-		);
 
 		Mockito.when(
 			group.getExternalReferenceCode()

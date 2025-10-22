@@ -15,7 +15,10 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
+import com.liferay.layout.provider.LayoutStructureProvider;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -208,48 +211,31 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@TestInfo("LPD-67912")
 	public void testFormContainerSuccessMessageWithPage() throws Exception {
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
-
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					group.getGroupId(), layout1.getPlid());
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(layout1.getPlid()));
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructureRel.getData());
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.addFormStyledLayoutStructureItem(
-					layoutStructure.getMainItemId(), 0);
-
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
-		formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
-				"layout",
+				"classNameId", "0"
+			).put(
+				"classTypeId", "0"
+			).put(
+				"successMessage",
 				JSONUtil.put(
-					"groupId", layout2.getGroupId()
-				).put(
-					"layoutId", layout2.getLayoutId()
-				).put(
-					"layoutUuid", layout2.getUuid()
-				).put(
-					"privateLayout", layout2.isPrivateLayout()
-				)));
-
-		layoutPageTemplateStructureRel.setData(layoutStructure.toString());
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				layoutPageTemplateStructureRel);
+					"layout",
+					JSONUtil.put(
+						"groupId", layout2.getGroupId()
+					).put(
+						"layoutId", layout2.getLayoutId()
+					).put(
+						"layoutUuid", layout2.getUuid()
+					).put(
+						"privateLayout", layout2.isPrivateLayout()
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
+			_layoutStructureProvider,
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout1.getPlid()));
 
 		exportImportLayouts(
 			new long[] {layout2.getLayoutId(), layout1.getLayoutId()},
@@ -258,19 +244,18 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout importedLayout1 = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout1.getUuid(), importedGroup.getGroupId(), false);
 
-		LayoutPageTemplateStructure importedLayoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					importedGroup.getGroupId(), importedLayout1.getPlid());
-
-		LayoutStructure importedLayoutStructure = LayoutStructure.of(
-			importedLayoutPageTemplateStructure.
-				getDefaultSegmentsExperienceData());
+		LayoutStructure importedLayoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				importedLayout1.getPlid(),
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(
+						importedLayout1.getPlid()));
 
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
 			importedLayoutStructure.getFormStyledLayoutStructureItems();
 
-		formStyledLayoutStructureItem = formStyledLayoutStructureItems.get(0);
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			formStyledLayoutStructureItems.get(0);
 
 		JSONObject successMessageJSONObject =
 			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
@@ -296,50 +281,34 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
 
-		LayoutPageTemplateStructure layoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					group.getGroupId(), layout1.getPlid());
-
-		LayoutPageTemplateStructureRel layoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(layout1.getPlid()));
-
-		LayoutStructure layoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructureRel.getData());
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.addFormStyledLayoutStructureItem(
-					layoutStructure.getMainItemId(), 0);
-
 		Group guestGroup = _groupLocalService.getGroup(
 			TestPropsValues.getGroupId());
 
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(guestGroup);
 
-		formStyledLayoutStructureItem.setSuccessMessageJSONObject(
+		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
-				"layout",
+				"classNameId", "0"
+			).put(
+				"classTypeId", "0"
+			).put(
+				"successMessage",
 				JSONUtil.put(
-					"groupId", layout2.getGroupId()
-				).put(
-					"layoutId", layout2.getLayoutId()
-				).put(
-					"layoutUuid", layout2.getUuid()
-				).put(
-					"privateLayout", layout2.isPrivateLayout()
-				)));
-
-		layoutPageTemplateStructureRel.setData(layoutStructure.toString());
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				layoutPageTemplateStructureRel);
+					"layout",
+					JSONUtil.put(
+						"groupId", layout2.getGroupId()
+					).put(
+						"layoutId", layout2.getLayoutId()
+					).put(
+						"layoutUuid", layout2.getUuid()
+					).put(
+						"privateLayout", layout2.isPrivateLayout()
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
+			_layoutStructureProvider,
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				layout1.getPlid()));
 
 		exportImportLayouts(
 			new long[] {layout1.getLayoutId()}, getImportParameterMap());
@@ -347,19 +316,17 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			layout1.getUuid(), importedGroup.getGroupId(), false);
 
-		LayoutPageTemplateStructure importedLayoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					importedGroup.getGroupId(), importedLayout.getPlid());
-
-		LayoutStructure importedLayoutStructure = LayoutStructure.of(
-			importedLayoutPageTemplateStructure.
-				getDefaultSegmentsExperienceData());
+		LayoutStructure importedLayoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				importedLayout.getPlid(),
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
 
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
 			importedLayoutStructure.getFormStyledLayoutStructureItems();
 
-		formStyledLayoutStructureItem = formStyledLayoutStructureItems.get(0);
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			formStyledLayoutStructureItems.get(0);
 
 		JSONObject successMessageJSONObject =
 			formStyledLayoutStructureItem.getSuccessMessageJSONObject();
@@ -397,6 +364,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 	@Inject
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	@Inject
+	private LayoutStructureProvider _layoutStructureProvider;
 
 	@Inject
 	private Portal _portal;

@@ -9,7 +9,6 @@ export class ApplicationPage {
 	readonly addEndpointButton: Locator;
 	readonly addSchemaButton: Locator;
 	readonly applicationTitleTextBox: Locator;
-	readonly cancelButton: Locator;
 	readonly createButton: Locator;
 	readonly endpointConfigurationSchemaSelector: Locator;
 	readonly endpointPathTextBox: Locator;
@@ -26,7 +25,6 @@ export class ApplicationPage {
 		this.applicationTitleTextBox = page.getByRole('textbox', {
 			name: 'Enter title.',
 		});
-		this.cancelButton = page.getByRole('button', {name: 'Cancel'});
 		this.createButton = page.getByRole('button', {name: 'Create'});
 		this.endpointConfigurationSchemaSelector = page.getByLabel(
 			'Response Body Schema',

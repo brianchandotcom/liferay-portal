@@ -8,19 +8,21 @@ import {expect, mergeTests} from '@playwright/test';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {headlessDiscoveryPagesTest} from '../../../fixtures/headlessDiscoveryWebPagesTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {uiElementsPageTest} from '../../../fixtures/uiElementsTest';
 import {headlessBuilderPagesTest} from './fixtures/headlessBuilderPagesTest';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
 	headlessBuilderPagesTest(),
 	headlessDiscoveryPagesTest,
-	loginTest()
+	loginTest(),
+	uiElementsPageTest
 );
 
 test.describe('Headless Builder - API Application', () => {
-	let application;
+	let application: any;
 
-	test.beforeEach(async ({apiHelpers, headlessBuilderPage, page}) => {
+	test.beforeEach(async ({apiHelpers, headlessBuilderPage}) => {
 		application = await apiHelpers.objectEntry.postObjectEntry(
 			{
 				apiApplicationToAPISchemas: [
@@ -42,9 +44,7 @@ test.describe('Headless Builder - API Application', () => {
 
 		apiHelpers.data.push({id: application.id, type: 'apiApplication'});
 
-		await headlessBuilderPage.goto();
-		await headlessBuilderPage.openApplicationActions(application.title);
-		await page.getByRole('menuitem', {name: 'Edit'}).click();
+		await headlessBuilderPage.openApplicationAndEdit(application.title);
 	});
 
 	test('Can get updated title in response after publish', async ({
@@ -76,6 +76,7 @@ test.describe('Headless Builder - API Application', () => {
 	test('Can see cancel and publish buttons enabled after publish application', async ({
 		applicationPage,
 		page,
+		uiElementsPage,
 	}) => {
 		await applicationPage.publishButton.click();
 
@@ -86,7 +87,7 @@ test.describe('Headless Builder - API Application', () => {
 			page.getByText('API application was published')
 		).not.toBeVisible();
 
-		await expect(applicationPage.cancelButton).toBeEnabled();
+		await expect(uiElementsPage.cancelButton).toBeEnabled();
 
 		await expect(applicationPage.publishButton).toBeEnabled();
 	});

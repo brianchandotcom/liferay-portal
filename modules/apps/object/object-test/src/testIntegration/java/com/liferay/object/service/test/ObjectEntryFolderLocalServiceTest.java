@@ -216,9 +216,7 @@ public class ObjectEntryFolderLocalServiceTest {
 				role.getRoleId(), ActionKeys.ADD_ENTRY));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testCopyObjectEntryFolder() throws Exception {
 		Group group1 = GroupTestUtil.addGroup();
@@ -438,9 +436,7 @@ public class ObjectEntryFolderLocalServiceTest {
 			group1.getGroupId(), group2.getGroupId());
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryFolderToTrash() throws Exception {
 		Group group = GroupTestUtil.addGroup();

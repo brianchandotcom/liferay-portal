@@ -8,6 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:label
+	cssClass="c-ml-2 label-inverse-warning"
 	displayType="warning"
 	label='<%= LanguageUtil.get(request, "empty") %>'
 />

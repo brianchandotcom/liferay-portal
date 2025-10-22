@@ -997,6 +997,16 @@ public class LayoutWrapper
 	}
 
 	/**
+	 * Returns the master layout plid of this layout.
+	 *
+	 * @return the master layout plid of this layout
+	 */
+	@Override
+	public long getMasterLayoutPlid() {
+		return model.getMasterLayoutPlid();
+	}
+
+	/**
 	 * Returns the modified date of this layout.
 	 *
 	 * @return the modified date of this layout

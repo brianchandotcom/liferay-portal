@@ -77,7 +77,8 @@ public class LayoutLocalServiceWrapper
 	 To see how the URL is normalized when accessed, see {@link
 	 com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil#normalize(
 	 String)}.
-	 * @param masterLayoutPlid the primary key of the master layout
+	 * @param masterLayoutPageTemplateEntryERC the external reference code of
+	 the master layout page template entry
 	 * @param serviceContext the service context to be applied. Must set the
 	 UUID for the layout. Can set the creation date, modification
 	 date, and expando bridge attributes for the layout. For layouts
@@ -105,14 +106,16 @@ public class LayoutLocalServiceWrapper
 			java.util.Map<java.util.Locale, String> robotsMap, String type,
 			String typeSettings, boolean hidden, boolean system,
 			java.util.Map<java.util.Locale, String> friendlyURLMap,
-			long masterLayoutPlid, ServiceContext serviceContext)
+			String masterLayoutPageTemplateEntryERC,
+			ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _layoutLocalService.addLayout(
 			externalReferenceCode, userId, groupId, privateLayout,
 			parentLayoutId, classNameId, classPK, nameMap, titleMap,
 			descriptionMap, keywordsMap, robotsMap, type, typeSettings, hidden,
-			system, friendlyURLMap, masterLayoutPlid, serviceContext);
+			system, friendlyURLMap, masterLayoutPageTemplateEntryERC,
+			serviceContext);
 	}
 
 	/**

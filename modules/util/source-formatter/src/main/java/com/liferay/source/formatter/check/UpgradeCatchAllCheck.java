@@ -117,10 +117,11 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			UpgradeCatchAllJavaLongLinesCheck longLinesCheck =
 				new UpgradeCatchAllJavaLongLinesCheck();
 
-			if (!StringUtil.equals(
-					content,
-					longLinesCheck.doProcess(
-						fileName + "-before", absolutePath, content))) {
+			String longLinesContent = longLinesCheck.doProcess(
+				fileName + "-before", absolutePath, content);
+
+			if (!StringUtil.equals(content, longLinesContent) &&
+				(getLineCount(content) != getLineCount(longLinesContent))) {
 
 				throw new UpgradeCatchAllException(
 					fileName + " missing 80 max line length rule");
@@ -188,6 +189,12 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 		_testMode = false;
 
 		return content;
+	}
+
+	protected int getLineCount(String content) {
+		String[] lines = content.split("\r\n|\r|\n");
+
+		return lines.length;
 	}
 
 	private static List<String> _getInterpolatedNewParameterNames(

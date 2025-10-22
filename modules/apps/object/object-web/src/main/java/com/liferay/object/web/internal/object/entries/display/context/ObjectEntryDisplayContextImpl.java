@@ -1507,6 +1507,10 @@ public class ObjectEntryDisplayContextImpl
 				ObjectWebKeys.OBJECT_ENTRY_GROUP_ID);
 		}
 
+		if (groupId == 0) {
+			groupId = _getGroupId();
+		}
+
 		ObjectRelationship objectRelationship =
 			_objectRelationshipLocalService.fetchObjectRelationship(
 				ParamUtil.getLong(

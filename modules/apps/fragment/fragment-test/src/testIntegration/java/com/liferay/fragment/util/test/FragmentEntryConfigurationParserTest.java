@@ -8,14 +8,13 @@ package com.liferay.fragment.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -27,13 +26,11 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -47,9 +44,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Rubén Pulido
@@ -100,10 +94,16 @@ public class FragmentEntryConfigurationParserTest {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group1.getGroupId());
 
-		serviceContext.setRequest(
-			_getHttpServletRequest(
+		HttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
 				_companyLocalService.getCompany(group1.getCompanyId()), group1,
-				layout1));
+				layout1);
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAKARTA_PORTLET_RESPONSE,
+			new MockLiferayPortletRenderResponse());
+
+		serviceContext.setRequest(mockHttpServletRequest);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
@@ -190,43 +190,6 @@ public class FragmentEntryConfigurationParserTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
-	}
-
-	private HttpServletRequest _getHttpServletRequest(
-			Company company, Group group, Layout layout)
-		throws Exception {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			JavaConstants.JAKARTA_PORTLET_RESPONSE,
-			new MockLiferayPortletRenderResponse());
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(company);
-		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(LocaleUtil.US));
-		themeDisplay.setLayout(layout);
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		themeDisplay.setLayoutSet(layoutSet);
-		themeDisplay.setLookAndFeel(
-			layoutSet.getTheme(), layoutSet.getColorScheme());
-
-		themeDisplay.setPortalURL(company.getPortalURL(group.getGroupId()));
-		themeDisplay.setRealUser(TestPropsValues.getUser());
-		themeDisplay.setRequest(mockHttpServletRequest);
-		themeDisplay.setResponse(new MockHttpServletResponse());
-		themeDisplay.setScopeGroupId(group.getGroupId());
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		return mockHttpServletRequest;
 	}
 
 	private ResourceBundle _getResourceBundle(String language) {

@@ -1194,7 +1194,7 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setRelationshipType(relationshipType);
 		objectField.setRequired(required);
 
-		_validateRelationshipNameForDBColumnLimit(name, objectDefinition1);
+		_validateRelationshipName(dbColumnName, name);
 
 		objectField = _objectFieldLocalService.updateObjectField(objectField);
 
@@ -2068,20 +2068,20 @@ public class ObjectRelationshipLocalServiceImpl
 		}
 	}
 
-	private void _validateRelationshipNameForDBColumnLimit(String name, ObjectDefinition objectDefinition)
+	private void _validateRelationshipName(String dbColumnName, String name)
 		throws ObjectRelationshipNameException {
 
-		String prefix =
-			ObjectRelationshipConstants.OBJECT_RELATIONSHIP_FIELD_NAME_PREFIX;
-		String pkFieldName = objectDefinition.getPKObjectFieldName();
-
-		int maxLength = 64;
-		int usedLength = prefix.length() + StringPool.UNDERLINE.length() + pkFieldName.length();
-		int availableLength = maxLength - usedLength;
+		int availableLength =
+			_DB_COLUMN_NAME_MAX_LENGTH -
+				(dbColumnName.length() - name.length());
 
 		if (name.length() > availableLength) {
-			throw new ObjectRelationshipNameException.MustBeShorterThanAvailable(
-				availableLength);
+			throw new ObjectRelationshipNameException(
+				StringBundler.concat(
+					"The relationship name must be less than ", availableLength,
+					" characters. Longer object definition names reduce the ",
+					"available characters you can use for the relationship ",
+					"name."));
 		}
 	}
 
@@ -2157,6 +2157,8 @@ public class ObjectRelationshipLocalServiceImpl
 		_validateParameterObjectFieldId(
 			objectDefinition1, objectDefinition2, parameterObjectFieldId, type);
 	}
+
+	private static final int _DB_COLUMN_NAME_MAX_LENGTH = 64;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipLocalServiceImpl.class);

@@ -3,59 +3,62 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import z from 'zod';
+
 import CreateFilters from '../../core/CreateFilters';
 import {
 	FilterSchemaOption,
 	filterSchema as filterSchemas,
 } from '../../schema/filters';
+import zodSchema from '../../schema/zod';
 import {downloadFile} from '../../utils/file';
 import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
 
 class MarketplaceOAuth2 extends MarketplaceSpringBootOAuth2 {
-	async createAccount(accountData: any): Promise<Account> {
+	async createAccount(
+		account: z.infer<typeof zodSchema.accountForm>
+	): Promise<Account> {
 		const formData = new FormData();
 
-		if (accountData.accountImage) {
-			const blob = new Blob([accountData.accountImage]);
-			formData.append('file', blob, accountData.accountImage.name);
+		if (account.accountImage) {
+			const blob = new Blob([account.accountImage]);
+			formData.append('file', blob, account.accountImage.name);
 		}
 
 		const data = {
 			customFields: [
 				{
 					customValue: {
-						data: accountData.emailAddress,
+						data: account.emailAddress,
 					},
 					name: 'Contact Email',
 				},
 			],
-			name: accountData.accountName,
+			name: account.accountName,
 			postalAddresses: [
 				{
-					addressCountry: accountData.billingAddress.country,
-					addressLocality: accountData.billingAddress.city,
-					addressRegion:
-						accountData.billingAddress.regionISOCode ?? '',
-					name: accountData.billingAddress.name,
-					phoneNumber: accountData.billingAddress.phoneNumber,
-					postalCode: accountData.billingAddress.zip,
+					addressCountry: account.billingAddress.country,
+					addressLocality: account.billingAddress.city,
+					addressRegion: account.billingAddress.regionISOCode ?? '',
+					name: account.billingAddress.name,
+					phoneNumber: account.billingAddress.phoneNumber,
+					postalCode: account.billingAddress.zip,
 					primary: true,
-					streetAddressLine1: accountData.billingAddress.street1,
-					streetAddressLine2:
-						accountData.billingAddress.street2 ?? '',
+					streetAddressLine1: account.billingAddress.street1,
+					streetAddressLine2: account.billingAddress.street2 ?? '',
 				},
 			],
-			taxId: accountData.taxNumber,
-			type: accountData.accountType,
+			taxId: account.taxNumber,
+			type: account.accountType,
 		};
 
 		formData.append('account', JSON.stringify(data));
 
-		const account = await this.post<Account>(`/account`, formData, {
+		const newAccount = await this.post<Account>('/account', formData, {
 			earlyReturn: true,
 		});
 
-		return account;
+		return newAccount;
 	}
 
 	async downloadOrderReport(

@@ -103,8 +103,18 @@ components:
                             items:
                                 $ref: "#/components/schemas/CollectionDisplayViewport"
                             type: array
-                        collectionReference:
-                            $ref: "#/components/schemas/CollectionReference"
+                        collectionSettings:
+                            properties:
+                                collectionConfig:
+                                    additionalProperties:
+                                        type: object
+                                    # @review
+                                    description:
+                                        The configuration keys and values of the collection.
+                                    type: object
+                                collectionReference:
+                                    $ref: "#/components/schemas/CollectionReference"
+                            type: object
                         displayAllItems:
                             # @review
                             description:

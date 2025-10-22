@@ -829,6 +829,15 @@ components:
                 A unique reference to a FavIcon of type ItemExternalReference which remains constant across
                 environments.
             type: object
+        FormContainerClassSubtypeReference:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/ClassSubtypeReference"
+                -   $ref: "#/components/schemas/FormContainerReference"
+            description:
+                A unique reference to a FormContainerReference of type FormContainerClassSubtypeReference which remains
+                constant across environments.
+            type: object
         FormContainerConfig:
             # @review
             description:
@@ -836,11 +845,9 @@ components:
             properties:
                 formContainerReference:
                     # @review
+                    $ref: "#/components/schemas/FormContainerReference"
                     description:
                         The form container reference.
-                    oneOf:
-                        -   $ref: "#/components/schemas/ClassSubtypeReference"
-                        -   $ref: "#/components/schemas/ContextReference"
                 formContainerType:
                     enum: [Multistep, Simple]
                     type: string
@@ -851,14 +858,19 @@ components:
                     type: integer
                 successFormContainerSubmissionResult:
                     # @review
+                    $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
                     description:
                         The definition of the result when a form container submission is successful.
-                    oneOf:
-                        -   $ref: "#/components/schemas/MessageFormContainerSubmissionResult"
-                        -   $ref: "#/components/schemas/SitePageFormContainerSubmissionResult"
-                        -   $ref: "#/components/schemas/URLFormContainerSubmissionResult"
-                    type: object
             type: object            
+        FormContainerContextReference:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/ContextReference"
+                -   $ref: "#/components/schemas/FormContainerReference"
+            description:
+                A unique reference to a FormContainerReference of type FormContainerContextReference which remains
+                constant across environments.
+            type: object
         FormContainerPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -877,7 +889,6 @@ components:
                             type: string
                         formContainerConfig:
                             $ref: "#/components/schemas/FormContainerConfig"
-                            type: object
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
@@ -908,6 +919,23 @@ components:
             # @review
             description:
                 The page element definition of a form.
+            type: object
+        FormContainerReference:
+            # @review
+            description:
+                The form container reference.
+            discriminator:
+                mapping:
+                    FormContainerClassSubtypeReference: "#/components/schemas/FormContainerClassSubtypeReference"
+                    FormContainerContextReference: "#/components/schemas/FormContainerContextReference"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        The form container reference. Can be a class subtype reference or a context reference.
+                    enum: [FormContainerClassSubtypeReference, FormContainerContextReference]
+                    type: string
             type: object
         FormStepContainerPageElementDefinition:
             allOf:
@@ -2193,25 +2221,27 @@ components:
                     type: string
         MessageFormContainerSubmissionResult:
             # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        message:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized submission of message type.
+                        messageType:
+                            # @review
+                            description:
+                                The message form submission type (embedded, none).
+                            enum: [Embedded, None]
+                            type: string
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
             description:
                 The definition of a submission result of type message.
-            properties:
-                message:
-                    $ref: "#/components/schemas/FragmentInlineValue"
-                    # @review
-                    description:
-                        The localized submission of message type.
-                messageType:
-                    # @review
-                    description:
-                        The message form submission type (embedded, none).
-                    enum: [Embedded, None]
-                    type: string
-                successNotificationMessage:
-                    $ref: "#/components/schemas/SuccessNotificationMessage"
-                    # @review
-                    description:
-                        The success notification message.
             type: object
         ModulePageElementDefinition:
             allOf:
@@ -3351,19 +3381,21 @@ components:
             type: object
         SitePageFormContainerSubmissionResult:
             # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        itemReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+                            # @review
+                            description:
+                                The localized submission of page type.
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
             description:
                 The definition of a submission result of type page.
-            properties:
-                itemReference:
-                    $ref: "#/components/schemas/ItemExternalReference"
-                    # @review
-                    description:
-                        The localized submission of page type.
-                successNotificationMessage:
-                    $ref: "#/components/schemas/SuccessNotificationMessage"
-                    # @review
-                    description:
-                        The success notification message.
             type: object
         SitePageNavigationSettings:
             allOf:
@@ -3428,6 +3460,24 @@ components:
                     maximum: 1
                     minimum: 0
                     type: number
+            type: object
+        SuccessFormContainerSubmissionResult:
+            # @review
+            description:
+                The form container success form container submission result.
+            discriminator:
+                mapping:
+                    MessageFormContainerSubmissionResult : "#/components/schemas/MessageFormContainerSubmissionResult"
+                    SitePageFormContainerSubmissionResult: "#/components/schemas/SitePageFormContainerSubmissionResult"
+                    URLFormContainerSubmissionResult: "#/components/schemas/URLFormContainerSubmissionResult"
+                propertyName: type
+            properties:
+                type:
+                    # @review
+                    description:
+                        The form container success form container submission result type.
+                    enum: [MessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
+                    type: string
             type: object
         SuccessNotificationMessage:
             # @review
@@ -3514,14 +3564,16 @@ components:
             type: object
         URLFormContainerSubmissionResult:
             # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        url:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized submission of URL type.
             description:
                 The definition of a submission result of type URL.
-            properties:
-                url:
-                    $ref: "#/components/schemas/FragmentInlineValue"
-                    # @review
-                    description:
-                        The localized submission of URL type.
             type: object
         URLFragmentConfigurationFieldValue:
             allOf:

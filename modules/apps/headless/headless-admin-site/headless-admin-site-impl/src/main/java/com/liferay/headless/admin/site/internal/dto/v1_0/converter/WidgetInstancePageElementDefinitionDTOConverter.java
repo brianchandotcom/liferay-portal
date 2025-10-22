@@ -101,8 +101,11 @@ public class WidgetInstancePageElementDefinitionDTOConverter
 			setDraftWidgetInstanceExternalReferenceCode(
 				() -> {
 					FragmentEntryLink originalFragmentEntryLink =
-						_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-							fragmentEntryLink.getOriginalFragmentEntryLinkId());
+						_fragmentEntryLinkLocalService.
+							fetchFragmentEntryLinkByExternalReferenceCode(
+								fragmentEntryLink.
+									getOriginalFragmentEntryLinkERC(),
+								fragmentEntryLink.getGroupId());
 
 					if (originalFragmentEntryLink == null) {
 						return null;

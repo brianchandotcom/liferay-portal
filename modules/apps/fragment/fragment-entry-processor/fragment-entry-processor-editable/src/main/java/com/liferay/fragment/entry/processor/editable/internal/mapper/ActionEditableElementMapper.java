@@ -7,7 +7,7 @@ package com.liferay.fragment.entry.processor.editable.internal.mapper;
 
 import com.liferay.fragment.entry.processor.editable.element.constants.ActionEditableElementConstants;
 import com.liferay.fragment.entry.processor.editable.mapper.EditableElementMapper;
-import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
@@ -247,7 +247,7 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 				return;
 			}
 
-			Layout layout = LayoutReferenceResolverUtil.resolve(
+			Layout layout = _layoutReferenceResolver.resolve(
 				themeDisplay.getCompanyId(), pageJSONObject,
 				themeDisplay.getScopeGroupId());
 
@@ -286,6 +286,9 @@ public class ActionEditableElementMapper implements EditableElementMapper {
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutReferenceResolver _layoutReferenceResolver;
 
 	@Reference
 	private Portal _portal;

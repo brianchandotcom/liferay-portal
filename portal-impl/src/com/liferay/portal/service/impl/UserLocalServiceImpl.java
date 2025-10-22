@@ -1529,18 +1529,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					TransactionInvokerUtil.invoke(
 						_transactionConfig,
 						() -> {
-							Session session = null;
-
-							try {
-								session = userPersistence.openSession();
-
-								session.apply(
-									connection -> _updateLastLogin(
-										connection, deduplicatedUsers));
-							}
-							finally {
-								userPersistence.closeSession(session);
-							}
+							_updateLastLogin(deduplicatedUsers);
 
 							return null;
 						});
@@ -7569,6 +7558,19 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 						UserImpl.class, user.getUserId());
 				}
 			}
+		}
+	}
+
+	private void _updateLastLogin(List<User> users) throws SQLException {
+		Session session = null;
+
+		try {
+			session = userPersistence.openSession();
+
+			session.apply(connection -> _updateLastLogin(connection, users));
+		}
+		finally {
+			userPersistence.closeSession(session);
 		}
 	}
 

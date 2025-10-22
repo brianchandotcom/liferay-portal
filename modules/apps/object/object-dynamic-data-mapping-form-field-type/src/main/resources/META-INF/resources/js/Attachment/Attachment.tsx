@@ -21,24 +21,20 @@ import type {
 
 export interface AttachmentProps
 	extends AttachmentBaseProps<string | LocalizedValue<string>> {
-	contentURL?: string;
 	deleteURL?: string;
 	fieldName: string;
 	fileEntryProperties: AttachmentFile | LocalizedValue<AttachmentFile>;
 	localizedObjectField: boolean;
 	onChange: FieldChangeEventHandler<string | LocalizedValue<string>>;
-	title?: string;
 }
 
 export default function Attachment({
-	contentURL,
 	deleteURL,
 	fileEntryProperties,
 	localizedObjectField,
 	onChange,
 	readOnly,
 	tip,
-	title,
 	value,
 	...otherProps
 }: AttachmentProps) {

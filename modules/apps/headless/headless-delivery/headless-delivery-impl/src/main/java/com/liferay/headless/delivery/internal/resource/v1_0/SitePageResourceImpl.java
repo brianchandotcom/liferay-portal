@@ -438,7 +438,7 @@ public class SitePageResourceImpl
 			null, siteId, false, parentLayoutId, nameMap, titleMap,
 			descriptionMap, keywordsMap, robotsMap,
 			LayoutConstants.TYPE_CONTENT,
-			typeSettingsUnicodeProperties.toString(), hidden, friendlyUrlMap, 0,
+			typeSettingsUnicodeProperties.toString(), hidden, friendlyUrlMap, null,
 			serviceContext);
 
 		_importPageDefinition(

@@ -112,7 +112,8 @@ public class EditLayoutModeProductNavigationControlMenuEntry
 					layout.getDescriptionMap(), layout.getKeywordsMap(),
 					layout.getRobotsMap(), layout.getType(),
 					unicodeProperties.toString(), true, true,
-					Collections.emptyMap(), layout.getMasterLayoutPlid(),
+					Collections.emptyMap(),
+					layout.getMasterLayoutPageTemplateEntryERC(),
 					serviceContext);
 
 				draftLayout = _layoutLocalService.copyLayoutContent(

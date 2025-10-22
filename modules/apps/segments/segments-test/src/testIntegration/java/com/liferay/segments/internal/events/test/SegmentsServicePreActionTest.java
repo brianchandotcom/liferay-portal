@@ -128,7 +128,7 @@ public class SegmentsServicePreActionTest {
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), 0, serviceContext);
+					false, false, Collections.emptyMap(), null, serviceContext);
 
 				mockHttpServletRequest.setAttribute(
 					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
@@ -183,7 +183,7 @@ public class SegmentsServicePreActionTest {
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), 0,
+					false, false, Collections.emptyMap(), null,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId(), TestPropsValues.getUserId()));
 
@@ -266,7 +266,7 @@ public class SegmentsServicePreActionTest {
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), 0, serviceContext);
+					false, false, Collections.emptyMap(), null, serviceContext);
 
 				mockHttpServletRequest.setAttribute(
 					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));
@@ -420,7 +420,7 @@ public class SegmentsServicePreActionTest {
 					UnicodePropertiesBuilder.put(
 						LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 					).buildString(),
-					false, false, Collections.emptyMap(), 0, serviceContext);
+					false, false, Collections.emptyMap(), null, serviceContext);
 
 				mockHttpServletRequest.setAttribute(
 					WebKeys.THEME_DISPLAY, _getThemeDisplay(layout));

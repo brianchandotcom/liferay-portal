@@ -138,7 +138,7 @@ public class LayoutTypeContentPerformanceTest {
 				).build(),
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), LayoutConstants.TYPE_CONTENT, StringPool.BLANK,
-				false, false, new HashMap<>(), 0, _serviceContext);
+				false, false, new HashMap<>(), null, _serviceContext);
 
 			ContentLayoutTestUtil.publishLayout(
 				layout.fetchDraftLayout(), layout);

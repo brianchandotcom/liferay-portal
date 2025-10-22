@@ -206,7 +206,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		if (plid == 0) {
 			Layout layout = _addLayout(
-				userId, groupId, name, type, masterLayoutPlid, status,
+				userId, groupId, name, type,
+				layoutPageTemplateEntry.getExternalReferenceCode(), status,
 				serviceContext);
 
 			if (layout != null) {
@@ -934,7 +935,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 	private Layout _addLayout(
 			long userId, long groupId, String name, int type,
-			long masterLayoutPlid, int status, ServiceContext serviceContext)
+			String masterLayoutPageTemplateEntryERC, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean privateLayout = false;
@@ -959,7 +961,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
-			(masterLayoutPlid > 0)) {
+			Validator.isNotNull(masterLayoutPageTemplateEntryERC)) {
 
 			typeSettingsUnicodeProperties.setProperty(
 				"lfr-theme:regular:show-footer", Boolean.FALSE.toString());
@@ -982,12 +984,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		Layout layout = _layoutLocalService.addLayout(
 			null, userId, groupId, privateLayout, 0, 0, 0, titleMap, titleMap,
 			null, null, null, layoutType, typeSettings, true, true,
-			new HashMap<>(), masterLayoutPlid, serviceContext);
+			new HashMap<>(), masterLayoutPageTemplateEntryERC, serviceContext);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		if ((type == LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT) ||
-			(masterLayoutPlid > 0)) {
+			Validator.isNotNull(masterLayoutPageTemplateEntryERC)) {
 
 			LayoutSet layoutSet = _layoutSetLocalService.getLayoutSet(
 				groupId, false);

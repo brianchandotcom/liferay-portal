@@ -76,7 +76,7 @@ public class LayoutServiceUpgradeProcessTest {
 			UnicodePropertiesBuilder.put(
 				LayoutTypeSettingsConstants.KEY_PUBLISHED, "true"
 			).buildString(),
-			false, false, Collections.emptyMap(), 0,
+			false, false, Collections.emptyMap(), null,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));
 

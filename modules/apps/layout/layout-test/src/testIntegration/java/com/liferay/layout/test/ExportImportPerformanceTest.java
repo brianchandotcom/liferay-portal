@@ -445,7 +445,7 @@ public class ExportImportPerformanceTest {
 				).build(),
 				new HashMap<>(), new HashMap<>(), new HashMap<>(),
 				new HashMap<>(), _layoutType, StringPool.BLANK, false, false,
-				new HashMap<>(), 0, _serviceContext);
+				new HashMap<>(), null, _serviceContext);
 
 			if (Objects.equals(_layoutType, LayoutConstants.TYPE_CONTENT)) {
 				_addFragmentEntryLinks(layout);

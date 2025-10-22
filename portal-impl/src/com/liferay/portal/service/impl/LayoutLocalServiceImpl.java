@@ -480,8 +480,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				_classNameLocalService.getClassNameId(Layout.class),
 				layout.getPlid(), nameMap, titleMap, descriptionMap,
 				keywordsMap, robotsMap, type, typeSettings, true, true,
-				Collections.emptyMap(), layout.getMasterLayoutPlid(),
-				serviceContext);
+				Collections.emptyMap(),
+				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
 		}
 
 		return layoutLocalService.getLayout(layout.getPlid());
@@ -551,7 +551,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			externalReferenceCode, userId, groupId, privateLayout,
 			parentLayoutId, 0, 0, nameMap, titleMap, descriptionMap,
 			keywordsMap, robotsMap, type, typeSettings, hidden, system,
-			friendlyURLMap, 0, serviceContext);
+			friendlyURLMap, null, serviceContext);
 	}
 
 	/**
@@ -792,7 +792,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			sourceLayout.getDescriptionMap(), sourceLayout.getKeywordsMap(),
 			sourceLayout.getRobotsMap(), sourceLayout.getType(),
 			sourceUnicodeProperties.toString(), hidden, system, new HashMap<>(),
-			sourceLayout.getMasterLayoutPlid(), serviceContext);
+			sourceLayout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
 
 		if (copyPermissions) {
 			_resourceLocalService.deleteResource(

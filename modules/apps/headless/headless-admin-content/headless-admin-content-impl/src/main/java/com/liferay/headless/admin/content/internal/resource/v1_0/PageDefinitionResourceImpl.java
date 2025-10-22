@@ -113,7 +113,7 @@ public class PageDefinitionResourceImpl extends BasePageDefinitionResourceImpl {
 			_portal.getClassNameId(PageDefinition.class), 0, nameMap, nameMap,
 			Collections.emptyMap(), Collections.emptyMap(),
 			Collections.emptyMap(), LayoutConstants.TYPE_CONTENT,
-			StringPool.BLANK, true, false, Collections.emptyMap(), 0,
+			StringPool.BLANK, true, false, Collections.emptyMap(), null,
 			serviceContext);
 
 		LayoutStructure layoutStructure = new LayoutStructure();

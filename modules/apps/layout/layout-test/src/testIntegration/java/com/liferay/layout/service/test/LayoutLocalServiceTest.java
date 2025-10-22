@@ -273,7 +273,7 @@ public class LayoutLocalServiceTest {
 			).put(
 				LocaleUtil.US, "/englishurl"
 			).build(),
-			0, _serviceContext);
+			null, _serviceContext);
 
 		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
 
@@ -428,7 +428,8 @@ public class LayoutLocalServiceTest {
 				publishedLayout.getKeywordsMap(),
 				publishedLayout.getRobotsMap(), publishedLayout.getType(),
 				unicodeProperties.toString(), true, true,
-				Collections.emptyMap(), publishedLayout.getMasterLayoutPlid(),
+				Collections.emptyMap(),
+				publishedLayout.getMasterLayoutPageTemplateEntryERC(),
 				serviceContext);
 
 			draftLayout = _layoutLocalService.copyLayoutContent(

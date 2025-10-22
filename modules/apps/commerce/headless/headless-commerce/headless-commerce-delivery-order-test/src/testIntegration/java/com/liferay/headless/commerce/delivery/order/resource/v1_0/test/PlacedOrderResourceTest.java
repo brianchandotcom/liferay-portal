@@ -151,7 +151,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 
 		String customFieldValue = RandomTestUtil.randomString();
 
-		PlacedOrder placedOrder1 = _addCommerceOrderWithCustomField(
+		PlacedOrder placedOrder1 = _addPlacedOrder(
 			randomPlacedOrder(), expandoColumn.getName(), customFieldValue);
 
 		Page<PlacedOrder> page = placedOrderResource.getChannelPlacedOrdersPage(
@@ -423,7 +423,7 @@ public class PlacedOrderResourceTest extends BasePlacedOrderResourceTestCase {
 		return _addPlacedOrder(commerceOrder);
 	}
 
-	private PlacedOrder _addCommerceOrderWithCustomField(
+	private PlacedOrder _addPlacedOrder(
 			PlacedOrder placedOrder, String expandoColumn,
 			String customFieldValue)
 		throws Exception {

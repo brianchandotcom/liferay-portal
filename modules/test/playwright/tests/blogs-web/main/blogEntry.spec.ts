@@ -323,7 +323,7 @@ test(
 			title,
 		});
 
-		await page.getByLabel('Current').selectOption('category-1');
+		await page.getByLabel('In Use').selectOption('category-1');
 		await page.getByLabel('Reorder Down').click();
 		await page.getByLabel('Reorder Down').click();
 
@@ -387,7 +387,7 @@ test(
 		});
 
 		await page.getByLabel('Remove category-1').click();
-		await page.getByLabel('Current').selectOption('category-2');
+		await page.getByLabel('In Use').selectOption('category-2');
 		await page.getByLabel('Reorder Down').click();
 
 		const expectedCategoriesPartialURL = 'category-3/category-2';

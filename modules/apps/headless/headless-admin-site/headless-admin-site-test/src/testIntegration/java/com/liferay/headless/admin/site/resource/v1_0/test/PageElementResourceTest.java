@@ -384,7 +384,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementDefinition.Type.DROP_ZONE, StringPool.BLANK));
 
 		PageElement formPageElement = _randomPageElement(
-			PageElementDefinition.Type.FORM, StringPool.BLANK);
+			PageElementDefinition.Type.FORM_CONTAINER, StringPool.BLANK);
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			formPageElement);

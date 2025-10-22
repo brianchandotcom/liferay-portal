@@ -11,7 +11,7 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.i
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.ColumnLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.ContainerLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.DropZoneLayoutStructureItemImporter;
-import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormContainerLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormStepContainerLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormStepItemLayoutStructureItemImporter;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FragmentDropZoneLayoutStructureItemImporter;
@@ -55,8 +55,8 @@ public class LayoutStructureItemImporterUtil {
 			PageElementDefinition.Type.DROP_ZONE,
 			new DropZoneLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
-			PageElementDefinition.Type.FORM,
-			new FormLayoutStructureItemImporter());
+			PageElementDefinition.Type.FORM_CONTAINER,
+			new FormContainerLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageElementDefinition.Type.FORM_STEP,
 			new FormStepItemLayoutStructureItemImporter());

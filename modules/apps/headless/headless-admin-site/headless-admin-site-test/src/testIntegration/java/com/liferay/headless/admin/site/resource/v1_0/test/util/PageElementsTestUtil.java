@@ -12,7 +12,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElement
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
@@ -79,11 +79,11 @@ public class PageElementsTestUtil {
 			};
 		}
 
-		if (Objects.equals(type, PageElementDefinition.Type.FORM)) {
-			return new FormPageElementDefinition() {
+		if (Objects.equals(type, PageElementDefinition.Type.FORM_CONTAINER)) {
+			return new FormContainerPageElementDefinition() {
 				{
 					setIndexed(Boolean.TRUE);
-					setType(Type.FORM);
+					setType(Type.FORM_CONTAINER);
 				}
 			};
 		}

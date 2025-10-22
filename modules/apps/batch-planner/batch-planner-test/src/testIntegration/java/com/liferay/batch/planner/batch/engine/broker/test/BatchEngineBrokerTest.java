@@ -1146,14 +1146,14 @@ public class BatchEngineBrokerTest {
 	private List<List<String>> _normalizeCSVRecords(
 		List<CSVRecord> csvRecords) {
 
-		List<List<String>> normalizedRecords = new ArrayList<>(
+		List<List<String>> normalizedCSVRecords = new ArrayList<>(
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			normalizedRecords.add(_normalizeValues(csvRecord.toList()));
+			normalizedCSVRecords.add(_normalizeValues(csvRecord.toList()));
 		}
 
-		return normalizedRecords;
+		return normalizedCSVRecords;
 	}
 
 	private List<String> _normalizeValues(List<String> values) {

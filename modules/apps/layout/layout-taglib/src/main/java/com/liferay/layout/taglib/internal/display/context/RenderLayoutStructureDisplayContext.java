@@ -7,7 +7,7 @@ package com.liferay.layout.taglib.internal.display.context;
 
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
-import com.liferay.fragment.entry.processor.util.LayoutReferenceResolverUtil;
+import com.liferay.fragment.entry.processor.helper.LayoutReferenceResolver;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
@@ -928,7 +928,10 @@ public class RenderLayoutStructureDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		Layout layout = LayoutReferenceResolverUtil.resolve(
+		LayoutReferenceResolver layoutReferenceResolver =
+			ServletContextUtil.getLayoutReferenceResolverRegistry();
+
+		Layout layout = layoutReferenceResolver.resolve(
 			_themeDisplay.getCompanyId(), layoutJSONObject,
 			_themeDisplay.getScopeGroupId());
 

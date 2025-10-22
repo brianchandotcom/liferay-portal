@@ -6795,10 +6795,10 @@ information. Make sure to commit in all format-javadoc results.
 		<run-functional-test app.server.type="weblogic" database.type="postgresql" />
 	</target>
 
-	<target name="functional-upgrade-weblogic141-postgresql155">
+	<target name="functional-upgrade-weblogic141-postgresql163">
 		<set-app-server-version-number app.server.type="weblogic" app.server.version="14.1.1" />
 
-		<run-functional-test app.server.type="weblogic" database.type="postgresql" database.version="15.5" />
+		<run-functional-test app.server.type="weblogic" database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="functional-upgrade-wildfly300-mariadb">

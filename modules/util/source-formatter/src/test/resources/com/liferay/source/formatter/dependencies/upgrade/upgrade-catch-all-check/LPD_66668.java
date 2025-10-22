@@ -10,21 +10,21 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Nícolas Moura
  */
-public class LPD_66666 {
+public class LPD_66668 {
 
 	public void method(
-		long cpInstanceId, long commercePriceListId, boolean useAncestor) {
+		long commercePriceListId, String cpInstanceUuid, boolean useAncestor) {
 
 		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
-			123, commercePriceListId, useAncestor);
+			123, cpInstanceUuid, useAncestor);
 		CommercePriceEntryLocalServiceUtil.fetchCommercePriceEntry(
-			cpInstanceId, commercePriceListId, useAncestor);
+			commercePriceListId, cpInstanceUuid, useAncestor);
 		CommercePriceEntryServiceUtil.fetchCommercePriceEntry(
-			cpInstanceId, commercePriceListId, useAncestor);
+			commercePriceListId, cpInstanceUuid, useAncestor);
 		_commercePriceEntryLocalService.fetchCommercePriceEntry(
-			cpInstanceId, commercePriceListId, useAncestor);
+			commercePriceListId, cpInstanceUuid, useAncestor);
 		_commercePriceEntryService.fetchCommercePriceEntry(
-			cpInstanceId, commercePriceListId, useAncestor);
+			commercePriceListId, cpInstanceUuid, useAncestor);
 	}
 
 	@Reference

@@ -7559,15 +7559,49 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	private void _updateLastLogin(List<User> users) throws SQLException {
-		Session session = null;
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			Map<Long, List<User>> companyUsersMap = new HashMap<>();
 
-		try {
-			session = userPersistence.openSession();
+			for (User user : users) {
+				List<User> companyUsers = companyUsersMap.computeIfAbsent(
+					user.getCompanyId(), key -> new ArrayList<>());
 
-			session.apply(connection -> _updateLastLogin(connection, users));
+				companyUsers.add(user);
+			}
+
+			for (Map.Entry<Long, List<User>> entry :
+					companyUsersMap.entrySet()) {
+
+				_companyLocalService.forEachCompanyId(
+					companyId -> {
+						Session session = null;
+
+						try {
+							session = userPersistence.openSession();
+
+							session.apply(
+								connection -> _updateLastLogin(
+									connection, entry.getValue()));
+						}
+						finally {
+							userPersistence.closeSession(session);
+						}
+					},
+					new long[] {entry.getKey()});
+			}
 		}
-		finally {
-			userPersistence.closeSession(session);
+		else {
+			Session session = null;
+
+			try {
+				session = userPersistence.openSession();
+
+				session.apply(
+					connection -> _updateLastLogin(connection, users));
+			}
+			finally {
+				userPersistence.closeSession(session);
+			}
 		}
 	}
 

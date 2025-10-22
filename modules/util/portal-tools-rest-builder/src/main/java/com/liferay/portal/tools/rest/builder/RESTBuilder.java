@@ -192,11 +192,11 @@ public class RESTBuilder {
 			_createClientPaginationFile(context);
 			_createClientPermissionFile(context);
 			_createClientProblemFile(context);
-			_createClientScopeFile(context);
 			_createClientUnsafeSupplierFile(context);
 		}
 
 		boolean createClientCustomFieldFiles = true;
+		boolean createClientScopeFiles = true;
 		List<String> validationErrorMessages = new ArrayList<>();
 
 		for (File openAPIYAMLFile :
@@ -353,6 +353,13 @@ public class RESTBuilder {
 						_createClientCustomFieldFiles(context);
 
 						createClientCustomFieldFiles = false;
+					}
+
+					if (createClientScopeFiles &&
+						_containsVulcanScope(schema)) {
+
+						_createClientScopeFile(context);
+						createClientScopeFiles = false;
 					}
 
 					_createClientResourceFile(
@@ -522,6 +529,22 @@ public class RESTBuilder {
 				}
 			}
 			else if (Objects.equals(propertySchema.getType(), "customField")) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _containsVulcanScope(Schema schema) {
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (MapUtil.isEmpty(propertySchemas)) {
+			return false;
+		}
+
+		for (Schema propertySchema : propertySchemas.values()) {
+			if (Objects.equals(propertySchema.getType(), "scope")) {
 				return true;
 			}
 		}

@@ -489,7 +489,7 @@ const AppsPanel = ({
 							xl="4"
 						>
 							<ClayLayout.ContainerFluid size={false}>
-								<ClayLayout.Row>
+								<ClayLayout.Row className="h-100">
 									<ClayLayout.Col
 										className="c-px-0"
 										md="12"

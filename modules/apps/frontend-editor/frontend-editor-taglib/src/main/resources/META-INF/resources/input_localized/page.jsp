@@ -15,6 +15,8 @@ String componentId = (String)request.getAttribute("liferay-editor:input-localize
 JSONArray availableLocalesJSONArray = (JSONArray)request.getAttribute("liferay-editor:input-localized:availableLocales");
 String defaultLanguageId = (String)request.getAttribute("liferay-editor:input-localized:defaultLanguageId");
 Map<String, Object> editorConfigurationData = (Map<String, Object>)request.getAttribute("liferay-editor:input-localized:editorConfigurationData");
+String fieldPrefix = (String)request.getAttribute("liferay-editor:input-localized:fieldPrefix");
+String fieldPrefixSeparator = (String)request.getAttribute("liferay-editor:input-localized:fieldPrefixSeparator");
 boolean languagesDropdownVisible = (boolean)request.getAttribute("liferay-editor:input-localized:languagesDropdownVisible");
 String name = (String)request.getAttribute("liferay-editor:input-localized:name");
 String selectedLanguageId = (String)request.getAttribute("liferay-editor:input-localized:selectedLanguageId");
@@ -51,6 +53,10 @@ if (defaultLanguageId == null) {
 				"defaultLanguageId", defaultLanguageId
 			).put(
 				"editorConfig", editorConfigJSONObject
+			).put(
+				"fieldPrefix", fieldPrefix
+			).put(
+				"fieldPrefixSeparator", fieldPrefixSeparator
 			).put(
 				"languagesDropdownVisible", languagesDropdownVisible
 			).put(

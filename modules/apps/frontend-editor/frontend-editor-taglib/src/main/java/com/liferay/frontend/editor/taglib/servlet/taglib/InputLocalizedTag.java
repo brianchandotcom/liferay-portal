@@ -67,6 +67,14 @@ public class InputLocalizedTag extends IncludeTag {
 		return _editorName;
 	}
 
+	public String getFieldPrefix() {
+		return _fieldPrefix;
+	}
+
+	public String getFieldPrefixSeparator() {
+		return _fieldPrefixSeparator;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -139,6 +147,14 @@ public class InputLocalizedTag extends IncludeTag {
 		_editorName = editorName;
 	}
 
+	public void setFieldPrefix(String fieldPrefix) {
+		_fieldPrefix = fieldPrefix;
+	}
+
+	public void setFieldPrefixSeparator(String fieldPrefixSeparator) {
+		_fieldPrefixSeparator = fieldPrefixSeparator;
+	}
+
 	public void setIgnoreRequestValue(boolean ignoreRequestValue) {
 		_ignoreRequestValue = ignoreRequestValue;
 	}
@@ -190,6 +206,8 @@ public class InputLocalizedTag extends IncludeTag {
 		_configKey = null;
 		_defaultLanguageId = null;
 		_editorName = "ckeditor5_classic";
+		_fieldPrefix = null;
+		_fieldPrefixSeparator = null;
 		_ignoreRequestValue = false;
 		_languagesDropdownVisible = true;
 		_name = null;
@@ -236,6 +254,11 @@ public class InputLocalizedTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-editor:input-localized:editorConfigurationData",
 			_getCKEditor5ClassicEditorConfigurationData(httpServletRequest));
+		httpServletRequest.setAttribute(
+			"liferay-editor:input-localized:fieldPrefix", _fieldPrefix);
+		httpServletRequest.setAttribute(
+			"liferay-editor:input-localized:fieldPrefixSeparator",
+			_fieldPrefixSeparator);
 		httpServletRequest.setAttribute(
 			"liferay-editor:input-localized:languagesDropdownVisible",
 			_languagesDropdownVisible);
@@ -365,6 +388,8 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _configKey;
 	private String _defaultLanguageId;
 	private String _editorName = "ckeditor5_classic";
+	private String _fieldPrefix;
+	private String _fieldPrefixSeparator;
 	private boolean _ignoreRequestValue;
 	private boolean _languagesDropdownVisible = true;
 	private String _name;

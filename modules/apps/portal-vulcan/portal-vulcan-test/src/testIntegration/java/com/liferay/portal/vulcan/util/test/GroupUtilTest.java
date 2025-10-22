@@ -122,9 +122,7 @@ public class GroupUtilTest {
 				_groupLocalService));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetGroupIdWithFF() throws Exception {
 		Group group = _groupLocalService.fetchGroup(

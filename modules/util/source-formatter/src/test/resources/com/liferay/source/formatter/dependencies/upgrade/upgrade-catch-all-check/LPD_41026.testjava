@@ -26,18 +26,18 @@ public class LPD_41026 {
 		LayoutServiceUtil.addLayout(
 			userId, groupId, privateLayout, parentLayoutId, name, title,
 			description, type, hidden, friendlyURL, serviceContext);
-		_LayoutLocalService.addLayout(
+		_layoutLocalService.addLayout(
 			userId, groupId, privateLayout, parentLayoutId, name, title,
 			description, type, hidden, friendlyURL, serviceContext);
-		_LayoutService.addLayout(
+		_layoutService.addLayout(
 			userId, groupId, privateLayout, parentLayoutId, name, title,
 			description, type, hidden, friendlyURL, serviceContext);
 	}
 
 	@Reference
-	private LayoutLocalService _LayoutLocalService;
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
-	private LayoutService _LayoutService;
+	private LayoutService _layoutService;
 
 }

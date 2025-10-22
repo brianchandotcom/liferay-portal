@@ -171,27 +171,27 @@ test(
 			.click();
 
 		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Edit'})
+		).toBeVisible();
+		expect(
 			page.getByRole('menuitem', {exact: true, name: 'View Usages'})
 		).toBeVisible();
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Make a Copy'})
 		).toBeVisible();
 		expect(
-			page.getByRole('menuitem', {exact: true, name: 'Permissions'})
-		).toBeVisible();
-
-		expect(
-			page.getByRole('menuitem', {exact: true, name: 'Edit'})
-		).toBeHidden();
-		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Export as JSON'})
-		).toBeHidden();
+		).toBeVisible();
 		expect(
 			page.getByRole('menuitem', {
 				exact: true,
 				name: 'Import and Override',
 			})
-		).toBeHidden();
+		).toBeVisible();
+		expect(
+			page.getByRole('menuitem', {exact: true, name: 'Permissions'})
+		).toBeVisible();
+
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Delete'})
 		).toBeHidden();

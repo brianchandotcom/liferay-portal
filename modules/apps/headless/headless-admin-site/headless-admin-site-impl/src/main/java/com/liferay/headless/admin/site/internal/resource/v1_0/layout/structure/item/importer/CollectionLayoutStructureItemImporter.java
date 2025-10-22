@@ -63,10 +63,13 @@ public class CollectionLayoutStructureItemImporter
 			PageElement pageElement)
 		throws Exception {
 
+		PageElement[] pageElements = pageElement.getPageElements();
+
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem =
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.addCollectionStyledLayoutStructureItem(
+						pageElements[0].getExternalReferenceCode(),
 						pageElement.getExternalReferenceCode(),
 						LayoutStructureUtil.getParentExternalReferenceCode(
 							pageElement, layoutStructure),

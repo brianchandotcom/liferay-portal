@@ -15,7 +15,7 @@ import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 
-const OBJECT_ENTRY_FOLDER_CLASSNAME =
+const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
 
 export default function RecycleBinFDSPropsTransformer({
@@ -43,7 +43,13 @@ export default function RecycleBinFDSPropsTransformer({
 				{
 					component: ({itemData}) =>
 						SpaceRendererWithCache({
-							spaceId: itemData.embedded.scopeId,
+							spaceExternalReferenceCode:
+								itemData?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+									? itemData.embedded.systemProperties.scope
+											.externalReferenceCode
+									: itemData.embedded.scope
+											.externalReferenceCode,
 						}),
 					name: 'spaceTableCellRenderer',
 					type: 'internal',
@@ -57,7 +63,7 @@ export default function RecycleBinFDSPropsTransformer({
 					isVisible: (item: any) =>
 						Boolean(
 							item?.entryClassName !==
-								OBJECT_ENTRY_FOLDER_CLASSNAME
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
 						),
 				};
 			}

@@ -104,7 +104,14 @@ export default function AssetsFDSPropsTransformer({
 				{
 					component: ({itemData}) => (
 						<SpaceRendererWithCache
-							spaceId={itemData.embedded.scopeId}
+							spaceExternalReferenceCode={
+								itemData?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+									? itemData.embedded.systemProperties.scope
+											.externalReferenceCode
+									: itemData.embedded.scope
+											.externalReferenceCode
+							}
 						/>
 					),
 					name: 'spaceTableCellRenderer',

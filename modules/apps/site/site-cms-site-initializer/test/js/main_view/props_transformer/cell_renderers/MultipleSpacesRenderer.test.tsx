@@ -37,16 +37,19 @@ const mockLiferayLanguageGet = jest.fn((key: string) => {
 
 const mockSpaces = [
 	{
+		externalReferenceCode: 'ERC_1',
 		id: 1,
 		name: 'Space 1',
 		settings: {logoColor: 'outline-5'},
 	},
 	{
+		externalReferenceCode: 'ERC_2',
 		id: 2,
 		name: 'Space 2',
 		settings: {logoColor: 'outline-7'},
 	},
 	{
+		externalReferenceCode: 'ERC_3',
 		id: 3,
 		name: 'Space 3',
 		settings: {logoColor: 'outline-9'},
@@ -55,9 +58,9 @@ const mockSpaces = [
 
 const itemData = {
 	assetLibraries: [
-		{id: 1, name: ''},
-		{id: 2, name: ''},
-		{id: 3, name: ''},
+		{externalReferenceCode: 'ERC_1', id: 1, name: ''},
+		{externalReferenceCode: 'ERC_2', id: 2, name: ''},
+		{externalReferenceCode: 'ERC_3', id: 3, name: ''},
 	],
 } as MultipleSpacesRendererProps['itemData'];
 
@@ -92,9 +95,13 @@ describe('MultipleSpacesRenderer', () => {
 
 	it('renders correctly after fetching space data', async () => {
 		jest.spyOn(SpaceService, 'getSpaceWithCache').mockImplementation(
-			(spaceId) => {
+			(spaceExternalReferenceCode) => {
 				return Promise.resolve(
-					mockSpaces.find((space) => space.id === spaceId)!
+					mockSpaces.find(
+						(space) =>
+							space.externalReferenceCode ===
+							spaceExternalReferenceCode
+					)!
 				);
 			}
 		);
@@ -122,8 +129,8 @@ describe('MultipleSpacesRenderer', () => {
 
 		const itemData = {
 			assetLibraries: [
-				{id: 1, name: 'Fallback 1'},
-				{id: 2, name: 'Fallback 2'},
+				{externalReferenceCode: 'ERC_1', id: 1, name: 'Fallback 1'},
+				{externalReferenceCode: 'ERC_2', id: 2, name: 'Fallback 2'},
 			],
 		} as MultipleSpacesRendererProps['itemData'];
 

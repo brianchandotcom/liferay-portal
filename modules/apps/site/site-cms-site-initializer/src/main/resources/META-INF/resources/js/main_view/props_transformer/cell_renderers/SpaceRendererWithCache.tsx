@@ -10,14 +10,18 @@ import SpaceService from '../../../common/services/SpaceService';
 import {Space} from '../../../common/types/Space';
 import SpaceRenderer from './SpaceRenderer';
 
-const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
+const SpaceRendererWithCache = ({
+	spaceExternalReferenceCode,
+}: {
+	spaceExternalReferenceCode: string;
+}) => {
 	const [loading, setLoading] = useState(true);
 	const [space, setSpace] = useState<Space | null>(null);
 
 	useEffect(() => {
 		let isMounted = true;
 
-		SpaceService.getSpaceWithCache(spaceId)
+		SpaceService.getSpaceWithCache(spaceExternalReferenceCode)
 			.then((space) => {
 				if (isMounted) {
 					setSpace(space);
@@ -25,7 +29,7 @@ const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
 			})
 			.catch((error) => {
 				console.error(
-					`Failed to fetch space data for spaceId: ${spaceId}`,
+					`Failed to fetch space data for spaceId: ${spaceExternalReferenceCode}`,
 					error
 				);
 			})
@@ -38,7 +42,7 @@ const SpaceRendererWithCache = ({spaceId}: {spaceId: number | string}) => {
 		return () => {
 			isMounted = false;
 		};
-	}, [spaceId]);
+	}, [spaceExternalReferenceCode]);
 
 	if (loading) {
 		return (

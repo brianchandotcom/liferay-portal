@@ -27,19 +27,8 @@ async function addSpace({
 	);
 }
 
-function getSpaceEndpoint(spaceId: number | string): string;
-function getSpaceEndpoint(externalReferenceCode: string): string;
-
-function getSpaceEndpoint(id: number | string): string {
-	if (typeof id === 'number') {
-		return `/o/headless-asset-library/v1.0/asset-libraries/${id}`;
-	}
-
-	return `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${id}`;
-}
-
-async function getSpace(id: number | string): Promise<Space> {
-	const url = getSpaceEndpoint(id);
+async function getSpace(externalReferenceCode: string): Promise<Space> {
+	const url = `/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/${externalReferenceCode}`;
 
 	const {data, error} = await ApiHelper.get<Space>(url);
 
@@ -50,19 +39,21 @@ async function getSpace(id: number | string): Promise<Space> {
 	throw new Error(error || 'Failed to fetch space data.');
 }
 
-const spaceCache = new Map<number | string, Promise<Space>>();
+const spaceCache = new Map<string, Promise<Space>>();
 
-async function getSpaceWithCache(id: number | string): Promise<Space> {
-	if (spaceCache.has(id)) {
-		return spaceCache.get(id)!;
+async function getSpaceWithCache(
+	externalReferenceCode: string
+): Promise<Space> {
+	if (spaceCache.has(externalReferenceCode)) {
+		return spaceCache.get(externalReferenceCode)!;
 	}
 
-	const fetchPromise = getSpace(id).catch((error) => {
-		spaceCache.delete(id);
+	const fetchPromise = getSpace(externalReferenceCode).catch((error) => {
+		spaceCache.delete(externalReferenceCode);
 		throw error;
 	});
 
-	spaceCache.set(id, fetchPromise);
+	spaceCache.set(externalReferenceCode, fetchPromise);
 
 	return fetchPromise;
 }

@@ -13,6 +13,7 @@ import {Space} from '../../../common/types/Space';
 export interface MultipleSpacesRendererProps {
 	itemData: {
 		assetLibraries: {
+			externalReferenceCode: string;
 			id: number;
 			name: string;
 		}[];
@@ -40,11 +41,13 @@ export default function MultipleSpacesRenderer({
 
 			const spacePromises = assetLibraries.map(async (assetLib) => {
 				try {
-					return await SpaceService.getSpaceWithCache(assetLib.id);
+					return await SpaceService.getSpaceWithCache(
+						assetLib.externalReferenceCode
+					);
 				}
 				catch (error) {
 					return {
-						externalReferenceCode: '',
+						externalReferenceCode: assetLib.externalReferenceCode,
 						id: assetLib.id,
 						name: assetLib.name,
 						settings: {},

@@ -633,7 +633,7 @@ public class DBUpgradeClient {
 			try {
 				InetAddress.getByName(name);
 
-				return hostToVerify;
+				return name;
 			}
 			catch (Exception exception) {
 				System.err.println(

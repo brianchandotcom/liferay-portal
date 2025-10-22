@@ -708,7 +708,7 @@ public class DBUpgradeClient {
 
 				System.out.println("]");
 				System.out.println(
-					"Please enter your application server (Tomcat): ");
+					"Please enter your application server (tomcat): ");
 
 				response = _consoleReader.readLine();
 
@@ -822,7 +822,7 @@ public class DBUpgradeClient {
 
 			System.out.println("]");
 
-			System.out.println("Please enter your database (MySQL): ");
+			System.out.println("Please enter your database (mysql): ");
 
 			response = _consoleReader.readLine();
 

@@ -6,9 +6,7 @@ const ToThousandsCell = ({data}) => {
 
 	return (
 		<td className='table-cell-expand '>
-			<div className='text-truncate text-right mr-5'>
-				{formattedCount}
-			</div>
+			<div className='text-truncate text-right'>{formattedCount}</div>
 		</td>
 	);
 };

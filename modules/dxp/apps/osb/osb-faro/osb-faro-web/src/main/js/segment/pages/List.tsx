@@ -308,7 +308,7 @@ export const List: React.FC<IListProps> = ({
 				API.individualSegment
 					.delete({
 						groupId,
-						id
+						ids: [id]
 					})
 					.then(() => {
 						_tableRef?.current?.reload();

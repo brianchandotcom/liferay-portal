@@ -60,7 +60,7 @@ public class PageElementDefinitionTypeUtil {
 			PageElementDefinition.Type.DROP_ZONE,
 			LayoutDataItemTypeConstants.TYPE_DROP_ZONE
 		).put(
-			PageElementDefinition.Type.FORM,
+			PageElementDefinition.Type.FORM_CONTAINER,
 			LayoutDataItemTypeConstants.TYPE_FORM
 		).put(
 			PageElementDefinition.Type.FORM_STEP,

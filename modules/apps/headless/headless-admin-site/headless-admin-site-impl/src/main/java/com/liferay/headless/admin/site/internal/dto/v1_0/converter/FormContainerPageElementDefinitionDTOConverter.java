@@ -5,9 +5,8 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.headless.admin.site.dto.v1_0.FormConfig;
-import com.liferay.headless.admin.site.dto.v1_0.FormPageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.dto.v1_0.FormContainerConfig;
+import com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.delivery.dto.v1_0.ClassTypeReference;
 import com.liferay.headless.delivery.dto.v1_0.ContextReference;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -27,22 +26,22 @@ import org.osgi.service.component.annotations.Component;
 	property = "dto.class.name=com.liferay.layout.util.structure.FormStyledLayoutStructureItem",
 	service = DTOConverter.class
 )
-public class FormPageElementDefinitionDTOConverter
+public class FormContainerPageElementDefinitionDTOConverter
 	implements DTOConverter
-		<FormStyledLayoutStructureItem, FormPageElementDefinition> {
+		<FormStyledLayoutStructureItem, FormContainerPageElementDefinition> {
 
 	@Override
 	public String getContentType() {
-		return FormPageElementDefinition.class.getSimpleName();
+		return FormContainerPageElementDefinition.class.getSimpleName();
 	}
 
 	@Override
-	public FormPageElementDefinition toDTO(
+	public FormContainerPageElementDefinition toDTO(
 			DTOConverterContext dtoConverterContext,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem)
 		throws Exception {
 
-		return new FormPageElementDefinition() {
+		return new FormContainerPageElementDefinition() {
 			{
 				setCssClasses(
 					() -> {
@@ -57,16 +56,17 @@ public class FormPageElementDefinitionDTOConverter
 							formStyledLayoutStructureItem.getCssClasses());
 					});
 				setCustomCSS(formStyledLayoutStructureItem::getCustomCSS);
-				setFormConfig(
-					() -> _toFormConfig(formStyledLayoutStructureItem));
+				setFormContainerConfig(
+					() -> _toFormContainerConfig(
+						formStyledLayoutStructureItem));
 				setIndexed(formStyledLayoutStructureItem::isIndexed);
 				setName(formStyledLayoutStructureItem::getName);
-				setType(PageElementDefinition.Type.FORM);
+				setType(Type.FORM_CONTAINER);
 			}
 		};
 	}
 
-	private FormConfig _toFormConfig(
+	private FormContainerConfig _toFormContainerConfig(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
 
 		if ((formStyledLayoutStructureItem.getFormConfig() !=
@@ -78,9 +78,9 @@ public class FormPageElementDefinitionDTOConverter
 			return null;
 		}
 
-		return new FormConfig() {
+		return new FormContainerConfig() {
 			{
-				setFormReference(
+				setFormContainerReference(
 					() -> {
 						if (formStyledLayoutStructureItem.getFormConfig() ==
 								FormStyledLayoutStructureItem.
@@ -105,16 +105,16 @@ public class FormPageElementDefinitionDTOConverter
 							}
 						};
 					});
-				setFormType(
+				setFormContainerType(
 					() -> {
 						if (Objects.equals(
 								formStyledLayoutStructureItem.getFormType(),
 								"simple")) {
 
-							return FormType.SIMPLE;
+							return FormContainerType.SIMPLE;
 						}
 
-						return FormType.MULTISTEP;
+						return FormContainerType.MULTISTEP;
 					});
 				setNumberOfSteps(
 					formStyledLayoutStructureItem::getNumberOfSteps);

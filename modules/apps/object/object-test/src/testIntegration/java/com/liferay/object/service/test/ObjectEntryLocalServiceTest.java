@@ -232,7 +232,6 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LogEntry;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -1357,9 +1356,7 @@ public class ObjectEntryLocalServiceTest {
 		}
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithAssetTag() throws Exception {
 		_setUpCMSContext();
@@ -1740,9 +1737,7 @@ public class ObjectEntryLocalServiceTest {
 				ObjectFieldUtil.getCounterName(objectField)));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithDraftWorkflowDefinition()
 		throws Exception {
@@ -2687,9 +2682,7 @@ public class ObjectEntryLocalServiceTest {
 				new ServiceContext()));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testAddObjectEntryWithObjectEntryScheduleEnabled()
 		throws Exception {
@@ -4965,9 +4958,7 @@ public class ObjectEntryLocalServiceTest {
 			24, values3, valuesList.get(2), selectedObjectFieldNames);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryToTrashWithComments() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -4987,9 +4978,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCommentsCount(0, _siteObjectDefinition, objectEntry);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryToTrashWithObjectAction() throws Exception {
 		_addObjectAction(
@@ -5011,9 +5000,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(1);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryToTrashWithObjectEntryFolder()
 		throws Exception {
@@ -5045,9 +5032,7 @@ public class ObjectEntryLocalServiceTest {
 				trashEntry.getTypeSettingsProperty("objectEntryFolderId")));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testMoveObjectEntryToTrashWithOngoingWorkflowInstances()
 		throws Exception {
@@ -5441,9 +5426,7 @@ public class ObjectEntryLocalServiceTest {
 		_testPartialUpdateObjectEntryWithObjectRelationship();
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFromTrashWithComments() throws Exception {
 		Group group = GroupTestUtil.addGroup();
@@ -5464,9 +5447,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCommentsCount(1, _siteObjectDefinition, objectEntry);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFromTrashWithObjectAction()
 		throws Exception {
@@ -5501,9 +5482,7 @@ public class ObjectEntryLocalServiceTest {
 		_assertCount(2);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFromTrashWithObjectEntryFolder()
 		throws Exception {
@@ -5549,9 +5528,7 @@ public class ObjectEntryLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testRestoreObjectEntryFromTrashWithOngoingWorkflowInstances()
 		throws Exception {
@@ -6361,9 +6338,7 @@ public class ObjectEntryLocalServiceTest {
 		_testUpdateObjectEntryWithObjectRelationship();
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testUpdateObjectEntryWithAttachmentObjectFieldAndEnableObjectEntryVersioning()
 		throws Exception {

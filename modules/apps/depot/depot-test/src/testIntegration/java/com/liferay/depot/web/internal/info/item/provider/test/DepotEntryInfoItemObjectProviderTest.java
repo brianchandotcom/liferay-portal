@@ -34,9 +34,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Roberto Díaz
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-)
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class DepotEntryInfoItemObjectProviderTest {
 

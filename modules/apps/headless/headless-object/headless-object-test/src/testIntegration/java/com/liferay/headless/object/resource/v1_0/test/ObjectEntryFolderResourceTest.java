@@ -77,9 +77,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
-@FeatureFlags(
-	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-)
+@FeatureFlag("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryFolderResourceTest
 	extends BaseObjectEntryFolderResourceTestCase {
@@ -230,9 +228,7 @@ public class ObjectEntryFolderResourceTest
 		_testPostScopeScopeKeyObjectEntryFolderWithNonexistentParentObjectEntryFolderByObjectEntryFolderId();
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-17564")
 	@Override
 	@Test
 	public void testPostScopeScopeKeyObjectEntryFolderByExternalReferenceCodeRestore()

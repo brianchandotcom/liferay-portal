@@ -107,7 +107,7 @@ public class ViewStructuresDisplayContext {
 				ActionUtil.getBaseStructureBuilderURL(_themeDisplay) +
 					"?objectDefinitionId={id}",
 				"pencil", "edit", LanguageUtil.get(_httpServletRequest, "edit"),
-				"get", "update", null, Map.of("system", false)),
+				"get", "update", null),
 			new FDSActionDropdownItem(
 				ActionUtil.getBaseStructureUsagesURL(_themeDisplay) + "{id}",
 				"list-ul", "viewUsages",
@@ -130,7 +130,7 @@ public class ViewStructuresDisplayContext {
 				).buildString(),
 				"export", "export",
 				LanguageUtil.get(_httpServletRequest, "export-as-json"), "get",
-				"exportObjectDefinition", null, Map.of("system", false)),
+				"exportObjectDefinition", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortletURLFactoryUtil.create(
@@ -144,7 +144,7 @@ public class ViewStructuresDisplayContext {
 				).buildString(),
 				"import", "import",
 				LanguageUtil.get(_httpServletRequest, "import-and-override"),
-				"get", "update", null, Map.of("system", false)),
+				"get", "update", null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					PortalUtil.getControlPanelPortletURL(

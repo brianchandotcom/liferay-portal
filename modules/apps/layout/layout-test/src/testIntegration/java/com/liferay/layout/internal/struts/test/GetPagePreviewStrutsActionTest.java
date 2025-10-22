@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -242,8 +244,14 @@ public class GetPagePreviewStrutsActionTest {
 			content, CoreMatchers.containsString(_fragmentEntryLink.getHtml()));
 		Assert.assertThat(
 			content, CoreMatchers.containsString(_fragmentEntryLink.getJs()));
+
+		Theme theme = _themeLocalService.fetchTheme(
+			TestPropsValues.getCompanyId(), expectedThemeId);
+
 		Assert.assertThat(
-			content, CoreMatchers.containsString("themeId=" + expectedThemeId));
+			content,
+			CoreMatchers.containsString(
+				"/o/" + theme.getServletContextName() + "/css/main."));
 	}
 
 	private void _setUpThemeDisplay() throws Exception {
@@ -297,5 +305,8 @@ public class GetPagePreviewStrutsActionTest {
 
 	private ServiceContext _serviceContext;
 	private ThemeDisplay _themeDisplay;
+
+	@Inject
+	private ThemeLocalService _themeLocalService;
 
 }

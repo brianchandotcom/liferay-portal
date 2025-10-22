@@ -838,6 +838,24 @@ public class LayoutImpl extends LayoutBaseImpl {
 			getGroupId(), isPrivateLayout(), linkToLayoutId);
 	}
 
+	/**
+	 * Returns the master layout plid of this layout.
+	 *
+	 * @return the master layout plid of this layout
+	 */
+	public long getMasterLayoutPlid() {
+		Layout masterLayout =
+			LayoutPageTemplateEntryLayoutProviderUtil.
+				getLayoutPageTemplateEntryLayout(
+					getGroupId(), getMasterLayoutPageTemplateEntryERC());
+
+		if (masterLayout == null) {
+			return 0;
+		}
+
+		return masterLayout.getPlid();
+	}
+
 	@Override
 	public String getRegularURL(HttpServletRequest httpServletRequest)
 		throws PortalException {

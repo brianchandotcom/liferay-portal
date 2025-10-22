@@ -1,16 +1,13 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -39,21 +36,26 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of a submission result of type message.",
-	value = "MessageFormSubmissionResult"
+	description = "The definition of a submission result of type embedded message.",
+	value = "EmbeddedMessageFormContainerSubmissionResult"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "MessageFormSubmissionResult")
-public class MessageFormSubmissionResult implements Serializable {
+@XmlRootElement(name = "EmbeddedMessageFormContainerSubmissionResult")
+public class EmbeddedMessageFormContainerSubmissionResult
+	extends SuccessFormContainerSubmissionResult implements Serializable {
 
-	public static MessageFormSubmissionResult toDTO(String json) {
+	public static EmbeddedMessageFormContainerSubmissionResult toDTO(
+		String json) {
+
 		return ObjectMapperUtil.readValue(
-			MessageFormSubmissionResult.class, json);
+			EmbeddedMessageFormContainerSubmissionResult.class, json);
 	}
 
-	public static MessageFormSubmissionResult unsafeToDTO(String json) {
+	public static EmbeddedMessageFormContainerSubmissionResult unsafeToDTO(
+		String json) {
+
 		return ObjectMapperUtil.unsafeReadValue(
-			MessageFormSubmissionResult.class, json);
+			EmbeddedMessageFormContainerSubmissionResult.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
@@ -101,44 +103,36 @@ public class MessageFormSubmissionResult implements Serializable {
 	private Supplier<FragmentInlineValue> _messageSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The message form submission type (embedded, none)."
+		description = "The success notification message."
 	)
-	@JsonGetter("messageType")
 	@Valid
-	public MessageType getMessageType() {
-		if (_messageTypeSupplier != null) {
-			messageType = _messageTypeSupplier.get();
+	public SuccessNotificationMessage getSuccessNotificationMessage() {
+		if (_successNotificationMessageSupplier != null) {
+			successNotificationMessage =
+				_successNotificationMessageSupplier.get();
 
-			_messageTypeSupplier = null;
+			_successNotificationMessageSupplier = null;
 		}
 
-		return messageType;
+		return successNotificationMessage;
+	}
+
+	public void setSuccessNotificationMessage(
+		SuccessNotificationMessage successNotificationMessage) {
+
+		this.successNotificationMessage = successNotificationMessage;
+
+		_successNotificationMessageSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getMessageTypeAsString() {
-		MessageType messageType = getMessageType();
+	public void setSuccessNotificationMessage(
+		UnsafeSupplier<SuccessNotificationMessage, Exception>
+			successNotificationMessageUnsafeSupplier) {
 
-		if (messageType == null) {
-			return null;
-		}
-
-		return messageType.toString();
-	}
-
-	public void setMessageType(MessageType messageType) {
-		this.messageType = messageType;
-
-		_messageTypeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setMessageType(
-		UnsafeSupplier<MessageType, Exception> messageTypeUnsafeSupplier) {
-
-		_messageTypeSupplier = () -> {
+		_successNotificationMessageSupplier = () -> {
 			try {
-				return messageTypeUnsafeSupplier.get();
+				return successNotificationMessageUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -149,55 +143,13 @@ public class MessageFormSubmissionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The message form submission type (embedded, none)."
-	)
+	@GraphQLField(description = "The success notification message.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected MessageType messageType;
+	protected SuccessNotificationMessage successNotificationMessage;
 
 	@JsonIgnore
-	private Supplier<MessageType> _messageTypeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public Boolean getShowNotification() {
-		if (_showNotificationSupplier != null) {
-			showNotification = _showNotificationSupplier.get();
-
-			_showNotificationSupplier = null;
-		}
-
-		return showNotification;
-	}
-
-	public void setShowNotification(Boolean showNotification) {
-		this.showNotification = showNotification;
-
-		_showNotificationSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setShowNotification(
-		UnsafeSupplier<Boolean, Exception> showNotificationUnsafeSupplier) {
-
-		_showNotificationSupplier = () -> {
-			try {
-				return showNotificationUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Boolean showNotification;
-
-	@JsonIgnore
-	private Supplier<Boolean> _showNotificationSupplier;
+	private Supplier<SuccessNotificationMessage>
+		_successNotificationMessageSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -205,15 +157,17 @@ public class MessageFormSubmissionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof MessageFormSubmissionResult)) {
+		if (!(object instanceof EmbeddedMessageFormContainerSubmissionResult)) {
 			return false;
 		}
 
-		MessageFormSubmissionResult messageFormSubmissionResult =
-			(MessageFormSubmissionResult)object;
+		EmbeddedMessageFormContainerSubmissionResult
+			embeddedMessageFormContainerSubmissionResult =
+				(EmbeddedMessageFormContainerSubmissionResult)object;
 
 		return Objects.equals(
-			toString(), messageFormSubmissionResult.toString());
+			toString(),
+			embeddedMessageFormContainerSubmissionResult.toString());
 	}
 
 	@Override
@@ -240,32 +194,33 @@ public class MessageFormSubmissionResult implements Serializable {
 			sb.append(String.valueOf(message));
 		}
 
-		MessageType messageType = getMessageType();
+		SuccessNotificationMessage successNotificationMessage =
+			getSuccessNotificationMessage();
 
-		if (messageType != null) {
+		if (successNotificationMessage != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"messageType\": ");
+			sb.append("\"successNotificationMessage\": ");
 
-			sb.append("\"");
-
-			sb.append(messageType);
-
-			sb.append("\"");
+			sb.append(String.valueOf(successNotificationMessage));
 		}
 
-		Boolean showNotification = getShowNotification();
+		Type type = getType();
 
-		if (showNotification != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"showNotification\": ");
+			sb.append("\"type\": ");
 
-			sb.append(showNotification);
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -275,48 +230,10 @@ public class MessageFormSubmissionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.MessageFormSubmissionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.EmbeddedMessageFormContainerSubmissionResult",
 		name = "x-class-name"
 	)
 	public String xClassName;
-
-	@GraphQLName("MessageType")
-	public static enum MessageType {
-
-		EMBEDDED("Embedded"), NONE("None");
-
-		@JsonCreator
-		public static MessageType create(String value) {
-			if ((value == null) || value.equals("")) {
-				return null;
-			}
-
-			for (MessageType messageType : values()) {
-				if (Objects.equals(messageType.getValue(), value)) {
-					return messageType;
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid enum value: " + value);
-		}
-
-		@JsonValue
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private MessageType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

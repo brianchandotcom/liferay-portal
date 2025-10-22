@@ -1,13 +1,18 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -36,51 +41,90 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of a submission result of type page.",
-	value = "SitePageFormSubmissionResult"
+	description = "The form container success form container submission result.",
+	value = "SuccessFormContainerSubmissionResult"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "SitePageFormSubmissionResult")
-public class SitePageFormSubmissionResult implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "DisplayPage",
+			value = DisplayPageFormContainerSubmissionResult.class
+		),
+		@JsonSubTypes.Type(
+			name = "EmbeddedMessage",
+			value = EmbeddedMessageFormContainerSubmissionResult.class
+		),
+		@JsonSubTypes.Type(
+			name = "SitePage",
+			value = SitePageFormContainerSubmissionResult.class
+		),
+		@JsonSubTypes.Type(
+			name = "StayInPage",
+			value = StayInPageFormContainerSubmissionResult.class
+		),
+		@JsonSubTypes.Type(
+			name = "Url", value = URLFormContainerSubmissionResult.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "SuccessFormContainerSubmissionResult")
+public abstract class SuccessFormContainerSubmissionResult
+	implements Serializable {
 
-	public static SitePageFormSubmissionResult toDTO(String json) {
+	public static SuccessFormContainerSubmissionResult toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			SitePageFormSubmissionResult.class, json);
+			SuccessFormContainerSubmissionResult.class, json);
 	}
 
-	public static SitePageFormSubmissionResult unsafeToDTO(String json) {
+	public static SuccessFormContainerSubmissionResult unsafeToDTO(
+		String json) {
+
 		return ObjectMapperUtil.unsafeReadValue(
-			SitePageFormSubmissionResult.class, json);
+			SuccessFormContainerSubmissionResult.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized submission of page type."
+		description = "The form container success form container submission result type."
 	)
+	@JsonGetter("type")
 	@Valid
-	public ItemExternalReference getItemReference() {
-		if (_itemReferenceSupplier != null) {
-			itemReference = _itemReferenceSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_itemReferenceSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return itemReference;
-	}
-
-	public void setItemReference(ItemExternalReference itemReference) {
-		this.itemReference = itemReference;
-
-		_itemReferenceSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setItemReference(
-		UnsafeSupplier<ItemExternalReference, Exception>
-			itemReferenceUnsafeSupplier) {
+	public String getTypeAsString() {
+		Type type = getType();
 
-		_itemReferenceSupplier = () -> {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return itemReferenceUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -91,12 +135,14 @@ public class SitePageFormSubmissionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The localized submission of page type.")
+	@GraphQLField(
+		description = "The form container success form container submission result type."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected ItemExternalReference itemReference;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<ItemExternalReference> _itemReferenceSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -104,15 +150,16 @@ public class SitePageFormSubmissionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof SitePageFormSubmissionResult)) {
+		if (!(object instanceof SuccessFormContainerSubmissionResult)) {
 			return false;
 		}
 
-		SitePageFormSubmissionResult sitePageFormSubmissionResult =
-			(SitePageFormSubmissionResult)object;
+		SuccessFormContainerSubmissionResult
+			successFormContainerSubmissionResult =
+				(SuccessFormContainerSubmissionResult)object;
 
 		return Objects.equals(
-			toString(), sitePageFormSubmissionResult.toString());
+			toString(), successFormContainerSubmissionResult.toString());
 	}
 
 	@Override
@@ -127,16 +174,20 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 		sb.append("{");
 
-		ItemExternalReference itemReference = getItemReference();
+		Type type = getType();
 
-		if (itemReference != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"itemReference\": ");
+			sb.append("\"type\": ");
 
-			sb.append(String.valueOf(itemReference));
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -146,10 +197,49 @@ public class SitePageFormSubmissionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SitePageFormSubmissionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.SuccessFormContainerSubmissionResult",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		DISPLAY_PAGE("DisplayPage"), EMBEDDED_MESSAGE("EmbeddedMessage"),
+		SITE_PAGE("SitePage"), STAY_IN_PAGE("StayInPage"), URL("Url");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

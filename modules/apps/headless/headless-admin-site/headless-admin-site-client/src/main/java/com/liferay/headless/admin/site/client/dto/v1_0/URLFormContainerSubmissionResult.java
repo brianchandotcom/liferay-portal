@@ -1,12 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.URLFormSubmissionResultSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.URLFormContainerSubmissionResultSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,12 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class URLFormSubmissionResult implements Cloneable, Serializable {
+public class URLFormContainerSubmissionResult
+	extends SuccessFormContainerSubmissionResult
+	implements Cloneable, Serializable {
 
-	public static URLFormSubmissionResult toDTO(String json) {
-		return URLFormSubmissionResultSerDes.toDTO(json);
+	public static URLFormContainerSubmissionResult toDTO(String json) {
+		return URLFormContainerSubmissionResultSerDes.toDTO(json);
 	}
 
 	public FragmentInlineValue getUrl() {
@@ -47,8 +49,10 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 	protected FragmentInlineValue url;
 
 	@Override
-	public URLFormSubmissionResult clone() throws CloneNotSupportedException {
-		return (URLFormSubmissionResult)super.clone();
+	public URLFormContainerSubmissionResult clone()
+		throws CloneNotSupportedException {
+
+		return (URLFormContainerSubmissionResult)super.clone();
 	}
 
 	@Override
@@ -57,14 +61,15 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof URLFormSubmissionResult)) {
+		if (!(object instanceof URLFormContainerSubmissionResult)) {
 			return false;
 		}
 
-		URLFormSubmissionResult urlFormSubmissionResult =
-			(URLFormSubmissionResult)object;
+		URLFormContainerSubmissionResult urlFormContainerSubmissionResult =
+			(URLFormContainerSubmissionResult)object;
 
-		return Objects.equals(toString(), urlFormSubmissionResult.toString());
+		return Objects.equals(
+			toString(), urlFormContainerSubmissionResult.toString());
 	}
 
 	@Override
@@ -75,7 +80,7 @@ public class URLFormSubmissionResult implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return URLFormSubmissionResultSerDes.toJSON(this);
+		return URLFormContainerSubmissionResultSerDes.toJSON(this);
 	}
 
 }

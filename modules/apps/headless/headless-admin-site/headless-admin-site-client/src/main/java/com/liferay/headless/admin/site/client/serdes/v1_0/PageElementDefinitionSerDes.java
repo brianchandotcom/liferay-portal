@@ -9,7 +9,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.FormPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentCompositionInstancePageElementDefinition;
@@ -81,9 +81,9 @@ public class PageElementDefinitionSerDes {
 					(DropZonePageElementDefinition)pageElementDefinition);
 			}
 
-			if (typeString.equals("Form")) {
-				return FormPageElementDefinitionSerDes.toJSON(
-					(FormPageElementDefinition)pageElementDefinition);
+			if (typeString.equals("FormContainer")) {
+				return FormContainerPageElementDefinitionSerDes.toJSON(
+					(FormContainerPageElementDefinition)pageElementDefinition);
 			}
 
 			if (typeString.equals("FormStep")) {
@@ -211,8 +211,8 @@ public class PageElementDefinitionSerDes {
 					return DropZonePageElementDefinition.toDTO(json);
 				}
 
-				if (typeString.equals("Form")) {
-					return FormPageElementDefinition.toDTO(json);
+				if (typeString.equals("FormContainer")) {
+					return FormContainerPageElementDefinition.toDTO(json);
 				}
 
 				if (typeString.equals("FormStep")) {

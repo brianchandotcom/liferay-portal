@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.FormPageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FormContainerPageElementDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,11 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class FormPageElementDefinition
+public class FormContainerPageElementDefinition
 	extends PageElementDefinition implements Cloneable, Serializable {
 
-	public static FormPageElementDefinition toDTO(String json) {
-		return FormPageElementDefinitionSerDes.toDTO(json);
+	public static FormContainerPageElementDefinition toDTO(String json) {
+		return FormContainerPageElementDefinitionSerDes.toDTO(json);
 	}
 
 	public String[] getCssClasses() {
@@ -68,48 +68,29 @@ public class FormPageElementDefinition
 
 	protected String customCSS;
 
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		return customCSSViewports;
+	public FormContainerConfig getFormContainerConfig() {
+		return formContainerConfig;
 	}
 
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
+	public void setFormContainerConfig(
+		FormContainerConfig formContainerConfig) {
+
+		this.formContainerConfig = formContainerConfig;
 	}
 
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
+	public void setFormContainerConfig(
+		UnsafeSupplier<FormContainerConfig, Exception>
+			formContainerConfigUnsafeSupplier) {
 
 		try {
-			customCSSViewports = customCSSViewportsUnsafeSupplier.get();
+			formContainerConfig = formContainerConfigUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected CustomCSSViewport[] customCSSViewports;
-
-	public FormConfig getFormConfig() {
-		return formConfig;
-	}
-
-	public void setFormConfig(FormConfig formConfig) {
-		this.formConfig = formConfig;
-	}
-
-	public void setFormConfig(
-		UnsafeSupplier<FormConfig, Exception> formConfigUnsafeSupplier) {
-
-		try {
-			formConfig = formConfigUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FormConfig formConfig;
+	protected FormContainerConfig formContainerConfig;
 
 	public FragmentStyle getFragmentStyle() {
 		return fragmentStyle;
@@ -216,8 +197,10 @@ public class FormPageElementDefinition
 	protected String name;
 
 	@Override
-	public FormPageElementDefinition clone() throws CloneNotSupportedException {
-		return (FormPageElementDefinition)super.clone();
+	public FormContainerPageElementDefinition clone()
+		throws CloneNotSupportedException {
+
+		return (FormContainerPageElementDefinition)super.clone();
 	}
 
 	@Override
@@ -226,14 +209,15 @@ public class FormPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof FormPageElementDefinition)) {
+		if (!(object instanceof FormContainerPageElementDefinition)) {
 			return false;
 		}
 
-		FormPageElementDefinition formPageElementDefinition =
-			(FormPageElementDefinition)object;
+		FormContainerPageElementDefinition formContainerPageElementDefinition =
+			(FormContainerPageElementDefinition)object;
 
-		return Objects.equals(toString(), formPageElementDefinition.toString());
+		return Objects.equals(
+			toString(), formContainerPageElementDefinition.toString());
 	}
 
 	@Override
@@ -244,7 +228,7 @@ public class FormPageElementDefinition
 	}
 
 	public String toString() {
-		return FormPageElementDefinitionSerDes.toJSON(this);
+		return FormContainerPageElementDefinitionSerDes.toJSON(this);
 	}
 
 }

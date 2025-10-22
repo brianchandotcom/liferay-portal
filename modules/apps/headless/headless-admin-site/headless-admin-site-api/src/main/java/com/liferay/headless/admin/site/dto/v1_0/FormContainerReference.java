@@ -1,13 +1,18 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.dto.v1_0;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
@@ -36,49 +41,75 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The definition of a submission result of type URL.",
-	value = "URLFormSubmissionResult"
+	description = "The form container reference.",
+	value = "FormContainerReference"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "URLFormSubmissionResult")
-public class URLFormSubmissionResult implements Serializable {
+@JsonSubTypes(
+	{
+		@JsonSubTypes.Type(
+			name = "FormContainerClassSubtypeReference",
+			value = FormContainerClassSubtypeReference.class
+		),
+		@JsonSubTypes.Type(
+			name = "FormContainerContextReference",
+			value = FormContainerContextReference.class
+		)
+	}
+)
+@JsonTypeInfo(
+	include = JsonTypeInfo.As.PROPERTY, property = "type",
+	use = JsonTypeInfo.Id.NAME, visible = true
+)
+@XmlRootElement(name = "FormContainerReference")
+public abstract class FormContainerReference implements Serializable {
 
-	public static URLFormSubmissionResult toDTO(String json) {
-		return ObjectMapperUtil.readValue(URLFormSubmissionResult.class, json);
+	public static FormContainerReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(FormContainerReference.class, json);
 	}
 
-	public static URLFormSubmissionResult unsafeToDTO(String json) {
+	public static FormContainerReference unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			URLFormSubmissionResult.class, json);
+			FormContainerReference.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The localized submission of URL type."
+		description = "The form container reference. Can be a class subtype reference or a context reference."
 	)
+	@JsonGetter("type")
 	@Valid
-	public FragmentInlineValue getUrl() {
-		if (_urlSupplier != null) {
-			url = _urlSupplier.get();
+	public Type getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
 
-			_urlSupplier = null;
+			_typeSupplier = null;
 		}
 
-		return url;
-	}
-
-	public void setUrl(FragmentInlineValue url) {
-		this.url = url;
-
-		_urlSupplier = null;
+		return type;
 	}
 
 	@JsonIgnore
-	public void setUrl(
-		UnsafeSupplier<FragmentInlineValue, Exception> urlUnsafeSupplier) {
+	public String getTypeAsString() {
+		Type type = getType();
 
-		_urlSupplier = () -> {
+		if (type == null) {
+			return null;
+		}
+
+		return type.toString();
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
 			try {
-				return urlUnsafeSupplier.get();
+				return typeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -89,12 +120,14 @@ public class URLFormSubmissionResult implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The localized submission of URL type.")
+	@GraphQLField(
+		description = "The form container reference. Can be a class subtype reference or a context reference."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FragmentInlineValue url;
+	protected Type type;
 
 	@JsonIgnore
-	private Supplier<FragmentInlineValue> _urlSupplier;
+	private Supplier<Type> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -102,14 +135,14 @@ public class URLFormSubmissionResult implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof URLFormSubmissionResult)) {
+		if (!(object instanceof FormContainerReference)) {
 			return false;
 		}
 
-		URLFormSubmissionResult urlFormSubmissionResult =
-			(URLFormSubmissionResult)object;
+		FormContainerReference formContainerReference =
+			(FormContainerReference)object;
 
-		return Objects.equals(toString(), urlFormSubmissionResult.toString());
+		return Objects.equals(toString(), formContainerReference.toString());
 	}
 
 	@Override
@@ -124,16 +157,20 @@ public class URLFormSubmissionResult implements Serializable {
 
 		sb.append("{");
 
-		FragmentInlineValue url = getUrl();
+		Type type = getType();
 
-		if (url != null) {
+		if (type != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"url\": ");
+			sb.append("\"type\": ");
 
-			sb.append(String.valueOf(url));
+			sb.append("\"");
+
+			sb.append(type);
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -143,10 +180,50 @@ public class URLFormSubmissionResult implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.URLFormSubmissionResult",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormContainerReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
+
+	@GraphQLName("Type")
+	public static enum Type {
+
+		FORM_CONTAINER_CLASS_SUBTYPE_REFERENCE(
+			"FormContainerClassSubtypeReference"),
+		FORM_CONTAINER_CONTEXT_REFERENCE("FormContainerContextReference");
+
+		@JsonCreator
+		public static Type create(String value) {
+			if ((value == null) || value.equals("")) {
+				return null;
+			}
+
+			for (Type type : values()) {
+				if (Objects.equals(type.getValue(), value)) {
+					return type;
+				}
+			}
+
+			throw new IllegalArgumentException("Invalid enum value: " + value);
+		}
+
+		@JsonValue
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private Type(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 	private static String _escape(Object object) {
 		return StringUtil.replace(

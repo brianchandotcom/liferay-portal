@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.MessageFormSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.SuccessNotificationMessage;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,28 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class MessageFormSubmissionResultSerDes {
+public class SuccessNotificationMessageSerDes {
 
-	public static MessageFormSubmissionResult toDTO(String json) {
-		MessageFormSubmissionResultJSONParser
-			messageFormSubmissionResultJSONParser =
-				new MessageFormSubmissionResultJSONParser();
+	public static SuccessNotificationMessage toDTO(String json) {
+		SuccessNotificationMessageJSONParser
+			successNotificationMessageJSONParser =
+				new SuccessNotificationMessageJSONParser();
 
-		return messageFormSubmissionResultJSONParser.parseToDTO(json);
+		return successNotificationMessageJSONParser.parseToDTO(json);
 	}
 
-	public static MessageFormSubmissionResult[] toDTOs(String json) {
-		MessageFormSubmissionResultJSONParser
-			messageFormSubmissionResultJSONParser =
-				new MessageFormSubmissionResultJSONParser();
+	public static SuccessNotificationMessage[] toDTOs(String json) {
+		SuccessNotificationMessageJSONParser
+			successNotificationMessageJSONParser =
+				new SuccessNotificationMessageJSONParser();
 
-		return messageFormSubmissionResultJSONParser.parseToDTOs(json);
+		return successNotificationMessageJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		MessageFormSubmissionResult messageFormSubmissionResult) {
+		SuccessNotificationMessage successNotificationMessage) {
 
-		if (messageFormSubmissionResult == null) {
+		if (successNotificationMessage == null) {
 			return "null";
 		}
 
@@ -50,38 +50,24 @@ public class MessageFormSubmissionResultSerDes {
 
 		sb.append("{");
 
-		if (messageFormSubmissionResult.getMessage() != null) {
+		if (successNotificationMessage.getMessage() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"message\": ");
 
-			sb.append(String.valueOf(messageFormSubmissionResult.getMessage()));
+			sb.append(String.valueOf(successNotificationMessage.getMessage()));
 		}
 
-		if (messageFormSubmissionResult.getMessageType() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"messageType\": ");
-
-			sb.append("\"");
-
-			sb.append(messageFormSubmissionResult.getMessageType());
-
-			sb.append("\"");
-		}
-
-		if (messageFormSubmissionResult.getShowNotification() != null) {
+		if (successNotificationMessage.getShowNotification() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"showNotification\": ");
 
-			sb.append(messageFormSubmissionResult.getShowNotification());
+			sb.append(successNotificationMessage.getShowNotification());
 		}
 
 		sb.append("}");
@@ -90,72 +76,60 @@ public class MessageFormSubmissionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		MessageFormSubmissionResultJSONParser
-			messageFormSubmissionResultJSONParser =
-				new MessageFormSubmissionResultJSONParser();
+		SuccessNotificationMessageJSONParser
+			successNotificationMessageJSONParser =
+				new SuccessNotificationMessageJSONParser();
 
-		return messageFormSubmissionResultJSONParser.parseToMap(json);
+		return successNotificationMessageJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		MessageFormSubmissionResult messageFormSubmissionResult) {
+		SuccessNotificationMessage successNotificationMessage) {
 
-		if (messageFormSubmissionResult == null) {
+		if (successNotificationMessage == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (messageFormSubmissionResult.getMessage() == null) {
+		if (successNotificationMessage.getMessage() == null) {
 			map.put("message", null);
 		}
 		else {
 			map.put(
 				"message",
-				String.valueOf(messageFormSubmissionResult.getMessage()));
+				String.valueOf(successNotificationMessage.getMessage()));
 		}
 
-		if (messageFormSubmissionResult.getMessageType() == null) {
-			map.put("messageType", null);
-		}
-		else {
-			map.put(
-				"messageType",
-				String.valueOf(messageFormSubmissionResult.getMessageType()));
-		}
-
-		if (messageFormSubmissionResult.getShowNotification() == null) {
+		if (successNotificationMessage.getShowNotification() == null) {
 			map.put("showNotification", null);
 		}
 		else {
 			map.put(
 				"showNotification",
 				String.valueOf(
-					messageFormSubmissionResult.getShowNotification()));
+					successNotificationMessage.getShowNotification()));
 		}
 
 		return map;
 	}
 
-	public static class MessageFormSubmissionResultJSONParser
-		extends BaseJSONParser<MessageFormSubmissionResult> {
+	public static class SuccessNotificationMessageJSONParser
+		extends BaseJSONParser<SuccessNotificationMessage> {
 
 		@Override
-		protected MessageFormSubmissionResult createDTO() {
-			return new MessageFormSubmissionResult();
+		protected SuccessNotificationMessage createDTO() {
+			return new SuccessNotificationMessage();
 		}
 
 		@Override
-		protected MessageFormSubmissionResult[] createDTOArray(int size) {
-			return new MessageFormSubmissionResult[size];
+		protected SuccessNotificationMessage[] createDTOArray(int size) {
+			return new SuccessNotificationMessage[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(jsonParserFieldName, "message")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "messageType")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "showNotification")) {
@@ -167,26 +141,19 @@ public class MessageFormSubmissionResultSerDes {
 
 		@Override
 		protected void setField(
-			MessageFormSubmissionResult messageFormSubmissionResult,
+			SuccessNotificationMessage successNotificationMessage,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "message")) {
 				if (jsonParserFieldValue != null) {
-					messageFormSubmissionResult.setMessage(
+					successNotificationMessage.setMessage(
 						FragmentInlineValueSerDes.toDTO(
-							(String)jsonParserFieldValue));
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "messageType")) {
-				if (jsonParserFieldValue != null) {
-					messageFormSubmissionResult.setMessageType(
-						MessageFormSubmissionResult.MessageType.create(
 							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "showNotification")) {
 				if (jsonParserFieldValue != null) {
-					messageFormSubmissionResult.setShowNotification(
+					successNotificationMessage.setShowNotification(
 						(Boolean)jsonParserFieldValue);
 				}
 			}

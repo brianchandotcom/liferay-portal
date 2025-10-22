@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.URLFormSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,26 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class URLFormSubmissionResultSerDes {
+public class URLFormContainerSubmissionResultSerDes {
 
-	public static URLFormSubmissionResult toDTO(String json) {
-		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
-			new URLFormSubmissionResultJSONParser();
+	public static URLFormContainerSubmissionResult toDTO(String json) {
+		URLFormContainerSubmissionResultJSONParser
+			urlFormContainerSubmissionResultJSONParser =
+				new URLFormContainerSubmissionResultJSONParser();
 
-		return urlFormSubmissionResultJSONParser.parseToDTO(json);
+		return urlFormContainerSubmissionResultJSONParser.parseToDTO(json);
 	}
 
-	public static URLFormSubmissionResult[] toDTOs(String json) {
-		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
-			new URLFormSubmissionResultJSONParser();
+	public static URLFormContainerSubmissionResult[] toDTOs(String json) {
+		URLFormContainerSubmissionResultJSONParser
+			urlFormContainerSubmissionResultJSONParser =
+				new URLFormContainerSubmissionResultJSONParser();
 
-		return urlFormSubmissionResultJSONParser.parseToDTOs(json);
+		return urlFormContainerSubmissionResultJSONParser.parseToDTOs(json);
 	}
 
 	public static String toJSON(
-		URLFormSubmissionResult urlFormSubmissionResult) {
+		URLFormContainerSubmissionResult urlFormContainerSubmissionResult) {
 
-		if (urlFormSubmissionResult == null) {
+		if (urlFormContainerSubmissionResult == null) {
 			return "null";
 		}
 
@@ -48,14 +50,29 @@ public class URLFormSubmissionResultSerDes {
 
 		sb.append("{");
 
-		if (urlFormSubmissionResult.getUrl() != null) {
+		if (urlFormContainerSubmissionResult.getUrl() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
 			sb.append("\"url\": ");
 
-			sb.append(String.valueOf(urlFormSubmissionResult.getUrl()));
+			sb.append(
+				String.valueOf(urlFormContainerSubmissionResult.getUrl()));
+		}
+
+		if (urlFormContainerSubmissionResult.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(urlFormContainerSubmissionResult.getType());
+
+			sb.append("\"");
 		}
 
 		sb.append("}");
@@ -64,47 +81,62 @@ public class URLFormSubmissionResultSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		URLFormSubmissionResultJSONParser urlFormSubmissionResultJSONParser =
-			new URLFormSubmissionResultJSONParser();
+		URLFormContainerSubmissionResultJSONParser
+			urlFormContainerSubmissionResultJSONParser =
+				new URLFormContainerSubmissionResultJSONParser();
 
-		return urlFormSubmissionResultJSONParser.parseToMap(json);
+		return urlFormContainerSubmissionResultJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		URLFormSubmissionResult urlFormSubmissionResult) {
+		URLFormContainerSubmissionResult urlFormContainerSubmissionResult) {
 
-		if (urlFormSubmissionResult == null) {
+		if (urlFormContainerSubmissionResult == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (urlFormSubmissionResult.getUrl() == null) {
+		if (urlFormContainerSubmissionResult.getUrl() == null) {
 			map.put("url", null);
 		}
 		else {
-			map.put("url", String.valueOf(urlFormSubmissionResult.getUrl()));
+			map.put(
+				"url",
+				String.valueOf(urlFormContainerSubmissionResult.getUrl()));
+		}
+
+		if (urlFormContainerSubmissionResult.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put(
+				"type",
+				String.valueOf(urlFormContainerSubmissionResult.getType()));
 		}
 
 		return map;
 	}
 
-	public static class URLFormSubmissionResultJSONParser
-		extends BaseJSONParser<URLFormSubmissionResult> {
+	public static class URLFormContainerSubmissionResultJSONParser
+		extends BaseJSONParser<URLFormContainerSubmissionResult> {
 
 		@Override
-		protected URLFormSubmissionResult createDTO() {
-			return new URLFormSubmissionResult();
+		protected URLFormContainerSubmissionResult createDTO() {
+			return new URLFormContainerSubmissionResult();
 		}
 
 		@Override
-		protected URLFormSubmissionResult[] createDTOArray(int size) {
-			return new URLFormSubmissionResult[size];
+		protected URLFormContainerSubmissionResult[] createDTOArray(int size) {
+			return new URLFormContainerSubmissionResult[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(jsonParserFieldName, "url")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -113,13 +145,20 @@ public class URLFormSubmissionResultSerDes {
 
 		@Override
 		protected void setField(
-			URLFormSubmissionResult urlFormSubmissionResult,
+			URLFormContainerSubmissionResult urlFormContainerSubmissionResult,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(jsonParserFieldName, "url")) {
 				if (jsonParserFieldValue != null) {
-					urlFormSubmissionResult.setUrl(
+					urlFormContainerSubmissionResult.setUrl(
 						FragmentInlineValueSerDes.toDTO(
+							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					urlFormContainerSubmissionResult.setType(
+						URLFormContainerSubmissionResult.Type.create(
 							(String)jsonParserFieldValue));
 				}
 			}

@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -41,113 +39,61 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page element definition.",
-	value = "PageElementDefinition"
+	description = "A unique reference to a FormContainerReference of type FormContainerContextReference which remains constant across environments.",
+	value = "FormContainerContextReference"
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "CollectionDisplay",
-			value = CollectionDisplayPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "CollectionItem",
-			value = CollectionItemPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Container", value = ContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "DropZone", value = DropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormContainer",
-			value = FormContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStep", value = FormStepPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStepContainer",
-			value = FormStepContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Fragment",
-			value = FragmentInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentComposition",
-			value = FragmentCompositionInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentDropZone",
-			value = FragmentDropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Grid", value = GridPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Module", value = ModulePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Widget", value = WidgetInstancePageElementDefinition.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "PageElementDefinition")
-public abstract class PageElementDefinition implements Serializable {
+@XmlRootElement(name = "FormContainerContextReference")
+public class FormContainerContextReference
+	extends FormContainerReference implements Serializable {
 
-	public static PageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageElementDefinition.class, json);
+	public static FormContainerContextReference toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			FormContainerContextReference.class, json);
 	}
 
-	public static PageElementDefinition unsafeToDTO(String json) {
+	public static FormContainerContextReference unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			PageElementDefinition.class, json);
+			FormContainerContextReference.class, json);
 	}
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form container, form step, form step container, fragment, fragment composition, fragment drop zone, grid,  module or widget)."
-	)
-	@JsonGetter("type")
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("contextSource")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public ContextSource getContextSource() {
+		if (_contextSourceSupplier != null) {
+			contextSource = _contextSourceSupplier.get();
 
-			_typeSupplier = null;
+			_contextSourceSupplier = null;
 		}
 
-		return type;
+		return contextSource;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public String getContextSourceAsString() {
+		ContextSource contextSource = getContextSource();
 
-		if (type == null) {
+		if (contextSource == null) {
 			return null;
 		}
 
-		return type.toString();
+		return contextSource.toString();
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setContextSource(ContextSource contextSource) {
+		this.contextSource = contextSource;
 
-		_typeSupplier = null;
+		_contextSourceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+	public void setContextSource(
+		UnsafeSupplier<ContextSource, Exception> contextSourceUnsafeSupplier) {
+
+		_contextSourceSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return contextSourceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -158,14 +104,12 @@ public abstract class PageElementDefinition implements Serializable {
 		};
 	}
 
-	@GraphQLField(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form container, form step, form step container, fragment, fragment composition, fragment drop zone, grid,  module or widget)."
-	)
+	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected ContextSource contextSource;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<ContextSource> _contextSourceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -173,14 +117,15 @@ public abstract class PageElementDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageElementDefinition)) {
+		if (!(object instanceof FormContainerContextReference)) {
 			return false;
 		}
 
-		PageElementDefinition pageElementDefinition =
-			(PageElementDefinition)object;
+		FormContainerContextReference formContainerContextReference =
+			(FormContainerContextReference)object;
 
-		return Objects.equals(toString(), pageElementDefinition.toString());
+		return Objects.equals(
+			toString(), formContainerContextReference.toString());
 	}
 
 	@Override
@@ -194,6 +139,22 @@ public abstract class PageElementDefinition implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		ContextSource contextSource = getContextSource();
+
+		if (contextSource != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"contextSource\": ");
+
+			sb.append("\"");
+
+			sb.append(contextSource);
+
+			sb.append("\"");
+		}
 
 		Type type = getType();
 
@@ -218,31 +179,25 @@ public abstract class PageElementDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormContainerContextReference",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Type")
-	public static enum Type {
+	@GraphQLName("ContextSource")
+	public static enum ContextSource {
 
-		COLLECTION_DISPLAY("CollectionDisplay"),
-		COLLECTION_ITEM("CollectionItem"), CONTAINER("Container"),
-		DROP_ZONE("DropZone"), FORM_CONTAINER("FormContainer"),
-		FORM_STEP("FormStep"), FORM_STEP_CONTAINER("FormStepContainer"),
-		FRAGMENT("Fragment"), FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
-		WIDGET("Widget");
+		COLLECTION_ITEM("CollectionItem"), DISPLAY_PAGE_ITEM("DisplayPageItem");
 
 		@JsonCreator
-		public static Type create(String value) {
+		public static ContextSource create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
+			for (ContextSource contextSource : values()) {
+				if (Objects.equals(contextSource.getValue(), value)) {
+					return contextSource;
 				}
 			}
 
@@ -259,7 +214,7 @@ public abstract class PageElementDefinition implements Serializable {
 			return _value;
 		}
 
-		private Type(String value) {
+		private ContextSource(String value) {
 			_value = value;
 		}
 

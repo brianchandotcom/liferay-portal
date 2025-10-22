@@ -37,25 +37,25 @@ import java.util.function.Supplier;
 @Generated("")
 @GraphQLName(
 	description = "The page element definition of a form.",
-	value = "FormPageElementDefinition"
+	value = "FormContainerPageElementDefinition"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FormPageElementDefinition")
-public class FormPageElementDefinition
+@XmlRootElement(name = "FormContainerPageElementDefinition")
+public class FormContainerPageElementDefinition
 	extends PageElementDefinition implements Serializable {
 
-	public static FormPageElementDefinition toDTO(String json) {
+	public static FormContainerPageElementDefinition toDTO(String json) {
 		return ObjectMapperUtil.readValue(
-			FormPageElementDefinition.class, json);
+			FormContainerPageElementDefinition.class, json);
 	}
 
-	public static FormPageElementDefinition unsafeToDTO(String json) {
+	public static FormContainerPageElementDefinition unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			FormPageElementDefinition.class, json);
+			FormContainerPageElementDefinition.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of CSS classes that are applied to the form page element."
+		description = "A list of CSS classes that are applied to the form container page element."
 	)
 	public String[] getCssClasses() {
 		if (_cssClassesSupplier != null) {
@@ -91,7 +91,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of CSS classes that are applied to the form page element."
+		description = "A list of CSS classes that are applied to the form container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] cssClasses;
@@ -100,7 +100,7 @@ public class FormPageElementDefinition
 	private Supplier<String[]> _cssClassesSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "Custom CSS that is applied on the form page element."
+		description = "Custom CSS that is applied on the form container page element."
 	)
 	public String getCustomCSS() {
 		if (_customCSSSupplier != null) {
@@ -136,7 +136,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "Custom CSS that is applied on the form page element."
+		description = "Custom CSS that is applied on the form container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String customCSS;
@@ -144,76 +144,34 @@ public class FormPageElementDefinition
 	@JsonIgnore
 	private Supplier<String> _customCSSSupplier;
 
-	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom CSS viewports of the page form."
-	)
-	@Valid
-	public CustomCSSViewport[] getCustomCSSViewports() {
-		if (_customCSSViewportsSupplier != null) {
-			customCSSViewports = _customCSSViewportsSupplier.get();
-
-			_customCSSViewportsSupplier = null;
-		}
-
-		return customCSSViewports;
-	}
-
-	public void setCustomCSSViewports(CustomCSSViewport[] customCSSViewports) {
-		this.customCSSViewports = customCSSViewports;
-
-		_customCSSViewportsSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setCustomCSSViewports(
-		UnsafeSupplier<CustomCSSViewport[], Exception>
-			customCSSViewportsUnsafeSupplier) {
-
-		_customCSSViewportsSupplier = () -> {
-			try {
-				return customCSSViewportsUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The custom CSS viewports of the page form.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected CustomCSSViewport[] customCSSViewports;
-
-	@JsonIgnore
-	private Supplier<CustomCSSViewport[]> _customCSSViewportsSupplier;
-
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public FormConfig getFormConfig() {
-		if (_formConfigSupplier != null) {
-			formConfig = _formConfigSupplier.get();
+	public FormContainerConfig getFormContainerConfig() {
+		if (_formContainerConfigSupplier != null) {
+			formContainerConfig = _formContainerConfigSupplier.get();
 
-			_formConfigSupplier = null;
+			_formContainerConfigSupplier = null;
 		}
 
-		return formConfig;
+		return formContainerConfig;
 	}
 
-	public void setFormConfig(FormConfig formConfig) {
-		this.formConfig = formConfig;
+	public void setFormContainerConfig(
+		FormContainerConfig formContainerConfig) {
 
-		_formConfigSupplier = null;
+		this.formContainerConfig = formContainerConfig;
+
+		_formContainerConfigSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFormConfig(
-		UnsafeSupplier<FormConfig, Exception> formConfigUnsafeSupplier) {
+	public void setFormContainerConfig(
+		UnsafeSupplier<FormContainerConfig, Exception>
+			formContainerConfigUnsafeSupplier) {
 
-		_formConfigSupplier = () -> {
+		_formContainerConfigSupplier = () -> {
 			try {
-				return formConfigUnsafeSupplier.get();
+				return formContainerConfigUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -226,13 +184,13 @@ public class FormPageElementDefinition
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FormConfig formConfig;
+	protected FormContainerConfig formContainerConfig;
 
 	@JsonIgnore
-	private Supplier<FormConfig> _formConfigSupplier;
+	private Supplier<FormContainerConfig> _formContainerConfigSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The fragment style of a form page element."
+		description = "The fragment style of a form container page element."
 	)
 	@Valid
 	public FragmentStyle getFragmentStyle() {
@@ -268,7 +226,9 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The fragment style of a form page element.")
+	@GraphQLField(
+		description = "The fragment style of a form container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentStyle fragmentStyle;
 
@@ -276,7 +236,7 @@ public class FormPageElementDefinition
 	private Supplier<FragmentStyle> _fragmentStyleSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A list of fragment viewports of a form page element."
+		description = "A list of fragment viewports of a form container page element."
 	)
 	@Valid
 	public FragmentViewport[] getFragmentViewports() {
@@ -314,7 +274,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A list of fragment viewports of a form page element."
+		description = "A list of fragment viewports of a form container page element."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected FragmentViewport[] fragmentViewports;
@@ -323,7 +283,7 @@ public class FormPageElementDefinition
 	private Supplier<FragmentViewport[]> _fragmentViewportsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "A flag that indicates whether the page fragment instance is indexed or not."
+		description = "A flag that indicates whether the form container is indexed or not."
 	)
 	public Boolean getIndexed() {
 		if (_indexedSupplier != null) {
@@ -359,7 +319,7 @@ public class FormPageElementDefinition
 	}
 
 	@GraphQLField(
-		description = "A flag that indicates whether the page fragment instance is indexed or not."
+		description = "A flag that indicates whether the form container is indexed or not."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Boolean indexed;
@@ -368,7 +328,7 @@ public class FormPageElementDefinition
 	private Supplier<Boolean> _indexedSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The form page element's layout."
+		description = "The form container page element's layout."
 	)
 	@Valid
 	public Layout getLayout() {
@@ -404,7 +364,7 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The form page element's layout.")
+	@GraphQLField(description = "The form container page element's layout.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Layout layout;
 
@@ -412,7 +372,7 @@ public class FormPageElementDefinition
 	private Supplier<Layout> _layoutSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The custom name of a form page element."
+		description = "The custom name of a form container page element."
 	)
 	public String getName() {
 		if (_nameSupplier != null) {
@@ -445,7 +405,9 @@ public class FormPageElementDefinition
 		};
 	}
 
-	@GraphQLField(description = "The custom name of a form page element.")
+	@GraphQLField(
+		description = "The custom name of a form container page element."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
@@ -458,14 +420,15 @@ public class FormPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof FormPageElementDefinition)) {
+		if (!(object instanceof FormContainerPageElementDefinition)) {
 			return false;
 		}
 
-		FormPageElementDefinition formPageElementDefinition =
-			(FormPageElementDefinition)object;
+		FormContainerPageElementDefinition formContainerPageElementDefinition =
+			(FormContainerPageElementDefinition)object;
 
-		return Objects.equals(toString(), formPageElementDefinition.toString());
+		return Objects.equals(
+			toString(), formContainerPageElementDefinition.toString());
 	}
 
 	@Override
@@ -522,38 +485,16 @@ public class FormPageElementDefinition
 			sb.append("\"");
 		}
 
-		CustomCSSViewport[] customCSSViewports = getCustomCSSViewports();
+		FormContainerConfig formContainerConfig = getFormContainerConfig();
 
-		if (customCSSViewports != null) {
+		if (formContainerConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"customCSSViewports\": ");
+			sb.append("\"formContainerConfig\": ");
 
-			sb.append("[");
-
-			for (int i = 0; i < customCSSViewports.length; i++) {
-				sb.append(String.valueOf(customCSSViewports[i]));
-
-				if ((i + 1) < customCSSViewports.length) {
-					sb.append(", ");
-				}
-			}
-
-			sb.append("]");
-		}
-
-		FormConfig formConfig = getFormConfig();
-
-		if (formConfig != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"formConfig\": ");
-
-			sb.append(String.valueOf(formConfig));
+			sb.append(String.valueOf(formContainerConfig));
 		}
 
 		FragmentStyle fragmentStyle = getFragmentStyle();
@@ -653,7 +594,7 @@ public class FormPageElementDefinition
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormPageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefinition",
 		name = "x-class-name"
 	)
 	public String xClassName;

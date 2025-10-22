@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.PageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.FormContainerReferenceSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,10 +19,11 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public abstract class PageElementDefinition implements Cloneable, Serializable {
+public abstract class FormContainerReference
+	implements Cloneable, Serializable {
 
-	public static PageElementDefinition toDTO(String json) {
-		return PageElementDefinitionSerDes.toDTO(json);
+	public static FormContainerReference toDTO(String json) {
+		return FormContainerReferenceSerDes.toDTO(json);
 	}
 
 	public Type getType() {
@@ -53,8 +54,8 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 	protected Type type;
 
 	@Override
-	public PageElementDefinition clone() throws CloneNotSupportedException {
-		return (PageElementDefinition)super.clone();
+	public FormContainerReference clone() throws CloneNotSupportedException {
+		return (FormContainerReference)super.clone();
 	}
 
 	@Override
@@ -63,14 +64,14 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageElementDefinition)) {
+		if (!(object instanceof FormContainerReference)) {
 			return false;
 		}
 
-		PageElementDefinition pageElementDefinition =
-			(PageElementDefinition)object;
+		FormContainerReference formContainerReference =
+			(FormContainerReference)object;
 
-		return Objects.equals(toString(), pageElementDefinition.toString());
+		return Objects.equals(toString(), formContainerReference.toString());
 	}
 
 	@Override
@@ -81,18 +82,14 @@ public abstract class PageElementDefinition implements Cloneable, Serializable {
 	}
 
 	public String toString() {
-		return PageElementDefinitionSerDes.toJSON(this);
+		return FormContainerReferenceSerDes.toJSON(this);
 	}
 
 	public static enum Type {
 
-		COLLECTION_DISPLAY("CollectionDisplay"),
-		COLLECTION_ITEM("CollectionItem"), CONTAINER("Container"),
-		DROP_ZONE("DropZone"), FORM_CONTAINER("FormContainer"),
-		FORM_STEP("FormStep"), FORM_STEP_CONTAINER("FormStepContainer"),
-		FRAGMENT("Fragment"), FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
-		WIDGET("Widget");
+		FORM_CONTAINER_CLASS_SUBTYPE_REFERENCE(
+			"FormContainerClassSubtypeReference"),
+		FORM_CONTAINER_CONTEXT_REFERENCE("FormContainerContextReference");
 
 		public static Type create(String value) {
 			for (Type type : values()) {

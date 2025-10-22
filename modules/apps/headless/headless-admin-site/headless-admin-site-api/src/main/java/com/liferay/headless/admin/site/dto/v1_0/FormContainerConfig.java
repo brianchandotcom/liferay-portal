@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -14,7 +14,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -40,48 +39,52 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The form page element definition form's configuration.",
-	value = "FormConfig"
+	description = "The form container page element definition form's container configuration.",
+	value = "FormContainerConfig"
 )
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "FormConfig")
-public class FormConfig implements Serializable {
+@XmlRootElement(name = "FormContainerConfig")
+public class FormContainerConfig implements Serializable {
 
-	public static FormConfig toDTO(String json) {
-		return ObjectMapperUtil.readValue(FormConfig.class, json);
+	public static FormContainerConfig toDTO(String json) {
+		return ObjectMapperUtil.readValue(FormContainerConfig.class, json);
 	}
 
-	public static FormConfig unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(FormConfig.class, json);
+	public static FormContainerConfig unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(
+			FormContainerConfig.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The form reference."
+		description = "The form container reference."
 	)
 	@Valid
-	public Object getFormReference() {
-		if (_formReferenceSupplier != null) {
-			formReference = _formReferenceSupplier.get();
+	public FormContainerReference getFormContainerReference() {
+		if (_formContainerReferenceSupplier != null) {
+			formContainerReference = _formContainerReferenceSupplier.get();
 
-			_formReferenceSupplier = null;
+			_formContainerReferenceSupplier = null;
 		}
 
-		return formReference;
+		return formContainerReference;
 	}
 
-	public void setFormReference(Object formReference) {
-		this.formReference = formReference;
+	public void setFormContainerReference(
+		FormContainerReference formContainerReference) {
 
-		_formReferenceSupplier = null;
+		this.formContainerReference = formContainerReference;
+
+		_formContainerReferenceSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFormReference(
-		UnsafeSupplier<Object, Exception> formReferenceUnsafeSupplier) {
+	public void setFormContainerReference(
+		UnsafeSupplier<FormContainerReference, Exception>
+			formContainerReferenceUnsafeSupplier) {
 
-		_formReferenceSupplier = () -> {
+		_formContainerReferenceSupplier = () -> {
 			try {
-				return formReferenceUnsafeSupplier.get();
+				return formContainerReferenceUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -92,50 +95,51 @@ public class FormConfig implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The form reference.")
+	@GraphQLField(description = "The form container reference.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object formReference;
+	protected FormContainerReference formContainerReference;
 
 	@JsonIgnore
-	private Supplier<Object> _formReferenceSupplier;
+	private Supplier<FormContainerReference> _formContainerReferenceSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
-	@JsonGetter("formType")
+	@JsonGetter("formContainerType")
 	@Valid
-	public FormType getFormType() {
-		if (_formTypeSupplier != null) {
-			formType = _formTypeSupplier.get();
+	public FormContainerType getFormContainerType() {
+		if (_formContainerTypeSupplier != null) {
+			formContainerType = _formContainerTypeSupplier.get();
 
-			_formTypeSupplier = null;
+			_formContainerTypeSupplier = null;
 		}
 
-		return formType;
+		return formContainerType;
 	}
 
 	@JsonIgnore
-	public String getFormTypeAsString() {
-		FormType formType = getFormType();
+	public String getFormContainerTypeAsString() {
+		FormContainerType formContainerType = getFormContainerType();
 
-		if (formType == null) {
+		if (formContainerType == null) {
 			return null;
 		}
 
-		return formType.toString();
+		return formContainerType.toString();
 	}
 
-	public void setFormType(FormType formType) {
-		this.formType = formType;
+	public void setFormContainerType(FormContainerType formContainerType) {
+		this.formContainerType = formContainerType;
 
-		_formTypeSupplier = null;
+		_formContainerTypeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setFormType(
-		UnsafeSupplier<FormType, Exception> formTypeUnsafeSupplier) {
+	public void setFormContainerType(
+		UnsafeSupplier<FormContainerType, Exception>
+			formContainerTypeUnsafeSupplier) {
 
-		_formTypeSupplier = () -> {
+		_formContainerTypeSupplier = () -> {
 			try {
-				return formTypeUnsafeSupplier.get();
+				return formContainerTypeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -148,13 +152,13 @@ public class FormConfig implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected FormType formType;
+	protected FormContainerType formContainerType;
 
 	@JsonIgnore
-	private Supplier<FormType> _formTypeSupplier;
+	private Supplier<FormContainerType> _formContainerTypeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The form page element's number of steps."
+		description = "The form container page element's number of steps."
 	)
 	public Integer getNumberOfSteps() {
 		if (_numberOfStepsSupplier != null) {
@@ -189,7 +193,9 @@ public class FormConfig implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The form page element's number of steps.")
+	@GraphQLField(
+		description = "The form container page element's number of steps."
+	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer numberOfSteps;
 
@@ -197,36 +203,40 @@ public class FormConfig implements Serializable {
 	private Supplier<Integer> _numberOfStepsSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The definition of the result when a form submission is successful."
+		description = "The definition of the result when a form container submission is successful."
 	)
 	@Valid
-	public Object getSuccessFormSubmissionResult() {
-		if (_successFormSubmissionResultSupplier != null) {
-			successFormSubmissionResult =
-				_successFormSubmissionResultSupplier.get();
+	public SuccessFormContainerSubmissionResult
+		getSuccessFormContainerSubmissionResult() {
 
-			_successFormSubmissionResultSupplier = null;
+		if (_successFormContainerSubmissionResultSupplier != null) {
+			successFormContainerSubmissionResult =
+				_successFormContainerSubmissionResultSupplier.get();
+
+			_successFormContainerSubmissionResultSupplier = null;
 		}
 
-		return successFormSubmissionResult;
+		return successFormContainerSubmissionResult;
 	}
 
-	public void setSuccessFormSubmissionResult(
-		Object successFormSubmissionResult) {
+	public void setSuccessFormContainerSubmissionResult(
+		SuccessFormContainerSubmissionResult
+			successFormContainerSubmissionResult) {
 
-		this.successFormSubmissionResult = successFormSubmissionResult;
+		this.successFormContainerSubmissionResult =
+			successFormContainerSubmissionResult;
 
-		_successFormSubmissionResultSupplier = null;
+		_successFormContainerSubmissionResultSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setSuccessFormSubmissionResult(
-		UnsafeSupplier<Object, Exception>
-			successFormSubmissionResultUnsafeSupplier) {
+	public void setSuccessFormContainerSubmissionResult(
+		UnsafeSupplier<SuccessFormContainerSubmissionResult, Exception>
+			successFormContainerSubmissionResultUnsafeSupplier) {
 
-		_successFormSubmissionResultSupplier = () -> {
+		_successFormContainerSubmissionResultSupplier = () -> {
 			try {
-				return successFormSubmissionResultUnsafeSupplier.get();
+				return successFormContainerSubmissionResultUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -238,13 +248,15 @@ public class FormConfig implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The definition of the result when a form submission is successful."
+		description = "The definition of the result when a form container submission is successful."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object successFormSubmissionResult;
+	protected SuccessFormContainerSubmissionResult
+		successFormContainerSubmissionResult;
 
 	@JsonIgnore
-	private Supplier<Object> _successFormSubmissionResultSupplier;
+	private Supplier<SuccessFormContainerSubmissionResult>
+		_successFormContainerSubmissionResultSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -252,13 +264,13 @@ public class FormConfig implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof FormConfig)) {
+		if (!(object instanceof FormContainerConfig)) {
 			return false;
 		}
 
-		FormConfig formConfig = (FormConfig)object;
+		FormContainerConfig formContainerConfig = (FormContainerConfig)object;
 
-		return Objects.equals(toString(), formConfig.toString());
+		return Objects.equals(toString(), formContainerConfig.toString());
 	}
 
 	@Override
@@ -273,41 +285,31 @@ public class FormConfig implements Serializable {
 
 		sb.append("{");
 
-		Object formReference = getFormReference();
+		FormContainerReference formContainerReference =
+			getFormContainerReference();
 
-		if (formReference != null) {
+		if (formContainerReference != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formReference\": ");
+			sb.append("\"formContainerReference\": ");
 
-			if (formReference instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject((Map<?, ?>)formReference));
-			}
-			else if (formReference instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)formReference));
-				sb.append("\"");
-			}
-			else {
-				sb.append(formReference);
-			}
+			sb.append(String.valueOf(formContainerReference));
 		}
 
-		FormType formType = getFormType();
+		FormContainerType formContainerType = getFormContainerType();
 
-		if (formType != null) {
+		if (formContainerType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"formType\": ");
+			sb.append("\"formContainerType\": ");
 
 			sb.append("\"");
 
-			sb.append(formType);
+			sb.append(formContainerType);
 
 			sb.append("\"");
 		}
@@ -324,28 +326,18 @@ public class FormConfig implements Serializable {
 			sb.append(numberOfSteps);
 		}
 
-		Object successFormSubmissionResult = getSuccessFormSubmissionResult();
+		SuccessFormContainerSubmissionResult
+			successFormContainerSubmissionResult =
+				getSuccessFormContainerSubmissionResult();
 
-		if (successFormSubmissionResult != null) {
+		if (successFormContainerSubmissionResult != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"successFormSubmissionResult\": ");
+			sb.append("\"successFormContainerSubmissionResult\": ");
 
-			if (successFormSubmissionResult instanceof Map) {
-				sb.append(
-					JSONFactoryUtil.createJSONObject(
-						(Map<?, ?>)successFormSubmissionResult));
-			}
-			else if (successFormSubmissionResult instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)successFormSubmissionResult));
-				sb.append("\"");
-			}
-			else {
-				sb.append(successFormSubmissionResult);
-			}
+			sb.append(String.valueOf(successFormContainerSubmissionResult));
 		}
 
 		sb.append("}");
@@ -355,25 +347,25 @@ public class FormConfig implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormConfig",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.FormContainerConfig",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("FormType")
-	public static enum FormType {
+	@GraphQLName("FormContainerType")
+	public static enum FormContainerType {
 
 		MULTISTEP("Multistep"), SIMPLE("Simple");
 
 		@JsonCreator
-		public static FormType create(String value) {
+		public static FormContainerType create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (FormType formType : values()) {
-				if (Objects.equals(formType.getValue(), value)) {
-					return formType;
+			for (FormContainerType formContainerType : values()) {
+				if (Objects.equals(formContainerType.getValue(), value)) {
+					return formContainerType;
 				}
 			}
 
@@ -390,7 +382,7 @@ public class FormConfig implements Serializable {
 			return _value;
 		}
 
-		private FormType(String value) {
+		private FormContainerType(String value) {
 			_value = value;
 		}
 

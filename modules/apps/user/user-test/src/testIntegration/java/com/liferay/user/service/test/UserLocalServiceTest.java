@@ -1415,41 +1415,7 @@ public class UserLocalServiceTest {
 
 	@Test
 	public void testUpdateLastLogin() throws Throwable {
-		User user = UserTestUtil.addUser();
-
-		AopInvocationHandler aopInvocationHandler =
-			ProxyUtil.fetchInvocationHandler(
-				_userLocalService, AopInvocationHandler.class);
-
-		ServiceWrapper<UserLocalService> serviceWrapper =
-			(ServiceWrapper<UserLocalService>)aopInvocationHandler.getTarget();
-
-		UserLocalServiceImpl userLocalServiceImpl =
-			(UserLocalServiceImpl)serviceWrapper.getWrappedService();
-
-		user.setLoginDate(new Date());
-		user.setLastLoginDate(new Date());
-
-		TransactionInvokerUtil.invoke(
-			TransactionConfig.Factory.create(
-				Propagation.SUPPORTS, new Class<?>[] {Exception.class}),
-			() -> ReflectionTestUtil.invoke(
-				userLocalServiceImpl, "_updateLastLogin",
-				new Class<?>[] {List.class}, Collections.singletonList(user)));
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					user.getCompanyId())) {
-
-			EntityCacheUtil.clearCache(UserImpl.class);
-
-			User updatedUser = _userLocalService.getUser(user.getUserId());
-
-			Assert.assertEquals(
-				user.getLoginDate(), updatedUser.getLoginDate());
-			Assert.assertEquals(
-				user.getLastLoginDate(), updatedUser.getLastLoginDate());
-		}
+		_testUpdateLastLogin(UserTestUtil.addUser());
 	}
 
 	@Test
@@ -2003,6 +1969,42 @@ public class UserLocalServiceTest {
 			new long[] {userGroup.getUserGroupId()}, null);
 
 		Assert.assertEquals(usersCount1 + 1, usersCount2);
+	}
+
+	private void _testUpdateLastLogin(User user) throws Throwable {
+		AopInvocationHandler aopInvocationHandler =
+			ProxyUtil.fetchInvocationHandler(
+				_userLocalService, AopInvocationHandler.class);
+
+		ServiceWrapper<UserLocalService> serviceWrapper =
+			(ServiceWrapper<UserLocalService>)aopInvocationHandler.getTarget();
+
+		UserLocalServiceImpl userLocalServiceImpl =
+			(UserLocalServiceImpl)serviceWrapper.getWrappedService();
+
+		user.setLoginDate(new Date());
+		user.setLastLoginDate(new Date());
+
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.SUPPORTS, new Class<?>[] {Exception.class}),
+			() -> ReflectionTestUtil.invoke(
+				userLocalServiceImpl, "_updateLastLogin",
+				new Class<?>[] {List.class}, Collections.singletonList(user)));
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					user.getCompanyId())) {
+
+			EntityCacheUtil.clearCache(UserImpl.class);
+
+			User updatedUser = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				user.getLoginDate(), updatedUser.getLoginDate());
+			Assert.assertEquals(
+				user.getLastLoginDate(), updatedUser.getLastLoginDate());
+		}
 	}
 
 	private void _testVerifyEmailAddress(boolean expired) throws Exception {

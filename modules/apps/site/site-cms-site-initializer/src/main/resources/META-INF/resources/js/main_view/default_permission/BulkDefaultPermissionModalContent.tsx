@@ -15,6 +15,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
+import {getScopeExternalReferenceCode} from '../../common/utils/getScopeExternalReferenceCode';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
 import {
@@ -41,8 +42,6 @@ export function DEFAULT_PERMISSIONS(actions: ActionsMap) {
 export const DEPOT_CLASS_NAME = 'com.liferay.depot.model.DepotEntry';
 export const OBJECT_DEFINITION_CLASS_NAME =
 	'com.liferay.object.model.ObjectDefinition';
-export const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 export function defaultPermissionsBulkAction({
 	apiURL,
@@ -204,12 +203,7 @@ export default function BulkDefaultPermissionModalContent({
 						}
 						else {
 							const space = await SpaceService.getSpace(
-								firstItem?.entryClassName !==
-									OBJECT_ENTRY_FOLDER_CLASS_NAME
-									? firstItem.embedded.systemProperties.scope
-											.externalReferenceCode
-									: firstItem.embedded.scope
-											.externalReferenceCode
+								getScopeExternalReferenceCode(firstItem)
 							);
 
 							entryClassExternalReferenceCode =

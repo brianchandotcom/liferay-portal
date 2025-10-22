@@ -8,7 +8,7 @@ import {sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
 import {IBulkActionFDSData} from '../../../common/types/BulkActionTask';
-import {OBJECT_ENTRY_FOLDER_CLASS_NAME} from '../../default_permission/BulkDefaultPermissionModalContent';
+import {getScopeExternalReferenceCode} from '../../../common/utils/getScopeExternalReferenceCode';
 import {isFromRecycleBin} from '../utils/isFromRecycleBin';
 import {triggerAssetBulkAction} from './triggerAssetBulkAction';
 
@@ -68,18 +68,9 @@ async function getEntriesSpaces(
 	items: IBulkActionFDSData['items'] = []
 ): Promise<any[]> {
 	const promises = items
-		.filter((item) =>
-			item.entryClassName !== OBJECT_ENTRY_FOLDER_CLASS_NAME
-				? item.embedded.systemProperties?.scope?.externalReferenceCode
-				: item.embedded.scope?.externalReferenceCode
-		)
+		.filter((item) => getScopeExternalReferenceCode(item))
 		.map((item) =>
-			SpaceService.getSpace(
-				item.entryClassName !== OBJECT_ENTRY_FOLDER_CLASS_NAME
-					? item.embedded.systemProperties?.scope
-							?.externalReferenceCode!
-					: item.embedded.scope?.externalReferenceCode!
-			)
+			SpaceService.getSpace(getScopeExternalReferenceCode(item))
 		);
 
 	return (await Promise.all(promises)).filter(Boolean);

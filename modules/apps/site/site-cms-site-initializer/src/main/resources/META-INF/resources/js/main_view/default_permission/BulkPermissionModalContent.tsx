@@ -13,12 +13,15 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import CMSDefaultPermissionService from '../../common/services/CMSDefaultPermissionService';
 import SpaceService from '../../common/services/SpaceService';
+import {
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+	getScopeExternalReferenceCode,
+} from '../../common/utils/getScopeExternalReferenceCode';
 import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
 import {
 	DEFAULT_PERMISSIONS,
 	DEPOT_CLASS_NAME,
 	OBJECT_DEFINITION_CLASS_NAME,
-	OBJECT_ENTRY_FOLDER_CLASS_NAME,
 } from './BulkDefaultPermissionModalContent';
 import DefaultPermissionFormContainer from './DefaultPermissionFormContainer';
 import {
@@ -155,12 +158,7 @@ export default function BulkPermissionModalContent({
 						}
 						else {
 							const space = await SpaceService.getSpace(
-								firstItem?.entryClassName !==
-									OBJECT_ENTRY_FOLDER_CLASS_NAME
-									? firstItem.embedded.systemProperties.scope
-											.externalReferenceCode
-									: firstItem.embedded.scope
-											.externalReferenceCode
+								getScopeExternalReferenceCode(firstItem)
 							);
 
 							entryClassExternalReferenceCode =

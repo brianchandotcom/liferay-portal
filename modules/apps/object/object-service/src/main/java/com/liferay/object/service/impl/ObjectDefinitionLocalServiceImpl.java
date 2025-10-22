@@ -1623,6 +1623,9 @@ public class ObjectDefinitionLocalServiceImpl
 						objectField.isRequired(), objectField.isState(),
 						objectField.getObjectFieldSettings());
 				}
+
+				_setValidationErrorEntryKey(
+					ObjectField.class.getName(), objectField.getName());
 			}
 		}
 
@@ -2886,6 +2889,9 @@ public class ObjectDefinitionLocalServiceImpl
 				objectField.getReadOnlyConditionExpression(),
 				objectField.isRequired(), objectField.isState(),
 				objectField.isSystem(), objectField.getObjectFieldSettings());
+
+			_setValidationErrorEntryKey(
+				ObjectField.class.getName(), objectField.getName());
 		}
 	}
 

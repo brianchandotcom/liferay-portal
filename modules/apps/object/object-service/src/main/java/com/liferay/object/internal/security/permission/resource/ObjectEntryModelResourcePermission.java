@@ -25,11 +25,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
@@ -43,7 +41,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.security.permission.UserBagFactoryUtil;
 
 import java.io.Serializable;
 
@@ -277,22 +274,13 @@ public class ObjectEntryModelResourcePermission
 		long classPK = GetterUtil.getLong(assigneeMap.get("classPK"));
 
 		if (StringUtil.equals(className, Role.class.getName())) {
-			UserBag userBag = UserBagFactoryUtil.create(user);
+			if (ListUtil.exists(
+					user.getAllRoles(), role -> role.getRoleId() == classPK)) {
 
-			for (long roleId : userBag.getRoleIds()) {
-				if (roleId == classPK) {
-					return true;
-				}
+				return true;
 			}
 
-			for (UserGroupRole userGroupRole :
-					_userGroupRoleLocalService.getUserGroupRoles(
-						user.getUserId())) {
-
-				if (userGroupRole.getRoleId() == classPK) {
-					return true;
-				}
-			}
+			return false;
 		}
 		else if (StringUtil.equals(className, User.class.getName()) &&
 				 (user.getUserId() == classPK)) {

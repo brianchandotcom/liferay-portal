@@ -17,16 +17,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleModel;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.model.UserGroupRoleModel;
-import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
-import com.liferay.portal.security.permission.UserBagFactoryUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -132,13 +129,8 @@ public class AssigneeFieldPredicateProvider implements FieldPredicateProvider {
 			return new Long[] {0L};
 		}
 
-		UserBag userBag = UserBagFactoryUtil.create(user);
-
-		return ArrayUtil.append(
-			ArrayUtil.toArray(userBag.getRoleIds()),
-			TransformUtil.transformToArray(
-				_userGroupRoleLocalService.getUserGroupRoles(user.getUserId()),
-				UserGroupRoleModel::getRoleId, Long.class));
+		return TransformUtil.transformToArray(
+			user.getAllRoles(), RoleModel::getRoleId, Long.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

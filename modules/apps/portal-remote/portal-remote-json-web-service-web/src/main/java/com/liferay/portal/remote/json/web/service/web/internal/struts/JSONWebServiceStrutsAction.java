@@ -6,6 +6,7 @@
 package com.liferay.portal.remote.json.web.service.web.internal.struts;
 
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -21,10 +22,6 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -56,18 +53,21 @@ public class JSONWebServiceStrutsAction implements StrutsAction {
 
 			Theme theme = (Theme)httpServletRequest.getAttribute(WebKeys.THEME);
 
-			Document document = Jsoup.parse(
-				ThemeUtil.include(
-					ServletContextPool.get(StringPool.BLANK),
-					httpServletRequest, httpServletResponse,
-					"portal_pop_up.jsp", theme, false));
+			String html = ThemeUtil.include(
+				ServletContextPool.get(StringPool.BLANK), httpServletRequest,
+				httpServletResponse, "portal_pop_up.jsp", theme, false);
 
-			Element bodyElement = document.body();
+			int bodyTagEndIndex =
+				html.indexOf(StringPool.GREATER_THAN, html.indexOf("<body")) +
+					1;
 
-			bodyElement.prepend(unsyncStringWriter.toString());
-			bodyElement.removeClass("product-menu-open");
+			StringBundler sb = new StringBundler(3);
 
-			ServletResponseUtil.write(httpServletResponse, document.html());
+			sb.append(html.substring(0, bodyTagEndIndex));
+			sb.append(unsyncStringWriter.toString());
+			sb.append(html.substring(bodyTagEndIndex));
+
+			ServletResponseUtil.write(httpServletResponse, sb.toString());
 		}
 		catch (Exception exception) {
 			_log.error(exception);

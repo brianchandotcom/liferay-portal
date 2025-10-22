@@ -261,24 +261,17 @@ public class PageSpecificationDTOConverter
 					() -> unicodeProperties.getProperty("javascript", null));
 				setMasterPageItemExternalReference(
 					() -> {
-						if (layout.getMasterLayoutPlid() == 0) {
-							return null;
-						}
+						if (Validator.isNull(
+								layout.getMasterLayoutPageTemplateEntryERC())) {
 
-						LayoutPageTemplateEntry layoutPageTemplateEntry =
-							_layoutPageTemplateEntryLocalService.
-								fetchLayoutPageTemplateEntryByPlid(
-									layout.getMasterLayoutPlid());
-
-						if (layoutPageTemplateEntry == null) {
 							return null;
 						}
 
 						return new ItemExternalReference() {
 							{
 								setExternalReferenceCode(
-									layoutPageTemplateEntry::
-										getExternalReferenceCode);
+									layout::
+										getMasterLayoutPageTemplateEntryERC);
 							}
 						};
 					});

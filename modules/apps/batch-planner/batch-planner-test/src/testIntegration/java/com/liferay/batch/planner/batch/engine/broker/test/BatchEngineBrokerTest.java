@@ -1160,7 +1160,7 @@ public class BatchEngineBrokerTest {
 		List<String> normalizedValues = new ArrayList<>(values.size());
 
 		for (String value : values) {
-			if (Validator.isNotNull(value) && !value.isBlank() &&
+			if (!Validator.isBlank(value) &&
 				_htmlTagPattern.matcher(
 					value
 				).find()) {

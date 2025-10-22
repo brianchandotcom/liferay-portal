@@ -8,6 +8,9 @@ import {IInternalRenderer} from '@liferay/frontend-data-set-web';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 
+const OBJECT_ENTRY_FOLDER_CLASS_NAME =
+	'com.liferay.object.model.ObjectEntryFolder';
+
 export default function CategoryUsagesFDSPropsTransformer({
 	...otherProps
 }: {
@@ -25,7 +28,13 @@ export default function CategoryUsagesFDSPropsTransformer({
 				{
 					component: ({itemData}) =>
 						SpaceRendererWithCache({
-							spaceId: itemData.embedded.scopeId,
+							spaceExternalReferenceCode:
+								itemData?.entryClassName !==
+								OBJECT_ENTRY_FOLDER_CLASS_NAME
+									? itemData.embedded.systemProperties.scope
+											.externalReferenceCode
+									: itemData.embedded.scope
+											.externalReferenceCode,
 						}),
 					name: 'spaceTableCellRenderer',
 					type: 'internal',

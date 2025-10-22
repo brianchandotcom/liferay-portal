@@ -34,6 +34,10 @@ export interface IAssetObjectEntry {
 	objectEntryFolderExternalReferenceCode: string;
 	objectEntryFolderId: number;
 	reviewDate: string;
+	scope?: {
+		externalReferenceCode: string;
+		type: string;
+	};
 	scopeId: number;
 	scopeKey: string;
 	status: {
@@ -49,6 +53,10 @@ export interface IAssetObjectEntry {
 }
 
 export interface IAssetVersion {
+	scope?: {
+		externalReferenceCode: string;
+		type: string;
+	};
 	version: {
 		number: number;
 	};

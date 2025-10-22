@@ -17,6 +17,7 @@ jest.mock(
 
 describe('SpaceRendererWithCache', () => {
 	const mockSpace = {
+		externalReferenceCode: 'ERC',
 		id: 123,
 		name: 'Test Space',
 		settings: {
@@ -33,7 +34,7 @@ describe('SpaceRendererWithCache', () => {
 			new Promise(() => {})
 		);
 
-		render(<SpaceRendererWithCache spaceId={123} />);
+		render(<SpaceRendererWithCache spaceExternalReferenceCode="ERC" />);
 
 		expect(
 			screen.getByTestId('space-renderer-loading')
@@ -45,11 +46,13 @@ describe('SpaceRendererWithCache', () => {
 			mockSpace
 		);
 
-		const {container} = render(<SpaceRendererWithCache spaceId={123} />);
+		const {container} = render(
+			<SpaceRendererWithCache spaceExternalReferenceCode="ERC" />
+		);
 
 		expect(await screen.findByText('Test Space')).toBeInTheDocument();
 
-		expect(SpaceService.getSpaceWithCache).toHaveBeenCalledWith(123);
+		expect(SpaceService.getSpaceWithCache).toHaveBeenCalledWith('ERC');
 
 		expect(container.querySelector('.sticker')).toHaveClass(
 			'sticker-outline-0'
@@ -61,7 +64,9 @@ describe('SpaceRendererWithCache', () => {
 			null as any
 		);
 
-		const {container} = render(<SpaceRendererWithCache spaceId={123} />);
+		const {container} = render(
+			<SpaceRendererWithCache spaceExternalReferenceCode="ERC" />
+		);
 
 		await waitFor(() => {
 			expect(container.firstChild).toBeNull();

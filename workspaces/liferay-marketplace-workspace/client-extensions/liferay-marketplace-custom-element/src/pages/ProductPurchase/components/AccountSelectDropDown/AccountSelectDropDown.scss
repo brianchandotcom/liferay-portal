@@ -1,6 +1,11 @@
 .custom-drop-down-container {
 	position: relative;
 
+	.drop-down-item-selected {
+		background-color: #f0f8ff;
+		color: #004ad7;
+	}
+
 	button {
 		background-color: white;
 		border: 1px solid #ccc;
@@ -23,7 +28,6 @@
 		padding: 4px 0;
 		position: absolute;
 		right: 0;
-		top: 110%;
 		z-index: 10;
 
 		li {
@@ -34,10 +38,5 @@
 				background-color: #f8f9fa;
 			}
 		}
-	}
-
-	.drop-down-item-selected {
-		background-color: #f0f8ff;
-		color: #004ad7;
 	}
 }

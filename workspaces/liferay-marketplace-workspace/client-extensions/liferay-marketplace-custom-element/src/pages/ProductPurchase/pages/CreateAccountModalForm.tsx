@@ -163,6 +163,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 					<h1 className="create-account-modal-form-title">
 						{i18n.translate('new-account')}
 					</h1>
+
 					<p className="text-muted">
 						{i18n.translate(
 							'create-a-new-marketplace-acccount-or-join-an-already-existing-one'
@@ -192,17 +193,19 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 							/>
 						</div>
 						<div>
-							<strong>
-								{i18n.translate(
-									'contact-your-administrator-to-become-part-of-an-account'
-								)}
-							</strong>
-							<br />
-							{i18n.translate(
-								'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace'
-							)}
 							<p>
-								<br />
+								<strong>
+									{i18n.translate(
+										'contact-your-administrator-to-become-part-of-an-account'
+									)}
+								</strong>
+							</p>
+							<p>
+								{i18n.translate(
+									'to-join-an-existing-business-account-pleasecontact-your-administrator-who-can-add-you-once-added-you-will-automatically-become-part-of-that-account-and-will-be-able-to-manage-it-and-make-purchases-on-markeplace'
+								)}
+							</p>
+							<p>
 								<strong>
 									Any questions?
 									<a
@@ -219,6 +222,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 					<>
 						<div className="mt-6">
 							<h3>{i18n.translate('account-details')}</h3>
+
 							<hr className="mb-2 mt-2" />
 						</div>
 						<ClayForm.Group className="pr-2 w-100">
@@ -269,6 +273,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 									<Form.Label className="mb-2" required>
 										{i18n.translate('account-name')}
 									</Form.Label>
+
 									<Input
 										{...register('accountName')}
 										errorMessage={
@@ -279,11 +284,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										type="text"
 									/>
 								</div>
-
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2" required>
 										{i18n.translate('email-address')}
 									</Form.Label>
+
 									<Input
 										{...register('emailAddress')}
 										disabled
@@ -309,6 +314,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 						<ClayForm.Group className="mb-3 mt-2 pr-2 w-100">
 							<div>
 								<h3>{i18n.translate('billing-address')}</h3>
+
 								<hr className="mb-3" />
 							</div>
 
@@ -328,11 +334,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										type="text"
 									/>
 								</div>
-
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2" required>
 										Phone
 									</Form.Label>
+
 									<Input
 										{...register(
 											'billingAddress.phoneNumber'
@@ -362,11 +368,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										type="text"
 									/>
 								</div>
-
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2">
 										Apt, Suite, Unit (optional)
 									</Form.Label>
+
 									<Input
 										{...register('billingAddress.street2')}
 										errorMessage={
@@ -425,11 +431,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										value={billingAddress.country}
 									/>
 								</div>
-
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2" required>
 										State/Region
 									</Form.Label>
+
 									<Select
 										boldLabel
 										className="custom-input"
@@ -467,11 +473,11 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 										type="text"
 									/>
 								</div>
-
 								<div className="pr-2 w-100">
 									<Form.Label className="mb-2" required>
 										Zip Code
 									</Form.Label>
+
 									<Input
 										{...register('billingAddress.zip')}
 										errorMessage={
@@ -504,6 +510,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 							{isSubmitting && (
 								<ClayLoadingIndicator className="mr-3 my-0" />
 							)}
+
 							{i18n.translate('save')}
 						</div>
 					</Button>

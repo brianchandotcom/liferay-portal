@@ -15,7 +15,7 @@ interface Option {
 	text: string;
 }
 
-interface DropdownProps {
+interface DropdDownProps {
 	onChange: (value: string) => void;
 	options: Option[];
 	value?: Option;
@@ -25,7 +25,7 @@ export default function AcountSelectDropDown({
 	onChange,
 	options,
 	value,
-}: DropdownProps) {
+}: DropdDownProps) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selected, setSelected] = useState<Option | undefined>(value);
 	const dropDownRef = useRef<HTMLDivElement>(null);
@@ -52,9 +52,10 @@ export default function AcountSelectDropDown({
 
 	return (
 		<div className="custom-drop-down-container" ref={dropDownRef}>
-			<button onClick={() => setIsOpen((prev) => !prev)}>
+			<button onClick={() => setIsOpen((open) => !open)}>
 				<div className="align-items-center d-flex justify-content-between">
 					{value?.name}
+
 					<ClayIcon symbol="caret-bottom" />
 				</div>
 			</button>
@@ -73,13 +74,14 @@ export default function AcountSelectDropDown({
 							<div className="align-items-center d-flex justify-content-between">
 								<div className="d-flex flex-column">
 									<b>{option.name}</b>
+
 									<small>{option.text}</small>
 								</div>
 								{selected?.key === option.key && (
 									<div>
 										<ClayIcon
 											className="ml-2"
-											color="##004AD7"
+											color="#004AD7"
 											fontSize={14}
 											symbol="check"
 										/>

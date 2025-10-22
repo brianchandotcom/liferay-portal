@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyleDefinition;
@@ -97,7 +98,7 @@ public class CollectionLayoutStructureItemImporter
 
 		collectionStyledLayoutStructureItem.setCollectionJSONObject(
 			_getCollectionJSONObject(
-				collectionDisplayPageElementDefinition.getCollectionReference(),
+				collectionDisplayPageElementDefinition.getCollectionSettings(),
 				layoutStructureItemImporterContext));
 
 		_setCollectionDisplayListStyle(
@@ -298,18 +299,26 @@ public class CollectionLayoutStructureItemImporter
 	}
 
 	private JSONObject _getCollectionJSONObject(
-			CollectionReference collectionReference,
+			CollectionSettings collectionSettings,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext)
 		throws Exception {
+
+		CollectionReference collectionReference =
+			collectionSettings.getCollectionReference();
 
 		if (collectionReference == null) {
 			return JSONFactoryUtil.createJSONObject();
 		}
 
 		if (collectionReference instanceof ClassNameReference) {
-			return _getClassNameReferenceJSONObject(
+			JSONObject collectionJSONObject = _getClassNameReferenceJSONObject(
 				collectionReference, layoutStructureItemImporterContext);
+
+			collectionJSONObject.put(
+				"config", collectionSettings.getCollectionConfig());
+
+			return collectionJSONObject;
 		}
 
 		return _getCollectionItemExternalReferenceJSONObject(

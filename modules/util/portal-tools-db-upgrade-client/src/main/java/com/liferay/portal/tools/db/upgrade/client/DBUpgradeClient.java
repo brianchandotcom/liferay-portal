@@ -573,6 +573,10 @@ public class DBUpgradeClient {
 				allowAbsolutePaths, baseDir, dirNameToVerify);
 
 			if ((testDir != null) && _isValidDir(testDir)) {
+				if (allowAbsolutePaths) {
+					return testDir.getCanonicalPath();
+				}
+
 				return dirNameToVerify;
 			}
 		}

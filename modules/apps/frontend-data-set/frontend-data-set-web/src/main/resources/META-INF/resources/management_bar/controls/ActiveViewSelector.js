@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';
@@ -13,15 +14,15 @@ import {saveViewSettings} from '../../utils/saveViewSettings';
 import ViewsContext from '../../views/ViewsContext';
 
 const ActiveViewSelectorTrigger = React.forwardRef(
-	({symbol, ...otherProps}, ref) => (
+	({symbol, title, ...otherProps}, ref) => (
 		<ClayButtonWithIcon
 			{...otherProps}
-			aria-label={Liferay.Language.get('show-view-options')}
+			aria-label={title}
 			className="nav-link nav-link-monospaced"
 			displayType="unstyled"
 			ref={ref}
 			symbol={symbol}
-			title={Liferay.Language.get('show-view-options')}
+			title={title}
 		/>
 	)
 );
@@ -59,6 +60,10 @@ function ActiveViewSelector({views}) {
 			onSelectionChange={handleSelectionChange}
 			selectedKey={activeView.name}
 			symbol={activeView.thumbnail}
+			title={sub(
+				Liferay.Language.get('x-view-selected'),
+				activeView.label
+			)}
 		>
 			{({label, name, thumbnail}) => (
 				<Option key={name} textValue={name}>

@@ -42,10 +42,10 @@ public class CTCollectionTemplateServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_templateName = RandomTestUtil.randomString();
+		_name = RandomTestUtil.randomString();
 
 		_ctCollectionTemplateService.addCTCollectionTemplate(
-			_templateName, RandomTestUtil.randomString(),
+			_name, RandomTestUtil.randomString(),
 			JSONUtil.put(
 				"description", RandomTestUtil.randomString()
 			).put(
@@ -60,32 +60,33 @@ public class CTCollectionTemplateServiceTest {
 	}
 
 	@Test
-	public void testGetCTCollectionTemplatesWithSearch() {
-		_assertGetCTCollectionTemplates(StringPool.BLANK);
-
-		_assertGetCTCollectionTemplates(_templateName);
-
-		_assertGetCTCollectionTemplatesCount(StringPool.BLANK);
-
-		_assertGetCTCollectionTemplatesCount(_templateName);
+	public void testGetCTCollectionTemplates() {
+		_testGetCTCollectionTemplates(StringPool.BLANK);
+		_testGetCTCollectionTemplates(_name);
 	}
 
-	private void _assertGetCTCollectionTemplates(String keywords) {
-		List<CTCollectionTemplate> ctCollectionTemplateList =
+	@Test
+	public void testGetCTCollectionTemplatesCount() {
+		_testGetCTCollectionTemplatesCount(StringPool.BLANK);
+		_testGetCTCollectionTemplatesCount(_name);
+	}
+
+	private void _testGetCTCollectionTemplates(String keywords) {
+		List<CTCollectionTemplate> ctCollectionTemplates =
 			_ctCollectionTemplateService.getCTCollectionTemplates(
 				keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			ctCollectionTemplateList.toString(), 1,
-			ctCollectionTemplateList.size());
+			ctCollectionTemplates.toString(), 1,
+			ctCollectionTemplates.size());
 
 		CTCollectionTemplate ctCollectionTemplate =
-			ctCollectionTemplateList.get(0);
+			ctCollectionTemplates.get(0);
 
-		Assert.assertEquals(_templateName, ctCollectionTemplate.getName());
+		Assert.assertEquals(_name, ctCollectionTemplate.getName());
 	}
 
-	private void _assertGetCTCollectionTemplatesCount(String keywords) {
+	private void _testGetCTCollectionTemplatesCount(String keywords) {
 		long count = _ctCollectionTemplateService.getCTCollectionTemplatesCount(
 			keywords);
 
@@ -95,6 +96,6 @@ public class CTCollectionTemplateServiceTest {
 	@Inject
 	private static CTCollectionTemplateService _ctCollectionTemplateService;
 
-	private String _templateName;
+	private String _name;
 
 }

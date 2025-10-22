@@ -17,15 +17,19 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import org.apache.tika.Tika;
+import java.util.Set;
 
 /**
  * @author Lourdes Fernández Besada
@@ -53,27 +57,30 @@ public class FileEntryUtil {
 					httpURLConnection.getResponseCode()));
 		}
 
-		byte[] fileBytes = StreamUtil.toByteArray(
-			urlConnection.getInputStream());
+		InputStream fileInputStream = urlConnection.getInputStream();
 
-		Tika tika = new Tika();
+		byte[] fileBytes = StreamUtil.toByteArray(fileInputStream);
 
-		String mimeType = tika.detect(fileBytes);
+		File tempFile = FileUtil.createTempFile(fileBytes);
 
-		String extension = mimeType.split("/")[1];
+		String mimeType = MimeTypesUtil.getContentType(tempFile);
+
+		FileUtil.delete(tempFile);
+
+		Set<String> extensions = MimeTypesUtil.getExtensions(mimeType);
+
+		String extension = "";
+
+		if (!extensions.isEmpty()) {
+			extension = extensions.iterator(
+			).next();
+		}
 
 		long repositoryId = groupId;
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		String fileName =
-			urlReference.getExternalReferenceCode() + "_preview." + extension;
-
-		ServiceContext sc = new ServiceContext();
-
-		sc.setScopeGroupId(groupId);
-
-		sc.setAddGroupPermissions(true);
-		sc.setAddGuestPermissions(false);
+			urlReference.getExternalReferenceCode() + "_preview" + extension;
 
 		return DLAppLocalServiceUtil.addFileEntry(
 			urlReference.getExternalReferenceCode(), user.getUserId(),

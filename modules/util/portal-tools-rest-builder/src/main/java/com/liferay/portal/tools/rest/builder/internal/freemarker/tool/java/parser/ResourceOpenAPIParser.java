@@ -783,8 +783,10 @@ public class ResourceOpenAPIParser {
 			String batchPath = StringUtil.removeSubstrings(
 				path, "/{" + schemaVarName + "Id}", "/{id}");
 
-			batchPath = StringUtil.removeSubstring(
-				batchPath, "/{" + schemaVarName + "ExternalReferenceCode}");
+			if (ConfigUtil.isVersionCompatible(configYAML, 13)) {
+				batchPath = StringUtil.removeSubstring(
+					batchPath, "/{" + schemaVarName + "ExternalReferenceCode}");
+			}
 
 			return batchPath + "/batch";
 		}

@@ -187,6 +187,7 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67912")
 	public void testEditableWithLinkedLayoutReferencedByExternalReferenceCode()
 		throws Exception {
 
@@ -230,16 +231,8 @@ public class EditableFragmentEntryProcessorTest {
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
 				fragmentEntry.getType());
 
-		Assert.assertTrue(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(
-					LocaleUtil.getMostRelevantLocale(),
-					FragmentEntryLinkConstants.VIEW)
-			).contains(
-				_portal.getLayoutRelativeURL(
-					_layout, _getThemeDisplay(LocaleUtil.US))
-			));
+		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
+			fragmentEntryLink, _layout);
 
 		Group group = GroupTestUtil.addGroup();
 
@@ -282,16 +275,8 @@ public class EditableFragmentEntryProcessorTest {
 				_layout.getPlid()),
 			fragmentEntry.getType());
 
-		Assert.assertTrue(
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				fragmentEntryLink,
-				_getFragmentEntryProcessorContext(
-					LocaleUtil.getMostRelevantLocale(),
-					FragmentEntryLinkConstants.VIEW)
-			).contains(
-				_portal.getLayoutRelativeURL(
-					layout, _getThemeDisplay(LocaleUtil.US))
-			));
+		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
+			fragmentEntryLink, layout);
 	}
 
 	@Test
@@ -2106,6 +2091,23 @@ public class EditableFragmentEntryProcessorTest {
 			_readFileToString(jsonFileName));
 
 		return jsonObject.toString();
+	}
+
+	private void _testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
+			FragmentEntryLink fragmentEntryLink, Layout layout)
+		throws Exception {
+
+		String content =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink,
+				_getFragmentEntryProcessorContext(
+					LocaleUtil.getMostRelevantLocale(),
+					FragmentEntryLinkConstants.VIEW));
+
+		Assert.assertTrue(
+			content.contains(
+				_portal.getLayoutRelativeURL(
+					layout, _getThemeDisplay(LocaleUtil.US))));
 	}
 
 	private void _testFragmentEntryProcessorEditableLinkInlineValue(

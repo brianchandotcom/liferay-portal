@@ -936,13 +936,10 @@ public class RenderLayoutStructureDisplayContext {
 			_themeDisplay.getScopeGroupId());
 
 		if (layout == null) {
-			long groupId = layoutJSONObject.getLong("groupId");
-			boolean privateLayout = layoutJSONObject.getBoolean(
-				"privateLayout");
-
 			layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				layoutJSONObject.getString("layoutUuid"), groupId,
-				privateLayout);
+				layoutJSONObject.getString("layoutUuid"),
+				layoutJSONObject.getLong("groupId"),
+				layoutJSONObject.getBoolean("privateLayout"));
 		}
 
 		if (layout != null) {

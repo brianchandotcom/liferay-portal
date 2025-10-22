@@ -1165,30 +1165,11 @@ public class BatchEngineBrokerTest {
 					value
 				).find()) {
 
-				if (_HTML_NORMALIZATION_MODE ==
-						HtmlNormalizationMode.BLOCK_NEWLINES) {
-
-					value = _htmlBreakPattern.matcher(
-						value
-					).replaceAll(
-						StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
-					);
-				}
-				else if (_HTML_NORMALIZATION_MODE ==
-							HtmlNormalizationMode.PRESERVE_SINGLELINE) {
-
-					value = _htmlBreakPattern.matcher(
-						value
-					).replaceAll(
-						StringBundler.concat("$1", _NEWLINE, "$3")
-					);
-				}
-				else if (_HTML_NORMALIZATION_MODE ==
-							HtmlNormalizationMode.NONE) {
-
-					// No normalization performed
-
-				}
+				value = _htmlBreakPattern.matcher(
+					value
+				).replaceAll(
+					StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
+				);
 			}
 
 			normalizedValues.add(value);
@@ -1625,9 +1606,6 @@ public class BatchEngineBrokerTest {
 
 	private static final String _ENCLOSING_CHARACTER_VALUE = StringPool.QUOTE;
 
-	private static final HtmlNormalizationMode _HTML_NORMALIZATION_MODE =
-		HtmlNormalizationMode.BLOCK_NEWLINES;
-
 	private static final String _NEWLINE = System.lineSeparator();
 
 	private static final String _OBJECT_DEFINITION_1_ERC =
@@ -1845,11 +1823,5 @@ public class BatchEngineBrokerTest {
 
 	@Inject
 	private UserLocalService _userLocalService;
-
-	private enum HtmlNormalizationMode {
-
-		BLOCK_NEWLINES, NONE, PRESERVE_SINGLELINE
-
-	}
 
 }

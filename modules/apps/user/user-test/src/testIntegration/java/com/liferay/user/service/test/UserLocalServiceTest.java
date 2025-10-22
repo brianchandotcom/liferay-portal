@@ -17,7 +17,6 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
@@ -115,8 +114,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-
-import java.sql.Connection;
 
 import java.util.Calendar;
 import java.util.Collections;
@@ -1417,7 +1414,7 @@ public class UserLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateLastLogin() throws Exception {
+	public void testUpdateLastLogin() throws Throwable {
 		User user = UserTestUtil.addUser();
 
 		AopInvocationHandler aopInvocationHandler =
@@ -1433,20 +1430,26 @@ public class UserLocalServiceTest {
 		user.setLoginDate(new Date());
 		user.setLastLoginDate(new Date());
 
-		try (Connection connection = DataAccess.getConnection()) {
-			ReflectionTestUtil.invoke(
+		TransactionInvokerUtil.invoke(
+			TransactionConfig.Factory.create(
+				Propagation.SUPPORTS, new Class<?>[] {Exception.class}),
+			() -> ReflectionTestUtil.invoke(
 				userLocalServiceImpl, "_updateLastLogin",
-				new Class<?>[] {Connection.class, List.class}, connection,
-				Collections.singletonList(user));
+				new Class<?>[] {List.class}, Collections.singletonList(user)));
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					user.getCompanyId())) {
+
+			EntityCacheUtil.clearCache(UserImpl.class);
+
+			User updatedUser = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				user.getLoginDate(), updatedUser.getLoginDate());
+			Assert.assertEquals(
+				user.getLastLoginDate(), updatedUser.getLastLoginDate());
 		}
-
-		EntityCacheUtil.clearCache(UserImpl.class);
-
-		User updatedUser = _userLocalService.getUser(user.getUserId());
-
-		Assert.assertEquals(user.getLoginDate(), updatedUser.getLoginDate());
-		Assert.assertEquals(
-			user.getLastLoginDate(), updatedUser.getLastLoginDate());
 	}
 
 	@Test

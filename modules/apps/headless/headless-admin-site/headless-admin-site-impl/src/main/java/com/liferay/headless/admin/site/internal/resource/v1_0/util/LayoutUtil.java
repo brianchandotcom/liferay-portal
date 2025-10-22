@@ -195,6 +195,14 @@ public class LayoutUtil {
 							itemExternalReference.getExternalReferenceCode(),
 							groupId);
 
+				if ((layoutPageTemplateEntry != null) &&
+					!Objects.equals(
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+						layoutPageTemplateEntry.getType())) {
+
+					throw new UnsupportedOperationException();
+				}
+
 				if (layoutPageTemplateEntry == null) {
 					LogUtil.logOptionalReference(
 						LayoutPageTemplateEntry.class,

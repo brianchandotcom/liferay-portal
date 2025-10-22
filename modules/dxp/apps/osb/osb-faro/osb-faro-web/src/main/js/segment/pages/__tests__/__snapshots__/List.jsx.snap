@@ -541,7 +541,7 @@ exports[`List should render 1`] = `
                         class="table-cell-expand "
                       >
                         <div
-                          class="text-truncate text-right mr-5"
+                          class="text-truncate text-right"
                         >
                           10
                         </div>

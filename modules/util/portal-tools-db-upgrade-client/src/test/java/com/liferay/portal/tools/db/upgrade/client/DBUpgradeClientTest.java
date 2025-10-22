@@ -190,11 +190,12 @@ public class DBUpgradeClientTest {
 			"com.mysql.cj.jdbc.Driver",
 			properties.getProperty("jdbc.default.driverClassName"));
 		Assert.assertEquals(
-			"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8" +
-				"&dontTrackOpenResources=true" +
-					"&holdResultsOpenOverStatementClose=true" +
-						"&serverTimezone=GMT&useFastDateParsing=false" +
-							"&useUnicode=true",
+			StringBundler.concat(
+				"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8",
+				"&dontTrackOpenResources=true",
+				"&holdResultsOpenOverStatementClose=true",
+				"&serverTimezone=GMT&useFastDateParsing=false",
+				"&useUnicode=true"),
 			properties.getProperty("jdbc.default.url"));
 		Assert.assertEquals(
 			StringPool.BLANK, properties.getProperty("jdbc.default.username"));
@@ -226,11 +227,12 @@ public class DBUpgradeClientTest {
 			"com.mysql.cj.jdbc.Driver",
 			properties.getProperty("jdbc.default.driverClassName"));
 		Assert.assertEquals(
-			"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8" +
-				"&dontTrackOpenResources=true" +
-					"&holdResultsOpenOverStatementClose=true" +
-						"&serverTimezone=GMT&useFastDateParsing=false" +
-							"&useUnicode=true",
+			StringBundler.concat(
+				"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8",
+				"&dontTrackOpenResources=true",
+				"&holdResultsOpenOverStatementClose=true",
+				"&serverTimezone=GMT&useFastDateParsing=false",
+				"&useUnicode=true"),
 			properties.getProperty("jdbc.default.url"));
 		Assert.assertEquals(
 			StringPool.BLANK, properties.getProperty("jdbc.default.username"));

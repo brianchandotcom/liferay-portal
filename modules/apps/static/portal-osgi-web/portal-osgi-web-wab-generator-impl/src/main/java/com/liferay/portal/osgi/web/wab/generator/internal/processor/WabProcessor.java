@@ -643,7 +643,7 @@ public class WabProcessor {
 		String cdiInstruction = pluginPackageProperties.getProperty(
 			Constants.CDIANNOTATIONS);
 
-		if (cdiInstruction != null) {
+		if ((cdiInstruction != null) && cdiInstruction.isBlank()) {
 			return;
 		}
 

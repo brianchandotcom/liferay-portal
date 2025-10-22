@@ -325,7 +325,10 @@ public class DefaultObjectEntryManagerImpl
 			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			group.getGroupKey(), serviceContext);
 
-		if (!_isUniqueTitle(objectEntry.getId(), objectEntryFolderId, values)) {
+		if (!_isUniqueTitle(
+				objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
+				values)) {
+
 			if (replace) {
 				try {
 					Callable<com.liferay.object.model.ObjectEntry>
@@ -1230,7 +1233,10 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext, serviceBuilderObjectEntry),
 			group.getGroupKey(), serviceContext);
 
-		if (!_isUniqueTitle(objectEntryId, objectEntryFolderId, values)) {
+		if (!_isUniqueTitle(
+				objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
+				values)) {
+
 			if (replace) {
 				try {
 					Callable<com.liferay.object.model.ObjectEntry>
@@ -2979,16 +2985,13 @@ public class DefaultObjectEntryManagerImpl
 	}
 
 	private boolean _isUniqueTitle(
-			long objectEntryId, long objectEntryFolderId,
+			long objectDefinitionId, long objectEntryFolderId,
 			Map<String, Serializable> values)
 		throws Exception {
 
-		com.liferay.object.model.ObjectEntry objectEntry =
-			_objectEntryService.getObjectEntry(objectEntryId);
-
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
-				objectEntry.getObjectDefinitionId());
+				objectDefinitionId);
 
 		ObjectField titleObjectField =
 			_objectFieldLocalService.fetchObjectField(
@@ -3902,55 +3905,58 @@ public class DefaultObjectEntryManagerImpl
 		public com.liferay.object.model.ObjectEntry call() throws Exception {
 			ObjectDefinition objectDefinition =
 				_objectDefinitionLocalService.getObjectDefinition(
-					_objectEntry.getObjectDefinitionId());
+					_serviceBuilderObjectEntry.getObjectDefinitionId());
 
 			ObjectField titleObjectField =
 				_objectFieldLocalService.fetchObjectField(
 					objectDefinition.getTitleObjectFieldId());
 
-			for (com.liferay.object.model.ObjectEntry folderObjectEntry :
-					objectEntryLocalService.getObjectEntries(
-						_objectEntryFolder.getGroupId(),
-						_objectEntryFolder.getCompanyId(),
-						_objectEntryFolder.getObjectEntryFolderId())) {
+			for (com.liferay.object.model.ObjectEntry
+					serviceBuilderObjectEntry :
+						objectEntryLocalService.getObjectEntries(
+							_objectEntryFolder.getGroupId(),
+							_objectEntryFolder.getCompanyId(),
+							_objectEntryFolder.getObjectEntryFolderId())) {
 
 				if (StringUtil.equals(
-						folderObjectEntry.getTitleValue(),
+						serviceBuilderObjectEntry.getTitleValue(),
 						_getTitleValue(titleObjectField, _values))) {
 
 					_objectEntryService.deleteObjectEntry(
-						folderObjectEntry.getObjectEntryId());
+						serviceBuilderObjectEntry.getObjectEntryId());
 				}
 			}
 
 			if (_action.equals("copy")) {
 				return _objectEntryService.copyObjectEntry(
-					_objectEntry.getObjectEntryId(),
+					_serviceBuilderObjectEntry.getObjectEntryId(),
 					_objectEntryFolder.getObjectEntryFolderId(), _values,
 					_serviceContext);
 			}
 
 			return _objectEntryService.moveObjectEntry(
-				_objectEntry.getObjectEntryId(),
+				_serviceBuilderObjectEntry.getObjectEntryId(),
 				_objectEntryFolder.getObjectEntryFolderId(), _values,
 				_serviceContext);
 		}
 
 		private ObjectEntryReplaceCallable(
-			String action, com.liferay.object.model.ObjectEntry objectEntry,
+			String action,
+			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
 			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext,
 			Map<String, Serializable> values) {
 
 			_action = action;
-			_objectEntry = objectEntry;
+			_serviceBuilderObjectEntry = serviceBuilderObjectEntry;
 			_objectEntryFolder = objectEntryFolder;
 			_serviceContext = serviceContext;
 			_values = values;
 		}
 
 		private final String _action;
-		private final com.liferay.object.model.ObjectEntry _objectEntry;
 		private final ObjectEntryFolder _objectEntryFolder;
+		private final com.liferay.object.model.ObjectEntry
+			_serviceBuilderObjectEntry;
 		private final ServiceContext _serviceContext;
 		private final Map<String, Serializable> _values;
 

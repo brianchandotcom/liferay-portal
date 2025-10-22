@@ -272,6 +272,14 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("itemsTotalCount", additionalAssertFieldName)) {
+				if (inventoryAnalysis.getItemsTotalCount() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("totalCount", additionalAssertFieldName)) {
 				if (inventoryAnalysis.getTotalCount() == null) {
 					valid = false;
@@ -414,6 +422,17 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("itemsTotalCount", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						inventoryAnalysis1.getItemsTotalCount(),
+						inventoryAnalysis2.getItemsTotalCount())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("totalCount", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						inventoryAnalysis1.getTotalCount(),
@@ -538,6 +557,11 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("itemsTotalCount")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		if (entityFieldName.equals("totalCount")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -588,6 +612,7 @@ public abstract class BaseInventoryAnalysisResourceTestCase {
 	protected InventoryAnalysis randomInventoryAnalysis() throws Exception {
 		return new InventoryAnalysis() {
 			{
+				itemsTotalCount = RandomTestUtil.randomLong();
 				totalCount = RandomTestUtil.randomLong();
 			}
 		};

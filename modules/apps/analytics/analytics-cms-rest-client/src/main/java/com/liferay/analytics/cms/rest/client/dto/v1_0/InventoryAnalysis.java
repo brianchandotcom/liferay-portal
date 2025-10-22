@@ -49,6 +49,27 @@ public class InventoryAnalysis implements Cloneable, Serializable {
 
 	protected InventoryAnalysisItem[] inventoryAnalysisItems;
 
+	public Long getItemsTotalCount() {
+		return itemsTotalCount;
+	}
+
+	public void setItemsTotalCount(Long itemsTotalCount) {
+		this.itemsTotalCount = itemsTotalCount;
+	}
+
+	public void setItemsTotalCount(
+		UnsafeSupplier<Long, Exception> itemsTotalCountUnsafeSupplier) {
+
+		try {
+			itemsTotalCount = itemsTotalCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long itemsTotalCount;
+
 	public Long getTotalCount() {
 		return totalCount;
 	}

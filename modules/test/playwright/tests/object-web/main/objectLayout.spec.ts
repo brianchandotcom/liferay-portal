@@ -399,11 +399,11 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 
 		await page.getByRole('menuitem', {name: 'Create New'}).click();
 
-		const objectChildEnty = 'ChildEntry' + getRandomInt();
+		const objectChildEntry = 'ChildEntry' + getRandomInt();
 
 		await page
 			.getByLabel(objectFields2[0].label.en_US)
-			.fill(objectChildEnty);
+			.fill(objectChildEntry);
 
 		await page.getByRole('button', {name: 'Save'}).click();
 
@@ -418,7 +418,7 @@ test.describe('manage Object Layouts through the Object Layout tab', () => {
 			.waitFor({state: 'visible'});
 
 		await expect(page.getByRole('textbox').last()).toHaveValue(
-			objectChildEnty
+			objectChildEntry
 		);
 	});
 

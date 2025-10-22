@@ -7,15 +7,16 @@ import {fetch, sub} from 'frontend-js-web';
 
 import SpaceService from '../../../common/services/SpaceService';
 import {
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+	getScopeExternalReferenceCode,
+} from '../../../common/utils/getScopeExternalReferenceCode';
+import {
 	displayDeleteSuccessToast,
 	displayErrorToast,
 } from '../../../common/utils/toastUtil';
 import {DEFAULT_HEADERS} from '../utils/constants';
 import displayUndoDeleteSuccessToast from '../utils/displayUndoDeleteSuccessToast';
 import confirmAndDeleteEntryAction from './confirmAndDeleteEntryAction';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 /**
  * Shows different success messages by having Recycle Bin enabled or not
@@ -71,7 +72,7 @@ export default async function deleteItemAction(
 
 	if (embedded) {
 		const itemSpace = await SpaceService.getSpace(
-			embedded.scopeId as number
+			getScopeExternalReferenceCode(itemData)
 		);
 
 		if (!itemSpace.settings?.trashEnabled) {

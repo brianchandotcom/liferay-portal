@@ -885,7 +885,6 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 		}
 
 		sb.append(" <@U01EV0V1Y6N>\n");
-
 		sb.append(topLevelBuildURL);
 
 		NotificationUtil.sendSlackNotification(

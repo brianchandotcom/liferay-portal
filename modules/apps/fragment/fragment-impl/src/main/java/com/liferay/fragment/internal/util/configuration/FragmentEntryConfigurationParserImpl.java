@@ -783,13 +783,9 @@ public class FragmentEntryConfigurationParserImpl
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		if ((serviceContext == null) || Validator.isNull(value)) {
-			return StringPool.POUND;
-		}
+		if ((serviceContext == null) || Validator.isNull(value) ||
+			(serviceContext.getThemeDisplay() == null)) {
 
-		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
-
-		if (themeDisplay == null) {
 			return StringPool.POUND;
 		}
 
@@ -801,6 +797,8 @@ public class FragmentEntryConfigurationParserImpl
 		if (layoutJSONObject == null) {
 			return jsonObject.getString("href");
 		}
+
+		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		Layout layout = _layoutReferenceResolver.resolve(
 			themeDisplay.getCompanyId(), layoutJSONObject,

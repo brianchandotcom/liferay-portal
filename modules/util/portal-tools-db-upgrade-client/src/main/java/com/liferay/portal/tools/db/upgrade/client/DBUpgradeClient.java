@@ -429,8 +429,7 @@ public class DBUpgradeClient {
 				return dir;
 			}
 
-			System.err.println(
-				"Please enter a relative path, not an absolute path.");
+			System.err.println(dirName + " is not a relative path.");
 
 			return null;
 		}
@@ -567,17 +566,17 @@ public class DBUpgradeClient {
 				return null;
 			}
 
-			String dirNameToVerify = response.trim();
+			String dirName = response.trim();
 
 			File testDir = _getResolvedDir(
-				allowAbsolutePaths, baseDir, dirNameToVerify);
+				allowAbsolutePaths, baseDir, dirName);
 
 			if ((testDir != null) && _isValidDir(testDir)) {
 				if (allowAbsolutePaths) {
 					return testDir.getCanonicalPath();
 				}
 
-				return dirNameToVerify;
+				return dirName;
 			}
 		}
 	}
@@ -596,13 +595,11 @@ public class DBUpgradeClient {
 				return null;
 			}
 
-			String dirNamesToVerify = response.trim();
-
-			String[] dirNames = dirNamesToVerify.split(",");
-
 			boolean hasErrors = false;
 
-			for (String dirName : dirNames) {
+			String dirNames = response.trim();
+
+			for (String dirName : dirNames.split(",")) {
 				dirName = dirName.trim();
 
 				File testDir = _getResolvedDir(
@@ -614,7 +611,7 @@ public class DBUpgradeClient {
 			}
 
 			if (!hasErrors) {
-				return dirNamesToVerify;
+				return dirNames;
 			}
 		}
 	}
@@ -631,16 +628,16 @@ public class DBUpgradeClient {
 				return null;
 			}
 
-			String hostToVerify = response.trim();
+			String name = response.trim();
 
 			try {
-				InetAddress.getByName(hostToVerify);
+				InetAddress.getByName(name);
 
 				return hostToVerify;
 			}
 			catch (Exception exception) {
 				System.err.println(
-					"Unable to resolve host " + hostToVerify + ". " +
+					"Unable to resolve host " + name + ": " +
 						exception.getMessage());
 			}
 		}
@@ -672,15 +669,15 @@ public class DBUpgradeClient {
 			}
 
 			try {
-				int portNumber = Integer.parseInt(response);
+				int portInt = Integer.parseInt(response);
 
-				if ((portNumber < 0) || (portNumber > 65535)) {
+				if ((portInt < 0) || (portInt > 65535)) {
 					System.err.println("Port must be between 0 and 65535.");
 
 					continue;
 				}
 
-				return portNumber;
+				return portInt;
 			}
 			catch (NumberFormatException numberFormatException) {
 				System.err.println(response + " is not a valid port number.");
@@ -711,7 +708,7 @@ public class DBUpgradeClient {
 
 				System.out.println("]");
 				System.out.println(
-					"Please enter your application server (tomcat): ");
+					"Please enter your application server (Tomcat): ");
 
 				response = _consoleReader.readLine();
 
@@ -825,7 +822,7 @@ public class DBUpgradeClient {
 
 			System.out.println("]");
 
-			System.out.println("Please enter your database (mysql): ");
+			System.out.println("Please enter your database (MySQL): ");
 
 			response = _consoleReader.readLine();
 

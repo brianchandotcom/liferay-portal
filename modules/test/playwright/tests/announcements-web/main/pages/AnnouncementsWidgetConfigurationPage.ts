@@ -70,7 +70,7 @@ export class AnnouncementsWidgetConfigurationPage {
 
 		await this.configurationIframe
 			.getByRole('button', {
-				name: 'Transfer Item Right to Left',
+				name: 'Move selected items from Available to In Use',
 			})
 			.click();
 	}

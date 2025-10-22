@@ -12,6 +12,9 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
 import java.io.Serializable;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -55,6 +58,15 @@ public interface PersistedModelLocalService {
 		BasePersistence<?> basePersistence = getBasePersistence();
 
 		return (PersistedModel)basePersistence.fetchByPrimaryKey(primaryKeyObj);
+	}
+
+	public default <T extends PersistedModel> Map<Serializable, T>
+		fetchPersistedModels(Set<Serializable> primaryKeys) {
+
+		BasePersistence<?> basePersistence = getBasePersistence();
+
+		return (Map<Serializable, T>)basePersistence.fetchByPrimaryKeys(
+			primaryKeys);
 	}
 
 	public default BasePersistence<?> getBasePersistence() {

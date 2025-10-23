@@ -61,10 +61,10 @@ for (String type : types) {
 <div class="form-group" id="<portlet:namespace />typesOptions">
 
 	<%
-	for (String curDisplayStyle : displayStyles) {
+	for (String displayStyle : displayStyles) {
 	%>
 
-		<aui:input checked="<%= displayStyle.equals(curDisplayStyle) %>" label="<%= curDisplayStyle %>" name="preferences--socialBookmarksDisplayStyle--" type="radio" value="<%= curDisplayStyle %>" />
+		<aui:input checked="<%= displayStyle.equals(displayStyle) %>" label="<%= displayStyle %>" name="preferences--socialBookmarksDisplayStyle--" type="radio" value="<%= displayStyle %>" />
 
 	<%
 	}

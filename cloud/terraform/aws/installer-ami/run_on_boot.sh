@@ -26,7 +26,8 @@ function main {
 
 	pushd "${terraform_dir}/ecr"
 
-	terraform apply -auto-approve \
+	terraform apply \
+		-auto-approve \
 		-var="deployment_name=lfr-ami" \
 		-var="region=${region}"
 
@@ -61,7 +62,10 @@ function main {
 
 	pushd "${terraform_dir}/eks"
 
-	terraform apply -auto-approve -var node_instance_type=t3.2xlarge
+	terraform apply \
+		-auto-approve \
+		-var="arn_partition=aws-us-gov" \
+		-var node_instance_type=t3.2xlarge
 
 	terraform output > "${terraform_dir}/dependencies/terraform.tfvars"
 

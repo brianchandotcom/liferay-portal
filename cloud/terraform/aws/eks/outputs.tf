@@ -1,3 +1,6 @@
+output "arn_partition" {
+	value=var.arn_partition
+}
 output "cluster_name" {
 	value=module.eks.cluster_name
 }

@@ -1,3 +1,6 @@
+variable "arn_partition" {
+	default="aws"
+}
 variable "cluster_name" {
 	type=string
 }

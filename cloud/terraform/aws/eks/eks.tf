@@ -1,5 +1,5 @@
 locals {
-	oidc_provider_arn="arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
+	oidc_provider_arn="arn:${var.arn_partition}:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${module.eks.oidc_provider}"
 }
 module "eks" {
 	addons={
@@ -46,8 +46,8 @@ module "eks" {
 			desired_size=var.node_group_desired_size
 			disk_size=var.root_volume_size
 			iam_role_additional_policies={
-				AmazonEBSCSIDriverPolicy="arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
-				CloudWatchAgentServerPolicy="arn:aws:iam::aws:policy/CloudWatchAgentServerPolicy"
+				AmazonEBSCSIDriverPolicy="arn:${var.arn_partition}:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+				CloudWatchAgentServerPolicy="arn:${var.arn_partition}:iam::aws:policy/CloudWatchAgentServerPolicy"
 			}
 			instance_types=[var.node_instance_type]
 			max_size=var.node_group_max_size
@@ -151,11 +151,11 @@ resource "aws_iam_role_policy" "this" {
 	role=aws_iam_role.irsa.id
 }
 resource "aws_iam_role_policy_attachment" "role_policy_attachment_ebs_csi_driver" {
-	policy_arn="arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+	policy_arn="arn:${var.arn_partition}:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 	role=aws_iam_role.ebs_csi_driver.name
 }
 resource "aws_iam_role_policy_attachment" "role_policy_attachment_this" {
-	policy_arn="arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+	policy_arn="arn:${var.arn_partition}:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
 	role=aws_iam_role.irsa.name
 }
 resource "aws_kms_alias" "eks_kms_alias" {

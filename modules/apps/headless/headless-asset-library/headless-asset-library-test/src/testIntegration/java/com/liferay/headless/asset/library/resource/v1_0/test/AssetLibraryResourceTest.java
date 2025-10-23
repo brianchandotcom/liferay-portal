@@ -312,26 +312,6 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return assetLibrary;
 	}
 
-	protected AssetLibrary randomAssetLibraryWithTrashEnabled()
-		throws Exception {
-
-		AssetLibrary assetLibrary = super.randomAssetLibrary();
-
-		assetLibrary.setSettings(
-			new Settings() {
-				{
-					autoTaggingEnabled = false;
-					logoColor = "color-1";
-					sharingEnabled = false;
-					trashEnabled = true;
-					trashEntriesMaxAge = RandomTestUtil.randomInt();
-					useCustomLanguages = false;
-				}
-			});
-
-		return assetLibrary;
-	}
-
 	@Override
 	protected AssetLibrary randomPatchAssetLibrary() throws Exception {
 		AssetLibrary assetLibrary = randomAssetLibrary();

@@ -6,16 +6,24 @@
 package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.asset.library.client.dto.v1_0.UserAccount;
 import com.liferay.headless.asset.library.client.pagination.Page;
 import com.liferay.headless.asset.library.client.pagination.Pagination;
+import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.headless.asset.library.client.resource.v1_0.UserAccountResource;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -27,13 +35,18 @@ import com.liferay.portal.odata.entity.StringEntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,11 +59,28 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_spaceDepotEntry = DepotEntryLocalServiceUtil.addDepotEntry(
+			Collections.singletonMap(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+			null, DepotConstants.TYPE_SPACE,
+			new ServiceContext() {
+				{
+					setCompanyId(testCompany.getCompanyId());
+					setUserId(TestPropsValues.getUserId());
+				}
+			});
 		_testUser = UserTestUtil.addUser();
 	}
 
@@ -69,9 +99,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode();
 
 		_testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-			_getAssetLibraryMemberUserAccountResource(""));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource(""));
+
+		UserAccountResource cmsAdministratorUserAccountResource =
+			_getCMSAdministratorUserAccountResource();
+
+		_assertFailure(
+			() ->
+				_testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
+					testDepotEntry, cmsAdministratorUserAccountResource));
 		_testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-			_getCMSAdministratorUserAccountResource(""));
+			_spaceDepotEntry, cmsAdministratorUserAccountResource);
 	}
 
 	@Override
@@ -82,13 +120,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testGetAssetLibraryByExternalReferenceCodeUserAccountsPage();
 
 		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
-			_getAssetLibraryMemberUserAccountResource(""));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource(""));
 		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
-			_getAssetLibraryMemberUserAccountResource("roles"));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource("roles"));
+
+		UserAccountResource cmsAdministratorUserAccountResource =
+			_getCMSAdministratorUserAccountResource();
+
+		_assertFailure(
+			() -> _testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
+				testDepotEntry, cmsAdministratorUserAccountResource));
 		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
-			_getCMSAdministratorUserAccountResource(""));
-		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
-			_getCMSAdministratorUserAccountResource("roles"));
+			_spaceDepotEntry, cmsAdministratorUserAccountResource);
+
 		_testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSortId();
 	}
 
@@ -98,9 +142,17 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testGetAssetLibraryUserAccount();
 
 		_testGetAssetLibraryUserAccount(
-			_getAssetLibraryMemberUserAccountResource(""));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource(""));
+
+		UserAccountResource cmsAdministratorUserAccountResource =
+			_getCMSAdministratorUserAccountResource();
+
+		_assertFailure(
+			() -> _testGetAssetLibraryUserAccount(
+				testDepotEntry, cmsAdministratorUserAccountResource));
+
 		_testGetAssetLibraryUserAccount(
-			_getCMSAdministratorUserAccountResource(""));
+			_spaceDepotEntry, cmsAdministratorUserAccountResource);
 	}
 
 	@Override
@@ -109,13 +161,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		super.testGetAssetLibraryUserAccountsPage();
 
 		_testGetAssetLibraryUserAccountsPage(
-			_getAssetLibraryMemberUserAccountResource(""));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource(""));
 		_testGetAssetLibraryUserAccountsPage(
-			_getAssetLibraryMemberUserAccountResource("roles"));
+			testDepotEntry, _getAssetLibraryMemberUserAccountResource("roles"));
+
+		UserAccountResource cmsAdministratorUserAccountResource =
+			_getCMSAdministratorUserAccountResource();
+
+		_assertFailure(
+			() -> _testGetAssetLibraryUserAccountsPage(
+				testDepotEntry, cmsAdministratorUserAccountResource));
 		_testGetAssetLibraryUserAccountsPage(
-			_getCMSAdministratorUserAccountResource(""));
-		_testGetAssetLibraryUserAccountsPage(
-			_getCMSAdministratorUserAccountResource("roles"));
+			_spaceDepotEntry, cmsAdministratorUserAccountResource);
+
 		_testGetAssetLibraryUserAccountsPageWithSortId();
 	}
 
@@ -272,6 +330,11 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testDepotEntry.getGroupId(), _testUser.getUserId());
 	}
 
+	private void _assertFailure(UnsafeRunnable<Exception> unsafeRunnable) {
+		AssertUtils.assertFailure(
+			Problem.ProblemException.class, null, unsafeRunnable);
+	}
+
 	private UserAccountResource _getAssetLibraryMemberUserAccountResource(
 			String nestedFields)
 		throws Exception {
@@ -300,8 +363,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		).build();
 	}
 
-	private UserAccountResource _getCMSAdministratorUserAccountResource(
-			String nestedFields)
+	private UserAccountResource _getCMSAdministratorUserAccountResource()
 		throws Exception {
 
 		String password = RandomTestUtil.randomString();
@@ -325,8 +387,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
 			LocaleUtil.getDefault()
-		).parameter(
-			"nestedFields", nestedFields
 		).build();
 	}
 
@@ -338,16 +398,20 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	private void
 			_testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				UserAccountResource userAccountResource)
+				DepotEntry depotEntry,
+				UserAccountResource getUserAccountResource)
 		throws Exception {
 
 		UserAccount postUserAccount =
-			testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_addUserAccount();
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), _testUser.getUserId());
+
+		Group group = depotEntry.getGroup();
 
 		UserAccount getUserAccount =
-			userAccountResource.
+			getUserAccountResource.
 				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-					testGetAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode_getAssetLibraryExternalReferenceCode(),
+					group.getExternalReferenceCode(),
 					postUserAccount.getExternalReferenceCode());
 
 		assertEquals(postUserAccount, getUserAccount);
@@ -355,33 +419,36 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _testGetAssetLibraryByExternalReferenceCodeUserAccountsPage(
-			UserAccountResource userAccountResource)
+			DepotEntry depotEntry, UserAccountResource getUserAccountResource)
 		throws Exception {
 
-		String externalReferenceCode =
-			testGetAssetLibraryByExternalReferenceCodeUserAccountsPage_getExternalReferenceCode();
+		Group group = depotEntry.getGroup();
 
 		Page<UserAccount> page =
-			userAccountResource.
+			getUserAccountResource.
 				getAssetLibraryByExternalReferenceCodeUserAccountsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 10),
-					null);
+					group.getExternalReferenceCode(), null, null,
+					Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 
+		UserAccount randomUserAccount = randomUserAccount();
+
 		UserAccount userAccount1 =
-			testGetAssetLibraryByExternalReferenceCodeUserAccountsPage_addUserAccount(
-				externalReferenceCode, randomUserAccount());
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), randomUserAccount.getId());
+
+		randomUserAccount = randomUserAccount();
 
 		UserAccount userAccount2 =
-			testGetAssetLibraryByExternalReferenceCodeUserAccountsPage_addUserAccount(
-				externalReferenceCode, randomUserAccount());
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), randomUserAccount.getId());
 
 		page =
-			userAccountResource.
+			getUserAccountResource.
 				getAssetLibraryByExternalReferenceCodeUserAccountsPage(
-					externalReferenceCode, null, null, Pagination.of(1, 10),
-					null);
+					group.getExternalReferenceCode(), null, null,
+					Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -390,7 +457,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(
 			page,
 			testGetAssetLibraryByExternalReferenceCodeUserAccountsPage_getExpectedActions(
-				externalReferenceCode));
+				group.getExternalReferenceCode()));
 	}
 
 	private void _testGetAssetLibraryByExternalReferenceCodeUserAccountsPageWithSortId()
@@ -403,44 +470,46 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	}
 
 	private void _testGetAssetLibraryUserAccount(
-			UserAccountResource userAccountResource)
+			DepotEntry depotEntry, UserAccountResource getUserAccountResource)
 		throws Exception {
 
 		UserAccount postUserAccount =
-			testGetAssetLibraryUserAccount_addUserAccount();
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), _testUser.getUserId());
 
 		UserAccount getUserAccount =
-			userAccountResource.getAssetLibraryUserAccount(
-				testGetAssetLibraryUserAccount_getAssetLibraryId(),
-				postUserAccount.getId());
+			getUserAccountResource.getAssetLibraryUserAccount(
+				depotEntry.getGroupId(), postUserAccount.getId());
 
 		assertEquals(postUserAccount, getUserAccount);
 		assertValid(getUserAccount);
 	}
 
 	private void _testGetAssetLibraryUserAccountsPage(
-			UserAccountResource userAccountResource)
+			DepotEntry depotEntry, UserAccountResource getUserAccountResource)
 		throws Exception {
 
-		Long assetLibraryId =
-			testGetAssetLibraryUserAccountsPage_getAssetLibraryId();
-
 		Page<UserAccount> page =
-			userAccountResource.getAssetLibraryUserAccountsPage(
-				assetLibraryId, null, null, Pagination.of(1, 10), null);
+			getUserAccountResource.getAssetLibraryUserAccountsPage(
+				depotEntry.getGroupId(), null, null, Pagination.of(1, 10),
+				null);
 
 		long totalCount = page.getTotalCount();
 
+		UserAccount randomUserAccount = randomUserAccount();
+
 		UserAccount userAccount1 =
-			testGetAssetLibraryUserAccountsPage_addUserAccount(
-				assetLibraryId, randomUserAccount());
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), randomUserAccount.getId());
+
+		randomUserAccount = randomUserAccount();
 
 		UserAccount userAccount2 =
-			testGetAssetLibraryUserAccountsPage_addUserAccount(
-				assetLibraryId, randomUserAccount());
+			userAccountResource.putAssetLibraryUserAccount(
+				depotEntry.getGroupId(), randomUserAccount.getId());
 
-		page = userAccountResource.getAssetLibraryUserAccountsPage(
-			assetLibraryId, null, null, Pagination.of(1, 10), null);
+		page = getUserAccountResource.getAssetLibraryUserAccountsPage(
+			depotEntry.getGroupId(), null, null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -449,7 +518,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 		assertValid(
 			page,
 			testGetAssetLibraryUserAccountsPage_getExpectedActions(
-				assetLibraryId));
+				depotEntry.getGroupId()));
 	}
 
 	private void _testGetAssetLibraryUserAccountsPageWithSortId()
@@ -464,6 +533,7 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	@Inject
 	private RoleLocalService _roleLocalService;
 
+	private DepotEntry _spaceDepotEntry;
 	private User _testUser;
 
 	@Inject

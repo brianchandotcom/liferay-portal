@@ -128,7 +128,7 @@ public class ObjectEntryDisplayContextImplTest {
 		String groupId = String.valueOf(RandomTestUtil.randomLong());
 
 		Mockito.when(
-			httpServletRequest.getParameter(ObjectWebKeys.OBJECT_ENTRY_GROUP_ID)
+			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_ENTRY_GROUP_ID)
 		).thenReturn(
 			groupId
 		);

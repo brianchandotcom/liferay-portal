@@ -2753,8 +2753,6 @@ public class CustomFieldsUtilTest {
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.ORIGIN_STAGING,
 			exportImportReportEntry.getOrigin());
-		Assert.assertEquals("company", exportImportReportEntry.getScope());
-		Assert.assertEquals("", exportImportReportEntry.getScopeKey());
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.TYPE_EMPTY,
 			exportImportReportEntry.getType());

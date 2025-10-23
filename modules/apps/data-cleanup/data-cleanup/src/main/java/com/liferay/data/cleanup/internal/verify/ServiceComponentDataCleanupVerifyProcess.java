@@ -63,7 +63,7 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 
 				DataCleanupLoggingUtil.logDelete(
 					_log, 1, "ServiceComponent",
-					buildNamespace + " is a portletShortName");
+					buildNamespace + " is not a fully qualified name");
 			}
 			else if (buildNamespace.startsWith("com.liferay.")) {
 				Bundle bundle = BundleUtil.getBundle(

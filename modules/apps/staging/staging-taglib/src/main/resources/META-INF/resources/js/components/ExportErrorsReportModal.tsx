@@ -56,7 +56,11 @@ export function ExportErrorsReportModal({
 	const [downloadURL] = useState<string | undefined>();
 
 	return (
-		<Modal observer={observer} status={STATUS_MAP[status].displayType}>
+		<Modal
+			disableAutoClose
+			observer={observer}
+			status={STATUS_MAP[status].displayType}
+		>
 			<Modal.Header>
 				{Liferay.Language.get('export-errors-report')}
 			</Modal.Header>

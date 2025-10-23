@@ -128,7 +128,8 @@ const Table: React.FC<ITableProps> = ({
 		'table-striped',
 		'table-list',
 		'table-nowrap',
-		'table-bordered',
+		'table-head-bordered',
+		'table-hover',
 		{
 			'show-quick-actions-on-hover': renderRowActions
 		}

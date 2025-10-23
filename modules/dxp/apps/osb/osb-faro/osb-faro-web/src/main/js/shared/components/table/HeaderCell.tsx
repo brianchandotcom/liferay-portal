@@ -33,7 +33,7 @@ const ButtonSort = ({children, sortOrder}) => (
 					? Liferay.Language.get('ascending')
 					: Liferay.Language.get('descending')
 			}
-			className='component-action ml-4'
+			className='component-action ml-2'
 			size='sm'
 		>
 			{!sortOrder ? (

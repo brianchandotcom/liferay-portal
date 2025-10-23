@@ -103,7 +103,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 
 	const activeFilters = filterBy.some(values => values.some(Boolean));
 
-	const classes = getCN({
+	const classes = getCN('my-2', {
 		disabled,
 		'items-selected': itemsSelected
 	});
@@ -286,7 +286,7 @@ const Toolbar: React.FC<IToolbarProps> = ({
 					</Nav>
 
 					{(!itemsSelected || alwaysShowSearch) && showSearch && (
-						<div className='navbar-form navbar-form-autofit'>
+						<div className='navbar-form navbar-form-autofit mx-2'>
 							<SearchInput
 								autoFocus={autoFocus}
 								className={getCN('search', {

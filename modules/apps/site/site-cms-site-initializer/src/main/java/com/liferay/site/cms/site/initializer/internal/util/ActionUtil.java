@@ -1013,6 +1013,11 @@ public class ActionUtil {
 		return DropdownItemBuilder.putData(
 			"action", "uploadMultipleFiles"
 		).putData(
+			"baseAssetLibraryViewURL",
+			getBaseSpaceURL(
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY))
+		).putData(
 			"parentObjectEntryFolderExternalReferenceCode",
 			parentObjectEntryFolderExternalReferenceCode
 		).setIcon(

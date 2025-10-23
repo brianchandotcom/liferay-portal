@@ -21,7 +21,7 @@ const StructureLabelRenderer = ({
 }) => {
 	if (itemData.system) {
 		return (
-			<>
+			<div className="table-list-title">
 				{value}
 
 				<ClayIcon
@@ -34,7 +34,7 @@ const StructureLabelRenderer = ({
 					)}
 					symbol="lock"
 				/>
-			</>
+			</div>
 		);
 	}
 

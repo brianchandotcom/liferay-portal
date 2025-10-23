@@ -10,6 +10,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -44,6 +45,8 @@ public class CKEditor5EditorConfigContributor
 				"liferay-ui:input-editor:namespace"));
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
+		String placeholder = LanguageUtil.format(
+			themeDisplay.getLocale(), "write-your-content-here", false);
 
 		jsonObject.put(
 			"editorType", "ckeditor5"
@@ -51,6 +54,8 @@ public class CKEditor5EditorConfigContributor
 			"itemSelectorEventName", namespace + name + "selectItem"
 		).put(
 			"licenseKey", _ckEditor5Configuration.licenseKey()
+		).put(
+			"placeholder", placeholder
 		).put(
 			"preset", "advanced"
 		);

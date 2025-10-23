@@ -40,14 +40,13 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,9 +70,8 @@ public class LearnRestController extends BaseRestController {
 	@GetMapping("/lesson/{lessonId}/audio/base64")
 	@ResponseBody
 	public ResponseEntity<Object> getLessonAudioBase64(
-		@AuthenticationPrincipal Jwt jwt, @PathVariable long lessonId,
-		@RequestParam String languageCode, @RequestParam String voiceName,
-		@RequestParam String voiceType) {
+		@PathVariable long lessonId, @RequestParam String languageCode,
+		@RequestParam String voiceName, @RequestParam String voiceType) {
 
 		try {
 			JSONObject lessonJSONObject = new JSONObject(
@@ -99,32 +97,38 @@ public class LearnRestController extends BaseRestController {
 			String fileName = StringBundler.concat(
 				"lesson-", lessonId, "-", voiceType, ".mp3");
 
-			JSONObject documentsJSONObject = null;
+			JSONObject jsonObject = null;
 
 			try {
-				documentsJSONObject = new JSONObject(
+				jsonObject = new JSONObject(
 					get(
 						"",
 						UriComponentsBuilder.fromPath(
 							StringBundler.concat(
-								"/o/headless-delivery/v1.0/sites/", _siteId,
+								"/o/headless-delivery/v1.0/sites/",
+								_siteGroupId,
 								"/documents/by-external-reference-code/",
 								StringUtil.toUpperCase(fileName))
 						).build(
 						).toUri()));
 			}
-			catch (Exception exception) {
-				String message = exception.getMessage();
+			catch (WebClientResponseException webClientResponseException) {
+				if (webClientResponseException.getStatusCode() !=
+						HttpStatus.NOT_FOUND) {
 
-				if ((message != null) && message.contains("404")) {
-					documentsJSONObject = null;
+					throw webClientResponseException;
 				}
-				else {
-					exception.printStackTrace();
 
-					throw exception;
-				}
+				return ResponseEntity.ok(
+					_generateAudioResource(
+						content, 0, fileName, languageCode, voiceName));
 			}
+
+			OffsetDateTime documentDateModified = OffsetDateTime.parse(
+				jsonObject.getString("dateModified")
+			).truncatedTo(
+				ChronoUnit.MINUTES
+			);
 
 			OffsetDateTime lessonDateModified = OffsetDateTime.parse(
 				lessonJSONObject.getString("dateModified")
@@ -132,219 +136,16 @@ public class LearnRestController extends BaseRestController {
 				ChronoUnit.MINUTES
 			);
 
-			OffsetDateTime documentDateModified = OffsetDateTime.MIN;
-
-			if (documentsJSONObject != null) {
-				documentDateModified = OffsetDateTime.parse(
-					documentsJSONObject.getString("dateModified")
-				).truncatedTo(
-					ChronoUnit.MINUTES
-				);
-			}
-
 			if (lessonDateModified.isAfter(documentDateModified)) {
-				ByteArrayOutputStream byteArrayOutputStream =
-					new ByteArrayOutputStream();
-
-				List<String> ssmls = _splitSsml(
-					content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
-
-				for (String ssml : ssmls) {
-					String response = post(
-						_getGoogleAccessToken(),
-						new JSONObject(
-							HashMapBuilder.<String, Object>put(
-								"audioConfig",
-								HashMapBuilder.<String, Object>put(
-									"audioEncoding", "MP3"
-								).build()
-							).put(
-								"input",
-								HashMapBuilder.<String, Object>put(
-									"text", ssml
-								).build()
-							).put(
-								"voice",
-								HashMapBuilder.<String, Object>put(
-									"languageCode", languageCode
-								).put(
-									"name", voiceName
-								).build()
-							).build()
-						).toString(),
-						UriComponentsBuilder.fromUriString(
-							"https://texttospeech.googleapis.com/v1beta1" +
-								"/text:synthesize"
-						).build(
-						).toUri());
-
-					byteArrayOutputStream.write(
-						Base64.getDecoder(
-						).decode(
-							new JSONObject(
-								response
-							).getString(
-								"audioContent"
-							)
-						));
-				}
-
-				byte[] fullAudioBytes = byteArrayOutputStream.toByteArray();
-
-				ByteArrayResource fileResource = new ByteArrayResource(
-					fullAudioBytes) {
-
-					@Override
-					public String getFilename() {
-						return fileName;
-					}
-
-				};
-
-				if (documentsJSONObject == null) {
-					JSONObject documentMetadataJSONObject = new JSONObject(
-					).put(
-						"title", fileName
-					).put(
-						"externalReferenceCode",
-						StringUtil.toUpperCase(fileName)
-					).put(
-						"fileName", fileName
-					).put(
-						"viewableBy", "Anyone"
-					);
-
-					MultipartBodyBuilder builder = new MultipartBodyBuilder();
-
-					builder.part(
-						"document", documentMetadataJSONObject.toString(),
-						MediaType.APPLICATION_JSON);
-
-					builder.part(
-						"file", fileResource,
-						MediaType.APPLICATION_OCTET_STREAM);
-
-					MultiValueMap<String, HttpEntity<?>> multipartBody =
-						builder.build();
-
-					URI uri = UriComponentsBuilder.fromHttpUrl(
-						_protocol + "://" + _mainDomain
-					).path(
-						"/o/headless-delivery/v1.0/document-folders/" +
-							_folderId + "/documents"
-					).build(
-					).toUri();
-
-					try {
-						String uploadResponse = WebClient.create(
-						).post(
-						).uri(
-							uri
-						).contentType(
-							MediaType.MULTIPART_FORM_DATA
-						).header(
-							HttpHeaders.AUTHORIZATION, _getAuthorization()
-						).body(
-							BodyInserters.fromMultipartData(multipartBody)
-						).retrieve(
-						).bodyToMono(
-							String.class
-						).block();
-
-						JSONObject uploadJSONJSONObject = new JSONObject(
-							uploadResponse);
-
-						String contentUrl = uploadJSONJSONObject.optString(
-							"contentUrl", null);
-
-						JSONObject responseJSONObject = new JSONObject(
-						).put(
-							"contentUrl", contentUrl
-						);
-
-						return ResponseEntity.ok(
-						).contentType(
-							MediaType.APPLICATION_JSON
-						).body(
-							responseJSONObject.toString(2)
-						);
-					}
-					catch (WebClientResponseException
-								webClientResponseException) {
-
-						System.err.println(
-							StringBundler.concat(
-								"Failed in Liferay (",
-								webClientResponseException.getStatusCode(),
-								"): ",
-								webClientResponseException.
-									getResponseBodyAsString()));
-
-						throw new RuntimeException(
-							"Failed to upload to the Liferay API", webClientResponseException);
-					}
-				}
-				else {
-					long documentId = documentsJSONObject.getLong("id");
-
-					MultipartBodyBuilder builder = new MultipartBodyBuilder();
-
-					builder.part(
-						"file", fileResource,
-						MediaType.APPLICATION_OCTET_STREAM);
-
-					MultiValueMap<String, HttpEntity<?>> multipartBody =
-						builder.build();
-
-					String updateResponse = WebClient.create(
-					).put(
-					).uri(
-						UriComponentsBuilder.fromHttpUrl(
-							_protocol + "://" + _mainDomain
-						).path(
-							"/o/headless-delivery/v1.0/documents/" + documentId
-						).build(
-						).toUri()
-					).contentType(
-						MediaType.MULTIPART_FORM_DATA
-					).header(
-						HttpHeaders.AUTHORIZATION, _getAuthorization()
-					).body(
-						BodyInserters.fromMultipartData(multipartBody)
-					).retrieve(
-					).bodyToMono(
-						String.class
-					).block();
-
-					return ResponseEntity.ok(
-					).contentType(
-						MediaType.APPLICATION_JSON
-					).body(
-						new JSONObject(
-						).put(
-							"contentUrl",
-							new JSONObject(
-								updateResponse
-							).getString(
-								"contentUrl"
-							)
-						).toString()
-					);
-				}
+				return ResponseEntity.ok(
+					_generateAudioResource(
+						content, _documentFolderId, fileName, languageCode,
+						voiceName));
 			}
 
 			return ResponseEntity.ok(
-			).contentType(
-				MediaType.APPLICATION_JSON
-			).body(
-				new JSONObject(
-				).put(
-					"contentUrl",
-					documentsJSONObject.optString("contentUrl", null)
-				).toString(
-					2
-				)
-			);
+				Collections.singletonMap(
+					"contentUrl", jsonObject.getString("contentUrl")));
 		}
 		catch (Exception exception) {
 			return ResponseEntity.status(
@@ -461,19 +262,19 @@ public class LearnRestController extends BaseRestController {
 		return ResponseEntity.ok(quizResultMap);
 	}
 
-	private String _convertHtmlListToTextInline(String html) {
-		html = _convertHtmlTableToTextInline(html);
+	private String _convertHTMLListToTextInline(String html) {
+		html = _convertHTMLTableToTextInline(html);
 
 		Matcher matcher = _liPattern.matcher(html);
 
 		StringBuffer stringBuffer = new StringBuffer();
 
 		while (matcher.find()) {
-			String openingTag = matcher.group(1);
+			String closingTag = matcher.group(3);
 			String innerContent = matcher.group(
 				2
 			).trim();
-			String closingTag = matcher.group(3);
+			String openingTag = matcher.group(1);
 
 			String text = innerContent.replaceAll(
 				"(?s)<[^>]+>", " "
@@ -520,19 +321,19 @@ public class LearnRestController extends BaseRestController {
 		).trim();
 	}
 
-	private String _convertHtmlTableToTextInline(String html) {
+	private String _convertHTMLTableToTextInline(String html) {
 		if (html == null) {
 			return "";
 		}
 
-		Matcher tableMatcher = _tablePattern.matcher(html);
 		StringBuffer stringBuffer = new StringBuffer();
+		Matcher tableMatcher = _tablePattern.matcher(html);
 
 		while (tableMatcher.find()) {
-			String tableHtml = tableMatcher.group(1);
+			String tableHTML = tableMatcher.group(1);
 
 			List<String> headers = new ArrayList<>();
-			Matcher theadMatcher = _theadPattern.matcher(tableHtml);
+			Matcher theadMatcher = _theadPattern.matcher(tableHTML);
 
 			if (theadMatcher.find()) {
 				Matcher headTrMatcher = _trPattern.matcher(
@@ -544,21 +345,21 @@ public class LearnRestController extends BaseRestController {
 
 					while (headCellsMatcher.find()) {
 						headers.add(
-							_decodeBasicHtmlEntities(
+							_decodeBasicHTMLEntities(
 								headCellsMatcher.group(1)
 							).trim());
 					}
 				}
 			}
 
-			String bodyHtml = tableHtml;
-			Matcher tbodyMatcher = _tbodyPattern.matcher(tableHtml);
+			String bodyHTML = tableHTML;
+			Matcher tbodyMatcher = _tbodyPattern.matcher(tableHTML);
 
 			if (tbodyMatcher.find()) {
-				bodyHtml = tbodyMatcher.group(1);
+				bodyHTML = tbodyMatcher.group(1);
 			}
 
-			Matcher trMatcher = _trPattern.matcher(bodyHtml);
+			Matcher trMatcher = _trPattern.matcher(bodyHTML);
 
 			StringBuilder tableDescription = new StringBuilder("Table: ");
 
@@ -578,7 +379,7 @@ public class LearnRestController extends BaseRestController {
 					}
 				}
 
-				tableDescription.append(sb.toString());
+				tableDescription.append(sb);
 			}
 
 			int row = 0;
@@ -593,7 +394,7 @@ public class LearnRestController extends BaseRestController {
 				List<String> cells = new ArrayList<>();
 
 				while (cellMatcher.find()) {
-					String raw = _decodeBasicHtmlEntities(
+					String raw = _decodeBasicHTMLEntities(
 						cellMatcher.group(1)
 					).trim();
 
@@ -648,7 +449,7 @@ public class LearnRestController extends BaseRestController {
 		return stringBuffer.toString();
 	}
 
-	private String _decodeBasicHtmlEntities(String string) {
+	private String _decodeBasicHTMLEntities(String string) {
 		if (string == null) {
 			return "";
 		}
@@ -660,6 +461,134 @@ public class LearnRestController extends BaseRestController {
 				"&#39;"
 			},
 			new String[] {" ", " ", " ", "&", "<", ">", "\"", "'"});
+	}
+
+	private Map<String, Object> _generateAudioResource(
+			String content, long documentFolderId, String fileName,
+			String languageCode, String voiceName)
+		throws Exception {
+
+		ByteArrayOutputStream byteArrayOutputStream =
+			new ByteArrayOutputStream();
+
+		List<String> ssmls = _splitSsml(
+			content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
+
+		for (String ssml : ssmls) {
+			String response = post(
+				_getGoogleAccessToken(),
+				new JSONObject(
+					HashMapBuilder.<String, Object>put(
+						"audioConfig",
+						HashMapBuilder.<String, Object>put(
+							"audioEncoding", "MP3"
+						).build()
+					).put(
+						"input",
+						HashMapBuilder.<String, Object>put(
+							"text", ssml
+						).build()
+					).put(
+						"voice",
+						HashMapBuilder.<String, Object>put(
+							"languageCode", languageCode
+						).put(
+							"name", voiceName
+						).build()
+					).build()
+				).toString(),
+				UriComponentsBuilder.fromUriString(
+					"https://texttospeech.googleapis.com/v1beta1" +
+						"/text:synthesize"
+				).build(
+				).toUri());
+
+			byteArrayOutputStream.write(
+				Base64.getDecoder(
+				).decode(
+					new JSONObject(
+						response
+					).getString(
+						"audioContent"
+					)
+				));
+		}
+
+		ByteArrayResource fileResource = new ByteArrayResource(
+			byteArrayOutputStream.toByteArray()) {
+
+			@Override
+			public String getFilename() {
+				return fileName;
+			}
+
+		};
+
+		MultipartBodyBuilder builder = new MultipartBodyBuilder();
+
+		builder.part(
+			"document",
+			new JSONObject(
+			).put(
+				"documentFolderId", _documentFolderId
+			).put(
+				"externalReferenceCode", StringUtil.toUpperCase(fileName)
+			).put(
+				"fileName", fileName
+			).put(
+				"title", fileName
+			).put(
+				"viewableBy", "Anyone"
+			).toString(),
+			MediaType.APPLICATION_JSON);
+
+		builder.part("file", fileResource, MediaType.APPLICATION_OCTET_STREAM);
+
+		HttpMethod method = null;
+		URI uri = null;
+
+		if (documentFolderId != 0) {
+			method = HttpMethod.PUT;
+			uri = UriComponentsBuilder.fromPath(
+				"/o/headless-delivery/v1.0/sites/{siteGroupId}/documents" +
+					"/by-external-reference-code/{fileName}"
+			).build(
+				_siteGroupId, StringUtil.toUpperCase(fileName)
+			);
+		}
+		else {
+			method = HttpMethod.POST;
+			uri = UriComponentsBuilder.fromPath(
+				"/o/headless-delivery/v1.0/document-folders" +
+					"/{documentFolderId}/documents"
+			).build(
+				_documentFolderId
+			);
+		}
+
+		return Collections.singletonMap(
+			"contentUrl",
+			new JSONObject(
+				_webClientBuilder.baseUrl(
+					_lxcDXPServerProtocol + "://" + _lxcDXPMainDomain
+				).build(
+				).method(
+					method
+				).uri(
+					uri
+				).contentType(
+					MediaType.MULTIPART_FORM_DATA
+				).header(
+					HttpHeaders.AUTHORIZATION, _getAuthorization()
+				).body(
+					BodyInserters.fromMultipartData(builder.build())
+				).retrieve(
+				).bodyToMono(
+					String.class
+				).block()
+			).optString(
+				"contentUrl", null
+			));
 	}
 
 	private String _getAuthorization() {
@@ -883,11 +812,11 @@ public class LearnRestController extends BaseRestController {
 			"</speak>$", ""
 		).trim();
 
-		ssmlContent = _decodeBasicHtmlEntities(ssmlContent);
-
-		ssmlContent = _convertHtmlListToTextInline(ssmlContent);
-
-		String[] sentences = ssmlContent.split("(?<=[.!?])\\s+");
+		String[] sentences = _convertHTMLListToTextInline(
+			_decodeBasicHTMLEntities(ssmlContent)
+		).split(
+			"(?<=[.!?])\\s+"
+		);
 
 		for (String sentence : sentences) {
 			if ((sb.length() + sentence.length()) > maxLength) {
@@ -946,8 +875,8 @@ public class LearnRestController extends BaseRestController {
 	private static final Pattern _trPattern = Pattern.compile(
 		"(?is)<tr[^>]*>(.*?)</tr>");
 
-	@Value("${folder.id}")
-	private String _folderId;
+	@Value("${liferay.learn.audio.lessons.document.folder.id}")
+	private long _documentFolderId;
 
 	@Value("${liferay.learn.google.credentials}")
 	private String _googleCredentials;
@@ -956,12 +885,15 @@ public class LearnRestController extends BaseRestController {
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;
 
 	@Value("${com.liferay.lxc.dxp.mainDomain}")
-	private String _mainDomain;
+	private String _lxcDXPMainDomain;
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
-	private String _protocol;
+	private String _lxcDXPServerProtocol;
 
 	@Value("${liferay.learn.dxp.site.group.id}")
-	private String _siteId;
+	private String _siteGroupId;
+
+	@Autowired
+	private WebClient.Builder _webClientBuilder;
 
 }

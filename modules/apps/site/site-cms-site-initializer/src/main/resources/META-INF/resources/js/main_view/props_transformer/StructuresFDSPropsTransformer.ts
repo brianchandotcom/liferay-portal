@@ -9,7 +9,7 @@ import getLocalizedValue from '../../common/utils/getLocalizedValue';
 import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
-import StructureLabelRenderer from './cell_renderers/StructureLabelRenderer';
+import StructureNameRenderer from './cell_renderers/StructureNameRenderer';
 import StructureScopeRenderer from './cell_renderers/StructureScopeRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 
@@ -28,8 +28,8 @@ export default function StructuresFDSPropsTransformer({
 					type: 'internal',
 				} as IInternalRenderer,
 				{
-					component: StructureLabelRenderer,
-					name: 'structureLabelTableCellRenderer',
+					component: StructureNameRenderer,
+					name: 'structureNameTableCellRenderer',
 					type: 'internal',
 				} as IInternalRenderer,
 				{

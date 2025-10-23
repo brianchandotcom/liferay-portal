@@ -1178,15 +1178,6 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<ObjectEntry> getObjectEntries(
-			long groupId, long companyId, long objectEntryFolderId)
-		throws PortalException {
-
-		return objectEntryPersistence.findByG_C_OEFI(
-			groupId, companyId, objectEntryFolderId);
-	}
-
-	@Override
 	public int getObjectEntriesCount(long objectDefinitionId) {
 		return objectEntryPersistence.countByObjectDefinitionId(
 			objectDefinitionId);

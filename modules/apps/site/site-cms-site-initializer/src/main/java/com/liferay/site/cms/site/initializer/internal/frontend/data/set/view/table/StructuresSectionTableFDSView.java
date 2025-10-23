@@ -32,7 +32,7 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"label", "label",
+			"label", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"edit"
 			).setContentRenderer(

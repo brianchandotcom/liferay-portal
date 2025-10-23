@@ -32,11 +32,11 @@ availableSocialBookmarkTypes = ListUtil.sort(availableSocialBookmarkTypes, new K
 
 List<KeyValuePair> currentSocialBookmarkTypes = new ArrayList<>();
 
-for (int i = 0; i < types.length; i++) {
-	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(types[i]);
+for (String type : types) {
+	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(type);
 
 	if (socialBookmark != null) {
-		currentSocialBookmarkTypes.add(new KeyValuePair(types[i], socialBookmark.getName(locale)));
+		currentSocialBookmarkTypes.add(new KeyValuePair(type, socialBookmark.getName(locale)));
 	}
 }
 %>

@@ -254,7 +254,7 @@ public class BatchEngineImportTaskExecutorImpl
 	private <T> void _commitItems(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<T> batchEngineTaskItemDelegate,
-			List<T> items1, Map<String, Serializable> parameters,
+			List<T> items, Map<String, Serializable> parameters,
 			int processedItemsCount)
 		throws Throwable {
 
@@ -263,13 +263,13 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineImportTask.getOperation());
 
 		if (batchEngineTaskOperation == BatchEngineTaskOperation.CREATE) {
-			batchEngineTaskItemDelegate.create(items1, parameters);
+			batchEngineTaskItemDelegate.create(items, parameters);
 		}
 		else if (batchEngineTaskOperation == BatchEngineTaskOperation.DELETE) {
-			batchEngineTaskItemDelegate.delete(items1, parameters);
+			batchEngineTaskItemDelegate.delete(items, parameters);
 		}
 		else {
-			batchEngineTaskItemDelegate.update(items1, parameters);
+			batchEngineTaskItemDelegate.update(items, parameters);
 		}
 
 		batchEngineImportTask.setProcessedItemsCount(processedItemsCount);

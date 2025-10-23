@@ -57,15 +57,15 @@ public class JSONWebServiceStrutsAction implements StrutsAction {
 				ServletContextPool.get(StringPool.BLANK), httpServletRequest,
 				httpServletResponse, "portal_pop_up.jsp", theme, false);
 
-			int bodyTagEndIndex =
+			int index =
 				html.indexOf(StringPool.GREATER_THAN, html.indexOf("<body")) +
 					1;
 
 			StringBundler sb = new StringBundler(3);
 
-			sb.append(html.substring(0, bodyTagEndIndex));
+			sb.append(html.substring(0, index));
 			sb.append(unsyncStringWriter.toString());
-			sb.append(html.substring(bodyTagEndIndex));
+			sb.append(html.substring(index));
 
 			ServletResponseUtil.write(httpServletResponse, sb.toString());
 		}

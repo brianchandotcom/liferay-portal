@@ -35,7 +35,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 
 		for (T currentItem : items) {
-			importUnsafeBiConsumer.accept(
+			importItemUnsafeBiConsumer.accept(
 				currentItem, item -> createItem(item, parameters));
 		}
 	}
@@ -52,7 +52,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 		throws Exception {
 
 		for (T currentItem : items) {
-			importUnsafeBiConsumer.accept(
+			importItemUnsafeBiConsumer.accept(
 				currentItem,
 				item -> {
 					deleteItem(item, parameters);
@@ -109,11 +109,11 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	}
 
 	@Override
-	public void setImportUnsafeBiConsumer(
+	public void setImportItemUnsafeBiConsumer(
 		UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
 			unsafeBiConsumer) {
 
-		importUnsafeBiConsumer = unsafeBiConsumer;
+		importItemUnsafeBiConsumer = unsafeBiConsumer;
 	}
 
 	@Override
@@ -138,7 +138,7 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 	protected Company contextCompany;
 	protected User contextUser;
 	protected UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
-		importUnsafeBiConsumer;
+		importItemUnsafeBiConsumer;
 	protected String languageId;
 	protected UriInfo uriInfo;
 

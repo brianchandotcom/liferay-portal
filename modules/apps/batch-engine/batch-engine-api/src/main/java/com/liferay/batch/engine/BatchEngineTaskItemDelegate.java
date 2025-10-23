@@ -66,7 +66,7 @@ public interface BatchEngineTaskItemDelegate<T> {
 
 	public void setContextUser(User contextUser);
 
-	public void setImportUnsafeBiConsumer(
+	public void setImportItemUnsafeBiConsumer(
 		UnsafeBiConsumer<T, UnsafeFunction<T, T, Exception>, Exception>
 			unsafeBiConsumer);
 

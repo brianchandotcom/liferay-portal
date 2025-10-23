@@ -294,8 +294,6 @@ async function main() {
 	});
 
 	navContainer.addEventListener('click', (event) => {
-		event.stopPropagation();
-
 		if (
 			!search.contains(event.target) &&
 			!searchDropdown.contains(event.target)

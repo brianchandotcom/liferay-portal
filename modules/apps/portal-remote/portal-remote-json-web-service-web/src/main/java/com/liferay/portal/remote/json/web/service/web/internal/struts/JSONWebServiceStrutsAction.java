@@ -51,6 +51,8 @@ public class JSONWebServiceStrutsAction implements StrutsAction {
 			requestDispatcher.include(
 				httpServletRequest, pipingServletResponse);
 
+			StringBundler sb = new StringBundler(3);
+
 			Theme theme = (Theme)httpServletRequest.getAttribute(WebKeys.THEME);
 
 			String html = ThemeUtil.include(
@@ -61,9 +63,8 @@ public class JSONWebServiceStrutsAction implements StrutsAction {
 				html.indexOf(StringPool.GREATER_THAN, html.indexOf("<body")) +
 					1;
 
-			StringBundler sb = new StringBundler(3);
-
 			sb.append(html.substring(0, index));
+
 			sb.append(unsyncStringWriter.toString());
 			sb.append(html.substring(index));
 

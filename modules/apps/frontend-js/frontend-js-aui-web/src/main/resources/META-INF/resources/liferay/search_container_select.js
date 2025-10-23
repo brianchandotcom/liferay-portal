@@ -8,6 +8,8 @@ AUI.add(
 	(A) => {
 		const AArray = A.Array;
 		const Lang = A.Lang;
+		const {SessionStorage: sessionStorage} = Liferay.Util;
+		const {TYPES: COOKIE_TYPES} = sessionStorage;
 
 		const REGEX_MATCH_EVERYTHING = /.*/;
 
@@ -290,7 +292,12 @@ AUI.add(
 						'sessionStorageItemKey'
 					);
 
-					if (sessionStorage.getItem(sessionStorageItemKey)) {
+					if (
+						sessionStorage.getItem(
+							sessionStorageItemKey,
+							COOKIE_TYPES.FUNCTIONAL
+						)
+					) {
 						const container = A.one(host._getNodeToParse());
 
 						const selections = sessionStorage
@@ -342,11 +349,17 @@ AUI.add(
 						selectedItems = instance.getAllSelectedElements().val();
 					}
 
-					if (sessionStorage.getItem(sessionStorageItemKey)) {
+					if (
+						sessionStorage.getItem(
+							sessionStorageItemKey,
+							COOKIE_TYPES.FUNCTIONAL
+						)
+					) {
 						if (selectedItems.length) {
 							sessionStorage.setItem(
 								sessionStorageItemKey,
-								selectedItems
+								selectedItems,
+								COOKIE_TYPES.FUNCTIONAL
 							);
 						}
 						else {
@@ -356,7 +369,8 @@ AUI.add(
 					else if (selectedItems.length) {
 						sessionStorage.setItem(
 							sessionStorageItemKey,
-							selectedItems
+							selectedItems,
+							COOKIE_TYPES.FUNCTIONAL
 						);
 					}
 				},

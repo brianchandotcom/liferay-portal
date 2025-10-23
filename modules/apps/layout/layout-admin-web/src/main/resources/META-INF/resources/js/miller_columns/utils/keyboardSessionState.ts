@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
+
 import {MillerColumnItem} from '../types/MillerColumnItem';
 
 export type KeyboardActionType = 'movement' | 'navigate';
@@ -12,7 +14,10 @@ export function clearSessionState() {
 }
 
 export function getSessionState() {
-	const state = sessionStorage.getItem('miller-columns-keyboard-state');
+	const state = sessionStorage.getItem(
+		'miller-columns-keyboard-state',
+		COOKIE_TYPES.FUNCTIONAL
+	);
 
 	return state ? JSON.parse(state) : {};
 }
@@ -23,6 +28,7 @@ export function setSessionState(
 ) {
 	sessionStorage.setItem(
 		'miller-columns-keyboard-state',
-		JSON.stringify({itemId, type})
+		JSON.stringify({itemId, type}),
+		COOKIE_TYPES.FUNCTIONAL
 	);
 }

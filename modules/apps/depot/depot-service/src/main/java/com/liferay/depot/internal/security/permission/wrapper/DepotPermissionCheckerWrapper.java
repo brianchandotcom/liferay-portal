@@ -5,6 +5,7 @@
 
 package com.liferay.depot.internal.security.permission.wrapper;
 
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.constants.DepotRolesConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
@@ -159,11 +160,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 
 			Group group = _groupLocalService.fetchGroup(groupId);
 
-			if (group == null) {
-				return false;
-			}
-
-			if (_isCMSAdministrator(group.getCompanyId())) {
+			if (_isCMSAdministrator(group)) {
 				return true;
 			}
 
@@ -260,16 +257,30 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		return false;
 	}
 
-	private boolean _isCMSAdministrator(long companyId) throws Exception {
+	private boolean _isCMSAdministrator(Group group) throws Exception {
+		if ((group == null) || !group.isDepot()) {
+			return false;
+		}
+
+		long depotEntryType = GetterUtil.getInteger(
+			group.getTypeSettingsProperty("depotEntryType"),
+			DepotConstants.TYPE_ASSET_LIBRARY);
+
+		if (depotEntryType != DepotConstants.TYPE_SPACE) {
+			return false;
+		}
+
 		Boolean value = PermissionCacheUtil.getUserPrimaryKeyRole(
-			getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR);
+			getUserId(), group.getCompanyId(), RoleConstants.CMS_ADMINISTRATOR);
 
 		if (value == null) {
 			value = _roleLocalService.hasUserRole(
-				getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR, true);
+				getUserId(), group.getCompanyId(),
+				RoleConstants.CMS_ADMINISTRATOR, true);
 
 			PermissionCacheUtil.putUserPrimaryKeyRole(
-				getUserId(), companyId, RoleConstants.CMS_ADMINISTRATOR, value);
+				getUserId(), group.getCompanyId(),
+				RoleConstants.CMS_ADMINISTRATOR, value);
 		}
 
 		return value;

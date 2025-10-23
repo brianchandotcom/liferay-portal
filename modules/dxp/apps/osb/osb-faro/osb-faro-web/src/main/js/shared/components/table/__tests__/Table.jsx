@@ -57,7 +57,7 @@ describe('Table', () => {
 			</StaticRouter>
 		);
 
-		expect(container.querySelector('.table-bordered')).toBeTruthy();
+		expect(container.querySelector('.table-head-bordered')).toBeTruthy();
 	});
 
 	it('should render with nowrap rows', () => {

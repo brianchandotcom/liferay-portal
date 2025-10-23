@@ -129,7 +129,8 @@ public class InventoryAnalysisResourceTest
 
 		Assert.assertEquals("My Category", inventoryAnalysisItem.getTitle());
 
-		Assert.assertEquals(1L, (long)inventoryAnalysis.getInventoryAnalysisItemsCount());
+		Assert.assertEquals(
+			1L, (long)inventoryAnalysis.getInventoryAnalysisItemsCount());
 	}
 
 	private void _deleteFile(Bundle bundle, String fileName) {

@@ -245,7 +245,7 @@ export class ContentsPage {
 		});
 
 		await expect(
-			this.page.locator('.management-bar').getByText('Publish')
+			this.page.locator('button[type="submit"]', {hasText: 'Publish'})
 		).toBeVisible();
 	}
 

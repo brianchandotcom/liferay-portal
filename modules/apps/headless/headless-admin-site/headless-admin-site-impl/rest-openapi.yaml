@@ -3392,11 +3392,16 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
                 -   properties:
+                        defaultDisplayPage:
+                            # @review
+                            description:
+                                Default display page when a form container submission is successful.
+                            type: boolean
                         itemReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:
-                                The localized submission of page type.
+                                A reference to a site page when a form container submission is successful.
                         successNotificationMessage:
                             $ref: "#/components/schemas/SuccessNotificationMessage"
                             # @review

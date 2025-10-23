@@ -79,6 +79,7 @@ testSample.describe('Samples', () => {
 		testSample(
 			`${sample.name}'s .js file can be downloaded`,
 			async ({page}) => {
+				await page.route('**', (route) => route.continue());
 				const response = await page.goto(sample.url);
 
 				expect(response.status()).toBe(200);

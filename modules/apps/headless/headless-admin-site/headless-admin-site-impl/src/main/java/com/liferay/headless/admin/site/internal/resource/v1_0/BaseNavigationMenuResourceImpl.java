@@ -322,9 +322,9 @@ public abstract class BaseNavigationMenuResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
+		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 		String resourceName = getPermissionCheckerResourceName(
 			navigationMenuId);
-		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -941,9 +941,9 @@ public abstract class BaseNavigationMenuResourceImpl
 		throws Exception {
 
 		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
+		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 		String resourceName = getPermissionCheckerResourceName(
 			navigationMenuId);
-		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);

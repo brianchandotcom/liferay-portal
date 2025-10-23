@@ -14,10 +14,12 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -164,40 +166,18 @@ public class AssetTagStagedModelDataHandler
 		if (existingAssetTag == null) {
 			serviceContext.setUuid(assetTag.getUuid());
 
-			try {
-				importedAssetTag = _assetTagLocalService.addTag(
-					assetTag.getExternalReferenceCode(), userId,
+			importedAssetTag = _assetTagLocalService.addTag(
+				assetTag.getExternalReferenceCode(), userId,
+				portletDataContext.getScopeGroupId(),
+				_getUniqueTagName(
 					portletDataContext.getScopeGroupId(), assetTag.getName(),
-					serviceContext);
-			}
-			catch (DuplicateTagException duplicateTagException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(duplicateTagException);
-				}
-
-				importedAssetTag = _assetTagLocalService.addTag(
-					assetTag.getExternalReferenceCode(), userId,
-					portletDataContext.getScopeGroupId(),
-					assetTag.getName() + " (Duplicate)", serviceContext);
-			}
+					" (Duplicate)", 1),
+				serviceContext);
 		}
 		else {
-			try {
-				importedAssetTag = _assetTagLocalService.updateTag(
-					existingAssetTag.getExternalReferenceCode(), userId,
-					existingAssetTag.getTagId(), assetTag.getName(),
-					serviceContext);
-			}
-			catch (DuplicateTagException duplicateTagException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(duplicateTagException);
-				}
-
-				importedAssetTag = _assetTagLocalService.updateTag(
-					existingAssetTag.getExternalReferenceCode(), userId,
-					existingAssetTag.getTagId(),
-					assetTag.getName() + " (Duplicate)", serviceContext);
-			}
+			importedAssetTag = _updateTag(
+				existingAssetTag, assetTag.getName(), " (Duplicate)", 1, userId,
+				serviceContext);
 		}
 
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
@@ -213,6 +193,51 @@ public class AssetTagStagedModelDataHandler
 		serviceContext.setScopeGroupId(portletDataContext.getScopeGroupId());
 
 		return serviceContext;
+	}
+
+	private String _getUniqueTagName(
+		long groupId, String name, String suffix, int index) {
+
+		AssetTag assetTag = _assetTagLocalService.fetchTag(groupId, name);
+
+		if (assetTag == null) {
+			return name;
+		}
+
+		if (name.endsWith(suffix)) {
+			name = StringUtil.removeSubstring(name, suffix);
+
+			suffix = StringBundler.concat(" (Duplicate-", index, ")");
+		}
+
+		return _getUniqueTagName(groupId, name + suffix, suffix, index + 1);
+	}
+
+	private AssetTag _updateTag(
+			AssetTag assetTag, String name, String suffix, int index,
+			long userId, ServiceContext serviceContext)
+		throws PortalException {
+
+		try {
+			return _assetTagLocalService.updateTag(
+				assetTag.getExternalReferenceCode(), userId,
+				assetTag.getTagId(), name, serviceContext);
+		}
+		catch (DuplicateTagException duplicateTagException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(duplicateTagException);
+			}
+
+			if (name.endsWith(suffix)) {
+				name = StringUtil.removeSubstring(name, suffix);
+
+				suffix = StringBundler.concat(" (Duplicate-", index, ")");
+			}
+
+			return _updateTag(
+				assetTag, name + suffix, suffix, index + 1, userId,
+				serviceContext);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

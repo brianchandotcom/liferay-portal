@@ -77,18 +77,17 @@ public class PropagateFragmentEntryChangesMVCActionCommandTest {
 	public void setUp() throws Exception {
 		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 
-		Group globalGroup = _groupLocalService.getCompanyGroup(
-			TestPropsValues.getCompanyId());
-
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(_group.getGroupId());
+
+		Group globalGroup = _groupLocalService.getCompanyGroup(
+			TestPropsValues.getCompanyId());
 
 		FragmentCollection globalFragmentCollection =
 			FragmentTestUtil.addFragmentCollection(globalGroup.getGroupId());
 
 		_fragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			fragmentCollection.getFragmentCollectionId());
-
 		_globalFragmentEntry = FragmentEntryTestUtil.addFragmentEntry(
 			globalFragmentCollection.getFragmentCollectionId());
 	}
@@ -99,7 +98,6 @@ public class PropagateFragmentEntryChangesMVCActionCommandTest {
 
 		_testPropagateChangesOfFragmentEntryToLockedContentLayout(
 			_fragmentEntry);
-
 		_testPropagateChangesOfFragmentEntryToLockedContentLayout(
 			_globalFragmentEntry);
 	}

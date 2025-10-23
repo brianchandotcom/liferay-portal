@@ -34,12 +34,14 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
@@ -100,6 +102,36 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Assert.assertEquals(originalTotalCount + 1, page.getTotalCount());
 
 		assetLibraryResource.deleteAssetLibrary(assetLibrary.getId());
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibrariesPageWithFilterDateTimeEquals()
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(
+			EntityField.Type.DATE_TIME);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		AssetLibrary assetLibrary1 = randomAssetLibrary();
+
+		assetLibrary1 = testGetAssetLibrariesPage_addAssetLibrary(
+			assetLibrary1);
+
+		for (EntityField entityField : entityFields) {
+			Page<AssetLibrary> page =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, null,
+					getFilterString(entityField, "between", assetLibrary1),
+					Pagination.of(1, 2), null);
+
+			assertEquals(
+				Collections.singletonList(assetLibrary1),
+				(List<AssetLibrary>)page.getItems());
+		}
 	}
 
 	@Override

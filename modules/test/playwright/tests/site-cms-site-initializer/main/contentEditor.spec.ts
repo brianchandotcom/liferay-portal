@@ -45,9 +45,9 @@ test(
 
 		await contentsPage.goto();
 
-		// Create new Knowledge Base content
+		// Create new Basic Content
 
-		await contentsPage.createContent('Knowledge Base');
+		await contentsPage.createContent('Basic Content');
 
 		// Fill data and save
 
@@ -267,7 +267,7 @@ test(
 
 		await contentsPage.goto();
 
-		// Create new Folder and a Knowledge Base content
+		// Create new Folder and a Basic Content
 
 		const folderName = getRandomString();
 
@@ -275,7 +275,7 @@ test(
 
 		await folderPage.clickOption(folderName, 'View Folder');
 
-		await contentsPage.createContent('Knowledge Base');
+		await contentsPage.createContent('Basic Content');
 
 		// Fill data and save
 
@@ -611,10 +611,14 @@ test.describe('Categorization Panel', () => {
 			const categoryName = getRandomString();
 			const vocabularyName = getRandomString();
 
+			const site = await apiHelpers.headlessSite.getSiteByERC('L_CMS');
+
 			await createCategories({
 				apiHelpers,
 				assetLibraries: [{id: -1, name: 'All Spaces'}],
+				assetTypes: [{required: false, type: 'AllAssetTypes'}],
 				categoryNames: [{name: categoryName}],
+				siteId: site.id,
 				vocabularyName,
 			});
 
@@ -638,7 +642,12 @@ test.describe('Categorization Panel', () => {
 
 			await tagsAutocomplete.fill(tagName);
 
-			await page.getByRole('option', {name: 'Create New Tag:'}).click();
+			const newTagOption = page.getByRole('option', {
+				name: 'Create New Tag:',
+			});
+
+			await newTagOption.waitFor();
+			await newTagOption.click();
 
 			const tagLabel = page.locator('.label-item', {hasText: tagName});
 

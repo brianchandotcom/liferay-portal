@@ -334,8 +334,8 @@ const zodSchema = {
 		projectId: z
 			.string()
 			.min(3, {message: 'Project ID must have at least 3 characters'})
-			.regex(/^[a-zA-Z0-9-]*$/, {
-				message: 'Only letters, numbers, and hyphens are allowed',
+			.regex(/^[a-zA-Z0-9]+$/, {
+				message: 'Only alphanumeric characters are allowed',
 			}),
 		siteInitializerKey: z.string(),
 	}),

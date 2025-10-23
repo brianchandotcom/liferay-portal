@@ -699,11 +699,10 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_removeInvalidAssetTags(
+		_removeInvalidAssetCategories(
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
-
-		_removeInvalidAssetCategories(
+		_removeInvalidAssetTags(
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
 
@@ -1780,11 +1779,10 @@ public class ObjectEntryLocalServiceImpl
 			_objectDefinitionPersistence.findByPrimaryKey(
 				objectEntry.getObjectDefinitionId());
 
-		_removeInvalidAssetTags(
+		_removeInvalidAssetCategories(
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
-
-		_removeInvalidAssetCategories(
+		_removeInvalidAssetTags(
 			objectEntryFolder.getGroupId(), objectDefinition.getClassName(),
 			objectEntryId, serviceContext);
 

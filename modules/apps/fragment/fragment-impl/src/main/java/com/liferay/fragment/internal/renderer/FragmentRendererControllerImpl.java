@@ -99,11 +99,10 @@ public class FragmentRendererControllerImpl
 					StringBundler.concat(
 						"Unable to render content of fragment entry ",
 						fragmentEntryLink.getFragmentEntryERC(),
-						" on group with ID ",
-						fragmentEntryLink.getFragmentEntryGroupId(),
 						" with fragment entry link ",
-						fragmentEntryLink.getFragmentEntryLinkId(),
-						" and PLID ", fragmentEntryLink.getPlid(), ": ",
+						fragmentEntryLink.getFragmentEntryLinkId(), ", group ",
+						fragmentEntryLink.getFragmentEntryGroupId(),
+						", and PLID ", fragmentEntryLink.getPlid(), ": ",
 						throwable.getMessage()),
 					exception);
 			}

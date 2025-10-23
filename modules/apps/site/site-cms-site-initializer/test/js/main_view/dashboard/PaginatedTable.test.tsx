@@ -128,6 +128,7 @@ const mockData: InventoryAnalysisDataType = {
 			title: 'title 22',
 		},
 	],
+	inventoryAnalysisItemsCount: 4050,
 	page: 1,
 	pageSize: 20,
 	totalCount: 4050,

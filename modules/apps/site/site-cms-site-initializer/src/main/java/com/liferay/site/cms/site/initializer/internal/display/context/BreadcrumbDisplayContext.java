@@ -6,13 +6,19 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -57,86 +63,125 @@ public class BreadcrumbDisplayContext {
 
 		return HashMapBuilder.<String, Object>put(
 			"actionItems",
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"href",
-					ActionUtil.getSpaceSettingsURL(
-						group.getClassPK(), _themeDisplay.getURLCurrent(),
-						_themeDisplay)
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "space-settings")
-				).put(
-					"symbolLeft", "cog"
-				),
-				JSONUtil.put(
-					"href",
-					PermissionsURLTag.doTag(
-						StringPool.BLANK, DepotEntry.class.getName(),
-						group.getName(), group.getGroupId(),
-						String.valueOf(group.getClassPK()),
-						LiferayWindowState.POP_UP.toString(), null,
-						_httpServletRequest)
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "permissions")
-				).put(
-					"symbolLeft", "password-policies"
-				).put(
-					"target", "modal"
-				),
-				JSONUtil.put(
-					"defaultPermissionAdditionalProps",
-					HashMapBuilder.putAll(
-						PermissionUtil.getDefaultPermissionAdditionalProps(
-							_httpServletRequest, _themeDisplay)
-					).put(
-						"classExternalReferenceCode",
-						group.getExternalReferenceCode()
-					).put(
-						"className", DepotEntry.class.getName()
-					).build()
-				).put(
-					"href", StringPool.BLANK
-				).put(
-					"label",
-					LanguageUtil.get(_httpServletRequest, "default-permissions")
-				).put(
-					"symbolLeft", "password-policies"
-				).put(
-					"target", "defaultPermissionsModal"
-				),
-				JSONUtil.put(
-					"confirmationMessage",
-					LanguageUtil.get(
-						_httpServletRequest, "delete-space-confirmation-body")
-				).put(
-					"confirmationTitle",
-					LanguageUtil.format(
-						_httpServletRequest, "delete-space-confirmation-title",
-						group.getDescriptiveName())
-				).put(
-					"href",
-					"/o/headless-asset-library/v1.0/asset-libraries" +
-						"/by-external-reference-code/" +
-							group.getExternalReferenceCode()
-				).put(
-					"label", LanguageUtil.get(_httpServletRequest, "delete")
-				).put(
-					"redirect",
-					StringBundler.concat(
-						_themeDisplay.getPathFriendlyURLPublic(),
-						GroupConstants.CMS_FRIENDLY_URL, "/all-spaces")
-				).put(
-					"successMessage",
-					LanguageUtil.format(
-						_httpServletRequest, "x-was-successfully-deleted",
-						group.getDescriptiveName())
-				).put(
-					"symbolLeft", "trash"
-				).put(
-					"target", "asyncDelete"
-				))
+			_putAll(
+				unsafeConsumer -> {
+					PermissionChecker permissionChecker =
+						_themeDisplay.getPermissionChecker();
+
+					if (permissionChecker.hasPermission(
+							group, DepotEntry.class.getName(),
+							group.getClassPK(), ActionKeys.UPDATE)) {
+
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href",
+								ActionUtil.getSpaceSettingsURL(
+									group.getClassPK(),
+									_themeDisplay.getURLCurrent(),
+									_themeDisplay)
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest, "space-settings")
+							).put(
+								"symbolLeft", "cog"
+							));
+					}
+
+					if (permissionChecker.hasPermission(
+							group, DepotEntry.class.getName(),
+							group.getClassPK(), ActionKeys.PERMISSIONS)) {
+
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"href",
+								PermissionsURLTag.doTag(
+									StringPool.BLANK,
+									DepotEntry.class.getName(), group.getName(),
+									group.getGroupId(),
+									String.valueOf(group.getClassPK()),
+									LiferayWindowState.POP_UP.toString(), null,
+									_httpServletRequest)
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest, "permissions")
+							).put(
+								"symbolLeft", "password-policies"
+							).put(
+								"target", "modal"
+							));
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"defaultPermissionAdditionalProps",
+								HashMapBuilder.putAll(
+									PermissionUtil.
+										getDefaultPermissionAdditionalProps(
+											_httpServletRequest, _themeDisplay)
+								).put(
+									"classExternalReferenceCode",
+									group.getExternalReferenceCode()
+								).put(
+									"className", DepotEntry.class.getName()
+								).build()
+							).put(
+								"href", StringPool.BLANK
+							).put(
+								"label",
+								LanguageUtil.get(
+									_httpServletRequest, "default-permissions")
+							).put(
+								"symbolLeft", "password-policies"
+							).put(
+								"target", "defaultPermissionsModal"
+							));
+					}
+
+					if (permissionChecker.hasPermission(
+							group, DepotEntry.class.getName(),
+							group.getClassPK(), ActionKeys.DELETE)) {
+
+						unsafeConsumer.accept(
+							JSONUtil.put(
+								"confirmationMessage",
+								LanguageUtil.get(
+									_httpServletRequest,
+									"delete-space-confirmation-body")
+							).put(
+								"confirmationTitle",
+								LanguageUtil.format(
+									_httpServletRequest,
+									"delete-space-confirmation-title",
+									group.getDescriptiveName())
+							).put(
+								"href",
+								StringBundler.concat(
+									"/o/headless-asset-library/v1.0",
+									"/asset-libraries",
+									"/by-external-reference-code/",
+									group.getExternalReferenceCode())
+							).put(
+								"label",
+								LanguageUtil.get(_httpServletRequest, "delete")
+							).put(
+								"redirect",
+								StringBundler.concat(
+									_themeDisplay.getPathFriendlyURLPublic(),
+									GroupConstants.CMS_FRIENDLY_URL,
+									"/all-spaces")
+							).put(
+								"successMessage",
+								LanguageUtil.format(
+									_httpServletRequest,
+									"x-was-successfully-deleted",
+									group.getDescriptiveName())
+							).put(
+								"symbolLeft", "trash"
+							).put(
+								"target", "asyncDelete"
+							));
+					}
+				})
 		).put(
 			"breadcrumbItems",
 			JSONUtil.put(
@@ -163,6 +208,22 @@ public class BreadcrumbDisplayContext {
 
 	private Group _getGroup() throws Exception {
 		return _groupLocalService.getGroup(_groupId);
+	}
+
+	private JSONArray _putAll(
+			UnsafeConsumer<UnsafeConsumer<JSONObject, Exception>, Exception>
+				unsafeConsumer)
+		throws Exception {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		unsafeConsumer.accept(jsonArray::put);
+
+		if (jsonArray.length() == 0) {
+			return null;
+		}
+
+		return jsonArray;
 	}
 
 	private final long _groupId;

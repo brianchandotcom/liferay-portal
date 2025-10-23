@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -170,14 +169,12 @@ public class AssetTagStagedModelDataHandler
 				assetTag.getExternalReferenceCode(), userId,
 				portletDataContext.getScopeGroupId(),
 				_getUniqueTagName(
-					portletDataContext.getScopeGroupId(), assetTag.getName(),
-					" (Duplicate)", 1),
+					portletDataContext.getScopeGroupId(), assetTag.getName()),
 				serviceContext);
 		}
 		else {
 			importedAssetTag = _updateTag(
-				existingAssetTag, assetTag.getName(), " (Duplicate)", 1, userId,
-				serviceContext);
+				existingAssetTag, assetTag.getName(), userId, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
@@ -195,28 +192,38 @@ public class AssetTagStagedModelDataHandler
 		return serviceContext;
 	}
 
-	private String _getUniqueTagName(
-		long groupId, String name, String suffix, int index) {
-
+	private String _getUniqueTagName(long groupId, String name) {
 		AssetTag assetTag = _assetTagLocalService.fetchTag(groupId, name);
 
 		if (assetTag == null) {
 			return name;
 		}
 
-		if (name.endsWith(suffix)) {
-			name = StringUtil.removeSubstring(name, suffix);
+		int index = 1;
 
-			suffix = StringBundler.concat(" (Duplicate-", index, ")");
+		while (true) {
+			String newName;
+
+			if (index == 1) {
+				newName = name + " (Duplicate)";
+			}
+			else {
+				newName = StringBundler.concat(
+					name, " (Duplicate-", index, ")");
+			}
+
+			if (_assetTagLocalService.fetchTag(groupId, newName) == null) {
+				return newName;
+			}
+
+			index++;
 		}
-
-		return _getUniqueTagName(groupId, name + suffix, suffix, index + 1);
 	}
 
 	private AssetTag _updateTag(
-			AssetTag assetTag, String name, String suffix, int index,
-			long userId, ServiceContext serviceContext)
-		throws PortalException {
+			AssetTag assetTag, String name, long userId,
+			ServiceContext serviceContext)
+		throws Exception {
 
 		try {
 			return _assetTagLocalService.updateTag(
@@ -227,16 +234,33 @@ public class AssetTagStagedModelDataHandler
 			if (_log.isDebugEnabled()) {
 				_log.debug(duplicateTagException);
 			}
+		}
 
-			if (name.endsWith(suffix)) {
-				name = StringUtil.removeSubstring(name, suffix);
+		int index = 1;
 
-				suffix = StringBundler.concat(" (Duplicate-", index, ")");
+		while (true) {
+			String newName;
+
+			if (index == 1) {
+				newName = name + " (Duplicate)";
+			}
+			else {
+				newName = StringBundler.concat(
+					name, " (Duplicate-", index, ")");
 			}
 
-			return _updateTag(
-				assetTag, name + suffix, suffix, index + 1, userId,
-				serviceContext);
+			try {
+				return _assetTagLocalService.updateTag(
+					assetTag.getExternalReferenceCode(), userId,
+					assetTag.getTagId(), newName, serviceContext);
+			}
+			catch (DuplicateTagException duplicateTagException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(duplicateTagException);
+				}
+			}
+
+			index++;
 		}
 	}
 

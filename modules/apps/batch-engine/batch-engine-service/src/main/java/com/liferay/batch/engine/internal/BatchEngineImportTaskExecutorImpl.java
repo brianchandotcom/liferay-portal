@@ -428,7 +428,7 @@ public class BatchEngineImportTaskExecutorImpl
 				batchEngineImportTask.getCompanyId(),
 				batchEngineTaskItemDelegate, parameters, user);
 
-			batchEngineTaskItemDelegate.setImportUnsafeBiConsumer(
+			batchEngineTaskItemDelegate.setImportItemUnsafeBiConsumer(
 				(item, unsafeFunction) -> _importItem(
 					batchEngineImportTask, batchEngineTaskItemDelegate, item,
 					unsafeFunction));

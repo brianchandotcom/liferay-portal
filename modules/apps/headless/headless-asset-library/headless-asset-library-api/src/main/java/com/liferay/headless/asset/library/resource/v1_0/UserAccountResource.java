@@ -46,53 +46,31 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface UserAccountResource {
 
-	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
 	public void deleteAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
-		throws Exception;
-
-	public UserAccount
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public Page<UserAccount>
-			getAssetLibraryByExternalReferenceCodeUserAccountsPage(
-				String externalReferenceCode, String keywords, String search,
-				Pagination pagination,
-				com.liferay.portal.kernel.search.Sort[] sorts)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public UserAccount getAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<UserAccount> getAssetLibraryUserAccountsPage(
-			Long assetLibraryId, String keywords, String search,
-			Pagination pagination,
+			String assetLibraryExternalReferenceCode, String keywords,
+			String search, Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public Response postAssetLibraryUserAccountsPageExportBatch(
-			Long assetLibraryId, String keywords, String search,
-			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
-			String contentType, String fieldNames)
-		throws Exception;
-
-	public UserAccount
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
+			String assetLibraryExternalReferenceCode, String keywords,
+			String search, com.liferay.portal.kernel.search.Sort[] sorts,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public UserAccount putAssetLibraryUserAccount(
-			Long assetLibraryId, Long userAccountId)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

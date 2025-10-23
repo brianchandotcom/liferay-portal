@@ -44,44 +44,24 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface RoleResource {
 
-	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
-		throws Exception;
-
 	public Page<Role> getAssetLibraryUserAccountRolesPage(
-			Long assetLibraryId, Long userAccountId)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<Role> getAssetLibraryUserGroupRolesPage(
-			Long assetLibraryId, Long userGroupId)
-		throws Exception;
-
-	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode, Role[] roles)
-		throws Exception;
-
-	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode, Role[] roles)
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode)
 		throws Exception;
 
 	public Page<Role> putAssetLibraryUserAccountRolesPage(
-			Long assetLibraryId, Long userAccountId, Role[] roles)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public Page<Role> putAssetLibraryUserGroupRolesPage(
-			Long assetLibraryId, Long userGroupId, Role[] roles)
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

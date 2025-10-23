@@ -79,6 +79,8 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 			).put(
 				"idTokenSigningAlgValues", new String[] {"RS256"}
 			).put(
+				"matcherField", "email"
+			).put(
 				"scopes", "openid email profile"
 			).put(
 				"subjectTypes", defaultValue
@@ -183,6 +185,10 @@ public class OpenIdConnectProviderConfigurationDisplayContext {
 
 	public String getJwksURI() {
 		return GetterUtil.getString(_properties.get("jwksURI"));
+	}
+
+	public String getMatcherField() {
+		return GetterUtil.getString(_properties.get("matcherField"));
 	}
 
 	public String getOpenIdConnectClientId() {

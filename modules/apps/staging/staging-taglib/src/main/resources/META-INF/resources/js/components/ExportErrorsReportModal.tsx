@@ -85,10 +85,12 @@ export function ExportErrorsReportModal({
 
 						<ClayLink
 							button
-							className={classNames({
-								disabled: status !== 'completed',
-							})}
-							displayType="primary"
+							className={classNames(
+								`btn-${STATUS_MAP[status].displayType}`,
+								{
+									disabled: status !== 'completed',
+								}
+							)}
 							download={filename}
 							href={downloadURL ?? '#'}
 						>

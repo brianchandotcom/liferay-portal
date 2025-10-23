@@ -170,15 +170,16 @@ public class PropagateFragmentEntryChangesMVCActionCommandTest {
 				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layout.getPlid(), "css value", "<div>HTML value</div>",
-				"js value", "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
-		fragmentEntry.setCss("new css value");
-		fragmentEntry.setHtml("<div>new updated HTML value</div>");
-		fragmentEntry.setJs("new js value");
+		fragmentEntry.setCss(RandomTestUtil.randomString());
+		fragmentEntry.setHtml(RandomTestUtil.randomString());
+		fragmentEntry.setJs(RandomTestUtil.randomString());
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry);

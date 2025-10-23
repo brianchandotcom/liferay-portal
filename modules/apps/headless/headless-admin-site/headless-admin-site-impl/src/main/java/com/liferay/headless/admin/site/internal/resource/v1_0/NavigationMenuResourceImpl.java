@@ -505,10 +505,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		).build();
 	}
 
-	private boolean _isNameProperty(Map.Entry<String, String> property) {
-		String propertyKey = property.getKey();
+	private boolean _isNameProperty(Map.Entry<String, String> entry) {
+		String key = entry.getKey();
 
-		return propertyKey.startsWith("name_");
+		return key.startsWith("name_");
 	}
 
 	private NavigationMenu _toNavigationMenu(

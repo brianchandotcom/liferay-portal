@@ -18,6 +18,7 @@ if (Validator.isNull(displayStyle)) {
 }
 
 List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
+
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
 for (String socialBookmarkType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {

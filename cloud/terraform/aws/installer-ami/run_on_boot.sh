@@ -103,8 +103,31 @@ function main {
 		--namespace "${namespace}" \
 		--set "liferay-default.image.repository=${ecr_dxp_repository_url}" \
 		--set "liferay-default.image.tag=${dxp_image_tag}" \
+		--set "liferay-default.ingress.className=nginx" \
+		--set "liferay-default.ingress.enabled=true" \
+		--set "liferay-default.ingress.rules[0].http.paths[0].backend.service.name=liferay-default" \
+		--set "liferay-default.ingress.rules[0].http.paths[0].backend.service.port.name=http" \
+		--set "liferay-default.ingress.rules[0].http.paths[0].path=/" \
+		--set "liferay-default.ingress.rules[0].http.paths[0].pathType=ImplementationSpecific" \
 		--set "liferay-default.serviceAccount.annotations.eks\.amazonaws\.com/role-arn=${role_arn}" \
 		${values_file_argument}
+
+	helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+	helm repo update
+
+	helm \
+		upgrade \
+		nginx-ingress-controller \
+		ingress-nginx/ingress-nginx \
+		--create-namespace \
+		--install \
+		--namespace nginx-ingress-controller \
+		--set "controller.service.annotations.service\.beta\.kubernetes\.io/aws-load-balancer-backend-protocol=tcp" \
+		--set "controller.service.annotations.service\.beta\.kubernetes\.io/aws-load-balancer-scheme=internal" \
+		--set "controller.service.annotations.service\.beta\.kubernetes\.io/aws-load-balancer-type=nlb" \
+		--set-string "controller.service.annotations.service\.beta\.kubernetes\.io/aws-load-balancer-internal=false" \
+		--version 4.13.3
 
 	kubectl \
 		rollout \
@@ -112,6 +135,16 @@ function main {
 		statefulset/liferay-default \
 		--namespace "${namespace}" \
 		--timeout=1200s
+
+	local public_address=$( \
+		kubectl \
+			get \
+			ingress \
+			liferay-default \
+			--namespace "${namespace}" \
+			--output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+
+	echo "Open your browser to http://${public_address}"
 }
 
 main

@@ -22,7 +22,7 @@
 		</button>
 
 		<react:component
-			module="{ExportErrorsReport} from staging-taglib"
+			module="{ExportErrorsReportAction} from staging-taglib"
 		/>
 	</li>
 </c:if>

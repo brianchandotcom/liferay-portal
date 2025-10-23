@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.verify.VerifyProcess;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
@@ -46,8 +48,8 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 			_serviceComponentLocalService.getServiceComponents(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		List<ServiceComponent> latestServiceComponents =
-			_serviceComponentLocalService.getLatestServiceComponents();
+		Set<ServiceComponent> latestServiceComponents = new HashSet<>(
+			_serviceComponentLocalService.getLatestServiceComponents());
 
 		for (ServiceComponent serviceComponent : serviceComponents) {
 			String buildNamespace = serviceComponent.getBuildNamespace();

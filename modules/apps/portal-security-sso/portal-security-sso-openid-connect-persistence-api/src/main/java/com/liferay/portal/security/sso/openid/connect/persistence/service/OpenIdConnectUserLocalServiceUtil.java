@@ -36,6 +36,13 @@ public class OpenIdConnectUserLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.security.sso.openid.connect.persistence.service.impl.OpenIdConnectUserLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static OpenIdConnectUser addOpenIdConnectUser(
+			long companyId, long userId, String issuer, String subject)
+		throws PortalException {
+
+		return getService().addOpenIdConnectUser(
+			companyId, userId, issuer, subject);
+	}
 
 	/**
 	 * Adds the open ID connect user to the database. Also notifies the appropriate model listeners.
@@ -208,6 +215,12 @@ public class OpenIdConnectUserLocalServiceUtil {
 		long openIdConnectUserId) {
 
 		return getService().fetchOpenIdConnectUser(openIdConnectUserId);
+	}
+
+	public static OpenIdConnectUser fetchOpenIdConnectUser(
+		long companyId, String issuer, String subject) {
+
+		return getService().fetchOpenIdConnectUser(companyId, issuer, subject);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery

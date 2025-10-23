@@ -119,24 +119,31 @@ public class PermissionCacheUtil {
 			return;
 		}
 
-		_clearPermissionChecksMap();
+		_clearResourcePermissionCache(scope, name, primKey);
 
 		if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
-			_permissionPortalCacheNamePrimKeyIndexer.removeKeys(
-				PermissionKeyNamePrimKeyIndexEncoder.encode(name, primKey));
-
-			_sendClearCacheClusterMessage(
-				_clearResourcePermissionCacheMethodKey, scope, name, primKey);
+			if (PropsValues.DATABASE_PARTITION_ENABLED) {
+				_sendClearCacheClusterMessage(
+					_dbPartitionClearResourcePermissionCacheMethodKey,
+					CompanyThreadLocal.getCompanyId(), scope, name, primKey);
+			}
+			else {
+				_sendClearCacheClusterMessage(
+					_clearResourcePermissionCacheMethodKey, scope, name,
+					primKey);
+			}
 		}
 		else if (scope == ResourceConstants.SCOPE_GROUP) {
-			_permissionPortalCacheGroupIdIndexer.removeKeys(
-				Long.valueOf(primKey));
-
-			_sendClearCacheClusterMessage(
-				_clearResourcePermissionCacheMethodKey, scope, name, primKey);
-		}
-		else {
-			_permissionPortalCache.removeAll();
+			if (PropsValues.DATABASE_PARTITION_ENABLED) {
+				_sendClearCacheClusterMessage(
+					_dbPartitionClearResourcePermissionCacheMethodKey,
+					CompanyThreadLocal.getCompanyId(), scope, name, primKey);
+			}
+			else {
+				_sendClearCacheClusterMessage(
+					_clearResourcePermissionCacheMethodKey, scope, name,
+					primKey);
+			}
 		}
 	}
 
@@ -295,6 +302,41 @@ public class PermissionCacheUtil {
 		}
 	}
 
+	private static void _clearResourcePermissionCache(
+		int scope, String name, String primKey) {
+
+		if (ExportImportThreadLocal.isImportInProcess() ||
+			!PermissionThreadLocal.isFlushResourcePermissionEnabled(
+				name, primKey)) {
+
+			return;
+		}
+
+		_clearPermissionChecksMap();
+
+		if (scope == ResourceConstants.SCOPE_INDIVIDUAL) {
+			_permissionPortalCacheNamePrimKeyIndexer.removeKeys(
+				PermissionKeyNamePrimKeyIndexEncoder.encode(name, primKey));
+		}
+		else if (scope == ResourceConstants.SCOPE_GROUP) {
+			_permissionPortalCacheGroupIdIndexer.removeKeys(
+				Long.valueOf(primKey));
+		}
+		else {
+			_permissionPortalCache.removeAll();
+		}
+	}
+
+	private static void _clearResourcePermissionCache(
+		long companyId, int scope, String name, String primKey) {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			_clearResourcePermissionCache(scope, name, primKey);
+		}
+	}
+
 	private static void _sendClearCacheClusterMessage(
 		MethodKey methodKey, Object... arguments) {
 
@@ -314,11 +356,15 @@ public class PermissionCacheUtil {
 		PermissionCacheUtil.class, "_clearCache", long[].class);
 	private static final MethodKey _clearResourcePermissionCacheMethodKey =
 		new MethodKey(
-			PermissionCacheUtil.class, "clearResourcePermissionCache",
+			PermissionCacheUtil.class, "_clearResourcePermissionCache",
 			int.class, String.class, String.class);
 	private static final MethodKey _dbPartitionClearCacheMethodKey =
 		new MethodKey(
 			PermissionCacheUtil.class, "_clearCache", long.class, long[].class);
+	private static final MethodKey
+		_dbPartitionClearResourcePermissionCacheMethodKey = new MethodKey(
+			PermissionCacheUtil.class, "_clearResourcePermissionCache",
+			long.class, int.class, String.class, String.class);
 	private static final PortalCache<PermissionKey, Boolean>
 		_permissionPortalCache = PortalCacheHelperUtil.getPortalCache(
 			PortalCacheManagerNames.MULTI_VM, PERMISSION_CACHE_NAME);

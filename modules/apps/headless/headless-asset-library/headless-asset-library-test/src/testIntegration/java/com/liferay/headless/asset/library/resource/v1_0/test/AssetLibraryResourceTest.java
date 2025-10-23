@@ -34,14 +34,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Locale;
 
@@ -264,8 +261,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Override
-	protected Collection<EntityField> getEntityFields() throws Exception {
-		return new ArrayList<>();
+	protected String[] getIgnoredEntityFieldNames() {
+		return new String[] {"type"};
 	}
 
 	protected AssetLibrary randomAssetLibrary() throws Exception {

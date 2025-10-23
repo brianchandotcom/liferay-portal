@@ -29,6 +29,16 @@ public class OpenIdConnectUserLocalServiceWrapper
 		_openIdConnectUserLocalService = openIdConnectUserLocalService;
 	}
 
+	@Override
+	public com.liferay.portal.security.sso.openid.connect.persistence.model.
+		OpenIdConnectUser addOpenIdConnectUser(
+				long companyId, long userId, String issuer, String subject)
+			throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _openIdConnectUserLocalService.addOpenIdConnectUser(
+			companyId, userId, issuer, subject);
+	}
+
 	/**
 	 * Adds the open ID connect user to the database. Also notifies the appropriate model listeners.
 	 *
@@ -236,6 +246,15 @@ public class OpenIdConnectUserLocalServiceWrapper
 
 		return _openIdConnectUserLocalService.fetchOpenIdConnectUser(
 			openIdConnectUserId);
+	}
+
+	@Override
+	public com.liferay.portal.security.sso.openid.connect.persistence.model.
+		OpenIdConnectUser fetchOpenIdConnectUser(
+			long companyId, String issuer, String subject) {
+
+		return _openIdConnectUserLocalService.fetchOpenIdConnectUser(
+			companyId, issuer, subject);
 	}
 
 	@Override

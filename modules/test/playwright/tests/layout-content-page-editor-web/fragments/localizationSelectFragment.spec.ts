@@ -72,7 +72,7 @@ test(
 			await structureBuilderPage.addField(type);
 		}
 
-		const structureId = await structureBuilderPage.publishStructure();
+		const {id: structureId} = await structureBuilderPage.publishStructure();
 
 		// Go to view mode (create a content) and fill values in default language
 
@@ -191,7 +191,7 @@ test(
 			await structureBuilderPage.addField(type as FieldType);
 		}
 
-		const structureId = await structureBuilderPage.publishStructure();
+		const {id: structureId} = await structureBuilderPage.publishStructure();
 
 		// Go to view mode (create a content) and fill values in default language and save the content
 
@@ -356,7 +356,7 @@ test(
 
 		await structureBuilderPage.addField('Long Text');
 
-		const structureId = await structureBuilderPage.publishStructure();
+		const {id: structureId} = await structureBuilderPage.publishStructure();
 
 		// Go to view mode (create a content) and fill values in default language and save the content
 
@@ -437,7 +437,7 @@ test(
 			await route.fulfill({
 				body: JSON.stringify({
 					fields: {
-						ObjectField_longtext: 'Naranja',
+						ObjectField_longText: 'Naranja',
 						ObjectField_title: 'Naranja',
 					},
 				}),

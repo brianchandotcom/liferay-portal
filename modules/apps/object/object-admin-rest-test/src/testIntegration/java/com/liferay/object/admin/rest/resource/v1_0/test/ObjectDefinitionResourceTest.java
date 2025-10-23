@@ -63,6 +63,7 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -903,6 +904,9 @@ public class ObjectDefinitionResourceTest
 		randomModifiableSystemObjectDefinition.
 			setObjectFolderExternalReferenceCode(StringPool.BLANK);
 
+		String finalObjectDefinitionExternalReferenceCode =
+			randomModifiableSystemObjectDefinition.getExternalReferenceCode();
+
 		ObjectValidationRule updatedCustomObjectValidationRule =
 			new ObjectValidationRule() {
 				{
@@ -915,8 +919,7 @@ public class ObjectDefinitionResourceTest
 					name = Collections.singletonMap(
 						"en_US", RandomTestUtil.randomString());
 					objectDefinitionExternalReferenceCode =
-						randomModifiableSystemObjectDefinition.
-							getExternalReferenceCode();
+						finalObjectDefinitionExternalReferenceCode;
 					objectValidationRuleSettings =
 						new ObjectValidationRuleSetting[] {
 							new ObjectValidationRuleSetting() {
@@ -945,8 +948,7 @@ public class ObjectDefinitionResourceTest
 					name = Collections.singletonMap(
 						"en_US", RandomTestUtil.randomString());
 					objectDefinitionExternalReferenceCode =
-						randomModifiableSystemObjectDefinition.
-							getExternalReferenceCode();
+						finalObjectDefinitionExternalReferenceCode;
 					objectValidationRuleSettings =
 						new ObjectValidationRuleSetting[] {
 							new ObjectValidationRuleSetting() {
@@ -1025,6 +1027,46 @@ public class ObjectDefinitionResourceTest
 
 		_objectDefinitionLocalService.deleteObjectDefinition(
 			randomModifiableSystemObjectDefinition.getId());
+
+		// Modifiable system object definition with a different language ID
+
+		randomModifiableSystemObjectDefinition =
+			objectDefinitionResource.postObjectDefinition(
+				_randomModifiableSystemObjectDefinition());
+
+		randomModifiableSystemObjectDefinition.setDefaultLanguageId(
+			objectDefinitionDefaultLanguageId);
+		randomModifiableSystemObjectDefinition.setLabel(
+			MapUtil.fromArray(
+				objectDefinitionDefaultLanguageId,
+				RandomTestUtil.randomString()));
+
+		try {
+			CompanyTestUtil.resetCompanyLocales(
+				TestPropsValues.getCompanyId(),
+				LanguageUtil.getAvailableLocales(
+					TestPropsValues.getCompanyId()),
+				LocaleUtil.fromLanguageId("es_ES"));
+
+			randomModifiableSystemObjectDefinition =
+				objectDefinitionResource.putObjectDefinition(
+					randomModifiableSystemObjectDefinition.getId(),
+					randomModifiableSystemObjectDefinition);
+
+			labelMap = randomModifiableSystemObjectDefinition.getLabel();
+
+			Assert.assertTrue(
+				labelMap.containsKey(objectDefinitionDefaultLanguageId));
+			Assert.assertTrue(labelMap.containsKey(siteDefaultLanguageId));
+			Assert.assertTrue(labelMap.containsKey("es_ES"));
+		}
+		finally {
+			CompanyTestUtil.resetCompanyLocales(
+				TestPropsValues.getCompanyId(),
+				LanguageUtil.getAvailableLocales(
+					TestPropsValues.getCompanyId()),
+				LocaleUtil.fromLanguageId(siteDefaultLanguageId));
+		}
 
 		// Object definition settings
 

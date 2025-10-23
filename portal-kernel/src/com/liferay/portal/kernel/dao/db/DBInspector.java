@@ -409,8 +409,7 @@ public class DBInspector {
 			normalizeName(tableName, databaseMetaData), columnName);
 	}
 
-	private List<String> _getNames(
-			String namePattern, String elementType)
+	private List<String> _getNames(String namePattern, String elementType)
 		throws SQLException {
 
 		List<String> names = new ArrayList<>();
@@ -418,8 +417,8 @@ public class DBInspector {
 		DatabaseMetaData databaseMetaData = _connection.getMetaData();
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
-				_connection.getCatalog(), _connection.getSchema(),
-				namePattern, new String[] {elementType})) {
+				_connection.getCatalog(), _connection.getSchema(), namePattern,
+				new String[] {elementType})) {
 
 			while (resultSet.next()) {
 				names.add(resultSet.getString("TABLE_NAME"));

@@ -65,3 +65,41 @@ CookiesPreferenceHandlingConfigurationDisplayContext cookiesPreferenceHandlingCo
 <liferay-frontend:component
 	module="{ConfigurationFormEventHandler} from cookies-banner-web"
 />
+
+<aui:script>
+	var form = document.<portlet:namespace />fm;
+
+	if (form) {
+		form.addEventListener('submit', (event) => {
+			var consentRenewalPeriod = document.getElementById(
+				'<portlet:namespace />consentRenewalPeriod'
+			);
+
+			if (!consentRenewalPeriod.value || isNaN(consentRenewalPeriod.value)) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+				return;
+			}
+
+			var enabled = document.getElementById('<portlet:namespace />enabled');
+
+			if (
+				enabled.checked &&
+				<%= cookiesPreferenceHandlingConfigurationDisplayContext.getCookiesPreferenceHandlingEnabled() %>
+			) {
+				event.preventDefault();
+				event.stopImmediatePropagation();
+
+				Liferay.Util.openConfirmModal({
+					message:
+						'<liferay-ui:message key="you-are-about-to-change-the-consent-renewal-period" />',
+					onConfirm: (isConfirmed) => {
+						if (isConfirmed) {
+							form.submit();
+						}
+					},
+				});
+			}
+		});
+	}
+</aui:script>

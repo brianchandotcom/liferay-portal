@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -51,7 +53,7 @@ public class AccountEntrySystemObjectDefinitionManager
 		throws Exception {
 
 		AccountResource accountResource = _buildAccountResource(
-			checkPermissions, user);
+			checkPermissions);
 
 		Account account = accountResource.postAccount(_toAccount(values));
 
@@ -171,7 +173,7 @@ public class AccountEntrySystemObjectDefinitionManager
 			Sort[] sorts)
 		throws Exception {
 
-		AccountResource accountResource = _buildAccountResource(true, user);
+		AccountResource accountResource = _buildAccountResource(true);
 
 		return accountResource.getAccountsPage(
 			search, filter, pagination, sorts);
@@ -207,7 +209,7 @@ public class AccountEntrySystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _buildAccountResource(false, user);
+		AccountResource accountResource = _buildAccountResource(false);
 
 		Account account = accountResource.patchAccount(
 			primaryKey, _toAccount(values));
@@ -215,10 +217,13 @@ public class AccountEntrySystemObjectDefinitionManager
 		setExtendedProperties(Account.class.getName(), account, user, values);
 	}
 
-	private AccountResource _buildAccountResource(
-		boolean checkPermissions, User user) {
-
+	private AccountResource _buildAccountResource(boolean checkPermissions) {
 		AccountResource.Builder builder = _accountResourceFactory.create();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
 
 		return builder.checkPermissions(
 			checkPermissions

@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.model.OrganizationTable;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -50,7 +52,7 @@ public class OrganizationSystemObjectDefinitionManager
 		throws Exception {
 
 		OrganizationResource organizationResource = _buildOrganizationResource(
-			checkPermissions, user);
+			checkPermissions);
 
 		Organization organization = organizationResource.postOrganization(
 			_toOrganization(values));
@@ -170,7 +172,7 @@ public class OrganizationSystemObjectDefinitionManager
 		throws Exception {
 
 		OrganizationResource organizationResource = _buildOrganizationResource(
-			true, user);
+			true);
 
 		return organizationResource.getOrganizationsPage(
 			null, search, filter, pagination, sorts);
@@ -210,10 +212,15 @@ public class OrganizationSystemObjectDefinitionManager
 	}
 
 	private OrganizationResource _buildOrganizationResource(
-		boolean checkPermissions, User user) {
+		boolean checkPermissions) {
 
 		OrganizationResource.Builder builder =
 			_organizationResourceFactory.create();
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		User user = permissionChecker.getUser();
 
 		return builder.checkPermissions(
 			checkPermissions

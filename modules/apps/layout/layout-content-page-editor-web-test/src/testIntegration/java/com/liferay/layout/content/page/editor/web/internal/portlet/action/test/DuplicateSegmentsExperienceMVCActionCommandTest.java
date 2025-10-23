@@ -155,7 +155,6 @@ public class DuplicateSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(
 			Validator.isNull(
 				targetFragmentEntryLink.getOriginalFragmentEntryLinkERC()));
-
 		Assert.assertEquals(
 			sourceFragmentEntryLink.getFragmentEntryERC(),
 			targetFragmentEntryLink.getFragmentEntryERC());

@@ -478,8 +478,8 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 			}
 
 			if (_isCaptchaFragmentEntry(
-					fragmentEntryLink.getFragmentEntryGroupId(),
 					fragmentEntryLink.getFragmentEntryERC(),
+					fragmentEntryLink.getFragmentEntryGroupId(),
 					fragmentEntryLink.getRendererKey())) {
 
 				return fragmentEntryLink;
@@ -613,7 +613,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	}
 
 	private boolean _isCaptchaFragmentEntry(
-		long fragmentEntryGroupId, String fragmentEntryERC,
+		String fragmentEntryERC, long fragmentEntryGroupId,
 		String rendererKey) {
 
 		FragmentEntry fragmentEntry = null;

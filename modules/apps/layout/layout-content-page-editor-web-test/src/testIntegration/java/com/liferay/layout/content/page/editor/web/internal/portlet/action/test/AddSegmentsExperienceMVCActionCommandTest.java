@@ -272,7 +272,6 @@ public class AddSegmentsExperienceMVCActionCommandTest {
 		Assert.assertTrue(
 			Validator.isNull(
 				targetFragmentEntryLink.getOriginalFragmentEntryLinkERC()));
-
 		Assert.assertEquals(
 			sourceFragmentEntryLink.getFragmentEntryERC(),
 			targetFragmentEntryLink.getFragmentEntryERC());

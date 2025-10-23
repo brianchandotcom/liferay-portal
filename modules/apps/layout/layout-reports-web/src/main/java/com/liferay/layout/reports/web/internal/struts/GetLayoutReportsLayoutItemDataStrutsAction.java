@@ -353,8 +353,8 @@ public class GetLayoutReportsLayoutItemDataStrutsAction
 			return StringPool.BLANK;
 		}
 
-		if (Validator.isNotNull(fragmentEntryLink.getRendererKey()) ||
-			Validator.isNotNull(fragmentEntryLink.getFragmentEntryERC())) {
+		if (Validator.isNotNull(fragmentEntryLink.getFragmentEntryERC()) ||
+			Validator.isNotNull(fragmentEntryLink.getRendererKey())) {
 
 			return _fragmentEntryLinkHelper.getFragmentEntryName(
 				fragmentEntryLink, locale);

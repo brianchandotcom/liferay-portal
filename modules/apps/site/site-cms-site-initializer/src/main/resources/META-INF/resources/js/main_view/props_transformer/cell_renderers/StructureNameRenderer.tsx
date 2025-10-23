@@ -8,7 +8,7 @@ import React from 'react';
 
 import SimpleActionLinkRenderer, {ActionItem} from './SimpleActionLinkRenderer';
 
-const StructureLabelRenderer = ({
+const StructureNameRenderer = ({
 	actions,
 	itemData,
 	options,
@@ -48,4 +48,4 @@ const StructureLabelRenderer = ({
 	);
 };
 
-export default StructureLabelRenderer;
+export default StructureNameRenderer;

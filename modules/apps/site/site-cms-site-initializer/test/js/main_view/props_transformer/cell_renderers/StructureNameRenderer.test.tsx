@@ -3,16 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
 
 // eslint-disable-next-line
 import {checkAccessibility} from '@liferay/layout-js-components-web/test/__lib__/index';
 import {render, screen} from '@testing-library/react';
 import React from 'react';
 
-import StructureLabelRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/StructureLabelRenderer';
+import StructureNameRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/StructureNameRenderer';
 
-describe('StructureLabelRenderer', () => {
+describe('StructureNameRenderer', () => {
 	const defaultProps = {
 		actions: [
 			{
@@ -26,7 +26,7 @@ describe('StructureLabelRenderer', () => {
 	};
 
 	it('renders link when system is false or undefined', () => {
-		render(<StructureLabelRenderer {...defaultProps} />);
+		render(<StructureNameRenderer {...defaultProps} />);
 
 		expect(
 			screen.getByRole('link', {name: 'Test Value'})
@@ -34,16 +34,14 @@ describe('StructureLabelRenderer', () => {
 	});
 
 	it('checks the accessibility of the multiple file uploader', async () => {
-		const {container} = render(
-			<StructureLabelRenderer {...defaultProps} />
-		);
+		const {container} = render(<StructureNameRenderer {...defaultProps} />);
 
 		await checkAccessibility({bestPractices: true, context: container});
 	});
 
 	it('renders value and lock icon when system is true', () => {
 		render(
-			<StructureLabelRenderer
+			<StructureNameRenderer
 				{...defaultProps}
 				itemData={{system: true}}
 			/>

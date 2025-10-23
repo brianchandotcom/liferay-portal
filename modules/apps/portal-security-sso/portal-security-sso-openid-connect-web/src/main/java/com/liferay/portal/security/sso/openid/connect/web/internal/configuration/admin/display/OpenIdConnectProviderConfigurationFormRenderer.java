@@ -76,6 +76,9 @@ public class OpenIdConnectProviderConfigurationFormRenderer
 		).put(
 			"jwksURI", ParamUtil.getString(httpServletRequest, "jwksURI")
 		).put(
+			"matcherField",
+			ParamUtil.getString(httpServletRequest, "matcherField")
+		).put(
 			"openIdConnectClientId",
 			ParamUtil.getString(httpServletRequest, "openIdConnectClientId")
 		).put(

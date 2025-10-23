@@ -43,7 +43,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
             class="toolbar-root"
           >
             <nav
-              class="navbar navbar-root management-bar management-bar-light navbar-expand"
+              class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
             >
               <div
                 class="container-fluid"
@@ -53,7 +53,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                   role="tablist"
                 />
                 <div
-                  class="navbar-form navbar-form-autofit"
+                  class="navbar-form navbar-form-autofit mx-2"
                 >
                   <div
                     class="input-group search"
@@ -98,7 +98,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
               class="table-responsive"
             >
               <table
-                class="table table-autofit table-striped table-list table-nowrap table-bordered"
+                class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
               >
                 <thead>
                   <tr>
@@ -119,7 +119,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                           </div>
                           <button
                             aria-label="Ascending"
-                            class="component-action ml-4 btn btn-sm btn-primary"
+                            class="component-action ml-2 btn btn-sm btn-primary"
                             type="button"
                           >
                             <svg
@@ -151,7 +151,7 @@ exports[`SearchableEntitiesTableModal should render 1`] = `
                           </div>
                           <button
                             aria-label="Descending"
-                            class="component-action ml-4 btn btn-sm btn-primary"
+                            class="component-action ml-2 btn btn-sm btn-primary"
                             type="button"
                           >
                             <span

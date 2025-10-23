@@ -69,7 +69,7 @@ exports[`BatchActionModal should render 1`] = `
             class="table-responsive"
           >
             <table
-              class="table table-autofit table-striped table-list table-nowrap table-bordered"
+              class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
             >
               <thead>
                 <tr>

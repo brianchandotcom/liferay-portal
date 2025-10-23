@@ -6,7 +6,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root items-selected management-bar management-bar-primary navbar-expand"
+      class="navbar navbar-root my-2 items-selected management-bar management-bar-primary navbar-expand"
     >
       <div
         class="container-fluid"
@@ -37,7 +37,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
           </li>
         </ul>
         <div
-          class="navbar-form navbar-form-autofit"
+          class="navbar-form navbar-form-autofit mx-2"
         >
           <div
             class="input-group search"
@@ -75,7 +75,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
       </div>
     </nav>
     <nav
-      class="subnav-tbar subnav-tbar-root tbar"
+      class="mb-3 subnav-tbar-root subnav-tbar tbar"
     >
       <div
         class="container-fluid"
@@ -111,7 +111,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
       class="table-responsive"
     >
       <table
-        class="table table-autofit table-striped table-list table-nowrap table-bordered"
+        class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
       >
         <thead>
           <tr>
@@ -133,7 +133,7 @@ exports[`CrossPageSelect should render the selected list when the user presses t
                   </div>
                   <button
                     aria-label="Ascending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <svg
@@ -274,7 +274,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+      class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
     >
       <div
         class="container-fluid"
@@ -305,7 +305,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
           </li>
         </ul>
         <div
-          class="navbar-form navbar-form-autofit"
+          class="navbar-form navbar-form-autofit mx-2"
         >
           <div
             class="input-group search"
@@ -350,7 +350,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
       class="table-responsive"
     >
       <table
-        class="table table-autofit table-striped table-list table-nowrap table-bordered"
+        class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
       >
         <thead>
           <tr>
@@ -372,7 +372,7 @@ exports[`CrossPageSelect should render the server data list by default 1`] = `
                   </div>
                   <button
                     aria-label="Ascending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <svg

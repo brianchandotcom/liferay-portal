@@ -20,11 +20,11 @@ if (Validator.isNull(displayStyle)) {
 List<KeyValuePair> availableSocialBookmarkTypes = new ArrayList<>();
 Set<String> typesSet = new HashSet<>(Arrays.asList(types));
 
-for (String curType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
-	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(curType);
+for (String socialBookmarkType : SocialBookmarksRegistryUtil.getSocialBookmarksTypes()) {
+	SocialBookmark socialBookmark = SocialBookmarksRegistryUtil.getSocialBookmark(socialBookmarkType);
 
-	if (!typesSet.contains(curType)) {
-		availableSocialBookmarkTypes.add(new KeyValuePair(curType, socialBookmark.getName(locale)));
+	if (!typesSet.contains(socialBookmarkType)) {
+		availableSocialBookmarkTypes.add(new KeyValuePair(socialBookmarkType, socialBookmark.getName(locale)));
 	}
 }
 

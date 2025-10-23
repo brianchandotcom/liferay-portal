@@ -110,9 +110,6 @@ import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.kernel.transaction.TransactionConfig;
-import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -178,7 +175,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.Callable;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -308,14 +304,14 @@ public class DefaultObjectEntryManagerImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectEntry.getObjectDefinitionId());
 
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
 
 		Group group = _groupLocalService.getGroup(
 			objectEntryFolder.getGroupId());
-
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
 
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry,
@@ -325,37 +321,8 @@ public class DefaultObjectEntryManagerImpl
 			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			group.getGroupKey(), serviceContext);
 
-		if (!_isUniqueTitle(
-				objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
-				values)) {
-
-			if (replace) {
-				try {
-					Callable<com.liferay.object.model.ObjectEntry>
-						objectEntryReplaceCallable =
-							new ObjectEntryReplaceCallable(
-								"copy", serviceBuilderObjectEntry,
-								objectEntryFolder, serviceContext, values);
-
-					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext,
-						TransactionInvokerUtil.invoke(
-							_transactionConfig, objectEntryReplaceCallable));
-				}
-				catch (Throwable throwable) {
-					throw new Exception(throwable);
-				}
-			}
-			else {
-				ObjectField titleObjectField =
-					_objectFieldLocalService.fetchObjectField(
-						objectDefinition.getTitleObjectFieldId());
-
-				_replaceValues(
-					objectDefinition, group.getGroupKey(), titleObjectField,
-					values);
-			}
-		}
+		_updateDuplicateObjectEntryName(
+			objectDefinition, objectEntryFolder, values, replace);
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
@@ -1214,56 +1181,25 @@ public class DefaultObjectEntryManagerImpl
 			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectEntry.getObjectDefinitionId());
 
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
 
 		Group group = _groupLocalService.getGroup(
 			objectEntryFolder.getGroupId());
 
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
-
 		ServiceContext serviceContext = _createServiceContext(
 			dtoConverterContext, objectDefinition, objectEntry,
 			group.getGroupKey());
 
 		Map<String, Serializable> values = _toObjectValues(
-			0L, dtoConverterContext.getLocale(), objectDefinition,
-			_objectEntryDTOConverter.toDTO(
-				dtoConverterContext, serviceBuilderObjectEntry),
+			0L, dtoConverterContext.getLocale(), objectDefinition, objectEntry,
 			group.getGroupKey(), serviceContext);
 
-		if (!_isUniqueTitle(
-				objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
-				values)) {
-
-			if (replace) {
-				try {
-					Callable<com.liferay.object.model.ObjectEntry>
-						objectEntryReplaceCallable =
-							new ObjectEntryReplaceCallable(
-								"move", serviceBuilderObjectEntry,
-								objectEntryFolder, serviceContext, values);
-
-					return _objectEntryDTOConverter.toDTO(
-						dtoConverterContext,
-						TransactionInvokerUtil.invoke(
-							_transactionConfig, objectEntryReplaceCallable));
-				}
-				catch (Throwable throwable) {
-					throw new Exception(throwable);
-				}
-			}
-			else {
-				ObjectField titleObjectField =
-					_objectFieldLocalService.fetchObjectField(
-						objectDefinition.getTitleObjectFieldId());
-
-				_replaceValues(
-					objectDefinition, group.getGroupKey(), titleObjectField,
-					values);
-			}
-		}
+		_updateDuplicateObjectEntryName(
+			objectDefinition, objectEntryFolder, values, replace);
 
 		return _objectEntryDTOConverter.toDTO(
 			dtoConverterContext,
@@ -2984,51 +2920,6 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
-	private boolean _isUniqueTitle(
-			long objectDefinitionId, long objectEntryFolderId,
-			Map<String, Serializable> values)
-		throws Exception {
-
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectDefinitionId);
-
-		ObjectField titleObjectField =
-			_objectFieldLocalService.fetchObjectField(
-				objectDefinition.getTitleObjectFieldId());
-
-		Table<?> table = _objectFieldLocalService.getTable(
-			objectDefinition.getObjectDefinitionId(),
-			titleObjectField.getName());
-
-		Column<?, String> objectFieldColumn =
-			(Column<?, String>)table.getColumn(
-				titleObjectField.getDBColumnName());
-
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
-
-		String value = _getTitleValue(titleObjectField, values);
-
-		long count = objectEntryLocalService.getValuesListCount(
-			new Long[] {objectEntryFolder.getGroupId()},
-			objectDefinition.getCompanyId(), objectDefinition.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			objectFieldColumn.eq(
-				value
-			).and(
-				ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
-					objectEntryFolder.getObjectEntryFolderId())
-			),
-			false, null);
-
-		if (count > 0) {
-			return false;
-		}
-
-		return true;
-	}
-
 	private long _processAttachment(
 			ObjectDefinition objectDefinition, ObjectField objectField,
 			Object propertyValue, String scopeKey,
@@ -3659,6 +3550,90 @@ public class DefaultObjectEntryManagerImpl
 		return values;
 	}
 
+	private void _updateDuplicateObjectEntryName(
+			ObjectDefinition objectDefinition,
+			ObjectEntryFolder objectEntryFolder,
+			Map<String, Serializable> values, boolean replace)
+		throws Exception {
+
+		ObjectField titleObjectField =
+			_objectFieldLocalService.fetchObjectField(
+				objectDefinition.getTitleObjectFieldId());
+
+		Table<?> table = _objectFieldLocalService.getTable(
+			objectDefinition.getObjectDefinitionId(),
+			titleObjectField.getName());
+
+		Column<?, String> objectFieldColumn =
+			(Column<?, String>)table.getColumn(
+				titleObjectField.getDBColumnName());
+
+		String titleValue = _getTitleValue(titleObjectField, values);
+
+		if (replace) {
+			for (long primaryKey :
+					objectEntryLocalService.getPrimaryKeys(
+						new Long[] {objectEntryFolder.getGroupId()},
+						objectDefinition.getCompanyId(),
+						objectDefinition.getUserId(),
+						objectDefinition.getObjectDefinitionId(),
+						objectFieldColumn.eq(
+							titleValue
+						).and(
+							ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+								objectEntryFolder.getObjectEntryFolderId())
+						),
+						false, null, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+						null)) {
+
+				_objectEntryService.deleteObjectEntry(primaryKey);
+			}
+		}
+		else {
+			long objectEntryCount = objectEntryLocalService.getValuesListCount(
+				new Long[] {objectEntryFolder.getGroupId()},
+				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+				objectDefinition.getObjectDefinitionId(),
+				objectFieldColumn.eq(
+					titleValue
+				).and(
+					ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+						objectEntryFolder.getObjectEntryFolderId())
+				),
+				false, null);
+
+			if (objectEntryCount > 0) {
+				values.put(
+					titleObjectField.getName(),
+					UniqueUtil.getCopyValue(
+						copyValue -> {
+							long count =
+								objectEntryLocalService.getValuesListCount(
+									new Long[] {objectEntryFolder.getGroupId()},
+									objectDefinition.getCompanyId(),
+									objectDefinition.getUserId(),
+									objectDefinition.getObjectDefinitionId(),
+									objectFieldColumn.eq(
+										copyValue
+									).and(
+										ObjectEntryTable.INSTANCE.
+											objectEntryFolderId.eq(
+												objectEntryFolder.
+													getObjectEntryFolderId())
+									),
+									false, null);
+
+							if (count == 0) {
+								return true;
+							}
+
+							return false;
+						},
+						titleValue));
+			}
+		}
+	}
+
 	private ObjectEntry _updateObjectEntry(
 			long allowedRelationshipObjectFieldId,
 			DTOConverterContext dtoConverterContext,
@@ -3758,10 +3733,6 @@ public class DefaultObjectEntryManagerImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DefaultObjectEntryManagerImpl.class);
-
-	private static final TransactionConfig _transactionConfig =
-		TransactionConfig.Factory.create(
-			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
 	@Reference
 	private Aggregations _aggregations;
@@ -3897,69 +3868,5 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private UserLocalService _userLocalService;
-
-	private class ObjectEntryReplaceCallable
-		implements Callable<com.liferay.object.model.ObjectEntry> {
-
-		@Override
-		public com.liferay.object.model.ObjectEntry call() throws Exception {
-			ObjectDefinition objectDefinition =
-				_objectDefinitionLocalService.getObjectDefinition(
-					_serviceBuilderObjectEntry.getObjectDefinitionId());
-
-			ObjectField titleObjectField =
-				_objectFieldLocalService.fetchObjectField(
-					objectDefinition.getTitleObjectFieldId());
-
-			for (com.liferay.object.model.ObjectEntry
-					serviceBuilderObjectEntry :
-						objectEntryLocalService.getObjectEntries(
-							_objectEntryFolder.getGroupId(),
-							_objectEntryFolder.getCompanyId(),
-							_objectEntryFolder.getObjectEntryFolderId())) {
-
-				if (StringUtil.equals(
-						serviceBuilderObjectEntry.getTitleValue(),
-						_getTitleValue(titleObjectField, _values))) {
-
-					_objectEntryService.deleteObjectEntry(
-						serviceBuilderObjectEntry.getObjectEntryId());
-				}
-			}
-
-			if (_action.equals("copy")) {
-				return _objectEntryService.copyObjectEntry(
-					_serviceBuilderObjectEntry.getObjectEntryId(),
-					_objectEntryFolder.getObjectEntryFolderId(), _values,
-					_serviceContext);
-			}
-
-			return _objectEntryService.moveObjectEntry(
-				_serviceBuilderObjectEntry.getObjectEntryId(),
-				_objectEntryFolder.getObjectEntryFolderId(), _values,
-				_serviceContext);
-		}
-
-		private ObjectEntryReplaceCallable(
-			String action,
-			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,
-			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext,
-			Map<String, Serializable> values) {
-
-			_action = action;
-			_serviceBuilderObjectEntry = serviceBuilderObjectEntry;
-			_objectEntryFolder = objectEntryFolder;
-			_serviceContext = serviceContext;
-			_values = values;
-		}
-
-		private final String _action;
-		private final ObjectEntryFolder _objectEntryFolder;
-		private final com.liferay.object.model.ObjectEntry
-			_serviceBuilderObjectEntry;
-		private final ServiceContext _serviceContext;
-		private final Map<String, Serializable> _values;
-
-	}
 
 }

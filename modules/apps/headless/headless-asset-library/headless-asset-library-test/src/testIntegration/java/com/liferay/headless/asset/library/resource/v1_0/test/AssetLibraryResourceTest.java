@@ -497,6 +497,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		try {
 			User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
+			Assert.assertNotNull(user);
 			Assert.assertNotNull(
 				_depotEntryPinLocalService.getDepotEntryPin(
 					user.getUserId(), assetLibraryId));

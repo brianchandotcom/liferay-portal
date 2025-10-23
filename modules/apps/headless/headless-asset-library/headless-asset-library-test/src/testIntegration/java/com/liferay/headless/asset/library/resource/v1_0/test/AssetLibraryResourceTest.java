@@ -525,7 +525,7 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			expectedAutoTaggingEnabled, settings.getAutoTaggingEnabled());
 		Assert.assertEquals(
 			expectedDefaultLanguageId, settings.getDefaultLanguageId());
-		Assert.assertEquals(
+		Assert.assertArrayEquals(
 			expectedAvailableLanguageIds, settings.getAvailableLanguageIds());
 		Assert.assertEquals(expectedLogoColor, settings.getLogoColor());
 

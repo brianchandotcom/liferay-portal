@@ -5,7 +5,7 @@
 
 import {VerticalNav as ClayVerticalNav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import Label from '@clayui/label';
+import ClayLabel from '@clayui/label';
 import {FeatureIndicator} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -61,13 +61,13 @@ export default function VerticalNav({
 					{item.labelItems && (
 						<span className="inline-item inline-item-after">
 							{item.labelItems.map(({label, ...props}) => (
-								<Label
+								<ClayLabel
 									className="c-ml-2"
 									key={label}
 									{...props}
 								>
 									{label}
-								</Label>
+								</ClayLabel>
 							))}
 						</span>
 					)}

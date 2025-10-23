@@ -46,49 +46,28 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface ConnectedSiteResource {
 
-	public void
-			deleteAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String connectedSiteExternalReferenceCode)
-		throws Exception;
-
 	public void deleteAssetLibraryConnectedSite(
-			Long assetLibraryId, Long connectedSiteId)
-		throws Exception;
-
-	public ConnectedSite
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String connectedSiteExternalReferenceCode)
-		throws Exception;
-
-	public Page<ConnectedSite>
-			getAssetLibraryByExternalReferenceCodeConnectedSitesPage(
-				String externalReferenceCode, Pagination pagination)
+			String assetLibraryExternalReferenceCode,
+			String connectedSiteExternalReferenceCode)
 		throws Exception;
 
 	public ConnectedSite getAssetLibraryConnectedSite(
-			Long assetLibraryId, Long connectedSiteId)
+			String assetLibraryExternalReferenceCode,
+			String connectedSiteExternalReferenceCode)
 		throws Exception;
 
 	public Page<ConnectedSite> getAssetLibraryConnectedSitesPage(
-			Long assetLibraryId, Pagination pagination)
+			String assetLibraryExternalReferenceCode, Pagination pagination)
 		throws Exception;
 
 	public Response postAssetLibraryConnectedSitesPageExportBatch(
-			Long assetLibraryId, String callbackURL, String contentType,
-			String fieldNames)
-		throws Exception;
-
-	public ConnectedSite
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeConnectedSiteByExternalReferenceCodeConnectedSiteExternalReferenceCode(
-				String assetLibraryExternalReferenceCode,
-				String connectedSiteExternalReferenceCode,
-				ConnectedSite connectedSite)
+			String assetLibraryExternalReferenceCode, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public ConnectedSite putAssetLibraryConnectedSite(
-			Long assetLibraryId, Long connectedSiteId,
+			String assetLibraryExternalReferenceCode,
+			String connectedSiteExternalReferenceCode,
 			ConnectedSite connectedSite)
 		throws Exception;
 

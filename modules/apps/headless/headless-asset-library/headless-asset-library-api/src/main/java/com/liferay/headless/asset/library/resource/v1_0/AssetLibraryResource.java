@@ -46,20 +46,14 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface AssetLibraryResource {
 
-	public void deleteAssetLibrary(Long assetLibraryId) throws Exception;
+	public void deleteAssetLibrary(String assetLibraryExternalReferenceCode)
+		throws Exception;
 
 	public Response deleteAssetLibraryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
+	public void deleteAssetLibraryPin(String assetLibraryExternalReferenceCode)
 		throws Exception;
-
-	public void deleteAssetLibraryByExternalReferenceCodePin(
-			String externalReferenceCode)
-		throws Exception;
-
-	public void deleteAssetLibraryPin(Long assetLibraryId) throws Exception;
 
 	public Page<AssetLibrary> getAssetLibrariesPage(
 			String keywords, String search,
@@ -72,28 +66,17 @@ public interface AssetLibraryResource {
 			Pagination pagination)
 		throws Exception;
 
-	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception;
-
-	public AssetLibrary getAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getAssetLibraryByExternalReferenceCodePermissionsPage(
-				String externalReferenceCode, String roleNames)
+	public AssetLibrary getAssetLibrary(
+			String assetLibraryExternalReferenceCode)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			getAssetLibraryPermissionsPage(
-				Long assetLibraryId, String roleNames)
+				String assetLibraryExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public AssetLibrary patchAssetLibrary(
-			Long assetLibraryId, AssetLibrary assetLibrary)
-		throws Exception;
-
-	public AssetLibrary patchAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+			String assetLibraryExternalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
 	public Response postAssetLibrariesPageExportBatch(
@@ -109,27 +92,21 @@ public interface AssetLibraryResource {
 	public Response postAssetLibraryBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public AssetLibrary putAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+	public AssetLibrary putAssetLibrary(
+			String assetLibraryExternalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putAssetLibraryByExternalReferenceCodePermissionsPage(
-				String externalReferenceCode,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
-			String externalReferenceCode)
+	public Response putAssetLibraryBatch(String callbackURL, Object object)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putAssetLibraryPermissionsPage(
-				Long assetLibraryId,
+				String assetLibraryExternalReferenceCode,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 
-	public AssetLibrary putAssetLibraryPin(Long assetLibraryId)
+	public AssetLibrary putAssetLibraryPin(
+			String assetLibraryExternalReferenceCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

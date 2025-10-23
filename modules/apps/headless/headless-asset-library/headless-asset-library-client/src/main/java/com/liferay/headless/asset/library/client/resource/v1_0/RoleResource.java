@@ -35,88 +35,48 @@ public interface RoleResource {
 		return new Builder();
 	}
 
-	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode)
-		throws Exception;
-
-	public Page<Role>
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode)
-		throws Exception;
-
 	public Page<Role> getAssetLibraryUserAccountRolesPage(
-			Long assetLibraryId, Long userAccountId)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryUserAccountRolesPageHttpResponse(
-				Long assetLibraryId, Long userAccountId)
+				String assetLibraryExternalReferenceCode,
+				String userAccountExternalReferenceCode)
 		throws Exception;
 
 	public Page<Role> getAssetLibraryUserGroupRolesPage(
-			Long assetLibraryId, Long userGroupId)
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getAssetLibraryUserGroupRolesPageHttpResponse(
-				Long assetLibraryId, Long userGroupId)
-		throws Exception;
-
-	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
 				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode, Role[] roles)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
-				String assetLibraryExternalReferenceCode,
-				String userAccountExternalReferenceCode, Role[] roles)
-		throws Exception;
-
-	public Page<Role>
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode, Role[] roles)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
-				String assetLibraryExternalReferenceCode,
-				String userGroupExternalReferenceCode, Role[] roles)
+				String userGroupExternalReferenceCode)
 		throws Exception;
 
 	public Page<Role> putAssetLibraryUserAccountRolesPage(
-			Long assetLibraryId, Long userAccountId, Role[] roles)
+			String assetLibraryExternalReferenceCode,
+			String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putAssetLibraryUserAccountRolesPageHttpResponse(
-				Long assetLibraryId, Long userAccountId, Role[] roles)
+				String assetLibraryExternalReferenceCode,
+				String userAccountExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public Page<Role> putAssetLibraryUserGroupRolesPage(
-			Long assetLibraryId, Long userGroupId, Role[] roles)
+			String assetLibraryExternalReferenceCode,
+			String userGroupExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putAssetLibraryUserGroupRolesPageHttpResponse(
-				Long assetLibraryId, Long userGroupId, Role[] roles)
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode, Role[] roles)
 		throws Exception;
 
 	public static class Builder {
@@ -227,14 +187,13 @@ public interface RoleResource {
 
 	public static class RoleResourceImpl implements RoleResource {
 
-		public Page<Role>
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-					String assetLibraryExternalReferenceCode,
-					String userAccountExternalReferenceCode)
+		public Page<Role> getAssetLibraryUserAccountRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userAccountExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
+				getAssetLibraryUserAccountRolesPageHttpResponse(
 					assetLibraryExternalReferenceCode,
 					userAccountExternalReferenceCode);
 
@@ -298,7 +257,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
+				getAssetLibraryUserAccountRolesPageHttpResponse(
 					String assetLibraryExternalReferenceCode,
 					String userAccountExternalReferenceCode)
 			throws Exception {
@@ -327,7 +286,7 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/roles");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts/{userAccountExternalReferenceCode}/roles");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -344,14 +303,13 @@ public interface RoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Role>
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-					String assetLibraryExternalReferenceCode,
-					String userGroupExternalReferenceCode)
+		public Page<Role> getAssetLibraryUserGroupRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
+				getAssetLibraryUserGroupRolesPageHttpResponse(
 					assetLibraryExternalReferenceCode,
 					userGroupExternalReferenceCode);
 
@@ -415,7 +373,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				getAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
+				getAssetLibraryUserGroupRolesPageHttpResponse(
 					String assetLibraryExternalReferenceCode,
 					String userGroupExternalReferenceCode)
 			throws Exception {
@@ -444,7 +402,7 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}/roles");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/user-groups/{userGroupExternalReferenceCode}/roles");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -461,232 +419,13 @@ public interface RoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Role> getAssetLibraryUserAccountRolesPage(
-				Long assetLibraryId, Long userAccountId)
+		public Page<Role> putAssetLibraryUserAccountRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userAccountExternalReferenceCode, Role[] roles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryUserAccountRolesPageHttpResponse(
-					assetLibraryId, userAccountId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, RoleSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getAssetLibraryUserAccountRolesPageHttpResponse(
-					Long assetLibraryId, Long userAccountId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}/roles");
-
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userAccountId", userAccountId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Role> getAssetLibraryUserGroupRolesPage(
-				Long assetLibraryId, Long userGroupId)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getAssetLibraryUserGroupRolesPageHttpResponse(
-					assetLibraryId, userGroupId);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, RoleSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getAssetLibraryUserGroupRolesPageHttpResponse(
-					Long assetLibraryId, Long userGroupId)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}/roles");
-
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userGroupId", userGroupId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Role>
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPage(
-					String assetLibraryExternalReferenceCode,
-					String userAccountExternalReferenceCode, Role[] roles)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
+				putAssetLibraryUserAccountRolesPageHttpResponse(
 					assetLibraryExternalReferenceCode,
 					userAccountExternalReferenceCode, roles);
 
@@ -750,7 +489,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserAccountByExternalReferenceCodeUserAccountExternalReferenceCodeRolesPageHttpResponse(
+				putAssetLibraryUserAccountRolesPageHttpResponse(
 					String assetLibraryExternalReferenceCode,
 					String userAccountExternalReferenceCode, Role[] roles)
 			throws Exception {
@@ -787,7 +526,7 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-accounts/by-external-reference-code/{userAccountExternalReferenceCode}/roles");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/user-accounts/{userAccountExternalReferenceCode}/roles");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -804,14 +543,13 @@ public interface RoleResource {
 			return httpInvoker.invoke();
 		}
 
-		public Page<Role>
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPage(
-					String assetLibraryExternalReferenceCode,
-					String userGroupExternalReferenceCode, Role[] roles)
+		public Page<Role> putAssetLibraryUserGroupRolesPage(
+				String assetLibraryExternalReferenceCode,
+				String userGroupExternalReferenceCode, Role[] roles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
+				putAssetLibraryUserGroupRolesPageHttpResponse(
 					assetLibraryExternalReferenceCode,
 					userGroupExternalReferenceCode, roles);
 
@@ -875,7 +613,7 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse
-				putAssetLibraryByExternalReferenceCodeAssetLibraryExternalReferenceCodeUserGroupByExternalReferenceCodeUserGroupExternalReferenceCodeRolesPageHttpResponse(
+				putAssetLibraryUserGroupRolesPageHttpResponse(
 					String assetLibraryExternalReferenceCode,
 					String userGroupExternalReferenceCode, Role[] roles)
 			throws Exception {
@@ -912,7 +650,7 @@ public interface RoleResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{assetLibraryExternalReferenceCode}/user-groups/by-external-reference-code/{userGroupExternalReferenceCode}/roles");
+						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/user-groups/{userGroupExternalReferenceCode}/roles");
 
 			httpInvoker.path(
 				"assetLibraryExternalReferenceCode",
@@ -920,240 +658,6 @@ public interface RoleResource {
 			httpInvoker.path(
 				"userGroupExternalReferenceCode",
 				userGroupExternalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Role> putAssetLibraryUserAccountRolesPage(
-				Long assetLibraryId, Long userAccountId, Role[] roles)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryUserAccountRolesPageHttpResponse(
-					assetLibraryId, userAccountId, roles);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, RoleSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putAssetLibraryUserAccountRolesPageHttpResponse(
-					Long assetLibraryId, Long userAccountId, Role[] roles)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Role roleValue : roles) {
-				values.add(String.valueOf(roleValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-accounts/{userAccountId}/roles");
-
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userAccountId", userAccountId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Role> putAssetLibraryUserGroupRolesPage(
-				Long assetLibraryId, Long userGroupId, Role[] roles)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putAssetLibraryUserGroupRolesPageHttpResponse(
-					assetLibraryId, userGroupId, roles);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, RoleSerDes::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putAssetLibraryUserGroupRolesPageHttpResponse(
-					Long assetLibraryId, Long userGroupId, Role[] roles)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Role roleValue : roles) {
-				values.add(String.valueOf(roleValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/user-groups/{userGroupId}/roles");
-
-			httpInvoker.path("assetLibraryId", assetLibraryId);
-			httpInvoker.path("userGroupId", userGroupId);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

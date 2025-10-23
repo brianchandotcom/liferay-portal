@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -187,15 +188,16 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layout.getPlid(), "css value", "<div>HTML value</div>",
-				"js value", "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
-		fragmentEntry.setCss("new css value");
-		fragmentEntry.setHtml("<div>new updated HTML value</div>");
-		fragmentEntry.setJs("new js value");
+		fragmentEntry.setCss(RandomTestUtil.randomString());
+		fragmentEntry.setHtml(RandomTestUtil.randomString());
+		fragmentEntry.setJs(RandomTestUtil.randomString());
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry);
@@ -233,15 +235,16 @@ public class PropagateGroupFragmentEntryChangesMVCActionCommandTest {
 				fragmentEntry.getScopeERC(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(layout.getPlid()),
-				layout.getPlid(), "css value", "<div>HTML value</div>",
-				"js value", "{fieldSets: []}", StringPool.BLANK,
-				StringPool.BLANK, 0, null, fragmentEntry.getType(),
+				layout.getPlid(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				"{fieldSets: []}", StringPool.BLANK, StringPool.BLANK, 0, null,
+				fragmentEntry.getType(),
 				ServiceContextTestUtil.getServiceContext(
 					_group, TestPropsValues.getUserId()));
 
-		fragmentEntry.setCss("new css value");
-		fragmentEntry.setHtml("<div>new updated HTML value</div>");
-		fragmentEntry.setJs("new js value");
+		fragmentEntry.setCss(RandomTestUtil.randomString());
+		fragmentEntry.setHtml(RandomTestUtil.randomString());
+		fragmentEntry.setJs(RandomTestUtil.randomString());
 
 		fragmentEntry = _fragmentEntryLocalService.updateFragmentEntry(
 			fragmentEntry);

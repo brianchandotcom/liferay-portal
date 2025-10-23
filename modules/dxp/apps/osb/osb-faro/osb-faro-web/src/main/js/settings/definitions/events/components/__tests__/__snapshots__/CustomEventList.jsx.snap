@@ -9,7 +9,7 @@ exports[`CustomEventList should render 1`] = `
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+      class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
     >
       <div
         class="container-fluid"
@@ -40,7 +40,7 @@ exports[`CustomEventList should render 1`] = `
           </li>
         </ul>
         <div
-          class="navbar-form navbar-form-autofit"
+          class="navbar-form navbar-form-autofit mx-2"
         >
           <div
             class="input-group search"
@@ -85,7 +85,7 @@ exports[`CustomEventList should render 1`] = `
       class="table-responsive"
     >
       <table
-        class="table table-autofit table-striped table-list table-nowrap table-bordered show-quick-actions-on-hover"
+        class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover show-quick-actions-on-hover"
       >
         <thead>
           <tr>
@@ -107,7 +107,7 @@ exports[`CustomEventList should render 1`] = `
                   </div>
                   <button
                     aria-label="Ascending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <svg
@@ -139,7 +139,7 @@ exports[`CustomEventList should render 1`] = `
                   </div>
                   <button
                     aria-label="Descending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <span
@@ -165,38 +165,7 @@ exports[`CustomEventList should render 1`] = `
             </th>
             <th
               class="table-head-title"
-            >
-              <a
-                class="button-root w-100 btn btn-unstyled"
-                href="/?field=hidden&page=1&sortOrder=ASC"
-              >
-                <div
-                  class="align-items-center d-flex justify-content-between"
-                >
-                  <div
-                    class="text-truncate"
-                  />
-                  <button
-                    aria-label="Descending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
-                    type="button"
-                  >
-                    <span
-                      class="opacity-25"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-order-arrow icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#order-arrow"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </div>
-              </a>
-            </th>
+            />
             <th />
           </tr>
         </thead>
@@ -250,7 +219,9 @@ exports[`CustomEventList should render 1`] = `
             <td
               class="table-cell-expand text-truncate"
             />
-            <td />
+            <td
+              class="text-right"
+            />
             <td
               class="row-actions"
             >
@@ -442,7 +413,7 @@ exports[`CustomEventList should render alert notification 1`] = `
     class="toolbar-root"
   >
     <nav
-      class="navbar navbar-root management-bar management-bar-light navbar-expand"
+      class="navbar navbar-root my-2 management-bar management-bar-light navbar-expand"
     >
       <div
         class="container-fluid"
@@ -473,7 +444,7 @@ exports[`CustomEventList should render alert notification 1`] = `
           </li>
         </ul>
         <div
-          class="navbar-form navbar-form-autofit"
+          class="navbar-form navbar-form-autofit mx-2"
         >
           <div
             class="input-group search"
@@ -518,7 +489,7 @@ exports[`CustomEventList should render alert notification 1`] = `
       class="table-responsive"
     >
       <table
-        class="table table-autofit table-striped table-list table-nowrap table-bordered show-quick-actions-on-hover"
+        class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover show-quick-actions-on-hover"
       >
         <thead>
           <tr>
@@ -540,7 +511,7 @@ exports[`CustomEventList should render alert notification 1`] = `
                   </div>
                   <button
                     aria-label="Ascending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <svg
@@ -572,7 +543,7 @@ exports[`CustomEventList should render alert notification 1`] = `
                   </div>
                   <button
                     aria-label="Descending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
+                    class="component-action ml-2 btn btn-sm btn-primary"
                     type="button"
                   >
                     <span
@@ -598,38 +569,7 @@ exports[`CustomEventList should render alert notification 1`] = `
             </th>
             <th
               class="table-head-title"
-            >
-              <a
-                class="button-root w-100 btn btn-unstyled"
-                href="/?field=hidden&page=1&sortOrder=ASC"
-              >
-                <div
-                  class="align-items-center d-flex justify-content-between"
-                >
-                  <div
-                    class="text-truncate"
-                  />
-                  <button
-                    aria-label="Descending"
-                    class="component-action ml-4 btn btn-sm btn-primary"
-                    type="button"
-                  >
-                    <span
-                      class="opacity-25"
-                    >
-                      <svg
-                        class="lexicon-icon lexicon-icon-order-arrow icon-root"
-                        role="presentation"
-                      >
-                        <use
-                          href="#order-arrow"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-                </div>
-              </a>
-            </th>
+            />
             <th />
           </tr>
         </thead>
@@ -683,7 +623,9 @@ exports[`CustomEventList should render alert notification 1`] = `
             <td
               class="table-cell-expand text-truncate"
             />
-            <td />
+            <td
+              class="text-right"
+            />
             <td
               class="row-actions"
             >

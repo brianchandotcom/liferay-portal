@@ -102,7 +102,7 @@ exports[`AcquisitionsCard renders 1`] = `
           class="table-responsive"
         >
           <table
-            class="table table-autofit table-striped table-list table-nowrap table-bordered"
+            class="table table-autofit table-striped table-list table-nowrap table-head-bordered table-hover"
           >
             <thead>
               <tr>
@@ -123,7 +123,7 @@ exports[`AcquisitionsCard renders 1`] = `
                       </div>
                       <button
                         aria-label="Descending"
-                        class="component-action ml-4 btn btn-sm btn-primary"
+                        class="component-action ml-2 btn btn-sm btn-primary"
                         type="button"
                       >
                         <span

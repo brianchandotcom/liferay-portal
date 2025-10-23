@@ -21,7 +21,7 @@ exports[`HeaderCell should render 1`] = `
         </div>
         <button
           aria-label="Descending"
-          class="component-action ml-4 btn btn-sm btn-primary"
+          class="component-action ml-2 btn btn-sm btn-primary"
           type="button"
         >
           <span

@@ -92,16 +92,16 @@ announcementsPortletInstanceConfiguration = ParameterMapUtil.setParameterMap(Ann
 							List<KeyValuePair> availableGroups = new ArrayList<KeyValuePair>();
 							List<KeyValuePair> currentGroups = new ArrayList<KeyValuePair>();
 
-							for (Group curGroup : groups) {
-								if (!curGroup.isSite()) {
+							for (Group group : groups) {
+								if (!group.isSite()) {
 									continue;
 								}
 
-								String descriptiveName = curGroup.isOrganization() ? String.format("%s (%s)", curGroup.getDescriptiveName(locale), LanguageUtil.get(request, OrganizationConstants.TYPE_ORGANIZATION)) : curGroup.getDescriptiveName(locale);
+								String descriptiveName = group.isOrganization() ? String.format("%s (%s)", group.getDescriptiveName(locale), LanguageUtil.get(request, OrganizationConstants.TYPE_ORGANIZATION)) : group.getDescriptiveName(locale);
 
-								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(curGroup.getExternalReferenceCode()), descriptiveName);
+								KeyValuePair keyValuePair = new KeyValuePair(HtmlUtil.escape(group.getExternalReferenceCode()), descriptiveName);
 
-								if (announcementsDisplayContext.isScopeGroupSelected(curGroup)) {
+								if (announcementsDisplayContext.isScopeGroupSelected(group)) {
 									currentGroups.add(keyValuePair);
 								}
 								else {

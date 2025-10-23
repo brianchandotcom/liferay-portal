@@ -200,7 +200,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 	}
 
 	@Test
-	public void testPortletShortNameIsDeleted() throws Exception {
+	public void testPortletNotFullyQualifiedNameIsDeleted() throws Exception {
 		AtomicReference<ServiceComponent> serviceComponentAtomicReference =
 			new AtomicReference<>();
 
@@ -216,7 +216,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 							"Table ",
 							_dbInspector.normalizeName("ServiceComponent"),
 							", 1 row deleted because ", portletName,
-							" is a portletShortName")));
+							" is not a fully qualified name")));
 			},
 			() -> {
 				if (serviceComponentAtomicReference.get() != null) {

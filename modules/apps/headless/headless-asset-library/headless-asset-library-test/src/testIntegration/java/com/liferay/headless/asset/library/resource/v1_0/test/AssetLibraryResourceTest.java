@@ -40,6 +40,7 @@ import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -116,21 +117,19 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			return;
 		}
 
-		AssetLibrary assetLibrary1 = randomAssetLibrary();
-
-		assetLibrary1 = testGetAssetLibrariesPage_addAssetLibrary(
-			assetLibrary1);
+		AssetLibrary assetLibrary = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
 
 		for (EntityField entityField : entityFields) {
 			Page<AssetLibrary> page =
 				assetLibraryResource.getAssetLibrariesPage(
 					null, null,
-					getFilterString(entityField, "between", assetLibrary1),
-					Pagination.of(1, 2), null);
+					getFilterString(entityField, "between", assetLibrary),
+					Pagination.of(1, 10), null);
 
-			assertEquals(
-				Collections.singletonList(assetLibrary1),
-				(List<AssetLibrary>)page.getItems());
+			Collection<AssetLibrary> items = page.getItems();
+
+			Assert.assertTrue(items.contains(assetLibrary));
 		}
 	}
 

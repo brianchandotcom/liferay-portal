@@ -23,23 +23,25 @@ public class UpgradeCatchAllJavaLongLinesCheck extends JavaLongLinesCheck {
 
 	@Override
 	protected String doProcess(
-			String fileName, String absolutePath, String fileContent)
+			String fileName, String absolutePath, String content)
 		throws IOException {
+
+		if (!absolutePath.contains("/upgrade/upgrade-catch-all-check") ||
+			!fileName.contains("-before")) {
+
+			return content;
+		}
 
 		Matcher matcher = _pattern.matcher(fileName);
 
-		if (!matcher.find() ||
-			!absolutePath.contains("/upgrade/upgrade-catch-all-check") ||
-			!fileName.contains("-before")) {
-
-			return fileContent;
+		if (!matcher.find()) {
+			return content;
 		}
 
 		setMaxLineLength(80);
 
 		super.doProcess(
-			StringUtil.removeSubstring(fileName, "-before"), absolutePath,
-			fileContent);
+			StringUtil.removeLast(fileName, "-before"), absolutePath, content);
 
 		try {
 			return JavaParser.parse(new File(absolutePath), 80);

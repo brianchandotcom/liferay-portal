@@ -144,7 +144,7 @@ function main {
 			--namespace "${namespace}" \
 			--output jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 
-	echo "Open your browser to http://${public_address}"
+	echo "Open your browser to http://${public_address}."
 }
 
 main

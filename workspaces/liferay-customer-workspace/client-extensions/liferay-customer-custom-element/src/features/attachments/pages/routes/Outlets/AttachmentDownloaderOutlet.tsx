@@ -32,13 +32,16 @@ const renderErrorComponent = (errorCode: string | null) => {
 };
 
 const AttachmentDownloaderOutlet = () => {
-	const {ticketAttachmentERC, ticketAttachmentId} = useParams();
-	const {errorCode, hasAccess, loading} = useCheckAttachmentAccess();
-	const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
 	const [downloadError, setDownloadError] = useState<string | null>(null);
+	const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
+	const [downloadUrlLoading, setDownloadUrlLoading] = useState(false);
+	const {errorCode, hasAccess, loading} = useCheckAttachmentAccess();
+	const {ticketAttachmentERC, ticketAttachmentId} = useParams();
 
 	useEffect(() => {
 		const fetchDownloadURL = async () => {
+			setDownloadUrlLoading(true);
+
 			try {
 				const endpoint = ticketAttachmentId
 					? `/ticket-attachments/by-id/${ticketAttachmentId}/download`
@@ -63,6 +66,9 @@ const AttachmentDownloaderOutlet = () => {
 					i18n.translate('error-downloading-attachment')
 				);
 			}
+			finally {
+				setDownloadUrlLoading(false);
+			}
 		};
 
 		if (hasAccess && (ticketAttachmentERC || ticketAttachmentId)) {
@@ -70,7 +76,7 @@ const AttachmentDownloaderOutlet = () => {
 		}
 	}, [hasAccess, ticketAttachmentERC, ticketAttachmentId]);
 
-	if (loading) {
+	if (loading || downloadUrlLoading) {
 		return (
 			<div className="mx-auto">
 				<ClayLoadingIndicator size="sm" />

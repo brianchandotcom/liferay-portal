@@ -11,6 +11,10 @@ import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import formatActionURL from '../../common/utils/formatActionURL';
+import {
+	OBJECT_ENTRY_FOLDER_CLASS_NAME,
+	getScopeExternalReferenceCode,
+} from '../../common/utils/getScopeExternalReferenceCode';
 import CategoriesAndTagsModalContent from '../categorization/modal/CategoriesAndTagsModalContent';
 import {defaultPermissionsBulkAction} from '../default_permission/BulkDefaultPermissionModalContent';
 import {permissionsBulkAction} from '../default_permission/BulkPermissionModalContent';
@@ -33,9 +37,6 @@ import SpaceRendererWithCache from './cell_renderers/SpaceRendererWithCache';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 import transformViewsItemsProps from './utils/transformViewsItemProps';
-
-const OBJECT_ENTRY_FOLDER_CLASS_NAME =
-	'com.liferay.object.model.ObjectEntryFolder';
 
 const ACTIONS = {
 	createAsset: createAssetAction,
@@ -104,14 +105,9 @@ export default function AssetsFDSPropsTransformer({
 				{
 					component: ({itemData}) => (
 						<SpaceRendererWithCache
-							spaceExternalReferenceCode={
-								itemData?.entryClassName !==
-								OBJECT_ENTRY_FOLDER_CLASS_NAME
-									? itemData.embedded.systemProperties.scope
-											.externalReferenceCode
-									: itemData.embedded.scope
-											.externalReferenceCode
-							}
+							spaceExternalReferenceCode={getScopeExternalReferenceCode(
+								itemData
+							)}
 						/>
 					),
 					name: 'spaceTableCellRenderer',

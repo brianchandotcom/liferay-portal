@@ -67,11 +67,13 @@ function getBulkDeleteMessage(selectedData: any): {
 async function getEntriesSpaces(
 	items: IBulkActionFDSData['items'] = []
 ): Promise<any[]> {
-	const promises = items
-		.filter((item) => getScopeExternalReferenceCode(item))
-		.map((item) =>
-			SpaceService.getSpace(getScopeExternalReferenceCode(item))
-		);
+	const promises = items.flatMap((item) => {
+		const externalReferenceCode = getScopeExternalReferenceCode(item);
+
+		return externalReferenceCode
+			? [SpaceService.getSpace(externalReferenceCode)]
+			: [];
+	});
 
 	return (await Promise.all(promises)).filter(Boolean);
 }

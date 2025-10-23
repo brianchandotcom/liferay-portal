@@ -11,6 +11,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -18,6 +19,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
+import java.net.URI;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
@@ -36,11 +39,15 @@ import org.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.MultipartBodyBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,6 +56,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 /**
@@ -62,8 +72,8 @@ public class LearnRestController extends BaseRestController {
 	@ResponseBody
 	public ResponseEntity<Object> getLessonAudioBase64(
 		@AuthenticationPrincipal Jwt jwt, @PathVariable long lessonId,
-		@RequestParam String folderId, @RequestParam String languageCode,
-		@RequestParam String voiceName, @RequestParam String voiceType) {
+		@RequestParam String languageCode, @RequestParam String voiceName,
+		@RequestParam String voiceType) {
 
 		try {
 			JSONObject lessonJSONObject = new JSONObject(
@@ -86,42 +96,53 @@ public class LearnRestController extends BaseRestController {
 				);
 			}
 
-			JSONObject documentsJSONObject = new JSONObject(
-				get(
-					"",
-					UriComponentsBuilder.fromPath(
-						"/o/headless-delivery/v1.0/document-folders/" +
-							folderId + "/documents"
-					).queryParam(
-						"filter",
-						StringBundler.concat(
-							"title eq 'lesson-", lessonId, "-", voiceType,
-							".mp3'")
-					).build(
-					).toUri()));
+			String fileName = StringBundler.concat(
+				"lesson-", lessonId, "-", voiceType, ".mp3");
 
-			OffsetDateTime offsetDateTime1 = OffsetDateTime.parse(
+			JSONObject documentsJSONObject = null;
+
+			try {
+				documentsJSONObject = new JSONObject(
+					get(
+						"",
+						UriComponentsBuilder.fromPath(
+							StringBundler.concat(
+								"/o/headless-delivery/v1.0/sites/", _siteId,
+								"/documents/by-external-reference-code/",
+								StringUtil.toUpperCase(fileName))
+						).build(
+						).toUri()));
+			}
+			catch (Exception exception) {
+				String message = exception.getMessage();
+
+				if ((message != null) && message.contains("404")) {
+					documentsJSONObject = null;
+				}
+				else {
+					exception.printStackTrace();
+
+					throw exception;
+				}
+			}
+
+			OffsetDateTime lessonDateModified = OffsetDateTime.parse(
 				lessonJSONObject.getString("dateModified")
 			).truncatedTo(
 				ChronoUnit.MINUTES
 			);
 
-			OffsetDateTime offsetDateTime2 = OffsetDateTime.MIN;
+			OffsetDateTime documentDateModified = OffsetDateTime.MIN;
 
-			JSONObject documentJSONObject = null;
-			JSONArray jsonArray = documentsJSONObject.optJSONArray("items");
-
-			if ((jsonArray != null) && (jsonArray.length() > 0)) {
-				documentJSONObject = jsonArray.optJSONObject(0);
-
-				offsetDateTime2 = OffsetDateTime.parse(
-					documentJSONObject.getString("dateModified")
+			if (documentsJSONObject != null) {
+				documentDateModified = OffsetDateTime.parse(
+					documentsJSONObject.getString("dateModified")
 				).truncatedTo(
 					ChronoUnit.MINUTES
 				);
 			}
 
-			if (offsetDateTime1.isAfter(offsetDateTime2)) {
+			if (lessonDateModified.isAfter(documentDateModified)) {
 				ByteArrayOutputStream byteArrayOutputStream =
 					new ByteArrayOutputStream();
 
@@ -168,20 +189,148 @@ public class LearnRestController extends BaseRestController {
 						));
 				}
 
-				String audioContentBase64 = Base64.getEncoder(
-				).encodeToString(
-					byteArrayOutputStream.toByteArray()
-				);
+				byte[] fullAudioBytes = byteArrayOutputStream.toByteArray();
 
-				return ResponseEntity.ok(
-					new JSONObject(
+				ByteArrayResource fileResource = new ByteArrayResource(
+					fullAudioBytes) {
+
+					@Override
+					public String getFilename() {
+						return fileName;
+					}
+
+				};
+
+				if (documentsJSONObject == null) {
+					JSONObject documentMetadataJSONObject = new JSONObject(
 					).put(
-						"audioContentBase64", audioContentBase64
+						"title", fileName
 					).put(
-						"id",
-						(documentJSONObject != null) ?
-							documentJSONObject.optString("id", null) : null
-					).toString());
+						"externalReferenceCode",
+						StringUtil.toUpperCase(fileName)
+					).put(
+						"fileName", fileName
+					).put(
+						"viewableBy", "Anyone"
+					);
+
+					MultipartBodyBuilder builder = new MultipartBodyBuilder();
+
+					builder.part(
+						"document", documentMetadataJSONObject.toString(),
+						MediaType.APPLICATION_JSON);
+
+					builder.part(
+						"file", fileResource,
+						MediaType.APPLICATION_OCTET_STREAM);
+
+					MultiValueMap<String, HttpEntity<?>> multipartBody =
+						builder.build();
+
+					URI uri = UriComponentsBuilder.fromHttpUrl(
+						_protocol + "://" + _mainDomain
+					).path(
+						"/o/headless-delivery/v1.0/document-folders/" +
+							_folderId + "/documents"
+					).build(
+					).toUri();
+
+					try {
+						String uploadResponse = WebClient.create(
+						).post(
+						).uri(
+							uri
+						).contentType(
+							MediaType.MULTIPART_FORM_DATA
+						).header(
+							HttpHeaders.AUTHORIZATION, _getAuthorization()
+						).body(
+							BodyInserters.fromMultipartData(multipartBody)
+						).retrieve(
+						).bodyToMono(
+							String.class
+						).block();
+
+						JSONObject uploadJSONJSONObject = new JSONObject(
+							uploadResponse);
+
+						String contentUrl = uploadJSONJSONObject.optString(
+							"contentUrl", null);
+
+						JSONObject responseJSONObject = new JSONObject(
+						).put(
+							"contentUrl", contentUrl
+						);
+
+						return ResponseEntity.ok(
+						).contentType(
+							MediaType.APPLICATION_JSON
+						).body(
+							responseJSONObject.toString(2)
+						);
+					}
+					catch (WebClientResponseException
+								webClientResponseException) {
+
+						System.err.println(
+							StringBundler.concat(
+								"Failed in Liferay (",
+								webClientResponseException.getStatusCode(),
+								"): ",
+								webClientResponseException.
+									getResponseBodyAsString()));
+
+						throw new RuntimeException(
+							"Failed to upload to the Liferay API", webClientResponseException);
+					}
+				}
+				else {
+					long documentId = documentsJSONObject.getLong("id");
+
+					MultipartBodyBuilder builder = new MultipartBodyBuilder();
+
+					builder.part(
+						"file", fileResource,
+						MediaType.APPLICATION_OCTET_STREAM);
+
+					MultiValueMap<String, HttpEntity<?>> multipartBody =
+						builder.build();
+
+					String updateResponse = WebClient.create(
+					).put(
+					).uri(
+						UriComponentsBuilder.fromHttpUrl(
+							_protocol + "://" + _mainDomain
+						).path(
+							"/o/headless-delivery/v1.0/documents/" + documentId
+						).build(
+						).toUri()
+					).contentType(
+						MediaType.MULTIPART_FORM_DATA
+					).header(
+						HttpHeaders.AUTHORIZATION, _getAuthorization()
+					).body(
+						BodyInserters.fromMultipartData(multipartBody)
+					).retrieve(
+					).bodyToMono(
+						String.class
+					).block();
+
+					return ResponseEntity.ok(
+					).contentType(
+						MediaType.APPLICATION_JSON
+					).body(
+						new JSONObject(
+						).put(
+							"contentUrl",
+							new JSONObject(
+								updateResponse
+							).getString(
+								"contentUrl"
+							)
+						).toString()
+					);
+				}
 			}
 
 			return ResponseEntity.ok(
@@ -191,7 +340,7 @@ public class LearnRestController extends BaseRestController {
 				new JSONObject(
 				).put(
 					"contentUrl",
-					documentJSONObject.optString("contentUrl", null)
+					documentsJSONObject.optString("contentUrl", null)
 				).toString(
 					2
 				)
@@ -797,6 +946,9 @@ public class LearnRestController extends BaseRestController {
 	private static final Pattern _trPattern = Pattern.compile(
 		"(?is)<tr[^>]*>(.*?)</tr>");
 
+	@Value("${folder.id}")
+	private String _folderId;
+
 	@Value("${liferay.learn.google.credentials}")
 	private String _googleCredentials;
 
@@ -808,5 +960,8 @@ public class LearnRestController extends BaseRestController {
 
 	@Value("${com.liferay.lxc.dxp.server.protocol}")
 	private String _protocol;
+
+	@Value("${liferay.learn.dxp.site.group.id}")
+	private String _siteId;
 
 }

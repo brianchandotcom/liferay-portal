@@ -65,7 +65,9 @@ function ActionLinkRenderer({
 	} = useContext(FrontendDataSetContext);
 
 	if (!actions || !actions.length) {
-		return value ? <DefaultContent value={value} /> : null;
+		return value !== null && value !== undefined ? (
+			<DefaultContent value={value} />
+		) : null;
 	}
 
 	const formattedActions = filterItemActions({
@@ -84,7 +86,9 @@ function ActionLinkRenderer({
 			: formattedActions[0];
 
 	if (!currentAction) {
-		return value ? <DefaultContent value={value} /> : null;
+		return value !== null && value !== undefined ? (
+			<DefaultContent value={value} />
+		) : null;
 	}
 
 	const formattedHref =
@@ -198,10 +202,11 @@ function ActionLinkRenderer({
 							}
 				}
 			>
-				{value ||
-					(currentAction.icon && (
-						<ClayIcon symbol={currentAction.icon} />
-					))}
+				{value !== null && value !== undefined
+					? value
+					: currentAction.icon && (
+							<ClayIcon symbol={currentAction.icon} />
+						)}
 			</ClayLink>
 		</div>
 	);

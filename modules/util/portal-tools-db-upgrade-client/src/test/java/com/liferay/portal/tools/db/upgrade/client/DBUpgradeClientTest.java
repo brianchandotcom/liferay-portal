@@ -247,7 +247,7 @@ public class DBUpgradeClientTest {
 		liferayHomeDir.mkdirs();
 
 		String[] answers = {
-			"invalid-liferay-home", liferayHomeDir.getAbsolutePath()
+			RandomTestUtil.randomString(), liferayHomeDir.getAbsolutePath()
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);

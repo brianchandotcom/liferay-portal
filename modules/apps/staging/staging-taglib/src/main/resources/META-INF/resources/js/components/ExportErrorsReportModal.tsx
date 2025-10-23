@@ -43,10 +43,12 @@ const STATUS_MAP: Record<StatusKey, Status> = {
 };
 
 export function ExportErrorsReportModal({
+	backgroundTaskId,
 	filename,
 	observer,
 	onOpenChange,
 }: {
+	backgroundTaskId: string;
 	filename: string;
 	observer: Observer;
 	onOpenChange: (value: boolean) => void;

@@ -23,6 +23,11 @@
 
 		<react:component
 			module="{ExportErrorsReportAction} from staging-taglib"
+			props='<%=
+				HashMapBuilder.<String, Object>put(
+					"backgroundTaskId", backgroundTask.getBackgroundTaskId()
+				).build()
+			%>'
 		/>
 	</li>
 </c:if>

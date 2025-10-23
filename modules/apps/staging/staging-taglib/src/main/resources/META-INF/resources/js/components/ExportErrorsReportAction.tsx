@@ -10,10 +10,12 @@ import React from 'react';
 import {ExportErrorsReportModal} from './ExportErrorsReportModal';
 
 type ExportErrorsReportProps = {
+	backgroundTaskId: string;
 	filename?: string;
 };
 
 export function ExportErrorsReportAction({
+	backgroundTaskId,
 	filename = 'Extranet_backup_Errors_Report.csv',
 }: ExportErrorsReportProps) {
 	const {observer, onOpenChange, open} = useModal();
@@ -30,6 +32,7 @@ export function ExportErrorsReportAction({
 
 			{open && (
 				<ExportErrorsReportModal
+					backgroundTaskId={backgroundTaskId}
 					filename={filename}
 					observer={observer}
 					onOpenChange={onOpenChange}

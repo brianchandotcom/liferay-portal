@@ -186,10 +186,10 @@ public class JournalDisplayContextTest {
 		JournalFolder journalFolder = journalFolderFixture.addFolder(
 			_group.getGroupId(), RandomTestUtil.randomString());
 
-		_assertLocationOptions(
+		_testGetSearchProps(
 			journalFolder, "all-fields",
 			searchProps -> searchProps.containsKey("searchLocationOptions"));
-		_assertLocationOptions(
+		_testGetSearchProps(
 			journalFolder, "comments",
 			searchProps -> !searchProps.containsKey("searchLocationOptions"));
 	}
@@ -250,7 +250,7 @@ public class JournalDisplayContextTest {
 			null, LocaleUtil.getDefault(), null, false, false, _serviceContext);
 	}
 
-	private void _assertLocationOptions(
+	private void _testGetSearchProps(
 			JournalFolder journalFolder, String searchIn,
 			UnsafeFunction<Map<String, Object>, Boolean, Exception>
 				unsafeFunction)

@@ -131,7 +131,7 @@ public class PreupgradeVerifyDatabaseState extends PreupgradeVerifyProcess {
 			DBInspector dbInspector, Set<String> missingTableNames)
 		throws Exception {
 
-		TreeSet<String> viewNames = new TreeSet<>(
+		Set<String> viewNames = new TreeSet<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		if (CompanyThreadLocal.getNonsystemCompanyId() ==

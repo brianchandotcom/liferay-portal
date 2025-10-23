@@ -120,9 +120,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			String longLinesContent = longLinesCheck.doProcess(
 				fileName + "-before", absolutePath, content);
 
-			if (!StringUtil.equals(content, longLinesContent) &&
-				(getLineCount(content) != getLineCount(longLinesContent))) {
-
+			if (getLineCount(content) != getLineCount(longLinesContent)) {
 				throw new UpgradeCatchAllException(
 					fileName + " missing 80 max line length rule");
 			}

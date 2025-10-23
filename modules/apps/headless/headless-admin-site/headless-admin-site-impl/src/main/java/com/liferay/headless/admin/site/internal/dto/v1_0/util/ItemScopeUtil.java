@@ -48,16 +48,25 @@ public class ItemScopeUtil {
 	}
 
 	public static Scope getItemScope(
-			long companyId, String itemGroupExternalReferenceCode,
-			long scopeGroupId)
-		throws PortalException {
+		long companyId, String itemGroupExternalReferenceCode,
+		long scopeGroupId) {
 
 		if (Validator.isNull(itemGroupExternalReferenceCode)) {
 			return null;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
 			itemGroupExternalReferenceCode, companyId);
+
+		if (group == null) {
+			return new Scope() {
+				{
+					setExternalReferenceCode(
+						() -> itemGroupExternalReferenceCode);
+					setType(() -> Type.SITE);
+				}
+			};
+		}
 
 		if (group.getGroupId() == scopeGroupId) {
 			return null;

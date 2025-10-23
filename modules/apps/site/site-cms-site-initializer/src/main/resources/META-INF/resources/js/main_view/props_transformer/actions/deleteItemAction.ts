@@ -70,9 +70,9 @@ export default async function deleteItemAction(
 	const {actions, embedded} = itemData;
 
 	if (embedded) {
-		const itemSpace = await SpaceService.getSpace({
-			spaceId: embedded.scopeId as number,
-		});
+		const itemSpace = await SpaceService.getSpace(
+			embedded.scopeId as number
+		);
 
 		if (!itemSpace.settings?.trashEnabled) {
 			confirmAndDeleteEntryAction({

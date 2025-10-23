@@ -12,7 +12,6 @@ import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Resource;
 import com.liferay.portal.kernel.model.ResourceAction;
@@ -27,7 +26,6 @@ import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -45,7 +43,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -85,22 +82,21 @@ import java.util.Set;
 @jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseAssetLibraryResourceImpl
 	implements AssetLibraryResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<AssetLibrary>,
-			   VulcanCRUDItemDelegate<AssetLibrary> {
+			   VulcanBatchEngineTaskItemDelegate<AssetLibrary> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes the asset library."
+		description = "Deletes the asset library by external reference code."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -108,14 +104,14 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
 	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}")
+	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryExternalReferenceCode}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteAssetLibrary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId)
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -166,40 +162,7 @@ public abstract class BaseAssetLibraryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes the asset library by external reference code."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}"
-	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteAssetLibraryByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/pins'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Unpins the asset library."
@@ -208,7 +171,7 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -217,46 +180,15 @@ public abstract class BaseAssetLibraryResourceImpl
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins"
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/pins"
 	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteAssetLibraryByExternalReferenceCodePin(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/pins'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Unpins the asset library."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}/pins")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public void deleteAssetLibraryPin(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId)
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 	}
 
@@ -338,7 +270,7 @@ public abstract class BaseAssetLibraryResourceImpl
 					nestedField -> {
 						Page<Permission> permissionsPage =
 							getAssetLibraryPermissionsPage(
-								assetLibrary.getId(), null);
+								assetLibrary.getExternalReferenceCode(), null);
 
 						Collection<Permission> permissions =
 							permissionsPage.getItems();
@@ -385,79 +317,14 @@ public abstract class BaseAssetLibraryResourceImpl
 		return Page.of(Collections.emptyList());
 	}
 
-	protected abstract AssetLibrary doGetAssetLibrary(Long assetLibraryId)
+	protected abstract AssetLibrary doGetAssetLibrary(
+			String assetLibraryExternalReferenceCode)
 		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the asset library."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public final AssetLibrary getAssetLibrary(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId)
-		throws Exception {
-
-		AssetLibrary getAssetLibrary = doGetAssetLibrary(assetLibraryId);
-
-		getAssetLibrary.setPermissions(
-			() -> NestedFieldsSupplier.supply(
-				"permissions",
-				nestedField -> {
-					Page<Permission> permissionsPage =
-						getAssetLibraryPermissionsPage(
-							getAssetLibrary.getId(), null);
-
-					Collection<Permission> permissions =
-						permissionsPage.getItems();
-
-					return permissions.toArray(
-						new Permission[permissions.size()]);
-				}));
-
-		return getAssetLibrary;
-	}
-
-	protected abstract AssetLibrary doGetAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Retrieves the asset library by external reference code."
@@ -466,7 +333,7 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -486,20 +353,18 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}"
-	)
+	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryExternalReferenceCode}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public final AssetLibrary getAssetLibraryByExternalReferenceCode(
+	public final AssetLibrary getAssetLibrary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 
-		AssetLibrary getAssetLibrary = doGetAssetLibraryByExternalReferenceCode(
-			externalReferenceCode);
+		AssetLibrary getAssetLibrary = doGetAssetLibrary(
+			assetLibraryExternalReferenceCode);
 
 		getAssetLibrary.setPermissions(
 			() -> NestedFieldsSupplier.supply(
@@ -507,7 +372,7 @@ public abstract class BaseAssetLibraryResourceImpl
 				nestedField -> {
 					Page<Permission> permissionsPage =
 						getAssetLibraryPermissionsPage(
-							getAssetLibrary.getId(), null);
+							getAssetLibrary.getExternalReferenceCode(), null);
 
 					Collection<Permission> permissions =
 						permissionsPage.getItems();
@@ -522,13 +387,13 @@ public abstract class BaseAssetLibraryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -549,69 +414,26 @@ public abstract class BaseAssetLibraryResourceImpl
 	)
 	@jakarta.ws.rs.GET
 	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions"
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/permissions"
 	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Permission>
-			getAssetLibraryByExternalReferenceCodePermissionsPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.ws.rs.QueryParam("roleNames")
-				String roleNames)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/permissions'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "roleNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}/permissions")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public Page<Permission> getAssetLibraryPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("roleNames")
 			String roleNames)
 		throws Exception {
 
-		Long groupId = getPermissionCheckerGroupId(assetLibraryId);
-		Long resourceId = getPermissionCheckerResourceId(assetLibraryId);
-		String resourceName = getPermissionCheckerResourceName(assetLibraryId);
+		Long groupId = getPermissionCheckerGroupId(
+			assetLibraryExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			assetLibraryExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
+			assetLibraryExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -636,42 +458,7 @@ public abstract class BaseAssetLibraryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}' -d $'{"assetLibraryKey": ___, "description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "settings": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the asset library using only the fields received in the request body. Any other fields are left untouched."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.PATCH
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public AssetLibrary patchAssetLibrary(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
-			AssetLibrary assetLibrary)
-		throws Exception {
-
-		return new AssetLibrary();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}' -d $'{"assetLibraryKey": ___, "description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "settings": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}' -d $'{"assetLibraryKey": ___, "description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "settings": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the asset library using only the fields received in the request body with the given external reference code. Any other fields are left untouched."
@@ -680,7 +467,7 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -689,21 +476,19 @@ public abstract class BaseAssetLibraryResourceImpl
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
 	@jakarta.ws.rs.PATCH
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}"
-	)
+	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryExternalReferenceCode}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public AssetLibrary patchAssetLibraryByExternalReferenceCode(
+	public AssetLibrary patchAssetLibrary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			AssetLibrary assetLibrary)
 		throws Exception {
 
-		AssetLibrary existingAssetLibrary =
-			getAssetLibraryByExternalReferenceCode(externalReferenceCode);
+		AssetLibrary existingAssetLibrary = getAssetLibrary(
+			assetLibraryExternalReferenceCode);
 
 		if (assetLibrary.getAssetLibraryKey() != null) {
 			existingAssetLibrary.setAssetLibraryKey(
@@ -742,8 +527,8 @@ public abstract class BaseAssetLibraryResourceImpl
 
 		preparePatch(assetLibrary, existingAssetLibrary);
 
-		return putAssetLibraryByExternalReferenceCode(
-			externalReferenceCode, existingAssetLibrary);
+		return putAssetLibrary(
+			assetLibraryExternalReferenceCode, existingAssetLibrary);
 	}
 
 	/**
@@ -862,7 +647,7 @@ public abstract class BaseAssetLibraryResourceImpl
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putAssetLibraryPermissionsPage(
-				postAssetLibrary.getId(), permissions);
+				postAssetLibrary.getExternalReferenceCode(), permissions);
 
 			postAssetLibrary.setPermissions(
 				() -> NestedFieldsSupplier.supply(
@@ -923,14 +708,14 @@ public abstract class BaseAssetLibraryResourceImpl
 		).build();
 	}
 
-	protected abstract AssetLibrary doPutAssetLibraryByExternalReferenceCode(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+	protected abstract AssetLibrary doPutAssetLibrary(
+			String assetLibraryExternalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}' -d $'{"assetLibraryKey": ___, "description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "settings": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}' -d $'{"assetLibraryKey": ___, "description": ___, "description_i18n": ___, "externalReferenceCode": ___, "name": ___, "name_i18n": ___, "permissions": ___, "settings": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the asset library with information sent in the request body with the given external reference code. Any missing fields are deleted unless they are required."
@@ -939,7 +724,7 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -947,28 +732,26 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}"
-	)
+	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryExternalReferenceCode}")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public final AssetLibrary putAssetLibraryByExternalReferenceCode(
+	public final AssetLibrary putAssetLibrary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			AssetLibrary assetLibrary)
 		throws Exception {
 
 		Permission[] permissions = assetLibrary.getPermissions();
 
-		AssetLibrary putAssetLibrary = doPutAssetLibraryByExternalReferenceCode(
-			externalReferenceCode, assetLibrary);
+		AssetLibrary putAssetLibrary = doPutAssetLibrary(
+			assetLibraryExternalReferenceCode, assetLibrary);
 
 		if (permissions != null) {
 			Page<Permission> permissionsPage = putAssetLibraryPermissionsPage(
-				putAssetLibrary.getId(), permissions);
+				putAssetLibrary.getExternalReferenceCode(), permissions);
 
 			putAssetLibrary.setPermissions(
 				() -> NestedFieldsSupplier.supply(
@@ -988,83 +771,57 @@ public abstract class BaseAssetLibraryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}/permissions"
-	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
+	@jakarta.ws.rs.Consumes("application/json")
+	@jakarta.ws.rs.Path("/asset-libraries/batch")
+	@jakarta.ws.rs.Produces("application/json")
 	@jakarta.ws.rs.PUT
 	@Override
-	public Page<Permission>
-			putAssetLibraryByExternalReferenceCodePermissionsPage(
-				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-				@jakarta.validation.constraints.NotNull
-				@jakarta.ws.rs.PathParam("externalReferenceCode")
-				String externalReferenceCode,
-				Permission[] permissions)
-		throws Exception {
-
-		return Page.of(Collections.emptyList());
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Pins the asset library."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
-	)
-	@jakarta.ws.rs.Path(
-		"/asset-libraries/by-external-reference-code/{externalReferenceCode}/pins"
-	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@jakarta.ws.rs.PUT
-	@Override
-	public AssetLibrary putAssetLibraryByExternalReferenceCodePin(
+	public Response putAssetLibraryBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			@jakarta.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
 		throws Exception {
 
-		return new AssetLibrary();
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				AssetLibrary.class.getName(), callbackURL, object)
+		).build();
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
@@ -1072,21 +829,26 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}/permissions")
+	@jakarta.ws.rs.Path(
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/permissions"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
 	public Page<Permission> putAssetLibraryPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode,
 			Permission[] permissions)
 		throws Exception {
 
-		Long groupId = getPermissionCheckerGroupId(assetLibraryId);
-		Long resourceId = getPermissionCheckerResourceId(assetLibraryId);
-		String resourceName = getPermissionCheckerResourceName(assetLibraryId);
+		Long groupId = getPermissionCheckerGroupId(
+			assetLibraryExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			assetLibraryExternalReferenceCode);
+		String resourceName = getPermissionCheckerResourceName(
+			assetLibraryExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -1148,7 +910,7 @@ public abstract class BaseAssetLibraryResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryId}/pins'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-asset-library/v1.0/asset-libraries/{assetLibraryExternalReferenceCode}/pins'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Pins the asset library."
@@ -1157,22 +919,24 @@ public abstract class BaseAssetLibraryResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "assetLibraryId"
+				name = "assetLibraryExternalReferenceCode"
 			)
 		}
 	)
 	@io.swagger.v3.oas.annotations.tags.Tags(
 		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "AssetLibrary")}
 	)
-	@jakarta.ws.rs.Path("/asset-libraries/{assetLibraryId}/pins")
+	@jakarta.ws.rs.Path(
+		"/asset-libraries/{assetLibraryExternalReferenceCode}/pins"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
 	public AssetLibrary putAssetLibraryPin(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId)
+			@jakarta.ws.rs.PathParam("assetLibraryExternalReferenceCode")
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 
 		return new AssetLibrary();
@@ -1200,35 +964,12 @@ public abstract class BaseAssetLibraryResourceImpl
 			String updateStrategy = (String)parameters.getOrDefault(
 				"updateStrategy", "UPDATE");
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				assetLibraryUnsafeFunction = assetLibrary -> {
-					AssetLibrary getAssetLibrary = null;
-					AssetLibrary persistedAssetLibrary = null;
-
-					try {
-						getAssetLibrary =
-							getAssetLibraryByExternalReferenceCode(
-								assetLibrary.getExternalReferenceCode());
-
-						persistedAssetLibrary = patchAssetLibrary(
-							getAssetLibrary.getId(), assetLibrary);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						persistedAssetLibrary = postAssetLibrary(assetLibrary);
-					}
-
-					return persistedAssetLibrary;
-				};
-			}
-
 			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
 				assetLibraryUnsafeFunction = assetLibrary -> {
 					AssetLibrary persistedAssetLibrary = null;
 
-					persistedAssetLibrary =
-						putAssetLibraryByExternalReferenceCode(
-							assetLibrary.getExternalReferenceCode(),
-							assetLibrary);
+					persistedAssetLibrary = putAssetLibrary(
+						assetLibrary.getExternalReferenceCode(), assetLibrary);
 
 					return persistedAssetLibrary;
 				};
@@ -1264,24 +1005,8 @@ public abstract class BaseAssetLibraryResourceImpl
 
 		UnsafeFunction<AssetLibrary, AssetLibrary, Exception>
 			assetLibraryUnsafeFunction = assetLibrary -> {
-				if (assetLibrary.getId() != null) {
-					try {
-						deleteAssetLibrary(assetLibrary.getId());
-
-						return assetLibrary;
-					}
-					catch (Exception exception) {
-						if (assetLibrary.getExternalReferenceCode() != null) {
-							deleteAssetLibraryByExternalReferenceCode(
-								assetLibrary.getExternalReferenceCode());
-
-							return assetLibrary;
-						}
-					}
-				}
-				else if (assetLibrary.getExternalReferenceCode() != null) {
-					deleteAssetLibraryByExternalReferenceCode(
-						assetLibrary.getExternalReferenceCode());
+				if (assetLibrary.getExternalReferenceCode() != null) {
+					deleteAssetLibrary(assetLibrary.getExternalReferenceCode());
 
 					return assetLibrary;
 				}
@@ -1310,7 +1035,7 @@ public abstract class BaseAssetLibraryResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("PARTIAL_UPDATE");
+		return SetUtil.fromArray();
 	}
 
 	@Override
@@ -1370,36 +1095,8 @@ public abstract class BaseAssetLibraryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<AssetLibrary, AssetLibrary, Exception>
-			assetLibraryUnsafeFunction = null;
-
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
-		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-			assetLibraryUnsafeFunction = assetLibrary -> patchAssetLibrary(
-				assetLibrary.getId(), assetLibrary);
-		}
-
-		if (assetLibraryUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Update strategy \"" + updateStrategy +
-					"\" is not supported for AssetLibrary");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				assetLibraries, assetLibraryUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				assetLibraries, assetLibraryUnsafeFunction::apply);
-		}
-		else {
-			for (AssetLibrary assetLibrary : assetLibraries) {
-				assetLibraryUnsafeFunction.apply(assetLibrary);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -1409,34 +1106,26 @@ public abstract class BaseAssetLibraryResourceImpl
 		return null;
 	}
 
-	@Override
-	public AssetLibrary getItem(Long id) throws Exception {
-		return getAssetLibrary(id);
-	}
-
-	protected String getPermissionCheckerActionsResourceName(Object id)
+	protected Long getPermissionCheckerGroupId(
+			String groupExternalReferenceCode)
 		throws Exception {
 
-		return getPermissionCheckerResourceName(id);
+		com.liferay.portal.kernel.model.Group group =
+			groupLocalService.getGroupByExternalReferenceCode(
+				groupExternalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getGroupId();
 	}
 
-	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String getPermissionCheckerPortletName(Object id)
+	protected Long getPermissionCheckerResourceId(String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
-		return GetterUtil.getLong(id);
-	}
-
-	protected String getPermissionCheckerResourceName(Object id)
+	protected String getPermissionCheckerResourceName(
+			String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

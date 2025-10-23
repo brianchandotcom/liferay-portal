@@ -6,12 +6,8 @@
 package com.liferay.source.formatter.check;
 
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.java.parser.JavaParser;
 import com.liferay.source.formatter.SourceFormatterArgs;
 
-import com.puppycrawl.tools.checkstyle.api.CheckstyleException;
-
-import java.io.File;
 import java.io.IOException;
 
 import java.util.regex.Matcher;
@@ -41,15 +37,8 @@ public class UpgradeCatchAllJavaLongLinesCheck extends JavaLongLinesCheck {
 
 		setMaxLineLength(SourceFormatterArgs.MAX_LINE_LENGTH);
 
-		super.doProcess(
+		return super.doProcess(
 			StringUtil.removeLast(fileName, "-before"), absolutePath, content);
-
-		try {
-			return JavaParser.parse(new File(absolutePath), getMaxLineLength());
-		}
-		catch (CheckstyleException checkstyleException) {
-			throw new RuntimeException("Invalid java class" + fileName);
-		}
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

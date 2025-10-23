@@ -18,6 +18,8 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.builder.ObjectDefinitionSettingBuilder;
+import com.liferay.object.definition.util.ObjectDefinitionValidationThreadLocal;
+import com.liferay.object.exception.DuplicateObjectDefinitionExternalReferenceCodeException;
 import com.liferay.object.exception.NoSuchObjectFieldException;
 import com.liferay.object.exception.NoSuchObjectFolderException;
 import com.liferay.object.exception.ObjectDefinitionAccountEntryRestrictedException;
@@ -41,7 +43,12 @@ import com.liferay.object.exception.ObjectDefinitionSettingNameException;
 import com.liferay.object.exception.ObjectDefinitionSettingValueException;
 import com.liferay.object.exception.ObjectDefinitionStatusException;
 import com.liferay.object.exception.ObjectDefinitionSystemException;
+import com.liferay.object.exception.ObjectDefinitionValidationException;
+import com.liferay.object.exception.ObjectDefinitionValidationException.ValidationError;
 import com.liferay.object.exception.ObjectDefinitionVersionException;
+import com.liferay.object.exception.ObjectFieldLabelException;
+import com.liferay.object.exception.ObjectFieldListTypeDefinitionIdException;
+import com.liferay.object.exception.ObjectFieldNameException;
 import com.liferay.object.exception.ObjectFieldRelationshipTypeException;
 import com.liferay.object.exception.ObjectRelationshipEdgeException;
 import com.liferay.object.field.builder.AssigneeObjectFieldBuilder;
@@ -50,6 +57,7 @@ import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
+import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.setting.builder.ObjectFieldSettingBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -79,6 +87,7 @@ import com.liferay.object.test.util.TreeTestUtil;
 import com.liferay.object.tree.Node;
 import com.liferay.object.tree.ObjectDefinitionTreeFactory;
 import com.liferay.object.tree.Tree;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -158,6 +167,7 @@ import java.io.Serializable;
 
 import java.sql.Connection;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -209,13 +219,89 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
-	@FeatureFlag("LPD-6233")
+	@FeatureFlags(
+		featureFlags = {
+			@FeatureFlag("LPD-6233"), @FeatureFlag(value = "LPD-51345")
+		}
+	)
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 
-		// Enable form container
+		// Accumulate error
 
 		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		try (SafeCloseable safeCloseable1 =
+				ObjectDefinitionValidationThreadLocal.
+					setAccumulateErrorWithSafeCloseable(true);
+			SafeCloseable safeCloseable2 =
+				ObjectDefinitionValidationThreadLocal.
+					setValidationErrorsWithSafeCloseable(new ArrayList<>())) {
+
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				objectDefinition.getExternalReferenceCode(),
+				TestPropsValues.getUserId(), 0, null, false, true, true, true,
+				false, false, false, false, false, null, null, null, null, null,
+				null, true, RandomTestUtil.randomString(),
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				ListUtil.fromArray(
+					new PicklistObjectFieldBuilder(
+					).name(
+						"Test"
+					).build(),
+					new TextObjectFieldBuilder(
+					).name(
+						"Test"
+					).build()),
+				Collections.emptyList());
+
+			Assert.fail();
+		}
+		catch (ObjectDefinitionValidationException
+					objectDefinitionValidationException) {
+
+			List<String> exceptionClassNames = TransformUtil.transform(
+				objectDefinitionValidationException.getValidationErrors(),
+				ValidationError::getExceptionClassName);
+
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					DuplicateObjectDefinitionExternalReferenceCodeException.
+						class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectDefinitionLabelException.class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectDefinitionNameException.MustBeginWithUpperCaseLetter.
+						class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectDefinitionPluralLabelException.class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectDefinitionScopeException.class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectFieldLabelException.class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectFieldListTypeDefinitionIdException.class.getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectFieldNameException.MustBeginWithLowerCaseLetter.class.
+						getName()));
+			Assert.assertTrue(
+				exceptionClassNames.contains(
+					ObjectFieldNameException.MustNotBeDuplicate.class.
+						getName()));
+		}
+
+		// Enable form container
+
+		objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				null, TestPropsValues.getUserId(), 0, null, false, true, true,
 				true, false, false, false, false, false, null,

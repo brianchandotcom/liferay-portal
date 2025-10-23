@@ -211,9 +211,7 @@ portletDisplay.setURLBackTitle("bookmarks");
 
 								List<KeyValuePair> currentItems = new ArrayList<>();
 
-								for (int i = 0; i < entryColumns.length; i++) {
-									String entryColumn = entryColumns[i];
-
+								for (String entryColumn : entryColumns) {
 									currentItems.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 								}
 

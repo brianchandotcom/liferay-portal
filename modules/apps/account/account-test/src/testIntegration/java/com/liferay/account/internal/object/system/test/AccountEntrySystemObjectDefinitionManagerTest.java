@@ -68,6 +68,8 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 
 		setUser(user1);
 
+		User user2 = UserTestUtil.addUser();
+
 		String description = RandomTestUtil.randomString();
 		String name = RandomTestUtil.randomString();
 
@@ -81,7 +83,7 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 			_accountEntryLocalService.getAccountEntriesCount();
 
 		long accountEntryId = systemObjectDefinitionManager.addBaseModel(
-			true, user1, values);
+			true, user2, values);
 
 		_assertCount(accountEntriesCount + 1);
 
@@ -94,8 +96,6 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 		_accountEntryLocalService.deleteAccountEntry(accountEntryId);
 
 		// Without permissions
-
-		User user2 = UserTestUtil.addUser();
 
 		setUser(user2);
 

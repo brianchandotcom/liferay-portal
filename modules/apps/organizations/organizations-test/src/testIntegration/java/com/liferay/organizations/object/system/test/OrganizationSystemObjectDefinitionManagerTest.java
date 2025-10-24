@@ -79,6 +79,8 @@ public class OrganizationSystemObjectDefinitionManagerTest
 
 		setUser(user1);
 
+		User user2 = UserTestUtil.addUser();
+
 		String comment = RandomTestUtil.randomString();
 		String name = RandomTestUtil.randomString();
 
@@ -92,7 +94,7 @@ public class OrganizationSystemObjectDefinitionManagerTest
 			_organizationLocalService.getOrganizationsCount();
 
 		long organizationId1 = systemObjectDefinitionManager.addBaseModel(
-			true, user1, values);
+			true, user2, values);
 
 		_assertCount(organizationsCount + 1);
 
@@ -106,7 +108,7 @@ public class OrganizationSystemObjectDefinitionManagerTest
 		name = RandomTestUtil.randomString();
 
 		long organizationId2 = systemObjectDefinitionManager.addBaseModel(
-			true, user1,
+			true, user2,
 			HashMapBuilder.<String, Object>put(
 				"comment", comment
 			).put(
@@ -126,8 +128,6 @@ public class OrganizationSystemObjectDefinitionManagerTest
 
 		// Without permissions
 
-		User user2 = UserTestUtil.addUser();
-
 		setUser(user2);
 
 		AssertUtils.assertFailure(
@@ -141,6 +141,8 @@ public class OrganizationSystemObjectDefinitionManagerTest
 
 	@Test
 	public void testDeleteBaseModel() throws Exception {
+		setUser(TestPropsValues.getUser());
+
 		int organizationsCount =
 			_organizationLocalService.getOrganizationsCount();
 

@@ -16,7 +16,6 @@ import {Input} from '../../../components/Input/Input';
 import Form from '../../../components/MarketplaceForm';
 import Modal from '../../../components/Modal';
 import Select from '../../../components/Select/Select';
-import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import useCommerceRegions from '../../../hooks/useCommerceRegions';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
@@ -38,11 +37,28 @@ type CreateAccountModalFormProps = {
 
 type FormFields = z.infer<typeof zodSchema.accountForm>;
 
+const defaultFormValues = {
+	accountImage: undefined,
+	accountName: '',
+	accountType: 'business',
+	billingAddress: {
+		city: '',
+		country: '',
+		countryISOCode: '',
+		name: '',
+		phoneNumber: '',
+		regionISOCode: '',
+		street1: '',
+		street2: '',
+		zip: '',
+	},
+	emailAddress: Liferay.ThemeDisplay.getUserEmailAddress(),
+	taxNumber: '',
+};
+
 const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 	modal,
 }) => {
-	const {myUserAccount} = useMarketplaceContext();
-
 	const {
 		formState: {errors, isSubmitting},
 		handleSubmit,
@@ -51,24 +67,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 		setValue,
 		watch,
 	} = useForm<FormFields>({
-		defaultValues: {
-			accountImage: undefined,
-			accountName: '',
-			accountType: 'business',
-			billingAddress: {
-				city: '',
-				country: '',
-				countryISOCode: '',
-				name: '',
-				phoneNumber: '',
-				regionISOCode: '',
-				street1: '',
-				street2: '',
-				zip: '',
-			},
-			emailAddress: myUserAccount.emailAddress,
-			taxNumber: '',
-		},
+		defaultValues: defaultFormValues,
 		resolver: zodResolver(zodSchema.accountForm),
 	});
 
@@ -89,24 +88,7 @@ const CreateAccountModalForm: React.FC<CreateAccountModalFormProps> = ({
 	};
 
 	const handleOnClose = () => {
-		reset({
-			accountImage: undefined,
-			accountName: '',
-			accountType: 'business',
-			billingAddress: {
-				city: '',
-				country: '',
-				countryISOCode: '',
-				name: '',
-				phoneNumber: '',
-				regionISOCode: '',
-				street1: '',
-				street2: '',
-				zip: '',
-			},
-			emailAddress: myUserAccount.emailAddress,
-			taxNumber: '',
-		});
+		reset(defaultFormValues);
 
 		modal.onClose();
 	};

@@ -8,7 +8,7 @@ import {useModal} from '@clayui/modal';
 
 import withProviders from '../../hoc/withProviders';
 import i18n from '../../i18n';
-import CreateAccountModalForm from './CreateAccountModalForm';
+import CreateAccountModalForm from '../ProductPurchase/pages/CreateAccountModalForm';
 
 import './NewAccountButton.scss';
 

@@ -10,6 +10,12 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                descriptiveName:
+                    type: string
+                descriptiveName_i18n:
+                    additionalProperties:
+                        type: string
+                    type: object
                 externalReferenceCode:
                     description:
                         The site's external reference code.

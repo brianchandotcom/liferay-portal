@@ -85,6 +85,14 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 					fragmentEntryLink::getExternalReferenceCode);
 				setFragmentReference(
 					() -> {
+						if (Validator.isNull(
+								fragmentEntryLink.getFragmentEntryERC()) &&
+							Validator.isNull(
+								fragmentEntryLink.getRendererKey())) {
+
+							return null;
+						}
+
 						FragmentEntry fragmentEntry =
 							_fragmentEntryLocalService.
 								fetchFragmentEntryByExternalReferenceCode(

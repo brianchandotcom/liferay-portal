@@ -190,11 +190,11 @@ export default function AttributeFields({
 							disabled={disabled}
 							id={valueId}
 							items={BOOLEAN_VALUE_ITEMS}
-
-							// @ts-ignore
-
 							onSelectionChange={(value) =>
 								onAttributeChange(index, {
+
+									// @ts-ignore
+
 									value: JSON.parse(value),
 								})
 							}

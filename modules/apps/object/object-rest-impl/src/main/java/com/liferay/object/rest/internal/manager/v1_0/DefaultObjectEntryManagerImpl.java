@@ -300,12 +300,19 @@ public class DefaultObjectEntryManagerImpl
 
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
 
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
+		if (replace &&
+			(serviceBuilderObjectEntry.getObjectEntryFolderId() ==
+				objectEntryFolderId)) {
+
+			return objectEntry;
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectEntry.getObjectDefinitionId());
-
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
 
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
@@ -1177,12 +1184,18 @@ public class DefaultObjectEntryManagerImpl
 
 		_checkObjectEntryStatus(serviceBuilderObjectEntry);
 
+		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
+			dtoConverterContext, serviceBuilderObjectEntry);
+
+		if (serviceBuilderObjectEntry.getObjectEntryFolderId() ==
+				objectEntryFolderId) {
+
+			return objectEntry;
+		}
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.getObjectDefinition(
 				serviceBuilderObjectEntry.getObjectDefinitionId());
-
-		ObjectEntry objectEntry = _objectEntryDTOConverter.toDTO(
-			dtoConverterContext, serviceBuilderObjectEntry);
 
 		ObjectEntryFolder objectEntryFolder =
 			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
@@ -2920,6 +2933,31 @@ public class DefaultObjectEntryManagerImpl
 		return false;
 	}
 
+	private boolean _isUniqueName(
+			ObjectDefinition objectDefinition,
+			ObjectEntryFolder objectEntryFolder,
+			Column<?, String> objectFieldColumn, String titleValue)
+		throws PortalException {
+
+		long count = objectEntryLocalService.getValuesListCount(
+			new Long[] {objectEntryFolder.getGroupId()},
+			objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectFieldColumn.eq(
+				titleValue
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+					objectEntryFolder.getObjectEntryFolderId())
+			),
+			false, null);
+
+		if (count == 0) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private long _processAttachment(
 			ObjectDefinition objectDefinition, ObjectField objectField,
 			Object propertyValue, String scopeKey,
@@ -3591,46 +3629,19 @@ public class DefaultObjectEntryManagerImpl
 
 			return;
 		}
+		else if (_isUniqueName(
+					objectDefinition, objectEntryFolder, objectFieldColumn,
+					titleValue)) {
 
-		long count1 = objectEntryLocalService.getValuesListCount(
-			new Long[] {objectEntryFolder.getGroupId()},
-			objectDefinition.getCompanyId(), objectDefinition.getUserId(),
-			objectDefinition.getObjectDefinitionId(),
-			objectFieldColumn.eq(
-				titleValue
-			).and(
-				ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
-					objectEntryFolder.getObjectEntryFolderId())
-			),
-			false, null);
-
-		if (count1 == 0) {
 			return;
 		}
 
 		values.put(
 			titleObjectField.getName(),
 			UniqueUtil.getCopyValue(
-				copyValue -> {
-					long count2 = objectEntryLocalService.getValuesListCount(
-						new Long[] {objectEntryFolder.getGroupId()},
-						objectDefinition.getCompanyId(),
-						objectDefinition.getUserId(),
-						objectDefinition.getObjectDefinitionId(),
-						objectFieldColumn.eq(
-							copyValue
-						).and(
-							ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
-								objectEntryFolder.getObjectEntryFolderId())
-						),
-						false, null);
-
-					if (count2 == 0) {
-						return true;
-					}
-
-					return false;
-				},
+				copyValue -> _isUniqueName(
+					objectDefinition, objectEntryFolder, objectFieldColumn,
+					copyValue),
 				titleValue));
 	}
 

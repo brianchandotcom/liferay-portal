@@ -70,6 +70,19 @@ if (Validator.isNull(titlePage)) {
 						<liferay-ui:message key="your-password-reset-link-is-no-longer-valid" />
 					</c:otherwise>
 				</c:choose>
+
+				<div class="reset-link-container">
+					<clay:link
+						href='<%=
+							PortletURLBuilder.createRenderURL(
+								liferayPortletResponse, PortletKeys.LOGIN
+							).setMVCRenderCommandName(
+								"/login/forgot_password"
+							).buildString()
+						%>'
+						label="request-a-new-password-reset-link"
+					/>
+				</div>
 			</div>
 		</c:when>
 		<c:when test="<%= MultiSessionErrors.contains(liferayPortletRequest, UserLockoutException.LDAPLockout.class.getName()) %>">

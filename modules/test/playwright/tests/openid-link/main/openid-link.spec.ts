@@ -27,6 +27,7 @@ const test = mergeTests(
 	openIdSettingsPagesTest,
 	featureFlagsTest({
 		'LPD-6378': {enabled: true},
+		'LPD-20879': {enabled: true},
 		'LPD-57332': {enabled: true},
 	}),
 	loginTest(),
@@ -36,7 +37,8 @@ const test = mergeTests(
 
 async function setupOpenIdConnection(
 	openIDInstanceSettingsPage: OpenIdInstanceSettingsPage,
-	customClaim?: CustomClaim
+	customClaim?: CustomClaim,
+	matcherField?: string
 ) {
 	await openIDInstanceSettingsPage.goto();
 
@@ -45,9 +47,10 @@ async function setupOpenIdConnection(
 	providerName = getRandomString();
 
 	await openIDInstanceSettingsPage.addOpenIDConnectProviderConnectionConfiguration(
-		providerName,
 		openIdConfig.openIdProvider,
-		customClaim
+		providerName,
+		customClaim,
+		matcherField
 	);
 }
 
@@ -162,5 +165,15 @@ test.describe('OpenID Connect custom claims', () => {
 		await setupOpenIdConnection(openIDInstanceSettingsPage, customClaim);
 
 		await viewAttributesPage.deleteCustomField(expandoColumnName, 'User');
+	});
+});
+
+test.describe('LPD-68521 OpenID Connect Secure Matching', () => {
+	test('can choose a matcherField', async ({openIDInstanceSettingsPage}) => {
+		await setupOpenIdConnection(
+			openIDInstanceSettingsPage,
+			null,
+			'Screen Name'
+		);
 	});
 });

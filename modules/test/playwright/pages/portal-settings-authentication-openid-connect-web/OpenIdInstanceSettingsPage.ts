@@ -17,6 +17,7 @@ export class OpenIdInstanceSettingsPage {
 	readonly discoveryEndpointField: Locator;
 	readonly enabledCheckbox: Locator;
 	readonly instanceSettingsPage: InstanceSettingsPage;
+	readonly matcherField: Locator;
 	readonly openIDConnectClientIDField: Locator;
 	readonly openIDConnectClientSecret: Locator;
 	readonly openIdConnectMenuItem: Locator;
@@ -34,6 +35,7 @@ export class OpenIdInstanceSettingsPage {
 		);
 		this.enabledCheckbox = page.getByText(' Enabled ');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
+		this.matcherField = page.getByLabel('Matcher Field');
 		this.openIDConnectClientIDField = page.getByLabel(
 			'OpenID Connect Client ID'
 		);
@@ -54,9 +56,10 @@ export class OpenIdInstanceSettingsPage {
 	}
 
 	async addOpenIDConnectProviderConnectionConfiguration(
-		providerName: string,
 		openIdProvider: string,
-		customClaim?: CustomClaim
+		providerName: string,
+		customClaim?: CustomClaim,
+		matcherField?: string
 	) {
 		await this.clickOpenIDConnectProviderConnectionMenuItem();
 		await this.addButton.click();
@@ -72,6 +75,10 @@ export class OpenIdInstanceSettingsPage {
 			await this.customClaimField.fill(
 				customClaim.oidcProviderCustomClaim
 			);
+		}
+
+		if (matcherField) {
+			await this.matcherField.selectOption(matcherField);
 		}
 
 		await this.saveButton.click();

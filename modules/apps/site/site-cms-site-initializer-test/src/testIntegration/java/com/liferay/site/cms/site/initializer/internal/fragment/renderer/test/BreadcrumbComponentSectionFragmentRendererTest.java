@@ -6,6 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.batch.engine.unit.BatchEngineUnitProcessor;
+import com.liferay.batch.engine.unit.BatchEngineUnitReader;
 import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
@@ -19,6 +21,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -30,13 +33,20 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.permission.SimplePermissionChecker;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.File;
+
 import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,11 +55,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+
 import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Adolfo Pérez
  */
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+)
 @RunWith(Arquillian.class)
 public class BreadcrumbComponentSectionFragmentRendererTest {
 
@@ -62,6 +79,8 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_setUpCMSContext();
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -98,6 +117,42 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 
 			Assert.assertEquals(
 				expectedLabels[i], jsonObject.getString("label"));
+		}
+	}
+
+	private void _deleteFile(Bundle bundle, String fileName) {
+		File file = bundle.getDataFile(
+			".com.liferay.site.initializer.cms.internal.batch." + fileName +
+				".batch.engine.data.json.0.processed");
+
+		if ((file != null) && file.exists()) {
+			file.delete();
+		}
+	}
+
+	private void _setUpCMSContext() throws Exception {
+		Bundle testBundle = FrameworkUtil.getBundle(
+			BreadcrumbComponentSectionFragmentRendererTest.class);
+
+		BundleContext bundleContext = testBundle.getBundleContext();
+
+		for (Bundle bundle : bundleContext.getBundles()) {
+			if (Objects.equals(
+					bundle.getSymbolicName(),
+					"com.liferay.site.initializer.cms")) {
+
+				_deleteFile(bundle, "00.list.type.definition");
+				_deleteFile(bundle, "01.object.folder");
+				_deleteFile(bundle, "02.object.definition");
+
+				CompletableFuture<Void> completableFuture =
+					_batchEngineUnitProcessor.processBatchEngineUnits(
+						_batchEngineUnitReader.getBatchEngineUnits(bundle));
+
+				completableFuture.join();
+
+				break;
+			}
 		}
 	}
 
@@ -140,6 +195,12 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 	}
 
 	@Inject
+	private BatchEngineUnitProcessor _batchEngineUnitProcessor;
+
+	@Inject
+	private BatchEngineUnitReader _batchEngineUnitReader;
+
+	@Inject
 	private CompanyLocalService _companyLocalService;
 
 	@DeleteAfterTestRun
@@ -152,5 +213,11 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		filter = "component.name=com.liferay.site.cms.site.initializer.internal.fragment.renderer.BreadcrumbComponentSectionFragmentRenderer"
 	)
 	private FragmentRenderer _fragmentRenderer;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

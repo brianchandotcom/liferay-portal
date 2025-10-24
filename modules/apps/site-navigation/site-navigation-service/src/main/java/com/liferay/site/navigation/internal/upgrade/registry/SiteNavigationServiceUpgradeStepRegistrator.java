@@ -8,6 +8,7 @@ package com.liferay.site.navigation.internal.upgrade.registry;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.upgrade.BaseExternalReferenceCodeUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.BaseSQLServerDatetimeUpgradeProcess;
@@ -18,6 +19,7 @@ import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMe
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuTable;
 import com.liferay.site.navigation.internal.upgrade.v2_3_0.SiteNavigationMenuItemUpgradeProcess;
 import com.liferay.site.navigation.internal.upgrade.v3_0_0.SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess;
+import com.liferay.site.navigation.internal.upgrade.v4_0_0.SiteNavigationMenuItemClassNameUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -87,10 +89,18 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 			new SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess(
 				_assetVocabularyLocalService, _journalArticleLocalService,
 				_kbArticleLocalService, _layoutLocalService));
+
+		registry.register(
+			"3.0.0", "4.0.0",
+			new SiteNavigationMenuItemClassNameUpgradeProcess(
+				_classNameLocalService));
 	}
 
 	@Reference
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private JournalArticleLocalService _journalArticleLocalService;

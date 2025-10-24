@@ -34,6 +34,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -69,6 +70,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -543,6 +545,67 @@ public class CustomFDSSerializer
 		String defaultVisualizationMode = String.valueOf(
 			dataSetObjectEntryProperties.get("defaultVisualizationMode"));
 
+		JSONArray systemViewsJSONArray = _systemFDSSerializer.serializeViews(
+			fdsName, httpServletRequest);
+
+		JSONArray tableViewSchemaFieldsJSONArray = null;
+
+		for (int i = 0; i < systemViewsJSONArray.length(); i++) {
+			JSONObject systemViewJSONObject =
+				systemViewsJSONArray.getJSONObject(i);
+
+			String contentRenderer = systemViewJSONObject.getString(
+				"contentRenderer");
+
+			if (Validator.isNotNull(contentRenderer) &&
+				contentRenderer.contains("table")) {
+
+				JSONObject tableViewSchemaJSONObject =
+					systemViewJSONObject.getJSONObject("schema");
+
+				if (tableViewSchemaJSONObject != null) {
+					tableViewSchemaFieldsJSONArray =
+						tableViewSchemaJSONObject.getJSONArray("fields");
+
+					break;
+				}
+			}
+		}
+
+		Map<String, JSONObject> schemaFields = new HashMap<>();
+
+		if (tableViewSchemaFieldsJSONArray != null) {
+			for (int i = 0; i < tableViewSchemaFieldsJSONArray.length(); i++) {
+				JSONObject schemaFieldJSONObject =
+					tableViewSchemaFieldsJSONArray.getJSONObject(i);
+
+				Object object = schemaFieldJSONObject.get("fieldName");
+
+				String fieldName = StringPool.BLANK;
+
+				if (object instanceof String) {
+					fieldName = (String)object;
+				}
+				else {
+					StringBundler sb = new StringBundler();
+
+					String[] fieldNameItems = (String[])object;
+
+					for (int j = 0; j < fieldNameItems.length; j++) {
+						sb.append(fieldNameItems[j]);
+
+						if ((j + 1) < fieldNameItems.length) {
+							sb.append('.');
+						}
+					}
+
+					fieldName = sb.toString();
+				}
+
+				schemaFields.put(fieldName, schemaFieldJSONObject);
+			}
+		}
+
 		jsonArray.put(
 			() -> {
 				List<ObjectEntry> objectEntries = getRelatedObjectEntries(
@@ -607,12 +670,21 @@ public class CustomFDSSerializer
 						Map<String, Object> properties =
 							objectEntry.getProperties();
 
-						JSONObject jsonObject = JSONUtil.put(
+						String fieldName = (String)properties.get("fieldName");
+
+						JSONObject schemaFieldJSONObject = schemaFields.get(
+							fieldName);
+
+						if (schemaFieldJSONObject == null) {
+							schemaFieldJSONObject =
+								_jsonFactory.createJSONObject();
+						}
+
+						schemaFieldJSONObject.put(
 							"contentRenderer",
 							String.valueOf(properties.get("renderer"))
 						).put(
-							"fieldName",
-							String.valueOf(properties.get("fieldName"))
+							"fieldName", fieldName
 						).put(
 							"label",
 							MapUtil.getWithFallbackKey(
@@ -625,7 +697,7 @@ public class CustomFDSSerializer
 							properties.get("rendererType"));
 
 						if (!Objects.equals(rendererType, "clientExtension")) {
-							return jsonObject;
+							return schemaFieldJSONObject;
 						}
 
 						String externalReferenceCode = String.valueOf(
@@ -644,14 +716,14 @@ public class CustomFDSSerializer
 											externalReferenceCode);
 							}
 
-							return jsonObject.put(
+							return schemaFieldJSONObject.put(
 								"contentRenderer", "default"
 							).put(
 								"contentRendererClientExtension", false
 							);
 						}
 
-						return jsonObject.put(
+						return schemaFieldJSONObject.put(
 							"contentRendererClientExtension", true
 						).put(
 							"contentRendererModuleURL",

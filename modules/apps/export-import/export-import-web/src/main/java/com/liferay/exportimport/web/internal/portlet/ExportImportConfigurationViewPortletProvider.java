@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
 	service = PortletProvider.class
 )
-public class ExportImportViewConfigurationPortletProvider
+public class ExportImportConfigurationViewPortletProvider
 	extends BasePortletProvider {
 
 	@Override

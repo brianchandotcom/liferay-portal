@@ -688,6 +688,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				},
 				externalReferenceCode));
 
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_randomPageElement(
+				PageElementDefinition.Type.FRAGMENT, StringPool.BLANK));
+
 		externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(

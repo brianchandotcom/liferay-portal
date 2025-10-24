@@ -981,12 +981,18 @@ public class TaxonomyVocabularyResourceImpl
 				_getAssetLibraryGroupIds(taxonomyVocabulary));
 		}
 
+		boolean internalVisibilityType =
+			TaxonomyVocabulary.VisibilityType.INTERNAL.equals(
+				taxonomyVocabulary.getVisibilityType());
+
 		return _assetVocabularyService.updateVocabulary(
-			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
+			assetVocabulary.getVocabularyId(), taxonomyVocabulary.getName(),
+			titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId(),
 				taxonomyVocabulary.getMultiValued()),
+			internalVisibilityType ? 1 : 0,
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()

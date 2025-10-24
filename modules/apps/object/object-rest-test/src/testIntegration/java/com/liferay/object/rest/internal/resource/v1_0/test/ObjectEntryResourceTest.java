@@ -6303,6 +6303,15 @@ public class ObjectEntryResourceTest {
 	public void testGetObjectEntryByExternalReferenceCodeWithSlash()
 		throws Exception {
 
+		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(), _OBJECT_FIELD_NAME_1);
+
+		_objectDefinition1.setTitleObjectFieldId(
+			textObjectField.getObjectFieldId());
+
+		_objectDefinitionLocalService.updateObjectDefinition(
+			_objectDefinition1);
+
 		HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
@@ -9069,9 +9078,11 @@ public class ObjectEntryResourceTest {
 		User adminUser = UserTestUtil.getAdminUser(
 			portalInstanceJSONObject.getLong("companyId"));
 
+		String objectDefinitionName = ObjectDefinitionTestUtil.getRandomName();
+
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				_objectDefinition1.getShortName(),
+				objectDefinitionName,
 				Arrays.asList(
 					ObjectFieldUtil.createObjectField(
 						ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
@@ -9162,8 +9173,7 @@ public class ObjectEntryResourceTest {
 								ObjectFieldSettingConstants.
 									NAME_STORAGE_DL_FOLDER_PATH
 							).value(
-								StringPool.SLASH +
-									_objectDefinition1.getShortName()
+								StringPool.SLASH + objectDefinitionName
 							).build()),
 						false)),
 				ObjectDefinitionConstants.SCOPE_COMPANY, adminUser.getUserId());

@@ -342,7 +342,7 @@ public class OpenAPIResourceTest {
 
 					ObjectDefinition companyObjectDefinition =
 						ObjectDefinitionTestUtil.publishObjectDefinition(
-							"Object1",
+							ObjectDefinitionTestUtil.getRandomName(),
 							Collections.singletonList(
 								ObjectFieldUtil.createObjectField(
 									ObjectFieldConstants.BUSINESS_TYPE_TEXT,

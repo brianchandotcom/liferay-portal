@@ -9199,104 +9199,6 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/NavigationMenu"
             tags: ["NavigationMenu"]
-    "/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}":
-        delete:
-            # @review
-            description:
-                Deletes the navigation menu by external reference code and returns a 204 if the operation succeeds
-            operationId: deleteSiteNavigationMenuByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            responses:
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
-            tags: ["NavigationMenu"]
-        get:
-            # @review
-            description:
-                Retrieves the navigation menu by external reference code.
-            operationId: getSiteNavigationMenuByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-                -   in: query
-                    name: fields
-                    schema:
-                        type: string
-                -   in: query
-                    name: nestedFields
-                    schema:
-                        type: integer
-                -   in: query
-                    name: restrictFields
-                    schema:
-                        type: string
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/NavigationMenu"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/NavigationMenu"
-            tags: ["NavigationMenu"]
-        put:
-            # @review
-            description:
-                Updates the navigation menu with the given external reference code or creates it if it does not exist.
-            operationId: putSiteNavigationMenuByExternalReferenceCode
-            parameters:
-                -   in: path
-                    name: siteId
-                    required: true
-                    schema:
-                        format: int64
-                        type: integer
-                -   in: path
-                    name: externalReferenceCode
-                    required: true
-                    schema:
-                        type: string
-            requestBody:
-                content:
-                    application/json:
-                        schema:
-                            $ref: "#/components/schemas/NavigationMenu"
-                    application/xml:
-                        schema:
-                            $ref: "#/components/schemas/NavigationMenu"
-            responses:
-                200:
-                    content:
-                        application/json:
-                            schema:
-                                $ref: "#/components/schemas/NavigationMenu"
-                        application/xml:
-                            schema:
-                                $ref: "#/components/schemas/NavigationMenu"
-            tags: ["NavigationMenu"]
     "/sites/{siteId}/navigation-menus/permissions":
         get:
             operationId: getSiteNavigationMenuPermissionsPage
@@ -9347,6 +9249,104 @@ paths:
                     content:
                         application/json: {}
                         application/xml: {}
+            tags: ["NavigationMenu"]
+    "/sites/{siteId}/navigation-menus/{externalReferenceCode}":
+        delete:
+            # @review
+            description:
+                Deletes a specific navigation menu of a site.
+            operationId: deleteSiteNavigationMenu
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["NavigationMenu"]
+        get:
+            # @review
+            description:
+                Retrieves a specific navigation menu of a site.
+            operationId: getSiteNavigationMenu
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+                -   in: query
+                    name: fields
+                    schema:
+                        type: string
+                -   in: query
+                    name: nestedFields
+                    schema:
+                        type: integer
+                -   in: query
+                    name: restrictFields
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+            tags: ["NavigationMenu"]
+        put:
+            # @review
+            description:
+                Updates the navigation menu with the given external reference code or creates it if it does not exist.
+            operationId: putSiteNavigationMenu
+            parameters:
+                -   in: path
+                    name: siteId
+                    required: true
+                    schema:
+                        format: int64
+                        type: integer
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/NavigationMenu"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/NavigationMenu"
             tags: ["NavigationMenu"]
     /sites:
         get:

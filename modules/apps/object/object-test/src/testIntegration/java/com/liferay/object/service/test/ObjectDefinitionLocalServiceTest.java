@@ -872,6 +872,8 @@ public class ObjectDefinitionLocalServiceTest {
 		Assert.assertEquals(
 			workflowDefinition.getVersion(),
 			workflowDefinitionLink.getWorkflowDefinitionVersion());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -1336,6 +1338,8 @@ public class ObjectDefinitionLocalServiceTest {
 		_assertWorkflowDefinitionLink(
 			workflowDefinitionLinks.get(0), group.getGroupId(),
 			objectDefinition);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	@Test
@@ -1395,6 +1399,10 @@ public class ObjectDefinitionLocalServiceTest {
 				objectDefinition3.getClassName(),
 				ObjectDefinitionConstants.
 					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
 	}
 
 	@Test
@@ -2885,7 +2893,7 @@ public class ObjectDefinitionLocalServiceTest {
 
 		ObjectDefinition objectDefinition3 =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				false, "Test1",
+				false, "Test",
 				Collections.singletonList(
 					new TextObjectFieldBuilder(
 					).labelMap(
@@ -2898,30 +2906,36 @@ public class ObjectDefinitionLocalServiceTest {
 				TestPropsValues.getUserId());
 
 		Assert.assertEquals(
-			"c_test1", objectDefinition3.getFriendlyURLSeparator());
+			"c_test", objectDefinition3.getFriendlyURLSeparator());
+
+		ObjectDefinition objectDefinition4 =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				null, TestPropsValues.getUserId(), 0, null, false, true, true,
+				true, true, false, false, false, false, "api",
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				true, ObjectDefinitionConstants.SCOPE_COMPANY,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())),
+				Collections.emptyList());
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionFriendlyURLSeparatorException.class,
 			"Other asset types may use this prefix.",
-			() -> ObjectDefinitionTestUtil.publishObjectDefinition(
-				false, "Test",
-				Collections.singletonList(
-					new TextObjectFieldBuilder(
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).name(
-						StringUtil.randomId()
-					).build()),
-				ObjectDefinitionConstants.SCOPE_COMPANY,
-				TestPropsValues.getUserId()));
+			() -> _objectDefinitionLocalService.publishCustomObjectDefinition(
+				TestPropsValues.getUserId(),
+				objectDefinition4.getObjectDefinitionId()));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition3);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinitionLocalService.fetchObjectDefinition(
-				TestPropsValues.getCompanyId(), "C_Test"));
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition4);
 	}
 
 	@FeatureFlags(
@@ -2934,7 +2948,7 @@ public class ObjectDefinitionLocalServiceTest {
 				null, TestPropsValues.getUserId(), 0, null, false, true, false,
 				true, true, false, false, false, false, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
@@ -2947,9 +2961,10 @@ public class ObjectDefinitionLocalServiceTest {
 
 		objectDefinition =
 			ObjectDefinitionTestUtil.addUnmodifiableSystemObjectDefinition(
-				null, TestPropsValues.getUserId(), "Test", null,
+				null, TestPropsValues.getUserId(),
+				RandomTestUtil.randomString(), null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				"Test", null, null,
+				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				Collections.<ObjectField>emptyList());

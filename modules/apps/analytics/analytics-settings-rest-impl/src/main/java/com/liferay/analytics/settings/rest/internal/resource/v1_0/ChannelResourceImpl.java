@@ -187,26 +187,29 @@ public class ChannelResourceImpl extends BaseChannelResourceImpl {
 			GetterUtil.getLong(dataSource.getDataSourceId()),
 			analyticsChannel.getAnalyticsDataSources());
 
-		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
-			null,
-			_configurationProvider.getCompanyConfiguration(
-				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
-			ArrayUtil.isNotEmpty(analyticsDataSource.getCommerceChannelIds()),
-			null, ArrayUtil.isNotEmpty(analyticsDataSource.getSiteIds()));
+		String[] syncedCommerceChannelIds =
+			_analyticsSettingsManager.updateCommerceChannelIds(
+				channel.getChannelId(), contextCompany.getCompanyId(),
+				analyticsDataSource.getCommerceChannelIds());
+
+		String[] syncedGroupIds = _analyticsSettingsManager.updateSiteIds(
+			channel.getChannelId(), contextCompany.getCompanyId(),
+			analyticsDataSource.getSiteIds());
 
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextUser.getCompanyId(),
 			HashMapBuilder.<String, Object>put(
-				"syncedCommerceChannelIds",
-				_analyticsSettingsManager.updateCommerceChannelIds(
-					channel.getChannelId(), contextCompany.getCompanyId(),
-					analyticsDataSource.getCommerceChannelIds())
+				"syncedCommerceChannelIds", syncedCommerceChannelIds
 			).put(
-				"syncedGroupIds",
-				_analyticsSettingsManager.updateSiteIds(
-					channel.getChannelId(), contextCompany.getCompanyId(),
-					analyticsDataSource.getSiteIds())
+				"syncedGroupIds", syncedGroupIds
 			).build());
+
+		_analyticsCloudClient.updateAnalyticsDataSourceDetails(
+			null,
+			_configurationProvider.getCompanyConfiguration(
+				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
+			ArrayUtil.isNotEmpty(syncedCommerceChannelIds), null,
+			ArrayUtil.isNotEmpty(syncedGroupIds));
 
 		return _channelDTOConverter.toDTO(
 			new ChannelDTOConverterContext(

@@ -9250,7 +9250,7 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["NavigationMenu"]
-    "/sites/{siteId}/navigation-menus/{externalReferenceCode}":
+    "/sites/{siteId}/navigation-menus/{navigationMenuExternalReferenceCode}":
         delete:
             # @review
             description:
@@ -9264,7 +9264,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: externalReferenceCode
+                    name: navigationMenuExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -9287,7 +9287,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: externalReferenceCode
+                    name: navigationMenuExternalReferenceCode
                     required: true
                     schema:
                         type: string
@@ -9326,7 +9326,7 @@ paths:
                         format: int64
                         type: integer
                 -   in: path
-                    name: externalReferenceCode
+                    name: navigationMenuExternalReferenceCode
                     required: true
                     schema:
                         type: string

@@ -384,7 +384,7 @@ public class UpgradeCatchAllCheck extends BaseFileCheck {
 			for (int i = 0; i < toParameters.size(); i++) {
 				String toParameter = toParameters.get(i);
 
-				toParameter = toParameter.replaceFirst(
+				toParameter = toParameter.replaceAll(
 					"param\\#\\d+\\#", "\\$\\$");
 
 				if (StringUtil.equals(toParameter, "$$")) {

@@ -1512,7 +1512,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return pageElement;
 	}
 
-	private void _testPostSitePageSpecificationPageExperiencePageElement(
+	private PageElement _testPostSitePageSpecificationPageExperiencePageElement(
 			PageElement pageElement)
 		throws Exception {
 
@@ -1530,9 +1530,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		assertEquals(pageElement, postPageElement);
 		assertValid(postPageElement);
+
+		return postPageElement;
 	}
 
-	private void _testPutSitePageSpecificationPageExperiencePageElement(
+	private PageElement _testPutSitePageSpecificationPageExperiencePageElement(
 			PageElement pageElement)
 		throws Exception {
 
@@ -1551,6 +1553,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		assertEquals(pageElement, putPageElement);
 		assertValid(putPageElement);
+
+		return putPageElement;
 	}
 
 	private Layout _draftLayout;

@@ -77,14 +77,6 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
                 -   $ref: "#/components/schemas/ItemExternalReference"
-                -   properties:
-                        collectionConfiguration:
-                            additionalProperties:
-                                type: string
-                            # @review
-                            description:
-                                The configuration keys and values of the collection.
-                            type: object
             # @review
             description:
                 A unique reference to a collection which remains constant across environments.

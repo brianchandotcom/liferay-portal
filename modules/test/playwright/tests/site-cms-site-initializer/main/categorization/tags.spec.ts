@@ -154,7 +154,7 @@ test(
 
 		await page.getByLabel('Space Selector').click();
 
-		await page.getByLabel('Default').last().click();
+		await page.getByRole('option', {name: 'D Default'}).click();
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText(`Success:${name} was created successfully.`),

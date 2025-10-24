@@ -74,16 +74,15 @@ public class UserSearchPermissionFilterContributor
 				}
 
 				if (OrganizationPermissionUtil.contains(
-					permissionChecker, userOrgId,
-					ActionKeys.MANAGE_SUBORGANIZATIONS_USERS)) {
+						permissionChecker, userOrgId,
+						ActionKeys.MANAGE_SUBORGANIZATIONS_USERS)) {
 
 					for (Organization organization :
-						_organizationLocalService.getSuborganizations(
-							companyId, userOrgId)) {
+							_organizationLocalService.getSuborganizations(
+								companyId, userOrgId)) {
 
 						termsFilter.addValue(
-							String.valueOf(
-								organization.getOrganizationId()));
+							String.valueOf(organization.getOrganizationId()));
 					}
 				}
 			}

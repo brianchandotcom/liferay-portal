@@ -16,7 +16,12 @@ definition {
 		var testLiferayVirtualInstance = PropsUtil.get("test.liferay.virtual.instance");
 
 		if (${testLiferayVirtualInstance} == "true") {
+			PortalSettings.tearDownCP();
+
 			PortalInstances.tearDownCP();
+		}
+		else {
+			PortalSettings.tearDownCP();
 		}
 
 		FileInstall.deleteConfigFile(configFile = "com.liferay.commerce.product.definitions.web.internal.configuration.CPInstanceConfiguration.config");

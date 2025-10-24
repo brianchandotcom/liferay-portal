@@ -14,12 +14,14 @@ import {
 
 export default function CategorizationPanel({
 	categorizationFields,
+	cmsGroupId,
 	contentAPIURL,
 	groupId,
 	hasUpdatePermission,
 	onUpdateCategorization,
 }: {
 	categorizationFields: CategorizationFields;
+	cmsGroupId: number | string;
 	contentAPIURL: string;
 	groupId: number | string;
 	hasUpdatePermission: boolean;
@@ -56,8 +58,9 @@ export default function CategorizationPanel({
 					keywords: assetTagNames.value,
 					taxonomyCategoryBriefs: assetCategoryIds.value,
 				}}
-				cmsGroupId={groupId}
+				cmsGroupId={cmsGroupId}
 				getObjectEntryURL={contentAPIURL}
+				groupId={groupId}
 				hasUpdatePermission={hasUpdatePermission}
 				inputSize="sm"
 				onUpdateCategorization={updateCategorization}

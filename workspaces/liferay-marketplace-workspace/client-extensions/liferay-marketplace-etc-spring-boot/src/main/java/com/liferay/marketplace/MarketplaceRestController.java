@@ -206,7 +206,8 @@ public class MarketplaceRestController extends BaseRestController {
 		UserAccountResource userAccountResource =
 			_marketplaceService.getUserAccountResource();
 
-		UserAccount userAccount = userAccountResource.getMyUserAccount();
+		UserAccount userAccount = userAccountResource.getUserAccount(
+			GetterUtil.getLong(jwt.getClaimAsString("sub")));
 
 		String emailAddress = userAccount.getEmailAddress();
 

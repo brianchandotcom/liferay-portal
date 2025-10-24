@@ -482,6 +482,13 @@ public interface AssetVocabularyLocalService
 
 	@Indexable(type = IndexableType.REINDEX)
 	public AssetVocabulary updateVocabulary(
+			long vocabularyId, String name, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, String settings,
+			int visibilityType, ServiceContext serviceContext)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public AssetVocabulary updateVocabulary(
 			long vocabularyId, String title, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String settings,
 			ServiceContext serviceContext)

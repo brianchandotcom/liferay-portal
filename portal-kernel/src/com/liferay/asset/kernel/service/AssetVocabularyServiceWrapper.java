@@ -350,6 +350,20 @@ public class AssetVocabularyServiceWrapper
 
 	@Override
 	public AssetVocabulary updateVocabulary(
+			long vocabularyId, String name,
+			java.util.Map<java.util.Locale, String> titleMap,
+			java.util.Map<java.util.Locale, String> descriptionMap,
+			String settings, int visibilityType,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _assetVocabularyService.updateVocabulary(
+			vocabularyId, name, titleMap, descriptionMap, settings,
+			visibilityType, serviceContext);
+	}
+
+	@Override
+	public AssetVocabulary updateVocabulary(
 			long vocabularyId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,

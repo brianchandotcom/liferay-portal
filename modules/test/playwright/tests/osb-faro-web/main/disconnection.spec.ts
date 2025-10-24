@@ -56,9 +56,9 @@ test(
 				projectID: project.groupId,
 			});
 
-			await page.getByRole('link', {name: 'Add Data Source'}).click();
+			await page.getByRole('button', {name: 'Add Data Source'}).click();
 
-			await page.getByRole('button', {name: 'Liferay DXP'}).click();
+			await page.getByRole('menuitem', {name: 'Liferay DXP'}).click();
 
 			await page.waitForTimeout(1000);
 

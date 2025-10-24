@@ -69,11 +69,11 @@ baseTest(
 );
 
 ckeditor5Test(
-	'Added "Rich Text" field includes preview of editor',
+	'Added "Rich Text" field includes preview of editor and is disabled',
 	{
 		tag: ['@LPD-11235'],
 	},
-	async ({formBuilderPage, formBuilderSidePanelPage}) => {
+	async ({formBuilderPage, formBuilderSidePanelPage, page}) => {
 		await formBuilderPage.goToNew();
 
 		await expect(formBuilderPage.newFormHeading).toBeVisible();
@@ -84,6 +84,17 @@ ckeditor5Test(
 			name: 'Rich Text Editor',
 		});
 		await expect(editable).toBeVisible();
+		await expect(editable).toHaveAttribute('contenteditable', 'false');
+
+		const ckEditor5Toolbar = page.getByRole('toolbar', {
+			name: 'Editor toolbar',
+		});
+		await expect(ckEditor5Toolbar).toBeVisible();
+
+		const ckEditor5SourceButton = page.getByRole('button', {
+			name: 'Source',
+		});
+		await expect(ckEditor5SourceButton).toBeDisabled();
 	}
 );
 

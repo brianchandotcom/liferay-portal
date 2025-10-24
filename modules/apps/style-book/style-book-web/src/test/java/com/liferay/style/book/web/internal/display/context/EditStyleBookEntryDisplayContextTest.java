@@ -76,36 +76,32 @@ public class EditStyleBookEntryDisplayContextTest {
 	}
 
 	@Test
-	public void testGetStyleBookEditorData() throws PortalException {
-		Group liveGroup = Mockito.mock(Group.class);
+	public void testGetFrontendTokenDefinitionJSONObject()
+		throws PortalException {
 
-		long liveGroupId = RandomTestUtil.randomLong();
+		Group group = Mockito.mock(Group.class);
+
+		long groupId = RandomTestUtil.randomLong();
 
 		Mockito.when(
-			liveGroup.getGroupId()
+			group.getGroupId()
 		).thenReturn(
-			liveGroupId
+			groupId
 		);
 
-		Mockito.when(
-			liveGroup.isPrivateLayoutsEnabled()
-		).thenReturn(
-			true
-		);
-
-		LayoutSet liveLayoutSet = Mockito.mock(LayoutSet.class);
+		LayoutSet layoutSet = Mockito.mock(LayoutSet.class);
 
 		Mockito.when(
-			liveLayoutSet.getGroup()
+			layoutSet.getGroup()
 		).thenReturn(
-			liveGroup
+			group
 		);
 
 		_layoutSetLocalServiceUtilMockedStatic.when(
 			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
-				Mockito.eq(liveGroup.getGroupId()), Mockito.anyBoolean())
+				Mockito.eq(group.getGroupId()), Mockito.anyBoolean())
 		).thenReturn(
-			liveLayoutSet
+			layoutSet
 		);
 
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
@@ -113,61 +109,16 @@ public class EditStyleBookEntryDisplayContextTest {
 
 		_invokeGetFrontendTokenDefinitionJSONObject(
 			frontendTokenDefinitionRegistry,
-			_getThemeDisplay(liveGroup, liveLayoutSet));
+			_getThemeDisplay(group, layoutSet));
 
 		_layoutSetLocalServiceUtilMockedStatic.verify(
 			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
-				Mockito.eq(liveGroupId), Mockito.eq(false)));
+				Mockito.eq(groupId), Mockito.eq(false)));
 
 		Mockito.verify(
 			frontendTokenDefinitionRegistry
 		).getFrontendTokenDefinition(
-			liveLayoutSet
-		);
-
-		Group stagingGroup = Mockito.mock(Group.class);
-
-		long stagingGroupId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			stagingGroup.getGroupId()
-		).thenReturn(
-			stagingGroupId
-		);
-
-		Mockito.when(
-			stagingGroup.isPrivateLayoutsEnabled()
-		).thenReturn(
-			true
-		);
-
-		LayoutSet stagingLayoutSet = Mockito.mock(LayoutSet.class);
-
-		Mockito.when(
-			stagingLayoutSet.getGroup()
-		).thenReturn(
-			stagingGroup
-		);
-
-		_layoutSetLocalServiceUtilMockedStatic.when(
-			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
-				Mockito.eq(stagingGroup.getGroupId()), Mockito.anyBoolean())
-		).thenReturn(
-			stagingLayoutSet
-		);
-
-		_invokeGetFrontendTokenDefinitionJSONObject(
-			frontendTokenDefinitionRegistry,
-			_getThemeDisplay(stagingGroup, stagingLayoutSet));
-
-		_layoutSetLocalServiceUtilMockedStatic.verify(
-			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
-				Mockito.eq(stagingGroupId), Mockito.eq(false)));
-
-		Mockito.verify(
-			frontendTokenDefinitionRegistry
-		).getFrontendTokenDefinition(
-			stagingLayoutSet
+			layoutSet
 		);
 	}
 

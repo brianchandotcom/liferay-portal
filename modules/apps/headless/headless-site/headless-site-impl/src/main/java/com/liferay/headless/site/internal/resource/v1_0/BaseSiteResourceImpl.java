@@ -340,7 +340,7 @@ public abstract class BaseSiteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteExternalReferenceCode": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "descriptiveName": ___, "descriptiveName_i18n": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteExternalReferenceCode": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
 	@io.swagger.v3.oas.annotations.Operation(
@@ -508,7 +508,7 @@ public abstract class BaseSiteResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteExternalReferenceCode": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-site/v1.0/sites' -d $'{"active": ___, "description": ___, "descriptiveName": ___, "descriptiveName_i18n": ___, "externalReferenceCode": ___, "friendlyUrlPath": ___, "manualMembership": ___, "membershipRestriction": ___, "membershipType": ___, "name": ___, "name_i18n": ___, "parentSiteExternalReferenceCode": ___, "parentSiteKey": ___, "templateKey": ___, "templateType": ___, "typeSettings": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@Deprecated
 	@io.swagger.v3.oas.annotations.Operation(

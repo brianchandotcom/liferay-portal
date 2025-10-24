@@ -641,20 +641,6 @@ public class ObjectLayoutLocalServiceImpl
 								"definitions with a default storage type");
 				}
 
-				if ((StringUtil.equals(
-						objectLayoutBoxType,
-						ObjectLayoutBoxConstants.TYPE_CATEGORIZATION) &&
-					 !objectDefinition.isEnableCategorization()) ||
-					(StringUtil.equals(
-						objectLayoutBoxType,
-						ObjectLayoutBoxConstants.TYPE_SEO) &&
-					 !objectDefinition.isEnableFriendlyURLCustomization())) {
-
-					throw new ObjectLayoutBoxTypeException(
-						objectLayoutBoxTypeLabel +
-							" layout box must be enabled to be used");
-				}
-
 				if (ListUtil.isNotEmpty(
 						objectLayoutBox.getObjectLayoutRows())) {
 

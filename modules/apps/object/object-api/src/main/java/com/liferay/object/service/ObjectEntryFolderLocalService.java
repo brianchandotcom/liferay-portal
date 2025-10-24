@@ -80,6 +80,13 @@ public interface ObjectEntryFolderLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntryFolder copyObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
@@ -348,6 +355,13 @@ public interface ObjectEntryFolderLocalService
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public ObjectEntryFolder moveObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public void moveObjectEntryFoldersToTrash(

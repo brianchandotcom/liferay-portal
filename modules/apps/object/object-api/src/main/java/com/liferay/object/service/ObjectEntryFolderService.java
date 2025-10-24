@@ -52,6 +52,11 @@ public interface ObjectEntryFolderService extends BaseService {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	public ObjectEntryFolder copyObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace, ServiceContext serviceContext)
+		throws PortalException;
+
 	public ObjectEntryFolder deleteObjectEntryFolder(long objectEntryFolderId)
 		throws PortalException;
 
@@ -100,6 +105,11 @@ public interface ObjectEntryFolderService extends BaseService {
 	 * @return the OSGi service identifier
 	 */
 	public String getOSGiServiceIdentifier();
+
+	public ObjectEntryFolder moveObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace, ServiceContext serviceContext)
+		throws PortalException;
 
 	public ObjectEntryFolder moveObjectEntryFolderToTrash(
 			ObjectEntryFolder objectEntryFolder, ServiceContext serviceContext)

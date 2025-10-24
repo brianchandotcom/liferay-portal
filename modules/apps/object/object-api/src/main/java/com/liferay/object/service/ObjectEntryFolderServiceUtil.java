@@ -43,6 +43,17 @@ public class ObjectEntryFolderServiceUtil {
 			description, labelMap, name, serviceContext);
 	}
 
+	public static ObjectEntryFolder copyObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyObjectEntryFolder(
+			objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
+	}
+
 	public static ObjectEntryFolder deleteObjectEntryFolder(
 			long objectEntryFolderId)
 		throws PortalException {
@@ -123,6 +134,17 @@ public class ObjectEntryFolderServiceUtil {
 	 */
 	public static String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static ObjectEntryFolder moveObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntryFolder(
+			objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
 	}
 
 	public static ObjectEntryFolder moveObjectEntryFolderToTrash(

@@ -42,6 +42,18 @@ public class ObjectEntryFolderServiceWrapper
 	}
 
 	@Override
+	public com.liferay.object.model.ObjectEntryFolder copyObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.copyObjectEntryFolder(
+			objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectEntryFolder deleteObjectEntryFolder(
 			long objectEntryFolderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -140,6 +152,18 @@ public class ObjectEntryFolderServiceWrapper
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _objectEntryFolderService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder moveObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.moveObjectEntryFolder(
+			objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
 	}
 
 	@Override

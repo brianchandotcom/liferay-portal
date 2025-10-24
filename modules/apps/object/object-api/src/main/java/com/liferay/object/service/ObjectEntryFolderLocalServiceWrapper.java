@@ -60,6 +60,18 @@ public class ObjectEntryFolderLocalServiceWrapper
 			description, labelMap, name, serviceContext);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder copyObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.copyObjectEntryFolder(
+			userId, objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
@@ -480,6 +492,18 @@ public class ObjectEntryFolderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryFolderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder moveObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.moveObjectEntryFolder(
+			userId, objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
 	}
 
 	@Override

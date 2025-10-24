@@ -66,6 +66,17 @@ public class ObjectEntryFolderLocalServiceUtil {
 			description, labelMap, name, serviceContext);
 	}
 
+	public static ObjectEntryFolder copyObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().copyObjectEntryFolder(
+			userId, objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
+	}
+
 	/**
 	 * Creates a new object entry folder with the primary key. Does not add the object entry folder to the database.
 	 *
@@ -422,6 +433,17 @@ public class ObjectEntryFolderLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static ObjectEntryFolder moveObjectEntryFolder(
+			long userId, long objectEntryFolderId,
+			long parentObjectEntryFolderId, boolean replace,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().moveObjectEntryFolder(
+			userId, objectEntryFolderId, parentObjectEntryFolderId, replace,
+			serviceContext);
 	}
 
 	public static void moveObjectEntryFoldersToTrash(

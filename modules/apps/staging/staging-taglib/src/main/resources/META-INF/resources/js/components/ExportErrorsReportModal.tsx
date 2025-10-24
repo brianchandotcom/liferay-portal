@@ -236,6 +236,12 @@ export function ExportErrorsReportModal({
 							download={filename}
 							href={downloadURL ?? '#'}
 						>
+							{status === 'STARTED' && (
+								<span className="inline-item inline-item-before">
+									<ClayLoadingIndicator size="xs" />
+								</span>
+							)}
+
 							{Liferay.Language.get('download')}
 						</ClayLink>
 					</ClayButton.Group>

@@ -21,6 +21,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
@@ -856,8 +857,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			() -> collectionDisplayListStyle);
 		collectionDisplayPageElementDefinition.setCollectionDisplayViewports(
 			() -> collectionDisplayViewports);
-		collectionDisplayPageElementDefinition.setCollectionReference(
-			() -> collectionReference);
+		collectionDisplayPageElementDefinition.setCollectionSettings(
+			() -> new CollectionSettings() {
+				{
+					setCollectionReference(() -> collectionReference);
+				}
+			});
 		collectionDisplayPageElementDefinition.setDisplayAllItems(
 			() -> displayAllItems);
 		collectionDisplayPageElementDefinition.setDisplayAllPages(

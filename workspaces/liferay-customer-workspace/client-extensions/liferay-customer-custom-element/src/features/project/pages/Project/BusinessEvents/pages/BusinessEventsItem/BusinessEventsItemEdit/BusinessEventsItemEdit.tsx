@@ -492,10 +492,12 @@ const BusinessEventsItemEditPage: React.FC<IProps> = ({
 					</div>
 
 					<div className="align-items-center d-flex justify-content-between mb-4 mt-2">
-						<div className="font-weight-bold text-neutral-10">
-							<h3>{businessEvent.name}</h3>
+						<div className="flex-fill font-weight-bold pr-4 text-neutral-10">
+							<h3 className="mb-0 text-break">
+								{businessEvent.name}
+							</h3>
 						</div>
-						<div>
+						<div className="flex-shrink-0">
 							<Button
 								displayType="secondary"
 								onClick={() => {

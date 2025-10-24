@@ -9,6 +9,7 @@ import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.petra.string.StringBundler;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.model.ResourcePermissionTable;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.ReindexCacheThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -70,6 +72,8 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.ResourcePermissionLocalServiceBaseImpl;
 import com.liferay.portal.service.persistence.impl.ResourcePermissionPersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.io.Serializable;
 
 import java.lang.reflect.Field;
 
@@ -937,32 +941,15 @@ public class ResourcePermissionLocalServiceImpl
 			String actionId)
 		throws PortalException {
 
-		List<ResourcePermission> resourcePermissions =
-			resourcePermissionPersistence.findByC_N_S_P(
-				companyId, name, scope, primKey);
+		ResourceAction resourceAction =
+			_resourceActionLocalService.fetchResourceAction(name, actionId);
 
-		if (resourcePermissions.isEmpty()) {
+		if (resourceAction == null) {
 			return Collections.emptyList();
 		}
 
-		ResourceAction resourceAction =
-			_resourceActionLocalService.getResourceAction(name, actionId);
-
-		Set<Long> rolesIds = new HashSet<>();
-
-		for (ResourcePermission resourcePermission : resourcePermissions) {
-			if (resourcePermission.hasAction(resourceAction)) {
-				rolesIds.add(resourcePermission.getRoleId());
-			}
-		}
-
-		List<Role> roles = new ArrayList<>(rolesIds.size());
-
-		for (long roleId : rolesIds) {
-			roles.add(_roleLocalService.getRole(roleId));
-		}
-
-		return roles;
+		return _lookupRoles(
+			companyId, name, scope, resourceAction.getBitwiseValue(), primKey);
 	}
 
 	/**
@@ -2240,6 +2227,118 @@ public class ResourcePermissionLocalServiceImpl
 				IndexWriterHelperUtil.updatePermissionFields(name, name);
 			}
 		}
+	}
+
+	private List<Role> _lookupRoles(
+		long companyId, String name, int scope, long bitwiseValue,
+		String primKey) {
+
+		Map<String, List<Role>> rolesMap =
+			ReindexCacheThreadLocal.getScopeReindexCache(
+				ResourcePermissionLocalServiceImpl.class.getName(),
+				StringBundler.concat(name, "#", scope, "#", bitwiseValue),
+				() -> resourcePermissionPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ResourcePermissionTable.INSTANCE
+					).where(
+						ResourcePermissionTable.INSTANCE.companyId.eq(companyId)
+					),
+					false),
+				() -> resourcePermissionPersistence.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						ResourcePermissionTable.INSTANCE
+					).where(
+						ResourcePermissionTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							ResourcePermissionTable.INSTANCE.name.eq(name)
+						).and(
+							ResourcePermissionTable.INSTANCE.scope.eq(scope)
+						).and(
+							DSLFunctionFactoryUtil.bitAnd(
+								ResourcePermissionTable.INSTANCE.actionIds,
+								bitwiseValue
+							).eq(
+								bitwiseValue
+							)
+						)
+					),
+					false),
+				count -> {
+					Map<String, List<Role>> localRolesMap = new HashMap<>();
+
+					if (count == 0) {
+						return localRolesMap;
+					}
+
+					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
+						ResourcePermissionTable.INSTANCE.primKey,
+						ResourcePermissionTable.INSTANCE.roleId
+					).from(
+						ResourcePermissionTable.INSTANCE
+					).where(
+						ResourcePermissionTable.INSTANCE.companyId.eq(
+							companyId
+						).and(
+							ResourcePermissionTable.INSTANCE.name.eq(name)
+						).and(
+							ResourcePermissionTable.INSTANCE.scope.eq(scope)
+						).and(
+							DSLFunctionFactoryUtil.bitAnd(
+								ResourcePermissionTable.INSTANCE.actionIds,
+								bitwiseValue
+							).eq(
+								bitwiseValue
+							)
+						)
+					);
+
+					for (Object[] values :
+							(List<Object[]>)
+								resourcePermissionPersistence.dslQuery(
+									dslQuery, false)) {
+
+						Role role = _rolePersistence.fetchByPrimaryKey(
+							(Long)values[1]);
+
+						if (role != null) {
+							List<Role> roles = localRolesMap.computeIfAbsent(
+								(String)values[0], key -> new ArrayList<>());
+
+							roles.add(role);
+						}
+					}
+
+					return localRolesMap;
+				});
+
+		if (rolesMap == null) {
+			Set<Serializable> roleIds = new HashSet<>();
+
+			for (ResourcePermission resourcePermission :
+					resourcePermissionPersistence.findByC_N_S_P(
+						companyId, name, scope, primKey)) {
+
+				if ((resourcePermission.getActionIds() & bitwiseValue) != 0) {
+					roleIds.add(resourcePermission.getRoleId());
+				}
+			}
+
+			Map<Serializable, Role> roles = _rolePersistence.fetchByPrimaryKeys(
+				roleIds);
+
+			return new ArrayList<>(roles.values());
+		}
+
+		List<Role> roles = rolesMap.get(primKey);
+
+		if (roles == null) {
+			return Collections.emptyList();
+		}
+
+		return roles;
 	}
 
 	private boolean _matches(

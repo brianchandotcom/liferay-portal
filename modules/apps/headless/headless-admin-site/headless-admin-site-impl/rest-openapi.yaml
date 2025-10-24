@@ -934,6 +934,32 @@ components:
             description:
                 The page element definition of a fragment composition instance.
             type: object
+        FragmentConfigurationFieldValue:
+            # @review
+            description:
+                The value of a configuration field.
+            properties:
+                type:
+                    # @review
+                    description:
+                        The fragment configuration field's type (category, checkbox, collection, colorPalette,
+                        colorPicker, item, length, navigationMenu, select, text, URL, video).
+                    enum: [Category, Checkbox, Collection, ColorPalette, ColorPicker, Item, Length, NavigationMenu, Select, Text, URL, Video]
+                    type: string
+                value:
+                    # @review
+                    description:
+                        The value of a non-localizable fragment configuration field.
+                    type: string
+                value_i18n:
+                    additionalProperties:
+                        type: string
+                    # @review
+                    description:
+                        The localized value of the fragment configuration field.
+            required:
+                -   type
+            type: object
         FragmentDropZonePageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
@@ -1162,7 +1188,7 @@ components:
                             type: string
                         fragmentConfig:
                             additionalProperties:
-                                type: object
+                                $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                             # @review
                             description:
                                 The configuration values of the fragment instance.

@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayLabel from '@clayui/label';
 import {useModal} from '@clayui/modal';
 import {
 	Panel,
@@ -36,21 +37,38 @@ export function ObjectLayoutBox({
 	tabIndex,
 	type,
 }: ObjectLayoutBoxProps) {
-	const [{isViewOnly}, dispatch] = useLayoutContext();
+	const [
+		{enableCategorization, enableFriendlyURLCustomization, isViewOnly},
+		dispatch,
+	] = useLayoutContext();
 	const [visibleModal, setVisibleModal] = useState(false);
 	const {observer, onClose} = useModal({
 		onClose: () => setVisibleModal(false),
 	});
 
+	const disabled =
+		(type === 'categorization' && !enableCategorization) ||
+		(type === 'seo' && !enableFriendlyURLCustomization);
+
 	return (
 		<>
 			<Panel>
 				<PanelHeader
+					{...(disabled && {
+						contentLeft: (
+							<ClayLabel
+								className="label-inside-custom-select"
+								displayType="secondary"
+							>
+								{Liferay.Language.get('disabled')}
+							</ClayLabel>
+						),
+					})}
 					contentRight={
 						<>
 							<Toggle
 								aria-label={Liferay.Language.get('collapsible')}
-								disabled={isViewOnly}
+								disabled={disabled || isViewOnly}
 								label={Liferay.Language.get('collapsible')}
 								onToggle={(value) => {
 									dispatch({
@@ -71,7 +89,7 @@ export function ObjectLayoutBox({
 							{type === 'regular' && (
 								<ClayButton
 									className="ml-4"
-									disabled={isViewOnly}
+									disabled={disabled || isViewOnly}
 									displayType="secondary"
 									onClick={() => setVisibleModal(true)}
 									small
@@ -94,7 +112,7 @@ export function ObjectLayoutBox({
 							/>
 						</>
 					}
-					disabled={isViewOnly}
+					disabled={disabled}
 					title={label}
 					type={type}
 				/>

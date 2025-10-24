@@ -46,74 +46,54 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface NavigationMenuResource {
 
-	public void deleteNavigationMenu(Long navigationMenuId) throws Exception;
-
-	public Response deleteNavigationMenuBatch(String callbackURL, Object object)
+	public void deleteSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
-	public void deleteSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public NavigationMenu getNavigationMenu(Long navigationMenuId)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getNavigationMenuPermissionsPage(
-				Long navigationMenuId, String roleNames)
-		throws Exception;
-
-	public NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public NavigationMenu getSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
-			getSiteNavigationMenuPermissionsPage(Long siteId, String roleNames)
+			getSiteNavigationMenuPermissionsPage(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
-			Long siteId, String search,
+			String siteExternalReferenceCode, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
 		throws Exception;
 
 	public NavigationMenu postSiteNavigationMenu(
-			Long siteId, NavigationMenu navigationMenu)
+			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception;
 
 	public Response postSiteNavigationMenuBatch(
-			Long siteId, String callbackURL, Object object)
+			String siteExternalReferenceCode, String callbackURL, Object object)
 		throws Exception;
 
 	public Response postSiteNavigationMenusPageExportBatch(
-			Long siteId, String search,
+			String siteExternalReferenceCode, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			com.liferay.portal.kernel.search.Sort[] sorts, String callbackURL,
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public NavigationMenu putNavigationMenu(
-			Long navigationMenuId, NavigationMenu navigationMenu)
-		throws Exception;
-
-	public Response putNavigationMenuBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public Page<com.liferay.portal.vulcan.permission.Permission>
-			putNavigationMenuPermissionsPage(
-				Long navigationMenuId,
-				com.liferay.portal.vulcan.permission.Permission[] permissions)
-		throws Exception;
-
-	public NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
+	public NavigationMenu putSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception;
 
 	public Page<com.liferay.portal.vulcan.permission.Permission>
 			putSiteNavigationMenuPermissionsPage(
-				Long siteId,
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
 		throws Exception;
 

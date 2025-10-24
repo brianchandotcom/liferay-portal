@@ -93,22 +93,6 @@ public class EditStyleBookEntryDisplayContextTest {
 			true
 		);
 
-		Group stagingGroup = Mockito.mock(Group.class);
-
-		long stagingGroupId = RandomTestUtil.randomLong();
-
-		Mockito.when(
-			stagingGroup.getGroupId()
-		).thenReturn(
-			stagingGroupId
-		);
-
-		Mockito.when(
-			stagingGroup.isPrivateLayoutsEnabled()
-		).thenReturn(
-			true
-		);
-
 		LayoutSet liveLayoutSet = Mockito.mock(LayoutSet.class);
 
 		Mockito.when(
@@ -117,26 +101,11 @@ public class EditStyleBookEntryDisplayContextTest {
 			liveGroup
 		);
 
-		LayoutSet stagingLayoutSet = Mockito.mock(LayoutSet.class);
-
-		Mockito.when(
-			stagingLayoutSet.getGroup()
-		).thenReturn(
-			stagingGroup
-		);
-
 		_layoutSetLocalServiceUtilMockedStatic.when(
 			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
 				Mockito.eq(liveGroup.getGroupId()), Mockito.anyBoolean())
 		).thenReturn(
 			liveLayoutSet
-		);
-
-		_layoutSetLocalServiceUtilMockedStatic.when(
-			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
-				Mockito.eq(stagingGroup.getGroupId()), Mockito.anyBoolean())
-		).thenReturn(
-			stagingLayoutSet
 		);
 
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
@@ -156,6 +125,37 @@ public class EditStyleBookEntryDisplayContextTest {
 			liveLayoutSet
 		);
 
+		Group stagingGroup = Mockito.mock(Group.class);
+
+		long stagingGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			stagingGroup.getGroupId()
+		).thenReturn(
+			stagingGroupId
+		);
+
+		Mockito.when(
+			stagingGroup.isPrivateLayoutsEnabled()
+		).thenReturn(
+			true
+		);
+
+		LayoutSet stagingLayoutSet = Mockito.mock(LayoutSet.class);
+
+		Mockito.when(
+			stagingLayoutSet.getGroup()
+		).thenReturn(
+			stagingGroup
+		);
+
+		_layoutSetLocalServiceUtilMockedStatic.when(
+			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
+				Mockito.eq(stagingGroup.getGroupId()), Mockito.anyBoolean())
+		).thenReturn(
+			stagingLayoutSet
+		);
+
 		_invokeGetFrontendTokenDefinitionJSONObject(
 			frontendTokenDefinitionRegistry,
 			_getThemeDisplay(stagingGroup, stagingLayoutSet));
@@ -169,26 +169,6 @@ public class EditStyleBookEntryDisplayContextTest {
 		).getFrontendTokenDefinition(
 			stagingLayoutSet
 		);
-	}
-
-	private void _invokeGetFrontendTokenDefinitionJSONObject(
-		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
-		ThemeDisplay themeDisplay) {
-
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
-			new EditStyleBookEntryDisplayContext(
-				null, frontendTokenDefinitionRegistry, mockHttpServletRequest,
-				null, new MockRenderResponse());
-
-		ReflectionTestUtil.invoke(
-			editStyleBookEntryDisplayContext,
-			"_getFrontendTokenDefinitionJSONObject", new Class<?>[0]);
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, LayoutSet layoutSet) {
@@ -222,6 +202,26 @@ public class EditStyleBookEntryDisplayContextTest {
 		);
 
 		return themeDisplay;
+	}
+
+	private void _invokeGetFrontendTokenDefinitionJSONObject(
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
+		ThemeDisplay themeDisplay) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
+			new EditStyleBookEntryDisplayContext(
+				null, frontendTokenDefinitionRegistry, mockHttpServletRequest,
+				null, new MockRenderResponse());
+
+		ReflectionTestUtil.invoke(
+			editStyleBookEntryDisplayContext,
+			"_getFrontendTokenDefinitionJSONObject", new Class<?>[0]);
 	}
 
 	private static final MockedStatic<JSONFactoryUtil>

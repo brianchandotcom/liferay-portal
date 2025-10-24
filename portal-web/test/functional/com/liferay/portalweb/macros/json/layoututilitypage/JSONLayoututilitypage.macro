@@ -22,4 +22,48 @@ definition {
 			portalURL = ${portalURL});
 	}
 
+	@summary = "Default summary"
+	macro setDefaultLayoutUtilityPage(groupName = null, site = null, portalInstanceName = null, portalURL = null, layoutUtilityPageName = null) {
+		Variables.assertDefined(parameterList = ${layoutUtilityPageName});
+
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupSetter.setGroupId(
+				groupName = ${groupName},
+				portalInstanceName = ${portalInstanceName},
+				portalURL = ${portalURL},
+				site = ${site});
+		}
+
+		var layoutUtilityPageEntryId = JSONLayoututilitypageAPI._getLayoutUtilityPageEntryId(
+			groupId = ${groupId},
+			layoutUtilityPageName = ${layoutUtilityPageName},
+			portalURL = ${portalURL});
+
+		JSONLayoututilitypageAPI._setDefaultLayoutUtilityPage(
+			layoutUtilityPageEntryId = ${layoutUtilityPageEntryId},
+			portalURL = ${portalURL});
+	}
+
+	@summary = "Default summary"
+	macro unsetDefaultLayoutUtilityPage(groupName = null, site = null, portalInstanceName = null, portalURL = null, layoutUtilityPageName = null) {
+		Variables.assertDefined(parameterList = ${layoutUtilityPageName});
+
+		if (!(isSet(groupId))) {
+			var groupId = JSONGroupSetter.setGroupId(
+				groupName = ${groupName},
+				portalInstanceName = ${portalInstanceName},
+				portalURL = ${portalURL},
+				site = ${site});
+		}
+
+		var layoutUtilityPageEntryId = JSONLayoututilitypageAPI._getLayoutUtilityPageEntryId(
+			groupId = ${groupId},
+			layoutUtilityPageName = ${layoutUtilityPageName},
+			portalURL = ${portalURL});
+
+		JSONLayoututilitypageAPI._unsetDefaultLayoutUtilityPage(
+			layoutUtilityPageEntryId = ${layoutUtilityPageEntryId},
+			portalURL = ${portalURL});
+	}
+
 }

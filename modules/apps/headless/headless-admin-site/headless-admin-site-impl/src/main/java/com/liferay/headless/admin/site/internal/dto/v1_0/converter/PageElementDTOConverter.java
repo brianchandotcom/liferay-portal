@@ -171,6 +171,7 @@ public class PageElementDTOConverter
 				LayoutDataItemTypeConstants.TYPE_FORM)) {
 
 			return _formContainerPageElementDefinitionDTOConverter.toDTO(
+				dtoConverterContext,
 				(FormStyledLayoutStructureItem)layoutStructureItem);
 		}
 

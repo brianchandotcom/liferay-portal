@@ -85,20 +85,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Override
-	public void deleteSite(Long siteId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		_groupService.deleteGroup(siteId);
-	}
-
-	@Override
-	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
-		throws Exception {
-
+	public void deleteSite(String externalReferenceCode) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-41306")) {
 
@@ -118,22 +105,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Site getSite(Long siteId) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-41306")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		Group group = _groupLocalService.fetchGroup(siteId);
-
-		return _toSite(group);
-	}
-
-	@Override
-	public Site getSiteByExternalReferenceCode(String externalReferenceCode)
-		throws Exception {
-
+	public Site getSite(String externalReferenceCode) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-41306")) {
 
@@ -147,8 +119,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Response getSiteByExternalReferenceCodeSiteInitializer(
-			String externalReferenceCode)
+	public Response getSiteSiteInitializer(String externalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -261,25 +232,35 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 		Site site = multipartBody.getValueAsInstance("site", Site.class);
 
-		return putSiteByExternalReferenceCode(
+		return putSiteSiteInitializer(
 			site.getExternalReferenceCode(), multipartBody);
 	}
 
 	@Override
-	public Site putSite(Site site) throws Exception {
+	public Site putSite(String siteExternalReferenceCode, Site site)
+		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				contextCompany.getCompanyId(), "LPD-41306")) {
 
 			throw new UnsupportedOperationException();
 		}
 
-		String externalReferenceCode = site.getExternalReferenceCode();
+		if (site.getExternalReferenceCode() == null) {
+			site.setExternalReferenceCode(() -> siteExternalReferenceCode);
+		}
+
+		if (!Objects.equals(
+				siteExternalReferenceCode, site.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+			siteExternalReferenceCode, contextCompany.getCompanyId());
 
 		if (group == null) {
-			group = _addGroup(externalReferenceCode, site);
+			group = _addGroup(siteExternalReferenceCode, site);
 		}
 		else {
 			group = _updateGroup(group, site);
@@ -289,7 +270,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	@Override
-	public Site putSiteByExternalReferenceCode(
+	public Site putSiteSiteInitializer(
 			String externalReferenceCode, MultipartBody multipartBody)
 		throws Exception {
 

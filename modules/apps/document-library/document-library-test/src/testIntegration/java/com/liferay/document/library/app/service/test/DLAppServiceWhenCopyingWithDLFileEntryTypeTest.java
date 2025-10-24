@@ -195,7 +195,7 @@ public class DLAppServiceWhenCopyingWithDLFileEntryTypeTest
 		FileEntry fileEntry2 = dlAppService.copyFileEntry(
 			fileEntry1.getFileEntryId(), _newParentFolder.getFolderId(),
 			_newParentFolder.getGroupId(),
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+			_dlFileEntryType.getFileEntryTypeId(),
 			new long[] {group.getGroupId()},
 			ServiceContextTestUtil.getServiceContext(
 				_newParentFolder.getGroupId()));

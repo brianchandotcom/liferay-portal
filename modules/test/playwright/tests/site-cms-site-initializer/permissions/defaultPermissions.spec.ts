@@ -60,11 +60,11 @@ async function createSpace(page, spaceName: string) {
 }
 
 async function deleteSpace(page, spaceName: string) {
-	await clickMenuItem('Delete', page, spaceName);
-
 	await expect(async () => {
+		await clickMenuItem('Delete', page, spaceName);
+
 		await page.getByRole('button', {name: 'Delete'}).click();
-	}).toPass();
+	}).toPass({timeout: 5000});
 
 	await waitForAlert(page, `${spaceName} was successfully deleted.`);
 }
@@ -73,12 +73,22 @@ async function getTableRowByText(page, text: string) {
 	return page.locator('table.table tbody tr', {hasText: text}).first();
 }
 
-async function resetPermissions(page, folderName: string) {
-	await clickMenuItem('Reset to Default Permissions', page, folderName);
-
+async function goToAllSpaces(page) {
 	await expect(async () => {
+		await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+		await expect(
+			page.getByRole('heading', {exact: true, name: 'All Spaces'})
+		).toBeVisible();
+	}).toPass({timeout: 10000});
+}
+
+async function resetPermissions(page, folderName: string) {
+	await expect(async () => {
+		await clickMenuItem('Reset to Default Permissions', page, folderName);
+
 		await page.getByRole('button', {name: 'OK'}).click();
-	}).toPass();
+	}).toPass({timeout: 5000});
 
 	await waitForAlert(page, 'Permissions reset successfully.');
 }
@@ -121,14 +131,14 @@ test(
 	}) => {
 		test.setTimeout(90000);
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		const spaceName = 'Space' + getRandomInt();
 
 		await createSpace(page, spaceName);
 
 		try {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await clickMenuItem('Default Permissions', page, spaceName);
 
@@ -188,7 +198,7 @@ test(
 			).not.toBeVisible();
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName);
 		}
@@ -205,20 +215,20 @@ test(
 		const spaceName2 = 'Space' + getRandomInt();
 		const spaceName3 = 'Space' + getRandomInt();
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName1);
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName2);
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName3);
 
 		try {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await tickCheckBoxes(page, [spaceName1, spaceName2]);
 			await clickMenuItem('Default Permissions', page);
@@ -259,7 +269,7 @@ test(
 			});
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName1);
 			await deleteSpace(page, spaceName2);
@@ -277,16 +287,16 @@ test(
 		const spaceName1 = 'Space' + getRandomInt();
 		const spaceName2 = 'Space' + getRandomInt();
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName1);
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName2);
 
 		try {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await clickMenuItem('Default Permissions', page, spaceName1);
 
@@ -403,7 +413,7 @@ test(
 			});
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName1);
 			await deleteSpace(page, spaceName2);
@@ -417,7 +427,7 @@ test(
 	async ({defaultPermissionsPage, folderPage, page, spaceSummaryPage}) => {
 		test.setTimeout(90000);
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		const spaceName = 'Space' + getRandomInt();
 
@@ -436,7 +446,7 @@ test(
 
 			await folderPage.createFolder(subFolderName);
 
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await clickMenuItem(
 				'Edit and Propagate Default Permissions',
@@ -495,7 +505,7 @@ test(
 			});
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName);
 		}
@@ -512,14 +522,14 @@ test(
 		permissionsPage,
 		spaceSummaryPage,
 	}) => {
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		const spaceName = 'Space' + getRandomInt();
 
 		await createSpace(page, spaceName);
 
 		try {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await clickMenuItem('Default Permissions', page, spaceName);
 
@@ -578,7 +588,7 @@ test(
 			});
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName);
 		}
@@ -591,7 +601,7 @@ test(
 	async ({contentsPage, defaultPermissionsPage, filesPage, page}) => {
 		const spaceName = 'Space' + getRandomInt();
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName);
 
@@ -655,7 +665,7 @@ test(
 			).toBeVisible();
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName);
 		}
@@ -668,7 +678,7 @@ test(
 	async ({page}) => {
 		const spaceName = 'Space' + getRandomInt();
 
-		await page.goto(PORTLET_URLS.cmsAllSpaces);
+		await goToAllSpaces(page);
 
 		await createSpace(page, spaceName);
 
@@ -682,7 +692,7 @@ test(
 				await page.getByRole('menuitem', {name: 'Folder'}).click();
 
 				await expect(page.getByLabel('Name')).toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			const folderName = String(getRandomInt());
 
@@ -704,7 +714,7 @@ test(
 				await expect(
 					page.getByRole('heading', {name: 'Permissions'})
 				).toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -714,7 +724,7 @@ test(
 				await expect(
 					page.getByRole('heading', {name: 'Permissions'})
 				).not.toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -732,7 +742,7 @@ test(
 						name: 'Edit Default Permissions',
 					})
 				).toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -744,7 +754,7 @@ test(
 						name: 'Edit Default Permissions',
 					})
 				).not.toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -759,7 +769,7 @@ test(
 						name: 'Edit Default Permissions',
 					})
 				).toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -771,7 +781,7 @@ test(
 						name: 'Edit Default Permissions',
 					})
 				).not.toBeVisible();
-			}).toPass();
+			}).toPass({timeout: 5000});
 
 			await expect(async () => {
 				await page
@@ -790,10 +800,10 @@ test(
 				).toBeVisible();
 
 				await page.getByRole('button', {name: 'Cancel'}).click();
-			}).toPass();
+			}).toPass({timeout: 5000});
 		}
 		finally {
-			await page.goto(PORTLET_URLS.cmsAllSpaces);
+			await goToAllSpaces(page);
 
 			await deleteSpace(page, spaceName);
 		}

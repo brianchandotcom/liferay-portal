@@ -191,9 +191,7 @@ public class EditStyleBookEntryDisplayContextTest {
 			"_getFrontendTokenDefinitionJSONObject", new Class<?>[0]);
 	}
 
-	private ThemeDisplay _getThemeDisplay(
-		Group liveGroup, LayoutSet layoutSet) {
-
+	private ThemeDisplay _getThemeDisplay(Group group, LayoutSet layoutSet) {
 		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 
 		Mockito.doNothing(
@@ -220,7 +218,7 @@ public class EditStyleBookEntryDisplayContextTest {
 		Mockito.when(
 			themeDisplay.getScopeGroup()
 		).thenReturn(
-			liveGroup
+			group
 		);
 
 		return themeDisplay;

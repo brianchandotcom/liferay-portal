@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.IntFunction;
 import java.util.function.Supplier;
 
 /**
@@ -19,11 +20,9 @@ import java.util.function.Supplier;
  */
 public class ReindexCacheThreadLocal {
 
-	public static final int SIZE_LIMIT = GetterUtil.getInteger(
-		PropsUtil.get("reindex.cache.size.limit"), 1000000);
-
-	public static <T> T getReindexCache(
-		String ownerName, Supplier<T> supplier) {
+	public static <T> T getGlobalReindexCache(
+		String ownerName, Supplier<Integer> globalCountSupplier,
+		IntFunction<T> reindexCacheFunction) {
 
 		Map<String, Object> reindexCacheMap = _reindexCacheMap.get();
 
@@ -34,14 +33,69 @@ public class ReindexCacheThreadLocal {
 		T t = (T)reindexCacheMap.computeIfAbsent(
 			ownerName,
 			key -> {
-				Object result = supplier.get();
+				int count = globalCountSupplier.get();
 
-				if (result == null) {
+				if (count > _SIZE_LIMIT) {
 					return _NULL_HOLDER;
 				}
 
-				return result;
+				return reindexCacheFunction.apply(count);
 			});
+
+		if (t == _NULL_HOLDER) {
+			return null;
+		}
+
+		return t;
+	}
+
+	public static <T> T getScopeReindexCache(
+		String ownerName, String scopeName,
+		Supplier<Integer> globalCountSupplier,
+		Supplier<Integer> scopeCountSupplier,
+		IntFunction<T> reindexCacheFunction) {
+
+		Map<String, Object> reindexCacheMap = _reindexCacheMap.get();
+
+		if (reindexCacheMap == null) {
+			return null;
+		}
+
+		String cacheKey = ownerName + "#" + scopeName;
+
+		T t = (T)reindexCacheMap.get(cacheKey);
+
+		// Waste one get to avoid potential "Recursive update" error
+
+		if (t == null) {
+
+			// Check global count with cache to avoid per scope repeated
+			// checking.
+
+			int globalCount = (int)reindexCacheMap.computeIfAbsent(
+				ownerName + "#globalCount", key -> globalCountSupplier.get());
+
+			t = (T)reindexCacheMap.computeIfAbsent(
+				cacheKey,
+				key -> {
+					int count = globalCount;
+
+					if (count > _SIZE_LIMIT) {
+
+						// If global count is oversize, give scope count a
+						// second chance. This is in hope of not every scope
+						// will be used.
+
+						count = scopeCountSupplier.get();
+
+						if (count > _SIZE_LIMIT) {
+							return _NULL_HOLDER;
+						}
+					}
+
+					return reindexCacheFunction.apply(count);
+				});
+		}
 
 		if (t == _NULL_HOLDER) {
 			return null;
@@ -61,6 +115,9 @@ public class ReindexCacheThreadLocal {
 	}
 
 	private static final Object _NULL_HOLDER = new Object();
+
+	private static final int _SIZE_LIMIT = GetterUtil.getInteger(
+		PropsUtil.get("reindex.cache.size.limit"), 1000000);
 
 	private static final CentralizedThreadLocal<Map<String, Object>>
 		_reindexCacheMap = new CentralizedThreadLocal<>(

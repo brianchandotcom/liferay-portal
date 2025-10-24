@@ -9,6 +9,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenu;
 import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.admin.site.internal.odata.entity.v1_0.NavigationMenuEntityModel;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.NavigationMenuResource;
 import com.liferay.headless.admin.user.dto.v1_0.Creator;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -80,19 +81,9 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Override
-	public void deleteNavigationMenu(Long navigationMenuId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		_siteNavigationMenuService.deleteSiteNavigationMenu(navigationMenuId);
-	}
-
-	@Override
-	public void deleteSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	public void deleteSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -102,7 +93,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		_siteNavigationMenuService.deleteSiteNavigationMenu(
-			externalReferenceCode, siteId);
+			navigationMenuExternalReferenceCode,
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(),
+				siteExternalReferenceCode));
 	}
 
 	@Override
@@ -111,23 +105,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	protected NavigationMenu doGetNavigationMenu(Long navigationMenuId)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		return _toNavigationMenu(
-			_siteNavigationMenuService.fetchSiteNavigationMenu(
-				navigationMenuId));
-	}
-
-	@Override
-	protected NavigationMenu doGetSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
+	protected NavigationMenu doGetSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -139,13 +119,16 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return _toNavigationMenu(
 			_siteNavigationMenuService.
 				getSiteNavigationMenuByExternalReferenceCode(
-					externalReferenceCode, siteId));
+					navigationMenuExternalReferenceCode,
+					GroupUtil.getGroupId(
+						true, contextCompany.getCompanyId(),
+						siteExternalReferenceCode)));
 	}
 
 	@Override
 	protected Page<NavigationMenu> doGetSiteNavigationMenusPage(
-			Long siteId, String search, Filter filter, Pagination pagination,
-			Sort[] sorts)
+			String siteExternalReferenceCode, String search, Filter filter,
+			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -154,19 +137,22 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		return SearchUtil.search(
 			HashMapBuilder.put(
 				"create",
 				addAction(
 					SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU,
 					"postSiteNavigationMenu",
-					SiteNavigationConstants.RESOURCE_NAME, siteId)
+					SiteNavigationConstants.RESOURCE_NAME, groupId)
 			).put(
 				"createBatch",
 				addAction(
 					SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU,
 					"postSiteNavigationMenuBatch",
-					SiteNavigationConstants.RESOURCE_NAME, siteId)
+					SiteNavigationConstants.RESOURCE_NAME, groupId)
 			).put(
 				"deleteBatch",
 				addAction(
@@ -185,7 +171,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
-				searchContext.setGroupIds(new long[] {siteId});
+				searchContext.setGroupIds(new long[] {groupId});
 			},
 			sorts,
 			document -> _toNavigationMenu(
@@ -195,7 +181,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Override
 	protected NavigationMenu doPostSiteNavigationMenu(
-			Long siteId, NavigationMenu navigationMenu)
+			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -205,30 +191,16 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		}
 
 		return _addNavigationMenu(
-			navigationMenu.getExternalReferenceCode(), siteId, navigationMenu);
+			navigationMenu.getExternalReferenceCode(),
+			GroupUtil.getGroupId(
+				true, contextCompany.getCompanyId(), siteExternalReferenceCode),
+			navigationMenu);
 	}
 
 	@Override
-	protected NavigationMenu doPutNavigationMenu(
-			Long navigationMenuId, NavigationMenu navigationMenu)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-66179")) {
-
-			throw new UnsupportedOperationException();
-		}
-
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuService.fetchSiteNavigationMenu(
-				navigationMenuId);
-
-		return _updateNavigationMenu(navigationMenu, siteNavigationMenu);
-	}
-
-	@Override
-	protected NavigationMenu doPutSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
+	protected NavigationMenu doPutSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {
 
@@ -238,21 +210,27 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuLocalService.
 				fetchSiteNavigationMenuByExternalReferenceCode(
-					externalReferenceCode, siteId);
+					navigationMenuExternalReferenceCode, groupId);
 
 		if (siteNavigationMenu != null) {
 			return _updateNavigationMenu(navigationMenu, siteNavigationMenu);
 		}
 
 		return _addNavigationMenu(
-			externalReferenceCode, siteId, navigationMenu);
+			navigationMenuExternalReferenceCode, groupId, navigationMenu);
 	}
 
 	@Override
-	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
+	protected Long getPermissionCheckerGroupId(
+			String groupExternalReferenceCode)
+		throws Exception {
+
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.fetchSiteNavigationMenu((Long)id);
 
@@ -270,7 +248,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	private NavigationMenu _addNavigationMenu(
-			String externalReferenceCode, Long siteId,
+			String externalReferenceCode, long groupId,
 			NavigationMenu navigationMenu)
 		throws Exception {
 
@@ -285,10 +263,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		SiteNavigationMenu siteNavigationMenu =
 			_siteNavigationMenuService.addSiteNavigationMenu(
-				externalReferenceCode, siteId, navigationMenu.getName(), type,
+				externalReferenceCode, groupId, navigationMenu.getName(), type,
 				true,
 				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest, null
+					groupId, contextHttpServletRequest, null
 				).permissions(
 					ModelPermissionsUtil.toModelPermissions(
 						contextCompany.getCompanyId(),
@@ -300,7 +278,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				).build());
 
 		_createNavigationMenuItems(
-			navigationMenu.getNavigationMenuItems(), 0, siteId,
+			navigationMenu.getNavigationMenuItems(), 0, groupId,
 			siteNavigationMenu.getSiteNavigationMenuId());
 
 		return _toNavigationMenu(siteNavigationMenu);
@@ -308,7 +286,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private void _createNavigationMenuItem(
 			NavigationMenuItem navigationMenuItem, long parentNavigationMenuId,
-			long siteId, long siteNavigationMenuId)
+			long groupId, long siteNavigationMenuId)
 		throws Exception {
 
 		UnicodeProperties unicodeProperties = UnicodePropertiesBuilder.putAll(
@@ -317,10 +295,10 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemService.addSiteNavigationMenuItem(
-				null, siteId, siteNavigationMenuId, parentNavigationMenuId,
+				null, groupId, siteNavigationMenuId, parentNavigationMenuId,
 				navigationMenuItem.getType(), unicodeProperties.toString(),
 				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest, null
+					groupId, contextHttpServletRequest, null
 				).expandoBridgeAttributes(
 					CustomFieldsUtil.toMap(
 						SiteNavigationMenuItem.class.getName(),
@@ -331,13 +309,14 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		_createNavigationMenuItems(
 			navigationMenuItem.getNavigationMenuItems(),
-			siteNavigationMenuItem.getSiteNavigationMenuItemId(), siteId,
+			siteNavigationMenuItem.getSiteNavigationMenuItemId(), groupId,
 			siteNavigationMenuId);
 	}
 
 	private void _createNavigationMenuItems(
 			NavigationMenuItem[] navigationMenuItems,
-			long parentNavigationMenuId, long siteId, long siteNavigationMenuId)
+			long parentNavigationMenuId, long groupId,
+			long siteNavigationMenuId)
 		throws Exception {
 
 		if (navigationMenuItems == null) {
@@ -346,7 +325,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 		for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
 			_createNavigationMenuItem(
-				navigationMenuItem, parentNavigationMenuId, siteId,
+				navigationMenuItem, parentNavigationMenuId, groupId,
 				siteNavigationMenuId);
 		}
 	}
@@ -748,7 +727,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private void _updateNavigationMenuItems(
 			NavigationMenuItem[] navigationMenuItems,
-			long parentSiteNavigationMenuItemId, Long siteId,
+			long parentSiteNavigationMenuItemId, long groupId,
 			long siteNavigationMenuId)
 		throws Exception {
 
@@ -787,7 +766,7 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						navigationMenuItemId,
 						String.valueOf(navigationMenuItem.getTypeSettings()),
 						ServiceContextBuilder.create(
-							siteId, contextHttpServletRequest, null
+							groupId, contextHttpServletRequest, null
 						).expandoBridgeAttributes(
 							CustomFieldsUtil.toMap(
 								SiteNavigationMenuItem.class.getName(),
@@ -799,13 +778,13 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				_updateNavigationMenuItems(
 					navigationMenuItem.getNavigationMenuItems(),
 					updatedSiteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					siteId, siteNavigationMenuId);
+					groupId, siteNavigationMenuId);
 
 				siteNavigationMenuItems.remove(siteNavigationMenuItem);
 			}
 			else {
 				_createNavigationMenuItem(
-					navigationMenuItem, parentSiteNavigationMenuItemId, siteId,
+					navigationMenuItem, parentSiteNavigationMenuItemId, groupId,
 					siteNavigationMenuId);
 			}
 		}

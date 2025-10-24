@@ -12,6 +12,16 @@ definition {
 		TestCase.setUpPortalInstance();
 
 		User.firstLoginPG();
+
+		JSONLayoututilitypage.unsetDefaultLayoutUtilityPage(
+			groupName = "Guest",
+			layoutUtilityPageName = "Sign In");
+	}
+
+	tearDown {
+		JSONLayoututilitypage.setDefaultLayoutUtilityPage(
+			groupName = "Guest",
+			layoutUtilityPageName = "Sign In");
 	}
 
 	@description = "This is a use case for LPS-139642 TC6-3: Assert error message when add invalid auth server local metadata."

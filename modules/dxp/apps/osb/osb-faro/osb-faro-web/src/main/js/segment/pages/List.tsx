@@ -557,7 +557,7 @@ export const List: React.FC<IListProps> = ({
 											formatDateToTimeZone(date, 'lll'),
 										datePath: 'lastMembershipUpdateDate'
 									},
-									className: 'table-column-text-end',
+									className: 'table-column-text-start',
 									label: Liferay.Language.get(
 										'last-membership-update'
 									)
@@ -577,7 +577,7 @@ export const List: React.FC<IListProps> = ({
 											formatDateToTimeZone(date, 'll'),
 										datePath: 'dateModified'
 									},
-									className: 'table-column-text-end',
+									className: 'table-column-text-start',
 									label: Liferay.Language.get('modified-date')
 								}
 							]}

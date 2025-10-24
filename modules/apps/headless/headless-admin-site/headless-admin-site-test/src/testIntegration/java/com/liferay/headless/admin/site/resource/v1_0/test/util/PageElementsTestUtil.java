@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormStepContainerPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.FormStepPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentDropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
@@ -39,7 +40,8 @@ import java.util.Objects;
 public class PageElementsTestUtil {
 
 	public static FragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(FragmentEntry fragmentEntry) {
+		getFragmentInstancePageElementDefinition(
+			FragmentEntry fragmentEntry, long scopeGroupId) {
 
 		return new FragmentInstancePageElementDefinition() {
 			{
@@ -53,15 +55,34 @@ public class PageElementsTestUtil {
 				setFragmentInstanceExternalReferenceCode(
 					RandomTestUtil::randomString);
 				setFragmentReference(
-					() -> new DefaultFragmentReference() {
-						{
-							setDefaultFragmentKey(
-								fragmentEntry::getFragmentEntryKey);
-							setFragmentReferenceType(
-								() ->
-									FragmentReferenceType.
-										DEFAULT_FRAGMENT_REFERENCE);
+					() -> {
+						if (fragmentEntry.getFragmentEntryId() == 0) {
+							return new DefaultFragmentReference() {
+								{
+									setDefaultFragmentKey(
+										fragmentEntry::getFragmentEntryKey);
+									setFragmentReferenceType(
+										() ->
+											FragmentReferenceType.
+												DEFAULT_FRAGMENT_REFERENCE);
+								}
+							};
 						}
+
+						return new FragmentItemExternalReference() {
+							{
+								setExternalReferenceCode(
+									fragmentEntry::getExternalReferenceCode);
+								setFragmentReferenceType(
+									() ->
+										FragmentReferenceType.
+											FRAGMENT_ITEM_EXTERNAL_REFERENCE);
+								setScope(
+									() -> ScopeTestUtil.getItemScope(
+										fragmentEntry.getGroupId(),
+										scopeGroupId));
+							}
+						};
 					});
 				setFragmentType(FragmentType.BASIC);
 				setHtml(fragmentEntry::getHtml);

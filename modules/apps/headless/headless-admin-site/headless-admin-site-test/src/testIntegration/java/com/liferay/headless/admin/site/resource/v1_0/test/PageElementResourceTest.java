@@ -20,6 +20,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElem
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemExternalReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
@@ -1017,6 +1018,29 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				}
 			}
 		};
+	}
+
+	private PageElement _getCollectionItemPageElement(
+			String pageElementExternalReferenceCode,
+			String parentPageElementExternalReferenceCode,
+			PageElement[] pageElements)
+		throws Exception {
+
+		CollectionItemPageElementDefinition
+			collectionItemPageElementDefinition =
+				new CollectionItemPageElementDefinition();
+
+		collectionItemPageElementDefinition.setType(
+			PageElementDefinition.Type.COLLECTION_ITEM);
+
+		PageElement pageElement = _getPageElement(
+			collectionItemPageElementDefinition,
+			pageElementExternalReferenceCode, pageElements);
+
+		pageElement.setParentExternalReferenceCode(
+			parentPageElementExternalReferenceCode);
+
+		return pageElement;
 	}
 
 	private CollectionReference _getCollectionReference(

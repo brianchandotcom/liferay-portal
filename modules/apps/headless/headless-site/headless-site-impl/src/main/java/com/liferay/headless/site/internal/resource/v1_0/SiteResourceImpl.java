@@ -645,6 +645,11 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 						return descriptionMap;
 					});
+				setDescriptiveName(
+					() -> group.getDescriptiveName(LocaleUtil.getDefault()));
+				setDescriptiveName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						group.getDescriptiveNameMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setFriendlyUrlPath(group::getFriendlyURL);
 				setId(group::getGroupId);

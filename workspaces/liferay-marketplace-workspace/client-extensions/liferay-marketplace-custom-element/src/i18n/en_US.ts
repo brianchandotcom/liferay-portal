@@ -44,7 +44,6 @@ export default {
 	'all-progress-and-information-related-to-the-creation-of-the-solution-will-be-lost-unless-you-save-the-solution-as-a-draft-do-you-still-want-to-exit':
 		'All progress and information related to the creation of the solution will be lost unless you save the solution as a draft. Do you still want to exit?',
 	'all-published-apps': 'All Published Apps',
-	'allowed-email-domains': 'Allowed Email Domains',
 	'amount': 'Amount',
 	'an-administrator-of-the-marketplace-will-review-your-request-shortly-if-you-have-questions-regarding-your-submission-please-email':
 		'An administrator of the Marketplace will review your request shortly. If you have questions regarding your submission, please email.',
@@ -744,7 +743,6 @@ export default {
 	'when-adding-app-versions-you-can-use-your-own-numbering-system-but-be-sure-it-is-consistent-and-understandable-by-the-customer':
 		'When adding app versions, you can use your own numbering system, but be sure it is consistent and understandable by the customer.',
 	'workflow-action': 'Workflow Action',
-	'workspace-friendly-url': 'Workspace Friendly URL',
 	'workspace-info': 'Workspace Info',
 	'workspace-name': 'Workspace Name',
 	'workspace-owner-email': 'Workspace Owner Email',

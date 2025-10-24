@@ -937,11 +937,11 @@ public abstract class BaseWorkspaceGitRepository
 			return;
 		}
 
-		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
-
 		String jobName = System.getenv("JOB_NAME");
 
 		if (!jobName.contains("-batch") && !jobName.contains("-downstream")) {
+			GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
 			File archiveFile = gitWorkingDirectory.archive(
 				_getGitArchiveName());
 

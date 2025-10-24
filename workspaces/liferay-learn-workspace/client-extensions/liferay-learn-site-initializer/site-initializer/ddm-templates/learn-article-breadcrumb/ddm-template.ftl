@@ -4,53 +4,51 @@
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 />
 
+<#macro renderBreadcrumbItem
+	breadcrumbItem
+>
+	<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"" />
+
+	<#if breadcrumbItem?? && breadcrumbItem?has_content>
+		<li>
+			<a href='${(breadcrumbItem.getString("url"))!"#"}'>
+				${(breadcrumbItem.getString("title"))!""}
+			</a>
+		</li>
+	</#if>
+</#macro>
+
 <div class="learn-article-nav learn-article-nav-breadcrumb-container">
 	<div class="learn-article-breadcrumbs">
 		<div class="learn-article-breadcrumbs-content">
 			<div class="align-breadcrumbItems-baseline d-flex justify-content-between">
-				<ul aria-label="breadcrumb navigation" class="learn-article-breadcrumb" role="navigation">
 					<#if breadcrumbJSONArray?? && breadcrumbJSONArray?has_content>
+						<ul aria-label="breadcrumb navigation" class="learn-article-breadcrumb" role="navigation">
+							<#if breadcrumbJSONArray.length() lt 2>
+								<li>
+									<a href="/"><@clay["icon"] symbol="home-full" /></a>
+								</li>
 
-						<#if breadcrumbJSONArray.length() lt 2>
+								<#list 0..(breadcrumbJSONArray.length() - 1) as i>
+									<@renderBreadcrumbItem breadcrumbItem />
+								</#list>
+							<#else>
+								<li>
+									<a class="ellipsis-breadcrumb" href='${breadcrumbJSONArray.getJSONObject(0).getString("url")}'>
+										<@clay["icon"] symbol="ellipsis-h" />
+									</a>
+								</li>
+
+								<#list (0..1)?reverse as i>
+									<@renderBreadcrumbItem breadcrumbItem />
+								</#list>
+							</#if>
+
 							<li>
-								<a href="/"><@clay["icon"] symbol="home-full" /></a>
+								${navigationJSONObject.getJSONObject("self").getString("title")}
 							</li>
-
-							<#list 0..(breadcrumbJSONArray.length() - 1) as i>
-								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"" />
-
-								<#if breadcrumbItem?? && breadcrumbItem?has_content>
-									<li>
-										<a href='${(breadcrumbItem.getString("url"))!"#"}'>
-											${(breadcrumbItem.getString("title"))!""}
-										</a>
-									</li>
-								</#if>
-							</#list>
-						<#else>
-							<li>
-								<a href='${breadcrumbJSONArray.getJSONObject(0).getString("url")}'>
-									<span class="ellipsis-breadcrumb"></span>
-								</a>
-							</li>
-
-							<#list (0..1)?reverse as i>
-								<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)! />
-
-								<#if breadcrumbItem?? && breadcrumbItem?has_content>
-									<li>
-										<a href='${(breadcrumbItem.getString("url"))!"#"}'>
-											${(breadcrumbItem.getString("title"))!""}
-										</a>
-									</li>
-								</#if>
-							</#list>
-						</#if>
+						</ul>
 					</#if>
-					<li>
-						${navigationJSONObject.getJSONObject("self").getString("title")}
-					</li>
-				</ul>
 			</div>
 		</div>
 	</div>
@@ -62,3 +60,52 @@
 		</a>
 	</div>
 </div>
+
+<style>
+	.ellipsis-breadcrumb svg {
+		height: 1rem;
+		width: 1rem;
+	}
+
+	.learn-article-breadcrumb {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2px;
+	}
+
+	.learn-article-breadcrumb li {
+		color: #6C6C75;
+		font-size: 13px;
+		font-weight: 400;
+	}
+
+	.learn-article-breadcrumb li a {
+		color: #6C6C75;
+		font-size: 13px;
+		font-weight: 400;
+	}
+
+	.learn-article-breadcrumb li + li::before {
+		content: "/";
+		padding: 0 8px;
+	}
+
+	.learn-article-breadcrumb li:nth-child(2),
+	.learn-article-breadcrumb li:nth-child(2) a {
+		font-weight: 600;
+	}
+
+	.learn-article-nav-breadcrumb-container {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		padding: 0 1.75rem;
+	}
+
+	@media(max-width: 1024px) {
+		.learn-article-nav-breadcrumb-container {
+			margin-bottom: 2.5rem;
+			padding: 0;
+		}
+	}
+</style>

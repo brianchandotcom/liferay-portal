@@ -51,6 +51,94 @@ public class ConnectedSite implements Serializable {
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
+		description = "The connected site's descriptive name."
+	)
+	public String getDescriptiveName() {
+		if (_descriptiveNameSupplier != null) {
+			descriptiveName = _descriptiveNameSupplier.get();
+
+			_descriptiveNameSupplier = null;
+		}
+
+		return descriptiveName;
+	}
+
+	public void setDescriptiveName(String descriptiveName) {
+		this.descriptiveName = descriptiveName;
+
+		_descriptiveNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDescriptiveName(
+		UnsafeSupplier<String, Exception> descriptiveNameUnsafeSupplier) {
+
+		_descriptiveNameSupplier = () -> {
+			try {
+				return descriptiveNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The connected site's descriptive name.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected String descriptiveName;
+
+	@JsonIgnore
+	private Supplier<String> _descriptiveNameSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Map<String, String> getDescriptiveName_i18n() {
+		if (_descriptiveName_i18nSupplier != null) {
+			descriptiveName_i18n = _descriptiveName_i18nSupplier.get();
+
+			_descriptiveName_i18nSupplier = null;
+		}
+
+		return descriptiveName_i18n;
+	}
+
+	public void setDescriptiveName_i18n(
+		Map<String, String> descriptiveName_i18n) {
+
+		this.descriptiveName_i18n = descriptiveName_i18n;
+
+		_descriptiveName_i18nSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setDescriptiveName_i18n(
+		UnsafeSupplier<Map<String, String>, Exception>
+			descriptiveName_i18nUnsafeSupplier) {
+
+		_descriptiveName_i18nSupplier = () -> {
+			try {
+				return descriptiveName_i18nUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, String> descriptiveName_i18n;
+
+	@JsonIgnore
+	private Supplier<Map<String, String>> _descriptiveName_i18nSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The connected site's external reference code."
 	)
 	public String getExternalReferenceCode() {
@@ -326,6 +414,34 @@ public class ConnectedSite implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
+
+		String descriptiveName = getDescriptiveName();
+
+		if (descriptiveName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(descriptiveName));
+
+			sb.append("\"");
+		}
+
+		Map<String, String> descriptiveName_i18n = getDescriptiveName_i18n();
+
+		if (descriptiveName_i18n != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName_i18n\": ");
+
+			sb.append(_toJSON(descriptiveName_i18n));
+		}
 
 		String externalReferenceCode = getExternalReferenceCode();
 

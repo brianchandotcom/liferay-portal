@@ -46,6 +46,30 @@ public class ConnectedSiteSerDes {
 
 		sb.append("{");
 
+		if (connectedSite.getDescriptiveName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(connectedSite.getDescriptiveName()));
+
+			sb.append("\"");
+		}
+
+		if (connectedSite.getDescriptiveName_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"descriptiveName_i18n\": ");
+
+			sb.append(_toJSON(connectedSite.getDescriptiveName_i18n()));
+		}
+
 		if (connectedSite.getExternalReferenceCode() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -137,6 +161,24 @@ public class ConnectedSiteSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
+		if (connectedSite.getDescriptiveName() == null) {
+			map.put("descriptiveName", null);
+		}
+		else {
+			map.put(
+				"descriptiveName",
+				String.valueOf(connectedSite.getDescriptiveName()));
+		}
+
+		if (connectedSite.getDescriptiveName_i18n() == null) {
+			map.put("descriptiveName_i18n", null);
+		}
+		else {
+			map.put(
+				"descriptiveName_i18n",
+				String.valueOf(connectedSite.getDescriptiveName_i18n()));
+		}
+
 		if (connectedSite.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -200,7 +242,17 @@ public class ConnectedSiteSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
+				return false;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "descriptiveName_i18n")) {
+
+				return true;
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -227,7 +279,23 @@ public class ConnectedSiteSerDes {
 			ConnectedSite connectedSite, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "externalReferenceCode")) {
+			if (Objects.equals(jsonParserFieldName, "descriptiveName")) {
+				if (jsonParserFieldValue != null) {
+					connectedSite.setDescriptiveName(
+						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "descriptiveName_i18n")) {
+
+				if (jsonParserFieldValue != null) {
+					connectedSite.setDescriptiveName_i18n(
+						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "externalReferenceCode")) {
+
 				if (jsonParserFieldValue != null) {
 					connectedSite.setExternalReferenceCode(
 						(String)jsonParserFieldValue);

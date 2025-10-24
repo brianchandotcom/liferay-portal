@@ -208,6 +208,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 
 		ConnectedSite connectedSite = randomConnectedSite();
 
+		connectedSite.setDescriptiveName(regex);
 		connectedSite.setExternalReferenceCode(regex);
 		connectedSite.setLogo(regex);
 		connectedSite.setName(regex);
@@ -218,6 +219,7 @@ public abstract class BaseConnectedSiteResourceTestCase {
 
 		connectedSite = ConnectedSiteSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, connectedSite.getDescriptiveName());
 		Assert.assertEquals(regex, connectedSite.getExternalReferenceCode());
 		Assert.assertEquals(regex, connectedSite.getLogo());
 		Assert.assertEquals(regex, connectedSite.getName());
@@ -976,6 +978,24 @@ public abstract class BaseConnectedSiteResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("descriptiveName", additionalAssertFieldName)) {
+				if (connectedSite.getDescriptiveName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"descriptiveName_i18n", additionalAssertFieldName)) {
+
+				if (connectedSite.getDescriptiveName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
 
@@ -1140,6 +1160,30 @@ public abstract class BaseConnectedSiteResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("descriptiveName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						connectedSite1.getDescriptiveName(),
+						connectedSite2.getDescriptiveName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"descriptiveName_i18n", additionalAssertFieldName)) {
+
+				if (!equals(
+						(Map)connectedSite1.getDescriptiveName_i18n(),
+						(Map)connectedSite2.getDescriptiveName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals(
 					"externalReferenceCode", additionalAssertFieldName)) {
@@ -1312,6 +1356,57 @@ public abstract class BaseConnectedSiteResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("descriptiveName")) {
+			Object object = connectedSite.getDescriptiveName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
+		if (entityFieldName.equals("descriptiveName_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("externalReferenceCode")) {
 			Object object = connectedSite.getExternalReferenceCode();
@@ -1511,6 +1606,8 @@ public abstract class BaseConnectedSiteResourceTestCase {
 	protected ConnectedSite randomConnectedSite() throws Exception {
 		return new ConnectedSite() {
 			{
+				descriptiveName = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();

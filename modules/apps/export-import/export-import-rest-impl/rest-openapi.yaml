@@ -376,7 +376,7 @@ paths:
     "/report-entry/{reportEntryId}":
         get:
             description:
-                Retrieves the error report entry with the specified ID.
+                Retrieves the report entry with the specified ID.
             operationId: getReportEntry
             parameters:
                 -   in: path

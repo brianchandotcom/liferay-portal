@@ -32,8 +32,8 @@ export function ExportErrorsReportAction({
 
 			{open && (
 				<ExportErrorsReportModal
-					backgroundTaskId={backgroundTaskId}
 					filename={filename}
+					importProcessId={backgroundTaskId}
 					observer={observer}
 					onOpenChange={onOpenChange}
 				/>

@@ -5,6 +5,7 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
+import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,10 +26,22 @@ public class LocalizedValueUtil {
 	}
 
 	public static JSONObject toJSONObject(Map<String, String> localizedValues) {
+		return toJSONObject(localizedValues, value -> value);
+	}
+
+	public static <T, R, E extends Throwable> JSONObject toJSONObject(
+			Map<String, T> localizedValues,
+			UnsafeFunction<T, R, E> unsafeFunction)
+		throws E {
+
+		List<String> availableLanguageIds = getAvailableLanguageIds();
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		for (Map.Entry<String, String> entry : localizedValues.entrySet()) {
-			jsonObject.put(entry.getKey(), entry.getValue());
+		for (Map.Entry<String, T> entry : localizedValues.entrySet()) {
+			if (availableLanguageIds.contains(entry.getKey())) {
+				jsonObject.put(
+					entry.getKey(), unsafeFunction.apply(entry.getValue()));
+			}
 		}
 
 		return jsonObject;

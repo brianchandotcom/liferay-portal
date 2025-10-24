@@ -192,6 +192,14 @@ public class EditStyleBookEntryDisplayContextTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay(Group group, LayoutSet layoutSet) {
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getLayoutSet()
+		).thenReturn(
+			layoutSet
+		);
+
 		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
 
 		Mockito.doNothing(
@@ -199,14 +207,6 @@ public class EditStyleBookEntryDisplayContextTest {
 			portletDisplay
 		).setURLBack(
 			StringPool.BLANK
-		);
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			themeDisplay.getLayoutSet()
-		).thenReturn(
-			layoutSet
 		);
 
 		Mockito.when(

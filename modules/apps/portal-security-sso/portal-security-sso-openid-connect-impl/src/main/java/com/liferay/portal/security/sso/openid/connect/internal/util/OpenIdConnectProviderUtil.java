@@ -7,10 +7,16 @@ package com.liferay.portal.security.sso.openid.connect.internal.util;
 
 import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.util.Base64;
+
+import java.net.URI;
+
+import java.security.MessageDigest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +26,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Renan Vasconcelos
  */
 public class OpenIdConnectProviderUtil {
+
+	public static String generateLocalWellKnownURI(
+			String issuer, String tokenEndpoint)
+		throws Exception {
+
+		URI issuerURI = URI.create(issuer);
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+		return StringBundler.concat(
+			issuerURI.getScheme(), "://", issuerURI.getAuthority(),
+			"/.well-known/openid-configuration", issuerURI.getPath(), '/',
+			Base64.encodeToURL(messageDigest.digest(tokenEndpoint.getBytes())),
+			"/local");
+	}
 
 	public static long getOAuthClientEntryId(
 		long companyId, String providerName,

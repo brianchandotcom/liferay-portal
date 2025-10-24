@@ -13,9 +13,12 @@ import com.liferay.expando.kernel.model.ExpandoValue;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -44,20 +47,28 @@ import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
 import com.liferay.portal.security.sso.openid.connect.internal.exception.StrangersNotAllowedException;
+import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
+import com.liferay.portal.security.sso.openid.connect.persistence.model.OpenIdConnectUser;
+import com.liferay.portal.security.sso.openid.connect.persistence.service.OpenIdConnectUserLocalService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -68,17 +79,24 @@ import org.osgi.service.component.annotations.Reference;
 public class OIDCUserInfoProcessor {
 
 	public long processUserInfo(
-			long companyId, String customClaimsJSON, String issuer,
-			ServiceContext serviceContext, String userInfoJSON,
-			String userInfoMapperJSON)
+			long companyId, String issuer, OAuthClientEntry oAuthClientEntry,
+			ServiceContext serviceContext, String tokenEndpoint,
+			String userInfoJSON)
 		throws Exception {
 
+		String matcherField = _getMatcherField(
+			oAuthClientEntry.getAuthServerWellKnownURI(),
+			oAuthClientEntry.getClientId(), companyId, issuer, tokenEndpoint);
+
 		User user = _addOrUpdateUser(
-			companyId, customClaimsJSON, issuer, serviceContext, userInfoJSON,
-			userInfoMapperJSON);
+			companyId, oAuthClientEntry.getCustomClaimsJSON(), matcherField,
+			issuer, serviceContext, userInfoJSON,
+			oAuthClientEntry.getOIDCUserInfoMapperJSON());
 
 		try {
-			_addAddress(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+			_addAddress(
+				serviceContext, user, userInfoJSON,
+				oAuthClientEntry.getOIDCUserInfoMapperJSON());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -87,7 +105,9 @@ public class OIDCUserInfoProcessor {
 		}
 
 		try {
-			_addPhone(serviceContext, user, userInfoJSON, userInfoMapperJSON);
+			_addPhone(
+				serviceContext, user, userInfoJSON,
+				oAuthClientEntry.getOIDCUserInfoMapperJSON());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
@@ -196,8 +216,8 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private User _addOrUpdateUser(
-			long companyId, String customClaimsJSON, String issuer,
-			ServiceContext serviceContext, String userInfoJSON,
+			long companyId, String customClaimsJSON, String matcherField,
+			String issuer, ServiceContext serviceContext, String userInfoJSON,
 			String userInfoMapperJSON)
 		throws Exception {
 
@@ -219,10 +239,35 @@ public class OIDCUserInfoProcessor {
 		String screenName = _getClaimString(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
 
-		User user = _userLocalService.fetchUserByEmailAddress(
-			companyId, emailAddress);
+		String sub = userInfoJSONObject.getString("sub");
 
-		_validate(companyId, emailAddress, firstName, lastName, user);
+		User user = null;
+
+		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
+			OpenIdConnectUser openIdConnectUser =
+				_openIdConnectUserLocalService.fetchOpenIdConnectUser(
+					companyId, issuer, sub);
+
+			if (openIdConnectUser != null) {
+				user = _userLocalService.fetchUser(
+					openIdConnectUser.getUserId());
+			}
+			else if (matcherField.equals("email")) {
+				user = _userLocalService.fetchUserByEmailAddress(
+					companyId, emailAddress);
+			}
+			else if (matcherField.equals("screenName")) {
+				user = _userLocalService.fetchUserByScreenName(
+					companyId, screenName);
+			}
+		}
+		else {
+			user = _userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
+		}
+
+		_validate(
+			companyId, emailAddress, matcherField, firstName, lastName, user);
 
 		JSONObject contactMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("contact");
@@ -263,6 +308,8 @@ public class OIDCUserInfoProcessor {
 					null,
 				false, serviceContext);
 
+			_saveOpenIdConnectUser(issuer, sub, user);
+
 			ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 				User.class.getName(), companyId);
 
@@ -285,7 +332,7 @@ public class OIDCUserInfoProcessor {
 		_addOrUpdateUserCustomClaims(
 			customClaimsJSON, user, userInfoJSONObject);
 
-		return _userLocalService.updateUser(
+		user = _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, false, user.getReminderQueryQuestion(),
 			user.getReminderQueryAnswer(),
@@ -309,6 +356,10 @@ public class OIDCUserInfoProcessor {
 			user.getUserGroupRoles(),
 			_getUserGroupIds(companyId, oAuthClientEntryId, user, userGroupIds),
 			serviceContext);
+
+		_saveOpenIdConnectUser(issuer, sub, user);
+
+		return user;
 	}
 
 	private void _addOrUpdateUserCustomClaims(
@@ -497,6 +548,47 @@ public class OIDCUserInfoProcessor {
 		Company company = _companyLocalService.getCompany(companyId);
 
 		return company.getLocale();
+	}
+
+	private String _getMatcherField(
+			String authServerWellKnownURI, String clientId, long companyId,
+			String issuer, String tokenEndpoint)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
+			return "email";
+		}
+
+		String generatedLocalWellKnownURI =
+			OpenIdConnectProviderUtil.generateLocalWellKnownURI(
+				issuer, tokenEndpoint);
+
+		String filterString = null;
+
+		if (authServerWellKnownURI.equals(generatedLocalWellKnownURI)) {
+			filterString = StringBundler.concat(
+				"(&(companyId=", companyId, ")(tokenEndpoint=", tokenEndpoint,
+				")(issuerURL=", issuer, ")(openIdConnectClientId=", clientId,
+				"))");
+		}
+		else {
+			filterString = StringBundler.concat(
+				"(&(companyId=", companyId, ")(discoveryEndpoint=",
+				authServerWellKnownURI, ")(openIdConnectClientId=", clientId,
+				"))");
+		}
+
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
+
+		if (configurations == null) {
+			return "email";
+		}
+
+		Dictionary<String, Object> properties =
+			configurations[0].getProperties();
+
+		return GetterUtil.getString(properties.get("matcherField"));
 	}
 
 	private ExpandoColumn _getOrAddExpandoColumn(
@@ -717,12 +809,38 @@ public class OIDCUserInfoProcessor {
 		return false;
 	}
 
-	private void _validate(
-			long companyId, String emailAddress, String firstName,
-			String lastName, User user)
+	private void _saveOpenIdConnectUser(
+			String issuer, String subject, User user)
 		throws Exception {
 
-		if (Validator.isNull(emailAddress)) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				user.getCompanyId(), "LPD-20879")) {
+
+			return;
+		}
+
+		OpenIdConnectUser openIdConnectUser =
+			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
+				user.getCompanyId(), issuer, subject);
+
+		if (openIdConnectUser != null) {
+			return;
+		}
+
+		_openIdConnectUserLocalService.addOpenIdConnectUser(
+			user.getUserId(), issuer, subject);
+	}
+
+	private void _validate(
+			long companyId, String emailAddress, String matcherField,
+			String firstName, String lastName, User user)
+		throws Exception {
+
+		if (Validator.isNull(emailAddress) &&
+			(matcherField.equals("email") ||
+			 PrefsPropsUtil.getBoolean(
+				 companyId, PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED))) {
+
 			throw new OpenIdConnectServiceException.UserMappingException(
 				"Email address is null");
 		}
@@ -764,6 +882,9 @@ public class OIDCUserInfoProcessor {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
+	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
 	private CountryLocalService _countryLocalService;
 
 	@Reference
@@ -780,6 +901,9 @@ public class OIDCUserInfoProcessor {
 
 	@Reference
 	private ListTypeLocalService _listTypeLocalService;
+
+	@Reference
+	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;

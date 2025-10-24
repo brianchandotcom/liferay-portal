@@ -23,10 +23,13 @@ import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -97,6 +100,9 @@ public class InventoryAnalysisResourceTest
 			null, _depotEntry.getDepotEntryId(), "category", null, null, null,
 			null, null, null, null, null);
 
+		Assert.assertEquals(
+			2L, (long)inventoryAnalysis.getInventoryAnalysisItemsCount());
+
 		inventoryAnalysisItems = inventoryAnalysis.getInventoryAnalysisItems();
 
 		Assert.assertEquals(
@@ -119,11 +125,16 @@ public class InventoryAnalysisResourceTest
 			_assetCategory.getCategoryId(), _depotEntry.getDepotEntryId(),
 			"category", null, null, null, null, null, null, null, null);
 
+		Assert.assertEquals(
+			1L, (long)inventoryAnalysis.getInventoryAnalysisItemsCount());
+
 		inventoryAnalysisItems = inventoryAnalysis.getInventoryAnalysisItems();
 
 		Assert.assertEquals(
 			inventoryAnalysisItems.toString(), 1,
 			inventoryAnalysisItems.length);
+
+		inventoryAnalysisItem = inventoryAnalysisItems[0];
 
 		Assert.assertEquals(1L, (long)inventoryAnalysisItem.getCount());
 
@@ -140,25 +151,43 @@ public class InventoryAnalysisResourceTest
 		}
 	}
 
+	private boolean _isCMSSiteInitialized() throws Exception {
+		ObjectFolder objectFolder =
+			_objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES,
+				TestPropsValues.getCompanyId());
+
+		if (objectFolder != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _setUpCMSContext() throws Exception {
-		Bundle testBundle = FrameworkUtil.getBundle(OverviewResourceTest.class);
+		if (!_isCMSSiteInitialized()) {
+			Bundle testBundle = FrameworkUtil.getBundle(
+				OverviewResourceTest.class);
 
-		BundleContext bundleContext = testBundle.getBundleContext();
+			BundleContext bundleContext = testBundle.getBundleContext();
 
-		for (Bundle bundle : bundleContext.getBundles()) {
-			if (Objects.equals(
-					bundle.getSymbolicName(),
-					"com.liferay.site.initializer.cms")) {
+			for (Bundle bundle : bundleContext.getBundles()) {
+				if (Objects.equals(
+						bundle.getSymbolicName(),
+						"com.liferay.site.initializer.cms")) {
 
-				_deleteFile(bundle, "00.list.type.definition");
-				_deleteFile(bundle, "01.object.folder");
-				_deleteFile(bundle, "02.object.definition");
+					_deleteFile(bundle, "00.list.type.definition");
+					_deleteFile(bundle, "01.object.folder");
+					_deleteFile(bundle, "02.object.definition");
 
-				CompletableFuture<Void> completableFuture =
-					_batchEngineUnitProcessor.processBatchEngineUnits(
-						_batchEngineUnitReader.getBatchEngineUnits(bundle));
+					CompletableFuture<Void> completableFuture =
+						_batchEngineUnitProcessor.processBatchEngineUnits(
+							_batchEngineUnitReader.getBatchEngineUnits(bundle));
 
-				completableFuture.join();
+					completableFuture.join();
+
+					break;
+				}
 			}
 		}
 
@@ -263,6 +292,9 @@ public class InventoryAnalysisResourceTest
 
 	@DeleteAfterTestRun
 	private List<ObjectEntry> _objectEntries = new ArrayList<>();
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 	private ServiceContext _serviceContext;
 

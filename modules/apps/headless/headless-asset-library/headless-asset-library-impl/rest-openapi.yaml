@@ -124,6 +124,16 @@ components:
             description:
                 Represents a connected site.
             properties:
+                descriptiveName:
+                    description:
+                        The connected site's descriptive name.
+                    readOnly: true
+                    type: string
+                descriptiveName_i18n:
+                    additionalProperties:
+                        type: string
+                    readOnly: true
+                    type: object
                 externalReferenceCode:
                     description:
                         The connected site's external reference code.

@@ -58,6 +58,23 @@ public class ObjectEntryFolderServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder copyObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace, ServiceContext serviceContext)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), objectEntryFolderId, ActionKeys.UPDATE);
+		_modelResourcePermission.check(
+			getPermissionChecker(), parentObjectEntryFolderId,
+			ActionKeys.UPDATE);
+
+		return objectEntryFolderLocalService.copyObjectEntryFolder(
+			getUserId(), objectEntryFolderId, parentObjectEntryFolderId,
+			replace, serviceContext);
+	}
+
+	@Override
 	public ObjectEntryFolder deleteObjectEntryFolder(long objectEntryFolderId)
 		throws PortalException {
 
@@ -203,6 +220,23 @@ public class ObjectEntryFolderServiceImpl
 		return objectEntryFolderLocalService.getOrAddEmptyObjectEntryFolder(
 			externalReferenceCode, groupId, companyId, getUserId(),
 			serviceContext);
+	}
+
+	@Override
+	public ObjectEntryFolder moveObjectEntryFolder(
+			long objectEntryFolderId, long parentObjectEntryFolderId,
+			boolean replace, ServiceContext serviceContext)
+		throws PortalException {
+
+		_modelResourcePermission.check(
+			getPermissionChecker(), objectEntryFolderId, ActionKeys.UPDATE);
+		_modelResourcePermission.check(
+			getPermissionChecker(), parentObjectEntryFolderId,
+			ActionKeys.UPDATE);
+
+		return objectEntryFolderLocalService.moveObjectEntryFolder(
+			getUserId(), objectEntryFolderId, parentObjectEntryFolderId,
+			replace, serviceContext);
 	}
 
 	@Override

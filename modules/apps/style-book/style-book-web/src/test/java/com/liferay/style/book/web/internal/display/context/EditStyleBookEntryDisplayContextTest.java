@@ -142,7 +142,7 @@ public class EditStyleBookEntryDisplayContextTest {
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
 			Mockito.mock(FrontendTokenDefinitionRegistry.class);
 
-		_callGetFrontendTokenDefinitionJSONObject(
+		_invokeGetFrontendTokenDefinitionJSONObject(
 			frontendTokenDefinitionRegistry,
 			_getThemeDisplay(liveGroup, liveLayoutSet));
 
@@ -156,7 +156,7 @@ public class EditStyleBookEntryDisplayContextTest {
 			liveLayoutSet
 		);
 
-		_callGetFrontendTokenDefinitionJSONObject(
+		_invokeGetFrontendTokenDefinitionJSONObject(
 			frontendTokenDefinitionRegistry,
 			_getThemeDisplay(stagingGroup, stagingLayoutSet));
 
@@ -171,7 +171,7 @@ public class EditStyleBookEntryDisplayContextTest {
 		);
 	}
 
-	private void _callGetFrontendTokenDefinitionJSONObject(
+	private void _invokeGetFrontendTokenDefinitionJSONObject(
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		ThemeDisplay themeDisplay) {
 

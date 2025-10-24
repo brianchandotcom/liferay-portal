@@ -227,23 +227,23 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
-	protected Long getPermissionCheckerGroupId(
-			String groupExternalReferenceCode)
+	protected Long getPermissionCheckerResourceId(
+			String groupExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuService.fetchSiteNavigationMenu((Long)id);
+			_siteNavigationMenuService.
+				getSiteNavigationMenuByExternalReferenceCode(
+					externalReferenceCode,
+					getPermissionCheckerGroupId(groupExternalReferenceCode));
 
-		return siteNavigationMenu.getGroupId();
+		return siteNavigationMenu.getPrimaryKey();
 	}
 
 	@Override
-	protected String getPermissionCheckerPortletName(Object id) {
-		return SiteNavigationConstants.RESOURCE_NAME;
-	}
+	protected String getPermissionCheckerResourceName(
+		String groupExternalReferenceCode, String externalReferenceCode) {
 
-	@Override
-	protected String getPermissionCheckerResourceName(Object id) {
 		return SiteNavigationMenu.class.getName();
 	}
 

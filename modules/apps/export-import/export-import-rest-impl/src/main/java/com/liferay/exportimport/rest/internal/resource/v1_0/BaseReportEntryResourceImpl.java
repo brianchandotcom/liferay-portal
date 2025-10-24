@@ -148,7 +148,7 @@ public abstract class BaseReportEntryResourceImpl
 	 * curl -X 'GET' 'http://localhost:8080/o/export-import/v1.0/report-entry/{reportEntryId}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the error report entry with the specified ID."
+		description = "Retrieves the report entry with the specified ID."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {

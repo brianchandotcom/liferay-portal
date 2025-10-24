@@ -94,6 +94,8 @@ public class ObjectEntryModelListenerTest {
 	public void setUp() throws Exception {
 		_cmsAdministratorRole = _getOrAddCMSAdministratorRole(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId());
+		_ownerRole = _roleLocalService.getRole(
+			TestPropsValues.getCompanyId(), RoleConstants.OWNER);
 		_userRole = _roleLocalService.getRole(
 			TestPropsValues.getCompanyId(), RoleConstants.USER);
 
@@ -234,6 +236,17 @@ public class ObjectEntryModelListenerTest {
 				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectEntry2.getObjectEntryId()),
+				_ownerRole.getRoleId());
+
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
 				_userRole.getRoleId());
 
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.DELETE));
@@ -268,6 +281,8 @@ public class ObjectEntryModelListenerTest {
 				RoleConstants.CMS_ADMINISTRATOR,
 				JSONUtil.putAll(
 					ActionKeys.DELETE, ActionKeys.VIEW, randomString)
+			).put(
+				RoleConstants.OWNER, JSONUtil.putAll(ActionKeys.DELETE)
 			).put(
 				RoleConstants.USER, JSONUtil.putAll(ActionKeys.UPDATE)
 			));
@@ -324,6 +339,17 @@ public class ObjectEntryModelListenerTest {
 		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 		Assert.assertFalse(resourcePermission.hasActionId(randomString));
+
+		resourcePermission =
+			_resourcePermissionLocalService.getResourcePermission(
+				objectEntry2.getCompanyId(), objectEntry2.getModelClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry2.getObjectEntryId()),
+				_ownerRole.getRoleId());
+
+		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.DELETE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.UPDATE));
+		Assert.assertFalse(resourcePermission.hasActionId(ActionKeys.VIEW));
 
 		resourcePermission =
 			_resourcePermissionLocalService.getResourcePermission(
@@ -408,6 +434,8 @@ public class ObjectEntryModelListenerTest {
 
 	@Inject
 	private ObjectFolderLocalService _objectFolderLocalService;
+
+	private Role _ownerRole;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

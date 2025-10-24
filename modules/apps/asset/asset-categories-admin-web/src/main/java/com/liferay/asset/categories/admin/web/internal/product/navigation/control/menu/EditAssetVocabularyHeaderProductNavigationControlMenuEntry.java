@@ -5,24 +5,14 @@
 
 package com.liferay.asset.categories.admin.web.internal.product.navigation.control.menu;
 
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPortletKeys;
-import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.model.AssetVocabularyConstants;
-import com.liferay.asset.kernel.service.AssetVocabularyService;
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.theme.PortletDisplay;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseJSPProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,40 +40,10 @@ public class EditAssetVocabularyHeaderProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		Boolean show = (Boolean)httpServletRequest.getAttribute(
+			AssetCategoriesAdminWebKeys.SHOW_EDIT_ASSET_VOCABULARY_HEADER);
 
-		Layout layout = themeDisplay.getLayout();
-
-		if (!layout.isTypeControlPanel()) {
-			return false;
-		}
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		if ((portletDisplay == null) ||
-			!Objects.equals(
-				portletDisplay.getId(),
-				AssetCategoriesAdminPortletKeys.ASSET_CATEGORIES_ADMIN)) {
-
-			return false;
-		}
-
-		long vocabularyId = ParamUtil.getLong(
-			httpServletRequest, portletDisplay.getNamespace() + "vocabularyId");
-
-		if (vocabularyId <= 0) {
-			return false;
-		}
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyService.fetchVocabulary(vocabularyId);
-
-		if ((assetVocabulary == null) ||
-			(assetVocabulary.getVisibilityType() !=
-				AssetVocabularyConstants.VISIBILITY_TYPE_EMPTY)) {
-
+		if ((show == null) || !show) {
 			return false;
 		}
 
@@ -94,9 +54,6 @@ public class EditAssetVocabularyHeaderProductNavigationControlMenuEntry
 	protected ServletContext getServletContext() {
 		return _servletContext;
 	}
-
-	@Reference
-	private AssetVocabularyService _assetVocabularyService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.asset.categories.admin.web)"

@@ -32,7 +32,7 @@ public class SitesSummarySectionTableFDSView extends BaseTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "sites",
+			"descriptiveName", "sites",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"siteTableCellRenderer")
 		).build();

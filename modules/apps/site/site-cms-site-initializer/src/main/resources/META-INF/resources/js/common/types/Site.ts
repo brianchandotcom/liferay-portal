@@ -4,6 +4,7 @@
  */
 
 export type Site = {
+	descriptiveName: string;
 	externalReferenceCode: string;
 	id: string;
 	logo: string;

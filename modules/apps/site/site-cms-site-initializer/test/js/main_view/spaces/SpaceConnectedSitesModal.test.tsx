@@ -44,13 +44,15 @@ const mockedOpenToast = openToast as jest.Mock;
 
 const mockConnectedSites: Site[] = [
 	{
+		descriptiveName: 'Connected Site 1',
 		externalReferenceCode: '1',
 		id: '1',
 		logo: 'logo1.png',
-		name: 'Connected Site 1',
+		name: 'Guest',
 		searchable: true,
 	},
 	{
+		descriptiveName: 'Connected Site 2',
 		externalReferenceCode: '2',
 		id: '2',
 		logo: 'logo2.png',
@@ -60,6 +62,7 @@ const mockConnectedSites: Site[] = [
 ];
 
 const mockUnconnectedSite: Site = {
+	descriptiveName: 'Unconnected Site 3',
 	externalReferenceCode: '3',
 	id: '3',
 	logo: 'logo3.png',
@@ -128,6 +131,7 @@ describe('SpaceConnectedSitesModal', () => {
 		mockConnectSiteToSpace.mockImplementation(
 			async (_externalReferenceCode, siteId, searchable) => ({
 				data: {
+					descriptiveName: mockUnconnectedSite.descriptiveName,
 					externalReferenceCode:
 						mockUnconnectedSite.externalReferenceCode,
 					id: siteId,
@@ -210,12 +214,16 @@ describe('SpaceConnectedSitesModal', () => {
 
 			await waitFor(() => {
 				expect(
-					screen.getByRole('option', {name: mockUnconnectedSite.name})
+					screen.getByRole('option', {
+						name: mockUnconnectedSite.descriptiveName,
+					})
 				).toBeInTheDocument();
 			});
 
 			await userEvent.click(
-				screen.getByRole('option', {name: mockUnconnectedSite.name})
+				screen.getByRole('option', {
+					name: mockUnconnectedSite.descriptiveName,
+				})
 			);
 
 			await userEvent.click(
@@ -234,7 +242,7 @@ describe('SpaceConnectedSitesModal', () => {
 			);
 
 			expect(
-				screen.getByText(mockUnconnectedSite.name)
+				screen.getByText(mockUnconnectedSite.descriptiveName)
 			).toBeInTheDocument();
 		});
 
@@ -262,12 +270,16 @@ describe('SpaceConnectedSitesModal', () => {
 
 			await waitFor(() => {
 				expect(
-					screen.getByRole('option', {name: mockUnconnectedSite.name})
+					screen.getByRole('option', {
+						name: mockUnconnectedSite.descriptiveName,
+					})
 				).toBeInTheDocument();
 			});
 
 			await userEvent.click(
-				screen.getByRole('option', {name: mockUnconnectedSite.name})
+				screen.getByRole('option', {
+					name: mockUnconnectedSite.descriptiveName,
+				})
 			);
 
 			await userEvent.click(

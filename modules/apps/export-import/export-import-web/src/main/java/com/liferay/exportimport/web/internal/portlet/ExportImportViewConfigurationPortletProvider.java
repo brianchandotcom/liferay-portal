@@ -5,7 +5,6 @@
 
 package com.liferay.exportimport.web.internal.portlet;
 
-import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.constants.ExportImportPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Jaime León Rosado
  */
 @Component(
-	property = "model.class.name=" + ExportImportConstants.EXPORT_IMPORT_CONFIGURATION,
+	property = "model.class.name=com.liferay.exportimport.kernel.model.ExportImportConfiguration",
 	service = PortletProvider.class
 )
 public class ExportImportViewConfigurationPortletProvider

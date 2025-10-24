@@ -5,7 +5,7 @@
 
 package com.liferay.exportimport.web.internal.portlet.configuration.icon;
 
-import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -68,8 +68,7 @@ public class ImportPortletConfigurationIcon
 		try {
 			return PortletURLBuilder.create(
 				PortletProviderUtil.getPortletURL(
-					portletRequest,
-					ExportImportConstants.EXPORT_IMPORT_CONFIGURATION,
+					portletRequest, ExportImportConfiguration.class.getName(),
 					PortletProvider.Action.VIEW)
 			).setMVCPath(
 				"/import_portlet.jsp"

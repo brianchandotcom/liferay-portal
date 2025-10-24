@@ -57,7 +57,6 @@ public class EditStyleBookEntryDisplayContextTest {
 		_styleBookEntryLocalServiceUtilMockedStatic.close();
 	}
 
-	@FeatureFlag(enable = false, value = "LPD-30204")
 	@Test
 	public void testGetStyleBookEditorData() throws PortalException {
 		Group liveGroup = Mockito.mock(Group.class);

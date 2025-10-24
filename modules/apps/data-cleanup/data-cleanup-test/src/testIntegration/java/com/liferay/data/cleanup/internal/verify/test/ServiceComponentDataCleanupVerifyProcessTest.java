@@ -68,8 +68,11 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 
 				Assert.assertTrue(
 					messages.contains(
-						"Content of table ServiceComponent for bundle " +
-							"com.liferay.layout.service is outdated"));
+						StringBundler.concat(
+							"Content of table ",
+							_dbInspector.normalizeName("ServiceComponent"),
+							" for bundle com.liferay.layout.service is ",
+							"outdated")));
 			},
 			() -> {
 				if (serviceComponentAtomicReference.get() != null) {
@@ -103,8 +106,11 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 
 				Assert.assertTrue(
 					messages.contains(
-						"Content of table ServiceComponent for bundle " +
-							"com.liferay.layout.service is outdated"));
+						StringBundler.concat(
+							"Content of table ",
+							_dbInspector.normalizeName("ServiceComponent"),
+							" for bundle com.liferay.layout.service is ",
+							"outdated")));
 			},
 			() -> {
 				ServiceComponent serviceComponent = _getLatestServiceComponent(

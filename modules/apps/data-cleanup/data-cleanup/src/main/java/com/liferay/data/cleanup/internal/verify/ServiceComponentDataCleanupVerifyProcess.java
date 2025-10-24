@@ -5,8 +5,10 @@
 
 package com.liferay.data.cleanup.internal.verify;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
+import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,12 +46,16 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		DBInspector dbInspector = new DBInspector(connection);
+
+		Set<ServiceComponent> latestServiceComponents = new HashSet<>(
+			_serviceComponentLocalService.getLatestServiceComponents());
+
 		List<ServiceComponent> serviceComponents =
 			_serviceComponentLocalService.getServiceComponents(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Set<ServiceComponent> latestServiceComponents = new HashSet<>(
-			_serviceComponentLocalService.getLatestServiceComponents());
+		String tableName = dbInspector.normalizeName("ServiceComponent");
 
 		for (ServiceComponent serviceComponent : serviceComponents) {
 			String buildNamespace = serviceComponent.getBuildNamespace();
@@ -62,7 +68,7 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 					serviceComponent);
 
 				DataCleanupLoggingUtil.logDelete(
-					_log, 1, "ServiceComponent",
+					_log, 1, tableName,
 					buildNamespace + " is not a fully qualified name");
 			}
 			else if (buildNamespace.startsWith("com.liferay.")) {
@@ -74,7 +80,7 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 						serviceComponent);
 
 					DataCleanupLoggingUtil.logDelete(
-						_log, 1, "ServiceComponent",
+						_log, 1, tableName,
 						buildNamespace +
 							" does not match with any existing bundle");
 
@@ -98,8 +104,9 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 						serviceComponent.getData(), _generateXML(bundle))) {
 
 					_log.error(
-						"Content of table ServiceComponent for bundle " +
-							buildNamespace + " is outdated");
+						StringBundler.concat(
+							"Content of table ", tableName, " for bundle ",
+							buildNamespace, " is outdated"));
 				}
 			}
 		}

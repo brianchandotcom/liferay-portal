@@ -91,7 +91,8 @@ public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
 		}
 		catch (Exception exception) {
 			if (exception instanceof UserPasswordException) {
-				SessionErrors.add(actionRequest, exception.getClass());
+				SessionErrors.add(
+					actionRequest, exception.getClass(), exception);
 			}
 			else if (exception instanceof NoSuchUserException ||
 					 exception instanceof PrincipalException) {

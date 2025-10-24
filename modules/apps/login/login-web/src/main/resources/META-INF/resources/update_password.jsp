@@ -94,7 +94,7 @@ if (Validator.isNull(titlePage)) {
 			<div class="alert alert-danger">
 
 				<%
-				UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)SessionErrors.get(request, UserLockoutException.PasswordPolicyLockout.class.getName());
+				UserLockoutException.PasswordPolicyLockout ule = (UserLockoutException.PasswordPolicyLockout)MultiSessionErrors.get(liferayPortletRequest, UserLockoutException.PasswordPolicyLockout.class.getName());
 
 				Format dateFormat = FastDateFormatFactoryUtil.getDateTime(FastDateFormatConstants.SHORT, FastDateFormatConstants.LONG, locale, TimeZone.getTimeZone(ule.user.getTimeZoneId()));
 				%>

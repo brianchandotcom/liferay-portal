@@ -352,7 +352,7 @@ test(
 				permissions: defaultPermissions,
 			});
 
-			await page.getByRole('link', {name: 'Clear'}).click();
+			await page.getByRole('button', {name: 'Clear'}).click();
 
 			await tickCheckBoxes(page, [folderName2, folderName3]);
 			await verifyPermissions({

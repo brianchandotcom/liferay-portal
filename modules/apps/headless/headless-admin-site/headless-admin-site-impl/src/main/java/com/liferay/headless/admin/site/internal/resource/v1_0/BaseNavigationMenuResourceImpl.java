@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -43,7 +42,6 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -83,105 +81,25 @@ import java.util.Set;
 @jakarta.ws.rs.Path("/v1.0")
 public abstract class BaseNavigationMenuResourceImpl
 	implements EntityModelResource, NavigationMenuResource,
-			   VulcanBatchEngineTaskItemDelegate<NavigationMenu>,
-			   VulcanCRUDItemDelegate<NavigationMenu> {
+			   VulcanBatchEngineTaskItemDelegate<NavigationMenu> {
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}'  -u 'test@liferay.com:test'
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes the navigation menu and returns a 204 if the operation succeeds"
+		description = "Deletes a specific navigation menu of a site."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "navigationMenuId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/navigation-menus/{navigationMenuId}")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public void deleteNavigationMenu(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("navigationMenuId")
-			Long navigationMenuId)
-		throws Exception {
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.DELETE
-	@jakarta.ws.rs.Path("/navigation-menus/batch")
-	@jakarta.ws.rs.Produces("application/json")
-	@Override
-	public Response deleteNavigationMenuBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.deleteImportTask(
-				NavigationMenu.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Deletes the navigation menu by external reference code and returns a 204 if the operation succeeds"
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
+				name = "navigationMenuExternalReferenceCode"
 			)
 		}
 	)
@@ -192,35 +110,44 @@ public abstract class BaseNavigationMenuResourceImpl
 	)
 	@jakarta.ws.rs.DELETE
 	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}"
+		"/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}"
 	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public void deleteSiteNavigationMenuByExternalReferenceCode(
+	public void deleteSiteNavigationMenu(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+			@jakarta.ws.rs.PathParam("navigationMenuExternalReferenceCode")
+			String navigationMenuExternalReferenceCode)
 		throws Exception {
 	}
 
-	protected abstract NavigationMenu doGetNavigationMenu(Long navigationMenuId)
+	protected abstract NavigationMenu doGetSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}'  -u 'test@liferay.com:test'
 	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves a specific navigation menu of a site."
+	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "navigationMenuId"
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "navigationMenuExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -242,26 +169,33 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/navigation-menus/{navigationMenuId}")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public final NavigationMenu getNavigationMenu(
+	public final NavigationMenu getSiteNavigationMenu(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("navigationMenuId")
-			Long navigationMenuId)
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("navigationMenuExternalReferenceCode")
+			String navigationMenuExternalReferenceCode)
 		throws Exception {
 
-		NavigationMenu getNavigationMenu = doGetNavigationMenu(
-			navigationMenuId);
+		NavigationMenu getNavigationMenu = doGetSiteNavigationMenu(
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode);
 
 		getNavigationMenu.setPermissions(
 			() -> NestedFieldsSupplier.supply(
 				"permissions",
 				nestedField -> {
 					Page<Permission> permissionsPage =
-						getNavigationMenuPermissionsPage(
-							getNavigationMenu.getId(), null);
+						getSiteNavigationMenuPermissionsPage(
+							siteExternalReferenceCode,
+							getNavigationMenu.getExternalReferenceCode(), null);
 
 					Collection<Permission> permissions =
 						permissionsPage.getItems();
@@ -276,13 +210,17 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "navigationMenuId"
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "navigationMenuExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -308,23 +246,30 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/navigation-menus/{navigationMenuId}/permissions")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<Permission> getNavigationMenuPermissionsPage(
+	public Page<Permission> getSiteNavigationMenuPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("navigationMenuId")
-			Long navigationMenuId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("navigationMenuExternalReferenceCode")
+			String navigationMenuExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("roleNames")
 			String roleNames)
 		throws Exception {
 
-		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
-		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
+		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode);
 		String resourceName = getPermissionCheckerResourceName(
-			navigationMenuId);
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -334,170 +279,20 @@ public abstract class BaseNavigationMenuResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"getNavigationMenuPermissionsPage", null, resourceName,
+					"getSiteNavigationMenuPermissionsPage", null, resourceName,
 					groupId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"putNavigationMenuPermissionsPage", null, resourceName,
+					"putSiteNavigationMenuPermissionsPage", null, resourceName,
 					groupId)
 			).build(),
 			resourceId, resourceName, roleNames);
 	}
 
-	protected abstract NavigationMenu
-			doGetSiteNavigationMenuByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Retrieves the navigation menu by external reference code."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}"
-	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public final NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
-		throws Exception {
-
-		NavigationMenu getNavigationMenu =
-			doGetSiteNavigationMenuByExternalReferenceCode(
-				siteId, externalReferenceCode);
-
-		getNavigationMenu.setPermissions(
-			() -> NestedFieldsSupplier.supply(
-				"permissions",
-				nestedField -> {
-					Page<Permission> permissionsPage =
-						getNavigationMenuPermissionsPage(
-							getNavigationMenu.getId(), null);
-
-					Collection<Permission> permissions =
-						permissionsPage.getItems();
-
-					return permissions.toArray(
-						new Permission[permissions.size()]);
-				}));
-
-		return getNavigationMenu;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/permissions'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "fields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "nestedFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "restrictFields"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "roleNames"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus/permissions")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@Override
-	public Page<Permission> getSiteNavigationMenuPermissionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("roleNames")
-			String roleNames)
-		throws Exception {
-
-		String portletName = getPermissionCheckerPortletName(siteId);
-
-		PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
-
-		return toPermissionPage(
-			HashMapBuilder.put(
-				"get",
-				addAction(
-					ActionKeys.PERMISSIONS, siteId,
-					"getSiteNavigationMenuPermissionsPage", null, portletName,
-					siteId)
-			).put(
-				"replace",
-				addAction(
-					ActionKeys.PERMISSIONS, siteId,
-					"putSiteNavigationMenuPermissionsPage", null, portletName,
-					siteId)
-			).build(),
-			siteId, portletName, roleNames);
-	}
-
 	protected abstract Page<NavigationMenu> doGetSiteNavigationMenusPage(
-			Long siteId, String search,
+			String siteExternalReferenceCode, String search,
 			com.liferay.portal.kernel.search.filter.Filter filter,
 			Pagination pagination,
 			com.liferay.portal.kernel.search.Sort[] sorts)
@@ -506,13 +301,13 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus'  -u 'test@liferay.com:test'
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -554,14 +349,14 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.GET
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus")
+	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/navigation-menus")
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final Page<NavigationMenu> getSiteNavigationMenusPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -573,7 +368,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		throws Exception {
 
 		Page<NavigationMenu> navigationMenusPage = doGetSiteNavigationMenusPage(
-			siteId, search, filter, pagination, sorts);
+			siteExternalReferenceCode, search, filter, pagination, sorts);
 
 		for (NavigationMenu navigationMenu : navigationMenusPage.getItems()) {
 			navigationMenu.setPermissions(
@@ -581,8 +376,10 @@ public abstract class BaseNavigationMenuResourceImpl
 					"permissions",
 					nestedField -> {
 						Page<Permission> permissionsPage =
-							getNavigationMenuPermissionsPage(
-								navigationMenu.getId(), null);
+							getSiteNavigationMenuPermissionsPage(
+								siteExternalReferenceCode,
+								navigationMenu.getExternalReferenceCode(),
+								null);
 
 						Collection<Permission> permissions =
 							permissionsPage.getItems();
@@ -596,13 +393,13 @@ public abstract class BaseNavigationMenuResourceImpl
 	}
 
 	protected abstract NavigationMenu doPostSiteNavigationMenu(
-			Long siteId, NavigationMenu navigationMenu)
+			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new navigation menu."
@@ -611,7 +408,7 @@ public abstract class BaseNavigationMenuResourceImpl
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "siteExternalReferenceCode"
 			)
 		}
 	)
@@ -621,26 +418,28 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus")
+	@jakarta.ws.rs.Path("/sites/{siteExternalReferenceCode}/navigation-menus")
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
 	public final NavigationMenu postSiteNavigationMenu(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {
 
 		Permission[] permissions = navigationMenu.getPermissions();
 
 		NavigationMenu postNavigationMenu = doPostSiteNavigationMenu(
-			siteId, navigationMenu);
+			siteExternalReferenceCode, navigationMenu);
 
 		if (permissions != null) {
-			Page<Permission> permissionsPage = putNavigationMenuPermissionsPage(
-				postNavigationMenu.getId(), permissions);
+			Page<Permission> permissionsPage =
+				putSiteNavigationMenuPermissionsPage(
+					siteExternalReferenceCode,
+					postNavigationMenu.getExternalReferenceCode(), permissions);
 
 			postNavigationMenu.setPermissions(
 				() -> NestedFieldsSupplier.supply(
@@ -660,13 +459,13 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -680,15 +479,17 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus/batch")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/batch"
+	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postSiteNavigationMenuBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -714,13 +515,13 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/export-batch'  -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/export-batch'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
+				name = "siteExternalReferenceCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -754,15 +555,17 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus/export-batch")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/export-batch"
+	)
 	@jakarta.ws.rs.POST
 	@jakarta.ws.rs.Produces("application/json")
 	@Override
 	public Response postSiteNavigationMenusPageExportBatch(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.ws.rs.QueryParam("search")
 			String search,
@@ -801,23 +604,29 @@ public abstract class BaseNavigationMenuResourceImpl
 		).build();
 	}
 
-	protected abstract NavigationMenu doPutNavigationMenu(
-			Long navigationMenuId, NavigationMenu navigationMenu)
+	protected abstract NavigationMenu doPutSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
+			NavigationMenu navigationMenu)
 		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
-		description = "Replaces the navigation menu with the information sent in the request body. Any missing fields are deleted, unless they are required."
+		description = "Updates the navigation menu with the given external reference code or creates it if it does not exist."
 	)
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "navigationMenuId"
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "navigationMenuExternalReferenceCode"
 			)
 		}
 	)
@@ -827,26 +636,35 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/navigation-menus/{navigationMenuId}")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public final NavigationMenu putNavigationMenu(
+	public final NavigationMenu putSiteNavigationMenu(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("navigationMenuId")
-			Long navigationMenuId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("navigationMenuExternalReferenceCode")
+			String navigationMenuExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception {
 
 		Permission[] permissions = navigationMenu.getPermissions();
 
-		NavigationMenu putNavigationMenu = doPutNavigationMenu(
-			navigationMenuId, navigationMenu);
+		NavigationMenu putNavigationMenu = doPutSiteNavigationMenu(
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode,
+			navigationMenu);
 
 		if (permissions != null) {
-			Page<Permission> permissionsPage = putNavigationMenuPermissionsPage(
-				putNavigationMenu.getId(), permissions);
+			Page<Permission> permissionsPage =
+				putSiteNavigationMenuPermissionsPage(
+					siteExternalReferenceCode,
+					putNavigationMenu.getExternalReferenceCode(), permissions);
 
 			putNavigationMenu.setPermissions(
 				() -> NestedFieldsSupplier.supply(
@@ -866,59 +684,17 @@ public abstract class BaseNavigationMenuResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/batch'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
-				name = "callbackURL"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.Consumes("application/json")
-	@jakarta.ws.rs.Path("/navigation-menus/batch")
-	@jakarta.ws.rs.Produces("application/json")
-	@jakarta.ws.rs.PUT
-	@Override
-	public Response putNavigationMenuBatch(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.ws.rs.QueryParam("callbackURL")
-			String callbackURL,
-			Object object)
-		throws Exception {
-
-		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
-			contextAcceptLanguage);
-		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
-		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
-			contextHttpServletRequest);
-		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
-		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
-
-		Response.ResponseBuilder responseBuilder = Response.accepted();
-
-		return responseBuilder.entity(
-			vulcanBatchEngineImportTaskResource.putImportTask(
-				NavigationMenu.class.getName(), callbackURL, object)
-		).build();
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}/permissions'  -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions'  -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "navigationMenuId"
+				name = "siteExternalReferenceCode"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "navigationMenuExternalReferenceCode"
 			)
 		}
 	)
@@ -928,22 +704,29 @@ public abstract class BaseNavigationMenuResourceImpl
 		}
 	)
 	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/navigation-menus/{navigationMenuId}/permissions")
+	@jakarta.ws.rs.Path(
+		"/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions"
+	)
 	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
 	@jakarta.ws.rs.PUT
 	@Override
-	public Page<Permission> putNavigationMenuPermissionsPage(
+	public Page<Permission> putSiteNavigationMenuPermissionsPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("navigationMenuId")
-			Long navigationMenuId,
+			@jakarta.ws.rs.PathParam("siteExternalReferenceCode")
+			String siteExternalReferenceCode,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@jakarta.validation.constraints.NotNull
+			@jakarta.ws.rs.PathParam("navigationMenuExternalReferenceCode")
+			String navigationMenuExternalReferenceCode,
 			Permission[] permissions)
 		throws Exception {
 
-		Long groupId = getPermissionCheckerGroupId(navigationMenuId);
-		Long resourceId = getPermissionCheckerResourceId(navigationMenuId);
+		Long groupId = getPermissionCheckerGroupId(siteExternalReferenceCode);
+		Long resourceId = getPermissionCheckerResourceId(
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode);
 		String resourceName = getPermissionCheckerResourceName(
-			navigationMenuId);
+			siteExternalReferenceCode, navigationMenuExternalReferenceCode);
 
 		PermissionServiceUtil.checkPermission(
 			groupId, resourceName, resourceId);
@@ -990,179 +773,16 @@ public abstract class BaseNavigationMenuResourceImpl
 				"get",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"getNavigationMenuPermissionsPage", null, resourceName,
+					"getSiteNavigationMenuPermissionsPage", null, resourceName,
 					groupId)
 			).put(
 				"replace",
 				addAction(
 					ActionKeys.PERMISSIONS, resourceId,
-					"putNavigationMenuPermissionsPage", null, resourceName,
+					"putSiteNavigationMenuPermissionsPage", null, resourceName,
 					groupId)
 			).build(),
 			resourceId, resourceName, null);
-	}
-
-	protected abstract NavigationMenu
-			doPutSiteNavigationMenuByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
-				NavigationMenu navigationMenu)
-		throws Exception;
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}' -d $'{"externalReferenceCode": ___, "name": ___, "navigationMenuItems": ___, "navigationType": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Operation(
-		description = "Updates the navigation menu with the given external reference code or creates it if it does not exist."
-	)
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
-			),
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "externalReferenceCode"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path(
-		"/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}"
-	)
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@jakarta.ws.rs.PUT
-	@Override
-	public final NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			NavigationMenu navigationMenu)
-		throws Exception {
-
-		Permission[] permissions = navigationMenu.getPermissions();
-
-		NavigationMenu putNavigationMenu =
-			doPutSiteNavigationMenuByExternalReferenceCode(
-				siteId, externalReferenceCode, navigationMenu);
-
-		if (permissions != null) {
-			Page<Permission> permissionsPage = putNavigationMenuPermissionsPage(
-				putNavigationMenu.getId(), permissions);
-
-			putNavigationMenu.setPermissions(
-				() -> NestedFieldsSupplier.supply(
-					"permissions",
-					nestedField -> {
-						Collection<Permission> collection =
-							permissionsPage.getItems();
-
-						return collection.toArray(
-							new Permission[collection.size()]);
-					}));
-		}
-
-		return putNavigationMenu;
-	}
-
-	/**
-	 * Invoke this method with the command line:
-	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/permissions'  -u 'test@liferay.com:test'
-	 */
-	@io.swagger.v3.oas.annotations.Parameters(
-		value = {
-			@io.swagger.v3.oas.annotations.Parameter(
-				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
-				name = "siteId"
-			)
-		}
-	)
-	@io.swagger.v3.oas.annotations.tags.Tags(
-		value = {
-			@io.swagger.v3.oas.annotations.tags.Tag(name = "NavigationMenu")
-		}
-	)
-	@jakarta.ws.rs.Consumes({"application/json", "application/xml"})
-	@jakarta.ws.rs.Path("/sites/{siteId}/navigation-menus/permissions")
-	@jakarta.ws.rs.Produces({"application/json", "application/xml"})
-	@jakarta.ws.rs.PUT
-	@Override
-	public Page<Permission> putSiteNavigationMenuPermissionsPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@jakarta.validation.constraints.NotNull
-			@jakarta.ws.rs.PathParam("siteId")
-			Long siteId,
-			Permission[] permissions)
-		throws Exception {
-
-		String portletName = getPermissionCheckerPortletName(siteId);
-
-		PermissionServiceUtil.checkPermission(siteId, portletName, siteId);
-
-		ModelPermissions modelPermissions =
-			ModelPermissionsUtil.toModelPermissions(
-				contextCompany.getCompanyId(), permissions, siteId, portletName,
-				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService);
-
-		Collection<String> roleNames = modelPermissions.getRoleNames();
-
-		for (ResourcePermission resourcePermission :
-				resourcePermissionLocalService.getResourcePermissions(
-					contextCompany.getCompanyId(), portletName,
-					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(siteId))) {
-
-			com.liferay.portal.kernel.model.Role role =
-				roleLocalService.fetchRole(resourcePermission.getRoleId());
-
-			if ((role == null) || roleNames.contains(role.getName())) {
-				continue;
-			}
-
-			for (ResourceAction resourceAction :
-					resourceActionLocalService.getResourceActions(
-						portletName)) {
-
-				resourcePermissionLocalService.removeResourcePermission(
-					contextCompany.getCompanyId(), portletName,
-					ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(siteId),
-					role.getRoleId(), resourceAction.getActionId());
-			}
-		}
-
-		resourcePermissionLocalService.updateResourcePermissions(
-			contextCompany.getCompanyId(), siteId, portletName,
-			String.valueOf(siteId), modelPermissions);
-
-		return toPermissionPage(
-			HashMapBuilder.put(
-				"get",
-				addAction(
-					ActionKeys.PERMISSIONS, siteId,
-					"getSiteNavigationMenuPermissionsPage", null, portletName,
-					siteId)
-			).put(
-				"replace",
-				addAction(
-					ActionKeys.PERMISSIONS, siteId,
-					"putSiteNavigationMenuPermissionsPage", null, portletName,
-					siteId)
-			).build(),
-			siteId, portletName, null);
 	}
 
 	@Override
@@ -1179,14 +799,15 @@ public abstract class BaseNavigationMenuResourceImpl
 			"createStrategy", "INSERT");
 
 		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			if (parameters.containsKey("siteId")) {
+			if (parameters.containsKey("siteExternalReferenceCode")) {
 				navigationMenuUnsafeFunction =
 					navigationMenu -> postSiteNavigationMenu(
-						(Long)parameters.get("siteId"), navigationMenu);
+						(String)parameters.get("siteExternalReferenceCode"),
+						navigationMenu);
 			}
 			else {
 				throw new NotSupportedException(
-					"One of the following parameters must be specified: [siteId]");
+					"One of the following parameters must be specified: [siteExternalReferenceCode]");
 			}
 		}
 
@@ -1198,16 +819,15 @@ public abstract class BaseNavigationMenuResourceImpl
 				navigationMenuUnsafeFunction = navigationMenu -> {
 					NavigationMenu persistedNavigationMenu = null;
 
-					if (parameters.containsKey("siteId")) {
-						persistedNavigationMenu =
-							putSiteNavigationMenuByExternalReferenceCode(
-								(Long)parameters.get("siteId"),
-								navigationMenu.getExternalReferenceCode(),
-								navigationMenu);
+					if (parameters.containsKey("siteExternalReferenceCode")) {
+						persistedNavigationMenu = putSiteNavigationMenu(
+							(String)parameters.get("siteExternalReferenceCode"),
+							navigationMenu.getExternalReferenceCode(),
+							navigationMenu);
 					}
 					else {
 						throw new NotSupportedException(
-							"One of the following parameters must be specified: [siteId]");
+							"One of the following parameters must be specified: [siteExternalReferenceCode]");
 					}
 
 					return persistedNavigationMenu;
@@ -1244,9 +864,16 @@ public abstract class BaseNavigationMenuResourceImpl
 
 		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
 			navigationMenuUnsafeFunction = navigationMenu -> {
-				deleteNavigationMenu(navigationMenu.getId());
+				if (parameters.containsKey("siteExternalReferenceCode")) {
+					deleteSiteNavigationMenu(
+						(String)parameters.get("siteExternalReferenceCode"),
+						navigationMenu.getExternalReferenceCode());
 
-				return navigationMenu;
+					return navigationMenu;
+				}
+
+				throw new UnsupportedOperationException(
+					"Unable to delete by external reference code or ID");
 			};
 
 		if (contextBatchUnsafeBiConsumer != null) {
@@ -1269,7 +896,7 @@ public abstract class BaseNavigationMenuResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray("UPDATE");
+		return SetUtil.fromArray();
 	}
 
 	@Override
@@ -1296,14 +923,14 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters, String search)
 		throws Exception {
 
-		if (parameters.containsKey("siteId")) {
+		if (parameters.containsKey("siteExternalReferenceCode")) {
 			return getSiteNavigationMenusPage(
-				(Long)parameters.get("siteId"), search, filter, pagination,
-				sorts);
+				(String)parameters.get("siteExternalReferenceCode"), search,
+				filter, pagination, sorts);
 		}
 		else {
 			throw new NotSupportedException(
-				"One of the following parameters must be specified: [siteId]");
+				"One of the following parameters must be specified: [siteExternalReferenceCode]");
 		}
 	}
 
@@ -1335,36 +962,8 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
-			navigationMenuUnsafeFunction = null;
-
-		String updateStrategy = (String)parameters.getOrDefault(
-			"updateStrategy", "UPDATE");
-
-		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-			navigationMenuUnsafeFunction = navigationMenu -> putNavigationMenu(
-				navigationMenu.getId(), navigationMenu);
-		}
-
-		if (navigationMenuUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Update strategy \"" + updateStrategy +
-					"\" is not supported for NavigationMenu");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				navigationMenus, navigationMenuUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				navigationMenus, navigationMenuUnsafeFunction::apply);
-		}
-		else {
-			for (NavigationMenu navigationMenu : navigationMenus) {
-				navigationMenuUnsafeFunction.apply(navigationMenu);
-			}
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override
@@ -1374,34 +973,27 @@ public abstract class BaseNavigationMenuResourceImpl
 		return null;
 	}
 
-	@Override
-	public NavigationMenu getItem(Long id) throws Exception {
-		return getNavigationMenu(id);
-	}
-
-	protected String getPermissionCheckerActionsResourceName(Object id)
+	protected Long getPermissionCheckerGroupId(
+			String groupExternalReferenceCode)
 		throws Exception {
 
-		return getPermissionCheckerResourceName(id);
+		com.liferay.portal.kernel.model.Group group =
+			groupLocalService.getGroupByExternalReferenceCode(
+				groupExternalReferenceCode, contextCompany.getCompanyId());
+
+		return group.getGroupId();
 	}
 
-	protected Long getPermissionCheckerGroupId(Object id) throws Exception {
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	protected String getPermissionCheckerPortletName(Object id)
+	protected Long getPermissionCheckerResourceId(
+			String groupExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Long getPermissionCheckerResourceId(Object id) throws Exception {
-		return GetterUtil.getLong(id);
-	}
-
-	protected String getPermissionCheckerResourceName(Object id)
+	protected String getPermissionCheckerResourceName(
+			String groupExternalReferenceCode, String externalReferenceCode)
 		throws Exception {
 
 		throw new UnsupportedOperationException(

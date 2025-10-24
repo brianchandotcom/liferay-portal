@@ -37,142 +37,99 @@ public interface NavigationMenuResource {
 		return new Builder();
 	}
 
-	public void deleteNavigationMenu(Long navigationMenuId) throws Exception;
-
-	public HttpInvoker.HttpResponse deleteNavigationMenuHttpResponse(
-			Long navigationMenuId)
+	public void deleteSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
-	public void deleteNavigationMenuBatch(String callbackURL, Object object)
+	public HttpInvoker.HttpResponse deleteSiteNavigationMenuHttpResponse(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse deleteNavigationMenuBatchHttpResponse(
-			String callbackURL, Object object)
+	public NavigationMenu getSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
-	public void deleteSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public NavigationMenu getNavigationMenu(Long navigationMenuId)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getNavigationMenuHttpResponse(
-			Long navigationMenuId)
-		throws Exception;
-
-	public Page<Permission> getNavigationMenuPermissionsPage(
-			Long navigationMenuId, String roleNames)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getNavigationMenuPermissionsPageHttpResponse(
-				Long navigationMenuId, String roleNames)
-		throws Exception;
-
-	public NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode)
+	public HttpInvoker.HttpResponse getSiteNavigationMenuHttpResponse(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode)
 		throws Exception;
 
 	public Page<Permission> getSiteNavigationMenuPermissionsPage(
-			Long siteId, String roleNames)
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getSiteNavigationMenuPermissionsPageHttpResponse(
-				Long siteId, String roleNames)
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode, String roleNames)
 		throws Exception;
 
 	public Page<NavigationMenu> getSiteNavigationMenusPage(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
+			String siteExternalReferenceCode, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getSiteNavigationMenusPageHttpResponse(
-			Long siteId, String search, String filterString,
-			Pagination pagination, String sortString)
+			String siteExternalReferenceCode, String search,
+			String filterString, Pagination pagination, String sortString)
 		throws Exception;
 
 	public NavigationMenu postSiteNavigationMenu(
-			Long siteId, NavigationMenu navigationMenu)
+			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteNavigationMenuHttpResponse(
-			Long siteId, NavigationMenu navigationMenu)
+			String siteExternalReferenceCode, NavigationMenu navigationMenu)
 		throws Exception;
 
 	public void postSiteNavigationMenuBatch(
-			Long siteId, String callbackURL, Object object)
+			String siteExternalReferenceCode, String callbackURL, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postSiteNavigationMenuBatchHttpResponse(
-			Long siteId, String callbackURL, Object object)
+			String siteExternalReferenceCode, String callbackURL, Object object)
 		throws Exception;
 
 	public void postSiteNavigationMenusPageExportBatch(
-			Long siteId, String search, String filterString, String sortString,
-			String callbackURL, String contentType, String fieldNames)
+			String siteExternalReferenceCode, String search,
+			String filterString, String sortString, String callbackURL,
+			String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postSiteNavigationMenusPageExportBatchHttpResponse(
-				Long siteId, String search, String filterString,
-				String sortString, String callbackURL, String contentType,
-				String fieldNames)
+				String siteExternalReferenceCode, String search,
+				String filterString, String sortString, String callbackURL,
+				String contentType, String fieldNames)
 		throws Exception;
 
-	public NavigationMenu putNavigationMenu(
-			Long navigationMenuId, NavigationMenu navigationMenu)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putNavigationMenuHttpResponse(
-			Long navigationMenuId, NavigationMenu navigationMenu)
-		throws Exception;
-
-	public void putNavigationMenuBatch(String callbackURL, Object object)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse putNavigationMenuBatchHttpResponse(
-			String callbackURL, Object object)
-		throws Exception;
-
-	public Page<Permission> putNavigationMenuPermissionsPage(
-			Long navigationMenuId, Permission[] permissions)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			putNavigationMenuPermissionsPageHttpResponse(
-				Long navigationMenuId, Permission[] permissions)
-		throws Exception;
-
-	public NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
-			Long siteId, String externalReferenceCode,
+	public NavigationMenu putSiteNavigationMenu(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
 			NavigationMenu navigationMenu)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			putSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-				Long siteId, String externalReferenceCode,
-				NavigationMenu navigationMenu)
+	public HttpInvoker.HttpResponse putSiteNavigationMenuHttpResponse(
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
+			NavigationMenu navigationMenu)
 		throws Exception;
 
 	public Page<Permission> putSiteNavigationMenuPermissionsPage(
-			Long siteId, Permission[] permissions)
+			String siteExternalReferenceCode,
+			String navigationMenuExternalReferenceCode,
+			Permission[] permissions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			putSiteNavigationMenuPermissionsPageHttpResponse(
-				Long siteId, Permission[] permissions)
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode,
+				Permission[] permissions)
 		throws Exception;
 
 	public static class Builder {
@@ -284,11 +241,15 @@ public interface NavigationMenuResource {
 	public static class NavigationMenuResourceImpl
 		implements NavigationMenuResource {
 
-		public void deleteNavigationMenu(Long navigationMenuId)
+		public void deleteSiteNavigationMenu(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				deleteNavigationMenuHttpResponse(navigationMenuId);
+				deleteSiteNavigationMenuHttpResponse(
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -349,8 +310,9 @@ public interface NavigationMenuResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteNavigationMenuHttpResponse(
-				Long navigationMenuId)
+		public HttpInvoker.HttpResponse deleteSiteNavigationMenuHttpResponse(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -377,217 +339,13 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}");
-
-			httpInvoker.path("navigationMenuId", navigationMenuId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteNavigationMenuBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteNavigationMenuBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse deleteNavigationMenuBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}");
 
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public void deleteSiteNavigationMenuByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					Long siteId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("siteId", siteId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+				"navigationMenuExternalReferenceCode",
+				navigationMenuExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -597,11 +355,15 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public NavigationMenu getNavigationMenu(Long navigationMenuId)
+		public NavigationMenu getSiteNavigationMenu(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getNavigationMenuHttpResponse(navigationMenuId);
+				getSiteNavigationMenuHttpResponse(
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -662,8 +424,9 @@ public interface NavigationMenuResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getNavigationMenuHttpResponse(
-				Long navigationMenuId)
+		public HttpInvoker.HttpResponse getSiteNavigationMenuHttpResponse(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -690,230 +453,13 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}");
-
-			httpInvoker.path("navigationMenuId", navigationMenuId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Permission> getNavigationMenuPermissionsPage(
-				Long navigationMenuId, String roleNames)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getNavigationMenuPermissionsPageHttpResponse(
-					navigationMenuId, roleNames);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getNavigationMenuPermissionsPageHttpResponse(
-					Long navigationMenuId, String roleNames)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
-			if (roleNames != null) {
-				httpInvoker.parameter("roleNames", String.valueOf(roleNames));
-			}
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}");
 
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}/permissions");
-
-			httpInvoker.path("navigationMenuId", navigationMenuId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
-				Long siteId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return NavigationMenuSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					Long siteId, String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
-
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("siteId", siteId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+				"navigationMenuExternalReferenceCode",
+				navigationMenuExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -924,12 +470,14 @@ public interface NavigationMenuResource {
 		}
 
 		public Page<Permission> getSiteNavigationMenuPermissionsPage(
-				Long siteId, String roleNames)
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode, String roleNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteNavigationMenuPermissionsPageHttpResponse(
-					siteId, roleNames);
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode, roleNames);
 
 			String content = httpResponse.getContent();
 
@@ -992,7 +540,9 @@ public interface NavigationMenuResource {
 
 		public HttpInvoker.HttpResponse
 				getSiteNavigationMenuPermissionsPageHttpResponse(
-					Long siteId, String roleNames)
+					String siteExternalReferenceCode,
+					String navigationMenuExternalReferenceCode,
+					String roleNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1023,9 +573,13 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/permissions");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"navigationMenuExternalReferenceCode",
+				navigationMenuExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1036,13 +590,14 @@ public interface NavigationMenuResource {
 		}
 
 		public Page<NavigationMenu> getSiteNavigationMenusPage(
-				Long siteId, String search, String filterString,
-				Pagination pagination, String sortString)
+				String siteExternalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getSiteNavigationMenusPageHttpResponse(
-					siteId, search, filterString, pagination, sortString);
+					siteExternalReferenceCode, search, filterString, pagination,
+					sortString);
 
 			String content = httpResponse.getContent();
 
@@ -1104,8 +659,8 @@ public interface NavigationMenuResource {
 		}
 
 		public HttpInvoker.HttpResponse getSiteNavigationMenusPageHttpResponse(
-				Long siteId, String search, String filterString,
-				Pagination pagination, String sortString)
+				String siteExternalReferenceCode, String search,
+				String filterString, Pagination pagination, String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1151,9 +706,10 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1164,11 +720,12 @@ public interface NavigationMenuResource {
 		}
 
 		public NavigationMenu postSiteNavigationMenu(
-				Long siteId, NavigationMenu navigationMenu)
+				String siteExternalReferenceCode, NavigationMenu navigationMenu)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				postSiteNavigationMenuHttpResponse(siteId, navigationMenu);
+				postSiteNavigationMenuHttpResponse(
+					siteExternalReferenceCode, navigationMenu);
 
 			String content = httpResponse.getContent();
 
@@ -1230,7 +787,7 @@ public interface NavigationMenuResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteNavigationMenuHttpResponse(
-				Long siteId, NavigationMenu navigationMenu)
+				String siteExternalReferenceCode, NavigationMenu navigationMenu)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1259,9 +816,10 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1272,12 +830,13 @@ public interface NavigationMenuResource {
 		}
 
 		public void postSiteNavigationMenuBatch(
-				Long siteId, String callbackURL, Object object)
+				String siteExternalReferenceCode, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteNavigationMenuBatchHttpResponse(
-					siteId, callbackURL, object);
+					siteExternalReferenceCode, callbackURL, object);
 
 			String content = httpResponse.getContent();
 
@@ -1328,7 +887,8 @@ public interface NavigationMenuResource {
 		}
 
 		public HttpInvoker.HttpResponse postSiteNavigationMenuBatchHttpResponse(
-				Long siteId, String callbackURL, Object object)
+				String siteExternalReferenceCode, String callbackURL,
+				Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1362,9 +922,10 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/batch");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/batch");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1375,15 +936,15 @@ public interface NavigationMenuResource {
 		}
 
 		public void postSiteNavigationMenusPageExportBatch(
-				Long siteId, String search, String filterString,
-				String sortString, String callbackURL, String contentType,
-				String fieldNames)
+				String siteExternalReferenceCode, String search,
+				String filterString, String sortString, String callbackURL,
+				String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postSiteNavigationMenusPageExportBatchHttpResponse(
-					siteId, search, filterString, sortString, callbackURL,
-					contentType, fieldNames);
+					siteExternalReferenceCode, search, filterString, sortString,
+					callbackURL, contentType, fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -1435,9 +996,9 @@ public interface NavigationMenuResource {
 
 		public HttpInvoker.HttpResponse
 				postSiteNavigationMenusPageExportBatchHttpResponse(
-					Long siteId, String search, String filterString,
-					String sortString, String callbackURL, String contentType,
-					String fieldNames)
+					String siteExternalReferenceCode, String search,
+					String filterString, String sortString, String callbackURL,
+					String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1492,117 +1053,10 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/export-batch");
-
-			httpInvoker.path("siteId", siteId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public NavigationMenu putNavigationMenu(
-				Long navigationMenuId, NavigationMenu navigationMenu)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putNavigationMenuHttpResponse(navigationMenuId, navigationMenu);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return NavigationMenuSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse putNavigationMenuHttpResponse(
-				Long navigationMenuId, NavigationMenu navigationMenu)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(navigationMenu.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/export-batch");
 
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}");
-
-			httpInvoker.path("navigationMenuId", navigationMenuId);
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1612,229 +1066,16 @@ public interface NavigationMenuResource {
 			return httpInvoker.invoke();
 		}
 
-		public void putNavigationMenuBatch(String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putNavigationMenuBatchHttpResponse(callbackURL, object);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-		}
-
-		public HttpInvoker.HttpResponse putNavigationMenuBatchHttpResponse(
-				String callbackURL, Object object)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			httpInvoker.body(object.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			if (callbackURL != null) {
-				httpInvoker.parameter(
-					"callbackURL", String.valueOf(callbackURL));
-			}
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/batch");
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Page<Permission> putNavigationMenuPermissionsPage(
-				Long navigationMenuId, Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				putNavigationMenuPermissionsPageHttpResponse(
-					navigationMenuId, permissions);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return Page.of(content, Permission::toDTO);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				putNavigationMenuPermissionsPageHttpResponse(
-					Long navigationMenuId, Permission[] permissions)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			List<String> values = new ArrayList<>();
-
-			for (Permission permissionValue : permissions) {
-				values.add(String.valueOf(permissionValue));
-			}
-
-			httpInvoker.body(values.toString(), "application/json");
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.PUT);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/navigation-menus/{navigationMenuId}/permissions");
-
-			httpInvoker.path("navigationMenuId", navigationMenuId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
-				Long siteId, String externalReferenceCode,
+		public NavigationMenu putSiteNavigationMenu(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode,
 				NavigationMenu navigationMenu)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					siteId, externalReferenceCode, navigationMenu);
+				putSiteNavigationMenuHttpResponse(
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode, navigationMenu);
 
 			String content = httpResponse.getContent();
 
@@ -1895,10 +1136,10 @@ public interface NavigationMenuResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				putSiteNavigationMenuByExternalReferenceCodeHttpResponse(
-					Long siteId, String externalReferenceCode,
-					NavigationMenu navigationMenu)
+		public HttpInvoker.HttpResponse putSiteNavigationMenuHttpResponse(
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode,
+				NavigationMenu navigationMenu)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1927,10 +1168,13 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}");
 
-			httpInvoker.path("siteId", siteId);
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"navigationMenuExternalReferenceCode",
+				navigationMenuExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1941,12 +1185,15 @@ public interface NavigationMenuResource {
 		}
 
 		public Page<Permission> putSiteNavigationMenuPermissionsPage(
-				Long siteId, Permission[] permissions)
+				String siteExternalReferenceCode,
+				String navigationMenuExternalReferenceCode,
+				Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				putSiteNavigationMenuPermissionsPageHttpResponse(
-					siteId, permissions);
+					siteExternalReferenceCode,
+					navigationMenuExternalReferenceCode, permissions);
 
 			String content = httpResponse.getContent();
 
@@ -2009,7 +1256,9 @@ public interface NavigationMenuResource {
 
 		public HttpInvoker.HttpResponse
 				putSiteNavigationMenuPermissionsPageHttpResponse(
-					Long siteId, Permission[] permissions)
+					String siteExternalReferenceCode,
+					String navigationMenuExternalReferenceCode,
+					Permission[] permissions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -2044,9 +1293,13 @@ public interface NavigationMenuResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}/navigation-menus/permissions");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/navigation-menus/{navigationMenuExternalReferenceCode}/permissions");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
+			httpInvoker.path(
+				"navigationMenuExternalReferenceCode",
+				navigationMenuExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

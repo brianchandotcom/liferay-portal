@@ -385,7 +385,7 @@ exports[`List should render 1`] = `
                         </a>
                       </th>
                       <th
-                        class="table-head-title table-column-text-end"
+                        class="table-head-title table-column-text-start"
                       >
                         <a
                           class="button-root w-100 btn btn-unstyled"
@@ -457,7 +457,7 @@ exports[`List should render 1`] = `
                         </a>
                       </th>
                       <th
-                        class="table-head-title table-column-text-end"
+                        class="table-head-title table-column-text-start"
                       >
                         <a
                           class="button-root w-100 btn btn-unstyled"
@@ -547,7 +547,7 @@ exports[`List should render 1`] = `
                         </div>
                       </td>
                       <td
-                        class="table-column-text-end"
+                        class="table-column-text-start"
                       >
                         -
                       </td>
@@ -566,7 +566,7 @@ exports[`List should render 1`] = `
                         />
                       </td>
                       <td
-                        class="table-column-text-end"
+                        class="table-column-text-start"
                       >
                         Jul 10, 2018
                       </td>

@@ -7,22 +7,26 @@ import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import React from 'react';
 
-import EmptyRecycleBinService from '../../common/services/EmptyRecycleBinService';
+import {triggerAssetBulkAction} from '../props_transformer/actions/triggerAssetBulkAction';
+
+const CMS_EMPTY_RECYCLE_BIN_FILTER =
+	"cmsRoot eq true and (cmsSection eq 'contents' or cmsSection eq 'files') and status eq 8";
 
 export default function EmptyRecycleBinModalContent({
 	closeModal,
 }: {
 	closeModal: () => void;
 }) {
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		try {
-			EmptyRecycleBinService.emptyRecycleBin();
-		}
-		finally {
-			closeModal();
-		}
+		triggerAssetBulkAction({
+			apiURL: `/o/headless-cms/v1.0/bulk-action?filter=${encodeURIComponent(CMS_EMPTY_RECYCLE_BIN_FILTER)}&nestedFields=embedded`,
+			selectedData: {selectAll: true},
+			type: 'DeleteBulkAction',
+		});
+
+		closeModal();
 	};
 
 	return (

@@ -38,7 +38,7 @@ const SelectionCheckbox = ({
 	return (
 		<>
 			<ClayCheckbox
-				aria-labelledby="items-selector"
+				aria-labelledby="itemsSelectorLabel"
 				checked={allItemsSelectedActive || !!selectedItemsValue.length}
 				indeterminate={
 					!!selectedItemsValue.length &&
@@ -52,7 +52,8 @@ const SelectionCheckbox = ({
 						: Liferay.Language.get('select-items')
 				}
 			/>
-			<span className="sr-only" id="items-selector">
+
+			<span className="sr-only" id="itemsSelectorLabel">
 				{label}
 			</span>
 		</>

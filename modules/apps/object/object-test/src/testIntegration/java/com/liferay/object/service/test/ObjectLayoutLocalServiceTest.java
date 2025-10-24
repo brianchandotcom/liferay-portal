@@ -215,6 +215,19 @@ public class ObjectLayoutLocalServiceTest {
 					_createObjectLayoutBox(
 						_createObjectLayoutColumn(
 							_modifiableSystemObjectDefinition)))));
+
+		_updateCustomObjectDefinition(
+			false, false, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
+
+		_addObjectLayout(
+			_customObjectDefinition,
+			_createObjectLayoutTab(
+				_createObjectLayoutBox(
+					ObjectLayoutBoxConstants.TYPE_CATEGORIZATION)));
+		_addObjectLayout(
+			_customObjectDefinition,
+			_createObjectLayoutTab(
+				_createObjectLayoutBox(ObjectLayoutBoxConstants.TYPE_SEO)));
 	}
 
 	@Test
@@ -345,14 +358,6 @@ public class ObjectLayoutLocalServiceTest {
 			objectLayoutBoxTypeLabel +
 				" layout box can only be used in object definitions with a " +
 					"default storage type",
-			() -> _addObjectLayout(_customObjectDefinition, objectLayoutTab));
-
-		_updateCustomObjectDefinition(
-			false, false, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
-
-		AssertUtils.assertFailure(
-			ObjectLayoutBoxTypeException.class,
-			objectLayoutBoxTypeLabel + " layout box must be enabled to be used",
 			() -> _addObjectLayout(_customObjectDefinition, objectLayoutTab));
 
 		_updateCustomObjectDefinition(

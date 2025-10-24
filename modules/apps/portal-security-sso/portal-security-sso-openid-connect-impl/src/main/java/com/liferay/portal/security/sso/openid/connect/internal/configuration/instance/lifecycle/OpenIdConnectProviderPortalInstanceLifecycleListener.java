@@ -11,7 +11,6 @@ import com.liferay.oauth.client.persistence.model.OAuthClientEntry;
 import com.liferay.oauth.client.persistence.service.OAuthClientASLocalMetadataLocalService;
 import com.liferay.oauth.client.persistence.service.OAuthClientEntryLocalService;
 import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.EveryNodeEveryStartup;
@@ -29,15 +28,10 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.internal.util.OpenIdConnectProviderUtil;
-
-import java.net.URI;
-
-import java.security.MessageDigest;
 
 import java.util.Dictionary;
 import java.util.Map;
@@ -133,9 +127,10 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			return discoveryEndpoint;
 		}
 
-		String localWellKnownURI = _generateLocalWellKnownURI(
-			_getPropertyAsString("issuerURL", properties),
-			_getPropertyAsString("tokenEndpoint", properties));
+		String localWellKnownURI =
+			OpenIdConnectProviderUtil.generateLocalWellKnownURI(
+				_getPropertyAsString("issuerURL", properties),
+				_getPropertyAsString("tokenEndpoint", properties));
 
 		_oAuthClientASLocalMetadataLocalService.
 			deleteOAuthClientASLocalMetadata(localWellKnownURI);
@@ -237,20 +232,6 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 		).put(
 			"scope", _getPropertyAsString("scopes", properties)
 		).toString();
-	}
-
-	private String _generateLocalWellKnownURI(
-			String issuer, String tokenEndpoint)
-		throws Exception {
-
-		URI issuerURI = URI.create(issuer);
-		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-
-		return StringBundler.concat(
-			issuerURI.getScheme(), "://", issuerURI.getAuthority(),
-			"/.well-known/openid-configuration", issuerURI.getPath(), '/',
-			Base64.encodeToURL(messageDigest.digest(tokenEndpoint.getBytes())),
-			"/local");
 	}
 
 	private String _generateMetadataJSON(Dictionary<String, ?> properties) {
@@ -408,9 +389,10 @@ public class OpenIdConnectProviderPortalInstanceLifecycleListener
 			return discoveryEndpoint;
 		}
 
-		String localWellKnownURI = _generateLocalWellKnownURI(
-			_getPropertyAsString("issuerURL", properties),
-			_getPropertyAsString("tokenEndpoint", properties));
+		String localWellKnownURI =
+			OpenIdConnectProviderUtil.generateLocalWellKnownURI(
+				_getPropertyAsString("issuerURL", properties),
+				_getPropertyAsString("tokenEndpoint", properties));
 
 		OAuthClientASLocalMetadata oAuthClientASLocalMetadata =
 			_oAuthClientASLocalMetadataLocalService.

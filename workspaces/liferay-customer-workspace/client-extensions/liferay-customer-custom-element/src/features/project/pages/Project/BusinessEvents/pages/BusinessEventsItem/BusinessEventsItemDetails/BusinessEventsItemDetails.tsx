@@ -104,6 +104,14 @@ const BusinessEventsItemDetails = () => {
 		});
 	}, [fetchBusinessEvent]);
 
+	const handleCloseModal = (isOpen: boolean) => {
+		if (!isOpen) {
+			navigate(`/${accountKey}/business-events/${id}`);
+		}
+
+		onOpenChange(isOpen);
+	};
+
 	useEffect(() => {
 		if (businessEvent && tickets) {
 			const associatedTickets = JSON.parse(
@@ -347,7 +355,7 @@ const BusinessEventsItemDetails = () => {
 					accountExternalReferenceCode={accountKey || ''}
 					businessEvent={businessEvent}
 					client={client}
-					closeFunction={onOpenChange}
+					closeFunction={handleCloseModal}
 					modalType={modalType}
 					observer={observer}
 					onCancel={handleOnCancel}

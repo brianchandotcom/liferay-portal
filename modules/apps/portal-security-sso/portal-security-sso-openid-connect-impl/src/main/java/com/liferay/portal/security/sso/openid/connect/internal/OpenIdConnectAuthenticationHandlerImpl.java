@@ -163,9 +163,10 @@ public class OpenIdConnectAuthenticationHandlerImpl
 
 		long userId = _oidcUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),
-			oAuthClientEntry.getCustomClaimsJSON(),
-			String.valueOf(oidcProviderMetadata.getIssuer()), serviceContext,
-			userInfoJSON, oAuthClientEntry.getOIDCUserInfoMapperJSON());
+			String.valueOf(oidcProviderMetadata.getIssuer()), oAuthClientEntry,
+			serviceContext,
+			String.valueOf(oidcProviderMetadata.getTokenEndpointURI()),
+			userInfoJSON);
 
 		userIdUnsafeConsumer.accept(userId);
 

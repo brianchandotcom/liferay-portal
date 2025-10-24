@@ -986,7 +986,6 @@ public class EmailNotificationTypeTest extends BaseNotificationTypeTest {
 			accountEntryRestrictedObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testSendNotificationToAssignee() throws Exception {
 		ObjectDefinition objectDefinition =

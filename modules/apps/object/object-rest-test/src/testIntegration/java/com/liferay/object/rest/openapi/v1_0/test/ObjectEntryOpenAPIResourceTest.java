@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import io.swagger.v3.oas.models.OpenAPI;
@@ -50,7 +49,6 @@ public class ObjectEntryOpenAPIResourceTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testGetOpenAPI() throws Exception {
 		ObjectDefinition objectDefinition =

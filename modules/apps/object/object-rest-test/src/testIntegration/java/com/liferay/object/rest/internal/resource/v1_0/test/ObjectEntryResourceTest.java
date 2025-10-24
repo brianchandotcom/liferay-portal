@@ -6014,7 +6014,6 @@ public class ObjectEntryResourceTest {
 				Pagination.of(QueryUtil.ALL_POS, QueryUtil.ALL_POS)));
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testGetObjectEntriesWithAssigneeObjectField() throws Exception {
 		ObjectFieldUtil.addCustomObjectField(
@@ -8837,7 +8836,6 @@ public class ObjectEntryResourceTest {
 		Assert.assertNull(objectEntryJSONObject.get("permissions"));
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testPatchPutCustomObjectEntryByExternalReferenceCodeWithAssigneeObjectField()
 		throws Exception {
@@ -8884,7 +8882,6 @@ public class ObjectEntryResourceTest {
 			Http.Method.PUT, jsonObject.getLong("id"));
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testPatchPutCustomObjectEntryWithAssigneeObjectField()
 		throws Exception {
@@ -9024,7 +9021,6 @@ public class ObjectEntryResourceTest {
 			group.getGroupKey());
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testPostCustomObjectEntryWithAssigneeObjectField()
 		throws Exception {

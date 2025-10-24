@@ -1400,7 +1400,6 @@ public class DefaultObjectEntryManagerImplTest
 		_addObjectEntry(accountEntry);
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testAddObjectEntryWithAssigneeObjectField() throws Exception {
 		ObjectFieldUtil.addCustomObjectField(
@@ -6399,11 +6398,7 @@ public class DefaultObjectEntryManagerImplTest
 				_objectDefinition4, _group.getGroupKey(), 2));
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-6233"), @FeatureFlag(value = "LPD-17564")
-		}
-	)
+	@FeatureFlag("LPD-17564")
 	@Test
 	public void testGetObjectEntryByVersionWithAssigneeObjectField()
 		throws Exception {
@@ -8980,7 +8975,6 @@ public class DefaultObjectEntryManagerImplTest
 			objectEntry);
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testUpdateObjectEntryWithAssigneeObjectField()
 		throws Exception {

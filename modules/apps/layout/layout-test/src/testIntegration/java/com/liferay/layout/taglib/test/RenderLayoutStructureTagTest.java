@@ -109,6 +109,7 @@ import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -711,6 +712,111 @@ public class RenderLayoutStructureTagTest {
 		content = _getRenderLayoutHTML(layout);
 
 		Assert.assertTrue(content, content.contains(url));
+	}
+
+	@Test
+	@TestInfo("LPD-69237")
+	public void testFormInputsAreEscaped() throws Exception {
+		String name = CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ListUtil.fromArray(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), name)),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		String xssScript = "\"><script>alert('xss')</script>";
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			_group.getGroupId(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"en_US",
+			HashMapBuilder.<String, Serializable>put(
+				name, xssScript
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		long classNameId = _portal.getClassNameId(
+			objectDefinition.getClassName());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+				_group.getGroupId(), classNameId, 0, true,
+				WorkflowConstants.STATUS_APPROVED);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, objectDefinition.getClassName());
+
+		InfoForm infoForm = infoItemFormProvider.getInfoForm(
+			StringPool.BLANK, _group.getGroupId());
+
+		List<InfoField<?>> allInfoFields = ListUtil.filter(
+			infoForm.getAllInfoFields(), InfoField::isEditable);
+
+		ContentLayoutTestUtil.addFormToLayout(
+			false, String.valueOf(classNameId), "0", draftLayout,
+			_layoutStructureProvider,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid()),
+			allInfoFields.toArray(new InfoField<?>[0]));
+
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(
+					objectDefinition.getClassName());
+
+		MockHttpServletRequest mockHttpServletRequest =
+			_getMockHttpServletRequest(
+				layout,
+				layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+					new InfoItemReference(
+						objectDefinition.getClassName(),
+						objectEntry.getObjectEntryId())),
+				Collections.emptyMap(), null);
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM, objectEntry);
+
+		InfoItemDetailsProvider<ObjectEntry> infoItemDetailsProvider =
+			(InfoItemDetailsProvider<ObjectEntry>)
+				_infoItemServiceRegistry.getFirstInfoItemService(
+					InfoItemDetailsProvider.class,
+					objectDefinition.getClassName());
+
+		mockHttpServletRequest.setAttribute(
+			InfoDisplayWebKeys.INFO_ITEM_DETAILS,
+			infoItemDetailsProvider.getInfoItemDetails(objectEntry));
+
+		_serviceContext.setRequest(mockHttpServletRequest);
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+
+		try {
+			MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+				layout, mockHttpServletRequest);
+
+			String content = mockHttpServletResponse.getContentAsString();
+
+			Assert.assertFalse(
+				StringBundler.concat(
+					"Content contains: '", xssScript, "', value: ", content),
+				content.contains(xssScript));
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Test

@@ -322,8 +322,9 @@ public class EditStyleBookEntryDisplayContext {
 					_themeDisplay.getCompanyId(), _styleBookEntry.getThemeId());
 		}
 		else {
-			Group group = _themeDisplay.getLayoutSet(
-			).getGroup();
+			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
+
+			Group group = layoutSet.getGroup();
 
 			frontendTokenDefinition =
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinition(

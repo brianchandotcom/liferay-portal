@@ -709,6 +709,14 @@ public class CustomFDSSerializer
 								externalReferenceCode);
 
 						if (fdsCellRendererCET == null) {
+							boolean clientExtension =
+								schemaFieldJSONObject.getBoolean(
+									"contentRendererClientExtension");
+
+							if (!clientExtension) {
+								return schemaFieldJSONObject;
+							}
+
 							if (_log.isWarnEnabled()) {
 								_log.warn(
 									"No frontend data set cell renderer " +

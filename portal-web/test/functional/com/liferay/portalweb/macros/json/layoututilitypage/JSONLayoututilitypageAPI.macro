@@ -44,4 +44,42 @@ definition {
 		return ${layoutUtilityPageEntryId};
 	}
 
+	@summary = "Default summary"
+	macro _setDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null) {
+		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/set-default-layout-utility-page-entry \
+				-u ${userLoginInfo} \
+				-d layoutUtilityPageEntryId=${layoutUtilityPageEntryId}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
+	@summary = "Default summary"
+	macro _unsetDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null) {
+		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
+
+		if (!(isSet(portalURL))) {
+			var portalURL = JSONCompany.getPortalURL();
+		}
+
+		var userLoginInfo = JSONUtil2.formatJSONUser();
+
+		var curl = '''
+			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/unset-default-layout-utility-page-entry \
+				-u ${userLoginInfo} \
+				-d layoutUtilityPageEntryId=${layoutUtilityPageEntryId}
+		''';
+
+		JSONCurlUtil.post(${curl});
+	}
+
 }

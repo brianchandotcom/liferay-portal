@@ -939,9 +939,15 @@ public abstract class BaseWorkspaceGitRepository
 
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
-		File archiveFile = gitWorkingDirectory.archive(_getGitArchiveName());
+		String jobName = System.getenv("JOB_NAME");
 
-		CloudBucketUtil.uploadS3File(_getGitArchiveS3BucketPath(), archiveFile);
+		if (!jobName.contains("-batch") && !jobName.contains("-downstream")) {
+			File archiveFile = gitWorkingDirectory.archive(
+				_getGitArchiveName());
+
+			CloudBucketUtil.uploadS3File(
+				_getGitArchiveS3BucketPath(), archiveFile);
+		}
 
 		_setSnapshot(true);
 

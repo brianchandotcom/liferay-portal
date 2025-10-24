@@ -21,9 +21,9 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -375,10 +376,11 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		if (fragmentEntryLink.isTypeInput()) {
 			sb.append("; const input = ");
 			sb.append(
-				JSONUtil.toString(
-					_getInputJSONObject(
-						fragmentEntryLink, fragmentRendererContext,
-						httpServletRequest)));
+				_toXSSSafeJSON(
+					JSONUtil.toString(
+						_getInputJSONObject(
+							fragmentEntryLink, fragmentRendererContext,
+							httpServletRequest))));
 		}
 
 		sb.append("; const layoutMode = '");
@@ -537,6 +539,15 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		_configurationPortalCache.put(key, entry);
 
 		return entry.getValue();
+	}
+
+	private String _toXSSSafeJSON(String json) {
+		return StringUtil.replace(
+			json,
+			new char[] {
+				CharPool.LESS_THAN, CharPool.GREATER_THAN, CharPool.AMPERSAND
+			},
+			new String[] {"\\u003C", "\\u003E", "\\u0026"});
 	}
 
 	private String _writePortletPaths(

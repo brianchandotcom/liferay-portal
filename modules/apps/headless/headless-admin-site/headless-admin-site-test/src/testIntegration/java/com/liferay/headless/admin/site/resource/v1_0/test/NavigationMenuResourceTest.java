@@ -177,8 +177,8 @@ public class NavigationMenuResourceTest
 
 	@Override
 	@Test
-	public void testGetNavigationMenu() throws Exception {
-		super.testGetNavigationMenu();
+	public void testGetSiteNavigationMenu() throws Exception {
+		super.testGetSiteNavigationMenu();
 
 		BlogsEntry blogsEntry = _blogsEntryLocalService.addEntry(
 			TestPropsValues.getUserId(), StringUtil.randomString(),
@@ -322,8 +322,8 @@ public class NavigationMenuResourceTest
 
 	@Override
 	@Test
-	public void testPutNavigationMenu() throws Exception {
-		super.testPutNavigationMenu();
+	public void testPutSiteNavigationMenu() throws Exception {
+		super.testPutSiteNavigationMenu();
 
 		_testPutSiteNavigationMenuWithPermissions();
 	}
@@ -399,11 +399,19 @@ public class NavigationMenuResourceTest
 	}
 
 	@Override
-	protected NavigationMenu testGetNavigationMenu_addNavigationMenu()
+	protected NavigationMenu testGetSiteNavigationMenu_addNavigationMenu()
 		throws Exception {
 
 		return navigationMenuResource.postSiteNavigationMenu(
-			testGroup.getGroupId(), _randomNavigationMenu(false));
+			testGroup.getExternalReferenceCode(), _randomNavigationMenu(false));
+	}
+
+	protected NavigationMenu testPostSiteNavigationMenu_addNavigationMenu(
+			NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getExternalReferenceCode(), navigationMenu);
 	}
 
 	private void _assertNavigationMenuItem(
@@ -761,7 +769,7 @@ public class NavigationMenuResourceTest
 		throws Exception {
 
 		NavigationMenu postNavigationMenu =
-			testGetNavigationMenu_addNavigationMenu();
+			testGetSiteNavigationMenu_addNavigationMenu();
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -797,8 +805,9 @@ public class NavigationMenuResourceTest
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
 		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu.getId());
+			navigationMenuResource.getSiteNavigationMenu(
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode());
 
 		assertValid(getNavigationMenu);
 
@@ -859,7 +868,7 @@ public class NavigationMenuResourceTest
 
 		NavigationMenu postNavigationMenu =
 			navigationMenuResource.postSiteNavigationMenu(
-				testGroup.getGroupId(),
+				testGroup.getExternalReferenceCode(),
 				_randomNavigationMenu(
 					layout1, layout2, nameI18nMap1, nameI18nMap2));
 
@@ -867,8 +876,9 @@ public class NavigationMenuResourceTest
 			_buildNavigationMenuResource(LocaleUtil.SPAIN);
 
 		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu.getId());
+			navigationMenuResource.getSiteNavigationMenu(
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode());
 
 		_assertNavigationMenuItem(
 			nameI18nMap1.get(LocaleUtil.SPAIN.toLanguageTag()), nameI18nMap1,
@@ -898,7 +908,7 @@ public class NavigationMenuResourceTest
 
 	private void _testGetNavigationMenuWithNestedFields() throws Exception {
 		NavigationMenu postNavigationMenu =
-			testGetNavigationMenu_addNavigationMenu();
+			testGetSiteNavigationMenu_addNavigationMenu();
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -919,8 +929,9 @@ public class NavigationMenuResourceTest
 			).build();
 
 		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu.getId());
+			navigationMenuResource.getSiteNavigationMenu(
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode());
 
 		Assert.assertTrue(
 			ArrayUtil.exists(
@@ -933,7 +944,7 @@ public class NavigationMenuResourceTest
 
 	private void _testGetNavigationMenuWithoutNestedFields() throws Exception {
 		NavigationMenu postNavigationMenu =
-			testGetNavigationMenu_addNavigationMenu();
+			testGetSiteNavigationMenu_addNavigationMenu();
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
@@ -952,8 +963,9 @@ public class NavigationMenuResourceTest
 			).build();
 
 		NavigationMenu getNavigationMenu =
-			navigationMenuResource.getNavigationMenu(
-				postNavigationMenu.getId());
+			navigationMenuResource.getSiteNavigationMenu(
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode());
 
 		Assert.assertNull(getNavigationMenu.getPermissions());
 	}
@@ -979,7 +991,7 @@ public class NavigationMenuResourceTest
 		throws Exception {
 
 		NavigationMenu postNavigationMenu =
-			testGetNavigationMenu_addNavigationMenu();
+			testGetSiteNavigationMenu_addNavigationMenu();
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
@@ -1015,7 +1027,8 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				testGroup.getGroupId(), null, null, Pagination.of(1, 10), null);
+				testGroup.getExternalReferenceCode(), null, null,
+				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 		assertValid(page);
@@ -1055,7 +1068,9 @@ public class NavigationMenuResourceTest
 			_equalsCustomFieldsIgnoringOrder(
 				customFields, _getExpectedCustomFields(serviceContext)));
 
-		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
+		navigationMenuResource.deleteSiteNavigationMenu(
+			testGroup.getExternalReferenceCode(),
+			postNavigationMenu.getExternalReferenceCode());
 	}
 
 	private void _testGetSiteNavigationMenusPageWithSearch() throws Exception {
@@ -1066,14 +1081,14 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				postNavigationMenu.getSiteId(), postNavigationMenu.getName(),
-				null, Pagination.of(1, 10), null);
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getName(), null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 
 		page = navigationMenuResource.getSiteNavigationMenusPage(
-			postNavigationMenu.getSiteId(), RandomTestUtil.randomString(), null,
-			Pagination.of(1, 10), null);
+			testGroup.getExternalReferenceCode(), RandomTestUtil.randomString(),
+			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(0, page.getTotalCount());
 	}
@@ -1086,7 +1101,7 @@ public class NavigationMenuResourceTest
 		navigationMenu.setNavigationType(NavigationMenu.NavigationType.PRIMARY);
 
 		navigationMenu = navigationMenuResource.postSiteNavigationMenu(
-			testGroup.getGroupId(), navigationMenu);
+			testGroup.getExternalReferenceCode(), navigationMenu);
 
 		Assert.assertEquals(
 			NavigationMenu.NavigationType.PRIMARY,
@@ -1140,7 +1155,7 @@ public class NavigationMenuResourceTest
 
 	private void _testPutSiteNavigationMenuWithPermissions() throws Exception {
 		NavigationMenu postNavigationMenu =
-			testPutNavigationMenu_addNavigationMenu();
+			testPutSiteNavigationMenu_addNavigationMenu();
 
 		NavigationMenu randomNavigationMenu = randomNavigationMenu();
 
@@ -1161,8 +1176,10 @@ public class NavigationMenuResourceTest
 		randomNavigationMenu.setPermissions(new Permission[] {permission1});
 
 		NavigationMenu putNavigationMenu =
-			navigationMenuResource.putNavigationMenu(
-				postNavigationMenu.getId(), randomNavigationMenu);
+			navigationMenuResource.putSiteNavigationMenu(
+				testGroup.getExternalReferenceCode(),
+				postNavigationMenu.getExternalReferenceCode(),
+				randomNavigationMenu);
 
 		List<com.liferay.portal.vulcan.permission.Permission> permissions =
 			ListUtil.fromCollection(

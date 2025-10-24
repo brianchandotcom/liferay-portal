@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
@@ -47,7 +46,26 @@ public class EditStyleBookEntryDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpMockUtils();
+		_jsonFactoryUtilMockedStatic.when(
+			JSONFactoryUtil::createJSONObject
+		).thenReturn(
+			Mockito.mock(JSONObject.class)
+		);
+
+		StyleBookEntry styleBookEntry = Mockito.mock(StyleBookEntry.class);
+
+		Mockito.when(
+			styleBookEntry.isHead()
+		).thenReturn(
+			true
+		);
+
+		_styleBookEntryLocalServiceUtilMockedStatic.when(
+			() -> StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				Mockito.anyLong())
+		).thenReturn(
+			styleBookEntry
+		);
 	}
 
 	@After
@@ -206,29 +224,6 @@ public class EditStyleBookEntryDisplayContextTest {
 		);
 
 		return themeDisplay;
-	}
-
-	private void _setUpMockUtils() {
-		_jsonFactoryUtilMockedStatic.when(
-			JSONFactoryUtil::createJSONObject
-		).thenReturn(
-			Mockito.mock(JSONObject.class)
-		);
-
-		StyleBookEntry styleBookEntry = Mockito.mock(StyleBookEntry.class);
-
-		Mockito.when(
-			styleBookEntry.isHead()
-		).thenReturn(
-			true
-		);
-
-		_styleBookEntryLocalServiceUtilMockedStatic.when(
-			() -> StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
-				Mockito.anyLong())
-		).thenReturn(
-			styleBookEntry
-		);
 	}
 
 	private static final MockedStatic<JSONFactoryUtil>

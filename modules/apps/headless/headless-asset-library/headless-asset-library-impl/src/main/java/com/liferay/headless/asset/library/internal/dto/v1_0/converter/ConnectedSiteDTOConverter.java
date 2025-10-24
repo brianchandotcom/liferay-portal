@@ -56,6 +56,13 @@ public class ConnectedSiteDTOConverter
 
 		return new ConnectedSite() {
 			{
+				setDescriptiveName(
+					() -> group.getDescriptiveName(
+						dtoConverterContext.getLocale()));
+				setDescriptiveName_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						dtoConverterContext.isAcceptAllLanguages(),
+						group.getDescriptiveNameMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setId(group::getGroupId);
 				setLogo(

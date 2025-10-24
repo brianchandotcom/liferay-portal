@@ -9694,21 +9694,26 @@ public class ObjectEntryResourceTest {
 
 		random.nextBytes(data);
 
+		String base64 = Base64.encode(data);
+
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				attachmentFieldName,
 				JSONUtil.put(
-					"fileBase64", Base64.encode(data)
+					"fileBase64", base64
 				).put(
 					"name", StringUtil.randomString() + ".txt"
 				)
 			).toString(),
-			_objectDefinition1.getRESTContextPath(), Http.Method.POST);
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(), "?nestedFields=",
+				attachmentFieldName, ".fileBase64"),
+			Http.Method.POST);
 
 		_assertAttachmentJSONObject(
 			_dlFileEntryLocalService.getDLFileEntry(
 				_testDLFileEntryModelListener.getLastFileEntryId()),
-			null, jsonObject.getJSONObject(attachmentFieldName),
+			base64, jsonObject.getJSONObject(attachmentFieldName),
 			JSONUtil.put(
 				"externalReferenceCode", "L_GLOBAL"
 			).put(
@@ -15153,9 +15158,7 @@ public class ObjectEntryResourceTest {
 			Assert.assertNotNull(jsonObject.get("externalReferenceCode"));
 		}
 
-		if (fileBase64 != null) {
-			Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
-		}
+		Assert.assertEquals(fileBase64, jsonObject.get("fileBase64"));
 
 		if (scopeJSONObject == null) {
 			Assert.assertFalse(jsonObject.has("scope"));

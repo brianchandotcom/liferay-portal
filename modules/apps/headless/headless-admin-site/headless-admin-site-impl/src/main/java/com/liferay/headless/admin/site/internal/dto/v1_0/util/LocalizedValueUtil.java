@@ -35,13 +35,20 @@ public class LocalizedValueUtil {
 	}
 
 	public static Map<String, String> toLocalizedValues(JSONObject jsonObject) {
+		return toLocalizedValues(jsonObject, key -> jsonObject.getString(key));
+	}
+
+	public static <R, E extends Throwable> Map<String, R> toLocalizedValues(
+			JSONObject jsonObject, UnsafeFunction<String, R, E> unsafeFunction)
+		throws E {
+
 		return new HashMap<>() {
 			{
 				List<String> availableLanguageIds = getAvailableLanguageIds();
 
 				for (String key : jsonObject.keySet()) {
 					if (availableLanguageIds.contains(key)) {
-						put(key, jsonObject.getString(key));
+						put(key, unsafeFunction.apply(key));
 					}
 				}
 			}

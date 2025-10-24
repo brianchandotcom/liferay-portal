@@ -54,9 +54,7 @@ public class VerifyProcessTrackerOSGiCommandsTest {
 
 		_runOnPortalUpgradeVerifiers =
 			StartupHelperUtil.isRunOnPortalUpgradeVerifiers();
-
 		_symbolicName = bundle.getSymbolicName();
-
 		_upgrading = StartupHelperUtil.isUpgrading();
 
 		StartupHelperUtil.setUpgrading(false);

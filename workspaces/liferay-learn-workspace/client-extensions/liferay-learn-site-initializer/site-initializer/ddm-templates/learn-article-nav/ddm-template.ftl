@@ -14,12 +14,7 @@
 				<div class="learn-article-nav-item learn-article-nav-parent menu-trigger menu-trigger-capabilities">
 					<div class="mr-2 menu-toggler-icon">
 						<a href='${parentJSONObject.getString("url")}'>
-							<svg
-								class="lexicon-icon lexicon-icon-angle-left"
-								role="presentation"
-								viewBox="0 0 512 512">
-								<use xlink:href="/o/admin-theme/images/clay/icons.svg#angle-left"></use>
-							</svg>
+							<@clay["icon"] symbol="angle-left" />
 						</a>
 					</div>
 
@@ -101,3 +96,128 @@
 		});
 	});
 </script>
+
+<style>
+	.learn-article-nav-parent .menu-toggler-icon {
+		display: none;
+	}
+
+	.learn-article-nav-parent span {
+		font-weight: 700;
+	}
+
+	.learn-article-page-container {
+		padding: 1.5rem;
+	}
+
+	.liferay-nav-item-border {
+		border-bottom: 1px solid #E2E2E4;
+	}
+
+	.liferay-nav-item-right-arrow {
+		background-color: currentColor;
+		display: inline-block;
+		height: 16px;
+		mask-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.5593 7.32801L6.44914 3.27799C5.60571 2.48472 4.46015 3.56307 5.2847 4.34085L9.00776 8.00043L5.26267 11.7003C4.49477 12.4223 5.67809 13.4821 6.44914 12.757L10.5687 8.69764C11.1006 8.20804 11.1887 7.91057 10.5593 7.32801Z'/%3E%3C/svg%3E");
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		transition: transform 0.3s ease-in-out;
+		width: 16px;
+	}
+
+	.menu-nav-items-capabilities.show,
+	.menu-nav-items-documentation.show {
+		display: flex !important;
+		flex-direction: column;
+	}
+
+	.menu-trigger {
+		cursor: pointer;
+	}
+
+	.menu-trigger.show .liferay-nav-item-right-arrow {
+		transform: rotate(90deg);
+	}
+
+	.table-of-contents-documentation {
+		display: none;
+	}
+
+	.table-of-contents-documentation,
+	.menu-trigger-capabilities {
+		align-items: center;
+		justify-content: space-between;
+		padding: 8px 12px;
+	}
+
+	.table-of-contents-documentation span {
+		font-weight: 700;
+	}
+
+	@media (max-width: 1024px) {
+		.learn-article {
+			padding: 0 !important;
+		}
+
+		.learn-article-content-container,
+		.learn-article-page-container {
+			flex-direction: column !important;
+		}
+
+		.learn-article-nav-breadcrumb-container {
+			margin-bottom: 2.5rem;
+			padding: 0;
+		}
+
+		.learn-article-nav-container {
+			max-width: 100% !important;
+		}
+
+		.learn-article-nav-content {
+			margin-bottom: 40px;
+		}
+
+		.learn-article-nav-parent .menu-toggler-icon {
+			display: none;
+		}
+
+		.learn-article-page-container {
+			padding: 0;
+		}
+
+		.menu-nav-items-capabilities,
+		.menu-nav-items-documentation {
+			display: none;
+		}
+
+		.menu-trigger-capabilities {
+			justify-content: space-between !important;
+			padding: 16px 20px;
+		}
+
+		.menu-trigger-capabilities .liferay-nav-item-right-arrow {
+			display: flex !important;
+		}
+
+		.table-of-contents-documentation {
+			display: flex;
+		}
+	}
+
+	@media (min-width: 1025px) {
+		.learn-article-nav-parent .menu-toggler-icon {
+			display: flex;
+		}
+
+		.menu-nav-items-capabilities,
+		.menu-nav-items-documentation {
+			display: flex !important;
+			flex-direction: column;
+		}
+
+		.menu-trigger-capabilities .liferay-nav-item-right-arrow,
+		.menu-trigger-documentation .liferay-nav-item-right-arrow {
+			display: none !important;
+		}
+	}
+</style>

@@ -3,12 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import classNames from 'classnames';
 import {getObjectValueFromPath} from 'frontend-js-web';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useContext} from 'react';
 
+import FrontendDataSetContext from '../FrontendDataSetContext';
 import BulkActions from './controls/BulkActions';
 import NavBar from './controls/NavBar';
+import SelectionCheckbox from './controls/SelectionCheckbox';
 import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 
 function ManagementBar({
@@ -24,12 +27,13 @@ function ManagementBar({
 	selectedItems,
 	selectedItemsKey,
 	selectedItemsValue,
-	selectionType,
 	showNavBarWhenSelected = false,
 	showSearch,
 	showSelectAll,
 	total,
 }) {
+	const {selectable, selectionType} = useContext(FrontendDataSetContext);
+
 	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
 		items.some(
 			(item) =>
@@ -54,38 +58,52 @@ function ManagementBar({
 		);
 	}
 
+	const showBulkActions =
+		selectionType === 'multiple' &&
+		!showNavBarWhenSelected &&
+		!!selectedItemsValue.length;
+
 	return (
 		<>
-			{selectionType === 'multiple' && !showNavBarWhenSelected && (
-				<BulkActions
-					bulkActions={bulkActions}
-					deselectItems={deselectItems}
-					fluid={fluid}
-					handleCheckboxClick={handleCheckboxClick}
-					handleSelectAll={(value) => onSelectAll(value)}
-					items={items}
-					onClear={onBulkActionsClear}
-					pageSelectedItemsValue={pageSelectedItemsValue}
-					selectItems={selectItems}
-					selectedItems={selectedItems}
-					selectedItemsKey={selectedItemsKey}
-					selectedItemsValue={selectedItemsValue}
-					showSelectAll={showSelectAll}
-					total={total}
-				/>
-			)}
+			<div
+				className={classNames(
+					'container-fluid ml-2 d-flex align-items-center management-bar',
+					{'management-bar-primary': showBulkActions},
+					!fluid && 'px-0'
+				)}
+			>
+				{!!items.length &&
+					selectable &&
+					selectionType === 'multiple' && (
+						<div className="ml-4 mt-2">
+							<SelectionCheckbox
+								handleCheckboxClick={handleCheckboxClick}
+								items={items}
+								selectedItemsValue={pageSelectedItemsValue}
+							/>
+						</div>
+					)}
 
-			{(selectionType === 'single' ||
-				!selectedItemsValue.length ||
-				(!!selectedItemsValue.length && showNavBarWhenSelected)) && (
-				<NavBar
-					creationMenu={creationMenu}
-					handleCheckboxClick={handleCheckboxClick}
-					items={items}
-					pageSelectedItemsValue={pageSelectedItemsValue}
-					showSearch={showSearch}
-				/>
-			)}
+				{showBulkActions ? (
+					<BulkActions
+						bulkActions={bulkActions}
+						handleSelectAll={(value) => onSelectAll(value)}
+						items={items}
+						onClear={onBulkActionsClear}
+						pageSelectedItemsValue={pageSelectedItemsValue}
+						selectedItems={selectedItems}
+						selectedItemsKey={selectedItemsKey}
+						selectedItemsValue={selectedItemsValue}
+						showSelectAll={showSelectAll}
+						total={total}
+					/>
+				) : (
+					<NavBar
+						creationMenu={creationMenu}
+						showSearch={showSearch}
+					/>
+				)}
+			</div>
 
 			<ActiveFiltersBar
 				dataLoading={dataLoading}

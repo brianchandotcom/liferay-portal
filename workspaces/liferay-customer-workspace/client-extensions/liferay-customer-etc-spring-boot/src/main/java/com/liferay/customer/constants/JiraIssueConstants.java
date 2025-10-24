@@ -5,6 +5,8 @@
 
 package com.liferay.customer.constants;
 
+import com.liferay.petra.string.StringPool;
+
 /**
  * @author Jenny Chen
  */
@@ -32,5 +34,11 @@ public interface JiraIssueConstants {
 	};
 
 	public static final String TYPE_GENERAL_REQUEST = "General Request";
+
+	public static String toJQLCustomField(String customField) {
+		int pos = customField.indexOf(StringPool.UNDERLINE);
+
+		return "cf[" + customField.substring(pos + 1) + "]";
+	}
 
 }

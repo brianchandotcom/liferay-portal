@@ -106,7 +106,8 @@ public class AccountsTicketsRestController extends BaseRestController {
 					JiraIssueConstants.STATUSES_SOLVED_AND_CLOSED, "','"));
 			sb.append("')) and ");
 			sb.append(
-				_jiraService.getJQLCustomField(_jiraSupportHCFieldRequestType));
+				JiraIssueConstants.toJQLCustomField(
+					_jiraSupportHCFieldRequestType));
 			sb.append(" = '");
 			sb.append(JiraIssueConstants.TYPE_GENERAL_REQUEST);
 			sb.append("'");

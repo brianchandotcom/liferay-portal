@@ -5,7 +5,6 @@
 
 package com.liferay.template.web.internal.display.context;
 
-import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.frontend.taglib.clay.servlet.taglib.display.context.SearchContainerManagementToolbarDisplayContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -22,19 +21,15 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.template.constants.TemplatePortletKeys;
 import com.liferay.template.info.item.capability.TemplateInfoItemCapability;
 import com.liferay.template.model.TemplateEntry;
 import com.liferay.template.web.internal.security.permissions.resource.TemplateEntryPermission;
@@ -124,9 +119,7 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		if (!_informationTemplatesTemplateDisplayContext.isAddButtonEnabled() ||
-			!containsAddPortletDisplayTemplatePermission()) {
-
+		if (!_informationTemplatesTemplateDisplayContext.isAddButtonEnabled()) {
 			return null;
 		}
 
@@ -149,30 +142,12 @@ public class InformationTemplatesManagementToolbarDisplayContext
 		return "templateEntries";
 	}
 
-	protected boolean containsAddPortletDisplayTemplatePermission() {
-		try {
-			return PortletPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroupId(), _themeDisplay.getLayout(),
-				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE, false,
-				false);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to check permission for resource name " +
-						TemplatePortletKeys.TEMPLATE,
-					portalException);
-			}
-		}
-
-		return false;
-	}
-
 	private JSONArray _getItemTypesJSONArray() {
 		JSONArray itemTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		if (!containsAddPortletDisplayTemplatePermission()) {
+		if (!_informationTemplatesTemplateDisplayContext.
+				containsAddPortletDisplayTemplatePermission()) {
+
 			return itemTypesJSONArray;
 		}
 
@@ -259,9 +234,6 @@ public class InformationTemplatesManagementToolbarDisplayContext
 
 		return itemTypesJSONArray;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		InformationTemplatesManagementToolbarDisplayContext.class);
 
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final InformationTemplatesTemplateDisplayContext

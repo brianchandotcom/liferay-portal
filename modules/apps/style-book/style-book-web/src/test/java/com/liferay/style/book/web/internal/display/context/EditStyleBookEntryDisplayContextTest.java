@@ -1,0 +1,245 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.style.book.web.internal.display.context;
+
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockRenderResponse;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.theme.PortletDisplay;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlag;
+import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.style.book.model.StyleBookEntry;
+import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+
+/**
+ * @author Anderson Luiz
+ */
+public class EditStyleBookEntryDisplayContextTest {
+
+	@ClassRule
+	@Rule
+	public static final LiferayUnitTestRule liferayUnitTestRule =
+		LiferayUnitTestRule.INSTANCE;
+
+	@Before
+	public void setUp() throws Exception {
+		_setUpMockUtils();
+	}
+
+	@After
+	public void tearDown() {
+		_jsonFactoryUtilMockedStatic.close();
+		_layoutSetLocalServiceUtilMockedStatic.close();
+		_styleBookEntryLocalServiceUtilMockedStatic.close();
+	}
+
+	@FeatureFlag(enable = false, value = "LPD-30204")
+	@Test
+	public void testGetStyleBookEditorData() throws PortalException {
+		Group liveGroup = Mockito.mock(Group.class);
+
+		long liveGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			liveGroup.getGroupId()
+		).thenReturn(
+			liveGroupId
+		);
+
+		Mockito.when(
+			liveGroup.isPrivateLayoutsEnabled()
+		).thenReturn(
+			true
+		);
+
+		Group stagingGroup = Mockito.mock(Group.class);
+
+		long stagingGroupId = RandomTestUtil.randomLong();
+
+		Mockito.when(
+			stagingGroup.getGroupId()
+		).thenReturn(
+			stagingGroupId
+		);
+
+		Mockito.when(
+			stagingGroup.isPrivateLayoutsEnabled()
+		).thenReturn(
+			true
+		);
+
+		LayoutSet liveLayoutSet = Mockito.mock(LayoutSet.class);
+
+		Mockito.when(
+			liveLayoutSet.getGroup()
+		).thenReturn(
+			liveGroup
+		);
+
+		LayoutSet stagingLayoutSet = Mockito.mock(LayoutSet.class);
+
+		Mockito.when(
+			stagingLayoutSet.getGroup()
+		).thenReturn(
+			stagingGroup
+		);
+
+		_layoutSetLocalServiceUtilMockedStatic.when(
+			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
+				Mockito.eq(liveGroup.getGroupId()), Mockito.anyBoolean())
+		).thenReturn(
+			liveLayoutSet
+		);
+
+		_layoutSetLocalServiceUtilMockedStatic.when(
+			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
+				Mockito.eq(stagingGroup.getGroupId()), Mockito.anyBoolean())
+		).thenReturn(
+			stagingLayoutSet
+		);
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			Mockito.mock(FrontendTokenDefinitionRegistry.class);
+
+		_callGetFrontendTokenDefinitionJSONObject(
+			frontendTokenDefinitionRegistry,
+			_getThemeDisplay(liveGroup, liveLayoutSet));
+
+		_layoutSetLocalServiceUtilMockedStatic.verify(
+			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
+				Mockito.eq(liveGroupId), Mockito.eq(false)));
+
+		Mockito.verify(
+			frontendTokenDefinitionRegistry
+		).getFrontendTokenDefinition(
+			liveLayoutSet
+		);
+
+		_callGetFrontendTokenDefinitionJSONObject(
+			frontendTokenDefinitionRegistry,
+			_getThemeDisplay(stagingGroup, stagingLayoutSet));
+
+		_layoutSetLocalServiceUtilMockedStatic.verify(
+			() -> LayoutSetLocalServiceUtil.fetchLayoutSet(
+				Mockito.eq(stagingGroupId), Mockito.eq(false)));
+
+		Mockito.verify(
+			frontendTokenDefinitionRegistry
+		).getFrontendTokenDefinition(
+			stagingLayoutSet
+		);
+	}
+
+	private void _callGetFrontendTokenDefinitionJSONObject(
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
+		ThemeDisplay themeDisplay) {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
+			new EditStyleBookEntryDisplayContext(
+				null, frontendTokenDefinitionRegistry, mockHttpServletRequest,
+				null, new MockRenderResponse());
+
+		ReflectionTestUtil.invoke(
+			editStyleBookEntryDisplayContext,
+			"_getFrontendTokenDefinitionJSONObject", new Class<?>[0]);
+	}
+
+	private ThemeDisplay _getThemeDisplay(
+		Group liveGroup, LayoutSet layoutSet) {
+
+		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
+
+		Mockito.doNothing(
+		).when(
+			portletDisplay
+		).setURLBack(
+			StringPool.BLANK
+		);
+
+		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
+
+		Mockito.when(
+			themeDisplay.getLayoutSet()
+		).thenReturn(
+			layoutSet
+		);
+
+		Mockito.when(
+			themeDisplay.getPortletDisplay()
+		).thenReturn(
+			portletDisplay
+		);
+
+		Mockito.when(
+			themeDisplay.getScopeGroup()
+		).thenReturn(
+			liveGroup
+		);
+
+		return themeDisplay;
+	}
+
+	private void _setUpMockUtils() {
+		_jsonFactoryUtilMockedStatic.when(
+			JSONFactoryUtil::createJSONObject
+		).thenReturn(
+			Mockito.mock(JSONObject.class)
+		);
+
+		StyleBookEntry styleBookEntry = Mockito.mock(StyleBookEntry.class);
+
+		Mockito.when(
+			styleBookEntry.isHead()
+		).thenReturn(
+			true
+		);
+
+		_styleBookEntryLocalServiceUtilMockedStatic.when(
+			() -> StyleBookEntryLocalServiceUtil.fetchStyleBookEntry(
+				Mockito.anyLong())
+		).thenReturn(
+			styleBookEntry
+		);
+	}
+
+	private static final MockedStatic<JSONFactoryUtil>
+		_jsonFactoryUtilMockedStatic = Mockito.mockStatic(
+			JSONFactoryUtil.class);
+	private static final MockedStatic<LayoutSetLocalServiceUtil>
+		_layoutSetLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			LayoutSetLocalServiceUtil.class);
+	private static final MockedStatic<StyleBookEntryLocalServiceUtil>
+		_styleBookEntryLocalServiceUtilMockedStatic = Mockito.mockStatic(
+			StyleBookEntryLocalServiceUtil.class);
+
+}

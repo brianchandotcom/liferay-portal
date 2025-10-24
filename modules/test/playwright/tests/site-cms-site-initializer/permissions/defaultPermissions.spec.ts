@@ -661,3 +661,141 @@ test(
 		}
 	}
 );
+
+test(
+	'Action are working also in cms home page',
+	{tag: '@LPD-67530'},
+	async ({page}) => {
+		const spaceName = 'Space' + getRandomInt();
+
+		await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+		await createSpace(page, spaceName);
+
+		try {
+			await expect(async () => {
+				await page
+					.getByText('No Content Yet')
+					.locator('../..')
+					.getByTestId('fdsCreationActionButton')
+					.click();
+				await page.getByRole('menuitem', {name: 'Folder'}).click();
+
+				await expect(page.getByLabel('Name')).toBeVisible();
+			}).toPass();
+
+			const folderName = String(getRandomInt());
+
+			await page.getByLabel('Name').fill(folderName);
+			await page.getByRole('button', {name: 'Save'}).click();
+
+			await expect(
+				page.getByRole('link', {name: folderName})
+			).toBeVisible();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {exact: true, name: 'Permissions'})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {name: 'Permissions'})
+				).toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Close'})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {name: 'Permissions'})
+				).not.toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {
+						exact: true,
+						name: 'Default Permissions',
+					})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: 'Edit Default Permissions',
+					})
+				).toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Close'})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: 'Edit Default Permissions',
+					})
+				).not.toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {name: 'Edit and Propagate Default'})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: 'Edit Default Permissions',
+					})
+				).toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Close'})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: 'Edit Default Permissions',
+					})
+				).not.toBeVisible();
+			}).toPass();
+
+			await expect(async () => {
+				await page
+					.getByRole('button', {exact: true, name: 'Actions'})
+					.click();
+				await page
+					.getByRole('menuitem', {
+						name: 'Reset to Default Permissions',
+					})
+					.click();
+
+				await expect(
+					page.getByRole('heading', {
+						name: 'Confirm Reset Permissions -',
+					})
+				).toBeVisible();
+
+				await page.getByRole('button', {name: 'Cancel'}).click();
+			}).toPass();
+		}
+		finally {
+			await page.goto(PORTLET_URLS.cmsAllSpaces);
+
+			await deleteSpace(page, spaceName);
+		}
+	}
+);

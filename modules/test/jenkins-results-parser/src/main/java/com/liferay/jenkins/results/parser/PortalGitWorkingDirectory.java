@@ -55,8 +55,6 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 					executionResult.getStandardError()));
 		}
 
-		System.out.println(executionResult.getStandardOut());
-
 		return archiveFile;
 	}
 

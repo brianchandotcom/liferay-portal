@@ -7,15 +7,29 @@ import {Tag} from '../types/Tag';
 import ApiHelper from './ApiHelper';
 
 async function createTag({
+	cmsGroupId,
 	groupId,
 	name,
 }: {
-	groupId: number | string;
+	cmsGroupId: number | string;
+	groupId: number | string | null | undefined;
 	name: string;
 }) {
+	let requestBody;
+
+	if (groupId === null || groupId === undefined) {
+		requestBody = {name};
+	}
+	else {
+		requestBody = {
+			assetLibraries: [{id: groupId}],
+			name,
+		};
+	}
+
 	return await ApiHelper.post<Tag>(
-		`/o/headless-admin-taxonomy/v1.0/sites/${groupId}/keywords`,
-		{name}
+		`/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`,
+		requestBody
 	);
 }
 

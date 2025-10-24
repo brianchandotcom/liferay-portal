@@ -145,6 +145,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				return null;
 			}
 		).put(
+			"cmsGroupId", themeDisplay.getScopeGroupId()
+		).put(
 			"comments",
 			() -> {
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -238,7 +240,7 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 					themeDisplay.getLocale());
 			}
 		).put(
-			"groupId", themeDisplay.getScopeGroupId()
+			"groupId", objectEntry.getGroupId()
 		).put(
 			"hasUpdatePermission",
 			() -> {

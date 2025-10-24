@@ -219,11 +219,7 @@ public class ObjectDefinitionLocalServiceTest {
 			_objectDefinitionLocalService, _objectRelationshipLocalService);
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag("LPD-6233"), @FeatureFlag(value = "LPD-51345")
-		}
-	)
+	@FeatureFlag("LPD-51345")
 	@Test
 	public void testAddCustomObjectDefinition() throws Exception {
 

@@ -1418,7 +1418,6 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testAddObjectEntryWithAssigneeObjectField() throws Exception {
 		ObjectDefinition objectDefinition =

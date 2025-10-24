@@ -1459,7 +1459,6 @@ public class ObjectFieldLocalServiceImpl
 
 		if (!oldObjectField.compareBusinessType(businessType)) {
 			_validateBusinessTypeAssignee(
-				newObjectField.getCompanyId(),
 				newObjectField.getObjectDefinitionId(), businessType);
 		}
 
@@ -1581,24 +1580,19 @@ public class ObjectFieldLocalServiceImpl
 		}
 
 		_validateBusinessTypeAssignee(
-			objectDefinition.getCompanyId(),
 			objectDefinition.getObjectDefinitionId(), businessType);
 		_validateBusinessTypeEncrypted(
 			objectDefinition.getObjectDefinitionId(), businessType);
 	}
 
 	private void _validateBusinessTypeAssignee(
-			long companyId, long objectDefinitionId, String businessType)
+			long objectDefinitionId, String businessType)
 		throws PortalException {
 
 		if (!Objects.equals(
 				businessType, ObjectFieldConstants.BUSINESS_TYPE_ASSIGNEE)) {
 
 			return;
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-6233")) {
-			throw new UnsupportedOperationException();
 		}
 
 		int count = objectFieldPersistence.countByODI_BT(

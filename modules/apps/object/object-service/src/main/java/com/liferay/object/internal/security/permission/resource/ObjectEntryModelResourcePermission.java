@@ -22,7 +22,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -244,10 +243,7 @@ public class ObjectEntryModelResourcePermission
 			ObjectEntry objectEntry, User user)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-6233") ||
-			!actionId.equals(ActionKeys.UPDATE)) {
-
+		if (!actionId.equals(ActionKeys.UPDATE)) {
 			return false;
 		}
 

@@ -79,7 +79,6 @@ const test = mergeTests(
 const assigneeTest = mergeTests(
 	test,
 	featureFlagsTest({
-		'LPD-6233': {enabled: true},
 		'LPS-179669': {enabled: true},
 	})
 );

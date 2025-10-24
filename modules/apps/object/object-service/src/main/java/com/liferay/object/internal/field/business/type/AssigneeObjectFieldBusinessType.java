@@ -10,12 +10,10 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.render.ObjectFieldRenderingContext;
-import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.Assignee;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.log.Log;
@@ -154,12 +152,6 @@ public class AssigneeObjectFieldBusinessType
 	@Override
 	public boolean isLocalizationSupported(ObjectField objectField) {
 		return false;
-	}
-
-	@Override
-	public boolean isVisible(ObjectDefinition objectDefinition) {
-		return FeatureFlagManagerUtil.isEnabled(
-			objectDefinition.getCompanyId(), "LPD-6233");
 	}
 
 	private Object _getValue(

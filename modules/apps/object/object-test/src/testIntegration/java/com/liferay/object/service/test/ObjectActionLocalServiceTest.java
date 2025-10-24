@@ -2098,7 +2098,6 @@ public class ObjectActionLocalServiceTest {
 		_testExecuteObjectActionMultipleTimesInTheSameThreadWithASystemObjectDefinition();
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testExecuteObjectActionWithAssigneeObjectField()
 		throws Exception {

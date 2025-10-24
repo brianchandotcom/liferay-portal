@@ -94,7 +94,6 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.test.rule.FeatureFlag;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
@@ -144,11 +143,7 @@ public class ObjectFieldLocalServiceTest {
 					ListTypeEntryUtil.createListTypeEntry(_listTypeEntryKey)));
 	}
 
-	@FeatureFlags(
-		featureFlags = {
-			@FeatureFlag(value = "LPD-6233"), @FeatureFlag(value = "LPD-32050")
-		}
-	)
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddCustomObjectField() throws Exception {
 		AssertUtils.assertFailure(
@@ -798,7 +793,6 @@ public class ObjectFieldLocalServiceTest {
 		_testAddCustomObjectFieldReadOnly();
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testAddOrUpdateCustomObjectField() throws Exception {
 		ObjectFieldBuilder objectFieldBuilder =
@@ -1426,7 +1420,6 @@ public class ObjectFieldLocalServiceTest {
 			modifiableSystemObjectDefinition);
 	}
 
-	@FeatureFlag("LPD-6233")
 	@Test
 	public void testDeleteObjectField() throws Exception {
 

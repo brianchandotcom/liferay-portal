@@ -153,16 +153,6 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 					SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU,
 					"postSiteNavigationMenuBatch",
 					SiteNavigationConstants.RESOURCE_NAME, groupId)
-			).put(
-				"deleteBatch",
-				addAction(
-					ActionKeys.DELETE, "deleteNavigationMenuBatch",
-					SiteNavigationConstants.RESOURCE_NAME, null)
-			).put(
-				"updateBatch",
-				addAction(
-					ActionKeys.UPDATE, "putNavigationMenuBatch",
-					SiteNavigationConstants.RESOURCE_NAME, null)
 			).build(),
 			booleanQuery -> {
 			},
@@ -500,12 +490,12 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 						"delete",
 						addAction(
 							ActionKeys.DELETE, siteNavigationMenu,
-							"deleteNavigationMenu")
+							"deleteSiteNavigationMenu")
 					).put(
 						"replace",
 						addAction(
 							ActionKeys.UPDATE, siteNavigationMenu,
-							"putNavigationMenu")
+							"putSiteNavigationMenu")
 					).build());
 				setCreator(
 					() -> {

@@ -1475,7 +1475,8 @@ public interface LayoutLocalService
 		throws PortalException;
 
 	/**
-	 * Updates the layout replacing its master layout plid.
+	 * Updates the layout replacing its master layout page template entry
+	 * external reference code
 	 *
 	 * @param groupId the primary key of the group
 	 * @param privateLayout whether the layout is private to the group

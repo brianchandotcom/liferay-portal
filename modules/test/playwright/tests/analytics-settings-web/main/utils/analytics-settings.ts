@@ -14,12 +14,23 @@ import {acceptsCookiesBanner} from '../../../osb-faro-web/main/utils/portal';
 export const PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX = 1;
 export const PROPERTY_SITE_COLUMN_INDEX = 2;
 
-async function switchToTab({page, tabName}: {page: Page; tabName: string}) {
-	const sitesTab = await page.getByRole('tab', {name: tabName});
+enum TabName {
+	Channel = "Channel",
+	Sites = "Sites"
+}
 
-	await sitesTab.click();
+async function switchToTab({page, tabName}: {page: Page; tabName: TabName}) {
+	await page.getByRole('tab', {name: tabName}).click();
 
-	await page.waitForTimeout(3000);
+	if (tabName === TabName.Channel) {
+		await page
+				.getByText("Channels can only be assigned to a single property at a time")
+				.waitFor({state: "visible"});
+	} else {
+		await page
+				.getByText("Sites can only be assigned to a single property at a time")
+				.waitFor({state: "visible"});
+	}
 }
 
 export async function connectToAnalyticsCloud(
@@ -300,7 +311,7 @@ export async function syncCommerce({
 
 	await assignButton.click();
 
-	await switchToTab({page, tabName: 'Channel'});
+	await switchToTab({page, tabName: TabName.Channel});
 
 	await page
 		.locator('.active')
@@ -349,7 +360,7 @@ export async function toggleSiteSync({
 
 	await assignButton.click();
 
-	await switchToTab({page, tabName: 'Sites'});
+	await switchToTab({page, tabName: TabName.Sites});
 
 	await page.locator('.active').getByPlaceholder('Search').fill(siteName);
 

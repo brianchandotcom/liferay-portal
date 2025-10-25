@@ -4,6 +4,7 @@
  */
 
 import AdvancedPropsTransformer from './AdvancedPropsTransformer';
+import ContentRenderersFrontendDataSet from './ContentRenderersFrontendDataSet';
 import ControlledFrontendDataSet from './ControlledFrontendDataSet';
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 import CustomInternalViewPropsTransformer from './CustomInternalViewPropsTransformer';
@@ -14,6 +15,7 @@ import SingleSelectionPropsTransformer from './SingleSelectionPropsTransformer';
 
 export {
 	AdvancedPropsTransformer,
+	ContentRenderersFrontendDataSet,
 	ControlledFrontendDataSet,
 	CustomAuthorTableCell,
 	CustomInternalViewPropsTransformer,

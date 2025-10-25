@@ -70,6 +70,20 @@ export default function MergeTagsModalContent({
 		getTags();
 	}, [cmsGroupId, currentTag]);
 
+    const _getConfirmationMessage = () => {
+        const tagNames = '"' + selectedTags.map((item) => item.label).join(', ') + '"';
+        const intoTagName = '"' + Liferay.Util.escapeHTML(currentTag.label) + '"';
+
+        return sub(
+            Liferay.Language.get(
+                'are-you-sure-you-want-to-merge-x-into-x.-x-will-be-available-in-x'
+            ),
+            `<strong>${tagNames}</strong>`,
+            `<strong>${intoTagName}</strong>`,
+            `<strong>"${Liferay.Language.get('all-spaces')}"</strong>`
+        );
+    };
+
 	const _handleTagChange = (items: Tag[]) => {
 		setSelectedTags(tags.filter((item) => items.includes(item)));
 	};
@@ -138,13 +152,7 @@ export default function MergeTagsModalContent({
 			}
 
 			openModal({
-				bodyHTML: sub(
-					Liferay.Language.get(
-						'are-you-sure-you-want-to-merge-x-into-x-all-spaces'
-					),
-					selectedTags.map((item) => item.label).join(', '),
-					`${Liferay.Util.escapeHTML(currentTag.label)}`
-				),
+				bodyHTML: _getConfirmationMessage(),
 				buttons: [
 					{
 						autoFocus: true,

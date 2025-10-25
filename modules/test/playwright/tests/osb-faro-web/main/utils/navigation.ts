@@ -11,7 +11,7 @@ import {waitForLoading} from './loading';
 export enum ACPage {
 	apisTokensPage = 'apis/tokens',
 	assetPage = 'assets',
-	dataSourcePage = 'data-source',
+	dataSourcePage = 'data-source?field=name&page=1&sortOrder=DESC',
 	dataPrivacyRequestLogPage = 'data-privacy/request-log',
 	dataPrivacySupressedUsersPage = 'data-privacy/suppressed-users',
 	definitionsIndividualAttributesPage = 'definitions/individual-attributes',

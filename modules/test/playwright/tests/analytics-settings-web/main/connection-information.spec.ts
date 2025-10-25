@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
@@ -11,6 +11,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import { createChannel } from '../../osb-faro-web/main/utils/channel';
+import { gotoLatestLiferayDXPDataSource } from '../../osb-faro-web/main/utils/data-source';
 import {
 	PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
 	PROPERTY_SITE_COLUMN_INDEX,
@@ -116,5 +118,88 @@ test(
 			index: PROPERTY_SITE_COLUMN_INDEX,
 			page,
 		});
+	}
+);
+
+test(
+	'Assert that synced sites boolean properly reflects on Analytics Cloud after sites sync on DXP',
+	{
+		tag: '@LPD-69652',
+	},
+	async ({apiHelpers, page}) => {
+		const site1 = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site1.id, type: 'site'});
+
+		const channelName1 = getRandomString();
+
+		await syncAnalyticsCloud({
+			apiHelpers,
+			channelName: channelName1,
+			page,
+			siteName: site1.name,
+		});
+
+		await goToSettingsStep({
+			page,
+			stepName: 'Properties',
+		});
+
+		const site2 = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site2.id, type: 'site'});
+
+		const channelName2 = getRandomString();
+
+		const {project} = await createChannel({
+			apiHelpers,
+			channelName: channelName2,
+		});
+
+		await toggleSiteSync({
+			channelName: channelName2,
+			page,
+			siteName: site2.name,
+		});
+
+		await gotoLatestLiferayDXPDataSource(page, project);
+
+		expect(page.getByText('Synced SitesConfigured').isVisible()).toBeTruthy();
+
+		await goToSettingsStep({
+			page,
+			stepName: 'Properties',
+		});
+
+		await toggleSiteSync({
+			channelName: channelName2,
+			page,
+			siteName: site2.name,
+			synced: false
+		});
+
+		await gotoLatestLiferayDXPDataSource(page, project);
+
+		expect(page.getByText('Synced SitesConfigured').isVisible()).toBeTruthy();
+
+		await goToSettingsStep({
+			page,
+			stepName: 'Properties',
+		});
+
+		await toggleSiteSync({
+			channelName: channelName1,
+			page,
+			siteName: site1.name,
+			synced: false
+		});
+
+		await gotoLatestLiferayDXPDataSource(page, project);
+
+		expect(page.getByText('Synced SitesUnconfigured').isVisible()).toBeTruthy();
 	}
 );

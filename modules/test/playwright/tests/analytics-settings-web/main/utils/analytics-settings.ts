@@ -202,7 +202,7 @@ export async function syncAnalyticsCloud({
 
 	await connectToAnalyticsCloud(page, {token});
 
-	await syncSite({
+	await toggleSiteSync({
 		channelName,
 		page,
 		siteName,
@@ -332,14 +332,16 @@ export async function syncCommerce({
 	).toBeVisible();
 }
 
-export async function syncSite({
+export async function toggleSiteSync({
 	channelName,
 	page,
 	siteName = 'Liferay DXP',
+	synced = true
 }: {
 	channelName: string;
 	page: Page;
 	siteName?: string;
+	synced?: boolean;
 }) {
 	const channel = await findChannel({channelName, page});
 
@@ -363,7 +365,11 @@ export async function syncSite({
 		'tbody tr:first-child input[type="checkbox"]'
 	);
 
-	await checkbox.check();
+	if (synced) {
+		await checkbox.check();
+	} else {
+		await checkbox.uncheck();
+	}
 
 	const submitButton = await page.$(
 		'.modal .modal-item-last button.btn-primary'

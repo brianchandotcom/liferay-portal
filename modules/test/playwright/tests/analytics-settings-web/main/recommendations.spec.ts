@@ -21,7 +21,7 @@ import {
 	goNextStep,
 	goToAnalyticsCloudInstanceSettings,
 	syncAllContacts,
-	syncSite,
+	toggleSiteSync,
 } from './utils/analytics-settings';
 
 export enum JobId {
@@ -82,7 +82,7 @@ test.describe('Test All Recommendation Job', () => {
 
 			await connectToAnalyticsCloud(page, {token});
 
-			await syncSite({
+			await toggleSiteSync({
 				channelName,
 				page,
 				siteName: site.name,

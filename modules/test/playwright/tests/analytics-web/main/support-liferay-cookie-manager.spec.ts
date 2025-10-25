@@ -18,7 +18,7 @@ import {
 	goNextStep,
 	goToAnalyticsCloudInstanceSettings,
 	syncAllContacts,
-	syncSite,
+	toggleSiteSync,
 } from '../../analytics-settings-web/main/utils/analytics-settings';
 import {createChannel} from '../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../osb-faro-web/main/utils/data-source';
@@ -110,7 +110,7 @@ async function connectACToDXP({
 
 	await connectToAnalyticsCloud(page, {token});
 
-	await syncSite({
+	await toggleSiteSync({
 		channelName,
 		page,
 	});

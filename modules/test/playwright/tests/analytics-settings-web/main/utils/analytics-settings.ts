@@ -7,6 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
+import { PORTLET_URLS } from '../../../../utils/portletUrls';
 import {createChannel} from '../../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../../osb-faro-web/main/utils/data-source';
 import {acceptsCookiesBanner} from '../../../osb-faro-web/main/utils/portal';
@@ -135,17 +136,9 @@ export async function findChannel({
 export async function goToAnalyticsCloudInstanceSettings(page: Page) {
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	await page.getByLabel('Open Applications MenuCtrl+Alt+A').click();
+	await page.goto(`${PORTLET_URLS.analyticsCloudConnection}`);
 
-	await page.getByRole('tab', {name: 'Control Panel'}).click();
-
-	await page.getByRole('menuitem', {name: 'Instance Settings'}).click();
-
-	await page.getByRole('link', {name: 'Analytics Cloud'}).click();
-
-	await expect(page.getByText('Analytics Cloud Token')).toBeVisible({
-		timeout: 100 * 1000,
-	});
+	await page.getByText('Analytics Cloud Token').waitFor({state: "visible"})
 }
 
 export async function goToSettingsStep({

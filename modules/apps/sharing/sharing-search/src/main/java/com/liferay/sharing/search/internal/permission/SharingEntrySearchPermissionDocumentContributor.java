@@ -93,20 +93,15 @@ public class SharingEntrySearchPermissionDocumentContributor
 		long classNameId, long classPK) {
 
 		Map<Long, Map<Long, List<Object[]>>> sharingEntryObjectsListsMap =
-			ReindexCacheThreadLocal.getReindexCache(
+			ReindexCacheThreadLocal.getGlobalReindexCache(
 				SharingEntrySearchPermissionDocumentContributor.class.getName(),
-				() -> {
-					int count = _sharingEntryLocalService.dslQueryCount(
-						DSLQueryFactoryUtil.count(
-						).from(
-							SharingEntryTable.INSTANCE
-						),
-						false);
-
-					if (count > ReindexCacheThreadLocal.SIZE_LIMIT) {
-						return null;
-					}
-
+				() -> _sharingEntryLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						SharingEntryTable.INSTANCE
+					),
+					false),
+				count -> {
 					Map<Long, Map<Long, List<Object[]>>>
 						localSharingEntryObjectsListsMap = new HashMap<>();
 

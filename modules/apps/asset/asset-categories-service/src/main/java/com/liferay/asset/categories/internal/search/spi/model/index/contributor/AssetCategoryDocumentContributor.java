@@ -324,7 +324,7 @@ public class AssetCategoryDocumentContributor
 	private Collection<AssetCategory> _lookupAssetCategories(
 		long classNameId, long classPK) {
 
-		Map<Long, Map<Long, Set<Serializable>>> indexedAssetCategoryIdsMap =
+		Map<Long, Map<Long, Set<Serializable>>> assetCategoryIdsMaps =
 			ReindexCacheThreadLocal.getReindexCache(
 				AssetCategoryDocumentContributor.class.getName(),
 				() -> {
@@ -340,10 +340,10 @@ public class AssetCategoryDocumentContributor
 					}
 
 					Map<Long, Map<Long, Set<Serializable>>>
-						localIndexedAssetCategoryIdsMap = new HashMap<>();
+						localAssetCategoryIdsMap = new HashMap<>();
 
 					if (count == 0) {
-						return localIndexedAssetCategoryIdsMap;
+						return localAssetCategoryIdsMap;
 					}
 
 					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -367,43 +367,40 @@ public class AssetCategoryDocumentContributor
 							(List<Object[]>)_assetCategoryLocalService.dslQuery(
 								dslQuery, false)) {
 
-						Map<Long, Set<Serializable>>
-							classNameIdAssetCategoryIdsMap =
-								localIndexedAssetCategoryIdsMap.computeIfAbsent(
-									(Long)values[0], key -> new HashMap<>());
+						Map<Long, Set<Serializable>> assetCategoryIdsMap =
+							localAssetCategoryIdsMap.computeIfAbsent(
+								(Long)values[0], key -> new HashMap<>());
 
-						Set<Serializable> classPKAssetCategoryIds =
-							classNameIdAssetCategoryIdsMap.computeIfAbsent(
+						Set<Serializable> assetCategoryIds =
+							assetCategoryIdsMap.computeIfAbsent(
 								(Long)values[1], key -> new HashSet<>());
 
-						classPKAssetCategoryIds.add((Serializable)values[2]);
+						assetCategoryIds.add((Serializable)values[2]);
 					}
 
-					return localIndexedAssetCategoryIdsMap;
+					return localAssetCategoryIdsMap;
 				});
 
-		if (indexedAssetCategoryIdsMap == null) {
+		if (assetCategoryIdsMaps == null) {
 			return _assetCategoryLocalService.getCategories(
 				classNameId, classPK);
 		}
 
-		Map<Long, Set<Serializable>> classNameIdAssetCategoryIdsMap =
-			indexedAssetCategoryIdsMap.get(classNameId);
+		Map<Long, Set<Serializable>> assetCategoryIdsMap =
+			assetCategoryIdsMaps.get(classNameId);
 
-		if (classNameIdAssetCategoryIdsMap == null) {
+		if (assetCategoryIdsMap == null) {
 			return null;
 		}
 
-		Set<Serializable> classPKAssetCategoryIds =
-			classNameIdAssetCategoryIdsMap.get(classPK);
+		Set<Serializable> assetCategoryIds = assetCategoryIdsMap.get(classPK);
 
-		if (classPKAssetCategoryIds == null) {
+		if (assetCategoryIds == null) {
 			return null;
 		}
 
 		Map<Serializable, AssetCategory> assetCategories =
-			_assetCategoryLocalService.fetchPersistedModels(
-				classPKAssetCategoryIds);
+			_assetCategoryLocalService.fetchPersistedModels(assetCategoryIds);
 
 		return assetCategories.values();
 	}

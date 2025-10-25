@@ -134,7 +134,7 @@ public class AssetTagDocumentContributor
 	private List<Object[]> _lookupAssetTagObjectsList(
 		long classNameId, long classPK) {
 
-		Map<Long, Map<Long, List<Object[]>>> indexedAssetTagObjectsLists =
+		Map<Long, Map<Long, List<Object[]>>> assetTagObjectsListsMap =
 			ReindexCacheThreadLocal.getReindexCache(
 				AssetTagDocumentContributor.class.getName(),
 				() -> {
@@ -150,10 +150,10 @@ public class AssetTagDocumentContributor
 					}
 
 					Map<Long, Map<Long, List<Object[]>>>
-						localIndexedAssetTagObjectsLists = new HashMap<>();
+						localAssetTagObjectsListsMap = new HashMap<>();
 
 					if (count == 0) {
-						return localIndexedAssetTagObjectsLists;
+						return localAssetTagObjectsListsMap;
 					}
 
 					DSLQuery dslQuery = DSLQueryFactoryUtil.select(
@@ -178,24 +178,24 @@ public class AssetTagDocumentContributor
 								dslQuery, false)) {
 
 						Map<Long, List<Object[]>>
-							classNameIdAssetTagObjectsLists =
-								localIndexedAssetTagObjectsLists.
+							assetTagObjectsLists =
+								localAssetTagObjectsListsMap.
 									computeIfAbsent(
 										(Long)values[0],
 										key -> new HashMap<>());
 
-						List<Object[]> classPKAssetTagObjectsList =
-							classNameIdAssetTagObjectsLists.computeIfAbsent(
+						List<Object[]> assetTagObjectsList =
+							assetTagObjectsLists.computeIfAbsent(
 								(Long)values[1], key -> new ArrayList<>());
 
-						classPKAssetTagObjectsList.add(
+						assetTagObjectsList.add(
 							new Object[] {values[2], values[3]});
 					}
 
-					return localIndexedAssetTagObjectsLists;
+					return localAssetTagObjectsListsMap;
 				});
 
-		if (indexedAssetTagObjectsLists == null) {
+		if (assetTagObjectsListsMap == null) {
 			List<AssetTag> assetTags = _assetTagLocalService.getTags(
 				classNameId, classPK);
 
@@ -214,14 +214,14 @@ public class AssetTagDocumentContributor
 			return assetTagObjectsList;
 		}
 
-		Map<Long, List<Object[]>> classNameIdAssetTagObjectsLists =
-			indexedAssetTagObjectsLists.get(classNameId);
+		Map<Long, List<Object[]>> assetTagObjectsLists =
+			assetTagObjectsListsMap.get(classNameId);
 
-		if (classNameIdAssetTagObjectsLists == null) {
+		if (assetTagObjectsLists == null) {
 			return null;
 		}
 
-		return classNameIdAssetTagObjectsLists.get(classPK);
+		return assetTagObjectsLists.get(classPK);
 	}
 
 	@Reference

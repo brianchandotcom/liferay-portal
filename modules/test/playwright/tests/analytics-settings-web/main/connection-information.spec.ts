@@ -11,8 +11,8 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginAnalyticsCloudTest} from '../../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
-import { createChannel } from '../../osb-faro-web/main/utils/channel';
-import { gotoLatestLiferayDXPDataSource } from '../../osb-faro-web/main/utils/data-source';
+import {createChannel} from '../../osb-faro-web/main/utils/channel';
+import {gotoLatestLiferayDXPDataSource} from '../../osb-faro-web/main/utils/data-source';
 import {
 	PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX,
 	PROPERTY_SITE_COLUMN_INDEX,
@@ -168,7 +168,9 @@ test(
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(page.getByText('Synced SitesConfigured').isVisible()).toBeTruthy();
+		expect(
+			page.getByText('Synced SitesConfigured').isVisible()
+		).toBeTruthy();
 
 		await goToSettingsStep({
 			page,
@@ -179,12 +181,14 @@ test(
 			channelName: channelName2,
 			page,
 			siteName: site2.name,
-			synced: false
+			synced: false,
 		});
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(page.getByText('Synced SitesConfigured').isVisible()).toBeTruthy();
+		expect(
+			page.getByText('Synced SitesConfigured').isVisible()
+		).toBeTruthy();
 
 		await goToSettingsStep({
 			page,
@@ -195,11 +199,13 @@ test(
 			channelName: channelName1,
 			page,
 			siteName: site1.name,
-			synced: false
+			synced: false,
 		});
 
 		await gotoLatestLiferayDXPDataSource(page, project);
 
-		expect(page.getByText('Synced SitesUnconfigured').isVisible()).toBeTruthy();
+		expect(
+			page.getByText('Synced SitesUnconfigured').isVisible()
+		).toBeTruthy();
 	}
 );

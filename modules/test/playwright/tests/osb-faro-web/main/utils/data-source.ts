@@ -6,7 +6,7 @@
 import {Page, expect} from '@playwright/test';
 
 import {faroConfig} from '../faro.config';
-import { ACPage, navigateToACSettingsViaURL } from './navigation';
+import {ACPage, navigateToACSettingsViaURL} from './navigation';
 
 export async function checkDataSourceStatus({
 	dataSourceName,
@@ -77,7 +77,11 @@ export async function gotoLatestLiferayDXPDataSource(page, project) {
 		projectID: project.groupId,
 	});
 
-	await page.locator('td').filter({ exact: false, hasText: 'Liferay DXP' }).first().click()
+	await page
+		.locator('td')
+		.filter({exact: false, hasText: 'Liferay DXP'})
+		.first()
+		.click();
 }
 
 export async function renameDataSource({

@@ -7,7 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {liferayConfig} from '../../../../liferay.config';
-import { PORTLET_URLS } from '../../../../utils/portletUrls';
+import {PORTLET_URLS} from '../../../../utils/portletUrls';
 import {createChannel} from '../../../osb-faro-web/main/utils/channel';
 import {createDataSource} from '../../../osb-faro-web/main/utils/data-source';
 import {acceptsCookiesBanner} from '../../../osb-faro-web/main/utils/portal';
@@ -16,8 +16,8 @@ export const PROPERTY_COMMERCE_CHANNEL_COLUMN_INDEX = 1;
 export const PROPERTY_SITE_COLUMN_INDEX = 2;
 
 enum TabName {
-	Channel = "Channel",
-	Sites = "Sites"
+	Channel = 'Channel',
+	Sites = 'Sites',
 }
 
 async function switchToTab({page, tabName}: {page: Page; tabName: TabName}) {
@@ -25,12 +25,17 @@ async function switchToTab({page, tabName}: {page: Page; tabName: TabName}) {
 
 	if (tabName === TabName.Channel) {
 		await page
-				.getByText("Channels can only be assigned to a single property at a time")
-				.waitFor({state: "visible"});
-	} else {
+			.getByText(
+				'Channels can only be assigned to a single property at a time'
+			)
+			.waitFor({state: 'visible'});
+	}
+	else {
 		await page
-				.getByText("Sites can only be assigned to a single property at a time")
-				.waitFor({state: "visible"});
+			.getByText(
+				'Sites can only be assigned to a single property at a time'
+			)
+			.waitFor({state: 'visible'});
 	}
 }
 
@@ -138,7 +143,7 @@ export async function goToAnalyticsCloudInstanceSettings(page: Page) {
 
 	await page.goto(`${PORTLET_URLS.analyticsCloudConnection}`);
 
-	await page.getByText('Analytics Cloud Token').waitFor({state: "visible"})
+	await page.getByText('Analytics Cloud Token').waitFor({state: 'visible'});
 }
 
 export async function goToSettingsStep({
@@ -340,7 +345,7 @@ export async function toggleSiteSync({
 	channelName,
 	page,
 	siteName = 'Liferay DXP',
-	synced = true
+	synced = true,
 }: {
 	channelName: string;
 	page: Page;
@@ -371,7 +376,8 @@ export async function toggleSiteSync({
 
 	if (synced) {
 		await checkbox.check();
-	} else {
+	}
+	else {
 		await checkbox.uncheck();
 	}
 

@@ -135,20 +135,15 @@ public class AssetTagDocumentContributor
 		long classNameId, long classPK) {
 
 		Map<Long, Map<Long, List<Object[]>>> assetTagObjectsListsMap =
-			ReindexCacheThreadLocal.getReindexCache(
+			ReindexCacheThreadLocal.getGlobalReindexCache(
 				AssetTagDocumentContributor.class.getName(),
-				() -> {
-					int count = _assetTagLocalService.dslQueryCount(
-						DSLQueryFactoryUtil.count(
-						).from(
-							AssetTagTable.INSTANCE
-						),
-						false);
-
-					if (count > ReindexCacheThreadLocal.SIZE_LIMIT) {
-						return null;
-					}
-
+				() -> _assetTagLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						AssetTagTable.INSTANCE
+					),
+					false),
+				count -> {
 					Map<Long, Map<Long, List<Object[]>>>
 						localAssetTagObjectsListsMap = new HashMap<>();
 
@@ -177,12 +172,9 @@ public class AssetTagDocumentContributor
 							(List<Object[]>)_assetTagLocalService.dslQuery(
 								dslQuery, false)) {
 
-						Map<Long, List<Object[]>>
-							assetTagObjectsLists =
-								localAssetTagObjectsListsMap.
-									computeIfAbsent(
-										(Long)values[0],
-										key -> new HashMap<>());
+						Map<Long, List<Object[]>> assetTagObjectsLists =
+							localAssetTagObjectsListsMap.computeIfAbsent(
+								(Long)values[0], key -> new HashMap<>());
 
 						List<Object[]> assetTagObjectsList =
 							assetTagObjectsLists.computeIfAbsent(

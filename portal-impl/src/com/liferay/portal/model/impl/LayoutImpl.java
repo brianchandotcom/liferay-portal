@@ -844,6 +844,10 @@ public class LayoutImpl extends LayoutBaseImpl {
 	 * @return the master layout plid of this layout
 	 */
 	public long getMasterLayoutPlid() {
+		if (Validator.isNull(getMasterLayoutPageTemplateEntryERC())) {
+			return 0;
+		}
+
 		Layout masterLayout =
 			LayoutPageTemplateEntryLayoutProviderUtil.
 				getLayoutPageTemplateEntryLayout(

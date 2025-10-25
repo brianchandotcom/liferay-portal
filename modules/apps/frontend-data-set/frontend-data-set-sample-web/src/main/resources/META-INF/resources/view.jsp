@@ -30,6 +30,12 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 						});
 					add(
 						navigationItem -> {
+							navigationItem.setActive(navigation.equals("content-renderers"));
+							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "content-renderers");
+							navigationItem.setLabel("Content Renderers");
+						});
+					add(
+						navigationItem -> {
 							navigationItem.setActive(navigation.equals("controlled"));
 							navigationItem.setHref(renderResponse.createRenderURL(), "navigation", "controlled");
 							navigationItem.setLabel("Controlled");
@@ -78,6 +84,9 @@ String navigation = ParamUtil.getString(request, "navigation", "advanced");
 	<c:choose>
 		<c:when test='<%= navigation.equals("classic") %>'>
 			<liferay-util:include page="/partials/classic.jsp" servletContext="<%= application %>" />
+		</c:when>
+		<c:when test='<%= navigation.equals("content-renderers") %>'>
+			<liferay-util:include page="/partials/content_renderers.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:when test='<%= navigation.equals("controlled") %>'>
 			<liferay-util:include page="/partials/controlled.jsp" servletContext="<%= application %>" />

@@ -18,7 +18,7 @@ import {
 	goToSettingsStep,
 	syncAnalyticsCloud,
 	syncCommerce,
-	syncSite,
+	toggleSiteSync,
 } from './utils/analytics-settings';
 
 export const test = mergeTests(
@@ -91,7 +91,7 @@ test(
 			page,
 		});
 
-		await syncSite({
+		await toggleSiteSync({
 			channelName,
 			page,
 			siteName: site2.name,

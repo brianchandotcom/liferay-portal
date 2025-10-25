@@ -1990,12 +1990,12 @@ public class LayoutLocalServiceWrapper
 	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
-	public Layout updateMasterLayoutPlid(
+	public Layout updateMasterLayoutPageTemplateEntryERC(
 			long groupId, boolean privateLayout, long layoutId,
 			String masterLayoutPageTemplateEntryERC)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _layoutLocalService.updateMasterLayoutPlid(
+		return _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			groupId, privateLayout, layoutId, masterLayoutPageTemplateEntryERC);
 	}
 

@@ -76,9 +76,10 @@ public class ChangeMasterLayoutMVCActionCommand
 		LayoutPermissionUtil.checkLayoutRestrictedUpdatePermission(
 			themeDisplay.getPermissionChecker(), layout);
 
-		Layout updatedLayout = _layoutLocalService.updateMasterLayoutPlid(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			masterLayoutPlid);
+		Layout updatedLayout =
+			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId(), masterLayoutPlid);
 
 		if (layout.isDraftLayout()) {
 			UnicodeProperties layoutTypeSettingsUnicodeProperties =

@@ -146,9 +146,11 @@ public class CreateLayoutPageTemplateEntryMVCActionCommandTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		draftLayout = _layoutLocalService.updateMasterLayoutPlid(
-			draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
-			draftLayout.getLayoutId(), masterLayoutPageTemplateEntry.getPlid());
+		draftLayout =
+			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+				draftLayout.getGroupId(), draftLayout.isPrivateLayout(),
+				draftLayout.getLayoutId(),
+				masterLayoutPageTemplateEntry.getPlid());
 
 		StyleBookEntry styleBookEntry =
 			_styleBookEntryLocalService.addStyleBookEntry(

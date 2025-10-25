@@ -217,7 +217,7 @@ public class EditSEOMVCActionCommandTest {
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layout = _layoutLocalService.updateMasterLayoutPlid(
+		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_group.getGroupId(), _layout.isPrivateLayout(),
 			_layout.getLayoutId(), masterLayoutPageTemplateEntry.getPlid());
 

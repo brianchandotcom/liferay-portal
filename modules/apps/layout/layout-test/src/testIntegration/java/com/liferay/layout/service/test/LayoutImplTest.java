@@ -110,7 +110,7 @@ public class LayoutImplTest {
 			_addThemeSettingProperty(
 				key, masterLayout.getTypeSettingsProperties(), value));
 
-		_layout = _layoutLocalService.updateMasterLayoutPlid(
+		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_group.getGroupId(), false, _layout.getLayoutId(),
 			masterLayout.getPlid());
 
@@ -137,18 +137,20 @@ public class LayoutImplTest {
 		Layout privateLayout = LayoutTestUtil.addTypePortletLayout(
 			_group, true);
 
-		privateLayout = _layoutLocalService.updateMasterLayoutPlid(
-			privateLayout.getGroupId(), privateLayout.isPrivateLayout(),
-			privateLayout.getLayoutId(), masterLayout.getPlid());
+		privateLayout =
+			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+				privateLayout.getGroupId(), privateLayout.isPrivateLayout(),
+				privateLayout.getLayoutId(), masterLayout.getPlid());
 
 		_assertThemeId(privateLayout, "admin_WAR_admintheme");
 
 		Layout publicLayout = LayoutTestUtil.addTypePortletLayout(
 			_group, false);
 
-		publicLayout = _layoutLocalService.updateMasterLayoutPlid(
-			publicLayout.getGroupId(), publicLayout.isPrivateLayout(),
-			publicLayout.getLayoutId(), masterLayout.getPlid());
+		publicLayout =
+			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+				publicLayout.getGroupId(), publicLayout.isPrivateLayout(),
+				publicLayout.getLayoutId(), masterLayout.getPlid());
 
 		_assertThemeId(publicLayout, "dialect_WAR_dialecttheme");
 	}
@@ -427,7 +429,7 @@ public class LayoutImplTest {
 			masterLayout.getLayoutId(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK);
 
-		layout = _layoutLocalService.updateMasterLayoutPlid(
+		layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayout.getPlid());
 

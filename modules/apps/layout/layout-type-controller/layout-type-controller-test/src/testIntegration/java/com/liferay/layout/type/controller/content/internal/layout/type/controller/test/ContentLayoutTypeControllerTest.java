@@ -241,7 +241,7 @@ public class ContentLayoutTypeControllerTest {
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layout = _layoutLocalService.updateMasterLayoutPlid(
+		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_layout.getGroupId(), _layout.isPrivateLayout(),
 			_layout.getLayoutId(), layoutPageTemplateEntry.getPlid());
 
@@ -338,7 +338,7 @@ public class ContentLayoutTypeControllerTest {
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
-		_layout = _layoutLocalService.updateMasterLayoutPlid(
+		_layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_layout.getGroupId(), _layout.isPrivateLayout(),
 			_layout.getLayoutId(), layoutPageTemplateEntry.getPlid());
 

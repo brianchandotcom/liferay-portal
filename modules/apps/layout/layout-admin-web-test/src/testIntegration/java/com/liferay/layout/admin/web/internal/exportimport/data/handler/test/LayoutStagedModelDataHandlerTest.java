@@ -906,7 +906,7 @@ public class LayoutStagedModelDataHandlerTest
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(stagingGroup);
 
-		layout = _layoutLocalService.updateMasterLayoutPlid(
+		layout = _layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			masterLayoutPageTemplateEntry.getPlid());
 
@@ -1144,9 +1144,10 @@ public class LayoutStagedModelDataHandlerTest
 		Layout stagingMasterLayout = _layoutLocalService.fetchLayout(
 			masterLayout.getUuid(), stagingGroup.getGroupId(), true);
 
-		stagingLayout = _layoutLocalService.updateMasterLayoutPlid(
-			stagingGroup.getGroupId(), false, stagingLayout.getLayoutId(),
-			stagingMasterLayout.getPlid());
+		stagingLayout =
+			_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
+				stagingGroup.getGroupId(), false, stagingLayout.getLayoutId(),
+				stagingMasterLayout.getPlid());
 
 		stagingMasterLayout.setLayoutId(layout.getLayoutId());
 

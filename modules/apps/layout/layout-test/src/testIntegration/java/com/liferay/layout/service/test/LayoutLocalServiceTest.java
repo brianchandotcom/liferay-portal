@@ -836,7 +836,7 @@ public class LayoutLocalServiceTest {
 	public void testUpdateMasterLayoutWithInvalidPlid1() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
-		_layoutLocalService.updateMasterLayoutPlid(
+		_layoutLocalService.updateMasterLayoutPageTemplateEntryERC(
 			_group.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getPlid());
 	}

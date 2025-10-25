@@ -1027,7 +1027,9 @@ public class NavigationMenuResourceTest
 
 		Page<NavigationMenu> page =
 			navigationMenuResource.getSiteNavigationMenusPage(
-				testGroup.getExternalReferenceCode(), null, null,
+				testGroup.getExternalReferenceCode(), null,
+				"externalReferenceCode eq '" +
+					postNavigationMenu.getExternalReferenceCode() + "'",
 				Pagination.of(1, 10), null);
 
 		Assert.assertEquals(1, page.getTotalCount());

@@ -325,20 +325,15 @@ public class AssetCategoryDocumentContributor
 		long classNameId, long classPK) {
 
 		Map<Long, Map<Long, Set<Serializable>>> assetCategoryIdsMaps =
-			ReindexCacheThreadLocal.getReindexCache(
+			ReindexCacheThreadLocal.getGlobalReindexCache(
 				AssetCategoryDocumentContributor.class.getName(),
-				() -> {
-					int count = _assetCategoryLocalService.dslQueryCount(
-						DSLQueryFactoryUtil.count(
-						).from(
-							AssetCategoryTable.INSTANCE
-						),
-						false);
-
-					if (count > ReindexCacheThreadLocal.SIZE_LIMIT) {
-						return null;
-					}
-
+				() -> _assetCategoryLocalService.dslQueryCount(
+					DSLQueryFactoryUtil.count(
+					).from(
+						AssetCategoryTable.INSTANCE
+					),
+					false),
+				count -> {
 					Map<Long, Map<Long, Set<Serializable>>>
 						localAssetCategoryIdsMap = new HashMap<>();
 

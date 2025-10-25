@@ -840,7 +840,8 @@ public class FriendlyURLServletTest {
 				StringPool.SLASH + RandomTestUtil.randomString()
 			).build(),
 			layout.isIconImage(), null, layout.getStyleBookEntryERC(),
-			layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
+			layout.getFaviconFileEntryId(),
+			layout.getMasterLayoutPageTemplateEntryERC(),
 			ServiceContextTestUtil.getServiceContext());
 
 		mockHttpServletRequest.setAttribute(

@@ -11,7 +11,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
@@ -39,15 +38,19 @@ public class RenderedPageUtil {
 			_getLayoutPageTemplateEntry(
 				layout, layoutPageTemplateEntryLocalService, portal);
 
-		LayoutPageTemplateEntry masterLayout = _getMasterLayout(
-			layout, layoutPageTemplateEntryLocalService);
+		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
+			layoutPageTemplateEntryLocalService.
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					layout.getMasterLayoutPageTemplateEntryERC(),
+					layout.getGroupId());
 
 		return new RenderedPage() {
 			{
 				setMasterPageId(
 					() -> {
-						if (masterLayout != null) {
-							return masterLayout.getLayoutPageTemplateEntryKey();
+						if (masterLayoutPageTemplateEntry != null) {
+							return masterLayoutPageTemplateEntry.
+								getLayoutPageTemplateEntryKey();
 						}
 
 						return null;
@@ -55,8 +58,8 @@ public class RenderedPageUtil {
 
 				setMasterPageName(
 					() -> {
-						if (masterLayout != null) {
-							return masterLayout.getName();
+						if (masterLayoutPageTemplateEntry != null) {
+							return masterLayoutPageTemplateEntry.getName();
 						}
 
 						return null;
@@ -140,22 +143,6 @@ public class RenderedPageUtil {
 
 		return layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
 			layout.getClassPK());
-	}
-
-	private static LayoutPageTemplateEntry _getMasterLayout(
-		Layout layout,
-		LayoutPageTemplateEntryLocalService
-			layoutPageTemplateEntryLocalService) {
-
-		Layout masterLayout = LayoutLocalServiceUtil.fetchLayout(
-			layout.getMasterLayoutPlid());
-
-		if (masterLayout == null) {
-			return null;
-		}
-
-		return layoutPageTemplateEntryLocalService.fetchLayoutPageTemplateEntry(
-			masterLayout.getClassPK());
 	}
 
 }

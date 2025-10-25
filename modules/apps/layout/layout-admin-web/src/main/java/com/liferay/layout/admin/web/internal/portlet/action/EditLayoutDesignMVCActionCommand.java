@@ -282,7 +282,8 @@ public class EditLayoutDesignMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getType(), draftLayout.isHidden(),
 					draftLayout.getFriendlyURLMap(), !deleteLogo, iconBytes,
 					styleBookEntryERC, faviconFileEntryId,
-					draftLayout.getMasterLayoutPlid(), serviceContext);
+					draftLayout.getMasterLayoutPageTemplateEntryERC(),
+					serviceContext);
 
 				_updateClientExtensionEntryRels(
 					actionRequest, draftLayout, themeDisplay.getUserId());

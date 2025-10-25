@@ -463,7 +463,7 @@ public class LayoutsAdminDisplayContext {
 			layout.getDescriptionMap(), layout.getKeywordsMap(),
 			layout.getRobotsMap(), layout.getType(),
 			unicodeProperties.toString(), true, true, Collections.emptyMap(),
-			layout.getMasterLayoutPlid(), serviceContext);
+			layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
 
 		draftLayout = _layoutLocalService.copyLayoutContent(
 			layout, draftLayout);

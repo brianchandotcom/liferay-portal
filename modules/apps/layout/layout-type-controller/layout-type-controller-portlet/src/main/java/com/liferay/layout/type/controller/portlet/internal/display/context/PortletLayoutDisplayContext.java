@@ -37,8 +37,9 @@ public class PortletLayoutDisplayContext {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(
-					layout.getMasterLayoutPlid());
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					layout.getMasterLayoutPageTemplateEntryERC(),
+					layout.getGroupId());
 
 		if (masterLayoutPageTemplateEntry == null) {
 			_layoutStructure = _getDefaultMasterLayoutStructure();

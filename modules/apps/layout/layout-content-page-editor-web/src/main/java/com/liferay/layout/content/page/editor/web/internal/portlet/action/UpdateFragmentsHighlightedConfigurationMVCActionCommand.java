@@ -352,14 +352,15 @@ public class UpdateFragmentsHighlightedConfigurationMVCActionCommand
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.getMasterLayoutPlid() <= 0) {
+		if (Validator.isNull(layout.getMasterLayoutPageTemplateEntryERC())) {
 			return null;
 		}
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
-				fetchLayoutPageTemplateEntryByPlid(
-					layout.getMasterLayoutPlid());
+				fetchLayoutPageTemplateEntryByExternalReferenceCode(
+					layout.getMasterLayoutPageTemplateEntryERC(),
+					layout.getGroupId());
 
 		if (masterLayoutPageTemplateEntry == null) {
 			return null;

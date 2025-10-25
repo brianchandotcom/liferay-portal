@@ -117,7 +117,7 @@ public class LayoutGetFaviconURLTest {
 			_layout.getLayoutId(), _layout.getTypeSettings(), null,
 			_layout.getThemeId(), _layout.getColorSchemeId(),
 			_layout.getStyleBookEntryERC(), _layout.getCss(), 0,
-			_layout.getMasterLayoutPlid());
+			_layout.getMasterLayoutPageTemplateEntryERC());
 
 		Layout layout = _layoutLocalService.fetchLayout(_layout.getPlid());
 

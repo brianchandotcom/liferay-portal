@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutPrototypeService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -122,17 +121,11 @@ public class AddContentLayoutMVCActionCommand
 						layoutPageTemplateEntryId, ActionKeys.VIEW);
 				}
 
-				long masterLayoutPlid = 0;
+				String masterLayoutPageTemplateEntryERC = null;
 
 				if (layoutPageTemplateEntry != null) {
-					Layout layoutPageTemplateEntryLayout =
-						_layoutLocalService.fetchLayout(
-							layoutPageTemplateEntry.getPlid());
-
-					if (layoutPageTemplateEntryLayout != null) {
-						masterLayoutPlid =
-							layoutPageTemplateEntryLayout.getMasterLayoutPlid();
-					}
+					masterLayoutPageTemplateEntryERC =
+						layoutPageTemplateEntry.getExternalReferenceCode();
 				}
 
 				layout = _layoutService.addLayout(
@@ -142,7 +135,8 @@ public class AddContentLayoutMVCActionCommand
 					new HashMap<>(), new HashMap<>(), new HashMap<>(),
 					LayoutConstants.TYPE_CONTENT,
 					typeSettingsUnicodeProperties.toString(), false, false,
-					new HashMap<>(), masterLayoutPlid, serviceContext);
+					new HashMap<>(), masterLayoutPageTemplateEntryERC,
+					serviceContext);
 			}
 
 			String redirectURL = getRedirectURL(
@@ -184,9 +178,6 @@ public class AddContentLayoutMVCActionCommand
 				actionRequest, actionResponse, exception);
 		}
 	}
-
-	@Reference
-	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private LayoutPageTemplateEntryLocalService

@@ -1373,7 +1373,8 @@ public class LayoutCTTest {
 					layout.getFriendlyURLMap(), false, null,
 					layout.getStyleBookEntryERC(),
 					layout.getFaviconFileEntryId(),
-					layout.getMasterLayoutPlid(), serviceContext);
+					layout.getMasterLayoutPageTemplateEntryERC(),
+					serviceContext);
 			}
 		}
 		finally {

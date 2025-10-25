@@ -1470,11 +1470,12 @@ public class ContentPageEditorDisplayContext {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.getMasterLayoutPlid() > 0) {
+		if (Validator.isNotNull(layout.getMasterLayoutPageTemplateEntryERC())) {
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 				layoutPageTemplateEntryLocalService.
-					fetchLayoutPageTemplateEntryByPlid(
-						layout.getMasterLayoutPlid());
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						layout.getMasterLayoutPageTemplateEntryERC(),
+						layout.getGroupId());
 
 			if (masterLayoutPageTemplateEntry != null) {
 				fragmentEntryLinks =

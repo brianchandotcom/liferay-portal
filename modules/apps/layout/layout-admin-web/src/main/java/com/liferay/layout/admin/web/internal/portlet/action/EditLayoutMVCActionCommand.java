@@ -127,8 +127,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 				layout.getDescriptionMap(), layout.getKeywordsMap(),
 				layout.getRobotsMap(), type, hidden, friendlyURLMap,
 				layout.isIconImage(), null, layout.getStyleBookEntryERC(),
-				layout.getFaviconFileEntryId(), layout.getMasterLayoutPlid(),
-				serviceContext);
+				layout.getFaviconFileEntryId(),
+				layout.getMasterLayoutPageTemplateEntryERC(), serviceContext);
 
 			UnicodeProperties formTypeSettingsUnicodeProperties =
 				PropertiesParamUtil.getProperties(
@@ -152,7 +152,8 @@ public class EditLayoutMVCActionCommand extends BaseMVCActionCommand {
 					draftLayout.getFriendlyURLMap(), draftLayout.isIconImage(),
 					null, draftLayout.getStyleBookEntryERC(),
 					draftLayout.getFaviconFileEntryId(),
-					draftLayout.getMasterLayoutPlid(), serviceContext);
+					draftLayout.getMasterLayoutPageTemplateEntryERC(),
+					serviceContext);
 			}
 
 			themeDisplay.clearLayoutFriendlyURL(layout);

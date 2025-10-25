@@ -144,14 +144,15 @@ public class SettingsTestUtil {
 		ItemExternalReference masterPageItemExternalReference =
 			settings.getMasterPageItemExternalReference();
 
-		if (layout.getMasterLayoutPlid() == 0) {
+		if (Validator.isNull(layout.getMasterLayoutPageTemplateEntryERC())) {
 			Assert.assertNull(masterPageItemExternalReference);
 		}
 		else {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				LayoutPageTemplateEntryLocalServiceUtil.
-					fetchLayoutPageTemplateEntryByPlid(
-						layout.getMasterLayoutPlid());
+					fetchLayoutPageTemplateEntryByExternalReferenceCode(
+						layout.getMasterLayoutPageTemplateEntryERC(),
+						layout.getGroupId());
 
 			Assert.assertEquals(
 				layoutPageTemplateEntry.getExternalReferenceCode(),

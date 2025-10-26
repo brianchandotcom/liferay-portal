@@ -92,11 +92,13 @@ public class UpgradeProcessCheck extends BaseCheck {
 			return;
 		}
 
-		_checkPostUpgradeSteps(slistDetailAST);
-		_checkPreUpgradeSteps(slistDetailAST);
+		_checkMovableMethodCallsToGetPostUpgradeSteps(slistDetailAST);
+		_checkMovableMethodCallsToGetPreUpgradeSteps(slistDetailAST);
 	}
 
-	private void _checkPostUpgradeSteps(DetailAST detailAST) {
+	private void _checkMovableMethodCallsToGetPostUpgradeSteps(
+		DetailAST detailAST) {
+
 		DetailAST lastChildDetailAST = detailAST.getLastChild();
 
 		if (lastChildDetailAST.getType() != TokenTypes.RCURLY) {
@@ -141,7 +143,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkPreUpgradeSteps(DetailAST detailAST) {
+	private void _checkMovableMethodCallsToGetPreUpgradeSteps(
+		DetailAST detailAST) {
+
 		DetailAST firstChildDetailAST = detailAST.getFirstChild();
 
 		if ((firstChildDetailAST == null) ||

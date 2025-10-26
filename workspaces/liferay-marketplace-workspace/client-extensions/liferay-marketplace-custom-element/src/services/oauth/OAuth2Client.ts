@@ -29,27 +29,35 @@ class OAuth2Client {
 			Liferay.OAuth2Client?.FromUserAgentApplication(agentName);
 	}
 
-	private fetcher = async <T = any>(
-		resource: RequestInfo,
-		options?: Options<T>
-	): Promise<T> => {
-		const response = await this.oAuth2Client.fetch(
-			`${this.basePath + resource}`,
-			options
-		);
-
-		if (options?.earlyReturn) {
-			return response as T;
-		}
-
-		if (!response.ok) {
+	private async parseError(response: Response | Error) {
+		if (response instanceof Response && !response.ok) {
 			const error = new FetcherError(
 				'An error occurred while fetching the data.'
 			);
 
 			error.info = await response.json();
 			error.status = response.status;
+
 			throw error;
+		}
+
+		return response;
+	}
+
+	private fetcher = async <T = any>(
+		resource: RequestInfo,
+		options?: Options<T>
+	): Promise<T> => {
+		const response = (await this.oAuth2Client
+			.fetch(`${this.basePath + resource}`, options)
+			.catch(this.parseError.bind(this))) as Response;
+
+		if (options?.earlyReturn || !(response instanceof Response)) {
+			return response as T;
+		}
+
+		if (!response.ok) {
+			throw this.parseError(response);
 		}
 
 		if (

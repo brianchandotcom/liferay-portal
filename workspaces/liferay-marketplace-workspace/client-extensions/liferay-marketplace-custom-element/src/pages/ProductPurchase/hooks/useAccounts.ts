@@ -29,9 +29,7 @@ const useAccounts = () => {
 			return Promise.all(
 				accountBriefs.map((accountBrief) =>
 					fetcher(
-						`o/headless-admin-user/v1.0/accounts/${
-							accountBrief.id
-						}?nestedFields=accountUserAccounts`
+						`o/headless-admin-user/v1.0/accounts/${accountBrief.id}?nestedFields=accountUserAccounts`
 					)
 				)
 			);

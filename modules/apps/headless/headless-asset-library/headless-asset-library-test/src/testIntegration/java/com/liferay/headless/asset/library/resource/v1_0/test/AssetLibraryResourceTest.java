@@ -6,6 +6,7 @@
 package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.depot.service.DepotEntryPinLocalService;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -190,6 +192,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.UPDATE));
 		Assert.assertTrue(resourcePermission.hasActionId(ActionKeys.VIEW));
 
+		_assertGroupDepotEntryType(assetLibrary);
+
 		boolean autoTaggingEnabled = false;
 
 		Settings settings = new Settings();
@@ -308,6 +312,9 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 					useCustomLanguages = false;
 				}
 			});
+
+		assetLibrary.setType(
+			RandomTestUtil.randomEnum(AssetLibrary.Type.class));
 
 		return assetLibrary;
 	}
@@ -513,6 +520,26 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 		return assetLibraryResource.postAssetLibrary(randomAssetLibrary());
 	}
 
+	private void _assertGroupDepotEntryType(AssetLibrary assetLibrary)
+		throws Exception {
+
+		Group group = _groupLocalService.getGroupByExternalReferenceCode(
+			assetLibrary.getExternalReferenceCode(),
+			testCompany.getCompanyId());
+
+		UnicodeProperties unicodeProperties = group.getTypeSettingsProperties();
+
+		int depotEntryType = DepotConstants.TYPE_ASSET_LIBRARY;
+
+		if (assetLibrary.getType() == AssetLibrary.Type.SPACE) {
+			depotEntryType = DepotConstants.TYPE_SPACE;
+		}
+
+		Assert.assertEquals(
+			String.valueOf(depotEntryType),
+			unicodeProperties.get("depotEntryType"));
+	}
+
 	private void _assertSettings(
 		AssetLibrary assetLibrary, boolean expectedAutoTaggingEnabled,
 		String[] expectedAvailableLanguageIds, String expectedDefaultLanguageId,
@@ -607,6 +634,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
 			defaultLanguageId, logoColor, mimeTypeLimits, sharingEnabled,
 			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
+
+		_assertGroupDepotEntryType(assetLibrary);
 	}
 
 	private void _testPutAssetLibraryByExternalReferenceCode(
@@ -662,6 +691,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			assetLibrary, autoTaggingEnabled, availableLanguageIds,
 			defaultLanguageId, "outline-0", new MimeTypeLimit[0], true,
 			trashEnabled, trashEntriesMaxAge, useCustomLanguages);
+
+		_assertGroupDepotEntryType(assetLibrary);
 	}
 
 	@Inject

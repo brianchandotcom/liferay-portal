@@ -64,7 +64,13 @@ export default function Routes({path, properties}: AppRoutesProps) {
 
 	return (
 		<Suspense
-			fallback={<Loading displayType="secondary" shape="squares" />}
+			fallback={
+				<Loading
+					className="mt-4"
+					displayType="secondary"
+					shape="squares"
+				/>
+			}
 		>
 			<Route properties={properties} />
 		</Suspense>

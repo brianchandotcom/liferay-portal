@@ -370,6 +370,13 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 			}
 		}
 
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+				idleSlavesCount +=
+					awsFleetCloud.getMaxSize() - _jenkinsSlavesMap.size();
+			}
+		}
+
 		return idleSlavesCount;
 	}
 

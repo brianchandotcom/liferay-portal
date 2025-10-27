@@ -31,13 +31,12 @@ function DateTimeRenderer({
 
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
-	const dateOptions = {
+	const dateOptions: Intl.DateTimeFormatOptions = {
 		day: options?.format?.day || 'numeric',
 		hour: options?.format?.hour || 'numeric',
 		minute: options?.format?.minute || 'numeric',
 		month: options?.format?.month || 'short',
 		second: options?.format?.second || 'numeric',
-		timeZone: options?.format?.timeZone || 'UTC',
 		year: options?.format?.year || 'numeric',
 	};
 
@@ -46,6 +45,11 @@ function DateTimeRenderer({
 		ETimeZoneBehaviors.APPLY_THEME_DISPLAY_TIME_ZONE
 	) {
 		dateOptions.timeZone = Liferay.ThemeDisplay.getTimeZone();
+	}
+	else if (
+		options?.timeZoneBehavior === ETimeZoneBehaviors.APPLY_GIVEN_TIME_ZONE
+	) {
+		dateOptions.timeZone = options?.format?.timeZone || 'UTC';
 	}
 
 	const formattedDate = new Intl.DateTimeFormat(locale, dateOptions).format(

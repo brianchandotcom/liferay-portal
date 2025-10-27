@@ -42,6 +42,6 @@ public class BaseDateFDSTableSchemaField extends FDSTableSchemaField {
 
 	private JSONObject _formatJSONObject;
 	private String _timeZoneBehavior =
-		FDSTimeZoneBehaviorConstants.DO_NOT_MODIFY_DATE_VALUE;
+		FDSTimeZoneBehaviorConstants.APPLY_GIVEN_TIME_ZONE;
 
 }

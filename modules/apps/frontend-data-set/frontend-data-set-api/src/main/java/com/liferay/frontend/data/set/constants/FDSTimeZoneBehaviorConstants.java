@@ -10,6 +10,8 @@ package com.liferay.frontend.data.set.constants;
  */
 public class FDSTimeZoneBehaviorConstants {
 
+	public static final String APPLY_GIVEN_TIME_ZONE = "applyGivenTimeZone";
+
 	public static final String APPLY_THEME_DISPLAY_TIME_ZONE =
 		"applyThemeDisplayTimeZone";
 

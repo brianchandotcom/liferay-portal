@@ -11,6 +11,7 @@ export const DEFAULT_FETCH_HEADERS = {
 
 export enum ETimeZoneBehaviors {
 	APPLY_THEME_DISPLAY_TIME_ZONE = 'applyThemeDisplayTimeZone',
+	APPLY_GIVEN_TIME_ZONE = 'applyGivenTimeZone',
 	DO_NOT_MODIFY_DATE_VALUE = 'doNotModifyDateValue',
 }
 

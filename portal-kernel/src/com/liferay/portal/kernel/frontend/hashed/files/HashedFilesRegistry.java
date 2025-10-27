@@ -19,6 +19,10 @@ public interface HashedFilesRegistry {
 	/**
 	 * Get the URI of the hashed file associated to an unhashed file URI.
 	 *
+	 * The URI is absolute to DXP server, i.e., it must contain a prefix when
+	 * DXP is not running in the application server's ROOT context but must not
+	 * contain the proxy path if it is configured.
+	 *
 	 * @return a valid URI or null if hashed file does not exist
 	 * @review
 	 */
@@ -26,6 +30,10 @@ public interface HashedFilesRegistry {
 
 	/**
 	 * Get the URL of the file associated to a given URI.
+	 *
+	 * The URI is absolute to DXP server, i.e., it must contain a prefix when
+	 * DXP is not running in the application server's ROOT context but must not
+	 * contain the proxy path if it is configured.
 	 *
 	 * @param path a path like '/o/frontend-js-web/__liferay__/index.js' or
 	 *                '/o/frontend-js-web/__liferay__/index.(zXjA8D).js'

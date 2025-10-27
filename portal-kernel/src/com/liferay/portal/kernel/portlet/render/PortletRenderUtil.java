@@ -346,34 +346,37 @@ public class PortletRenderUtil {
 
 	private static String _getStaticCSSResourceURL(
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
-		String unhashedFileURI) {
+		String originalURL) {
 
-		String url = unhashedFileURI;
+		String url;
+
+		String pathProxy = PortalUtil.getPathProxy();
+
+		String unhashedFileURI = originalURL.substring(pathProxy.length());
 
 		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
 			unhashedFileURI);
 
 		if (hashedFileURI == null) {
+			url = originalURL;
+
 			if (PortalUtil.isRightToLeft(httpServletRequest)) {
-				int i = unhashedFileURI.lastIndexOf(StringPool.PERIOD);
+				int i = url.lastIndexOf(StringPool.PERIOD);
 
 				if (i != -1) {
-					url =
-						unhashedFileURI.substring(0, i) + "_rtl" +
-							unhashedFileURI.substring(i);
+					url = url.substring(0, i) + "_rtl" + url.substring(i);
 				}
 			}
 		}
 		else {
+			url = pathProxy + hashedFileURI;
+
 			if (PortalUtil.isRightToLeft(httpServletRequest)) {
-				url = HashedFilesUtil.addNameSuffix(hashedFileURI, "_rtl");
-			}
-			else {
-				url = hashedFileURI;
+				url = HashedFilesUtil.addNameSuffix(url, "_rtl");
 			}
 		}
 
-		if (_isTokenized(url)) {
+		if (_isTokenized(unhashedFileURI)) {
 			url = HttpComponentsUtil.addParameter(
 				url, "themeId", themeDisplay.getThemeId());
 			url = HttpComponentsUtil.addParameter(url, "tokenize", true);

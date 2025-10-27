@@ -191,20 +191,11 @@ public class ThemeDisplay
 			return _clayCSSURL;
 		}
 
-		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
-			StringBundler.concat(
-				PortalUtil.getPathModule(), StringPool.SLASH,
-				_theme.getServletContextName(), _theme.getCssPath(),
-				PortalUtil.isRightToLeft(_httpServletRequest) ?
-					"/clay_rtl.css" : "/clay.css"));
-
-		if (Validator.isNotNull(hashedFileURI)) {
-			_clayCSSURL = hashedFileURI;
-		}
-		else {
-			_clayCSSURL = PortalUtil.getStaticResourceURL(
-				getRequest(), getPathThemeCss() + "/clay.css");
-		}
+		_clayCSSURL = _getResource(
+			"/clay.css", getPathThemeCss(),
+			PortalUtil.isRightToLeft(_httpServletRequest) ? "/clay_rtl.css" :
+				"/clay.css",
+			_theme.getCssPath());
 
 		return _clayCSSURL;
 	}
@@ -572,20 +563,11 @@ public class ThemeDisplay
 			return _mainCSSURL;
 		}
 
-		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
-			StringBundler.concat(
-				PortalUtil.getPathModule(), StringPool.SLASH,
-				_theme.getServletContextName(), _theme.getCssPath(),
-				PortalUtil.isRightToLeft(_httpServletRequest) ?
-					"/main_rtl.css" : "/main.css"));
-
-		if (Validator.isNotNull(hashedFileURI)) {
-			_mainCSSURL = hashedFileURI;
-		}
-		else {
-			_mainCSSURL = PortalUtil.getStaticResourceURL(
-				getRequest(), getPathThemeCss() + "/main.css");
-		}
+		_mainCSSURL = _getResource(
+			"/main.css", getPathThemeCss(),
+			PortalUtil.isRightToLeft(_httpServletRequest) ? "/main_rtl.css" :
+				"/main.css",
+			_theme.getCssPath());
 
 		return _mainCSSURL;
 	}
@@ -595,19 +577,9 @@ public class ThemeDisplay
 			return _mainJSURL;
 		}
 
-		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
-			StringBundler.concat(
-				PortalUtil.getPathModule(), StringPool.SLASH,
-				_theme.getServletContextName(), _theme.getJavaScriptPath(),
-				"/main.js"));
-
-		if (Validator.isNotNull(hashedFileURI)) {
-			_mainJSURL = hashedFileURI;
-		}
-		else {
-			_mainJSURL = PortalUtil.getStaticResourceURL(
-				getRequest(), getPathThemeJavaScript() + "/main.js");
-		}
+		_mainJSURL = _getResource(
+			"/main.js", getPathThemeJavaScript(), "/main.js",
+			_theme.getJavaScriptPath());
 
 		return _mainJSURL;
 	}
@@ -2016,6 +1988,39 @@ public class ThemeDisplay
 		}
 
 		return _layoutManagePagesInitialChildren;
+	}
+
+	private String _getResource(
+		String staticResourceURLName, String staticResourceURLPath,
+		String unhashedFileURIName, String unhashedFileURIPath) {
+
+		String url;
+
+		String prefix = PortalUtil.getPathModule();
+
+		String pathProxy = PortalUtil.getPathProxy();
+
+		prefix = prefix.substring(pathProxy.length());
+
+		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
+			StringBundler.concat(
+				prefix, StringPool.SLASH, _theme.getServletContextName(),
+				unhashedFileURIPath, unhashedFileURIName));
+
+		if (Validator.isNotNull(hashedFileURI)) {
+			if (pathProxy.isEmpty()) {
+				url = hashedFileURI;
+			}
+			else {
+				url = pathProxy + hashedFileURI;
+			}
+		}
+		else {
+			url = PortalUtil.getStaticResourceURL(
+				getRequest(), staticResourceURLPath + staticResourceURLName);
+		}
+
+		return url;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);

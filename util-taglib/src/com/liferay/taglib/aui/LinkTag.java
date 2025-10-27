@@ -5,7 +5,6 @@
 
 package com.liferay.taglib.aui;
 
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,22 +52,26 @@ public class LinkTag extends BaseLinkTag {
 
 			if (Validator.isNotNull(href)) {
 				if (getHashedFile()) {
-					StringBundler sb = new StringBundler(3);
+					String pathProxy = PortalUtil.getPathProxy();
 
-					try {
-						sb.append(PortalUtil.getCDNHost(getRequest()));
-					}
-					catch (PortalException portalException) {
-						throw new RuntimeException(portalException);
-					}
+					String prefix = PortalUtil.getPathModule();
 
-					sb.append(PortalUtil.getPathProxy());
-					sb.append(
+					prefix = prefix.substring(pathProxy.length());
+
+					String hashedFileURI =
 						HashedFilesRegistryUtil.getHashedFileURI(
-							PortalUtil.getPathModule() + StringPool.SLASH +
-								href));
+							prefix + StringPool.SLASH + href);
 
-					href = sb.toString();
+					if (hashedFileURI != null) {
+						try {
+							href =
+								PortalUtil.getCDNHost(getRequest()) +
+									pathProxy + hashedFileURI;
+						}
+						catch (PortalException portalException) {
+							throw new RuntimeException(portalException);
+						}
+					}
 				}
 
 				_write(jspWriter, "href", href);

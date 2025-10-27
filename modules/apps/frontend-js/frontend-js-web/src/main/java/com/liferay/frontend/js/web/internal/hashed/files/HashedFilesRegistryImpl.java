@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import jakarta.servlet.ServletContext;
 
@@ -68,7 +67,13 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 
 		int subpathIndex = 3;
 
-		if (!Validator.isBlank(_portal.getPathContext())) {
+		String pathContext = _portal.getPathContext();
+
+		String pathProxy = _portal.getPathProxy();
+
+		pathContext = pathContext.substring(pathProxy.length());
+
+		if (!pathContext.isEmpty()) {
 			subpathIndex = 4;
 		}
 

@@ -12,12 +12,17 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -27,6 +32,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -143,6 +149,58 @@ public class CopyTemplateEntryMVCActionCommandTest {
 		Assert.assertNotNull(templateEntry);
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	@TestInfo("LPD-69505")
+	public void testCopyTemplateEntryWithNoPermissions() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"templateEntryId",
+			String.valueOf(_templateEntry.getTemplateEntryId()));
+
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group.getGroupId()));
+		String name = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"name_" + languageId, name);
+
+		String description = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"description_" + languageId, description);
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			List<TemplateEntry> templateEntries =
+				_templateEntryLocalService.getTemplateEntries(
+					_group.getGroupId(), _templateEntry.getInfoItemClassName(),
+					_templateEntry.getInfoItemFormVariationKey(),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				templateEntries.toString(), 0, templateEntries.size());
+		}
+	}
+
 	private MockLiferayPortletActionRequest
 			_getMockLiferayPortletActionRequest()
 		throws Exception {
@@ -190,6 +248,9 @@ public class CopyTemplateEntryMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/template/copy_template_entry")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;

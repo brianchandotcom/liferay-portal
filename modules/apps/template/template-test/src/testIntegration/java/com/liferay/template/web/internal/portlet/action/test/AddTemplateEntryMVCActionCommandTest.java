@@ -16,16 +16,21 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,8 +40,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -56,6 +61,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Lourdes Fernández Besada
@@ -133,6 +140,85 @@ public class AddTemplateEntryMVCActionCommandTest {
 			templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
+	}
+
+	@Test
+	@TestInfo("LPD-69505")
+	public void testAddTemplateEntryWithNoPermissions() throws Exception {
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest();
+
+		InfoItemClassDetails infoItemClassDetails =
+			TemplateTestUtil.getFirstTemplateInfoItemClassDetails(
+				_infoItemServiceRegistry, _group.getGroupId());
+
+		String infoItemFormVariationKey = StringPool.BLANK;
+
+		InfoItemFormVariation infoItemFormVariation =
+			TemplateTestUtil.getFirstInfoItemFormVariation(
+				infoItemClassDetails, _infoItemServiceRegistry,
+				_group.getGroupId());
+
+		if (infoItemFormVariation != null) {
+			infoItemFormVariationKey = infoItemFormVariation.getKey();
+		}
+
+		mockLiferayPortletActionRequest.addParameter(
+			"infoItemClassName", infoItemClassDetails.getClassName());
+		mockLiferayPortletActionRequest.addParameter(
+			"infoItemFormVariationKey", infoItemFormVariationKey);
+		mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
+
+			List<TemplateEntry> templateEntries =
+				_templateEntryLocalService.getTemplateEntries(
+					_group.getGroupId(), infoItemClassDetails.getClassName(),
+					infoItemFormVariationKey, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+			Assert.assertEquals(
+				templateEntries.toString(), 0, templateEntries.size());
+
+			MockHttpServletResponse mockHttpServletResponse =
+				(MockHttpServletResponse)
+					mockLiferayPortletActionResponse.getHttpServletResponse();
+
+			Assert.assertEquals(
+				"application/json", mockHttpServletResponse.getContentType());
+
+			JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject(
+				mockHttpServletResponse.getContentAsString());
+
+			Assert.assertEquals(
+				"you-do-not-have-the-required-permissions",
+				responseJSONObject.getJSONObject(
+					"error"
+				).getString(
+					"other"
+				));
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
 
 	@Test
@@ -225,7 +311,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 	private MVCActionCommand _mvcActionCommand;
 
 	@Inject
-	private Portal _portal;
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	private ServiceContext _serviceContext;
 

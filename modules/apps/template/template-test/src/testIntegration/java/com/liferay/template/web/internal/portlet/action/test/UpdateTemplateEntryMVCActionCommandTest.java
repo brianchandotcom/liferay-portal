@@ -13,13 +13,18 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -29,6 +34,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -171,6 +177,98 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		Assert.assertEquals(script, ddmTemplate.getScript());
 	}
 
+	@Test(expected = PrincipalException.MustHavePermission.class)
+	@TestInfo("LPD-69505")
+	public void testUpdateTemplateEntryWithNoPermissions() throws Exception {
+		String script = "<#-- Modified script content -->";
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(script);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
+
+		String name = RandomTestUtil.randomString();
+		String languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group.getGroupId()));
+
+		mockLiferayPortletActionRequest.addParameter(
+			"name_" + languageId, name);
+
+		String description = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"description_" + languageId, description);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"templateEntryId",
+			String.valueOf(_templateEntry.getTemplateEntryId()));
+
+		ReflectionTestUtil.setFieldValue(
+			_mvcActionCommand, "_portal",
+			ProxyUtil.newProxyInstance(
+				UpdateTemplateEntryMVCActionCommandTest.class.getClassLoader(),
+				new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						LiferayPortletRequest liferayPortletRequest =
+							_portal.getLiferayPortletRequest(
+								mockLiferayPortletActionRequest);
+
+						return UploadTestUtil.createUploadPortletRequest(
+							_portal.getUploadServletRequest(
+								liferayPortletRequest.getHttpServletRequest()),
+							liferayPortletRequest,
+							_portal.getPortletNamespace(
+								liferayPortletRequest.getPortletName()));
+					}
+
+					return method.invoke(_portal, args);
+				}));
+
+		User user = UserTestUtil.addUser();
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			PermissionThreadLocal.setPermissionChecker(
+				_permissionCheckerFactory.create(user));
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+
+			TemplateEntry modifiedTemplateEntry =
+				_templateEntryLocalService.getTemplateEntry(
+					_templateEntry.getTemplateEntryId());
+
+			Assert.assertNotNull(modifiedTemplateEntry);
+
+			Date currentModifiedDate = modifiedTemplateEntry.getModifiedDate();
+
+			Assert.assertFalse(
+				currentModifiedDate.after(_templateEntry.getModifiedDate()));
+
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
+				_templateEntry.getDDMTemplateId());
+
+			Assert.assertNotNull(ddmTemplate);
+			Assert.assertNotEquals(name, ddmTemplate.getName(languageId));
+			Assert.assertNotEquals(
+				description, ddmTemplate.getDescription(languageId));
+			Assert.assertNotEquals(script, ddmTemplate.getScript());
+		}
+	}
+
 	private MockMultipartHttpServletRequest
 			_createMockMultipartHttpServletRequest(String script)
 		throws Exception {
@@ -256,6 +354,9 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 	@Inject(filter = "mvc.command.name=/template/update_template_entry")
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;

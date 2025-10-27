@@ -38,7 +38,7 @@ export class TagsPage {
 			.waitFor();
 	}
 
-	async createTag() {
+	async createTag(spaces?: string[]) {
 		await this.goto();
 
 		const tagName = `Tag${getRandomInt()}`;
@@ -46,6 +46,19 @@ export class TagsPage {
 		await this.newTagButton.click();
 
 		await this.page.getByLabel('NameRequired').fill(tagName);
+
+		if (spaces) {
+			await this.spaceCheckbox.uncheck();
+
+			for (const space of spaces) {
+				await this.page.getByLabel('Space Selector').click();
+				await this.page
+					.locator(
+						`//button[@role='option']//span[text()='${space}']`
+					)
+					.click();
+			}
+		}
 
 		await clickAndExpectToBeVisible({
 			target: this.page.getByText(

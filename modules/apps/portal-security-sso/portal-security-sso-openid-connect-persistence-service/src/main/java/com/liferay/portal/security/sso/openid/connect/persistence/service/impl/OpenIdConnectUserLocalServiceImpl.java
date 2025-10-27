@@ -7,6 +7,8 @@ package com.liferay.portal.security.sso.openid.connect.persistence.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.DuplicateOpenIdConnectUserException;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.OpenIdConnectUserIssuerException;
@@ -17,6 +19,7 @@ import com.liferay.portal.security.sso.openid.connect.persistence.service.base.O
 import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Arthur Chan
@@ -30,15 +33,25 @@ public class OpenIdConnectUserLocalServiceImpl
 
 	@Override
 	public OpenIdConnectUser addOpenIdConnectUser(
-			long companyId, long userId, String issuer, String subject)
+			long userId, String issuer, String subject)
 		throws PortalException {
+
+		User user = _userLocalService.getUser(userId);
 
 		OpenIdConnectUser openIdConnectUser =
 			openIdConnectUserPersistence.fetchByC_I_S(
-				companyId, issuer, subject);
+				user.getCompanyId(), issuer, subject);
 
 		if (openIdConnectUser != null) {
 			throw new DuplicateOpenIdConnectUserException();
+		}
+
+		if (Validator.isNull(issuer)) {
+			throw new OpenIdConnectUserIssuerException("Issuer is null");
+		}
+
+		if (Validator.isNull(subject)) {
+			throw new OpenIdConnectUserSubjectException("Subject is null");
 		}
 
 		long openIdConnectUserId = counterLocalService.increment();
@@ -46,20 +59,10 @@ public class OpenIdConnectUserLocalServiceImpl
 		openIdConnectUser = openIdConnectUserPersistence.create(
 			openIdConnectUserId);
 
-		openIdConnectUser.setCompanyId(companyId);
-		openIdConnectUser.setUserId(userId);
+		openIdConnectUser.setCompanyId(user.getCompanyId());
+		openIdConnectUser.setUserId(user.getUserId());
 		openIdConnectUser.setCreateDate(new Date());
-
-		if (Validator.isNull(issuer)) {
-			throw new OpenIdConnectUserIssuerException("Issuer is null");
-		}
-
 		openIdConnectUser.setIssuer(issuer);
-
-		if (Validator.isNull(subject)) {
-			throw new OpenIdConnectUserSubjectException("Subject is null");
-		}
-
 		openIdConnectUser.setSubject(subject);
 
 		return openIdConnectUserPersistence.update(openIdConnectUser);
@@ -72,5 +75,8 @@ public class OpenIdConnectUserLocalServiceImpl
 		return openIdConnectUserPersistence.fetchByC_I_S(
 			companyId, issuer, subject);
 	}
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

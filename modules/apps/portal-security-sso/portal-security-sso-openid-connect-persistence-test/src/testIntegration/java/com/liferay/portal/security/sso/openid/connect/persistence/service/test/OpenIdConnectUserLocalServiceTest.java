@@ -41,25 +41,25 @@ public class OpenIdConnectUserLocalServiceTest {
 	public void testAddOpenIdConnectUser() throws Exception {
 		OpenIdConnectUser openIdConnectUser =
 			_openIdConnectUserLocalService.addOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
 		_assertPortalException(
 			DuplicateOpenIdConnectUserException.class,
 			() -> _openIdConnectUserLocalService.addOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				openIdConnectUser.getIssuer(), openIdConnectUser.getSubject()));
+				TestPropsValues.getUserId(), openIdConnectUser.getIssuer(),
+				openIdConnectUser.getSubject()));
 
 		_assertPortalException(
 			OpenIdConnectUserIssuerException.class,
 			() -> _openIdConnectUserLocalService.addOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				StringPool.BLANK, RandomTestUtil.randomString()));
+				TestPropsValues.getUserId(), StringPool.BLANK,
+				RandomTestUtil.randomString()));
 		_assertPortalException(
 			OpenIdConnectUserSubjectException.class,
 			() -> _openIdConnectUserLocalService.addOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), StringPool.BLANK));
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				StringPool.BLANK));
 	}
 
 	@Test
@@ -71,8 +71,8 @@ public class OpenIdConnectUserLocalServiceTest {
 
 		OpenIdConnectUser openIdConnectUser =
 			_openIdConnectUserLocalService.addOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString());
+				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
 		Assert.assertEquals(
 			openIdConnectUser,

@@ -115,6 +115,11 @@ public class UtilityPageResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return UtilityPageResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

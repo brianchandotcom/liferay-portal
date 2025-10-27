@@ -155,6 +155,11 @@ public class TaxonomyCategoryResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return TaxonomyCategoryResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

@@ -183,6 +183,11 @@ public class RoleResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return RoleResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

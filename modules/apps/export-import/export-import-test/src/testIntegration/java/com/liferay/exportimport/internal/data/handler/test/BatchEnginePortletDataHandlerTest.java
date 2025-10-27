@@ -1777,6 +1777,11 @@ public class BatchEnginePortletDataHandlerTest {
 				}
 
 				@Override
+				public String getResourceClassName() {
+					return _resourceClassName;
+				}
+
+				@Override
 				public Scope getScope() {
 					return Scope.COMPANY;
 				}
@@ -1862,6 +1867,8 @@ public class BatchEnginePortletDataHandlerTest {
 		}
 
 		private static String _modelClassName = RandomTestUtil.randomString();
+		private static String _resourceClassName =
+			RandomTestUtil.randomString();
 
 		private final Function<Filter, Page<TestItem>> _function;
 		private final String _portletId;

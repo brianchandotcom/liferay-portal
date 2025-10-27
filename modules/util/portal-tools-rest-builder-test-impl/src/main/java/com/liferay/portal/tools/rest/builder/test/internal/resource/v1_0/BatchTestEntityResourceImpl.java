@@ -117,6 +117,11 @@ public class BatchTestEntityResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return BatchTestEntityResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

@@ -339,6 +339,11 @@ public class AccountResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return AccountResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

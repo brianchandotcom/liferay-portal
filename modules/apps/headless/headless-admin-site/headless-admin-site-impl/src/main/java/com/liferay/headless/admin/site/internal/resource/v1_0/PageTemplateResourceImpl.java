@@ -134,6 +134,11 @@ public class PageTemplateResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return PageTemplateResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

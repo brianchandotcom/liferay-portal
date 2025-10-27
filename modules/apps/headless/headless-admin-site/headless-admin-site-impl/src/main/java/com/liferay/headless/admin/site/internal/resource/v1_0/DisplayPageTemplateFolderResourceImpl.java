@@ -94,6 +94,11 @@ public class DisplayPageTemplateFolderResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return DisplayPageTemplateFolderResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

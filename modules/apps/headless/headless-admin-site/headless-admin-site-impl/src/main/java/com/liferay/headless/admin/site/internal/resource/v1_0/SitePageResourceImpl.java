@@ -205,6 +205,11 @@ public class SitePageResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return SitePageResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

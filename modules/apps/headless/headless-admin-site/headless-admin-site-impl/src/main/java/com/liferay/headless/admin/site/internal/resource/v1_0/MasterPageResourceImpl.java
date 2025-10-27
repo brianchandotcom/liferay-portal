@@ -114,6 +114,11 @@ public class MasterPageResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return MasterPageResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

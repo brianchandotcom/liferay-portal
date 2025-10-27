@@ -222,6 +222,11 @@ public class AccountGroupResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return AccountGroupResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

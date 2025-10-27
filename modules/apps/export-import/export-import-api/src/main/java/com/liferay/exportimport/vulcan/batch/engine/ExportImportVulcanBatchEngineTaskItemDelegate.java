@@ -23,12 +23,6 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 
 	public interface ExportImportDescriptor {
 
-		public default String getClassName() {
-			return getClass(
-			).getEnclosingClass(
-			).getName();
-		}
-
 		public default String getLabelLanguageKey() {
 			return null;
 		}
@@ -50,6 +44,8 @@ public interface ExportImportVulcanBatchEngineTaskItemDelegate<T>
 		}
 
 		public String getPortletId();
+
+		public String getResourceClassName();
 
 		public Scope getScope();
 

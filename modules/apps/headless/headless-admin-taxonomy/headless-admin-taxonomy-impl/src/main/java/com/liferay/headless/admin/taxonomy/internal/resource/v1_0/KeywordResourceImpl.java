@@ -166,6 +166,11 @@ public class KeywordResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return KeywordResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

@@ -136,6 +136,11 @@ public class DisplayPageTemplateResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return DisplayPageTemplateResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.SITE;
 			}

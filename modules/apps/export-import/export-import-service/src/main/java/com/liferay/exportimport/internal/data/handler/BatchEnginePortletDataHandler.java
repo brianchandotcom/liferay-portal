@@ -296,7 +296,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				if ((activeRegistrations.size() > 1) &&
 					!portletDataContext.getBooleanParameter(
 						getPortletId(),
-						exportImportDescriptor.getClassName())) {
+						exportImportDescriptor.getResourceClassName())) {
 
 					continue;
 				}
@@ -322,7 +322,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					result.getBatchEngineExportTask();
 
 				manifestSummary.addModelAdditionCount(
-					new StagedModelType(exportImportDescriptor.getClassName()),
+					new StagedModelType(
+						exportImportDescriptor.getResourceClassName()),
 					batchEngineExportTask.getProcessedItemsCount());
 			}
 
@@ -349,7 +350,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 			if ((activeRegistrations.size() > 1) &&
 				!portletDataContext.getBooleanParameter(
-					getPortletId(), exportImportDescriptor.getClassName())) {
+					getPortletId(),
+					exportImportDescriptor.getResourceClassName())) {
 
 				continue;
 			}
@@ -440,7 +442,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					portletDataContext.getManifestSummary();
 
 				manifestSummary.addModelAdditionCount(
-					new StagedModelType(exportImportDescriptor.getClassName()),
+					new StagedModelType(
+						exportImportDescriptor.getResourceClassName()),
 					batchEngineExportTask.getTotalItemsCount());
 			}
 		}
@@ -542,9 +545,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			exportImportDescriptor = registration.getExportImportDescriptor();
 
 		return new PortletDataHandlerBoolean(
-			getPortletId(), exportImportDescriptor.getClassName(),
+			getPortletId(), exportImportDescriptor.getResourceClassName(),
 			exportImportDescriptor.getLabelLanguageKey(), true, false, null,
-			exportImportDescriptor.getClassName(), null);
+			exportImportDescriptor.getResourceClassName(), null);
 	}
 
 	private String _getSiteExternalReferenceCode(

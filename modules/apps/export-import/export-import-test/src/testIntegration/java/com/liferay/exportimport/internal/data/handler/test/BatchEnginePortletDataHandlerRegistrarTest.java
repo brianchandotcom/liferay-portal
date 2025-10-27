@@ -335,11 +335,6 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 			return new ExportImportDescriptor() {
 
 				@Override
-				public String getClassName() {
-					return _className;
-				}
-
-				@Override
 				public String getModelClassName() {
 					return _className;
 				}
@@ -347,6 +342,11 @@ public class BatchEnginePortletDataHandlerRegistrarTest {
 				@Override
 				public String getPortletId() {
 					return _portletId;
+				}
+
+				@Override
+				public String getResourceClassName() {
+					return _className;
 				}
 
 				@Override

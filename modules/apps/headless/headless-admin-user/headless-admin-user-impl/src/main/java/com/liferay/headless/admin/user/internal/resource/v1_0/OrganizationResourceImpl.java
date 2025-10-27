@@ -328,6 +328,11 @@ public class OrganizationResourceImpl
 			}
 
 			@Override
+			public String getResourceClassName() {
+				return OrganizationResourceImpl.class.getName();
+			}
+
+			@Override
 			public Scope getScope() {
 				return Scope.COMPANY;
 			}

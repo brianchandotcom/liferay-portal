@@ -401,11 +401,6 @@ public class ObjectEntryResourceImpl
 		return new ExportImportDescriptor() {
 
 			@Override
-			public String getClassName() {
-				return _objectDefinition.getClassName();
-			}
-
-			@Override
 			public String getModelClassName() {
 				return _objectDefinition.getClassName();
 			}
@@ -427,6 +422,11 @@ public class ObjectEntryResourceImpl
 			@Override
 			public String getPortletId() {
 				return _objectDefinition.getPortletId();
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return _objectDefinition.getClassName();
 			}
 
 			@Override

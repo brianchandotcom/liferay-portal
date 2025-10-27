@@ -48,11 +48,8 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 	}
 
 	@Override
-	public ExportImportVulcanBatchEngineTaskItemDelegate.ExportImportDescriptor
-		getExportImportDescriptor() {
-
-		return new ExportImportVulcanBatchEngineTaskItemDelegate.
-			ExportImportDescriptor() {
+	public ExportImportDescriptor getExportImportDescriptor() {
+		return new ExportImportDescriptor() {
 
 			@Override
 			public String getLabelLanguageKey() {
@@ -69,6 +66,12 @@ public class SharedInternalModelBatchTestEntityResourceImpl
 			public String getPortletId() {
 				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
 					"BatchTestEntityPortlet";
+			}
+
+			@Override
+			public String getResourceClassName() {
+				return SharedInternalModelBatchTestEntityResourceImpl.class.
+					getName();
 			}
 
 			@Override

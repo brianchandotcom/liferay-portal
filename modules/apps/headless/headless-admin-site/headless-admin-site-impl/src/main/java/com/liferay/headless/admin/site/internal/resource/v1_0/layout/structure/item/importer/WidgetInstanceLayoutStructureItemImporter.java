@@ -102,11 +102,15 @@ public class WidgetInstanceLayoutStructureItemImporter
 		if (fragmentEntryLink == null) {
 			fragmentEntryLink = _addFragmentEntryLink(
 				widgetInstancePageElementDefinition.
+					getDraftWidgetInstanceExternalReferenceCode(),
+				widgetInstancePageElementDefinition.
 					getWidgetInstanceExternalReferenceCode(),
 				layoutStructureItemImporterContext, widgetInstance);
 		}
 		else {
 			fragmentEntryLink = _updateFragmentEntryLink(
+				widgetInstancePageElementDefinition.
+					getDraftWidgetInstanceExternalReferenceCode(),
 				fragmentEntryLink, layoutStructureItemImporterContext,
 				widgetInstance);
 		}
@@ -146,6 +150,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
+			String draftWidgetInstanceExternalReferenceCode,
 			String externalReferenceCode,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
@@ -160,7 +165,8 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			externalReferenceCode,
 			layoutStructureItemImporterContext.getUserId(),
-			layoutStructureItemImporterContext.getGroupId(), null, null, null,
+			layoutStructureItemImporterContext.getGroupId(),
+			draftWidgetInstanceExternalReferenceCode, null, null,
 			layoutStructureItemImporterContext.getSegmentsExperienceId(),
 			layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK,
@@ -293,6 +299,7 @@ public class WidgetInstanceLayoutStructureItemImporter
 	}
 
 	private FragmentEntryLink _updateFragmentEntryLink(
+			String draftWidgetInstanceExternalReferenceCode,
 			FragmentEntryLink fragmentEntryLink,
 			LayoutStructureItemImporterContext
 				layoutStructureItemImporterContext,
@@ -331,10 +338,13 @@ public class WidgetInstanceLayoutStructureItemImporter
 		editableValuesJSONObject = _getEditableValuesJSONObject(
 			fragmentEntryLink, widgetInstance);
 
+		fragmentEntryLink.setOriginalFragmentEntryLinkERC(
+			draftWidgetInstanceExternalReferenceCode);
+		fragmentEntryLink.setEditableValues(
+			editableValuesJSONObject.toString());
+
 		return FragmentEntryLinkLocalServiceUtil.updateFragmentEntryLink(
-			layoutStructureItemImporterContext.getUserId(),
-			fragmentEntryLink.getFragmentEntryLinkId(),
-			editableValuesJSONObject.toString(), true);
+			fragmentEntryLink);
 	}
 
 	private static final ServiceTracker

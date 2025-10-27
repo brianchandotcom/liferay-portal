@@ -36,9 +36,10 @@ public interface SiteResource {
 		return new Builder();
 	}
 
-	public void deleteSite(Long siteId) throws Exception;
+	public void deleteSite(String siteExternalReferenceCode) throws Exception;
 
-	public HttpInvoker.HttpResponse deleteSiteHttpResponse(Long siteId)
+	public HttpInvoker.HttpResponse deleteSiteHttpResponse(
+			String siteExternalReferenceCode)
 		throws Exception;
 
 	public void deleteSiteBatch(String callbackURL, Object object)
@@ -48,33 +49,17 @@ public interface SiteResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public void deleteSiteByExternalReferenceCode(String externalReferenceCode)
+	public Site getSite(String siteExternalReferenceCode) throws Exception;
+
+	public HttpInvoker.HttpResponse getSiteHttpResponse(
+			String siteExternalReferenceCode)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse
-			deleteSiteByExternalReferenceCodeHttpResponse(
-				String externalReferenceCode)
+	public void getSiteSiteInitializer(String siteExternalReferenceCode)
 		throws Exception;
 
-	public Site getSite(Long siteId) throws Exception;
-
-	public HttpInvoker.HttpResponse getSiteHttpResponse(Long siteId)
-		throws Exception;
-
-	public Site getSiteByExternalReferenceCode(String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse getSiteByExternalReferenceCodeHttpResponse(
-			String externalReferenceCode)
-		throws Exception;
-
-	public void getSiteByExternalReferenceCodeSiteInitializer(
-			String externalReferenceCode)
-		throws Exception;
-
-	public HttpInvoker.HttpResponse
-			getSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-				String externalReferenceCode)
+	public HttpInvoker.HttpResponse getSiteSiteInitializerHttpResponse(
+			String siteExternalReferenceCode)
 		throws Exception;
 
 	public Page<Site> getSitesPage(
@@ -115,9 +100,11 @@ public interface SiteResource {
 			String contentType, String fieldNames)
 		throws Exception;
 
-	public Site putSite(Site site) throws Exception;
+	public Site putSite(String siteExternalReferenceCode, Site site)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteHttpResponse(Site site)
+	public HttpInvoker.HttpResponse putSiteHttpResponse(
+			String siteExternalReferenceCode, Site site)
 		throws Exception;
 
 	public void putSiteBatch(String callbackURL, Object object)
@@ -127,13 +114,13 @@ public interface SiteResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public Site putSiteByExternalReferenceCode(
-			String externalReferenceCode, Site site,
+	public Site putSiteSiteInitializer(
+			String siteExternalReferenceCode, Site site,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
-	public HttpInvoker.HttpResponse putSiteByExternalReferenceCodeHttpResponse(
-			String externalReferenceCode, Site site,
+	public HttpInvoker.HttpResponse putSiteSiteInitializerHttpResponse(
+			String siteExternalReferenceCode, Site site,
 			Map<String, File> multipartFiles)
 		throws Exception;
 
@@ -245,9 +232,11 @@ public interface SiteResource {
 
 	public static class SiteResourceImpl implements SiteResource {
 
-		public void deleteSite(Long siteId) throws Exception {
+		public void deleteSite(String siteExternalReferenceCode)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = deleteSiteHttpResponse(
-				siteId);
+				siteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -308,7 +297,8 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse deleteSiteHttpResponse(Long siteId)
+		public HttpInvoker.HttpResponse deleteSiteHttpResponse(
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -335,9 +325,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}");
 
-			httpInvoker.path("siteId", siteId);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -446,116 +437,9 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void deleteSiteByExternalReferenceCode(
-				String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				deleteSiteByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return;
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				deleteSiteByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.DELETE);
-
-			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Site getSite(Long siteId) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = getSiteHttpResponse(siteId);
+		public Site getSite(String siteExternalReferenceCode) throws Exception {
+			HttpInvoker.HttpResponse httpResponse = getSiteHttpResponse(
+				siteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -616,7 +500,8 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getSiteHttpResponse(Long siteId)
+		public HttpInvoker.HttpResponse getSiteHttpResponse(
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -643,116 +528,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/{siteId}");
-
-			httpInvoker.path("siteId", siteId);
-
-			if ((_builder._login != null) && (_builder._password != null)) {
-				httpInvoker.userNameAndPassword(
-					_builder._login + ":" + _builder._password);
-			}
-
-			return httpInvoker.invoke();
-		}
-
-		public Site getSiteByExternalReferenceCode(String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker.HttpResponse httpResponse =
-				getSiteByExternalReferenceCodeHttpResponse(
-					externalReferenceCode);
-
-			String content = httpResponse.getContent();
-
-			if ((httpResponse.getStatusCode() / 100) != 2) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response content: " + content);
-				_logger.log(
-					Level.WARNING,
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.log(
-					Level.WARNING,
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-
-				Problem.ProblemException problemException = null;
-
-				if (Objects.equals(
-						httpResponse.getContentType(), "application/json")) {
-
-					problemException = new Problem.ProblemException(
-						Problem.toDTO(content));
-				}
-				else {
-					_logger.log(
-						Level.WARNING,
-						"Unable to process content type: " +
-							httpResponse.getContentType());
-
-					Problem problem = new Problem();
-
-					problem.setStatus(
-						String.valueOf(httpResponse.getStatusCode()));
-
-					problemException = new Problem.ProblemException(problem);
-				}
-
-				throw problemException;
-			}
-			else {
-				_logger.fine("HTTP response content: " + content);
-				_logger.fine(
-					"HTTP response message: " + httpResponse.getMessage());
-				_logger.fine(
-					"HTTP response status code: " +
-						httpResponse.getStatusCode());
-			}
-
-			try {
-				return SiteSerDes.toDTO(content);
-			}
-			catch (Exception e) {
-				_logger.log(
-					Level.WARNING,
-					"Unable to process HTTP response: " + content, e);
-
-				throw new Problem.ProblemException(Problem.toDTO(content));
-			}
-		}
-
-		public HttpInvoker.HttpResponse
-				getSiteByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode)
-			throws Exception {
-
-			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
-
-			if (_builder._locale != null) {
-				httpInvoker.header(
-					"Accept-Language", _builder._locale.toLanguageTag());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._headers.entrySet()) {
-
-				httpInvoker.header(entry.getKey(), entry.getValue());
-			}
-
-			for (Map.Entry<String, String> entry :
-					_builder._parameters.entrySet()) {
-
-				httpInvoker.parameter(entry.getKey(), entry.getValue());
-			}
-
-			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}");
 
 			httpInvoker.path(
-				_builder._scheme + "://" + _builder._host + ":" +
-					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}");
-
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -762,13 +541,11 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public void getSiteByExternalReferenceCodeSiteInitializer(
-				String externalReferenceCode)
+		public void getSiteSiteInitializer(String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				getSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-					externalReferenceCode);
+				getSiteSiteInitializerHttpResponse(siteExternalReferenceCode);
 
 			String content = httpResponse.getContent();
 
@@ -818,9 +595,8 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				getSiteByExternalReferenceCodeSiteInitializerHttpResponse(
-					String externalReferenceCode)
+		public HttpInvoker.HttpResponse getSiteSiteInitializerHttpResponse(
+				String siteExternalReferenceCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -847,9 +623,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}/site-initializer");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-initializer");
 
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1410,8 +1187,11 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site putSite(Site site) throws Exception {
-			HttpInvoker.HttpResponse httpResponse = putSiteHttpResponse(site);
+		public Site putSite(String siteExternalReferenceCode, Site site)
+			throws Exception {
+
+			HttpInvoker.HttpResponse httpResponse = putSiteHttpResponse(
+				siteExternalReferenceCode, site);
 
 			String content = httpResponse.getContent();
 
@@ -1472,7 +1252,8 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse putSiteHttpResponse(Site site)
+		public HttpInvoker.HttpResponse putSiteHttpResponse(
+				String siteExternalReferenceCode, Site site)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1501,7 +1282,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}");
+
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(
@@ -1610,14 +1394,14 @@ public interface SiteResource {
 			return httpInvoker.invoke();
 		}
 
-		public Site putSiteByExternalReferenceCode(
-				String externalReferenceCode, Site site,
+		public Site putSiteSiteInitializer(
+				String siteExternalReferenceCode, Site site,
 				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
-				putSiteByExternalReferenceCodeHttpResponse(
-					externalReferenceCode, site, multipartFiles);
+				putSiteSiteInitializerHttpResponse(
+					siteExternalReferenceCode, site, multipartFiles);
 
 			String content = httpResponse.getContent();
 
@@ -1678,10 +1462,9 @@ public interface SiteResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse
-				putSiteByExternalReferenceCodeHttpResponse(
-					String externalReferenceCode, Site site,
-					Map<String, File> multipartFiles)
+		public HttpInvoker.HttpResponse putSiteSiteInitializerHttpResponse(
+				String siteExternalReferenceCode, Site site,
+				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1716,9 +1499,10 @@ public interface SiteResource {
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
-						"/o/headless-admin-site/v1.0/sites/by-external-reference-code/{externalReferenceCode}");
+						"/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/site-initializer");
 
-			httpInvoker.path("externalReferenceCode", externalReferenceCode);
+			httpInvoker.path(
+				"siteExternalReferenceCode", siteExternalReferenceCode);
 
 			if ((_builder._login != null) && (_builder._password != null)) {
 				httpInvoker.userNameAndPassword(

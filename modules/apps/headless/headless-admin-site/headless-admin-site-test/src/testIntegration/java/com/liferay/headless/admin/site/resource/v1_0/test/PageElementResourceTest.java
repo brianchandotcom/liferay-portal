@@ -359,10 +359,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String draftWidgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		String widgetInstanceId = RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
 
 		_addFragmentEntryLink(
-			draftWidgetInstanceExternalReferenceCode, layout, widgetInstanceId);
+			draftWidgetInstanceExternalReferenceCode, layout, namespace);
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
@@ -370,8 +370,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomString(),
 				draftWidgetInstanceExternalReferenceCode, false,
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				_getWidgetConfig(), RandomTestUtil.randomString(),
-				widgetInstanceId, JournalContentPortletKeys.JOURNAL_CONTENT,
+				_getWidgetConfig(), RandomTestUtil.randomString(), namespace,
+				JournalContentPortletKeys.JOURNAL_CONTENT,
 				_getWidgetPermissions()));
 	}
 
@@ -489,10 +489,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String draftWidgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();
 
-		String widgetInstanceId = RandomTestUtil.randomString();
+		String namespace = RandomTestUtil.randomString();
 
 		_addFragmentEntryLink(
-			draftWidgetInstanceExternalReferenceCode, layout, widgetInstanceId);
+			draftWidgetInstanceExternalReferenceCode, layout, namespace);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
@@ -501,13 +501,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				draftWidgetInstanceExternalReferenceCode, false,
 				RandomTestUtil.randomString(), externalReferenceCode,
 				_getWidgetConfig(), widgetInstanceExternalReferenceCode,
-				widgetInstanceId, AssetPublisherPortletKeys.ASSET_PUBLISHER,
+				namespace, AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				_getWidgetPermissions()));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getWidgetPageElement(
 				null, null, null, false, RandomTestUtil.randomString(),
 				externalReferenceCode, new HashMap<>(),
-				widgetInstanceExternalReferenceCode, widgetInstanceId,
+				widgetInstanceExternalReferenceCode, namespace,
 				AssetPublisherPortletKeys.ASSET_PUBLISHER,
 				new WidgetPermission[0]));
 	}

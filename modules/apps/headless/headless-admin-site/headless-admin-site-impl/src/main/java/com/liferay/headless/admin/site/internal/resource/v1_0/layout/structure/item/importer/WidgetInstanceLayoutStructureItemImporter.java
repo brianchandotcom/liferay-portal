@@ -26,8 +26,10 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -206,7 +208,9 @@ public class WidgetInstanceLayoutStructureItemImporter
 		return editableValuesJSONObject.put(
 			"instanceId",
 			() -> {
-				String instanceId = widgetInstance.getWidgetInstanceId();
+				String instanceId = _getInstanceId(
+					widgetInstance.getWidgetInstanceId(),
+					widgetInstance.getWidgetName());
 
 				if (Validator.isNull(instanceId)) {
 					return null;
@@ -217,6 +221,16 @@ public class WidgetInstanceLayoutStructureItemImporter
 		).put(
 			"portletId", widgetInstance.getWidgetName()
 		);
+	}
+
+	private String _getInstanceId(String widgetInstanceId, String widgetName) {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(widgetName);
+
+		if (portlet.isInstanceable()) {
+			return widgetInstanceId;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private String _getNamespace(WidgetInstance widgetInstance) {

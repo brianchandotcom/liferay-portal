@@ -209,6 +209,100 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder postObjectEntryFolderByParentObjectEntryFolderCopy(
+			Long objectEntryFolderId, Long parentObjectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					parentObjectEntryFolderId);
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.copyObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId, false,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
+	}
+
+	@Override
+	public ObjectEntryFolder
+			postObjectEntryFolderByParentObjectEntryFolderCopyReplace(
+				Long objectEntryFolderId, Long parentObjectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					parentObjectEntryFolderId);
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.copyObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId, true,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
+	}
+
+	@Override
+	public ObjectEntryFolder postObjectEntryFolderByParentObjectEntryFolderMove(
+			Long objectEntryFolderId, Long parentObjectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					parentObjectEntryFolderId);
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.moveObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId, false,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
+	}
+
+	@Override
+	public ObjectEntryFolder
+			postObjectEntryFolderByParentObjectEntryFolderMoveReplace(
+				Long objectEntryFolderId, Long parentObjectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder
+			serviceBuilderObjectEntryFolder =
+				_objectEntryFolderService.getObjectEntryFolder(
+					parentObjectEntryFolderId);
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.moveObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId, true,
+				ServiceContextBuilder.create(
+					serviceBuilderObjectEntryFolder.getGroupId(),
+					contextHttpServletRequest, null
+				).build()));
+	}
+
+	@Override
 	public ObjectEntryFolder postScopeScopeKeyObjectEntryFolder(
 			String scopeKey, ObjectEntryFolder objectEntryFolder)
 		throws Exception {

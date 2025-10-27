@@ -70,6 +70,10 @@ public class ImportObjectDefinitionMVCActionCommand
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, errorsJSONObject);
 		}
+		else {
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, _jsonFactory.createJSONObject());
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
 	}

@@ -56,6 +56,9 @@ public class ImportObjectFolderMVCActionCommand extends BaseMVCActionCommand {
 
 		try {
 			_importObjectFolder(actionRequest);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, _jsonFactory.createJSONObject());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

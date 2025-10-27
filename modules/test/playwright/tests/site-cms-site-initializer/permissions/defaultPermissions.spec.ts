@@ -700,7 +700,7 @@ test(
 			await page.getByRole('button', {name: 'Save'}).click();
 
 			await expect(
-				page.getByRole('link', {name: folderName})
+				page.getByRole('link', {name: folderName}).first()
 			).toBeVisible();
 
 			await expect(async () => {

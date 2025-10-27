@@ -9,7 +9,6 @@ import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.petra.function.UnsafeConsumer;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
@@ -64,7 +63,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
-import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
@@ -105,10 +103,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179669")) {
-			throw new NotFoundException();
-		}
-
 		SearchRequestBody searchRequestBody = new SearchRequestBody();
 
 		searchRequestBody.setAttributes(
@@ -140,10 +134,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		String entryClassNames, String scope, String search, Filter filter,
 		Pagination pagination, Sort[] sorts,
 		SearchRequestBody searchRequestBody) {
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-179669")) {
-			throw new NotFoundException();
-		}
 
 		Map<String, Object> attributes = GetterUtil.getObject(
 			searchRequestBody.getAttributes(), HashMap::new);

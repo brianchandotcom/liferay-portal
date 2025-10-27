@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyleDefinition;
@@ -31,6 +32,7 @@ import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -93,8 +95,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		collectionDisplayPageElementDefinition.setCollectionDisplayViewports(
 			() -> _toCollectionDisplayViewports(
 				collectionStyledLayoutStructureItem));
-		collectionDisplayPageElementDefinition.setCollectionReference(
-			() -> _toCollectionReference(
+		collectionDisplayPageElementDefinition.setCollectionSettings(
+			() -> _toCollectionSettings(
 				collectionStyledLayoutStructureItem, companyId, scopeGroupId));
 		collectionDisplayPageElementDefinition.setDisplayAllItems(
 			collectionStyledLayoutStructureItem::isDisplayAllItems);
@@ -167,6 +169,28 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 					});
 			}
 		};
+	}
+
+	private Map<String, Object> _toCollectionConfig(
+		CollectionStyledLayoutStructureItem
+			collectionStyledLayoutStructureItem) {
+
+		JSONObject collectionJSONObject =
+			collectionStyledLayoutStructureItem.getCollectionJSONObject();
+
+		if (collectionJSONObject == null) {
+			return null;
+		}
+
+		JSONObject configJSONObject = collectionJSONObject.getJSONObject(
+			"config");
+
+		if (configJSONObject == null) {
+			return null;
+		}
+
+		return (Map<String, Object>)_jsonFactory.looseDeserialize(
+			configJSONObject.toString());
 	}
 
 	private CollectionDisplayListStyle _toCollectionDisplayListStyle(
@@ -430,6 +454,23 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		return classNameReference;
 	}
 
+	private CollectionSettings _toCollectionSettings(
+		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
+		long companyId, long scopeGroupId) {
+
+		return new CollectionSettings() {
+			{
+				setCollectionConfig(
+					() -> _toCollectionConfig(
+						collectionStyledLayoutStructureItem));
+				setCollectionReference(
+					() -> _toCollectionReference(
+						collectionStyledLayoutStructureItem, companyId,
+						scopeGroupId));
+			}
+		};
+	}
+
 	private EmptyCollectionConfig _toEmptyCollectionOption(
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
@@ -576,5 +617,8 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 
 	@Reference
 	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 }

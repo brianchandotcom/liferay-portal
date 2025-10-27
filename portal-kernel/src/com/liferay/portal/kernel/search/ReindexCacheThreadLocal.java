@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class ReindexCacheThreadLocal {
 
 	public static <T> T getGlobalReindexCache(
-		Supplier<Integer> globalCountSupplier, String ownerName,
+		Supplier<Integer> countSupplier, String ownerName,
 		IntFunction<T> reindexCacheFunction) {
 
 		Map<String, Object> reindexCacheMap = _reindexCacheMap.get();
@@ -33,7 +33,7 @@ public class ReindexCacheThreadLocal {
 		T t = (T)reindexCacheMap.computeIfAbsent(
 			ownerName,
 			key -> {
-				int count = globalCountSupplier.get();
+				int count = countSupplier.get();
 
 				if (count > _SIZE_LIMIT) {
 					return _NULL_HOLDER;
@@ -51,7 +51,7 @@ public class ReindexCacheThreadLocal {
 
 	public static <T> T getScopeReindexCache(
 		String ownerName, String scopeName,
-		Supplier<Integer> globalCountSupplier,
+		Supplier<Integer> countSupplier,
 		Supplier<Integer> scopeCountSupplier,
 		IntFunction<T> reindexCacheFunction) {
 
@@ -73,7 +73,7 @@ public class ReindexCacheThreadLocal {
 			// checking.
 
 			int globalCount = (int)reindexCacheMap.computeIfAbsent(
-				ownerName + "#globalCount", key -> globalCountSupplier.get());
+				ownerName + "#globalCount", key -> countSupplier.get());
 
 			t = (T)reindexCacheMap.computeIfAbsent(
 				cacheKey,

@@ -22,7 +22,6 @@ import com.liferay.headless.admin.site.client.serdes.v1_0.SiteSerDes;
 import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
 import com.liferay.headless.batch.engine.client.http.HttpInvoker.HttpResponse;
 import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
-import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -31,12 +30,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
-import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
-import com.liferay.portal.kernel.service.RoleLocalService;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -50,27 +43,15 @@ import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import jakarta.annotation.Generated;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import jakarta.ws.rs.core.MultivaluedHashMap;
-import jakarta.ws.rs.core.MultivaluedMap;
-import jakarta.ws.rs.core.PathSegment;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
 
 import java.io.File;
 
 import java.lang.reflect.Method;
-
-import java.net.URI;
 
 import java.text.Format;
 
@@ -81,7 +62,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -94,9 +74,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-
 /**
  * @author Rubén Pulido
  * @generated
@@ -106,10 +83,8 @@ public abstract class BaseSiteResourceTestCase {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -236,11 +211,15 @@ public abstract class BaseSiteResourceTestCase {
 		Site site = testDeleteSite_addSite();
 
 		assertHttpResponseStatusCode(
-			204, siteResource.deleteSiteHttpResponse(site.getId()));
+			204,
+			siteResource.deleteSiteHttpResponse(
+				site.getExternalReferenceCode()));
 
 		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site.getId()));
-		assertHttpResponseStatusCode(404, siteResource.getSiteHttpResponse(0L));
+			404,
+			siteResource.getSiteHttpResponse(site.getExternalReferenceCode()));
+		assertHttpResponseStatusCode(
+			404, siteResource.getSiteHttpResponse("-"));
 	}
 
 	protected Site testDeleteSite_addSite() throws Exception {
@@ -256,31 +235,8 @@ public abstract class BaseSiteResourceTestCase {
 			202, site1.getExternalReferenceCode(), null);
 
 		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-
-		site1 = testDeleteSiteBatch_addSite();
-
-		testDeleteSiteBatch_deleteSite(202, null, site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-
-		site1 = testDeleteSiteBatch_addSite();
-		Site site2 = testDeleteSiteBatch_addSite();
-
-		testDeleteSiteBatch_deleteSite(
-			202, site2.getExternalReferenceCode(), site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-		assertHttpResponseStatusCode(
-			200, siteResource.getSiteHttpResponse(site2.getId()));
-
-		testDeleteSiteBatch_deleteSite(
-			202, site2.getExternalReferenceCode(), site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site2.getId()));
+			404,
+			siteResource.getSiteHttpResponse(site1.getExternalReferenceCode()));
 	}
 
 	protected Site testDeleteSiteBatch_addSite() throws Exception {
@@ -309,224 +265,14 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testDeleteSiteByExternalReferenceCode() throws Exception {
-		@SuppressWarnings("PMD.UnusedLocalVariable")
-		Site site = testDeleteSiteByExternalReferenceCode_addSite();
-
-		assertHttpResponseStatusCode(
-			204,
-			siteResource.deleteSiteByExternalReferenceCodeHttpResponse(
-				site.getExternalReferenceCode()));
-
-		assertHttpResponseStatusCode(
-			404,
-			siteResource.getSiteByExternalReferenceCodeHttpResponse(
-				site.getExternalReferenceCode()));
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteByExternalReferenceCodeHttpResponse("-"));
-	}
-
-	protected Site testDeleteSiteByExternalReferenceCode_addSite()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
 	public void testGetSite() throws Exception {
 		Site postSite = testGetSite_addSite();
 
-		Site getSite = siteResource.getSite(postSite.getId());
+		Site getSite = siteResource.getSite(
+			postSite.getExternalReferenceCode());
 
 		assertEquals(postSite, getSite);
 		assertValid(getSite);
-	}
-
-	@Test
-	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
-		Site postSite = testGetSite_addSite();
-
-		Site getSite = siteResource.getSite(postSite.getId());
-
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateBuilderRegistry.builder(
-				testCompany, "com.liferay.headless.admin.site.dto.v1_0.Site"
-			).acceptLanguage(
-				new AcceptLanguage() {
-
-					@Override
-					public List<Locale> getLocales() {
-						return Arrays.asList(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public String getPreferredLanguageId() {
-						return LocaleUtil.toLanguageId(LocaleUtil.getDefault());
-					}
-
-					@Override
-					public Locale getPreferredLocale() {
-						return LocaleUtil.getDefault();
-					}
-
-				}
-			).groupLocalService(
-				_groupLocalService
-			).httpServletRequest(
-				testVulcanCRUDItemDelegate_getHttpServletRequest()
-			).httpServletResponse(
-				new MockHttpServletResponse()
-			).resourceActionLocalService(
-				_resourceActionLocalService
-			).resourcePermissionLocalService(
-				_resourcePermissionLocalService
-			).roleLocalService(
-				_roleLocalService
-			).scopeChecker(
-				_scopeChecker
-			).uriInfo(
-				testVulcanCRUDItemDelegate_getUriInfo()
-			).user(
-				testVulcanCRUDItemDelegate_getUser()
-			).build();
-
-		Object item = vulcanCRUDItemDelegate.getItem(postSite.getId());
-
-		assertEquals(getSite, SiteSerDes.toDTO(item.toString()));
-	}
-
-	protected HttpServletRequest
-		testVulcanCRUDItemDelegate_getHttpServletRequest() {
-
-		return new MockHttpServletRequest() {
-
-			@Override
-			public StringBuffer getRequestURL() {
-				return new StringBuffer(
-					StringBundler.concat(
-						"http://localhost:8080/o/v1.0/",
-						RandomTestUtil.randomString(), "/",
-						RandomTestUtil.randomString()));
-			}
-
-		};
-	}
-
-	protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-		String applicationPath = RandomTestUtil.randomString() + "/";
-		String resourcePath = RandomTestUtil.randomString();
-
-		return new UriInfo() {
-
-			@Override
-			public String getPath() {
-				return resourcePath;
-			}
-
-			@Override
-			public String getPath(boolean decode) {
-				return getPath();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<PathSegment> getPathSegments(boolean decode) {
-				return getPathSegments();
-			}
-
-			@Override
-			public URI getRequestUri() {
-				return URI.create(
-					"http://localhost:8080/o/" + applicationPath +
-						resourcePath);
-			}
-
-			@Override
-			public UriBuilder getRequestUriBuilder() {
-				return UriBuilder.fromUri(getRequestUri());
-			}
-
-			@Override
-			public URI getAbsolutePath() {
-				return getRequestUri();
-			}
-
-			@Override
-			public UriBuilder getAbsolutePathBuilder() {
-				return getRequestUriBuilder();
-			}
-
-			@Override
-			public URI getBaseUri() {
-				return URI.create("http://localhost:8080/o/" + applicationPath);
-			}
-
-			@Override
-			public UriBuilder getBaseUriBuilder() {
-				return UriBuilder.fromUri(getBaseUri());
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getPathParameters(
-				boolean decode) {
-
-				return getPathParameters();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters() {
-				return new MultivaluedHashMap<>();
-			}
-
-			@Override
-			public MultivaluedMap<String, String> getQueryParameters(
-				boolean decode) {
-
-				return getQueryParameters();
-			}
-
-			@Override
-			public List<String> getMatchedURIs() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public List<String> getMatchedURIs(boolean decode) {
-				return getMatchedURIs();
-			}
-
-			@Override
-			public List<Object> getMatchedResources() {
-				return Collections.emptyList();
-			}
-
-			@Override
-			public URI resolve(URI requestUri) {
-				return getBaseUri().resolve(requestUri);
-			}
-
-			@Override
-			public URI relativize(URI uri) {
-				return getBaseUri().relativize(uri);
-			}
-
-		};
-	}
-
-	protected com.liferay.portal.kernel.model.User
-		testVulcanCRUDItemDelegate_getUser() {
-
-		return _testCompanyAdminUser;
 	}
 
 	protected Site testGetSite_addSite() throws Exception {
@@ -535,27 +281,7 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testGetSiteByExternalReferenceCode() throws Exception {
-		Site postSite = testGetSiteByExternalReferenceCode_addSite();
-
-		Site getSite = siteResource.getSiteByExternalReferenceCode(
-			postSite.getExternalReferenceCode());
-
-		assertEquals(postSite, getSite);
-		assertValid(getSite);
-	}
-
-	protected Site testGetSiteByExternalReferenceCode_addSite()
-		throws Exception {
-
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testGetSiteByExternalReferenceCodeSiteInitializer()
-		throws Exception {
-
+	public void testGetSiteAsSiteInitializer() throws Exception {
 		Assert.assertTrue(false);
 	}
 
@@ -578,9 +304,9 @@ public abstract class BaseSiteResourceTestCase {
 		assertContains(site2, (List<Site>)page.getItems());
 		assertValid(page, testGetSitesPage_getExpectedActions());
 
-		siteResource.deleteSite(site1.getId());
+		siteResource.deleteSite(site1.getExternalReferenceCode());
 
-		siteResource.deleteSite(site2.getId());
+		siteResource.deleteSite(site2.getExternalReferenceCode());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -711,12 +437,13 @@ public abstract class BaseSiteResourceTestCase {
 
 		Site randomSite = randomSite();
 
-		Site putSite = siteResource.putSite(randomSite);
+		Site putSite = siteResource.putSite(
+			postSite.getExternalReferenceCode(), randomSite);
 
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
 
-		Site getSite = siteResource.getSite(putSite.getId());
+		Site getSite = siteResource.getSite(putSite.getExternalReferenceCode());
 
 		assertEquals(randomSite, getSite);
 		assertValid(getSite);
@@ -728,56 +455,38 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	@Test
-	public void testPutSiteByExternalReferenceCode() throws Exception {
-		Site postSite = testPutSiteByExternalReferenceCode_addSite();
+	public void testPutSiteSiteInitializer() throws Exception {
+		Site postSite = testPutSiteSiteInitializer_addSite();
 
 		Site randomSite = randomSite();
 
 		Map<String, File> multipartFiles = getMultipartFiles();
 
-		Site putSite = siteResource.putSiteByExternalReferenceCode(
+		Site putSite = siteResource.putSiteSiteInitializer(
 			postSite.getExternalReferenceCode(), randomSite, multipartFiles);
 
 		assertEquals(randomSite, putSite);
 		assertValid(putSite);
 
-		Site getSite = siteResource.getSiteByExternalReferenceCode(
+		Site getSite = testPutSiteSiteInitializer_getSite(
 			putSite.getExternalReferenceCode());
 
 		assertEquals(randomSite, getSite);
 		assertValid(getSite);
 
 		assertValid(getSite, multipartFiles);
-
-		Site newSite = testPutSiteByExternalReferenceCode_createSite();
-
-		putSite = siteResource.putSiteByExternalReferenceCode(
-			newSite.getExternalReferenceCode(), newSite, getMultipartFiles());
-
-		assertEquals(newSite, putSite);
-		assertValid(putSite);
-
-		getSite = siteResource.getSiteByExternalReferenceCode(
-			putSite.getExternalReferenceCode());
-
-		assertEquals(newSite, getSite);
-
-		Assert.assertEquals(
-			newSite.getExternalReferenceCode(),
-			putSite.getExternalReferenceCode());
 	}
 
-	protected Site testPutSiteByExternalReferenceCode_addSite()
-		throws Exception {
+	protected Site testPutSiteSiteInitializer_getSite(
+		String siteExternalReferenceCode) {
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
 
-	protected Site testPutSiteByExternalReferenceCode_createSite()
-		throws Exception {
-
-		return randomSite();
+	protected Site testPutSiteSiteInitializer_addSite() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test
@@ -785,34 +494,11 @@ public abstract class BaseSiteResourceTestCase {
 		Site site1 = testBatchEngineDeleteImportTask_addSite();
 
 		testBatchEngineDeleteImportTask_deleteSite(
-			200, site1.getExternalReferenceCode(), null);
+			200, site1.getExternalReferenceCode());
 
 		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-
-		site1 = testBatchEngineDeleteImportTask_addSite();
-
-		testBatchEngineDeleteImportTask_deleteSite(200, null, site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-
-		site1 = testBatchEngineDeleteImportTask_addSite();
-		Site site2 = testBatchEngineDeleteImportTask_addSite();
-
-		testBatchEngineDeleteImportTask_deleteSite(
-			200, site2.getExternalReferenceCode(), site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site1.getId()));
-		assertHttpResponseStatusCode(
-			200, siteResource.getSiteHttpResponse(site2.getId()));
-
-		testBatchEngineDeleteImportTask_deleteSite(
-			200, site2.getExternalReferenceCode(), site1.getId());
-
-		assertHttpResponseStatusCode(
-			404, siteResource.getSiteHttpResponse(site2.getId()));
+			404,
+			siteResource.getSiteHttpResponse(site1.getExternalReferenceCode()));
 	}
 
 	protected Site testBatchEngineDeleteImportTask_addSite() throws Exception {
@@ -820,7 +506,7 @@ public abstract class BaseSiteResourceTestCase {
 	}
 
 	protected void testBatchEngineDeleteImportTask_deleteSite(
-			int expectedStatusCode, String externalReferenceCode, Long id,
+			int expectedStatusCode, String externalReferenceCode,
 			String... parameters)
 		throws Exception {
 
@@ -840,10 +526,7 @@ public abstract class BaseSiteResourceTestCase {
 				null, null,
 				JSONUtil.putAll(
 					JSONUtil.put(
-						"externalReferenceCode", () -> externalReferenceCode
-					).put(
-						"id", () -> id
-					)));
+						"externalReferenceCode", () -> externalReferenceCode)));
 
 		Assert.assertEquals(expectedStatusCode, httpResponse.getStatusCode());
 
@@ -2127,27 +1810,5 @@ public abstract class BaseSiteResourceTestCase {
 	@Inject
 	private com.liferay.headless.admin.site.resource.v1_0.SiteResource
 		_siteResource;
-
-	@Inject
-	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private ResourceActionLocalService _resourceActionLocalService;
-
-	@Inject
-	private ResourcePermissionLocalService _resourcePermissionLocalService;
-
-	@Inject
-	private RoleLocalService _roleLocalService;
-
-	@Inject
-	private ScopeChecker _scopeChecker;
-
-	@Inject
-	private UserLocalService _userLocalService;
-
-	@Inject
-	private VulcanCRUDItemDelegateBuilderRegistry
-		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }

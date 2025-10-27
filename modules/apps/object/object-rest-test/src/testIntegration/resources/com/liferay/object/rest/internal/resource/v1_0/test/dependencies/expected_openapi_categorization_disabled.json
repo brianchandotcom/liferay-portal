@@ -2377,6 +2377,178 @@
 				]
 			}
 		},
+		"/{object9Id}/by-object-entry-folder-id/{object9FolderId}/copy": {
+			"post": {
+				"operationId": "postObject9ByObject9FolderCopy",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object9FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
+		"/{object9Id}/by-object-entry-folder-id/{object9FolderId}/copy-replace": {
+			"post": {
+				"operationId": "postObject9ByObject9FolderCopyReplace",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object9FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
+		"/{object9Id}/by-object-entry-folder-id/{object9FolderId}/move": {
+			"post": {
+				"operationId": "postObject9ByObject9FolderMove",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object9FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
+		"/{object9Id}/by-object-entry-folder-id/{object9FolderId}/move-replace": {
+			"post": {
+				"operationId": "postObject9ByObject9FolderMoveReplace",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object9Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object9FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object9"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object9"
+				]
+			}
+		},
 		"/{object9Id}/by-version/{version}": {
 			"delete": {
 				"operationId": "deleteObject9ByVersion",

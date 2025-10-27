@@ -2781,6 +2781,178 @@
 				]
 			}
 		},
+		"/{object1Id}/by-object-entry-folder-id/{object1FolderId}/copy": {
+			"post": {
+				"operationId": "postObject1ByObject1FolderCopy",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object1Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object1FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/{object1Id}/by-object-entry-folder-id/{object1FolderId}/copy-replace": {
+			"post": {
+				"operationId": "postObject1ByObject1FolderCopyReplace",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object1Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object1FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/{object1Id}/by-object-entry-folder-id/{object1FolderId}/move": {
+			"post": {
+				"operationId": "postObject1ByObject1FolderMove",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object1Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object1FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
+		"/{object1Id}/by-object-entry-folder-id/{object1FolderId}/move-replace": {
+			"post": {
+				"operationId": "postObject1ByObject1FolderMoveReplace",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "object1Id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "object1FolderId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"default": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							},
+							"application/xml": {
+								"schema": {
+									"$ref": "#/components/schemas/Object1"
+								}
+							}
+						},
+						"description": "default response"
+					}
+				},
+				"tags": [
+					"Object1"
+				]
+			}
+		},
 		"/{object1Id}/by-version/{version}": {
 			"delete": {
 				"operationId": "deleteObject1ByVersion",

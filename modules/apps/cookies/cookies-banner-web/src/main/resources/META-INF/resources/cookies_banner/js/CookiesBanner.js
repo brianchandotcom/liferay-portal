@@ -10,9 +10,11 @@ import {
 	acceptAllCookies,
 	declineAllCookies,
 	getCookie,
+	removeAllCookies,
 	setCookie,
 	setUserConfigCookie,
 	userConfigCookieName,
+	userConfigDateCookieName,
 } from '../../js/CookiesUtil';
 
 let openCookieConsentModal = () => {
@@ -26,6 +28,7 @@ export default function ({
 	configurationURL,
 	consentRenewalPeriod,
 	includeDeclineAllButton,
+	modifiedDate = 0,
 	namespace,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames,
@@ -44,6 +47,13 @@ export default function ({
 	const editMode = document.body.classList.contains('has-edit-mode-menu');
 
 	if (!editMode) {
+		if (isCookiesPreferenceHandlingConfigurationModified(modifiedDate)) {
+			removeAllCookies(
+				optionalConsentCookieTypeNames,
+				requiredConsentCookieTypeNames
+			);
+		}
+
 		const cookieManager = document.getElementById(
 			'_com_liferay_my_account_web_portlet_MyAccountPortlet_cookiesBannerConfigurationForm'
 		);
@@ -59,7 +69,7 @@ export default function ({
 			cookieBanner.style.display = 'none';
 		}
 		else {
-			setBannerVisibility(cookieBanner);
+			setBannerVisibility(cookieBanner, modifiedDate);
 		}
 
 		const cookiePreferences = {};
@@ -226,8 +236,28 @@ function isCookieTypesAccepted(cookieTypes) {
 	return cookieTypes.every((cookieType) => checkConsent(cookieType));
 }
 
-function setBannerVisibility(cookieBanner) {
-	if (getCookie(userConfigCookieName)) {
+function isCookiesPreferenceHandlingConfigurationModified(modifiedDate) {
+	if (modifiedDate === 0) {
+		return false;
+	}
+
+	const userConfigDateCookie = getCookie(userConfigDateCookieName);
+
+	if (
+		userConfigDateCookie === undefined ||
+		userConfigDateCookie < modifiedDate
+	) {
+		return true;
+	}
+
+	return false;
+}
+
+function setBannerVisibility(cookieBanner, modifiedDate) {
+	if (
+		!isCookiesPreferenceHandlingConfigurationModified(modifiedDate) &&
+		getCookie(userConfigCookieName)
+	) {
 		cookieBanner.style.display = 'none';
 	}
 	else {

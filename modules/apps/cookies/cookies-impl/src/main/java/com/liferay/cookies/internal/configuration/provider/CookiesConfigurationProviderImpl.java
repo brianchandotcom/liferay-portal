@@ -38,6 +38,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -318,6 +319,10 @@ public class CookiesConfigurationProviderImpl
 			"enabled", enabled
 		).put(
 			"explicitConsentMode", explicitConsentMode
+		).put(
+			"modifiedDate",
+			new Date(
+			).getTime()
 		).build();
 	}
 

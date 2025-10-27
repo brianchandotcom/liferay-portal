@@ -117,6 +117,16 @@ public class BaseCookiesBannerDisplayContext {
 		return _consentRenewalPeriod;
 	}
 
+	protected long getModifiedDate() {
+		if (_modifiedDate > 0) {
+			return _modifiedDate;
+		}
+
+		_modifiedDate = cookiesPreferenceHandlingConfiguration.modifiedDate();
+
+		return _modifiedDate;
+	}
+
 	protected CookiesBannerConfiguration cookiesBannerConfiguration;
 	protected CookiesConsentConfiguration cookiesConsentConfiguration;
 	protected CookiesPreferenceHandlingConfiguration
@@ -188,6 +198,7 @@ public class BaseCookiesBannerDisplayContext {
 
 	private int _consentRenewalPeriod;
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
+	private long _modifiedDate;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;
 

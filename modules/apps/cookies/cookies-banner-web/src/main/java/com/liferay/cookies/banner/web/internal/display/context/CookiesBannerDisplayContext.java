@@ -81,6 +81,8 @@ public class CookiesBannerDisplayContext
 		).put(
 			"includeDeclineAllButton", isIncludeDeclineAllButton()
 		).put(
+			"modifiedDate", getModifiedDate()
+		).put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
 		).put(

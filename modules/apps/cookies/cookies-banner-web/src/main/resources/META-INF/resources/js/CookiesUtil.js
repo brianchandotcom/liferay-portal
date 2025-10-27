@@ -7,10 +7,12 @@ import {
 	COOKIE_TYPES,
 	getCookie as getCookieUtil,
 	getOpener,
+	removeCookie as removeCookieUtil,
 	setCookie as setCookieUtil,
 } from 'frontend-js-web';
 
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
+export const userConfigDateCookieName = 'USER_CONSENT_CONFIGURED_DATE';
 
 export function acceptAllCookies(
 	consentRenewalPeriod,
@@ -44,6 +46,21 @@ export function getCookie(name) {
 	return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 }
 
+export function removeAllCookies(
+	optionalConsentCookieTypeNames,
+	requiredConsentCookieTypeNames
+) {
+	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
+		removeCookieUtil(optionalConsentCookieTypeName);
+	});
+
+	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
+		removeCookieUtil(requiredConsentCookieTypeName);
+	});
+
+	removeCookieUtil(userConfigDateCookieName);
+}
+
 export function setCookie(consentRenewalPeriod, name, value) {
 	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
 		'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
@@ -53,6 +70,11 @@ export function setCookie(consentRenewalPeriod, name, value) {
 
 export function setUserConfigCookie(consentRenewalPeriod) {
 	setCookie(consentRenewalPeriod, userConfigCookieName, 'true');
+	setCookie(
+		consentRenewalPeriod,
+		userConfigDateCookieName,
+		new Date().getTime()
+	);
 
 	getOpener()?.Liferay.fire('cookieBannerSetCookie');
 }

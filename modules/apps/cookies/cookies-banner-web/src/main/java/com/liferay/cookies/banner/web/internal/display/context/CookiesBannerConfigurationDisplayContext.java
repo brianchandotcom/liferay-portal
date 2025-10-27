@@ -45,6 +45,8 @@ public class CookiesBannerConfigurationDisplayContext
 		return HashMapBuilder.<String, Object>put(
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(
+			"modifiedDate", getModifiedDate()
+		).put(
 			"optionalConsentCookieTypeNames",
 			getConsentCookieTypeNamesJSONArray(getOptionalConsentCookieTypes())
 		).put(

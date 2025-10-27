@@ -28,6 +28,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -57,6 +58,12 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 		).put(
 			"explicitConsentMode",
 			ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
+		).put(
+			"modifiedDate",
+			ParamUtil.getLong(
+				httpServletRequest, "modifiedDate",
+				new Date(
+				).getTime())
 		).build();
 	}
 

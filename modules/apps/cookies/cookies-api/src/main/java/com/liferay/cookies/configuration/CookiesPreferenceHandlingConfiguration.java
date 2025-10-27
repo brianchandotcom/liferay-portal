@@ -42,4 +42,7 @@ public interface CookiesPreferenceHandlingConfiguration {
 	)
 	public boolean explicitConsentMode();
 
+	@Meta.AD(deflt = "0", name = "modified-date", required = false)
+	public long modifiedDate();
+
 }

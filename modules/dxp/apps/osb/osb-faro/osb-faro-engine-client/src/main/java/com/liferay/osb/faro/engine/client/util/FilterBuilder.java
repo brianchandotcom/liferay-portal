@@ -115,7 +115,8 @@ public class FilterBuilder implements Cloneable {
 	}
 
 	public void addSearchFilter(
-		String query, List<String> fieldNames, String fieldNameContext) {
+		String query, List<String> fieldNames, String fieldNameContext,
+		boolean required) {
 
 		if (Validator.isNull(query) || fieldNames.isEmpty()) {
 			return;
@@ -127,6 +128,12 @@ public class FilterBuilder implements Cloneable {
 
 		if ((keywords.length > 1) && fieldNames.containsAll(_nameFieldNames)) {
 			nameSearch = true;
+		}
+
+		List<String> filters = _filters;
+
+		if (required) {
+			filters = _requiredFilters;
 		}
 
 		if (nameSearch) {
@@ -145,7 +152,7 @@ public class FilterBuilder implements Cloneable {
 				fieldNameFilterBuilder.addFilter(keywordsFilterBuilder, true);
 			}
 
-			_filters.add(fieldNameFilterBuilder.build());
+			filters.add(fieldNameFilterBuilder.build());
 		}
 
 		for (String fieldName : fieldNames) {
@@ -155,9 +162,15 @@ public class FilterBuilder implements Cloneable {
 				fieldNameFilterBuilder.addSearchFilter(
 					query, fieldName, fieldNameContext);
 
-				_filters.add(fieldNameFilterBuilder.build());
+				filters.add(fieldNameFilterBuilder.build());
 			}
 		}
+	}
+
+	public void addSearchFilter(
+		String query, List<String> fieldNames, String fieldNameContext) {
+
+		addSearchFilter(query, fieldNames, fieldNameContext, false);
 	}
 
 	public void addSearchFilter(String query, String fieldName) {

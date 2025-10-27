@@ -5,8 +5,8 @@
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormPageElementDefinition;
@@ -60,9 +60,10 @@ public class PageElementDefinitionSerDes {
 		if (type != null) {
 			String typeString = type.toString();
 
-			if (typeString.equals("Collection")) {
-				return CollectionPageElementDefinitionSerDes.toJSON(
-					(CollectionPageElementDefinition)pageElementDefinition);
+			if (typeString.equals("CollectionDisplay")) {
+				return CollectionDisplayPageElementDefinitionSerDes.toJSON(
+					(CollectionDisplayPageElementDefinition)
+						pageElementDefinition);
 			}
 
 			if (typeString.equals("CollectionItem")) {
@@ -194,8 +195,8 @@ public class PageElementDefinitionSerDes {
 			if (type != null) {
 				String typeString = type.toString();
 
-				if (typeString.equals("Collection")) {
-					return CollectionPageElementDefinition.toDTO(json);
+				if (typeString.equals("CollectionDisplay")) {
+					return CollectionDisplayPageElementDefinition.toDTO(json);
 				}
 
 				if (typeString.equals("CollectionItem")) {

@@ -41,112 +41,78 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page element definition.",
-	value = "PageElementDefinition"
+	description = "The collection display's list style.",
+	value = "CollectionDisplayListStyle"
 )
 @JsonFilter("Liferay.Vulcan")
 @JsonSubTypes(
 	{
-		@JsonSubTypes.Type(
-			name = "CollectionDisplay",
-			value = CollectionDisplayPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "CollectionItem",
-			value = CollectionItemPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Container", value = ContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "DropZone", value = DropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Form", value = FormPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStep", value = FormStepPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStepContainer",
-			value = FormStepContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Fragment",
-			value = FragmentInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentComposition",
-			value = FragmentCompositionInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentDropZone",
-			value = FragmentDropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Grid", value = GridPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Module", value = ModulePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Widget", value = WidgetInstancePageElementDefinition.class
-		)
+		@JsonSubTypes.Type(name = "ListStyle", value = ListStyle.class),
+		@JsonSubTypes.Type(name = "Template", value = TemplateListStyle.class)
 	}
 )
 @JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
+	include = JsonTypeInfo.As.PROPERTY,
+	property = "collectionDisplayListStyleType", use = JsonTypeInfo.Id.NAME,
+	visible = true
 )
-@XmlRootElement(name = "PageElementDefinition")
-public abstract class PageElementDefinition implements Serializable {
+@XmlRootElement(name = "CollectionDisplayListStyle")
+public abstract class CollectionDisplayListStyle implements Serializable {
 
-	public static PageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageElementDefinition.class, json);
+	public static CollectionDisplayListStyle toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			CollectionDisplayListStyle.class, json);
 	}
 
-	public static PageElementDefinition unsafeToDTO(String json) {
+	public static CollectionDisplayListStyle unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			PageElementDefinition.class, json);
+			CollectionDisplayListStyle.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, module or widget)."
+		description = "The collection display's list style type (ListStyle, Template)."
 	)
-	@JsonGetter("type")
+	@JsonGetter("collectionDisplayListStyleType")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public CollectionDisplayListStyleType getCollectionDisplayListStyleType() {
+		if (_collectionDisplayListStyleTypeSupplier != null) {
+			collectionDisplayListStyleType =
+				_collectionDisplayListStyleTypeSupplier.get();
 
-			_typeSupplier = null;
+			_collectionDisplayListStyleTypeSupplier = null;
 		}
 
-		return type;
+		return collectionDisplayListStyleType;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public String getCollectionDisplayListStyleTypeAsString() {
+		CollectionDisplayListStyleType collectionDisplayListStyleType =
+			getCollectionDisplayListStyleType();
 
-		if (type == null) {
+		if (collectionDisplayListStyleType == null) {
 			return null;
 		}
 
-		return type.toString();
+		return collectionDisplayListStyleType.toString();
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+	public void setCollectionDisplayListStyleType(
+		CollectionDisplayListStyleType collectionDisplayListStyleType) {
 
-		_typeSupplier = null;
+		this.collectionDisplayListStyleType = collectionDisplayListStyleType;
+
+		_collectionDisplayListStyleTypeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+	public void setCollectionDisplayListStyleType(
+		UnsafeSupplier<CollectionDisplayListStyleType, Exception>
+			collectionDisplayListStyleTypeUnsafeSupplier) {
+
+		_collectionDisplayListStyleTypeSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return collectionDisplayListStyleTypeUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -158,13 +124,14 @@ public abstract class PageElementDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, module or widget)."
+		description = "The collection display's list style type (ListStyle, Template)."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	protected CollectionDisplayListStyleType collectionDisplayListStyleType;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<CollectionDisplayListStyleType>
+		_collectionDisplayListStyleTypeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -172,14 +139,15 @@ public abstract class PageElementDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageElementDefinition)) {
+		if (!(object instanceof CollectionDisplayListStyle)) {
 			return false;
 		}
 
-		PageElementDefinition pageElementDefinition =
-			(PageElementDefinition)object;
+		CollectionDisplayListStyle collectionDisplayListStyle =
+			(CollectionDisplayListStyle)object;
 
-		return Objects.equals(toString(), pageElementDefinition.toString());
+		return Objects.equals(
+			toString(), collectionDisplayListStyle.toString());
 	}
 
 	@Override
@@ -194,18 +162,19 @@ public abstract class PageElementDefinition implements Serializable {
 
 		sb.append("{");
 
-		Type type = getType();
+		CollectionDisplayListStyleType collectionDisplayListStyleType =
+			getCollectionDisplayListStyleType();
 
-		if (type != null) {
+		if (collectionDisplayListStyleType != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"type\": ");
+			sb.append("\"collectionDisplayListStyleType\": ");
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(collectionDisplayListStyleType);
 
 			sb.append("\"");
 		}
@@ -217,31 +186,29 @@ public abstract class PageElementDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayListStyle",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Type")
-	public static enum Type {
+	@GraphQLName("CollectionDisplayListStyleType")
+	public static enum CollectionDisplayListStyleType {
 
-		COLLECTION_DISPLAY("CollectionDisplay"),
-		COLLECTION_ITEM("CollectionItem"), CONTAINER("Container"),
-		DROP_ZONE("DropZone"), FORM("Form"), FORM_STEP("FormStep"),
-		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
-		FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
-		WIDGET("Widget");
+		LIST_STYLE("ListStyle"), TEMPLATE("Template");
 
 		@JsonCreator
-		public static Type create(String value) {
+		public static CollectionDisplayListStyleType create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
+			for (CollectionDisplayListStyleType collectionDisplayListStyleType :
+					values()) {
+
+				if (Objects.equals(
+						collectionDisplayListStyleType.getValue(), value)) {
+
+					return collectionDisplayListStyleType;
 				}
 			}
 
@@ -258,7 +225,7 @@ public abstract class PageElementDefinition implements Serializable {
 			return _value;
 		}
 
-		private Type(String value) {
+		private CollectionDisplayListStyleType(String value) {
 			_value = value;
 		}
 

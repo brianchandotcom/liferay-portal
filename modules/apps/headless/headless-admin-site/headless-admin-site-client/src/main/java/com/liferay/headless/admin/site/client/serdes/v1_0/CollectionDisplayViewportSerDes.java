@@ -1,11 +1,11 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -21,24 +21,28 @@ import java.util.TreeMap;
  * @generated
  */
 @Generated("")
-public class CollectionViewportSerDes {
+public class CollectionDisplayViewportSerDes {
 
-	public static CollectionViewport toDTO(String json) {
-		CollectionViewportJSONParser collectionViewportJSONParser =
-			new CollectionViewportJSONParser();
+	public static CollectionDisplayViewport toDTO(String json) {
+		CollectionDisplayViewportJSONParser
+			collectionDisplayViewportJSONParser =
+				new CollectionDisplayViewportJSONParser();
 
-		return collectionViewportJSONParser.parseToDTO(json);
+		return collectionDisplayViewportJSONParser.parseToDTO(json);
 	}
 
-	public static CollectionViewport[] toDTOs(String json) {
-		CollectionViewportJSONParser collectionViewportJSONParser =
-			new CollectionViewportJSONParser();
+	public static CollectionDisplayViewport[] toDTOs(String json) {
+		CollectionDisplayViewportJSONParser
+			collectionDisplayViewportJSONParser =
+				new CollectionDisplayViewportJSONParser();
 
-		return collectionViewportJSONParser.parseToDTOs(json);
+		return collectionDisplayViewportJSONParser.parseToDTOs(json);
 	}
 
-	public static String toJSON(CollectionViewport collectionViewport) {
-		if (collectionViewport == null) {
+	public static String toJSON(
+		CollectionDisplayViewport collectionDisplayViewport) {
+
+		if (collectionDisplayViewport == null) {
 			return "null";
 		}
 
@@ -46,19 +50,22 @@ public class CollectionViewportSerDes {
 
 		sb.append("{");
 
-		if (collectionViewport.getCollectionViewportDefinition() != null) {
+		if (collectionDisplayViewport.
+				getCollectionDisplayViewportDefinition() != null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"collectionViewportDefinition\": ");
+			sb.append("\"collectionDisplayViewportDefinition\": ");
 
 			sb.append(
 				String.valueOf(
-					collectionViewport.getCollectionViewportDefinition()));
+					collectionDisplayViewport.
+						getCollectionDisplayViewportDefinition()));
 		}
 
-		if (collectionViewport.getId() != null) {
+		if (collectionDisplayViewport.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
@@ -67,7 +74,7 @@ public class CollectionViewportSerDes {
 
 			sb.append("\"");
 
-			sb.append(_escape(collectionViewport.getId()));
+			sb.append(collectionDisplayViewport.getId());
 
 			sb.append("\"");
 		}
@@ -78,58 +85,63 @@ public class CollectionViewportSerDes {
 	}
 
 	public static Map<String, Object> toMap(String json) {
-		CollectionViewportJSONParser collectionViewportJSONParser =
-			new CollectionViewportJSONParser();
+		CollectionDisplayViewportJSONParser
+			collectionDisplayViewportJSONParser =
+				new CollectionDisplayViewportJSONParser();
 
-		return collectionViewportJSONParser.parseToMap(json);
+		return collectionDisplayViewportJSONParser.parseToMap(json);
 	}
 
 	public static Map<String, String> toMap(
-		CollectionViewport collectionViewport) {
+		CollectionDisplayViewport collectionDisplayViewport) {
 
-		if (collectionViewport == null) {
+		if (collectionDisplayViewport == null) {
 			return null;
 		}
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (collectionViewport.getCollectionViewportDefinition() == null) {
-			map.put("collectionViewportDefinition", null);
+		if (collectionDisplayViewport.
+				getCollectionDisplayViewportDefinition() == null) {
+
+			map.put("collectionDisplayViewportDefinition", null);
 		}
 		else {
 			map.put(
-				"collectionViewportDefinition",
+				"collectionDisplayViewportDefinition",
 				String.valueOf(
-					collectionViewport.getCollectionViewportDefinition()));
+					collectionDisplayViewport.
+						getCollectionDisplayViewportDefinition()));
 		}
 
-		if (collectionViewport.getId() == null) {
+		if (collectionDisplayViewport.getId() == null) {
 			map.put("id", null);
 		}
 		else {
-			map.put("id", String.valueOf(collectionViewport.getId()));
+			map.put("id", String.valueOf(collectionDisplayViewport.getId()));
 		}
 
 		return map;
 	}
 
-	public static class CollectionViewportJSONParser
-		extends BaseJSONParser<CollectionViewport> {
+	public static class CollectionDisplayViewportJSONParser
+		extends BaseJSONParser<CollectionDisplayViewport> {
 
 		@Override
-		protected CollectionViewport createDTO() {
-			return new CollectionViewport();
+		protected CollectionDisplayViewport createDTO() {
+			return new CollectionDisplayViewport();
 		}
 
 		@Override
-		protected CollectionViewport[] createDTOArray(int size) {
-			return new CollectionViewport[size];
+		protected CollectionDisplayViewport[] createDTOArray(int size) {
+			return new CollectionDisplayViewport[size];
 		}
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
 			if (Objects.equals(
-					jsonParserFieldName, "collectionViewportDefinition")) {
+					jsonParserFieldName,
+					"collectionDisplayViewportDefinition")) {
 
 				return false;
 			}
@@ -142,21 +154,25 @@ public class CollectionViewportSerDes {
 
 		@Override
 		protected void setField(
-			CollectionViewport collectionViewport, String jsonParserFieldName,
-			Object jsonParserFieldValue) {
+			CollectionDisplayViewport collectionDisplayViewport,
+			String jsonParserFieldName, Object jsonParserFieldValue) {
 
 			if (Objects.equals(
-					jsonParserFieldName, "collectionViewportDefinition")) {
+					jsonParserFieldName,
+					"collectionDisplayViewportDefinition")) {
 
 				if (jsonParserFieldValue != null) {
-					collectionViewport.setCollectionViewportDefinition(
-						CollectionViewportDefinitionSerDes.toDTO(
-							(String)jsonParserFieldValue));
+					collectionDisplayViewport.
+						setCollectionDisplayViewportDefinition(
+							CollectionDisplayViewportDefinitionSerDes.toDTO(
+								(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
-					collectionViewport.setId((String)jsonParserFieldValue);
+					collectionDisplayViewport.setId(
+						CollectionDisplayViewport.Id.create(
+							(String)jsonParserFieldValue));
 				}
 			}
 		}

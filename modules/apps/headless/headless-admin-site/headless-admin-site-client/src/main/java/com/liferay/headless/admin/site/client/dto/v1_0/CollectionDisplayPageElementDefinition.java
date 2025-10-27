@@ -6,7 +6,7 @@
 package com.liferay.headless.admin.site.client.dto.v1_0;
 
 import com.liferay.headless.admin.site.client.function.UnsafeSupplier;
-import com.liferay.headless.admin.site.client.serdes.v1_0.CollectionPageElementDefinitionSerDes;
+import com.liferay.headless.admin.site.client.serdes.v1_0.CollectionDisplayPageElementDefinitionSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -19,60 +19,84 @@ import java.util.Objects;
  * @generated
  */
 @Generated("")
-public class CollectionPageElementDefinition
+public class CollectionDisplayPageElementDefinition
 	extends PageElementDefinition implements Cloneable, Serializable {
 
-	public static CollectionPageElementDefinition toDTO(String json) {
-		return CollectionPageElementDefinitionSerDes.toDTO(json);
+	public static CollectionDisplayPageElementDefinition toDTO(String json) {
+		return CollectionDisplayPageElementDefinitionSerDes.toDTO(json);
 	}
 
-	public CollectionReference getCollectionReference() {
-		return collectionReference;
+	public CollectionDisplayListStyle getCollectionDisplayListStyle() {
+		return collectionDisplayListStyle;
 	}
 
-	public void setCollectionReference(
-		CollectionReference collectionReference) {
+	public void setCollectionDisplayListStyle(
+		CollectionDisplayListStyle collectionDisplayListStyle) {
 
-		this.collectionReference = collectionReference;
+		this.collectionDisplayListStyle = collectionDisplayListStyle;
 	}
 
-	public void setCollectionReference(
-		UnsafeSupplier<CollectionReference, Exception>
-			collectionReferenceUnsafeSupplier) {
+	public void setCollectionDisplayListStyle(
+		UnsafeSupplier<CollectionDisplayListStyle, Exception>
+			collectionDisplayListStyleUnsafeSupplier) {
 
 		try {
-			collectionReference = collectionReferenceUnsafeSupplier.get();
+			collectionDisplayListStyle =
+				collectionDisplayListStyleUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected CollectionReference collectionReference;
+	protected CollectionDisplayListStyle collectionDisplayListStyle;
 
-	public CollectionViewport[] getCollectionViewports() {
-		return collectionViewports;
+	public CollectionDisplayViewport[] getCollectionDisplayViewports() {
+		return collectionDisplayViewports;
 	}
 
-	public void setCollectionViewports(
-		CollectionViewport[] collectionViewports) {
+	public void setCollectionDisplayViewports(
+		CollectionDisplayViewport[] collectionDisplayViewports) {
 
-		this.collectionViewports = collectionViewports;
+		this.collectionDisplayViewports = collectionDisplayViewports;
 	}
 
-	public void setCollectionViewports(
-		UnsafeSupplier<CollectionViewport[], Exception>
-			collectionViewportsUnsafeSupplier) {
+	public void setCollectionDisplayViewports(
+		UnsafeSupplier<CollectionDisplayViewport[], Exception>
+			collectionDisplayViewportsUnsafeSupplier) {
 
 		try {
-			collectionViewports = collectionViewportsUnsafeSupplier.get();
+			collectionDisplayViewports =
+				collectionDisplayViewportsUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected CollectionViewport[] collectionViewports;
+	protected CollectionDisplayViewport[] collectionDisplayViewports;
+
+	public CollectionSettings getCollectionSettings() {
+		return collectionSettings;
+	}
+
+	public void setCollectionSettings(CollectionSettings collectionSettings) {
+		this.collectionSettings = collectionSettings;
+	}
+
+	public void setCollectionSettings(
+		UnsafeSupplier<CollectionSettings, Exception>
+			collectionSettingsUnsafeSupplier) {
+
+		try {
+			collectionSettings = collectionSettingsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected CollectionSettings collectionSettings;
 
 	public Boolean getDisplayAllItems() {
 		return displayAllItems;
@@ -140,111 +164,26 @@ public class CollectionPageElementDefinition
 
 	protected EmptyCollectionConfig emptyCollectionConfig;
 
-	public FragmentStyle getFragmentStyle() {
-		return fragmentStyle;
+	public Boolean getHidden() {
+		return hidden;
 	}
 
-	public void setFragmentStyle(FragmentStyle fragmentStyle) {
-		this.fragmentStyle = fragmentStyle;
+	public void setHidden(Boolean hidden) {
+		this.hidden = hidden;
 	}
 
-	public void setFragmentStyle(
-		UnsafeSupplier<FragmentStyle, Exception> fragmentStyleUnsafeSupplier) {
+	public void setHidden(
+		UnsafeSupplier<Boolean, Exception> hiddenUnsafeSupplier) {
 
 		try {
-			fragmentStyle = fragmentStyleUnsafeSupplier.get();
+			hidden = hiddenUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected FragmentStyle fragmentStyle;
-
-	public FragmentViewport[] getFragmentViewports() {
-		return fragmentViewports;
-	}
-
-	public void setFragmentViewports(FragmentViewport[] fragmentViewports) {
-		this.fragmentViewports = fragmentViewports;
-	}
-
-	public void setFragmentViewports(
-		UnsafeSupplier<FragmentViewport[], Exception>
-			fragmentViewportsUnsafeSupplier) {
-
-		try {
-			fragmentViewports = fragmentViewportsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected FragmentViewport[] fragmentViewports;
-
-	public BasicLayout getLayout() {
-		return layout;
-	}
-
-	public void setLayout(BasicLayout layout) {
-		this.layout = layout;
-	}
-
-	public void setLayout(
-		UnsafeSupplier<BasicLayout, Exception> layoutUnsafeSupplier) {
-
-		try {
-			layout = layoutUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected BasicLayout layout;
-
-	public String getListItemStyle() {
-		return listItemStyle;
-	}
-
-	public void setListItemStyle(String listItemStyle) {
-		this.listItemStyle = listItemStyle;
-	}
-
-	public void setListItemStyle(
-		UnsafeSupplier<String, Exception> listItemStyleUnsafeSupplier) {
-
-		try {
-			listItemStyle = listItemStyleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String listItemStyle;
-
-	public String getListStyle() {
-		return listStyle;
-	}
-
-	public void setListStyle(String listStyle) {
-		this.listStyle = listStyle;
-	}
-
-	public void setListStyle(
-		UnsafeSupplier<String, Exception> listStyleUnsafeSupplier) {
-
-		try {
-			listStyle = listStyleUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String listStyle;
+	protected Boolean hidden;
 
 	public String getName() {
 		return name;
@@ -264,27 +203,6 @@ public class CollectionPageElementDefinition
 	}
 
 	protected String name;
-
-	public Integer getNumberOfColumns() {
-		return numberOfColumns;
-	}
-
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
-	}
-
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
-
-		try {
-			numberOfColumns = numberOfColumnsUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected Integer numberOfColumns;
 
 	public Integer getNumberOfItems() {
 		return numberOfItems;
@@ -379,32 +297,11 @@ public class CollectionPageElementDefinition
 
 	protected PaginationType paginationType;
 
-	public String getTemplateKey() {
-		return templateKey;
-	}
-
-	public void setTemplateKey(String templateKey) {
-		this.templateKey = templateKey;
-	}
-
-	public void setTemplateKey(
-		UnsafeSupplier<String, Exception> templateKeyUnsafeSupplier) {
-
-		try {
-			templateKey = templateKeyUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String templateKey;
-
 	@Override
-	public CollectionPageElementDefinition clone()
+	public CollectionDisplayPageElementDefinition clone()
 		throws CloneNotSupportedException {
 
-		return (CollectionPageElementDefinition)super.clone();
+		return (CollectionDisplayPageElementDefinition)super.clone();
 	}
 
 	@Override
@@ -413,15 +310,16 @@ public class CollectionPageElementDefinition
 			return true;
 		}
 
-		if (!(object instanceof CollectionPageElementDefinition)) {
+		if (!(object instanceof CollectionDisplayPageElementDefinition)) {
 			return false;
 		}
 
-		CollectionPageElementDefinition collectionPageElementDefinition =
-			(CollectionPageElementDefinition)object;
+		CollectionDisplayPageElementDefinition
+			collectionDisplayPageElementDefinition =
+				(CollectionDisplayPageElementDefinition)object;
 
 		return Objects.equals(
-			toString(), collectionPageElementDefinition.toString());
+			toString(), collectionDisplayPageElementDefinition.toString());
 	}
 
 	@Override
@@ -432,12 +330,12 @@ public class CollectionPageElementDefinition
 	}
 
 	public String toString() {
-		return CollectionPageElementDefinitionSerDes.toJSON(this);
+		return CollectionDisplayPageElementDefinitionSerDes.toJSON(this);
 	}
 
 	public static enum PaginationType {
 
-		NONE("None"), NUMERIC("Numeric"), REGULAR("Regular"), SIMPLE("Simple");
+		NONE("None"), NUMERIC("Numeric"), SIMPLE("Simple");
 
 		public static PaginationType create(String value) {
 			for (PaginationType paginationType : values()) {

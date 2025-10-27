@@ -15,13 +15,20 @@ public class BatchEngineImportTaskExecutorException extends PortalException {
 	public BatchEngineImportTaskExecutorException(
 		Object item, Throwable throwable) {
 
-		super("Unable to convert item", throwable);
+		super(throwable);
 
 		_item = item;
 	}
 
 	public Object getItem() {
 		return _item;
+	}
+
+	@Override
+	public String getMessage() {
+		Throwable throwable = getCause();
+
+		return throwable.getMessage();
 	}
 
 	private final Object _item;

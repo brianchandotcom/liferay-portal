@@ -121,7 +121,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				getObjectDefinitionByExternalReferenceCode(
 					externalReferenceCode, companyId);
 
-		String[] resourceActions = TransformUtil.transformToArray(
+		String[] actionIds = TransformUtil.transformToArray(
 			_resourceActionLocalService.getResourceActions(
 				objectDefinition.getClassName()),
 			ResourceAction::getActionId, String.class);
@@ -144,9 +144,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 			new String[] {ActionKeys.VIEW}
 		).put(
-			RoleConstants.CMS_ADMINISTRATOR, resourceActions
+			RoleConstants.CMS_ADMINISTRATOR, actionIds
 		).put(
-			RoleConstants.OWNER, resourceActions
+			RoleConstants.OWNER, actionIds
 		).put(
 			RoleConstants.USER, new String[] {ActionKeys.VIEW}
 		);
@@ -169,7 +169,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		String[] objectEntryFolderResourceActions =
+		String[] actionIds =
 			TransformUtil.transformToArray(
 				_resourceActionLocalService.getResourceActions(
 					ObjectEntryFolder.class.getName()),
@@ -207,10 +207,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
 				).put(
 					RoleConstants.CMS_ADMINISTRATOR,
-					JSONUtil.putAll(objectEntryFolderResourceActions)
+					JSONUtil.putAll(actionIds)
 				).put(
 					RoleConstants.OWNER,
-					JSONUtil.putAll(objectEntryFolderResourceActions)
+					JSONUtil.putAll(actionIds)
 				).put(
 					RoleConstants.USER,
 					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}

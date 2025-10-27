@@ -2,7 +2,7 @@
 	"#child-nodes": [
 		{
 			"#tag-name": "name",
-			"#value": "workflow-definition-1"
+			"#value": "assignee-workflow-definition"
 		},
 		{
 			"#tag-name": "version",

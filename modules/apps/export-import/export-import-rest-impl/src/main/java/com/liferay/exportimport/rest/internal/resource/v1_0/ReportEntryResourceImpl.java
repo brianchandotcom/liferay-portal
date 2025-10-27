@@ -12,7 +12,6 @@ import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
 import com.liferay.exportimport.rest.dto.v1_0.Origin;
 import com.liferay.exportimport.rest.dto.v1_0.ReportEntry;
-import com.liferay.exportimport.rest.dto.v1_0.Scope;
 import com.liferay.exportimport.rest.dto.v1_0.Status;
 import com.liferay.exportimport.rest.dto.v1_0.Type;
 import com.liferay.exportimport.rest.internal.odata.entity.v1_0.ReportEntryEntityModel;
@@ -24,26 +23,22 @@ import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.NotFoundException;
@@ -52,7 +47,6 @@ import jakarta.ws.rs.core.MultivaluedMap;
 import java.io.Serializable;
 
 import java.util.Collections;
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -137,35 +131,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		return _toReportEntry(exportImportReportEntry);
 	}
 
-	private String _getGroupName(Group group, Locale locale) {
-		try {
-			String descriptiveName = group.getDescriptiveName(locale);
-
-			if (Validator.isNotNull(descriptiveName)) {
-				return descriptiveName;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return group.getName(locale);
-	}
-
-	private Scope.Type _getGroupType(Group group) {
-		if (group.isDepot()) {
-			return Scope.Type.ASSET_LIBRARY;
-		}
-		else if (group.isSite()) {
-			return Scope.Type.SITE;
-		}
-		else if (group.isCMS()) {
-			return Scope.Type.SPACE;
-		}
-
-		return null;
-	}
-
 	private String _getOriginLabel(int origin) {
 		if (origin == ExportImportReportEntryConstants.ORIGIN_BATCH) {
 			return _language.get(
@@ -177,30 +142,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		}
 
 		return null;
-	}
-
-	private Scope _getScope(long groupId) {
-		Group group = _groupLocalService.fetchGroup(groupId);
-
-		if ((group == null) || group.isCompany()) {
-			return null;
-		}
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setKey(
-					() -> NestedFieldsSupplier.supply(
-						"scope.key", nestedField -> group.getGroupKey()));
-				setLabel(
-					() -> NestedFieldsSupplier.supply(
-						"scope.label",
-						nestedField -> _getGroupName(
-							group,
-							contextAcceptLanguage.getPreferredLocale())));
-				setType(() -> _getGroupType(group));
-			}
-		};
 	}
 
 	private String _getStatusLabel(int status) {
@@ -284,7 +225,10 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 				setModelName(
 					() -> _toModelName(exportImportReportEntry.getModelName()));
 				setOrigin(() -> _toOrigin(exportImportReportEntry.getOrigin()));
-				setScope(() -> _getScope(exportImportReportEntry.getGroupId()));
+				setScope(
+					() -> ScopeUtil.toScope(
+						exportImportReportEntry.getGroupId(),
+						contextAcceptLanguage.getPreferredLocale()));
 				setStatus(() -> _toStatus(exportImportReportEntry.getStatus()));
 				setType(() -> _toType(exportImportReportEntry.getType()));
 			}
@@ -315,9 +259,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		ReportEntryResourceImpl.class);
-
 	private static final EntityModel _entityModel =
 		new ReportEntryEntityModel();
 
@@ -331,9 +272,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 	@Reference
 	private ExportImportReportEntryLocalService
 		_exportImportReportEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

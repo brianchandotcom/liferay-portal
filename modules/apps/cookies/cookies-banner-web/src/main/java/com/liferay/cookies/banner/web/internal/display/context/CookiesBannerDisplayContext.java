@@ -77,6 +77,8 @@ public class CookiesBannerDisplayContext
 		).put(
 			"configurationURL", getConfigurationURL()
 		).put(
+			"consentRenewalPeriod", getConsentRenewalPeriod()
+		).put(
 			"includeDeclineAllButton", isIncludeDeclineAllButton()
 		).put(
 			"optionalConsentCookieTypeNames",

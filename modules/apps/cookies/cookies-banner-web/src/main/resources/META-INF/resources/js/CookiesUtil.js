@@ -13,28 +13,30 @@ import {
 export const userConfigCookieName = 'USER_CONSENT_CONFIGURED';
 
 export function acceptAllCookies(
+	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
-		setCookie(optionalConsentCookieTypeName, 'true');
+		setCookie(consentRenewalPeriod, optionalConsentCookieTypeName, 'true');
 	});
 
 	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
-		setCookie(requiredConsentCookieTypeName, 'true');
+		setCookie(consentRenewalPeriod, requiredConsentCookieTypeName, 'true');
 	});
 }
 
 export function declineAllCookies(
+	consentRenewalPeriod,
 	optionalConsentCookieTypeNames,
 	requiredConsentCookieTypeNames
 ) {
 	optionalConsentCookieTypeNames.forEach((optionalConsentCookieTypeName) => {
-		setCookie(optionalConsentCookieTypeName, 'false');
+		setCookie(consentRenewalPeriod, optionalConsentCookieTypeName, 'false');
 	});
 
 	requiredConsentCookieTypeNames.forEach((requiredConsentCookieTypeName) => {
-		setCookie(requiredConsentCookieTypeName, 'true');
+		setCookie(consentRenewalPeriod, requiredConsentCookieTypeName, 'true');
 	});
 }
 
@@ -42,14 +44,15 @@ export function getCookie(name) {
 	return getCookieUtil(name, COOKIE_TYPES.NECESSARY);
 }
 
-export function setCookie(name, value) {
+export function setCookie(consentRenewalPeriod, name, value) {
 	setCookieUtil(name, value, COOKIE_TYPES.NECESSARY, {
-		path: themeDisplay.getPathContext() || '/',
+		'max-age': 60 * 60 * 24 * 365 * (consentRenewalPeriod / 12),
+		'path': themeDisplay.getPathContext() || '/',
 	});
 }
 
-export function setUserConfigCookie() {
-	setCookie(userConfigCookieName, 'true');
+export function setUserConfigCookie(consentRenewalPeriod) {
+	setCookie(consentRenewalPeriod, userConfigCookieName, 'true');
 
 	getOpener()?.Liferay.fire('cookieBannerSetCookie');
 }

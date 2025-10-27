@@ -6,6 +6,7 @@
 package com.liferay.cookies.banner.web.internal.display.context;
 
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.cookies.configuration.banner.CookiesBannerConfiguration;
 import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
@@ -43,6 +44,8 @@ public class BaseCookiesBannerDisplayContext {
 			httpServletRequest);
 		cookiesConsentConfiguration = _getCookiesConsentConfiguration(
 			httpServletRequest);
+		cookiesPreferenceHandlingConfiguration =
+			_getCookiesPreferenceHandlingConfiguration(httpServletRequest);
 	}
 
 	public List<ConsentCookieType> getOptionalConsentCookieTypes() {
@@ -103,8 +106,21 @@ public class BaseCookiesBannerDisplayContext {
 		return consentCookieTypeNamesJSONArray;
 	}
 
+	protected int getConsentRenewalPeriod() {
+		if (_consentRenewalPeriod > 0) {
+			return _consentRenewalPeriod;
+		}
+
+		_consentRenewalPeriod =
+			cookiesPreferenceHandlingConfiguration.consentRenewalPeriod();
+
+		return _consentRenewalPeriod;
+	}
+
 	protected CookiesBannerConfiguration cookiesBannerConfiguration;
 	protected CookiesConsentConfiguration cookiesConsentConfiguration;
+	protected CookiesPreferenceHandlingConfiguration
+		cookiesPreferenceHandlingConfiguration;
 	protected HttpServletRequest httpServletRequest;
 	protected LayoutUtilityPageEntryLayoutProvider
 		layoutUtilityPageEntryLayoutProvider;
@@ -146,9 +162,31 @@ public class BaseCookiesBannerDisplayContext {
 		return null;
 	}
 
+	private CookiesPreferenceHandlingConfiguration
+		_getCookiesPreferenceHandlingConfiguration(
+			HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			return _cookiesConfigurationProvider.
+				getCookiesPreferenceHandlingConfiguration(themeDisplay);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get cookies preference handling configuration",
+				exception);
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseCookiesBannerDisplayContext.class);
 
+	private int _consentRenewalPeriod;
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;
 	private List<ConsentCookieType> _requiredConsentCookieTypes;

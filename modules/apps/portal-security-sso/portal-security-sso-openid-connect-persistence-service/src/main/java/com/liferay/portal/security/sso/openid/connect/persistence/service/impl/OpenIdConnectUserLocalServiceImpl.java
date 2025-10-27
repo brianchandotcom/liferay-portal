@@ -7,6 +7,7 @@ package com.liferay.portal.security.sso.openid.connect.persistence.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.DuplicateOpenIdConnectUserException;
 import com.liferay.portal.security.sso.openid.connect.persistence.exception.OpenIdConnectUserIssuerException;
@@ -30,12 +31,12 @@ public class OpenIdConnectUserLocalServiceImpl
 
 	@Override
 	public OpenIdConnectUser addOpenIdConnectUser(
-			long companyId, long userId, String issuer, String subject)
+			User user, String issuer, String subject)
 		throws PortalException {
 
 		OpenIdConnectUser openIdConnectUser =
 			openIdConnectUserPersistence.fetchByC_I_S(
-				companyId, issuer, subject);
+				user.getCompanyId(), issuer, subject);
 
 		if (openIdConnectUser != null) {
 			throw new DuplicateOpenIdConnectUserException();
@@ -46,8 +47,8 @@ public class OpenIdConnectUserLocalServiceImpl
 		openIdConnectUser = openIdConnectUserPersistence.create(
 			openIdConnectUserId);
 
-		openIdConnectUser.setCompanyId(companyId);
-		openIdConnectUser.setUserId(userId);
+		openIdConnectUser.setCompanyId(user.getCompanyId());
+		openIdConnectUser.setUserId(user.getUserId());
 		openIdConnectUser.setCreateDate(new Date());
 
 		if (Validator.isNull(issuer)) {

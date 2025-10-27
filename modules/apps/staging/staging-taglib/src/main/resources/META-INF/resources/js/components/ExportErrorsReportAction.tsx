@@ -11,12 +11,12 @@ import {ExportErrorsReportModal} from './ExportErrorsReportModal';
 
 type ExportErrorsReportProps = {
 	backgroundTaskId: string;
-	filename?: string;
+	filename: string;
 };
 
 export function ExportErrorsReportAction({
 	backgroundTaskId,
-	filename = 'Extranet_backup_Errors_Report.csv',
+	filename,
 }: ExportErrorsReportProps) {
 	const {observer, onOpenChange, open} = useModal();
 

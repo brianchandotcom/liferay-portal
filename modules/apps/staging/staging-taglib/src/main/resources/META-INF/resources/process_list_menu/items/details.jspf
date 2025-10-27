@@ -26,6 +26,12 @@
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"backgroundTaskId", backgroundTask.getBackgroundTaskId()
+				).put(
+					"filename",
+					backgroundTask.getName(
+					).replace(
+						".lar", "_report_entries.zip"
+					)
 				).build()
 			%>'
 		/>

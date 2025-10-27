@@ -45,16 +45,6 @@ public class OrphanReferencesDataCleanupUtil {
 
 		DB db = DBManagerUtil.getDB();
 
-		DBType dbType = db.getDBType();
-
-		boolean aliasNeeded = false;
-
-		if ((dbType == DBType.MYSQL) || (dbType == DBType.SQLSERVER) ||
-			(dbType == DBType.MARIADB)) {
-
-			aliasNeeded = true;
-		}
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
@@ -68,8 +58,7 @@ public class OrphanReferencesDataCleanupUtil {
 					sourceColumnName));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
-					"delete ",
-					aliasNeeded ? (_SOURCE_TABLE_ALIAS + StringPool.SPACE) : "",
+					"delete ", (db.getDBType() == DBType.MYSQL) ? "s " : "",
 					"from ", sourceTableName, StringPool.SPACE,
 					_SOURCE_TABLE_ALIAS,
 					getWhereClause(

@@ -11,7 +11,6 @@ import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -21,6 +20,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -85,76 +84,27 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
+		_group = _groupLocalService.fetchGroup(TestPropsValues.getGroupId());
 
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+		serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 
-		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
-
-		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		_templateEntry = TemplateTestUtil.addAnyTemplateEntry(
-			_infoItemServiceRegistry, _serviceContext);
+			_infoItemServiceRegistry, serviceContext);
 	}
 
 	@Test
 	public void testUpdateTemplateEntry() throws Exception {
 		String script = "<#-- Modified script content -->";
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(script);
+		ActionRequestSetupTest setup = _setUpActionRequest(script);
 
-		mockLiferayPortletActionRequest.addParameter(
-			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
-
-		String name = RandomTestUtil.randomString();
-		String languageId = LocaleUtil.toLanguageId(
-			_portal.getSiteDefaultLocale(_group.getGroupId()));
-
-		mockLiferayPortletActionRequest.addParameter(
-			"name_" + languageId, name);
-
-		String description = RandomTestUtil.randomString();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"description_" + languageId, description);
-
-		mockLiferayPortletActionRequest.addParameter(
-			"templateEntryId",
-			String.valueOf(_templateEntry.getTemplateEntryId()));
-
-		ReflectionTestUtil.setFieldValue(
-			_mvcActionCommand, "_portal",
-			ProxyUtil.newProxyInstance(
-				UpdateTemplateEntryMVCActionCommandTest.class.getClassLoader(),
-				new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						LiferayPortletRequest liferayPortletRequest =
-							_portal.getLiferayPortletRequest(
-								mockLiferayPortletActionRequest);
-
-						return UploadTestUtil.createUploadPortletRequest(
-							_portal.getUploadServletRequest(
-								liferayPortletRequest.getHttpServletRequest()),
-							liferayPortletRequest,
-							_portal.getPortletNamespace(
-								liferayPortletRequest.getPortletName()));
-					}
-
-					return method.invoke(_portal, args);
-				}));
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_invokeActionRequest(setup, false);
 
 		TemplateEntry modifiedTemplateEntry =
 			_templateEntryLocalService.getTemplateEntry(
@@ -171,9 +121,9 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 			_templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
-		Assert.assertEquals(name, ddmTemplate.getName(languageId));
+		Assert.assertEquals(setup.name, ddmTemplate.getName(setup.languageId));
 		Assert.assertEquals(
-			description, ddmTemplate.getDescription(languageId));
+			setup.description, ddmTemplate.getDescription(setup.languageId));
 		Assert.assertEquals(script, ddmTemplate.getScript());
 	}
 
@@ -182,96 +132,13 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	public void testUpdateTemplateEntryWithNoPermissions() throws Exception {
 		String script = "<#-- Modified script content -->";
 
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(script);
+		ActionRequestSetupTest setup = _setUpActionRequest(script);
 
-		mockLiferayPortletActionRequest.addParameter(
-			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
-
-		String name = RandomTestUtil.randomString();
-		String languageId = LocaleUtil.toLanguageId(
-			_portal.getSiteDefaultLocale(_group.getGroupId()));
-
-		mockLiferayPortletActionRequest.addParameter(
-			"name_" + languageId, name);
-
-		String description = RandomTestUtil.randomString();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"description_" + languageId, description);
-
-		mockLiferayPortletActionRequest.addParameter(
-			"templateEntryId",
-			String.valueOf(_templateEntry.getTemplateEntryId()));
-
-		ReflectionTestUtil.setFieldValue(
-			_mvcActionCommand, "_portal",
-			ProxyUtil.newProxyInstance(
-				UpdateTemplateEntryMVCActionCommandTest.class.getClassLoader(),
-				new Class<?>[] {Portal.class},
-				(proxy, method, args) -> {
-					if (Objects.equals(
-							method.getName(), "getUploadPortletRequest")) {
-
-						LiferayPortletRequest liferayPortletRequest =
-							_portal.getLiferayPortletRequest(
-								mockLiferayPortletActionRequest);
-
-						return UploadTestUtil.createUploadPortletRequest(
-							_portal.getUploadServletRequest(
-								liferayPortletRequest.getHttpServletRequest()),
-							liferayPortletRequest,
-							_portal.getPortletNamespace(
-								liferayPortletRequest.getPortletName()));
-					}
-
-					return method.invoke(_portal, args);
-				}));
-
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "doTransactionalCommand",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-
-			TemplateEntry modifiedTemplateEntry =
-				_templateEntryLocalService.getTemplateEntry(
-					_templateEntry.getTemplateEntryId());
-
-			Assert.assertNotNull(modifiedTemplateEntry);
-
-			Date currentModifiedDate = modifiedTemplateEntry.getModifiedDate();
-
-			Assert.assertFalse(
-				currentModifiedDate.after(_templateEntry.getModifiedDate()));
-
-			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-				_templateEntry.getDDMTemplateId());
-
-			Assert.assertNotNull(ddmTemplate);
-			Assert.assertNotEquals(name, ddmTemplate.getName(languageId));
-			Assert.assertNotEquals(
-				description, ddmTemplate.getDescription(languageId));
-			Assert.assertNotEquals(script, ddmTemplate.getScript());
-		}
+		_invokeActionRequest(setup, true);
 	}
 
 	private MockMultipartHttpServletRequest
-			_createMockMultipartHttpServletRequest(String script)
-		throws Exception {
+		_createMockMultipartHttpServletRequest(String script) {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
@@ -325,7 +192,8 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	private ThemeDisplay _getThemeDisplay() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
-		themeDisplay.setCompany(_company);
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(_group.getCompanyId()));
 		themeDisplay.setPermissionChecker(
 			PermissionThreadLocal.getPermissionChecker());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
@@ -335,19 +203,99 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private Company _company;
+	private void _invokeActionRequest(
+			ActionRequestSetupTest setup, boolean noPermission)
+		throws Exception {
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			if (noPermission) {
+				User user = UserTestUtil.addUser();
+
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(user));
+			}
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				setup.mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
+
+	private ActionRequestSetupTest _setUpActionRequest(String script)
+		throws Exception {
+
+		ActionRequestSetupTest setup = new ActionRequestSetupTest();
+
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			_getMockLiferayPortletActionRequest(script);
+
+		setup.mockLiferayPortletActionRequest = mockLiferayPortletActionRequest;
+
+		mockLiferayPortletActionRequest.addParameter(
+			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
+
+		setup.name = RandomTestUtil.randomString();
+		setup.languageId = LocaleUtil.toLanguageId(
+			_portal.getSiteDefaultLocale(_group.getGroupId()));
+
+		mockLiferayPortletActionRequest.addParameter(
+			"name_" + setup.languageId, setup.name);
+
+		setup.description = RandomTestUtil.randomString();
+
+		mockLiferayPortletActionRequest.addParameter(
+			"description_" + setup.languageId, setup.description);
+
+		mockLiferayPortletActionRequest.addParameter(
+			"templateEntryId",
+			String.valueOf(_templateEntry.getTemplateEntryId()));
+
+		ReflectionTestUtil.setFieldValue(
+			_mvcActionCommand, "_portal",
+			ProxyUtil.newProxyInstance(
+				UpdateTemplateEntryMVCActionCommandTest.class.getClassLoader(),
+				new Class<?>[] {Portal.class},
+				(proxy, method, args) -> {
+					if (Objects.equals(
+							method.getName(), "getUploadPortletRequest")) {
+
+						LiferayPortletRequest liferayPortletRequest =
+							_portal.getLiferayPortletRequest(
+								mockLiferayPortletActionRequest);
+
+						return UploadTestUtil.createUploadPortletRequest(
+							_portal.getUploadServletRequest(
+								liferayPortletRequest.getHttpServletRequest()),
+							liferayPortletRequest,
+							_portal.getPortletNamespace(
+								liferayPortletRequest.getPortletName()));
+					}
+
+					return method.invoke(_portal, args);
+				}));
+
+		return setup;
+	}
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
-	@DeleteAfterTestRun
-	private DDMTemplate _ddmTemplate;
-
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
-	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
@@ -361,12 +309,19 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	@Inject
 	private Portal _portal;
 
-	private ServiceContext _serviceContext;
-
 	@DeleteAfterTestRun
 	private TemplateEntry _templateEntry;
 
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;
+
+	private static class ActionRequestSetupTest {
+
+		public String description;
+		public String languageId;
+		public MockLiferayPortletActionRequest mockLiferayPortletActionRequest;
+		public String name;
+
+	}
 
 }

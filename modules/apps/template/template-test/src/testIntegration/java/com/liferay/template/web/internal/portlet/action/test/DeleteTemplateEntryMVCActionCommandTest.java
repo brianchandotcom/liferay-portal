@@ -6,10 +6,8 @@
 package com.liferay.template.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -17,7 +15,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -27,7 +25,6 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -64,12 +61,11 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_group = GroupTestUtil.addGroup();
-
-		_company = _companyLocalService.getCompany(_group.getCompanyId());
+		Group group = _groupLocalService.fetchGroup(
+			TestPropsValues.getGroupId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), TestPropsValues.getUserId());
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		_serviceContext.setCompanyId(TestPropsValues.getCompanyId());
 
@@ -84,45 +80,30 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		TemplateEntry templateEntry = TemplateTestUtil.addAnyTemplateEntry(
+		TemplateEntry extraTemplateEntry = TemplateTestUtil.addAnyTemplateEntry(
 			_infoItemServiceRegistry, _serviceContext);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds",
 			new String[] {
 				String.valueOf(_templateEntry.getTemplateEntryId()),
-				String.valueOf(templateEntry.getTemplateEntryId())
+				String.valueOf(extraTemplateEntry.getTemplateEntryId())
 			});
 
 		_assertTemplateExists(_templateEntry);
-		_assertTemplateExists(templateEntry);
+		_assertTemplateExists(extraTemplateEntry);
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_invokeActionRequest(mockLiferayPortletActionRequest, false);
 
 		_assertTemplateNotExists(_templateEntry);
-		_assertTemplateNotExists(templateEntry);
+		_assertTemplateNotExists(extraTemplateEntry);
 	}
 
 	@Test
 	public void testDeleteTemplateEntry() throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"templateEntryId",
-			String.valueOf(_templateEntry.getTemplateEntryId()));
-
 		_assertTemplateExists(_templateEntry);
 
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "doTransactionalCommand",
-			new Class<?>[] {ActionRequest.class, ActionResponse.class},
-			mockLiferayPortletActionRequest,
-			new MockLiferayPortletActionResponse());
+		_invokeActionRequest(_getMockLiferayPortletActionRequest(), false);
 
 		_assertTemplateNotExists(_templateEntry);
 	}
@@ -130,36 +111,9 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	@TestInfo("LPD-69505")
 	public void testDeleteTemplateEntryWithNoPermissions() throws Exception {
-		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			new MockLiferayPortletActionRequest();
-
-		mockLiferayPortletActionRequest.addParameter(
-			"templateEntryId",
-			String.valueOf(_templateEntry.getTemplateEntryId()));
-
 		_assertTemplateExists(_templateEntry);
 
-		User user = UserTestUtil.addUser();
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				_permissionCheckerFactory.create(user));
-
-			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "doTransactionalCommand",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-
-			_assertTemplateExists(_templateEntry);
-		}
+		_invokeActionRequest(_getMockLiferayPortletActionRequest(), true);
 	}
 
 	private void _assertTemplateExists(TemplateEntry templateEntry) {
@@ -180,19 +134,50 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 				templateEntry.getTemplateEntryId()));
 	}
 
-	private Company _company;
+	private MockLiferayPortletActionRequest
+		_getMockLiferayPortletActionRequest() {
 
-	@Inject
-	private CompanyLocalService _companyLocalService;
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
+			new MockLiferayPortletActionRequest();
 
-	@DeleteAfterTestRun
-	private DDMTemplate _ddmTemplate;
+		mockLiferayPortletActionRequest.addParameter(
+			"templateEntryId",
+			String.valueOf(_templateEntry.getTemplateEntryId()));
+
+		return mockLiferayPortletActionRequest;
+	}
+
+	private void _invokeActionRequest(
+			ActionRequest actionRequest, boolean noPermissions)
+		throws Exception {
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			if (noPermissions) {
+				User user = UserTestUtil.addUser();
+
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(user));
+			}
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				actionRequest, new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+	}
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
-	@DeleteAfterTestRun
-	private Group _group;
+	@Inject
+	private GroupLocalService _groupLocalService;
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;

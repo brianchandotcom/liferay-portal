@@ -292,17 +292,17 @@ export const List: React.FC<IListProps> = ({
 			confirmation: isMultiple
 				? Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-the-selected-segments'
-					)
+				  )
 				: Liferay.Language.get(
 						'are-you-sure-you-want-to-delete-this-segment'
-					),
+				  ),
 			subtitle: isMultiple
 				? Liferay.Language.get(
 						'you-will-lose-all-data-related-to-these-segments.-you-will-not-be-able-to-undo-this-operation'
-					)
+				  )
 				: Liferay.Language.get(
 						'you-will-lose-all-data-related-to-this-segment.-you-will-not-be-able-to-undo-this-operation'
-					),
+				  ),
 			title: isMultiple
 				? Liferay.Language.get('delete-segments')
 				: sub(Liferay.Language.get('deleting-x'), [name])
@@ -548,10 +548,9 @@ export const List: React.FC<IListProps> = ({
 											BATCH: Liferay.Language.get(
 												'batch'
 											),
-											REAL_TIME:
-												Liferay.Language.get(
-													'real-time'
-												)
+											REAL_TIME: Liferay.Language.get(
+												'real-time'
+											)
 										};
 
 										return (

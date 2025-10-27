@@ -164,11 +164,6 @@
 			flex-direction: column !important;
 		}
 
-		.learn-article-nav-breadcrumb-container {
-			margin-bottom: 2.5rem;
-			padding: 0;
-		}
-
 		.learn-article-nav-container {
 			max-width: 100% !important;
 		}

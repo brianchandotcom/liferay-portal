@@ -68,7 +68,7 @@ const mockPropsWithCustomLanguages = {
 };
 
 const closeToast = async () => {
-	await userEvent.click(screen.getByRole('button', {name: 'Close'}));
+	await userEvent.click(screen.getByRole('button', {name: 'close'}));
 };
 
 const renderComponent = (props: any = mockProps) => {

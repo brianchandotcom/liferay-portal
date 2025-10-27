@@ -2164,7 +2164,7 @@ public class ContactsEngineClientImpl
 			filterBuilder.addFilter(segmentTypeFilterBuilder.build());
 		}
 
-		filterBuilder.addSearchFilter(query, fields, null);
+		filterBuilder.addSearchFilter(query, fields, null, true);
 
 		uriVariables.put("filter", filterBuilder.build());
 

@@ -100,17 +100,26 @@ public class BatchTestEntityResourceImpl
 				filterApplicableExternalReferenceCode() {
 
 				return externalReferenceCode -> {
-					if (externalReferenceCode.endsWith("_FROM_DIFFERENT_DTO")) {
+					BatchTestEntity batchTestEntity = _fetchBatchTestEntity(
+						externalReferenceCode);
+
+					if (batchTestEntity == null) {
 						return null;
 					}
 
-					return externalReferenceCode;
+					return batchTestEntity.getExternalReferenceCode();
 				};
 			}
 
 			@Override
 			public String getDeletionSystemEventClassName() {
-				return BatchTestEntity.class.getName();
+				return "com_liferay_portal_tools_rest_builder_test_portlet_" +
+					"BatchTestEntityPortlet";
+			}
+
+			@Override
+			public String getLabel() {
+				return "Batch Test Entity";
 			}
 
 			@Override

@@ -45,7 +45,7 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro unsetDefaultLayoutUtilityPage(groupName = null, site = null, portalInstanceName = null, portalURL = null, layoutUtilityPageName = null) {
+	macro unsetDefaultLayoutUtilityPage(groupName = null, site = null, portalInstanceName = null, portalURL = null, layoutUtilityPageName = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageName});
 
 		if (!(isSet(groupId))) {
@@ -59,11 +59,13 @@ definition {
 		var layoutUtilityPageEntryId = JSONLayoututilitypageAPI._getLayoutUtilityPageEntryId(
 			groupId = ${groupId},
 			layoutUtilityPageName = ${layoutUtilityPageName},
-			portalURL = ${portalURL});
+			portalURL = ${portalURL},
+			specificURL = ${specificURL});
 
 		JSONLayoututilitypageAPI._unsetDefaultLayoutUtilityPage(
 			layoutUtilityPageEntryId = ${layoutUtilityPageEntryId},
-			portalURL = ${portalURL});
+			portalURL = ${portalURL},
+			specificURL = ${specificURL});
 	}
 
 }

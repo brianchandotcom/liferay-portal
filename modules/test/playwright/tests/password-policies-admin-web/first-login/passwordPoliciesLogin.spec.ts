@@ -36,7 +36,7 @@ test('LPD-39929 Do not ask user to change password when the user set the passwor
 }) => {
 	await page.goto(liferayConfig.environment.baseUrl);
 
-	await page.getByRole('button', {name: 'Sign In'}).click();
+	await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 	await page.getByText('Create Account').click();
 
@@ -64,7 +64,7 @@ test('LPD-39929 Do not ask user to change password when the user set the passwor
 
 	await page.getByLabel('Password').fill(password);
 
-	await page.getByRole('button', {name: 'Sign In'}).click();
+	await page.getByRole('button', {name: 'Sign In'}).last().click();
 
 	await expect(page.getByText('Welcome to Liferay')).toBeVisible();
 });

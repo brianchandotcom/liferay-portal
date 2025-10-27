@@ -388,6 +388,19 @@ definition {
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
+
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				portalInstanceName = "www.able.com",
+				site = "true",
+				specificURL = "http://www.able.com:8080");
+
+			JSONLayoututilitypage.unsetDefaultLayoutUtilityPage(
+				groupId = ${groupId},
+				groupName = "Guest",
+				layoutUtilityPageName = "Sign In",
+				portalURL = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080");
 		}
 
 		task ("Add OAuth Clients") {
@@ -665,6 +678,19 @@ definition {
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
+
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				portalInstanceName = "www.able.com",
+				site = "true",
+				specificURL = "http://www.able.com:8080");
+
+			JSONLayoututilitypage.unsetDefaultLayoutUtilityPage(
+				groupId = ${groupId},
+				groupName = "Guest",
+				layoutUtilityPageName = "Sign In",
+				portalURL = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080");
 		}
 
 		task ("Login at able.com and enable OpenId connect CP") {
@@ -1074,6 +1100,19 @@ definition {
 				domain = "www.able.com",
 				portalInstanceId = "www.able.com",
 				virtualHost = "www.able.com");
+
+			var groupId = JSONGroupAPI._getGroupIdByName(
+				groupName = "Guest",
+				portalInstanceName = "www.able.com",
+				site = "true",
+				specificURL = "http://www.able.com:8080");
+
+			JSONLayoututilitypage.unsetDefaultLayoutUtilityPage(
+				groupId = ${groupId},
+				groupName = "Guest",
+				layoutUtilityPageName = "Sign In",
+				portalURL = "http://www.able.com:8080",
+				specificURL = "http://www.able.com:8080");
 		}
 
 		task ("When: User adds OIDC connection on able.com") {

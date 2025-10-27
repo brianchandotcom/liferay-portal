@@ -5,11 +5,14 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.notification;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
 import com.liferay.portal.workflow.kaleo.definition.RecipientType;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilder;
+import com.liferay.portal.workflow.kaleo.runtime.notification.recipient.NotificationRecipientBuilderRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -33,13 +37,24 @@ public class BaseNotificationSenderTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		Mockito.when(
+			_notificationRecipientBuilderRegistry.
+				getNotificationRecipientBuilder(RecipientType.SCRIPT)
+		).thenReturn(
+			Mockito.mock(NotificationRecipientBuilder.class)
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_baseNotificationSender, "notificationRecipientBuilderRegistry",
+			_notificationRecipientBuilderRegistry);
+	}
+
 	@Test
 	public void testGetNotificationRecipientsMap() throws Exception {
 		ExecutionContext executionContext = Mockito.mock(
 			ExecutionContext.class);
-
-		BaseNotificationSender baseNotificationSender = Mockito.spy(
-			BaseNotificationSender.class);
 
 		List<KaleoNotificationRecipient> kaleoNotificationRecipients =
 			new ArrayList<>();
@@ -63,10 +78,19 @@ public class BaseNotificationSenderTest {
 
 		Map<NotificationReceptionType, Set<NotificationRecipient>>
 			notificationRecipientsMap =
-				baseNotificationSender.getNotificationRecipientsMap(
+				_baseNotificationSender.getNotificationRecipientsMap(
 					kaleoNotificationRecipients, executionContext);
 
-		Assert.assertTrue(notificationRecipientsMap.isEmpty());
+		Set<NotificationRecipient> notificationRecipients =
+			notificationRecipientsMap.get(NotificationReceptionType.TO);
+
+		Assert.assertTrue(notificationRecipients.isEmpty());
 	}
+
+	private final BaseNotificationSender _baseNotificationSender = Mockito.spy(
+		BaseNotificationSender.class);
+	private final NotificationRecipientBuilderRegistry
+		_notificationRecipientBuilderRegistry = Mockito.mock(
+			NotificationRecipientBuilderRegistry.class);
 
 }

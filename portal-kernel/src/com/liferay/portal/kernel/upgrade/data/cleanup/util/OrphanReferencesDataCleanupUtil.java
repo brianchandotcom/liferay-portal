@@ -102,10 +102,6 @@ public class OrphanReferencesDataCleanupUtil {
 		return _normalizedExcludedTableNames;
 	}
 
-	public static String getSourceTableAlias() {
-		return _SOURCE_TABLE_ALIAS;
-	}
-
 	public static String getWhereClause(
 			Connection connection, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,

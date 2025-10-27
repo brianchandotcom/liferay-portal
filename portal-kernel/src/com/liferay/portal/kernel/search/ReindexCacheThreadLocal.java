@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class ReindexCacheThreadLocal {
 
 	public static <T> T getGlobalReindexCache(
-		String ownerName, Supplier<Integer> globalCountSupplier,
+		Supplier<Integer> globalCountSupplier, String ownerName,
 		IntFunction<T> reindexCacheFunction) {
 
 		Map<String, Object> reindexCacheMap = _reindexCacheMap.get();

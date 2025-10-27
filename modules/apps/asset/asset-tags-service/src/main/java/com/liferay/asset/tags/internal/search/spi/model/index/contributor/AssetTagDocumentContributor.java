@@ -136,13 +136,13 @@ public class AssetTagDocumentContributor
 
 		Map<Long, Map<Long, List<Object[]>>> assetTagObjectsListsMap =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-				AssetTagDocumentContributor.class.getName(),
 				() -> _assetTagLocalService.dslQueryCount(
 					DSLQueryFactoryUtil.count(
 					).from(
 						AssetTagTable.INSTANCE
 					),
 					false),
+				AssetTagDocumentContributor.class.getName(),
 				count -> {
 					Map<Long, Map<Long, List<Object[]>>>
 						localAssetTagObjectsListsMap = new HashMap<>();

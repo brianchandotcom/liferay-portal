@@ -326,13 +326,13 @@ public class AssetCategoryDocumentContributor
 
 		Map<Long, Map<Long, Set<Serializable>>> assetCategoryIdsMaps =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-				AssetCategoryDocumentContributor.class.getName(),
 				() -> _assetCategoryLocalService.dslQueryCount(
 					DSLQueryFactoryUtil.count(
 					).from(
 						AssetCategoryTable.INSTANCE
 					),
 					false),
+				AssetCategoryDocumentContributor.class.getName(),
 				count -> {
 					Map<Long, Map<Long, Set<Serializable>>>
 						localAssetCategoryIdsMap = new HashMap<>();

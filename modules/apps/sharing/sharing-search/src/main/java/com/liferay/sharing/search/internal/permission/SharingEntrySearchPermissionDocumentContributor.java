@@ -94,13 +94,13 @@ public class SharingEntrySearchPermissionDocumentContributor
 
 		Map<Long, Map<Long, List<Object[]>>> sharingEntryObjectsListsMap =
 			ReindexCacheThreadLocal.getGlobalReindexCache(
-				SharingEntrySearchPermissionDocumentContributor.class.getName(),
 				() -> _sharingEntryLocalService.dslQueryCount(
 					DSLQueryFactoryUtil.count(
 					).from(
 						SharingEntryTable.INSTANCE
 					),
 					false),
+				SharingEntrySearchPermissionDocumentContributor.class.getName(),
 				count -> {
 					Map<Long, Map<Long, List<Object[]>>>
 						localSharingEntryObjectsListsMap = new HashMap<>();

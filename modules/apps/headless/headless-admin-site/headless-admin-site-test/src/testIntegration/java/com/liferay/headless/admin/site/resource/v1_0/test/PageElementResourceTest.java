@@ -646,15 +646,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private void _addFragmentEntryLink(
-			String externalReferenceCode, Layout layout,
-			String widgetInstanceId)
+			String externalReferenceCode, Layout layout, String namespace)
 		throws Exception {
 
 		FragmentEntryLinkLocalServiceUtil.addFragmentEntryLink(
 			externalReferenceCode, TestPropsValues.getUserId(),
 			testGroup.getGroupId(), null, null, null, 0, layout.getPlid(),
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, widgetInstanceId, 0, null,
+			StringPool.BLANK, StringPool.BLANK, namespace, 0, null,
 			FragmentConstants.TYPE_PORTLET, new ServiceContext());
 	}
 

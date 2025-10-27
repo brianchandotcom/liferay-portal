@@ -275,10 +275,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getCollectionReference(
 					"com.liferay.asset.internal.info.collection.provider." +
 						"RecentContentInfoCollectionProvider",
-					HashMapBuilder.put(
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					).build(),
 					null),
 				true, true,
 				HashMapBuilder.put(
@@ -309,7 +305,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						RandomTestUtil.randomString()),
 					_getCollectionDisplayViewports(),
 					_getCollectionReference(
-						null, null, assetListEntry.getExternalReferenceCode()),
+						null, assetListEntry.getExternalReferenceCode()),
 					true, true, null, true, RandomTestUtil.randomString(),
 					RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 					RandomTestUtil.randomInt(),
@@ -475,10 +471,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getCollectionReference(
 					"com.liferay.asset.internal.info.collection.provider." +
 						"RecentContentInfoCollectionProvider",
-					HashMapBuilder.put(
-						RandomTestUtil.randomString(),
-						RandomTestUtil.randomString()
-					).build(),
 					null),
 				true, true,
 				HashMapBuilder.put(
@@ -508,7 +500,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					RandomTestUtil.randomString()),
 				_getCollectionDisplayViewports(),
 				_getCollectionReference(
-					null, null, assetListEntry.getExternalReferenceCode()),
+					null, assetListEntry.getExternalReferenceCode()),
 				true, true, null, true, RandomTestUtil.randomString(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(),
@@ -1081,8 +1073,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private CollectionReference _getCollectionReference(
-		String className, Map<String, String> collectionConfiguration,
-		String externalReferenceCode) {
+		String className, String externalReferenceCode) {
 
 		if (Validator.isNotNull(className)) {
 			ClassNameReference classNameReference = new ClassNameReference();
@@ -1097,8 +1088,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		CollectionItemExternalReference collectionItemExternalReference =
 			new CollectionItemExternalReference();
 
-		collectionItemExternalReference.setCollectionConfiguration(
-			collectionConfiguration);
 		collectionItemExternalReference.setCollectionType(
 			CollectionReference.CollectionType.COLLECTION);
 		collectionItemExternalReference.setExternalReferenceCode(

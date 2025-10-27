@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.LinkFDSTableSchemaField;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
@@ -19,7 +20,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Noor Najjar
  */
-@Component(property = "frontend.data.set.name=test", service = FDSView.class)
+@Component(
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.VOCABULARIES,
+	service = FDSView.class
+)
 public class VocabulariesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override

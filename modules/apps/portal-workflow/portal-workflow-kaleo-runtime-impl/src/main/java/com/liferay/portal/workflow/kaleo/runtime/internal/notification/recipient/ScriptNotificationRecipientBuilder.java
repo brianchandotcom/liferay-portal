@@ -75,6 +75,10 @@ public class ScriptNotificationRecipientBuilder
 			List<Role> roles = (List<Role>)results.get(
 				ScriptingNotificationRecipientConstants.ROLES_RECIPIENT);
 
+			if (roles == null) {
+				return;
+			}
+
 			for (Role role : roles) {
 				addRoleRecipientAddresses(
 					notificationRecipients, role, notificationReceptionType,

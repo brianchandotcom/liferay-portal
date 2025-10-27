@@ -11,10 +11,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.test.util.lar.BaseExportImportTestCase;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.provider.LayoutStructureProvider;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
@@ -78,9 +74,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Test
 	public void testBackgroundImageMappedValuesImport() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
 		Layout exportedLayout = LayoutTestUtil.addTypeContentLayout(group);
 
 		// Delete and readd to ensure a different layout ID (not ID or UUID).
@@ -91,75 +84,48 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 		exportedLayout = LayoutTestUtil.addTypeContentLayout(group);
 
-		LayoutPageTemplateStructure exportedLayoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					group.getGroupId(), exportedLayout.getPlid());
-
-		LayoutPageTemplateStructureRel exportedLayoutPageTemplateStructureRel =
-			_layoutPageTemplateStructureRelLocalService.
-				fetchLayoutPageTemplateStructureRel(
-					exportedLayoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId(),
-					SegmentsExperienceLocalServiceUtil.
-						fetchDefaultSegmentsExperienceId(
-							exportedLayout.getPlid()));
-
-		LayoutStructure exportedLayoutStructure = LayoutStructure.of(
-			exportedLayoutPageTemplateStructureRel.getData());
-
-		ContainerStyledLayoutStructureItem
-			exportedContainerStyledLayoutStructureItem =
-				(ContainerStyledLayoutStructureItem)
-					exportedLayoutStructure.
-						addContainerStyledLayoutStructureItem(
-							exportedLayoutStructure.getMainItemId(), 0);
-
 		FileEntry exportedFileEntry = DLAppLocalServiceUtil.addFileEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + ".png", ContentTypes.IMAGE_PNG,
-			_read("dependencies/sample.png"), null, null, null, serviceContext);
+			_read("dependencies/sample.png"), null, null, null,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
-		JSONObject exportedItemConfigJSONObject = JSONUtil.put(
-			"styles",
+		ContentLayoutTestUtil.addItemToLayout(
 			JSONUtil.put(
-				"backgroundImage",
+				"styles",
 				JSONUtil.put(
-					"className", FileEntry.class.getName()
-				).put(
-					"classNameId", _portal.getClassNameId(FileEntry.class)
-				).put(
-					"classPK", exportedFileEntry.getFileEntryId()
-				).put(
-					"classTypeId",
-					String.valueOf(
-						DLFileEntryTypeConstants.
-							FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
-				).put(
-					"itemSubtype",
-					_language.get(
-						LocaleUtil.ENGLISH,
-						DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT)
-				).put(
-					"itemType", "Document"
-				).put(
-					"title", exportedFileEntry.getTitle()
-				).put(
-					"type",
-					"com.liferay.item.selector.criteria." +
-						"InfoItemItemSelectorReturnType"
-				)));
-
-		exportedContainerStyledLayoutStructureItem.updateItemConfig(
-			exportedItemConfigJSONObject);
-
-		exportedLayoutPageTemplateStructureRel.setData(
-			exportedLayoutStructure.toString());
-
-		_layoutPageTemplateStructureRelLocalService.
-			updateLayoutPageTemplateStructureRel(
-				exportedLayoutPageTemplateStructureRel);
+					"backgroundImage",
+					JSONUtil.put(
+						"className", FileEntry.class.getName()
+					).put(
+						"classNameId", _portal.getClassNameId(FileEntry.class)
+					).put(
+						"classPK", exportedFileEntry.getFileEntryId()
+					).put(
+						"classTypeId",
+						String.valueOf(
+							DLFileEntryTypeConstants.
+								FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT)
+					).put(
+						"itemSubtype",
+						_language.get(
+							LocaleUtil.ENGLISH,
+							DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT)
+					).put(
+						"itemType", "Document"
+					).put(
+						"title", exportedFileEntry.getTitle()
+					).put(
+						"type",
+						"com.liferay.item.selector.criteria." +
+							"InfoItemItemSelectorReturnType"
+					))
+			).toString(),
+			LayoutDataItemTypeConstants.TYPE_CONTAINER, exportedLayout,
+			_layoutStructureProvider,
+			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+				exportedLayout.getPlid()));
 
 		exportImportLayouts(
 			new long[] {exportedLayout.getLayoutId()}, getImportParameterMap());
@@ -167,14 +133,11 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		Layout importedLayout = _layoutLocalService.getLayoutByUuidAndGroupId(
 			exportedLayout.getUuid(), importedGroup.getGroupId(), false);
 
-		LayoutPageTemplateStructure importedLayoutPageTemplateStructure =
-			_layoutPageTemplateStructureLocalService.
-				fetchLayoutPageTemplateStructure(
-					importedGroup.getGroupId(), importedLayout.getPlid());
-
-		LayoutStructure importedLayoutStructure = LayoutStructure.of(
-			importedLayoutPageTemplateStructure.
-				getDefaultSegmentsExperienceData());
+		LayoutStructure importedLayoutStructure =
+			_layoutStructureProvider.getLayoutStructure(
+				importedLayout.getPlid(),
+				SegmentsExperienceLocalServiceUtil.
+					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
 
 		LayoutStructureItem mainLayoutStructureItem =
 			importedLayoutStructure.getMainLayoutStructureItem();
@@ -356,14 +319,6 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
-
-	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private LayoutPageTemplateStructureRelLocalService
-		_layoutPageTemplateStructureRelLocalService;
 
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;

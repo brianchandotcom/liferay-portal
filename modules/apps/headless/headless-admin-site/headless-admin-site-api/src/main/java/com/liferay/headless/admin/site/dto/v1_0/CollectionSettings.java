@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -18,6 +18,8 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
+import jakarta.validation.Valid;
+
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -33,50 +35,47 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "The definition of the collection viewport.",
-	value = "CollectionViewportDefinition"
-)
+@GraphQLName("CollectionSettings")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "CollectionViewportDefinition")
-public class CollectionViewportDefinition implements Serializable {
+@XmlRootElement(name = "CollectionSettings")
+public class CollectionSettings implements Serializable {
 
-	public static CollectionViewportDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(
-			CollectionViewportDefinition.class, json);
+	public static CollectionSettings toDTO(String json) {
+		return ObjectMapperUtil.readValue(CollectionSettings.class, json);
 	}
 
-	public static CollectionViewportDefinition unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(
-			CollectionViewportDefinition.class, json);
+	public static CollectionSettings unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(CollectionSettings.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The number of columns of the collection viewport."
+		description = "The configuration keys and values of the collection."
 	)
-	public Integer getNumberOfColumns() {
-		if (_numberOfColumnsSupplier != null) {
-			numberOfColumns = _numberOfColumnsSupplier.get();
+	@Valid
+	public Map<String, Object> getCollectionConfig() {
+		if (_collectionConfigSupplier != null) {
+			collectionConfig = _collectionConfigSupplier.get();
 
-			_numberOfColumnsSupplier = null;
+			_collectionConfigSupplier = null;
 		}
 
-		return numberOfColumns;
+		return collectionConfig;
 	}
 
-	public void setNumberOfColumns(Integer numberOfColumns) {
-		this.numberOfColumns = numberOfColumns;
+	public void setCollectionConfig(Map<String, Object> collectionConfig) {
+		this.collectionConfig = collectionConfig;
 
-		_numberOfColumnsSupplier = null;
+		_collectionConfigSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setNumberOfColumns(
-		UnsafeSupplier<Integer, Exception> numberOfColumnsUnsafeSupplier) {
+	public void setCollectionConfig(
+		UnsafeSupplier<Map<String, Object>, Exception>
+			collectionConfigUnsafeSupplier) {
 
-		_numberOfColumnsSupplier = () -> {
+		_collectionConfigSupplier = () -> {
 			try {
-				return numberOfColumnsUnsafeSupplier.get();
+				return collectionConfigUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -88,13 +87,58 @@ public class CollectionViewportDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The number of columns of the collection viewport."
+		description = "The configuration keys and values of the collection."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Integer numberOfColumns;
+	protected Map<String, Object> collectionConfig;
 
 	@JsonIgnore
-	private Supplier<Integer> _numberOfColumnsSupplier;
+	private Supplier<Map<String, Object>> _collectionConfigSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public CollectionReference getCollectionReference() {
+		if (_collectionReferenceSupplier != null) {
+			collectionReference = _collectionReferenceSupplier.get();
+
+			_collectionReferenceSupplier = null;
+		}
+
+		return collectionReference;
+	}
+
+	public void setCollectionReference(
+		CollectionReference collectionReference) {
+
+		this.collectionReference = collectionReference;
+
+		_collectionReferenceSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCollectionReference(
+		UnsafeSupplier<CollectionReference, Exception>
+			collectionReferenceUnsafeSupplier) {
+
+		_collectionReferenceSupplier = () -> {
+			try {
+				return collectionReferenceUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected CollectionReference collectionReference;
+
+	@JsonIgnore
+	private Supplier<CollectionReference> _collectionReferenceSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -102,15 +146,13 @@ public class CollectionViewportDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof CollectionViewportDefinition)) {
+		if (!(object instanceof CollectionSettings)) {
 			return false;
 		}
 
-		CollectionViewportDefinition collectionViewportDefinition =
-			(CollectionViewportDefinition)object;
+		CollectionSettings collectionSettings = (CollectionSettings)object;
 
-		return Objects.equals(
-			toString(), collectionViewportDefinition.toString());
+		return Objects.equals(toString(), collectionSettings.toString());
 	}
 
 	@Override
@@ -125,16 +167,28 @@ public class CollectionViewportDefinition implements Serializable {
 
 		sb.append("{");
 
-		Integer numberOfColumns = getNumberOfColumns();
+		Map<String, Object> collectionConfig = getCollectionConfig();
 
-		if (numberOfColumns != null) {
+		if (collectionConfig != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"numberOfColumns\": ");
+			sb.append("\"collectionConfig\": ");
 
-			sb.append(numberOfColumns);
+			sb.append(_toJSON(collectionConfig));
+		}
+
+		CollectionReference collectionReference = getCollectionReference();
+
+		if (collectionReference != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"collectionReference\": ");
+
+			sb.append(String.valueOf(collectionReference));
 		}
 
 		sb.append("}");
@@ -144,7 +198,7 @@ public class CollectionViewportDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.CollectionViewportDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.CollectionSettings",
 		name = "x-class-name"
 	)
 	public String xClassName;

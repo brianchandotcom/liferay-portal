@@ -10,8 +10,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
@@ -24,6 +22,7 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 import jakarta.annotation.Generated;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 
 import jakarta.xml.bind.annotation.XmlRootElement;
 
@@ -41,112 +40,62 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "The page element definition.",
-	value = "PageElementDefinition"
+	description = "A collection display viewport.",
+	value = "CollectionDisplayViewport"
+)
+@io.swagger.v3.oas.annotations.media.Schema(
+	description = "A collection display viewport.",
+	requiredProperties = {"collectionDisplayViewportDefinition", "id"}
 )
 @JsonFilter("Liferay.Vulcan")
-@JsonSubTypes(
-	{
-		@JsonSubTypes.Type(
-			name = "CollectionDisplay",
-			value = CollectionDisplayPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "CollectionItem",
-			value = CollectionItemPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Container", value = ContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "DropZone", value = DropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Form", value = FormPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStep", value = FormStepPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FormStepContainer",
-			value = FormStepContainerPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Fragment",
-			value = FragmentInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentComposition",
-			value = FragmentCompositionInstancePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "FragmentDropZone",
-			value = FragmentDropZonePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Grid", value = GridPageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Module", value = ModulePageElementDefinition.class
-		),
-		@JsonSubTypes.Type(
-			name = "Widget", value = WidgetInstancePageElementDefinition.class
-		)
-	}
-)
-@JsonTypeInfo(
-	include = JsonTypeInfo.As.PROPERTY, property = "type",
-	use = JsonTypeInfo.Id.NAME, visible = true
-)
-@XmlRootElement(name = "PageElementDefinition")
-public abstract class PageElementDefinition implements Serializable {
+@XmlRootElement(name = "CollectionDisplayViewport")
+public class CollectionDisplayViewport implements Serializable {
 
-	public static PageElementDefinition toDTO(String json) {
-		return ObjectMapperUtil.readValue(PageElementDefinition.class, json);
+	public static CollectionDisplayViewport toDTO(String json) {
+		return ObjectMapperUtil.readValue(
+			CollectionDisplayViewport.class, json);
 	}
 
-	public static PageElementDefinition unsafeToDTO(String json) {
+	public static CollectionDisplayViewport unsafeToDTO(String json) {
 		return ObjectMapperUtil.unsafeReadValue(
-			PageElementDefinition.class, json);
+			CollectionDisplayViewport.class, json);
 	}
 
 	@io.swagger.v3.oas.annotations.media.Schema(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, module or widget)."
+		description = "The definition of the collection display viewport."
 	)
-	@JsonGetter("type")
 	@Valid
-	public Type getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
+	public CollectionDisplayViewportDefinition
+		getCollectionDisplayViewportDefinition() {
 
-			_typeSupplier = null;
+		if (_collectionDisplayViewportDefinitionSupplier != null) {
+			collectionDisplayViewportDefinition =
+				_collectionDisplayViewportDefinitionSupplier.get();
+
+			_collectionDisplayViewportDefinitionSupplier = null;
 		}
 
-		return type;
+		return collectionDisplayViewportDefinition;
+	}
+
+	public void setCollectionDisplayViewportDefinition(
+		CollectionDisplayViewportDefinition
+			collectionDisplayViewportDefinition) {
+
+		this.collectionDisplayViewportDefinition =
+			collectionDisplayViewportDefinition;
+
+		_collectionDisplayViewportDefinitionSupplier = null;
 	}
 
 	@JsonIgnore
-	public String getTypeAsString() {
-		Type type = getType();
+	public void setCollectionDisplayViewportDefinition(
+		UnsafeSupplier<CollectionDisplayViewportDefinition, Exception>
+			collectionDisplayViewportDefinitionUnsafeSupplier) {
 
-		if (type == null) {
-			return null;
-		}
-
-		return type.toString();
-	}
-
-	public void setType(Type type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<Type, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
+		_collectionDisplayViewportDefinitionSupplier = () -> {
 			try {
-				return typeUnsafeSupplier.get();
+				return collectionDisplayViewportDefinitionUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -158,13 +107,69 @@ public abstract class PageElementDefinition implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The page element definition's type (collection display, collection item, container, drop zone, form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, module or widget)."
+		description = "The definition of the collection display viewport."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Type type;
+	@NotNull
+	protected CollectionDisplayViewportDefinition
+		collectionDisplayViewportDefinition;
 
 	@JsonIgnore
-	private Supplier<Type> _typeSupplier;
+	private Supplier<CollectionDisplayViewportDefinition>
+		_collectionDisplayViewportDefinitionSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema
+	@JsonGetter("id")
+	@Valid
+	public Id getId() {
+		if (_idSupplier != null) {
+			id = _idSupplier.get();
+
+			_idSupplier = null;
+		}
+
+		return id;
+	}
+
+	@JsonIgnore
+	public String getIdAsString() {
+		Id id = getId();
+
+		if (id == null) {
+			return null;
+		}
+
+		return id.toString();
+	}
+
+	public void setId(Id id) {
+		this.id = id;
+
+		_idSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setId(UnsafeSupplier<Id, Exception> idUnsafeSupplier) {
+		_idSupplier = () -> {
+			try {
+				return idUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	@NotNull
+	protected Id id;
+
+	@JsonIgnore
+	private Supplier<Id> _idSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -172,14 +177,14 @@ public abstract class PageElementDefinition implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof PageElementDefinition)) {
+		if (!(object instanceof CollectionDisplayViewport)) {
 			return false;
 		}
 
-		PageElementDefinition pageElementDefinition =
-			(PageElementDefinition)object;
+		CollectionDisplayViewport collectionDisplayViewport =
+			(CollectionDisplayViewport)object;
 
-		return Objects.equals(toString(), pageElementDefinition.toString());
+		return Objects.equals(toString(), collectionDisplayViewport.toString());
 	}
 
 	@Override
@@ -194,18 +199,32 @@ public abstract class PageElementDefinition implements Serializable {
 
 		sb.append("{");
 
-		Type type = getType();
+		CollectionDisplayViewportDefinition
+			collectionDisplayViewportDefinition =
+				getCollectionDisplayViewportDefinition();
 
-		if (type != null) {
+		if (collectionDisplayViewportDefinition != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"type\": ");
+			sb.append("\"collectionDisplayViewportDefinition\": ");
+
+			sb.append(String.valueOf(collectionDisplayViewportDefinition));
+		}
+
+		Id id = getId();
+
+		if (id != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"id\": ");
 
 			sb.append("\"");
 
-			sb.append(type);
+			sb.append(id);
 
 			sb.append("\"");
 		}
@@ -217,31 +236,26 @@ public abstract class PageElementDefinition implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition",
+		defaultValue = "com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewport",
 		name = "x-class-name"
 	)
 	public String xClassName;
 
-	@GraphQLName("Type")
-	public static enum Type {
+	@GraphQLName("Id")
+	public static enum Id {
 
-		COLLECTION_DISPLAY("CollectionDisplay"),
-		COLLECTION_ITEM("CollectionItem"), CONTAINER("Container"),
-		DROP_ZONE("DropZone"), FORM("Form"), FORM_STEP("FormStep"),
-		FORM_STEP_CONTAINER("FormStepContainer"), FRAGMENT("Fragment"),
-		FRAGMENT_COMPOSITION("FragmentComposition"),
-		FRAGMENT_DROP_ZONE("FragmentDropZone"), GRID("Grid"), MODULE("Module"),
-		WIDGET("Widget");
+		LANDSCAPE_MOBILE("LandscapeMobile"), PORTRAIT_MOBILE("PortraitMobile"),
+		TABLET("Tablet");
 
 		@JsonCreator
-		public static Type create(String value) {
+		public static Id create(String value) {
 			if ((value == null) || value.equals("")) {
 				return null;
 			}
 
-			for (Type type : values()) {
-				if (Objects.equals(type.getValue(), value)) {
-					return type;
+			for (Id id : values()) {
+				if (Objects.equals(id.getValue(), value)) {
+					return id;
 				}
 			}
 
@@ -258,7 +272,7 @@ public abstract class PageElementDefinition implements Serializable {
 			return _value;
 		}
 
-		private Type(String value) {
+		private Id(String value) {
 			_value = value;
 		}
 

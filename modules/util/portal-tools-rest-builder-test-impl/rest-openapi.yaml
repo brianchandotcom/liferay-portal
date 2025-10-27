@@ -1629,6 +1629,7 @@ paths:
             tags: ["Schema"]
     "/shared-internal-model-batch-test-entities":
         get:
+            operationId: getSharedInternalModelBatchTestEntitiesPage
             responses:
                 200:
                     content:
@@ -1646,6 +1647,7 @@ paths:
                         "OK"
             tags: ["SharedInternalModelBatchTestEntity"]
         post:
+            operationId: postSharedInternalModelBatchTestEntity
             requestBody:
                 content:
                     application/json:
@@ -1666,6 +1668,7 @@ paths:
             tags: ["SharedInternalModelBatchTestEntity"]
     "/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}":
         delete:
+            operationId: deleteSharedInternalModelBatchTestEntityByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1681,6 +1684,7 @@ paths:
                         "OK"
             tags: ["SharedInternalModelBatchTestEntity"]
         get:
+            operationId: getSharedInternalModelBatchTestEntityByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1700,6 +1704,7 @@ paths:
                         "OK"
             tags: ["SharedInternalModelBatchTestEntity"]
         put:
+            operationId: putSharedInternalModelBatchTestEntityByExternalReferenceCode
             parameters:
                 -   in: path
                     name: externalReferenceCode

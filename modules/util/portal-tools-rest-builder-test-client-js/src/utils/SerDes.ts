@@ -33,12 +33,14 @@
 	import {PagePermission} from '../models/PagePermission';
 	import {PageSchema} from '../models/PageSchema';
 	import {PageScopedTestEntity} from '../models/PageScopedTestEntity';
+	import {PageSharedInternalModelBatchTestEntity} from '../models/PageSharedInternalModelBatchTestEntity';
 	import {PageSiteTestEntity} from '../models/PageSiteTestEntity';
 	import {PageSort} from '../models/PageSort';
 	import {PageTestEntity} from '../models/PageTestEntity';
 	import {Permission} from '../models/Permission';
 	import {Schema} from '../models/Schema';
 	import {ScopedTestEntity} from '../models/ScopedTestEntity';
+	import {SharedInternalModelBatchTestEntity} from '../models/SharedInternalModelBatchTestEntity';
 	import {SiteTestEntity} from '../models/SiteTestEntity';
 	import {Sort} from '../models/Sort';
 	import {StringTestEntity} from '../models/StringTestEntity';
@@ -109,12 +111,14 @@ const typeMap: {[index: string]: any} = {
 	PagePermission,
 	PageSchema,
 	PageScopedTestEntity,
+	PageSharedInternalModelBatchTestEntity,
 	PageSiteTestEntity,
 	PageSort,
 	PageTestEntity,
 	Permission,
 	Schema,
 	ScopedTestEntity,
+	SharedInternalModelBatchTestEntity,
 	SiteTestEntity,
 	Sort,
 	StringTestEntity,

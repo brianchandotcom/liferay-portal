@@ -109,6 +109,8 @@ public class OpenAPIResourceImpl {
 
 			add(ScopedTestEntityResourceImpl.class);
 
+			add(SharedInternalModelBatchTestEntityResourceImpl.class);
+
 			add(SiteTestEntityResourceImpl.class);
 
 			add(SortResourceImpl.class);

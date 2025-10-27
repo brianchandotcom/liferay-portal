@@ -23,6 +23,7 @@ import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Filter;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.MultipartTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Schema;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.ScopedTestEntity;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SharedInternalModelBatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SiteTestEntity;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.Sort;
 import com.liferay.portal.tools.rest.builder.test.dto.v1_0.TestEntity;
@@ -39,6 +40,7 @@ import com.liferay.portal.tools.rest.builder.test.resource.v1_0.FilterResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.MultipartTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SchemaResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.ScopedTestEntityResource;
+import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SharedInternalModelBatchTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SiteTestEntityResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SortResource;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.TestEntityAddressResource;
@@ -167,6 +169,15 @@ public class Query {
 
 		_scopedTestEntityResourceComponentServiceObjects =
 			scopedTestEntityResourceComponentServiceObjects;
+	}
+
+	public static void
+		setSharedInternalModelBatchTestEntityResourceComponentServiceObjects(
+			ComponentServiceObjects<SharedInternalModelBatchTestEntityResource>
+				sharedInternalModelBatchTestEntityResourceComponentServiceObjects) {
+
+		_sharedInternalModelBatchTestEntityResourceComponentServiceObjects =
+			sharedInternalModelBatchTestEntityResourceComponentServiceObjects;
 	}
 
 	public static void setSiteTestEntityResourceComponentServiceObjects(
@@ -813,6 +824,46 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sharedInternalModelBatchTestEntities{items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SharedInternalModelBatchTestEntityPage
+			sharedInternalModelBatchTestEntities()
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sharedInternalModelBatchTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sharedInternalModelBatchTestEntityResource ->
+				new SharedInternalModelBatchTestEntityPage(
+					sharedInternalModelBatchTestEntityResource.
+						getSharedInternalModelBatchTestEntitiesPage()));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sharedInternalModelBatchTestEntityByExternalReferenceCode(externalReferenceCode: ___){externalReferenceCode, name}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public SharedInternalModelBatchTestEntity
+			sharedInternalModelBatchTestEntityByExternalReferenceCode(
+				@GraphQLName("externalReferenceCode") String
+					externalReferenceCode)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_sharedInternalModelBatchTestEntityResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			sharedInternalModelBatchTestEntityResource ->
+				sharedInternalModelBatchTestEntityResource.
+					getSharedInternalModelBatchTestEntityByExternalReferenceCode(
+						externalReferenceCode));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteTestEntities(siteKey: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField
@@ -1057,6 +1108,34 @@ public class Query {
 				companyTestEntityResource ->
 					companyTestEntityResource.
 						getCompanyTestEntityByExternalReferenceCode(
+							_batchTestEntity.getExternalReferenceCode()));
+		}
+
+		private BatchTestEntity _batchTestEntity;
+
+	}
+
+	@GraphQLTypeExtension(BatchTestEntity.class)
+	public class
+		GetSharedInternalModelBatchTestEntityByExternalReferenceCodeTypeExtension {
+
+		public GetSharedInternalModelBatchTestEntityByExternalReferenceCodeTypeExtension(
+			BatchTestEntity batchTestEntity) {
+
+			_batchTestEntity = batchTestEntity;
+		}
+
+		@GraphQLField
+		public SharedInternalModelBatchTestEntity
+				sharedInternalModelBatchTestEntityByExternalReferenceCode()
+			throws Exception {
+
+			return _applyComponentServiceObjects(
+				_sharedInternalModelBatchTestEntityResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				sharedInternalModelBatchTestEntityResource ->
+					sharedInternalModelBatchTestEntityResource.
+						getSharedInternalModelBatchTestEntityByExternalReferenceCode(
 							_batchTestEntity.getExternalReferenceCode()));
 		}
 
@@ -1451,6 +1530,42 @@ public class Query {
 
 		@GraphQLField
 		protected java.util.Collection<ScopedTestEntity> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
+
+	@GraphQLName("SharedInternalModelBatchTestEntityPage")
+	public class SharedInternalModelBatchTestEntityPage {
+
+		public SharedInternalModelBatchTestEntityPage(
+			Page sharedInternalModelBatchTestEntityPage) {
+
+			actions = sharedInternalModelBatchTestEntityPage.getActions();
+
+			items = sharedInternalModelBatchTestEntityPage.getItems();
+			lastPage = sharedInternalModelBatchTestEntityPage.getLastPage();
+			page = sharedInternalModelBatchTestEntityPage.getPage();
+			pageSize = sharedInternalModelBatchTestEntityPage.getPageSize();
+			totalCount = sharedInternalModelBatchTestEntityPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<SharedInternalModelBatchTestEntity>
+			items;
 
 		@GraphQLField
 		protected long lastPage;
@@ -1864,6 +1979,30 @@ public class Query {
 	}
 
 	private void _populateResourceContext(
+			SharedInternalModelBatchTestEntityResource
+				sharedInternalModelBatchTestEntityResource)
+		throws Exception {
+
+		sharedInternalModelBatchTestEntityResource.setContextAcceptLanguage(
+			_acceptLanguage);
+		sharedInternalModelBatchTestEntityResource.setContextCompany(_company);
+		sharedInternalModelBatchTestEntityResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		sharedInternalModelBatchTestEntityResource.
+			setContextHttpServletResponse(_httpServletResponse);
+		sharedInternalModelBatchTestEntityResource.setContextUriInfo(_uriInfo);
+		sharedInternalModelBatchTestEntityResource.setContextUser(_user);
+		sharedInternalModelBatchTestEntityResource.setGroupLocalService(
+			_groupLocalService);
+		sharedInternalModelBatchTestEntityResource.
+			setResourceActionLocalService(_resourceActionLocalService);
+		sharedInternalModelBatchTestEntityResource.
+			setResourcePermissionLocalService(_resourcePermissionLocalService);
+		sharedInternalModelBatchTestEntityResource.setRoleLocalService(
+			_roleLocalService);
+	}
+
+	private void _populateResourceContext(
 			SiteTestEntityResource siteTestEntityResource)
 		throws Exception {
 
@@ -1962,6 +2101,9 @@ public class Query {
 		_schemaResourceComponentServiceObjects;
 	private static ComponentServiceObjects<ScopedTestEntityResource>
 		_scopedTestEntityResourceComponentServiceObjects;
+	private static ComponentServiceObjects
+		<SharedInternalModelBatchTestEntityResource>
+			_sharedInternalModelBatchTestEntityResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SiteTestEntityResource>
 		_siteTestEntityResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SortResource>

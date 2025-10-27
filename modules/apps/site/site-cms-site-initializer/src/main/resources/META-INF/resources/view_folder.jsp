@@ -29,7 +29,7 @@ ViewFolderSectionDisplayContext viewFolderSectionDisplayContext = (ViewFolderSec
 		formName="fm"
 		id="<%= viewFolderSectionDisplayContext.getCMSSiteInitializerFDSName() %>"
 		itemsPerPage="<%= 20 %>"
-		propsTransformer="{AssetsFDSPropsTransformer} from site-cms-site-initializer"
+		propsTransformer="<%= viewFolderSectionDisplayContext.getPropsTransformerModule() %>"
 		selectedItemsKey="embedded.id"
 		selectionType="multiple"
 		showSelectAll="<%= true %>"

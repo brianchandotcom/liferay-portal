@@ -63,6 +63,8 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
 
+		_httpServletRequest = httpServletRequest;
+
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 	}
 
@@ -276,6 +278,19 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return new String[] {_objectFolderExternalReferenceCode};
 	}
 
+	public String getPropsTransformerModule() {
+		String rootObjectEntryFolderExternalReferenceCode =
+			getRootObjectEntryFolderExternalReferenceCode();
+
+		if (rootObjectEntryFolderExternalReferenceCode.equals(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
+
+			return "{AssetsFilesDropFDSPropsTransformer} from site-cms-site-initializer";
+		}
+
+		return "{AssetsFDSPropsTransformer} from site-cms-site-initializer";
+	}
+
 	@Override
 	public String getRootObjectEntryFolderExternalReferenceCode() {
 		if (_rootObjectEntryFolderExternalReferenceCode != null) {
@@ -315,6 +330,7 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		return null;
 	}
 
+	private final HttpServletRequest _httpServletRequest;
 	private final ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 	private String _objectFolderExternalReferenceCode;
 	private String _rootObjectEntryFolderExternalReferenceCode;

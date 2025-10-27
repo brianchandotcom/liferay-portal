@@ -5,7 +5,16 @@
 
 package com.liferay.portal.tools.rest.builder.test.internal.resource.v1_0;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.rest.builder.test.dto.v1_0.SharedInternalModelBatchTestEntity;
 import com.liferay.portal.tools.rest.builder.test.resource.v1_0.SharedInternalModelBatchTestEntityResource;
+import com.liferay.portal.vulcan.pagination.Page;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.TreeMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -15,9 +24,118 @@ import org.osgi.service.component.annotations.ServiceScope;
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/shared-internal-model-batch-test-entity.properties",
+	property = "export.import.vulcan.batch.engine.task.item.delegate=true",
 	scope = ServiceScope.PROTOTYPE,
 	service = SharedInternalModelBatchTestEntityResource.class
 )
 public class SharedInternalModelBatchTestEntityResourceImpl
 	extends BaseSharedInternalModelBatchTestEntityResourceImpl {
+
+	@Override
+	public void deleteSharedInternalModelBatchTestEntityByExternalReferenceCode(
+		String externalReferenceCode) {
+
+		SharedInternalModelBatchTestEntity sharedInternalModelBatchTestEntity =
+			_fetchSharedInternalModelBatchTestEntity(externalReferenceCode);
+
+		if (sharedInternalModelBatchTestEntity != null) {
+			_sharedInternalModelBatchTestEntities.remove(
+				sharedInternalModelBatchTestEntity.getExternalReferenceCode());
+		}
+	}
+
+	@Override
+	public Page<SharedInternalModelBatchTestEntity>
+		getSharedInternalModelBatchTestEntitiesPage() {
+
+		return Page.of(_sharedInternalModelBatchTestEntities.values());
+	}
+
+	@Override
+	public SharedInternalModelBatchTestEntity
+			getSharedInternalModelBatchTestEntityByExternalReferenceCode(
+				String externalReferenceCode)
+		throws Exception {
+
+		SharedInternalModelBatchTestEntity sharedInternalModelBatchTestEntity =
+			_fetchSharedInternalModelBatchTestEntity(externalReferenceCode);
+
+		if (sharedInternalModelBatchTestEntity == null) {
+			throw new NoSuchModelException();
+		}
+
+		return sharedInternalModelBatchTestEntity;
+	}
+
+	@Override
+	public SharedInternalModelBatchTestEntity
+		postSharedInternalModelBatchTestEntity(
+			SharedInternalModelBatchTestEntity
+				sharedInternalModelBatchTestEntity) {
+
+		if (Validator.isNull(
+				sharedInternalModelBatchTestEntity.
+					getExternalReferenceCode())) {
+
+			sharedInternalModelBatchTestEntity.setExternalReferenceCode(
+				StringUtil.randomString());
+		}
+
+		_sharedInternalModelBatchTestEntities.put(
+			sharedInternalModelBatchTestEntity.getExternalReferenceCode(),
+			sharedInternalModelBatchTestEntity);
+
+		return sharedInternalModelBatchTestEntity;
+	}
+
+	@Override
+	public SharedInternalModelBatchTestEntity
+		putSharedInternalModelBatchTestEntityByExternalReferenceCode(
+			String externalReferenceCode,
+			SharedInternalModelBatchTestEntity
+				sharedInternalModelBatchTestEntity) {
+
+		SharedInternalModelBatchTestEntity
+			existingSharedInternalModelBatchTestEntity =
+				_fetchSharedInternalModelBatchTestEntity(externalReferenceCode);
+
+		if (existingSharedInternalModelBatchTestEntity == null) {
+			return postSharedInternalModelBatchTestEntity(
+				sharedInternalModelBatchTestEntity);
+		}
+
+		sharedInternalModelBatchTestEntity.setExternalReferenceCode(
+			externalReferenceCode);
+		sharedInternalModelBatchTestEntity.setName(
+			sharedInternalModelBatchTestEntity.getName());
+
+		_sharedInternalModelBatchTestEntities.put(
+			sharedInternalModelBatchTestEntity.getExternalReferenceCode(),
+			sharedInternalModelBatchTestEntity);
+
+		return sharedInternalModelBatchTestEntity;
+	}
+
+	private SharedInternalModelBatchTestEntity
+		_fetchSharedInternalModelBatchTestEntity(String externalReferenceCode) {
+
+		for (SharedInternalModelBatchTestEntity
+				sharedInternalModelBatchTestEntity :
+					_sharedInternalModelBatchTestEntities.values()) {
+
+			if (Objects.equals(
+					externalReferenceCode,
+					sharedInternalModelBatchTestEntity.
+						getExternalReferenceCode())) {
+
+				return sharedInternalModelBatchTestEntity;
+			}
+		}
+
+		return null;
+	}
+
+	private static final Map<String, SharedInternalModelBatchTestEntity>
+		_sharedInternalModelBatchTestEntities = new TreeMap<>();
+
 }

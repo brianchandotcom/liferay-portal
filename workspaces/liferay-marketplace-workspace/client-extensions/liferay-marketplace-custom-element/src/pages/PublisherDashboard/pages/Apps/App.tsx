@@ -11,7 +11,6 @@ import {useMemo} from 'react';
 import {useLocation, useNavigate, useParams} from 'react-router-dom';
 import useSWR from 'swr';
 
-import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
 import HeadlessCommerceAdminCatalog from '../../../../services/rest/HeadlessCommerceAdminCatalog';
@@ -20,7 +19,6 @@ import {
 	getThumbnailByProductAttachment,
 	showAppImage,
 } from '../../../../utils/util';
-import {ReviewAndSubmitAppPage} from './AppCreationFlow/ReviewAndSubmitAppPage/ReviewAndSubmitAppPage';
 import AppDetail from './AppDetail';
 
 import './App.scss';
@@ -31,7 +29,6 @@ type AppProps = {
 
 const App: React.FC<AppProps> = ({header}) => {
 	const {productId} = useParams();
-	const {properties} = useMarketplaceContext();
 	const navigate = useNavigate();
 	const {pathname} = useLocation();
 
@@ -57,8 +54,6 @@ const App: React.FC<AppProps> = ({header}) => {
 	if (isLoading || !product) {
 		return null;
 	}
-
-	const isNewAppEnabled = properties.featureFlags.includes('LPD-24546');
 
 	const thumbnail = getThumbnailByProductAttachment(product?.images);
 
@@ -148,15 +143,7 @@ const App: React.FC<AppProps> = ({header}) => {
 				{header}
 			</div>
 			<div>
-				{isNewAppEnabled ? (
-					<AppDetail />
-				) : (
-					<ReviewAndSubmitAppPage
-						productERC={product.externalReferenceCode}
-						productId={product.productId}
-						readonly
-					/>
-				)}
+				<AppDetail />
 			</div>
 		</div>
 	);

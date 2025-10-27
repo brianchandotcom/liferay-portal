@@ -9,6 +9,7 @@ import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
 
 import Modal from '../../../../components/Modal';
+import {useMarketplaceContext} from '../../../../context/MarketplaceContext';
 import {useNewAppContext} from '../../../../context/NewAppContext';
 import {ProductWorkflowStatusCode} from '../../../../enums/Product';
 import i18n from '../../../../i18n';
@@ -31,10 +32,14 @@ const isRequiredDraftFormFilled = (context: Context) =>
 const PublishAppOutlet = () => {
 	usePublishHeader();
 
+	const {properties} = useMarketplaceContext();
 	const [context, dispatch] = useNewAppContext();
 	const {observer, onOpenChange, open} = useModal();
 	const {onSave, onSaveAsDraft} = usePublishAppSubmission(context, dispatch);
 	const onExitModal = useModal();
+
+	const isEditAppEnabled = properties.featureFlags.includes('LPD-24546');
+
 	const isEditingApp =
 		context?._product &&
 		context._product.productStatus === ProductWorkflowStatusCode.APPROVED;
@@ -65,7 +70,7 @@ const PublishAppOutlet = () => {
 
 	return (
 		<BasePublishAppOutlet
-			canSaveAsDraft={canSaveAsDraft}
+			canSaveAsDraft={isEditAppEnabled && canSaveAsDraft}
 			context={context}
 			flowItems={getFlowItems(context)}
 			isEditingApp={!!isEditingApp}

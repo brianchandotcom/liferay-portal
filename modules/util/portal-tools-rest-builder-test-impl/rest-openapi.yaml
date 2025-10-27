@@ -271,6 +271,13 @@ components:
                     readOnly: true
                     type: integer
             type: object
+        SharedInternalModelBatchTestEntity:
+            properties:
+                externalReferenceCode:
+                    type: string
+                name:
+                    type: string
+            type: object
         SiteTestEntity:
             properties:
                 dateCreated:
@@ -1620,6 +1627,105 @@ paths:
                     description:
                         "OK"
             tags: ["Schema"]
+    "/shared-internal-model-batch-test-entities":
+        get:
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                                type: array
+                    description:
+                        "OK"
+            tags: ["SharedInternalModelBatchTestEntity"]
+        post:
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+            responses:
+                "200":
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+            tags: ["SharedInternalModelBatchTestEntity"]
+    "/shared-internal-model-batch-test-entities/by-external-reference-code/{externalReferenceCode}":
+        delete:
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                    description:
+                        "OK"
+            tags: ["SharedInternalModelBatchTestEntity"]
+        get:
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                    description:
+                        "OK"
+            tags: ["SharedInternalModelBatchTestEntity"]
+        put:
+            parameters:
+                -   in: path
+                    name: externalReferenceCode
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/SharedInternalModelBatchTestEntity"
+                    description:
+                        "OK"
+            tags: ["SharedInternalModelBatchTestEntity"]
     "/site-test-entities/{siteTestEntityId}":
         get:
             operationId: getSiteTestEntity

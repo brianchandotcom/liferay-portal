@@ -75,7 +75,9 @@ public class ObjectEntryFolderResourceImpl
 	public void deleteObjectEntryFolder(Long objectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -89,7 +91,9 @@ public class ObjectEntryFolderResourceImpl
 			String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -116,7 +120,9 @@ public class ObjectEntryFolderResourceImpl
 				String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -134,7 +140,9 @@ public class ObjectEntryFolderResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -196,7 +204,9 @@ public class ObjectEntryFolderResourceImpl
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -213,7 +223,9 @@ public class ObjectEntryFolderResourceImpl
 			Long objectEntryFolderId, Long parentObjectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -237,7 +249,9 @@ public class ObjectEntryFolderResourceImpl
 				Long objectEntryFolderId, Long parentObjectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -260,7 +274,9 @@ public class ObjectEntryFolderResourceImpl
 			Long objectEntryFolderId, Long parentObjectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -284,7 +300,9 @@ public class ObjectEntryFolderResourceImpl
 				Long objectEntryFolderId, Long parentObjectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -307,7 +325,9 @@ public class ObjectEntryFolderResourceImpl
 			String scopeKey, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -327,7 +347,9 @@ public class ObjectEntryFolderResourceImpl
 				String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -353,7 +375,9 @@ public class ObjectEntryFolderResourceImpl
 				String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -376,7 +400,9 @@ public class ObjectEntryFolderResourceImpl
 				String scopeKey, String externalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -400,7 +426,9 @@ public class ObjectEntryFolderResourceImpl
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -443,7 +471,9 @@ public class ObjectEntryFolderResourceImpl
 	protected ObjectEntryFolder doGetObjectEntryFolder(Long objectEntryFolderId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -457,7 +487,9 @@ public class ObjectEntryFolderResourceImpl
 			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -535,7 +567,8 @@ public class ObjectEntryFolderResourceImpl
 				serviceBuilderObjectEntryFolder.getGroupId()) &&
 			(serviceBuilderObjectEntryFolder.getStatus() !=
 				WorkflowConstants.STATUS_IN_TRASH) &&
-			FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
 
 			_objectEntryFolderService.moveObjectEntryFolderToTrash(
 				serviceBuilderObjectEntryFolder,
@@ -662,7 +695,8 @@ public class ObjectEntryFolderResourceImpl
 				).put(
 					"restore",
 					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-17564") ||
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564") ||
 							(serviceBuilderObjectEntryFolder.getStatus() !=
 								WorkflowConstants.STATUS_IN_TRASH)) {
 

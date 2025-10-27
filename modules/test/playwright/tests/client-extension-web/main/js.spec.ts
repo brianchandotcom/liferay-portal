@@ -12,7 +12,7 @@ import {siteSettingsPagesTest} from '../../../fixtures/siteSettingsPagesTest';
 import {styleBookPageTest} from '../../../fixtures/styleBookPageTest';
 import {PagesAdminPage} from '../../../pages/layout-admin-web/PagesAdminPage';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
-import {disableCacheForPage} from '../../../utils/disableCacheForPage';
+import {disableCache} from '../../../utils/disableCache';
 import getRandomString from '../../../utils/getRandomString';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editJSClientExtensionsPageTest} from './fixtures/editJSClientExtensionsPageTest';
@@ -80,13 +80,15 @@ testSample.describe('Samples', () => {
 		testSample(
 			`${sample.name}'s .js file can be downloaded`,
 			async ({page}) => {
-				await disableCacheForPage(page);
+				await disableCache(page);
 
 				const response = await page.goto(sample.url);
+
+				expect(response.status()).toBe(200);
+
 				const responseContentType =
 					await response.headerValue('Content-Type');
 
-				expect(response.status()).toBe(200);
 				expect(responseContentType).toBe('application/javascript');
 			}
 		);

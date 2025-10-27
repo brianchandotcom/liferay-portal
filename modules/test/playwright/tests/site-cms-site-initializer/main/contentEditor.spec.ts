@@ -29,7 +29,6 @@ const test = mergeTests(
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
-		'LPS-179669': {enabled: true},
 	}),
 	fragmentsPagesTest,
 	loginTest(),
@@ -1001,7 +1000,6 @@ const testWithRepeatableFF = mergeTests(
 	test,
 	featureFlagsTest({
 		'LPD-50377': {enabled: true},
-		'LPS-179669': {enabled: true},
 	})
 );
 

@@ -10,9 +10,6 @@
  * @generated
  */
 
-	/**
-	* https://www.schema.org/Document
-	*/
 	export class BatchTestEntity {
 			"customFields"?: Array<any>;
 			"externalReferenceCode"?: string;

@@ -9,9 +9,6 @@
  * @generated
  */
 
-	/**
-	* https://www.schema.org/Document
-	*/
 	export class TestEntityAddress {
 			"dateCreated"?: Date;
 			"dateModified"?: Date;

@@ -35,9 +35,7 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName(
-	description = "https://www.schema.org/Document", value = "BatchTestEntity"
-)
+@GraphQLName("BatchTestEntity")
 @JsonFilter("Liferay.Vulcan")
 @XmlRootElement(name = "BatchTestEntity")
 public class BatchTestEntity implements Serializable {

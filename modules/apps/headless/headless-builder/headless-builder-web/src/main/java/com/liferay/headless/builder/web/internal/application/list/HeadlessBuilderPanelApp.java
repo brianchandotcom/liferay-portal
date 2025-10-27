@@ -44,7 +44,9 @@ public class HeadlessBuilderPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				group.getCompanyId(), "LPS-178642")) {
+
 			return false;
 		}
 

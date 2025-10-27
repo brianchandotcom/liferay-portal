@@ -37,7 +37,9 @@ public class APIApplicationPublisherPortalInstanceLifecycleListener
 
 	@Override
 	public void portalInstanceRegistered(Company company) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				company.getCompanyId(), "LPS-178642")) {
+
 			return;
 		}
 

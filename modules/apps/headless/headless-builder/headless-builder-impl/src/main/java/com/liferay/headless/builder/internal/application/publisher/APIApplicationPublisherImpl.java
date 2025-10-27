@@ -70,7 +70,7 @@ public class APIApplicationPublisherImpl
 	@Clusterable
 	@Override
 	public void publish(String baseURL, long companyId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-178642")) {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
 		}
@@ -134,7 +134,7 @@ public class APIApplicationPublisherImpl
 	@Clusterable
 	@Override
 	public void unpublish(String baseURL, long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled("LPS-178642")) {
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPS-178642")) {
 			throw new UnsupportedOperationException(
 				"APIApplicationPublisher not available");
 		}

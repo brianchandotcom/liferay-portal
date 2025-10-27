@@ -95,6 +95,19 @@ export default function SimpleActionLinkRenderer({
 
 			<ClayLink aria-label={title} data-senna-off href={formattedHref}>
 				{title}
+
+				{itemData.system && (
+					<ClayIcon
+						aria-label={Liferay.Language.get(
+							'system-default-structure'
+						)}
+						className="c-ml-2 lfr-portal-tooltip text-secondary"
+						data-title={Liferay.Language.get(
+							'system-default-structure'
+						)}
+						symbol="lock"
+					/>
+				)}
 			</ClayLink>
 		</div>
 	);

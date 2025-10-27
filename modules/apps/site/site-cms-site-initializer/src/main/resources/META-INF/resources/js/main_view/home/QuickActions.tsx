@@ -50,9 +50,9 @@ export default function QuickActions({
 				</div>
 			</div>
 
-			<div className="row">
+			<div className="row row-cols-lg-5 row-cols-md-3 row-cols-sm-1">
 				{quickActions.map((quickAction: any) => (
-					<div className="col" key={quickAction.href}>
+					<div className="col pb-2" key={quickAction.href}>
 						<button
 							className="btn btn-secondary text-left w-100"
 							onClick={(event) =>

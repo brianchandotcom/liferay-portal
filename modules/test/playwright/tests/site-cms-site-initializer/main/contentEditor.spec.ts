@@ -597,7 +597,7 @@ test.describe('Schedule Panel', () => {
 test.describe('Categorization Panel', () => {
 	test(
 		'Add categories and tags to the content',
-		{tag: '@LPD-62047'},
+		{tag: ['@LPD-62047', '@LPD-69196']},
 		async ({
 			apiHelpers,
 			contentsPage,
@@ -605,6 +605,30 @@ test.describe('Categorization Panel', () => {
 			tagsPage,
 			vocabulariesPage,
 		}) => {
+			const selectCategory = async (categoryName: string) => {
+				const categoriesAutocomplete =
+					page.getByPlaceholder('Add category');
+
+				await categoriesAutocomplete.fill(categoryName);
+
+				const option = page.getByRole('option', {name: categoryName});
+
+				await option.waitFor();
+				await option.click();
+			};
+
+			const selectTag = async (tagName: string) => {
+				const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+				await tagsAutocomplete.fill(tagName);
+
+				const newTagOption = page.getByRole('option', {
+					name: 'Create New Tag:',
+				});
+
+				await newTagOption.waitFor();
+				await newTagOption.click();
+			};
 
 			// Create category
 
@@ -622,48 +646,32 @@ test.describe('Categorization Panel', () => {
 				vocabularyName,
 			});
 
-			// Create a content
+			// Create a content and publish it
 
 			await contentsPage.goto();
 
 			await contentsPage.createContent('Basic Content');
 
-			await contentsPage.openSidePanel('Categorization');
-
 			const title = getRandomString();
 
 			await page.getByPlaceholder('New Basic Web Content').fill(title);
 
-			// Add a new tag to the content
+			await contentsPage.publishButton.click();
 
-			const tagsAutocomplete = page.getByPlaceholder('Add tag');
+			// Edit the content to set a categorization
 
-			const tagName = getRandomString();
-
-			await tagsAutocomplete.fill(tagName);
-
-			const newTagOption = page.getByRole('option', {
-				name: 'Create New Tag:',
+			const content = page.locator('.table-list-title a', {
+				hasText: title,
 			});
 
-			await newTagOption.waitFor();
-			await newTagOption.click();
+			await content.waitFor();
+			await content.click();
 
-			const tagLabel = page.locator('.label-item', {hasText: tagName});
+			await contentsPage.openSidePanel('Categorization');
 
-			await expect(tagLabel).toBeAttached();
+			// Add a category to the content
 
-			// Add a new category to the content
-
-			const categoriesAutocomplete =
-				page.getByPlaceholder('Add category');
-
-			await categoriesAutocomplete.fill(categoryName);
-
-			const option = page.getByRole('option', {name: categoryName});
-
-			option.waitFor();
-			option.click();
+			await selectCategory(categoryName);
 
 			const categoryLabel = page.locator('.label-item', {
 				hasText: categoryName,
@@ -671,17 +679,43 @@ test.describe('Categorization Panel', () => {
 
 			await expect(categoryLabel).toBeAttached();
 
-			// Publish the content
+			// Add a tag to the content
+
+			let tagName = getRandomString();
+
+			await selectTag(tagName);
+
+			let tagLabel = page.locator('.label-item', {hasText: tagName});
+
+			await expect(tagLabel).toBeAttached();
+
+			// Cancel the content and edit it again to check that nothing has been saved
+
+			await page.getByLabel('Cancel', {exact: true}).click();
+
+			await content.waitFor();
+			await content.click();
+
+			await contentsPage.openSidePanel('Categorization');
+
+			await expect(categoryLabel).not.toBeAttached();
+			await expect(tagLabel).not.toBeAttached();
+
+			// Select again the category and the tag and publish it
+
+			await selectCategory(categoryName);
+
+			tagName = getRandomString();
+			tagLabel = page.locator('.label-item', {hasText: tagName});
+
+			await selectTag(tagName);
+
+			await expect(categoryLabel).toBeAttached();
+			await expect(tagLabel).toBeAttached();
 
 			await contentsPage.publishButton.click();
 
-			const content = page.locator('.table-list-title a', {
-				hasText: title,
-			});
-
-			await content.waitFor();
-
-			// Edit content and check that the tag and category are still there
+			// Edit the content and check that the categorization is still there
 
 			await content.click();
 

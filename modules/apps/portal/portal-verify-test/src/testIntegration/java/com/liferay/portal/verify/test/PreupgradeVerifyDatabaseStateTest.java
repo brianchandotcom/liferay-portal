@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.db.DBResourceUtil;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -106,10 +107,12 @@ public class PreupgradeVerifyDatabaseStateTest
 
 		DB db = DBManagerUtil.getDB();
 
+		String lowerCaseTestTable = StringUtil.toLowerCase("testtable");
+
 		try {
-			db.runSQL(
-				"create table " + StringUtil.toLowerCase("testtable") +
-					"(id LONG)");
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"create table " + lowerCaseTestTable + "(id LONG)"));
 
 			testVerify();
 		}
@@ -117,9 +120,9 @@ public class PreupgradeVerifyDatabaseStateTest
 			_serviceComponentLocalService.deleteServiceComponent(
 				serviceComponent);
 
-			db.runSQL(
-				"DROP_TABLE_IF_EXISTS(" + StringUtil.toLowerCase("testtable") +
-					")");
+			DBPartitionUtil.forEachCompanyId(
+				companyId -> db.runSQL(
+					"DROP_TABLE_IF_EXISTS(" + lowerCaseTestTable + ")"));
 		}
 	}
 

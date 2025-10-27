@@ -1,0 +1,235 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.kernel.theme;
+
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistryUtil;
+import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+/**
+ * @author Iván Zaera Avellón
+ */
+public class ThemeDisplayTest {
+
+	@Before
+	public void setUp() {
+		_hashedFilesRegistryUtilMockedStatic.when(
+			() -> HashedFilesRegistryUtil.getHashedFileURI(Mockito.anyString())
+		).thenAnswer(
+			invocationOnMock -> HashedFilesUtil.addHash(
+				invocationOnMock.getArgument(0), _HASH)
+		);
+
+		ReflectionTestUtil.setFieldValue(_themeDisplay, "_theme", _mockTheme());
+	}
+
+	@After
+	public void tearDown() {
+		_hashedFilesRegistryUtilMockedStatic.close();
+
+		_portalUtilMockedStatic.close();
+	}
+
+	@Test
+	public void testGetClayCSSURL() {
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetClayCSSURLWithContext() {
+		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/dxp/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetClayCSSURLWithContextAndProxy() {
+		_mockPortalUtil("/dxp", "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/dxp/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetClayCSSURLWithProxy() {
+		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/o/classic-theme/css/clay.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURL() {
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURLWithContext() {
+		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/dxp/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURLWithContextAndProxy() {
+		_mockPortalUtil("/dxp", "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/dxp/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainCSSURLWithProxy() {
+		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/o/classic-theme/css/main.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	@Test
+	public void testGetMainJSURL() {
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testGetMainJSURLWithContext() {
+		_mockPortalUtil("/dxp", StringPool.BLANK, false);
+
+		Assert.assertEquals(
+			"/dxp/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testGetMainJSURLWithContextAndProxy() {
+		_mockPortalUtil("/dxp", "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/dxp/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testGetMainJSURLWithProxy() {
+		_mockPortalUtil(StringPool.BLANK, "/liferay", false);
+
+		Assert.assertEquals(
+			"/liferay/o/classic-theme/js/main.(" + _HASH + ").js",
+			_themeDisplay.getMainJSURL());
+	}
+
+	@Test
+	public void testRTLGetClayCSSURL() {
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, true);
+
+		Assert.assertEquals(
+			"/o/classic-theme/css/clay_rtl.(" + _HASH + ").css",
+			_themeDisplay.getClayCSSURL());
+	}
+
+	@Test
+	public void testRTLGetMainCSSURL() {
+		_mockPortalUtil(StringPool.BLANK, StringPool.BLANK, true);
+
+		Assert.assertEquals(
+			"/o/classic-theme/css/main_rtl.(" + _HASH + ").css",
+			_themeDisplay.getMainCSSURL());
+	}
+
+	private void _mockPortalUtil(
+		String pathContext, String pathProxy, boolean rtl) {
+
+		_portalUtilMockedStatic.when(
+			PortalUtil::getPathContext
+		).thenReturn(
+			pathProxy + pathContext
+		);
+
+		_portalUtilMockedStatic.when(
+			PortalUtil::getPathModule
+		).thenReturn(
+			pathProxy + pathContext + "/o"
+		);
+
+		_portalUtilMockedStatic.when(
+			PortalUtil::getPathProxy
+		).thenReturn(
+			pathProxy
+		);
+
+		_portalUtilMockedStatic.when(
+			() -> PortalUtil.isRightToLeft(Mockito.any())
+		).thenReturn(
+			rtl
+		);
+	}
+
+	private Theme _mockTheme() {
+		Theme theme = Mockito.mock(Theme.class);
+
+		Mockito.when(
+			theme.getCssPath()
+		).thenReturn(
+			"/css"
+		);
+
+		Mockito.when(
+			theme.getJavaScriptPath()
+		).thenReturn(
+			"/js"
+		);
+
+		Mockito.when(
+			theme.getServletContextName()
+		).thenReturn(
+			"classic-theme"
+		);
+
+		return theme;
+	}
+
+	private static final String _HASH = RandomTestUtil.randomString(8);
+
+	private final MockedStatic<HashedFilesRegistryUtil>
+		_hashedFilesRegistryUtilMockedStatic = Mockito.mockStatic(
+			HashedFilesRegistryUtil.class);
+	private final MockedStatic<PortalUtil> _portalUtilMockedStatic =
+		Mockito.mockStatic(PortalUtil.class);
+	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
+
+}

@@ -123,8 +123,6 @@ public class ObjectEntryDTOConverterTest {
 
 		SystemProperties systemProperties = objectEntry.getSystemProperties();
 
-		Assert.assertNotNull(systemProperties);
-
 		Scope scope = systemProperties.getScope();
 
 		Assert.assertEquals(

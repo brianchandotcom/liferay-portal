@@ -1879,7 +1879,7 @@ public class DefaultObjectEntryManagerImpl
 						objectEntry, scopeKey, serviceContext),
 					serviceContext),
 				scopeKey),
-			null);
+			_objectEntryService.fetchObjectEntry(objectEntryId));
 	}
 
 	private void _checkApprovedObjectEntry(
@@ -2718,7 +2718,8 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(),
 					predicate, false, serviceBuilderObjectEntry.getPrimaryKey(),
-					search, start, end, sorts)),
+					search, start, end, sorts),
+				serviceBuilderObjectEntry),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(),
@@ -2855,7 +2856,8 @@ public class DefaultObjectEntryManagerImpl
 				objectRelatedModelsProvider.getRelatedModels(
 					groupId, objectRelationship.getObjectRelationshipId(), null,
 					false, objectEntryId, null, _getStartPosition(pagination),
-					_getEndPosition(pagination), null)),
+					_getEndPosition(pagination), null),
+				null),
 			pagination,
 			objectRelatedModelsProvider.getRelatedModelsCount(
 				groupId, objectRelationship.getObjectRelationshipId(), null,
@@ -3265,8 +3267,8 @@ public class DefaultObjectEntryManagerImpl
 
 	private List<ObjectEntry> _toObjectEntries(
 		DTOConverterContext dtoConverterContext,
-		List<com.liferay.object.model.ObjectEntry>
-			serviceBuilderObjectEntries) {
+		List<com.liferay.object.model.ObjectEntry> serviceBuilderObjectEntries,
+		com.liferay.object.model.ObjectEntry serviceBuilderParentObjectEntry) {
 
 		return TransformUtil.transform(
 			serviceBuilderObjectEntries,
@@ -3274,7 +3276,7 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext,
 				_objectDefinitionLocalService.getObjectDefinition(
 					serviceBuilderObjectEntry.getObjectDefinitionId()),
-				serviceBuilderObjectEntry, null));
+				serviceBuilderObjectEntry, serviceBuilderParentObjectEntry));
 	}
 
 	private ObjectEntry _toObjectEntry(

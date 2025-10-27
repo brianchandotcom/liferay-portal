@@ -44,6 +44,8 @@ const STATUS_MAP: Record<StatusKey, Status> = {
 	},
 };
 
+const POLL_INTERVAL = 1_000;
+
 type State = {
 	downloadURL?: string;
 	errorMessage?: string;
@@ -52,7 +54,7 @@ type State = {
 };
 
 type Action =
-	| {payload: {progress: number}; type: 'UPDATE_PROGRESS'}
+	| {payload: {progress: number}; type: 'STARTED'}
 	| {payload: {downloadURL: string}; type: 'COMPLETED'}
 	| {payload?: {errorMessage?: string}; type: 'FAILED'};
 
@@ -65,8 +67,8 @@ const initialState: State = {
 
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
-		case 'UPDATE_PROGRESS':
-			return {...state, progress: action.payload.progress};
+		case 'STARTED':
+			return {progress: action.payload.progress, status: 'STARTED'};
 		case 'COMPLETED':
 			return {
 				downloadURL: action.payload.downloadURL,
@@ -113,7 +115,7 @@ function useBatchEngineExportTask(importProcessId: string) {
 					if (data.executeStatus === 'STARTED') {
 						dispatch({
 							payload: {progress: data.progress ?? 0},
-							type: 'UPDATE_PROGRESS',
+							type: 'STARTED',
 						});
 					}
 					else if (data.executeStatus === 'COMPLETED') {
@@ -138,7 +140,7 @@ function useBatchEngineExportTask(importProcessId: string) {
 					});
 					stopPolling();
 				}
-			}, 2000);
+			}, POLL_INTERVAL);
 		};
 
 		const startTask = async () => {

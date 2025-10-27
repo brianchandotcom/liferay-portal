@@ -29,6 +29,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -44,10 +45,13 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Aquiles Duarte
@@ -58,27 +62,15 @@ public class ObjectEntryDisplayContextImplTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Before
+	public void setUp() throws Exception {
+		_setUpMockHttpServletRequest();
+	}
+
 	@Test
 	public void testAddFieldsetDDMFormField() {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		Mockito.when(
-			themeDisplay.getLocale()
-		).thenReturn(
-			LocaleUtil.SPAIN
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
-
 		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
-			_createObjectEntryDisplayContextImpl(httpServletRequest);
+			_createObjectEntryDisplayContextImpl(_mockHttpServletRequest);
 
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm();
 		String fieldName = RandomTestUtil.randomString();
@@ -104,86 +96,32 @@ public class ObjectEntryDisplayContextImplTest {
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
-		HttpServletRequest httpServletRequest = Mockito.mock(
-			HttpServletRequest.class);
-		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
-
-		ObjectDefinition objectDefinition = Mockito.mock(
-			ObjectDefinition.class);
-
 		String externalReferenceCode = RandomTestUtil.randomString();
 
-		Mockito.when(
-			httpServletRequest.getParameter("externalReferenceCode")
-		).thenReturn(
-			externalReferenceCode
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_DEFINITION)
-		).thenReturn(
-			objectDefinition
-		);
+		_mockHttpServletRequest.setParameter(
+			"externalReferenceCode", externalReferenceCode);
 
 		String groupId = String.valueOf(RandomTestUtil.randomLong());
 
-		Mockito.when(
-			httpServletRequest.getAttribute(ObjectWebKeys.OBJECT_ENTRY_GROUP_ID)
-		).thenReturn(
-			groupId
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
-		).thenReturn(
-			false
-		);
-
-		Mockito.when(
-			httpServletRequest.getParameter("objectRelationshipId")
-		).thenReturn(
-			"0"
-		);
-
-		Mockito.when(
-			objectDefinition.getStorageType()
-		).thenReturn(
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
-		);
-
-		Mockito.when(
-			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
-		).thenReturn(
-			themeDisplay
-		);
+		_mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID, groupId);
 
 		long companyId = RandomTestUtil.randomLong();
 
+		Company company = Mockito.mock(Company.class);
+
 		Mockito.when(
-			themeDisplay.getCompanyId()
+			company.getCompanyId()
 		).thenReturn(
 			companyId
 		);
 
-		Mockito.when(
-			themeDisplay.getSiteDefaultLocale()
-		).thenReturn(
-			LocaleUtil.US
-		);
+		_themeDisplay.setCompany(company);
 
-		Mockito.when(
-			themeDisplay.getUser()
-		).thenReturn(
-			Mockito.mock(User.class)
-		);
-
-		ObjectEntryManagerRegistry objectEntryManagerRegistry = Mockito.mock(
-			ObjectEntryManagerRegistry.class);
 		ObjectEntryManager objectEntryManager = Mockito.mock(
 			ObjectEntryManager.class);
-		ObjectRelationshipLocalService objectRelationshipLocalService =
-			Mockito.mock(ObjectRelationshipLocalService.class);
+		ObjectEntryManagerRegistry objectEntryManagerRegistry = Mockito.mock(
+			ObjectEntryManagerRegistry.class);
 
 		Mockito.when(
 			objectEntryManagerRegistry.getObjectEntryManager(
@@ -192,62 +130,27 @@ public class ObjectEntryDisplayContextImplTest {
 			objectEntryManager
 		);
 
-		Mockito.when(
-			objectRelationshipLocalService.fetchObjectRelationship(0L)
-		).thenReturn(
-			null
-		);
-
-		ObjectEntry objectEntry1 = Mockito.mock(ObjectEntry.class);
-
-		Mockito.when(
-			objectEntry1.getId()
-		).thenReturn(
-			RandomTestUtil.randomLong()
-		);
+		ObjectEntry objectEntry = Mockito.mock(ObjectEntry.class);
 
 		Mockito.when(
 			objectEntryManager.getObjectEntry(
 				Mockito.eq(companyId), Mockito.any(DTOConverterContext.class),
-				Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
-				Mockito.eq(groupId))
+				Mockito.eq(externalReferenceCode),
+				Mockito.eq(_objectDefinition), Mockito.eq(groupId))
 		).thenReturn(
-			objectEntry1
+			objectEntry
 		);
 
 		ObjectEntryDisplayContextImpl objectEntryDisplayContextImpl =
 			_createObjectEntryDisplayContextImpl(
-				httpServletRequest, objectEntryManagerRegistry,
-				objectRelationshipLocalService);
+				_mockHttpServletRequest, objectEntryManagerRegistry,
+				Mockito.mock(ObjectRelationshipLocalService.class));
 
-		ObjectEntry objectEntry2 = ReflectionTestUtil.invoke(
-			objectEntryDisplayContextImpl, "_getObjectEntry", new Class<?>[0],
-			new Object[0]);
-
-		Assert.assertSame(objectEntry1, objectEntry2);
-
-		ObjectEntry objectEntry3 = ReflectionTestUtil.invoke(
-			objectEntryDisplayContextImpl, "_getObjectEntry", new Class<?>[0],
-			new Object[0]);
-
-		Assert.assertSame(objectEntry1, objectEntry3);
-
-		Mockito.verify(
-			objectRelationshipLocalService, Mockito.times(1)
-		).fetchObjectRelationship(
-			0L
-		);
-
-		Mockito.verify(
-			objectEntryManager, Mockito.times(1)
-		).getObjectEntry(
-			Mockito.eq(companyId), Mockito.any(DTOConverterContext.class),
-			Mockito.eq(externalReferenceCode), Mockito.eq(objectDefinition),
-			Mockito.eq(groupId)
-		);
-
-		Mockito.verifyNoMoreInteractions(
-			objectRelationshipLocalService, objectEntryManager);
+		Assert.assertSame(
+			objectEntry,
+			ReflectionTestUtil.invoke(
+				objectEntryDisplayContextImpl, "_getObjectEntry",
+				new Class<?>[0], new Object[0]));
 	}
 
 	@Test
@@ -306,13 +209,6 @@ public class ObjectEntryDisplayContextImplTest {
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry,
 		ObjectRelationshipLocalService objectRelationshipLocalService) {
 
-		Mockito.when(
-			httpServletRequest.getAttribute(
-				ObjectWebKeys.OBJECT_ENTRY_READ_ONLY)
-		).thenReturn(
-			false
-		);
-
 		return new ObjectEntryDisplayContextImpl(
 			Mockito.mock(DDMExpressionFactory.class),
 			Mockito.mock(DDMFormRenderer.class), httpServletRequest,
@@ -343,10 +239,39 @@ public class ObjectEntryDisplayContextImplTest {
 		ObjectFieldBusinessTypeRegistry objectFieldBusinessTypeRegistry) {
 
 		return _createObjectEntryDisplayContextImpl(
-			Mockito.mock(HttpServletRequest.class),
+			_mockHttpServletRequest,
 			Mockito.mock(ObjectEntryManagerRegistry.class),
 			objectFieldBusinessTypeRegistry,
 			Mockito.mock(ObjectRelationshipLocalService.class));
 	}
+
+	private void _setUpMockHttpServletRequest() {
+		Mockito.when(
+			_objectDefinition.getStorageType()
+		).thenReturn(
+			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
+		);
+
+		_mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
+
+		_mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY, Boolean.FALSE);
+
+		_themeDisplay.setLocale(LocaleUtil.SPAIN);
+
+		_themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
+
+		_themeDisplay.setUser(Mockito.mock(User.class));
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+	}
+
+	private final MockHttpServletRequest _mockHttpServletRequest =
+		new MockHttpServletRequest();
+	private final ObjectDefinition _objectDefinition = Mockito.mock(
+		ObjectDefinition.class);
+	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
 
 }

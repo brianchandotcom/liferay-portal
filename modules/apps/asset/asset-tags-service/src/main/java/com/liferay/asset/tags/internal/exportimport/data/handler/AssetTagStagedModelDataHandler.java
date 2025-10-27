@@ -173,8 +173,25 @@ public class AssetTagStagedModelDataHandler
 				serviceContext);
 		}
 		else {
-			importedAssetTag = _updateTag(
-				existingAssetTag, assetTag.getName(), userId, serviceContext);
+			try {
+				importedAssetTag = _assetTagLocalService.updateTag(
+					existingAssetTag.getExternalReferenceCode(), userId,
+					existingAssetTag.getTagId(), assetTag.getName(),
+					serviceContext);
+			}
+			catch (DuplicateTagException duplicateTagException) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(duplicateTagException);
+				}
+
+				importedAssetTag = _assetTagLocalService.updateTag(
+					existingAssetTag.getExternalReferenceCode(), userId,
+					existingAssetTag.getTagId(),
+					_getUniqueTagName(
+						portletDataContext.getScopeGroupId(),
+						assetTag.getName()),
+					serviceContext);
+			}
 		}
 
 		portletDataContext.importClassedModel(assetTag, importedAssetTag);
@@ -212,46 +229,6 @@ public class AssetTagStagedModelDataHandler
 
 			if (_assetTagLocalService.fetchTag(groupId, newName) == null) {
 				return newName;
-			}
-		}
-	}
-
-	private AssetTag _updateTag(
-			AssetTag assetTag, String name, long userId,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		try {
-			return _assetTagLocalService.updateTag(
-				assetTag.getExternalReferenceCode(), userId,
-				assetTag.getTagId(), name, serviceContext);
-		}
-		catch (DuplicateTagException duplicateTagException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(duplicateTagException);
-			}
-		}
-
-		for (int index = 1;; index++) {
-			String newName;
-
-			if (index == 1) {
-				newName = name + " (Duplicate)";
-			}
-			else {
-				newName = StringBundler.concat(
-					name, " (Duplicate-", index, ")");
-			}
-
-			try {
-				return _assetTagLocalService.updateTag(
-					assetTag.getExternalReferenceCode(), userId,
-					assetTag.getTagId(), newName, serviceContext);
-			}
-			catch (DuplicateTagException duplicateTagException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(duplicateTagException);
-				}
 			}
 		}
 	}

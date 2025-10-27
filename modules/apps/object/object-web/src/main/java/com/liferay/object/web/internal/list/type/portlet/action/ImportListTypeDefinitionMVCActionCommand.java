@@ -56,6 +56,9 @@ public class ImportListTypeDefinitionMVCActionCommand
 
 		try {
 			_importListTypeDefinition(actionRequest);
+
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, _jsonFactory.createJSONObject());
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

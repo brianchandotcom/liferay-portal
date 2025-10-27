@@ -23,6 +23,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldSet;
 import com.liferay.info.field.InfoFieldSetEntry;
+import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
@@ -1341,7 +1342,15 @@ public class ActionUtil {
 					objectDefinitionName, readOnly, repeatable,
 					segmentsExperienceId, serviceContext, stylesJSONObject);
 			}
-			else {
+			else if (infoFieldSetEntry instanceof InfoField) {
+				InfoField<?> infoField = (InfoField<?>)infoFieldSetEntry;
+
+				if (RelationshipInfoFieldType.INSTANCE ==
+						infoField.getInfoFieldType()) {
+
+					continue;
+				}
+
 				_addInputFragmentEntryLink(
 					addedFragmentEntryLinks, null, formManager, null,
 					(InfoField<?>)infoFieldSetEntry, layout, layoutStructure,

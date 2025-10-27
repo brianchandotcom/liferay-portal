@@ -43,7 +43,7 @@ public class EditAssetVocabularyHeaderProductNavigationControlMenuEntry
 		Boolean show = (Boolean)httpServletRequest.getAttribute(
 			AssetCategoriesAdminWebKeys.SHOW_EDIT_ASSET_VOCABULARY_HEADER);
 
-		if ((show == null) || !show) {
+		if (!Boolean.TRUE.equals(show)) {
 			return false;
 		}
 

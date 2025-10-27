@@ -57,7 +57,7 @@ export class HeadlessAssetLibraryApiHelper {
 
 	async deleteAssetLibrary(externalReferenceCode: string) {
 		return this.apiHelpers.delete(
-			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/by-external-reference-code/${externalReferenceCode}`
+			`${this.apiHelpers.baseUrl}${this.basePath}/asset-libraries/${externalReferenceCode}`
 		);
 	}
 }

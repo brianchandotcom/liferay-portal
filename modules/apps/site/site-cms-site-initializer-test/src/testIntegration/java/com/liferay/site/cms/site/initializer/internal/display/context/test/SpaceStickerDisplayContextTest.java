@@ -141,7 +141,8 @@ public class SpaceStickerDisplayContextTest extends BaseDisplayContextTestCase {
 		_groupLocalService.updateGroup(
 			depotGroup.getGroupId(), unicodeProperties.toString());
 
-		return _assetLibraryResource.getAssetLibrary(depotEntry.getGroupId());
+		return _assetLibraryResource.getAssetLibrary(
+			depotGroup.getExternalReferenceCode());
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(long groupId)

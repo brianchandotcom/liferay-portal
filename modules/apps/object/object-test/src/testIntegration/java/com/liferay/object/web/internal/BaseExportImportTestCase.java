@@ -148,8 +148,7 @@ public abstract class BaseExportImportTestCase {
 			(MockHttpServletResponse)
 				mockLiferayPortletActionResponse.getHttpServletResponse();
 
-		Assert.assertTrue(
-			Validator.isNull(mockHttpServletResponse.getContentAsString()));
+		Assert.assertEquals("{}", mockHttpServletResponse.getContentAsString());
 
 		// MVCResourceCommand
 

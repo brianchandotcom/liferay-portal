@@ -20,14 +20,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _getLayoutUtilityPageEntryId(groupId = null, layoutUtilityPageName = null) {
+	macro _getLayoutUtilityPageEntryId(groupId = null, layoutUtilityPageName = null, specificURL = null) {
 		Variables.assertDefined(parameterList = "${groupId},${layoutUtilityPageName}");
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/get-layout-utility-page-entries \
@@ -45,14 +45,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _setDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null) {
+	macro _setDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/set-default-layout-utility-page-entry \
@@ -64,14 +64,14 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro _unsetDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null) {
+	macro _unsetDefaultLayoutUtilityPage(layoutUtilityPageEntryId = null, specificURL = null) {
 		Variables.assertDefined(parameterList = ${layoutUtilityPageEntryId});
 
 		if (!(isSet(portalURL))) {
 			var portalURL = JSONCompany.getPortalURL();
 		}
 
-		var userLoginInfo = JSONUtil2.formatJSONUser();
+		var userLoginInfo = JSONUtil2.formatJSONUser(domain = ${specificURL});
 
 		var curl = '''
 			${portalURL}/api/jsonws/layoututilitypage.layoututilitypageentry/unset-default-layout-utility-page-entry \

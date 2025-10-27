@@ -76,12 +76,7 @@ const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
-const assigneeTest = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPS-179669': {enabled: true},
-	})
-);
+const assigneeTest = test;
 
 const scheduleTest = mergeTests(
 	test,

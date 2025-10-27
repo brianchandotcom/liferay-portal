@@ -46,7 +46,6 @@ const test = mergeTests(
 		'LPD-32050': {enabled: true},
 		'LPD-60546': {enabled: true},
 		'LPS-178052': {enabled: true},
-		'LPS-179669': {enabled: true},
 	}),
 	fragmentsPagesTest,
 	isolatedSiteTest,

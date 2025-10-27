@@ -9,6 +9,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.TableOrphanReferencesDataCleanupPreupgradeProcess;
+import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
 
 /**
  * @author Luis Ortiz
@@ -21,17 +22,17 @@ public class JournalDataCleanupPreupgradeProcess
 		upgrade(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
-					"from ClassName_ where value = 'com.liferay.journal.model.",
-					"JournalArticle')"),
+					OrphanReferencesDataCleanupUtil.SOURCE_TABLE_ALIAS,
+					".classNameId = (select classNameId from ClassName_ where ",
+					"value = 'com.liferay.journal.model.JournalArticle')"),
 				new String[] {"classNameId"}, "classPK",
 				new String[] {"resourcePrimKey", "id_"}, "JournalArticle"));
 		upgrade(
 			new FilterableAllTablesOrphanReferencesDataCleanupPreupgradeProcess(
 				StringBundler.concat(
-					"[$SOURCE_TABLE_ALIAS$].classNameId = (select classNameId ",
-					"from ClassName_ where value = 'com.liferay.journal.model.",
-					"JournalFeed')"),
+					OrphanReferencesDataCleanupUtil.SOURCE_TABLE_ALIAS,
+					".classNameId = (select classNameId from ClassName_ where ",
+					"value = 'com.liferay.journal.model.JournalFeed')"),
 				new String[] {"classNameId"}, "classPK", new String[] {"id_"},
 				"JournalFeed"));
 		upgrade(

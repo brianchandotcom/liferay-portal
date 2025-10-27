@@ -30,6 +30,8 @@ import java.util.List;
  */
 public class OrphanReferencesDataCleanupUtil {
 
+	public static final String SOURCE_TABLE_ALIAS = "s";
+
 	public static void cleanUpTable(
 			Connection connection, String sourceAdditionalWhereClause,
 			String sourceColumnName, String sourceTableName,
@@ -47,20 +49,20 @@ public class OrphanReferencesDataCleanupUtil {
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
-					"select ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
+					"select ", SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 					sourceColumnName, ", count(1) from ", sourceTableName,
-					StringPool.SPACE, _SOURCE_TABLE_ALIAS,
+					StringPool.SPACE, SOURCE_TABLE_ALIAS,
 					getWhereClause(
 						connection, sourceAdditionalWhereClause,
 						sourceColumnName, sourceTableName, targetColumnNames,
 						targetTableName),
-					" group by ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
+					" group by ", SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 					sourceColumnName));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"delete ", (db.getDBType() == DBType.MYSQL) ? "s " : "",
 					"from ", sourceTableName, StringPool.SPACE,
-					_SOURCE_TABLE_ALIAS,
+					SOURCE_TABLE_ALIAS,
 					getWhereClause(
 						connection, sourceAdditionalWhereClause,
 						sourceColumnName, sourceTableName, targetColumnNames,
@@ -115,12 +117,12 @@ public class OrphanReferencesDataCleanupUtil {
 
 		if (dbInspector.isNumeric(sourceTableName, sourceColumnName)) {
 			additionalNullCheck = StringBundler.concat(
-				" and ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
+				" and ", SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 				sourceColumnName, " != 0");
 		}
 		else if (db.getDBType() != DBType.ORACLE) {
 			additionalNullCheck = StringBundler.concat(
-				" and ", _SOURCE_TABLE_ALIAS, StringPool.PERIOD,
+				" and ", SOURCE_TABLE_ALIAS, StringPool.PERIOD,
 				sourceColumnName, " != ''");
 		}
 
@@ -137,13 +139,9 @@ public class OrphanReferencesDataCleanupUtil {
 				targetColumnNames, targetTableName);
 		}
 
-		sourceAdditionalWhereClause = StringUtil.replace(
-			sourceAdditionalWhereClause, "[$SOURCE_TABLE_ALIAS$]",
-			_SOURCE_TABLE_ALIAS);
-
 		return StringBundler.concat(
 			query, " and ",
-			_SOURCE_TABLE_ALIAS + StringPool.PERIOD + sourceColumnName,
+			SOURCE_TABLE_ALIAS + StringPool.PERIOD + sourceColumnName,
 			" is not null", additionalNullCheck,
 			(sourceAdditionalWhereClause != null) ?
 				" and " + sourceAdditionalWhereClause : "");
@@ -171,7 +169,7 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(StringPool.PERIOD);
 			sb.append(targetColumnName);
 			sb.append(" = ");
-			sb.append(_SOURCE_TABLE_ALIAS);
+			sb.append(SOURCE_TABLE_ALIAS);
 			sb.append(StringPool.PERIOD);
 			sb.append(sourceColumnName);
 
@@ -222,7 +220,7 @@ public class OrphanReferencesDataCleanupUtil {
 			sb.append(StringPool.PERIOD);
 			sb.append(targetColumnName);
 			sb.append(" = ");
-			sb.append(_SOURCE_TABLE_ALIAS);
+			sb.append(SOURCE_TABLE_ALIAS);
 			sb.append(StringPool.PERIOD);
 			sb.append(sourceColumnName);
 			sb.append(" or ");
@@ -243,8 +241,6 @@ public class OrphanReferencesDataCleanupUtil {
 
 		return sb.toString();
 	}
-
-	private static final String _SOURCE_TABLE_ALIAS = "s";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrphanReferencesDataCleanupUtil.class);

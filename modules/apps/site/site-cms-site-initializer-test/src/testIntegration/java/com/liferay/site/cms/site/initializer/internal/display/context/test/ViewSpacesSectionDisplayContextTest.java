@@ -12,6 +12,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -220,7 +221,10 @@ public class ViewSpacesSectionDisplayContextTest
 				}
 			});
 
-		return _assetLibraryResource.getAssetLibrary(depotEntry.getGroupId());
+		Group depotEntryGroup = depotEntry.getGroup();
+
+		return _assetLibraryResource.getAssetLibrary(
+			depotEntryGroup.getExternalReferenceCode());
 	}
 
 	private AssetLibrary _addPinnedByMeAssetLibrary() throws Exception {
@@ -229,8 +233,10 @@ public class ViewSpacesSectionDisplayContextTest
 		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
 			assetLibrary.getId());
 
+		Group depotEntryGroup = depotEntry.getGroup();
+
 		return _assetLibraryResource.putAssetLibraryPin(
-			depotEntry.getGroupId());
+			depotEntryGroup.getExternalReferenceCode());
 	}
 
 	private AssetLibrary _addPinnedByOtherUserAssetLibrary(User user)
@@ -254,7 +260,10 @@ public class ViewSpacesSectionDisplayContextTest
 			user
 		).build();
 
-		return assetLibraryResource.putAssetLibraryPin(depotEntry.getGroupId());
+		Group depotEntryGroup = depotEntry.getGroup();
+
+		return assetLibraryResource.putAssetLibraryPin(
+			depotEntryGroup.getExternalReferenceCode());
 	}
 
 	private Object _getViewSpacesDisplayContext(

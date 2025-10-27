@@ -54,10 +54,10 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 	public String getAPIURL() {
 		return StringBundler.concat(
-			"/o/headless-asset-library/v1.0/asset-libraries",
-			"/by-external-reference-code/", _externalReferenceCode,
-			"/connected-sites?page=", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
-			"&pageSize=", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
+			"/o/headless-asset-library/v1.0/asset-libraries/",
+			_externalReferenceCode, "/connected-sites?page=",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE, "&pageSize=",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE);
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -92,10 +92,9 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 			_getSearchableFDSActionDropdownItem(false),
 			new FDSActionDropdownItem(
 				StringBundler.concat(
-					"/o/headless-asset-library/v1.0/asset-libraries",
-					"/by-external-reference-code/", _externalReferenceCode,
-					"/connected-sites/by-external-reference-code",
-					"/{externalReferenceCode}"),
+					"/o/headless-asset-library/v1.0/asset-libraries/",
+					_externalReferenceCode,
+					"/connected-sites/{externalReferenceCode}"),
 				null, "delete",
 				_language.get(_httpServletRequest, "disconnect"), "delete",
 				null, "headless"));
@@ -120,10 +119,9 @@ public class ViewSpaceSitesSummarySectionDisplayContext {
 
 		FDSActionDropdownItem fdsActionDropdownItem = new FDSActionDropdownItem(
 			StringBundler.concat(
-				"/o/headless-asset-library/v1.0/asset-libraries",
-				"/by-external-reference-code/", _externalReferenceCode,
-				"/connected-sites/by-external-reference-code",
-				"/{externalReferenceCode}"),
+				"/o/headless-asset-library/v1.0/asset-libraries/",
+				_externalReferenceCode,
+				"/connected-sites/{externalReferenceCode}"),
 			null, searchable ? "make-searchable" : "make-unsearchable",
 			_language.get(
 				_httpServletRequest,

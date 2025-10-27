@@ -59,10 +59,9 @@ public class ViewSpaceMembersSummarySectionDisplayContext {
 	}
 
 	public String getAPIURL(String type) {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
-		sb.append("/o/headless-asset-library/v1.0/asset-libraries");
-		sb.append("/by-external-reference-code/");
+		sb.append("/o/headless-asset-library/v1.0/asset-libraries/");
 		sb.append(_externalReferenceCode);
 		sb.append("/");
 		sb.append(type);

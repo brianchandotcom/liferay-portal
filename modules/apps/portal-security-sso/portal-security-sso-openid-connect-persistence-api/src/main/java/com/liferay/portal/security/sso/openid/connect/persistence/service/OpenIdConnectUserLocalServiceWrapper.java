@@ -32,11 +32,11 @@ public class OpenIdConnectUserLocalServiceWrapper
 	@Override
 	public com.liferay.portal.security.sso.openid.connect.persistence.model.
 		OpenIdConnectUser addOpenIdConnectUser(
-				long companyId, long userId, String issuer, String subject)
+				long userId, String issuer, String subject)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _openIdConnectUserLocalService.addOpenIdConnectUser(
-			companyId, userId, issuer, subject);
+			userId, issuer, subject);
 	}
 
 	/**

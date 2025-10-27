@@ -15,12 +15,12 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemExternalReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionListStyle;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionViewport;
-import com.liferay.headless.admin.site.client.dto.v1_0.CollectionViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
@@ -264,9 +264,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getCollectionPageElement(
-				_getCollectionListStyle(
+			_getCollectionDisplayPageElement(
+				_getCollectionDisplayListStyle(
 					null, null, ListStyle.ListStyleType.FLEX_COLUMN, null),
+				_getCollectionDisplayViewports(),
 				_getCollectionReference(
 					"com.liferay.asset.internal.info.collection.provider." +
 						"RecentContentInfoCollectionProvider",
@@ -275,7 +276,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						RandomTestUtil.randomString()
 					).build(),
 					null),
-				_getCollectionViewports(), true, true,
+				true, true,
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), RandomTestUtil.randomString()
 				).put(
@@ -283,7 +284,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				).build(),
 				true, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				CollectionPageElementDefinition.PaginationType.NONE,
+				CollectionDisplayPageElementDefinition.PaginationType.NONE,
 				RandomTestUtil.randomString()));
 
 		AssetListEntry assetListEntry =
@@ -293,20 +294,21 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, new ServiceContext());
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getCollectionPageElement(
-				_getCollectionListStyle(
+			_getCollectionDisplayPageElement(
+				_getCollectionDisplayListStyle(
 					"com.liferay.asset.internal.info.renderer." +
 						"AssetEntryFullContentInfoItemRenderer",
 					"com.liferay.asset.info.internal.list.renderer." +
 						"NumberedAssetEntryBasicInfoListRenderer",
 					ListStyle.ListStyleType.FLEX_ROW,
 					RandomTestUtil.randomString()),
+				_getCollectionDisplayViewports(),
 				_getCollectionReference(
 					null, null, assetListEntry.getExternalReferenceCode()),
-				_getCollectionViewports(), true, true, null, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+				true, true, null, true, RandomTestUtil.randomString(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				CollectionPageElementDefinition.PaginationType.SIMPLE,
+				RandomTestUtil.randomInt(),
+				CollectionDisplayPageElementDefinition.PaginationType.SIMPLE,
 				RandomTestUtil.randomString()));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
@@ -447,9 +449,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String externalReferenceCode = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getCollectionPageElement(
-				_getCollectionListStyle(
+			_getCollectionDisplayPageElement(
+				_getCollectionDisplayListStyle(
 					null, null, ListStyle.ListStyleType.FLEX_COLUMN, null),
+				_getCollectionDisplayViewports(),
 				_getCollectionReference(
 					"com.liferay.asset.internal.info.collection.provider." +
 						"RecentContentInfoCollectionProvider",
@@ -458,7 +461,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						RandomTestUtil.randomString()
 					).build(),
 					null),
-				_getCollectionViewports(), true, true,
+				true, true,
 				HashMapBuilder.put(
 					LocaleUtil.SPAIN.toString(), RandomTestUtil.randomString()
 				).put(
@@ -466,7 +469,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				).build(),
 				true, RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				CollectionPageElementDefinition.PaginationType.NONE,
+				CollectionDisplayPageElementDefinition.PaginationType.NONE,
 				externalReferenceCode));
 
 		AssetListEntry assetListEntry =
@@ -476,28 +479,29 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, new ServiceContext());
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getCollectionPageElement(
-				_getCollectionListStyle(
+			_getCollectionDisplayPageElement(
+				_getCollectionDisplayListStyle(
 					"com.liferay.asset.internal.info.renderer." +
 						"AssetEntryFullContentInfoItemRenderer",
 					"com.liferay.asset.info.internal.list.renderer." +
 						"NumberedAssetEntryBasicInfoListRenderer",
 					ListStyle.ListStyleType.FLEX_ROW,
 					RandomTestUtil.randomString()),
+				_getCollectionDisplayViewports(),
 				_getCollectionReference(
 					null, null, assetListEntry.getExternalReferenceCode()),
-				_getCollectionViewports(), true, true, null, true,
-				RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
+				true, true, null, true, RandomTestUtil.randomString(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				CollectionPageElementDefinition.PaginationType.SIMPLE,
+				RandomTestUtil.randomInt(),
+				CollectionDisplayPageElementDefinition.PaginationType.SIMPLE,
 				externalReferenceCode));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
-			_getCollectionPageElement(
+			_getCollectionDisplayPageElement(
 				null, null, null, true, true, null, true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomInt(),
 				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				CollectionPageElementDefinition.PaginationType.SIMPLE,
+				CollectionDisplayPageElementDefinition.PaginationType.SIMPLE,
 				externalReferenceCode));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
@@ -792,15 +796,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		};
 	}
 
-	private CollectionListStyle _getCollectionListStyle(
+	private CollectionDisplayListStyle _getCollectionDisplayListStyle(
 		String listItemStyleClassName, String listStyleClassName,
 		ListStyle.ListStyleType listStyleType, String templateKey) {
 
 		if (Validator.isNotNull(templateKey)) {
 			TemplateListStyle templateListStyle = new TemplateListStyle();
 
-			templateListStyle.setCollectionListStyleType(
-				CollectionListStyle.CollectionListStyleType.TEMPLATE);
+			templateListStyle.setCollectionDisplayListStyleType(
+				CollectionDisplayListStyle.CollectionDisplayListStyleType.
+					TEMPLATE);
 			templateListStyle.setListItemStyleClassName(listItemStyleClassName);
 			templateListStyle.setListStyleClassName(listStyleClassName);
 			templateListStyle.setTemplateKey(templateKey);
@@ -821,40 +826,43 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		ListStyle listStyle = new ListStyle();
 
-		listStyle.setCollectionListStyleType(
-			CollectionListStyle.CollectionListStyleType.LIST_STYLE);
+		listStyle.setCollectionDisplayListStyleType(
+			CollectionDisplayListStyle.CollectionDisplayListStyleType.
+				LIST_STYLE);
 		listStyle.setListStyleDefinition(listStyleDefinition);
 		listStyle.setListStyleType(listStyleType);
 
 		return listStyle;
 	}
 
-	private PageElement _getCollectionPageElement(
-			CollectionListStyle collectionListStyle,
-			CollectionReference collectionReference,
-			CollectionViewport[] collectionViewports, Boolean displayAllItems,
+	private PageElement _getCollectionDisplayPageElement(
+			CollectionDisplayListStyle collectionDisplayListStyle,
+			CollectionDisplayViewport[] collectionDisplayViewports,
+			CollectionReference collectionReference, Boolean displayAllItems,
 			Boolean displayAllPages,
 			Map<String, String> emptyCollectionMessages, Boolean hidden,
 			String name, Integer numberOfItems, Integer numberOfItemsPerPage,
 			Integer numberOfPages,
-			CollectionPageElementDefinition.PaginationType paginationType,
+			CollectionDisplayPageElementDefinition.PaginationType
+				paginationType,
 			String pageElementExternalReferenceCode)
 		throws Exception {
 
-		CollectionPageElementDefinition collectionPageElementDefinition =
-			new CollectionPageElementDefinition();
+		CollectionDisplayPageElementDefinition
+			collectionDisplayPageElementDefinition =
+				new CollectionDisplayPageElementDefinition();
 
-		collectionPageElementDefinition.setCollectionReference(
+		collectionDisplayPageElementDefinition.setCollectionDisplayListStyle(
+			() -> collectionDisplayListStyle);
+		collectionDisplayPageElementDefinition.setCollectionDisplayViewports(
+			() -> collectionDisplayViewports);
+		collectionDisplayPageElementDefinition.setCollectionReference(
 			() -> collectionReference);
-		collectionPageElementDefinition.setCollectionListStyle(
-			() -> collectionListStyle);
-		collectionPageElementDefinition.setCollectionViewports(
-			() -> collectionViewports);
-		collectionPageElementDefinition.setDisplayAllItems(
+		collectionDisplayPageElementDefinition.setDisplayAllItems(
 			() -> displayAllItems);
-		collectionPageElementDefinition.setDisplayAllPages(
+		collectionDisplayPageElementDefinition.setDisplayAllPages(
 			() -> displayAllPages);
-		collectionPageElementDefinition.setEmptyCollectionConfig(
+		collectionDisplayPageElementDefinition.setEmptyCollectionConfig(
 			() -> {
 				if (MapUtil.isEmpty(emptyCollectionMessages)) {
 					return null;
@@ -869,18 +877,72 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 				return emptyCollectionConfig;
 			});
-		collectionPageElementDefinition.setHidden(() -> hidden);
-		collectionPageElementDefinition.setName(() -> name);
-		collectionPageElementDefinition.setNumberOfItems(() -> numberOfItems);
-		collectionPageElementDefinition.setNumberOfItemsPerPage(
+		collectionDisplayPageElementDefinition.setHidden(() -> hidden);
+		collectionDisplayPageElementDefinition.setName(() -> name);
+		collectionDisplayPageElementDefinition.setNumberOfItems(
+			() -> numberOfItems);
+		collectionDisplayPageElementDefinition.setNumberOfItemsPerPage(
 			() -> numberOfItemsPerPage);
-		collectionPageElementDefinition.setNumberOfPages(() -> numberOfPages);
-		collectionPageElementDefinition.setPaginationType(() -> paginationType);
-		collectionPageElementDefinition.setType(
-			PageElementDefinition.Type.COLLECTION);
+		collectionDisplayPageElementDefinition.setNumberOfPages(
+			() -> numberOfPages);
+		collectionDisplayPageElementDefinition.setPaginationType(
+			() -> paginationType);
+		collectionDisplayPageElementDefinition.setType(
+			PageElementDefinition.Type.COLLECTION_DISPLAY);
 
 		return _getPageElement(
-			collectionPageElementDefinition, pageElementExternalReferenceCode);
+			collectionDisplayPageElementDefinition,
+			pageElementExternalReferenceCode);
+	}
+
+	private CollectionDisplayViewport[] _getCollectionDisplayViewports() {
+		return new CollectionDisplayViewport[] {
+			new CollectionDisplayViewport() {
+				{
+					setCollectionDisplayViewportDefinition(
+						() -> new CollectionDisplayViewportDefinition() {
+							{
+								setAlign(Align.START);
+								setFlexWrap(FlexWrap.WRAP_REVERSE);
+								setHidden(false);
+								setJustify(Justify.CENTER);
+								setNumberOfColumns(1);
+							}
+						});
+					setId(Id.LANDSCAPE_MOBILE);
+				}
+			},
+			new CollectionDisplayViewport() {
+				{
+					setCollectionDisplayViewportDefinition(
+						() -> new CollectionDisplayViewportDefinition() {
+							{
+								setAlign(Align.CENTER);
+								setFlexWrap(FlexWrap.NO_WRAP);
+								setHidden(true);
+								setJustify(Justify.SPACE_AROUND);
+								setNumberOfColumns(4);
+							}
+						});
+					setId(Id.PORTRAIT_MOBILE);
+				}
+			},
+			new CollectionDisplayViewport() {
+				{
+					setCollectionDisplayViewportDefinition(
+						() -> new CollectionDisplayViewportDefinition() {
+							{
+								setAlign(Align.STRETCH);
+								setFlexWrap(FlexWrap.WRAP);
+								setHidden(false);
+								setJustify(Justify.SPACE_BETWEEN);
+								setNumberOfColumns(12);
+							}
+						});
+					setId(Id.TABLET);
+				}
+			}
+		};
 	}
 
 	private CollectionReference _getCollectionReference(
@@ -902,62 +964,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		collectionItemExternalReference.setCollectionConfiguration(
 			collectionConfiguration);
-		collectionItemExternalReference.setExternalReferenceCode(
-			externalReferenceCode);
 		collectionItemExternalReference.setCollectionType(
 			CollectionReference.CollectionType.COLLECTION);
+		collectionItemExternalReference.setExternalReferenceCode(
+			externalReferenceCode);
 
 		return collectionItemExternalReference;
-	}
-
-	private CollectionViewport[] _getCollectionViewports() {
-		return new CollectionViewport[] {
-			new CollectionViewport() {
-				{
-					setCollectionViewportDefinition(
-						() -> new CollectionViewportDefinition() {
-							{
-								setAlign(Align.START);
-								setFlexWrap(FlexWrap.WRAP_REVERSE);
-								setHidden(false);
-								setJustify(Justify.CENTER);
-								setNumberOfColumns(1);
-							}
-						});
-					setId(Id.LANDSCAPE_MOBILE);
-				}
-			},
-			new CollectionViewport() {
-				{
-					setCollectionViewportDefinition(
-						() -> new CollectionViewportDefinition() {
-							{
-								setAlign(Align.CENTER);
-								setFlexWrap(FlexWrap.NO_WRAP);
-								setHidden(true);
-								setJustify(Justify.SPACE_AROUND);
-								setNumberOfColumns(4);
-							}
-						});
-					setId(Id.PORTRAIT_MOBILE);
-				}
-			},
-			new CollectionViewport() {
-				{
-					setCollectionViewportDefinition(
-						() -> new CollectionViewportDefinition() {
-							{
-								setAlign(Align.STRETCH);
-								setFlexWrap(FlexWrap.WRAP);
-								setHidden(false);
-								setJustify(Justify.SPACE_BETWEEN);
-								setNumberOfColumns(12);
-							}
-						});
-					setId(Id.TABLET);
-				}
-			}
-		};
 	}
 
 	private PageElement _getContainerPageElement(

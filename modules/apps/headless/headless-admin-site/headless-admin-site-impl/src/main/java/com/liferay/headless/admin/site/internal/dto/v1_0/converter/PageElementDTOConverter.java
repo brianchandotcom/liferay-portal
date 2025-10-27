@@ -7,8 +7,8 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemPageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.DropZonePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FormPageElementDefinition;
@@ -124,7 +124,7 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
 
-			return _collectionPageElementDefinitionDTOConverter.toDTO(
+			return _collectionDisplayPageElementDefinitionDTOConverter.toDTO(
 				dtoConverterContext,
 				(CollectionStyledLayoutStructureItem)layoutStructureItem);
 		}
@@ -274,11 +274,12 @@ public class PageElementDTOConverter
 	}
 
 	@Reference(
-		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.CollectionPageElementDefinitionDTOConverter)"
+		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.CollectionDisplayPageElementDefinitionDTOConverter)"
 	)
 	private DTOConverter
-		<CollectionStyledLayoutStructureItem, CollectionPageElementDefinition>
-			_collectionPageElementDefinitionDTOConverter;
+		<CollectionStyledLayoutStructureItem,
+		 CollectionDisplayPageElementDefinition>
+			_collectionDisplayPageElementDefinitionDTOConverter;
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.ContainerPageElementDefinitionDTOConverter)"

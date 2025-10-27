@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * @author Mikel Lorza
  */
-public class CollectionListStyleUtil {
+public class CollectionDisplayListStyleUtil {
 
 	public static final Map<String, String> externalToInternalValuesMap =
 		HashMapBuilder.put(

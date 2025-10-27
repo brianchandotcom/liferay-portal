@@ -43,7 +43,7 @@ public class LayoutStructureItemImporterUtil {
 			PageElementDefinition.Type.class);
 
 		_layoutStructureItemImporters.put(
-			PageElementDefinition.Type.COLLECTION,
+			PageElementDefinition.Type.COLLECTION_DISPLAY,
 			new CollectionLayoutStructureItemImporter());
 		_layoutStructureItemImporters.put(
 			PageElementDefinition.Type.COLLECTION_ITEM,

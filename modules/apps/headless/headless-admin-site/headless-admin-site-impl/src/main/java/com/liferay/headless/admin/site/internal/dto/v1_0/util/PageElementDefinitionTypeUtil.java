@@ -48,7 +48,7 @@ public class PageElementDefinitionTypeUtil {
 
 	private static final Map<PageElementDefinition.Type, String>
 		_externalToInternalValuesMap = HashMapBuilder.put(
-			PageElementDefinition.Type.COLLECTION,
+			PageElementDefinition.Type.COLLECTION_DISPLAY,
 			LayoutDataItemTypeConstants.TYPE_COLLECTION
 		).put(
 			PageElementDefinition.Type.COLLECTION_ITEM,

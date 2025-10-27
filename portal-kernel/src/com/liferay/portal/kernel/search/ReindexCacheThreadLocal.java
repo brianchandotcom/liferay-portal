@@ -50,8 +50,7 @@ public class ReindexCacheThreadLocal {
 	}
 
 	public static <T> T getScopeReindexCache(
-		String ownerName, String scopeName,
-		Supplier<Integer> countSupplier,
+		String ownerName, String scopeName, Supplier<Integer> countSupplier,
 		Supplier<Integer> scopeCountSupplier,
 		IntFunction<T> reindexCacheFunction) {
 

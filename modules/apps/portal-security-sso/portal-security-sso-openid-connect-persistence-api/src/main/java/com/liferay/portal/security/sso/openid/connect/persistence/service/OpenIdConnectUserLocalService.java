@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
@@ -52,9 +53,6 @@ public interface OpenIdConnectUserLocalService
 	 *
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.security.sso.openid.connect.persistence.service.impl.OpenIdConnectUserLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the open ID connect user local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link OpenIdConnectUserLocalServiceUtil} if injection and service tracking are not available.
 	 */
-	public OpenIdConnectUser addOpenIdConnectUser(
-			long companyId, long userId, String issuer, String subject)
-		throws PortalException;
 
 	/**
 	 * Adds the open ID connect user to the database. Also notifies the appropriate model listeners.
@@ -69,6 +67,10 @@ public interface OpenIdConnectUserLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public OpenIdConnectUser addOpenIdConnectUser(
 		OpenIdConnectUser openIdConnectUser);
+
+	public OpenIdConnectUser addOpenIdConnectUser(
+			User user, String issuer, String subject)
+		throws PortalException;
 
 	/**
 	 * Creates a new open ID connect user with the primary key. Does not add the open ID connect user to the database.

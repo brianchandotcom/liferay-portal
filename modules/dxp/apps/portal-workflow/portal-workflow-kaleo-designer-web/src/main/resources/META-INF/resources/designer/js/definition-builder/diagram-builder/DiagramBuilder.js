@@ -397,7 +397,7 @@ export default function DiagramBuilder() {
 
 	useEffect(() => {
 		if (deserialize && currentEditor) {
-			const xmlDefinition = currentEditor.getData();
+			const xmlDefinition = currentEditor.getValue();
 
 			deserializeUtil.updateXMLDefinition(xmlDefinition);
 

@@ -9,13 +9,12 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayToolbar from '@clayui/toolbar';
-import {ClassicEditor} from 'frontend-editor-ckeditor-web';
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import {CodeMirrorEditor} from '@liferay/object-js-components-web';
+import React, {useContext, useEffect, useState} from 'react';
 import {isEdge, isNode} from 'react-flow-renderer';
 
 import XMLUtil from '../../../js/definition-builder/source-builder/xmlUtil';
 import {DefinitionBuilderContext} from '../DefinitionBuilderContext';
-import {editorConfig} from '../constants';
 import {xmlNamespace} from './constants';
 import DeserializeUtil from './deserializeUtil';
 import {serializeDefinition} from './serializeUtil';
@@ -31,21 +30,20 @@ export default function SourceBuilder() {
 		setCurrentEditor,
 		workflowDefinitionVersions,
 	} = useContext(DefinitionBuilderContext);
-	const editorRef = useRef();
 	const [loading, setLoading] = useState(true);
 	const [showImportSuccessMessage, setShowImportSuccessMessage] =
 		useState(false);
 
 	useEffect(() => {
 		function loadXmlContent() {
-			if (currentEditor?.mode === 'source' && elements) {
+			if (currentEditor && elements) {
 				const metadata = {
 					description: definitionDescription,
 					name: definitionName,
 					version: workflowDefinitionVersions.length,
 				};
 
-				const currentData = currentEditor.getData();
+				const currentData = currentEditor.getValue();
 				let currentElements;
 
 				if (currentData) {
@@ -69,30 +67,21 @@ export default function SourceBuilder() {
 				);
 
 				if (xmlContent) {
-					currentEditor.setData(xmlContent);
-
-					setLoading(false);
+					if (currentEditor.getValue() !== xmlContent) {
+						currentEditor.setValue(xmlContent);
+					}
 				}
+
+				setLoading(false);
 			}
 		}
 
-		const interval = setInterval(() => {
-			if (currentEditor) {
-				if (currentEditor.mode !== 'source') {
-					setTimeout(() => {
-						currentEditor.setMode('source');
-					}, 1000);
-				}
-				else {
-					clearInterval(interval);
-					loadXmlContent();
-				}
-			}
-		}, 1000);
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		if (currentEditor) {
+			loadXmlContent();
+		}
 	}, [
 		currentEditor,
+		definitionDescription,
 		definitionName,
 		elements,
 		workflowDefinitionVersions.length,
@@ -141,7 +130,7 @@ export default function SourceBuilder() {
 					event.target.readyState === FileReader.DONE &&
 					XMLUtil.validateDefinition(event.target.result)
 				) {
-					currentEditor.setData(event.target.result);
+					currentEditor.setValue(event.target.result);
 
 					const fileInput = document.querySelector('#fileInput');
 
@@ -201,23 +190,12 @@ export default function SourceBuilder() {
 				/>
 			)}
 
-			<ClassicEditor
-				config={editorConfig}
-				name="sourceBuilderEditor"
-				onBeforeDestroy={({editor}) => {
-					if (
-						editor.checkDirty() &&
-						!XMLUtil.validateDefinition(editor.getData())
-					) {
-						editor.setData('');
-					}
-				}}
-				onInstanceReady={({editor}) => {
-					editor.setMode('source');
-
-					setCurrentEditor(editor);
-				}}
-				ref={editorRef}
+			<CodeMirrorEditor
+				lineWrapping={true}
+				mode="xml"
+				onChange={() => {}}
+				readOnly={false}
+				ref={setCurrentEditor}
 			/>
 
 			{showImportSuccessMessage && (

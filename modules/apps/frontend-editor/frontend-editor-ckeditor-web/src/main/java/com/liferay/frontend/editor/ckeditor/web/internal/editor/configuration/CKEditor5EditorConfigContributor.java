@@ -46,7 +46,7 @@ public class CKEditor5EditorConfigContributor
 		String name = GetterUtil.getString(
 			inputEditorTaglibAttributes.get("liferay-ui:input-editor:name"));
 		String placeholder = LanguageUtil.format(
-			themeDisplay.getLocale(), "write-your-content-here", false);
+			themeDisplay.getLocale(), "start-writing-content", false);
 
 		jsonObject.put(
 			"editorType", "ckeditor5"

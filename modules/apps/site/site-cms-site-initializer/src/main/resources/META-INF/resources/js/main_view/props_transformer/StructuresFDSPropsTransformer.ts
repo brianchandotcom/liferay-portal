@@ -10,7 +10,6 @@ import deleteStructureAction from './actions/deleteStructureAction';
 import importStructureAction from './actions/importStructureAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
 import SimpleActionLinkRenderer from './cell_renderers/SimpleActionLinkRenderer';
-import StructureNameRenderer from './cell_renderers/StructureNameRenderer';
 import StructureScopeRenderer from './cell_renderers/StructureScopeRenderer';
 import TypeRenderer from './cell_renderers/TypeRenderer';
 

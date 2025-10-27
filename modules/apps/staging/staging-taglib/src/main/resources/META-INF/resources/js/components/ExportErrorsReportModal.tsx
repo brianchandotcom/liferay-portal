@@ -113,8 +113,19 @@ function useBatchEngineExportTask(importProcessId: string) {
 					const data = await response.json();
 
 					if (data.executeStatus === 'STARTED') {
+						const {processedItemsCount, totalItemsCount} = data;
+
+						const progress =
+							totalItemsCount === 0
+								? 0
+								: Math.floor(
+										(processedItemsCount /
+											totalItemsCount) *
+											100
+									);
+
 						dispatch({
-							payload: {progress: data.progress ?? 0},
+							payload: {progress},
 							type: 'STARTED',
 						});
 					}

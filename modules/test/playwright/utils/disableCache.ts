@@ -5,6 +5,6 @@
 
 import type {Page} from '@playwright/test';
 
-export async function disableCacheForPage(page: Page) {
+export async function disableCache(page: Page) {
 	await page.route('**', (route) => route.continue());
 }

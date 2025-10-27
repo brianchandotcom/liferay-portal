@@ -199,9 +199,7 @@ public class AssetTagStagedModelDataHandler
 			return name;
 		}
 
-		int index = 1;
-
-		while (true) {
+		for (int index = 1;; index++) {
 			String newName;
 
 			if (index == 1) {
@@ -215,8 +213,6 @@ public class AssetTagStagedModelDataHandler
 			if (_assetTagLocalService.fetchTag(groupId, newName) == null) {
 				return newName;
 			}
-
-			index++;
 		}
 	}
 
@@ -236,9 +232,7 @@ public class AssetTagStagedModelDataHandler
 			}
 		}
 
-		int index = 1;
-
-		while (true) {
+		for (int index = 1;; index++) {
 			String newName;
 
 			if (index == 1) {
@@ -259,8 +253,6 @@ public class AssetTagStagedModelDataHandler
 					_log.debug(duplicateTagException);
 				}
 			}
-
-			index++;
 		}
 	}
 

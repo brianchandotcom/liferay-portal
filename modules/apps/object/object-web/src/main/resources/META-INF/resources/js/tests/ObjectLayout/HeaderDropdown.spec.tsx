@@ -33,17 +33,23 @@ const mockAddSeo = jest.fn();
 
 const mockDeleteElement = jest.fn();
 
-function mockLayoutContextWithBoxes(
+function mockLayoutContextWithBoxes({
+	enableCategorization = false,
+	enableFriendlyURLCustomization = false,
+	objectLayoutBoxes = [],
+}: {
+	enableCategorization?: boolean;
+	enableFriendlyURLCustomization?: boolean;
 	objectLayoutBoxes: Array<
 		{type: string} & Partial<{
 			collapsable: boolean;
 		}>
-	> = []
-) {
+	>;
+}) {
 	mockUseLayoutContext.mockReturnValue([
 		{
-			enableCategorization: true,
-			enableFriendlyURLCustomization: true,
+			enableCategorization,
+			enableFriendlyURLCustomization,
 			isViewOnly: false,
 			objectLayout: {
 				objectLayoutTabs: [
@@ -81,8 +87,11 @@ describe('HeaderDropdown component', () => {
 		mockUseLayoutContext.mockClear();
 	});
 
-	it('disables "add-categorization" if it already exists in a tab', () => {
-		mockLayoutContextWithBoxes([{type: 'categorization'}]);
+	it('disables add categorization if it already exists in a tab', () => {
+		mockLayoutContextWithBoxes({
+			enableCategorization: true,
+			objectLayoutBoxes: [{type: 'categorization'}],
+		});
 
 		renderHeaderDropdown();
 
@@ -95,8 +104,11 @@ describe('HeaderDropdown component', () => {
 		expect(categorizationButton).toBeDisabled();
 	});
 
-	it('disables "add-seo" if it already exists in a tab', () => {
-		mockLayoutContextWithBoxes([{type: 'seo'}]);
+	it('disables add seo if it already exists in a tab', () => {
+		mockLayoutContextWithBoxes({
+			enableFriendlyURLCustomization: true,
+			objectLayoutBoxes: [{type: 'seo'}],
+		});
 
 		renderHeaderDropdown();
 
@@ -109,8 +121,46 @@ describe('HeaderDropdown component', () => {
 		expect(addSeoButton).toBeDisabled();
 	});
 
+	it('enables delete categorization if enableCategorization is false', () => {
+		mockLayoutContextWithBoxes({
+			enableCategorization: false,
+			objectLayoutBoxes: [],
+		});
+
+		renderHeaderDropdown();
+
+		openDropdown();
+
+		const deleteCategorizationButton = screen.getByRole('menuitem', {
+			name: 'delete',
+		});
+
+		expect(deleteCategorizationButton).toBeEnabled();
+	});
+
+	it('enables delete seo if enableFriendlyURLCustomization is false', () => {
+		mockLayoutContextWithBoxes({
+			enableFriendlyURLCustomization: false,
+			objectLayoutBoxes: [],
+		});
+
+		renderHeaderDropdown();
+
+		openDropdown();
+
+		const deleteSeoButton = screen.getByRole('menuitem', {
+			name: 'delete',
+		});
+
+		expect(deleteSeoButton).toBeEnabled();
+	});
+
 	it('opens the dropdown and renders all available items', async () => {
-		mockLayoutContextWithBoxes([]);
+		mockLayoutContextWithBoxes({
+			enableCategorization: true,
+			enableFriendlyURLCustomization: true,
+			objectLayoutBoxes: [],
+		});
 
 		renderHeaderDropdown();
 

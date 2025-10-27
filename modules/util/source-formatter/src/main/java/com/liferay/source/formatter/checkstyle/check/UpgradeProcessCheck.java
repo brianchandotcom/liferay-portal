@@ -60,31 +60,75 @@ public class UpgradeProcessCheck extends BaseCheck {
 
 		for (DetailAST methodDefDetailAST : methodDefDetailASTs) {
 			if (!AnnotationUtil.containsAnnotation(
-					methodDefDetailAST, "Override") ||
-				!StringUtil.equals(getName(methodDefDetailAST), "doUpgrade")) {
+					methodDefDetailAST, "Override")) {
 
 				continue;
 			}
 
-			DetailAST slistDetailAST = methodDefDetailAST.findFirstToken(
-				TokenTypes.SLIST);
+			String methodName = getName(methodDefDetailAST);
 
-			if (slistDetailAST.getChildCount() == 1) {
-				return;
+			if (StringUtil.equals(methodName, "doUpgrade")) {
+				DetailAST slistDetailAST = methodDefDetailAST.findFirstToken(
+					TokenTypes.SLIST);
+
+				if (slistDetailAST.getChildCount() == 1) {
+					return;
+				}
+
+				if ((methodDefDetailASTs.size() == 1) &&
+					_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
+
+					log(
+						detailAST, _MSG_UNNECESSARY_CLASS,
+						JavaSourceUtil.getClassName(absolutePath));
+
+					return;
+				}
+
+				_checkMovableMethodCallsToGetPostUpgradeSteps(slistDetailAST);
+				_checkMovableMethodCallsToGetPreUpgradeSteps(slistDetailAST);
+			}
+			else if (StringUtil.equals(methodName, "getPostUpgradeSteps") ||
+					 StringUtil.equals(methodName, "getPreUpgradeSteps")) {
+
+				_checkIncorrectMethodCallsInUpgradeSteps(methodDefDetailAST);
+			}
+		}
+	}
+
+	private void _checkIncorrectMethodCallsInUpgradeSteps(DetailAST detailAST) {
+		List<DetailAST> methodCallDetailASTs = getAllChildTokens(
+			detailAST, true, TokenTypes.METHOD_CALL);
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
+			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
+				TokenTypes.DOT);
+
+			if (dotDetailAST == null) {
+				log(detailAST, _MSG_AVOID_METHOD_CALLS);
+
+				continue;
 			}
 
-			if ((methodDefDetailASTs.size() == 1) &&
-				_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
+			List<String> names = getNames(dotDetailAST, false);
 
-				log(
-					detailAST, _MSG_UNNECESSARY_CLASS,
-					JavaSourceUtil.getClassName(absolutePath));
+			if (names.size() != 2) {
+				log(detailAST, _MSG_AVOID_METHOD_CALLS);
 
-				return;
+				continue;
 			}
 
-			_checkMovableMethodCallsToGetPostUpgradeSteps(slistDetailAST);
-			_checkMovableMethodCallsToGetPreUpgradeSteps(slistDetailAST);
+			String methodCallClassName = names.get(0);
+			String methodCallMethodName = names.get(1);
+
+			if ((methodCallClassName.endsWith("Table") &&
+				 methodCallMethodName.equals("create")) ||
+				methodCallClassName.equals("UpgradeProcessFactory")) {
+
+				continue;
+			}
+
+			log(detailAST, _MSG_AVOID_METHOD_CALLS);
 		}
 	}
 
@@ -390,6 +434,8 @@ public class UpgradeProcessCheck extends BaseCheck {
 		"alterColumnName", "alterColumnType", "alterTableAddColumn",
 		"alterTableDropColumn"
 	};
+
+	private static final String _MSG_AVOID_METHOD_CALLS = "method.calls.avoid";
 
 	private static final String
 		_MSG_MOVE_UPGRADE_STEP_INSIDE_POST_UPGRADE_STEPS =

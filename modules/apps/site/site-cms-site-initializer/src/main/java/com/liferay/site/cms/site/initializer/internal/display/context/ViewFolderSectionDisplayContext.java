@@ -64,7 +64,6 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 			objectEntryFolderModelResourcePermission, portal);
 
 		_httpServletRequest = httpServletRequest;
-
 		_objectEntryFolderLocalService = objectEntryFolderLocalService;
 	}
 
@@ -285,7 +284,8 @@ public class ViewFolderSectionDisplayContext extends BaseSectionDisplayContext {
 		if (rootObjectEntryFolderExternalReferenceCode.equals(
 				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
 
-			return "{AssetsFilesDropFDSPropsTransformer} from site-cms-site-initializer";
+			return "{AssetsFilesDropFDSPropsTransformer} from " +
+				"site-cms-site-initializer";
 		}
 
 		return "{AssetsFDSPropsTransformer} from site-cms-site-initializer";

@@ -162,3 +162,21 @@ describe('SimpleActionLinkRenderer. Show type icon.', () => {
 		);
 	});
 });
+
+describe('SimpleActionLinkRenderer. Show lock icon.', () => {
+	it('shows lock icon if it is a system link', () => {
+		render(
+			<SimpleActionLinkRenderer
+				{...testBaseProps}
+				itemData={{
+					...testBaseProps.itemData,
+					system: true,
+				}}
+			/>
+		);
+
+		expect(
+			screen.getByLabelText('system-default-structure')
+		).toBeInTheDocument();
+	});
+});

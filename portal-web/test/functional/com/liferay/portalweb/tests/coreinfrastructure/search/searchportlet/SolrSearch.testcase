@@ -30,7 +30,7 @@ definition {
 	@description = "This is a use case for LPS-89561."
 	@priority = 4
 	test AssertSearchURLWhenModifyingPagination {
-		property custom.properties = "search.container.page.default.delta=10${line.separator}feature.flag.LPD-35013=true";
+		property custom.properties = "search.container.page.default.delta=10${line.separator}search.container.page.delta.values=4,8,10,20${line.separator}feature.flag.LPD-35013=true";
 
 		for (var count : list "1,2,3,4,5,6,7,8,9,10,11") {
 			JSONWebcontent.addWebContent(

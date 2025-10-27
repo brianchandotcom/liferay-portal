@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
@@ -23,7 +22,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyObjectDefinitionSelectionFDSFilter;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -110,11 +108,6 @@ public class ViewVocabulariesDisplayContext {
 				null, "trash", "delete",
 				LanguageUtil.get(_httpServletRequest, "delete"), null, "delete",
 				null));
-	}
-
-	public List<FDSFilter> getFDSFilters() {
-		return ListUtil.fromArray(
-			new VocabularyObjectDefinitionSelectionFDSFilter());
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {

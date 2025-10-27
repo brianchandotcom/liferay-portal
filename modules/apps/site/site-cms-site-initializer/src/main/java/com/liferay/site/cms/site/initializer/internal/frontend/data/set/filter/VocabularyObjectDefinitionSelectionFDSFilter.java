@@ -7,18 +7,26 @@ package com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter;
 
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.service.ObjectDefinitionServiceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Noor Najjar
  */
+@Component(
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.VOCABULARIES,
+	service = FDSFilter.class
+)
 public class VocabularyObjectDefinitionSelectionFDSFilter
 	extends BaseSelectionFDSFilter {
 

@@ -101,7 +101,6 @@ public class EditMenuAccessConfigurationMVCActionCommandTest {
 
 		mockLiferayPortletActionRequest.addParameter(
 			"roleSearchContainerPrimaryKeys", new String[0]);
-
 		mockLiferayPortletActionRequest.addParameter(
 			"showControlMenuByRole", Boolean.TRUE.toString());
 		mockLiferayPortletActionRequest.setAttribute(
@@ -115,7 +114,6 @@ public class EditMenuAccessConfigurationMVCActionCommandTest {
 
 		Role administratorRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.ADMINISTRATOR);
-
 		Role siteAdministratorRole = _roleLocalService.getRole(
 			_group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 

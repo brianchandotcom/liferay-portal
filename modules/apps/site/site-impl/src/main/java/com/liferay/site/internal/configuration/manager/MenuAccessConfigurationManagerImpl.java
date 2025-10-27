@@ -19,6 +19,7 @@ import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.List;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -93,7 +94,7 @@ public class MenuAccessConfigurationManagerImpl
 		throws Exception {
 
 		if (accessToControlMenuRoleIds == null) {
-			ArrayList<String> accessToControlMenuRoleIdsArrayList =
+			List<String> accessToControlMenuRoleIdsList =
 				new ArrayList<>();
 
 			Group group = _groupLocalService.getGroup(groupId);
@@ -101,17 +102,17 @@ public class MenuAccessConfigurationManagerImpl
 			Role administratorRole = _roleLocalService.getRole(
 				group.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
-			accessToControlMenuRoleIdsArrayList.add(
+			accessToControlMenuRoleIdsList.add(
 				String.valueOf(administratorRole.getRoleId()));
 
 			Role siteAdministratorRole = _roleLocalService.getRole(
 				group.getCompanyId(), RoleConstants.SITE_ADMINISTRATOR);
 
-			accessToControlMenuRoleIdsArrayList.add(
+			accessToControlMenuRoleIdsList.add(
 				String.valueOf(siteAdministratorRole.getRoleId()));
 
 			accessToControlMenuRoleIds = ArrayUtil.toStringArray(
-				accessToControlMenuRoleIdsArrayList);
+				accessToControlMenuRoleIdsList);
 		}
 
 		_configurationProvider.saveGroupConfiguration(

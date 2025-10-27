@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.entries.frontend.data.set.view.table;
 
+import com.liferay.frontend.data.set.constants.FDSTimeZoneBehaviorConstants;
 import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.DateFDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.DateTimeFDSTableSchemaField;
@@ -14,6 +15,7 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.frontend.data.set.view.table.StringFDSTableSchemaField;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -271,6 +273,17 @@ public class ObjectEntriesTableFDSView extends BaseTableFDSView {
 				new DateTimeFDSTableSchemaField();
 
 			dateTimeFDSTableSchemaField.setFieldName(fieldName);
+
+			if (ListUtil.isNotEmpty(objectFieldSettings) &&
+				StringUtil.equals(
+					ObjectFieldSettingUtil.getValue(
+						ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+						objectFieldSettings),
+					ObjectFieldSettingConstants.VALUE_USE_INPUT_AS_ENTERED)) {
+
+				dateTimeFDSTableSchemaField.setTimeZoneBehavior(
+					FDSTimeZoneBehaviorConstants.DO_NOT_MODIFY_DATE_VALUE);
+			}
 
 			User user = null;
 

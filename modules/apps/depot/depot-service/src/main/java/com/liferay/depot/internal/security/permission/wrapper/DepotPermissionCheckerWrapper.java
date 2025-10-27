@@ -227,7 +227,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 						return false;
 					}
 
-					if (_isGroupAdmin(group)) {
+					if (_isCMSAdministrator(group) || _isGroupAdmin(group)) {
 						return true;
 					}
 
@@ -257,7 +257,7 @@ public class DepotPermissionCheckerWrapper extends PermissionCheckerWrapper {
 		return false;
 	}
 
-	private boolean _isCMSAdministrator(Group group) throws Exception {
+	private boolean _isCMSAdministrator(Group group) throws PortalException {
 		if ((group == null) || !group.isDepot()) {
 			return false;
 		}

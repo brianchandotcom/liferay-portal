@@ -37,6 +37,23 @@ public class ItemScopeUtil {
 		return group.getGroupId();
 	}
 
+	public static Long getItemGroupId(
+		long companyId, Scope scope, long scopeGroupId) {
+
+		if ((scope == null) || (scope.getExternalReferenceCode() == null)) {
+			return scopeGroupId;
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroupByExternalReferenceCode(
+			scope.getExternalReferenceCode(), companyId);
+
+		if (group == null) {
+			return null;
+		}
+
+		return group.getGroupId();
+	}
+
 	public static Scope getItemScope(long itemScopeGroupId, long scopeGroupId)
 		throws Exception {
 

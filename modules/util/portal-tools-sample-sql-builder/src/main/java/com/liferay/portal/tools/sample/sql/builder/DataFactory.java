@@ -3923,7 +3923,7 @@ public class DataFactory {
 
 	public UserModel newDefaultAdminUserModel() {
 		return newUserModel(
-			_counter.get(), "Test", "Test", "Test", UserConstants.TYPE_REGULAR);
+			_counter.get(), "test", "test", "test", UserConstants.TYPE_REGULAR);
 	}
 
 	public AssetVocabularyModel newDefaultAssetVocabularyModel() {

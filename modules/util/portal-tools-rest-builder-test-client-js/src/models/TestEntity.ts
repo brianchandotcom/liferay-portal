@@ -11,9 +11,6 @@
  * @generated
  */
 
-	/**
-	* https://www.schema.org/Document
-	*/
 	export class TestEntity {
 			"dateCreated"?: Date;
 			"dateModified"?: Date;

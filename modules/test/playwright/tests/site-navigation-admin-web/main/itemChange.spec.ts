@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -13,9 +14,61 @@ import {navigationMenusPagesTest} from './fixtures/navigationMenusPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,
+	displayPageTemplatesPagesTest,
 	isolatedSiteTest,
 	loginTest(),
 	navigationMenusPagesTest
+);
+
+test(
+	'Assert DisplayPageTemplate remains visible after editing a NavigationMenuItem',
+	{
+		tag: '@LPD-69616',
+	},
+	async ({
+		apiHelpers,
+		displayPageTemplatesPage,
+		navigationMenusPage,
+		page,
+		site,
+	}) => {
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Blogs Entry',
+			name: displayPageTemplateName,
+		});
+
+		await displayPageTemplatesPage.markAsDefault(displayPageTemplateName);
+
+		const blogTitle1 = getRandomString();
+
+		const blogTitle2 = getRandomString();
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: blogTitle1,
+		});
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: blogTitle2,
+		});
+
+		await navigationMenusPage.goto(site.friendlyUrlPath);
+
+		await navigationMenusPage.createNavigationMenu(getRandomString());
+
+		await navigationMenusPage.addBlogItem(blogTitle1);
+
+		await navigationMenusPage.changeBlogItem(blogTitle1, blogTitle2);
+
+		await expect(
+			page.locator('p.card-title', {hasText: blogTitle2})
+		).toBeVisible();
+
+		await expect(page.getByRole('paragraph').locator('svg')).toBeHidden();
+	}
 );
 
 test(

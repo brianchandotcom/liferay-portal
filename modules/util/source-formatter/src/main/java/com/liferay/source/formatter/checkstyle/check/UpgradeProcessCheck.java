@@ -58,42 +58,34 @@ public class UpgradeProcessCheck extends BaseCheck {
 			detailAST.findFirstToken(TokenTypes.OBJBLOCK), false,
 			TokenTypes.METHOD_DEF);
 
-		DetailAST doUpgradeMethodDefDetailAST = null;
-
 		for (DetailAST methodDefDetailAST : methodDefDetailASTs) {
-			if (StringUtil.equals(getName(methodDefDetailAST), "doUpgrade") &&
-				AnnotationUtil.containsAnnotation(
-					methodDefDetailAST, "Override")) {
+			if (!AnnotationUtil.containsAnnotation(
+					methodDefDetailAST, "Override") ||
+				!StringUtil.equals(getName(methodDefDetailAST), "doUpgrade")) {
 
-				doUpgradeMethodDefDetailAST = methodDefDetailAST;
-
-				break;
+				continue;
 			}
+
+			DetailAST slistDetailAST = methodDefDetailAST.findFirstToken(
+				TokenTypes.SLIST);
+
+			if (slistDetailAST.getChildCount() == 1) {
+				return;
+			}
+
+			if ((methodDefDetailASTs.size() == 1) &&
+				_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
+
+				log(
+					detailAST, _MSG_UNNECESSARY_CLASS,
+					JavaSourceUtil.getClassName(absolutePath));
+
+				return;
+			}
+
+			_checkMovableMethodCallsToGetPostUpgradeSteps(slistDetailAST);
+			_checkMovableMethodCallsToGetPreUpgradeSteps(slistDetailAST);
 		}
-
-		if (doUpgradeMethodDefDetailAST == null) {
-			return;
-		}
-
-		DetailAST slistDetailAST = doUpgradeMethodDefDetailAST.findFirstToken(
-			TokenTypes.SLIST);
-
-		if (slistDetailAST.getChildCount() == 1) {
-			return;
-		}
-
-		if ((methodDefDetailASTs.size() == 1) &&
-			_isUnnecessaryUpgradeProcessClass(slistDetailAST)) {
-
-			log(
-				detailAST, _MSG_UNNECESSARY_CLASS,
-				JavaSourceUtil.getClassName(absolutePath));
-
-			return;
-		}
-
-		_checkMovableMethodCallsToGetPostUpgradeSteps(slistDetailAST);
-		_checkMovableMethodCallsToGetPreUpgradeSteps(slistDetailAST);
 	}
 
 	private void _checkMovableMethodCallsToGetPostUpgradeSteps(

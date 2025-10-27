@@ -2282,3 +2282,28 @@ test(
 		await expect(editUserPage.selectRegularRolesSearchInput).toBeEnabled();
 	}
 );
+
+test(
+	'Cannot delete the Account Manager role',
+	{tag: ['@LPD-69451']},
+	async ({rolesPage}) => {
+		const roleName = 'Account Manager';
+
+		await rolesPage.goto();
+
+		await rolesPage.organizationRolesLink.click();
+
+		await expect(rolesPage.rolesTable.cell(roleName)).toBeVisible();
+
+		await expect(async () => {
+			await (await rolesPage.rolesTable.rowActions(roleName)).click();
+
+			await expect(rolesPage.duplicateMenuItem).toBeVisible({
+				timeout: 100,
+			});
+			await expect(rolesPage.deleteButton).not.toBeVisible({
+				timeout: 100,
+			});
+		}).toPass();
+	}
+);

@@ -576,6 +576,46 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	protected ObjectEntryFolder
+			testPostObjectEntryFolderByParentObjectEntryFolderCopy_addObjectEntryFolder(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
+			testPostObjectEntryFolderByParentObjectEntryFolderCopyReplace_addObjectEntryFolder(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
+			testPostObjectEntryFolderByParentObjectEntryFolderMove_addObjectEntryFolder(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
+			testPostObjectEntryFolderByParentObjectEntryFolderMoveReplace_addObjectEntryFolder(
+				ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return objectEntryFolderResource.postScopeScopeKeyObjectEntryFolder(
+			String.valueOf(_testDepotEntry.getGroupId()), objectEntryFolder);
+	}
+
+	@Override
+	protected ObjectEntryFolder
 			testPostScopeScopeKeyObjectEntryFolder_addObjectEntryFolder(
 				ObjectEntryFolder objectEntryFolder)
 		throws Exception {

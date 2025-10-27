@@ -24,6 +24,7 @@ let openCookieConsentModal = () => {
 export default function ({
 	configurationNamespace,
 	configurationURL,
+	consentRenewalPeriod,
 	includeDeclineAllButton,
 	namespace,
 	optionalConsentCookieTypeNames,
@@ -78,11 +79,12 @@ export default function ({
 			cookieBanner.style.display = 'none';
 
 			acceptAllCookies(
+				consentRenewalPeriod,
 				optionalConsentCookieTypeNames,
 				requiredConsentCookieTypeNames
 			);
 
-			setUserConfigCookie();
+			setUserConfigCookie(consentRenewalPeriod);
 		});
 
 		openCookieConsentModal = ({
@@ -111,11 +113,12 @@ export default function ({
 						),
 						onClick() {
 							declineAllCookies(
+								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames
 							);
 
-							setUserConfigCookie();
+							setUserConfigCookie(consentRenewalPeriod);
 
 							setBannerVisibility(cookieBanner);
 
@@ -128,20 +131,21 @@ export default function ({
 						onClick() {
 							Object.entries(cookiePreferences).forEach(
 								([key, value]) => {
-									setCookie(key, value);
+									setCookie(consentRenewalPeriod, key, value);
 								}
 							);
 
 							requiredConsentCookieTypeNames.forEach(
 								(requiredConsentCookieTypeName) => {
 									setCookie(
+										consentRenewalPeriod,
 										requiredConsentCookieTypeName,
 										'true'
 									);
 								}
 							);
 
-							setUserConfigCookie();
+							setUserConfigCookie(consentRenewalPeriod);
 
 							setBannerVisibility(cookieBanner);
 
@@ -153,11 +157,12 @@ export default function ({
 						label: Liferay.Language.get('accept-all'),
 						onClick() {
 							acceptAllCookies(
+								consentRenewalPeriod,
 								optionalConsentCookieTypeNames,
 								requiredConsentCookieTypeNames
 							);
 
-							setUserConfigCookie();
+							setUserConfigCookie(consentRenewalPeriod);
 
 							setBannerVisibility(cookieBanner);
 
@@ -185,11 +190,12 @@ export default function ({
 				cookieBanner.style.display = 'none';
 
 				declineAllCookies(
+					consentRenewalPeriod,
 					optionalConsentCookieTypeNames,
 					requiredConsentCookieTypeNames
 				);
 
-				setUserConfigCookie();
+				setUserConfigCookie(consentRenewalPeriod);
 			});
 		}
 	}

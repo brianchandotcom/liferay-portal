@@ -259,8 +259,7 @@ public class WidgetLayoutStructureItemImporter
 						PortletIdCodec.decodePortletName(portletId),
 						portlet.getPortletName())) {
 
-					throw new PortletIdException(
-						"Unable to add uninstanceable portlet more than once");
+					throw new PortletIdException(portletId);
 				}
 			}
 		}

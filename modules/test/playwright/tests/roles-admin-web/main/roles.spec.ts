@@ -2071,12 +2071,18 @@ test(
 		await rolesPage.copyFrameNewRoleNameInput.fill(guestRoleName);
 		await rolesPage.copyFrameSaveButton.click();
 
-		await expect(rolesPage.copyFrameErrorMessage).toBeVisible();
+		await expect(rolesPage.copyFrameUniqueNameErrorMessage).toBeVisible();
+
+		await rolesPage.copyFrameNewRoleNameInput.clear();
+		await rolesPage.copyFrameNewRoleNameInput.fill('a'.repeat(80));
+		await rolesPage.copyFrameSaveButton.click();
+
+		await expect(rolesPage.copyFrameValidNameErrorMessage).toBeVisible();
 
 		await rolesPage.copyFrameNewRoleNameInput.clear();
 		await rolesPage.copyFrameSaveButton.click();
 
-		await expect(rolesPage.copyFrameEmptyErrorMessage).toBeVisible();
+		await expect(rolesPage.copyFrameValidNameErrorMessage).toBeVisible();
 
 		const duplicateRoleName = 'role' + getRandomInt();
 
@@ -2170,8 +2176,28 @@ test(
 		await copyRole('Account Administrator', 'Account');
 		await copyRole('Asset Library Member', 'Asset Library');
 		await copyRole('Guest', 'Regular');
-		await copyRole('Organization Administrator', 'Organization');
+		await copyRole('Organization User', 'Organization');
 		await copyRole('Site Member', 'Site');
+	}
+);
+
+test(
+	'Cannot duplicate a role with fixed permissions',
+	{tag: ['@LPD-69394']},
+	async ({rolesPage}) => {
+		await rolesPage.goto(false);
+
+		const rolesWithFixedPermissions = ['Administrator', 'Owner'];
+
+		for (const roleName of rolesWithFixedPermissions) {
+			await rolesPage.rolesTable.search(roleName);
+
+			await expect(rolesPage.rolesTable.cell(roleName)).toBeVisible();
+
+			await (await rolesPage.rolesTable.rowActions(roleName)).click();
+
+			await expect(rolesPage.duplicateMenuItem).not.toBeVisible();
+		}
 	}
 );
 

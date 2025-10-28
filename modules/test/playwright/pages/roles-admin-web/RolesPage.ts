@@ -16,8 +16,8 @@ export class RolesPage {
 	readonly applicationsMenuButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly copyFrame: FrameLocator;
-	readonly copyFrameEmptyErrorMessage: Locator;
-	readonly copyFrameErrorMessage: Locator;
+	readonly copyFrameValidNameErrorMessage: Locator;
+	readonly copyFrameUniqueNameErrorMessage: Locator;
 	readonly copyFrameNewRoleNameInput: Locator;
 	readonly copyFrameSaveButton: Locator;
 	readonly deleteButton: Locator;
@@ -50,10 +50,10 @@ export class RolesPage {
 		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.copyFrame = page.frameLocator('iframe[id="modalIframe"]');
-		this.copyFrameEmptyErrorMessage = this.copyFrame.getByText(
-			'Please enter a valid name'
-		);
-		this.copyFrameErrorMessage = this.copyFrame.getByText(
+		this.copyFrameValidNameErrorMessage = this.copyFrame
+			.locator('.alert.alert-dismissible')
+			.getByText('Please enter a valid name');
+		this.copyFrameUniqueNameErrorMessage = this.copyFrame.getByText(
 			'Please enter a unique name'
 		);
 		this.copyFrameNewRoleNameInput =

@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -28,6 +29,9 @@ public class ViewTagsDisplayContext {
 			"cmsGroupId", _themeDisplay.getScopeGroupId()
 		).put(
 			"dataSetId", CMSSiteInitializerFDSNames.CATEGORIZATION_TAGS
+		).put(
+			"invalidTagCharacters",
+			String.valueOf(AssetHelper.INVALID_CHARACTERS)
 		).put(
 			"tagsURL",
 			PortalUtil.getLayoutFullURL(

@@ -18,12 +18,14 @@ import MergeTagsModal from './MergeTagsModal';
 export default function ViewTags({
 	cmsGroupId,
 	dataSetId,
+	invalidTagCharacters,
 	tagUsagesURL,
 	tagsURL,
 	vocabulariesURL,
 }: {
 	cmsGroupId: number;
 	dataSetId: string;
+	invalidTagCharacters: string;
 	tagUsagesURL: string;
 	tagsURL: string;
 	vocabulariesURL: string;
@@ -45,6 +47,7 @@ export default function ViewTags({
 								closeModal,
 								cmsGroupId,
 								dataSetId,
+								invalidTagCharacters,
 							}),
 						size: 'md',
 					});

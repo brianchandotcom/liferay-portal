@@ -11,7 +11,12 @@ import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldText} from '../../../common/components/forms';
-import {required, validate} from '../../../common/components/forms/validations';
+import {
+	invalidCharacters,
+	maxLength,
+	required,
+	validate,
+} from '../../../common/components/forms/validations';
 import ApiHelper from '../../../common/services/ApiHelper';
 import {
 	displayErrorToast,
@@ -25,10 +30,12 @@ export default function CreateTagsModalContent({
 	closeModal,
 	cmsGroupId,
 	dataSetId,
+	invalidTagCharacters,
 }: {
 	closeModal: () => void;
 	cmsGroupId: number;
 	dataSetId: string;
+	invalidTagCharacters: string;
 }) {
 	const [nameInputError, setNameInputError] = useState<string>('');
 	const [selectedSpaces, setSelectedSpaces] = useState<number[]>([-1]);
@@ -67,6 +74,13 @@ export default function CreateTagsModalContent({
 						);
 
 						displayNameInUseErrorToast();
+					}
+					else if (
+						error === 'Keyword name cannot be an empty string'
+					) {
+						setNameInputError(
+							Liferay.Language.get('this-field-is-required')
+						);
 					}
 					else {
 						displayErrorToast();
@@ -107,7 +121,11 @@ export default function CreateTagsModalContent({
 			const errors = validate(
 				{
 					assetLibraries: [required],
-					tagName: [required],
+					tagName: [
+						required,
+						invalidCharacters(invalidTagCharacters.split('')),
+						maxLength(75),
+					],
 				},
 				values
 			);

@@ -115,6 +115,12 @@ public class FilterBuilder implements Cloneable {
 	}
 
 	public void addSearchFilter(
+		String query, List<String> fieldNames, String fieldNameContext) {
+
+		addSearchFilter(query, fieldNames, fieldNameContext, false);
+	}
+
+	public void addSearchFilter(
 		String query, List<String> fieldNames, String fieldNameContext,
 		boolean required) {
 
@@ -167,12 +173,6 @@ public class FilterBuilder implements Cloneable {
 		filters.add(fieldNameFilterBuilder.build());
 	}
 
-	public void addSearchFilter(
-		String query, List<String> fieldNames, String fieldNameContext) {
-
-		addSearchFilter(query, fieldNames, fieldNameContext, false);
-	}
-
 	public void addSearchFilter(String query, String fieldName) {
 		addSearchFilter(query, fieldName, null);
 	}
@@ -180,12 +180,19 @@ public class FilterBuilder implements Cloneable {
 	public void addSearchFilter(
 		String query, String fieldName, String fieldNameContext) {
 
+		addSearchFilter(query, fieldName, fieldNameContext, false);
+	}
+
+	public void addSearchFilter(
+		String query, String fieldName, String fieldNameContext,
+		boolean required) {
+
 		String[] keywords = StringUtil.split(query, StringPool.SPACE);
 
 		for (String keyword : keywords) {
 			addFilter(
 				FilterUtil.getFieldName(fieldName, fieldNameContext),
-				FilterConstants.STRING_FUNCTION_CONTAINS, keyword);
+				FilterConstants.STRING_FUNCTION_CONTAINS, keyword, required);
 		}
 	}
 

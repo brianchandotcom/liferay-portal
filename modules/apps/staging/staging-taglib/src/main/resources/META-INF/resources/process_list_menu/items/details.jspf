@@ -18,7 +18,7 @@
 	</li>
 	<li>
 		<button class="dropdown-item">
-			<liferay-ui:message key="export-errors-report" />
+			<liferay-ui:message key="export-report-entries" />
 		</button>
 
 		<react:component

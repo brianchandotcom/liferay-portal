@@ -213,7 +213,7 @@ export function ExportReportEntriesModal({
 			status={STATUS_MAP[status].displayType}
 		>
 			<Modal.Header>
-				{Liferay.Language.get('export-errors-report')}
+				{Liferay.Language.get('export-report-entries')}
 			</Modal.Header>
 
 			<Modal.Body className="text-3 text-weight-semi-bold">

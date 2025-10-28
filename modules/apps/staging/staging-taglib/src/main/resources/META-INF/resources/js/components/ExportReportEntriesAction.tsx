@@ -27,7 +27,7 @@ export function ExportReportEntriesAction({
 				displayType="unstyled"
 				onClick={() => onOpenChange(true)}
 			>
-				{Liferay.Language.get('export-errors-report')}
+				{Liferay.Language.get('export-report-entries')}
 			</ClayButton>
 
 			{open && (

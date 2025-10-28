@@ -432,8 +432,7 @@ public class PortletRenderUtil {
 						if (urlType == URLType.CSS) {
 							portletResource = _getStaticCSSResourceURL(
 								httpServletRequest,
-								contextPath + portletResource,
-								themeDisplay);
+								contextPath + portletResource, themeDisplay);
 						}
 						else if (urlType == URLType.JAVASCRIPT) {
 							Portlet rootPortlet = portlet.getRootPortlet();

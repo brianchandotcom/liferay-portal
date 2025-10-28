@@ -2035,6 +2035,7 @@ public class ThemeDisplay
 	private int _companyLogoHeight;
 	private int _companyLogoWidth;
 	private Contact _contact;
+	private String _contextPath = StringPool.BLANK;
 	private Group _controlPanelGroup;
 	private Layout _controlPanelLayout;
 	private Device _device;
@@ -2072,7 +2073,6 @@ public class ThemeDisplay
 	private List<NavItem> _navItems;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
-	private String _contextPath = StringPool.BLANK;
 	private String _pathControlPanelSpritemap = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateGroup = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateUser = StringPool.BLANK;

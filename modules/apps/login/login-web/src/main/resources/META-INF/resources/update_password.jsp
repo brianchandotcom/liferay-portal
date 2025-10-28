@@ -71,15 +71,17 @@ if (Validator.isNull(titlePage)) {
 					</c:otherwise>
 				</c:choose>
 
+				<%
+				LayoutUtilityPageEntry layoutUtilityPageEntry = LayoutUtilityPageEntryLocalServiceUtil.getDefaultLayoutUtilityPageEntry(themeDisplay.getScopeGroupId(), LayoutUtilityPageEntryConstants.TYPE_FORGOT_PASSWORD);
+				%>
+
+				<liferay-portlet:renderURL plid="<%= layoutUtilityPageEntry.getPlid() %>" var="requestNewPasswordURL">
+					<portlet:param name="mvcRenderCommandName" value="/login/forgot_password" />
+				</liferay-portlet:renderURL>
+
 				<div class="reset-link-container">
 					<clay:link
-						href='<%=
-							PortletURLBuilder.createRenderURL(
-								liferayPortletResponse, PortletKeys.LOGIN
-							).setMVCRenderCommandName(
-								"/login/forgot_password"
-							).buildString()
-						%>'
+						href="<%= requestNewPasswordURL %>"
 						label="request-a-new-password-reset-link"
 					/>
 				</div>

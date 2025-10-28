@@ -48,18 +48,17 @@ public class HashedFilesRegistryImplTest {
 	@Test
 	public void testGetResource() throws Exception {
 
-		// Vanilla setup
+		// Non root context plus proxy setup
 
 		ReflectionTestUtil.setFieldValue(
-			_hashedFilesRegistryImpl, "_portal",
-			_mockPortal(StringPool.BLANK, StringPool.BLANK));
+			_hashedFilesRegistryImpl, "_portal", _mockPortal("dxp", "liferay"));
 		ReflectionTestUtil.setFieldValue(
 			_hashedFilesRegistryImpl, "_serviceTrackerMap",
-			_mockServiceTrackerMap("/main.css", "/o/frontend-js-web"));
+			_mockServiceTrackerMap("/main.css", "/dxp/o/frontend-js-web"));
 
 		Assert.assertNotNull(
 			_hashedFilesRegistryImpl.getResource(
-				"/o/frontend-js-web/main.css"));
+				"/dxp/o/frontend-js-web/main.css"));
 
 		// Non root context setup
 
@@ -87,17 +86,18 @@ public class HashedFilesRegistryImplTest {
 			_hashedFilesRegistryImpl.getResource(
 				"/o/frontend-js-web/main.css"));
 
-		// Non root context plus proxy setup
+		// Vanilla setup
 
 		ReflectionTestUtil.setFieldValue(
-			_hashedFilesRegistryImpl, "_portal", _mockPortal("dxp", "liferay"));
+			_hashedFilesRegistryImpl, "_portal",
+			_mockPortal(StringPool.BLANK, StringPool.BLANK));
 		ReflectionTestUtil.setFieldValue(
 			_hashedFilesRegistryImpl, "_serviceTrackerMap",
-			_mockServiceTrackerMap("/main.css", "/dxp/o/frontend-js-web"));
+			_mockServiceTrackerMap("/main.css", "/o/frontend-js-web"));
 
 		Assert.assertNotNull(
 			_hashedFilesRegistryImpl.getResource(
-				"/dxp/o/frontend-js-web/main.css"));
+				"/o/frontend-js-web/main.css"));
 	}
 
 	private Portal _mockPortal(String pathContext, String pathProxy) {

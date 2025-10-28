@@ -107,7 +107,7 @@
 	}
 
 	.learn-article-page-container {
-		padding: 1.5rem;
+		padding: 0 1.5rem 1.5rem 1.5rem;
 	}
 
 	.liferay-nav-item-border {
@@ -147,7 +147,7 @@
 	.menu-trigger-capabilities {
 		align-items: center;
 		justify-content: space-between;
-		padding: 8px 12px;
+		padding: 16px 20px;
 	}
 
 	.table-of-contents-documentation span {

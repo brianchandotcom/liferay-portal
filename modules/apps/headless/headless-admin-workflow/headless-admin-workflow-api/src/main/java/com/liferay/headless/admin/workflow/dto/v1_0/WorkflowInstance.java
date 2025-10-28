@@ -143,6 +143,48 @@ public class WorkflowInstance implements Serializable {
 	@JsonIgnore
 	private Supplier<Boolean> _completedSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Map<String, ?> getContext() {
+		if (_contextSupplier != null) {
+			context = _contextSupplier.get();
+
+			_contextSupplier = null;
+		}
+
+		return context;
+	}
+
+	public void setContext(Map<String, ?> context) {
+		this.context = context;
+
+		_contextSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setContext(
+		UnsafeSupplier<Map<String, ?>, Exception> contextUnsafeSupplier) {
+
+		_contextSupplier = () -> {
+			try {
+				return contextUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Map<String, ?> context;
+
+	@JsonIgnore
+	private Supplier<Map<String, ?>> _contextSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The instance's current node names."
 	)
@@ -501,6 +543,18 @@ public class WorkflowInstance implements Serializable {
 			sb.append("\"completed\": ");
 
 			sb.append(completed);
+		}
+
+		Map<String, ?> context = getContext();
+
+		if (context != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"context\": ");
+
+			sb.append(_toJSON(context));
 		}
 
 		String[] currentNodeNames = getCurrentNodeNames();

@@ -1049,6 +1049,14 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("context", additionalAssertFieldName)) {
+				if (workflowInstance.getContext() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("currentNodeNames", additionalAssertFieldName)) {
 				if (workflowInstance.getCurrentNodeNames() == null) {
 					valid = false;
@@ -1231,6 +1239,17 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 				if (!Objects.deepEquals(
 						workflowInstance1.getCompleted(),
 						workflowInstance2.getCompleted())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("context", additionalAssertFieldName)) {
+				if (!equals(
+						(Map)workflowInstance1.getContext(),
+						(Map)workflowInstance2.getContext())) {
 
 					return false;
 				}
@@ -1432,6 +1451,11 @@ public abstract class BaseWorkflowInstanceResourceTestCase {
 		}
 
 		if (entityFieldName.equals("completed")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("context")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

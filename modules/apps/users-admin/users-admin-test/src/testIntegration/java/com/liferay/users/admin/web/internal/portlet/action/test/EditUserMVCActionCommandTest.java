@@ -184,6 +184,34 @@ public class EditUserMVCActionCommandTest {
 				prefixListType.getListTypeId(), contact.getPrefixListTypeId());
 			Assert.assertEquals(
 				suffixListType.getListTypeId(), contact.getSuffixListTypeId());
+
+			firstName = RandomTestUtil.randomString();
+
+			_processAction(
+				"/users_admin/edit_user",
+				HashMapBuilder.put(
+					Constants.CMD, Constants.UPDATE
+				).put(
+					"firstName", firstName
+				).put(
+					"prefixListTypeValue", "Dr"
+				).put(
+					"p_u_i_d", String.valueOf(user.getUserId())
+				).put(
+					"suffixListTypeValue", "II"
+				).build(),
+				userPermissionChecker, user.getUserId());
+
+			user = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(user.getFirstName(), firstName);
+
+			contact = user.getContact();
+
+			Assert.assertEquals(
+				prefixListType.getListTypeId(), contact.getPrefixListTypeId());
+			Assert.assertEquals(
+				suffixListType.getListTypeId(), contact.getSuffixListTypeId());
 		}
 
 		PropsUtil.set(

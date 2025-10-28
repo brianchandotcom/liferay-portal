@@ -368,8 +368,8 @@ const EditCategoryPage = ({
 						{isCreateNew && (
 							<ClayButton
 								data-testid="save-and-add-another-button"
+								displayType="secondary"
 								onClick={handleSaveAndAddAnother}
-								outline={true}
 								size="sm"
 							>
 								{Liferay.Language.get('save-and-add-another')}

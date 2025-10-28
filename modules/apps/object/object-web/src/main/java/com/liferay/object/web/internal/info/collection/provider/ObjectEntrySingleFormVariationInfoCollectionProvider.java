@@ -10,6 +10,9 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntryModel;
+import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.depot.util.SiteConnectedGroupGroupProviderUtil;
 import com.liferay.info.collection.provider.CollectionQuery;
 import com.liferay.info.collection.provider.ConfigurableInfoCollectionProvider;
@@ -305,7 +308,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 
 		searchContext.setEnd(pagination.getEnd());
 
-		searchContext.setGroupIds(new long[] {_getGroupId()});
+		searchContext.setGroupIds(_getGroupIds());
 
 		KeywordsInfoFilter keywordsInfoFilter = collectionQuery.getInfoFilter(
 			KeywordsInfoFilter.class);
@@ -530,19 +533,38 @@ public class ObjectEntrySingleFormVariationInfoCollectionProvider
 		return StringUtil.removeLast(sb.toString(), " and ");
 	}
 
-	private long _getGroupId() throws Exception {
+	private long[] _getGroupIds() throws Exception {
 		ObjectScopeProvider objectScopeProvider =
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				_objectDefinition.getScope());
 
 		if (!objectScopeProvider.isGroupAware()) {
-			return 0;
+			return new long[0];
 		}
+
+		List<Long> groupIds = new ArrayList<>();
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
-		return objectScopeProvider.getGroupId(serviceContext.getRequest());
+		long groupId = objectScopeProvider.getGroupId(
+			serviceContext.getRequest());
+
+		groupIds.add(groupId);
+
+		if (StringUtil.equals(
+				_objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+			groupIds.addAll(
+				TransformUtil.transform(
+					DepotEntryLocalServiceUtil.getGroupConnectedDepotEntries(
+						groupId, DepotConstants.TYPE_ANY, QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS),
+					DepotEntryModel::getGroupId));
+		}
+
+		return ArrayUtil.toLongArray(groupIds);
 	}
 
 	private InfoField<?> _getInfoField() {

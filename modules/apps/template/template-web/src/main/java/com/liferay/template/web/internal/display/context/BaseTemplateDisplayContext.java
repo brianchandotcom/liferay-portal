@@ -88,9 +88,9 @@ public abstract class BaseTemplateDisplayContext {
 	}
 
 	public boolean isAddButtonEnabled() {
-		if (!containsAddPortletDisplayTemplatePermission() ||
+		if (isMissingAddPortletDisplayTemplatePermission() ||
 			!_ddmWebConfiguration.enableTemplateCreation() ||
-			!isStagingGroup()) {
+			isStagingGroup()) {
 
 			return false;
 		}
@@ -104,30 +104,10 @@ public abstract class BaseTemplateDisplayContext {
 		if (!scopeGroup.hasLocalOrRemoteStagingGroup() ||
 			!scopeGroup.isStagedPortlet(TemplatePortletKeys.TEMPLATE)) {
 
-			return true;
+			return false;
 		}
 
-		return false;
-	}
-
-	protected boolean containsAddPortletDisplayTemplatePermission() {
-		try {
-			return PortletPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
-				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE, false,
-				false);
-		}
-		catch (PortalException portalException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to check permission for resource name " +
-						TemplatePortletKeys.TEMPLATE,
-					portalException);
-			}
-		}
-
-		return false;
+		return true;
 	}
 
 	protected String getKeywords() {
@@ -170,6 +150,26 @@ public abstract class BaseTemplateDisplayContext {
 		).setTabs1(
 			getTabs1()
 		).buildPortletURL();
+	}
+
+	protected boolean isMissingAddPortletDisplayTemplatePermission() {
+		try {
+			return !PortletPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), themeDisplay.getLayout(),
+				TemplatePortletKeys.TEMPLATE, DDMActionKeys.ADD_TEMPLATE, false,
+				false);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to check permission for resource name " +
+						TemplatePortletKeys.TEMPLATE,
+					portalException);
+			}
+		}
+
+		return true;
 	}
 
 	protected final LiferayPortletRequest liferayPortletRequest;

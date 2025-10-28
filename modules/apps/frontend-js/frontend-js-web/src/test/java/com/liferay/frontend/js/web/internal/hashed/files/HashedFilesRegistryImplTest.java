@@ -100,19 +100,19 @@ public class HashedFilesRegistryImplTest {
 				"/o/frontend-js-web/main.css"));
 	}
 
-	private Portal _mockPortal(String pathContext, String pathProxy) {
+	private Portal _mockPortal(String contextPath, String proxyPath) {
 		Portal portal = Mockito.mock(Portal.class);
 
 		Mockito.when(
 			portal.getPathContext()
 		).thenReturn(
-			pathProxy + pathContext
+			proxyPath + contextPath
 		);
 
 		Mockito.when(
 			portal.getPathProxy()
 		).thenReturn(
-			pathProxy
+			proxyPath
 		);
 
 		return portal;

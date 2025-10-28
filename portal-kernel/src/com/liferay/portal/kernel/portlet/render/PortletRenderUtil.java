@@ -350,9 +350,9 @@ public class PortletRenderUtil {
 
 		String url = null;
 
-		String pathProxy = PortalUtil.getPathProxy();
+		String proxyPath = PortalUtil.getPathProxy();
 
-		String unhashedFileURI = originalURL.substring(pathProxy.length());
+		String unhashedFileURI = originalURL.substring(proxyPath.length());
 
 		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
 			unhashedFileURI);
@@ -369,7 +369,7 @@ public class PortletRenderUtil {
 			}
 		}
 		else {
-			url = pathProxy + hashedFileURI;
+			url = proxyPath + hashedFileURI;
 
 			if (PortalUtil.isRightToLeft(httpServletRequest)) {
 				url = HashedFilesUtil.addNameSuffix(url, "_rtl");

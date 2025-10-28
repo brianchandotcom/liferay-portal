@@ -171,24 +171,24 @@ public class ThemeDisplayTest {
 	}
 
 	private void _mockPortalUtil(
-		String pathContext, String pathProxy, boolean rtl) {
+		String contextPath, String proxyPath, boolean rtl) {
 
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathContext
 		).thenReturn(
-			pathProxy + pathContext
+			proxyPath + contextPath
 		);
 
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathModule
 		).thenReturn(
-			pathProxy + pathContext + "/o"
+			proxyPath + contextPath + "/o"
 		);
 
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathProxy
 		).thenReturn(
-			pathProxy
+			proxyPath
 		);
 
 		_portalUtilMockedStatic.when(

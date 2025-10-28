@@ -67,13 +67,13 @@ public class HashedFilesRegistryImpl implements HashedFilesRegistry {
 
 		int subpathIndex = 3;
 
-		String pathContext = _portal.getPathContext();
+		String contextPath = _portal.getPathContext();
 
-		String pathProxy = _portal.getPathProxy();
+		String proxyPath = _portal.getPathProxy();
 
-		pathContext = pathContext.substring(pathProxy.length());
+		contextPath = contextPath.substring(proxyPath.length());
 
-		if (!pathContext.isEmpty()) {
+		if (!contextPath.isEmpty()) {
 			subpathIndex = 4;
 		}
 

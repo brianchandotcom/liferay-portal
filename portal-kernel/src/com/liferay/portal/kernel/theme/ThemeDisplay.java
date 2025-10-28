@@ -608,7 +608,7 @@ public class ThemeDisplay
 	}
 
 	public String getPathContext() {
-		return _pathContext;
+		return _contextPath;
 	}
 
 	/**
@@ -1582,8 +1582,8 @@ public class ThemeDisplay
 		_pathColorSchemeImages = pathColorSchemeImages;
 	}
 
-	public void setPathContext(String pathContext) {
-		_pathContext = pathContext;
+	public void setPathContext(String contextPath) {
+		_contextPath = contextPath;
 	}
 
 	public void setPathControlPanelSpritemap(String pathControlPanelSpritemap) {
@@ -1996,9 +1996,9 @@ public class ThemeDisplay
 
 		String prefix = PortalUtil.getPathModule();
 
-		String pathProxy = PortalUtil.getPathProxy();
+		String proxyPath = PortalUtil.getPathProxy();
 
-		prefix = prefix.substring(pathProxy.length());
+		prefix = prefix.substring(proxyPath.length());
 
 		String hashedFileURI = HashedFilesRegistryUtil.getHashedFileURI(
 			StringBundler.concat(
@@ -2006,11 +2006,11 @@ public class ThemeDisplay
 				unhashedFileURIPath, unhashedFileURIName));
 
 		if (Validator.isNotNull(hashedFileURI)) {
-			if (pathProxy.isEmpty()) {
+			if (proxyPath.isEmpty()) {
 				return hashedFileURI;
 			}
 
-			return pathProxy + hashedFileURI;
+			return proxyPath + hashedFileURI;
 		}
 
 		return PortalUtil.getStaticResourceURL(
@@ -2072,7 +2072,7 @@ public class ThemeDisplay
 	private List<NavItem> _navItems;
 	private String _pathApplet = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
-	private String _pathContext = StringPool.BLANK;
+	private String _contextPath = StringPool.BLANK;
 	private String _pathControlPanelSpritemap = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateGroup = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateUser = StringPool.BLANK;

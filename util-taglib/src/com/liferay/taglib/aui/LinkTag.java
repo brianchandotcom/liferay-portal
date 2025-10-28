@@ -54,9 +54,9 @@ public class LinkTag extends BaseLinkTag {
 				if (getHashedFile()) {
 					String prefix = PortalUtil.getPathModule();
 
-					String pathProxy = PortalUtil.getPathProxy();
+					String proxyPath = PortalUtil.getPathProxy();
 
-					prefix = prefix.substring(pathProxy.length());
+					prefix = prefix.substring(proxyPath.length());
 
 					String hashedFileURI =
 						HashedFilesRegistryUtil.getHashedFileURI(
@@ -66,7 +66,7 @@ public class LinkTag extends BaseLinkTag {
 						try {
 							href =
 								PortalUtil.getCDNHost(getRequest()) +
-									pathProxy + hashedFileURI;
+									proxyPath + hashedFileURI;
 						}
 						catch (PortalException portalException) {
 							throw new RuntimeException(portalException);

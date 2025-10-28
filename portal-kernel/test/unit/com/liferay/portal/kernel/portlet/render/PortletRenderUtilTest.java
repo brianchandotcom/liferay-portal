@@ -348,7 +348,7 @@ public class PortletRenderUtilTest {
 			"Nonempty expected set " + expectedSet, expectedSet.isEmpty());
 	}
 
-	private void _setUpMocks(String pathContext, String pathProxy)
+	private void _setUpMocks(String contextPath, String proxyPath)
 		throws Exception {
 
 		// HashedFilesRegistryUtil
@@ -405,13 +405,13 @@ public class PortletRenderUtilTest {
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathContext
 		).thenReturn(
-			pathProxy + pathContext
+			proxyPath + contextPath
 		);
 
 		_portalUtilMockedStatic.when(
 			PortalUtil::getPathProxy
 		).thenReturn(
-			pathProxy
+			proxyPath
 		);
 
 		_portalUtilMockedStatic.when(
@@ -483,7 +483,7 @@ public class PortletRenderUtilTest {
 		Mockito.when(
 			_portlet.getContextPath()
 		).thenReturn(
-			pathContext + "/o/portlet-web"
+			contextPath + "/o/portlet-web"
 		);
 
 		Mockito.when(

@@ -6466,7 +6466,7 @@ public class JournalArticleLocalServiceImpl
 				_classNameLocalService.getClassNameId(DDMStructure.class),
 				ddmTemplateKey, true);
 
-			if ((ddmTemplate == null) &&
+			if ((ddmTemplate == null) && (themeDisplay != null) &&
 				(article.getGroupId() != themeDisplay.getScopeGroupId())) {
 
 				ddmTemplate = ddmTemplateLocalService.fetchTemplate(

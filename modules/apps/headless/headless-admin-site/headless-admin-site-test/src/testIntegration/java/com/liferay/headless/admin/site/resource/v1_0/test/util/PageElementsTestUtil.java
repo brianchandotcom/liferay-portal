@@ -137,13 +137,15 @@ public class PageElementsTestUtil {
 	}
 
 	public static FragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(String key) {
+		getFragmentInstancePageElementDefinition(
+			String key, long scopeGroupId) {
 
 		FragmentEntry fragmentEntry =
 			FragmentCollectionContributorRegistryUtil.getFragmentEntry(key);
 
 		if (fragmentEntry != null) {
-			return getFragmentInstancePageElementDefinition(fragmentEntry);
+			return getFragmentInstancePageElementDefinition(
+				fragmentEntry, scopeGroupId);
 		}
 
 		FragmentRenderer fragmentRenderer =
@@ -157,7 +159,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static PageElementDefinition getPageElementDefinition(
-		PageElementDefinition.Type type) {
+		PageElementDefinition.Type type, long scopeGroupId) {
 
 		if (Objects.equals(
 				type, PageElementDefinition.Type.COLLECTION_DISPLAY)) {
@@ -231,7 +233,7 @@ public class PageElementsTestUtil {
 
 		if (Objects.equals(type, PageElementDefinition.Type.FRAGMENT)) {
 			return getFragmentInstancePageElementDefinition(
-				"BASIC_COMPONENT-heading");
+				"BASIC_COMPONENT-heading", scopeGroupId);
 		}
 
 		if (Objects.equals(
@@ -271,7 +273,7 @@ public class PageElementsTestUtil {
 	}
 
 	public static PageElement[] getPageElements(
-		int count, String parentExternalReferenceCode) {
+		int count, String parentExternalReferenceCode, long scopeGroupId) {
 
 		PageElement[] pageElements = new PageElement[count];
 
@@ -280,7 +282,7 @@ public class PageElementsTestUtil {
 
 			pageElement.setExternalReferenceCode(RandomTestUtil::randomString);
 			pageElement.setPageElementDefinition(
-				getPageElementDefinition(_getRandomType()));
+				getPageElementDefinition(_getRandomType(), scopeGroupId));
 			pageElement.setPosition(i);
 
 			if (_isParentablePageElementDefinitionType(
@@ -290,7 +292,7 @@ public class PageElementsTestUtil {
 				pageElement.setPageElements(
 					getPageElements(
 						RandomTestUtil.randomInt(1, 2),
-						pageElement.getExternalReferenceCode()));
+						pageElement.getExternalReferenceCode(), scopeGroupId));
 			}
 
 			pageElement.setParentExternalReferenceCode(

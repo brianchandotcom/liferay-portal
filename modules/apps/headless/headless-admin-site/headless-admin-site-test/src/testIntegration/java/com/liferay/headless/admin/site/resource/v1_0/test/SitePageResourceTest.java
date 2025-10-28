@@ -1060,7 +1060,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			randomSitePage.setPageSpecifications(
 				PageSpecificationsTestUtil.getContentPageSpecifications(
-					randomSitePage.getExternalReferenceCode()));
+					randomSitePage.getExternalReferenceCode(),
+					testGroup.getGroupId()));
 		}
 		else {
 			randomSitePage.setPageSpecifications(
@@ -1305,12 +1306,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			sitePage.getExternalReferenceCode());
@@ -1375,7 +1376,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		PageSpecification[] patchPageSpecifications =
 			PageSpecificationsTestUtil.getPatchPageSpecifications(
-				postSitePage.getPageSpecifications());
+				postSitePage.getPageSpecifications(), testGroup.getGroupId());
 
 		SitePage patchSitePage = sitePageResource.patchSiteSitePage(
 			testGroup.getExternalReferenceCode(),
@@ -1681,7 +1682,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		PageSpecification[] pageSpecifications =
 			PageSpecificationsTestUtil.getPageSpecifications(
-				sitePage.getExternalReferenceCode(), type);
+				sitePage.getExternalReferenceCode(), testGroup.getGroupId(),
+				type);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1762,12 +1764,13 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, PageSpecification.Status.APPROVED);
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.APPROVED);
+				testGroup.getGroupId(), PageSpecification.Status.APPROVED);
 
 		sitePage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1794,12 +1797,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, draftLayoutStatus);
+				null, testGroup.getGroupId(), draftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedLayoutStatus);
+				testGroup.getGroupId(), publishedLayoutStatus);
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			sitePage.getExternalReferenceCode());
@@ -2000,12 +2003,12 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		publishedContentPageSpecification.setExternalReferenceCode(
 			sitePage.getExternalReferenceCode());

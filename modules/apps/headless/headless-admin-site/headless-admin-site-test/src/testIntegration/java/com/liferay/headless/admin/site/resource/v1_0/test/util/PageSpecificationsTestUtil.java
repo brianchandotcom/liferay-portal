@@ -343,7 +343,8 @@ public class PageSpecificationsTestUtil {
 		String contentPageSpecificationExternalReferenceCode,
 		CustomField[] customFields,
 		String draftContentPageSpecificationExternalReferenceCode,
-		PageExperience[] pageExperiences, PageSpecification.Status status) {
+		PageExperience[] pageExperiences, long scopeGroupId,
+		PageSpecification.Status status) {
 
 		ContentPageSpecification contentPageSpecification =
 			new ContentPageSpecification() {
@@ -361,10 +362,11 @@ public class PageSpecificationsTestUtil {
 
 		if (pageExperiences == null) {
 			pageExperiences = PageExperiencesTestUtil.getPageExperiences(
-				contentPageSpecificationExternalReferenceCode);
+				contentPageSpecificationExternalReferenceCode, scopeGroupId);
 		}
 		else {
-			PageExperiencesTestUtil.modifyPageExperiences(pageExperiences);
+			PageExperiencesTestUtil.modifyPageExperiences(
+				pageExperiences, scopeGroupId);
 		}
 
 		contentPageSpecification.setPageExperiences(pageExperiences);
@@ -375,20 +377,22 @@ public class PageSpecificationsTestUtil {
 
 	public static ContentPageSpecification getContentPageSpecification(
 		String draftContentPageSpecificationExternalReferenceCode,
-		PageSpecification.Status status) {
+		long scopeGroupId, PageSpecification.Status status) {
 
 		return getContentPageSpecification(
 			RandomTestUtil.randomString(), null,
-			draftContentPageSpecificationExternalReferenceCode, null, status);
+			draftContentPageSpecificationExternalReferenceCode, null,
+			scopeGroupId, status);
 	}
 
 	public static PageSpecification[] getContentPageSpecifications(
-		String publishedPageSpecificationExternalReferenceCode) {
+		String publishedPageSpecificationExternalReferenceCode,
+		long scopeGroupId) {
 
 		return _getContentPageSpecifications(
 			getCustomFields(), RandomTestUtil.randomString(), null,
 			getCustomFields(), publishedPageSpecificationExternalReferenceCode,
-			null);
+			null, scopeGroupId);
 	}
 
 	public static CustomField[] getCustomFields() {
@@ -406,17 +410,17 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static PageSpecification[] getPageSpecifications(
-		String externalReferenceCode, SitePage.Type type) {
+		String externalReferenceCode, long scopeGroupId, SitePage.Type type) {
 
 		if (type == SitePage.Type.CONTENT_PAGE) {
 			ContentPageSpecification draftContentPageSpecification =
 				getContentPageSpecification(
-					null, PageSpecification.Status.DRAFT);
+					null, scopeGroupId, PageSpecification.Status.DRAFT);
 
 			ContentPageSpecification publishedContentPageSpecification =
 				getContentPageSpecification(
 					draftContentPageSpecification.getExternalReferenceCode(),
-					PageSpecification.Status.APPROVED);
+					scopeGroupId, PageSpecification.Status.APPROVED);
 
 			publishedContentPageSpecification.setExternalReferenceCode(
 				externalReferenceCode);
@@ -444,7 +448,7 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static PageSpecification[] getPatchPageSpecifications(
-		PageSpecification[] pageSpecifications) {
+		PageSpecification[] pageSpecifications, long scopeGroupId) {
 
 		if (pageSpecifications.length == 2) {
 			ContentPageSpecification draftContentPageSpecification = null;
@@ -473,7 +477,8 @@ public class PageSpecificationsTestUtil {
 				draftContentPageSpecification.getPageExperiences(),
 				getCustomFields(),
 				publishedContentPageSpecification.getExternalReferenceCode(),
-				publishedContentPageSpecification.getPageExperiences());
+				publishedContentPageSpecification.getPageExperiences(),
+				scopeGroupId);
 		}
 
 		WidgetPageSpecification widgetPageSpecification =
@@ -774,13 +779,14 @@ public class PageSpecificationsTestUtil {
 		PageExperience[] draftPageSpecificationPageExperiences,
 		CustomField[] publishedPageSpecificationCustomFields,
 		String publishedPageSpecificationExternalReferenceCode,
-		PageExperience[] publishedPageSpecificationPageExperiences) {
+		PageExperience[] publishedPageSpecificationPageExperiences,
+		long scopeGroupId) {
 
 		ContentPageSpecification draftContentPageSpecification =
 			getContentPageSpecification(
 				draftPageSpecificationExternalReferenceCode,
 				draftPageSpecificationCustomFields, null,
-				draftPageSpecificationPageExperiences,
+				draftPageSpecificationPageExperiences, scopeGroupId,
 				PageSpecification.Status.DRAFT);
 
 		ContentPageSpecification publishedContentPageSpecification =
@@ -788,7 +794,7 @@ public class PageSpecificationsTestUtil {
 				publishedPageSpecificationExternalReferenceCode,
 				publishedPageSpecificationCustomFields,
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedPageSpecificationPageExperiences,
+				publishedPageSpecificationPageExperiences, scopeGroupId,
 				PageSpecification.Status.APPROVED);
 
 		return new ContentPageSpecification[] {

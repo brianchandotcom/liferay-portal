@@ -595,13 +595,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
-					"BASIC_COMPONENT-button")));
+					"BASIC_COMPONENT-button", testGroup.getGroupId())));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
 					"com.liferay.fragment.internal.renderer." +
-						"ContentObjectFragmentRenderer")));
+						"ContentObjectFragmentRenderer",
+					testGroup.getGroupId())));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
@@ -1649,7 +1650,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		pageElement.setPageElementDefinition(
 			() -> PageElementsTestUtil.getPageElementDefinition(
-				pageElementDefinitionType));
+				pageElementDefinitionType, testGroup.getGroupId()));
 		pageElement.setPageElements(pageElements);
 		pageElement.setParentExternalReferenceCode(parentExternalReferenceCode);
 

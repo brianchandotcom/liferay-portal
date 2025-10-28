@@ -557,7 +557,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		PageSpecification[] pageSpecifications =
 			PageSpecificationsTestUtil.getContentPageSpecifications(
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), testGroup.getGroupId());
 
 		randomMasterPage.setPageSpecifications(pageSpecifications);
 
@@ -661,12 +661,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		masterPage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -715,7 +715,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 			PageSpecification[] patchPageSpecifications =
 				PageSpecificationsTestUtil.getPatchPageSpecifications(
-					postMasterPage.getPageSpecifications());
+					postMasterPage.getPageSpecifications(),
+					testGroup.getGroupId());
 
 			MasterPage patchMasterPage = masterPageResource.patchSiteMasterPage(
 				testGroup.getExternalReferenceCode(),
@@ -762,12 +763,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, draftLayoutStatus);
+				null, testGroup.getGroupId(), draftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedLayoutStatus);
+				testGroup.getGroupId(), publishedLayoutStatus);
 
 		masterPage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -814,7 +815,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, PageSpecification.Status.APPROVED);
+				null, testGroup.getGroupId(),
+				PageSpecification.Status.APPROVED);
 
 		Layout layout =
 			LayoutPageTemplateEntryTestUtil.
@@ -831,7 +833,7 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.APPROVED);
+				testGroup.getGroupId(), PageSpecification.Status.APPROVED);
 
 		publishedContentPageSpecification.
 			setSiteTemplatePageSpecificationExternalReferenceCode(
@@ -917,12 +919,12 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		masterPage.setPageSpecifications(
 			() -> new PageSpecification[] {

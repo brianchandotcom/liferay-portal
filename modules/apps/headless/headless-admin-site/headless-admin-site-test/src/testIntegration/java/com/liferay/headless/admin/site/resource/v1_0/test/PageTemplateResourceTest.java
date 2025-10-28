@@ -1163,12 +1163,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1394,12 +1394,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, draftLayoutStatus);
+				null, testGroup.getGroupId(), draftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedLayoutStatus);
+				testGroup.getGroupId(), publishedLayoutStatus);
 
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1441,7 +1441,8 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
 				PageSpecificationsTestUtil.getContentPageSpecification(
-					null, PageSpecification.Status.APPROVED)
+					null, testGroup.getGroupId(),
+					PageSpecification.Status.APPROVED)
 			});
 
 		_assertProblemException(
@@ -1572,12 +1573,12 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		pageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {

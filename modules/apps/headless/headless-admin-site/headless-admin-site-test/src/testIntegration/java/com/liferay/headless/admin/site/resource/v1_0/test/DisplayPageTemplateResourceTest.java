@@ -1126,12 +1126,12 @@ public class DisplayPageTemplateResourceTest
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		displayPageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1222,12 +1222,12 @@ public class DisplayPageTemplateResourceTest
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, draftLayoutStatus);
+				null, testGroup.getGroupId(), draftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedLayoutStatus);
+				testGroup.getGroupId(), publishedLayoutStatus);
 
 		displayPageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -1272,7 +1272,7 @@ public class DisplayPageTemplateResourceTest
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, PageSpecification.Status.DRAFT);
+				null, testGroup.getGroupId(), PageSpecification.Status.DRAFT);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -1285,7 +1285,7 @@ public class DisplayPageTemplateResourceTest
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				PageSpecification.Status.APPROVED);
+				testGroup.getGroupId(), PageSpecification.Status.APPROVED);
 
 		publishedContentPageSpecification.setSettings(
 			SettingsTestUtil.getSettings(
@@ -1686,12 +1686,12 @@ public class DisplayPageTemplateResourceTest
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		displayPageTemplate.setPageSpecifications(
 			() -> new PageSpecification[] {

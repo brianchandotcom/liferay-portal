@@ -182,7 +182,8 @@ public class PageExperienceResourceTest
 			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
 
 		pageExperience.setPageElements(
-			PageElementsTestUtil.getPageElements(2, null));
+			PageElementsTestUtil.getPageElements(
+				2, null, testGroup.getGroupId()));
 		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());
 		pageExperience.setSegmentExternalReferenceCode(

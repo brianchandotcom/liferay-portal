@@ -57,7 +57,8 @@ public class PageExperiencesTestUtil {
 	}
 
 	public static PageExperience[] getPageExperiences(
-		String contentPageSpecificationExternalReferenceCode) {
+		String contentPageSpecificationExternalReferenceCode,
+		long scopeGroupId) {
 
 		return new PageExperience[] {
 			new PageExperience() {
@@ -69,7 +70,8 @@ public class PageExperiencesTestUtil {
 							"en-US", RandomTestUtil.randomString()));
 					setPageElements(
 						PageElementsTestUtil.getPageElements(
-							RandomTestUtil.randomInt(1, 3), StringPool.BLANK));
+							RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
+							scopeGroupId));
 					setPageSpecificationExternalReferenceCode(
 						contentPageSpecificationExternalReferenceCode);
 				}
@@ -77,7 +79,9 @@ public class PageExperiencesTestUtil {
 		};
 	}
 
-	public static void modifyPageExperiences(PageExperience[] pageExperiences) {
+	public static void modifyPageExperiences(
+		PageExperience[] pageExperiences, long scopeGroupId) {
+
 		for (PageExperience pageExperience : pageExperiences) {
 			List<PageElement> dropZonePageElements =
 				TransformUtil.transformToList(
@@ -100,7 +104,8 @@ public class PageExperiencesTestUtil {
 				() -> {
 					PageElement[] pageElements =
 						PageElementsTestUtil.getPageElements(
-							RandomTestUtil.randomInt(1, 3), StringPool.BLANK);
+							RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
+							scopeGroupId);
 
 					if (ListUtil.isEmpty(dropZonePageElements)) {
 						return pageElements;

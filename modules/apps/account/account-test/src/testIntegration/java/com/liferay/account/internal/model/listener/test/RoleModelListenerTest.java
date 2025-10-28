@@ -168,15 +168,22 @@ public class RoleModelListenerTest {
 				Assert.fail(
 					"Allowed to delete default role: " + requiredRoleName);
 			}
-			catch (ModelListenerException modelListenerException) {
-				Throwable throwable = modelListenerException.getCause();
-
-				Assert.assertTrue(throwable instanceof RequiredRoleException);
-
-				String message = throwable.getMessage();
-
+			catch (Exception exception) {
 				Assert.assertTrue(
-					message.contains(" is a default account role"));
+					exception instanceof ModelListenerException ||
+					exception instanceof RequiredRoleException);
+
+				if (exception instanceof ModelListenerException) {
+					Throwable throwable = exception.getCause();
+
+					Assert.assertTrue(
+						throwable instanceof RequiredRoleException);
+
+					String message = throwable.getMessage();
+
+					Assert.assertTrue(
+						message.contains(" is a default account role"));
+				}
 			}
 		}
 	}

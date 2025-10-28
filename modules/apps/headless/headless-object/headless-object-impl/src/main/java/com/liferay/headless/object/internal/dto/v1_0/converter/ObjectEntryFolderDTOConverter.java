@@ -8,13 +8,11 @@ package com.liferay.headless.object.internal.dto.v1_0.converter;
 import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.object.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.object.dto.v1_0.ParentObjectEntryFolderBrief;
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.headless.object.dto.v1_0.Status;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -23,6 +21,7 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -153,28 +152,8 @@ public class ObjectEntryFolderDTOConverter
 						return null;
 					});
 				setScope(
-					() -> {
-						if (group == null) {
-							return null;
-						}
-
-						Scope scope = new Scope();
-
-						scope.setExternalReferenceCode(
-							group::getExternalReferenceCode);
-						scope.setType(
-							() -> {
-								if (group.getType() ==
-										GroupConstants.TYPE_DEPOT) {
-
-									return Scope.Type.ASSET_LIBRARY;
-								}
-
-								return Scope.Type.SITE;
-							});
-
-						return scope;
-					});
+					() -> ScopeUtil.toScope(
+						group, dtoConverterContext.getLocale()));
 				setScopeId(objectEntryFolder::getGroupId);
 				setScopeKey(
 					() -> {

@@ -95,7 +95,6 @@ import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.SystemProperties;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.rest.dto.v1_0.Version;
-import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
@@ -211,6 +210,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.permission.Permission;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -2756,14 +2756,16 @@ public class DefaultObjectEntryManagerImplTest
 					new TaxonomyCategoryBrief[] {
 						new TaxonomyCategoryBrief() {
 							{
-								scope = ScopeUtil.toScope(_group);
+								scope = ScopeUtil.toScope(
+									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode1;
 							}
 						},
 						new TaxonomyCategoryBrief() {
 							{
-								scope = ScopeUtil.toScope(_group);
+								scope = ScopeUtil.toScope(
+									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode2;
 							}

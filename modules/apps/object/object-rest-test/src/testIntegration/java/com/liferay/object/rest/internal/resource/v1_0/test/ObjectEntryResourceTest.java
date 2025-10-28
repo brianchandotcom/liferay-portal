@@ -31,7 +31,6 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.headless.delivery.dto.v1_0.Creator;
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
@@ -68,7 +67,6 @@ import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.ValidationRequest;
 import com.liferay.object.rest.dto.v1_0.ValidationResponse;
-import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
@@ -201,6 +199,8 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.scope.Scope;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -11644,10 +11644,7 @@ public class ObjectEntryResourceTest {
 
 		fileEntry1.setExternalReferenceCode(RandomTestUtil.randomString());
 
-		Scope scope = new Scope();
-
-		scope.setExternalReferenceCode(_group.getExternalReferenceCode());
-		scope.setType(Scope.Type.SITE);
+		Scope scope = ScopeUtil.toScope(_group, LocaleUtil.getDefault());
 
 		fileEntry1.setScope(scope);
 
@@ -15772,20 +15769,8 @@ public class ObjectEntryResourceTest {
 					return null;
 				}
 
-				Scope scope = new Scope();
-
-				Group group = _groupLocalService.getGroup(
-					dlFileEntry.getGroupId());
-
-				scope.setExternalReferenceCode(group::getExternalReferenceCode);
-				scope.setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Scope.Type.ASSET_LIBRARY;
-						}
-
-						return Scope.Type.SITE;
-					});
+				Scope scope = ScopeUtil.toScope(
+					dlFileEntry.getGroupId(), LocaleUtil.getDefault());
 
 				return JSONFactoryUtil.createJSONObject(scope.toString());
 			}
@@ -18330,12 +18315,8 @@ public class ObjectEntryResourceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		Scope scope = new Scope();
-
-		scope.setExternalReferenceCode(group.getExternalReferenceCode());
-		scope.setType(Scope.Type.SITE);
-
-		testFileEntry.setScope(scope);
+		testFileEntry.setScope(
+			ScopeUtil.toScope(group, LocaleUtil.getDefault()));
 
 		String externalReferenceCode3 =
 			testFileEntry.getExternalReferenceCode();
@@ -19848,7 +19829,8 @@ public class ObjectEntryResourceTest {
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {
 
-		Scope scope = ScopeUtil.toScope(taxonomyCategory.getSiteId());
+		Scope scope = ScopeUtil.toScope(
+			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(
 			"scope",

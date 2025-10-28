@@ -17,7 +17,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.exportimport.attachment.ExportImportAttachmentManager;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -77,7 +76,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -117,6 +115,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -757,6 +756,7 @@ public class ObjectEntryDTOConverter
 	}
 
 	private FileEntry _getFileEntry(
+			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry,
 			ObjectField objectField, long fileEntryId, String objectFieldName)
@@ -883,22 +883,8 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 
-				Scope scope = new Scope();
-
-				Group group = _groupLocalService.getGroup(
-					dlFileEntry.getGroupId());
-
-				scope.setExternalReferenceCode(group::getExternalReferenceCode);
-				scope.setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Scope.Type.ASSET_LIBRARY;
-						}
-
-						return Scope.Type.SITE;
-					});
-
-				return scope;
+				return ScopeUtil.toScope(
+					dlFileEntry.getGroupId(), dtoConverterContext.getLocale());
 			});
 		fileEntry.setThumbnailURL(
 			() -> NestedFieldsSupplier.supply(
@@ -1176,8 +1162,8 @@ public class ObjectEntryDTOConverter
 			}
 
 			return _getFileEntry(
-				objectDefinition, objectEntry, objectField, fileEntryId,
-				objectField.getName());
+				dtoConverterContext, objectDefinition, objectEntry, objectField,
+				fileEntryId, objectField.getName());
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE) ||
@@ -1631,22 +1617,7 @@ public class ObjectEntryDTOConverter
 							return null;
 						}
 
-						Scope scope = new Scope();
-
-						scope.setExternalReferenceCode(
-							group::getExternalReferenceCode);
-						scope.setType(
-							() -> {
-								if (group.getType() ==
-										GroupConstants.TYPE_DEPOT) {
-
-									return Scope.Type.ASSET_LIBRARY;
-								}
-
-								return Scope.Type.SITE;
-							});
-
-						return scope;
+						return ScopeUtil.toScope(groupId, locale);
 					});
 				setVersion(
 					() -> {

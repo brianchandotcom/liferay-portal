@@ -43,7 +43,7 @@
 		[/#if]
 
 		[#if input.required]
-			<input aria-hidden="true" class="d-none" id="${fragmentElementId}-ckeditor-required" required />
+			<input aria-hidden="true" class="d-none" id="${fragmentElementId}-ckeditor-required" required [#if input.value?has_content]value="required"[/#if] />
 		[/#if]
 	</div>
 </div>

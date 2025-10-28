@@ -72,6 +72,16 @@ public class WorkflowInstanceSerDes {
 			sb.append(workflowInstance.getCompleted());
 		}
 
+		if (workflowInstance.getContext() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"context\": ");
+
+			sb.append(_toJSON(workflowInstance.getContext()));
+		}
+
 		if (workflowInstance.getCurrentNodeNames() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -211,6 +221,13 @@ public class WorkflowInstanceSerDes {
 				"completed", String.valueOf(workflowInstance.getCompleted()));
 		}
 
+		if (workflowInstance.getContext() == null) {
+			map.put("context", null);
+		}
+		else {
+			map.put("context", String.valueOf(workflowInstance.getContext()));
+		}
+
 		if (workflowInstance.getCurrentNodeNames() == null) {
 			map.put("currentNodeNames", null);
 		}
@@ -299,6 +316,9 @@ public class WorkflowInstanceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "completed")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "context")) {
+				return true;
+			}
 			else if (Objects.equals(jsonParserFieldName, "currentNodeNames")) {
 				return false;
 			}
@@ -343,6 +363,12 @@ public class WorkflowInstanceSerDes {
 				if (jsonParserFieldValue != null) {
 					workflowInstance.setCompleted(
 						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "context")) {
+				if (jsonParserFieldValue != null) {
+					workflowInstance.setContext(
+						(Map<String, ?>)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "currentNodeNames")) {

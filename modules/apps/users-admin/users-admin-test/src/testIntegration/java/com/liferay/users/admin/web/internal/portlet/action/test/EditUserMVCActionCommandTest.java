@@ -194,9 +194,9 @@ public class EditUserMVCActionCommandTest {
 				).put(
 					"firstName", firstName
 				).put(
-					"prefixListTypeValue", "Dr"
-				).put(
 					"p_u_i_d", String.valueOf(user.getUserId())
+				).put(
+					"prefixListTypeValue", "Dr"
 				).put(
 					"suffixListTypeValue", "II"
 				).build(),

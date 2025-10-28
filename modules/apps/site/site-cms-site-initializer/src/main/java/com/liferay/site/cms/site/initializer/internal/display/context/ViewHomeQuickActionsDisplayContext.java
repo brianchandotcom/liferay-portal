@@ -199,20 +199,20 @@ public class ViewHomeQuickActionsDisplayContext {
 			quickActions.add(
 				_createQuickAction(
 					depotEntriesJSONArray,
-					_iconMap.getOrDefault(
+					_icons.getOrDefault(
 						objectDefinition.getExternalReferenceCode(), "forms"),
 					objectDefinition));
 		}
 
 		quickActions.add(
 			_createQuickAction(
-				depotEntriesJSONArray, _iconMap.get("L_CMS_BASIC_DOCUMENT"),
+				depotEntriesJSONArray, _icons.get("L_CMS_BASIC_DOCUMENT"),
 				_objectDefinitionService.
 					getObjectDefinitionByExternalReferenceCode(
 						"L_CMS_BASIC_DOCUMENT", _themeDisplay.getCompanyId())));
 		quickActions.add(
 			_createQuickAction(
-				depotEntriesJSONArray, _iconMap.get("L_CMS_EXTERNAL_VIDEO"),
+				depotEntriesJSONArray, _icons.get("L_CMS_EXTERNAL_VIDEO"),
 				_objectDefinitionService.
 					getObjectDefinitionByExternalReferenceCode(
 						"L_CMS_EXTERNAL_VIDEO", _themeDisplay.getCompanyId())));
@@ -220,7 +220,7 @@ public class ViewHomeQuickActionsDisplayContext {
 			HashMapBuilder.<String, Object>put(
 				"action", "createVocabulary"
 			).put(
-				"icon", _iconMap.get("L_CMS_VOCABULARY")
+				"icon", _icons.get("L_CMS_VOCABULARY")
 			).put(
 				"redirect",
 				PortalUtil.getLayoutFullURL(
@@ -239,7 +239,7 @@ public class ViewHomeQuickActionsDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ViewHomeQuickActionsDisplayContext.class);
 
-	private static final Map<String, String> _iconMap = HashMapBuilder.put(
+	private static final Map<String, String> _icons = HashMapBuilder.put(
 		"L_CMS_BASIC_DOCUMENT", "documents-and-media"
 	).put(
 		"L_CMS_BASIC_WEB_CONTENT", "forms"

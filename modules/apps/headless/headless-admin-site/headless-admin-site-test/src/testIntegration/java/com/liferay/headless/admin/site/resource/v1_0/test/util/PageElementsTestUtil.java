@@ -41,7 +41,6 @@ public class PageElementsTestUtil {
 				{
 					setDisplayAllItems(Boolean.FALSE);
 					setDisplayAllPages(Boolean.TRUE);
-					setNumberOfColumns(1);
 					setNumberOfItems(5);
 					setNumberOfItemsPerPage(5);
 					setNumberOfPages(20);

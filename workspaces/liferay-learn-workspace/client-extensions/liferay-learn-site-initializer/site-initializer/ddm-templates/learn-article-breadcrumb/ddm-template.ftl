@@ -4,15 +4,13 @@
 	breadcrumbJSONArray = navigationJSONObject.getJSONArray("breadcrumb")
 />
 
-<#macro renderBreadcrumbItem
-	breadcrumbItem
->
+<#macro renderBreadcrumbItem i>
 	<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"" />
 
 	<#if breadcrumbItem?? && breadcrumbItem?has_content>
 		<li>
-			<a href='${(breadcrumbItem.getString("url"))!"#"}'>
-				${(breadcrumbItem.getString("title"))!""}
+			<a href='${breadcrumbItem.getString("url")!"#"}'>
+				${breadcrumbItem.getString("title")!""}
 			</a>
 		</li>
 	</#if>
@@ -30,7 +28,7 @@
 								</li>
 
 								<#list 0..(breadcrumbJSONArray.length() - 1) as i>
-									<@renderBreadcrumbItem breadcrumbItem />
+									<@renderBreadcrumbItem i=i />
 								</#list>
 							<#else>
 								<li>
@@ -40,7 +38,7 @@
 								</li>
 
 								<#list (0..1)?reverse as i>
-									<@renderBreadcrumbItem breadcrumbItem />
+									<@renderBreadcrumbItem i=i />
 								</#list>
 							</#if>
 

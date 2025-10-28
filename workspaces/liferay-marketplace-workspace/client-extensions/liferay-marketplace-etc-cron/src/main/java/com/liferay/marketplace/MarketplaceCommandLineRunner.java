@@ -441,8 +441,10 @@ public class MarketplaceCommandLineRunner
 
 	private void _processInProgressTrials() throws Exception {
 		Page<Order> page = _getOrdersPage(
-			"orderStatus/any(x:(x eq " + _ORDER_STATUS_IN_PROGRESS +
-				")) and orderTypeExternalReferenceCode eq 'SOLUTIONS7'",
+			StringBundler.concat(
+				"orderStatus/any(x:(x eq ", _ORDER_STATUS_IN_PROGRESS,
+				")) and orderTypeExternalReferenceCode in (",
+				"'SSA_SAAS', 'SOLUTIONS7')"),
 			-1, -1);
 
 		if (page.getTotalCount() == 0) {

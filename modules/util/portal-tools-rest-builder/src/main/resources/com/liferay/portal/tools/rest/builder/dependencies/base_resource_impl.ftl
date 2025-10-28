@@ -1488,6 +1488,9 @@ public abstract class Base${schemaName}ResourceImpl
 				Permission permission = new Permission() {
 					{
 						actionIds = actionsIdsSet.toArray(new String[0]);
+						<#if freeMarkerTool.isVersionCompatible(configYAML, 14)>
+							roleExternalReferenceCode = role.getExternalReferenceCode();
+						</#if>
 						roleName = role.getName();
 					}
 				};
@@ -2081,7 +2084,10 @@ public abstract class Base${schemaName}ResourceImpl
 >
 	PermissionServiceUtil.checkPermission(${groupId}, ${resourceName}, ${resourceId});
 
-	ModelPermissions modelPermissions = ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService);
+	ModelPermissions modelPermissions = ModelPermissionsUtil.toModelPermissions(contextCompany.getCompanyId(), permissions, ${resourceId}, ${resourceName}, resourceActionLocalService, resourcePermissionLocalService, roleLocalService
+		<#if freeMarkerTool.isVersionCompatible(configYAML, 14)>
+			, contextUser.getUserId()
+		</#if>);
 
 	Collection<String> roleNames = modelPermissions.getRoleNames();
 

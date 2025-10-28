@@ -74,7 +74,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
 
 /**
- * @author Rubén Pulido
+ * @author     Rubén Pulido
  * @deprecated As of Cavanaugh (7.4.x)
  */
 @Component(

@@ -1498,7 +1498,7 @@ public class ObjectEntryDisplayContextImpl
 		HttpServletRequest httpServletRequest =
 			_objectRequestHelper.getRequest();
 
-		Long groupId = GetterUtil.getLong(
+		long groupId = GetterUtil.getLong(
 			httpServletRequest.getAttribute(
 				ObjectWebKeys.OBJECT_ENTRY_GROUP_ID));
 

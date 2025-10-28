@@ -182,7 +182,7 @@
 
 								<div class="how-to-cards-container" id="how-to-cards-container">
 									<#list knowledgeArticles.items as knowledgeArticle>
-											<a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
+										<a class="how-to-card" href="${(themeDisplay.getCanonicalURL()!)!''}/l/${knowledgeArticle.id}/">
 											<div class="how-to-card-header">
 												${knowledgeArticle.title!}
 											</div>
@@ -293,9 +293,19 @@
 		line-height: 1.75rem;
 	}
 
+	.learn-article {
+		max-width: 900px !important;
+	}
+
 	@media only screen and (max-width: 1200px) {
 		.how-to-cards-container {
 			flex-direction: column;
+		}
+	}
+
+	@media (max-width: 1024px) {
+		.learn-article {
+			margin-top: 2.5rem;
 		}
 	}
 </style>

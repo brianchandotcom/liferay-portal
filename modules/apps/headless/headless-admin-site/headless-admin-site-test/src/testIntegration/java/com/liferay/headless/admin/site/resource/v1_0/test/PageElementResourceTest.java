@@ -1118,9 +1118,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private WidgetInstance _getWidgetInstance(
-			Map<String, Object> widgetConfig, String widgetInstanceId,
-			String widgetName, WidgetPermission[] widgetPermissions)
-		throws Exception {
+		Map<String, Object> widgetConfig, String widgetInstanceId,
+		String widgetName, WidgetPermission[] widgetPermissions) {
 
 		WidgetInstance widgetInstance = new WidgetInstance();
 

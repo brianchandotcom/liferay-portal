@@ -699,33 +699,30 @@ public class BatchEngineBrokerTest {
 			String externalReferenceCode)
 		throws Exception {
 
-		List<CSVRecord> actualCSVRecords = CSVParser.parse(
+		List<CSVRecord> csvRecords = CSVParser.parse(
 			actualCSVString, _CSV_FORMAT
 		).getRecords();
-		List<List<String>> expectedCSVRecordsStrings =
-			_normalizeCSVRecordsStrings(
-				CSVParser.parse(
-					expectedCSVString, _CSV_FORMAT
-				).getRecords());
+
+		List<List<String>> expectedCSVRecordsList = _normalizeCSVRecordsList(
+			CSVParser.parse(
+				expectedCSVString, _CSV_FORMAT
+			).getRecords());
 
 		Assert.assertEquals(
-			expectedCSVRecordsStrings.get(0), _toList(actualCSVRecords.get(0)));
+			expectedCSVRecordsList.get(0), _toList(csvRecords.get(0)));
 
-		List<String> expectedCSVRecordStrings = expectedCSVRecordsStrings.get(
-			1);
+		List<String> expectedCSVRecordStrings = expectedCSVRecordsList.get(1);
 
 		boolean found = false;
 
-		for (int i = 1; i < actualCSVRecords.size(); i++) {
-			List<String> actualCSVRecordStrings = _toList(
-				actualCSVRecords.get(i));
+		for (int i = 1; i < csvRecords.size(); i++) {
+			List<String> csvRecordStrings = _toList(csvRecords.get(i));
 
-			if (!actualCSVRecordStrings.contains(externalReferenceCode)) {
+			if (!csvRecordStrings.contains(externalReferenceCode)) {
 				continue;
 			}
 
-			Assert.assertEquals(
-				expectedCSVRecordStrings, actualCSVRecordStrings);
+			Assert.assertEquals(expectedCSVRecordStrings, csvRecordStrings);
 
 			found = true;
 		}
@@ -1146,18 +1143,20 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private List<List<String>> _normalizeCSVRecordsStrings(
+	private List<List<String>> _normalizeCSVRecordsList(
 		List<CSVRecord> csvRecords) {
 
-		List<List<String>> normalizedCSVRecordsStrings = new ArrayList<>(
+		List<List<String>> normalizedCSVRecordsList = new ArrayList<>(
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			normalizedCSVRecordsStrings.add(
-				_normalizeValues(csvRecord.toList()));
+			List<String> csvRecordStrings = _normalizeValues(
+				csvRecord.toList());
+
+			normalizedCSVRecordsList.add(csvRecordStrings);
 		}
 
-		return normalizedCSVRecordsStrings;
+		return normalizedCSVRecordsList;
 	}
 
 	private List<String> _normalizeValues(List<String> values) {

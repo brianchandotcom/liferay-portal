@@ -33,6 +33,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerContextRefer
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
@@ -691,6 +692,17 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
 				PageElementDefinition.Type.FRAGMENT, StringPool.BLANK));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					"BASIC_COMPONENT-button")));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer")));
 
 		externalReferenceCode = RandomTestUtil.randomString();
 
@@ -1337,6 +1349,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _getPageElement(
 			formContainerPageElementDefinition,
 			pageElementExternalReferenceCode);
+	}
+
+	private PageElement _getFragmentInstancePageElement(
+			String externalReferenceCode,
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition)
+		throws Exception {
+
+		PageElement pageElement = super.randomPageElement();
+
+		pageElement.setExternalReferenceCode(externalReferenceCode);
+
+		pageElement.setPageElementDefinition(
+			() -> fragmentInstancePageElementDefinition);
+
+		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
+		pageElement.setPosition(_position);
+
+		return pageElement;
 	}
 
 	private FragmentLink _getFragmentLink(

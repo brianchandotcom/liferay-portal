@@ -2694,8 +2694,10 @@ public class DefaultObjectEntryManagerImplTest
 		AssertUtils.assertFailure(
 			NoSuchRoleException.class,
 			String.format(
-				"No Role exists with the key {companyId=%s, name=%s}",
-				_objectDefinition1.getCompanyId(), permission.getRoleName()),
+				"No Role exists with the key {externalReferenceCode=%s, " +
+					"companyId=%s}",
+				permission.getRoleExternalReferenceCode(),
+				_objectDefinition1.getCompanyId()),
 			() -> _defaultObjectEntryManager.addObjectEntry(
 				_simpleDTOConverterContext, _objectDefinition1,
 				new ObjectEntry() {

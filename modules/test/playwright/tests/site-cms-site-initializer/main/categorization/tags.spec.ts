@@ -379,3 +379,33 @@ test(
 		await tagsPage.deleteTag(name2);
 	}
 );
+
+test(
+	'UI error appears when attempting to create a tag with an invalid character',
+	{tag: '@LPD-69332'},
+	async ({page, tagsPage}) => {
+		await tagsPage.goto();
+
+		await tagsPage.newTagButton.click();
+
+		await page.getByLabel('NameRequired').fill('<Tag>');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText(
+				'Name cannot contain the following invalid characters:'
+			),
+			trigger: tagsPage.saveButton,
+		});
+
+		await clickAndExpectToBeHidden({
+			target: page
+				.locator('.modal-body')
+				.getByText(
+					'Name cannot contain the following invalid characters:'
+				),
+			trigger: page.getByText('Cancel'),
+		});
+
+		await expect(tagsPage.getItem('<Tag>')).not.toBeVisible();
+	}
+);

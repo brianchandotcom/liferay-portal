@@ -1994,8 +1994,6 @@ public class ThemeDisplay
 		String staticResourceURLName, String staticResourceURLPath,
 		String unhashedFileURIName, String unhashedFileURIPath) {
 
-		String url;
-
 		String prefix = PortalUtil.getPathModule();
 
 		String pathProxy = PortalUtil.getPathProxy();
@@ -2009,18 +2007,14 @@ public class ThemeDisplay
 
 		if (Validator.isNotNull(hashedFileURI)) {
 			if (pathProxy.isEmpty()) {
-				url = hashedFileURI;
+				return hashedFileURI;
 			}
-			else {
-				url = pathProxy + hashedFileURI;
-			}
-		}
-		else {
-			url = PortalUtil.getStaticResourceURL(
-				getRequest(), staticResourceURLPath + staticResourceURLName);
+
+			return pathProxy + hashedFileURI;
 		}
 
-		return url;
+		return PortalUtil.getStaticResourceURL(
+			getRequest(), staticResourceURLPath + staticResourceURLName);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);

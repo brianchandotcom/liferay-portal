@@ -74,4 +74,7 @@ public class CommerceOrderActionKeys {
 	public static final String VIEW_OPEN_COMMERCE_ORDERS =
 		"VIEW_OPEN_COMMERCE_ORDERS";
 
+	public static final String VIEW_ORGANIZATION_COMMERCE_ORDERS =
+		"VIEW_ORGANIZATION_COMMERCE_ORDERS";
+
 }

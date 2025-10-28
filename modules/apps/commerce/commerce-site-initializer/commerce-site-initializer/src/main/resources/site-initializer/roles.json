@@ -416,6 +416,11 @@
 				"scope": 1
 			},
 			{
+				"actionId": "VIEW_ORGANIZATION_COMMERCE_ORDERS",
+				"resource": "com.liferay.commerce.order",
+				"scope": 1
+			},
+			{
 				"actionId": "MANAGE_AVAILABLE_ACCOUNTS",
 				"resource": "com.liferay.portal.kernel.model.Organization",
 				"scope": 1

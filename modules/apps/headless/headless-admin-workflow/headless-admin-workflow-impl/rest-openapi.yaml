@@ -293,6 +293,10 @@ components:
                         A flag that indicates whether the instance is complete.
                     readOnly: true
                     type: boolean
+                context:
+                    additionalProperties: true
+                    readOnly: true
+                    type: object
                 currentNodeNames:
                     # @review
                     description:

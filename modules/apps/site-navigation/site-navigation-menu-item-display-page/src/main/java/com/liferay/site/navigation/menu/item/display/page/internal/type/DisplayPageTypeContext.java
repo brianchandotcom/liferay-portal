@@ -5,8 +5,9 @@
 
 package com.liferay.site.navigation.menu.item.display.page.internal.type;
 
-import com.liferay.info.item.ClassPKInfoItemIdentifier;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -22,7 +23,7 @@ import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -35,7 +36,8 @@ import java.util.Locale;
 public class DisplayPageTypeContext {
 
 	public DisplayPageTypeContext(
-		String className, InfoItemServiceRegistry infoItemServiceRegistry,
+		String className, GroupLocalService groupLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry,
 		LayoutDisplayPageMultiSelectionProviderRegistry
@@ -43,6 +45,7 @@ public class DisplayPageTypeContext {
 		LayoutDisplayPageProviderRegistry layoutDisplayPageProviderRegistry) {
 
 		_className = className;
+		_groupLocalService = groupLocalService;
 		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry =
 			layoutDisplayPageInfoItemFieldValuesProviderRegistry;
@@ -89,9 +92,10 @@ public class DisplayPageTypeContext {
 
 		return new InfoItemReference(
 			_className,
-			new ClassPKInfoItemIdentifier(
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("classPK"))));
+			new ERCInfoItemIdentifier(
+				typeSettingsUnicodeProperties.get("externalReferenceCode"),
+				typeSettingsUnicodeProperties.get(
+					"scopeExternalReferenceCode")));
 	}
 
 	public String getLabel(Locale locale) {
@@ -119,7 +123,8 @@ public class DisplayPageTypeContext {
 	}
 
 	public LayoutDisplayPageObjectProvider<?>
-		getLayoutDisplayPageObjectProvider(long classPK) {
+		getLayoutDisplayPageObjectProvider(
+			String externalReferenceCode, String scopeExternalReferenceCode) {
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
 			getLayoutDisplayPageProvider();
@@ -128,8 +133,11 @@ public class DisplayPageTypeContext {
 			return null;
 		}
 
+		InfoItemIdentifier infoItemIdentifier = new ERCInfoItemIdentifier(
+			externalReferenceCode, scopeExternalReferenceCode);
+
 		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-			new InfoItemReference(_className, classPK));
+			new InfoItemReference(_className, infoItemIdentifier));
 	}
 
 	public LayoutDisplayPageProvider<?> getLayoutDisplayPageProvider() {
@@ -167,6 +175,7 @@ public class DisplayPageTypeContext {
 	}
 
 	private final String _className;
+	private final GroupLocalService _groupLocalService;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final LayoutDisplayPageInfoItemFieldValuesProviderRegistry
 		_layoutDisplayPageInfoItemFieldValuesProviderRegistry;

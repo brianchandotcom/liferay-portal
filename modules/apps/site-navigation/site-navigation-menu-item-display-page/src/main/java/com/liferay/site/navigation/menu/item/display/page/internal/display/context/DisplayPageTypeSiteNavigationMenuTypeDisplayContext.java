@@ -7,8 +7,12 @@ package com.liferay.site.navigation.menu.item.display.page.internal.display.cont
 
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemIdentifier;
+import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
@@ -53,11 +57,14 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 	public DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
 		DisplayPageTypeContext displayPageTypeContext,
-		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
+		HttpServletRequest httpServletRequest,
+		InfoItemServiceRegistry infoItemServiceRegistry,
+		ItemSelector itemSelector,
 		SiteNavigationMenuItem siteNavigationMenuItem) {
 
 		_displayPageTypeContext = displayPageTypeContext;
 		_httpServletRequest = httpServletRequest;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_siteNavigationMenuItem = siteNavigationMenuItem;
 
@@ -195,9 +202,18 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 			LocaleUtil.toLanguageId(LocaleUtil.getMostRelevantLocale())
 		).put(
 			"hasDisplayPage",
-			AssetDisplayPageUtil.hasAssetDisplayPage(
-				_themeDisplay.getScopeGroupId(), getClassNameId(), getClassPK(),
-				getClassTypeId())
+			() -> {
+				InfoItemIdentifier infoItemIdentifier =
+					new ERCInfoItemIdentifier(
+						getExternalReferenceCode(),
+						getScopeExternalReferenceCode());
+
+				return AssetDisplayPageUtil.hasAssetDisplayPage(
+					_themeDisplay.getSiteGroupId(),
+					new InfoItemReference(
+						_displayPageTypeContext.getClassName(),
+						infoItemIdentifier));
+			}
 		).put(
 			"item",
 			HashMapBuilder.<String, Object>put(
@@ -398,18 +414,26 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	}
 
 	private JSONArray _getDataJSONArray() throws Exception {
-		LayoutDisplayPageInfoItemFieldValuesProvider<?>
+		LayoutDisplayPageInfoItemFieldValuesProvider<Object>
 			layoutDisplayPageInfoItemFieldValuesProvider =
-				_displayPageTypeContext.
-					getLayoutDisplayPageInfoItemFieldValuesProvider();
+				(LayoutDisplayPageInfoItemFieldValuesProvider<Object>)
+					_displayPageTypeContext.
+						getLayoutDisplayPageInfoItemFieldValuesProvider();
 
 		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
 			return JSONFactoryUtil.createJSONArray();
 		}
 
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider();
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return JSONFactoryUtil.createJSONArray();
+		}
+
 		InfoItemFieldValues infoItemFieldValues =
 			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
-				getClassPK());
+				layoutDisplayPageObjectProvider.getDisplayObject());
 
 		return JSONUtil.toJSONArray(
 			infoItemFieldValues.getInfoFieldValues(),
@@ -434,7 +458,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 
 		_layoutDisplayPageObjectProvider =
 			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
-				getClassPK());
+				getExternalReferenceCode(), getScopeExternalReferenceCode());
 
 		return _layoutDisplayPageObjectProvider;
 	}
@@ -446,6 +470,7 @@ public class DisplayPageTypeSiteNavigationMenuTypeDisplayContext {
 	private final DisplayPageTypeContext _displayPageTypeContext;
 	private String _externalReferenceCode;
 	private final HttpServletRequest _httpServletRequest;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private LayoutDisplayPageObjectProvider<?> _layoutDisplayPageObjectProvider;
 	private final LiferayPortletResponse _liferayPortletResponse;

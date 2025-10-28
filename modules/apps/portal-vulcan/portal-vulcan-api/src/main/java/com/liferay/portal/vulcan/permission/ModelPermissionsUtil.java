@@ -27,7 +27,7 @@ public class ModelPermissionsUtil {
 			String resourceName,
 			ResourceActionLocalService resourceActionLocalService,
 			ResourcePermissionLocalService resourcePermissionLocalService,
-			RoleLocalService roleLocalService)
+			RoleLocalService roleLocalService, Long userId)
 		throws PortalException {
 
 		if (permissions == null) {
@@ -39,19 +39,19 @@ public class ModelPermissionsUtil {
 
 		for (Permission permission : permissions) {
 			String[] actionIds = permission.getActionIds();
+			Role role = roleLocalService.getOrAddEmptyRole(
+				permission.getRoleExternalReferenceCode(), companyId, userId,
+				null, 0, permission.getRoleName(), 0);
 
 			if (actionIds.length > 0) {
 				modelPermissions.addRolePermissions(
-					permission.getRoleName(), permission.getActionIds());
+					role.getName(), permission.getActionIds());
 
 				continue;
 			}
 
 			List<ResourceAction> resourceActions =
 				resourceActionLocalService.getResourceActions(resourceName);
-
-			Role role = roleLocalService.getRole(
-				companyId, permission.getRoleName());
 
 			for (ResourceAction resourceAction : resourceActions) {
 				resourcePermissionLocalService.removeResourcePermission(

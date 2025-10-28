@@ -541,7 +541,7 @@ public class SitePageResourceImpl
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		com.liferay.headless.admin.site.dto.v1_0.Scope scope =
+		com.liferay.portal.vulcan.scope.Scope scope =
 			itemExternalReference.getScope();
 
 		if (scope != null) {

@@ -5,13 +5,14 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.vulcan.scope.Scope;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 /**
  * @author Rubén Pulido
@@ -61,7 +62,8 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return _getScope(GroupLocalServiceUtil.getGroup(itemScopeGroupId));
+		return ScopeUtil.toScope(
+			itemScopeGroupId, LocaleUtil.getMostRelevantLocale());
 	}
 
 	public static Scope getItemScope(
@@ -89,7 +91,7 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return _getScope(group);
+		return ScopeUtil.toScope(group, LocaleUtil.getMostRelevantLocale());
 	}
 
 	public static String getItemScopeExternalReferenceCode(
@@ -110,22 +112,6 @@ public class ItemScopeUtil {
 		}
 
 		return itemScope.getExternalReferenceCode();
-	}
-
-	private static Scope _getScope(Group group) {
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
 	}
 
 }

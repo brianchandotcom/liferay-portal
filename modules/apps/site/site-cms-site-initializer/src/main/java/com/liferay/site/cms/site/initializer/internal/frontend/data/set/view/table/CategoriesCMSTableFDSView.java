@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.frontend.data.set.view.table.LinkFDSTableSchemaField;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
@@ -41,17 +42,34 @@ public class CategoriesCMSTableFDSView extends BaseCMSTableFDSView {
 				true
 			)
 		).add(
-			"numberOfTaxonomyCategories", "subcategories",
-			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"view-categories"
-			).setContentRenderer(
-				"actionLink"
-			).setSortable(
-				true
-			)
+			_addViewSubcategoriesLinkFDSTableSchemaField()
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();
+	}
+
+	private LinkFDSTableSchemaField
+		_addViewSubcategoriesLinkFDSTableSchemaField() {
+
+		LinkFDSTableSchemaField linkFDSTableSchemaField =
+			new LinkFDSTableSchemaField();
+
+		linkFDSTableSchemaField.setActionId(
+			"view-categories"
+		).setContentRenderer(
+			"actionLink"
+		).setFieldName(
+			"numberOfTaxonomyCategories"
+		).setLabel(
+			"subcategories"
+		).setSortable(
+			true
+		);
+
+		linkFDSTableSchemaField.setDecoration("underline");
+		linkFDSTableSchemaField.setDisplayType("unstyled");
+
+		return linkFDSTableSchemaField;
 	}
 
 	@Reference

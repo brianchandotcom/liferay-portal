@@ -69,11 +69,14 @@ public class CPDefinitionLinkUpgradeProcess extends UpgradeProcess {
 	private long _getCPDefinitionId(long cProductId) throws Exception {
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select publishedCPDefinitionId from CProduct where " +
-					"CProductId = " + cProductId);
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"CProductId = ?")) {
 
-			if (resultSet.next()) {
-				return resultSet.getLong(1);
+			preparedStatement.setLong(1, cProductId);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					return resultSet.getLong(1);
+				}
 			}
 		}
 

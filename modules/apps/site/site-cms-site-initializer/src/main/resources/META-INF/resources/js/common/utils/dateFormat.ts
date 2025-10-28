@@ -19,7 +19,7 @@ export default function dateFormat(value: string) {
 		minute: 'numeric',
 		month: 'short',
 		second: 'numeric',
-		timeZone: 'UTC',
+		timeZone: Liferay.ThemeDisplay.getTimeZone(),
 		year: 'numeric',
 	}).format(new Date(value));
 

@@ -7,6 +7,9 @@ package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
@@ -22,6 +25,8 @@ import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 
 import java.util.Arrays;
@@ -34,11 +39,7 @@ import java.util.Objects;
 public class PageElementsTestUtil {
 
 	public static FragmentInstancePageElementDefinition
-		getFragmentInstancePageElementDefinition(String fragmentEntryKey) {
-
-		FragmentEntry fragmentEntry =
-			FragmentCollectionContributorRegistryUtil.getFragmentEntry(
-				fragmentEntryKey);
+		getFragmentInstancePageElementDefinition(FragmentEntry fragmentEntry) {
 
 		return new FragmentInstancePageElementDefinition() {
 			{
@@ -72,6 +73,66 @@ public class PageElementsTestUtil {
 				setUuid(RandomTestUtil::randomString);
 			}
 		};
+	}
+
+	public static FragmentInstancePageElementDefinition
+		getFragmentInstancePageElementDefinition(
+			FragmentRenderer fragmentRenderer) {
+
+		return new FragmentInstancePageElementDefinition() {
+			{
+				setConfiguration(
+					() -> JSONFactoryUtil.toString(
+						fragmentRenderer.getConfigurationJSONObject(
+							new DefaultFragmentRendererContext(null))));
+
+				setCss(() -> StringPool.BLANK);
+				setCssClasses(
+					() -> new String[] {RandomTestUtil.randomString()});
+				setCustomCSS(RandomTestUtil::randomString);
+				setDatePropagated(RandomTestUtil::nextDate);
+				setFragmentInstanceExternalReferenceCode(
+					RandomTestUtil::randomString);
+				setFragmentReference(
+					() -> new DefaultFragmentReference() {
+						{
+							setDefaultFragmentKey(fragmentRenderer::getKey);
+							setFragmentReferenceType(
+								() ->
+									FragmentReferenceType.
+										DEFAULT_FRAGMENT_REFERENCE);
+						}
+					});
+				setFragmentType(FragmentType.BASIC);
+				setHtml(() -> StringPool.BLANK);
+				setIndexed(RandomTestUtil::randomBoolean);
+				setJs(() -> StringPool.BLANK);
+				setName(RandomTestUtil::randomString);
+				setNamespace(RandomTestUtil::randomString);
+				setType(Type.FRAGMENT);
+				setUuid(RandomTestUtil::randomString);
+			}
+		};
+	}
+
+	public static FragmentInstancePageElementDefinition
+		getFragmentInstancePageElementDefinition(String key) {
+
+		FragmentEntry fragmentEntry =
+			FragmentCollectionContributorRegistryUtil.getFragmentEntry(key);
+
+		if (fragmentEntry != null) {
+			return getFragmentInstancePageElementDefinition(fragmentEntry);
+		}
+
+		FragmentRenderer fragmentRenderer =
+			FragmentRendererRegistryUtil.getFragmentRenderer(key);
+
+		if (fragmentRenderer != null) {
+			return getFragmentInstancePageElementDefinition(fragmentRenderer);
+		}
+
+		return null;
 	}
 
 	public static PageElementDefinition getPageElementDefinition(

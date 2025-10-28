@@ -97,15 +97,15 @@ public class ObjectEntryDisplayContextImplTest {
 
 	@Test
 	public void testGetObjectEntry() throws Exception {
-		String externalReferenceCode = RandomTestUtil.randomString();
-
-		_mockHttpServletRequest.setParameter(
-			"externalReferenceCode", externalReferenceCode);
-
 		String groupId = String.valueOf(RandomTestUtil.randomLong());
 
 		_mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID, groupId);
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		_mockHttpServletRequest.setParameter(
+			"externalReferenceCode", externalReferenceCode);
 
 		long companyId = _themeDisplay.getCompanyId();
 
@@ -264,12 +264,10 @@ public class ObjectEntryDisplayContextImplTest {
 	}
 
 	private void _setUpThemeDisplay() {
-		long companyId = RandomTestUtil.randomLong();
-
 		Mockito.when(
 			_themeDisplay.getCompanyId()
 		).thenReturn(
-			companyId
+			RandomTestUtil.randomLong()
 		);
 
 		Mockito.when(

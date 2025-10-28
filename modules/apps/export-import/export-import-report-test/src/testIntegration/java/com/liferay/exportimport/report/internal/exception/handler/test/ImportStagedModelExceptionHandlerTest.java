@@ -7,6 +7,7 @@ package com.liferay.exportimport.report.internal.exception.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -14,6 +15,8 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
+import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
@@ -22,8 +25,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -31,13 +36,22 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -56,13 +70,16 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Alvaro Saugar
  */
+@FeatureFlag("LPD-35914")
 @RunWith(Arquillian.class)
 public class ImportStagedModelExceptionHandlerTest {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
-		new LiferayIntegrationTestRule();
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -75,6 +92,37 @@ public class ImportStagedModelExceptionHandlerTest {
 	public void test() throws Exception {
 		_test(0L, _companyGroup);
 		_test(_group.getGroupId(), _group);
+	}
+
+	protected Group testGroup;
+
+	private void _assertExportImportReportEntryIndexed(
+		long classPK, long companyId, long exportImportConfigurationId) {
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				companyId
+			).emptySearchEnabled(
+				true
+			).fields(
+				Field.CLASS_PK
+			).modelIndexerClasses(
+				ExportImportReportEntry.class
+			).query(
+				_queries.term(
+					"exportImportConfigurationId_long",
+					exportImportConfigurationId)
+			).build());
+
+		Assert.assertEquals(1, searchResponse.getCount());
+
+		List<Document> documents = searchResponse.getDocuments();
+
+		Document document = documents.get(0);
+
+		Assert.assertEquals(
+			classPK, GetterUtil.getLong(document.getValue(Field.CLASS_PK)));
 	}
 
 	private void _test(long expectedGroupId, Group group) throws Exception {
@@ -95,10 +143,16 @@ public class ImportStagedModelExceptionHandlerTest {
 			ExportImportTestUtil.getImportPortletDataContext(
 				group.getGroupId());
 
-		long exportImportProcessId = RandomTestUtil.randomLong();
+		ExportImportConfiguration exportImportConfiguration =
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					group.getCreatorUserId(), RandomTestUtil.randomString(),
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					Collections.emptyMap());
 
 		portletDataContext.setExportImportProcessId(
-			String.valueOf(exportImportProcessId));
+			String.valueOf(
+				exportImportConfiguration.getExportImportConfigurationId()));
 
 		long exportImportReportEntriesCount =
 			_exportImportReportEntryLocalService.
@@ -144,7 +198,8 @@ public class ImportStagedModelExceptionHandlerTest {
 
 		List<ExportImportReportEntry> exportImportReportEntries =
 			_exportImportReportEntryLocalService.getExportImportReportEntries(
-				TestPropsValues.getCompanyId(), exportImportProcessId);
+				TestPropsValues.getCompanyId(),
+				exportImportConfiguration.getExportImportConfigurationId());
 
 		Assert.assertEquals(
 			exportImportReportEntries.toString(), 1,
@@ -159,7 +214,7 @@ public class ImportStagedModelExceptionHandlerTest {
 			TestPropsValues.getCompanyId(),
 			exportImportReportEntry.getCompanyId());
 		Assert.assertEquals(
-			exportImportProcessId,
+			exportImportConfiguration.getExportImportConfigurationId(),
 			exportImportReportEntry.getExportImportConfigurationId());
 		Assert.assertEquals(
 			externalReferenceCode,
@@ -177,12 +232,20 @@ public class ImportStagedModelExceptionHandlerTest {
 		Assert.assertEquals(
 			ExportImportReportEntryConstants.ORIGIN_STAGING,
 			exportImportReportEntry.getOrigin());
+
+		_assertExportImportReportEntryIndexed(
+			classPK, group.getCompanyId(),
+			exportImportConfiguration.getExportImportConfigurationId());
 	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	private Group _companyGroup;
+
+	@Inject
+	private ExportImportConfigurationLocalService
+		_exportImportConfigurationLocalService;
 
 	@Inject
 	private ExportImportReportEntryLocalService
@@ -193,6 +256,15 @@ public class ImportStagedModelExceptionHandlerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Queries _queries;
+
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	private class TestStagedModel
 		implements ExternalReferenceCodeModel, StagedModel {

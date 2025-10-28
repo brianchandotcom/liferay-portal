@@ -2080,16 +2080,7 @@ components:
                 externalReferenceCode:
                     type: string
                 scope:
-                    properties:
-                        externalReferenceCode:
-                            type: string
-                        type:
-                            enum: [AssetLibrary, Site]
-                            type: string
-                    required:
-                        -   externalReferenceCode
-                        -   type
-                    type: object
+                    type: scope
             required:
                 -   externalReferenceCode
             type: object

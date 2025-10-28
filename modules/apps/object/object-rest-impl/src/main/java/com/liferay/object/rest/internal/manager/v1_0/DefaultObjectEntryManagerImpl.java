@@ -3588,50 +3588,50 @@ public class DefaultObjectEntryManagerImpl
 
 				_objectEntryService.deleteObjectEntry(primaryKey);
 			}
+
+			return;
 		}
-		else {
-			long count1 = objectEntryLocalService.getValuesListCount(
-				new Long[] {objectEntryFolder.getGroupId()},
-				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
-				objectDefinition.getObjectDefinitionId(),
-				objectFieldColumn.eq(
-					titleValue
-				).and(
-					ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
-						objectEntryFolder.getObjectEntryFolderId())
-				),
-				false, null);
 
-			if (count1 > 0) {
-				values.put(
-					titleObjectField.getName(),
-					UniqueUtil.getCopyValue(
-						copyValue -> {
-							long count2 =
-								objectEntryLocalService.getValuesListCount(
-									new Long[] {objectEntryFolder.getGroupId()},
-									objectDefinition.getCompanyId(),
-									objectDefinition.getUserId(),
-									objectDefinition.getObjectDefinitionId(),
-									objectFieldColumn.eq(
-										copyValue
-									).and(
-										ObjectEntryTable.INSTANCE.
-											objectEntryFolderId.eq(
-												objectEntryFolder.
-													getObjectEntryFolderId())
-									),
-									false, null);
+		long count1 = objectEntryLocalService.getValuesListCount(
+			new Long[] {objectEntryFolder.getGroupId()},
+			objectDefinition.getCompanyId(), objectDefinition.getUserId(),
+			objectDefinition.getObjectDefinitionId(),
+			objectFieldColumn.eq(
+				titleValue
+			).and(
+				ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+					objectEntryFolder.getObjectEntryFolderId())
+			),
+			false, null);
 
-							if (count2 == 0) {
-								return true;
-							}
-
-							return false;
-						},
-						titleValue));
-			}
+		if (count1 == 0) {
+			return;
 		}
+
+		values.put(
+			titleObjectField.getName(),
+			UniqueUtil.getCopyValue(
+				copyValue -> {
+					long count2 = objectEntryLocalService.getValuesListCount(
+						new Long[] {objectEntryFolder.getGroupId()},
+						objectDefinition.getCompanyId(),
+						objectDefinition.getUserId(),
+						objectDefinition.getObjectDefinitionId(),
+						objectFieldColumn.eq(
+							copyValue
+						).and(
+							ObjectEntryTable.INSTANCE.objectEntryFolderId.eq(
+								objectEntryFolder.getObjectEntryFolderId())
+						),
+						false, null);
+
+					if (count2 == 0) {
+						return true;
+					}
+
+					return false;
+				},
+				titleValue));
 	}
 
 	private ObjectEntry _updateObjectEntry(

@@ -703,15 +703,15 @@ public class BatchEngineBrokerTest {
 			actualCSVString, _CSV_FORMAT
 		).getRecords();
 
-		List<List<String>> expectedCSVRecordsList = _normalizeCSVRecordsList(
+		List<List<String>> csvRecordStringsList = _normalizeCSVRecordsList(
 			CSVParser.parse(
 				expectedCSVString, _CSV_FORMAT
 			).getRecords());
 
 		Assert.assertEquals(
-			expectedCSVRecordsList.get(0), _toList(csvRecords.get(0)));
+			csvRecordStringsList.get(0), _toList(csvRecords.get(0)));
 
-		List<String> expectedCSVRecordStrings = expectedCSVRecordsList.get(1);
+		List<String> expectedCSVRecordStrings = csvRecordStringsList.get(1);
 
 		boolean found = false;
 

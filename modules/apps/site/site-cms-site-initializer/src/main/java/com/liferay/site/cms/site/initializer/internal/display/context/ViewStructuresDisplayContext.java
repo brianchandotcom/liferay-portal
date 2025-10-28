@@ -114,10 +114,6 @@ public class ViewStructuresDisplayContext {
 				LanguageUtil.get(_httpServletRequest, "view-usages"), "get",
 				null, null),
 			new FDSActionDropdownItem(
-				"", "copy", "copy",
-				LanguageUtil.get(_httpServletRequest, "make-a-copy"), null,
-				null, null),
-			new FDSActionDropdownItem(
 				ResourceURLBuilder.createResourceURL(
 					PortletURLFactoryUtil.create(
 						_httpServletRequest,

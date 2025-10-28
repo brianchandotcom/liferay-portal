@@ -53,15 +53,13 @@ const ProductListView: React.FC<MarketplaceProductsProps> = ({children}) => {
 
 	if (loading) {
 		return (
-			<>
+			<div className="mt-4">
 				<ClayLoadingIndicator
 					displayType="primary"
 					shape="squares"
 					size="lg"
 				/>
-
-				<div />
-			</>
+			</div>
 		);
 	}
 
@@ -86,10 +84,12 @@ const ProductListView: React.FC<MarketplaceProductsProps> = ({children}) => {
 
 	return (
 		<>
-			<div className="d-flex flex-wrap h-100 marketplace-search-results p-4">
-				{products.map((product, index) => (
-					<Fragment key={index}>{children(product)}</Fragment>
-				))}
+			<div className="marketplace-search-results-container">
+				<div className="d-flex flex-wrap h-100 justify-between m-auto marketplace-search-results p-4">
+					{products.map((product, index) => (
+						<Fragment key={index}>{children(product)}</Fragment>
+					))}
+				</div>
 			</div>
 
 			<div className="d-flex justify-content-end px-4 py-4 w-100">
@@ -120,7 +120,7 @@ const MarketplaceProducts: React.FC<ProductListViewProps> = ({
 	children,
 	onClickProduct,
 }) => (
-	<div className="d-flex flex-column h-100 justify-content-between payment-methods-modal-body">
+	<div className="d-flex flex-column h-100 payment-methods-modal-body">
 		<ManagementToolbar />
 
 		<ProductListView>

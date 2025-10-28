@@ -138,6 +138,12 @@ public class FragmentLayoutStructureItemImporter
 			rendererKey = defaultFragmentReference.getDefaultFragmentKey();
 		}
 
+		if (Validator.isNull(fragmentEntryERC) &&
+			Validator.isNull(rendererKey)) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		Layout layout = layoutStructureItemImporterContext.getLayout();
 
 		ServiceContext serviceContext =
@@ -263,6 +269,12 @@ public class FragmentLayoutStructureItemImporter
 				(DefaultFragmentReference)fragmentReference;
 
 			rendererKey = defaultFragmentReference.getDefaultFragmentKey();
+		}
+
+		if (Validator.isNull(fragmentEntryERC) &&
+			Validator.isNull(rendererKey)) {
+
+			throw new UnsupportedOperationException();
 		}
 
 		Layout layout = layoutStructureItemImporterContext.getLayout();

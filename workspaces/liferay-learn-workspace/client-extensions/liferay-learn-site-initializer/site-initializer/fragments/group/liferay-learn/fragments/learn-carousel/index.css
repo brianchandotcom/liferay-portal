@@ -1,15 +1,19 @@
-body.has-edit-mode-menu .carousel-slide .lfr-tooltip-scope .page-editor {
-	min-width: 500px;
-}
-
-body.has-edit-mode-menu .carousel-slides-container {
-	gap: 8rem;
-}
-
 .carousel-container-navigation {
 	display: flex;
 	gap: 0.75rem;
 	justify-content: center;
+}
+
+.carousel-live-region {
+	border: 0;
+	clip: rect(1px,1px,1px,1px);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden; 
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap; 
 }
 
 .carousel-main-container {
@@ -18,19 +22,20 @@ body.has-edit-mode-menu .carousel-slides-container {
 
 .carousel-nav-button {
 	align-items: center;
-	background: #FFFFFF;
-	border: 1px solid #0B5FFF;
+	background: var(--color-neutral-0, #FFFFFF);
+	border: 1px solid var(--color-brand-primary, #005BFF);
 	border-radius: 50%;
+	color: var(--color-brand-primary, #005BFF);
+	cursor: pointer;
 	display: flex;
-	flex-direction: row;
 	height: 2.5rem;
 	justify-content: center;
 	padding: 0.5rem;
 	width: 2.5rem;
-}
-
-.carousel-nav-button:hover {
-	background: #EDF3FE;
+	
+	&:hover {
+		background: var(--color-action-primary-hover-10, #EDF3FE);
+	}
 }
 
 .carousel-nav-container-indicators {
@@ -42,11 +47,6 @@ body.has-edit-mode-menu .carousel-slides-container {
 	width: unset !important;
 }
 
-.swiper {
-	height: 100%;
-	width: 100%;
-}
-
 .swiper-slide:not(.swiper-slide-active) {
 	opacity: 0.5; 
 }
@@ -56,34 +56,18 @@ body.has-edit-mode-menu .carousel-slides-container {
 }
 
 .swiper-pagination-bullet {
-	background: rgba(43, 58, 75, 0.3);
+	background: var(--color-neutral-3, #C9C9CF);
 	border-radius: 50%;
+	cursor: pointer;
 	height: 0.75rem;
+	transition: background 0.25s ease, transform 0.25s ease;
 	width: 0.75rem;
 }
 
 .swiper-pagination-bullet-active {
-	background: #0B5FFF !important;
-}
-
-.swiper-slide {
-	align-items: center;
-	display: flex;
-	justify-content: center;
+	background: var(--color-brand-primary, #005BFF);
 }
 
 .swiper-wrapper {
-	padding-bottom: 20px;
-}
-
-.visually-hidden {
-	border: 0;
-	clip: rect(1px,1px,1px,1px);
-	height: 1px;
-	margin: -1px;
-	overflow: hidden; 
-	padding: 0;
-	position: absolute !important;
-	width: 1px;
-	white-space: nowrap; 
+	padding-bottom: 1.25rem;
 }

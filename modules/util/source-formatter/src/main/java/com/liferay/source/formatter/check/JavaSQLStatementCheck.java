@@ -101,7 +101,7 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 				if (nextNextSQLStatementPart.endsWith("\"") &&
 					nextNextSQLStatementPart.startsWith("\".")) {
 
-						continue;
+					continue;
 				}
 			}
 

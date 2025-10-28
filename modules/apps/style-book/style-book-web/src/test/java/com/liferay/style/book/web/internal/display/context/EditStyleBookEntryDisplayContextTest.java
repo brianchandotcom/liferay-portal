@@ -163,13 +163,12 @@ public class EditStyleBookEntryDisplayContextTest {
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
-		httpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		EditStyleBookEntryDisplayContext editStyleBookEntryDisplayContext =
 			new EditStyleBookEntryDisplayContext(
-				null, frontendTokenDefinitionRegistry, httpServletRequest,
-				null, new MockRenderResponse());
+				null, frontendTokenDefinitionRegistry, httpServletRequest, null,
+				new MockRenderResponse());
 
 		ReflectionTestUtil.invoke(
 			editStyleBookEntryDisplayContext,

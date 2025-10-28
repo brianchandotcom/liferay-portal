@@ -702,15 +702,17 @@ public class BatchEngineBrokerTest {
 		List<CSVRecord> actualCSVRecords = CSVParser.parse(
 			actualCSVString, _CSV_FORMAT
 		).getRecords();
-		List<List<String>> expectedCSVRecords = _normalizeCSVRecords(
-			CSVParser.parse(
-				expectedCSVString, _CSV_FORMAT
-			).getRecords());
+		List<List<String>> expectedCSVRecordsStrings =
+			_normalizeCSVRecordsStrings(
+				CSVParser.parse(
+					expectedCSVString, _CSV_FORMAT
+				).getRecords());
 
 		Assert.assertEquals(
-			expectedCSVRecords.get(0), _toList(actualCSVRecords.get(0)));
+			expectedCSVRecordsStrings.get(0), _toList(actualCSVRecords.get(0)));
 
-		List<String> expectedCSVRecordStrings = expectedCSVRecords.get(1);
+		List<String> expectedCSVRecordStrings = expectedCSVRecordsStrings.get(
+			1);
 
 		boolean found = false;
 
@@ -1144,17 +1146,18 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private List<List<String>> _normalizeCSVRecords(
+	private List<List<String>> _normalizeCSVRecordsStrings(
 		List<CSVRecord> csvRecords) {
 
-		List<List<String>> normalizedCSVRecords = new ArrayList<>(
+		List<List<String>> normalizedCSVRecordsStrings = new ArrayList<>(
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			normalizedCSVRecords.add(_normalizeValues(csvRecord.toList()));
+			normalizedCSVRecordsStrings.add(
+				_normalizeValues(csvRecord.toList()));
 		}
 
-		return normalizedCSVRecords;
+		return normalizedCSVRecordsStrings;
 	}
 
 	private List<String> _normalizeValues(List<String> values) {

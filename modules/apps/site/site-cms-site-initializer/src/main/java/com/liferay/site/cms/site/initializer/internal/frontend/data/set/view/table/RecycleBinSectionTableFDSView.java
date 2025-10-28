@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
 	service = FDSView.class
 )
-public class RecycleBinSectionTableFDSView extends BaseTableFDSView {
+public class RecycleBinSectionTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -47,9 +46,7 @@ public class RecycleBinSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"spaceTableCellRenderer")
 		).add(
-			"embedded.removedDate", "removed-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime")
+			addDateFDSTableSchemaField("embedded.removedDate", "removed-date")
 		).add(
 			"embedded.removedBy.name", "removed-by",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(

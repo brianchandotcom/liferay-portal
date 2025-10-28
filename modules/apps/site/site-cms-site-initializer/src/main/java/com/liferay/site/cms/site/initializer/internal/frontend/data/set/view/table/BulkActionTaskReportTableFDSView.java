@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.BULK_ACTION_TASK_REPORT_SECTION,
 	service = FDSView.class
 )
-public class BulkActionTaskReportTableFDSView extends BaseTableFDSView {
+public class BulkActionTaskReportTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -45,19 +44,9 @@ public class BulkActionTaskReportTableFDSView extends BaseTableFDSView {
 			"externalReferenceCode", "external-reference-code",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"dateCreated", "create-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("dateCreated", "create-date")
 		).add(
-			"completionDate", "completed-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("completionDate", "completed-date")
 		).add(
 			"creator.name", "author-name",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)

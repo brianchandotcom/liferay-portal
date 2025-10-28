@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_HISTORY,
 	service = FDSView.class
 )
-public class ViewVersionHistoryTableFDSView extends BaseTableFDSView {
+public class ViewVersionHistoryTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -54,12 +53,7 @@ public class ViewVersionHistoryTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"authorTableCellRenderer")
 		).add(
-			"dateModified", "modified",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();
 	}
 

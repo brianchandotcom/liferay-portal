@@ -171,8 +171,10 @@ public class RoleDisplayContext {
 					LanguageUtil.get(_httpServletRequest, "delete"));
 			}
 		).add(
-			() -> PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_ROLE),
+			() ->
+				_currentRoleTypeContributor.isAllowDefinePermissions(role) &&
+				PortalPermissionUtil.contains(
+					permissionChecker, ActionKeys.ADD_ROLE),
 			dropdownItem -> {
 				dropdownItem.setData(
 					HashMapBuilder.<String, Object>put(

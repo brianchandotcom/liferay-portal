@@ -475,8 +475,8 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 					serviceContext.getScopeGroupId(),
 					serviceContext.getCompanyId(), resourcePermission.getName(),
 					resourcePermission.getScope(),
-					String.valueOf(resourcePermission.getPrimaryKey()),
-					targetRole.getRoleId(), actionId);
+					resourcePermission.getPrimKey(), targetRole.getRoleId(),
+					actionId);
 			}
 		}
 

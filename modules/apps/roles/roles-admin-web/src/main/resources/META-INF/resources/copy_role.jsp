@@ -15,6 +15,7 @@
 
 	<liferay-ui:error exception="<%= DuplicateRoleException.class %>" message="please-enter-a-unique-name" />
 	<liferay-ui:error exception="<%= RoleNameException.class %>" message="please-enter-a-valid-name" />
+	<liferay-ui:error exception="<%= SystemException.class %>" message="please-enter-a-valid-name" />
 
 	<aui:input label="new-role-name" name="roleName">
 		<aui:validator errorMessage="please-enter-a-valid-name" name="required" />

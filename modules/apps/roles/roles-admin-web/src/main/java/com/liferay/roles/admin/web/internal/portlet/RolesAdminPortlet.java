@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.exception.RequiredRoleException;
 import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.exception.RoleNameException;
 import com.liferay.portal.kernel.exception.RolePermissionsException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -141,10 +142,14 @@ public class RolesAdminPortlet extends MVCPortlet {
 				ServiceContextFactory.getInstance(
 					Role.class.getName(), actionRequest));
 		}
-		catch (DuplicateRoleException | RoleNameException exception) {
+		catch (DuplicateRoleException | RoleNameException | SystemException
+					exception) {
+
+			SessionErrors.add(actionRequest, exception.getClass());
+
 			actionResponse.setRenderParameter("mvcPath", "/copy_role.jsp");
 
-			throw exception;
+			return;
 		}
 
 		actionResponse.setRenderParameter("mvcPath", "/copy_role.jsp");

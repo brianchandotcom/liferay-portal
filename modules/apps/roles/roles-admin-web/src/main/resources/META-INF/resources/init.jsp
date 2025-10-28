@@ -40,6 +40,7 @@ page import="com.liferay.portal.kernel.exception.RequiredRoleException" %><%@
 page import="com.liferay.portal.kernel.exception.RoleAssignmentException" %><%@
 page import="com.liferay.portal.kernel.exception.RoleNameException" %><%@
 page import="com.liferay.portal.kernel.exception.RolePermissionsException" %><%@
+page import="com.liferay.portal.kernel.exception.SystemException" %><%@
 page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@

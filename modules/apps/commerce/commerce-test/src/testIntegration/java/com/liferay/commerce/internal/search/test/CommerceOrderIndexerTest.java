@@ -5,23 +5,35 @@
 
 package com.liferay.commerce.internal.search.test;
 
+import com.liferay.account.constants.AccountRoleConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
+import com.liferay.account.service.AccountEntryUserRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
+import com.liferay.commerce.configuration.CommerceAccountGroupServiceConfiguration;
+import com.liferay.commerce.configuration.CommerceOrderConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
+import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.commerce.util.CommerceGroupThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Region;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -30,8 +42,17 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -48,6 +69,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -57,6 +79,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Michele Vigilante
+ * @author Alessio Antonio Rendina
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -72,6 +95,13 @@ public class CommerceOrderIndexerTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+
+		_buyerRole = _roleLocalService.getRole(
+			_group.getCompanyId(),
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_BUYER);
+		_orderManagerRole = _roleLocalService.getRole(
+			_group.getCompanyId(),
+			AccountRoleConstants.ROLE_NAME_ACCOUNT_ORDER_MANAGER);
 
 		_user = UserTestUtil.addUser(_group.getGroupId());
 
@@ -91,10 +121,82 @@ public class CommerceOrderIndexerTest {
 			_group.getGroupId(), _commerceCurrency.getCode());
 
 		_indexer = _indexerRegistry.getIndexer(CommerceOrder.class);
+
+		CommerceGroupThreadLocal.setCommerceGroupWithSafeCloseable(
+			_commerceChannel.getGroupId());
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_configurationProvider.deleteGroupConfiguration(
+			CommerceAccountGroupServiceConfiguration.class,
+			_commerceChannel.getGroupId());
+		_configurationProvider.deleteGroupConfiguration(
+			CommerceOrderConfiguration.class, _commerceChannel.getGroupId());
 	}
 
 	@Test
-	public void testCommercePlacedOrderShippingAddressData() throws Exception {
+	public void testCommerceOrderUserVisibilityScope() throws Exception {
+		_updateCommerceAccountConfiguration();
+		_updateCommerceOrderConfiguration();
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_serviceContext.getUserId(), "Test Business Account", null,
+				null, new long[] {_user.getUserId()}, null, _serviceContext);
+
+		User orderManagerUser = UserTestUtil.addUser(_group.getGroupId());
+
+		_addUserAccountRole(
+			accountEntry, _orderManagerRole.getRoleId(),
+			orderManagerUser.getUserId());
+
+		CommerceOrder orderManagerCommerceOrder = _addUserCommerceOrder(
+			accountEntry.getAccountEntryId(), orderManagerUser);
+
+		User buyerUser = UserTestUtil.addUser(_group.getGroupId());
+
+		_addUserAccountRole(
+			accountEntry, _buyerRole.getRoleId(), buyerUser.getUserId());
+
+		CommerceOrder buyerCommerceOrder = _addUserCommerceOrder(
+			accountEntry.getAccountEntryId(), buyerUser);
+
+		SearchContext searchContext = _getSearchContext();
+
+		searchContext.setAttribute(
+			"commerceAccountIds",
+			new long[] {accountEntry.getAccountEntryId()});
+		searchContext.setAttribute(
+			"orderStatuses",
+			new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN});
+
+		_assertSearch(searchContext, buyerUser, buyerCommerceOrder);
+		_assertSearch(
+			searchContext, orderManagerUser, buyerCommerceOrder,
+			orderManagerCommerceOrder);
+
+		searchContext.setAttribute("negateOrderStatuses", Boolean.TRUE);
+
+		buyerCommerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+		orderManagerCommerceOrder.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+
+		buyerCommerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			buyerCommerceOrder);
+		orderManagerCommerceOrder =
+			_commerceOrderLocalService.updateCommerceOrder(
+				orderManagerCommerceOrder);
+
+		_assertSearch(searchContext, buyerUser, buyerCommerceOrder);
+		_assertSearch(
+			searchContext, orderManagerUser, buyerCommerceOrder,
+			orderManagerCommerceOrder);
+	}
+
+	@Test
+	public void testPlacedCommerceOrderShippingAddressData() throws Exception {
 		CommerceOrder commerceOrder1 = CommerceTestUtil.addB2BCommerceOrder(
 			_group.getGroupId(), _user.getUserId(),
 			_accountEntry.getAccountEntryId(),
@@ -168,6 +270,32 @@ public class CommerceOrderIndexerTest {
 			_serviceContext);
 	}
 
+	private void _addUserAccountRole(
+			AccountEntry accountEntry, long roleId, long userId)
+		throws Exception {
+
+		_accountEntryUserRelLocalService.addAccountEntryUserRel(
+			accountEntry.getAccountEntryId(), userId);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			userId, accountEntry.getAccountEntryGroupId(), roleId);
+	}
+
+	private CommerceOrder _addUserCommerceOrder(long accountEntryId, User user)
+		throws Exception {
+
+		if (user != null) {
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+		}
+
+		return _commerceOrderService.addCommerceOrder(
+			_commerceChannel.getGroupId(), accountEntryId,
+			_commerceCurrency.getCode(), 0);
+	}
+
 	private void _assertSearch(
 			Hits hits, CommerceOrder... expectedCommerceOrders)
 		throws Exception {
@@ -182,6 +310,23 @@ public class CommerceOrderIndexerTest {
 
 		Assert.assertArrayEquals(
 			expectedCommerceOrderIds, actualCommerceOrderIds);
+	}
+
+	private void _assertSearch(
+			SearchContext searchContext, User user,
+			CommerceOrder... expectedCommerceOrders)
+		throws Exception {
+
+		if (user != null) {
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
+		}
+
+		Hits hits = _indexer.search(searchContext);
+
+		_assertSearch(hits, expectedCommerceOrders);
 	}
 
 	private void _assertSearch(
@@ -235,6 +380,41 @@ public class CommerceOrderIndexerTest {
 		return searchContext;
 	}
 
+	private void _updateCommerceAccountConfiguration() throws Exception {
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ACCOUNT));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"commerceSiteType",
+			String.valueOf(CommerceChannelConstants.SITE_TYPE_B2B));
+
+		modifiableSettings.store();
+	}
+
+	private void _updateCommerceOrderConfiguration() throws Exception {
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue(
+			"openOrdersVisibilityScope",
+			CommerceOrderConstants.ORDER_VISIBILITY_SCOPE_USER);
+		modifiableSettings.setValue(
+			"placedOrdersVisibilityScope",
+			CommerceOrderConstants.ORDER_VISIBILITY_SCOPE_USER);
+
+		modifiableSettings.store();
+	}
+
 	@Inject
 	private static IndexerRegistry _indexerRegistry;
 
@@ -244,8 +424,12 @@ public class CommerceOrderIndexerTest {
 	private AccountEntryLocalService _accountEntryLocalService;
 
 	@Inject
+	private AccountEntryUserRelLocalService _accountEntryUserRelLocalService;
+
+	@Inject
 	private AddressLocalService _addressLocalService;
 
+	private Role _buyerRole;
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -259,11 +443,25 @@ public class CommerceOrderIndexerTest {
 	@Inject
 	private CommerceOrderLocalService _commerceOrderLocalService;
 
+	@Inject
+	private CommerceOrderService _commerceOrderService;
+
+	@Inject
+	private ConfigurationProvider _configurationProvider;
+
 	private Group _group;
 	private Indexer<CommerceOrder> _indexer;
+	private Role _orderManagerRole;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
+
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupRoleLocalService _userGroupRoleLocalService;
 
 }

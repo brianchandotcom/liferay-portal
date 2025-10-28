@@ -158,8 +158,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.zip.ZipInputStream;
@@ -714,24 +716,25 @@ public class BatchEngineBrokerTest {
 
 		List<String> expectedCSVRecordStrings = csvRecordStringsList.get(1);
 
-		boolean found = false;
+		int externalReferenceCodeIndex = csvRecordStringsList.get(
+			0
+		).indexOf(
+			"externalReferenceCode"
+		);
 
-		for (int i = 1; i < csvRecords.size(); i++) {
-			List<String> csvRecordStrings = _toList(csvRecords.get(i));
+		Map<String, List<String>> csvRecordStringsMap = _toCSVRecordsMap(
+			csvRecords.subList(1, csvRecords.size()),
+			externalReferenceCodeIndex);
 
-			if (!csvRecordStrings.contains(externalReferenceCode)) {
-				continue;
-			}
+		List<String> actualCSVRecordStrings = csvRecordStringsMap.get(
+			externalReferenceCode);
 
-			Assert.assertEquals(expectedCSVRecordStrings, csvRecordStrings);
-
-			found = true;
-		}
-
-		Assert.assertTrue(
+		Assert.assertNotNull(
 			"There is no CSV line for externalReferenceCode: " +
 				externalReferenceCode,
-			found);
+			actualCSVRecordStrings);
+
+		Assert.assertEquals(expectedCSVRecordStrings, actualCSVRecordStrings);
 	}
 
 	private void _assertJSONTConfiguration(
@@ -1588,6 +1591,26 @@ public class BatchEngineBrokerTest {
 							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 							"C_TestObject"))));
 		}
+	}
+
+	private Map<String, List<String>> _toCSVRecordsMap(
+		List<CSVRecord> csvRecords, int index) {
+
+		Map<String, List<String>> csvRecordStringsMap = new HashMap<>();
+
+		for (CSVRecord csvRecord : csvRecords) {
+			List<String> csvRecordStrings = _toList(csvRecord);
+
+			if (index >= csvRecordStrings.size()) {
+				continue;
+			}
+
+			String key = csvRecordStrings.get(index);
+
+			csvRecordStringsMap.put(key, csvRecordStrings);
+		}
+
+		return csvRecordStringsMap;
 	}
 
 	private String _toDateString(Date date) {

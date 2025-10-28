@@ -874,27 +874,6 @@ public class LayoutServiceUtil {
 	}
 
 	/**
-	 * Updates the layout replacing its type settings.
-	 *
-	 * @param groupId the primary key of the group
-	 * @param privateLayout whether the layout is private to the group
-	 * @param layoutId the layout ID of the layout
-	 * @param typeSettings the settings to load the unicode properties object.
-	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
-	 #fastLoad(String)}.
-	 * @return the updated layout
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static Layout updateLayout(
-			long groupId, boolean privateLayout, long layoutId,
-			String typeSettings)
-		throws PortalException {
-
-		return getService().updateLayout(
-			groupId, privateLayout, layoutId, typeSettings);
-	}
-
-	/**
 	 * Updates the look and feel of the layout.
 	 *
 	 * @param groupId the primary key of the group
@@ -1066,6 +1045,27 @@ public class LayoutServiceUtil {
 		throws PortalException {
 
 		return getService().updateType(plid, type);
+	}
+
+	/**
+	 * Updates the layout replacing its type settings.
+	 *
+	 * @param groupId the primary key of the group
+	 * @param privateLayout whether the layout is private to the group
+	 * @param layoutId the layout ID of the layout
+	 * @param typeSettings the settings to load the unicode properties object.
+	 See {@link com.liferay.portal.kernel.util.UnicodeProperties
+	 #fastLoad(String)}.
+	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
+	 */
+	public static Layout updateTypeSettings(
+			long groupId, boolean privateLayout, long layoutId,
+			String typeSettings)
+		throws PortalException {
+
+		return getService().updateTypeSettings(
+			groupId, privateLayout, layoutId, typeSettings);
 	}
 
 	public static LayoutService getService() {

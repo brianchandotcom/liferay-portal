@@ -30,7 +30,6 @@ import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -65,6 +64,8 @@ public class ObjectEntryDisplayContextImplTest {
 	@Before
 	public void setUp() throws Exception {
 		_setUpMockHttpServletRequest();
+		_setUpObjectDefinition();
+		_setUpThemeDisplay();
 	}
 
 	@Test
@@ -106,7 +107,7 @@ public class ObjectEntryDisplayContextImplTest {
 		_mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID, groupId);
 
-		long companyId = RandomTestUtil.randomLong();
+		long companyId = _themeDisplay.getCompanyId();
 
 		Company company = Mockito.mock(Company.class);
 
@@ -246,32 +247,42 @@ public class ObjectEntryDisplayContextImplTest {
 	}
 
 	private void _setUpMockHttpServletRequest() {
+		_mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
+		_mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY, Boolean.FALSE);
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _themeDisplay);
+	}
+
+	private void _setUpObjectDefinition() {
 		Mockito.when(
 			_objectDefinition.getStorageType()
 		).thenReturn(
 			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT
 		);
+	}
 
-		_mockHttpServletRequest.setAttribute(
-			ObjectWebKeys.OBJECT_DEFINITION, _objectDefinition);
+	private void _setUpThemeDisplay() {
+		long companyId = RandomTestUtil.randomLong();
 
-		_mockHttpServletRequest.setAttribute(
-			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY, Boolean.FALSE);
+		Mockito.when(
+			_themeDisplay.getCompanyId()
+		).thenReturn(
+			companyId
+		);
 
-		_themeDisplay.setLocale(LocaleUtil.SPAIN);
-
-		_themeDisplay.setSiteDefaultLocale(LocaleUtil.US);
-
-		_themeDisplay.setUser(Mockito.mock(User.class));
-
-		_mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, _themeDisplay);
+		Mockito.when(
+			_themeDisplay.getLocale()
+		).thenReturn(
+			LocaleUtil.SPAIN
+		);
 	}
 
 	private final MockHttpServletRequest _mockHttpServletRequest =
 		new MockHttpServletRequest();
 	private final ObjectDefinition _objectDefinition = Mockito.mock(
 		ObjectDefinition.class);
-	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
+	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

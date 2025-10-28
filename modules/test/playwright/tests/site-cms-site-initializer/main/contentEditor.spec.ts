@@ -27,6 +27,7 @@ const test = mergeTests(
 	cmsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-11235': {enabled: true},
 		'LPD-17564': {enabled: true},
 		'LPS-179669': {enabled: true},
 	}),
@@ -929,6 +930,72 @@ test.describe('Schedule Publication', () => {
 		}
 	);
 });
+
+test(
+	'The Rich Text required error only occurs when the field has no value',
+	{tag: '@LPD-69695'},
+	async ({contentsPage, page, structureBuilderPage}) => {
+
+		// Create a structure with a required Rich Text field
+
+		await structureBuilderPage.goToCreateStructure();
+
+		const structureLabel = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label: structureLabel,
+			name: structureLabel,
+		});
+
+		await structureBuilderPage.addField('Rich Text');
+
+		await structureBuilderPage.changeFieldSettings({mandatory: true});
+
+		await structureBuilderPage.publishStructure();
+
+		// Create a content of the new structure
+
+		await contentsPage.goto();
+
+		await contentsPage.createContent(structureLabel);
+
+		const contentTitle = getRandomString();
+
+		await page.getByLabel('Title').fill(contentTitle);
+
+		// Try to publish with the empty Rich Text and check the error
+
+		await contentsPage.publishButton.click();
+
+		await expect(
+			page.locator('.rich-text-input [data-required-error]')
+		).toHaveText('This field is required.');
+
+		// Fill the Rich Text field and publish the content
+
+		const richTextField = page.locator('.ck-editor__editable');
+
+		await richTextField.fill('This is very cool content');
+
+		await contentsPage.publishButton.click();
+
+		// Edit the content, publish it and check that there is no required error in the Rich Text field
+
+		await contentsPage.editContent(contentTitle);
+
+		await richTextField.waitFor();
+
+		await contentsPage.publishButton.click();
+
+		await expect(
+			page.locator('.table-list-title a', {hasText: contentTitle})
+		).toBeAttached();
+
+		// Delete content
+
+		await contentsPage.deleteContent(contentTitle);
+	}
+);
 
 const testWithRepeatableFF = mergeTests(
 	test,

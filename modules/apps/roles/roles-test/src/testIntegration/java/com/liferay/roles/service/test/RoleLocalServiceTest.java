@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEvent;
@@ -154,9 +155,30 @@ public class RoleLocalServiceTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
+		Role sourceRole = _roleLocalService.addRole(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), null, 0,
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), RoleConstants.TYPE_REGULAR,
+			null, null);
+
+		ResourcePermissionTestUtil.addResourcePermission(
+			_arbitraryResourceAction.getBitwiseValue(),
+			_arbitraryResourceAction.getName(),
+			String.valueOf(TestPropsValues.getGroupId()),
+			sourceRole.getRoleId(), ResourceConstants.SCOPE_GROUP);
+		ResourcePermissionTestUtil.addResourcePermission(
+			_arbitraryResourceAction.getBitwiseValue(),
+			_arbitraryResourceAction.getName(),
+			String.valueOf(TestPropsValues.getGroupId()),
+			sourceRole.getRoleId(), ResourceConstants.SCOPE_COMPANY);
+		ResourcePermissionTestUtil.addResourcePermission(
+			_arbitraryResourceAction.getBitwiseValue(),
+			_arbitraryResourceAction.getName(),
+			String.valueOf(TestPropsValues.getGroupId()),
+			sourceRole.getRoleId(), ResourceConstants.SCOPE_GROUP_TEMPLATE);
+
 		String name = RandomTestUtil.randomString();
-		Role sourceRole = _roleLocalService.getRole(
-			TestPropsValues.getCompanyId(), RoleConstants.ADMINISTRATOR);
 
 		Role targetRole = _roleLocalService.copyRole(
 			TestPropsValues.getUserId(), name, sourceRole.getRoleId(),

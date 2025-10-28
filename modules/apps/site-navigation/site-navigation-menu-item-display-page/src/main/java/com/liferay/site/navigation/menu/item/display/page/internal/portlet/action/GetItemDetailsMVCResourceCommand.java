@@ -7,9 +7,11 @@ package com.liferay.site.navigation.menu.item.display.page.internal.portlet.acti
 
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.info.field.InfoField;
+import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemClassDetails;
 import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemFormVariation;
+import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemDetailsProvider;
@@ -63,8 +65,15 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String externalReferenceCode = ParamUtil.getString(
+			resourceRequest, "externalReferenceCode");
+		String scopeExternalReferenceCode = ParamUtil.getString(
+			resourceRequest, "scopeExternalReferenceCode");
+
+		InfoItemIdentifier infoItemIdentifier = new ERCInfoItemIdentifier(
+			externalReferenceCode, scopeExternalReferenceCode);
+
 		long classNameId = ParamUtil.getLong(resourceRequest, "classNameId");
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 		long classTypeId = ParamUtil.getLong(resourceRequest, "classTypeId");
 
 		String className = _portal.getClassName(classNameId);
@@ -73,8 +82,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 			JSONObject jsonObject = JSONUtil.put(
 				"hasDisplayPage",
 				AssetDisplayPageUtil.hasAssetDisplayPage(
-					themeDisplay.getScopeGroupId(), classNameId, classPK,
-					classTypeId));
+					themeDisplay.getScopeGroupId(),
+					new InfoItemReference(className, infoItemIdentifier)));
 
 			String itemType = _getItemType(className, themeDisplay);
 
@@ -83,14 +92,16 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 			}
 
 			String itemSubtype = _getItemSubtype(
-				className, classPK, classTypeId, themeDisplay);
+				className, infoItemIdentifier, classTypeId, themeDisplay);
 
 			if (Validator.isNotNull(itemSubtype)) {
 				jsonObject.put("itemSubtype", itemSubtype);
 			}
 
 			jsonObject.put(
-				"data", _getDetailsJSONArray(className, classPK, themeDisplay));
+				"data",
+				_getDetailsJSONArray(
+					className, infoItemIdentifier, themeDisplay));
 
 			JSONPortletResponseUtil.writeJSON(
 				resourceRequest, resourceResponse, jsonObject);
@@ -109,21 +120,31 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private JSONArray _getDetailsJSONArray(
-			String className, long classPK, ThemeDisplay themeDisplay)
+			String className, InfoItemIdentifier infoItemIdentifier,
+			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		LayoutDisplayPageInfoItemFieldValuesProvider
+		LayoutDisplayPageInfoItemFieldValuesProvider<Object>
 			layoutDisplayPageInfoItemFieldValuesProvider =
-				_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
-					getLayoutDisplayPageInfoItemFieldValuesProvider(className);
+				(LayoutDisplayPageInfoItemFieldValuesProvider<Object>)
+					_layoutDisplayPageInfoItemFieldValuesProviderRegistry.
+						getLayoutDisplayPageInfoItemFieldValuesProvider(
+							className);
 
 		if (layoutDisplayPageInfoItemFieldValuesProvider == null) {
 			return _jsonFactory.createJSONArray();
 		}
 
+		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
+			_getLayoutDisplayPageObjectProvider(className, infoItemIdentifier);
+
+		if (layoutDisplayPageObjectProvider == null) {
+			return _jsonFactory.createJSONArray();
+		}
+
 		InfoItemFieldValues infoItemFieldValues =
 			layoutDisplayPageInfoItemFieldValuesProvider.getInfoItemFieldValues(
-				classPK);
+				layoutDisplayPageObjectProvider);
 
 		return JSONUtil.toJSONArray(
 			infoItemFieldValues.getInfoFieldValues(),
@@ -140,8 +161,9 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 	}
 
 	private String _getItemSubtype(
-		String className, long classPK, long classTypeId,
-		ThemeDisplay themeDisplay) {
+			String className, InfoItemIdentifier infoItemIdentifier,
+			long classTypeId, ThemeDisplay themeDisplay)
+		throws Exception {
 
 		InfoItemFormVariationsProvider<?> infoItemFormVariationsProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
@@ -151,17 +173,8 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 			return StringPool.BLANK;
 		}
 
-		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
-			_layoutDisplayPageProviderRegistry.
-				getLayoutDisplayPageProviderByClassName(className);
-
-		if (layoutDisplayPageProvider == null) {
-			return StringPool.BLANK;
-		}
-
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
-			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
-				new InfoItemReference(className, classPK));
+			_getLayoutDisplayPageObjectProvider(className, infoItemIdentifier);
 
 		if (layoutDisplayPageObjectProvider == null) {
 			return StringPool.BLANK;
@@ -196,6 +209,22 @@ public class GetItemDetailsMVCResourceCommand extends BaseMVCResourceCommand {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private LayoutDisplayPageObjectProvider _getLayoutDisplayPageObjectProvider(
+			String className, InfoItemIdentifier infoItemIdentifier)
+		throws Exception {
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		if (layoutDisplayPageProvider == null) {
+			return null;
+		}
+
+		return layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+			new InfoItemReference(className, infoItemIdentifier));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

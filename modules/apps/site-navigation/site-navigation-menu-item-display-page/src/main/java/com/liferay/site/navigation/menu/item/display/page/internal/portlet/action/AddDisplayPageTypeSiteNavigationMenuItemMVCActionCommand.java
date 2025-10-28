@@ -69,12 +69,16 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 
 		long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
+		String externalReferenceCode = ParamUtil.getString(
+			actionRequest, "externalReferenceCode");
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 		String siteNavigationMenuItemType = ParamUtil.getString(
 			actionRequest, "siteNavigationMenuItemType");
 
-		if ((classNameId > 0) && (classPK > 0) && (siteNavigationMenuId > 0) &&
+		if ((classNameId > 0) && (classPK > 0) &&
+			Validator.isNotNull(externalReferenceCode) &&
+			(siteNavigationMenuId > 0) &&
 			Validator.isNotNull(siteNavigationMenuItemType)) {
 
 			ThemeDisplay themeDisplay =
@@ -105,9 +109,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 							String.valueOf(
 								ParamUtil.getLong(actionRequest, "classTypeId"))
 						).put(
-							"externalReferenceCode",
-							ParamUtil.getString(
-								actionRequest, "externalReferenceCode")
+							"externalReferenceCode", externalReferenceCode
 						).put(
 							"scopeExternalReferenceCode",
 							() -> {
@@ -217,6 +219,7 @@ public class AddDisplayPageTypeSiteNavigationMenuItemMVCActionCommand
 					StringBundler.concat(
 						"Unable to add SiteNavigationMenuItem for classNameId ",
 						classNameId, ", classPK ", classPK,
+						", externalReferenceCode ", externalReferenceCode,
 						" siteNavigationMenuId ", siteNavigationMenuId,
 						" and type ", siteNavigationMenuItemType));
 			}

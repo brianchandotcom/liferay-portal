@@ -9,15 +9,21 @@ import com.liferay.asset.display.page.portlet.AssetDisplayPageFriendlyURLProvide
 import com.liferay.asset.display.page.util.AssetDisplayPageUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
+import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.item.provider.InfoItemDetailsProvider;
+import com.liferay.info.item.provider.InfoItemObjectProvider;
 import com.liferay.info.item.provider.InfoItemPermissionProvider;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
 import com.liferay.layout.display.page.LayoutDisplayPageMultiSelectionProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -27,11 +33,13 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ClassedModel;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -70,12 +78,16 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	public DisplayPageTypeSiteNavigationMenuItemType(
 		AssetDisplayPageFriendlyURLProvider assetDisplayPageFriendlyURLProvider,
 		DisplayPageTypeContext displayPageTypeContext,
+		GroupLocalService groupLocalService,
+		InfoItemServiceRegistry infoItemServiceRegistry,
 		ItemSelector itemSelector, JSPRenderer jspRenderer, Portal portal,
 		ServletContext servletContext) {
 
 		_assetDisplayPageFriendlyURLProvider =
 			assetDisplayPageFriendlyURLProvider;
 		_displayPageTypeContext = displayPageTypeContext;
+		_groupLocalService = groupLocalService;
+		_infoItemServiceRegistry = infoItemServiceRegistry;
 		_itemSelector = itemSelector;
 		_jspRenderer = jspRenderer;
 		_portal = portal;
@@ -93,13 +105,31 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		long classPK = GetterUtil.getLong(
-			typeSettingsUnicodeProperties.get("classPK"));
+		String externalReferenceCode = GetterUtil.getString(
+			typeSettingsUnicodeProperties.get("externalReferenceCode"));
 
 		try {
+			String scopeExternalReferenceCode =
+				typeSettingsUnicodeProperties.get("scopeExternalReferenceCode");
+			String siteNavigationMenuItemType =
+				siteNavigationMenuItem.getType();
+
+			if (Validator.isNull(scopeExternalReferenceCode) &&
+				!siteNavigationMenuItemType.contains(
+					ObjectDefinition.class.getName())) {
+
+				Group group = _groupLocalService.fetchGroup(
+					siteNavigationMenuItem.getGroupId());
+
+				if (group != null) {
+					scopeExternalReferenceCode =
+						group.getExternalReferenceCode();
+				}
+			}
+
 			LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 				_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
-					classPK);
+					externalReferenceCode, scopeExternalReferenceCode);
 
 			if (layoutDisplayPageObjectProvider == null) {
 				return false;
@@ -109,12 +139,17 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 				"display-page-class-name",
 				_displayPageTypeContext.getClassName());
 			siteNavigationMenuItemElement.addAttribute(
-				"display-page-class-pk", String.valueOf(classPK));
+				"display-page-class-pk",
+				GetterUtil.getString(
+					typeSettingsUnicodeProperties.get("classPK")));
 			siteNavigationMenuItemElement.addAttribute(
 				"display-page-external-reference-code",
 				GetterUtil.getString(
 					typeSettingsUnicodeProperties.get(
 						"externalReferenceCode")));
+			siteNavigationMenuItemElement.addAttribute(
+				"display-page-scope-external-reference-code",
+				scopeExternalReferenceCode);
 
 			portletDataContext.addReferenceElement(
 				siteNavigationMenuItem, siteNavigationMenuItemElement,
@@ -286,8 +321,9 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		LayoutDisplayPageObjectProvider<?> layoutDisplayPageObjectProvider =
 			_displayPageTypeContext.getLayoutDisplayPageObjectProvider(
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("classPK")));
+				typeSettingsUnicodeProperties.get("externalReferenceCode"),
+				typeSettingsUnicodeProperties.get(
+					"scopeExternalReferenceCode"));
 
 		String defaultTitle = typeSettingsUnicodeProperties.getProperty(
 			"title");
@@ -346,10 +382,52 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 			return true;
 		}
 
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				siteNavigationMenuItem.getTypeSettings()
+			).build();
+
+		String scopeExternalReferenceCode = typeSettingsUnicodeProperties.get(
+			"scopeExternalReferenceCode");
+
+		Group group = null;
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				scopeExternalReferenceCode,
+				siteNavigationMenuItem.getCompanyId());
+		}
+		else {
+			group = _groupLocalService.fetchGroup(
+				siteNavigationMenuItem.getGroupId());
+		}
+
+		if (group == null) {
+			return false;
+		}
+
+		String className = typeSettingsUnicodeProperties.get("className");
+
+		InfoItemObjectProvider<?> infoItemObjectProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemObjectProvider.class, className,
+				ClassPKInfoItemIdentifier.INFO_ITEM_SERVICE_FILTER);
+
+		Object infoItem = infoItemObjectProvider.getInfoItem(
+			new ERCInfoItemIdentifier(
+				typeSettingsUnicodeProperties.get("externalReferenceCode"),
+				scopeExternalReferenceCode));
+
+		InfoItemDetailsProvider infoItemDetailsProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemDetailsProvider.class, className);
+
+		InfoItemDetails infoItemDetails =
+			infoItemDetailsProvider.getInfoItemDetails(
+				group.getGroupId(), ClassPKInfoItemIdentifier.class, infoItem);
+
 		return infoItemPermissionProvider.hasPermission(
-			permissionChecker,
-			_displayPageTypeContext.getInfoItemReference(
-				siteNavigationMenuItem),
+			permissionChecker, infoItemDetails.getInfoItemReference(),
 			ActionKeys.VIEW);
 	}
 
@@ -367,6 +445,23 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		if (externalReferenceCode == null) {
 			return false;
+		}
+
+		String scopeExternalReferenceCode = GetterUtil.getString(
+			element.attributeValue(
+				"display-page-scope-external-reference-code"));
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			Group group = _groupLocalService.fetchGroupByExternalReferenceCode(
+				scopeExternalReferenceCode,
+				importedSiteNavigationMenuItem.getCompanyId());
+
+			if ((group == null) ||
+				(group.getGroupId() ==
+					importedSiteNavigationMenuItem.getGroupId())) {
+
+				scopeExternalReferenceCode = null;
+			}
 		}
 
 		importedSiteNavigationMenuItem.setTypeSettings(
@@ -390,6 +485,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 							element.attributeValue("display-page-class-pk"))))
 			).put(
 				"externalReferenceCode", externalReferenceCode
+			).put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode
 			).buildString());
 
 		return true;
@@ -436,7 +533,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 		httpServletRequest.setAttribute(
 			DisplayPageTypeSiteNavigationMenuTypeDisplayContext.class.getName(),
 			new DisplayPageTypeSiteNavigationMenuTypeDisplayContext(
-				_displayPageTypeContext, httpServletRequest, _itemSelector,
+				_displayPageTypeContext, httpServletRequest,
+				_infoItemServiceRegistry, _itemSelector,
 				siteNavigationMenuItem));
 
 		_jspRenderer.renderJSP(
@@ -454,7 +552,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 		InfoItemIdentifier infoItemIdentifier = new ERCInfoItemIdentifier(
 			GetterUtil.getString(
-				typeSettingsUnicodeProperties.get("externalReferenceCode")));
+				typeSettingsUnicodeProperties.get("externalReferenceCode")),
+			typeSettingsUnicodeProperties.get("scopeExternalReferenceCode"));
 
 		return AssetDisplayPageUtil.hasAssetDisplayPage(
 			siteNavigationMenuItem.getGroupId(),
@@ -470,6 +569,8 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 	private final AssetDisplayPageFriendlyURLProvider
 		_assetDisplayPageFriendlyURLProvider;
 	private final DisplayPageTypeContext _displayPageTypeContext;
+	private final GroupLocalService _groupLocalService;
+	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final ItemSelector _itemSelector;
 	private final JSPRenderer _jspRenderer;
 	private final Portal _portal;

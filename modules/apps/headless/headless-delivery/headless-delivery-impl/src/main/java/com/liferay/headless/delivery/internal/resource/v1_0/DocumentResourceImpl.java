@@ -708,7 +708,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 				getPermissionCheckerResourceId(document.getId()),
 				getPermissionCheckerResourceName(document.getId()),
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService);
+				roleLocalService, contextUser.getUserId());
 		}
 
 		if (assetCategoryIds == null) {

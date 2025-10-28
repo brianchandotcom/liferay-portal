@@ -416,7 +416,7 @@ public class DocumentFolderResourceImpl extends BaseDocumentFolderResourceImpl {
 				getPermissionCheckerResourceId(documentFolder.getId()),
 				getPermissionCheckerResourceName(documentFolder.getId()),
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService)
+				roleLocalService, contextUser.getUserId())
 		).build();
 	}
 

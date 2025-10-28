@@ -94,8 +94,7 @@ public class MenuAccessConfigurationManagerImpl
 		throws Exception {
 
 		if (accessToControlMenuRoleIds == null) {
-			List<String> accessToControlMenuRoleIdsList =
-				new ArrayList<>();
+			List<String> accessToControlMenuRoleIdsList = new ArrayList<>();
 
 			Group group = _groupLocalService.getGroup(groupId);
 

@@ -21,8 +21,6 @@ String taglibOnChange = "Liferay.Util.toggleDisabled('#" + liferayPortletRespons
 
 <aui:input disabled="<%= !useCustomName %>" label="name" localized="<%= true %>" maxlength='<%= ModelHintsUtil.getMaxLength(SiteNavigationMenuItem.class.getName(), "name") %>' name="name" placeholder="name" required="<%= true %>" type="text" value='<%= SiteNavigationMenuItemUtil.getSiteNavigationMenuItemXML(siteNavigationMenuItem, "name") %>' />
 
-<aui:input id="groupId" name="TypeSettingsProperties--groupId--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>" />
-
 <aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" required="<%= true %>" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>" />
 
 <div class="form-group input-text-wrapper mb-2 text-default">

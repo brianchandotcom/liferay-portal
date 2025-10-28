@@ -180,9 +180,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					siteNavigationMenuItem.getTypeSettings()
 				).build();
 
-			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
+			String externalReferenceCode = unicodeProperties.getProperty(
+				"externalReferenceCode");
 
-			if (Objects.equals(layout.getUuid(), layoutUuid)) {
+			if (Objects.equals(
+					layout.getExternalReferenceCode(), externalReferenceCode)) {
+
 				_siteNavigationMenuItemLocalService.
 					deleteSiteNavigationMenuItem(
 						siteNavigationMenuItem.getSiteNavigationMenuItemId());
@@ -211,9 +214,13 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					siteNavigationMenuItem.getTypeSettings()
 				).build();
 
-			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
+			String externalReferenceCode = unicodeProperties.getProperty(
+				"externalReferenceCode");
 
-			if (Objects.equals(parentLayout.getUuid(), layoutUuid)) {
+			if (Objects.equals(
+					parentLayout.getExternalReferenceCode(),
+					externalReferenceCode)) {
+
 				return siteNavigationMenuItem.getSiteNavigationMenuItemId();
 			}
 		}
@@ -246,9 +253,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 					siteNavigationMenuItem.getTypeSettings()
 				).build();
 
-			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
+			String externalReferenceCode = unicodeProperties.getProperty(
+				"externalReferenceCode");
 
-			if (Objects.equals(layout.getUuid(), layoutUuid)) {
+			if (Objects.equals(
+					layout.getExternalReferenceCode(), externalReferenceCode)) {
+
 				return true;
 			}
 		}

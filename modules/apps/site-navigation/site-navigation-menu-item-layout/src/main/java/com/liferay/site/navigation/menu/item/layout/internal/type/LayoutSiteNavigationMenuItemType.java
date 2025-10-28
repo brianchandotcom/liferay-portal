@@ -397,8 +397,6 @@ public class LayoutSiteNavigationMenuItemType
 			).put(
 				"externalReferenceCode", layout.getExternalReferenceCode()
 			).put(
-				"groupId", String.valueOf(layout.getGroupId())
-			).put(
 				"layoutUuid", layout.getUuid()
 			).put(
 				"privateLayout", String.valueOf(layout.isPrivateLayout())
@@ -531,21 +529,21 @@ public class LayoutSiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
+		String externalReferenceCode = typeSettingsUnicodeProperties.get(
+			"externalReferenceCode");
 
-		boolean privateLayout = GetterUtil.getBoolean(
-			typeSettingsUnicodeProperties.get("privateLayout"));
+		long groupId = siteNavigationMenuItem.getGroupId();
 
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			externalReferenceCode, groupId);
 
 		if ((layout == null) && _log.isWarnEnabled()) {
 			_log.warn(
 				StringBundler.concat(
 					"No layout found for site navigation menu item ID ",
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					" with layout UUID ", layoutUuid, " and private layout ",
-					privateLayout));
+					" with  external reference code  ", externalReferenceCode,
+					" and group ID ", groupId));
 		}
 
 		return layout;
@@ -560,8 +558,6 @@ public class LayoutSiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
-
 		boolean privateLayout = GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.get("privateLayout"));
 
@@ -570,15 +566,16 @@ public class LayoutSiteNavigationMenuItemType
 		}
 
 		try {
-			Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+			Layout layout =
+				_layoutLocalService.fetchLayoutByExternalReferenceCode(
+					typeSettingsUnicodeProperties.get("externalReferenceCode"),
+					siteNavigationMenuItem.getGroupId());
 
-			if ((layout == null) &&
-				ExportImportThreadLocal.isImportInProcess()) {
+			if ((layout != null) &&
+				(layout.isPrivateLayout() != privateLayout) &&
+				!ExportImportThreadLocal.isImportInProcess()) {
 
-				layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-					layoutUuid, siteNavigationMenuItem.getGroupId(),
-					!privateLayout);
+				layout = null;
 			}
 
 			if (layout == null) {

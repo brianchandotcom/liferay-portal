@@ -8,8 +8,10 @@ package com.liferay.site.navigation.menu.item.util;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -117,13 +119,13 @@ public class SiteNavigationMenuItemUtil {
 				siteNavigationMenuItem.getType(),
 				SiteNavigationMenuItemTypeConstants.LAYOUT)) {
 
-			String layoutUuid = typeSettingsUnicodeProperties.get("layoutUuid");
+			Group group = GroupLocalServiceUtil.getGroup(
+				siteNavigationMenuItem.getGroupId());
 
-			boolean privateLayout = GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.get("privateLayout"));
-
-			Layout layout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
-				layoutUuid, siteNavigationMenuItem.getGroupId(), privateLayout);
+			Layout layout =
+				LayoutLocalServiceUtil.getLayoutByExternalReferenceCode(
+					typeSettingsUnicodeProperties.get("externalReferenceCode"),
+					group.getGroupId());
 
 			Map<Locale, String> nameMap = layout.getNameMap();
 

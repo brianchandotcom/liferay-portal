@@ -33,6 +33,47 @@ import java.util.Objects;
  */
 public class PageElementsTestUtil {
 
+	public static FragmentInstancePageElementDefinition
+		getFragmentInstancePageElementDefinition(String fragmentEntryKey) {
+
+		FragmentEntry fragmentEntry =
+			FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+				fragmentEntryKey);
+
+		return new FragmentInstancePageElementDefinition() {
+			{
+				setConfiguration(fragmentEntry::getConfiguration);
+				setCss(fragmentEntry::getCss);
+
+				setCssClasses(
+					() -> new String[] {RandomTestUtil.randomString()});
+				setCustomCSS(RandomTestUtil::randomString);
+				setDatePropagated(RandomTestUtil::nextDate);
+				setFragmentInstanceExternalReferenceCode(
+					RandomTestUtil::randomString);
+				setFragmentReference(
+					() -> new DefaultFragmentReference() {
+						{
+							setDefaultFragmentKey(
+								fragmentEntry::getFragmentEntryKey);
+							setFragmentReferenceType(
+								() ->
+									FragmentReferenceType.
+										DEFAULT_FRAGMENT_REFERENCE);
+						}
+					});
+				setFragmentType(FragmentType.BASIC);
+				setHtml(fragmentEntry::getHtml);
+				setIndexed(RandomTestUtil::randomBoolean);
+				setJs(fragmentEntry::getJs);
+				setName(RandomTestUtil::randomString);
+				setNamespace(RandomTestUtil::randomString);
+				setType(Type.FRAGMENT);
+				setUuid(RandomTestUtil::randomString);
+			}
+		};
+	}
+
 	public static PageElementDefinition getPageElementDefinition(
 		PageElementDefinition.Type type) {
 
@@ -107,43 +148,8 @@ public class PageElementsTestUtil {
 		}
 
 		if (Objects.equals(type, PageElementDefinition.Type.FRAGMENT)) {
-			return new FragmentInstancePageElementDefinition() {
-				{
-					FragmentEntry fragmentEntry =
-						FragmentCollectionContributorRegistryUtil.
-							getFragmentEntry("BASIC_COMPONENT-heading");
-
-					setConfiguration(fragmentEntry::getConfiguration);
-					setCss(fragmentEntry::getCss);
-
-					setCssClasses(
-						() -> new String[] {RandomTestUtil.randomString()});
-					setCustomCSS(RandomTestUtil::randomString);
-					setDatePropagated(RandomTestUtil::nextDate);
-					setFragmentInstanceExternalReferenceCode(
-						RandomTestUtil::randomString);
-
-					setFragmentReference(
-						() -> new DefaultFragmentReference() {
-							{
-								setDefaultFragmentKey(
-									fragmentEntry::getFragmentEntryKey);
-								setFragmentReferenceType(
-									() ->
-										FragmentReferenceType.
-											DEFAULT_FRAGMENT_REFERENCE);
-							}
-						});
-					setFragmentType(FragmentType.BASIC);
-					setHtml(fragmentEntry::getHtml);
-					setIndexed(RandomTestUtil::randomBoolean);
-					setJs(fragmentEntry::getJs);
-					setName(RandomTestUtil::randomString);
-					setNamespace(RandomTestUtil::randomString);
-					setType(Type.FRAGMENT);
-					setUuid(RandomTestUtil::randomString);
-				}
-			};
+			return getFragmentInstancePageElementDefinition(
+				"BASIC_COMPONENT-heading");
 		}
 
 		if (Objects.equals(

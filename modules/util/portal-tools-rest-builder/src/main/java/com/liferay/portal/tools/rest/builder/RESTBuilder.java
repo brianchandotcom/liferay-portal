@@ -314,7 +314,25 @@ public class RESTBuilder {
 				allExternalSchemas, openAPIYAML, schemas);
 
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+				Schema schema = entry.getValue();
 				String schemaName = entry.getKey();
+
+				if (Validator.isNotNull(_configYAML.getClientDir())) {
+					if (createClientCustomFieldFiles &&
+						_containsVulcanCustomField(schema)) {
+
+						_createClientCustomFieldFiles(context);
+
+						createClientCustomFieldFiles = false;
+					}
+
+					if (createClientScopeFiles &&
+						_containsVulcanScope(schema)) {
+
+						_createClientScopeFile(context);
+						createClientScopeFiles = false;
+					}
+				}
 
 				List<JavaMethodSignature> javaMethodSignatures =
 					freeMarkerTool.getResourceJavaMethodSignatures(
@@ -323,8 +341,6 @@ public class RESTBuilder {
 				if (javaMethodSignatures.isEmpty()) {
 					continue;
 				}
-
-				Schema schema = entry.getValue();
 
 				_putSchema(
 					context, escapedVersion, javaDataTypeMap, schema,
@@ -347,21 +363,6 @@ public class RESTBuilder {
 				_createResourceImplFile(context, escapedVersion, schemaName);
 
 				if (Validator.isNotNull(_configYAML.getClientDir())) {
-					if (createClientCustomFieldFiles &&
-						_containsVulcanCustomField(schema)) {
-
-						_createClientCustomFieldFiles(context);
-
-						createClientCustomFieldFiles = false;
-					}
-
-					if (createClientScopeFiles &&
-						_containsVulcanScope(schema)) {
-
-						_createClientScopeFile(context);
-						createClientScopeFiles = false;
-					}
-
 					_createClientResourceFile(
 						context, escapedVersion, schemaName);
 				}

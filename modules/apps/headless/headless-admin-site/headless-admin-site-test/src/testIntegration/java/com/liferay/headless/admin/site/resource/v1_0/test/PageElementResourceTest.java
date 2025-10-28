@@ -59,6 +59,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocal
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
@@ -295,27 +296,42 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				RandomTestUtil.randomString(),
 				AssetListEntryTypeConstants.TYPE_DYNAMIC, new ServiceContext());
 
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_getCollectionDisplayPageElement(
-				_getCollectionDisplayListStyle(
-					"com.liferay.asset.internal.info.renderer." +
-						"AssetEntryFullContentInfoItemRenderer",
-					"com.liferay.asset.info.internal.list.renderer." +
-						"NumberedAssetEntryBasicInfoListRenderer",
-					ListStyle.ListStyleType.FLEX_ROW,
-					RandomTestUtil.randomString()),
-				_getCollectionDisplayViewports(),
-				_getCollectionReference(
-					null, null, assetListEntry.getExternalReferenceCode()),
-				true, true, null, true, RandomTestUtil.randomString(),
-				RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
-				RandomTestUtil.randomInt(),
-				CollectionDisplayPageElementDefinition.PaginationType.SIMPLE,
-				RandomTestUtil.randomString()));
+		PageElement postCollectionDisplayPageElement =
+			_testPostSitePageSpecificationPageExperiencePageElement(
+				_getCollectionDisplayPageElement(
+					_getCollectionDisplayListStyle(
+						"com.liferay.asset.internal.info.renderer." +
+							"AssetEntryFullContentInfoItemRenderer",
+						"com.liferay.asset.info.internal.list.renderer." +
+							"NumberedAssetEntryBasicInfoListRenderer",
+						ListStyle.ListStyleType.FLEX_ROW,
+						RandomTestUtil.randomString()),
+					_getCollectionDisplayViewports(),
+					_getCollectionReference(
+						null, null, assetListEntry.getExternalReferenceCode()),
+					true, true, null, true, RandomTestUtil.randomString(),
+					RandomTestUtil.randomInt(), RandomTestUtil.randomInt(),
+					RandomTestUtil.randomInt(),
+					CollectionDisplayPageElementDefinition.PaginationType.
+						SIMPLE,
+					RandomTestUtil.randomString()));
 
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.COLLECTION_ITEM, StringPool.BLANK));
+		PageElement[] pageElements =
+			postCollectionDisplayPageElement.getPageElements();
+
+		PageElement collectionItemPageElement = _getCollectionItemPageElement(
+			pageElements[0].getExternalReferenceCode(),
+			postCollectionDisplayPageElement.getExternalReferenceCode(),
+			new PageElement[0]);
+
+		collectionItemPageElement.setExternalReferenceCode(
+			pageElements[0].getExternalReferenceCode());
+
+		_assertProblemException(
+			"BAD_REQUEST", null,
+			() -> _testPostSitePageSpecificationPageExperiencePageElement(
+				collectionItemPageElement));
+
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				null, RandomTestUtil.randomString(), null, null,
@@ -802,6 +818,24 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, namespace, 0, null,
 			FragmentConstants.TYPE_PORTLET, new ServiceContext());
+	}
+
+	private void _assertProblemException(
+			String status, String title,
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try {
+			unsafeRunnable.run();
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals(status, problem.getStatus());
+			Assert.assertEquals(title, problem.getTitle());
+		}
 	}
 
 	private String[] _getActionIds(String roleName) {

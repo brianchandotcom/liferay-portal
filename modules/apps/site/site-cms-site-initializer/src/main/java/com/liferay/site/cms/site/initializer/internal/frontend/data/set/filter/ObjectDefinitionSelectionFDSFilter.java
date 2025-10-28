@@ -51,7 +51,7 @@ public class ObjectDefinitionSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 	@Override
 	public String getLabel() {
-		return "asset-type";
+		return "type";
 	}
 
 	@Override

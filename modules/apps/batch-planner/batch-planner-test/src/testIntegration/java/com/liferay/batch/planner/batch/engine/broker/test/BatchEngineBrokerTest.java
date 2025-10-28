@@ -724,6 +724,7 @@ public class BatchEngineBrokerTest {
 
 			Assert.assertEquals(
 				expectedCSVRecordStrings, actualCSVRecordStrings);
+
 			found = true;
 		}
 

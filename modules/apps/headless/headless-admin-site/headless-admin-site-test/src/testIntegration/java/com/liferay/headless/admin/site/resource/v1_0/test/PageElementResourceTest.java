@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1166,7 +1165,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private WidgetPermission[] _getWidgetPermissions() {
-		WidgetPermission[] widgetPermissions = TransformUtil.transformToArray(
+		return TransformUtil.transformToArray(
 			ListUtil.fromArray(
 				RoleConstants.GUEST, RoleConstants.SITE_CONTENT_REVIEWER,
 				RoleConstants.SITE_MEMBER),
@@ -1185,12 +1184,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				return widgetPermission;
 			},
 			WidgetPermission.class);
-
-		if (ArrayUtil.isEmpty(widgetPermissions)) {
-			return null;
-		}
-
-		return widgetPermissions;
 	}
 
 	private PageElement _randomPageElement(

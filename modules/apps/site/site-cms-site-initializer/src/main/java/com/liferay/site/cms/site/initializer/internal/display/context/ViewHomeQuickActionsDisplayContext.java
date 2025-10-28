@@ -205,18 +205,6 @@ public class ViewHomeQuickActionsDisplayContext {
 		}
 
 		quickActions.add(
-			_createQuickAction(
-				depotEntriesJSONArray, _icons.get("L_CMS_BASIC_DOCUMENT"),
-				_objectDefinitionService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_BASIC_DOCUMENT", _themeDisplay.getCompanyId())));
-		quickActions.add(
-			_createQuickAction(
-				depotEntriesJSONArray, _icons.get("L_CMS_EXTERNAL_VIDEO"),
-				_objectDefinitionService.
-					getObjectDefinitionByExternalReferenceCode(
-						"L_CMS_EXTERNAL_VIDEO", _themeDisplay.getCompanyId())));
-		quickActions.add(
 			HashMapBuilder.<String, Object>put(
 				"action", "createVocabulary"
 			).put(

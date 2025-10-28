@@ -41,7 +41,6 @@ public class ThemeDisplayTest {
 	@After
 	public void tearDown() {
 		_hashedFilesRegistryUtilMockedStatic.close();
-
 		_portalUtilMockedStatic.close();
 	}
 

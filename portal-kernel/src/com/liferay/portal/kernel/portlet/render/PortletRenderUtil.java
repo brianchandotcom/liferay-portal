@@ -348,7 +348,7 @@ public class PortletRenderUtil {
 		HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay,
 		String originalURL) {
 
-		String url;
+		String url = null;
 
 		String pathProxy = PortalUtil.getPathProxy();
 

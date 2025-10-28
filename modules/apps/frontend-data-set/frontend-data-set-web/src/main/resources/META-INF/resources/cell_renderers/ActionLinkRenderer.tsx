@@ -5,6 +5,7 @@
 
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import classNames from 'classnames';
 import {openConfirmModal} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
 import React, {useContext} from 'react';
@@ -22,6 +23,13 @@ interface IActionLinkRendererProps {
 	itemId: number | string;
 	options?: {
 		actionId?: string;
+		decoration?: 'none' | 'underline';
+		displayType?:
+			| 'danger'
+			| 'primary'
+			| 'secondary'
+			| 'tertiary'
+			| 'unstyled';
 	};
 	value: number | string;
 }
@@ -173,9 +181,13 @@ function ActionLinkRenderer({
 	}
 
 	return (
-		<div className="table-list-title">
+		<div
+			className={classNames({'table-list-title': !options?.displayType})}
+		>
 			<ClayLink
 				data-senna-off
+				decoration={options?.decoration}
+				displayType={options?.displayType}
 				href={formattedHref || '#'}
 				onClick={
 					isNotALink()

@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.rest.dto.v1_0.util;
+package com.liferay.portal.vulcan.util;
 
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.scope.Scope;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -41,7 +42,7 @@ public class ScopeUtilTest {
 
 	@Test
 	public void testToScopeNull() throws Exception {
-		Assert.assertNull(ScopeUtil.toScope(null));
+		Assert.assertNull(ScopeUtil.toScope(null, null));
 	}
 
 	@Test
@@ -52,23 +53,12 @@ public class ScopeUtilTest {
 			true
 		);
 
-		_assertScope(ScopeUtil.toScope(_group), Scope.Type.ASSET_LIBRARY);
-	}
-
-	@Test
-	public void testToScopeTypeCMS() throws Exception {
-		Mockito.when(
-			_group.isCMS()
-		).thenReturn(
-			true
-		);
-
-		_assertScope(ScopeUtil.toScope(_group), Scope.Type.CMS);
+		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.ASSET_LIBRARY);
 	}
 
 	@Test
 	public void testToScopeTypeNull() throws Exception {
-		_assertScope(ScopeUtil.toScope(_group), null);
+		_assertScope(ScopeUtil.toScope(_group, null), null);
 	}
 
 	@Test
@@ -79,7 +69,18 @@ public class ScopeUtilTest {
 			true
 		);
 
-		_assertScope(ScopeUtil.toScope(_group), Scope.Type.SITE);
+		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.SITE);
+	}
+
+	@Test
+	public void testToScopeTypeSpace() throws Exception {
+		Mockito.when(
+			_group.isCMS()
+		).thenReturn(
+			true
+		);
+
+		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.SPACE);
 	}
 
 	private void _assertScope(Scope scope, Scope.Type scopeType) {

@@ -649,7 +649,8 @@ public class PageSpecificationResourceTest
 					layout.getExternalReferenceCode());
 
 		PageExperiencesTestUtil.modifyPageExperiences(
-			contentPageSpecification.getPageExperiences());
+			contentPageSpecification.getPageExperiences(),
+			testGroup.getGroupId());
 
 		_modifySettings(
 			contentPageSpecification, serviceContext, layout.isTypeUtility());
@@ -1010,7 +1011,8 @@ public class PageSpecificationResourceTest
 					draftLayout.getExternalReferenceCode());
 
 		PageExperiencesTestUtil.modifyPageExperiences(
-			contentPageSpecification.getPageExperiences());
+			contentPageSpecification.getPageExperiences(),
+			testGroup.getGroupId());
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 

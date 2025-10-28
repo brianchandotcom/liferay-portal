@@ -777,7 +777,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 									PageSpecificationsTestUtil.
 										getContentPageSpecifications(
 											pageSpecification.
-												getExternalReferenceCode()));
+												getExternalReferenceCode(),
+											testGroup.getGroupId()));
 						}
 					}));
 		}
@@ -795,12 +796,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		utilityPage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -858,7 +859,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 			utilityPage.setPageSpecifications(
 				() -> PageSpecificationsTestUtil.getContentPageSpecifications(
-					RandomTestUtil.randomString()));
+					RandomTestUtil.randomString(), testGroup.getGroupId()));
 
 			_assertProblemException(
 				"BAD_REQUEST",
@@ -877,12 +878,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, draftLayoutStatus);
+				null, testGroup.getGroupId(), draftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				publishedLayoutStatus);
+				testGroup.getGroupId(), publishedLayoutStatus);
 
 		utilityPage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -951,7 +952,8 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 			utilityPage.setPageSpecifications(
 				() -> PageSpecificationsTestUtil.getContentPageSpecifications(
-					pageSpecification.getExternalReferenceCode()));
+					pageSpecification.getExternalReferenceCode(),
+					testGroup.getGroupId()));
 
 			_assertProblemException(
 				"BAD_REQUEST",
@@ -973,12 +975,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		ContentPageSpecification draftContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
-				null, oldDraftLayoutStatus);
+				null, testGroup.getGroupId(), oldDraftLayoutStatus);
 
 		ContentPageSpecification publishedContentPageSpecification =
 			PageSpecificationsTestUtil.getContentPageSpecification(
 				draftContentPageSpecification.getExternalReferenceCode(),
-				oldPublishedLayoutStatus);
+				testGroup.getGroupId(), oldPublishedLayoutStatus);
 
 		utilityPage.setPageSpecifications(
 			() -> new PageSpecification[] {

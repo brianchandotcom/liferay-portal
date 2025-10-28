@@ -135,9 +135,12 @@
 	}
 
 	.marketplace-search-results {
-		box-sizing: border-box;
-		gap: 31px;
-		overflow: auto;
+		gap: 24px;
+		max-width: 1272px;
+
+		&-container {
+			overflow: auto;
+		}
 
 		&-card {
 			background-color: #fbfcfe;

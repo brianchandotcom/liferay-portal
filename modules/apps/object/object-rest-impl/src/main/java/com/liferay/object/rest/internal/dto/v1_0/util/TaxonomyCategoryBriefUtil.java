@@ -7,12 +7,12 @@ package com.liferay.object.rest.internal.dto.v1_0.util;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
-import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -35,7 +35,10 @@ public class TaxonomyCategoryBriefUtil {
 				setEmbeddedTaxonomyCategory(
 					() -> _toTaxonomyCategory(
 						assetCategory.getCategoryId(), dtoConverterContext));
-				setScope(() -> ScopeUtil.toScope(assetCategory.getGroupId()));
+				setScope(
+					() -> ScopeUtil.toScope(
+						assetCategory.getGroupId(),
+						dtoConverterContext.getLocale()));
 				setTaxonomyCategoryExternalReferenceCode(
 					assetCategory::getExternalReferenceCode);
 				setTaxonomyCategoryId(assetCategory::getCategoryId);

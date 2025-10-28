@@ -16,7 +16,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.dto.v1_0.Status;
 import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
-import com.liferay.object.rest.dto.v1_0.util.ScopeUtil;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.rest.manager.v1_0.util.ObjectEntryManagerUtil;
@@ -37,9 +36,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 import java.text.DateFormat;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -131,7 +132,8 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 								});
 							setTaxonomyCategoryBriefs(
 								() -> _toTaxonomyCategoryBriefs(
-									serviceContext.getAssetCategoryIds()));
+									serviceContext.getAssetCategoryIds(),
+									themeDisplay.getLocale()));
 						}
 					});
 
@@ -244,7 +246,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	}
 
 	private TaxonomyCategoryBrief[] _toTaxonomyCategoryBriefs(
-		long[] assetCategoryIds) {
+		long[] assetCategoryIds, Locale locale) {
 
 		return TransformUtil.transformToArray(
 			ListUtil.fromArray(assetCategoryIds),
@@ -256,7 +258,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 					{
 						setScope(
 							() -> ScopeUtil.toScope(
-								assetCategory.getGroupId()));
+								assetCategory.getGroupId(), locale));
 						setTaxonomyCategoryExternalReferenceCode(
 							assetCategory::getExternalReferenceCode);
 						setTaxonomyCategoryId(() -> assetCategoryId);

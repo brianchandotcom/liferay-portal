@@ -6,7 +6,6 @@
 package com.liferay.object.rest.internal.dto.v1_0.converter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -40,6 +39,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.io.Serializable;

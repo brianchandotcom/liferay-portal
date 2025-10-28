@@ -2025,31 +2025,6 @@ public class DefaultObjectEntryManagerImpl
 				dtoConverterContext.getUserId());
 		}
 
-		if (LazyReferencingThreadLocal.isEnabled()) {
-			for (Permission permission : objectEntry.getPermissions()) {
-				if (Validator.isNull(
-						permission.getRoleExternalReferenceCode())) {
-
-					continue;
-				}
-
-				String className = StringPool.BLANK;
-
-				RoleTypeContributor roleTypeContributor =
-					_roleTypeContributorProvider.getRoleTypeContributor(
-						RoleConstants.getLabelType(permission.getRoleType()));
-
-				if (roleTypeContributor != null) {
-					className = roleTypeContributor.getClassName();
-				}
-
-				_roleService.getOrAddEmptyRole(
-					permission.getRoleExternalReferenceCode(), className, 0,
-					permission.getRoleName(),
-					RoleConstants.getLabelType(permission.getRoleType()));
-			}
-		}
-
 		ModelPermissions modelPermissions =
 			ModelPermissionsUtil.toModelPermissions(
 				objectDefinition.getCompanyId(), objectEntry.getPermissions(),

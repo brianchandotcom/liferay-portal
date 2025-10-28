@@ -360,6 +360,24 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	public int getIdleJenkinsSlavesCount() {
 		int idleSlavesCount = 0;
 
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			for (AWSFleetCloud awsFleetCloud : getAWSFleetClouds()) {
+				idleSlavesCount += awsFleetCloud.getMaxSize();
+			}
+
+			for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
+				if (jenkinsSlave.isOffline()) {
+					continue;
+				}
+
+				if (!jenkinsSlave.isIdle()) {
+					idleSlavesCount--;
+				}
+			}
+
+			return idleSlavesCount;
+		}
+
 		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
 			if (jenkinsSlave.isOffline()) {
 				continue;

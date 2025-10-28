@@ -23,13 +23,8 @@ interface IActionLinkRendererProps {
 	itemId: number | string;
 	options?: {
 		actionId?: string;
-		decoration?: 'none' | 'underline';
-		displayType?:
-			| 'danger'
-			| 'primary'
-			| 'secondary'
-			| 'tertiary'
-			| 'unstyled';
+		decoration?: React.ComponentProps<typeof ClayLink>['decoration'];
+		displayType?: React.ComponentProps<typeof ClayLink>['displayType'];
 	};
 	value: number | string;
 }

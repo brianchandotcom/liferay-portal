@@ -12,13 +12,8 @@ import DefaultContent from './DefaultRenderer';
 
 interface ILinkRendererProps {
 	options?: {
-		decoration?: 'none' | 'underline';
-		displayType?:
-			| 'danger'
-			| 'primary'
-			| 'secondary'
-			| 'tertiary'
-			| 'unstyled';
+		decoration?: React.ComponentProps<typeof ClayLink>['decoration'];
+		displayType?: React.ComponentProps<typeof ClayLink>['displayType'];
 	};
 	value: {
 		href: string;

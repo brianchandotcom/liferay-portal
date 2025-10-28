@@ -654,6 +654,145 @@ public class ObjectEntryRelatedObjectsResourceTest {
 	}
 
 	@Test
+	public void testGetByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNamePage()
+		throws Exception {
+
+		ObjectRelationship objectRelationshipA_AA = TreeTestUtil.bind(
+			_objectDefinition1.getObjectDefinitionId(),
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationshipA_AA);
+
+		String endpoint = StringBundler.concat(
+			_objectDefinition1.getRESTContextPath(),
+			"/by-external-reference-code/",
+			_objectEntry1.getExternalReferenceCode(), "/",
+			objectRelationshipA_AA.getName());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				_OBJECT_FIELD_NAME_1, RandomTestUtil.randomString()
+			).toJSONString(),
+			StringBundler.concat(
+				_objectDefinition1.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry1.getExternalReferenceCode(), "/",
+				objectRelationshipA_AA.getName()),
+			Http.Method.POST);
+
+		String href = StringBundler.concat(
+			"http://localhost:8080/o", endpoint, "/",
+			jsonObject.get("externalReferenceCode"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		JSONObject actionsJSONObject = itemJSONObject.getJSONObject("actions");
+
+		JSONAssert.assertEquals(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				"delete",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "DELETE"
+				).put(
+					"href", href
+				)
+			).put(
+				"get",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "GET"
+				).put(
+					"href", href
+				)
+			).put(
+				"update",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "PATCH"
+				).put(
+					"href", href
+				)
+			).toString(),
+			actionsJSONObject.toString(), JSONCompareMode.NON_EXTENSIBLE);
+
+		ObjectRelationship objectRelationshipAA_AAA = TreeTestUtil.bind(
+			_objectDefinition2.getObjectDefinitionId(),
+			_objectDefinition3.getObjectDefinitionId(),
+			_objectRelationshipLocalService);
+
+		_objectRelationships.add(objectRelationshipAA_AAA);
+
+		endpoint = StringBundler.concat(
+			_objectDefinition2.getRESTContextPath(),
+			"/by-external-reference-code/",
+			_objectEntry2.getExternalReferenceCode(), "/",
+			objectRelationshipAA_AAA.getName());
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				_OBJECT_FIELD_NAME_2, RandomTestUtil.randomString()
+			).toJSONString(),
+			StringBundler.concat(
+				_objectDefinition2.getRESTContextPath(),
+				"/by-external-reference-code/",
+				_objectEntry2.getExternalReferenceCode(), "/",
+				objectRelationshipAA_AAA.getName()),
+			Http.Method.POST);
+
+		href = StringBundler.concat(
+			"http://localhost:8080/o", endpoint, "/",
+			jsonObject.get("externalReferenceCode"));
+
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, endpoint, Http.Method.GET);
+
+		itemsJSONArray = jsonObject.getJSONArray("items");
+
+		itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		actionsJSONObject = itemJSONObject.getJSONObject("actions");
+
+		JSONAssert.assertEquals(
+			JSONFactoryUtil.createJSONObject(
+			).put(
+				"delete",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "DELETE"
+				).put(
+					"href", href
+				)
+			).put(
+				"get",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "GET"
+				).put(
+					"href", href
+				)
+			).put(
+				"update",
+				JSONFactoryUtil.createJSONObject(
+				).put(
+					"method", "PATCH"
+				).put(
+					"href", href
+				)
+			).toString(),
+			actionsJSONObject.toString(), JSONCompareMode.NON_EXTENSIBLE);
+	}
+
+	@Test
 	public void testGetByExternalReferenceCodeCurrentExternalReferenceCodeObjectRelationshipNameRelatedExternalReferenceCode()
 		throws Exception {
 

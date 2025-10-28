@@ -162,6 +162,8 @@ export default function SharedWithMeFDSPropsTransformer({
 							contentViewURL: additionalProps.contentViewURL,
 							currentIndex: currentItemPos,
 							items: transformedItems,
+							showCommentsPanel:
+								itemData.actionIds.includes('ADD_DISCUSSION'),
 							showInfoPanel: false,
 						}),
 					size: 'full-screen',

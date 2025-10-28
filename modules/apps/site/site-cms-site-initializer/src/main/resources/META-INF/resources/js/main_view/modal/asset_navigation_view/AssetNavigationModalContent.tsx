@@ -20,6 +20,7 @@ interface AssetNavigationModalContentProps {
 	contentViewURL: string;
 	currentIndex: number;
 	items: ISearchAssetObjectEntry[];
+	showCommentsPanel?: boolean;
 	showInfoPanel?: boolean;
 }
 
@@ -69,6 +70,7 @@ export default function AssetNavigationModalContent({
 	contentViewURL,
 	currentIndex = 0,
 	items,
+	showCommentsPanel = true,
 	showInfoPanel = true,
 }: AssetNavigationModalContentProps) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
@@ -162,6 +164,7 @@ export default function AssetNavigationModalContent({
 					handleClickComments={handleClickComments}
 					handleClickInfo={handleClickInfo}
 					item={currentItem}
+					showCommentsPanel={showCommentsPanel}
 					showInfoPanel={showInfoPanel}
 				/>
 			</ClayModal.Header>
@@ -179,23 +182,25 @@ export default function AssetNavigationModalContent({
 						showArrows={items.length > 1}
 					/>
 
-					<SidePanel
-						containerRef={containerRef}
-						onOpenChange={setOpenSidePanel}
-						open={openSidePanel}
-					>
-						{currentPanel === PANELS.commentPanel ? (
-							<AssetNavigationCommentsPanel
-								additionalProps={additionalProps as any}
-								item={currentItem}
-							/>
-						) : showInfoPanel ? (
-							<AssetTypeInfoPanel
-								additionalProps={additionalProps as any}
-								items={[currentItem]}
-							/>
-						) : null}
-					</SidePanel>
+					{(showCommentsPanel || showInfoPanel) && (
+						<SidePanel
+							containerRef={containerRef}
+							onOpenChange={setOpenSidePanel}
+							open={openSidePanel}
+						>
+							{currentPanel === PANELS.commentPanel ? (
+								<AssetNavigationCommentsPanel
+									additionalProps={additionalProps as any}
+									item={currentItem}
+								/>
+							) : showInfoPanel ? (
+								<AssetTypeInfoPanel
+									additionalProps={additionalProps as any}
+									items={[currentItem]}
+								/>
+							) : null}
+						</SidePanel>
+					)}
 				</div>
 			</ClayModal.Body>
 

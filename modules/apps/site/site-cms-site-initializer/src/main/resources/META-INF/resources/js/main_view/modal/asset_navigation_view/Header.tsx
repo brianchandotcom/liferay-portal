@@ -17,12 +17,14 @@ export default function Header({
 	handleClickComments,
 	handleClickInfo,
 	item,
+	showCommentsPanel,
 	showInfoPanel,
 }: {
 	activePanel?: keyof typeof PANELS | null;
 	handleClickComments: () => void;
 	handleClickInfo: () => void;
 	item: ISearchAssetObjectEntry;
+	showCommentsPanel: boolean;
 	showInfoPanel: boolean;
 }) {
 	const headerName = item.embedded?.title || item.embedded.file?.name;
@@ -37,17 +39,20 @@ export default function Header({
 			</div>
 
 			<div className="align-items-center c-gap-2 d-flex">
-				<ClayButtonWithIcon
-					aria-label={Liferay.Language.get('show-comments')}
-					borderless
-					className={classNames({
-						active:
-							activePanel && activePanel === PANELS.commentPanel,
-					})}
-					displayType="secondary"
-					onClick={handleClickComments}
-					symbol="message"
-				/>
+				{showCommentsPanel && (
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('show-comments')}
+						borderless
+						className={classNames({
+							active:
+								activePanel &&
+								activePanel === PANELS.commentPanel,
+						})}
+						displayType="secondary"
+						onClick={handleClickComments}
+						symbol="message"
+					/>
+				)}
 
 				{showInfoPanel && (
 					<ClayButtonWithIcon

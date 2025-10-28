@@ -1,0 +1,20 @@
+dependencies {
+	compileInclude group: "com.google.api.grpc", name: "proto-google-cloud-vertexai-v1", version: "1.27.0"
+	compileInclude group: "com.google.cloud", name: "google-cloud-vertexai", version: "1.27.0"
+	compileInclude group: "dev.langchain4j", name: "langchain4j", version: "1.7.1"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-core", version: "1.7.1"
+	compileInclude group: "dev.langchain4j", name: "langchain4j-vertex-ai-gemini", version: "1.7.1-beta14"
+	compileInclude group: "org.apache.opennlp", name: "opennlp-tools", version: "2.5.4"
+	compileInclude group: "org.jspecify", name: "jspecify", version: "1.0.0"
+	compileOnly group: "com.liferay.jakarta.portlet", name: "com.liferay.jakarta.portlet-api", version: "4.0.0"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+	compileOnly group: "jakarta.servlet", name: "jakarta.servlet-api", version: "6.0.0"
+	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
+	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
+	compileOnly project(":apps:portal-workflow:portal-workflow-api")
+	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-api")
+	compileOnly project(":apps:portal-workflow:portal-workflow-kaleo-runtime-api")
+	compileOnly project(":apps:site:site-api")
+	compileOnly project(":core:petra:petra-string")
+}

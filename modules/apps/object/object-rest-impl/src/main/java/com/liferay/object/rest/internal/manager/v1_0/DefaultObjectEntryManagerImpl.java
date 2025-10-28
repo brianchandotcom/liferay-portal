@@ -3590,7 +3590,7 @@ public class DefaultObjectEntryManagerImpl
 			}
 		}
 		else {
-			long objectEntryCount = objectEntryLocalService.getValuesListCount(
+			long count = objectEntryLocalService.getValuesListCount(
 				new Long[] {objectEntryFolder.getGroupId()},
 				objectDefinition.getCompanyId(), objectDefinition.getUserId(),
 				objectDefinition.getObjectDefinitionId(),
@@ -3602,7 +3602,7 @@ public class DefaultObjectEntryManagerImpl
 				),
 				false, null);
 
-			if (objectEntryCount > 0) {
+			if (count > 0) {
 				values.put(
 					titleObjectField.getName(),
 					UniqueUtil.getCopyValue(

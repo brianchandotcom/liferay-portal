@@ -5,26 +5,19 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
-import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElementDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -93,57 +86,25 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 							return null;
 						}
 
-						FragmentEntry fragmentEntry =
-							_fragmentEntryLocalService.
-								fetchFragmentEntryByExternalReferenceCode(
-									fragmentEntryLink.getFragmentEntryERC(),
-									fragmentEntryLink.
-										getFragmentEntryGroupId());
+						if (Validator.isNotNull(
+								fragmentEntryLink.getFragmentEntryERC())) {
 
-						if (fragmentEntry != null) {
 							return new FragmentItemExternalReference() {
 								{
 									setExternalReferenceCode(
-										fragmentEntry::
-											getExternalReferenceCode);
+										fragmentEntryLink::getFragmentEntryERC);
 									setFragmentReferenceType(
 										() ->
 											FragmentReferenceType.
 												FRAGMENT_ITEM_EXTERNAL_REFERENCE);
 									setScope(
-										() -> {
-											if (fragmentEntry.getGroupId() ==
-													fragmentEntryLink.
-														getGroupId()) {
-
-												return null;
-											}
-
-											Group group =
-												_groupLocalService.getGroup(
-													fragmentEntry.getGroupId());
-
-											return new Scope() {
-												{
-													setExternalReferenceCode(
-														group::
-															getExternalReferenceCode);
-													setType(() -> Type.SITE);
-												}
-											};
-										});
+										() -> ItemScopeUtil.getItemScope(
+											fragmentEntryLink.getCompanyId(),
+											fragmentEntryLink.
+												getFragmentEntryScopeERC(),
+											fragmentEntryLink.getGroupId()));
 								}
 							};
-						}
-
-						Map<String, FragmentEntry> fragmentEntries =
-							_fragmentCollectionContributorRegistry.
-								getFragmentEntries();
-
-						if (!fragmentEntries.containsKey(
-								fragmentEntryLink.getRendererKey())) {
-
-							return null;
 						}
 
 						return new DefaultFragmentReference() {
@@ -200,16 +161,6 @@ public class FragmentInstancePageElementDefinitionDTOConverter
 	}
 
 	@Reference
-	private FragmentCollectionContributorRegistry
-		_fragmentCollectionContributorRegistry;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLocalService _fragmentEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 }

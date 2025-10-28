@@ -187,7 +187,7 @@ function useBatchEngineExportTask(importProcessId: string) {
 	return state;
 }
 
-export function ExportErrorsReportModal({
+export function ExportReportEntriesModal({
 	filename,
 	importProcessId,
 	observer,

@@ -22,7 +22,7 @@
 		</button>
 
 		<react:component
-			module="{ExportErrorsReportAction} from staging-taglib"
+			module="{ExportReportEntriesAction} from staging-taglib"
 			props='<%=
 				HashMapBuilder.<String, Object>put(
 					"backgroundTaskId", backgroundTask.getBackgroundTaskId()

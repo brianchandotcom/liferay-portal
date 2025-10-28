@@ -7,14 +7,14 @@ import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import React from 'react';
 
-import {ExportErrorsReportModal} from './ExportErrorsReportModal';
+import {ExportReportEntriesModal} from './ExportReportEntriesModal';
 
 type ExportErrorsReportProps = {
 	backgroundTaskId: string;
 	filename: string;
 };
 
-export function ExportErrorsReportAction({
+export function ExportReportEntriesAction({
 	backgroundTaskId,
 	filename,
 }: ExportErrorsReportProps) {
@@ -31,7 +31,7 @@ export function ExportErrorsReportAction({
 			</ClayButton>
 
 			{open && (
-				<ExportErrorsReportModal
+				<ExportReportEntriesModal
 					filename={filename}
 					importProcessId={backgroundTaskId}
 					observer={observer}

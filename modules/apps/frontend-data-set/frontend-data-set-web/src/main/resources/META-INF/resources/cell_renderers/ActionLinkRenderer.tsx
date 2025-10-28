@@ -26,7 +26,15 @@ interface IActionLinkRendererProps {
 		decoration?: React.ComponentProps<typeof ClayLink>['decoration'];
 		displayType?: React.ComponentProps<typeof ClayLink>['displayType'];
 	};
-	value: number | string;
+	value: number | string | null | undefined;
+}
+
+function hasValue(value: any): boolean {
+	if (value === null || value === undefined) {
+		return false;
+	}
+
+	return typeof value === 'string' ? value.trim() !== '' : true;
 }
 
 const findAction = (
@@ -68,9 +76,7 @@ function ActionLinkRenderer({
 	} = useContext(FrontendDataSetContext);
 
 	if (!actions || !actions.length) {
-		return value !== null && value !== undefined ? (
-			<DefaultContent value={value} />
-		) : null;
+		return hasValue(value) ? <DefaultContent value={value} /> : null;
 	}
 
 	const formattedActions = filterItemActions({
@@ -89,9 +95,7 @@ function ActionLinkRenderer({
 			: formattedActions[0];
 
 	if (!currentAction) {
-		return value !== null && value !== undefined ? (
-			<DefaultContent value={value} />
-		) : null;
+		return hasValue(value) ? <DefaultContent value={value} /> : null;
 	}
 
 	const formattedHref =
@@ -209,7 +213,7 @@ function ActionLinkRenderer({
 							}
 				}
 			>
-				{value !== null && value !== undefined
+				{hasValue(value)
 					? value
 					: currentAction.icon && (
 							<ClayIcon symbol={currentAction.icon} />

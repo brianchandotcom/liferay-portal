@@ -169,11 +169,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		String[] actionIds =
-			TransformUtil.transformToArray(
-				_resourceActionLocalService.getResourceActions(
-					ObjectEntryFolder.class.getName()),
-				ResourceAction::getActionId, String.class);
+		String[] actionIds = TransformUtil.transformToArray(
+			_resourceActionLocalService.getResourceActions(
+				ObjectEntryFolder.class.getName()),
+			ResourceAction::getActionId, String.class);
 
 		CMSDefaultPermissionUtil.addOrUpdateObjectEntry(
 			null, group.getCompanyId(), group.getCreatorUserId(),
@@ -206,11 +205,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
 					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
 				).put(
-					RoleConstants.CMS_ADMINISTRATOR,
-					JSONUtil.putAll(actionIds)
+					RoleConstants.CMS_ADMINISTRATOR, JSONUtil.putAll(actionIds)
 				).put(
-					RoleConstants.OWNER,
-					JSONUtil.putAll(actionIds)
+					RoleConstants.OWNER, JSONUtil.putAll(actionIds)
 				).put(
 					RoleConstants.USER,
 					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}

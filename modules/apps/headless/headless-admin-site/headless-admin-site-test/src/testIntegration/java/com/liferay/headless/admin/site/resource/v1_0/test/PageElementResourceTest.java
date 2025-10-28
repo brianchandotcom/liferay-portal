@@ -13,7 +13,11 @@ import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionDisplayPageElementDefinition;
@@ -583,14 +587,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, RandomTestUtil.randomString(), null, null,
 				"FileEntry_fileName", null, false, externalReferenceCode));
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + StringPool.PERIOD +
 				ContentTypes.IMAGE_JPEG,
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, null,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+			new byte[0], null, null, null, serviceContext);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
@@ -703,6 +709,19 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
 					"com.liferay.fragment.internal.renderer." +
 						"ContentObjectFragmentRenderer",
+					testGroup.getGroupId())));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					_addFragmentEntry(
+						irrelevantGroup.getGroupId(), serviceContext),
+					testGroup.getGroupId())));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					_addFragmentEntry(testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
 
 		externalReferenceCode = RandomTestUtil.randomString();
@@ -960,6 +979,27 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				testGroup.getExternalReferenceCode(),
 				_draftLayout.getExternalReferenceCode(),
 				segmentsExperience.getExternalReferenceCode(), pageElement);
+	}
+
+	private FragmentEntry _addFragmentEntry(
+			long groupId, ServiceContext serviceContext)
+		throws Exception {
+
+		FragmentCollection fragmentCollection =
+			_fragmentCollectionLocalService.addFragmentCollection(
+				null, TestPropsValues.getUserId(), groupId,
+				StringUtil.randomString(), StringPool.BLANK, serviceContext);
+
+		return _fragmentEntryLocalService.addFragmentEntry(
+			null, TestPropsValues.getUserId(), groupId,
+			fragmentCollection.getFragmentCollectionId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			StringPool.BLANK,
+			"<h1 data-lfr-editable-id=\"element-text\" " +
+				"data-lfr-editable-type=\"text\">Heading Example</h1>",
+			StringPool.BLANK, false, StringPool.BLANK, null, 0, false, false,
+			FragmentConstants.TYPE_COMPONENT, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	private void _addFragmentEntryLink(
@@ -2050,6 +2090,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private Layout _draftLayout;
+
+	@Inject
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Inject
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
 	private Layout _layout;
 
 	@Inject

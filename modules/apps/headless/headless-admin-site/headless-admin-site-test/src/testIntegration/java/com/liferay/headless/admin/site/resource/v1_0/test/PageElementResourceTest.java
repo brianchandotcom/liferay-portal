@@ -25,6 +25,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmptyCollectionConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
@@ -531,14 +532,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, RandomTestUtil.randomString(), null, null,
 				"FileEntry_fileName", null, false, externalReferenceCode));
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
 			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
 			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			RandomTestUtil.randomString() + StringPool.PERIOD +
 				ContentTypes.IMAGE_JPEG,
 			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, null,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+			new byte[0], null, null, null, serviceContext);
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
@@ -588,6 +591,17 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_randomPageElement(
 				PageElementDefinition.Type.FRAGMENT, StringPool.BLANK));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					"BASIC_COMPONENT-button")));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFragmentInstancePageElement(
+				externalReferenceCode,
+				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					"com.liferay.fragment.internal.renderer." +
+						"ContentObjectFragmentRenderer")));
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
@@ -1145,6 +1159,26 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getPageElement(
 			containerPageElementDefinition, pageElementExternalReferenceCode);
+	}
+
+	private PageElement _getFragmentInstancePageElement(
+			String externalReferenceCode,
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition)
+		throws Exception {
+
+		PageElement pageElement = super.randomPageElement();
+
+		pageElement.setExternalReferenceCode(externalReferenceCode);
+
+		pageElement.setPageElementDefinition(
+			() -> fragmentInstancePageElementDefinition);
+
+		pageElement.setPageElements(new PageElement[0]);
+		pageElement.setParentExternalReferenceCode(StringPool.BLANK);
+		pageElement.setPosition(_position);
+
+		return pageElement;
 	}
 
 	private FragmentLink _getFragmentLink(

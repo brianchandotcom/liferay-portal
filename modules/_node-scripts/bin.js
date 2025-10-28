@@ -182,6 +182,17 @@ const COMMANDS = {
 		parameters: '[--with-internals]',
 		script: './report/bundle/sizes.mjs',
 	},
+	'report:dependencies': {
+		description: `
+		Generate aggregated information about bundled npm packages.
+
+		This task must be invoked after running 'CREATE_BUNDLE_REPORTS=yes ant all' (i.e: running
+		'ant all' with the environment variable 'CREATE_BUNDLE_REPORTS' set to 'yes', so that JSON
+		reports, inside the 'build' directory of each project, are created by 'esbuild').
+`,
+		parameters: '',
+		script: './report/dependencies.mjs',
+	},
 	'report:java:imports': {
 		description: `
 		Generate aggregated information about imported external packages and symbols by parsing

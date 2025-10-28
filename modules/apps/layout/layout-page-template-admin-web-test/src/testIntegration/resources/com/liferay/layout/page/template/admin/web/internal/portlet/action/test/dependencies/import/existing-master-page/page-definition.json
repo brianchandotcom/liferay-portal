@@ -11,6 +11,18 @@
 				},
 				"id": "item1",
 				"type": "DropZone"
+			},
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"portletSetupPortletDecoratorId": "borderless"
+						},
+						"widgetName": "com_liferay_announcements_web_portlet_AlertsPortlet"
+					}
+				},
+				"id": "itemWidgetUninstantiable",
+				"type": "Widget"
 			}
 		],
 		"type": "Root"

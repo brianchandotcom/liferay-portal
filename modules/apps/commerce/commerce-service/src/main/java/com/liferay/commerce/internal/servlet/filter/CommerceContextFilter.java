@@ -40,6 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 		"url-pattern=/o/headless-commerce-admin-site-setting/*",
 		"url-pattern=/o/headless-commerce-delivery-cart/*",
 		"url-pattern=/o/headless-commerce-delivery-catalog/*",
+		"url-pattern=/o/headless-commerce-delivery-order/*",
 		"url-pattern=/o/headless-commerce-machine-learning/*",
 		"url-pattern=/o/headless-commerce-punchout/*"
 	},

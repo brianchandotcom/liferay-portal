@@ -229,10 +229,12 @@ export class StructureBuilderPage {
 			await this.page.getByLabel('Localizable').click();
 		}
 
-		const mandatoryToggle = this.page.getByLabel('Mandatory');
+		const mandatoryToggle = this.page.getByRole('checkbox', {
+			name: 'Mandatory',
+		});
 
 		if (mandatory !== undefined && !(await mandatoryToggle.isChecked())) {
-			await this.page.getByLabel('Mandatory').click();
+			await mandatoryToggle.click();
 		}
 
 		if (requestFile !== undefined) {

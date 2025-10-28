@@ -4,15 +4,38 @@
  */
 
 import ClayLink from '@clayui/link';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
 import DefaultContent from './DefaultRenderer';
 
-function LinkRenderer({value}) {
+interface ILinkRendererProps {
+	options?: {
+		decoration?: 'none' | 'underline';
+		displayType?:
+			| 'danger'
+			| 'primary'
+			| 'secondary'
+			| 'tertiary'
+			| 'unstyled';
+	};
+	value: {
+		href: string;
+		label: string;
+	};
+}
+
+function LinkRenderer({options, value}: ILinkRendererProps) {
 	return (
-		<div className="table-list-title">
-			<ClayLink href={value?.href}>
+		<div
+			className={classNames({'table-list-title': !options?.displayType})}
+		>
+			<ClayLink
+				decoration={options?.decoration}
+				displayType={options?.displayType}
+				href={value?.href}
+			>
 				<DefaultContent value={value?.label} />
 			</ClayLink>
 		</div>

@@ -3946,6 +3946,12 @@
 					"title": "JWKS URI",
 					"type": "string"
 				},
+				"matcherField": {
+					"default": "email",
+					"description": "The \"sub\" claim is the primary user matcher. If matching fails, the configured matcher field is used as a fallback.",
+					"title": "Matcher Field",
+					"type": "string"
+				},
 				"openIdConnectClientId": {
 					"default": "",
 					"description": "Set the client ID for the OpenID Connect provider.",
@@ -4010,6 +4016,7 @@
 			},
 			"required": [
 				"pid",
+				"matcherField",
 				"openIdConnectClientId",
 				"openIdConnectClientSecret",
 				"providerName",

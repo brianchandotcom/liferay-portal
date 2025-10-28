@@ -5086,6 +5086,12 @@ public class ObjectEntryLocalServiceTest {
 	public void testMoveObjectEntryToTrashWithOngoingWorkflowInstances()
 		throws Exception {
 
+		_siteObjectDefinition.setEnableObjectEntryVersioning(true);
+
+		_siteObjectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_siteObjectDefinition);
+
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			TestPropsValues.getUserId(), TestPropsValues.getCompanyId(), 0,
 			_siteObjectDefinition.getClassName(), 0, 0, "Single Approver", 1);

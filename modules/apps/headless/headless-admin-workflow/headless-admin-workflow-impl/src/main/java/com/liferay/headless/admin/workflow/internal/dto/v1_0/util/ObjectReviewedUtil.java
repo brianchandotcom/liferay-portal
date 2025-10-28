@@ -27,62 +27,43 @@ public class ObjectReviewedUtil {
 	public static ObjectReviewed toObjectReviewed(
 		Locale locale, Map<String, Serializable> optionalAttributes) {
 
+		String entryClassName = GetterUtil.getString(
+			optionalAttributes.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME));
+
+		WorkflowHandler<?> workflowHandler =
+			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
+
+		if (workflowHandler == null) {
+			return null;
+		}
+
+		long entryClassPK = GetterUtil.getLong(
+			optionalAttributes.get(WorkflowConstants.CONTEXT_ENTRY_CLASS_PK));
+
 		return new ObjectReviewed() {
 			{
 				setAssetTitle(
-					() -> _getAssetTitle(
-						GetterUtil.getLong(
-							optionalAttributes.get(
-								WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)),
-						GetterUtil.getString(
-							optionalAttributes.get(
-								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
-						locale));
-				setAssetType(
-					() -> _getAssetType(
-						GetterUtil.getString(
-							optionalAttributes.get(
-								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME)),
-						locale));
-				setId(
-					() -> GetterUtil.getLong(
-						optionalAttributes.get(
-							WorkflowConstants.CONTEXT_ENTRY_CLASS_PK)));
+					() -> workflowHandler.getTitle(entryClassPK, locale));
+				setAssetType(() -> workflowHandler.getType(locale));
+				setId(() -> entryClassPK);
 				setResourceType(
-					() -> _toResourceType(
-						GetterUtil.getString(
-							optionalAttributes.get(
-								WorkflowConstants.CONTEXT_ENTRY_CLASS_NAME))));
+					() -> {
+						if (Objects.equals(
+								entryClassName, BlogsEntry.class.getName())) {
+
+							return "BlogPosting";
+						}
+						else if (Objects.equals(
+									entryClassName,
+									MBDiscussion.class.getName())) {
+
+							return "Comment";
+						}
+
+						return null;
+					});
 			}
 		};
-	}
-
-	private static String _getAssetTitle(
-		long classPK, String entryClassName, Locale locale) {
-
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
-
-		return workflowHandler.getTitle(classPK, locale);
-	}
-
-	private static String _getAssetType(String entryClassName, Locale locale) {
-		WorkflowHandler<?> workflowHandler =
-			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
-
-		return workflowHandler.getType(locale);
-	}
-
-	private static String _toResourceType(String entryClassName) {
-		if (Objects.equals(entryClassName, BlogsEntry.class.getName())) {
-			return "BlogPosting";
-		}
-
-		if (Objects.equals(entryClassName, MBDiscussion.class.getName())) {
-			return "Comment";
-		}
-
-		return null;
 	}
 
 }

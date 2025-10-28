@@ -613,7 +613,7 @@ public class EditUserMVCActionCommand
 
 		if (Validator.isNotNull(parameterValue)) {
 			ListType listType = _listTypeLocalService.addListType(
-				companyId, parameterValue, type);
+				companyId, StringUtil.toLowerCase(parameterValue), type);
 
 			return listType.getListTypeId();
 		}

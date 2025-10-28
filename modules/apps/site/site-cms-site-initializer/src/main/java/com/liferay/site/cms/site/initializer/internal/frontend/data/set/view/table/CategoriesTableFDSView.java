@@ -7,7 +7,6 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -25,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CATEGORIES,
 	service = FDSView.class
 )
-public class CategoriesTableFDSView extends BaseTableFDSView {
+public class CategoriesTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -51,12 +50,7 @@ public class CategoriesTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"dateModified", "modified",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();
 	}
 

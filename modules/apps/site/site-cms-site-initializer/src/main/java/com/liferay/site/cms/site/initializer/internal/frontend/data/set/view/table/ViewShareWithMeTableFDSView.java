@@ -6,7 +6,6 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.table.BaseTableFDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
@@ -24,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.SHARED_WITH_ME,
 	service = FDSView.class
 )
-public class ViewShareWithMeTableFDSView extends BaseTableFDSView {
+public class ViewShareWithMeTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -49,19 +48,9 @@ public class ViewShareWithMeTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"authorTableCellRenderer")
 		).add(
-			"dateCreated", "shared-date",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("dateCreated", "shared-date")
 		).add(
-			"dateModified", "modified",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"dateTime"
-			).setSortable(
-				true
-			)
+			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();
 	}
 

@@ -6,6 +6,8 @@
 package com.liferay.layout.page.template.admin.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.importer.LayoutsImportStrategy;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
@@ -17,6 +19,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServ
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
@@ -35,6 +38,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -42,6 +46,7 @@ import com.liferay.portal.kernel.zip.ZipWriterFactory;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.File;
 import java.io.InputStream;
@@ -197,6 +202,7 @@ public class ImportMVCResourceCommandTest {
 	}
 
 	@Test
+	@TestInfo("LPD-69818")
 	public void testImportFileWithOverwriteStrategyAndWithExistingLayoutPageTemplateEntry()
 		throws Exception {
 
@@ -310,12 +316,32 @@ public class ImportMVCResourceCommandTest {
 	private LayoutPageTemplateEntry _createLayoutPageTemplateEntry()
 		throws Exception {
 
-		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-			null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
-			"Existing Master Page",
-			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
-			WorkflowConstants.STATUS_APPROVED,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
+				"Existing Master Page",
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
+
+		_fragmentEntryLinkLocalService.addFragmentEntryLink(
+			null, layoutPageTemplateEntry.getUserId(),
+			layoutPageTemplateEntry.getGroupId(), null, null, null,
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				layoutPageTemplateEntry.getPlid()),
+			layoutPageTemplateEntry.getPlid(), StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			JSONUtil.put(
+				"instanceId", StringUtil.randomId()
+			).put(
+				"portletId", PortletKeys.ALERTS
+			).toString(),
+			StringPool.BLANK, 0, StringPool.BLANK,
+			FragmentConstants.TYPE_PORTLET, serviceContext);
+
+		return layoutPageTemplateEntry;
 	}
 
 	private File _getFile() throws Exception {
@@ -364,6 +390,9 @@ public class ImportMVCResourceCommandTest {
 	@Inject
 	private CompanyLocalService _companyLocalService;
 
+	@Inject
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -383,6 +412,9 @@ public class ImportMVCResourceCommandTest {
 
 	@Inject(filter = "mvc.command.name=/layout_page_template_admin/import")
 	private MVCResourceCommand _mvcResourceCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	private ServiceContext _serviceContext;
 

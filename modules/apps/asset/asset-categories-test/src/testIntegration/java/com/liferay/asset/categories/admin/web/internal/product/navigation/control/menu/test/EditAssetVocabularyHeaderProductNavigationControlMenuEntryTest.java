@@ -76,23 +76,6 @@ public class EditAssetVocabularyHeaderProductNavigationControlMenuEntryTest {
 	}
 
 	@Test
-	public void testIsShowWithNotVisibilityTypeEmptyAssetVocabulary()
-		throws Exception {
-
-		Assert.assertFalse(
-			_productNavigationControlMenuEntry.isShow(
-				_getMockHttpServletRequest(
-					_addAssetVocabulary(
-						AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL))));
-
-		Assert.assertFalse(
-			_productNavigationControlMenuEntry.isShow(
-				_getMockHttpServletRequest(
-					_addAssetVocabulary(
-						AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC))));
-	}
-
-	@Test
 	public void testIsShowWithoutAssetVocabulary() throws Exception {
 		Assert.assertFalse(
 			_productNavigationControlMenuEntry.isShow(

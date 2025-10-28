@@ -2759,8 +2759,8 @@ public class ObjectEntryLocalServiceImpl
 			throw new ObjectDefinitionScopeException(
 				StringBundler.concat(
 					"The object definition ", objectDefinitionId,
-					" requires explicit group IDs for accepted group ids  ",
-					"setting."));
+					" requires explicit group IDs for accepted group IDs  ",
+					"setting"));
 		}
 		else if (acceptedGroupsObjectDefinitionSetting != null) {
 			String acceptedGroupIdsString =
@@ -2776,7 +2776,7 @@ public class ObjectEntryLocalServiceImpl
 					StringBundler.concat(
 						"The group ", groupId,
 						" is not included in the object definition's accepted ",
-						"group ids setting"));
+						"group IDs setting"));
 			}
 		}
 	}

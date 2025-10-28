@@ -59,14 +59,14 @@ public class UserSearchPermissionFilterContributorTest {
 			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Test
-	public void testWhenHasOrganizationManageSuborganizationsPermissionSearch()
+	public void testWhenHasOrganizationManageSuborganizationsUsersPermissionSearch()
 		throws Exception {
 
-		Organization organization = OrganizationTestUtil.addOrganization();
+		Organization organization1 = OrganizationTestUtil.addOrganization();
 
-		User userA = _addOrganizationUser(organization);
+		User user1 = _addOrganizationUser(organization1);
 
-		Assert.assertEquals(1, _performUserSearchCount(userA));
+		Assert.assertEquals(1, _performUserSearchCount(user1));
 
 		Role organizationRole = RoleTestUtil.addRole(
 			RoleConstants.TYPE_ORGANIZATION);
@@ -76,20 +76,29 @@ public class UserSearchPermissionFilterContributorTest {
 			ResourceConstants.SCOPE_GROUP_TEMPLATE,
 			String.valueOf(
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
+			organizationRole.getRoleId(), ActionKeys.MANAGE_SUBORGANIZATIONS);
+
+		_userGroupRoleLocalService.addUserGroupRole(
+			user1.getUserId(), organization1.getGroupId(),
+			organizationRole.getRoleId());
+
+		Organization organization2 = OrganizationTestUtil.addOrganization(
+			organization1.getOrganizationId(), RandomTestUtil.randomString(),
+			true);
+
+		_addOrganizationUser(organization2);
+
+		Assert.assertEquals(1, _performUserSearchCount(user1));
+
+		_resourcePermissionLocalService.addResourcePermission(
+			TestPropsValues.getCompanyId(), Organization.class.getName(),
+			ResourceConstants.SCOPE_GROUP_TEMPLATE,
+			String.valueOf(
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID),
 			organizationRole.getRoleId(),
 			ActionKeys.MANAGE_SUBORGANIZATIONS_USERS);
 
-		_userGroupRoleLocalService.addUserGroupRole(
-			userA.getUserId(), organization.getGroupId(),
-			organizationRole.getRoleId());
-
-		Organization suborganization = OrganizationTestUtil.addOrganization(
-			organization.getOrganizationId(), RandomTestUtil.randomString(),
-			true);
-
-		_addOrganizationUser(suborganization);
-
-		Assert.assertEquals(2, _performUserSearchCount(userA));
+		Assert.assertEquals(2, _performUserSearchCount(user1));
 	}
 
 	@Test

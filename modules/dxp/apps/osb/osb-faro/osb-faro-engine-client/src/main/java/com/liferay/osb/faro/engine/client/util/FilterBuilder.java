@@ -166,7 +166,7 @@ public class FilterBuilder implements Cloneable {
 		for (String fieldName : fieldNames) {
 			if (!nameSearch || !_nameFieldNames.contains(fieldName)) {
 				fieldNameFilterBuilder.addSearchFilter(
-					query, fieldName, fieldNameContext);
+					query, fieldName, fieldNameContext, false);
 			}
 		}
 

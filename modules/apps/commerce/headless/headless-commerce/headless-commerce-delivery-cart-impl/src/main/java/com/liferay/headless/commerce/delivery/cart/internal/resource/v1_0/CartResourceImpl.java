@@ -170,7 +170,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 	@Override
 	public Cart getCart(Long cartId) throws Exception {
-		return _toCart(_commerceOrderService.getCommerceOrder(cartId));
+		return _toCart(GetterUtil.getLong(cartId));
 	}
 
 	@Override
@@ -187,9 +187,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					externalReferenceCode);
 		}
 
-		return _toCart(
-			_commerceOrderService.getCommerceOrder(
-				commerceOrder.getCommerceOrderId()));
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -252,8 +250,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			},
 			sorts,
 			document -> _toCart(
-				_commerceOrderService.getCommerceOrder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -315,8 +312,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			},
 			sorts,
 			document -> _toCart(
-				_commerceOrderService.getCommerceOrder(
-					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
+				GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK))));
 	}
 
 	@Override
@@ -336,7 +332,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_updateOrder(commerceOrder, cart);
 
-		return _toCart(commerceOrder);
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -361,7 +357,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_updateOrder(commerceOrder, cart);
 
-		return _toCart(commerceOrder);
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -397,14 +393,15 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 					externalReferenceCode);
 		}
 
-		return _toCart(
-			_commerceOrderService.applyCouponCode(
-				commerceOrder.getCommerceOrderId(), couponCode.getCode(),
-				_commerceContextFactory.create(
-					commerceOrder.getCommerceAccountId(),
-					commerceOrder.getGroupId(), null,
-					commerceOrder.getCommerceOrderId(),
-					contextCompany.getCompanyId())));
+		commerceOrder = _commerceOrderService.applyCouponCode(
+			commerceOrder.getCommerceOrderId(), couponCode.getCode(),
+			_commerceContextFactory.create(
+				commerceOrder.getCommerceAccountId(),
+				commerceOrder.getGroupId(), null,
+				commerceOrder.getCommerceOrderId(),
+				contextCompany.getCompanyId()));
+
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -424,14 +421,15 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 				"Unable to patch a placed order");
 		}
 
-		return _toCart(
-			_commerceOrderService.applyCouponCode(
-				cartId, couponCode.getCode(),
-				_commerceContextFactory.create(
-					commerceOrder.getCommerceAccountId(),
-					commerceOrder.getGroupId(), null,
-					commerceOrder.getCommerceOrderId(),
-					contextCompany.getCompanyId())));
+		commerceOrder = _commerceOrderService.applyCouponCode(
+			cartId, couponCode.getCode(),
+			_commerceContextFactory.create(
+				commerceOrder.getCommerceAccountId(),
+				commerceOrder.getGroupId(), null,
+				commerceOrder.getCommerceOrderId(),
+				contextCompany.getCompanyId()));
+
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -444,7 +442,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_updateOrder(commerceOrder, cart);
 
-		return _toCart(commerceOrder);
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -472,7 +470,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_updateOrder(commerceOrder, cart);
 
-		return _toCart(commerceOrder);
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	@Override
@@ -497,7 +495,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 
 		_updateOrder(commerceOrder, cart);
 
-		return _toCart(commerceOrder);
+		return _toCart(commerceOrder.getCommerceOrderId());
 	}
 
 	private CommerceAddress _addCommerceAddress(
@@ -798,7 +796,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 	}
 
 	private Cart _checkoutOrder(CommerceOrder commerceOrder) throws Exception {
-		Cart cart = _toCart(commerceOrder);
+		Cart cart = _toCart(commerceOrder.getCommerceOrderId());
 
 		CommerceOrder finalCommerceOrder = commerceOrder;
 		Cart finalCart = cart;
@@ -813,7 +811,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			commerceOrder = _commerceOrderEngine.checkoutCommerceOrder(
 				commerceOrder, contextUser.getUserId());
 
-			cart = _toCart(commerceOrder);
+			cart = _toCart(commerceOrder.getCommerceOrderId());
 		}
 		catch (Exception exception) {
 			cart.setValid(() -> false);
@@ -1172,11 +1170,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		return false;
 	}
 
-	private Cart _toCart(CommerceOrder commerceOrder) throws Exception {
+	private Cart _toCart(long commerceOrderId) throws Exception {
 		return _cartDTOConverter.toDTO(
 			new DefaultDTOConverterContext(
-				commerceOrder.getCommerceOrderId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				commerceOrderId, contextAcceptLanguage.getPreferredLocale()));
 	}
 
 	private void _updateCommerceOrderAddress(

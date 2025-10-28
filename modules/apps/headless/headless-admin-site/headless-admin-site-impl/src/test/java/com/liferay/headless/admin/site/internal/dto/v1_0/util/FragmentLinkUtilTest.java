@@ -12,7 +12,6 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemContextRe
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentMappedValueItemReference;
 import com.liferay.headless.admin.site.dto.v1_0.Mapping;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemDetails;
@@ -38,6 +37,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.vulcan.scope.Scope;
+import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -228,13 +229,7 @@ public class FragmentLinkUtilTest {
 				JournalArticle.class.getName(),
 				journalArticleExternalReferenceCode, "JournalArticle_title",
 				null,
-				new Scope() {
-					{
-						setExternalReferenceCode(
-							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-						setType(Type.ASSET_LIBRARY);
-					}
-				}),
+				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -368,13 +363,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
-				new Scope() {
-					{
-						setExternalReferenceCode(
-							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-						setType(Type.ASSET_LIBRARY);
-					}
-				}),
+				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -467,13 +456,7 @@ public class FragmentLinkUtilTest {
 				JournalArticle.class.getName(),
 				journalArticleExternalReferenceCode, "JournalArticle_title",
 				null,
-				new Scope() {
-					{
-						setExternalReferenceCode(
-							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-						setType(Type.ASSET_LIBRARY);
-					}
-				}),
+				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -550,13 +533,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
-				new Scope() {
-					{
-						setExternalReferenceCode(
-							_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-						setType(Type.ASSET_LIBRARY);
-					}
-				}),
+				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -694,6 +671,23 @@ public class FragmentLinkUtilTest {
 			classPK
 		);
 
+		Group group = Mockito.mock(Group.class);
+
+		String journalArticleScopeExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		Mockito.when(
+			group.getExternalReferenceCode()
+		).thenReturn(
+			journalArticleScopeExternalReferenceCode
+		);
+
+		Mockito.when(
+			group.isSite()
+		).thenReturn(
+			true
+		);
+
 		InfoItemReference infoItemReference = _mockInfoItemReference();
 
 		Mockito.when(
@@ -703,8 +697,6 @@ public class FragmentLinkUtilTest {
 		);
 
 		String journalArticleExternalReferenceCode =
-			RandomTestUtil.randomString();
-		String journalArticleScopeExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		Assert.assertEquals(
@@ -732,14 +724,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
-					null,
-					new Scope() {
-						{
-							setExternalReferenceCode(
-								journalArticleScopeExternalReferenceCode);
-							setType(Type.SITE);
-						}
-					}),
+					null, ScopeUtil.toScope(group, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -903,13 +888,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null,
-					new Scope() {
-						{
-							setExternalReferenceCode(
-								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-							setType(Type.ASSET_LIBRARY);
-						}
-					}),
+					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -993,13 +972,7 @@ public class FragmentLinkUtilTest {
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
 					null,
-					new Scope() {
-						{
-							setExternalReferenceCode(
-								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-							setType(Type.ASSET_LIBRARY);
-						}
-					}),
+					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -1068,13 +1041,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
 					null,
-					new Scope() {
-						{
-							setExternalReferenceCode(
-								_ITEM_GROUP_EXTERNAL_REFERENCE_CODE);
-							setType(Type.ASSET_LIBRARY);
-						}
-					}),
+					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}

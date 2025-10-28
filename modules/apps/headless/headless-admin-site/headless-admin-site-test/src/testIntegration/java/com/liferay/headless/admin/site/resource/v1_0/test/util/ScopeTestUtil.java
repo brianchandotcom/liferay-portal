@@ -5,7 +5,7 @@
 
 package com.liferay.headless.admin.site.resource.v1_0.test.util;
 
-import com.liferay.headless.admin.site.client.dto.v1_0.Scope;
+import com.liferay.headless.admin.site.client.scope.Scope;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;

@@ -1,0 +1,13 @@
+@media (max-width: 1024px) {
+	:not(pre) > code[class*='language-'] {
+		word-wrap: break-word;
+	}
+	
+	.learn-article-body {
+		padding-top: 0 !important;
+	}
+	
+	.learn-article-main-container {
+		padding: 1.5rem;
+	}
+}

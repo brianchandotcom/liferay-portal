@@ -5,14 +5,14 @@
 />
 
 <#macro renderBreadcrumbItem
-	breadcrumbItem
+	breadcrumbIndex
 >
-	<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(i)!"" />
+	<#assign breadcrumbItem = breadcrumbJSONArray.getJSONObject(breadcrumbIndex)!"" />
 
 	<#if breadcrumbItem?? && breadcrumbItem?has_content>
 		<li>
-			<a href='${(breadcrumbItem.getString("url"))!"#"}'>
-				${(breadcrumbItem.getString("title"))!""}
+			<a href='${breadcrumbItem.getString("url")!"#"}'>
+				${breadcrumbItem.getString("title")!""}
 			</a>
 		</li>
 	</#if>
@@ -30,7 +30,7 @@
 								</li>
 
 								<#list 0..(breadcrumbJSONArray.length() - 1) as i>
-									<@renderBreadcrumbItem breadcrumbItem />
+									<@renderBreadcrumbItem breadcrumbIndex = i />
 								</#list>
 							<#else>
 								<li>
@@ -40,7 +40,7 @@
 								</li>
 
 								<#list (0..1)?reverse as i>
-									<@renderBreadcrumbItem breadcrumbItem />
+									<@renderBreadcrumbItem breadcrumbIndex = i />
 								</#list>
 							</#if>
 
@@ -99,7 +99,7 @@
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-		padding: 0 1.75rem;
+		padding: 1.5rem 1.75rem;
 	}
 
 	@media(max-width: 1024px) {

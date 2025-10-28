@@ -68,7 +68,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			Set<String> batchRestrictFields = _getBatchRestrictFields(
 				batchEngineImportTask);
 
-			Field[] declaredFields = _getDeclaredFields(
+			Map<String, Field> declaredFields = _getDeclaredFields(
 				itemClass, resolvedClass);
 
 			Field anySetterField = _findAnySetterField(declaredFields);
@@ -84,7 +84,11 @@ public class BatchEngineImportTaskItemReaderUtil {
 					continue;
 				}
 
-				Field field = _findField(declaredFields, name);
+				Field field = declaredFields.get(name);
+
+				if (field == null) {
+					field = declaredFields.get(StringPool.UNDERLINE + name);
+				}
 
 				if (field != null) {
 					_setField(
@@ -202,23 +206,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 	}
 
-	private static Field _findAnySetterField(Field[] fields) {
-		for (Field field : fields) {
+	private static Field _findAnySetterField(Map<String, Field> fields) {
+		for (Field field : fields.values()) {
 			if (field.isAnnotationPresent(JsonAnySetter.class)) {
-				return field;
-			}
-		}
-
-		return null;
-	}
-
-	private static Field _findField(Field[] fields, String name) {
-		for (Field field : fields) {
-			String fieldName = field.getName();
-
-			if (Objects.equals(fieldName, name) ||
-				Objects.equals(fieldName, StringPool.UNDERLINE + name)) {
-
 				return field;
 			}
 		}
@@ -246,16 +236,24 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return SetUtil.fromArray(StringUtil.split(batchRestrictFields));
 	}
 
-	private static Field[] _getDeclaredFields(
+	private static Map<String, Field> _getDeclaredFields(
 		Class<?> baseClass, Class<?> resolvedClass) {
 
-		Field[] fields = baseClass.getDeclaredFields();
+		Map<String, Field> fields = new HashMap<>();
+
+		for (Field field : baseClass.getDeclaredFields()) {
+			fields.put(field.getName(), field);
+		}
 
 		if (Objects.equals(baseClass, resolvedClass)) {
 			return fields;
 		}
 
-		return ArrayUtil.append(fields, resolvedClass.getDeclaredFields());
+		for (Field field : resolvedClass.getDeclaredFields()) {
+			fields.put(field.getName(), field);
+		}
+
+		return fields;
 	}
 
 	private static ObjectMapper _getObjectMapper(

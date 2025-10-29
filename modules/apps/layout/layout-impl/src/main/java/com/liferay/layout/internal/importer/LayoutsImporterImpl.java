@@ -934,6 +934,42 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		return null;
 	}
 
+	private void _handleEntryImportException(
+		Exception exception,
+		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
+		String name, String typeName, String zipPath) {
+
+		String messageException = StringPool.BLANK;
+		String[] messageArgs;
+		String messageKey;
+
+		if (exception instanceof NoSuchClassTypeException) {
+			messageArgs = new String[] {zipPath};
+			messageKey = _MESSAGE_KEY_TYPE_INVALID;
+		}
+		else if (exception instanceof PortletIdException) {
+			messageException =
+				"Unable to add uninstanceable portlet with ID " +
+					exception.getMessage() + " more than once";
+			messageArgs = new String[] {zipPath, exception.getMessage()};
+			messageKey = _MESSAGE_UNINSTANCEABLE_PORTLET_ID_EXCEPTION;
+		}
+		else {
+			messageArgs = new String[] {zipPath, typeName};
+			messageKey = _MESSAGE_KEY_NAME_INVALID;
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(messageException, exception);
+		}
+
+		layoutsImporterResultEntries.add(
+			new LayoutsImporterResultEntry(
+				name, LayoutsImporterResultEntry.Status.INVALID,
+				new LayoutsImporterResultEntry.ErrorMessage(
+					messageArgs, messageKey)));
+	}
+
 	private List<FragmentEntryLink> _importPageElement(
 			Consumer<LayoutStructure> consumer, Layout layout,
 			LayoutStructure layoutStructure, String parentItemId,
@@ -1606,52 +1642,21 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_log.warn(dropzoneLayoutStructureItemException);
 			}
 
-			throw new PortalException();
-		}
-		catch (NoSuchClassTypeException noSuchClassTypeException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(noSuchClassTypeException);
-			}
-
-			layoutsImporterResultEntries.add(
-				new LayoutsImporterResultEntry(
-					name, LayoutsImporterResultEntry.Status.INVALID,
-					new LayoutsImporterResultEntry.ErrorMessage(
-						new String[] {zipPath}, _MESSAGE_KEY_TYPE_INVALID)));
-
-			return null;
-		}
-		catch (PortletIdException portletIdException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add uninstanceable portlet with ID " +
-						portletIdException.getMessage() + " more than once");
-			}
-
-			layoutsImporterResultEntries.add(
-				new LayoutsImporterResultEntry(
-					name, LayoutsImporterResultEntry.Status.INVALID,
-					new LayoutsImporterResultEntry.ErrorMessage(
-						new String[] {zipPath, portletIdException.getMessage()},
-						_MESSAGE_UNINSTANCEABLE_PORTLET_ID_EXCEPTION)));
-
-			return null;
+			throw new PortalException(dropzoneLayoutStructureItemException);
 		}
 		catch (PortalException portalException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
-			}
-
-			layoutsImporterResultEntries.add(
-				new LayoutsImporterResultEntry(
-					name, LayoutsImporterResultEntry.Status.INVALID,
-					new LayoutsImporterResultEntry.ErrorMessage(
-						new String[] {
-							zipPath, _toTypeName(layoutPageTemplateEntryType)
-						},
-						_MESSAGE_KEY_NAME_INVALID)));
+			_handleEntryImportException(
+				portalException, layoutsImporterResultEntries, name,
+				_toTypeName(layoutPageTemplateEntryType), zipPath);
 
 			return null;
+		}
+		catch (Exception exception) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(exception);
+			}
+
+			throw new PortalException(exception);
 		}
 
 		return layoutPageTemplateEntry;
@@ -1827,33 +1832,19 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 				_log.warn(dropzoneLayoutStructureItemException);
 			}
 
-			throw new PortalException();
-		}
-		catch (PortletIdException portletIdException) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to add uninstanceable portlet with ID " +
-						portletIdException.getMessage() + " more than once");
-			}
-
-			layoutsImporterResultEntries.add(
-				new LayoutsImporterResultEntry(
-					name, LayoutsImporterResultEntry.Status.INVALID,
-					new LayoutsImporterResultEntry.ErrorMessage(
-						new String[] {zipPath, portletIdException.getMessage()},
-						_MESSAGE_UNINSTANCEABLE_PORTLET_ID_EXCEPTION)));
+			throw new PortalException(dropzoneLayoutStructureItemException);
 		}
 		catch (PortalException portalException) {
+			_handleEntryImportException(
+				portalException, layoutsImporterResultEntries, name,
+				"utility page", zipPath);
+		}
+		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(portalException);
+				_log.warn(exception);
 			}
 
-			layoutsImporterResultEntries.add(
-				new LayoutsImporterResultEntry(
-					name, LayoutsImporterResultEntry.Status.INVALID,
-					new LayoutsImporterResultEntry.ErrorMessage(
-						new String[] {zipPath, "utility page"},
-						_MESSAGE_KEY_NAME_INVALID)));
+			throw new PortalException(exception);
 		}
 	}
 

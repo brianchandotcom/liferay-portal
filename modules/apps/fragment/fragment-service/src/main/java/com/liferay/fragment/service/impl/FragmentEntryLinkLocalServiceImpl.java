@@ -896,6 +896,12 @@ public class FragmentEntryLinkLocalServiceImpl
 			_fragmentEntryPersistence.fetchByERC_G_Head(
 				fragmentEntryLink.getFragmentEntryERC(), groupId, true);
 
+		if (fragmentEntry == null) {
+			throw new UnsupportedOperationException(
+				"Unable to propagate fragment entry link ID " +
+					fragmentEntryLinkId);
+		}
+
 		updateLatestChanges(fragmentEntry, fragmentEntryLink);
 	}
 

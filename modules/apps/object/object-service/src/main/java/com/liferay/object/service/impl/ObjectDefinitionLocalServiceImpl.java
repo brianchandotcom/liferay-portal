@@ -3439,6 +3439,11 @@ public class ObjectDefinitionLocalServiceImpl
 		invalidObjectDefinitionSettingsNames.removeAll(
 			_allowedObjectDefinitionSettingNames);
 
+		if (objectDefinition.isModifiableAndSystem()) {
+			invalidObjectDefinitionSettingsNames.remove(
+				ObjectDefinitionSettingConstants.NAME_VISIBLE);
+		}
+
 		if (!invalidObjectDefinitionSettingsNames.isEmpty()) {
 			_handleException(
 				new ObjectDefinitionSettingNameException.NotAllowedNames(
@@ -3453,6 +3458,9 @@ public class ObjectDefinitionLocalServiceImpl
 			if (StringUtil.equals(
 					ObjectDefinitionSettingConstants.
 						NAME_ROOT_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES,
+					objectDefinitionSettingsValue.getKey()) ||
+				StringUtil.equals(
+					ObjectDefinitionSettingConstants.NAME_VISIBLE,
 					objectDefinitionSettingsValue.getKey())) {
 
 				continue;

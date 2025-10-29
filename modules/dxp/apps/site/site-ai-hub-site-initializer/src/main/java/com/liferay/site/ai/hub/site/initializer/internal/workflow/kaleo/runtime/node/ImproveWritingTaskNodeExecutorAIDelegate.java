@@ -42,9 +42,6 @@ public class ImproveWritingTaskNodeExecutorAIDelegate
 		Map<String, Serializable> workflowContext =
 			executionContext.getWorkflowContext();
 
-		Map<String, Serializable> context =
-			(Map<String, Serializable>)workflowContext.get("context");
-
 		VertexAiGeminiStreamingChatModel vertexAiGeminiStreamingChatModel =
 			VertexAiGeminiStreamingChatModel.builder(
 			).project(
@@ -72,7 +69,7 @@ public class ImproveWritingTaskNodeExecutorAIDelegate
 
 		assistant.rewrite(
 			"This is the text to be rewritten : " +
-				GetterUtil.getString(context.get("text"))
+				GetterUtil.getString(workflowContext.get("text"))
 		).onCompleteResponse(
 			response -> _completeResponse(
 				response, executionContext, vertexAiGeminiStreamingChatModel)
@@ -101,7 +98,7 @@ public class ImproveWritingTaskNodeExecutorAIDelegate
 
 		AiMessage aiMessage = chatResponse.aiMessage();
 
-		workflowContext.put("text", aiMessage.text());
+		workflowContext.put("rewrittenText", aiMessage.text());
 
 		KaleoInstanceToken kaleoInstanceToken =
 			executionContext.getKaleoInstanceToken();

@@ -153,9 +153,9 @@ export default function AssetNavigationModalContent({
 
 	const activePanel = openSidePanel ? currentPanel : null;
 
-	const showCommentsPanel = !currentItem.actionIds
-		? true
-		: currentItem.actionIds.includes(SharingPermission.Comment);
+	const showCommentsPanel =
+		!currentItem.actionIds ||
+		currentItem.actionIds.includes(SharingPermission.Comment);
 
 	return (
 		<>

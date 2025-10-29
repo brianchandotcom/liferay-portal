@@ -118,7 +118,7 @@ export default function EditVocabulary({
 	}, [backURL, isNew, vocabularyId]);
 
 	const _handleValidateInputs = () => {
-		if (nameInputError || vocabulary.name === '') {
+		if (nameInputError || !vocabulary.name.trim().length) {
 			setNameInputError(
 				sub(
 					Liferay.Language.get('the-x-field-is-required'),
@@ -232,6 +232,11 @@ export default function EditVocabulary({
 		setActiveVerticalNavKey(verticalNav);
 	};
 
+	const shouldDisableSaveBtn =
+		!vocabulary.name.trim().length ||
+		!!spaceInputError ||
+		!!assetTypeInputError;
+
 	return (
 		<div className="categorization-section">
 			<div className="edit-page">
@@ -257,6 +262,7 @@ export default function EditVocabulary({
 
 						<ClayButton
 							className="inline-item-after"
+							disabled={shouldDisableSaveBtn}
 							displayType="primary"
 							onClick={() => {
 								if (assetTypeChange || spaceChange) {

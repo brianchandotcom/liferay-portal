@@ -11,6 +11,7 @@ import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyConstants;
 import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
 import com.liferay.asset.kernel.model.ClassType;
 import com.liferay.asset.kernel.model.ClassTypeReader;
@@ -504,7 +505,9 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getAssetTypes(), siteId,
 				GetterUtil.getBoolean(
 					taxonomyVocabulary.getMultiValued(), true)),
-			internalVisibilityType ? 1 : 0,
+			internalVisibilityType ?
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL :
+					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			ServiceContextBuilder.create(
 				siteId, contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()
@@ -992,7 +995,9 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId(),
 				taxonomyVocabulary.getMultiValued()),
-			internalVisibilityType ? 1 : 0,
+			internalVisibilityType ?
+				AssetVocabularyConstants.VISIBILITY_TYPE_INTERNAL :
+					AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			ServiceContextBuilder.create(
 				assetVocabulary.getGroupId(), contextHttpServletRequest,
 				taxonomyVocabulary.getViewableByAsString()

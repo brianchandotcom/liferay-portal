@@ -408,3 +408,39 @@ test(
 		await expect(tagsPage.getItem('<Tag>')).not.toBeVisible();
 	}
 );
+
+test('Validate tag inputs', {tag: ['@LPD-69687']}, async ({page, tagsPage}) => {
+	await tagsPage.goto();
+
+	await clickAndExpectToBeVisible({
+		target: page.locator('.modal-title', {
+			hasText: 'New Tag',
+		}),
+		timeout: 2000,
+		trigger: tagsPage.newTagButton,
+	});
+
+	// Check we can't publish an empty name
+
+	await expect(tagsPage.saveButton).toBeDisabled();
+
+	await expect(tagsPage.saveAndAddAnotherButton).toBeDisabled();
+
+	await page.getByLabel('NameRequired').fill('');
+
+	await clickAndExpectToBeVisible({
+		target: page.getByText('This field is required'),
+		trigger: page.locator('.modal-body'),
+	});
+
+	await page.getByLabel('NameRequired').fill(`Tag${getRandomInt()}`);
+
+	// Check we can't publish without selecting a space
+
+	await clickAndExpectToBeVisible({
+		target: page.getByText('The Space field is required'),
+		trigger: tagsPage.spaceCheckbox,
+	});
+
+	await expect(tagsPage.saveButton).toBeDisabled();
+});

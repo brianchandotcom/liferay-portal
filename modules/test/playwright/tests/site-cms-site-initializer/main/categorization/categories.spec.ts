@@ -107,17 +107,37 @@ test.describe('Category tests that focus on creation', () => {
 	);
 
 	test(
-		'Validate the create Category form inputs when saving',
-		{tag: '@LPD-32753'},
+		'Validate category inputs',
+		{tag: ['@LPD-32753', '@LPD-69687']},
 		async ({editCategoryPage, page}) => {
 			await editCategoryPage.gotoCreateCategory(vocabularyId);
 
-			// Shouldn't be able to save if Name field is empty
+			await expect(editCategoryPage.saveButton).toBeDisabled();
+
+			await expect(
+				editCategoryPage.saveAndAddAnotherButton
+			).toBeDisabled();
+
+			await editCategoryPage.fillName(getRandomString());
+
+			await expect(editCategoryPage.saveButton).not.toBeDisabled();
+
+			await expect(
+				editCategoryPage.saveAndAddAnotherButton
+			).not.toBeDisabled();
+
+			await editCategoryPage.fillName('');
 
 			await clickAndExpectToBeVisible({
 				target: page.getByText('The Name field is required'),
-				trigger: editCategoryPage.saveButton,
+				trigger: page.getByTestId('description-input'),
 			});
+
+			await expect(editCategoryPage.saveButton).toBeDisabled();
+
+			await expect(
+				editCategoryPage.saveAndAddAnotherButton
+			).toBeDisabled();
 		}
 	);
 

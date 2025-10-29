@@ -336,16 +336,20 @@ test(
 );
 
 test(
-	'Validate vocabulary inputs when saving',
-	{tag: '@LPD-32750'},
+	'Validate vocabulary inputs',
+	{tag: ['@LPD-32750', '@LPD-69687']},
 	async ({editVocabularyPage, page}) => {
 		editVocabularyPage.goto();
 
 		// Check we can't publish an empty name
 
+		await expect(editVocabularyPage.saveButton).toBeDisabled();
+
+		await editVocabularyPage.fillName('');
+
 		await clickAndExpectToBeVisible({
 			target: page.getByText('The Name field is required'),
-			trigger: editVocabularyPage.saveButton,
+			trigger: page.getByLabel('Description'),
 		});
 
 		const name = `Vocabulary${getRandomInt()}`;
@@ -355,14 +359,18 @@ test(
 			name,
 		});
 
+		await expect(editVocabularyPage.saveButton).not.toBeDisabled();
+
 		// Check we can't publish without selecting a space
 
-		await editVocabularyPage.spaceCheckbox.click();
+		// await editVocabularyPage.spaceCheckbox.click();
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText('The Space field is required'),
-			trigger: editVocabularyPage.saveButton,
+			trigger: editVocabularyPage.spaceCheckbox,
 		});
+
+		await expect(editVocabularyPage.saveButton).toBeDisabled();
 
 		await editVocabularyPage.spaceCheckbox.click();
 
@@ -370,12 +378,14 @@ test(
 
 		await editVocabularyPage.assetTypesButton.click();
 
-		await editVocabularyPage.assetTypeCheckbox.click();
+		// await editVocabularyPage.assetTypeCheckbox.click();
 
 		await clickAndExpectToBeVisible({
 			target: page.getByText('The Asset Types field is required.'),
-			trigger: editVocabularyPage.saveButton,
+			trigger: editVocabularyPage.assetTypeCheckbox,
 		});
+
+		await expect(editVocabularyPage.saveButton).toBeDisabled();
 	}
 );
 

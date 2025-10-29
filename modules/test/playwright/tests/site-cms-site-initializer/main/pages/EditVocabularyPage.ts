@@ -94,6 +94,11 @@ export class EditVocabularyPage {
 		return name;
 	}
 
+	async fillName(name: string) {
+		await this.nameInput.waitFor();
+		await this.nameInput.fill(name);
+	}
+
 	async selectAssetTypes(assetType: string) {
 		if (await this.assetTypeCheckbox.isChecked()) {
 			await this.assetTypeCheckbox.click();

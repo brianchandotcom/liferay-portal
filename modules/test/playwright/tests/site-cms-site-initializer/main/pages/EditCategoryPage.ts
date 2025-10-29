@@ -10,6 +10,7 @@ import {PORTLET_URLS} from '../../../../utils/portletUrls';
 export class EditCategoryPage {
 	readonly page: Page;
 	readonly saveButton: Locator;
+	readonly saveAndAddAnotherButton: Locator;
 
 	private readonly descriptionInput: Locator;
 	private readonly editConfirmationModal: Locator;
@@ -22,7 +23,6 @@ export class EditCategoryPage {
 	private readonly propertiesTableDeleteRowButton: (index: number) => Locator;
 	private readonly propertiesTableKeyInput: (index: number) => Locator;
 	private readonly propertiesTableValueInput: (index: number) => Locator;
-	private readonly saveAndAddAnotherButton: Locator;
 	private readonly sidebar: Locator;
 
 	constructor(page: Page) {

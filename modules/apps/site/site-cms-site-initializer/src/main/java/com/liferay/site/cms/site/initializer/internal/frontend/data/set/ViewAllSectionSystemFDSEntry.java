@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
 	service = SystemFDSEntry.class
 )
-public class AllSectionSystemFDSEntry implements SystemFDSEntry {
+public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 
 
 	@Override

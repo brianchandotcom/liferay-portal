@@ -356,9 +356,23 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		File workingDirectory = getWorkingDirectory();
 
 		try {
+			Map<String, String> envVariables = new HashMap<>();
+
+			Map<String, String> env = System.getenv();
+
+			for (Map.Entry<String, String> envEntry : env.entrySet()) {
+				String key = envEntry.getKey();
+
+				if (!key.startsWith("ANT_") && !key.startsWith("JAVA_")) {
+					continue;
+				}
+
+				envVariables.put(envEntry.getKey(), envEntry.getValue());
+			}
+
 			AntUtil.callTarget(
-				workingDirectory, "build.xml", "setup-yarn", null,
-				System.getenv());
+				workingDirectory, "build.xml", "setup-sdk setup-yarn", null,
+				envVariables);
 		}
 		catch (AntException antException) {
 			throw new GitWorkingDirectoryRuntimeException(

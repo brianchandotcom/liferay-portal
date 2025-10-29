@@ -77,13 +77,15 @@ export function ExportReportEntriesModal({
 			</Modal.Header>
 
 			<Modal.Body className="text-3 text-weight-semi-bold">
-				<p className="mb-0">{currentMessage}</p>
+				<div role="status">
+					<p className="mb-0">{currentMessage}</p>
 
-				<p>{filename}</p>
+					<p>{filename}</p>
 
-				<ClayLabel displayType={STATUS_MAP[status].displayType}>
-					{STATUS_MAP[status].label}
-				</ClayLabel>
+					<ClayLabel displayType={STATUS_MAP[status].displayType}>
+						{STATUS_MAP[status].label}
+					</ClayLabel>
+				</div>
 
 				<ClayProgressBar value={progress} />
 			</Modal.Body>

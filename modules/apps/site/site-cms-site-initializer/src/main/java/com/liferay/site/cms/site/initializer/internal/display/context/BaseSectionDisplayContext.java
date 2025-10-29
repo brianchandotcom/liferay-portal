@@ -111,6 +111,38 @@ public abstract class BaseSectionDisplayContext {
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
 	}
 
+	public String getAdditionalAPIURLParameters() {
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("emptySearch=true&filter=");
+
+		if (objectEntryFolder != null) {
+			sb.append("folderId eq ");
+			sb.append(objectEntryFolder.getObjectEntryFolderId());
+
+			if (objectEntryFolder.getStatus() ==
+					WorkflowConstants.STATUS_IN_TRASH) {
+
+				sb.append(" and status eq ");
+				sb.append(WorkflowConstants.STATUS_IN_TRASH);
+			}
+			else {
+				sb.append(" and status in (");
+				sb.append(StringUtil.merge(_statuses, ", "));
+				sb.append(")");
+			}
+		}
+		else {
+			sb.append(getCMSSectionFilterString());
+		}
+
+		sb.append("&nestedFields=embedded,file.metadata,");
+		sb.append("file.previewURL,file.thumbnailURL,");
+		sb.append("systemProperties.objectDefinitionBrief");
+
+		return sb.toString();
+	}
+
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"assetLibraries", _getDepotEntriesJSONArray()
@@ -278,35 +310,7 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAPIURL() {
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("/o/search/v1.0/search?emptySearch=true&filter=");
-
-		if (objectEntryFolder != null) {
-			sb.append("folderId eq ");
-			sb.append(objectEntryFolder.getObjectEntryFolderId());
-
-			if (objectEntryFolder.getStatus() ==
-					WorkflowConstants.STATUS_IN_TRASH) {
-
-				sb.append(" and status eq ");
-				sb.append(WorkflowConstants.STATUS_IN_TRASH);
-			}
-			else {
-				sb.append(" and status in (");
-				sb.append(StringUtil.merge(_statuses, ", "));
-				sb.append(")");
-			}
-		}
-		else {
-			sb.append(getCMSSectionFilterString());
-		}
-
-		sb.append("&nestedFields=embedded,file.metadata,");
-		sb.append("file.previewURL,file.thumbnailURL,");
-		sb.append("systemProperties.objectDefinitionBrief");
-
-		return sb.toString();
+		return "/o/search/v1.0/search?" + getAdditionalAPIURLParameters();
 	}
 
 	public Map<String, Object> getBreadcrumbProps() throws PortalException {

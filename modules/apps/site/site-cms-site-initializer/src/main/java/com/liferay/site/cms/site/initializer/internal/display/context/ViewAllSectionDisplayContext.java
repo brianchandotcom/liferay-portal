@@ -52,14 +52,14 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public String getAPIURL() {
+	public String getAdditionalAPIURLParameters() {
 		if (_httpServletRequest.getParameter("q") != null) {
 			return HttpComponentsUtil.addParameters(
-				super.getAPIURL(), "search",
+				super.getAdditionalAPIURLParameters(), "search",
 				_httpServletRequest.getParameter("q"));
 		}
 
-		return super.getAPIURL();
+		return super.getAdditionalAPIURLParameters();
 	}
 
 	@Override

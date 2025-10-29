@@ -112,35 +112,9 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public String getAdditionalAPIURLParameters() {
-		StringBundler sb = new StringBundler(9);
-
-		sb.append("emptySearch=true&filter=");
-
-		if (objectEntryFolder != null) {
-			sb.append("folderId eq ");
-			sb.append(objectEntryFolder.getObjectEntryFolderId());
-
-			if (objectEntryFolder.getStatus() ==
-					WorkflowConstants.STATUS_IN_TRASH) {
-
-				sb.append(" and status eq ");
-				sb.append(WorkflowConstants.STATUS_IN_TRASH);
-			}
-			else {
-				sb.append(" and status in (");
-				sb.append(StringUtil.merge(_statuses, ", "));
-				sb.append(")");
-			}
-		}
-		else {
-			sb.append(getCMSSectionFilterString());
-		}
-
-		sb.append("&nestedFields=embedded,file.metadata,");
-		sb.append("file.previewURL,file.thumbnailURL,");
-		sb.append("systemProperties.objectDefinitionBrief");
-
-		return sb.toString();
+		return _baseSectionDisplayContextHelper.getAdditionalAPIURLParameters(
+			getCMSSectionFilterString(), httpServletRequest,
+			getRootObjectEntryFolderExternalReferenceCode());
 	}
 
 	public Map<String, Object> getAdditionalProps() {
@@ -855,6 +829,9 @@ public abstract class BaseSectionDisplayContext {
 		WorkflowConstants.STATUS_EXPIRED, WorkflowConstants.STATUS_PENDING,
 		WorkflowConstants.STATUS_SCHEDULED);
 
+	private final BaseSectionDisplayContextHelper
+		_baseSectionDisplayContextHelper =
+			new BaseSectionDisplayContextHelper();
 	private final DLConfiguration _dlConfiguration;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectDefinitionSettingLocalService

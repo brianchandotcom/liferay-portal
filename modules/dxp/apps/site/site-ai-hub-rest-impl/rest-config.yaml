@@ -1,0 +1,12 @@
+apiDir: ../site-ai-hub-rest-api/src/main/java
+apiPackagePath: com.liferay.site.ai.hub.rest
+application:
+    baseURI: /ai-hub
+    className: AIHubRESTApplication
+    name: Liferay.Site.AI.Hub.REST
+author: Feliphe Marinho
+clientDir: ../site-ai-hub-rest-client/src/main/java
+compatibilityVersion: 13
+forcePredictableOperationId: true
+javaEEPackage: jakarta
+testDir: ../site-ai-hub-rest-test/src/testIntegration/java

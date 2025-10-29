@@ -575,6 +575,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				collectionDisplayPageElement.getExternalReferenceCode(),
 				new PageElement[0]));
 
+		externalReferenceCode = RandomTestUtil.randomString();
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
 				null, RandomTestUtil.randomString(), null, null,
@@ -686,6 +688,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				},
 				externalReferenceCode));
 
+		externalReferenceCode = RandomTestUtil.randomString();
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
@@ -708,6 +712,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				_getModulePageElements(externalReferenceCode, 12)));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElementDefaultValues(externalReferenceCode));
+
+		externalReferenceCode = RandomTestUtil.randomString();
 
 		String widgetInstanceExternalReferenceCode =
 			RandomTestUtil.randomString();

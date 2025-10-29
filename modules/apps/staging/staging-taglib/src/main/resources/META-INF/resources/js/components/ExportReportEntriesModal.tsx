@@ -5,10 +5,8 @@
 
 import ClayButton from '@clayui/button';
 import ClayLabel from '@clayui/label';
-import ClayLink from '@clayui/link';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import Modal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
 import ClayProgressBar from '@clayui/progress-bar';
 import classNames from 'classnames';
 import React from 'react';
@@ -17,6 +15,9 @@ import {
 	StatusKey,
 	useBatchEngineExportTask,
 } from '../hooks/useBatchEngineExportTask';
+import {downloadFile} from '../utils/downloadFile';
+
+import type {Observer} from '@clayui/modal/lib/types';
 
 type Status = {
 	displayType: 'success' | 'info' | 'danger';
@@ -97,16 +98,18 @@ export function ExportReportEntriesModal({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayLink
-							button
+						<ClayButton
 							className={classNames(
-								`btn-${STATUS_MAP[status].displayType}`,
-								{
-									disabled: status !== 'COMPLETED',
-								}
+								`btn-${STATUS_MAP[status].displayType}`
 							)}
-							download={filename}
-							href={downloadURL ?? '#'}
+							disabled={status !== 'COMPLETED'}
+							onClick={() => {
+								if (!downloadURL) {
+									return;
+								}
+
+								downloadFile(downloadURL, filename);
+							}}
 						>
 							{status === 'STARTED' && (
 								<span className="inline-item inline-item-before">
@@ -115,7 +118,7 @@ export function ExportReportEntriesModal({
 							)}
 
 							{Liferay.Language.get('download')}
-						</ClayLink>
+						</ClayButton>
 					</ClayButton.Group>
 				}
 			/>

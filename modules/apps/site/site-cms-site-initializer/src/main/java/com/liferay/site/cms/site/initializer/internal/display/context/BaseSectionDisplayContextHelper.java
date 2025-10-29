@@ -25,6 +25,12 @@ import java.util.List;
  */
 public class BaseSectionDisplayContextHelper {
 
+	public String appendStatus(String filterString) {
+		return StringBundler.concat(
+			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
+			")");
+	}
+
 	public String getAdditionalAPIURLParameters(
 		String filter, HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
@@ -67,12 +73,6 @@ public class BaseSectionDisplayContextHelper {
 		sb.append("systemProperties.objectDefinitionBrief");
 
 		return sb.toString();
-	}
-
-	public String appendStatus(String filterString) {
-		return StringBundler.concat(
-			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
-			")");
 	}
 
 	private ObjectEntryFolder _getObjectEntryFolder(

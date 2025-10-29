@@ -153,20 +153,16 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		CollectionStyledLayoutStructureItem
 			collectionStyledLayoutStructureItem) {
 
-		if (Validator.isNull(
-				collectionStyledLayoutStructureItem.getListStyle())) {
+		String listStyle = collectionStyledLayoutStructureItem.getListStyle();
 
-			return null;
+		if (Validator.isNull(listStyle) ||
+			Validator.isNotNull(
+				CollectionDisplayListStyleUtil.toExternalValue(listStyle))) {
+
+			return _toListStyle(collectionStyledLayoutStructureItem);
 		}
 
-		String listStyle = CollectionDisplayListStyleUtil.toExternalValue(
-			collectionStyledLayoutStructureItem.getListStyle());
-
-		if (Validator.isNull(listStyle)) {
-			return _toTemplateListStyle(collectionStyledLayoutStructureItem);
-		}
-
-		return _toListStyle(collectionStyledLayoutStructureItem);
+		return _toTemplateListStyle(collectionStyledLayoutStructureItem);
 	}
 
 	private CollectionDisplayViewport _toCollectionDisplayViewport(
@@ -398,9 +394,20 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 		listStyle.setListStyleDefinition(
 			() -> _toListStyleDefinition(collectionStyledLayoutStructureItem));
 		listStyle.setListStyleType(
-			() -> ListStyle.ListStyleType.create(
-				CollectionDisplayListStyleUtil.toExternalValue(
-					collectionStyledLayoutStructureItem.getListStyle())));
+			() -> {
+				String collectionStyledLayoutStructureItemListStyle = "grid";
+
+				if (Validator.isNotNull(
+						collectionStyledLayoutStructureItem.getListStyle())) {
+
+					collectionStyledLayoutStructureItemListStyle =
+						collectionStyledLayoutStructureItem.getListStyle();
+				}
+
+				return ListStyle.ListStyleType.create(
+					CollectionDisplayListStyleUtil.toExternalValue(
+						collectionStyledLayoutStructureItemListStyle));
+			});
 
 		return listStyle;
 	}

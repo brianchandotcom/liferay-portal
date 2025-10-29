@@ -829,81 +829,81 @@ components:
                 A unique reference to a FavIcon of type ItemExternalReference which remains constant across
                 environments.
             type: object
-        FormConfig:
+        FormContainerConfig:
             # @review
             description:
-                The form page element definition form's configuration.
+                The form container page element definition form's container configuration.
             properties:
-                formReference:
+                formContainerReference:
                     # @review
                     description:
-                        The form reference.
+                        The form container reference.
                     oneOf:
                         -   $ref: "#/components/schemas/ClassSubtypeReference"
                         -   $ref: "#/components/schemas/ContextReference"
-                formType:
+                formContainerType:
                     enum: [Multistep, Simple]
                     type: string
                 numberOfSteps:
                     # @review
                     description:
-                        The form page element's number of steps.
+                        The form container page element's number of steps.
                     type: integer
-                successFormSubmissionResult:
+                successFormContainerSubmissionResult:
                     # @review
                     description:
-                        The definition of the result when a form submission is successful.
+                        The definition of the result when a form container submission is successful.
                     oneOf:
-                        -   $ref: "#/components/schemas/MessageFormSubmissionResult"
-                        -   $ref: "#/components/schemas/SitePageFormSubmissionResult"
-                        -   $ref: "#/components/schemas/URLFormSubmissionResult"
+                        -   $ref: "#/components/schemas/MessageFormContainerSubmissionResult"
+                        -   $ref: "#/components/schemas/SitePageFormContainerSubmissionResult"
+                        -   $ref: "#/components/schemas/URLFormContainerSubmissionResult"
                     type: object
             type: object            
-        FormPageElementDefinition:
+        FormContainerPageElementDefinition:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
                         cssClasses:
                             # @review
                             description:
-                                A list of CSS classes that are applied to the form page element.
+                                A list of CSS classes that are applied to the form container page element.
                             items:
                                 type: string
                             type: array
                         customCSS:
                             # @review
                             description:
-                                Custom CSS that is applied on the form page element.
+                                Custom CSS that is applied on the form container page element.
                             type: string
-                        formConfig:
-                            $ref: "#/components/schemas/FormConfig"
+                        formContainerConfig:
+                            $ref: "#/components/schemas/FormContainerConfig"
                             type: object
                         fragmentStyle:
                             $ref: "#/components/schemas/FragmentStyle"
                             # @review
                             description:
-                                The fragment style of a form page element.
+                                The fragment style of a form container page element.
                         fragmentViewports:
                             # @review
                             description:
-                                A list of fragment viewports of a form page element.
+                                A list of fragment viewports of a form container page element.
                             items:
                                 $ref: "#/components/schemas/FragmentViewport"
                             type: array
                         indexed:
                             # @review
                             description:
-                                A flag that indicates whether the page fragment instance is indexed or not.
+                                A flag that indicates whether the form container is indexed or not.
                             type: boolean
                         layout:
                             $ref: "#/components/schemas/Layout"
                             # @review
                             description:
-                                The form page element's layout.
+                                The form container page element's layout.
                         name:
                             # @review
                             description:
-                                The custom name of a form page element.
+                                The custom name of a form container page element.
                             type: string
             # @review
             description:
@@ -2191,7 +2191,7 @@ components:
                     description:
                         A valid external identifier to reference this page.
                     type: string
-        MessageFormSubmissionResult:
+        MessageFormContainerSubmissionResult:
             # @review
             description:
                 The definition of a submission result of type message.
@@ -2574,7 +2574,7 @@ components:
                     CollectionItem: "#/components/schemas/CollectionItemPageElementDefinition"
                     Container: "#/components/schemas/ContainerPageElementDefinition"
                     DropZone: "#/components/schemas/DropZonePageElementDefinition"
-                    Form: "#/components/schemas/FormPageElementDefinition"
+                    FormContainer: "#/components/schemas/FormContainerPageElementDefinition"
                     FormStep: "#/components/schemas/FormStepPageElementDefinition"
                     FormStepContainer: "#/components/schemas/FormStepContainerPageElementDefinition"
                     Fragment: "#/components/schemas/FragmentInstancePageElementDefinition"
@@ -2589,14 +2589,14 @@ components:
                     # @review
                     description:
                         The page element definition's type (collection display, collection item, container, drop zone,
-                        form, form step, form step container, fragment, fragment composition, fragment drop zone, grid, 
-                        module or widget).
+                        form container, form step, form step container, fragment, fragment composition, fragment drop
+                        zone, grid,  module or widget).
                     enum:
                         -   CollectionDisplay
                         -   CollectionItem
                         -   Container
                         -   DropZone
-                        -   Form
+                        -   FormContainer
                         -   FormStep
                         -   FormStepContainer
                         -   Fragment
@@ -3349,7 +3349,7 @@ components:
                     description:
                         The reference to a page.
             type: object
-        SitePageFormSubmissionResult:
+        SitePageFormContainerSubmissionResult:
             # @review
             description:
                 The definition of a submission result of type page.
@@ -3512,7 +3512,7 @@ components:
                     description:
                         The localized action execution result of type URL.
             type: object
-        URLFormSubmissionResult:
+        URLFormContainerSubmissionResult:
             # @review
             description:
                 The definition of a submission result of type URL.

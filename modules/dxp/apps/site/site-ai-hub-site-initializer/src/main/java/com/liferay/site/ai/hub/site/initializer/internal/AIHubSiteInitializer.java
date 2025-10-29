@@ -63,51 +63,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 	@Override
 	public void initialize(long groupId) throws InitializationException {
 		try {
-			Group group = _groupLocalService.getGroup(groupId);
-
-			int count = _workflowDefinitionManager.getWorkflowDefinitionsCount(
-				group.getCompanyId(),
-				WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
-
-			if (count > 0) {
-				return;
-			}
-
-			Company company = _companyLocalService.getCompany(
-				group.getCompanyId());
-
-			Class<?> clazz = getClass();
-
-			ClassLoader classLoader = clazz.getClassLoader();
-
-			InputStream inputStream = classLoader.getResourceAsStream(
-				"com/liferay/site/ai/hub/site/initializer/internal" +
-					"/dependencies/improve-writing-workflow-definition.json");
-
-			String content = StringUtil.read(inputStream);
-
-			Map<String, String> titleMap = new HashMap<>();
-
-			for (Locale locale :
-					_language.getCompanyAvailableLocales(
-						company.getCompanyId())) {
-
-				titleMap.put(
-					_language.getLanguageId(locale),
-					_language.get(
-						locale,
-						WorkflowDefinitionConstants.NAME_IMPROVE_WRITING));
-			}
-
-			_workflowDefinitionManager.deployWorkflowDefinition(
-				WorkflowDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
-				company.getCompanyId(), PrincipalThreadLocal.getUserId(),
-				_localization.getXml(
-					titleMap, _language.getLanguageId(company.getLocale()),
-					"title"),
-				WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
-				content.getBytes());
+			_initialize(groupId);
 		}
 		catch (InitializationException initializationException) {
 			throw initializationException;
@@ -120,6 +76,50 @@ public class AIHubSiteInitializer implements SiteInitializer {
 	@Override
 	public boolean isActive(long companyId) {
 		return FeatureFlagManagerUtil.isEnabled(companyId, "LPD-62272");
+	}
+
+	private void _initialize(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
+
+		int count = _workflowDefinitionManager.getWorkflowDefinitionsCount(
+			group.getCompanyId(),
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
+
+		if (count > 0) {
+			return;
+		}
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/site/ai/hub/site/initializer/internal" +
+				"/dependencies/improve-writing-workflow-definition.json");
+
+		String content = StringUtil.read(inputStream);
+
+		Map<String, String> titleMap = new HashMap<>();
+
+		for (Locale locale :
+				_language.getCompanyAvailableLocales(company.getCompanyId())) {
+
+			titleMap.put(
+				_language.getLanguageId(locale),
+				_language.get(
+					locale, WorkflowDefinitionConstants.NAME_IMPROVE_WRITING));
+		}
+
+		_workflowDefinitionManager.deployWorkflowDefinition(
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
+			company.getCompanyId(), PrincipalThreadLocal.getUserId(),
+			_localization.getXml(
+				titleMap, _language.getLanguageId(company.getLocale()),
+				"title"),
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
+			content.getBytes());
 	}
 
 	@Reference

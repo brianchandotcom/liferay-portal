@@ -79,6 +79,9 @@ public class DBUpgradeClientTest {
 
 	@Before
 	public void setUp() throws Exception {
+		_consoleOutputStream.reset();
+		_errorOutputStream.reset();
+
 		System.setErr(new PrintStream(_errorOutputStream));
 		System.setOut(new PrintStream(_consoleOutputStream));
 	}
@@ -410,10 +413,10 @@ public class DBUpgradeClientTest {
 	private static File _shieldedContainerLib;
 
 
-	private final OutputStream _consoleOutputStream =
+	private final ByteArrayOutputStream _consoleOutputStream =
 		new ByteArrayOutputStream();
 	private DBUpgradeClient _dbUpgradeClient;
-	private final OutputStream _errorOutputStream = new ByteArrayOutputStream();
+	private final ByteArrayOutputStream _errorOutputStream = new ByteArrayOutputStream();
 	private final PrintStream _originalErrorOutputStream = System.err;
 	private final PrintStream _originalOutputStream = System.out;
 

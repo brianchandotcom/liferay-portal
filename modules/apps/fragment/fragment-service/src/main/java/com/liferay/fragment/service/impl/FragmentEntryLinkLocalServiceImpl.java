@@ -910,24 +910,20 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	private long _getFragmentEntryGroupId(
-			long companyId, long groupId, String fragmentEntryScopeERC)
-		throws PortalException {
-
-		long fragmentEntryGroupId = groupId;
-
-		if (Validator.isNotNull(fragmentEntryScopeERC)) {
-			Group fragmentEntryGroup =
-				_groupLocalService.fetchGroupByExternalReferenceCode(
-					fragmentEntryScopeERC, companyId);
-
-			if (fragmentEntryGroup != null) {
-				return fragmentEntryGroup.getGroupId();
-			}
-
-			return 0L;
+		long companyId, long groupId, String fragmentEntryScopeERC) {
+		if (Validator.isNull(fragmentEntryScopeERC)) {
+			return groupId;
 		}
 
-		return fragmentEntryGroupId;
+		Group fragmentEntryGroup =
+			_groupLocalService.fetchGroupByExternalReferenceCode(
+					fragmentEntryScopeERC, companyId);
+
+		if (fragmentEntryGroup == null) {
+			return 0;
+		}
+
+		return fragmentEntryGroup.getGroupId();
 	}
 
 	private String _getProcessedHTML(

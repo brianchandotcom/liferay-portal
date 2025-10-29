@@ -37,13 +37,13 @@ const STATUS_MAP: Record<StatusKey, Status> = {
 		displayType: 'danger',
 		label: Liferay.Language.get('failed'),
 		message: Liferay.Language.get(
-			'an-unexpected-error-happened-while-creating-the-file'
+			'please-try-again-an-unexpected-error-occurred-while-creating-the-file'
 		),
 	},
 	STARTED: {
 		displayType: 'info',
 		label: Liferay.Language.get('running'),
-		message: Liferay.Language.get('errors-report-file-is-being-created'),
+		message: Liferay.Language.get('your-file-is-being-created'),
 	},
 };
 
@@ -76,11 +76,11 @@ export function ExportReportEntriesModal({
 				{Liferay.Language.get('export-report-entries')}
 			</Modal.Header>
 
-			<Modal.Body className="text-3 text-weight-semi-bold">
+			<Modal.Body className="text-3">
 				<div role="status">
 					<p className="mb-0">{currentMessage}</p>
 
-					<p>{filename}</p>
+					<p><strong>{filename}</strong></p>
 
 					<ClayLabel displayType={STATUS_MAP[status].displayType}>
 						{STATUS_MAP[status].label}

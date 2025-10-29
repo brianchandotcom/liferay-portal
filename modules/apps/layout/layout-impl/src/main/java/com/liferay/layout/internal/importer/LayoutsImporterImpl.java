@@ -456,9 +456,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			layoutStructureItemImporter);
 	}
 
-	private void _deleteLayoutWidgetConfigurations(long groupId, long plid)
-		throws PortalException {
-
+	private void _deleteLayoutWidgetConfigurations(long groupId, long plid) {
 		_fragmentEntryLinkLocalService.
 			deleteLayoutPageTemplateEntryFragmentEntryLinks(groupId, plid);
 

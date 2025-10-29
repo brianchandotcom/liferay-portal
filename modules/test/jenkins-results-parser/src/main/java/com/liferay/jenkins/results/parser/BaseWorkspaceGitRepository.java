@@ -243,9 +243,13 @@ public abstract class BaseWorkspaceGitRepository
 
 		String jobVariant = System.getenv("JOB_VARIANT");
 
-		if (jobName.contains("master") &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-			jobVariant.contains("modules-unit")) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
+			return getBoolean("snapshot");
+		}
+
+		if ((jobName.contains("master") &&
+			 jobVariant.contains("modules-unit")) ||
+			jobVariant.contains("service-builder")) {
 
 			return false;
 		}

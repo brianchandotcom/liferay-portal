@@ -29,6 +29,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -103,9 +104,10 @@ public class PageElementsTestUtil {
 		return new FragmentInstancePageElementDefinition() {
 			{
 				setConfiguration(
-					() -> JSONFactoryUtil.toString(
-						fragmentRenderer.getConfigurationJSONObject(
-							new DefaultFragmentRendererContext(null))));
+					() -> GetterUtil.getString(
+						JSONFactoryUtil.toString(
+							fragmentRenderer.getConfigurationJSONObject(
+								new DefaultFragmentRendererContext(null)))));
 
 				setCss(() -> StringPool.BLANK);
 				setCssClasses(

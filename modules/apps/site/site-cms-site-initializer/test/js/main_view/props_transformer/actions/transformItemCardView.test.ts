@@ -213,4 +213,19 @@ describe('transformItemCardView', () => {
 			)
 		);
 	});
+
+	it('Shows Untitled Asset if title is not present', () => {
+		const cardView = transformItemCardView(
+			{
+				entryClassName: 'com.liferay.object.model.ObjectEntryFolder',
+			},
+			mockFileMimeTypeCssClasses,
+			mockFileMimeTypeIcons,
+			mockObjectDefinitionCssClasses,
+			mockObjectDefinitionIcons,
+			baseMockProps
+		);
+
+		expect(cardView.title).toBe('untitled-asset');
+	});
 });

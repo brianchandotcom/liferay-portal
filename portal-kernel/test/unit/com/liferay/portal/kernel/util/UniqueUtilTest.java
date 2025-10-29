@@ -25,12 +25,15 @@ public class UniqueUtilTest {
 
 	@Test
 	public void testGetCopyValue() throws PortalException {
+		String copyLabelKey = StringUtil.randomString();
+		String copyLabelValue = StringUtil.randomString();
+
 		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
-			language.get(Mockito.any(Locale.class), Mockito.eq("copy"))
+			language.get(Mockito.any(Locale.class), Mockito.eq(copyLabelKey))
 		).thenReturn(
-			"Copy"
+			copyLabelValue
 		);
 
 		ReflectionTestUtil.setFieldValue(
@@ -39,15 +42,15 @@ public class UniqueUtilTest {
 		String value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			value + " (Copy)",
-			UniqueUtil.getCopyValue(copyValue -> true, value));
+			StringBundler.concat(value, " (", copyLabelValue, ")"),
+			UniqueUtil.getCopyValue(copyValue -> true, copyLabelKey, value));
 
 		value = RandomTestUtil.randomString();
 
 		Assert.assertEquals(
-			value + " (Copy 3)",
+			StringBundler.concat(value, " (", copyLabelValue, " 3)"),
 			UniqueUtil.getCopyValue(
-				copyValue -> copyValue.endsWith("3)"), value));
+				copyValue -> copyValue.endsWith("3)"), copyLabelKey, value));
 	}
 
 }

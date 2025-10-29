@@ -188,7 +188,7 @@ public class EditableFragmentEntryProcessorTest {
 
 	@Test
 	@TestInfo("LPD-67912")
-	public void testEditableWithLinkedLayoutReferencedByExternalReferenceCode()
+	public void testFragmentEntryProcessorEditableWithMappedLayoutReferencedByERC()
 		throws Exception {
 
 		FragmentEntry fragmentEntry =

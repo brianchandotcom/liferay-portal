@@ -126,7 +126,7 @@ export default function SpacesSelector({
 								key={item.id}
 								textValue={item.name}
 							>
-								<SpaceSticker name={item.name} />
+								<SpaceSticker name={item.name} size="sm" />
 							</ItemSelector.Item>
 						)}
 					</ItemSelector>

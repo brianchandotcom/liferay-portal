@@ -12,6 +12,7 @@ import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
@@ -24,6 +25,8 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
@@ -224,6 +227,17 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 		).put(
 			"groupId", themeDisplay.getScopeGroupId()
 		).put(
+			"hasUpdatePermission",
+			() -> {
+				ModelResourcePermission<ObjectEntry> modelResourcePermission =
+					_objectEntryService.getModelResourcePermission(
+						objectEntry.getObjectDefinitionId());
+
+				return modelResourcePermission.contains(
+					themeDisplay.getPermissionChecker(), objectEntry,
+					ActionKeys.UPDATE);
+			}
+		).put(
 			"id", String.valueOf(objectEntry.getObjectEntryId())
 		).put(
 			"isSubscribed",
@@ -270,6 +284,9 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private SubscriptionLocalService _subscriptionLocalService;

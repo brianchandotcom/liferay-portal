@@ -76,7 +76,7 @@ public class DBUpgradeClientTest {
 	@Before
 	public void setUp() throws Exception {
 		System.setErr(new PrintStream(_errorOutputStream));
-		System.setOut(new PrintStream(new ByteArrayOutputStream()));
+		System.setOut(new PrintStream(_consoleOutputStream));
 	}
 
 	@After
@@ -163,17 +163,28 @@ public class DBUpgradeClientTest {
 
 	@Test
 	public void testVerifyPortalUpgradeDatabaseProperties() throws Exception {
+		_createPortalUpgradeExtPropertiesFile();
+
 		String[] answers = {
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, "invalidHost",
-			"localhost", "abc", "99999", StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, "invalidHost", "localhost",
+			"abc", "99999", StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.invoke(
+			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
+
+		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
 			new Class<?>[0]);
+
+		String consoleOutput = _consoleOutputStream.toString();
+
+		Assert.assertTrue(consoleOutput.contains("mariadb mysql postgresql"));
 
 		String errorOutput = _errorOutputStream.toString();
 
@@ -207,13 +218,20 @@ public class DBUpgradeClientTest {
 	public void testVerifyPortalUpgradeDatabasePropertiesWithEmptyAnswers()
 		throws Exception {
 
+		_createPortalUpgradeExtPropertiesFile();
+
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
+
+		ReflectionTestUtil.invoke(
+			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
 
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -221,6 +239,10 @@ public class DBUpgradeClientTest {
 
 		Properties properties = ReflectionTestUtil.getFieldValue(
 			_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
+
+		String consoleOutput = _consoleOutputStream.toString();
+
+		Assert.assertTrue(consoleOutput.contains("mariadb mysql postgresql"));
 
 		Assert.assertNotNull(properties);
 		Assert.assertEquals(
@@ -344,6 +366,8 @@ public class DBUpgradeClientTest {
 	private static File _rootDir;
 	private static File _tomcatDir;
 
+	private final OutputStream _consoleOutputStream =
+		new ByteArrayOutputStream();
 	private DBUpgradeClient _dbUpgradeClient;
 	private final OutputStream _errorOutputStream = new ByteArrayOutputStream();
 	private final PrintStream _originalErrorOutputStream = System.err;

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -108,15 +109,47 @@ public class AddTemplateEntryMVCActionCommandTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			templateEntries.toString(), setup.templateEntriesSize + 1,
+			templateEntries.toString(), setup.initialTemplateEntries.size() + 1,
 			templateEntries.size());
 
-		TemplateEntry templateEntry = templateEntries.get(0);
+		TemplateEntry newTemplateEntry = null;
 
-		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-			templateEntry.getDDMTemplateId());
+		for (TemplateEntry entry : templateEntries) {
+			boolean foundInInitial = false;
 
-		Assert.assertNotNull(ddmTemplate);
+			for (TemplateEntry initialEntry : setup.initialTemplateEntries) {
+				if (entry.getTemplateEntryId() ==
+						initialEntry.getTemplateEntryId()) {
+
+					foundInInitial = true;
+
+					break;
+				}
+			}
+
+			if (!foundInInitial) {
+				newTemplateEntry = entry;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(newTemplateEntry);
+
+		try {
+			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
+				newTemplateEntry.getDDMTemplateId());
+
+			Assert.assertNotNull(ddmTemplate);
+		}
+		finally {
+			if (newTemplateEntry != null) {
+				_templateEntryLocalService.deleteTemplateEntry(
+					newTemplateEntry.getTemplateEntryId());
+				_ddmTemplateLocalService.deleteTemplate(
+					newTemplateEntry.getDDMTemplateId());
+			}
+		}
 	}
 
 	@Test
@@ -134,7 +167,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 				QueryUtil.ALL_POS, null);
 
 		Assert.assertEquals(
-			templateEntries.toString(), setup.templateEntriesSize,
+			templateEntries.toString(), setup.initialTemplateEntries.size(),
 			templateEntries.size());
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -241,10 +274,10 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 		try {
 			if (noPermissions) {
-				User user = UserTestUtil.addUser();
+				_user = UserTestUtil.addUser();
 
 				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(user));
+					_permissionCheckerFactory.create(_user));
 			}
 
 			ReflectionTestUtil.invoke(
@@ -290,13 +323,11 @@ public class AddTemplateEntryMVCActionCommandTest {
 			"infoItemFormVariationKey", setup.infoItemFormVariationKey);
 		setup.mockLiferayPortletActionRequest.addParameter("name", setup.name);
 
-		List<TemplateEntry> templateEntries =
+		setup.initialTemplateEntries =
 			_templateEntryLocalService.getTemplateEntries(
 				_group.getGroupId(), setup.infoItemClassDetails.getClassName(),
 				setup.infoItemFormVariationKey, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null);
-
-		setup.templateEntriesSize = templateEntries.size();
 
 		return setup;
 	}
@@ -324,13 +355,16 @@ public class AddTemplateEntryMVCActionCommandTest {
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;
 
+	@DeleteAfterTestRun
+	private User _user;
+
 	private static class ActionRequestSetupTest {
 
 		public InfoItemClassDetails infoItemClassDetails;
 		public String infoItemFormVariationKey;
+		public List<TemplateEntry> initialTemplateEntries;
 		public MockLiferayPortletActionRequest mockLiferayPortletActionRequest;
 		public String name;
-		public int templateEntriesSize;
 
 	}
 

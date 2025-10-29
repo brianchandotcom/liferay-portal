@@ -86,23 +86,23 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		TemplateEntry extraTemplateEntry = TemplateTestUtil.addAnyTemplateEntry(
+		_extraTemplateEntry = TemplateTestUtil.addAnyTemplateEntry(
 			_infoItemServiceRegistry, _serviceContext);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds",
 			new String[] {
 				String.valueOf(_templateEntry.getTemplateEntryId()),
-				String.valueOf(extraTemplateEntry.getTemplateEntryId())
+				String.valueOf(_extraTemplateEntry.getTemplateEntryId())
 			});
 
 		_assertTemplateExists(_templateEntry);
-		_assertTemplateExists(extraTemplateEntry);
+		_assertTemplateExists(_extraTemplateEntry);
 
 		_invokeActionRequest(mockLiferayPortletActionRequest, false);
 
 		_assertTemplateNotExists(_templateEntry);
-		_assertTemplateNotExists(extraTemplateEntry);
+		_assertTemplateNotExists(_extraTemplateEntry);
 	}
 
 	@Test
@@ -162,10 +162,10 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 		try {
 			if (noPermissions) {
-				User user = UserTestUtil.addUser();
+				_user = UserTestUtil.addUser();
 
 				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(user));
+					_permissionCheckerFactory.create(_user));
 			}
 
 			ReflectionTestUtil.invoke(
@@ -181,6 +181,9 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
+
+	@DeleteAfterTestRun
+	private TemplateEntry _extraTemplateEntry;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -201,5 +204,8 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;
+
+	@DeleteAfterTestRun
+	private User _user;
 
 }

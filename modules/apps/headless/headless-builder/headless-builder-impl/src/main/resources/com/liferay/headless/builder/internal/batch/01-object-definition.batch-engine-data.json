@@ -14,6 +14,7 @@
 	"items": [
 		{
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_SORT",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -60,6 +61,7 @@
 		},
 		{
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_FILTER",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -106,6 +108,7 @@
 		},
 		{
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_ENDPOINT",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -290,6 +293,7 @@
 		{
 			"enableCategorization": true,
 			"enableComments": false,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_PROPERTY",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -408,6 +412,7 @@
 		},
 		{
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_SCHEMA",
 			"friendlyURLSeparator": "l",
 			"label": {
@@ -526,6 +531,7 @@
 		},
 		{
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_API_APPLICATION",
 			"friendlyURLSeparator": "l",
 			"label": {

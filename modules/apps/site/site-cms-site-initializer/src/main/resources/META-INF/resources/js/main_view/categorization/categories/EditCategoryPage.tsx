@@ -294,7 +294,7 @@ const EditCategoryPage = ({
 			}
 		}
 
-		window.location.reload();
+		resetForm();
 
 		displayCreateSuccessToast(category.name);
 	}

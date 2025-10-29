@@ -223,9 +223,8 @@ public class EditableFragmentEntryProcessorTest {
 						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 					JSONUtil.put("headingLevel", "h1")
 				).toString(),
-				fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-				fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-				fragmentEntry.getJs(), _layout,
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
+				null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
 				fragmentEntry.getFragmentEntryKey(),
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
@@ -268,9 +267,9 @@ public class EditableFragmentEntryProcessorTest {
 					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
 				JSONUtil.put("headingLevel", "h1")
 			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(),
-			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml(),
-			fragmentEntry.getJs(), _layout, fragmentEntry.getFragmentEntryKey(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
+			null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
+			fragmentEntry.getFragmentEntryKey(),
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				_layout.getPlid()),
 			fragmentEntry.getType());

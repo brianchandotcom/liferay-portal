@@ -888,13 +888,14 @@ public class FragmentEntryLinkLocalServiceImpl
 		FragmentEntryLink fragmentEntryLink =
 			fragmentEntryLinkPersistence.findByPrimaryKey(fragmentEntryLinkId);
 
-		long groupId = _getFragmentEntryGroupId(
-			fragmentEntryLink.getCompanyId(), fragmentEntryLink.getGroupId(),
-			fragmentEntryLink.getFragmentEntryScopeERC());
-
 		FragmentEntry fragmentEntry =
 			_fragmentEntryPersistence.fetchByERC_G_Head(
-				fragmentEntryLink.getFragmentEntryERC(), groupId, true);
+				fragmentEntryLink.getFragmentEntryERC(),
+				_getFragmentEntryGroupId(
+					fragmentEntryLink.getCompanyId(),
+					fragmentEntryLink.getGroupId(),
+					fragmentEntryLink.getFragmentEntryScopeERC()),
+				true);
 
 		if (fragmentEntry == null) {
 			throw new UnsupportedOperationException(
@@ -917,13 +918,14 @@ public class FragmentEntryLinkLocalServiceImpl
 
 	private long _getFragmentEntryGroupId(
 		long companyId, long groupId, String fragmentEntryScopeERC) {
+
 		if (Validator.isNull(fragmentEntryScopeERC)) {
 			return groupId;
 		}
 
 		Group fragmentEntryGroup =
 			_groupLocalService.fetchGroupByExternalReferenceCode(
-					fragmentEntryScopeERC, companyId);
+				fragmentEntryScopeERC, companyId);
 
 		if (fragmentEntryGroup == null) {
 			return 0;

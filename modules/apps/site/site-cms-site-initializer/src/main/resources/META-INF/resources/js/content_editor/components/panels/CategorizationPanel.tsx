@@ -16,11 +16,13 @@ export default function CategorizationPanel({
 	categorizationFields,
 	contentAPIURL,
 	groupId,
+	hasUpdatePermission,
 	onUpdateCategorization,
 }: {
 	categorizationFields: CategorizationFields;
 	contentAPIURL: string;
 	groupId: number | string;
+	hasUpdatePermission: boolean;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 }) {
 	const {assetCategoryIds, assetTagNames} = categorizationFields;
@@ -56,6 +58,7 @@ export default function CategorizationPanel({
 				}}
 				cmsGroupId={groupId}
 				getObjectEntryURL={contentAPIURL}
+				hasUpdatePermission={hasUpdatePermission}
 				inputSize="sm"
 				onUpdateCategorization={updateCategorization}
 			/>

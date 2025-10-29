@@ -19,11 +19,13 @@ import type {EntryCategorizationDTO} from '../services/ObjectEntryService';
 
 const AssetCategories = ({
 	cmsGroupId,
+	hasUpdatePermission,
 	inputSize,
 	objectEntry,
 	updateObjectEntry,
 }: {
 	cmsGroupId: number | string;
+	hasUpdatePermission?: boolean;
 	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry | EntryCategorizationDTO;
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
@@ -116,6 +118,7 @@ const AssetCategories = ({
 			<ClayPanel.Body>
 				<ItemSelector<any>
 					apiURL={`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/taxonomy-categories`}
+					disabled={!hasUpdatePermission}
 					locator={{
 						id: 'id',
 						label: 'name',
@@ -168,6 +171,8 @@ const AssetCategories = ({
 														Liferay.Language.get(
 															'close'
 														),
+													'disabled':
+														!hasUpdatePermission,
 													'onClick': async (
 														event
 													) => {

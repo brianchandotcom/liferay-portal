@@ -20,11 +20,13 @@ type TKeyword = {
 
 const AssetTags = ({
 	cmsGroupId,
+	hasUpdatePermission,
 	inputSize,
 	objectEntry,
 	updateObjectEntry,
 }: {
 	cmsGroupId: number | string;
+	hasUpdatePermission?: boolean;
 	inputSize?: CategorizationInputSize;
 	objectEntry: IAssetObjectEntry | EntryCategorizationDTO;
 	updateObjectEntry: (object: EntryCategorizationDTO) => void | Promise<void>;
@@ -96,6 +98,7 @@ const AssetTags = ({
 			<ClayPanel.Body>
 				<ItemSelector<TKeyword>
 					apiURL={`${Liferay.ThemeDisplay.getPortalURL()}/o/headless-admin-taxonomy/v1.0/sites/${cmsGroupId}/keywords`}
+					disabled={!hasUpdatePermission}
 					locator={{
 						id: 'id',
 						label: 'name',
@@ -144,6 +147,7 @@ const AssetTags = ({
 								className="mr-2 mt-2"
 								closeButtonProps={{
 									'aria-label': Liferay.Language.get('close'),
+									'disabled': !hasUpdatePermission,
 									'onClick': async (event) => {
 										event.preventDefault();
 

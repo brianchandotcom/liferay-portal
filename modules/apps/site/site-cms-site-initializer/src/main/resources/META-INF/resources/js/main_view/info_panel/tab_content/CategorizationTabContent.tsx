@@ -19,7 +19,7 @@ const CategorizationTabContent = () => {
 		},
 	] = objectEntries;
 
-	if (!cmsGroupId) {
+	if (!cmsGroupId || !get.href) {
 		return null;
 	}
 
@@ -27,7 +27,8 @@ const CategorizationTabContent = () => {
 		<AssetCategorization
 			cmsGroupId={cmsGroupId}
 			getObjectEntryURL={get.href}
-			updateObjectEntryURL={update.href}
+			hasUpdatePermission={!!update?.href}
+			updateObjectEntryURL={update?.href}
 		/>
 	);
 };

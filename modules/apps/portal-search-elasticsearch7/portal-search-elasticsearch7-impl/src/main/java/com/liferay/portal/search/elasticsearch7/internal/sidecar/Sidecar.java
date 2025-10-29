@@ -151,11 +151,13 @@ public class Sidecar {
 				}
 			}
 			catch (Exception exception) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
+				if (_log.isDebugEnabled()) {
+					_log.debug(
 						"Unable to get a started sidecar process, will restart",
 						exception);
 				}
+
+				_sidecarProcessFile.delete();
 			}
 		}
 

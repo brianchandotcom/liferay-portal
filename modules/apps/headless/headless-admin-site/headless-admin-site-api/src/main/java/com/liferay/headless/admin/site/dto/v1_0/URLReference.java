@@ -36,11 +36,11 @@ import java.util.function.Supplier;
  */
 @Generated("")
 @GraphQLName(
-	description = "A unique reference to an entity which remains constant across environments.",
+	description = "A unique reference to a URL which remains constant across environments.",
 	value = "URLReference"
 )
 @io.swagger.v3.oas.annotations.media.Schema(
-	description = "A unique reference to an entity which remains constant across environments.",
+	description = "A unique reference to a URL which remains constant across environments.",
 	requiredProperties = {"url"}
 )
 @JsonFilter("Liferay.Vulcan")

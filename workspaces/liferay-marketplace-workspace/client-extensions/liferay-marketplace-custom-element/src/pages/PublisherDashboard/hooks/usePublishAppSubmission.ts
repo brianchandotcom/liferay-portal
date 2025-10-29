@@ -6,6 +6,7 @@
 import {Dispatch} from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
 import {
 	AppActions,
 	NewAppInitialState,
@@ -14,26 +15,25 @@ import {
 import {ProductWorkflowStatusCode} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
-import AppPublish from '../../../services/actions/AppPublish';
-
-type ProductConfig = {
-	isDraft: boolean;
-	isEdit?: boolean;
-};
+import AppPublish, {ProductConfig} from '../../../services/actions/AppPublish';
 
 const usePublishAppSubmission = (
 	context: NewAppInitialState,
 	dispatch: Dispatch<AppActions>
 ) => {
 	const navigate = useNavigate();
+	const {properties} = useMarketplaceContext();
 
-	const _onSave = async (config: ProductConfig) => {
+	const _onSave = async (config: Partial<ProductConfig>) => {
 		try {
 			dispatch({payload: true, type: NewAppTypes.SET_LOADING});
 
 			const appPublish = new AppPublish(context);
 
-			const product = await appPublish.sync(config);
+			const product = await appPublish.sync({
+				...config,
+				properties,
+			} as ProductConfig);
 
 			dispatch({payload: product, type: NewAppTypes.SET_PRODUCT});
 

@@ -10,6 +10,7 @@ import useSWR from 'swr';
 
 import {UploadedFile} from '../components/FileList/FileList';
 import Loading from '../components/Loading';
+import SearchBuilder from '../core/SearchBuilder';
 import {MarketplaceProduct} from '../entity/MarketplaceProduct';
 import {
 	ProductLicenseTier,
@@ -24,6 +25,7 @@ import {useGetVocabulariesAndCategories} from '../hooks/data/useGetVocabulariesA
 import HeadlessCommerceAdminCatalogImpl from '../services/rest/HeadlessCommerceAdminCatalog';
 import HeadlessDelivery from '../services/rest/HeadlessDelivery';
 import HeadlessPublisherAsset from '../services/rest/HeadlessPublisherAsset';
+import {useMarketplaceContext} from './MarketplaceContext';
 
 export type LicensePrice = {key: number; value: number};
 export type LicenseType = 'Perpetual' | 'Subscription';
@@ -665,6 +667,9 @@ export default function NewAppContextProvider({
 	catalog,
 	children,
 }: NewAppContextProviderProps) {
+	const {
+		properties: {featurePreview},
+	} = useMarketplaceContext();
 	const [state, dispatch] = useReducer(reducer, newAppInitialState);
 	const {productId} = useParams();
 	const {data = {}, isLoading: isLoadingVocabularies} =
@@ -711,8 +716,17 @@ export default function NewAppContextProvider({
 	useSWR(
 		product ? `/product/publisher-assetses/${productId}` : null,
 		() =>
-			HeadlessPublisherAsset.getProductPublisherAssetsByProductId(
-				product!.id
+			HeadlessPublisherAsset.getPublisherAssets(
+				new URLSearchParams({
+					filter: SearchBuilder.eq(
+						featurePreview.includes(
+							'product-versioning-new-primary-key'
+						)
+							? 'r_productEntryToPublisherAssets_CProductId'
+							: 'r_productEntryToPublisherAssets_CPDefinitionId',
+						productId as string
+					),
+				})
 			).then((response) => response.items),
 		{
 			onSuccess: async (publisherAssetses) => {

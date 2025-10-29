@@ -14,6 +14,7 @@ import com.liferay.account.service.AccountEntryService;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
@@ -316,7 +317,10 @@ public class OrganizationResourceImpl
 					"taxonomyCategoryBriefs", "userAccountBriefs");
 			}
 
-			public Map<String, Serializable> getParameters() {
+			@Override
+			public Map<String, Serializable> getParameters(
+				PortletDataContext portletDataContext) {
+
 				return HashMapBuilder.<String, Serializable>put(
 					"flatten", "true"
 				).build();

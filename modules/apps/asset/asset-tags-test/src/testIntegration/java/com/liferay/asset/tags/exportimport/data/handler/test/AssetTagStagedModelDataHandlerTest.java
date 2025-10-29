@@ -59,7 +59,7 @@ public class AssetTagStagedModelDataHandlerTest
 		AssetTagLocalServiceUtil.getTag(
 			liveGroup.getGroupId(), name + " (Duplicate)");
 		AssetTagLocalServiceUtil.getTag(
-			liveGroup.getGroupId(), name + " (Duplicate-2)");
+			liveGroup.getGroupId(), name + " (Duplicate 1)");
 	}
 
 	@Override

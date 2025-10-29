@@ -14,11 +14,11 @@ import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.UniqueUtil;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -209,28 +209,26 @@ public class AssetTagStagedModelDataHandler
 		return serviceContext;
 	}
 
-	private String _getUniqueTagName(long groupId, String name) {
+	private String _getUniqueTagName(long groupId, String name)
+		throws PortalException {
+
 		AssetTag assetTag = _assetTagLocalService.fetchTag(groupId, name);
 
 		if (assetTag == null) {
 			return name;
 		}
 
-		for (int index = 1;; index++) {
-			String newName;
+		return UniqueUtil.getCopyValue(
+			copyValue -> {
+				if (_assetTagLocalService.fetchTag(groupId, copyValue) ==
+						null) {
 
-			if (index == 1) {
-				newName = name + " (Duplicate)";
-			}
-			else {
-				newName = StringBundler.concat(
-					name, " (Duplicate-", index, ")");
-			}
+					return true;
+				}
 
-			if (_assetTagLocalService.fetchTag(groupId, newName) == null) {
-				return newName;
-			}
-		}
+				return false;
+			},
+			"duplicate", name);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

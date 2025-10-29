@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
+import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
@@ -18,7 +19,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
@@ -40,7 +40,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal) {
+		Portal portal, SystemFDSEntry viewAllSectionSystemFDSEntry) {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
@@ -49,17 +49,14 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 			objectEntryFolderModelResourcePermission, portal);
 
 		_httpServletRequest = httpServletRequest;
+
+		_viewAllSectionSystemFDSEntry = viewAllSectionSystemFDSEntry;
 	}
 
 	@Override
 	public String getAdditionalAPIURLParameters() {
-		if (_httpServletRequest.getParameter("q") != null) {
-			return HttpComponentsUtil.addParameters(
-				super.getAdditionalAPIURLParameters(), "search",
-				_httpServletRequest.getParameter("q"));
-		}
-
-		return super.getAdditionalAPIURLParameters();
+		return _viewAllSectionSystemFDSEntry.getAdditionalAPIURLParameters(
+			httpServletRequest);
 	}
 
 	@Override
@@ -124,11 +121,11 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	protected String getCMSSectionFilterString() {
-		return appendStatus(
-			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
-				"eq 'files')");
+		throw new UnsupportedOperationException(
+			"ViewAllSystemFDSEntry must calculate this");
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final SystemFDSEntry _viewAllSectionSystemFDSEntry;
 
 }

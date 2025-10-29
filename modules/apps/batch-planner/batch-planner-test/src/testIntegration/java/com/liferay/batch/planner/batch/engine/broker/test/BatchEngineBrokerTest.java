@@ -701,25 +701,19 @@ public class BatchEngineBrokerTest {
 			String externalReferenceCode)
 		throws Exception {
 
-		List<CSVRecord> csvRecords = CSVParser.parse(
-			actualCSVString, _CSV_FORMAT
-		).getRecords();
+		List<CSVRecord> csvRecords = _getCSVRecords(actualCSVString);
 
 		List<List<String>> csvRecordStringsList = _normalize(
-			CSVParser.parse(
-				expectedCSVString, _CSV_FORMAT
-			).getRecords());
+			_getCSVRecords(expectedCSVString));
 
 		Assert.assertEquals(
 			csvRecordStringsList.get(0), _toList(csvRecords.get(0)));
 
+		List<String> csvRecordStrings = csvRecordStringsList.get(0);
+
 		Map<String, List<String>> csvRecordStringsMap = _getCSVRecordStringsMap(
 			csvRecords.subList(1, csvRecords.size()),
-			csvRecordStringsList.get(
-				0
-			).indexOf(
-				"externalReferenceCode"
-			));
+			csvRecordStrings.contains("externalReferenceCode"));
 
 		Assert.assertEquals(
 			csvRecordStringsList.get(1),
@@ -897,6 +891,12 @@ public class BatchEngineBrokerTest {
 
 		_getFinishedBatchEngineImportTask(
 			batchPlannerPlan.getBatchPlannerPlanId());
+	}
+
+	private List<CSVRecord> _getCSVRecords(String csvString) throws Exception {
+		CSVParser csvParser = CSVParser.parse(csvString, _csvFormat);
+
+		return csvParser.getRecords();
 	}
 
 	private Map<String, List<String>> _getCSVRecordStringsMap(
@@ -1600,15 +1600,6 @@ public class BatchEngineBrokerTest {
 		return csvRecord.toList();
 	}
 
-	private static final CSVFormat _CSV_FORMAT = CSVFormat.Builder.create(
-	).setDelimiter(
-		BatchEngineBrokerTest._DELIMITER_VALUE
-	).setIgnoreEmptyLines(
-		true
-	).setQuote(
-		BatchEngineBrokerTest._ENCLOSING_CHARACTER_VALUE.charAt(0)
-	).build();
-
 	private static final String _DELIMITER_VALUE = StringPool.COMMA;
 
 	private static final String _ENCLOSING_CHARACTER_VALUE = StringPool.QUOTE;
@@ -1627,6 +1618,14 @@ public class BatchEngineBrokerTest {
 
 	private static final String _OBJECT_ENTRY_ERC_3 = "TEST-OBJECT-ENTRY-3";
 
+	private static final CSVFormat _csvFormat = CSVFormat.Builder.create(
+	).setDelimiter(
+		_DELIMITER_VALUE
+	).setIgnoreEmptyLines(
+		true
+	).setQuote(
+		_ENCLOSING_CHARACTER_VALUE.charAt(0)
+	).build();
 	private static final Pattern _htmlBreakPattern = Pattern.compile(
 		"(?m)(</([A-Za-z][A-Za-z0-9]*)>)\\r?\\n(<\\2>)");
 	private static final Pattern _htmlTagPattern = Pattern.compile(

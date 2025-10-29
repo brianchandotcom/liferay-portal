@@ -22,16 +22,16 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				"select commerceOrderId from CommerceOrder where orderStatus " +
 					"= ?")) {
 
-			preparedStatement1.setInt(
+			preparedStatement.setInt(
 				1, CommerceOrderConstants.ORDER_STATUS_OPEN);
 
-			try (ResultSet resultSet1 = preparedStatement1.executeQuery()) {
-				while (resultSet1.next()) {
-					long commerceOrderId = resultSet1.getLong(1);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					long commerceOrderId = resultSet.getLong(1);
 
 					runSQL(
 						StringBundler.concat(
@@ -54,15 +54,15 @@ public class CommerceOrderUpgradeProcess extends UpgradeProcess {
 	private String _getShippable(Connection connection, long commerceOrderId)
 		throws Exception {
 
-		PreparedStatement preparedStatement3 = connection.prepareStatement(
+		PreparedStatement preparedStatement = connection.prepareStatement(
 			"select distinct shippable from CommerceOrderItem where " +
 				"commerceOrderId = ?");
 
-		preparedStatement3.setLong(1, commerceOrderId);
+		preparedStatement.setLong(1, commerceOrderId);
 
-		try (ResultSet resultSet3 = preparedStatement3.executeQuery()) {
-			while (resultSet3.next()) {
-				if (resultSet3.getBoolean("shippable")) {
+		try (ResultSet resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				if (resultSet.getBoolean("shippable")) {
 					return "[$TRUE$]";
 				}
 			}

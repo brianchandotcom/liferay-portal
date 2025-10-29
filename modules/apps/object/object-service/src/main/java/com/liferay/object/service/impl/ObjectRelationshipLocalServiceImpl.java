@@ -1173,6 +1173,8 @@ public class ObjectRelationshipLocalServiceImpl
 					objectDefinition1, name);
 		}
 
+		_validateRelationshipName(dbColumnName, name);
+
 		objectField.setDBColumnName(dbColumnName);
 
 		String dbTableName = objectDefinition2.getDBTableName();
@@ -1193,8 +1195,6 @@ public class ObjectRelationshipLocalServiceImpl
 		objectField.setReadOnlyConditionExpression(readOnlyConditionExpression);
 		objectField.setRelationshipType(relationshipType);
 		objectField.setRequired(required);
-
-		_validateRelationshipName(dbColumnName, name);
 
 		objectField = _objectFieldLocalService.updateObjectField(objectField);
 

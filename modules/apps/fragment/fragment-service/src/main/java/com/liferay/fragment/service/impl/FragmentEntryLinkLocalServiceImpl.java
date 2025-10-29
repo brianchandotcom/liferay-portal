@@ -917,10 +917,14 @@ public class FragmentEntryLinkLocalServiceImpl
 
 		if (Validator.isNotNull(fragmentEntryScopeERC)) {
 			Group fragmentEntryGroup =
-				_groupLocalService.getGroupByExternalReferenceCode(
+				_groupLocalService.fetchGroupByExternalReferenceCode(
 					fragmentEntryScopeERC, companyId);
 
-			fragmentEntryGroupId = fragmentEntryGroup.getGroupId();
+			if (fragmentEntryGroup != null) {
+				return fragmentEntryGroup.getGroupId();
+			}
+
+			return 0L;
 		}
 
 		return fragmentEntryGroupId;

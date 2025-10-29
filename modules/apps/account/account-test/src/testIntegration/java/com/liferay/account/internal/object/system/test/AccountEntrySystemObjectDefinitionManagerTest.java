@@ -149,8 +149,29 @@ public class AccountEntrySystemObjectDefinitionManagerTest
 	}
 
 	@Override
+	protected void assertUpdateBaseModelWithPermissions(
+			long baseModelId, Map<String, Object> values)
+		throws PortalException {
+
+		AccountEntry accountEntry = _accountEntryLocalService.getAccountEntry(
+			baseModelId);
+
+		Assert.assertEquals(values.get("name"), accountEntry.getName());
+	}
+
+	@Override
+	protected void deleteBaseModel(long baseModelId) throws Exception {
+		_accountEntryLocalService.deleteAccountEntry(baseModelId);
+	}
+
+	@Override
 	protected String getSystemObjectDefinitionName() {
 		return "AccountEntry";
+	}
+
+	@Override
+	protected String getSystemObjectDefinitionResourceName() {
+		return AccountEntry.class.getName();
 	}
 
 	private void _assertCount(int count) throws Exception {

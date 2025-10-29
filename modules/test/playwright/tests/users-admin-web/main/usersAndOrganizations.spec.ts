@@ -125,6 +125,88 @@ test(
 );
 
 test(
+	'WebDAV password generation should not be allowed for users without update permission',
+	{tag: '@LPD-69623'},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: 'Role' + getRandomInt(),
+			rolePermissions: [
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_users_admin_web_portlet_UsersAdminPortlet',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+			],
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performLogout(page);
+		await performLogin(page, user.alternateName);
+
+		await page.goto(
+			'/group/control_panel/manage?p_p_id=com_liferay_users_admin_web_portlet_UsersAdminPortlet'
+		);
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+
+		await expect(editUserPage.passwordLink).toBeVisible();
+
+		await editUserPage.passwordLink.click();
+
+		await expect(editUserPage.generateWebDAVPasswordButton).toBeEnabled();
+
+		const adminUser =
+			await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
+				'test@liferay.com'
+			);
+
+		let currentUrl = page.url();
+
+		currentUrl = currentUrl.replace(
+			user.id.toString(),
+			adminUser.id.toString()
+		);
+
+		await page.goto(currentUrl);
+
+		await editUserPage.passwordLink.click();
+
+		await expect(editUserPage.passwordInput).toBeVisible();
+		await expect(
+			editUserPage.generateWebDAVPasswordButton
+		).not.toBeVisible();
+	}
+);
+
+test(
 	'Update user information',
 	{tag: '@LPD-28908'},
 	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {

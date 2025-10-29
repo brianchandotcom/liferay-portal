@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -41,7 +42,8 @@ public class ModelPermissionsUtil {
 			String[] actionIds = permission.getActionIds();
 			Role role = roleLocalService.getOrAddEmptyRole(
 				permission.getRoleExternalReferenceCode(), companyId, userId,
-				null, 0, permission.getRoleName(), 0);
+				null, 0, permission.getRoleName(),
+				RoleConstants.getLabelType(permission.getRoleType()));
 
 			if (actionIds.length > 0) {
 				modelPermissions.addRolePermissions(

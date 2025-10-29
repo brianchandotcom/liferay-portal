@@ -39,7 +39,7 @@ const renderTitle = ({
 		return (
 			<>
 				{!title_i18n
-					? title
+					? title || Liferay.Language.get('untitled-asset')
 					: title_i18n[
 							Liferay.ThemeDisplay.getLanguageId() as keyof typeof title_i18n
 						] || title}

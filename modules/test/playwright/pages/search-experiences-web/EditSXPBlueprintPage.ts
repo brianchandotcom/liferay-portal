@@ -12,6 +12,7 @@ export class EditSXPBlueprintPage {
 	readonly configurationTab: Locator;
 	readonly editTitleButton: Locator;
 	readonly editDescriptionButton: Locator;
+	readonly infoSidebar: Locator;
 	readonly page: Page;
 	readonly pageToolbar: Locator;
 	readonly queryBuilderTab: Locator;
@@ -46,10 +47,11 @@ export class EditSXPBlueprintPage {
 
 		// Main Components
 
-		this.addSXPElementSidebar = page.locator('.add-element-sidebar');
+		this.addSXPElementSidebar = page.locator('.add-sxp-element-sidebar');
 		this.clauseContributorsSidebar = page.locator(
 			'.clause-contributors-sidebar'
 		);
+		this.infoSidebar = page.locator('.info-sidebar');
 		this.pageToolbar = page.getByLabel('Page Toolbar');
 		this.previewSidebar = page.getByTestId('previewSidebar');
 		this.querySXPElements = page.locator('.query-sxp-elements');
@@ -60,7 +62,7 @@ export class EditSXPBlueprintPage {
 		this.editDescriptionButton =
 			this.pageToolbar.getByLabel('Edit Description');
 		this.editTitleButton = this.pageToolbar.getByLabel('Edit Title');
-		this.cancelButton = this.pageToolbar.getByRole('button', {
+		this.cancelButton = this.pageToolbar.getByRole('link', {
 			name: 'Cancel',
 		});
 		this.previewSidebarButton = page.getByTestId('previewSidebarButton');

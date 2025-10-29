@@ -24,7 +24,15 @@ import com.liferay.headless.admin.site.client.dto.v1_0.CollectionItemPageElement
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageFormContainerSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.EmbeddedMessageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.EmptyCollectionConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerClassSubtypeReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerConfig;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerContextReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerPageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FormContainerReference;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLink;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkInlineValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentLinkMappedValue;
@@ -37,6 +45,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.client.dto.v1_0.ListStyleDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.Mapping;
@@ -45,7 +54,12 @@ import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewportDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.SitePageFormContainerSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.StayInPageFormContainerSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.SuccessFormContainerSubmissionResult;
+import com.liferay.headless.admin.site.client.dto.v1_0.SuccessNotificationMessage;
 import com.liferay.headless.admin.site.client.dto.v1_0.TemplateListStyle;
+import com.liferay.headless.admin.site.client.dto.v1_0.URLFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
@@ -55,11 +69,18 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
+import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.responsive.ViewportSize;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
@@ -78,7 +99,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -86,6 +110,7 @@ import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -383,23 +408,47 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_randomPageElement(
 				PageElementDefinition.Type.DROP_ZONE, StringPool.BLANK));
 
-		PageElement formPageElement = _randomPageElement(
-			PageElementDefinition.Type.FORM_CONTAINER, StringPool.BLANK);
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			formPageElement);
-
-		PageElement formStepContainerPageElement = _randomPageElement(
-			PageElementDefinition.Type.FORM_STEP_CONTAINER,
-			formPageElement.getExternalReferenceCode());
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), true, "displayPage", true,
+				RandomTestUtil.randomString()));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(), null, null, false,
+				"displayPage", false, RandomTestUtil.randomString()));
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			formStepContainerPageElement);
-
+			_getFormContainerPageElement(
+				null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "embedded", false,
+				RandomTestUtil.randomString()));
 		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.FORM_STEP,
-				formStepContainerPageElement.getExternalReferenceCode()));
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(), null, null, false, "none",
+				false, RandomTestUtil.randomString()));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "page", false,
+				RandomTestUtil.randomString()));
+		_testPostSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "url", false,
+				RandomTestUtil.randomString()));
 
 		PageElement fragmentPageElement = _randomPageElement(
 			PageElementDefinition.Type.FRAGMENT, StringPool.BLANK);
@@ -584,6 +633,59 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					}
 				},
 				externalReferenceCode));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING, "First Name",
+						"firstName")));
+
+		externalReferenceCode = RandomTestUtil.randomString();
+
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), true, "displayPage", true,
+				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(), null, null, false,
+				"displayPage", false, externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "embedded", false,
+				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(), null, null, false, "none",
+				false, externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				null,
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "page", false,
+				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getFormContainerPageElement(
+				objectDefinition.getClassName(),
+				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
+				RandomTestUtil.randomString(), false, "url", false,
+				externalReferenceCode));
+		_testPutSitePageSpecificationPageExperiencePageElement(
+			_getPageElement(
+				new FormContainerPageElementDefinition() {
+					{
+						setIndexed(true);
+						setType(Type.FORM_CONTAINER);
+					}
+				},
+				externalReferenceCode));
+
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getGridPageElement(
 				RandomTestUtil.randomStrings(RandomTestUtil.randomInt(1, 10)),
@@ -1142,6 +1244,91 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			containerPageElementDefinition, pageElementExternalReferenceCode);
 	}
 
+	private FormContainerConfig _getFormContainerConfig(
+		String className,
+		boolean formContainerSubmissionResultDefaultDisplayPage,
+		String formContainerSubmissionResultType) {
+
+		FormContainerConfig formContainerConfig = new FormContainerConfig();
+
+		formContainerConfig.setFormContainerReference(
+			() -> {
+				if (Validator.isNotNull(className)) {
+					FormContainerClassSubtypeReference
+						formContainerClassSubtypeReference =
+							new FormContainerClassSubtypeReference();
+
+					formContainerClassSubtypeReference.setClassName(className);
+					formContainerClassSubtypeReference.setType(
+						FormContainerReference.Type.
+							FORM_CONTAINER_CLASS_SUBTYPE_REFERENCE);
+
+					return formContainerClassSubtypeReference;
+				}
+
+				FormContainerContextReference formContainerContextReference =
+					new FormContainerContextReference();
+
+				formContainerContextReference.setContextSource(
+					() ->
+						FormContainerContextReference.ContextSource.
+							DISPLAY_PAGE_ITEM);
+				formContainerContextReference.setType(
+					FormContainerReference.Type.
+						FORM_CONTAINER_CONTEXT_REFERENCE);
+
+				return formContainerContextReference;
+			});
+		formContainerConfig.setFormContainerType(
+			FormContainerConfig.FormContainerType.SIMPLE);
+		formContainerConfig.setNumberOfSteps(1);
+		formContainerConfig.setSuccessFormContainerSubmissionResult(
+			() -> _getSuccessFormContainerSubmissionResult(
+				className, formContainerSubmissionResultDefaultDisplayPage,
+				formContainerSubmissionResultType));
+
+		return formContainerConfig;
+	}
+
+	private PageElement _getFormContainerPageElement(
+			String className, String[] cssClasses, String customCss,
+			boolean formContainerSubmissionResultDefaultDisplayPage,
+			String formContainerSubmissionResultType, boolean indexed,
+			String pageElementExternalReferenceCode)
+		throws Exception {
+
+		FormContainerPageElementDefinition formContainerPageElementDefinition =
+			new FormContainerPageElementDefinition();
+
+		formContainerPageElementDefinition.setCssClasses(cssClasses);
+		formContainerPageElementDefinition.setCustomCSS(customCss);
+		formContainerPageElementDefinition.setFormContainerConfig(
+			_getFormContainerConfig(
+				className, formContainerSubmissionResultDefaultDisplayPage,
+				formContainerSubmissionResultType));
+		formContainerPageElementDefinition.setFragmentViewports(
+			_getFragmentViewports());
+		formContainerPageElementDefinition.setIndexed(indexed);
+		formContainerPageElementDefinition.setLayout(
+			() -> new com.liferay.headless.admin.site.client.dto.v1_0.Layout() {
+				{
+					setAlign(Align.END);
+					setContentDisplay(ContentDisplay.FLEX_ROW);
+					setFlexWrap(FlexWrap.WRAP_REVERSE);
+					setJustify(Justify.CENTER);
+					setWidthType(WidthType.FIXED);
+				}
+			});
+		formContainerPageElementDefinition.setName(
+			RandomTestUtil.randomString());
+		formContainerPageElementDefinition.setType(
+			PageElementDefinition.Type.FORM_CONTAINER);
+
+		return _getPageElement(
+			formContainerPageElementDefinition,
+			pageElementExternalReferenceCode);
+	}
+
 	private FragmentLink _getFragmentLink(
 		String className, String externalReferenceCode, String fieldKey,
 		Map<String, String> localizedValues) {
@@ -1194,6 +1381,23 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return fragmentLinkMappedValue;
 	}
 
+	private FragmentMappedValueItemExternalReference
+		_getFragmentMappedValueItemExternalReference(
+			String className, String externalReferenceCode) {
+
+		FragmentMappedValueItemExternalReference
+			fragmentMappedValueItemExternalReference =
+				new FragmentMappedValueItemExternalReference();
+
+		fragmentMappedValueItemExternalReference.setClassName(className);
+		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
+			externalReferenceCode);
+		fragmentMappedValueItemExternalReference.setType(
+			FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE);
+
+		return fragmentMappedValueItemExternalReference;
+	}
+
 	private FragmentMappedValueItemReference
 		_getFragmentMappedValueItemReference(
 			String className, String externalReferenceCode) {
@@ -1207,17 +1411,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			};
 		}
 
-		FragmentMappedValueItemExternalReference
-			fragmentMappedValueItemExternalReference =
-				new FragmentMappedValueItemExternalReference();
-
-		fragmentMappedValueItemExternalReference.setClassName(className);
-		fragmentMappedValueItemExternalReference.setExternalReferenceCode(
-			externalReferenceCode);
-		fragmentMappedValueItemExternalReference.setType(
-			FragmentMappedValueItemReference.Type.ITEM_EXTERNAL_REFERENCE);
-
-		return fragmentMappedValueItemExternalReference;
+		return _getFragmentMappedValueItemExternalReference(
+			className, externalReferenceCode);
 	}
 
 	private FragmentViewport[] _getFragmentViewports() {
@@ -1379,6 +1574,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		};
 	}
 
+	private ItemExternalReference _getItemExternalReference(
+		String className, String externalReferenceCode) {
+
+		ItemExternalReference itemExternalReference =
+			new ItemExternalReference();
+
+		itemExternalReference.setClassName(className);
+		itemExternalReference.setExternalReferenceCode(externalReferenceCode);
+
+		return itemExternalReference;
+	}
+
 	private LayoutStructure _getLayoutStructure() {
 		LayoutPageTemplateStructure layoutPageTemplateStructure =
 			_layoutPageTemplateStructureLocalService.
@@ -1516,6 +1723,135 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(position);
 
 		return pageElement;
+	}
+
+	private FragmentInlineValue _getRandomFragmentInlineValue() {
+		return new FragmentInlineValue() {
+			{
+				setValue_i18n(
+					HashMapBuilder.put(
+						LocaleUtil.SPAIN.toString(),
+						RandomTestUtil.randomString()
+					).put(
+						LocaleUtil.US.toString(), RandomTestUtil.randomString()
+					).build());
+			}
+		};
+	}
+
+	private SuccessFormContainerSubmissionResult
+			_getSuccessFormContainerSubmissionResult(
+				String className,
+				boolean formContainerSubmissionResultDefaultDisplayPage,
+				String formContainerSubmissionResultType)
+		throws Exception {
+
+		if (StringUtil.equals(
+				formContainerSubmissionResultType, "displayPage")) {
+
+			DisplayPageFormContainerSubmissionResult
+				displayPageFormContainerSubmissionResult =
+					new DisplayPageFormContainerSubmissionResult();
+
+			if (formContainerSubmissionResultDefaultDisplayPage) {
+				displayPageFormContainerSubmissionResult.setDefaultDisplayPage(
+					() -> Boolean.TRUE);
+			}
+			else {
+				LayoutPageTemplateEntry layoutPageTemplateEntry =
+					DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+						testGroup.getGroupId(),
+						_portal.getClassNameId(className), 0, true,
+						WorkflowConstants.STATUS_APPROVED);
+
+				displayPageFormContainerSubmissionResult.
+					setItemExternalReference(
+						() -> _getItemExternalReference(
+							LayoutPageTemplateEntry.class.getName(),
+							layoutPageTemplateEntry.
+								getExternalReferenceCode()));
+			}
+
+			displayPageFormContainerSubmissionResult.
+				setSuccessNotificationMessage(
+					this::_getSuccessNotificationMessage);
+			displayPageFormContainerSubmissionResult.setType(
+				SuccessFormContainerSubmissionResult.Type.DISPLAY_PAGE);
+
+			return displayPageFormContainerSubmissionResult;
+		}
+		else if (StringUtil.equals(
+					formContainerSubmissionResultType, "embedded")) {
+
+			EmbeddedMessageFormContainerSubmissionResult
+				embeddedMessageFormContainerSubmissionResult =
+					new EmbeddedMessageFormContainerSubmissionResult();
+
+			embeddedMessageFormContainerSubmissionResult.setMessage(
+				this::_getRandomFragmentInlineValue);
+			embeddedMessageFormContainerSubmissionResult.
+				setSuccessNotificationMessage(
+					this::_getSuccessNotificationMessage);
+			embeddedMessageFormContainerSubmissionResult.setType(
+				SuccessFormContainerSubmissionResult.Type.EMBEDDED_MESSAGE);
+
+			return embeddedMessageFormContainerSubmissionResult;
+		}
+		else if (StringUtil.equals(formContainerSubmissionResultType, "none")) {
+			StayInPageFormContainerSubmissionResult
+				stayInPageFormContainerSubmissionResult =
+					new StayInPageFormContainerSubmissionResult();
+
+			stayInPageFormContainerSubmissionResult.
+				setSuccessNotificationMessage(
+					this::_getSuccessNotificationMessage);
+			stayInPageFormContainerSubmissionResult.setType(
+				SuccessFormContainerSubmissionResult.Type.STAY_IN_PAGE);
+
+			return stayInPageFormContainerSubmissionResult;
+		}
+		else if (StringUtil.equals(formContainerSubmissionResultType, "page")) {
+			SitePageFormContainerSubmissionResult
+				sitePageFormContainerSubmissionResult =
+					new SitePageFormContainerSubmissionResult();
+
+			Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+			sitePageFormContainerSubmissionResult.setItemExternalReference(
+				() -> _getItemExternalReference(
+					Layout.class.getName(), layout.getExternalReferenceCode()));
+
+			sitePageFormContainerSubmissionResult.setSuccessNotificationMessage(
+				this::_getSuccessNotificationMessage);
+			sitePageFormContainerSubmissionResult.setType(
+				SuccessFormContainerSubmissionResult.Type.SITE_PAGE);
+
+			return sitePageFormContainerSubmissionResult;
+		}
+		else if (StringUtil.equals(formContainerSubmissionResultType, "url")) {
+			URLFormContainerSubmissionResult urlFormContainerSubmissionResult =
+				new URLFormContainerSubmissionResult();
+
+			urlFormContainerSubmissionResult.setUrl(
+				this::_getRandomFragmentInlineValue);
+			urlFormContainerSubmissionResult.setType(
+				SuccessFormContainerSubmissionResult.Type.URL);
+
+			return urlFormContainerSubmissionResult;
+		}
+
+		return null;
+	}
+
+	private SuccessNotificationMessage _getSuccessNotificationMessage() {
+		SuccessNotificationMessage successNotificationMessage =
+			new SuccessNotificationMessage();
+
+		successNotificationMessage.setMessage(
+			this::_getRandomFragmentInlineValue);
+		successNotificationMessage.setShowNotification(true);
+
+		return successNotificationMessage;
 	}
 
 	private TreeMap<String, Object> _getWidgetConfig() {
@@ -1679,6 +2015,12 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	@Inject
 	private LayoutPageTemplateStructureLocalService
 		_layoutPageTemplateStructureLocalService;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private Portal _portal;
 
 	private int _position;
 

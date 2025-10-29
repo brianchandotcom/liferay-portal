@@ -91,12 +91,9 @@ public class AIHubSiteInitializer implements SiteInitializer {
 
 		Company company = _companyLocalService.getCompany(group.getCompanyId());
 
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/improve-writing-workflow-definition.json");
-
-		String content = StringUtil.read(inputStream);
+		String content = StringUtil.read(
+			AIHubSiteInitializer.class.getResourceAsStream(
+				"dependencies/improve-writing-workflow-definition.json"));
 
 		Map<String, String> titleMap = new HashMap<>();
 

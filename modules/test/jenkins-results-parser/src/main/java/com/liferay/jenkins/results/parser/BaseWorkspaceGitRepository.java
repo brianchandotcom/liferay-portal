@@ -231,21 +231,31 @@ public abstract class BaseWorkspaceGitRepository
 	}
 
 	public boolean isSnapshot() {
-		String jobName = System.getenv("JOB_NAME");
-
-		if (jobName.equals("forward-pullrequest") ||
-			jobName.equals("publish-testray-report") ||
-			jobName.equals("test-portal-source-format") ||
-			jobName.contains("validation")) {
-
-			return false;
-		}
+		String directoryName = getDirectoryName();
 
 		String jobVariant = System.getenv("JOB_VARIANT");
 
-		if (jobName.contains("master") &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-			jobVariant.contains("modules-unit")) {
+		if (directoryName.equals("liferay-portal")) {
+			String jobName = System.getenv("JOB_NAME");
+
+			if (jobName.equals("forward-pullrequest") ||
+				jobName.equals("publish-testray-report") ||
+				jobName.equals("test-portal-source-format") ||
+				jobName.contains("validation")) {
+
+				return false;
+			}
+
+			if (jobName.contains("master") &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				jobVariant.contains("modules-unit")) {
+
+				return false;
+			}
+		}
+
+		if (directoryName.equals("liferay-release-tool-ee") &&
+			jobVariant.startsWith("portal-license")) {
 
 			return false;
 		}

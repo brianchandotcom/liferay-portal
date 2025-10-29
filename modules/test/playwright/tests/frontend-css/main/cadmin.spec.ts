@@ -30,7 +30,7 @@ test(
 		const elements = [
 			{
 				cadminColor: 'rgba(0, 0, 0, 0)',
-				regularColor: 'rgba(255, 255, 255, 0.8)',
+				regularColor: 'rgba(255, 0, 0, 0.8)',
 				selector: '.cadmin-test-wrapper > .cadmin-test-unstyled',
 			},
 			{

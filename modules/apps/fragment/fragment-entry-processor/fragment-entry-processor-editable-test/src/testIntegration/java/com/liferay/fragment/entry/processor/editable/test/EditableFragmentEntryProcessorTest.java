@@ -744,22 +744,21 @@ public class EditableFragmentEntryProcessorTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		String editableValues = StringUtil.replace(
-			_readJSONFileToString(
-				"action/editable_values_action_mapped_action_on_" +
-					"success_page_by_erc.json"),
-			new String[] {
-				"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID",
-				"EXTERNAL_REFERENCE_CODE", "SCOPE_ERC"
-			},
-			new String[] {
-				String.valueOf(classNameId), String.valueOf(classPK), fieldId,
-				layout.getExternalReferenceCode(),
-				group.getExternalReferenceCode()
-			});
-
 		Element element = _getElement(
-			"data-lfr-editable-id", "editable_action", editableValues,
+			"data-lfr-editable-id", "editable_action",
+			StringUtil.replace(
+				_readJSONFileToString(
+					"action/editable_values_action_mapped_action_on_" +
+						"success_page_by_erc.json"),
+				new String[] {
+					"CLASS_NAME_ID", "CLASS_PK", "FIELD_ID",
+					"EXTERNAL_REFERENCE_CODE", "SCOPE_ERC"
+				},
+				new String[] {
+					String.valueOf(classNameId), String.valueOf(classPK),
+					fieldId, layout.getExternalReferenceCode(),
+					group.getExternalReferenceCode()
+				}),
 			"action/fragment_entry_action.html", LocaleUtil.getSiteDefault(),
 			FragmentEntryLinkConstants.VIEW);
 

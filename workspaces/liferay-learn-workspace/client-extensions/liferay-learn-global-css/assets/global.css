@@ -1494,34 +1494,6 @@ pre[class*='language-'] {
 	padding-bottom: 0;
 }
 
-@media (max-width: 767.98px) {
-	:not(pre) > code[class*='language-'],
-	pre[class*='language-'] {
-		font-size: 0.8rem;
-	}
-
-	code[class*='language-'],
-	pre[class*='language-'] {
-		max-width: 100%;
-	}
-
-	.learn-recipe-container .recipe-main {
-		display: flex;
-		flex-direction: column !important;
-	}
-
-	.recipe-content {
-		order: 2;
-		width: 100%;
-	}
-
-	.recipe-sidemenu {
-		margin-bottom: 2rem;
-		order: 1;
-		width: 100%;
-	}
-}
-
 .learn-search {
 	.input-group-item {
 		.input-group {
@@ -1840,8 +1812,31 @@ pre[class*='language-'] {
 	font-weight: 400;
 }
 
-@media(min-width: 767px) {
-	.code-toolbar {
-		max-width: 50vw;
+@media (max-width: 768px) {
+	:not(pre) > code[class*='language-'],
+	pre[class*='language-'] {
+		font-size: 0.8rem;
+		word-wrap: break-word;
+	}
+
+	code[class*='language-'],
+	pre[class*='language-'] {
+		max-width: 100%;
+	}
+
+	.learn-recipe-container .recipe-main {
+		display: flex;
+		flex-direction: column !important;
+	}
+
+	.recipe-content {
+		order: 2;
+		width: 100%;
+	}
+
+	.recipe-sidemenu {
+		margin-bottom: 2rem;
+		order: 1;
+		width: 100%;
 	}
 }

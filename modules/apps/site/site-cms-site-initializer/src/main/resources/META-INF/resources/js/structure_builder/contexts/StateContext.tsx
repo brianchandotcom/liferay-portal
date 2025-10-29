@@ -912,7 +912,7 @@ function getNextName({
 	const localizedLabel = getLocalizedValue(action.label);
 
 	return normalizeName(localizedLabel, {
-		style: 'type' in item ? 'camel' : 'pascal',
+		style: 'status' in item ? 'pascal' : 'camel',
 	});
 }
 

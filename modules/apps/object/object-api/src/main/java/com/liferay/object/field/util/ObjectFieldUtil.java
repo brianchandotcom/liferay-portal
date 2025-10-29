@@ -218,22 +218,23 @@ public class ObjectFieldUtil {
 			downloadURL, "objectEntryExternalReferenceCode",
 			objectEntry.getExternalReferenceCode());
 
-		if (FeatureFlagManagerUtil.isEnabled(
+		if (!FeatureFlagManagerUtil.isEnabled(
 				fileEntry.getCompanyId(), "LPD-17564")) {
 
-			if (!_hasDownloadPermission(
-					objectField.getAttachmentDownloadActionKey(), fileEntry,
-					objectEntry, objectEntryService, permissionChecker)) {
-
-				return StringPool.BLANK;
-			}
-
-			downloadURL = HttpComponentsUtil.addParameter(
-				downloadURL, "objectFieldExternalReferenceCode",
-				objectField.getExternalReferenceCode());
+			return downloadURL;
 		}
 
-		return downloadURL;
+		if (!fileEntry.containsPermission(
+				permissionChecker, ActionKeys.DOWNLOAD) ||
+			!objectEntryService.hasModelResourcePermission(
+				objectEntry, objectField.getAttachmentDownloadActionKey())) {
+
+			return StringPool.BLANK;
+		}
+
+		return HttpComponentsUtil.addParameter(
+			downloadURL, "objectFieldExternalReferenceCode",
+			objectField.getExternalReferenceCode());
 	}
 
 	public static String getCounterName(ObjectField objectField) {
@@ -452,23 +453,6 @@ public class ObjectFieldUtil {
 				_log.error(ddmExpressionException);
 			}
 		}
-	}
-
-	private static boolean _hasDownloadPermission(
-			String actionId, FileEntry fileEntry, ObjectEntry objectEntry,
-			ObjectEntryService objectEntryService,
-			PermissionChecker permissionChecker)
-		throws PortalException {
-
-		if (fileEntry.containsPermission(
-				permissionChecker, ActionKeys.DOWNLOAD) &&
-			objectEntryService.hasModelResourcePermission(
-				objectEntry, actionId)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static void _validateNewValue(

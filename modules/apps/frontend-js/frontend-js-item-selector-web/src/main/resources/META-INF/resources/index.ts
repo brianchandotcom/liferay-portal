@@ -4,6 +4,7 @@
  */
 
 export {default as ItemSelector} from './item_selector/ItemSelector';
+export type {IItemSelectorProps} from './item_selector/ItemSelector';
 export {default as ItemSelectorModal} from './item_selector/ItemSelectorModal';
 export type {IItemSelectorModalProps} from './item_selector/ItemSelectorModal';
 

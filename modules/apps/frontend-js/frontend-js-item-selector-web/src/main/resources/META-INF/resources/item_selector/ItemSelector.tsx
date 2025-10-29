@@ -203,7 +203,7 @@ interface IAutocomplete<T>
 	multiSelect?: false;
 }
 
-type IItemSelectorProps<T> = IMultiSelect<T> | IAutocomplete<T>;
+export type IItemSelectorProps<T> = IMultiSelect<T> | IAutocomplete<T>;
 
 function ItemSelector<T extends Record<string, any>>({
 	apiURL,

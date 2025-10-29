@@ -86,7 +86,7 @@ public class FragmentEntryConfigurationParserTest {
 
 	@Test
 	@TestInfo("LPD-67912")
-	public void testURLConfigurationWithLinkedLayoutReferencedByExternalReferenceCode()
+	public void testGetConfigurationJSONObjectURLConfigurationWithMappedLayoutReferencedByERC()
 		throws Exception {
 
 		Group group1 = _groupLocalService.getGroup(

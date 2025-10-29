@@ -15,6 +15,8 @@ import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryLocalService;
@@ -108,15 +110,24 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -723,6 +734,20 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
 					_addFragmentEntry(testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
+			externalReferenceCode,
+			_randomFragmentEntry(
+				RandomTestUtil.randomLong(), StringPool.BLANK,
+				irrelevantGroup.getGroupId()));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
+			externalReferenceCode,
+			_randomFragmentEntry(
+				RandomTestUtil.randomLong(), StringPool.BLANK,
+				testGroup.getGroupId()));
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
+			externalReferenceCode,
+			_randomFragmentRenderer(RandomTestUtil.randomString()));
 
 		externalReferenceCode = RandomTestUtil.randomString();
 
@@ -2020,6 +2045,52 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			WidgetPermission.class);
 	}
 
+	private FragmentEntry _randomFragmentEntry(
+		long fragmentEntryId, String fragmentEntryKey, long groupId) {
+
+		FragmentEntry fragmentEntry =
+			_fragmentEntryLocalService.createFragmentEntry(fragmentEntryId);
+
+		fragmentEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+		fragmentEntry.setGroupId(groupId);
+		fragmentEntry.setCompanyId(testCompany.getCompanyId());
+		fragmentEntry.setFragmentEntryKey(fragmentEntryKey);
+		fragmentEntry.setName(RandomTestUtil.randomString());
+		fragmentEntry.setCss(StringPool.BLANK);
+		fragmentEntry.setHtml(StringPool.BLANK);
+		fragmentEntry.setJs(StringPool.BLANK);
+		fragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
+		fragmentEntry.setConfiguration(StringPool.BLANK);
+		fragmentEntry.setType(FragmentConstants.TYPE_COMPONENT);
+		fragmentEntry.setTypeOptions(StringPool.BLANK);
+
+		return fragmentEntry;
+	}
+
+	private FragmentRenderer _randomFragmentRenderer(String key) {
+		return new FragmentRenderer() {
+
+			@Override
+			public String getCollectionKey() {
+				return "content-display";
+			}
+
+			@Override
+			public String getKey() {
+				return key;
+			}
+
+			@Override
+			public void render(
+					FragmentRendererContext fragmentRendererContext,
+					HttpServletRequest httpServletRequest,
+					HttpServletResponse httpServletResponse)
+				throws IOException {
+			}
+
+		};
+	}
+
 	private PageElement _randomPageElement(
 			PageElementDefinition.Type pageElementDefinitionType,
 			String parentExternalReferenceCode, PageElement... pageElements)
@@ -2042,6 +2113,30 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		pageElement.setPosition(position);
 
 		return pageElement;
+	}
+
+	private void _testMissingOptionalReference(
+			UnsafeRunnable<Exception> unsafeRunnable)
+		throws Exception {
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.headless.admin.site.internal.util.LogUtil",
+				LoggerTestUtil.WARN)) {
+
+			unsafeRunnable.run();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			String message = logEntry.getMessage();
+
+			Assert.assertTrue(
+				message,
+				message.startsWith("Optional reference generated for missing"));
+		}
 	}
 
 	private PageElement _testPostSitePageSpecificationPageExperiencePageElement(
@@ -2087,6 +2182,34 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		assertValid(putPageElement);
 
 		return putPageElement;
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
+				String externalReferenceCode, FragmentEntry fragmentEntry)
+		throws Exception {
+
+		_testMissingOptionalReference(
+			() -> _testPutSitePageSpecificationPageExperiencePageElement(
+				_getFragmentInstancePageElement(
+					externalReferenceCode,
+					PageElementsTestUtil.
+						getFragmentInstancePageElementDefinition(
+							fragmentEntry, testGroup.getGroupId()))));
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
+				String externalReferenceCode, FragmentRenderer fragmentRenderer)
+		throws Exception {
+
+		_testMissingOptionalReference(
+			() -> _testPutSitePageSpecificationPageExperiencePageElement(
+				_getFragmentInstancePageElement(
+					externalReferenceCode,
+					PageElementsTestUtil.
+						getFragmentInstancePageElementDefinition(
+							fragmentRenderer))));
 	}
 
 	private Layout _draftLayout;

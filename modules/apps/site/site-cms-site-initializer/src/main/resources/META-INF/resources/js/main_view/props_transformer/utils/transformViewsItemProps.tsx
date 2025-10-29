@@ -173,6 +173,7 @@ export function transformItemCardView(
 				/>
 			),
 		},
+		title: props.title || Liferay.Language.get('untitled-asset'),
 		...getThumbnailProps(item),
 	};
 }

@@ -16,9 +16,15 @@ TimeZone calendarBookingTimeZone = allDay ? TimeZone.getTimeZone(StringPool.UTC)
 
 java.util.Calendar defaultStartTimeJCalendar = CalendarFactoryUtil.getCalendar(calendarBookingTimeZone);
 
+java.util.Calendar userStartTimeJCalendar = CalendarFactoryUtil.getCalendar(userTimeZone);
+
 defaultStartTimeJCalendar.add(java.util.Calendar.HOUR, 1);
 
 defaultStartTimeJCalendar.set(java.util.Calendar.MINUTE, 0);
+
+userStartTimeJCalendar.add(java.util.Calendar.HOUR, 1);
+
+userStartTimeJCalendar.set(java.util.Calendar.MINUTE, 0);
 
 long calendarBookingId = BeanPropertiesUtil.getLong(calendarBooking, "calendarBookingId");
 
@@ -1039,13 +1045,17 @@ while (manageableCalendarsIterator.hasNext()) {
 				endDateContainer.style.display = 'block';
 
 				startTimeHours =
-					<%= defaultStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				startTimeMinutes =
-					<%= defaultStartTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
-				endTimeHours =
-					<%= defaultEndTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
-				endTimeMinutes =
-					<%= defaultEndTimeJCalendar.get(java.util.Calendar.MINUTE) %>;
+					<%= userStartTimeJCalendar.get(java.util.Calendar.HOUR_OF_DAY) %>;
+				startTimeMinutes = 0;
+
+				if (startTimeHours === 23) {
+					endTimeHours = 23;
+					endTimeMinutes = 59;
+				}
+				else {
+					endTimeHours = (startTimeHours + 1) % 24;
+					endTimeMinutes = 0;
+				}
 			}
 
 			updateTimePickersValues(

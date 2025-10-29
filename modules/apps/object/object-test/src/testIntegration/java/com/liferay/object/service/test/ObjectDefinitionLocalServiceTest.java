@@ -940,6 +940,22 @@ public class ObjectDefinitionLocalServiceTest {
 					).value(
 						String.valueOf(TestPropsValues.getGroupId())
 					).build())));
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingNameException.NotAllowedNames.class,
+			StringBundler.concat(
+				"The settings ", ObjectDefinitionSettingConstants.NAME_VISIBLE,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_VISIBLE
+					).value(
+						StringPool.TRUE
+					).build())));
 
 		String objectDefinitionSettingName = RandomTestUtil.randomString();
 

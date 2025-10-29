@@ -260,7 +260,7 @@ const CreateTrialModalForm: React.FC<CreateTrialModalFormProps> = ({
 
 					<ClayInput.GroupItem append shrink>
 						<ClayInput.GroupText>
-							.saas.demo.lxc.liferay.com
+							{properties.ssaProjectPrefix || '.lxc.liferay.com'}
 						</ClayInput.GroupText>
 					</ClayInput.GroupItem>
 				</ClayInput.Group>

@@ -120,7 +120,7 @@ public class ImportMVCResourceCommandTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_creatLayoutPageTemplateEntry();
+			_createLayoutPageTemplateEntry();
 
 		Layout expectedLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -137,7 +137,7 @@ public class ImportMVCResourceCommandTest {
 
 	@Test
 	public void testImportFileWithDoNotOverwriteStrategy() throws Exception {
-		_creatLayoutPageTemplateEntry();
+		_createLayoutPageTemplateEntry();
 
 		_assertImportResultsJSONObject(
 			1, 2, 1, _importFile(LayoutsImportStrategy.DO_NOT_OVERWRITE));
@@ -171,7 +171,7 @@ public class ImportMVCResourceCommandTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_creatLayoutPageTemplateEntry();
+			_createLayoutPageTemplateEntry();
 
 		Layout expectedLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -201,7 +201,7 @@ public class ImportMVCResourceCommandTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_creatLayoutPageTemplateEntry();
+			_createLayoutPageTemplateEntry();
 
 		Layout expectedLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -222,7 +222,7 @@ public class ImportMVCResourceCommandTest {
 		throws Exception {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			_creatLayoutPageTemplateEntry();
+			_createLayoutPageTemplateEntry();
 
 		Layout expectedLayout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
@@ -307,7 +307,7 @@ public class ImportMVCResourceCommandTest {
 			expectedIgnoredJSONArrayLength, ignoredJSONArray.length());
 	}
 
-	private LayoutPageTemplateEntry _creatLayoutPageTemplateEntry()
+	private LayoutPageTemplateEntry _createLayoutPageTemplateEntry()
 		throws Exception {
 
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(

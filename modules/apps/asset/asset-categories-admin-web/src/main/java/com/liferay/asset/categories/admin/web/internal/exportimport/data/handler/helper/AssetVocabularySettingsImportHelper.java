@@ -52,6 +52,10 @@ public class AssetVocabularySettingsImportHelper
 
 		JSONObject metadataJSONObject = _getMetadataJSONObject(classNameId);
 
+		if (metadataJSONObject == null) {
+			return false;
+		}
+
 		String className = metadataJSONObject.getString("className");
 
 		if (_classNameLocalService.fetchClassName(className) != null) {

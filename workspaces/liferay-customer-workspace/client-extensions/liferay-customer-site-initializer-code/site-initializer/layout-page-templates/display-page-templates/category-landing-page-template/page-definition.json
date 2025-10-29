@@ -4,24 +4,6 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragmentStyle": {
-						"hidden": true
-					},
-					"widgetInstance": {
-						"widgetConfig": {
-							"allowEmptySearches": "true",
-							"basicFacetSelection": "false",
-							"federatedSearchKey": "",
-							"retainFacetSelections": "false"
-						},
-						"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
-					}
-				},
-				"id": "6b3d2ae3-a552-87d1-91b8-263a99d546c3",
-				"type": "Widget"
-			},
-			{
-				"definition": {
 					"widgetInstance": {
 						"widgetConfig": {
 							"destination": "/search",

@@ -28,6 +28,7 @@ export type Space = {
 	id: number;
 	name: string;
 	settings?: SpaceSettings;
+	siteId: number;
 };
 
 export type SpaceSettings = {

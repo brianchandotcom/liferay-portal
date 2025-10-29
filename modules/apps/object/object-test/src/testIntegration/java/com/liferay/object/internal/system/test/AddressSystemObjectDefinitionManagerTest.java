@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.junit.After;
@@ -168,8 +169,23 @@ public class AddressSystemObjectDefinitionManagerTest
 	}
 
 	@Override
+	protected void assertUpdateBaseModelWithPermissions(
+			long baseModelId, Map<String, Object> values)
+		throws PortalException {
+	}
+
+	@Override
+	protected void deleteBaseModel(long baseModelId) throws Exception {
+	}
+
+	@Override
 	protected String getSystemObjectDefinitionName() {
 		return "Address";
+	}
+
+	@Override
+	protected String getSystemObjectDefinitionResourceName() {
+		return Address.class.getName();
 	}
 
 }

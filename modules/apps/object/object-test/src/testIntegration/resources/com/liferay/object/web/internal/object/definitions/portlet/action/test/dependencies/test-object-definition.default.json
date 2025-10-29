@@ -7,7 +7,7 @@
 	"defaultLanguageId": "en_US",
 	"enableCategorization": true,
 	"enableComments": false,
-	"enableLocalization": false,
+	"enableLocalization": true,
 	"enableObjectEntryDraft": false,
 	"enableObjectEntryHistory": false,
 	"externalReferenceCode": "TESTOBJECTDEFINITION",

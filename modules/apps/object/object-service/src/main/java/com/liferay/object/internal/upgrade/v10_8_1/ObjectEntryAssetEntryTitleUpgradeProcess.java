@@ -56,7 +56,6 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 						"from ObjectDefinition left join ObjectField on ",
 						"ObjectDefinition.titleObjectFieldId = ",
 						"ObjectField.objectFieldId where ",
-						"ObjectDefinition.enableLocalization = [$TRUE$] and ",
 						"ObjectField.localized = [$TRUE$]")));
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 

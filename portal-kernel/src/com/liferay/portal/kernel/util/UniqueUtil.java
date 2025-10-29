@@ -20,7 +20,16 @@ public class UniqueUtil {
 			String value)
 		throws PortalException {
 
-		String copy = LanguageUtil.get(LocaleUtil.getSiteDefault(), "copy");
+		return getCopyValue(unsafeFunction, "copy", value);
+	}
+
+	public static String getCopyValue(
+			UnsafeFunction<String, Boolean, PortalException> unsafeFunction,
+			String copyLabelKey, String value)
+		throws PortalException {
+
+		String copy = LanguageUtil.get(
+			LocaleUtil.getSiteDefault(), copyLabelKey);
 
 		String copyValue = StringUtil.appendParentheticalSuffix(value, copy);
 

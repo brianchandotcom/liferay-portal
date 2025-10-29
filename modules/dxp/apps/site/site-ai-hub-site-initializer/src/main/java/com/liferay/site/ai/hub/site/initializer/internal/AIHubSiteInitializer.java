@@ -20,8 +20,6 @@ import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 
-import java.io.InputStream;
-
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -112,8 +110,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			_localization.getXml(
 				titleMap, _language.getLanguageId(company.getLocale()),
 				"title"),
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
-			json.getBytes());
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, json.getBytes());
 	}
 
 	@Reference

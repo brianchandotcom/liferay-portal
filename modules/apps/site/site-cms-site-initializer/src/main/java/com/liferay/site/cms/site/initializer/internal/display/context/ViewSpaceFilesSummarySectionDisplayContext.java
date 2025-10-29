@@ -54,10 +54,11 @@ public class ViewSpaceFilesSummarySectionDisplayContext
 	}
 
 	@Override
-	public String getAPIURL() {
+	public String getAdditionalAPIURLParameters() {
 		return HttpComponentsUtil.addParameters(
-			super.getAPIURL(), "page", CMSSpaceConstants.SPACE_SUMMARY_PAGE,
-			"pageSize", CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE, "sort",
+			super.getAdditionalAPIURLParameters(), "page",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE, "pageSize",
+			CMSSpaceConstants.SPACE_SUMMARY_PAGE_SIZE, "sort",
 			"dateModified:desc");
 	}
 

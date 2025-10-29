@@ -21,6 +21,7 @@ import java.io.PrintStream;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+
 import java.util.ArrayList;
 
 import jline.console.ConsoleReader;
@@ -33,6 +34,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import org.mockito.Mockito;
 
 /**
  * @author István András Dézsi
@@ -71,7 +74,14 @@ public class DBUpgradeClientTest {
 
 		portalDir.mkdirs();
 
-		_shieldedContainerLib = new File(portalDir, "WEB-INF/shielded-container-lib");
+		_shieldedContainerLib = new File(
+			portalDir, "WEB-INF/shielded-container-lib");
+
+		Mockito.when(
+			_mockAppServer.getPortalShieldedContainerLibDir()
+		).thenReturn(
+			_shieldedContainerLib
+		);
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgradeClient.class, "_jarDir", _rootDir);
@@ -173,17 +183,15 @@ public class DBUpgradeClientTest {
 		_createPortalUpgradeExtPropertiesFile();
 
 		String[] answers = {
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, "invalidHost", "localhost",
-			"abc", "99999", StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, "invalidHost",
+			"localhost", "abc", "99999", StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
-		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
+		ReflectionTestUtil.setFieldValue(
+			_dbUpgradeClient, "_appServer", _mockAppServer);
 
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -222,41 +230,46 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeDatabasePropertiesOnDXP() throws Exception {
+	public void testVerifyPortalUpgradeDatabasePropertiesOnDXP()
+		throws Exception {
+
 		_createPortalUpgradeExtPropertiesFile();
 
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK
+			StringPool.BLANK, StringPool.BLANK
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
-		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
+		ReflectionTestUtil.setFieldValue(
+			_dbUpgradeClient, "_appServer", _mockAppServer);
 
-		Path jarPath = _shieldedContainerLib.toPath().resolve("com.liferay.portal.dao.db.jar");
+		Path jarPath = _shieldedContainerLib.toPath(
+		).resolve(
+			"com.liferay.portal.dao.db.jar"
+		);
 
 		Files.createDirectories(_shieldedContainerLib.toPath());
 
 		Files.createFile(jarPath);
 
-		try{
+		try {
 			ReflectionTestUtil.invoke(
 				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
 				new Class<?>[0]);
 
 			String consoleOutput = _consoleOutputStream.toString();
 
-			Assert.assertTrue(consoleOutput.contains("db2 mariadb mysql oracle postgresql sqlserver"));
+			Assert.assertTrue(
+				consoleOutput.contains(
+					"db2 mariadb mysql oracle postgresql sqlserver"));
 		}
 		finally {
-			jarPath.toFile().delete();
+			jarPath.toFile(
+			).delete();
 		}
-
 	}
 
 	@Test
@@ -268,15 +281,13 @@ public class DBUpgradeClientTest {
 		String[] answers = {
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
 			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK
+			StringPool.BLANK, StringPool.BLANK
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
-		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
+		ReflectionTestUtil.setFieldValue(
+			_dbUpgradeClient, "_appServer", _mockAppServer);
 
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -408,10 +419,11 @@ public class DBUpgradeClientTest {
 	}
 
 	private static File _liferayHomeDir;
+	private static final AppServer _mockAppServer = Mockito.mock(
+		AppServer.class);
 	private static File _rootDir;
-	private static File _tomcatDir;
 	private static File _shieldedContainerLib;
-
+	private static File _tomcatDir;
 
 	private final ByteArrayOutputStream _consoleOutputStream =
 		new ByteArrayOutputStream();

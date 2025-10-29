@@ -13,10 +13,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BatchEnginePortletDataHandlerRegistryUtil {
 
-	public static BatchEnginePortletDataHandler getByModelClassName(
-		String modelClassName) {
+	public static BatchEnginePortletDataHandler getByClassName(
+		String className) {
 
-		String portletId = _findPortletIdByClassName(modelClassName);
+		String portletId = _findPortletIdByClassName(className);
 
 		if (portletId == null) {
 			return null;
@@ -31,8 +31,8 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		return _batchEnginePortletDataHandlers.get(portletId);
 	}
 
-	public static boolean hasByModelClassName(String modelClassName) {
-		if (_findPortletIdByClassName(modelClassName) != null) {
+	public static boolean hasByClassName(String className) {
+		if (_findPortletIdByClassName(className) != null) {
 			return true;
 		}
 
@@ -49,7 +49,7 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 		_batchEnginePortletDataHandlers.remove(portletId);
 	}
 
-	private static String _findPortletIdByClassName(String modelClassName) {
+	private static String _findPortletIdByClassName(String className) {
 		for (Map.Entry<String, BatchEnginePortletDataHandler> entry :
 				_batchEnginePortletDataHandlers.entrySet()) {
 
@@ -58,8 +58,8 @@ public class BatchEnginePortletDataHandlerRegistryUtil {
 
 			String[] classNames = batchEnginePortletDataHandler.getClassNames();
 
-			for (String className : classNames) {
-				if (className.equals(modelClassName)) {
+			for (String currentClassName : classNames) {
+				if (currentClassName.equals(className)) {
 					return entry.getKey();
 				}
 			}

@@ -17,15 +17,17 @@ import {
 	SkuOptions,
 	getOfferingTypes,
 } from '../../enums/Product';
+import {MarketplaceProperties} from '../../utils/attributes';
 import {base64ToText, fileToBase64} from '../../utils/file';
 import HeadlessCommerceAdminCatalogImpl from '../rest/HeadlessCommerceAdminCatalog';
 import HeadlessCommerceAdminPricing from '../rest/HeadlessCommerceAdminPricing';
 import BaseAppPublish from './BaseAppPublish';
 import PublisherAsset from './PublisherAsset';
 
-type ProductConfig = {
+export type ProductConfig = {
 	isDraft: boolean;
 	isEdit?: boolean;
+	properties: MarketplaceProperties;
 };
 
 type TemporaryData = {
@@ -71,7 +73,11 @@ function isTierPriceChanged(
 }
 
 export default class AppPublish extends BaseAppPublish {
-	private config: ProductConfig = {isDraft: false};
+	private config: ProductConfig = {
+		isDraft: false,
+		properties: {},
+	} as ProductConfig;
+
 	private temporary: TemporaryData = {
 		compatibleOfferings: null,
 		description: null,
@@ -701,6 +707,7 @@ export default class AppPublish extends BaseAppPublish {
 				const publisherAsset = new PublisherAsset(
 					file,
 					product,
+					this.config?.properties ?? {},
 					versions.toString()
 				);
 

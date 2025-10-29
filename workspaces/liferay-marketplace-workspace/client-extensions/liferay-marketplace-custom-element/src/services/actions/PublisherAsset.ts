@@ -6,6 +6,7 @@
 import SearchBuilder from '../../core/SearchBuilder';
 import {DOCUMENT_FOLDER_PERMISSIONS} from '../../enums/File';
 import {Liferay} from '../../liferay/liferay';
+import {MarketplaceProperties} from '../../utils/attributes';
 import HeadlessDelivery from '../rest/HeadlessDelivery';
 import HeadlessPublisherAssetses from '../rest/HeadlessPublisherAsset';
 
@@ -17,6 +18,7 @@ export default class PublisherAsset {
 	constructor(
 		protected file: any,
 		protected product: Product,
+		protected properties: MarketplaceProperties,
 		protected versions: string
 	) {}
 
@@ -102,18 +104,20 @@ export default class PublisherAsset {
 
 			const appFolderId = await this.getAppFolderId(publisherFolderId);
 
-			const appDocumentId =
-				await this.getPublisherAssetDocumentId(appFolderId);
-
-			const accountId = Liferay.CommerceContext.account?.accountId;
+			const productRelationshipName =
+				this.properties.featurePreview?.includes(
+					'product-versioning-new-primary-key'
+				)
+					? 'r_productEntryToPublisherAssets_CProductId'
+					: 'r_productEntryToPublisherAssets_CPDefinitionId';
 
 			await HeadlessPublisherAssetses.createPublisherAsset({
 				name: this.product.name.en_US,
 				publisherAssetType: PICK_LIST_ASSET_TYPE,
-				r_accountEntryToPublisherAssets_accountEntryId: accountId,
-				r_productEntryToPublisherAssets_CProductId: this.product
-					.id as unknown as string,
-				sourceCode: appDocumentId,
+				r_accountEntryToPublisherAssets_accountEntryId:
+					Liferay.CommerceContext.account?.accountId,
+				[productRelationshipName]: this.product.id as unknown as string,
+				sourceCode: await this.getPublisherAssetDocumentId(appFolderId),
 				version: this.versions,
 			});
 		}

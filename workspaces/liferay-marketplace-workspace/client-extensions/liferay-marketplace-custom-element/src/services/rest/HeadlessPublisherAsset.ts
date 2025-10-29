@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import SearchBuilder from '../../core/SearchBuilder';
 import {axios} from '../../utils/axios';
 import fetcher from '../fetcher';
 
@@ -18,14 +17,7 @@ export default class HeadlessPublisherAsset {
 		return fetcher.delete(`o/c/publisherassetses/${id}`);
 	}
 
-	static getProductPublisherAssetsByProductId(productId: number | string) {
-		const searchParams = new URLSearchParams({
-			filter: SearchBuilder.eq(
-				'r_productEntryToPublisherAssets_CProductId',
-				productId
-			),
-		});
-
+	static getPublisherAssets(searchParams: URLSearchParams) {
 		return fetcher<APIResponse>(
 			`o/c/publisherassetses?${searchParams.toString()}`
 		);

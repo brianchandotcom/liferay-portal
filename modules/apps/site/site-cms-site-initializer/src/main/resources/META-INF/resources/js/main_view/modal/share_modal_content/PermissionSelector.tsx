@@ -6,18 +6,20 @@
 import {Option, Picker} from '@clayui/core';
 import React from 'react';
 
+import {SharingPermission} from '../../../common/types/SharingPermission';
+
 const PERMISSION_OPTIONS = [
 	{
 		label: Liferay.Language.get('view-and-download'),
-		value: 'VIEW',
+		value: SharingPermission.View,
 	},
 	{
 		label: Liferay.Language.get('view-download-and-comment'),
-		value: 'ADD_DISCUSSION,VIEW',
+		value: [SharingPermission.Comment, SharingPermission.View].join(','),
 	},
 	{
 		label: Liferay.Language.get('view-download-comment-and-update'),
-		value: 'ADD_DISCUSSION,UPDATE,VIEW',
+		value: Object.values(SharingPermission).join(','),
 	},
 ];
 

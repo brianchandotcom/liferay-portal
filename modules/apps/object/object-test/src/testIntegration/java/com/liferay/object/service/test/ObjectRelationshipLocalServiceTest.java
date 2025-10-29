@@ -401,9 +401,9 @@ public class ObjectRelationshipLocalServiceTest {
 			ObjectRelationshipNameException.class,
 			StringBundler.concat(
 				"The relationship name must be less than ",
-				expectedAvailableLength, " characters. Longer object ",
-				"definition names reduce the available characters you can use ",
-				"for the relationship name."),
+				expectedAvailableLength, " characters. Long object definition ",
+				"names reduce the characters available for the relationship ",
+				"name."),
 			() -> _objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				objectDefinition.getObjectDefinitionId(),

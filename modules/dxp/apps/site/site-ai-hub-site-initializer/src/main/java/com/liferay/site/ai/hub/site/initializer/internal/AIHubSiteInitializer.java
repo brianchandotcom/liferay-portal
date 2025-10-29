@@ -93,11 +93,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 
 		Class<?> clazz = getClass();
 
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/site/ai/hub/site/initializer/internal" +
-				"/dependencies/improve-writing-workflow-definition.json");
+		InputStream inputStream = clazz.getResourceAsStream(
+			"dependencies/improve-writing-workflow-definition.json");
 
 		String content = StringUtil.read(inputStream);
 

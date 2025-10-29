@@ -109,6 +109,11 @@ const item3 = {
 	title: 'First Blog',
 };
 
+const sharingItem = {
+	...item3,
+	actionIds: ['VIEW'],
+};
+
 const DEFAULT_PROPS = {
 	additionalProps: {
 		assetLibraries: [{groupId: 35393, name: 'Default'}],
@@ -129,6 +134,12 @@ const DEFAULT_PROPS = {
 
 const renderComponent = (props = DEFAULT_PROPS) => {
 	return render(<AssetNavigationModalContent {...props} />);
+};
+
+const renderComponentInSharing = (props = DEFAULT_PROPS) => {
+	return render(
+		<AssetNavigationModalContent {...props} showInfoPanel={false} />
+	);
 };
 
 describe('AssetNavigationModalContent', () => {
@@ -196,5 +207,31 @@ describe('AssetNavigationModalContent', () => {
 		fireEvent.click(getByLabelText('show-comments'));
 
 		expect(screen.getByText('add-comment')).toBeInTheDocument();
+	});
+
+	describe('Sharing items', () => {
+		it('info panel is hidden', () => {
+			const {getByLabelText, queryByText} = renderComponentInSharing();
+
+			expect(queryByText('show-details')).not.toBeInTheDocument();
+			expect(getByLabelText('show-comments')).toBeInTheDocument();
+		});
+
+		it('comment panel is hidden if sharing item has no permission', () => {
+			const {getByLabelText, queryByText} = renderComponentInSharing({
+				...DEFAULT_PROPS,
+				items: [item1, item2, sharingItem],
+			});
+
+			expect(getByLabelText('show-comments')).toBeInTheDocument();
+
+			fireEvent.click(getByLabelText('previous'));
+
+			expect(queryByText('show-comments')).not.toBeInTheDocument();
+
+			fireEvent.click(getByLabelText('previous'));
+
+			expect(getByLabelText('show-comments')).toBeInTheDocument();
+		});
 	});
 });

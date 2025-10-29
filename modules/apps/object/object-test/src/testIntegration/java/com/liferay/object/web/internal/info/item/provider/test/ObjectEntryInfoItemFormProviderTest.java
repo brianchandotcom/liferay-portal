@@ -127,6 +127,8 @@ public class ObjectEntryInfoItemFormProviderTest {
 					_createObjectFieldSetting(
 						"fileSource", "documentsAndMedia"),
 					_createObjectFieldSetting("maximumFileSize", "100"))
+			).system(
+				true
 			).build(),
 			new PicklistObjectFieldBuilder(
 			).labelMap(

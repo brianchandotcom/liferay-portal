@@ -779,6 +779,24 @@ components:
             description:
                 Represent a page element definition of a drop zone.
             type: object
+        EmbeddedMessageFormContainerSubmissionResult:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        message:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The localized submission of message type.
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
+            description:
+                The definition of a submission result of type embedded message.
+            type: object
         EmptyCollectionConfig:
             properties:
                 displayMessage:
@@ -2219,29 +2237,6 @@ components:
                     description:
                         A valid external identifier to reference this page.
                     type: string
-        MessageFormContainerSubmissionResult:
-            # @review
-            allOf:
-                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
-                -   properties:
-                        message:
-                            $ref: "#/components/schemas/FragmentInlineValue"
-                            # @review
-                            description:
-                                The localized submission of message type.
-                        messageType:
-                            # @review
-                            description:
-                                The message form submission type (embedded, none).
-                            enum: [Embedded, None]
-                            type: string
-                        successNotificationMessage:
-                            $ref: "#/components/schemas/SuccessNotificationMessage"
-                            # @review
-                            description:
-                                The success notification message.
-            description:
-                The definition of a submission result of type message.
             type: object
         ModulePageElementDefinition:
             allOf:
@@ -2529,6 +2524,19 @@ components:
                     # @review
                     description:
                         The localized text to display when an action is executed.
+            type: object
+        NotificationMessageFormContainerSubmissionResult:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
+            description:
+                The definition of a submission result of type notification message.
             type: object
         OpenGraphSettings:
             # @review
@@ -3467,7 +3475,8 @@ components:
                 The form container success form container submission result.
             discriminator:
                 mapping:
-                    MessageFormContainerSubmissionResult : "#/components/schemas/MessageFormContainerSubmissionResult"
+                    EmbeddedMessageFormContainerSubmissionResult : "#/components/schemas/EmbeddedMessageFormContainerSubmissionResult"
+                    NotificationMessageFormContainerSubmissionResult : "#/components/schemas/NotificationMessageFormContainerSubmissionResult"
                     SitePageFormContainerSubmissionResult: "#/components/schemas/SitePageFormContainerSubmissionResult"
                     URLFormContainerSubmissionResult: "#/components/schemas/URLFormContainerSubmissionResult"
                 propertyName: type
@@ -3476,7 +3485,7 @@ components:
                     # @review
                     description:
                         The form container success form container submission result type.
-                    enum: [MessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
+                    enum: [EmbeddedMessageFormContainerSubmissionResult,NotificationMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
                     type: string
             type: object
         SuccessNotificationMessage:

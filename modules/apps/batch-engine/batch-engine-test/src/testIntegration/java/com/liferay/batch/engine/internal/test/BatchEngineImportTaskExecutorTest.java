@@ -110,6 +110,17 @@ public class BatchEngineImportTaskExecutorTest
 	}
 
 	@Test
+	public void testCreateBlogPostingsFromCSVFileWithBOM() throws Exception {
+		_importBlogPostings(
+			BatchEngineTaskOperation.CREATE,
+			_getBlogPostingsCSVCreateContent(
+				TestPropsValues.getGroupId(), _BOM_FIELD_NAMES),
+			"CSV", _fieldNamesMappingMap);
+
+		_assertCreatedBlogPostings();
+	}
+
+	@Test
 	public void testCreateBlogPostingsFromCSVFileWithFieldMappings()
 		throws Exception {
 
@@ -1393,6 +1404,13 @@ public class BatchEngineImportTaskExecutorTest
 	};
 
 	private static final int _BATCH_SIZE = 10;
+
+	private static final byte[] _BOM = {(byte)0xEF, (byte)0xBB, (byte)0xBF};
+
+	private static final String[] _BOM_FIELD_NAMES = {
+		new String(_BOM) + "alternativeHeadline1", "articleBody1",
+		"datePublished1", "headline1", "siteId1"
+	};
 
 	private static final String
 		_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL =

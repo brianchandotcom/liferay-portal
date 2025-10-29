@@ -36,6 +36,10 @@ describe('NewSpace', () => {
 		apiPostSpy = jest
 			.spyOn(ApiHelper, 'post')
 			.mockResolvedValue({data: {id: 'fake-id'}, error: null});
+
+		global.Liferay.ThemeDisplay.getPathFriendlyURLPublic = jest
+			.fn()
+			.mockReturnValue('https://localhost/web');
 	});
 
 	afterEach(() => {
@@ -58,6 +62,10 @@ describe('NewSpace', () => {
 		expect(
 			screen.getByRole('button', {name: 'continue'})
 		).toBeInTheDocument();
+
+		const cancelLink = screen.getByRole('link', {name: 'cancel'});
+		expect(cancelLink).toBeInTheDocument();
+		expect(cancelLink).toHaveAttribute('href', 'https://localhost/web/cms');
 	});
 
 	it('disables continue button until it has a value', async () => {

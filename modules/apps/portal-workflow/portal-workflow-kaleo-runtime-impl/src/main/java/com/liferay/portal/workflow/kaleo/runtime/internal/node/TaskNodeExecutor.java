@@ -8,6 +8,7 @@ package com.liferay.portal.workflow.kaleo.runtime.internal.node;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
 import com.liferay.portal.workflow.kaleo.definition.DurationScale;
@@ -108,7 +109,8 @@ public class TaskNodeExecutor extends BaseNodeExecutor {
 		List<PathElement> remainingPathElements) {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				currentKaleoNode.getCompanyId(), "LPD-62272")) {
+				currentKaleoNode.getCompanyId(), "LPD-62272") ||
+			PortalRunMode.isTestMode()) {
 
 			return;
 		}

@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -423,6 +424,15 @@ public class ActionUtil {
 		}
 		else if (Objects.equals(firstParameterName, "id")) {
 			parameterMap.put(firstParameterName, id);
+		}
+		else if ((siteId != null) &&
+				 Objects.equals(
+					 firstParameterName, "siteExternalReferenceCode")) {
+
+			Group group = GroupServiceUtil.getGroup(siteId);
+
+			parameterMap.put(
+				firstParameterName, group.getExternalReferenceCode());
 		}
 		else if ((siteId != null) &&
 				 Objects.equals(firstParameterName, "siteId")) {

@@ -2,14 +2,14 @@ components:
     schemas:
         Task:
             properties:
-                actions:
-                    additionalProperties:
-                        additionalProperties:
-                            type: string
-                        type: object
-                    readOnly: true
+                context:
+                    additionalProperties: true
                     type: object
+                    writeOnly: true
                 externalReferenceCode:
+                    readOnly: true
+                    type: string
+                type:
                     type: string
             type: object
 info:

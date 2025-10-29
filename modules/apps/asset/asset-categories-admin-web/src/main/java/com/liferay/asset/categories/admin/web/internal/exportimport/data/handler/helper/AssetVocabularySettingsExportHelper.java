@@ -13,6 +13,8 @@ import com.liferay.asset.kernel.model.ClassTypeReader;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.model.ClassName;
+import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -62,6 +64,13 @@ public class AssetVocabularySettingsExportHelper
 				long classNameId = getClassNameId(classNameIdAndClassTypePK);
 
 				if (classNameId == AssetCategoryConstants.ALL_CLASS_NAME_ID) {
+					continue;
+				}
+
+				ClassName className = ClassNameLocalServiceUtil.fetchClassName(
+					classNameId);
+
+				if (className == null) {
 					continue;
 				}
 

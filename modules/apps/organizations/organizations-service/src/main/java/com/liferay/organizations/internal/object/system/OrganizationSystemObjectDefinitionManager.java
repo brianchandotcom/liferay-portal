@@ -208,7 +208,14 @@ public class OrganizationSystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		throw new UnsupportedOperationException();
+		OrganizationResource organizationResource = _buildOrganizationResource(
+			true);
+
+		Organization organization = organizationResource.patchOrganization(
+			String.valueOf(primaryKey), _toOrganization(values));
+
+		setExtendedProperties(
+			Organization.class.getName(), organization, user, values);
 	}
 
 	private OrganizationResource _buildOrganizationResource(

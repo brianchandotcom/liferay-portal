@@ -248,14 +248,14 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			serviceRegistrationsMap.put(
 				DBPartitionUtil.getPartitionKey(objectDefinitionId),
 				_deploy(
-					objectFieldsMap.getOrDefault(
+					objectActionsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
 					objectDefinition,
+					objectFieldsMap.getOrDefault(
+						objectDefinitionId, Collections.emptyList()),
 					objectLayoutsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
-					objectRelationshipsMap,
-					objectActionsMap.getOrDefault(
-						objectDefinitionId, Collections.emptyList())));
+					objectRelationshipsMap));
 		}
 
 		return serviceRegistrationsMap;
@@ -283,10 +283,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
-		List<ObjectField> attachmentObjectFields,
-		ObjectDefinition objectDefinition, List<ObjectLayout> objectLayouts,
-		Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
-		List<ObjectAction> standaloneObjectActions) {
+		List<ObjectAction> objectActions, ObjectDefinition objectDefinition,
+		List<ObjectField> objectFields, List<ObjectLayout> objectLayouts,
+		Map<Long, List<ObjectRelationship>> objectRelationshipsMap) {
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			return Collections.emptyList();
@@ -294,10 +293,9 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
-				attachmentObjectFields, _objectActionLocalService,
-				objectDefinition, _objectFieldLocalService,
-				_portletLocalService, _resourceActions,
-				standaloneObjectActions);
+				_objectActionLocalService, objectActions, objectDefinition,
+				_objectFieldLocalService, objectFields, _portletLocalService,
+				_resourceActions);
 		}
 		catch (Exception exception) {
 			return ReflectionUtil.throwException(exception);

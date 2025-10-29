@@ -1001,8 +1001,8 @@ public class ObjectFieldLocalServiceImpl
 
 			try {
 				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
-					null, null, objectDefinition, objectFieldLocalService,
-					_portletLocalService, _resourceActions, null);
+					null, null, objectDefinition, objectFieldLocalService, null,
+					_portletLocalService, _resourceActions);
 
 				_updateResourcePermissions(
 					objectField.getAttachmentDownloadActionKey(),

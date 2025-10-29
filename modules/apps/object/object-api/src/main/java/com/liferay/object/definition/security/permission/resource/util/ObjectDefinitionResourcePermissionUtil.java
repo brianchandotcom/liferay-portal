@@ -37,18 +37,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ObjectDefinitionResourcePermissionUtil {
 
 	public static void populateResourceActions(
-			List<ObjectField> attachmentObjectFields,
 			ObjectActionLocalService objectActionLocalService,
-			ObjectDefinition objectDefinition,
+			List<ObjectAction> objectActions, ObjectDefinition objectDefinition,
 			ObjectFieldLocalService objectFieldLocalService,
+			List<ObjectField> objectFields,
 			PortletLocalService portletLocalService,
-			ResourceActions resourceActions,
-			List<ObjectAction> standaloneObjectActions)
+			ResourceActions resourceActions)
 		throws Exception {
 
 		Document document = _readDocument(
-			attachmentObjectFields, objectActionLocalService, objectDefinition,
-			objectFieldLocalService, standaloneObjectActions);
+			objectActionLocalService, objectActions, objectDefinition,
+			objectFieldLocalService, objectFields);
 
 		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 				objectDefinition.getCompanyId())) {
@@ -84,7 +83,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		if (document == null) {
 			document = _readDocument(
-				null, objectActionLocalService, objectDefinition,
+				objectActionLocalService, null, objectDefinition,
 				objectFieldLocalService, null);
 		}
 
@@ -95,21 +94,21 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 	private static String _getObjectActionPermissionKeys(
 		ObjectActionLocalService objectActionLocalService,
-		long objectDefinitionId, List<ObjectAction> standaloneObjectActions) {
+		List<ObjectAction> objectActions, long objectDefinitionId) {
 
-		if (standaloneObjectActions == null) {
-			if (objectActionLocalService == null) {
-				return null;
-			}
-
-			standaloneObjectActions = objectActionLocalService.getObjectActions(
-				objectDefinitionId,
-				ObjectActionTriggerConstants.KEY_STANDALONE);
+		if (objectActionLocalService == null) {
+			return null;
 		}
 
 		String objectActionPermissionKeys = StringPool.BLANK;
 
-		for (ObjectAction objectAction : standaloneObjectActions) {
+		if (objectActions == null) {
+			objectActions = objectActionLocalService.getObjectActions(
+				objectDefinitionId,
+				ObjectActionTriggerConstants.KEY_STANDALONE);
+		}
+
+		for (ObjectAction objectAction : objectActions) {
 			objectActionPermissionKeys = StringBundler.concat(
 				objectActionPermissionKeys, "<action-key>",
 				objectAction.getName(), "</action-key>");
@@ -119,16 +118,17 @@ public class ObjectDefinitionResourcePermissionUtil {
 	}
 
 	private static String _getObjectFieldPermissionKeys(
-			List<ObjectField> attachmentObjectFields, long objectDefinitionId,
-			ObjectFieldLocalService objectFieldLocalService)
+			long objectDefinitionId,
+			ObjectFieldLocalService objectFieldLocalService,
+			List<ObjectField> objectFields)
 		throws Exception {
 
 		if (objectFieldLocalService == null) {
 			return null;
 		}
 
-		if (attachmentObjectFields == null) {
-			attachmentObjectFields =
+		if (objectFields == null) {
+			objectFields =
 				objectFieldLocalService.getObjectFieldsByBusinessType(
 					objectDefinitionId,
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
@@ -136,7 +136,7 @@ public class ObjectDefinitionResourcePermissionUtil {
 
 		String objectFieldPermissionKeys = StringPool.BLANK;
 
-		for (ObjectField objectField : attachmentObjectFields) {
+		for (ObjectField objectField : objectFields) {
 			objectFieldLocalService.
 				addOrUpdateObjectFieldResourceActionPLOEntries(objectField);
 
@@ -189,16 +189,15 @@ public class ObjectDefinitionResourcePermissionUtil {
 	}
 
 	private static Document _readDocument(
-			List<ObjectField> attachmentObjectFields,
 			ObjectActionLocalService objectActionLocalService,
-			ObjectDefinition objectDefinition,
+			List<ObjectAction> objectActions, ObjectDefinition objectDefinition,
 			ObjectFieldLocalService objectFieldLocalService,
-			List<ObjectAction> standaloneObjectActions)
+			List<ObjectField> objectFields)
 		throws Exception {
 
 		String objectActionPermissionKeys = _getObjectActionPermissionKeys(
-			objectActionLocalService, objectDefinition.getObjectDefinitionId(),
-			standaloneObjectActions);
+			objectActionLocalService, objectActions,
+			objectDefinition.getObjectDefinitionId());
 
 		String objectFieldPermissionKeys = StringPool.BLANK;
 
@@ -206,9 +205,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 				objectDefinition.getCompanyId(), "LPD-17564")) {
 
 			objectFieldPermissionKeys = _getObjectFieldPermissionKeys(
-				attachmentObjectFields,
 				objectDefinition.getObjectDefinitionId(),
-				objectFieldLocalService);
+				objectFieldLocalService, objectFields);
 		}
 
 		String resourceActionsFileName =

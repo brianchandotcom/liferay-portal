@@ -74,9 +74,10 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListener
 					try {
 						ObjectDefinitionResourcePermissionUtil.
 							populateResourceActions(
-								Collections.singletonList(objectField), null,
-								objectDefinition, _objectFieldLocalService,
-								_portletLocalService, _resourceActions, null);
+								null, null, objectDefinition,
+								_objectFieldLocalService,
+								Collections.singletonList(objectField),
+								_portletLocalService, _resourceActions);
 
 						_objectFieldLocalService.
 							addOrUpdateObjectFieldResourceActionPLOEntries(

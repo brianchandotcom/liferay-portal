@@ -72,6 +72,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -195,9 +196,46 @@ public class ObjectDefinitionResourceTest
 				this, "objectDefinitionResource", builder.build());
 		}
 
+		ObjectDefinition modifiableSystemObjectDefinition1 =
+			_addObjectDefinition(_randomModifiableSystemObjectDefinition());
+		ObjectDefinition modifiableSystemObjectDefinition2 =
+			_addObjectDefinition(
+				_randomModifiableSystemObjectDefinition(
+					new ObjectDefinitionSetting() {
+						{
+							name =
+								ObjectDefinitionSettingConstants.NAME_VISIBLE;
+							value = StringPool.TRUE;
+						}
+					}));
+
 		Page<ObjectDefinition> page =
 			objectDefinitionResource.getObjectDefinitionsPage(
-				null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
+				null, null, "hidden eq false", null, null);
+
+		Assert.assertFalse(
+			_contains(
+				modifiableSystemObjectDefinition1,
+				(List<ObjectDefinition>)page.getItems()));
+		Assert.assertTrue(
+			_contains(
+				modifiableSystemObjectDefinition2,
+				(List<ObjectDefinition>)page.getItems()));
+
+		page = objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, "hidden eq true", null, null);
+
+		Assert.assertTrue(
+			_contains(
+				modifiableSystemObjectDefinition1,
+				(List<ObjectDefinition>)page.getItems()));
+		Assert.assertFalse(
+			_contains(
+				modifiableSystemObjectDefinition2,
+				(List<ObjectDefinition>)page.getItems()));
+
+		page = objectDefinitionResource.getObjectDefinitionsPage(
+			null, null, "status/any(k:k eq 2)", Pagination.of(1, 20), null);
 
 		long totalCount = page.getTotalCount();
 
@@ -1838,6 +1876,16 @@ public class ObjectDefinitionResourceTest
 			new HashSet<>(Arrays.asList(workflowDefinitionLinks)));
 	}
 
+	private boolean _contains(
+		ObjectDefinition expectedObjectDefinition,
+		List<ObjectDefinition> objectDefinitions) {
+
+		return ListUtil.exists(
+			objectDefinitions,
+			objectDefinition -> Objects.equals(
+				objectDefinition.getId(), expectedObjectDefinition.getId()));
+	}
+
 	private ObjectRelationship _createObjectRelationship(
 		ObjectDefinition objectDefinition1, ObjectDefinition objectDefinition2,
 		ObjectRelationship.Type type) {
@@ -1860,7 +1908,8 @@ public class ObjectDefinitionResourceTest
 		return objectRelationship;
 	}
 
-	private ObjectDefinition _randomModifiableSystemObjectDefinition()
+	private ObjectDefinition _randomModifiableSystemObjectDefinition(
+			ObjectDefinitionSetting... objectDefinitionSettings)
 		throws Exception {
 
 		ObjectDefinition objectDefinition = randomObjectDefinition();
@@ -1874,6 +1923,7 @@ public class ObjectDefinitionResourceTest
 			randomObjectDefinitionExternalReferenceCode);
 
 		objectDefinition.setName("Test" + RandomTestUtil.randomString());
+		objectDefinition.setObjectDefinitionSettings(objectDefinitionSettings);
 		objectDefinition.setObjectFields(
 			new ObjectField[] {
 				new ObjectField() {

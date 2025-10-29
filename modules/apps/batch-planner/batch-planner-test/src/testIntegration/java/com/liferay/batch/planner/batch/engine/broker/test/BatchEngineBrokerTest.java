@@ -1144,6 +1144,31 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
+	private List<String> _normalizeCSVRecordStrings(
+		List<String> csvRecordStrings) {
+
+		List<String> normalizedCSVRecordStrings = new ArrayList<>(
+			csvRecordStrings.size());
+
+		for (String csvRecordString : csvRecordStrings) {
+			if (!Validator.isBlank(csvRecordString) &&
+				_htmlTagPattern.matcher(
+					csvRecordString
+				).find()) {
+
+				csvRecordString = _htmlBreakPattern.matcher(
+					csvRecordString
+				).replaceAll(
+					StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
+				);
+			}
+
+			normalizedCSVRecordStrings.add(csvRecordString);
+		}
+
+		return normalizedCSVRecordStrings;
+	}
+
 	private List<List<String>> _normalizeCSVRecordStringsList(
 		List<CSVRecord> csvRecords) {
 
@@ -1151,35 +1176,13 @@ public class BatchEngineBrokerTest {
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			List<String> csvRecordStrings = _normalizeValues(
+			List<String> csvRecordStrings = _normalizeCSVRecordStrings(
 				csvRecord.toList());
 
 			normalizedCSVRecordStringsList.add(csvRecordStrings);
 		}
 
 		return normalizedCSVRecordStringsList;
-	}
-
-	private List<String> _normalizeValues(List<String> values) {
-		List<String> normalizedValues = new ArrayList<>(values.size());
-
-		for (String value : values) {
-			if (!Validator.isBlank(value) &&
-				_htmlTagPattern.matcher(
-					value
-				).find()) {
-
-				value = _htmlBreakPattern.matcher(
-					value
-				).replaceAll(
-					StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
-				);
-			}
-
-			normalizedValues.add(value);
-		}
-
-		return normalizedValues;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

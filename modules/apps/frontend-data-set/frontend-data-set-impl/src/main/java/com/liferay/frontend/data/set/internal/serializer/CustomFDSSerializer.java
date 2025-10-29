@@ -1070,7 +1070,17 @@ public class CustomFDSSerializer
 		return JSONUtil.put(
 			"clientExtensionFilterURL", fdsFilterCET.getURL()
 		).put(
-			"entityFieldType", FDSEntityFieldTypes.STRING
+			"entityFieldType",
+			() -> {
+				if (Validator.isNotNull(properties.get("entityFieldType"))) {
+					return String.valueOf(properties.get("entityFieldType"));
+				}
+
+				return FDSEntityFieldTypes.STRING;
+			}
+		).put(
+			"entityFieldTypeCollection",
+			(boolean)properties.get("entityFieldTypeCollection")
 		).put(
 			"id", fieldName
 		).put(
@@ -1139,6 +1149,9 @@ public class CustomFDSSerializer
 			Map<String, Object> properties, String sourceType)
 		throws Exception {
 
+		String entityFieldType = String.valueOf(
+			properties.get("entityFieldType"));
+
 		if (Objects.equals(
 				sourceType, FDSEntryItemImportPolicy.ITEM_PROXY.toString())) {
 
@@ -1162,19 +1175,28 @@ public class CustomFDSSerializer
 		).put(
 			"entityFieldType",
 			() -> {
-				if (_isCollection(
-						String.valueOf(properties.get("fieldName")),
-						sourceType)) {
-
-					return FDSEntityFieldTypes.COLLECTION;
+				if (Validator.isNotNull(entityFieldType)) {
+					return entityFieldType;
 				}
 
 				return FDSEntityFieldTypes.STRING;
 			}
 		).put(
+			"entityFieldTypeCollection",
+			() -> {
+				if(_isCollection(
+						String.valueOf(properties.get("fieldName")),
+						sourceType) ||
+					!(boolean)properties.get("entityFieldTypeCollection")) {
+
+					return FDSEntityFieldTypes.COLLECTION;
+				}
+				return (boolean)properties.get("entityFieldTypeCollection");
+			}
+		).put(
 			"id",
 			() -> {
-				if (!Objects.equals(sourceType, "OBJECT_PICKLIST")) {
+				if (!Objects.equals(sourceType, "OBJECT_PICKLIST") || Validator.isNotNull(entityFieldType)) {
 					return fieldName;
 				}
 
@@ -1250,7 +1272,17 @@ public class CustomFDSSerializer
 					listTypeEntry.getName(
 						PortalUtil.getLocale(httpServletRequest))
 				).put(
-					"value", listTypeEntry.getKey()
+					"value",
+					() -> {
+						if (Validator.isNotNull(entityFieldType) &&
+							StringUtil.equalsIgnoreCase(
+								entityFieldType, FDSEntityFieldTypes.INTEGER)) {
+
+							return Integer.valueOf(listTypeEntry.getKey());
+						}
+
+						return listTypeEntry.getKey();
+					}
 				))
 		).put(
 			"preloadedData",
@@ -1281,7 +1313,19 @@ public class CustomFDSSerializer
 								listTypeEntry.getName(
 									PortalUtil.getLocale(httpServletRequest))
 							).put(
-								"value", listTypeEntry.getKey()
+								"value",
+								() -> {
+									if (Validator.isNotNull(entityFieldType) &&
+										StringUtil.equalsIgnoreCase(
+											entityFieldType,
+											FDSEntityFieldTypes.INTEGER)) {
+
+										return Integer.valueOf(
+											listTypeEntry.getKey());
+									}
+
+									return listTypeEntry.getKey();
+								}
 							));
 					}
 				}

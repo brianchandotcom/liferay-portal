@@ -274,3 +274,99 @@ test(
 		await picklistBuilderPage.deletePicklist(picklist.id);
 	}
 );
+
+test(
+	'Editing a saved draft structure regenerates correctly its name',
+	{tag: '@LPD-69987'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+
+		// Create a structure and save it as draft
+
+		await structureBuilderPage.goToCreateStructure();
+
+		const structureTitle = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label: structureTitle,
+		});
+
+		await structureBuilderPage.saveStructure();
+
+		// Edit the structure and change the title
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Edit',
+			filter: structureTitle,
+		});
+
+		const newStructureTitle = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label: newStructureTitle,
+		});
+
+		// Check that the name has been changed correctly and publish it
+
+		await expect(page.getByLabel('Content Structure Name')).toHaveValue(
+			newStructureTitle
+		);
+
+		await structureBuilderPage.publishStructure();
+
+		// Delete the structure
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: newStructureTitle,
+		});
+	}
+);
+
+test(
+	'When a published structure is republished, the name is not saved again',
+	{tag: '@LPD-69987'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+
+		// Create a structure and publish it
+
+		await structureBuilderPage.goToCreateStructure();
+
+		const structureTitle = `Structure${getRandomInt()}`;
+
+		await structureBuilderPage.changeStructureSettings({
+			label: structureTitle,
+		});
+
+		await structureBuilderPage.publishStructure();
+
+		// Edit the structure and change the title
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Edit',
+			filter: structureTitle,
+		});
+
+		// Publish the structure and check that the "This name is already in use" error is not present
+
+		await structureBuilderPage.publishStructure();
+
+		await expect(
+			page.getByText('This name is already in use. Try another one.')
+		).not.toBeVisible();
+
+		// Delete the structure
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Delete',
+			filter: structureTitle,
+		});
+	}
+);

@@ -29,7 +29,13 @@ export class StructuresPage {
 		return this.dataSetFragmentPage.getRow(filter);
 	}
 
-	async execItemAction({action, filter}: {action: 'Delete'; filter: string}) {
+	async execItemAction({
+		action,
+		filter,
+	}: {
+		action: 'Delete' | 'Edit';
+		filter: string;
+	}) {
 		await this.dataSetFragmentPage.execItemAction({
 			action,
 			filter,

@@ -95,6 +95,8 @@ public interface ObjectDefinition
 
 	public boolean isUnmodifiableSystemObject();
 
+	public boolean isVisible();
+
 	public void setObjectDefinitionSettings(
 		java.util.List<ObjectDefinitionSetting> objectDefinitionSettings);
 

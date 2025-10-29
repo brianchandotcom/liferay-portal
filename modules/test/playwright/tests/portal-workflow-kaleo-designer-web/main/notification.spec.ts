@@ -6,7 +6,9 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {rolesPagesTest} from '../../../fixtures/rolesPagesTest';
 import {workflowPagesTest} from '../../../fixtures/workflowPagesTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
@@ -14,7 +16,13 @@ import countSubstringOccurrences from './utils/countSubstringOccurrences';
 import {getWorkflowDefinition} from './utils/getWorkflowDefinition';
 import postSingleApproverCopy from './utils/postSingleApproverCopy';
 
-export const test = mergeTests(apiHelpersTest, loginTest(), workflowPagesTest);
+export const test = mergeTests(
+	apiHelpersTest,
+	dataApiHelpersTest,
+	loginTest(),
+	rolesPagesTest,
+	workflowPagesTest
+);
 
 const roleTypeNotification = {
 	notificationDescription: 'notificationDescription0' + getRandomInt(),
@@ -142,59 +150,96 @@ test('cannot save a workflow definition with a scripted recipient notification w
 	await expect(page.getByText('Error Updating Definition')).toBeVisible();
 });
 
-test('create a notification using role type', async ({
+test('create a notification using role type with a created role', async ({
+	apiHelpers,
 	diagramViewPage,
 	nodePropertiesSidebarPage,
 	notificationSectionPage,
 	processBuilderPage,
+	rolePage,
+	rolesPage,
 }) => {
-	await processBuilderPage.goto();
+	const roleName = 'NewRole';
 
-	await processBuilderPage.clickWorkflowDefinitionName(
-		workflowDefinitionName
-	);
+	const newRoleTypeNotification = {
+		...roleTypeNotification,
+		recipientTypeData: {
+			autocreate: false,
+			roleName,
+			roleType: 'Regular',
+		},
+	};
 
-	await diagramViewPage.clickNode('review');
+	await test.step('Create a new role with the name', async () => {
+		await rolesPage.goto();
 
-	await nodePropertiesSidebarPage.deleteNotifications();
+		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
 
-	await nodePropertiesSidebarPage.createNotification(roleTypeNotification);
+		await expect(async () => {
+			await rolesPage.rolesTable.newButton.click();
 
-	await processBuilderPage.switchToSourceViewAndBackToDiagram();
+			await expect(rolePage.keyInput).toBeVisible();
+		}).toPass();
 
-	await diagramViewPage.clickNode('review');
+		await rolePage.addRole(apiHelpers, {name: roleName, title: roleName});
+		await rolePage.backButton.click();
+	});
+
+	await test.step('Go to process builder and create a notification with the role created', async () => {
+		await processBuilderPage.goto();
+
+		await processBuilderPage.clickWorkflowDefinitionName(
+			workflowDefinitionName
+		);
+
+		await diagramViewPage.clickNode('review');
+
+		await nodePropertiesSidebarPage.deleteNotifications();
+
+		await nodePropertiesSidebarPage.createNotification(
+			newRoleTypeNotification
+		);
+	});
 
 	const notificationEntry = processBuilderPage.page.getByRole('link', {
 		name: 'Role Type Notification',
 	});
 
-	await expect(notificationEntry).toBeVisible();
+	await test.step('Switch between source and diagram views and check the value', async () => {
+		await processBuilderPage.switchToSourceViewAndBackToDiagram();
 
-	await notificationEntry.click();
+		await diagramViewPage.clickNode('review');
 
-	await notificationSectionPage.assertNotificationSectionFields(
-		0,
-		roleTypeNotification
-	);
+		await expect(notificationEntry).toBeVisible();
 
-	await diagramViewPage.saveWorkflowDefinition();
+		await notificationEntry.click();
 
-	await diagramViewPage.goBack();
+		await notificationSectionPage.assertNotificationSectionFields(
+			0,
+			newRoleTypeNotification
+		);
+	});
 
-	await processBuilderPage.clickWorkflowDefinitionName(
-		workflowDefinitionName
-	);
+	await test.step('Save the workflow and see if the notification was saved correctly', async () => {
+		await diagramViewPage.saveWorkflowDefinition();
 
-	await diagramViewPage.clickNode('review');
+		await diagramViewPage.goBack();
 
-	await expect(notificationEntry).toBeVisible();
+		await processBuilderPage.clickWorkflowDefinitionName(
+			workflowDefinitionName
+		);
 
-	await notificationEntry.click();
+		await diagramViewPage.clickNode('review');
 
-	await notificationSectionPage.assertNotificationSectionFields(
-		0,
-		roleTypeNotification
-	);
+		await expect(notificationEntry).toBeVisible();
+
+		await notificationEntry.click();
+
+		await notificationSectionPage.assertNotificationSectionFields(
+			0,
+			newRoleTypeNotification
+		);
+	});
 });
 
 test('notification receptionType on source remains the same after clicking on notification link on diagram', async ({

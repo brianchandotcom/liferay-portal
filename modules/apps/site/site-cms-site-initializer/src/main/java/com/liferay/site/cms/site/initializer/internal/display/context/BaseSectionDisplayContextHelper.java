@@ -69,6 +69,12 @@ public class BaseSectionDisplayContextHelper {
 		return sb.toString();
 	}
 
+	public String appendStatus(String filterString) {
+		return StringBundler.concat(
+			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
+			")");
+	}
+
 	private ObjectEntryFolder _getObjectEntryFolder(
 		long companyId, Object object,
 		String rootObjectEntryFolderExternalReferenceCode) {

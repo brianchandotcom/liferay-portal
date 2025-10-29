@@ -113,10 +113,6 @@ public class ViewAllSpacesDisplayContext {
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				"#", "document", "sampleBulkAction",
-				LanguageUtil.get(_httpServletRequest, "label"), null, null,
-				null),
-			new FDSActionDropdownItem(
 				StringPool.BLANK, "password-policies", "permissions",
 				LanguageUtil.get(_httpServletRequest, "permissions"), null,
 				null, null),

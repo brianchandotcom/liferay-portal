@@ -113,10 +113,10 @@ export default class PublisherAsset {
 
 			await HeadlessPublisherAssetses.createPublisherAsset({
 				name: this.product.name.en_US,
+				[productRelationshipName]: this.product.id as unknown as string,
 				publisherAssetType: PICK_LIST_ASSET_TYPE,
 				r_accountEntryToPublisherAssets_accountEntryId:
 					Liferay.CommerceContext.account?.accountId,
-				[productRelationshipName]: this.product.id as unknown as string,
 				sourceCode: await this.getPublisherAssetDocumentId(appFolderId),
 				version: this.versions,
 			});

@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 
@@ -124,7 +124,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_CONTAINER, exportedLayout,
 			_layoutStructureProvider,
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				exportedLayout.getPlid()));
 
 		exportImportLayouts(
@@ -136,7 +136,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		LayoutStructure importedLayoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
 				importedLayout.getPlid(),
-				SegmentsExperienceLocalServiceUtil.
+				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
 
 		LayoutStructureItem mainLayoutStructureItem =
@@ -197,7 +197,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
 			_layoutStructureProvider,
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout1.getPlid()));
 
 		exportImportLayouts(
@@ -210,7 +210,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		LayoutStructure importedLayoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
 				importedLayout1.getPlid(),
-				SegmentsExperienceLocalServiceUtil.
+				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(
 						importedLayout1.getPlid()));
 
@@ -270,7 +270,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 			).toString(),
 			LayoutDataItemTypeConstants.TYPE_FORM, layout1,
 			_layoutStructureProvider,
-			SegmentsExperienceLocalServiceUtil.fetchDefaultSegmentsExperienceId(
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
 				layout1.getPlid()));
 
 		exportImportLayouts(
@@ -282,7 +282,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 		LayoutStructure importedLayoutStructure =
 			_layoutStructureProvider.getLayoutStructure(
 				importedLayout.getPlid(),
-				SegmentsExperienceLocalServiceUtil.
+				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(importedLayout.getPlid()));
 
 		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
@@ -325,5 +325,8 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

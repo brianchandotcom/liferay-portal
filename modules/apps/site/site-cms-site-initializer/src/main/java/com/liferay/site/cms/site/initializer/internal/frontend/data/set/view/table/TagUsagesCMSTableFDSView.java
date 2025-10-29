@@ -17,56 +17,44 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Luca Pellizzon
+ * @author Brooke Dalton
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.BULK_ACTION_TASK_REPORT_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.TAG_USAGES,
 	service = FDSView.class
 )
-public class BulkActionTaskReportTableFDSView extends BaseCMSTableFDSView {
+public class TagUsagesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			fdsTableSchemaBuilderFactory.create();
+			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"id", "id",
+			"embedded.title", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink"
+				"title"
 			).setSortable(
 				true
 			)
 		).add(
-			"actionName", "action-name",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"embedded.scopeKey", "space",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"spaceTableCellRenderer")
 		).add(
-			"externalReferenceCode", "external-reference-code",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
 		).add(
-			addDateFDSTableSchemaField("dateCreated", "create-date")
+			addDateFDSTableSchemaField("dateModified", "modified")
 		).add(
-			addDateFDSTableSchemaField("completionDate", "completed-date")
-		).add(
-			"creator.name", "author-name",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"type", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"numberOfItems", "number-of-items",
-			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
-		).add(
-			"executionStatus", "execution-status"
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 
-	@Override
-	public boolean isDefault() {
-		return true;
-	}
-
 	@Reference
-	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 }

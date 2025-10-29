@@ -5,19 +5,25 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
+import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
+import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Roberto Díaz
+ * @author Pedro Leite
  */
-public abstract class BaseContentsSectionTableFDSView
-	extends BaseCMSTableFDSView {
+@Component(
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
+	service = FDSView.class
+)
+public class RecycleBinSectionCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -34,23 +40,17 @@ public abstract class BaseContentsSectionTableFDSView
 				true
 			)
 		).add(
-			"embedded.systemProperties.objectDefinitionBrief.label", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"assetTypeTableCellRenderer")
+			"embedded.systemProperties.objectDefinitionBrief.label", "type"
 		).add(
 			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"spaceTableCellRenderer")
 		).add(
-			"embedded.creator.name", "author",
+			addDateFDSTableSchemaField("embedded.removedDate", "removed-date")
+		).add(
+			"embedded.removedBy.name", "removed-by",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"authorTableCellRenderer")
-		).add(
-			addDateFDSTableSchemaField("dateModified", "modified")
-		).add(
-			"embedded.status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"statusTableCellRenderer")
 		).build();
 	}
 

@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FDSView.class
 )
 public class ContentAndFileSectionsTableFDSView
-	extends BaseContentsSectionTableFDSView {
+	extends BaseContentsSectionCMSTableFDSView {
 
 	@Override
 	public boolean isDefault() {

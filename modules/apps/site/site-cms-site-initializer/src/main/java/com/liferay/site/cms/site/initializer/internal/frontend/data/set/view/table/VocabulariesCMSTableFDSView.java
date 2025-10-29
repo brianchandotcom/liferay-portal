@@ -9,7 +9,6 @@ import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
-import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 
 import java.util.Locale;
 
@@ -17,13 +16,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marco Leo
+ * @author Noor Najjar
  */
-@Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SPACES_SECTION,
-	service = FDSView.class
-)
-public class AllSpacesSectionTableFDSView extends BaseCMSTableFDSView {
+@Component(property = "frontend.data.set.name=test", service = FDSView.class)
+public class VocabulariesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -31,18 +27,34 @@ public class AllSpacesSectionTableFDSView extends BaseCMSTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "name",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"spaceTableCellRenderer"
+			"name", "title",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"edit"
+			).setContentRenderer(
+				"actionLink"
 			).setSortable(
 				true
 			)
 		).add(
-			"numberOfUserAccounts", "num-of-users"
+			"numberOfTaxonomyCategories", "categories",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"view-categories"
+			).setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
-			"numberOfUserGroups", "num-of-user-groups"
+			"assetTypes", "type",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"customVocabularyRenderer"
+			).setSortable(
+				true
+			)
 		).add(
-			"numberOfConnectedSites", "num-of-connections"
+			"scopeKey", "space",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"spaceTableCellRenderer")
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();

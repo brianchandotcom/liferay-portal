@@ -1,6 +1,7 @@
 /**
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
- * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR
+ * LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
@@ -17,13 +18,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Sam Ziemer
+ * @author Cheryl Tang
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.STRUCTURES_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CATEGORIES,
 	service = FDSView.class
 )
-public class StructuresSectionTableFDSView extends BaseCMSTableFDSView {
+public class CategoriesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -31,32 +32,25 @@ public class StructuresSectionTableFDSView extends BaseCMSTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"label", "name",
+			"name", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"edit"
 			).setContentRenderer(
-				"simpleActionLinkTableCellRenderer"
+				"actionLink"
 			).setSortable(
 				true
 			)
 		).add(
-			"objectFolderExternalReferenceCode", "type",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"typeTableCellRenderer")
-		).add(
-			"scope", "space",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"structureScopeTableCellRenderer")
-		).add(
-			"creator.name", "author",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"authorTableCellRenderer")
+			"numberOfTaxonomyCategories", "subcategories",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"view-categories"
+			).setContentRenderer(
+				"actionLink"
+			).setSortable(
+				true
+			)
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
-		).add(
-			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
 		).build();
 	}
 

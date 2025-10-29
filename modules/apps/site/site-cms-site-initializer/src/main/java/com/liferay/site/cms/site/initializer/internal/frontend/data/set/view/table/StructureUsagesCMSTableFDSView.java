@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.STRUCTURE_USAGES,
 	service = FDSView.class
 )
-public class StructureUsagesTableFDSView extends BaseCMSTableFDSView {
+public class StructureUsagesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

@@ -17,44 +17,56 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pei-Jung Lan
+ * @author Luca Pellizzon
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CATEGORY_USAGES,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.BULK_ACTION_TASK_REPORT_SECTION,
 	service = FDSView.class
 )
-public class CategoryUsagesTableFDSView extends BaseCMSTableFDSView {
+public class BulkActionTaskReportCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			_fdsTableSchemaBuilderFactory.create();
+			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.title", "name",
+			"id", "id",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"title"
+				"actionLink"
 			).setSortable(
 				true
 			)
 		).add(
-			"embedded.scopeKey", "space",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"spaceTableCellRenderer")
+			"actionName", "action-name",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			"embedded.creator.name", "author",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"authorTableCellRenderer")
+			"externalReferenceCode", "external-reference-code",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
-			addDateFDSTableSchemaField("dateModified", "modified")
+			addDateFDSTableSchemaField("dateCreated", "create-date")
 		).add(
-			"embedded.status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+			addDateFDSTableSchemaField("completionDate", "completed-date")
+		).add(
+			"creator.name", "author-name",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"type", "type",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"numberOfItems", "number-of-items",
+			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
+		).add(
+			"executionStatus", "execution-status"
 		).build();
 	}
 
+	@Override
+	public boolean isDefault() {
+		return true;
+	}
+
 	@Reference
-	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
 
 }

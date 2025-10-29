@@ -17,44 +17,44 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pedro Leite
+ * @author Pei-Jung Lan
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.RECYCLE_BIN_SECTION,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.CATEGORY_USAGES,
 	service = FDSView.class
 )
-public class RecycleBinSectionTableFDSView extends BaseCMSTableFDSView {
+public class CategoryUsagesCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			fdsTableSchemaBuilderFactory.create();
+			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.title", "title",
-			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"actionLink"
-			).setContentRenderer(
-				"simpleActionLinkTableCellRenderer"
+			"embedded.title", "name",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"title"
 			).setSortable(
 				true
 			)
-		).add(
-			"embedded.systemProperties.objectDefinitionBrief.label", "type"
 		).add(
 			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"spaceTableCellRenderer")
 		).add(
-			addDateFDSTableSchemaField("embedded.removedDate", "removed-date")
-		).add(
-			"embedded.removedBy.name", "removed-by",
+			"embedded.creator.name", "author",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"authorTableCellRenderer")
+		).add(
+			addDateFDSTableSchemaField("dateModified", "modified")
+		).add(
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 
 	@Reference
-	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
+	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
 
 }

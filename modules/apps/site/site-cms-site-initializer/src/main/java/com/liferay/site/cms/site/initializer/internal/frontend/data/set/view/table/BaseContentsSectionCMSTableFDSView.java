@@ -5,62 +5,56 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
-import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noor Najjar
+ * @author Roberto Díaz
  */
-@Component(property = "frontend.data.set.name=test", service = FDSView.class)
-public class VocabulariesTableFDSView extends BaseCMSTableFDSView {
+public abstract class BaseContentsSectionCMSTableFDSView
+	extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
 		FDSTableSchemaBuilder fdsTableSchemaBuilder =
-			_fdsTableSchemaBuilderFactory.create();
+			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"name", "title",
+			"embedded.title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"edit"
-			).setContentRenderer(
 				"actionLink"
+			).setContentRenderer(
+				"simpleActionLinkTableCellRenderer"
 			).setSortable(
 				true
 			)
 		).add(
-			"numberOfTaxonomyCategories", "categories",
-			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
-				"view-categories"
-			).setContentRenderer(
-				"actionLink"
-			).setSortable(
-				true
-			)
-		).add(
-			"assetTypes", "type",
+			"embedded.systemProperties.objectDefinitionBrief.label", "type",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"customVocabularyRenderer"
-			).setSortable(
-				true
-			)
+				"assetTypeTableCellRenderer")
 		).add(
-			"scopeKey", "space",
+			"embedded.scopeKey", "space",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"spaceTableCellRenderer")
 		).add(
+			"embedded.creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
+		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
+		).add(
+			"embedded.status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"statusTableCellRenderer")
 		).build();
 	}
 
 	@Reference
-	private FDSTableSchemaBuilderFactory _fdsTableSchemaBuilderFactory;
+	protected FDSTableSchemaBuilderFactory fdsTableSchemaBuilderFactory;
 
 }

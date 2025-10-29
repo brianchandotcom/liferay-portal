@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 	service = FDSView.class
 )
 public class HomeRecentAssetsContentsSectionTableFDSView
-	extends BaseContentsSectionTableFDSView {
+	extends BaseContentsSectionCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

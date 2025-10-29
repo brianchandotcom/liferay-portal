@@ -17,13 +17,13 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mikel Lorza
+ * @author Marco Leo
  */
 @Component(
-	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_HISTORY,
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SPACES_SECTION,
 	service = FDSView.class
 )
-public class ViewVersionHistoryTableFDSView extends BaseCMSTableFDSView {
+public class AllSpacesSectionCMSTableFDSView extends BaseCMSTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {
@@ -31,27 +31,18 @@ public class ViewVersionHistoryTableFDSView extends BaseCMSTableFDSView {
 			_fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"title", "title",
+			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"assetVersionTableCellRenderer"
+				"spaceTableCellRenderer"
 			).setSortable(
 				true
 			)
 		).add(
-			"version", "version",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"versionTableCellRenderer"
-			).setSortable(
-				true
-			)
+			"numberOfUserAccounts", "num-of-users"
 		).add(
-			"status", "status",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"status")
+			"numberOfUserGroups", "num-of-user-groups"
 		).add(
-			"creator.name", "author",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"authorTableCellRenderer")
+			"numberOfConnectedSites", "num-of-connections"
 		).add(
 			addDateFDSTableSchemaField("dateModified", "modified")
 		).build();

@@ -238,6 +238,12 @@
 			},
 			"modifiable": true,
 			"name": "CommerceReturn",
+			"objectDefinitionSettings": [
+				{
+					"name": "visible",
+					"value": "true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "Long",
@@ -613,6 +619,12 @@
 			},
 			"modifiable": true,
 			"name": "CommerceReturnItem",
+			"objectDefinitionSettings": [
+				{
+					"name": "visible",
+					"value": "true"
+				}
+			],
 			"objectFields": [
 				{
 					"DBType": "BigDecimal",

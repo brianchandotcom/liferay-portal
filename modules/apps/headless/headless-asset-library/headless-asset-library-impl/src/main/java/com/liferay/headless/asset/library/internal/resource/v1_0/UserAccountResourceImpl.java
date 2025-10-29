@@ -98,15 +98,15 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 
 	@Override
 	public Page<UserAccount> getAssetLibraryUserAccountsPage(
-			String externalReferenceCode, String keywords, String search,
-			Pagination pagination, Sort[] sorts)
+			String assetLibraryExternalReferenceCode, String keywords,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
-		Group group = _getGroup(externalReferenceCode);
+		Group group = _getGroup(assetLibraryExternalReferenceCode);
 
 		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
 

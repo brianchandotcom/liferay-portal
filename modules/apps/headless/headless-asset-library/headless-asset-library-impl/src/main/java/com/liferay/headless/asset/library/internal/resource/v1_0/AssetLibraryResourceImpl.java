@@ -82,7 +82,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
-	public void deleteAssetLibrary(String externalReferenceCode)
+	public void deleteAssetLibrary(String assetLibraryExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -92,13 +92,14 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		DepotEntry depotEntry = _getGroupDepotEntry(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+			_getGroupIdByExternalReferenceCode(
+				assetLibraryExternalReferenceCode));
 
 		_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
 	}
 
 	@Override
-	public void deleteAssetLibraryPin(String externalReferenceCode)
+	public void deleteAssetLibraryPin(String assetLibraryExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -108,7 +109,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		DepotEntry depotEntry = _getGroupDepotEntry(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+			_getGroupIdByExternalReferenceCode(
+				assetLibraryExternalReferenceCode));
 
 		_depotEntryPinService.deleteDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -153,7 +155,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public AssetLibrary patchAssetLibrary(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+			String assetLibraryExternalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -163,7 +165,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		DepotEntry depotEntry = _getGroupDepotEntry(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+			_getGroupIdByExternalReferenceCode(
+				assetLibraryExternalReferenceCode));
 
 		Group group = depotEntry.getGroup();
 
@@ -222,7 +225,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	public AssetLibrary putAssetLibraryPin(String externalReferenceCode)
+	public AssetLibrary putAssetLibraryPin(
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -232,7 +236,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		}
 
 		DepotEntry depotEntry = _getGroupDepotEntry(
-			_getGroupIdByExternalReferenceCode(externalReferenceCode));
+			_getGroupIdByExternalReferenceCode(
+				assetLibraryExternalReferenceCode));
 
 		_depotEntryPinService.addDepotEntryPin(
 			contextUser.getUserId(), depotEntry.getDepotEntryId());
@@ -273,7 +278,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	}
 
 	@Override
-	protected AssetLibrary doGetAssetLibrary(String externalReferenceCode)
+	protected AssetLibrary doGetAssetLibrary(
+			String assetLibraryExternalReferenceCode)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -284,7 +290,8 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		return _toAssetLibrary(
 			_depotEntryService.getGroupDepotEntry(
-				_getGroupIdByExternalReferenceCode(externalReferenceCode)));
+				_getGroupIdByExternalReferenceCode(
+					assetLibraryExternalReferenceCode)));
 	}
 
 	@Override
@@ -313,7 +320,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	protected AssetLibrary doPutAssetLibrary(
-			String externalReferenceCode, AssetLibrary assetLibrary)
+			String assetLibraryExternalReferenceCode, AssetLibrary assetLibrary)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -328,7 +335,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 				_getLocalizedMap(
 					assetLibrary.getDescription(),
 					assetLibrary.getDescription_i18n()),
-				externalReferenceCode,
+				assetLibraryExternalReferenceCode,
 				_getLocalizedMap(
 					assetLibrary.getName(), assetLibrary.getName_i18n()),
 				_getServiceContext(),

@@ -106,11 +106,12 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 
 	@Override
 	protected UserGroup testGetAssetLibraryUserGroupsPage_addUserGroup(
-			String externalReferenceCode, UserGroup userGroup)
+			String assetLibraryExternalReferenceCode, UserGroup userGroup)
 		throws Exception {
 
 		return userGroupResource.putAssetLibraryUserGroup(
-			externalReferenceCode, userGroup.getExternalReferenceCode());
+			assetLibraryExternalReferenceCode,
+			userGroup.getExternalReferenceCode());
 	}
 
 	@Override

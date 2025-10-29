@@ -1644,7 +1644,7 @@ public class JournalArticleLocalServiceTest {
 	}
 
 	@Test
-	public void testGetArticleDisplayWithContentFromDepotWithLocalTemplate()
+	public void testGetArticleDisplayWithContentFromDepotEntryWithDDMTemplate()
 		throws Exception {
 
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(

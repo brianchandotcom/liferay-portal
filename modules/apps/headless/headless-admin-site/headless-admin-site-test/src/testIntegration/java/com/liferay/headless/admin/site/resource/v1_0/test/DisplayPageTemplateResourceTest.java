@@ -723,21 +723,6 @@ public class DisplayPageTemplateResourceTest
 			layoutPageTemplate.getPreviewFileEntryId(), fileEntryId);
 	}
 
-	/*	private void _assertThumbnailURLReference(
-			String expectedExternalReferenceCode, String expectedURL,
-			URLReference urlReference) {
-
-			if (expectedExternalReferenceCode != null) {
-				Assert.assertEquals(expectedURL, urlReference.getUrl());
-				Assert.assertEquals(
-					expectedExternalReferenceCode,
-					urlReference.getExternalReferenceCode());
-			}
-			else {
-				Assert.assertNull(urlReference);
-			}
-		}
-	 */
 	private void _enableLocalStaging() throws Exception {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), testGroup, true, false,

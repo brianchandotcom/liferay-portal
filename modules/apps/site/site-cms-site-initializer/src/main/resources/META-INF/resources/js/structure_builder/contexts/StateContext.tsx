@@ -732,9 +732,10 @@ function reducer(state: State, action: Action): State {
 
 			// Calculate new name
 
+			const isPublished = structure.status === 'published';
 			let nextName = structure.name;
 
-			if (structure.status !== 'published') {
+			if (!isPublished) {
 				nextName = getNextName({
 					action,
 					item: structure,
@@ -763,7 +764,12 @@ function reducer(state: State, action: Action): State {
 
 			const errors = validateStructure({
 				currentErrors: invalids.get(structure.uuid),
-				data: {erc, label, name: nextName, spaces},
+				data: {
+					erc,
+					label,
+					spaces,
+					...(!isPublished && {name: nextName}),
+				},
 				objectDefinitions,
 			});
 

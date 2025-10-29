@@ -45,7 +45,6 @@ const TeamMembersTable = ({
 	const {
 		articleAccountSupportURL,
 		articleNotifiedWhenMyActivationKeyIsAboutToExpireURL,
-		gravatarAPI,
 		importDate,
 		provisioningServerAPI,
 	} = useAppPropertiesContext();
@@ -459,7 +458,6 @@ const TeamMembersTable = ({
 									),
 									name: (
 										<NameColumn
-											gravatarAPI={gravatarAPI}
 											userAccount={userAccount}
 										/>
 									),

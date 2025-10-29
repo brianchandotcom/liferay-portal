@@ -52,7 +52,6 @@ type Properties = {
 };
 
 type APIs = {
-	gravatarAPI: string | null;
 	provisioningServerAPI: string | null;
 };
 
@@ -142,7 +141,6 @@ class CustomerPortalWebComponent extends HTMLElement {
 		};
 
 		const apis = {
-			gravatarAPI: super.getAttribute('gravatar-api'),
 			provisioningServerAPI: super.getAttribute(
 				'provisioning-server-api'
 			),

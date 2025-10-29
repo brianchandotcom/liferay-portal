@@ -17,7 +17,6 @@ export const AppPropertiesContext = createContext({
 	client: null,
 	createTicketURL: '',
 	featureFlags: [] as string[],
-	gravatarAPI: '',
 	importDate: null,
 	jiraFLSPortalURL: '',
 	jiraFLSProject: '',

@@ -8,11 +8,9 @@ import {memo} from 'react';
 import i18n from '~/utils/I18n';
 import Avatar from './components/Avatar/Avatar';
 
-const NameColumn = ({gravatarAPI, userAccount}) => (
+const NameColumn = ({userAccount}) => (
 	<div className="align-items-center d-flex">
 		<Avatar
-			emailAddress={userAccount.emailAddress}
-			gravatarAPI={gravatarAPI}
 			userName={userAccount.name}
 		/>
 

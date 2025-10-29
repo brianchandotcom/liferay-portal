@@ -8,7 +8,7 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import NavigationBar from '@clayui/navigation-bar';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {ButtonDropDown} from '~/components';
 import Table, {IRow} from '~/components/Table';
@@ -17,12 +17,8 @@ import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
-import {IUserAccount} from '~/utils/types';
 
 import './BusinessEventsItemActivityHistory.css';
-
-import {getUserAccount} from '~/services/liferay/graphql/queries';
-
 import Avatar from '../../../../TeamMembers/components/TeamMembersTable/components/columns/NameColumn/components/Avatar';
 import ManageEventModal from '../../../components/ManageEventModal';
 import useGetBusinessEvent from '../../../hooks/useGetBusinessEvent';
@@ -36,7 +32,7 @@ const BusinessEventsItemActivityHistory = () => {
 		id || ''
 	);
 
-	const {client, gravatarAPI} = useAppPropertiesContext();
+	const {client} = useAppPropertiesContext();
 
 	const generateFilterQuery = useCallback(() => {
 		const queryParams: string[] = [];
@@ -75,8 +71,6 @@ const BusinessEventsItemActivityHistory = () => {
 
 	const {observer, onOpenChange, open} = useModal();
 
-	const [userAccount, setUserAccount] = useState<IUserAccount | null>(null);
-
 	const rows = useMemo(() => {
 		if (businessEventVersions?.length > 0) {
 			return businessEventVersions.map((businessEventVersion) => {
@@ -113,8 +107,6 @@ const BusinessEventsItemActivityHistory = () => {
 					user: (
 						<div className="align-items-center d-flex">
 							<Avatar
-								emailAddress={userAccount?.emailAddress}
-								gravatarAPI={gravatarAPI}
 								userName={businessEventVersion?.creator?.name}
 							/>
 
@@ -128,7 +120,7 @@ const BusinessEventsItemActivityHistory = () => {
 		}
 
 		return [];
-	}, [businessEventVersions, gravatarAPI, userAccount?.emailAddress]);
+	}, [businessEventVersions]);
 
 	const handleOnCancel = useCallback(() => {
 		fetchBusinessEvent();
@@ -153,26 +145,6 @@ const BusinessEventsItemActivityHistory = () => {
 			type: 'success',
 		});
 	}, [fetchBusinessEvent, fetchBusinessEventVersions]);
-
-	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const {data} = await client.query({
-					query: getUserAccount,
-					variables: {
-						id: Liferay.ThemeDisplay.getUserId(),
-					},
-				});
-
-				setUserAccount(data.userAccount);
-			}
-			catch (error) {
-				console.error('Error fetching user account:', error);
-			}
-		};
-
-		getUser();
-	}, [client]);
 
 	if (loading || loadingVersions) {
 		return (

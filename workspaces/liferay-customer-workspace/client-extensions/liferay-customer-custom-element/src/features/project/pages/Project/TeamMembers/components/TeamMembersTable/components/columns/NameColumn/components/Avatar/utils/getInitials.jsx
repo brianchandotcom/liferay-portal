@@ -13,7 +13,7 @@ export function getInitials(userName) {
 		}
 
 		return initials;
-	});
+	},'');
 
 	return initials;
 }

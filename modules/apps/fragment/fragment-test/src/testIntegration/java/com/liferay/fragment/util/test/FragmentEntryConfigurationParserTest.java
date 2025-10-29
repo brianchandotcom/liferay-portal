@@ -10,13 +10,16 @@ import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorCons
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.TestInfo;
@@ -147,7 +150,13 @@ public class FragmentEntryConfigurationParserTest {
 
 			Group group2 = GroupTestUtil.addGroup();
 
-			Layout layout2 = LayoutTestUtil.addTypeContentLayout(group2);
+			Layout layout2 = _layoutLocalService.addLayout(
+				layout1.getExternalReferenceCode(), TestPropsValues.getUserId(),
+				group2.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK, serviceContext);
 
 			configurationValuesJSONObject =
 				_fragmentEntryConfigurationParser.getConfigurationJSONObject(
@@ -173,7 +182,7 @@ public class FragmentEntryConfigurationParserTest {
 								"layout",
 								JSONUtil.put(
 									"externalReferenceCode",
-									layout2.getExternalReferenceCode()
+									layout1.getExternalReferenceCode()
 								).put(
 									"scopeExternalReferenceCode",
 									group2.getExternalReferenceCode()
@@ -231,6 +240,9 @@ public class FragmentEntryConfigurationParserTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private LayoutLocalService _layoutLocalService;
 
 	@Inject
 	private Portal _portal;

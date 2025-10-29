@@ -445,13 +445,13 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Override
 	protected AssetLibrary testPutAssetLibraryPin_getAssetLibrary(
-		String externalReferenceCode) {
+		String assetLibraryExternalReferenceCode) {
 
 		try {
 			User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 			Group group = _groupLocalService.getGroupByExternalReferenceCode(
-				externalReferenceCode, testCompany.getCompanyId());
+				assetLibraryExternalReferenceCode, testCompany.getCompanyId());
 
 			DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 				group.getGroupId());
@@ -460,7 +460,8 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				_depotEntryPinLocalService.getDepotEntryPin(
 					user.getUserId(), depotEntry.getDepotEntryId()));
 
-			return assetLibraryResource.getAssetLibrary(externalReferenceCode);
+			return assetLibraryResource.getAssetLibrary(
+				assetLibraryExternalReferenceCode);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

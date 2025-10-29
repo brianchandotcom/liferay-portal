@@ -184,11 +184,12 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 
 	@Override
 	protected UserAccount testGetAssetLibraryUserAccountsPage_addUserAccount(
-			String externalReferenceCode, UserAccount userAccount)
+			String assetLibraryExternalReferenceCode, UserAccount userAccount)
 		throws Exception {
 
 		return userAccountResource.putAssetLibraryUserAccount(
-			externalReferenceCode, userAccount.getExternalReferenceCode());
+			assetLibraryExternalReferenceCode,
+			userAccount.getExternalReferenceCode());
 	}
 
 	@Override

@@ -100,7 +100,7 @@ public class ConnectedSiteResourceImpl extends BaseConnectedSiteResourceImpl {
 
 	@Override
 	public Page<ConnectedSite> getAssetLibraryConnectedSitesPage(
-			String externalReferenceCode, Pagination pagination)
+			String assetLibraryExternalReferenceCode, Pagination pagination)
 		throws Exception {
 
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
@@ -108,7 +108,7 @@ public class ConnectedSiteResourceImpl extends BaseConnectedSiteResourceImpl {
 		}
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			externalReferenceCode, contextCompany.getCompanyId());
+			assetLibraryExternalReferenceCode, contextCompany.getCompanyId());
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			group.getGroupId());

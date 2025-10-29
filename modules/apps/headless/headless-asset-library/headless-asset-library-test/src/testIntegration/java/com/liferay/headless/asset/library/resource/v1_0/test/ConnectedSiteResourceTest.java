@@ -98,12 +98,13 @@ public class ConnectedSiteResourceTest
 	@Override
 	protected ConnectedSite
 			testGetAssetLibraryConnectedSitesPage_addConnectedSite(
-				String externalReferenceCode, ConnectedSite connectedSite)
+				String assetLibraryExternalReferenceCode,
+				ConnectedSite connectedSite)
 		throws Exception {
 
 		return connectedSiteResource.putAssetLibraryConnectedSite(
-			externalReferenceCode, connectedSite.getExternalReferenceCode(),
-			connectedSite);
+			assetLibraryExternalReferenceCode,
+			connectedSite.getExternalReferenceCode(), connectedSite);
 	}
 
 	@Override

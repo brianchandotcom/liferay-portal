@@ -82,7 +82,7 @@ export default function TrialDetails() {
 	const placedOrder = data?.placedOrder as PlacedOrder;
 
 	const marketplaceProduct = useMemo(
-		() => new MarketplaceDeliveryProduct(product),
+		() => new MarketplaceDeliveryProduct(product || {}),
 		[product]
 	);
 
@@ -94,19 +94,15 @@ export default function TrialDetails() {
 	const {projectId} = safeJSONParse(
 		marketplaceOrder.customFields.TRIAL_SETTINGS,
 		{
-			projectId: '',
+			projectId: orderId,
 		}
 	);
-
-	if (!placedOrder || !marketplaceProduct) {
-		return;
-	}
 
 	return (
 		<PageRenderer
 			className="app-details-header d-flex flex-column w-100"
 			error={error}
-			isLoading={isLoading}
+			isLoading={isLoading || !placedOrder || !marketplaceProduct}
 		>
 			<BackLink>{i18n.translate('back-to-the-list')}</BackLink>
 
@@ -116,7 +112,7 @@ export default function TrialDetails() {
 					hasOrderDetails
 					image={marketplaceOrder.productThumbnail}
 					name={projectId}
-					productOwner={marketplaceProduct.catalogName}
+					productOwner={marketplaceProduct?.catalogName}
 				/>
 
 				<TrialActions
@@ -129,7 +125,7 @@ export default function TrialDetails() {
 				marketplaceOrder={marketplaceOrder}
 				marketplaceProduct={marketplaceProduct}
 				placedOrder={placedOrder}
-				projectId={projectId}
+				projectId={projectId as string}
 			/>
 		</PageRenderer>
 	);

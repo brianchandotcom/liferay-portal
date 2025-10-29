@@ -12,6 +12,10 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -19,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -59,30 +62,38 @@ public class ViewVocabulariesDisplayContext {
 			AssetRendererFactory::isCategorizable);
 	}
 
-	public List<Map<String, String>> getClassNameIdOptions() {
+	public List<Map<String, String>> getClassNameIdOptions()
+		throws PortalException {
+
 		List<Map<String, String>> selectOptions = new ArrayList<>();
 
-		List<AssetRendererFactory<?>> availableAssetRendererFactories =
-			getAvailableAssetRendererFactories();
+		List<ObjectFolder> objectFolders = new ArrayList<>();
 
-		for (AssetRendererFactory<?> availableAssetRendererFactory :
-				availableAssetRendererFactories) {
+		objectFolders.add(
+			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
+				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()));
+		objectFolders.add(
+			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
+				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()));
 
-			selectOptions.add(
-				HashMapBuilder.put(
-					"icon", availableAssetRendererFactory.getIconCssClass()
-				).put(
-					"label",
-					ResourceActionsUtil.getModelResource(
-						_themeDisplay.getLocale(),
-						availableAssetRendererFactory.getClassName())
-				).put(
-					"restricted", Boolean.FALSE.toString()
-				).put(
-					"value",
-					String.valueOf(
-						availableAssetRendererFactory.getClassNameId())
-				).build());
+		for (ObjectFolder objectFolder : objectFolders) {
+			for (ObjectDefinition objectDefinition :
+					ObjectDefinitionLocalServiceUtil.
+						getObjectFolderObjectDefinitions(
+							objectFolder.getObjectFolderId())) {
+
+				selectOptions.add(
+					HashMapBuilder.put(
+						"label", objectDefinition.getLabelCurrentValue()
+					).put(
+						"restricted", Boolean.FALSE.toString()
+					).put(
+						"value",
+						String.valueOf(
+							PortalUtil.getClassNameId(
+								objectDefinition.getClassName()))
+					).build());
+			}
 		}
 
 		return selectOptions;
@@ -152,7 +163,7 @@ public class ViewVocabulariesDisplayContext {
 				null));
 	}
 
-	public List<FDSFilter> getFDSFilters() {
+	public List<FDSFilter> getFDSFilters() throws Exception {
 		return ListUtil.fromArray(
 			new VocabularyAssetTypesSelectionFDSFilter(
 				getClassNameIdOptions()));

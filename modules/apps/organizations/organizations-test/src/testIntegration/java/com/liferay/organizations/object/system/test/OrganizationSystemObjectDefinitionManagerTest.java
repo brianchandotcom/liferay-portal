@@ -280,8 +280,29 @@ public class OrganizationSystemObjectDefinitionManagerTest
 	}
 
 	@Override
+	protected void assertUpdateBaseModelWithPermissions(
+			long baseModelId, Map<String, Object> values)
+		throws PortalException {
+
+		Organization organization = _organizationLocalService.getOrganization(
+			baseModelId);
+
+		Assert.assertEquals(values.get("name"), organization.getName());
+	}
+
+	@Override
+	protected void deleteBaseModel(long baseModelId) throws Exception {
+		_organizationLocalService.deleteOrganization(baseModelId);
+	}
+
+	@Override
 	protected String getSystemObjectDefinitionName() {
 		return "Organization";
+	}
+
+	@Override
+	protected String getSystemObjectDefinitionResourceName() {
+		return Organization.class.getName();
 	}
 
 	private void _assertCount(int count) throws Exception {

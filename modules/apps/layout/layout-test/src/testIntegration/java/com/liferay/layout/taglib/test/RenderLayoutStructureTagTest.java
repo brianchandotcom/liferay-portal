@@ -2417,7 +2417,13 @@ public class RenderLayoutStructureTagTest {
 			Group group = _groupLocalService.getGroup(
 				TestPropsValues.getGroupId());
 
-			layout2 = LayoutTestUtil.addTypeContentLayout(group);
+			Layout layout3 = _layoutLocalService.addLayout(
+				layout2.getExternalReferenceCode(), TestPropsValues.getUserId(),
+				group.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+				RandomTestUtil.randomString(), StringPool.BLANK,
+				StringPool.BLANK, LayoutConstants.TYPE_CONTENT, false,
+				StringPool.BLANK, _serviceContext);
 
 			formStyledLayoutStructureItem.setSuccessMessageJSONObject(
 				JSONUtil.put(
@@ -2444,7 +2450,7 @@ public class RenderLayoutStructureTagTest {
 			Assert.assertTrue(
 				content.contains(
 					"<input name=\"redirect\" type=\"hidden\" value=\"" +
-						_portal.getLayoutURL(layout2, themeDisplay)));
+						_portal.getLayoutURL(layout3, themeDisplay)));
 		}
 	}
 

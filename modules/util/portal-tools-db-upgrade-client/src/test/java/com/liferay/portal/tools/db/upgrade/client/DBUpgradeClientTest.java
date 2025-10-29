@@ -19,6 +19,8 @@ import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import jline.console.ConsoleReader;
@@ -68,6 +70,8 @@ public class DBUpgradeClientTest {
 		File portalDir = new File(_tomcatDir, "webapps/ROOT");
 
 		portalDir.mkdirs();
+
+		_shieldedContainerLib = new File(portalDir, "WEB-INF/shielded-container-lib");
 
 		ReflectionTestUtil.setFieldValue(
 			DBUpgradeClient.class, "_jarDir", _rootDir);
@@ -212,6 +216,44 @@ public class DBUpgradeClientTest {
 			StringPool.BLANK, properties.getProperty("jdbc.default.username"));
 		Assert.assertEquals(
 			StringPool.BLANK, properties.getProperty("jdbc.default.password"));
+	}
+
+	@Test
+	public void testVerifyPortalUpgradeDatabasePropertiesOnDXP() throws Exception {
+		_createPortalUpgradeExtPropertiesFile();
+
+		String[] answers = {
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK
+		};
+
+		_dbUpgradeClient = _createDBUpgradeClient(answers);
+
+		ReflectionTestUtil.invoke(
+			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
+
+		Path jarPath = _shieldedContainerLib.toPath().resolve("com.liferay.portal.dao.db.jar");
+
+		Files.createDirectories(_shieldedContainerLib.toPath());
+
+		Files.createFile(jarPath);
+
+		try{
+			ReflectionTestUtil.invoke(
+				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
+				new Class<?>[0]);
+
+			String consoleOutput = _consoleOutputStream.toString();
+
+			Assert.assertTrue(consoleOutput.contains("db2 mariadb mysql oracle postgresql sqlserver"));
+		}
+		finally {
+			jarPath.toFile().delete();
+		}
+
 	}
 
 	@Test
@@ -365,6 +407,8 @@ public class DBUpgradeClientTest {
 	private static File _liferayHomeDir;
 	private static File _rootDir;
 	private static File _tomcatDir;
+	private static File _shieldedContainerLib;
+
 
 	private final OutputStream _consoleOutputStream =
 		new ByteArrayOutputStream();

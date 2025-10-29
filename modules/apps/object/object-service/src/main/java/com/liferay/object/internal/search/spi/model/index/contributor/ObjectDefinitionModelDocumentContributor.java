@@ -26,6 +26,7 @@ public class ObjectDefinitionModelDocumentContributor
 	public void contribute(
 		Document document, ObjectDefinition objectDefinition) {
 
+		document.addKeyword(Field.HIDDEN, !objectDefinition.isVisible());
 		document.addText(Field.NAME, objectDefinition.getShortName());
 		document.addKeyword(Field.STATUS, objectDefinition.getStatus());
 		document.addLocalizedKeyword(

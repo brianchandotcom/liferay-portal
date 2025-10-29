@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -93,18 +92,18 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 	}
 
 	@Test
-	public void testProps() throws Exception {
-		_withAllowedActionId(ActionKeys.VIEW, Assert::assertNull);
-		_withAllowedActionId(
+	public void testGetProps() throws Exception {
+		_testGetProps(ActionKeys.VIEW, Assert::assertNull);
+		_testGetProps(
 			ActionKeys.DELETE,
-			actionItems -> _assertLabelsEquals(actionItems, "delete"));
-		_withAllowedActionId(
+			jsonArray -> _assertLabelsEquals(jsonArray, "delete"));
+		_testGetProps(
 			ActionKeys.PERMISSIONS,
-			actionItems -> _assertLabelsEquals(
-				actionItems, "permissions", "default-permissions"));
-		_withAllowedActionId(
+			jsonArray -> _assertLabelsEquals(
+				jsonArray, "permissions", "default-permissions"));
+		_testGetProps(
 			ActionKeys.UPDATE,
-			actionItems -> _assertLabelsEquals(actionItems, "space-settings"));
+			jsonArray -> _assertLabelsEquals(jsonArray, "space-settings"));
 	}
 
 	private void _assertLabelsEquals(
@@ -156,32 +155,32 @@ public class BreadcrumbComponentSectionFragmentRendererTest {
 		}
 	}
 
-	private void _withAllowedActionId(
+	private void _testGetProps(
 			String allowedActionId,
 			UnsafeConsumer<JSONArray, Exception> unsafeConsumer)
 		throws Exception {
-
-		PermissionChecker permissionChecker = new SimplePermissionChecker() {
-
-			@Override
-			public boolean hasPermission(
-				Group group, String name, String primKey, String actionId) {
-
-				return allowedActionId.equals(actionId);
-			}
-
-		};
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(
-			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
-		themeDisplay.setPermissionChecker(permissionChecker);
 
 		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
 
 		httpServletRequest.setAttribute(
 			InfoDisplayWebKeys.INFO_ITEM, _depotEntry);
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		themeDisplay.setCompany(
+			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				@Override
+				public boolean hasPermission(
+					Group group, String name, String primKey, String actionId) {
+
+					return allowedActionId.equals(actionId);
+				}
+
+			});
+
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		Map<String, Object> props = ReflectionTestUtil.invoke(

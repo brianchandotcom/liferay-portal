@@ -6,7 +6,11 @@
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set.view.table;
 
 import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.table.FDSTableSchema;
+import com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
+
+import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -17,17 +21,26 @@ import org.osgi.service.component.annotations.Component;
  * @author Sam Ziemer
  */
 @Component(
-	property = {
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.CONTENTS_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.FILES_SECTION,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_CONTENTS_FOLDER,
-		"frontend.data.set.name=" + CMSSiteInitializerFDSNames.VIEW_FILES_FOLDER
-	},
+	property = "frontend.data.set.name=" + CMSSiteInitializerFDSNames.HOME_RECENT_ASSETS_SECTION,
 	service = FDSView.class
 )
-public class ContentAndFileSectionsTableFDSView
+public class HomeRecentAssetsContentsSectionCMSTableFDSView
 	extends BaseContentsSectionCMSTableFDSView {
+
+	@Override
+	public FDSTableSchema getFDSTableSchema(Locale locale) {
+		FDSTableSchemaBuilder fdsTableSchemaBuilder =
+			fdsTableSchemaBuilderFactory.create();
+
+		return fdsTableSchemaBuilder.add(
+			"embedded.title", "title",
+			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
+				"actionLink"
+			).setContentRenderer(
+				"assetRenderer"
+			)
+		).build();
+	}
 
 	@Override
 	public boolean isDefault() {

@@ -52,6 +52,8 @@ public class ObjectFieldConstants {
 
 	public static final String BUSINESS_TYPE_TEXT = "Text";
 
+	public static final int DB_COLUMN_NAME_MAX_LENGTH = 64;
+
 	public static final String DB_TYPE_BIG_DECIMAL = "BigDecimal";
 
 	public static final String DB_TYPE_BLOB = "Blob";

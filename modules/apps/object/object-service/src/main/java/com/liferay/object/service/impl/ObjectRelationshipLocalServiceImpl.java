@@ -2072,7 +2072,7 @@ public class ObjectRelationshipLocalServiceImpl
 		throws ObjectRelationshipNameException {
 
 		int availableLength =
-			_DB_COLUMN_NAME_MAX_LENGTH -
+			ObjectFieldConstants.DB_COLUMN_NAME_MAX_LENGTH -
 				(dbColumnName.length() - name.length());
 
 		if (name.length() > availableLength) {
@@ -2156,8 +2156,6 @@ public class ObjectRelationshipLocalServiceImpl
 		_validateParameterObjectFieldId(
 			objectDefinition1, objectDefinition2, parameterObjectFieldId, type);
 	}
-
-	private static final int _DB_COLUMN_NAME_MAX_LENGTH = 64;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectRelationshipLocalServiceImpl.class);

@@ -63,6 +63,7 @@ export interface IAssetVersion {
 }
 
 export interface ISearchAssetObjectEntry {
+	actionIds?: any[];
 	actions: any;
 	dateCreated: string;
 	dateModified: string;

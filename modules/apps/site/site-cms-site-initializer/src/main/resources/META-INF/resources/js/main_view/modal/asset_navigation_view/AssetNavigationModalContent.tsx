@@ -8,6 +8,7 @@ import ClayModal from '@clayui/modal';
 import {addParams, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
+import {SharingPermission} from '../../../common/types/SharingPermission';
 import CommentsPanel from '../../../content_editor/components/panels/CommentsPanel';
 import AssetTypeInfoPanel from '../../info_panel/AssetTypeInfoPanelContent';
 import Carousel from './Carousel';
@@ -20,7 +21,6 @@ interface AssetNavigationModalContentProps {
 	contentViewURL: string;
 	currentIndex: number;
 	items: ISearchAssetObjectEntry[];
-	showCommentsPanel?: boolean;
 	showInfoPanel?: boolean;
 }
 
@@ -70,7 +70,6 @@ export default function AssetNavigationModalContent({
 	contentViewURL,
 	currentIndex = 0,
 	items,
-	showCommentsPanel = true,
 	showInfoPanel = true,
 }: AssetNavigationModalContentProps) {
 	const [currentItemIndex, setCurrentItemIndex] = useState(currentIndex);
@@ -154,6 +153,10 @@ export default function AssetNavigationModalContent({
 
 	const activePanel = openSidePanel ? currentPanel : null;
 
+	const showCommentsPanel = !currentItem.actionIds
+		? true
+		: currentItem.actionIds.includes(SharingPermission.Comment);
+
 	return (
 		<>
 			<ClayModal.Header
@@ -182,25 +185,24 @@ export default function AssetNavigationModalContent({
 						showArrows={items.length > 1}
 					/>
 
-					{(showCommentsPanel || showInfoPanel) && (
-						<SidePanel
-							containerRef={containerRef}
-							onOpenChange={setOpenSidePanel}
-							open={openSidePanel}
-						>
-							{currentPanel === PANELS.commentPanel ? (
-								<AssetNavigationCommentsPanel
-									additionalProps={additionalProps as any}
-									item={currentItem}
-								/>
-							) : showInfoPanel ? (
-								<AssetTypeInfoPanel
-									additionalProps={additionalProps as any}
-									items={[currentItem]}
-								/>
-							) : null}
-						</SidePanel>
-					)}
+					<SidePanel
+						containerRef={containerRef}
+						onOpenChange={setOpenSidePanel}
+						open={openSidePanel}
+					>
+						{currentPanel === PANELS.commentPanel &&
+						showCommentsPanel ? (
+							<AssetNavigationCommentsPanel
+								additionalProps={additionalProps as any}
+								item={currentItem}
+							/>
+						) : showInfoPanel ? (
+							<AssetTypeInfoPanel
+								additionalProps={additionalProps as any}
+								items={[currentItem]}
+							/>
+						) : null}
+					</SidePanel>
 				</div>
 			</ClayModal.Body>
 

@@ -2207,8 +2207,11 @@ components:
                         The message form submission type (embedded, none).
                     enum: [Embedded, None]
                     type: string
-                showNotification:
-                    type: boolean
+                successNotificationMessage:
+                    $ref: "#/components/schemas/SuccessNotificationMessage"
+                    # @review
+                    description:
+                        The success notification message.
             type: object
         ModulePageElementDefinition:
             allOf:
@@ -3356,6 +3359,11 @@ components:
                     # @review
                     description:
                         The localized submission of page type.
+                successNotificationMessage:
+                    $ref: "#/components/schemas/SuccessNotificationMessage"
+                    # @review
+                    description:
+                        The success notification message.
             type: object
         SitePageNavigationSettings:
             allOf:
@@ -3420,6 +3428,19 @@ components:
                     maximum: 1
                     minimum: 0
                     type: number
+            type: object
+        SuccessNotificationMessage:
+            # @review
+            description:
+                The success notification message.
+            properties:
+                message:
+                    $ref: "#/components/schemas/FragmentInlineValue"
+                    # @review
+                    description:
+                        The localized success notification message.
+                showNotification:
+                    type: boolean
             type: object
         TemplateListStyle:
             # @review

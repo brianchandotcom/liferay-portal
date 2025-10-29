@@ -6,8 +6,13 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.renderer.FragmentRenderer;
+import com.liferay.fragment.renderer.util.FragmentRendererRegistryUtil;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.DefaultFragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentItemExternalReference;
@@ -16,6 +21,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
@@ -109,6 +115,7 @@ public class FragmentLayoutStructureItemImporter
 
 		FragmentEntryReference fragmentEntryReference =
 			_getFragmentEntryReference(
+				layoutStructureItemImporterContext.getCompanyId(),
 				fragmentInstancePageElementDefinition.getFragmentReference(),
 				layoutStructureItemImporterContext.getGroupId());
 
@@ -157,7 +164,8 @@ public class FragmentLayoutStructureItemImporter
 	}
 
 	private FragmentEntryReference _getFragmentEntryReference(
-			FragmentReference fragmentReference, long groupId)
+			long companyId, FragmentReference fragmentReference,
+			long scopeGroupId)
 		throws Exception {
 
 		if (fragmentReference == null) {
@@ -178,10 +186,33 @@ public class FragmentLayoutStructureItemImporter
 				throw new UnsupportedOperationException();
 			}
 
+			FragmentEntry fragmentEntry = null;
+
+			Long groupId = ItemScopeUtil.getGroupId(
+				companyId, fragmentItemExternalReference.getScope(),
+				scopeGroupId);
+
+			if (groupId != null) {
+				fragmentEntry =
+					FragmentEntryLocalServiceUtil.
+						fetchFragmentEntryByExternalReferenceCode(
+							GetterUtil.getString(
+								fragmentItemExternalReference.
+									getExternalReferenceCode()),
+							groupId);
+			}
+
+			if (fragmentEntry == null) {
+				LogUtil.logOptionalReference(
+					fragmentItemExternalReference.getClassName(),
+					fragmentItemExternalReference.getExternalReferenceCode(),
+					fragmentItemExternalReference.getScope(), scopeGroupId);
+			}
+
 			return new FragmentEntryReference(
 				fragmentItemExternalReference.getExternalReferenceCode(),
 				ItemScopeUtil.getItemScopeExternalReferenceCode(
-					fragmentItemExternalReference.getScope(), groupId),
+					fragmentItemExternalReference.getScope(), scopeGroupId),
 				null);
 		}
 
@@ -192,6 +223,22 @@ public class FragmentLayoutStructureItemImporter
 				defaultFragmentReference.getDefaultFragmentKey())) {
 
 			throw new UnsupportedOperationException();
+		}
+
+		FragmentEntry fragmentEntry =
+			FragmentCollectionContributorRegistryUtil.getFragmentEntry(
+				defaultFragmentReference.getDefaultFragmentKey());
+		FragmentRenderer fragmentRenderer = null;
+
+		if (fragmentEntry == null) {
+			fragmentRenderer = FragmentRendererRegistryUtil.getFragmentRenderer(
+				defaultFragmentReference.getDefaultFragmentKey());
+		}
+
+		if ((fragmentEntry == null) && (fragmentRenderer == null)) {
+			LogUtil.logOptionalReference(
+				DefaultFragmentReference.class,
+				defaultFragmentReference.getDefaultFragmentKey(), scopeGroupId);
 		}
 
 		return new FragmentEntryReference(
@@ -259,6 +306,7 @@ public class FragmentLayoutStructureItemImporter
 
 		FragmentEntryReference fragmentEntryReference =
 			_getFragmentEntryReference(
+				layoutStructureItemImporterContext.getCompanyId(),
 				fragmentInstancePageElementDefinition.getFragmentReference(),
 				layoutStructureItemImporterContext.getGroupId());
 

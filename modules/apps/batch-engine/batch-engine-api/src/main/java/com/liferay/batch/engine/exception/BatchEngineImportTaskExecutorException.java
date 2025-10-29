@@ -28,7 +28,11 @@ public class BatchEngineImportTaskExecutorException extends PortalException {
 	public String getMessage() {
 		Throwable throwable = getCause();
 
-		return throwable.getMessage();
+		if (throwable != null) {
+			return throwable.getMessage();
+		}
+
+		return super.getMessage();
 	}
 
 	private final Object _item;

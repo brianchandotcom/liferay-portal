@@ -43,17 +43,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
  */
-@Component(
-	property = "item.selector.view.order:Integer=400",
-	service = ItemSelectorView.class
-)
-public class DepotItemSelectorView
+public abstract class BaseDepotItemSelectorView
 	implements ItemSelectorView<GroupItemSelectorCriterion> {
 
 	@Override
@@ -71,7 +66,8 @@ public class DepotItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			locale, getClass());
 
-		return ResourceBundleUtil.getString(resourceBundle, "asset-libraries");
+		return ResourceBundleUtil.getString(
+			resourceBundle, getTitleLanguageKey());
 	}
 
 	@Override
@@ -89,7 +85,7 @@ public class DepotItemSelectorView
 			return true;
 		}
 
-		return _depotPanelAppController.isShow(portletId);
+		return depotPanelAppController.isShow(portletId);
 	}
 
 	@Override
@@ -105,9 +101,23 @@ public class DepotItemSelectorView
 					(HttpServletRequest)servletRequest, itemSelectedEventName,
 					portletURL, groupItemSelectorCriterion);
 
-		_siteItemSelectorViewRenderer.renderHTML(
+		siteItemSelectorViewRenderer.renderHTML(
 			depotSitesItemSelectorViewDisplayContext);
 	}
+
+	protected abstract void customizeGroupItemSelectorCriterion(
+		GroupItemSelectorCriterion groupItemSelectorCriterion);
+
+	protected abstract String getTitleLanguageKey();
+
+	@Reference
+	protected DepotEntryAdminSearchProvider depotEntryAdminSearchProvider;
+
+	@Reference
+	protected DepotPanelAppController depotPanelAppController;
+
+	@Reference
+	protected SiteItemSelectorViewRenderer siteItemSelectorViewRenderer;
 
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableList(
@@ -115,15 +125,6 @@ public class DepotItemSelectorView
 				new GroupItemSelectorReturnType(),
 				new URLItemSelectorReturnType(),
 				new UUIDItemSelectorReturnType()));
-
-	@Reference
-	private DepotEntryAdminSearchProvider _depotEntryAdminSearchProvider;
-
-	@Reference
-	private DepotPanelAppController _depotPanelAppController;
-
-	@Reference
-	private SiteItemSelectorViewRenderer _siteItemSelectorViewRenderer;
 
 	private class DepotSitesItemSelectorViewDisplayContext
 		implements SitesItemSelectorViewDisplayContext {
@@ -162,7 +163,10 @@ public class DepotItemSelectorView
 		@Override
 		public GroupSearch getGroupSearch() {
 			try {
-				return _depotEntryAdminSearchProvider.getGroupSearch(
+				customizeGroupItemSelectorCriterion(
+					_groupItemSelectorCriterion);
+
+				return depotEntryAdminSearchProvider.getGroupSearch(
 					_groupItemSelectorCriterion, getPortletRequest(),
 					getPortletResponse(), getPortletURL());
 			}

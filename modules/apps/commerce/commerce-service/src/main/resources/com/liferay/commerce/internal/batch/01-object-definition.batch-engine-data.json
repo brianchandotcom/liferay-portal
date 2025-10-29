@@ -114,6 +114,7 @@
 			"titleObjectFieldName": "name"
 		},
 		{
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_COMMERCE_ORDER",
 			"objectRelationships": [
 				{
@@ -170,6 +171,7 @@
 			"titleObjectFieldName": "id"
 		},
 		{
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_COMMERCE_ORDER_ITEM",
 			"objectRelationships": [
 				{

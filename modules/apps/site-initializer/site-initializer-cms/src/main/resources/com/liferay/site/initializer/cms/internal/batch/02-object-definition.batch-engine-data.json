@@ -337,6 +337,7 @@
 		{
 			"className": "com.liferay.object.model.ObjectDefinition#P4T1",
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_CMS_BULK_ACTION_TASK",
 			"label": {
 				"en_US": "Bulk Action Task"
@@ -537,6 +538,7 @@
 		{
 			"className": "com.liferay.object.model.ObjectDefinition#S8R3",
 			"enableCategorization": true,
+			"enableFormContainer": false,
 			"externalReferenceCode": "L_CMS_BULK_ACTION_TASK_ITEM",
 			"label": {
 				"en_US": "Bulk Action Task Item"
@@ -674,6 +676,7 @@
 			"className": "com.liferay.object.model.ObjectDefinition#S5M4",
 			"enableCategorization": false,
 			"enableComments": false,
+			"enableFormContainer": false,
 			"enableFriendlyURLCustomization": false,
 			"enableIndexSearch": false,
 			"enableLocalization": true,

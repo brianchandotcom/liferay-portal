@@ -2078,7 +2078,8 @@ public class ObjectRelationshipLocalServiceImpl
 		if (name.length() > availableLength) {
 			throw new ObjectRelationshipNameException(
 				StringBundler.concat(
-					"The relationship name must be less than ", availableLength,
+					"The relationship name must be less than ",
+					availableLength + 1,
 					" characters. Long object definition names reduce the ",
 					"characters available for the relationship name."));
 		}

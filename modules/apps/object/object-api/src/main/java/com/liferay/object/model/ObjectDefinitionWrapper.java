@@ -1244,6 +1244,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public boolean isVisible() {
+		return model.isVisible();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

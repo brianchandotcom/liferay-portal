@@ -13,9 +13,15 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Gislayne Vitorino
  */
+@Component(
+	property = "indexer.class.name=com.liferay.asset.kernel.model.AssetTag",
+	service = ModelPreFilterContributor.class
+)
 public class AssetTagModelPreFilterContributor
 	implements ModelPreFilterContributor {
 

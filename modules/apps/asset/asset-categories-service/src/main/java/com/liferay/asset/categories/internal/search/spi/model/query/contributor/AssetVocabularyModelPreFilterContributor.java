@@ -15,9 +15,15 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Lourdes Fernández Besada
  */
+@Component(
+	property = "indexer.class.name=com.liferay.asset.kernel.model.AssetVocabulary",
+	service = ModelPreFilterContributor.class
+)
 public class AssetVocabularyModelPreFilterContributor
 	implements ModelPreFilterContributor {
 

@@ -245,7 +245,9 @@ else {
 		</div>
 	</c:if>
 
-	<aui:button data-qa-id="generateWebDAVPasswordButton" onClick='<%= liferayPortletResponse.getNamespace() + "generateWebDavPassword()" %>' value="generate-webdav-password" />
+	<c:if test="<%= userDisplayContext.hasUpdatePermission() %>">
+		<aui:button data-qa-id="generateWebDAVPasswordButton" onClick='<%= liferayPortletResponse.getNamespace() + "generateWebDavPassword()" %>' value="generate-webdav-password" />
+	</c:if>
 </clay:sheet-section>
 
 <aui:script>

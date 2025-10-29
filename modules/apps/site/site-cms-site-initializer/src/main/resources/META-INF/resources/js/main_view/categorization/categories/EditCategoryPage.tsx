@@ -104,16 +104,20 @@ const EditCategoryPage = ({
 	}
 
 	function validateForm() {
-		if (category.name.trim() === '') {
+		if (category.name === '' || !category.name.trim().length) {
 			setNameInputError(
 				sub(
 					Liferay.Language.get('the-x-field-is-required'),
 					Liferay.Language.get('name')
 				)
 			);
+
+			return false;
 		}
 		else {
 			setNameInputError('');
+
+			return true;
 		}
 	}
 
@@ -124,9 +128,7 @@ const EditCategoryPage = ({
 	}
 
 	async function handleSave() {
-		validateForm();
-
-		if (nameInputError !== '') {
+		if (!validateForm()) {
 			return;
 		}
 
@@ -241,9 +243,7 @@ const EditCategoryPage = ({
 	}
 
 	async function handleSaveAndAddAnother() {
-		validateForm();
-
-		if (nameInputError !== '') {
+		if (!validateForm()) {
 			return;
 		}
 

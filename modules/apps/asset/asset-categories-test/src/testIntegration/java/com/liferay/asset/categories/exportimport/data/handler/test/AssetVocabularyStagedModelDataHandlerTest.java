@@ -55,12 +55,10 @@ public class AssetVocabularyStagedModelDataHandlerTest
 	public void testAssetVocabularyWithDepotSettingsAreNotLost()
 		throws Exception {
 
-		initExport();
-
 		String classNameIds =
 			_portal.getClassNameId(JournalArticle.class.getName()) + ":-1";
 
-		UnicodeProperties typeSettingsUnicodeProperties =
+		AssetVocabulary importAssetVocabulary = _getImportAssetVocabulary(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -69,45 +67,7 @@ public class AssetVocabularyStagedModelDataHandlerTest
 				"multivalued", true
 			).put(
 				"selectedClassNameIds", classNameIds
-			).build();
-
-		AssetVocabulary assetVocabulary =
-			_assetVocabularyLocalService.addVocabulary(
-				TestPropsValues.getUserId(), stagingGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()
-				).build(),
-				HashMapBuilder.put(
-					LocaleUtil.getDefault(), RandomTestUtil.randomString()
-				).build(),
-				typeSettingsUnicodeProperties.toString(),
-				ServiceContextTestUtil.getServiceContext(
-					stagingGroup.getGroupId()));
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, assetVocabulary);
-
-		initImport();
-
-		StagedModel exportedStagedModel = readExportedStagedModel(
-			assetVocabulary);
-
-		Assert.assertNotNull(exportedStagedModel);
-
-		ExportImportThreadLocal.setPortletImportInProcess(true);
-
-		try {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, exportedStagedModel);
-		}
-		finally {
-			ExportImportThreadLocal.setPortletImportInProcess(false);
-		}
-
-		AssetVocabulary importAssetVocabulary =
-			_assetVocabularyLocalService.fetchAssetVocabularyByUuidAndGroupId(
-				assetVocabulary.getUuid(), liveGroup.getGroupId());
+			).build());
 
 		Assert.assertNotNull(importAssetVocabulary);
 
@@ -127,6 +87,21 @@ public class AssetVocabularyStagedModelDataHandlerTest
 		Assert.assertEquals(
 			classNameIds,
 			importedTypeSettingsUnicodeProperties.get("selectedClassNameIds"));
+	}
+
+	@Test
+	public void testAssetVocabularyWithNonexistentClassNameId()
+		throws Exception {
+
+		Assert.assertNotNull(
+			_getImportAssetVocabulary(
+				UnicodePropertiesBuilder.create(
+					true
+				).put(
+					"multivalued", true
+				).put(
+					"selectedClassNameIds", RandomTestUtil.randomLong() + ":-1"
+				).build()));
 	}
 
 	@Override
@@ -177,6 +152,58 @@ public class AssetVocabularyStagedModelDataHandlerTest
 			importedVocabulary.getDescription(LocaleUtil.getDefault()));
 		Assert.assertEquals(
 			vocabulary.getSettings(), importedVocabulary.getSettings());
+	}
+
+	private AssetVocabulary _addAssetVocabulary(
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws Exception {
+
+		return _assetVocabularyLocalService.addVocabulary(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			RandomTestUtil.randomString(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			typeSettingsUnicodeProperties.toString(),
+			ServiceContextTestUtil.getServiceContext(
+				stagingGroup.getGroupId()));
+	}
+
+	private AssetVocabulary _getImportAssetVocabulary(
+			UnicodeProperties typeSettingsUnicodeProperties)
+		throws Exception {
+
+		initExport();
+
+		AssetVocabulary assetVocabulary = _addAssetVocabulary(
+			typeSettingsUnicodeProperties);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, assetVocabulary);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			assetVocabulary);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		return _assetVocabularyLocalService.
+			fetchAssetVocabularyByUuidAndGroupId(
+				assetVocabulary.getUuid(), liveGroup.getGroupId());
 	}
 
 	@Inject

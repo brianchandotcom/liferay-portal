@@ -24,4 +24,6 @@ public class ObjectDefinitionSettingConstants {
 	public static final String NAME_ROOT_OBJECT_DEFINITION_IDS =
 		"rootObjectDefinitionIds";
 
+	public static final String NAME_VISIBLE = "visible";
+
 }

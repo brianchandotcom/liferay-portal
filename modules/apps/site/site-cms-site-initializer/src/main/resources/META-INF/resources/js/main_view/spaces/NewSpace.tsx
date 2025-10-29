@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import {useFormik} from 'formik';
 import {ILearnResourceContext, openToast} from 'frontend-js-components-web';
 import {navigate} from 'frontend-js-web';
@@ -117,9 +118,16 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 						values={values}
 					/>
 
-					<ClayButton.Group className="mb-0 w-100" spaced vertical>
+					<ClayButton.Group className="mb-0 mt-4 w-100" spaced>
+						<ClayLink
+							className="btn btn-outline-borderless btn-outline-secondary"
+							href={`${Liferay.ThemeDisplay.getPathFriendlyURLPublic()}/cms`}
+						>
+							{Liferay.Language.get('cancel')}
+						</ClayLink>
+
 						<ClayButton
-							className="mt-4"
+							className="flex-grow-1"
 							disabled={shouldDisableContinueBtn}
 							onClick={() => {
 								if (errors.name) {

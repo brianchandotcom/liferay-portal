@@ -5,8 +5,11 @@
 
 package com.liferay.portal.vulcan.util;
 
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -25,33 +28,27 @@ public class ObjectMapperUtilTest {
 
 	@Test
 	public void testReadValueWithHugeBase64String() {
-		int targetLength = 60_000_000;
+		byte[] data = new byte[21_000_000];
 
-		String base64Chunk = "AQID";
+		Random random = new Random();
 
-		StringBuilder sb = new StringBuilder(targetLength + 8);
+		random.nextBytes(data);
 
-		while (sb.length() < targetLength) {
-			sb.append(base64Chunk);
-		}
+		String base64 = Base64.encode(data);
 
-		String hugeBase64 = sb.toString();
-
-		LargePayload payload = ObjectMapperUtil.readValue(
-			LargePayload.class,
+		TestClass testClass = ObjectMapperUtil.readValue(
+			TestClass.class,
 			HashMapBuilder.<String, Object>put(
-				"file", hugeBase64
+				"string", base64
 			).build());
 
-		Assert.assertNotNull(payload);
-		Assert.assertNotNull(payload.file);
-		Assert.assertEquals(hugeBase64.length(), payload.file.length());
-		Assert.assertEquals(hugeBase64, payload.file);
+		Assert.assertNotNull(testClass);
+		Assert.assertEquals(base64, testClass.string);
 	}
 
-	public static class LargePayload {
+	public static class TestClass {
 
-		public String file;
+		public String string;
 
 	}
 

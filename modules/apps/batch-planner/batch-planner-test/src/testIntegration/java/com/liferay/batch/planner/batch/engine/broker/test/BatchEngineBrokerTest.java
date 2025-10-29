@@ -705,36 +705,25 @@ public class BatchEngineBrokerTest {
 			actualCSVString, _CSV_FORMAT
 		).getRecords();
 
-		List<List<String>> csvRecordStringsList =
-			_normalizeCSVRecordStringsList(
-				CSVParser.parse(
-					expectedCSVString, _CSV_FORMAT
-				).getRecords());
+		List<List<String>> csvRecordStringsList = _normalize(
+			CSVParser.parse(
+				expectedCSVString, _CSV_FORMAT
+			).getRecords());
 
 		Assert.assertEquals(
 			csvRecordStringsList.get(0), _toList(csvRecords.get(0)));
 
-		List<String> expectedCSVRecordStrings = csvRecordStringsList.get(1);
-
-		int externalReferenceCodeIndex = csvRecordStringsList.get(
-			0
-		).indexOf(
-			"externalReferenceCode"
-		);
-
-		Map<String, List<String>> csvRecordStringsMap = _toCSVRecordsMap(
+		Map<String, List<String>> csvRecordStringsMap = _getCSVRecordStringsMap(
 			csvRecords.subList(1, csvRecords.size()),
-			externalReferenceCodeIndex);
+			csvRecordStringsList.get(
+				0
+			).indexOf(
+				"externalReferenceCode"
+			));
 
-		List<String> actualCSVRecordStrings = csvRecordStringsMap.get(
-			externalReferenceCode);
-
-		Assert.assertNotNull(
-			"There is no CSV line for externalReferenceCode: " +
-				externalReferenceCode,
-			actualCSVRecordStrings);
-
-		Assert.assertEquals(expectedCSVRecordStrings, actualCSVRecordStrings);
+		Assert.assertEquals(
+			csvRecordStringsList.get(1),
+			csvRecordStringsMap.get(externalReferenceCode));
 	}
 
 	private void _assertJSONTConfiguration(
@@ -908,6 +897,26 @@ public class BatchEngineBrokerTest {
 
 		_getFinishedBatchEngineImportTask(
 			batchPlannerPlan.getBatchPlannerPlanId());
+	}
+
+	private Map<String, List<String>> _getCSVRecordStringsMap(
+		List<CSVRecord> csvRecords, int index) {
+
+		Map<String, List<String>> csvRecordStringsMap = new HashMap<>();
+
+		for (CSVRecord csvRecord : csvRecords) {
+			List<String> csvRecordStrings = _toList(csvRecord);
+
+			if (index >= csvRecordStrings.size()) {
+				continue;
+			}
+
+			String key = csvRecordStrings.get(index);
+
+			csvRecordStringsMap.put(key, csvRecordStrings);
+		}
+
+		return csvRecordStringsMap;
 	}
 
 	private String _getCSVString(
@@ -1147,45 +1156,33 @@ public class BatchEngineBrokerTest {
 		return zipInputStream;
 	}
 
-	private List<String> _normalizeCSVRecordStrings(
-		List<String> csvRecordStrings) {
-
-		List<String> normalizedCSVRecordStrings = new ArrayList<>(
-			csvRecordStrings.size());
-
-		for (String csvRecordString : csvRecordStrings) {
-			if (!Validator.isBlank(csvRecordString) &&
-				_htmlTagPattern.matcher(
-					csvRecordString
-				).find()) {
-
-				csvRecordString = _htmlBreakPattern.matcher(
-					csvRecordString
-				).replaceAll(
-					StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
-				);
-			}
-
-			normalizedCSVRecordStrings.add(csvRecordString);
-		}
-
-		return normalizedCSVRecordStrings;
-	}
-
-	private List<List<String>> _normalizeCSVRecordStringsList(
-		List<CSVRecord> csvRecords) {
-
-		List<List<String>> normalizedCSVRecordStringsList = new ArrayList<>(
+	private List<List<String>> _normalize(List<CSVRecord> csvRecords) {
+		List<List<String>> csvRecordStringsList = new ArrayList<>(
 			csvRecords.size());
 
 		for (CSVRecord csvRecord : csvRecords) {
-			List<String> csvRecordStrings = _normalizeCSVRecordStrings(
-				csvRecord.toList());
+			List<String> csvRecordStrings = new ArrayList<>();
 
-			normalizedCSVRecordStringsList.add(csvRecordStrings);
+			for (String csvRecordString : csvRecord.toList()) {
+				if (!Validator.isBlank(csvRecordString) &&
+					_htmlTagPattern.matcher(
+						csvRecordString
+					).find()) {
+
+					csvRecordString = _htmlBreakPattern.matcher(
+						csvRecordString
+					).replaceAll(
+						StringBundler.concat("$1", _NEWLINE, _NEWLINE, "$3")
+					);
+				}
+
+				csvRecordStrings.add(csvRecordString);
+			}
+
+			csvRecordStringsList.add(csvRecordStrings);
 		}
 
-		return normalizedCSVRecordStringsList;
+		return csvRecordStringsList;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(
@@ -1591,26 +1588,6 @@ public class BatchEngineBrokerTest {
 							"com.liferay.object.rest.dto.v1_0.ObjectEntry",
 							"C_TestObject"))));
 		}
-	}
-
-	private Map<String, List<String>> _toCSVRecordsMap(
-		List<CSVRecord> csvRecords, int index) {
-
-		Map<String, List<String>> csvRecordStringsMap = new HashMap<>();
-
-		for (CSVRecord csvRecord : csvRecords) {
-			List<String> csvRecordStrings = _toList(csvRecord);
-
-			if (index >= csvRecordStrings.size()) {
-				continue;
-			}
-
-			String key = csvRecordStrings.get(index);
-
-			csvRecordStringsMap.put(key, csvRecordStrings);
-		}
-
-		return csvRecordStringsMap;
 	}
 
 	private String _toDateString(Date date) {

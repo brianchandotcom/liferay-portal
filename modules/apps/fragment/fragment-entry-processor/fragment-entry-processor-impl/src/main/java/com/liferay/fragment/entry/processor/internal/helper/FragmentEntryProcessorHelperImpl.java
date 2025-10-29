@@ -3,11 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.fragment.entry.processor.internal.util;
+package com.liferay.fragment.entry.processor.internal.helper;
 
 import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.entry.processor.helper.FragmentEntryProcessorHelper;
 import com.liferay.fragment.entry.processor.helper.InfoItemFieldMapped;
+import com.liferay.fragment.entry.processor.internal.util.CommaSeparatedInfoCollectionTextFormatter;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.frontend.taglib.clay.servlet.taglib.AlertTag;
 import com.liferay.info.exception.InfoItemPermissionException;

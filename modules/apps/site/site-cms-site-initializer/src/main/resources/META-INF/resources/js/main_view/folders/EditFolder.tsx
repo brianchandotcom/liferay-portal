@@ -5,14 +5,15 @@
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm from '@clayui/form';
-import {Item} from '@clayui/multi-select/lib/types';
 import ClayToolbar from '@clayui/toolbar';
 import {useFormik} from 'formik';
-import {openToast} from 'frontend-js-components-web';
+import {FieldBase, openToast} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
-import {FieldSelect, FieldText} from '../../common/components/forms';
+import {SpaceInput} from '../../common/components/SpaceSelector';
+import {FieldText} from '../../common/components/forms';
 import {required, validate} from '../../common/components/forms/validations';
 import FolderService, {TFolder} from '../../common/services/FolderService';
 
@@ -26,6 +27,8 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 		Pick<TFolder, 'description' | 'scopeKey' | 'title'>
 	>({description: '', scopeKey: '', title: ''});
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const folderSpaceInputId = `${uuidv4()}folderSpace`;
 
 	useEffect(() => {
 		const fetchFolderData = async () => {
@@ -47,10 +50,6 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 
 		fetchFolderData();
 	}, [folderId]);
-
-	const spaceItems: Item[] = folderData
-		? [{label: folderData.scopeKey, value: folderData.scopeKey}]
-		: [];
 
 	const {
 		errors,
@@ -187,14 +186,19 @@ const EditFolder: React.FC<EditFolderProps> = ({backURL, folderId}) => {
 						value={values.folderName}
 					/>
 
-					<FieldSelect
-						aria-readonly
-						defaultValue={values.folderSpace}
-						items={spaceItems}
+					<FieldBase
+						id={folderSpaceInputId}
 						label={Liferay.Language.get('space')}
-						name="folderSpace"
 						required
-					/>
+					>
+						<SpaceInput
+							aria-readonly
+							id={folderSpaceInputId}
+							readOnly
+							spaceName={values.folderSpace}
+							value={values.folderSpace}
+						/>
+					</FieldBase>
 
 					<FieldText
 						component="textarea"

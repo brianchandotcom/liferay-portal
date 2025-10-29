@@ -6,12 +6,16 @@
 import ClayButton from '@clayui/button';
 import ClayModal from '@clayui/modal';
 import {FormikHelpers, useFormik} from 'formik';
+import {FieldBase} from 'frontend-js-components-web';
 import {navigate, sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
-import {FieldPicker, FieldText} from '../../common/components/forms';
+import SpaceSelector from '../../common/components/SpaceSelector';
+import {FieldText} from '../../common/components/forms';
 import {required, validate} from '../../common/components/forms/validations';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
+import {Space} from '../../common/types/Space';
 import {AssetData} from '../props_transformer/actions/createAssetAction';
 import {FolderData} from '../props_transformer/actions/createFolderAction';
 
@@ -41,6 +45,10 @@ export default function CreationModalContent({
 	redirect,
 	title,
 }: Props) {
+	const [space, setSpace] = useState<Space>();
+
+	const groupIdInputId = `${uuidv4()}groupId`;
+
 	const {
 		errors,
 		handleChange,
@@ -104,7 +112,7 @@ export default function CreationModalContent({
 				) : null}
 
 				{assetLibraries.length > 1 && (
-					<FieldPicker
+					<FieldBase
 						errorMessage={
 							touched.groupId ? errors.groupId : undefined
 						}
@@ -112,19 +120,22 @@ export default function CreationModalContent({
 							Liferay.Language.get('choose-the-space-for-the-x'),
 							title
 						)}
-						items={assetLibraries.map(({groupId, name}) => ({
-							label: name,
-							value: groupId,
-						}))}
+						id={groupIdInputId}
 						label={Liferay.Language.get('space')}
-						name="groupId"
-						onSelectionChange={(value: string) => {
-							setFieldValue('groupId', value);
-						}}
-						placeholder={Liferay.Language.get('select-a-space')}
 						required
-						selectedKey={values.groupId}
-					/>
+					>
+						<SpaceSelector
+							id={groupIdInputId}
+							onSpaceChange={(space) => {
+								setFieldValue(
+									'groupId',
+									space ? space.siteId : null
+								);
+								setSpace(space);
+							}}
+							space={space}
+						/>
+					</FieldBase>
 				)}
 			</ClayModal.Body>
 

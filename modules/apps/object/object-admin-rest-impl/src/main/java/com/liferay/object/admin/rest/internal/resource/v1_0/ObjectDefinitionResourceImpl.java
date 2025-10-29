@@ -1256,12 +1256,6 @@ public class ObjectDefinitionResourceImpl
 	}
 
 	private boolean _isAccumulateError() {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				contextCompany.getCompanyId(), "LPD-51345")) {
-
-			return false;
-		}
-
 		if (contextHttpServletRequest != null) {
 			return ParamUtil.getBoolean(
 				contextHttpServletRequest, "accumulateError");

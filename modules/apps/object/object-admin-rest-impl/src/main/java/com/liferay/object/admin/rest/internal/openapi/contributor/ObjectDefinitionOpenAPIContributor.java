@@ -5,8 +5,6 @@
 
 package com.liferay.object.admin.rest.internal.openapi.contributor;
 
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.openapi.OpenAPIContext;
@@ -34,8 +32,7 @@ public class ObjectDefinitionOpenAPIContributor implements OpenAPIContributor {
 	public void contribute(OpenAPI openAPI, OpenAPIContext openAPIContext)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-51345") ||
+		if ((openAPIContext == null) ||
 			!StringUtil.equals(openAPIContext.getPath(), "/o/object-admin/")) {
 
 			return;

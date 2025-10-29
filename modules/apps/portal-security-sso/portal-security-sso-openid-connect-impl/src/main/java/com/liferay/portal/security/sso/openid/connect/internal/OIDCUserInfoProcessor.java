@@ -84,14 +84,9 @@ public class OIDCUserInfoProcessor {
 			String userInfoJSON)
 		throws Exception {
 
-		String matcherField = _getMatcherField(
-			oAuthClientEntry.getAuthServerWellKnownURI(),
-			oAuthClientEntry.getClientId(), companyId, issuer, tokenEndpoint);
-
 		User user = _addOrUpdateUser(
-			companyId, oAuthClientEntry.getCustomClaimsJSON(), matcherField,
-			issuer, serviceContext, userInfoJSON,
-			oAuthClientEntry.getOIDCUserInfoMapperJSON());
+			companyId, issuer, oAuthClientEntry, serviceContext, tokenEndpoint,
+			userInfoJSON);
 
 		try {
 			_addAddress(
@@ -216,13 +211,13 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private User _addOrUpdateUser(
-			long companyId, String customClaimsJSON, String matcherField,
-			String issuer, ServiceContext serviceContext, String userInfoJSON,
-			String userInfoMapperJSON)
+			long companyId, String issuer, OAuthClientEntry oAuthClientEntry,
+			ServiceContext serviceContext, String tokenEndpoint,
+			String userInfoJSON)
 		throws Exception {
 
 		JSONObject userInfoMapperJSONObject = _jsonFactory.createJSONObject(
-			userInfoMapperJSON);
+			oAuthClientEntry.getOIDCUserInfoMapperJSON());
 
 		JSONObject userMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("user");
@@ -238,36 +233,17 @@ public class OIDCUserInfoProcessor {
 			"lastName", userMapperJSONObject, userInfoJSONObject);
 		String screenName = _getClaimString(
 			"screenName", userMapperJSONObject, userInfoJSONObject);
+		String subject = userInfoJSONObject.getString("sub");
 
-		String sub = userInfoJSONObject.getString("sub");
+		String matcherField = _getMatcherField(
+			oAuthClientEntry.getAuthServerWellKnownURI(),
+			oAuthClientEntry.getClientId(), companyId, issuer, tokenEndpoint);
 
-		User user = null;
-
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
-			OpenIdConnectUser openIdConnectUser =
-				_openIdConnectUserLocalService.fetchOpenIdConnectUser(
-					companyId, issuer, sub);
-
-			if (openIdConnectUser != null) {
-				user = _userLocalService.fetchUser(
-					openIdConnectUser.getUserId());
-			}
-			else if (matcherField.equals("email")) {
-				user = _userLocalService.fetchUserByEmailAddress(
-					companyId, emailAddress);
-			}
-			else if (matcherField.equals("screenName")) {
-				user = _userLocalService.fetchUserByScreenName(
-					companyId, screenName);
-			}
-		}
-		else {
-			user = _userLocalService.fetchUserByEmailAddress(
-				companyId, emailAddress);
-		}
+		User user = _fetchUser(
+			companyId, emailAddress, issuer, matcherField, screenName, subject);
 
 		_validate(
-			companyId, emailAddress, matcherField, firstName, lastName, user);
+			companyId, emailAddress, firstName, lastName, matcherField, user);
 
 		JSONObject contactMapperJSONObject =
 			userInfoMapperJSONObject.getJSONObject("contact");
@@ -283,11 +259,9 @@ public class OIDCUserInfoProcessor {
 			roleIds = _getRoleIds(companyId, issuer);
 		}
 
-		Long oAuthClientEntryId = (Long)serviceContext.getAttribute(
-			"oAuthClientEntryId");
-
 		List<Long> userGroupIds = _getUserGroupIds(
-			companyId, oAuthClientEntryId, userInfoJSONObject,
+			companyId, oAuthClientEntry.getOAuthClientEntryId(),
+			userInfoJSONObject,
 			userInfoMapperJSONObject.getJSONObject("users_groups"));
 
 		if (user == null) {
@@ -308,7 +282,7 @@ public class OIDCUserInfoProcessor {
 					null,
 				false, serviceContext);
 
-			_saveOpenIdConnectUser(issuer, sub, user);
+			_saveOpenIdConnectUser(issuer, subject, user);
 
 			ExpandoColumn expandoColumn = _getOrAddExpandoColumn(
 				User.class.getName(), companyId);
@@ -316,10 +290,12 @@ public class OIDCUserInfoProcessor {
 			_expandoValueLocalService.addValue(
 				_classNameLocalService.getClassNameId(User.class.getName()),
 				expandoColumn.getTableId(), expandoColumn.getColumnId(),
-				user.getUserId(), String.valueOf(oAuthClientEntryId));
+				user.getUserId(),
+				String.valueOf(oAuthClientEntry.getOAuthClientEntryId()));
 
 			_addOrUpdateUserCustomClaims(
-				customClaimsJSON, user, userInfoJSONObject);
+				oAuthClientEntry.getCustomClaimsJSON(), user,
+				userInfoJSONObject);
 
 			return _userLocalService.updatePasswordReset(
 				user.getUserId(), false);
@@ -330,7 +306,7 @@ public class OIDCUserInfoProcessor {
 		serviceContext.setUuid(user.getUuid());
 
 		_addOrUpdateUserCustomClaims(
-			customClaimsJSON, user, userInfoJSONObject);
+			oAuthClientEntry.getCustomClaimsJSON(), user, userInfoJSONObject);
 
 		user = _userLocalService.updateUser(
 			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
@@ -354,10 +330,12 @@ public class OIDCUserInfoProcessor {
 				"jobTitle", userMapperJSONObject, userInfoJSONObject),
 			user.getGroupIds(), user.getOrganizationIds(), user.getRoleIds(),
 			user.getUserGroupRoles(),
-			_getUserGroupIds(companyId, oAuthClientEntryId, user, userGroupIds),
+			_getUserGroupIds(
+				companyId, oAuthClientEntry.getOAuthClientEntryId(), user,
+				userGroupIds),
 			serviceContext);
 
-		_saveOpenIdConnectUser(issuer, sub, user);
+		_saveOpenIdConnectUser(issuer, subject, user);
 
 		return user;
 	}
@@ -447,6 +425,35 @@ public class OIDCUserInfoProcessor {
 			null, user.getUserId(), Contact.class.getName(),
 			user.getContactId(), phoneClaimString, null,
 			listType.getListTypeId(), false, serviceContext);
+	}
+
+	private User _fetchUser(
+		long companyId, String emailAddress, String issuer, String matcherField,
+		String screenName, String subject) {
+
+		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-20879")) {
+			return _userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
+		}
+
+		OpenIdConnectUser openIdConnectUser =
+			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
+				companyId, issuer, subject);
+
+		if (openIdConnectUser != null) {
+			return _userLocalService.fetchUser(openIdConnectUser.getUserId());
+		}
+		else if (matcherField.equals("email")) {
+			return _userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
+		}
+		else if (matcherField.equals("screenName")) {
+			return _userLocalService.fetchUserByScreenName(
+				companyId, screenName);
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid matcher field " + matcherField);
 	}
 
 	private int[] _getBirthday(
@@ -832,8 +839,8 @@ public class OIDCUserInfoProcessor {
 	}
 
 	private void _validate(
-			long companyId, String emailAddress, String matcherField,
-			String firstName, String lastName, User user)
+			long companyId, String emailAddress, String firstName,
+			String lastName, String matcherField, User user)
 		throws Exception {
 
 		if (Validator.isNull(emailAddress) &&

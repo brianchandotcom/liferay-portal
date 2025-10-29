@@ -158,9 +158,6 @@ public class OpenIdConnectAuthenticationHandlerImpl
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			httpServletRequest);
 
-		serviceContext.setAttribute(
-			"oAuthClientEntryId", oAuthClientEntry.getOAuthClientEntryId());
-
 		long userId = _oidcUserInfoProcessor.processUserInfo(
 			_portal.getCompanyId(httpServletRequest),
 			String.valueOf(oidcProviderMetadata.getIssuer()), oAuthClientEntry,

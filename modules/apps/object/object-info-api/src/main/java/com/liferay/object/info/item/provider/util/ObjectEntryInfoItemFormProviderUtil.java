@@ -96,7 +96,7 @@ public class ObjectEntryInfoItemFormProviderUtil {
 			unsafeConsumer -> {
 				for (ObjectField objectField :
 						objectFieldLocalService.getObjectFields(
-							objectDefinitionId, false)) {
+							objectDefinitionId)) {
 
 					if (!objectField.compareBusinessType(
 							ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {

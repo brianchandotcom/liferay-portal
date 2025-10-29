@@ -187,98 +187,6 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
-	@TestInfo("LPD-67912")
-	public void testFragmentEntryProcessorEditableWithMappedLayoutReferencedByERC()
-		throws Exception {
-
-		FragmentEntry fragmentEntry =
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading");
-
-		FragmentEntryLink fragmentEntryLink =
-			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"element-text",
-						JSONUtil.put(
-							"config",
-							JSONUtil.put(
-								"layout",
-								JSONUtil.put(
-									"externalReferenceCode",
-									_layout.getExternalReferenceCode()
-								).put(
-									"title", RandomTestUtil.randomString()
-								)
-							).put(
-								"mapperType", "link"
-							)
-						).put(
-							"defaultValue", RandomTestUtil.randomString()
-						))
-				).put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("headingLevel", "h1")
-				).toString(),
-				fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
-				null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
-				fragmentEntry.getFragmentEntryKey(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				fragmentEntry.getType());
-
-		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
-			fragmentEntryLink, _layout);
-
-		Group group = GroupTestUtil.addGroup();
-
-		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
-
-		fragmentEntryLink = ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
-			JSONUtil.put(
-				FragmentEntryProcessorConstants.
-					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put(
-					"element-text",
-					JSONUtil.put(
-						"config",
-						JSONUtil.put(
-							"layout",
-							JSONUtil.put(
-								"externalReferenceCode",
-								layout.getExternalReferenceCode()
-							).put(
-								"scopeExternalReferenceCode",
-								group.getExternalReferenceCode()
-							).put(
-								"title", RandomTestUtil.randomString()
-							)
-						).put(
-							"mapperType", "link"
-						)
-					).put(
-						"defaultValue", RandomTestUtil.randomString()
-					))
-			).put(
-				FragmentEntryProcessorConstants.
-					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-				JSONUtil.put("headingLevel", "h1")
-			).toString(),
-			fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
-			null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
-			fragmentEntry.getFragmentEntryKey(),
-			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid()),
-			fragmentEntry.getType());
-
-		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
-			fragmentEntryLink, layout);
-	}
-
-	@Test
 	public void testFragmentEntryProcessorEditable() throws Exception {
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.createFragmentEntryLink(0);
@@ -1604,6 +1512,98 @@ public class EditableFragmentEntryProcessorTest {
 			CoreMatchers.containsString("es_ES-alt"));
 
 		LocaleThreadLocal.setThemeDisplayLocale(currentLocale);
+	}
+
+	@Test
+	@TestInfo("LPD-67912")
+	public void testFragmentEntryProcessorEditableWithMappedLayoutReferencedByERC()
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading");
+
+		FragmentEntryLink fragmentEntryLink =
+			ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put(
+						"element-text",
+						JSONUtil.put(
+							"config",
+							JSONUtil.put(
+								"layout",
+								JSONUtil.put(
+									"externalReferenceCode",
+									_layout.getExternalReferenceCode()
+								).put(
+									"title", RandomTestUtil.randomString()
+								)
+							).put(
+								"mapperType", "link"
+							)
+						).put(
+							"defaultValue", RandomTestUtil.randomString()
+						))
+				).put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("headingLevel", "h1")
+				).toString(),
+				fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
+				null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
+				fragmentEntry.getFragmentEntryKey(),
+				_segmentsExperienceLocalService.
+					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
+				fragmentEntry.getType());
+
+		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
+			fragmentEntryLink, _layout);
+
+		Group group = GroupTestUtil.addGroup();
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
+
+		fragmentEntryLink = ContentLayoutTestUtil.addFragmentEntryLinkToLayout(
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_EDITABLE_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put(
+					"element-text",
+					JSONUtil.put(
+						"config",
+						JSONUtil.put(
+							"layout",
+							JSONUtil.put(
+								"externalReferenceCode",
+								layout.getExternalReferenceCode()
+							).put(
+								"scopeExternalReferenceCode",
+								group.getExternalReferenceCode()
+							).put(
+								"title", RandomTestUtil.randomString()
+							)
+						).put(
+							"mapperType", "link"
+						)
+					).put(
+						"defaultValue", RandomTestUtil.randomString()
+					))
+			).put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("headingLevel", "h1")
+			).toString(),
+			fragmentEntry.getCss(), fragmentEntry.getConfiguration(), null,
+			null, fragmentEntry.getHtml(), fragmentEntry.getJs(), _layout,
+			fragmentEntry.getFragmentEntryKey(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			fragmentEntry.getType());
+
+		_testEditableWithLinkedLayoutReferencedByExternalReferenceCode(
+			fragmentEntryLink, layout);
 	}
 
 	@Test

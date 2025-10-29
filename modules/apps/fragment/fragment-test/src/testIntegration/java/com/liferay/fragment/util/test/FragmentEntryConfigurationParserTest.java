@@ -75,16 +75,6 @@ public class FragmentEntryConfigurationParserTest {
 	}
 
 	@Test
-	public void testTranslateConfigurationEn() throws Exception {
-		_testTranslateConfiguration("en");
-	}
-
-	@Test
-	public void testTranslateConfigurationEs() throws Exception {
-		_testTranslateConfiguration("es");
-	}
-
-	@Test
 	@TestInfo("LPD-67912")
 	public void testGetConfigurationJSONObjectURLConfigurationWithMappedLayoutReferencedByERC()
 		throws Exception {
@@ -199,6 +189,16 @@ public class FragmentEntryConfigurationParserTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	@Test
+	public void testTranslateConfigurationEn() throws Exception {
+		_testTranslateConfiguration("en");
+	}
+
+	@Test
+	public void testTranslateConfigurationEs() throws Exception {
+		_testTranslateConfiguration("es");
 	}
 
 	private ResourceBundle _getResourceBundle(String language) {

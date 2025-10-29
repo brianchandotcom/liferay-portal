@@ -392,9 +392,7 @@ export function BaseRoleType({
 								disabled={!selectedRoleType}
 								id="role-name"
 								onBlur={(event) => {
-									const roleName = titleCase(
-										event.target.value
-									);
+									const roleName = event.target.value;
 
 									if (selectedRoleName !== '') {
 										roleNameItemUpdate({

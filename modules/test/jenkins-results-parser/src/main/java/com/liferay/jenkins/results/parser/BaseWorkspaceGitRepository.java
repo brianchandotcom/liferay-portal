@@ -235,7 +235,7 @@ public abstract class BaseWorkspaceGitRepository
 
 		String jobVariant = System.getenv("JOB_VARIANT");
 
-		if (directoryName.equals("liferay-portal")) {
+		if (directoryName.contains("liferay-portal")) {
 			String jobName = System.getenv("JOB_NAME");
 
 			if (jobName.equals("forward-pullrequest") ||
@@ -246,10 +246,17 @@ public abstract class BaseWorkspaceGitRepository
 				return false;
 			}
 
+			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
+				return getBoolean("snapshot");
+			}
+
 			if (jobName.contains("master") &&
-				!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
 				jobVariant.contains("modules-unit")) {
 
+				return false;
+			}
+
+			if (jobVariant.contains("service-builder")) {
 				return false;
 			}
 		}

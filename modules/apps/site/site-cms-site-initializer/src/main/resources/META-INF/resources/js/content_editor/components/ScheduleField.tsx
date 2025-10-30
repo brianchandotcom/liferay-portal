@@ -5,6 +5,7 @@
 
 import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
+import {isNullOrUndefined} from '@liferay/layout-js-components-web';
 import {datetimeUtils} from '@liferay/object-js-components-web';
 import {dateUtils} from 'frontend-js-web';
 import moment from 'moment';
@@ -25,7 +26,7 @@ export default React.forwardRef(function ScheduleField(
 		error: initialError = '',
 		label,
 		name,
-		neverExpire,
+		neverCheckbox,
 		required = false,
 		updateFieldData,
 	}: {
@@ -34,17 +35,19 @@ export default React.forwardRef(function ScheduleField(
 		error?: string;
 		label: string;
 		name: string;
-		neverExpire?: boolean;
+		neverCheckbox?: {label: string; value: boolean};
 		required?: boolean;
 		updateFieldData: any;
 	},
 	ref
 ) {
-	const [checked, setChecked] = useState<boolean>(Boolean(neverExpire));
+	const [checked, setChecked] = useState<boolean>(
+		Boolean(neverCheckbox?.value)
+	);
 	const [date, setDate] = useState<string>(initialDate);
 	const [error, setError] = useState<string>(initialError);
 
-	const hasNeverExpire = neverExpire !== undefined;
+	const hasNeverCheckbox = !isNullOrUndefined(neverCheckbox?.value);
 	const id = useId();
 	const locale = Liferay.ThemeDisplay.getBCP47LanguageId();
 
@@ -87,7 +90,7 @@ export default React.forwardRef(function ScheduleField(
 		<div aria-label={label} role="group">
 			<FieldWrapper
 				disabled={checked}
-				errorMessage={!hasNeverExpire || !checked ? error : ''}
+				errorMessage={!hasNeverCheckbox || !checked ? error : ''}
 				fieldId={id}
 				label={label}
 				required={required}
@@ -122,18 +125,18 @@ export default React.forwardRef(function ScheduleField(
 				/>
 			</FieldWrapper>
 
-			{hasNeverExpire ? (
+			{hasNeverCheckbox ? (
 				<ClayForm.Group>
 					<ClayCheckbox
 						checked={checked}
-						label={Liferay.Language.get('never-expire')}
+						label={neverCheckbox?.label}
 						onChange={({target: {checked}}) => {
 							setChecked(checked);
 
 							updateFieldData({
 								error,
 								name,
-								neverExpire: checked,
+								neverCheckbox: checked,
 								value: checked ? '' : date,
 							});
 						}}

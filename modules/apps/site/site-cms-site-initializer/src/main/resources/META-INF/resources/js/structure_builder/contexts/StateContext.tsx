@@ -84,6 +84,7 @@ const INITIAL_STATE: State = {
 		name: '',
 		spaces: 'all',
 		status: 'new',
+		system: false,
 		uuid: getUuid(),
 		workflows: {},
 	},

@@ -49,6 +49,7 @@ export type Structure = {
 	name: string;
 	spaces: Spaces;
 	status: Status;
+	system: boolean;
 	type?: 'L_CMS_CONTENT_STRUCTURES' | 'L_CMS_FILE_TYPES';
 	uuid: Uuid;
 	workflows: Workflows;

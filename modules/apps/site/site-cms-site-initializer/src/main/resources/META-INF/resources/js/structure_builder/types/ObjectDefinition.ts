@@ -58,6 +58,7 @@ export type ObjectDefinition = {
 	status?: {
 		code: number;
 	};
+	system?: boolean;
 	titleObjectFieldName?: string;
 	workflowDefinitionLinks?: {
 		groupExternalReferenceCode: string;

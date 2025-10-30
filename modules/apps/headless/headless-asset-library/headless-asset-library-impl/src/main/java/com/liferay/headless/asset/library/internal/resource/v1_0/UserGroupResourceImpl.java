@@ -60,7 +60,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				String userGroupExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -78,7 +80,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			Long assetLibraryId, Long userGroupId)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -93,7 +97,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				String userGroupExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -116,7 +122,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -133,7 +141,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			Long assetLibraryId, Long userGroupId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -164,7 +174,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				String userGroupExternalReferenceCode)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -183,7 +195,9 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			Long assetLibraryId, Long userGroupId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-17564")) {
+
 			throw new UnsupportedOperationException();
 		}
 

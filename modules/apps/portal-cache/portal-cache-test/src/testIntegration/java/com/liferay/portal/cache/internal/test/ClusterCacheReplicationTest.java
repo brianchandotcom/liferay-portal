@@ -624,6 +624,133 @@ public class ClusterCacheReplicationTest {
 				}));
 	}
 
+	@Test
+	public void testReplicateByUpdateViaCopy() throws Exception {
+		String testCacheName = ClusterCacheReplicationTest.class.getName();
+
+		String testKey = "testKey";
+		String testValue = "testValue";
+		String updateValue = "test.value.update";
+
+		// Assert node 1 is empty
+
+		Assert.assertNull(
+			_tomcatNode1.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					_setReplicateProperties(
+						portalCache, "_replicatePutsViaCopy", true);
+
+					_setReplicateProperties(
+						portalCache, "_replicateUpdatesViaCopy", true);
+
+					return portalCache.get(testKey);
+				}));
+
+		// Assert node 2 is empty
+
+		Assert.assertNull(
+			_tomcatNode2.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					_setReplicateProperties(
+						portalCache, "_replicatePutsViaCopy", true);
+
+					_setReplicateProperties(
+						portalCache, "_replicateUpdatesViaCopy", true);
+
+					portalCache.registerPortalCacheListener(
+						new TestPortalCacheListener());
+
+					return portalCache.get(testKey);
+				}));
+
+		// Assert node1 can see the value it just put
+
+		Assert.assertEquals(
+			testValue,
+			_tomcatNode1.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					portalCache.put(testKey, testValue);
+
+					return portalCache.get(testKey);
+				}));
+
+		// Assert node2 has the same value because replicatePutsViaCopy=true
+
+		Assert.assertEquals(
+			testValue,
+			_tomcatNode2.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					PortalCacheListener<?, ?> testPortalCacheListener =
+						_getListenerByName(
+							portalCache,
+							TestPortalCacheListener.class.getName());
+
+					CountDownLatch countDownLatchForPut =
+						ReflectionTestUtil.getFieldValue(
+							testPortalCacheListener, "_countDownLatchForPut");
+
+					countDownLatchForPut.await();
+
+					return portalCache.get(testKey);
+				}));
+
+		// Assert node1 can see the value it just update
+
+		Assert.assertEquals(
+			updateValue,
+			_tomcatNode1.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					portalCache.put(testKey, updateValue);
+
+					return portalCache.get(testKey);
+				}));
+
+		// Assert node 2 has the same value after node 1 update
+
+		Assert.assertEquals(
+			updateValue,
+			_tomcatNode2.syncExecute(
+				() -> {
+					PortalCache<String, String> portalCache =
+						PortalCacheHelperUtil.getPortalCache(
+							PortalCacheManagerNames.MULTI_VM, testCacheName);
+
+					PortalCacheListener<?, ?> testPortalCacheListener =
+						_getListenerByName(
+							portalCache,
+							TestPortalCacheListener.class.getName());
+
+					CountDownLatch countDownLatchForUpdate =
+						ReflectionTestUtil.getFieldValue(
+							testPortalCacheListener,
+							"_countDownLatchForUpdate");
+
+					countDownLatchForUpdate.await();
+
+					return portalCache.get(testKey);
+				}));
+	}
+
 	public static class TestPortalCacheListener
 		implements PortalCacheListener<String, String>, Serializable {
 
@@ -631,6 +758,7 @@ public class ClusterCacheReplicationTest {
 			_countDownLatchForPut = new CountDownLatch(1);
 			_countDownLatchForRemove = new CountDownLatch(1);
 			_countDownLatchForRemoveAll = new CountDownLatch(1);
+			_countDownLatchForUpdate = new CountDownLatch(1);
 		}
 
 		@Override
@@ -674,6 +802,8 @@ public class ClusterCacheReplicationTest {
 				PortalCache<String, String> portalCache, String key,
 				String value, int timeToLive)
 			throws PortalCacheException {
+
+			_countDownLatchForUpdate.countDown();
 		}
 
 		@Override
@@ -686,6 +816,7 @@ public class ClusterCacheReplicationTest {
 		private final CountDownLatch _countDownLatchForPut;
 		private final CountDownLatch _countDownLatchForRemove;
 		private final CountDownLatch _countDownLatchForRemoveAll;
+		private final CountDownLatch _countDownLatchForUpdate;
 
 	}
 

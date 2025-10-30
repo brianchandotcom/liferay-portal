@@ -7,11 +7,10 @@ import {Outlet, useOutletContext} from 'react-router-dom';
 
 import {DashboardNavigation} from '../../components/DashboardNavigation/DashboardNavigation';
 
-import './PublisherDashboard.scss';
-import {PageRenderer} from '../../components/Page';
-import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
-import i18n from '../../i18n';
 import {getAccountImage} from '../../utils/util';
+import {PageRenderer} from '../../components/Page';
+import i18n from '../../i18n';
+import useAccounts, {useAccount} from '../../hooks/data/useAccounts';
 
 type PublisherDashboardOutletProps = {
 	accountsSearch: ReturnType<typeof useAccounts>;

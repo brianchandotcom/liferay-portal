@@ -169,18 +169,17 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 
 						return objectEntry.getReviewDate();
 					});
+			}
 
-				dtoObjectEntry = objectEntryManager.updateObjectEntry(
+			return ObjectEntryUtil.toObjectEntry(
+				_objectDefinition,
+				objectEntryManager.updateObjectEntry(
 					objectEntry.getCompanyId(),
 					new DefaultDTOConverterContext(
 						false, null, null, null, null, themeDisplay.getLocale(),
 						null, themeDisplay.getUser()),
 					dtoObjectEntry.getExternalReferenceCode(),
-					_objectDefinition, dtoObjectEntry, scopeKey);
-			}
-
-			return ObjectEntryUtil.toObjectEntry(
-				_objectDefinition, dtoObjectEntry);
+					_objectDefinition, dtoObjectEntry, scopeKey));
 		}
 		catch (Exception exception) {
 			ObjectEntryInfoItemExceptionRequestHandler.handleInfoFormException(

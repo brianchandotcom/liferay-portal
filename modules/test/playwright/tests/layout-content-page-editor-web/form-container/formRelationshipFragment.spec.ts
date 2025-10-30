@@ -169,7 +169,6 @@ const FOOD_DEFINITION: ObjectDefinition = {
 const test = mergeTests(
 	featureFlagsTest({
 		'LPD-32050': {enabled: true},
-		'LPD-50377': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	cmsPagesTest,

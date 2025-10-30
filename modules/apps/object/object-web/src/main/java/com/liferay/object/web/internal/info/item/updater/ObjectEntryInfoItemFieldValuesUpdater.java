@@ -27,7 +27,6 @@ import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,7 +86,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
 		Map<String, Object> curProperties = _getProperties(
-			objectEntry, infoItemFieldValues, themeDisplay);
+			objectEntry, infoItemFieldValues);
 
 		try {
 			String scopeKey = ObjectEntryInfoItemUtil.getScopeKey(
@@ -236,20 +235,10 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 	}
 
 	private Map<String, Object> _getProperties(
-		ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues,
-		ThemeDisplay themeDisplay) {
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-50377")) {
-
-			return ObjectEntryUtil.toProperties(
-				infoItemFieldValues, _objectDefinition,
-				objectEntry.getValues());
-		}
+		ObjectEntry objectEntry, InfoItemFieldValues infoItemFieldValues) {
 
 		return ObjectEntryUtil.toProperties(
-			themeDisplay.getCompanyId(), infoItemFieldValues,
-			objectEntry.getValues());
+			infoItemFieldValues, _objectDefinition, objectEntry.getValues());
 	}
 
 	private TaxonomyCategoryBrief[] _toTaxonomyCategoryBriefs(

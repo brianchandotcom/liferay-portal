@@ -19,7 +19,6 @@ import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.web.internal.info.item.handler.ObjectEntryInfoItemExceptionRequestHandler;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -139,13 +138,6 @@ public class ObjectEntryInfoItemCreator
 
 	private Map<String, Object> _getProperties(
 		InfoItemFieldValues infoItemFieldValues, ThemeDisplay themeDisplay) {
-
-		if (FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getScopeGroupId(), "LPD-50377")) {
-
-			return ObjectEntryUtil.toProperties(
-				infoItemFieldValues, _objectDefinition, null);
-		}
 
 		return ObjectEntryUtil.toProperties(
 			themeDisplay.getCompanyId(), infoItemFieldValues, null);

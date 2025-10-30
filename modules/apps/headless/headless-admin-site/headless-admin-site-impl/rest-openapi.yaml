@@ -459,6 +459,16 @@ components:
             required:
                 -   contextSource
             type: object
+        ContextualMenuNavigationMenuValue:
+            allOf:
+                -   $ref: "#/components/schemas/NavigationMenuValue"
+                -   properties:
+                        contextualMenuType:
+                            enum: [Children, ParentAndItsSiblings, SelfAndSiblings]
+                            type: string
+                    required:
+                        -   contextualMenuType
+                    type: object
         CustomCSSViewport:
             # @review
             description:
@@ -2320,13 +2330,13 @@ components:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                 -   properties:
                         value:
+                            $ref: "#/components/schemas/NavigationMenuValue"
                             # @review
                             description:
                                 The value of the fragment configuration field of type navigation menu.
-                            type: object
                         value_i18n:
                             additionalProperties:
-                                type: object
+                                $ref: "#/components/schemas/NavigationMenuValue"
                             # @review
                             description:
                                 The localized value of the fragment configuration field of type navigation menu.
@@ -2427,6 +2437,22 @@ components:
                     type: boolean
             required:
                 -   typeSettings
+        NavigationMenuValue:
+            # @review
+            description:
+                A value of a field of type navigation menu.
+            discriminator:
+                mapping:
+                    ContextualMenu: "#/components/schemas/ContextualMenuNavigationMenuValue"
+                    SiteMenu: "#/components/schemas/SiteMenuNavigationMenuValue"
+                    SitePages: "#/components/schemas/SitePagesNavigationMenuValue"
+                propertyName:
+                    navigationMenuType
+            properties:
+                navigationMenuType:
+                    enum: [ContextualMenu, SiteMenu, SitePages]
+                    type: string
+            type: object
         NavigationSettings:
             # @review
             description:
@@ -3182,6 +3208,15 @@ components:
             required:
                 -   name
             type: object
+        SiteMenuNavigationMenuValue:
+            allOf:
+                -   $ref: "#/components/schemas/NavigationMenuValue"
+                -   properties:
+                        navigationMenuItemExternalReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+                        parentMenuItemExternalReferenceCode:
+                            type: string
+            type: object
         SitePage:
             # @review
             description:
@@ -3335,6 +3370,16 @@ components:
             description:
                 The navigation settings of a site page.
             type: object
+        SitePagesNavigationMenuValue:
+            allOf:
+                -   $ref: "#/components/schemas/NavigationMenuValue"
+                -   properties:
+                        pageSetType:
+                            enum: [PrivatePages, PublicPages]
+                            type: string
+                        parentSitePageExternalReferenceCode:
+                            type: string
+                    type: object
         SitemapSettings:
             # @review
             description:

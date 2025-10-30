@@ -7,6 +7,7 @@ package com.liferay.object.model.impl;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
@@ -205,6 +206,26 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 	@Override
 	public boolean isApproved() {
 		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isCMS() {
+		if (!FeatureFlagManagerUtil.isEnabled(getCompanyId(), "LPD-17564")) {
+			return false;
+		}
+
+		if (Objects.equals(
+				getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.
+					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) ||
+			Objects.equals(
+				getObjectFolderExternalReferenceCode(),
+				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
+
 			return true;
 		}
 

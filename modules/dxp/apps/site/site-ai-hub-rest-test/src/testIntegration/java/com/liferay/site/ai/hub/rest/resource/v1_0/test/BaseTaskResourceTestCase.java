@@ -36,11 +36,11 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.site.ai.hub.rest.client.dto.v1_0.Task;
-import com.liferay.site.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.site.ai.hub.rest.client.pagination.Page;
-import com.liferay.site.ai.hub.rest.client.resource.v1_0.TaskResource;
-import com.liferay.site.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
+import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.rest.client.pagination.Page;
+import com.liferay.ai.hub.rest.client.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
 
 import jakarta.annotation.Generated;
 

@@ -713,7 +713,7 @@ public class BatchEngineBrokerTest {
 
 		Map<String, List<String>> csvRecordStringsMap = _getCSVRecordStringsMap(
 			csvRecords.subList(1, csvRecords.size()),
-			csvRecordStrings.contains("externalReferenceCode"));
+			csvRecordStrings.indexOf("externalReferenceCode"));
 
 		Assert.assertEquals(
 			csvRecordStringsList.get(1),

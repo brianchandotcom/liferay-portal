@@ -130,7 +130,7 @@ public class GroupModelListenerTest {
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW},
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER)));
@@ -180,7 +180,7 @@ public class GroupModelListenerTest {
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW},
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER)));
@@ -222,7 +222,9 @@ public class GroupModelListenerTest {
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_CONTENT_REVIEWER)));
 		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE},
+			new String[] {
+				ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW, ActionKeys.SUBSCRIBE
+			},
 			JSONUtil.toStringArray(
 				jsonObject2.getJSONArray(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER)));

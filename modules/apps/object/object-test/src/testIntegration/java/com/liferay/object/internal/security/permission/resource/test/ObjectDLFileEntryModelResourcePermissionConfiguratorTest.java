@@ -32,9 +32,11 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -146,6 +148,17 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 		_themeDisplay.setCompany(_company);
 
+		_originalName = PrincipalThreadLocal.getName();
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		_user = UserLocalServiceUtil.getGuestUser(_company.getCompanyId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest(
 				HttpMethod.GET,
@@ -172,20 +185,23 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 		_role = _roleLocalService.getRole(
 			_company.getCompanyId(), RoleConstants.GUEST);
-
-		_user = UserLocalServiceUtil.getGuestUser(_company.getCompanyId());
 	}
 
 	@After
 	public void tearDown() throws PortalException {
 		_objectDefinitionLocalService.deleteObjectDefinition(_objectDefinition);
 
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
+
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
 	public void testContains() throws Exception {
-		String actionId = _objectField.getAttachmentDownloadActionKey();
+		String attachmentDownloadActionKey =
+			_objectField.getAttachmentDownloadActionKey();
 
 		Assert.assertFalse(
 			_dlFileEntryModelResourcePermission.contains(
@@ -193,8 +209,9 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 				ActionKeys.DOWNLOAD));
 
 		_testContains(new String[] {ActionKeys.VIEW}, false);
-		_testContains(new String[] {actionId}, false);
-		_testContains(new String[] {ActionKeys.VIEW, actionId}, true);
+		_testContains(new String[] {attachmentDownloadActionKey}, false);
+		_testContains(
+			new String[] {ActionKeys.VIEW, attachmentDownloadActionKey}, true);
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			_company.getCompanyId(), DLFileEntry.class.getName(),
@@ -204,11 +221,11 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 
 		Assert.assertFalse(
 			_dlFileEntryModelResourcePermission.contains(
-				PermissionCheckerFactoryUtil.create(_user), _dlFileEntry,
+				GuestOrUserUtil.getPermissionChecker(), _dlFileEntry,
 				ActionKeys.DOWNLOAD));
 	}
 
-	private void _testContains(String[] actionIds, boolean assertTrue)
+	private void _testContains(String[] actionIds, boolean expectedResult)
 		throws Exception {
 
 		_resourcePermissionLocalService.setResourcePermissions(
@@ -217,19 +234,11 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 			String.valueOf(_objectEntry.getObjectEntryId()), _role.getRoleId(),
 			actionIds);
 
-		PermissionChecker permissionChecker =
-			PermissionCheckerFactoryUtil.create(_user);
-
-		if (assertTrue) {
-			Assert.assertTrue(
-				_dlFileEntryModelResourcePermission.contains(
-					permissionChecker, _dlFileEntry, ActionKeys.DOWNLOAD));
-		}
-		else {
-			Assert.assertFalse(
-				_dlFileEntryModelResourcePermission.contains(
-					permissionChecker, _dlFileEntry, ActionKeys.DOWNLOAD));
-		}
+		Assert.assertEquals(
+			expectedResult,
+			_dlFileEntryModelResourcePermission.contains(
+				GuestOrUserUtil.getPermissionChecker(), _dlFileEntry,
+				ActionKeys.DOWNLOAD));
 	}
 
 	@Inject(
@@ -268,6 +277,8 @@ public class ObjectDLFileEntryModelResourcePermissionConfiguratorTest {
 	private ObjectEntryService _objectEntryService;
 
 	private ObjectField _objectField;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;

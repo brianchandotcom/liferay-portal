@@ -2005,13 +2005,13 @@ components:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                 -   properties:
                         value:
+                            $ref: "#/components/schemas/ItemValue"
                             # @review
                             description:
                                 The value of the fragment configuration field of type item.
-                            type: object
                         value_i18n:
                             additionalProperties:
-                                type: object
+                                $ref: "#/components/schemas/ItemValue"
                             # @review
                             description:
                                 The localized value of the fragment configuration field of type item.
@@ -2019,6 +2019,16 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type item.
+            type: object
+        ItemValue:
+            # @review
+            description:
+                A value of a field of type item.
+            properties:
+                item:
+                    $ref: "#/components/schemas/ItemExternalReference"
+                template:
+                    $ref: "#/components/schemas/TemplateReference"
             type: object
         Layout:
             allOf:

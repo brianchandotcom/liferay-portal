@@ -5583,7 +5583,7 @@ public class DataFactory {
 	public LayoutPageTemplateStructureRelModel
 			newObjectDefinitionLayoutPageTemplateStructureRelModel(
 				List<FragmentEntryLinkModel> fragmentEntryLinkModels,
-				LayoutModel layoutModel,
+				String layoutDataItemType, LayoutModel layoutModel,
 				LayoutPageTemplateStructureModel
 					layoutPageTemplateStructureModel,
 				ObjectDefinition objectDefinition)
@@ -5620,11 +5620,27 @@ public class DataFactory {
 		FragmentEntryLinkModel correspondingFragmentEntryLinkModel = null;
 
 		String data = _readFile(
-			"object/object_definition_layout_page_template_structure_rel.json");
+			StringBundler.concat(
+				"object/object_definition_layout_page_template_structure_rel",
+				"_data_item_type_", layoutDataItemType, ".json"));
 
-		data = StringUtil.replace(
-			data, "${objectDefinitionClassName}",
-			objectDefinition.getClassName());
+		if (StringUtil.equals(
+				layoutDataItemType,
+				LayoutDataItemTypeConstants.TYPE_COLLECTION)) {
+
+			data = StringUtil.replace(
+				data, "${objectDefinitionClassName}",
+				objectDefinition.getClassName());
+		}
+		else if (StringUtil.equals(
+					layoutDataItemType,
+					LayoutDataItemTypeConstants.TYPE_FORM)) {
+
+			data = StringUtil.replace(
+				data, "${objectDefinitionClassNameId}",
+				String.valueOf(
+					getClassNameId(objectDefinition.getClassName())));
+		}
 
 		for (FragmentEntryLinkModel fragmentEntryLinkModel :
 				fragmentEntryLinkModels) {

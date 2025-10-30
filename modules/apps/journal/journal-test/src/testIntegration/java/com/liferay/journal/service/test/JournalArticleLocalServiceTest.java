@@ -1202,7 +1202,7 @@ public class JournalArticleLocalServiceTest {
 	@Test
 	public void testDeleteDDMStructurePredefinedValues() throws Exception {
 		Tuple tuple = _createJournalArticleWithPredefinedValues(
-			_group.getGroupId(), "Test Article");
+			_group.getGroupId());
 
 		JournalArticle journalArticle = (JournalArticle)tuple.getObject(0);
 		DDMStructure ddmStructure = (DDMStructure)tuple.getObject(1);
@@ -1665,16 +1665,18 @@ public class JournalArticleLocalServiceTest {
 			depotEntryGroupRel.getDepotEntryGroupRelId(), true);
 
 		Tuple tuple = _createJournalArticleWithPredefinedValues(
-			depotEntry.getGroupId(), "Test Article");
+			depotEntry.getGroupId());
 
 		JournalArticle journalArticle = (JournalArticle)tuple.getObject(0);
 
 		DDMStructure ddmStructure = (DDMStructure)tuple.getObject(1);
 
+		String ddmTemplateScript = RandomTestUtil.randomString();
+
 		DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM, "ddm template 1",
+			TemplateConstants.LANG_TYPE_VM, ddmTemplateScript,
 			LocaleUtil.getSiteDefault());
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
@@ -1686,7 +1688,7 @@ public class JournalArticleLocalServiceTest {
 				defaultLanguageId, 1, null, _themeDisplay);
 
 		Assert.assertEquals(
-			"ddm template 1", journalArticleDisplay.getContent());
+			ddmTemplateScript, journalArticleDisplay.getContent());
 	}
 
 	@Test
@@ -1702,16 +1704,20 @@ public class JournalArticleLocalServiceTest {
 
 		DDMStructure ddmStructure = journalArticle.getDDMStructure();
 
+		String ddmTemplateScript1 = RandomTestUtil.randomString();
+
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			company.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM, "ddm template 1",
+			TemplateConstants.LANG_TYPE_VM, ddmTemplateScript1,
 			LocaleUtil.getSiteDefault());
+
+		String ddmTemplateScript2 = RandomTestUtil.randomString();
 
 		DDMTemplate ddmTemplate2 = DDMTemplateTestUtil.addTemplate(
 			company.getGroupId(), ddmStructure.getStructureId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			TemplateConstants.LANG_TYPE_VM, "ddm template 2",
+			TemplateConstants.LANG_TYPE_VM, ddmTemplateScript2,
 			LocaleUtil.getSiteDefault());
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
@@ -1723,14 +1729,14 @@ public class JournalArticleLocalServiceTest {
 				defaultLanguageId, 1, null, _themeDisplay);
 
 		Assert.assertEquals(
-			"ddm template 1", journalArticleDisplay.getContent());
+			ddmTemplateScript1, journalArticleDisplay.getContent());
 
 		journalArticleDisplay = _journalArticleLocalService.getArticleDisplay(
 			journalArticle, ddmTemplate2.getTemplateKey(), Constants.VIEW,
 			defaultLanguageId, 1, null, _themeDisplay);
 
 		Assert.assertEquals(
-			"ddm template 2", journalArticleDisplay.getContent());
+			ddmTemplateScript2, journalArticleDisplay.getContent());
 	}
 
 	@Test
@@ -2361,7 +2367,7 @@ public class JournalArticleLocalServiceTest {
 	@Test
 	public void testUpdateDDMStructurePredefinedValues() throws Exception {
 		Tuple tuple = _createJournalArticleWithPredefinedValues(
-			_group.getGroupId(), "Test Article");
+			_group.getGroupId());
 
 		JournalArticle journalArticle = (JournalArticle)tuple.getObject(0);
 		DDMStructure ddmStructure = (DDMStructure)tuple.getObject(1);
@@ -2492,8 +2498,7 @@ public class JournalArticleLocalServiceTest {
 		Assert.assertEquals(assetTagId, assetTag.getTagId());
 	}
 
-	private Tuple _createJournalArticleWithPredefinedValues(
-			long groupId, String title)
+	private Tuple _createJournalArticleWithPredefinedValues(long groupId)
 		throws Exception {
 
 		Set<Locale> availableLocales = DDMFormTestUtil.createAvailableLocales(
@@ -2547,7 +2552,7 @@ public class JournalArticleLocalServiceTest {
 				_classNameLocalService.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(),
 				HashMapBuilder.put(
-					LocaleUtil.US, title
+					LocaleUtil.US, RandomTestUtil.randomString()
 				).build(),
 				null, content, ddmStructure.getStructureId(),
 				ddmTemplate.getTemplateKey(), null, 0, 0, 0, 0, 0, 0, 0, 0, 0,

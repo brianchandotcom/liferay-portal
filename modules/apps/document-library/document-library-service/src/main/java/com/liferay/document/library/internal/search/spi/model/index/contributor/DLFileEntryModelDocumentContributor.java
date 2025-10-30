@@ -121,9 +121,6 @@ public class DLFileEntryModelDocumentContributor
 
 			document.addKeyword(
 				"dataRepositoryId", dlFileEntry.getDataRepositoryId());
-			document.addText(
-				"ddmContent",
-				_extractDDMContent(dlFileVersion, LocaleUtil.getSiteDefault()));
 			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
@@ -141,7 +138,7 @@ public class DLFileEntryModelDocumentContributor
 			document.addNumber(
 				"versionCount", GetterUtil.getDouble(dlFileEntry.getVersion()));
 
-			_addFileEntryTypeAttributes(document, dlFileVersion);
+			_processDDMIndexer(document, dlFileVersion);
 
 			if (dlFileEntry.isInHiddenFolder()) {
 				List<RelatedEntryIndexer> relatedEntryIndexers =
@@ -206,77 +203,6 @@ public class DLFileEntryModelDocumentContributor
 				_log.debug(exception);
 			}
 		}
-	}
-
-	private void _addFileEntryTypeAttributes(
-		Document document, DLFileVersion dlFileVersion) {
-
-		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
-				dlFileVersion.getFileVersionId());
-
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			try {
-				DDMFormValues ddmFormValues =
-					_ddmStorageEngineManager.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId());
-
-				if (ddmFormValues != null) {
-					DDMStructure ddmStructure =
-						_ddmStructureLocalService.getStructure(
-							dlFileEntryMetadata.getDDMStructureId());
-
-					_ddmIndexer.addAttributes(
-						document, ddmStructure, ddmFormValues);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve metadata values", exception);
-				}
-			}
-		}
-	}
-
-	private String _extractDDMContent(
-		DLFileVersion dlFileVersion, Locale locale) {
-
-		List<DLFileEntryMetadata> dlFileEntryMetadatas =
-			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
-				dlFileVersion.getFileVersionId());
-
-		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size() * 2);
-
-		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
-			try {
-				DDMFormValues ddmFormValues =
-					_ddmStorageEngineManager.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId());
-
-				if (ddmFormValues != null) {
-					DDMStructure ddmStructure =
-						_ddmStructureLocalService.getStructure(
-							dlFileEntryMetadata.getDDMStructureId());
-
-					sb.append(
-						_ddmIndexer.extractIndexableAttributes(
-							ddmStructure, ddmFormValues, locale));
-
-					sb.append(StringPool.SPACE);
-				}
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to retrieve metadata values", exception);
-				}
-			}
-		}
-
-		if (sb.index() > 0) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		return sb.toString();
 	}
 
 	private String _extractText(DLFileEntry dlFileEntry)
@@ -376,6 +302,53 @@ public class DLFileEntryModelDocumentContributor
 			CTCollectionThreadLocal.getCTCollectionId());
 
 		return ctCollection.isReadOnly();
+	}
+
+	private void _processDDMIndexer(
+		Document document, DLFileVersion dlFileVersion) {
+
+		List<DLFileEntryMetadata> dlFileEntryMetadatas =
+			_dlFileEntryMetadataLocalService.getFileVersionFileEntryMetadatas(
+				dlFileVersion.getFileVersionId());
+
+		Locale locale = LocaleUtil.getSiteDefault();
+
+		StringBundler sb = new StringBundler(dlFileEntryMetadatas.size() * 2);
+
+		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
+			try {
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.getStructure(
+						dlFileEntryMetadata.getDDMStructureId());
+
+				DDMFormValues ddmFormValues =
+					_ddmStorageEngineManager.getDDMFormValues(
+						dlFileEntryMetadata.getDDMStorageId(),
+						ddmStructure.getDDMForm());
+
+				if (ddmFormValues != null) {
+					sb.append(
+						_ddmIndexer.extractIndexableAttributes(
+							ddmStructure, ddmFormValues, locale));
+
+					sb.append(StringPool.SPACE);
+
+					_ddmIndexer.addAttributes(
+						document, ddmStructure, ddmFormValues);
+				}
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to retrieve metadata values", exception);
+				}
+			}
+		}
+
+		if (sb.index() > 0) {
+			sb.setIndex(sb.index() - 1);
+		}
+
+		document.addText("ddmContent", sb.toString());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

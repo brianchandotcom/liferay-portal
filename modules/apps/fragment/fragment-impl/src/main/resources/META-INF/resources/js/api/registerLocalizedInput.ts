@@ -64,7 +64,7 @@ export function registerLocalizedInput({
 				namespace,
 			});
 
-			input.value = value;
+			input.value = Liferay.Util.unescapeHTML(value);
 		});
 	}
 

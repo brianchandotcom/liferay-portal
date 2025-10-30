@@ -13,13 +13,11 @@ import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;
 import com.liferay.item.selector.criteria.ActionableInfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoItemItemSelectorReturnType;
 import com.liferay.item.selector.criteria.info.item.criterion.InfoItemItemSelectorCriterion;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -37,7 +35,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author Guilherme Camacho
@@ -67,8 +64,6 @@ public class ObjectEntryItemSelectorView
 			objectRelatedModelsProviderRegistry;
 		_objectScopeProviderRegistry = objectScopeProviderRegistry;
 		_portal = portal;
-
-		_cmsObjectDefinition = _isCMSObjectDefinition(objectDefinition);
 	}
 
 	@Override
@@ -92,7 +87,7 @@ public class ObjectEntryItemSelectorView
 	public String getTitle(Locale locale) {
 		String title = _objectDefinition.getPluralLabel(locale);
 
-		if (_cmsObjectDefinition) {
+		if (_objectDefinition.isCMS()) {
 			title = StringUtil.appendParentheticalSuffix(title, "CMS");
 		}
 
@@ -125,34 +120,12 @@ public class ObjectEntryItemSelectorView
 				_objectScopeProviderRegistry, _portal, portletURL));
 	}
 
-	private boolean _isCMSObjectDefinition(ObjectDefinition objectDefinition) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				objectDefinition.getCompanyId(), "LPD-17564")) {
-
-			return false;
-		}
-
-		if (Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) ||
-			Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final List<ItemSelectorReturnType>
 		_supportedItemSelectorReturnTypes = Arrays.asList(
 			new ActionableInfoItemItemSelectorReturnType(),
 			new InfoItemItemSelectorReturnType(),
 			new ObjectEntryItemSelectorReturnType());
 
-	private final boolean _cmsObjectDefinition;
 	private final GroupLocalService _groupLocalService;
 	private final InfoPermissionProvider<ObjectEntry> _infoPermissionProvider;
 	private final ItemSelectorViewDescriptorRenderer

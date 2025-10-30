@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.model.listener;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -17,8 +16,6 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
-
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,17 +31,7 @@ public class ObjectDefinitionModelListener
 	public void onAfterRemove(ObjectDefinition objectDefinition)
 		throws ModelListenerException {
 
-		String objectFolderExternalReferenceCode =
-			objectDefinition.getObjectFolderExternalReferenceCode();
-
-		if (!Objects.equals(
-				objectFolderExternalReferenceCode,
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) &&
-			!Objects.equals(
-				objectFolderExternalReferenceCode,
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
+		if (!objectDefinition.isCMS()) {
 			return;
 		}
 

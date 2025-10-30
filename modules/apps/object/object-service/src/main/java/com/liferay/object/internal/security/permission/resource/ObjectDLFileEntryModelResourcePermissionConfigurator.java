@@ -54,8 +54,8 @@ public class ObjectDLFileEntryModelResourcePermissionConfigurator
 
 		consumer.accept(
 			(permissionChecker, name, dlFileEntry, actionId) -> {
-				if (!actionId.equals(ActionKeys.DOWNLOAD) &&
-					FeatureFlagManagerUtil.isEnabled(
+				if (!actionId.equals(ActionKeys.DOWNLOAD) ||
+					!FeatureFlagManagerUtil.isEnabled(
 						dlFileEntry.getCompanyId(), "LPD-17564")) {
 
 					return null;
@@ -65,14 +65,14 @@ public class ObjectDLFileEntryModelResourcePermissionConfigurator
 					ServiceContextThreadLocal.getServiceContext();
 
 				if (serviceContext == null) {
-					return _handleInvalidContext(dlFileEntry);
+					return _validateObjectDefinitionClassName(dlFileEntry);
 				}
 
 				HttpServletRequest httpServletRequest =
 					serviceContext.getRequest();
 
 				if (httpServletRequest == null) {
-					return _handleInvalidContext(dlFileEntry);
+					return _validateObjectDefinitionClassName(dlFileEntry);
 				}
 
 				boolean download = ParamUtil.getBoolean(
@@ -82,89 +82,88 @@ public class ObjectDLFileEntryModelResourcePermissionConfigurator
 					return null;
 				}
 
+				long companyId = PortalUtil.getCompanyId(httpServletRequest);
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.
+						fetchObjectDefinitionByExternalReferenceCode(
+							ParamUtil.getString(
+								httpServletRequest,
+								"objectDefinitionExternalReferenceCode"),
+							companyId);
+
+				if (objectDefinition == null) {
+					return _validateObjectDefinitionClassName(dlFileEntry);
+				}
+
+				long groupId = ObjectDefinitionConstants.GROUP_ID_DEFAULT;
+
+				Group group =
+					_groupLocalService.fetchGroupByExternalReferenceCode(
+						ParamUtil.getString(
+							httpServletRequest, "groupExternalReferenceCode"),
+						companyId);
+
+				if (group != null) {
+					groupId = group.getGroupId();
+				}
+
+				ObjectEntry objectEntry =
+					_objectEntryLocalService.fetchObjectEntry(
+						ParamUtil.getString(
+							httpServletRequest,
+							"objectEntryExternalReferenceCode"),
+						groupId, objectDefinition.getObjectDefinitionId());
+
+				if (objectEntry == null) {
+					return _validateObjectDefinitionClassName(dlFileEntry);
+				}
+
 				String objectFieldExternalReferenceCode = ParamUtil.getString(
 					httpServletRequest, "objectFieldExternalReferenceCode");
 
-				if (Validator.isNotNull(objectFieldExternalReferenceCode)) {
-					long companyId = PortalUtil.getCompanyId(
-						httpServletRequest);
-
-					ObjectDefinition objectDefinition =
-						_objectDefinitionLocalService.
-							fetchObjectDefinitionByExternalReferenceCode(
-								ParamUtil.getString(
-									httpServletRequest,
-									"objectDefinitionExternalReferenceCode"),
-								companyId);
-
-					if (objectDefinition == null) {
-						return _handleInvalidContext(dlFileEntry);
-					}
-
-					long groupId = ObjectDefinitionConstants.GROUP_ID_DEFAULT;
-
-					Group group =
-						_groupLocalService.fetchGroupByExternalReferenceCode(
-							ParamUtil.getString(
-								httpServletRequest,
-								"groupExternalReferenceCode"),
-							companyId);
-
-					if (group != null) {
-						groupId = group.getGroupId();
-					}
-
-					long objectDefinitionId =
-						objectDefinition.getObjectDefinitionId();
-
-					ObjectEntry objectEntry =
-						_objectEntryLocalService.fetchObjectEntry(
-							ParamUtil.getString(
-								httpServletRequest,
-								"objectEntryExternalReferenceCode"),
-							groupId, objectDefinitionId);
-
-					if (objectEntry == null) {
-						return _handleInvalidContext(dlFileEntry);
-					}
-
-					ObjectField objectField =
-						_objectFieldLocalService.fetchObjectField(
-							objectFieldExternalReferenceCode,
-							objectDefinitionId);
-
-					if (objectField == null) {
-						return _handleInvalidContext(dlFileEntry);
-					}
-
-					ModelResourcePermission<?>
-						objectEntryModelResourcePermission =
-							ModelResourcePermissionRegistryUtil.
-								getModelResourcePermission(
-									objectDefinition.getClassName());
-
-					if ((objectEntryModelResourcePermission == null) ||
-						(objectEntryModelResourcePermission.contains(
-							permissionChecker, objectEntry.getObjectEntryId(),
-							ActionKeys.VIEW) &&
-						 objectEntryModelResourcePermission.contains(
-							 permissionChecker, objectEntry.getObjectEntryId(),
-							 objectField.getAttachmentDownloadActionKey()))) {
-
-						return null;
-					}
-
-					return false;
+				if (Validator.isNull(objectFieldExternalReferenceCode)) {
+					return _validateObjectDefinitionClassName(dlFileEntry);
 				}
 
-				return _handleInvalidContext(dlFileEntry);
+				ObjectField objectField =
+					_objectFieldLocalService.fetchObjectField(
+						objectFieldExternalReferenceCode,
+						objectDefinition.getObjectDefinitionId());
+
+				if (objectField == null) {
+					return _validateObjectDefinitionClassName(dlFileEntry);
+				}
+
+				ModelResourcePermission<?> objectEntryModelResourcePermission =
+					ModelResourcePermissionRegistryUtil.
+						getModelResourcePermission(
+							objectDefinition.getClassName());
+
+				if ((objectEntryModelResourcePermission == null) ||
+					(objectEntryModelResourcePermission.contains(
+						permissionChecker, objectEntry.getObjectEntryId(),
+						ActionKeys.VIEW) &&
+					 objectEntryModelResourcePermission.contains(
+						 permissionChecker, objectEntry.getObjectEntryId(),
+						 objectField.getAttachmentDownloadActionKey()))) {
+
+					return null;
+				}
+
+				return false;
 			});
 	}
 
-	private Boolean _handleInvalidContext(DLFileEntry dlFileEntry) {
+	private Boolean _validateObjectDefinitionClassName(
+		DLFileEntry dlFileEntry) {
+
 		String className = dlFileEntry.getClassName();
 
-		if (!className.contains("com.liferay.object.model.ObjectDefinition#")) {
+		if (!className.startsWith(
+				ObjectDefinitionConstants.
+					CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION)) {
+
 			return null;
 		}
 

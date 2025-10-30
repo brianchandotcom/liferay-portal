@@ -87,8 +87,7 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListener
 								_portletLocalService, _resourceActions);
 
 						_objectFieldLocalService.
-							addOrUpdateObjectFieldResourceActionPLOEntries(
-								objectField);
+							addOrUpdateObjectFieldPLOEntries(objectField);
 
 						for (ResourcePermission resourcePermission :
 								resourcePermissions) {

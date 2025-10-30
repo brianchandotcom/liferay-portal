@@ -4,25 +4,63 @@
  */
 
 import '@testing-library/jest-dom';
+import {useResource} from '@clayui/data-provider';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
+import {Space} from '../../../../src/main/resources/META-INF/resources/js/common/types/Space';
 import CreationModalContent from '../../../../src/main/resources/META-INF/resources/js/main_view/modal/CreationModalContent';
 
 const mockOnSubmit = jest.fn();
 const mockNavigate = jest.fn();
+
+const SPACES: Space[] = [
+	{
+		creatorUserId: '234',
+		description: '',
+		externalReferenceCode: 'space-1-erc',
+		id: 123,
+		name: 'Space 1',
+		settings: {
+			logoColor: 'outline-1',
+		},
+		siteId: 123,
+	},
+	{
+		creatorUserId: '234',
+		description: '',
+		externalReferenceCode: 'space-2-erc',
+		id: 456,
+		name: 'Space 2',
+		settings: {
+			logoColor: 'outline-2',
+		},
+		siteId: 456,
+	},
+];
 
 jest.mock('frontend-js-web', () => ({
 	...((jest.requireActual('frontend-js-web') ?? {}) as any),
 	navigate: (url: string) => mockNavigate(url),
 }));
 
+jest.mock('@clayui/data-provider', () => ({
+	useResource: jest.fn(),
+}));
+
+const mockUseResource = useResource as jest.Mock;
+
+mockUseResource.mockReturnValue({
+	loadMore: jest.fn(),
+	resource: SPACES,
+});
+
 const defaultProps = {
 	action: 'createFolder' as const,
 	assetLibraries: [
-		{groupId: 123, name: 'Space 1'},
-		{groupId: 456, name: 'Space 2'},
+		{groupId: SPACES[0].siteId, name: SPACES[0].name},
+		{groupId: SPACES[1].siteId, name: SPACES[1].name},
 	],
 	closeModal: () => {},
 	onSubmit: mockOnSubmit,
@@ -30,8 +68,23 @@ const defaultProps = {
 };
 
 describe('CreationModalContent', () => {
+	const {ResizeObserver: ResizeObserverOriginal} = window;
+
+	beforeAll(() => {
+		window.ResizeObserver = jest.fn().mockImplementation(() => ({
+			disconnect: jest.fn(),
+			observe: jest.fn(),
+			unobserve: jest.fn(),
+		}));
+	});
+
 	beforeEach(() => {
 		jest.clearAllMocks();
+	});
+
+	afterAll(() => {
+		jest.restoreAllMocks();
+		window.ResizeObserver = ResizeObserverOriginal;
 	});
 
 	test('renders the modal title in the header', () => {
@@ -56,7 +109,9 @@ describe('CreationModalContent', () => {
 		rerender(
 			<CreationModalContent
 				{...defaultProps}
-				assetLibraries={[{groupId: 123, name: 'Only One Space'}]}
+				assetLibraries={[
+					{groupId: SPACES[0].siteId, name: 'Only One Space'},
+				]}
 			/>
 		);
 		expect(screen.queryByLabelText(/space/i)).not.toBeInTheDocument();
@@ -66,19 +121,16 @@ describe('CreationModalContent', () => {
 		render(<CreationModalContent {...defaultProps} />);
 
 		await userEvent.type(screen.getByLabelText(/name/i), 'Folder Name');
-		await userEvent.click(screen.getByText('select-a-space'));
+		await userEvent.click(screen.getByLabelText('spacemandatory'));
 		await userEvent.click(screen.getByText('Space 1'));
 		await userEvent.click(screen.getByText('save'));
 
 		expect(mockOnSubmit).toHaveBeenCalledWith(
 			expect.objectContaining({
-				groupId: '123',
+				groupId: SPACES[0].siteId,
 				name: 'Folder Name',
 			}),
-			expect.objectContaining({
-				setErrors: expect.any(Function),
-				setFieldError: expect.any(Function),
-			})
+			expect.anything()
 		);
 	});
 
@@ -100,7 +152,7 @@ describe('CreationModalContent', () => {
 			);
 
 			await userEvent.type(screen.getByLabelText(/name/i), 'Folder Name');
-			await userEvent.click(screen.getByText('select-a-space'));
+			await userEvent.click(screen.getByLabelText('spacemandatory'));
 			await userEvent.click(screen.getByText('Space 1'));
 			await userEvent.click(screen.getByText('save'));
 
@@ -111,7 +163,7 @@ describe('CreationModalContent', () => {
 				expect.stringContaining('name=Folder+Name')
 			);
 			expect(mockNavigate).toHaveBeenCalledWith(
-				expect.stringContaining('groupId=123')
+				expect.stringContaining(`groupId=${SPACES[0].siteId}`)
 			);
 		}
 		finally {

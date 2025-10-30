@@ -84,6 +84,7 @@ describe('BulkDefaultPermissionModalContent', () => {
 			externalReferenceCode: 'ERC2',
 			id: 1,
 			name: 'Test Space',
+			siteId: 20203,
 		});
 
 		batchUpdateSpy = jest.spyOn(

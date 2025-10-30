@@ -115,7 +115,7 @@ export class HomePage {
 	}
 
 	async selectSpace(name: string) {
-		const selectButton: Locator = this.page.getByText('Select a Space');
+		const selectButton: Locator = this.page.getByLabel('SpaceMandatory');
 
 		await selectButton.waitFor({state: 'visible'});
 

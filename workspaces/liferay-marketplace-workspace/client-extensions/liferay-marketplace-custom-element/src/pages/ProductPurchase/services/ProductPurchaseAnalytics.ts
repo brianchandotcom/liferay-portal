@@ -31,7 +31,6 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 			incidentReportEmailAddresses: form.incidentReportContacts,
 			name: form.workspaceName,
 			ownerEmailAddress: form.workspaceOwnerEmail,
-			timeZoneId: form.timezone,
 		});
 	}
 

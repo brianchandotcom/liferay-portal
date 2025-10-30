@@ -47,13 +47,7 @@ const Modal = ({
 			size={size}
 			status={status}
 		>
-			{title && (
-				<ClayModal.Header
-					closeButtonAriaLabel={Liferay.Language.get('close')}
-				>
-					{title}
-				</ClayModal.Header>
-			)}
+			{title && <ClayModal.Header>{title}</ClayModal.Header>}
 
 			{subtitle && (
 				<ClayModal.SubtitleSection>

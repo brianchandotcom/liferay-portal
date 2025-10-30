@@ -123,14 +123,13 @@ const CurrencyModal = ({observer, onClose}: ReturnType<typeof useModal>) => {
 					id="currency-picker"
 					items={currenciesCode}
 					messages={{
-						itemDescribedby: Liferay.Language.get(
+						itemDescribedby: i18n.translate(
 							'you-are-currently-on-a-text-element,-inside-of-a-list-box'
 						),
-						itemSelected: Liferay.Language.get('x-selected'),
+						itemSelected: i18n.translate('x-selected'),
 						scrollToBottomAriaLabel:
-							Liferay.Language.get('scroll-to-bottom'),
-						scrollToTopAriaLabel:
-							Liferay.Language.get('scroll-to-top'),
+							i18n.translate('scroll-to-bottom'),
+						scrollToTopAriaLabel: i18n.translate('scroll-to-top'),
 					}}
 					onSelectionChange={(key: any) =>
 						setSelectedNewCurrency(key)

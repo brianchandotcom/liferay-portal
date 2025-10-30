@@ -59,7 +59,6 @@ const MultiSelect: React.FC<MultiSelectProps<any>> = ({
 				key={multiselectKey}
 				onChange={onChange}
 				onItemsChange={onItemsChange}
-				placeholder={placeholder}
 				sourceItems={sourceItems}
 				spritemap={getIconSpriteMap()}
 				value={value}

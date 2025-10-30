@@ -1,6 +1,6 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BaseDataSourcePage from '../../components/data-source/BasePage';
-import LiferayOverview from '../../components/liferay/Overview';
+import LiferayOverview from '../../components/liferay/LiferayOverview';
 import React from 'react';
 import {DataSource} from 'shared/util/records';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';

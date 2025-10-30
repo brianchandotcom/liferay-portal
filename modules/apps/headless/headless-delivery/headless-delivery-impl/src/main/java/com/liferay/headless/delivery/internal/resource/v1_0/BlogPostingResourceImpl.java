@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -122,7 +122,7 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 			BlogsEntry.class.getName(), 0, displayPageKey,
 			blogsEntry.getGroupId(), contextHttpServletRequest,
 			contextHttpServletResponse, blogsEntry, _infoItemServiceRegistry,
-			_layoutDisplayPageProviderRegistry, _layoutLocalService,
+			_layoutDisplayPageProviderRegistry, _layoutService,
 			_layoutPageTemplateEntryService);
 	}
 
@@ -495,10 +495,10 @@ public class BlogPostingResourceImpl extends BaseBlogPostingResourceImpl {
 		_layoutDisplayPageProviderRegistry;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

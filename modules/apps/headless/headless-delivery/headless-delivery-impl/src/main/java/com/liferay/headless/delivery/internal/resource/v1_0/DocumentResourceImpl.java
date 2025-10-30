@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -280,7 +281,7 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 			FileEntry.class.getName(), _getDDMStructureId(fileEntry),
 			displayPageKey, fileEntry.getGroupId(), contextHttpServletRequest,
 			contextHttpServletResponse, fileEntry, _infoItemServiceRegistry,
-			_layoutDisplayPageProviderRegistry, _layoutLocalService,
+			_layoutDisplayPageProviderRegistry, _layoutService,
 			_layoutPageTemplateEntryService);
 	}
 
@@ -1140,6 +1141,9 @@ public class DocumentResourceImpl extends BaseDocumentResourceImpl {
 
 	@Reference
 	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+
+	@Reference
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

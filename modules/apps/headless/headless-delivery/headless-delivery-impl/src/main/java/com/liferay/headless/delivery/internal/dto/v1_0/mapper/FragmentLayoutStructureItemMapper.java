@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,8 +44,8 @@ public class FragmentLayoutStructureItemMapper
 		FragmentEntryLocalService fragmentEntryLocalService,
 		GroupLocalService groupLocalService,
 		InfoItemServiceRegistry infoItemServiceRegistry,
-		JSONFactory jsonFactory, LayoutLocalService layoutLocalService,
-		Portal portal, PortletLocalService portletLocalService,
+		JSONFactory jsonFactory, LayoutService layoutService, Portal portal,
+		PortletLocalService portletLocalService,
 		PortletPermissionsExporter portletPermissionsExporter,
 		PortletPreferencesPortletConfigurationExporter
 			portletPreferencesPortletConfigurationExporter,
@@ -57,7 +57,7 @@ public class FragmentLayoutStructureItemMapper
 		_jsonFactory = jsonFactory;
 
 		_widgetInstanceMapper = new WidgetInstanceMapper(
-			layoutLocalService, portletLocalService, portletPermissionsExporter,
+			layoutService, portletLocalService, portletPermissionsExporter,
 			portletPreferencesPortletConfigurationExporter);
 
 		_pageFragmentInstanceDefinitionMapper =

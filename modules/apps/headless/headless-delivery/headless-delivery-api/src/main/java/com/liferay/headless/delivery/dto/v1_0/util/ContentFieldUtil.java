@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -73,7 +73,7 @@ public class ContentFieldUtil {
 		DDMFormFieldValue ddmFormFieldValue, DLAppService dlAppService,
 		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
 		JournalArticleService journalArticleService,
-		LayoutLocalService layoutLocalService) {
+		LayoutService layoutService) {
 
 		DDMFormField ddmFormField = ddmFormFieldValue.getDDMFormField();
 
@@ -89,7 +89,7 @@ public class ContentFieldUtil {
 					() -> _toContentFieldValue(
 						ddmFormField, dlAppService, dlURLHelper,
 						dtoConverterContext, journalArticleService,
-						layoutLocalService, dtoConverterContext.getLocale(),
+						layoutService, dtoConverterContext.getLocale(),
 						ddmFormFieldValue.getValue()));
 				setContentFieldValue_i18n(
 					() -> {
@@ -117,7 +117,7 @@ public class ContentFieldUtil {
 								_getContentFieldValue(
 									ddmFormField, dlAppService, dlURLHelper,
 									dtoConverterContext, journalArticleService,
-									layoutLocalService, defaultLocale,
+									layoutService, defaultLocale,
 									String.valueOf(
 										value.getString(defaultLocale))));
 						}
@@ -132,8 +132,7 @@ public class ContentFieldUtil {
 								_getContentFieldValue(
 									ddmFormField, dlAppService, dlURLHelper,
 									dtoConverterContext, journalArticleService,
-									layoutLocalService, locale,
-									entry.getValue()));
+									layoutService, locale, entry.getValue()));
 						}
 
 						return map;
@@ -156,7 +155,7 @@ public class ContentFieldUtil {
 						value -> toContentField(
 							value, dlAppService, dlURLHelper,
 							dtoConverterContext, journalArticleService,
-							layoutLocalService),
+							layoutService),
 						ContentField.class));
 				setRepeatable(ddmFormField::isRepeatable);
 			}
@@ -167,8 +166,7 @@ public class ContentFieldUtil {
 		DDMFormField ddmFormField, DLAppService dlAppService,
 		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
 		JournalArticleService journalArticleService,
-		LayoutLocalService layoutLocalService, Locale locale,
-		String valueString) {
+		LayoutService layoutService, Locale locale, String valueString) {
 
 		try {
 			UriInfo uriInfo = dtoConverterContext.getUriInfo();
@@ -398,7 +396,7 @@ public class ContentFieldUtil {
 				long groupId = jsonObject.getLong("groupId");
 				boolean privateLayout = jsonObject.getBoolean("privateLayout");
 
-				Layout layoutByUuidAndGroupId = layoutLocalService.getLayout(
+				Layout layoutByUuidAndGroupId = layoutService.getLayout(
 					groupId, privateLayout, layoutId);
 
 				return new ContentFieldValue() {
@@ -560,7 +558,7 @@ public class ContentFieldUtil {
 		DDMFormField ddmFormField, DLAppService dlAppService,
 		DLURLHelper dlURLHelper, DTOConverterContext dtoConverterContext,
 		JournalArticleService journalArticleService,
-		LayoutLocalService layoutLocalService, Locale locale, Value value) {
+		LayoutService layoutService, Locale locale, Value value) {
 
 		if (value == null) {
 			return new ContentFieldValue();
@@ -570,7 +568,7 @@ public class ContentFieldUtil {
 
 		return _getContentFieldValue(
 			ddmFormField, dlAppService, dlURLHelper, dtoConverterContext,
-			journalArticleService, layoutLocalService, locale, valueString);
+			journalArticleService, layoutService, locale, valueString);
 	}
 
 	private static String _toDateString(Locale locale, String valueString) {

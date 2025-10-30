@@ -146,7 +146,7 @@ public class SitePageResourceImpl
 
 	@Override
 	public SitePage getItem(Long id) throws Exception {
-		Layout layout = _layoutLocalService.getLayout(id);
+		Layout layout = _layoutService.getLayout(id);
 
 		return getSiteSitePage(layout.getGroupId(), layout.getFriendlyURL());
 	}
@@ -254,8 +254,8 @@ public class SitePageResourceImpl
 					document.get(Field.ENTRY_CLASS_PK));
 
 				return _toSitePage(
-					_isEmbeddedPageDefinition(),
-					_layoutLocalService.getLayout(plid), null);
+					_isEmbeddedPageDefinition(), _layoutService.getLayout(plid),
+					null);
 			});
 	}
 
@@ -444,7 +444,7 @@ public class SitePageResourceImpl
 		_importPageDefinition(
 			layout, sitePage.getPageDefinition(), serviceContext);
 
-		layout = _layoutLocalService.getLayout(layout.getPlid());
+		layout = _layoutService.getLayout(layout.getPlid());
 
 		PageDefinition pageDefinition = sitePage.getPageDefinition();
 
@@ -589,7 +589,7 @@ public class SitePageResourceImpl
 			_friendlyURLEntryLocalService.getFriendlyURLEntryLocalization(
 				groupId, _portal.getClassNameId(resourceName), friendlyUrlPath);
 
-		return _layoutLocalService.getLayout(
+		return _layoutService.getLayout(
 			friendlyURLEntryLocalization.getClassPK());
 	}
 

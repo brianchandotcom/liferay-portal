@@ -11,10 +11,11 @@ import com.liferay.headless.delivery.dto.v1_0.WidgetPermission;
 import com.liferay.layout.exporter.PortletPermissionsExporter;
 import com.liferay.layout.exporter.PortletPreferencesPortletConfigurationExporter;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,13 +29,12 @@ import java.util.Map;
 public class WidgetInstanceMapper {
 
 	public WidgetInstanceMapper(
-		LayoutLocalService layoutLocalService,
-		PortletLocalService portletLocalService,
+		LayoutService layoutService, PortletLocalService portletLocalService,
 		PortletPermissionsExporter portletPermissionsExporter,
 		PortletPreferencesPortletConfigurationExporter
 			portletPreferencesPortletConfigurationExporter) {
 
-		_layoutLocalService = layoutLocalService;
+		_layoutService = layoutService;
 		_portletLocalService = portletLocalService;
 		_portletPermissionsExporter = portletPermissionsExporter;
 		_portletPreferencesPortletConfigurationExporter =
@@ -64,8 +64,10 @@ public class WidgetInstanceMapper {
 		};
 	}
 
-	private Map<String, Object> _getWidgetConfig(long plid, String portletId) {
-		Layout layout = _layoutLocalService.fetchLayout(plid);
+	private Map<String, Object> _getWidgetConfig(long plid, String portletId)
+		throws PortalException {
+
+		Layout layout = _layoutService.getLayout(plid);
 
 		if (layout == null) {
 			return null;
@@ -126,7 +128,7 @@ public class WidgetInstanceMapper {
 			WidgetPermission.class);
 	}
 
-	private final LayoutLocalService _layoutLocalService;
+	private final LayoutService _layoutService;
 	private final PortletLocalService _portletLocalService;
 	private final PortletPermissionsExporter _portletPermissionsExporter;
 	private final PortletPreferencesPortletConfigurationExporter

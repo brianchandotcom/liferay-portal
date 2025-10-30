@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutServiceUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -115,7 +115,7 @@ public class FragmentMappedValueUtil {
 		final Layout layout;
 
 		try {
-			layout = LayoutLocalServiceUtil.getLayout(
+			layout = LayoutServiceUtil.getLayout(
 				layoutJSONObject.getLong("groupId"),
 				layoutJSONObject.getBoolean("privateLayout"),
 				layoutJSONObject.getLong("layoutId"));

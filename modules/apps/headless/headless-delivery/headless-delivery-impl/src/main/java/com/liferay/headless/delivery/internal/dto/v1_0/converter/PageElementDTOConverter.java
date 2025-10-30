@@ -45,7 +45,7 @@ import com.liferay.layout.util.structure.RootLayoutStructureItem;
 import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -156,7 +156,7 @@ public class PageElementDTOConverter
 				_fragmentEntryConfigurationParser,
 				_fragmentEntryLinkLocalService, _fragmentEntryLocalService,
 				_groupLocalService, _infoItemServiceRegistry, _jsonFactory,
-				_layoutLocalService, _portal, _portletLocalService,
+				_layoutService, _portal, _portletLocalService,
 				_portletPermissionsExporter,
 				_portletPreferencesPortletConfigurationExporter,
 				_portletRegistry));
@@ -249,7 +249,7 @@ public class PageElementDTOConverter
 	private JSONFactory _jsonFactory;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
 
 	private final Map<Class<?>, LayoutStructureItemMapper>
 		_layoutStructureItemMappers = new HashMap<>();

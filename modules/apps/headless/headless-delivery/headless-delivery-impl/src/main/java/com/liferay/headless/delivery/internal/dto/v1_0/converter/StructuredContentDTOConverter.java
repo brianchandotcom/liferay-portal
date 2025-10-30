@@ -40,7 +40,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -127,7 +127,7 @@ public class StructuredContentDTOConverter
 					() -> _toContentFields(
 						_dlAppService, _dlURLHelper, dtoConverterContext,
 						journalArticle, _journalArticleService,
-						_layoutLocalService));
+						_layoutService));
 				setContentStructureId(ddmStructure::getStructureId);
 				setCreator(
 					() -> CreatorUtil.toCreator(
@@ -254,7 +254,7 @@ public class StructuredContentDTOConverter
 			DTOConverterContext dtoConverterContext,
 			JournalArticle journalArticle,
 			JournalArticleService journalArticleService,
-			LayoutLocalService layoutLocalService)
+			LayoutService layoutService)
 		throws Exception {
 
 		DDMFormValues ddmFormValues = journalArticle.getDDMFormValues();
@@ -263,7 +263,7 @@ public class StructuredContentDTOConverter
 			ddmFormValues.getDDMFormFieldValues(),
 			ddmFormFieldValue -> ContentFieldUtil.toContentField(
 				ddmFormFieldValue, dlAppService, dlURLHelper,
-				dtoConverterContext, journalArticleService, layoutLocalService),
+				dtoConverterContext, journalArticleService, layoutService),
 			ContentField.class);
 	}
 
@@ -331,7 +331,7 @@ public class StructuredContentDTOConverter
 				ddmStructure.getStructureId(), dtoConverterContext,
 				journalArticle.getGroupId(), journalArticle,
 				_infoItemServiceRegistry, _layoutDisplayPageProviderRegistry,
-				_layoutLocalService, _layoutPageTemplateEntryService,
+				_layoutService, _layoutPageTemplateEntryService,
 				"getStructuredContentRenderedContentByDisplayPageDisplayPage" +
 					"Key");
 
@@ -382,10 +382,10 @@ public class StructuredContentDTOConverter
 		_layoutDisplayPageProviderRegistry;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

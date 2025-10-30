@@ -60,7 +60,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -216,7 +216,7 @@ public class DocumentDTOConverter
 						_getDDMStructureId(fileEntry), dtoConverterContext,
 						fileEntry.getGroupId(), fileEntry,
 						_infoItemServiceRegistry,
-						_layoutDisplayPageProviderRegistry, _layoutLocalService,
+						_layoutDisplayPageProviderRegistry, _layoutService,
 						_layoutPageTemplateEntryService,
 						"getDocumentRenderedContentByDisplayPageDisplayPage" +
 							"Key"));
@@ -383,8 +383,7 @@ public class DocumentDTOConverter
 								ContentFieldUtil.toContentField(
 									ddmFormFieldValue, _dlAppService,
 									_dlURLHelper, dtoConverterContext,
-									_journalArticleService,
-									_layoutLocalService),
+									_journalArticleService, _layoutService),
 							ContentField.class);
 					});
 				setDescription(
@@ -461,10 +460,10 @@ public class DocumentDTOConverter
 		_layoutDisplayPageProviderRegistry;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

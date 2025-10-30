@@ -30,7 +30,7 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -141,7 +141,7 @@ public class BlogPostingDTOConverter
 						BlogsEntry.class.getName(), blogsEntry.getEntryId(), 0,
 						dtoConverterContext, blogsEntry.getGroupId(),
 						blogsEntry, _infoItemServiceRegistry,
-						_layoutDisplayPageProviderRegistry, _layoutLocalService,
+						_layoutDisplayPageProviderRegistry, _layoutService,
 						_layoutPageTemplateEntryService,
 						"getBlogPostingRenderedContentByDisplayPageDisplay" +
 							"PageKey"));
@@ -220,10 +220,10 @@ public class BlogPostingDTOConverter
 		_layoutDisplayPageProviderRegistry;
 
 	@Reference
-	private LayoutLocalService _layoutLocalService;
+	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
 
 	@Reference
-	private LayoutPageTemplateEntryService _layoutPageTemplateEntryService;
+	private LayoutService _layoutService;
 
 	@Reference
 	private Portal _portal;

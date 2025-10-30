@@ -424,6 +424,17 @@ public class LayoutServiceUtil {
 		return getService().getDefaultPlid(groupId, scopeGroupId, portletId);
 	}
 
+	public static Layout getLayout(long plid) throws PortalException {
+		return getService().getLayout(plid);
+	}
+
+	public static Layout getLayout(
+			long groupId, boolean privateLayout, long layoutId)
+		throws PortalException {
+
+		return getService().getLayout(groupId, privateLayout, layoutId);
+	}
+
 	public static Layout getLayoutByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws PortalException {

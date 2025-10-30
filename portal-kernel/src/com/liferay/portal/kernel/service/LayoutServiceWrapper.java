@@ -440,6 +440,20 @@ public class LayoutServiceWrapper
 	}
 
 	@Override
+	public Layout getLayout(long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayout(plid);
+	}
+
+	@Override
+	public Layout getLayout(long groupId, boolean privateLayout, long layoutId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _layoutService.getLayout(groupId, privateLayout, layoutId);
+	}
+
+	@Override
 	public Layout getLayoutByExternalReferenceCode(
 			String externalReferenceCode, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -52,13 +52,5 @@ export function getSkuDetails(product: Product) {
 }
 
 export function handleImageError(event: React.ChangeEvent<HTMLImageElement>) {
-	if (event.currentTarget.src.startsWith('https://localhost:8080/')) {
-		event.currentTarget.src = event.currentTarget.src.replace(
-			'https://',
-			'http://'
-		);
-	}
-	else {
-		event.currentTarget.src = '/images/dxp_logo.svg';
-	}
+	event.currentTarget.src = '/images/dxp_logo.svg';
 }

@@ -354,6 +354,15 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			infoFieldType instanceof TextInfoFieldType) {
 
 			value = HtmlUtil.escape(value);
+
+			Map<Locale, String> escapedValueI18n = new HashMap<>();
+
+			for (Map.Entry<Locale, String> entry : valueI18n.entrySet()) {
+				escapedValueI18n.put(
+					entry.getKey(), HtmlUtil.escape(entry.getValue()));
+			}
+
+			valueI18n = escapedValueI18n;
 		}
 
 		InputTemplateNode inputTemplateNode = new InputTemplateNode(

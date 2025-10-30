@@ -1152,7 +1152,9 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 					label: {
 						en_US: 'objectRelationshipLabel' + getRandomInt(),
 					},
-					name: 'objectRelationshipName' + getRandomInt(),
+					name:
+						'objectRelationshipName' +
+						Math.floor(Math.random() * 99),
 					objectDefinitionExternalReferenceCode1:
 						objectDefinition1.externalReferenceCode,
 					objectDefinitionExternalReferenceCode2:

@@ -8,7 +8,6 @@ package com.liferay.ai.hub.rest.client.resource.v1_0;
 import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
 import com.liferay.ai.hub.rest.client.http.HttpInvoker;
 import com.liferay.ai.hub.rest.client.problem.Problem;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -203,7 +202,8 @@ public interface TaskResource {
 			}
 
 			try {
-				return TaskSerDes.toDTO(content);
+				return com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes.
+					toDTO(content);
 			}
 			catch (Exception e) {
 				_logger.log(

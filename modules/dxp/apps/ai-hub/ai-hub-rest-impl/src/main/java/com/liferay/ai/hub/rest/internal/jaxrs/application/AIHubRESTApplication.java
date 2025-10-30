@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"liferay.jackson=false", "osgi.jaxrs.application.base=/ai-hub",
 		"osgi.jaxrs.extension.select=(osgi.jaxrs.name=Liferay.Vulcan)",
-		"osgi.jaxrs.name=Liferay.Site.AI.Hub.REST"
+		"osgi.jaxrs.name=Liferay.AI.Hub.REST"
 	},
 	service = Application.class
 )

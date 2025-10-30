@@ -6,11 +6,11 @@
 package com.liferay.ai.hub.rest.internal.graphql.servlet.v1_0;
 
 import com.liferay.ai.hub.rest.internal.graphql.mutation.v1_0.Mutation;
-import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.ai.hub.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.ai.hub.rest.internal.resource.v1_0.TaskResourceImpl;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 
 import jakarta.annotation.Generated;
 
@@ -39,7 +39,7 @@ public class ServletDataImpl implements ServletData {
 	}
 
 	public String getApplicationName() {
-		return "Liferay.Site.AI.Hub.REST";
+		return "Liferay.AI.Hub.REST";
 	}
 
 	@Override

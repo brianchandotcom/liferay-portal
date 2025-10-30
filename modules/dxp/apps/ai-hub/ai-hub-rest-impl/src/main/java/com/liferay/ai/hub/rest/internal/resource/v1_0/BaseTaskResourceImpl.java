@@ -5,6 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.rest.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -35,8 +37,6 @@ import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
 import com.liferay.portal.vulcan.util.UriInfoUtil;
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 
 import jakarta.annotation.Generated;
 

@@ -248,7 +248,7 @@ public class Task implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.site.ai.hub.rest.dto.v1_0.Task",
+		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Task",
 		name = "x-class-name"
 	)
 	public String xClassName;

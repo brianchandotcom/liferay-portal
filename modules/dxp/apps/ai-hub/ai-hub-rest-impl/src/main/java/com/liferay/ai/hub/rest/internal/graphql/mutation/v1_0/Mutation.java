@@ -5,6 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.graphql.mutation.v1_0;
 
+import com.liferay.ai.hub.rest.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -14,8 +16,6 @@ import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTa
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
-import com.liferay.ai.hub.rest.dto.v1_0.Task;
-import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 
 import jakarta.annotation.Generated;
 

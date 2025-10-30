@@ -13,6 +13,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
+import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.client.http.HttpInvoker;
+import com.liferay.ai.hub.rest.client.pagination.Page;
+import com.liferay.ai.hub.rest.client.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -36,11 +41,6 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
-import com.liferay.ai.hub.rest.client.dto.v1_0.Task;
-import com.liferay.ai.hub.rest.client.http.HttpInvoker;
-import com.liferay.ai.hub.rest.client.pagination.Page;
-import com.liferay.ai.hub.rest.client.resource.v1_0.TaskResource;
-import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
 
 import jakarta.annotation.Generated;
 
@@ -469,7 +469,7 @@ public abstract class BaseTaskResourceTestCase {
 
 		for (java.lang.reflect.Field field :
 				getDeclaredFields(
-					com.liferay.site.ai.hub.rest.dto.v1_0.Task.class)) {
+					com.liferay.ai.hub.rest.dto.v1_0.Task.class)) {
 
 			if (!ArrayUtil.contains(
 					getAdditionalAssertFieldNames(), field.getName())) {
@@ -1026,7 +1026,6 @@ public abstract class BaseTaskResourceTestCase {
 	private com.liferay.portal.kernel.model.User _testCompanyAdminUser;
 
 	@Inject
-	private com.liferay.site.ai.hub.rest.resource.v1_0.TaskResource
-		_taskResource;
+	private com.liferay.ai.hub.rest.resource.v1_0.TaskResource _taskResource;
 
 }

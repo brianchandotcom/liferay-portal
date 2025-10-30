@@ -5,14 +5,22 @@
 
 package com.liferay.site.cms.site.initializer.internal.frontend.data.set;
 
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.object.model.ObjectEntryFolder;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 import com.liferay.site.cms.site.initializer.internal.display.context.BaseSectionDisplayContextHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Sanz
@@ -88,8 +96,30 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 		return "All Section";
 	}
 
-	private final BaseSectionDisplayContextHelper
-		_baseSectionDisplayContextHelper =
-			new BaseSectionDisplayContextHelper();
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_baseSectionDisplayContextHelper = new BaseSectionDisplayContextHelper(
+			_depotEntryLocalService, _groupLocalService,
+			_objectDefinitionSettingLocalService,
+			_objectEntryFolderModelResourcePermission);
+	}
+
+	private BaseSectionDisplayContextHelper _baseSectionDisplayContextHelper;
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
+
+	@Reference
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
+	)
+	private ModelResourcePermission<ObjectEntryFolder>
+		_objectEntryFolderModelResourcePermission;
 
 }

@@ -233,7 +233,7 @@ export default function MergeTagsModalContent({
 
 		return (
 			<>
-				<div className="categorization-section">
+				<div className="categorization-modal categorization-section">
 					<ClayModal.Header
 						closeButtonAriaLabel={Liferay.Language.get('close')}
 					>
@@ -342,83 +342,85 @@ export default function MergeTagsModalContent({
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<ClayModal.Header
-				closeButtonAriaLabel={Liferay.Language.get('close')}
-			>
-				{Liferay.Language.get('merge-tags')}
-			</ClayModal.Header>
+			<div className="categorization-modal">
+				<ClayModal.Header
+					closeButtonAriaLabel={Liferay.Language.get('close')}
+				>
+					{Liferay.Language.get('merge-tags')}
+				</ClayModal.Header>
 
-			<ClayModal.Body>
-				<ClayInput.Group>
-					<ClayInput.GroupItem className="categorization-spaces">
-						<label htmlFor="multiSelect">
-							{Liferay.Language.get('tags')}
+				<ClayModal.Body>
+					<ClayInput.Group>
+						<ClayInput.GroupItem className="categorization-spaces">
+							<label htmlFor="multiSelect">
+								{Liferay.Language.get('tags')}
+
+								<span className="ml-1 reference-mark">
+									<ClayIcon symbol="asterisk" />
+								</span>
+							</label>
+
+							<ClayMultiSelect
+								aria-label="multiSelect"
+								inputName="multiSelect"
+								items={selectedTags}
+								loadingState={3}
+								onItemsChange={(items: Tag[]) => {
+									_handleTagChange(items);
+								}}
+								sourceItems={tags}
+							/>
+						</ClayInput.GroupItem>
+
+						<ClayInput.GroupItem className="c-mt-4" shrink>
+							<ClayButton
+								aria-haspopup="dialog"
+								aria-label={Liferay.Language.get('select')}
+								displayType="secondary"
+								onClick={handleSelectButtonClick}
+							>
+								{Liferay.Language.get('select')}
+							</ClayButton>
+						</ClayInput.GroupItem>
+					</ClayInput.Group>
+
+					<Form.Group className="c-mt-3">
+						<label>
+							{Liferay.Language.get('into-this-tag')}
 
 							<span className="ml-1 reference-mark">
 								<ClayIcon symbol="asterisk" />
 							</span>
 						</label>
 
-						<ClayMultiSelect
-							aria-label="multiSelect"
-							inputName="multiSelect"
-							items={selectedTags}
-							loadingState={3}
-							onItemsChange={(items: Tag[]) => {
-								_handleTagChange(items);
-							}}
-							sourceItems={tags}
+						<ClaySelectWithOption
+							onChange={(event) =>
+								setCurrentTag(event.target.dataset as Tag)
+							}
+							options={selectIntoTags}
+							value={currentTag.label}
 						/>
-					</ClayInput.GroupItem>
+					</Form.Group>
+				</ClayModal.Body>
 
-					<ClayInput.GroupItem className="c-mt-4" shrink>
-						<ClayButton
-							aria-haspopup="dialog"
-							aria-label={Liferay.Language.get('select')}
-							displayType="secondary"
-							onClick={handleSelectButtonClick}
-						>
-							{Liferay.Language.get('select')}
-						</ClayButton>
-					</ClayInput.GroupItem>
-				</ClayInput.Group>
+				<ClayModal.Footer
+					last={
+						<ClayButton.Group spaced>
+							<ClayButton
+								displayType="secondary"
+								onClick={closeModal}
+								type="button"
+							>
+								{Liferay.Language.get('cancel')}
+							</ClayButton>
 
-				<Form.Group className="c-mt-3">
-					<label>
-						{Liferay.Language.get('into-this-tag')}
-
-						<span className="ml-1 reference-mark">
-							<ClayIcon symbol="asterisk" />
-						</span>
-					</label>
-
-					<ClaySelectWithOption
-						onChange={(event) =>
-							setCurrentTag(event.target.dataset as Tag)
-						}
-						options={selectIntoTags}
-						value={currentTag.label}
-					/>
-				</Form.Group>
-			</ClayModal.Body>
-
-			<ClayModal.Footer
-				last={
-					<ClayButton.Group spaced>
-						<ClayButton
-							displayType="secondary"
-							onClick={closeModal}
-							type="button"
-						>
-							{Liferay.Language.get('cancel')}
-						</ClayButton>
-
-						<ClayButton displayType="primary" type="submit">
-							{Liferay.Language.get('save')}
-						</ClayButton>
-					</ClayButton.Group>
-				}
-			/>
+							<ClayButton displayType="primary" type="submit">
+								{Liferay.Language.get('save')}
+							</ClayButton>
+						</ClayButton.Group>
+					}
+				/>
+			</div>
 		</form>
 	);
 }

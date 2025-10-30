@@ -66,56 +66,12 @@ public class BatchEngineImportTaskItemReaderUtil {
 			item = resolvedClass.getDeclaredConstructor(
 			).newInstance();
 
-			Set<String> batchRestrictFields = _getBatchRestrictFields(
-				batchEngineImportTask);
-
-			Map<String, Field> declaredFields = _getDeclaredFields(
-				itemClass, resolvedClass);
-
-			Field anySetterField = _findAnySetterField(declaredFields);
-
 			Map<String, Serializable> extendedProperties = new HashMap<>();
 
-			for (Map.Entry<String, Object> entry :
-					fieldNameValueMap.entrySet()) {
-
-				String name = entry.getKey();
-
-				try {
-					if (batchRestrictFields.contains(name)) {
-						continue;
-					}
-
-					Field field = declaredFields.get(name);
-
-					if (field == null) {
-						field = declaredFields.get(StringPool.UNDERLINE + name);
-					}
-
-					if (field != null) {
-						_setField(
-							batchEngineImportTask, field, item,
-							entry.getValue());
-
-						continue;
-					}
-
-					if (anySetterField != null) {
-						_setField(anySetterField, item, name, entry.getValue());
-					}
-					else {
-						extendedProperties.put(
-							entry.getKey(), (Serializable)entry.getValue());
-					}
-				}
-				catch (Exception exception) {
-					throw new Exception(
-						StringBundler.concat(
-							"Unable to set field ", name, StringPool.COLON,
-							StringPool.SPACE, exception.getMessage()),
-						exception);
-				}
-			}
+			_processFieldNameValueMap(
+				batchEngineImportTask,
+				_getDeclaredFields(itemClass, resolvedClass),
+				extendedProperties, fieldNameValueMap, item);
 
 			for (ItemReaderPostAction itemReaderPostAction :
 					itemReaderPostActions) {
@@ -334,6 +290,57 @@ public class BatchEngineImportTaskItemReaderUtil {
 		}
 
 		return true;
+	}
+
+	private static void _processFieldNameValueMap(
+			BatchEngineImportTask batchEngineImportTask,
+			Map<String, Field> declaredFields,
+			Map<String, Serializable> extendedProperties,
+			Map<String, Object> fieldNameValueMap, Object item)
+		throws Exception {
+
+		Field anySetterField = _findAnySetterField(declaredFields);
+
+		Set<String> batchRestrictFields = _getBatchRestrictFields(
+			batchEngineImportTask);
+
+		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
+			String name = entry.getKey();
+
+			try {
+				if (batchRestrictFields.contains(name)) {
+					continue;
+				}
+
+				Field field = declaredFields.get(name);
+
+				if (field == null) {
+					field = declaredFields.get(StringPool.UNDERLINE + name);
+				}
+
+				if (field != null) {
+					_setField(
+						batchEngineImportTask, field, item, entry.getValue());
+
+					continue;
+				}
+
+				if (anySetterField != null) {
+					_setField(anySetterField, item, name, entry.getValue());
+				}
+				else {
+					extendedProperties.put(
+						entry.getKey(), (Serializable)entry.getValue());
+				}
+			}
+			catch (Exception exception) {
+				throw new Exception(
+					StringBundler.concat(
+						"Unable to set field ", name, StringPool.COLON,
+						StringPool.SPACE, exception.getMessage()),
+					exception);
+			}
+		}
 	}
 
 	private static <T> Class<? extends T> _resolveClass(

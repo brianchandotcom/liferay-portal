@@ -34,13 +34,13 @@ const dateConfig = datetimeUtils.generateDateConfigurations({
 const initialFields = {
 	expirationDate: {
 		error: '',
-		neverExpire: false,
+		neverCheckbox: {label: 'never-expire', value: false},
 		serverValue: '',
 		value: '',
 	},
 	reviewDate: {
 		error: '',
-		neverExpire: false,
+		neverCheckbox: {label: 'never-review', value: false},
 		serverValue: '',
 		value: '',
 	},
@@ -88,10 +88,11 @@ describe('SchedulePanel', () => {
 		expect(reviewDateInput).toBeDisabled();
 		expect(reviewDateInput).toHaveAttribute('placeholder', placeholder);
 
-		const neverExpireCheckbox = screen.getAllByLabelText('never-expire');
+		const neverExpireCheckbox = screen.getByLabelText('never-expire');
+		const neverReviewCheckbox = screen.getByLabelText('never-review');
 
-		expect(neverExpireCheckbox[0]).toBeChecked();
-		expect(neverExpireCheckbox[1]).toBeChecked();
+		expect(neverExpireCheckbox).toBeChecked();
+		expect(neverReviewCheckbox).toBeChecked();
 
 		await checkAccessibility({context: container});
 	});
@@ -101,15 +102,15 @@ describe('SchedulePanel', () => {
 			...initialFields,
 			expirationDate: {
 				error: '',
-				neverExpire: false,
+				neverCheckbox: {label: 'never-expire', value: false},
 				serverValue: '2025-07-08T00:00',
 				value: '2025-07-08 00:00',
 			},
 		});
 
-		const neverExpireCheckboxs = screen.getAllByLabelText('never-expire');
+		const neverExpireCheckbox = screen.getByLabelText('never-expire');
 
-		expect(neverExpireCheckboxs[0]).not.toBeChecked();
+		expect(neverExpireCheckbox).not.toBeChecked();
 
 		const expirationInput: HTMLInputElement = screen.getByRole('textbox', {
 			name: 'expiration-date',
@@ -125,7 +126,7 @@ describe('SchedulePanel', () => {
 		const expirationInput: HTMLInputElement = screen.getByRole('textbox', {
 			name: 'expiration-date',
 		});
-		const neverExpireCheckbox = screen.getAllByLabelText('never-expire')[0];
+		const neverExpireCheckbox = screen.getByLabelText('never-expire');
 
 		expect(neverExpireCheckbox).toBeChecked();
 		expect(expirationInput).toBeDisabled();
@@ -144,7 +145,7 @@ describe('SchedulePanel', () => {
 		const expirationInput: HTMLInputElement = screen.getByRole('textbox', {
 			name: 'expiration-date',
 		});
-		const neverExpireCheckbox = screen.getAllByLabelText('never-expire')[0];
+		const neverExpireCheckbox = screen.getByLabelText('never-expire');
 
 		await userEvent.click(neverExpireCheckbox);
 
@@ -183,7 +184,7 @@ describe('SchedulePanel', () => {
 		const expirationInput: HTMLInputElement = screen.getByRole('textbox', {
 			name: 'expiration-date',
 		});
-		const neverExpireCheckbox = screen.getAllByLabelText('never-expire')[0];
+		const neverExpireCheckbox = screen.getByLabelText('never-expire');
 
 		await userEvent.click(neverExpireCheckbox);
 

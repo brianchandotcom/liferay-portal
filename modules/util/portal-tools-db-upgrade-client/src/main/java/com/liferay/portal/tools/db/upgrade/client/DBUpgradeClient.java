@@ -20,6 +20,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -166,6 +167,24 @@ public class DBUpgradeClient {
 
 		_portalUpgradeExtProperties = _readProperties(
 			_portalUpgradeExtPropertiesFile);
+	}
+
+	private String[] _getDBTypes() {
+		File portalShieldedContainerLibDir =
+			_appServer.getPortalShieldedContainerLibDir();
+
+		if (portalShieldedContainerLibDir != null) {
+			Path portalDaoDBPath = portalShieldedContainerLibDir.toPath(
+			).resolve(
+				_PORTAL_DAO_DB_JAR_NAME
+			);
+
+			if (Files.exists(portalDaoDBPath)) {
+				return _DXP_DATABASE_TYPES;
+			}
+		}
+
+		return _PORTAL_DATABASE_TYPES;
 	}
 
 	public void upgrade() throws IOException {
@@ -816,7 +835,7 @@ public class DBUpgradeClient {
 		while (dataSource == null) {
 			System.out.print("[ ");
 
-			for (String databaseType : _DATABASE_TYPES) {
+			for (String databaseType : _getDBTypes()) {
 				System.out.print(databaseType + " ");
 			}
 
@@ -936,8 +955,15 @@ public class DBUpgradeClient {
 		"jboss", "tomcat", "weblogic", "wildfly"
 	};
 
-	private static final String[] _DATABASE_TYPES = {
+	private static final String[] _DXP_DATABASE_TYPES = {
 		"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"
+	};
+
+	private static final String _PORTAL_DAO_DB_JAR_NAME =
+		"com.liferay.portal.dao.db.jar";
+
+	private static final String[] _PORTAL_DATABASE_TYPES = {
+		"mariadb", "mysql", "postgresql"
 	};
 
 	private static final String _GOGO_SHELL_PREFIX = "g! ";

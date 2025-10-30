@@ -207,14 +207,18 @@ export default function CommentsPanel({
 
 	return (
 		<>
-			<div className="border-bottom pb-2 px-3">
-				<label>{Liferay.Language.get('add-comment')}</label>
+			{addCommentURL && (
+				<div className="border-bottom pb-2 px-3">
+					<label>{Liferay.Language.get('add-comment')}</label>
 
-				<CommentEditor
-					editorConfig={editorConfig}
-					onSave={(content, editor) => saveComment({content, editor})}
-				/>
-			</div>
+					<CommentEditor
+						editorConfig={editorConfig}
+						onSave={(content, editor) =>
+							saveComment({content, editor})
+						}
+					/>
+				</div>
+			)}
 
 			{comments.length ? (
 				<ul className="p-0">

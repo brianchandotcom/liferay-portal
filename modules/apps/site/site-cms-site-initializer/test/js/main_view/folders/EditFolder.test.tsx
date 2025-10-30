@@ -14,6 +14,7 @@ import EditFolder from '../../../../src/main/resources/META-INF/resources/js/mai
 import {mockNavigate} from '../../__mocks__/frontend-js-web';
 
 jest.mock('frontend-js-components-web', () => ({
+	...((jest.requireActual('frontend-js-components-web') ?? {}) as any),
 	openToast: jest.fn(),
 }));
 
@@ -87,7 +88,7 @@ describe('EditFolder', () => {
 			mockFolder.description
 		);
 
-		const combobox = screen.getByRole('combobox', {name: /space/i});
+		const combobox = screen.getByRole('textbox', {name: /space/i});
 		expect(combobox).toHaveValue(mockFolder.scopeKey);
 		expect(combobox).toHaveAttribute('aria-readonly', 'true');
 	});

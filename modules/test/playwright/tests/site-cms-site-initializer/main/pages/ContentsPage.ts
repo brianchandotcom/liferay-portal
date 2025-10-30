@@ -114,7 +114,7 @@ export class ContentsPage {
 		await this.page.getByLabel('NameRequired').fill(folderName);
 
 		if (spaceName) {
-			await this.page.getByLabel('SpaceRequired').click();
+			await this.page.getByLabel('SpaceMandatory').click();
 			await this.page.getByRole('option', {name: spaceName}).click();
 		}
 

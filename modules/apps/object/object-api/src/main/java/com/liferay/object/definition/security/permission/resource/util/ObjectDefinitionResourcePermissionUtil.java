@@ -137,8 +137,8 @@ public class ObjectDefinitionResourcePermissionUtil {
 		String objectFieldPermissionKeys = StringPool.BLANK;
 
 		for (ObjectField objectField : objectFields) {
-			objectFieldLocalService.
-				addOrUpdateObjectFieldResourceActionPLOEntries(objectField);
+			objectFieldLocalService.addOrUpdateObjectFieldPLOEntries(
+				objectField);
 
 			objectFieldPermissionKeys = StringBundler.concat(
 				objectFieldPermissionKeys, "<action-key>",

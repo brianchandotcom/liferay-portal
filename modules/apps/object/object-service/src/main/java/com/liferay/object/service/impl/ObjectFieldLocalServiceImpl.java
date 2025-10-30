@@ -210,17 +210,17 @@ public class ObjectFieldLocalServiceImpl
 			objectFieldSettings);
 	}
 
-	@Override
-	public void addOrUpdateObjectFieldResourceActionPLOEntries(
-			ObjectField objectField)
+	public void addOrUpdateObjectFieldPLOEntries(ObjectField objectField)
 		throws PortalException {
 
 		for (Locale locale : _language.getAvailableLocales()) {
-			String actionId = objectField.getAttachmentDownloadActionKey();
+			String attachmentDownloadActionKey =
+				objectField.getAttachmentDownloadActionKey();
 
 			_ploEntryLocalService.addOrUpdatePLOEntry(
 				objectField.getCompanyId(), objectField.getUserId(),
-				"action." + actionId, LocaleUtil.toLanguageId(locale),
+				"action." + attachmentDownloadActionKey,
+				LocaleUtil.toLanguageId(locale),
 				_language.format(
 					locale, "download-x", objectField.getLabel(locale)));
 		}
@@ -338,6 +338,9 @@ public class ObjectFieldLocalServiceImpl
 	public void deleteObjectFieldByObjectDefinitionId(Long objectDefinitionId)
 		throws PortalException {
 
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId);
+
 		for (ObjectField objectField :
 				objectFieldPersistence.findByObjectDefinitionId(
 					objectDefinitionId)) {
@@ -348,29 +351,29 @@ public class ObjectFieldLocalServiceImpl
 
 			objectFieldPersistence.remove(objectField);
 
+			if (FeatureFlagManagerUtil.isEnabled(
+					objectField.getCompanyId(), "LPD-17564") &&
+				objectDefinition.isApproved() &&
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				String attachmentDownloadActionKey =
+					objectField.getAttachmentDownloadActionKey();
+
+				_ploEntryLocalService.deletePLOEntries(
+					objectField.getCompanyId(),
+					"action." + attachmentDownloadActionKey);
+
+				_resourceActions.removeModelResource(
+					objectDefinition.getClassName(),
+					attachmentDownloadActionKey);
+			}
+
 			if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_AUTO_INCREMENT)) {
 
 				counterLocalService.reset(
 					ObjectFieldUtil.getCounterName(objectField));
-			}
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					objectField.getCompanyId(), "LPD-17564") &&
-				objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
-
-				String actionId = objectField.getAttachmentDownloadActionKey();
-
-				_ploEntryLocalService.deletePLOEntries(
-					objectField.getCompanyId(), "action." + actionId);
-
-				ObjectDefinition objectDefinition =
-					_objectDefinitionPersistence.findByPrimaryKey(
-						objectField.getObjectDefinitionId());
-
-				_resourceActions.removeModelResource(
-					objectDefinition.getClassName(), actionId);
 			}
 
 			_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
@@ -1004,7 +1007,7 @@ public class ObjectFieldLocalServiceImpl
 					null, null, objectDefinition, objectFieldLocalService, null,
 					_portletLocalService, _resourceActions);
 
-				_updateResourcePermissions(
+				_updateResourcePermission(
 					objectField.getAttachmentDownloadActionKey(),
 					objectDefinition);
 			}
@@ -1256,13 +1259,16 @@ public class ObjectFieldLocalServiceImpl
 					objectField.getCompanyId(), "LPD-17564") &&
 				objectDefinition.isApproved()) {
 
-				String actionId = objectField.getAttachmentDownloadActionKey();
+				String attachmentDownloadActionKey =
+					objectField.getAttachmentDownloadActionKey();
 
 				_ploEntryLocalService.deletePLOEntries(
-					objectField.getCompanyId(), "action." + actionId);
+					objectField.getCompanyId(),
+					"action." + attachmentDownloadActionKey);
 
 				_resourceActions.removeModelResource(
-					objectDefinition.getClassName(), actionId);
+					objectDefinition.getClassName(),
+					attachmentDownloadActionKey);
 			}
 
 			ObjectFieldSetting objectFieldSetting =
@@ -1630,7 +1636,7 @@ public class ObjectFieldLocalServiceImpl
 				businessType.equals(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-				addOrUpdateObjectFieldResourceActionPLOEntries(newObjectField);
+				addOrUpdateObjectFieldPLOEntries(newObjectField);
 			}
 
 			return newObjectField;
@@ -1663,7 +1669,7 @@ public class ObjectFieldLocalServiceImpl
 		return newObjectField;
 	}
 
-	private void _updateResourcePermissions(
+	private void _updateResourcePermission(
 			String actionId, ObjectDefinition objectDefinition)
 		throws PortalException {
 

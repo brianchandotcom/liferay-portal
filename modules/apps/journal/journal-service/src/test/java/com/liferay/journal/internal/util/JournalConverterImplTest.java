@@ -204,7 +204,7 @@ public class JournalConverterImplTest {
 			String value = "Option" + RandomTestUtil.randomString();
 
 			ddmFormFieldOptions.addOption(value);
-			ddmFormFieldOptions.addOpt_updateContentDynamicElementionLabel(
+			ddmFormFieldOptions.addOptionLabel(
 				value, LocaleUtil.US, RandomTestUtil.randomString());
 
 			String optionReference = RandomTestUtil.randomString();

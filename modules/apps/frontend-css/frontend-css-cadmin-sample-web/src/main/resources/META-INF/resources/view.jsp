@@ -7,6 +7,20 @@
 
 <%@ include file="/init.jsp" %>
 
+<style>
+.cadmin-test-unstyled {
+	background-color: rgba(255, 255, 255, 0.8);
+}
+
+.cadmin-test-styled {
+	background-color: rgba(0, 0, 255, 0.8);
+}
+
+.cadmin-test-styled-override {
+	background-color: rgba(0, 0, 255, 0.8) !important;
+}
+</style>
+
 <div>
 	<react:component
 		module="{App} from frontend-css-cadmin-sample-web"

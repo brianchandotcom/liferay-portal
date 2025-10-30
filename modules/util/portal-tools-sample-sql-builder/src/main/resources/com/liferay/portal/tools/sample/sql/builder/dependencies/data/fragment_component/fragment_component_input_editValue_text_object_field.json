@@ -1,0 +1,8 @@
+{
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"inputFieldId": "${objectFieldId}",
+		"inputReadOnly": false,
+		"placeholder": "",
+		"showCharactersCount": false
+	}
+}

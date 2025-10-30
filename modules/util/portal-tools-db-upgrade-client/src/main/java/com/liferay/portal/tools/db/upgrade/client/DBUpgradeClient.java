@@ -20,8 +20,8 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -167,24 +167,6 @@ public class DBUpgradeClient {
 
 		_portalUpgradeExtProperties = _readProperties(
 			_portalUpgradeExtPropertiesFile);
-	}
-
-	private String[] _getDBTypes() {
-		File portalShieldedContainerLibDir =
-			_appServer.getPortalShieldedContainerLibDir();
-
-		if (portalShieldedContainerLibDir != null) {
-			Path portalDaoDBPath = portalShieldedContainerLibDir.toPath(
-			).resolve(
-				_PORTAL_DAO_DB_JAR_NAME
-			);
-
-			if (Files.exists(portalDaoDBPath)) {
-				return _DXP_DATABASE_TYPES;
-			}
-		}
-
-		return _PORTAL_DATABASE_TYPES;
 	}
 
 	public void upgrade() throws IOException {
@@ -436,6 +418,24 @@ public class DBUpgradeClient {
 		_appendClassPath(sb, _appServer.getExtraLibDirs());
 
 		return sb.toString();
+	}
+
+	private String[] _getDBTypes() {
+		File portalShieldedContainerLibDir =
+			_appServer.getPortalShieldedContainerLibDir();
+
+		if (portalShieldedContainerLibDir != null) {
+			Path portalDaoDBPath = portalShieldedContainerLibDir.toPath(
+			).resolve(
+				_PORTAL_DAO_DB_JAR_NAME
+			);
+
+			if (Files.exists(portalDaoDBPath)) {
+				return _DXP_DATABASE_TYPES;
+			}
+		}
+
+		return _PORTAL_DATABASE_TYPES;
 	}
 
 	private File _getResolvedDir(
@@ -959,16 +959,16 @@ public class DBUpgradeClient {
 		"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"
 	};
 
+	private static final String _GOGO_SHELL_PREFIX = "g! ";
+
+	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
+
 	private static final String _PORTAL_DAO_DB_JAR_NAME =
 		"com.liferay.portal.dao.db.jar";
 
 	private static final String[] _PORTAL_DATABASE_TYPES = {
 		"mariadb", "mysql", "postgresql"
 	};
-
-	private static final String _GOGO_SHELL_PREFIX = "g! ";
-
-	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
 
 	private static final Pattern _gogoShellAddressPattern = Pattern.compile(
 		"^([^\\:]+):([0-9]{1,5})$");

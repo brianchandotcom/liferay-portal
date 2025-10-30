@@ -16,7 +16,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 
 import java.nio.file.Files;
@@ -89,11 +88,11 @@ public class DBUpgradeClientTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_consoleOutputStream.reset();
-		_errorOutputStream.reset();
+		_consoleByteArrayOutputStream.reset();
+		_errorByteArrayOutputStream.reset();
 
-		System.setErr(new PrintStream(_errorOutputStream));
-		System.setOut(new PrintStream(_consoleOutputStream));
+		System.setErr(new PrintStream(_errorByteArrayOutputStream));
+		System.setOut(new PrintStream(_consoleByteArrayOutputStream));
 	}
 
 	@After
@@ -134,7 +133,7 @@ public class DBUpgradeClientTest {
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyAppServerProperties", new Class<?>[0]);
 
-		String errorOutput = _errorOutputStream.toString();
+		String errorOutput = _errorByteArrayOutputStream.toString();
 
 		Assert.assertTrue(
 			errorOutput.contains("does not exist or is not a directory"));
@@ -197,11 +196,11 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
 			new Class<?>[0]);
 
-		String consoleOutput = _consoleOutputStream.toString();
+		String consoleOutput = _consoleByteArrayOutputStream.toString();
 
 		Assert.assertTrue(consoleOutput.contains("mariadb mysql postgresql"));
 
-		String errorOutput = _errorOutputStream.toString();
+		String errorOutput = _errorByteArrayOutputStream.toString();
 
 		Assert.assertTrue(errorOutput.contains("Unable to resolve host"));
 		Assert.assertTrue(errorOutput.contains("is not a valid port number"));
@@ -260,7 +259,7 @@ public class DBUpgradeClientTest {
 				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
 				new Class<?>[0]);
 
-			String consoleOutput = _consoleOutputStream.toString();
+			String consoleOutput = _consoleByteArrayOutputStream.toString();
 
 			Assert.assertTrue(
 				consoleOutput.contains(
@@ -309,7 +308,7 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_verifyPortalUpgradeExtProperties",
 			new Class<?>[0]);
 
-		String errorOutput = _errorOutputStream.toString();
+		String errorOutput = _errorByteArrayOutputStream.toString();
 
 		Assert.assertTrue(
 			errorOutput.contains("does not exist or is not a directory"));
@@ -400,10 +399,11 @@ public class DBUpgradeClientTest {
 	private static File _shieldedContainerLib;
 	private static File _tomcatDir;
 
-	private final ByteArrayOutputStream _consoleOutputStream =
+	private final ByteArrayOutputStream _consoleByteArrayOutputStream =
 		new ByteArrayOutputStream();
 	private DBUpgradeClient _dbUpgradeClient;
-	private final ByteArrayOutputStream _errorOutputStream = new ByteArrayOutputStream();
+	private final ByteArrayOutputStream _errorByteArrayOutputStream =
+		new ByteArrayOutputStream();
 	private final PrintStream _originalErrorOutputStream = System.err;
 	private final PrintStream _originalOutputStream = System.out;
 

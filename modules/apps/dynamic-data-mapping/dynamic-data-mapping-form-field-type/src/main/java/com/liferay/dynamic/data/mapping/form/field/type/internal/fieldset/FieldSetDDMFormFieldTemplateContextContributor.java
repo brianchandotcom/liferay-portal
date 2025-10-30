@@ -81,15 +81,16 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 			DDMFormFieldTypeUtil.getPropertyValue(
 				ddmFormFieldRenderingContext, "dataDefinitionId")
 		).put(
-			"ddmStructureId", ddmFormField.getProperty("ddmStructureId")
+			"ddmStructureId", _getPropertyValue(ddmFormField, "ddmStructureId")
 		).put(
-			"ddmStructureKey", ddmFormField.getProperty("ddmStructureKey")
+			"ddmStructureKey",
+			_getPropertyValue(ddmFormField, "ddmStructureKey")
 		).put(
 			"ddmStructureLayoutId",
-			ddmFormField.getProperty("ddmStructureLayoutId")
+			_getPropertyValue(ddmFormField, "ddmStructureLayoutId")
 		).put(
 			"externalReferenceCode",
-			ddmFormField.getProperty("externalReferenceCode")
+			_getPropertyValue(ddmFormField, "externalReferenceCode")
 		).put(
 			"nestedFields", nestedFields
 		).put(
@@ -199,6 +200,18 @@ public class FieldSetDDMFormFieldTemplateContextContributor
 		}
 
 		return StringPool.BLANK;
+	}
+
+	private Object _getPropertyValue(
+		DDMFormField ddmFormField, String propertyName) {
+
+		Object propertyValue = ddmFormField.getProperty(propertyName);
+
+		if (Validator.isNull(propertyValue)) {
+			return null;
+		}
+
+		return propertyValue;
 	}
 
 	private List<Object> _getVisibleNestedFields(List<Object> nestedFields) {

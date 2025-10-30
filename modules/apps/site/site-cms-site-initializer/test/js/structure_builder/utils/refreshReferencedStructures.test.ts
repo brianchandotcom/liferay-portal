@@ -63,6 +63,7 @@ describe('refreshReferencedStructures', () => {
 			name: 'structure-name',
 			spaces: [],
 			status: 'published',
+			system: false,
 			uuid: structureUuid,
 			workflows: {},
 		};

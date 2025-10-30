@@ -1131,7 +1131,8 @@ testWithRepeatableFF(
 			trigger: card.locator('button'),
 		});
 
-		page.getByRole('dialog')
+		await page
+			.getByRole('dialog')
 			.getByRole('button', {name: 'Delete Entry'})
 			.click();
 
@@ -1241,7 +1242,8 @@ testWithRepeatableFF(
 			trigger: card.locator('button'),
 		});
 
-		page.getByRole('dialog')
+		await page
+			.getByRole('dialog')
 			.getByRole('button', {name: 'Delete Entry'})
 			.click();
 

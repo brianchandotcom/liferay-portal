@@ -356,7 +356,7 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 		File workingDirectory = getWorkingDirectory();
 
 		try {
-			Map<String, String> envVariables = new HashMap<>();
+			Map<String, String> filteredEnv = new HashMap<>();
 
 			Map<String, String> env = System.getenv();
 
@@ -367,12 +367,12 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 					continue;
 				}
 
-				envVariables.put(envEntry.getKey(), envEntry.getValue());
+				filteredEnv.put(envEntry.getKey(), envEntry.getValue());
 			}
 
 			AntUtil.callTarget(
 				workingDirectory, "build.xml", "setup-sdk setup-yarn", null,
-				envVariables);
+				filteredEnv);
 		}
 		catch (AntException antException) {
 			throw new GitWorkingDirectoryRuntimeException(

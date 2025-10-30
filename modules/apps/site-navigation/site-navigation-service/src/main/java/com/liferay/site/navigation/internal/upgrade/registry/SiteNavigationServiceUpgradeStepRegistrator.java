@@ -18,8 +18,6 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuItemTable;
 import com.liferay.site.navigation.internal.upgrade.v2_0_0.util.SiteNavigationMenuTable;
 import com.liferay.site.navigation.internal.upgrade.v2_3_0.SiteNavigationMenuItemUpgradeProcess;
-import com.liferay.site.navigation.internal.upgrade.v3_0_0.SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess;
-import com.liferay.site.navigation.internal.upgrade.v4_0_0.SiteNavigationMenuItemClassNameUpgradeProcess;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -86,14 +84,15 @@ public class SiteNavigationServiceUpgradeStepRegistrator
 
 		registry.register(
 			"2.5.0", "3.0.0",
-			new SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess(
-				_assetVocabularyLocalService, _journalArticleLocalService,
-				_kbArticleLocalService, _layoutLocalService));
+			new com.liferay.site.navigation.internal.upgrade.v3_0_0.
+				SiteNavigationMenuItemUpgradeProcess(
+					_assetVocabularyLocalService, _journalArticleLocalService,
+					_kbArticleLocalService, _layoutLocalService));
 
 		registry.register(
 			"3.0.0", "4.0.0",
-			new SiteNavigationMenuItemClassNameUpgradeProcess(
-				_classNameLocalService));
+			new com.liferay.site.navigation.internal.upgrade.v4_0_0.
+				SiteNavigationMenuItemUpgradeProcess(_classNameLocalService));
 	}
 
 	@Reference

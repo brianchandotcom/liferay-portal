@@ -67,7 +67,7 @@ import org.junit.runner.RunWith;
  * @author Gislayne Vitorino
  */
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcessTest {
+public class SiteNavigationMenuItemUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -397,7 +397,7 @@ public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.site.navigation.internal.upgrade.v3_0_0." +
-			"SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess";
+			"SiteNavigationMenuItemUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"

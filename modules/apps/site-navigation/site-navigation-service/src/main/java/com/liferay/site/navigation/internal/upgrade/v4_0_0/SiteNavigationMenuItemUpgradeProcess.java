@@ -1,0 +1,169 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.site.navigation.internal.upgrade.v4_0_0;
+
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
+import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+import java.util.Objects;
+
+/**
+ * @author Gislayne Vitorino
+ */
+public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
+
+	public SiteNavigationMenuItemUpgradeProcess(
+		ClassNameLocalService classNameLocalService) {
+
+		_classNameLocalService = classNameLocalService;
+	}
+
+	@Override
+	protected void doUpgrade() throws Exception {
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
+				"select ctCollectionId, siteNavigationMenuItemId, type_, " +
+					"typeSettings from SiteNavigationMenuItem");
+			PreparedStatement preparedStatement2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update SiteNavigationMenuItem set typeSettings = ? " +
+						"where ctCollectionId = ? and " +
+							"siteNavigationMenuItemId = ?");
+			ResultSet resultSet = preparedStatement1.executeQuery()) {
+
+			while (resultSet.next()) {
+				_upgradeSiteNavigationMenuItem(preparedStatement2, resultSet);
+			}
+
+			preparedStatement2.executeBatch();
+		}
+	}
+
+	private void _updateSiteNavigationMenuItemExternalReferenceCode(
+			String className, UnicodeProperties typeSettingsUnicodeProperties)
+		throws Exception {
+
+		if (className.equals(FileEntry.class.getName())) {
+			className = DLFileEntry.class.getName();
+		}
+		else if (className.contains(ObjectDefinition.class.getName())) {
+			className = ObjectEntry.class.getName();
+		}
+
+		PersistedModelLocalService persistedModelLocalService =
+			PersistedModelLocalServiceRegistryUtil.
+				getPersistedModelLocalService(className);
+
+		PersistedModel persistedModel =
+			persistedModelLocalService.getPersistedModel(
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.getProperty("classPK")));
+
+		if (persistedModel == null) {
+			return;
+		}
+
+		String externalReferenceCode = null;
+
+		if (Objects.equals(
+				className, "com.liferay.commerce.product.model.CPDefinition")) {
+
+			String sql = StringBundler.concat(
+				"select CProduct.externalReferenceCode from CProduct inner ",
+				"join CPDefinition on CProduct.CProductId = CPDefinition.",
+				"CProductId where CPDefinition.cpDefinitionId = ",
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.getProperty("classPK")));
+
+			try (PreparedStatement preparedStatement3 =
+					connection.prepareStatement(sql);
+				ResultSet resultSet3 = preparedStatement3.executeQuery()) {
+
+				if (resultSet3.next()) {
+					externalReferenceCode = resultSet3.getString(
+						"externalReferenceCode");
+				}
+			}
+		}
+		else if (persistedModel instanceof ExternalReferenceCodeModel) {
+			ExternalReferenceCodeModel externalReferenceCodeModel =
+				(ExternalReferenceCodeModel)persistedModel;
+
+			externalReferenceCode =
+				externalReferenceCodeModel.getExternalReferenceCode();
+		}
+
+		if (Validator.isNull(externalReferenceCode)) {
+			return;
+		}
+
+		typeSettingsUnicodeProperties.setProperty(
+			"externalReferenceCode", externalReferenceCode);
+	}
+
+	private void _upgradeSiteNavigationMenuItem(
+			PreparedStatement preparedStatement2, ResultSet resultSet)
+		throws Exception {
+
+		String type = resultSet.getString("type_");
+		UnicodeProperties typeSettingsUnicodeProperties =
+			UnicodePropertiesBuilder.fastLoad(
+				resultSet.getString("typeSettings")
+			).build();
+
+		if (!(typeSettingsUnicodeProperties.containsKey("classTypeId") ||
+			  Objects.equals(type, AssetCategory.class.getName())) ||
+			(typeSettingsUnicodeProperties.getProperty("className") != null)) {
+
+			return;
+		}
+
+		String className = String.valueOf(
+			_classNameLocalService.getClassName(
+				GetterUtil.getLong(
+					typeSettingsUnicodeProperties.getProperty("classNameId"))
+			).getClassName());
+
+		typeSettingsUnicodeProperties.setProperty("className", className);
+
+		String externalReferenceCode =
+			typeSettingsUnicodeProperties.getProperty("externalReferenceCode");
+
+		if (externalReferenceCode == null) {
+			_updateSiteNavigationMenuItemExternalReferenceCode(
+				className, typeSettingsUnicodeProperties);
+		}
+
+		preparedStatement2.setString(
+			1, typeSettingsUnicodeProperties.toString());
+		preparedStatement2.setLong(2, resultSet.getLong("ctCollectionId"));
+		preparedStatement2.setLong(
+			3, resultSet.getLong("siteNavigationMenuItemId"));
+
+		preparedStatement2.addBatch();
+	}
+
+	private final ClassNameLocalService _classNameLocalService;
+
+}

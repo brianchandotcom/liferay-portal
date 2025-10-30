@@ -33,11 +33,11 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 		size="12"
 	>
 		<p>
-			<%= cookiesBannerConfigurationDisplayContext.getDescription(locale) %>
+			<%= HtmlUtil.escape(cookiesBannerConfigurationDisplayContext.getDescription(locale)) %>
 
 			<clay:link
-				href="<%= cookiesBannerConfigurationDisplayContext.getCookiePolicyLink() %>"
-				label="<%= cookiesBannerConfigurationDisplayContext.getLinkDisplayText(locale) %>"
+				href="<%= HtmlUtil.escape(cookiesBannerConfigurationDisplayContext.getCookiePolicyLink()) %>"
+				label="<%= HtmlUtil.escape(cookiesBannerConfigurationDisplayContext.getLinkDisplayText(locale)) %>"
 				target="_blank"
 			/>
 		</p>
@@ -58,7 +58,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredConsentCookieType.getName(), request) %></h2>
+					<h2><%= HtmlUtil.escape(cookiesBannerConfigurationDisplayContext.getCookieTitle(requiredConsentCookieType.getName(), request)) %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -69,7 +69,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p><%= requiredConsentCookieType.getDescription(locale) %></p>
+				<p><%= HtmlUtil.escape(requiredConsentCookieType.getDescription(locale)) %></p>
 			</clay:content-row>
 
 		<%
@@ -88,7 +88,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 				<clay:content-col
 					expand="<%= true %>"
 				>
-					<h2><%= cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalConsentCookieType.getName(), request) %></h2>
+					<h2><%= HtmlUtil.escape(cookiesBannerConfigurationDisplayContext.getCookieTitle(optionalConsentCookieType.getName(), request)) %></h2>
 				</clay:content-col>
 
 				<clay:content-col>
@@ -107,7 +107,7 @@ CookiesBannerConfigurationDisplayContext cookiesBannerConfigurationDisplayContex
 			<clay:content-row
 				cssClass="mb-3"
 			>
-				<p><%= optionalConsentCookieType.getDescription(locale) %></p>
+				<p><%= HtmlUtil.escape(optionalConsentCookieType.getDescription(locale)) %></p>
 			</clay:content-row>
 
 		<%

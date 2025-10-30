@@ -86,7 +86,7 @@ async function resetPermissions(page, folderName: string) {
 	await expect(async () => {
 		await clickMenuItem('Reset to Default Permissions', page, folderName);
 
-		await page.getByRole('button', {name: 'OK'}).click();
+		await page.getByRole('button', {name: 'Confirm'}).click();
 	}).toPass({timeout: 5000});
 
 	await waitForAlert(page, 'Permissions reset successfully.');

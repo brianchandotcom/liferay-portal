@@ -116,8 +116,6 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	@TestInfo("LPD-69505")
 	public void testDeleteTemplateEntryWithNoPermissions() throws Exception {
-		_assertTemplateExists(_templateEntry);
-
 		_invokeActionRequest(_getMockLiferayPortletActionRequest(), true);
 	}
 

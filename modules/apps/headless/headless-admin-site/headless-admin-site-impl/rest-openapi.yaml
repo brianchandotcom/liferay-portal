@@ -31,6 +31,46 @@ components:
                 justify:
                     enum: [Center, End, None, SpaceAround, SpaceBetween, Start]
                     type: string
+        CategoryFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type category.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type category.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type category.
+            type: object
+        CheckboxFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                Whether the fragment configuration field of type checkbox is checked.
+                            type: boolean
+                        value_i18n:
+                            additionalProperties:
+                                type: boolean
+                            # @review
+                            description:
+                                Whether the fragment configuration field of type checkbox is checked.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type checkbox.
+            type: object
         ClassNameReference:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
@@ -198,6 +238,26 @@ components:
                 -   collectionDisplayViewportDefinition
                 -   id
             type: object
+        CollectionFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            $ref: "#/components/schemas/CollectionReference"
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type collection.
+                        value_i18n:
+                            additionalProperties:
+                                $ref: "#/components/schemas/CollectionReference"
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type collection.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type collection.
+            type: object
         CollectionItemExternalReference:
             allOf:
                 -   $ref: "#/components/schemas/CollectionReference"
@@ -235,6 +295,46 @@ components:
                         The collection's type (Collection, CollectionProvider).
                     enum: [Collection, CollectionProvider]
                     type: string
+            type: object
+        ColorPaletteFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type color palette.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type color palette.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type color palette.
+            type: object
+        ColorPickerFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type color picker.
+                            type: string
+                        value_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type color picker.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type color picker.
             type: object
         ContainerPageElementDefinition:
             allOf:
@@ -937,26 +1037,30 @@ components:
         FragmentConfigurationFieldValue:
             # @review
             description:
-                The value of a configuration field.
+                The value of a fragment configuration field.
+            discriminator:
+                mapping:
+                    Category: "#/components/schemas/CategoryFragmentConfigurationFieldValue"
+                    Checkbox: "#/components/schemas/CheckboxFragmentConfigurationFieldValue"
+                    Collection: "#/components/schemas/CollectionFragmentConfigurationFieldValue"
+                    ColorPalette: "#/components/schemas/ColorPaletteFragmentConfigurationFieldValue"
+                    ColorPicker: "#/components/schemas/ColorPickerFragmentConfigurationFieldValue"
+                    Item: "#/components/schemas/ItemFragmentConfigurationFieldValue"
+                    Length: "#/components/schemas/LengthFragmentConfigurationFieldValue"
+                    NavigationMenu: "#/components/schemas/NavigationMenuFragmentConfigurationFieldValue"
+                    Select: "#/components/schemas/SelectFragmentConfigurationFieldValue"
+                    Text: "#/components/schemas/TextFragmentConfigurationFieldValue"
+                    URL: "#/components/schemas/URLFragmentConfigurationFieldValue"
+                    Video: "#/components/schemas/VideoFragmentConfigurationFieldValue"
+                propertyName: type
             properties:
                 type:
                     # @review
                     description:
-                        The fragment configuration field's type (category, checkbox, collection, colorPalette,
-                        colorPicker, item, length, navigationMenu, select, text, URL, video).
+                        The configuration field's type (category, checkbox, collection, colorPalette, colorPicker, item,
+                        length, navigationMenu, select, text, URL, video).
                     enum: [Category, Checkbox, Collection, ColorPalette, ColorPicker, Item, Length, NavigationMenu, Select, Text, URL, Video]
                     type: string
-                value:
-                    # @review
-                    description:
-                        The value of a non-localizable fragment configuration field.
-                    type: string
-                value_i18n:
-                    additionalProperties:
-                        type: string
-                    # @review
-                    description:
-                        The localized value of the fragment configuration field.
             required:
                 -   type
             type: object
@@ -1884,6 +1988,26 @@ components:
             required:
                 -   externalReferenceCode
             type: object
+        ItemFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type item.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type item.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type item.
+            type: object
         Layout:
             allOf:
                 -   $ref: "#/components/schemas/BasicLayout"
@@ -1896,6 +2020,26 @@ components:
                                 The width's type (fixed or fluid).
                             enum: [Fixed, Fluid]
                             type: string
+        LengthFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type length.
+                            type: string
+                        value_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type length.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type length.
+            type: object
         ListStyle:
             # @review
             allOf:
@@ -2149,6 +2293,26 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+        NavigationMenuFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type navigation menu.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type navigation menu.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type navigation menu.
+            type: object
         NavigationMenuItem:
             # @review
             description:
@@ -2842,6 +3006,26 @@ components:
                     description:
                         Represents settings related with the site map.
             type: object
+        SelectFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type select.
+                            type: string
+                        value_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type select.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type select.
+            type: object
         Settings:
             # @review
             description:
@@ -3186,6 +3370,26 @@ components:
             description:
                 The collection display's template list style.
             type: object
+        TextFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type text.
+                            type: string
+                        value_i18n:
+                            additionalProperties:
+                                type: string
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type text.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type text.
+            type: object
         URLActionExecutionResult:
             # @review
             description:
@@ -3207,6 +3411,26 @@ components:
                     # @review
                     description:
                         The localized submission of URL type.
+            type: object
+        URLFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type URL.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type URL.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type URL.
             type: object
         UtilityPage:
             description:
@@ -3328,6 +3552,26 @@ components:
                     # @review
                     description:
                         The utility page's SEO settings.
+            type: object
+        VideoFragmentConfigurationFieldValue:
+            allOf:
+                -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
+                -   properties:
+                        value:
+                            # @review
+                            description:
+                                The value of the fragment configuration field of type video.
+                            type: object
+                        value_i18n:
+                            additionalProperties:
+                                type: object
+                            # @review
+                            description:
+                                The localized value of the fragment configuration field of type video.
+                            type: object
+            # @review
+            description:
+                The value of a fragment configuration field of type video.
             type: object
         WidgetInstance:
             # @review

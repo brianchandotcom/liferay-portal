@@ -4571,6 +4571,13 @@ public class JenkinsResultsParserUtil {
 						sb.append(dockerImageVersion);
 					}
 
+					String ecrDockerImageName = dockerImageNameMatcher.group(
+						"ecrDockerImageName");
+
+					if (!isNullOrEmpty(ecrDockerImageName)) {
+						dockerImageName = ecrDockerImageName;
+					}
+
 					process = executeBashCommands(
 						"docker pull " + sb,
 						"docker tag " + sb + " " + dockerImageName);
@@ -7261,8 +7268,9 @@ public class JenkinsResultsParserUtil {
 	private static final Pattern _dockerFilePattern = Pattern.compile(
 		".*FROM (?<dockerImageName>[^\\s]+)( AS builder)?\\n[\\s\\S]*");
 	private static final Pattern _dockerImageNamePattern = Pattern.compile(
-		"((?<repository>[^/\\s]+)/)?(?<name>[^/:\\s]+)" +
-			"(:(?<version>[^:\\s]+))?");
+		"(?<ecrDockerImageName>((?<repository>[^/\\s]+)/)?" +
+			"(?<name>[^/:\\s]+)(:(?<version>[^@:\\s]+))?)" +
+				"(@sha256:[^\\s]+)?");
 	private static final List<String> _forbiddenRedactTokens = Arrays.asList(
 		"admin", "liferay", "test");
 	private static JSONArray _gitDirectoriesJSONArray;

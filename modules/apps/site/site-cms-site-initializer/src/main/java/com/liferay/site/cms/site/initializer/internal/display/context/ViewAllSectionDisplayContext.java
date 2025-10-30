@@ -8,7 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -20,7 +22,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -40,7 +41,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal, SystemFDSEntry viewAllSectionSystemFDSEntry) {
+		Portal portal, FDSCreationMenu viewAllSectionSystemCreationMenu,
+		SystemFDSEntry viewAllSectionSystemFDSEntry) {
 
 		super(
 			depotEntryLocalService, dlConfiguration, groupLocalService,
@@ -51,6 +53,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		_httpServletRequest = httpServletRequest;
 
 		_viewAllSectionSystemFDSEntry = viewAllSectionSystemFDSEntry;
+
+		_viewAllSectionFDSCreationMenu = viewAllSectionSystemCreationMenu;
 	}
 
 	@Override
@@ -79,9 +83,15 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
-	public List<DropdownItem> getCreationMenuDropdownItems() {
-		return ActionUtil.getAllSectionCreationMenuDropdownItems(
+	public CreationMenu getCreationMenu() {
+		return _viewAllSectionFDSCreationMenu.getCreationMenu(
 			httpServletRequest);
+	}
+
+	@Override
+	public List<DropdownItem> getCreationMenuDropdownItems() {
+		throw new UnsupportedOperationException(
+			"ViewAllSectionFDSCreationMenu must calculate this");
 	}
 
 	@Override
@@ -122,10 +132,11 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	protected String getCMSSectionFilterString() {
 		throw new UnsupportedOperationException(
-			"ViewAllSystemFDSEntry must calculate this");
+			"ViewAllSectionSystemFDSEntry must calculate this");
 	}
 
 	private final HttpServletRequest _httpServletRequest;
+	private final FDSCreationMenu _viewAllSectionFDSCreationMenu;
 	private final SystemFDSEntry _viewAllSectionSystemFDSEntry;
 
 }

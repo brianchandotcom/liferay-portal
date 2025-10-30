@@ -9,6 +9,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.SystemFDSEntry;
+import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
@@ -63,7 +64,7 @@ public class ViewAllJSPSectionFragmentRenderer
 			httpServletRequest, language, _objectDefinitionService,
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderModelResourcePermission, _portal,
-			_viewAllSectionSystemFDSEntry);
+			_viewAllSectionCreationMenu, _viewAllSectionSystemFDSEntry);
 	}
 
 	@Override
@@ -91,6 +92,11 @@ public class ViewAllJSPSectionFragmentRenderer
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION + ")"
+	)
+	private FDSCreationMenu _viewAllSectionCreationMenu;
 
 	@Reference(
 		target = "(frontend.data.set.name=" + CMSSiteInitializerFDSNames.ALL_SECTION + ")"

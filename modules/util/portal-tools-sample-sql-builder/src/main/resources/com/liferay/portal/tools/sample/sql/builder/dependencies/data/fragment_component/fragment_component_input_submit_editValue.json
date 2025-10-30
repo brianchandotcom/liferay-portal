@@ -1,0 +1,15 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"submit-button-text": {
+			"config": {
+			},
+			"defaultValue": "Submit"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"buttonSize": "nm",
+		"buttonType": "primary",
+		"submittedEntryStatus": "approved",
+		"type": "submit"
+	}
+}

@@ -5,13 +5,22 @@
 
 package com.liferay.dynamic.data.mapping.form.field.type.internal.fieldset;
 
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructureLayout;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService;
+import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTemplateContextContributorTestCase;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.InputStream;
+
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,10 +28,13 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.Mockito;
+
 /**
  * @author Leonardo Barros
  */
-public class FieldSetDDMFormFieldTemplateContextContributorTest {
+public class FieldSetDDMFormFieldTemplateContextContributorTest
+	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 
 	@ClassRule
 	@Rule
@@ -31,8 +43,41 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		DDMStructureLayoutLocalService ddmStructureLayoutLocalService =
+			Mockito.mock(DDMStructureLayoutLocalService.class);
+
+		DDMStructureLayout ddmStructureLayout = Mockito.mock(
+			DDMStructureLayout.class);
+
+		Mockito.when(
+			ddmStructureLayout.getDefinition()
+		).thenReturn(
+			_read("ddm-structure-layout.json")
+		);
+
+		Mockito.when(
+			ddmStructureLayoutLocalService.getStructureLayout(Mockito.anyLong())
+		).thenReturn(
+			ddmStructureLayout
+		);
+
+		_fieldSetDDMFormFieldTemplateContextContributor.
+			ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
+
 		_fieldSetDDMFormFieldTemplateContextContributor.jsonFactory =
 			new JSONFactoryImpl();
+	}
+
+	@Test
+	public void testGetParameters() throws Exception {
+		_testGetParameters(StringPool.BLANK, null);
+		_testGetParameters("  ", null);
+		_testGetParameters("null", null);
+		_testGetParameters(null, null);
+
+		String value = RandomTestUtil.randomString();
+
+		_testGetParameters(value, value);
 	}
 
 	@Test
@@ -110,6 +155,31 @@ public class FieldSetDDMFormFieldTemplateContextContributorTest {
 			"dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
+	}
+
+	private void _testGetParameters(
+		Object actualPropertyValue, Object expectedPropertyValue) {
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"name", DDMFormFieldTypeConstants.FIELDSET);
+
+		ddmFormField.setProperty("ddmStructureId", actualPropertyValue);
+		ddmFormField.setProperty("ddmStructureKey", actualPropertyValue);
+		ddmFormField.setProperty("ddmStructureLayoutId", actualPropertyValue);
+		ddmFormField.setProperty("externalReferenceCode", actualPropertyValue);
+
+		Map<String, Object> parameters =
+			_fieldSetDDMFormFieldTemplateContextContributor.getParameters(
+				ddmFormField, createDDMFormFieldRenderingContext());
+
+		Assert.assertEquals(
+			expectedPropertyValue, parameters.get("ddmStructureId"));
+		Assert.assertEquals(
+			expectedPropertyValue, parameters.get("ddmStructureKey"));
+		Assert.assertEquals(
+			expectedPropertyValue, parameters.get("ddmStructureLayoutId"));
+		Assert.assertEquals(
+			expectedPropertyValue, parameters.get("externalReferenceCode"));
 	}
 
 	private final FieldSetDDMFormFieldTemplateContextContributor

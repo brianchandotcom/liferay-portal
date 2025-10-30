@@ -8,8 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {waitForFDS} from '../../../../../utils/waitFor';
-import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
-import {SubTabName, TabName} from "../../pages/CKEditorSamplePage";
+import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
+import {SubTabName, TabName} from "../../../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
 import {classicPageTest} from './fixtures/classicPageTest';
 
 export const test = mergeTests(

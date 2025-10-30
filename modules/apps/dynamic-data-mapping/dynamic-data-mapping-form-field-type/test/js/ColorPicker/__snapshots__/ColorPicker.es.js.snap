@@ -132,9 +132,11 @@ exports[`Field Color Picker renders field with helptext 1`] = `
         aria-live="assertive"
         class="form-feedback-item"
       />
-      <div>
+      <span
+        class="form-help-text"
+      >
         Helptext
-      </div>
+      </span>
     </div>
     <span
       class="sr-only"
@@ -214,9 +216,11 @@ exports[`Field Color Picker renders field with label 1`] = `
         aria-live="assertive"
         class="form-feedback-item"
       />
-      <div>
+      <span
+        class="form-help-text"
+      >
         Helptext
-      </div>
+      </span>
     </div>
     <span
       class="sr-only"

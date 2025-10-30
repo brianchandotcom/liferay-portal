@@ -182,9 +182,11 @@ exports[`Grid has a tip 1`] = `
         aria-live="assertive"
         class="form-feedback-item"
       />
-      <div>
+      <span
+        class="form-help-text"
+      >
         Type something
-      </div>
+      </span>
     </div>
     <span
       class="sr-only"

@@ -5954,6 +5954,7 @@ public class DataFactory {
 			List<SegmentsExperienceModel> segmentsExperienceModels)
 		throws Exception {
 
+		boolean addSubmitFragmentEntryLink = false;
 		List<FragmentEntryLinkModel> nonhiddenFragmentEntryLinkModels =
 			new ArrayList<>();
 		String paragraphRenderNamespace = StringUtil.randomId();
@@ -6010,6 +6011,8 @@ public class DataFactory {
 						layoutDataItemType,
 						LayoutDataItemTypeConstants.TYPE_FORM)) {
 
+				addSubmitFragmentEntryLink = true;
+
 				Map<String, String> objectFieldFragmentEntryAttributes =
 					_objectFieldFragmentEntryAttributes.get(
 						objectFieldModel.getBusinessType());
@@ -6047,6 +6050,24 @@ public class DataFactory {
 					layoutModels.get(1), null, segmentsExperienceId, css, html,
 					js, StringPool.BLANK, editValueJSON,
 					paragraphRenderNamespace, 0, renderKey));
+		}
+
+		if (addSubmitFragmentEntryLink) {
+			nonhiddenFragmentEntryLinkModels.add(
+				newFragmentEntryLinkModel(
+					layoutModels.get(1), null, segmentsExperienceId,
+					StringPool.BLANK,
+					_readFile(
+						_getFragmentComponentInputStream(
+							"inputs", "submit-button", "html")),
+					_readFile(
+						_getFragmentComponentInputStream(
+							"inputs", "submit-button", "js")),
+					StringPool.BLANK,
+					_readFile(
+						"fragment_component" +
+							"/fragment_component_input_submit_editValue.json"),
+					paragraphRenderNamespace, 0, "INPUTS-submit-button"));
 		}
 
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels = new ArrayList<>(

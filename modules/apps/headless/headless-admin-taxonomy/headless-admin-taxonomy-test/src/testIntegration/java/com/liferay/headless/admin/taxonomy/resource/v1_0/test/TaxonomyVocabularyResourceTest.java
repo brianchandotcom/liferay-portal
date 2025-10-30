@@ -246,7 +246,8 @@ public class TaxonomyVocabularyResourceTest
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {
-			"assetTypes", "description", "multiValued", "name", "visibilityType"
+			"assetTypes", "description", "multiValued", "name",
+			"numberOfTaxonomyCategories", "visibilityType"
 		};
 	}
 

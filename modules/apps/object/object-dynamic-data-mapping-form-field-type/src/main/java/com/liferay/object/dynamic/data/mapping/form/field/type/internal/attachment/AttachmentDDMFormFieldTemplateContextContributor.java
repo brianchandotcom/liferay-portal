@@ -22,8 +22,6 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
-import com.liferay.object.model.ObjectField;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -223,35 +221,32 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 						return url;
 					}
 
-					String objectDefinitionERC = GetterUtil.getString(
-						ddmFormField.getProperty(
-							"objectDefinitionExternalReferenceCode"));
-
-					String objectEntryERC = GetterUtil.getString(
-						ddmFormField.getProperty(
-							"objectEntryExternalReferenceCode"));
-
 					long groupId = GetterUtil.getLong(
 						ddmFormField.getProperty("groupId"));
+
+					String objectDefinitionExternalReferenceCode =
+						GetterUtil.getString(
+							ddmFormField.getProperty(
+								"objectDefinitionExternalReferenceCode"));
 
 					ObjectDefinition objectDefinition =
 						_objectDefinitionLocalService.
 							fetchObjectDefinitionByExternalReferenceCode(
-								objectDefinitionERC, fileEntry.getCompanyId());
-
-					ObjectEntry objectEntry =
-						_objectEntryLocalService.fetchObjectEntry(
-							objectEntryERC, groupId,
-							objectDefinition.getObjectDefinitionId());
-
-					ObjectField objectField =
-						_objectFieldLocalService.fetchObjectField(
-							GetterUtil.getLong(
-								ddmFormField.getProperty("objectFieldId")));
+								objectDefinitionExternalReferenceCode,
+								fileEntry.getCompanyId());
 
 					return ObjectFieldUtil.getAttachmentDownloadURL(
-						_dlURLHelper, fileEntry, groupId, objectDefinitionERC,
-						objectEntry, _objectEntryService, objectField,
+						_dlURLHelper, fileEntry, groupId,
+						objectDefinitionExternalReferenceCode,
+						_objectEntryLocalService.fetchObjectEntry(
+							GetterUtil.getString(
+								ddmFormField.getProperty(
+									"objectEntryExternalReferenceCode")),
+							groupId, objectDefinition.getObjectDefinitionId()),
+						_objectEntryService,
+						_objectFieldLocalService.fetchObjectField(
+							GetterUtil.getLong(
+								ddmFormField.getProperty("objectFieldId"))),
 						_getPermissionChecker(themeDisplay), themeDisplay);
 				}
 			).put(

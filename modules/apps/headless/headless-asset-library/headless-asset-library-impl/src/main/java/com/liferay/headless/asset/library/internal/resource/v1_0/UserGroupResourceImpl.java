@@ -11,15 +11,20 @@ import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.NoSuchUserGroupException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,8 +78,11 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		}
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
+
+		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
+
 		com.liferay.portal.kernel.model.UserGroup userGroup =
-			_userGroupService.getUserGroupByExternalReferenceCode(
+			_userGroupLocalService.getUserGroupByExternalReferenceCode(
 				userGroupExternalReferenceCode, contextCompany.getCompanyId());
 
 		_checkGroupUserGroup(group.getGroupId(), userGroup.getUserGroupId());
@@ -93,6 +101,8 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 		}
 
 		Group group = _getGroup(assetLibraryExternalReferenceCode);
+
+		_checkAssetLibraryAdminOrAssetLibraryMember(group.getGroupId());
 
 		return _getUserGroupPage(
 			group.getGroupId(), keywords, search, pagination, sorts);
@@ -119,6 +129,22 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 		return _toUserGroup(
 			_userGroupService.getUserGroup(userGroup.getUserGroupId()));
+	}
+
+	private void _checkAssetLibraryAdminOrAssetLibraryMember(long groupId)
+		throws Exception {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker.isGroupAdmin(groupId)) {
+			return;
+		}
+
+		if (!_userService.hasGroupUser(groupId, contextUser.getUserId())) {
+			throw new PrincipalException.MustHavePermission(
+				contextUser.getUserId(), ActionKeys.VIEW);
+		}
 	}
 
 	private void _checkGroupUserGroup(Long assetLibraryId, Long userGroupId)
@@ -181,10 +207,16 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 				if (Validator.isNotNull(search)) {
 					searchContext.setKeywords(search);
 				}
+
+				// Asset Library members should see other user groups that are
+				// also asset library members. See LPD-69321.
+
+				searchContext.setUserId(UserConstants.USER_ID_DEFAULT);
+				searchContext.setVulcanCheckPermissions(false);
 			},
 			sorts,
 			document -> _toUserGroup(
-				_userGroupService.getUserGroup(
+				_userGroupLocalService.getUserGroup(
 					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
@@ -242,5 +274,8 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 	@Reference
 	private UserGroupService _userGroupService;
+
+	@Reference
+	private UserService _userService;
 
 }

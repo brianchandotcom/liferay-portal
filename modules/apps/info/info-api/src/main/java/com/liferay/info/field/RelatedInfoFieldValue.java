@@ -5,7 +5,10 @@
 
 package com.liferay.info.field;
 
+import com.liferay.petra.lang.HashUtil;
+
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Víctor Galán
@@ -17,6 +20,14 @@ public class RelatedInfoFieldValue<T> {
 			relatedInfoFieldValues) {
 
 		_relatedInfoFieldValues = relatedInfoFieldValues;
+	}
+
+	public InfoFieldValue<T> getInfoFieldValue(
+		String externalReferenceCode, String parentExternalReferenceCode) {
+
+		return _relatedInfoFieldValues.get(
+			new RelatedInfoFieldValueIdentifier(
+				externalReferenceCode, parentExternalReferenceCode));
 	}
 
 	public Map<RelatedInfoFieldValueIdentifier, InfoFieldValue<T>>
@@ -34,12 +45,45 @@ public class RelatedInfoFieldValue<T> {
 			_parentExternalReferenceCode = parentExternalReferenceCode;
 		}
 
+		public boolean equals(Object object) {
+			if (this == object) {
+				return true;
+			}
+
+			if (!(object instanceof RelatedInfoFieldValueIdentifier)) {
+				return false;
+			}
+
+			RelatedInfoFieldValueIdentifier relatedInfoFieldValueIdentifier =
+				(RelatedInfoFieldValueIdentifier)object;
+
+			if (Objects.equals(
+					_externalReferenceCode,
+					relatedInfoFieldValueIdentifier._externalReferenceCode) &&
+				Objects.equals(
+					_parentExternalReferenceCode,
+					relatedInfoFieldValueIdentifier.
+						_parentExternalReferenceCode)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
 		public String getExternalReferenceCode() {
 			return _externalReferenceCode;
 		}
 
 		public String getParentExternalReferenceCode() {
 			return _parentExternalReferenceCode;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = HashUtil.hash(0, _externalReferenceCode);
+
+			return HashUtil.hash(hashCode, _parentExternalReferenceCode);
 		}
 
 		private final String _externalReferenceCode;

@@ -104,28 +104,20 @@ public class UpgradeProcessCheck extends BaseCheck {
 			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
 				TokenTypes.DOT);
 
-			if (dotDetailAST == null) {
-				log(detailAST, _MSG_AVOID_METHOD_CALLS);
+			if (dotDetailAST != null) {
+				List<String> names = getNames(dotDetailAST, false);
 
-				continue;
-			}
+				if (names.size() == 2) {
+					String methodCallClassName = names.get(0);
+					String methodCallMethodName = names.get(1);
 
-			List<String> names = getNames(dotDetailAST, false);
+					if ((methodCallClassName.endsWith("Table") &&
+						 methodCallMethodName.equals("create")) ||
+						methodCallClassName.equals("UpgradeProcessFactory")) {
 
-			if (names.size() != 2) {
-				log(detailAST, _MSG_AVOID_METHOD_CALLS);
-
-				continue;
-			}
-
-			String methodCallClassName = names.get(0);
-			String methodCallMethodName = names.get(1);
-
-			if ((methodCallClassName.endsWith("Table") &&
-				 methodCallMethodName.equals("create")) ||
-				methodCallClassName.equals("UpgradeProcessFactory")) {
-
-				continue;
+						continue;
+					}
+				}
 			}
 
 			log(detailAST, _MSG_AVOID_METHOD_CALLS);

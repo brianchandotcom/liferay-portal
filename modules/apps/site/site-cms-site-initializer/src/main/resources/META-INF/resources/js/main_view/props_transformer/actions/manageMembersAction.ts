@@ -26,7 +26,6 @@ export default function manageMembersAction(
 	} = data;
 
 	openModal({
-		center: true,
 		contentComponent: () =>
 			SpaceMembersModal({
 				assetLibraryCreatorUserId,

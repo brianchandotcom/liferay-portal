@@ -46,7 +46,6 @@ describe('manageMembersAction', () => {
 				const openModalConfig = (openModal as jest.Mock).mock
 					.calls[0][0];
 
-				expect(openModalConfig.center).toBe(true);
 				expect(openModalConfig.onClose).toBe(loadData);
 				expect(openModalConfig.size).toBe('md');
 				expect(openModalConfig.title).toBe(data.title);

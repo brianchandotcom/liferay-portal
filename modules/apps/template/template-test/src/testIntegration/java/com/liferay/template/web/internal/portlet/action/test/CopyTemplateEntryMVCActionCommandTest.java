@@ -190,10 +190,8 @@ public class CopyTemplateEntryMVCActionCommandTest {
 
 		try {
 			if (noPermissions) {
-				_user = UserTestUtil.addUser();
-
 				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(_user));
+					_permissionCheckerFactory.create(UserTestUtil.addUser()));
 			}
 
 			ReflectionTestUtil.invoke(
@@ -241,8 +239,5 @@ public class CopyTemplateEntryMVCActionCommandTest {
 
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

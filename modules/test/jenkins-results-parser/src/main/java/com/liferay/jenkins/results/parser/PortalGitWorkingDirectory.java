@@ -360,14 +360,14 @@ public class PortalGitWorkingDirectory extends GitWorkingDirectory {
 
 			Map<String, String> env = System.getenv();
 
-			for (Map.Entry<String, String> envEntry : env.entrySet()) {
-				String key = envEntry.getKey();
+			for (Map.Entry<String, String> entry : env.entrySet()) {
+				String key = entry.getKey();
 
 				if (!key.startsWith("ANT_") && !key.startsWith("JAVA_")) {
 					continue;
 				}
 
-				filteredEnv.put(envEntry.getKey(), envEntry.getValue());
+				filteredEnv.put(key, entry.getValue());
 			}
 
 			AntUtil.callTarget(

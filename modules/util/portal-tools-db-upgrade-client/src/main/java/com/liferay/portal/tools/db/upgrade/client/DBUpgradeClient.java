@@ -302,7 +302,7 @@ public class DBUpgradeClient {
 				"Remove " + file + " prior to running an upgrade to prevent " +
 					"possible conflicts.");
 
-			System.exit(0);
+			System.exit(1);
 		}
 
 		try {
@@ -315,7 +315,12 @@ public class DBUpgradeClient {
 			_saveProperties();
 		}
 		catch (IOException ioException) {
-			ioException.printStackTrace();
+			System.err.println(ioException.getMessage());
+			System.err.println(
+				"Stopping the upgrade process. Please fix the errors and try " +
+					"again.");
+
+			System.exit(1);
 		}
 	}
 
@@ -804,21 +809,122 @@ public class DBUpgradeClient {
 		else {
 			String dirName = _appServerProperties.getProperty("dir");
 
+			File liferayHome = new File(
+				_portalUpgradeExtProperties.getProperty("liferay.home"));
+
+			if (!_verifyDirName(
+					true, liferayHome, dirName,
+					_appServerPropertiesFile.getName(), "dir")) {
+
+				throw new IOException(
+					"Invalid configuration in " +
+						_appServerPropertiesFile.getName());
+			}
+
 			File dir = new File(dirName);
 
 			if (!dir.isAbsolute()) {
-				dir = new File(_jarDir, dirName);
+				dir = new File(liferayHome, dirName);
 			}
 
 			dirName = dir.getCanonicalPath();
 
 			_appServerProperties.setProperty("dir", dirName);
 
+			String extraLibDirNames = _appServerProperties.getProperty(
+				"extra.lib.dirs");
+			String globalLibDirName = _appServerProperties.getProperty(
+				"global.lib.dir");
+			String portalDirName = _appServerProperties.getProperty(
+				"portal.dir");
+
+			if (!_verifyDirNames(
+					false, dir, extraLibDirNames,
+					_appServerPropertiesFile.getName(), "extra.lib.dirs") |
+				!_verifyDirName(
+					false, dir, globalLibDirName,
+					_appServerPropertiesFile.getName(), "global.lib.dir") |
+				!_verifyDirName(
+					false, dir, portalDirName,
+					_appServerPropertiesFile.getName(), "portal.dir")) {
+
+				throw new IOException(
+					"Invalid configuration in " +
+						_appServerPropertiesFile.getName());
+			}
+
 			_appServer = new AppServer(
-				dirName, _appServerProperties.getProperty("extra.lib.dirs"),
-				_appServerProperties.getProperty("global.lib.dir"),
-				_appServerProperties.getProperty("portal.dir"), value);
+				dirName, extraLibDirNames, globalLibDirName, portalDirName,
+				value);
 		}
+	}
+
+	private boolean _verifyDirName(
+			boolean allowAbsolutePaths, File baseDir, String dirName,
+			String propertiesFileName, String propertyName)
+		throws IOException {
+
+		if ((dirName == null) ||
+			dirName.trim(
+			).isEmpty()) {
+
+			System.err.println(
+				"Property '" + propertyName + "' is not set in " +
+					propertiesFileName + ".");
+
+			return false;
+		}
+
+		File testDir = _getResolvedDir(allowAbsolutePaths, baseDir, dirName);
+
+		if (testDir == null) {
+			System.err.println(
+				"Property '" + propertyName + "' in " + propertiesFileName +
+					" contains an invalid path: " + dirName);
+
+			return false;
+		}
+
+		return _isValidDir(testDir);
+	}
+
+	private boolean _verifyDirNames(
+			boolean allowAbsolutePaths, File baseDir, String dirNames,
+			String propertiesFileName, String propertyName)
+		throws IOException {
+
+		if ((dirNames == null) ||
+			dirNames.trim(
+			).isEmpty()) {
+
+			return true;
+		}
+
+		boolean hasErrors = false;
+
+		for (String dirName : dirNames.split(",")) {
+			dirName = dirName.trim();
+
+			if (dirName.isEmpty()) {
+				continue;
+			}
+
+			File testDir = _getResolvedDir(
+				allowAbsolutePaths, baseDir, dirName);
+
+			if (testDir == null) {
+				System.err.println(
+					"Property '" + propertyName + "' in " + propertiesFileName +
+						" contains an invalid path: " + dirName);
+
+				hasErrors = true;
+			}
+			else if (!_isValidDir(testDir)) {
+				hasErrors = true;
+			}
+		}
+
+		return !hasErrors;
 	}
 
 	private void _verifyPortalUpgradeDatabaseProperties() throws IOException {
@@ -940,6 +1046,16 @@ public class DBUpgradeClient {
 		}
 		else {
 			baseDir = _jarDir;
+
+			if (!_verifyDirName(
+					true, baseDir, value,
+					_portalUpgradeExtPropertiesFile.getName(),
+					"liferay.home")) {
+
+				throw new IOException(
+					"Invalid configuration in " +
+						_portalUpgradeExtPropertiesFile.getName());
+			}
 		}
 
 		File liferayHome = new File(value);

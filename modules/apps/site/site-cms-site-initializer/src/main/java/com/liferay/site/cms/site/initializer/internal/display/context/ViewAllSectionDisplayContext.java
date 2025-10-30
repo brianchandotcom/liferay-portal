@@ -9,6 +9,7 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
+import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -41,7 +42,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
 		ModelResourcePermission<ObjectEntryFolder>
 			objectEntryFolderModelResourcePermission,
-		Portal portal, FDSCreationMenu viewAllSectionSystemCreationMenu,
+		Portal portal, FDSCreationMenu viewAllSectionFDSCreationMenu,
+		FDSItemsActions viewAllSectionFDSItemsActions,
 		SystemFDSEntry viewAllSectionSystemFDSEntry) {
 
 		super(
@@ -52,9 +54,9 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 		_httpServletRequest = httpServletRequest;
 
+		_viewAllSectionFDSCreationMenu = viewAllSectionFDSCreationMenu;
+		_viewAllSectionFDSItemsActions = viewAllSectionFDSItemsActions;
 		_viewAllSectionSystemFDSEntry = viewAllSectionSystemFDSEntry;
-
-		_viewAllSectionFDSCreationMenu = viewAllSectionSystemCreationMenu;
 	}
 
 	@Override
@@ -91,7 +93,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 	@Override
 	public List<DropdownItem> getCreationMenuDropdownItems() {
 		throw new UnsupportedOperationException(
-			"ViewAllSectionFDSCreationMenu must calculate this");
+			"ViewAllSectionCreationMenu must calculate this");
 	}
 
 	@Override
@@ -110,23 +112,8 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			super.getFDSActionDropdownItems();
-
-		fdsActionDropdownItems.add(
-			1,
-			new FDSActionDropdownItem(
-				"{embedded.file.link.href}", "download", "download",
-				LanguageUtil.get(httpServletRequest, "download"), "get", null,
-				"link"));
-		fdsActionDropdownItems.add(
-			2,
-			new FDSActionDropdownItem(
-				StringPool.BLANK, "info-circle-open", "show-details",
-				LanguageUtil.get(httpServletRequest, "show-details"), null,
-				null, "infoPanel"));
-
-		return fdsActionDropdownItems;
+		return _viewAllSectionFDSItemsActions.getFDSActionDropdownItems(
+			httpServletRequest);
 	}
 
 	@Override
@@ -137,6 +124,7 @@ public class ViewAllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final FDSCreationMenu _viewAllSectionFDSCreationMenu;
+	private final FDSItemsActions _viewAllSectionFDSItemsActions;
 	private final SystemFDSEntry _viewAllSectionSystemFDSEntry;
 
 }

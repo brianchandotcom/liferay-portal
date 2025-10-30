@@ -29,12 +29,14 @@ const ckeditorSamplePageTest = isolatedSiteTest.extend<{
 			title: getRandomString(),
 		});
 
-		await use(
-			new CKEditorSamplePage(
-				page,
-				`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
-			)
+		const ckeditorSamplePage = new CKEditorSamplePage(
+			page,
+			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
+
+		await ckeditorSamplePage.goto();
+
+		await use(ckeditorSamplePage);
 	},
 });
 

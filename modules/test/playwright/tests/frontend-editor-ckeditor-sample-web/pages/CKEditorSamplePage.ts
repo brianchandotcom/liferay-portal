@@ -7,6 +7,10 @@ import {Page, expect} from '@playwright/test';
 
 import POM from '../../../utils/POM';
 import {EEditorType, waitForEditor} from "../../../utils/waitFor";
+import {ClassicPage as CKEditor4ClassicPage} from './ckeditor4/ClassicPage';
+import {BalloonPage} from "./ckeditor5/BalloonPage";
+import {ClassicPage} from "./ckeditor5/ClassicPage";
+import {InputLocalizedPage} from "./ckeditor5/InputLocalizedPage";
 
 export enum TabName {
 	CK_EDITOR_4 = 'CKEditor 4',
@@ -25,14 +29,22 @@ export enum SubTabName {
 	REACT_PLUS_CET = 'React + CET',
 }
 
+export interface CKEditorSamplePageTab {
+}
+
 export class CKEditorSamplePage extends POM {
 	constructor(page: Page, url: string) {
 		super(page, url);
 	}
 
-	async selectTab(tabName: TabName, subTabName: SubTabName) {
+	async gotoTab<T extends CKEditorSamplePageTab>(
+		tabName: TabName, subTabName: SubTabName
+	): Promise<T | null> {
+
 		const navLink = this.page
-			.locator('.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar')
+			.locator(
+				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar'
+			)
 			.getByRole('link', {exact: true, name: tabName})
 
 		await navLink.click();
@@ -48,7 +60,9 @@ export class CKEditorSamplePage extends POM {
 		await waitForEditor({editorType, page: this.page});
 
 		const subNavLink = this.page
-			.locator('.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(2) .navbar')
+			.locator(
+				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(2) .navbar'
+			)
 			.getByRole('link', {exact: true, name: subTabName})
 
 		await subNavLink.click();
@@ -60,6 +74,36 @@ export class CKEditorSamplePage extends POM {
 		}
 
 		await waitForEditor({editorType, page: this.page});
+
+		let visitedPage = null;
+
+		if (tabName === TabName.CK_EDITOR_5) {
+			switch (subTabName) {
+				case SubTabName.ADVANCED_CLASSIC:
+				case SubTabName.BASIC_CLASSIC:
+				case SubTabName.REACT:
+				case SubTabName.REACT_PLUS_CET:
+					visitedPage = new ClassicPage(this.page);
+					break;
+
+				case SubTabName.BALLOON:
+					visitedPage = new BalloonPage(this.page);
+					break;
+
+				case SubTabName.INPUT_LOCALIZED:
+					visitedPage = new InputLocalizedPage(this.page);
+					break;
+			}
+		}
+		else if (tabName === TabName.CK_EDITOR_4) {
+			switch (subTabName) {
+				case SubTabName.CLASSIC:
+					visitedPage = new CKEditor4ClassicPage(this.page);
+					break;
+			}
+		}
+
+		return visitedPage as unknown as T;
 	}
 
 	override async waitFor() {

@@ -19,8 +19,7 @@ export const test = mergeTests(
 );
 
 test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.goto();
-	await ckeditorSamplePage.selectTab(
+	await ckeditorSamplePage.gotoTab(
 		TabName.CK_EDITOR_4,
 		SubTabName.LEGACY
 	);

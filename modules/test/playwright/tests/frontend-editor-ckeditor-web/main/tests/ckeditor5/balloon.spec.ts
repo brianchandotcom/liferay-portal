@@ -7,27 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
-import {SubTabName, TabName} from "../../../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
-import {balloonPageTest} from './fixtures/balloonPageTest';
+import {balloonPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor5/balloonPageTest';
 
 export const test = mergeTests(
 	balloonPageTest,
-	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()
 );
-
-test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.goto();
-	await ckeditorSamplePage.selectTab(
-		TabName.CK_EDITOR_5,
-		SubTabName.BALLOON
-	);
-});
 
 test(
 	'Toolbar contains all advanced preset controls',

@@ -5,7 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
-export class CKEditor4Page {
+export class ClassicPage {
 	readonly contextMenu: Locator;
 	readonly editableFrame: FrameLocator;
 	private readonly itemSelectorFrame: FrameLocator;

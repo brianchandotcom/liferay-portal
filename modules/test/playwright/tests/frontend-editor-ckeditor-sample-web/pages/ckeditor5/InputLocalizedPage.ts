@@ -5,7 +5,9 @@
 
 import {Locator, Page} from '@playwright/test';
 
-export class InputLocalizedPage {
+import {CKEditorSamplePageTab} from "../CKEditorSamplePage";
+
+export class InputLocalizedPage implements CKEditorSamplePageTab {
 	readonly content: {
 		container: Locator;
 		editor: Locator;

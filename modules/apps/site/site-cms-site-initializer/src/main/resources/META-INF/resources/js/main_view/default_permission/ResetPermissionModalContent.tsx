@@ -25,8 +25,8 @@ export default function openResetAssetPermissionModal({
 				type: 'cancel',
 			},
 			{
-				displayType: 'primary',
-				label: Liferay.Language.get('ok'),
+				displayType: 'warning',
+				label: Liferay.Language.get('confirm'),
 				onClick: async ({processClose}: {processClose: () => void}) => {
 					try {
 						const response =
@@ -64,8 +64,7 @@ export default function openResetAssetPermissionModal({
 				},
 			},
 		],
-		size: 'md',
 		status: 'warning',
-		title: Liferay.Language.get('confirm-reset-permissions'),
+		title: Liferay.Language.get('confirm-reset-to-default-permissions'),
 	});
 }

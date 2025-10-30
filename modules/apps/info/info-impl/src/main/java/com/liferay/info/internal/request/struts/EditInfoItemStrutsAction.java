@@ -20,6 +20,7 @@ import com.liferay.info.exception.InfoFormValidationException;
 import com.liferay.info.exception.NoSuchInfoItemException;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.InfoFieldValue;
+import com.liferay.info.field.RelatedInfoFieldValue;
 import com.liferay.info.field.type.DateInfoFieldType;
 import com.liferay.info.field.type.RelationshipInfoFieldType;
 import com.liferay.info.internal.request.helper.InfoRequestFieldValuesProviderHelper;
@@ -370,7 +371,7 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				InfoField<?> infoField = infoFieldValue.getInfoField();
 
 				infoFormParameterMap.put(
-					infoField.getName(), _getValue(infoFieldValue));
+					infoField.getUniqueId(), _getValue(infoFieldValue));
 
 				if (infoField.getInfoFieldType() ==
 						RelationshipInfoFieldType.INSTANCE) {
@@ -378,7 +379,8 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 					UploadServletRequest uploadServletRequest =
 						_portal.getUploadServletRequest(httpServletRequest);
 
-					String labelParameterName = infoField.getName() + "-label";
+					String labelParameterName =
+						infoField.getUniqueId() + "-label";
 
 					String label = ParamUtil.getString(
 						uploadServletRequest, labelParameterName);
@@ -607,6 +609,10 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 				(InfoLocalizedValue<String>)value;
 
 			return infoLocalizedValue.getValues();
+		}
+
+		if (value instanceof RelatedInfoFieldValue<?>) {
+			return value;
 		}
 
 		return String.valueOf(value);

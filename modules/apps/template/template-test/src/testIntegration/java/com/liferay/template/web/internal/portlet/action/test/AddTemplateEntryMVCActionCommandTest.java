@@ -98,56 +98,56 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 	@Test
 	public void testAddTemplateEntry() throws Exception {
-		ActionRequestSetupTest setup = _setUpActionRequest();
+		_setUpActionRequest();
 
-		_invokeActionRequest(setup, false);
+		_invokeActionRequest(false);
 
 		List<TemplateEntry> templateEntries =
 			_templateEntryLocalService.getTemplateEntries(
-				_group.getGroupId(), setup.infoItemClassDetails.getClassName(),
-				setup.infoItemFormVariationKey, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				_group.getGroupId(), _infoItemClassDetails.getClassName(),
+				_infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		Assert.assertEquals(
-			templateEntries.toString(), setup.initialTemplateEntries.size() + 1,
+			templateEntries.toString(), _initialTemplateEntries.size() + 1,
 			templateEntries.size());
 
-		TemplateEntry newTemplateEntry = null;
+		TemplateEntry templateEntry = null;
 
 		for (TemplateEntry entry : templateEntries) {
-			boolean foundInInitial = false;
+			boolean found = false;
 
-			for (TemplateEntry initialEntry : setup.initialTemplateEntries) {
+			for (TemplateEntry initialTemplateEntry : _initialTemplateEntries) {
 				if (entry.getTemplateEntryId() ==
-						initialEntry.getTemplateEntryId()) {
+						initialTemplateEntry.getTemplateEntryId()) {
 
-					foundInInitial = true;
+					found = true;
 
 					break;
 				}
 			}
 
-			if (!foundInInitial) {
-				newTemplateEntry = entry;
+			if (!found) {
+				templateEntry = entry;
 
 				break;
 			}
 		}
 
-		Assert.assertNotNull(newTemplateEntry);
+		Assert.assertNotNull(templateEntry);
 
 		try {
 			DDMTemplate ddmTemplate = _ddmTemplateLocalService.getTemplate(
-				newTemplateEntry.getDDMTemplateId());
+				templateEntry.getDDMTemplateId());
 
 			Assert.assertNotNull(ddmTemplate);
 		}
 		finally {
-			if (newTemplateEntry != null) {
+			if (templateEntry != null) {
 				_templateEntryLocalService.deleteTemplateEntry(
-					newTemplateEntry.getTemplateEntryId());
+					templateEntry.getTemplateEntryId());
 				_ddmTemplateLocalService.deleteTemplate(
-					newTemplateEntry.getDDMTemplateId());
+					templateEntry.getDDMTemplateId());
 			}
 		}
 	}
@@ -155,19 +155,19 @@ public class AddTemplateEntryMVCActionCommandTest {
 	@Test
 	@TestInfo("LPD-69505")
 	public void testAddTemplateEntryWithNoPermissions() throws Exception {
-		ActionRequestSetupTest setup = _setUpActionRequest();
+		_setUpActionRequest();
 
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			_invokeActionRequest(setup, true);
+			_invokeActionRequest(true);
 
 		List<TemplateEntry> templateEntries =
 			_templateEntryLocalService.getTemplateEntries(
-				_group.getGroupId(), setup.infoItemClassDetails.getClassName(),
-				setup.infoItemFormVariationKey, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
+				_group.getGroupId(), _infoItemClassDetails.getClassName(),
+				_infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 
 		Assert.assertEquals(
-			templateEntries.toString(), setup.initialTemplateEntries.size(),
+			templateEntries.toString(), _initialTemplateEntries.size(),
 			templateEntries.size());
 
 		MockHttpServletResponse mockHttpServletResponse =
@@ -263,7 +263,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 	}
 
 	private MockLiferayPortletActionResponse _invokeActionRequest(
-			ActionRequestSetupTest setup, boolean noPermissions)
+			boolean noPermissions)
 		throws Exception {
 
 		PermissionChecker originalPermissionChecker =
@@ -283,7 +283,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 			ReflectionTestUtil.invoke(
 				_mvcActionCommand, "doTransactionalCommand",
 				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				setup.mockLiferayPortletActionRequest,
+				_mockLiferayPortletActionRequest,
 				mockLiferayPortletActionResponse);
 		}
 		finally {
@@ -294,42 +294,36 @@ public class AddTemplateEntryMVCActionCommandTest {
 		return mockLiferayPortletActionResponse;
 	}
 
-	private ActionRequestSetupTest _setUpActionRequest() throws Exception {
-		ActionRequestSetupTest setup = new ActionRequestSetupTest();
-
-		setup.mockLiferayPortletActionRequest =
+	private void _setUpActionRequest() throws Exception {
+		_mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
-		setup.infoItemClassDetails =
+		_infoItemClassDetails =
 			TemplateTestUtil.getFirstTemplateInfoItemClassDetails(
 				_infoItemServiceRegistry, _group.getGroupId());
 
-		setup.infoItemFormVariationKey = StringPool.BLANK;
+		_infoItemFormVariationKey = StringPool.BLANK;
 
 		InfoItemFormVariation infoItemFormVariation =
 			TemplateTestUtil.getFirstInfoItemFormVariation(
-				setup.infoItemClassDetails, _infoItemServiceRegistry,
+				_infoItemClassDetails, _infoItemServiceRegistry,
 				_group.getGroupId());
 
 		if (infoItemFormVariation != null) {
-			setup.infoItemFormVariationKey = infoItemFormVariation.getKey();
+			_infoItemFormVariationKey = infoItemFormVariation.getKey();
 		}
 
-		setup.name = RandomTestUtil.randomString();
+		_mockLiferayPortletActionRequest.addParameter(
+			"infoItemClassName", _infoItemClassDetails.getClassName());
+		_mockLiferayPortletActionRequest.addParameter(
+			"infoItemFormVariationKey", _infoItemFormVariationKey);
+		_mockLiferayPortletActionRequest.addParameter(
+			"name", RandomTestUtil.randomString());
 
-		setup.mockLiferayPortletActionRequest.addParameter(
-			"infoItemClassName", setup.infoItemClassDetails.getClassName());
-		setup.mockLiferayPortletActionRequest.addParameter(
-			"infoItemFormVariationKey", setup.infoItemFormVariationKey);
-		setup.mockLiferayPortletActionRequest.addParameter("name", setup.name);
-
-		setup.initialTemplateEntries =
-			_templateEntryLocalService.getTemplateEntries(
-				_group.getGroupId(), setup.infoItemClassDetails.getClassName(),
-				setup.infoItemFormVariationKey, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		return setup;
+		_initialTemplateEntries = _templateEntryLocalService.getTemplateEntries(
+			_group.getGroupId(), _infoItemClassDetails.getClassName(),
+			_infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
 	}
 
 	@Inject
@@ -343,8 +337,14 @@ public class AddTemplateEntryMVCActionCommandTest {
 	@Inject
 	private GroupLocalService _groupLocalService;
 
+	private InfoItemClassDetails _infoItemClassDetails;
+	private String _infoItemFormVariationKey;
+
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	private List<TemplateEntry> _initialTemplateEntries;
+	private MockLiferayPortletActionRequest _mockLiferayPortletActionRequest;
 
 	@Inject(filter = "mvc.command.name=/template/add_template_entry")
 	private MVCActionCommand _mvcActionCommand;
@@ -357,15 +357,5 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private static class ActionRequestSetupTest {
-
-		public InfoItemClassDetails infoItemClassDetails;
-		public String infoItemFormVariationKey;
-		public List<TemplateEntry> initialTemplateEntries;
-		public MockLiferayPortletActionRequest mockLiferayPortletActionRequest;
-		public String name;
-
-	}
 
 }

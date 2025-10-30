@@ -1069,6 +1069,11 @@ public class ObjectDefinitionWrapper
 	}
 
 	@Override
+	public boolean isCMS() {
+		return model.isCMS();
+	}
+
+	@Override
 	public boolean isDefaultStorageType() {
 		return model.isDefaultStorageType();
 	}

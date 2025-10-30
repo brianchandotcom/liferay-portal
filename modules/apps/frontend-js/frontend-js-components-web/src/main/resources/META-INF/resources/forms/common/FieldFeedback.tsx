@@ -25,7 +25,9 @@ export default function FieldFeedback({
 				{message}
 			</ClayForm.FeedbackItem>
 
-			{helpMessage && <div>{helpMessage}</div>}
+			{helpMessage && (
+				<ClayForm.HelpText>{helpMessage}</ClayForm.HelpText>
+			)}
 		</ClayForm.FeedbackGroup>
 	);
 }

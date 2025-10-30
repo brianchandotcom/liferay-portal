@@ -108,7 +108,7 @@ function GeneralTab() {
 
 	const {data: objectDefinitions} = useCache('object-definitions');
 
-	const {erc, name, status} = structure;
+	const {erc, name, status, system} = structure;
 
 	return (
 		<div>
@@ -129,6 +129,7 @@ function GeneralTab() {
 			/>
 
 			<ERCInput
+				disabled={system}
 				error={errors.get('erc')}
 				onValueChange={(value) =>
 					dispatch({erc: value, type: 'update-structure'})

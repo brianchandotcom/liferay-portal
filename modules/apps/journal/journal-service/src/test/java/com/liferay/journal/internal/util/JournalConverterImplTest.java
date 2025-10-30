@@ -122,11 +122,11 @@ public class JournalConverterImplTest {
 	}
 
 	private void _testUpdateContentDynamicElementWithCheckBox() {
-		Element rootElement = _createRootElement();
 		List<List<String>> optionReferences = new ArrayList<>();
+		Element rootElement = _createRootElement();
 
-		_updateContentDynamicElement(true, rootElement, optionReferences);
-		_updateContentDynamicElement(false, rootElement, optionReferences);
+		_updateContentDynamicElement(optionReferences, true, rootElement);
+		_updateContentDynamicElement(optionReferences, false, rootElement);
 
 		List<Element> dynamicContentElements = rootElement.elements(
 			"dynamic-content");
@@ -146,19 +146,18 @@ public class JournalConverterImplTest {
 		ReflectionTestUtil.setFieldValue(
 			journalConverterImpl, "_jsonFactory", new JSONFactoryImpl());
 
+		List<String> optionReferences = new ArrayList<>();
 		Element rootElement = _createRootElement();
 
-		List<String> optionReferences = new ArrayList<>();
-
 		_updateContentDynamicElement(
-			journalConverterImpl, rootElement, "select", true, "field_0",
-			optionReferences);
+			"field_0", "select", journalConverterImpl, true, optionReferences,
+			rootElement);
 		_updateContentDynamicElement(
-			journalConverterImpl, rootElement, "select", false, "field_1",
-			optionReferences);
+			"field_1", "select", journalConverterImpl, false, optionReferences,
+			rootElement);
 		_updateContentDynamicElement(
-			journalConverterImpl, rootElement, "radio", null, "field_2",
-			optionReferences);
+			"field_2", "radio", journalConverterImpl, null, optionReferences,
+			rootElement);
 
 		List<Element> dynamicContentElements = rootElement.elements(
 			"dynamic-content");
@@ -179,8 +178,8 @@ public class JournalConverterImplTest {
 	}
 
 	private void _updateContentDynamicElement(
-		boolean multiple, Element rootElement,
-		List<List<String>> allOptionReferences) {
+		List<List<String>> allOptionReferences, boolean multiple,
+		Element rootElement) {
 
 		JournalConverterImpl journalConverterImpl = new JournalConverterImpl();
 
@@ -243,9 +242,9 @@ public class JournalConverterImplTest {
 	}
 
 	private void _updateContentDynamicElement(
-		JournalConverterImpl journalConverterImpl, Element rootElement,
-		String fieldType, Boolean multiple, String fieldName,
-		List<String> optionReferences) {
+		String fieldName, String fieldType,
+		JournalConverterImpl journalConverterImpl, Boolean multiple,
+		List<String> optionReferences, Element rootElement) {
 
 		DDMFormField ddmFormField = _createDDMFormField(
 			"string", true, fieldName, fieldType);

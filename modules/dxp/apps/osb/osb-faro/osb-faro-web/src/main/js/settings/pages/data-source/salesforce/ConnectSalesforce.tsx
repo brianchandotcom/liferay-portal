@@ -113,12 +113,12 @@ const ConnectSalesforce = ({addAlert}) => {
 
 				<a href='/#' target='_blank'>
 					<Text size={4} weight='semi-bold'>
-						{Liferay.Language.get('learn-more-about-data-sources.')}
+						{Liferay.Language.get('learn-more-about-data-sources')}
 					</Text>
 
 					<ClayIcon
 						aria-label={Liferay.Language.get(
-							'learn-more-about-data-sources.'
+							'learn-more-about-data-sources'
 						)}
 						className='ml-1'
 						fontSize={12}

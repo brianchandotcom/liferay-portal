@@ -246,6 +246,78 @@ test(
 	}
 );
 
+test(
+	'Escape texts in Cookie Banner to avoid XSS injections',
+	{tag: '@LPD-69398'},
+	async ({page, systemSettingsPage}) => {
+		const script = '<script>alert("Hello world!")</script>';
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS detected');
+			}
+		});
+
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Banner');
+
+		await page.getByLabel('Title', {exact: true}).fill(script);
+		await page.getByLabel('Content', {exact: true}).fill(script);
+		await page.getByLabel('Privacy Policy Link').fill(script);
+		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page);
+	}
+);
+
+test(
+	'Escape texts in Cookie Panel to avoid XSS injections',
+	{tag: '@LPD-69399'},
+	async ({page, systemSettingsPage}) => {
+		const script = '<script>alert("Hello world!")</script>';
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				throw new Error('XSS detected');
+			}
+		});
+
+		await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Panel');
+
+		await page.getByLabel('Title', {exact: true}).fill(script);
+		await page.getByLabel('Description', {exact: true}).fill(script);
+		await page.getByLabel('Cookie Policy Link').fill(script);
+		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
+		await page
+			.getByLabel('Strictly Necessary Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Functional Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Performance Cookies Description', {exact: true})
+			.fill(script);
+		await page
+			.getByLabel('Personalization Cookies Description', {exact: true})
+			.fill(script);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await waitForAlert(page);
+
+		const cookiesBanner = await page.locator(
+			'#p_p_id_com_liferay_cookies_banner_web_portlet_CookiesBannerPortlet_'
+		);
+
+		await cookiesBanner.waitFor();
+
+		await cookiesBanner
+			.getByRole('button', {name: 'Configuration'})
+			.click();
+	}
+);
+
 async function expectCookieConsentPanelButtons(locator: Locator) {
 	await locator.waitFor();
 

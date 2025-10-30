@@ -70,6 +70,10 @@ describe('Edit', () => {
 
 		await waitForLoadingToBeRemoved(container);
 
-		expect(getByText('Configure Salesforce')).toBeInTheDocument();
+		expect(
+			getByText(
+				'To configure your Salesforce data source, go to your Salesforce environment to update this app connection.'
+			)
+		).toBeInTheDocument();
 	});
 });

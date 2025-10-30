@@ -404,6 +404,41 @@ public class JournalConverterImplTest {
 	}
 
 	@Test
+	public void testGetFieldsFromRearrangedStructure() throws Exception {
+		DDMStructure ddmStructure = _ddmStructureTestHelper.addStructure(
+			PortalUtil.getClassNameId(JournalArticle.class), null,
+			"Test Structure",
+			jsonDeserialize(read("test-ddm-structure-rearranged-fields.json")),
+			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+		Fields expectedFields = new Fields();
+
+		_addField(
+			ddmStructure.getStructureId(), null, expectedFields, "Text0",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("0")
+			).build());
+		_addField(
+			ddmStructure.getStructureId(), null, expectedFields, "Text1",
+			HashMapBuilder.<Locale, List<Serializable>>put(
+				_enLocale, Collections.singletonList("1")
+			).build());
+
+		expectedFields.put(
+			getFieldsDisplayField(
+				ddmStructure.getStructureId(),
+				"FieldSet0_INSTANCE_Ou1IjCng,Text0_INSTANCE_fYZzWkyv" +
+					",Text1_INSTANCE_iTVc3xgV"));
+
+		String content = read("test-journal-content-rearranged-fields.xml");
+
+		Fields actualFields = _journalConverter.getDDMFields(
+			ddmStructure, content);
+
+		_assertFields(expectedFields, actualFields);
+	}
+
+	@Test
 	public void testGetFieldsFromRemovedNestedField() throws Exception {
 		String structureDefinition = read(
 			"test-ddm-structure-removed-nested-field.json");

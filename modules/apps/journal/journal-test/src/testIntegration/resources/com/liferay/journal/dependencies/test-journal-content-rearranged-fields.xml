@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="Text0" index-type="keyword" instance-id="fYZzWkyv" name="Text0" type="text">
+		<dynamic-content language-id="en_US"><![CDATA[0]]></dynamic-content>
+	</dynamic-element>
+	<dynamic-element field-reference="FieldSet0" index-type="" instance-id="Ou1IjCng" name="FieldSet0" type="fieldset">
+		<dynamic-element field-reference="Text1" index-type="keyword" instance-id="iTVc3xgV" name="Text1" type="text">
+			<dynamic-content language-id="en_US"><![CDATA[1]]></dynamic-content>
+		</dynamic-element>
+	</dynamic-element>
+</root>

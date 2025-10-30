@@ -28,6 +28,7 @@ export const test = mergeTests(
 test('Can see error report and details', async ({
 	apiHelpers,
 	exportImportPage,
+	page,
 }) => {
 	const objectDefinitionAPIClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionAPI);
@@ -78,7 +79,7 @@ test('Can see error report and details', async ({
 	await exportImportPage.goToImportDetails(exportName);
 
 	await expect(
-		exportImportPage.page.getByRole('cell', {
+		page.getByRole('cell', {
 			name: objectEntry.externalReferenceCode,
 		})
 	).toBeVisible();
@@ -88,9 +89,7 @@ test('Can see error report and details', async ({
 	);
 
 	await expect(
-		exportImportPage.page.getByText(
-			'No value was provided for required object field'
-		)
+		page.getByText('No value was provided for required object field')
 	).toBeVisible();
 
 	await expect(exportImportPage.page.getByText('ScopeSite')).toBeVisible();
@@ -100,6 +99,6 @@ test('Can see error report and details', async ({
 	).toBeVisible();
 
 	await expect(
-		exportImportPage.page.getByText(objectEntry.externalReferenceCode)
+		page.getByText(objectEntry.externalReferenceCode)
 	).toBeVisible();
 });

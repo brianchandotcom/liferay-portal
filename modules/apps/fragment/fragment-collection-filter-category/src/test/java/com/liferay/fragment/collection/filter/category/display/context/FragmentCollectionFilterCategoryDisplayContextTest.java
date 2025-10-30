@@ -5,15 +5,29 @@
 
 package com.liferay.fragment.collection.filter.category.display.context;
 
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
+import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
+import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.service.GroupService;
+import com.liferay.portal.kernel.service.GroupServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -33,9 +47,18 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	@TestInfo("LPD-59838")
-	public void testGetAssetCategoryTreeNodeTitleWhereAssetIsNull()
-		throws Exception {
+	@TestInfo("LPD-69226")
+	public void testGetAssetCategoryTreeNodeTitle() throws Exception {
+		long categoryTreeNodeId = RandomTestUtil.randomLong();
+		String title = RandomTestUtil.randomString();
+
+		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			title
+		);
 
 		AssetCategoryService assetCategoryService = Mockito.mock(
 			AssetCategoryService.class);
@@ -43,12 +66,21 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 		ReflectionTestUtil.setFieldValue(
 			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
 		Mockito.when(
-			assetCategoryService.fetchCategory(1)
+			assetCategoryService.fetchCategory(categoryTreeNodeId)
 		).thenReturn(
-			null
+			assetCategory
 		);
 
-		_testGetAssetCategoryTreeNodeTitleNonexisting("Category");
+		_testGetAssetCategoryTreeNodeTitle(
+			"Category", categoryTreeNodeId, title);
+
+		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
+
+		Mockito.when(
+			assetVocabulary.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			title
+		);
 
 		AssetVocabularyService assetVocabularyService = Mockito.mock(
 			AssetVocabularyService.class);
@@ -57,32 +89,243 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			AssetVocabularyServiceUtil.class, "_service",
 			assetVocabularyService);
 		Mockito.when(
-			assetVocabularyService.fetchVocabulary(1)
+			assetVocabularyService.fetchVocabulary(categoryTreeNodeId)
+		).thenReturn(
+			assetVocabulary
+		);
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Vocabulary", categoryTreeNodeId, title);
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Category", RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(), null,
+			0);
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Category", RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Vocabulary", RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(), null,
+			0);
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Vocabulary", RandomTestUtil.randomLong(),
+			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomLong());
+	}
+
+	@Test
+	@TestInfo("LPD-59838")
+	public void testGetAssetCategoryTreeNodeTitleWhereAssetIsNull()
+		throws Exception {
+
+		long categoryTreeNodeId = 1L;
+
+		AssetCategoryService assetCategoryService = Mockito.mock(
+			AssetCategoryService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
+		Mockito.when(
+			assetCategoryService.fetchCategory(categoryTreeNodeId)
 		).thenReturn(
 			null
 		);
 
-		_testGetAssetCategoryTreeNodeTitleNonexisting("Vocabulary");
+		_testGetAssetCategoryTreeNodeTitle(
+			"Category", categoryTreeNodeId, StringPool.BLANK);
+
+		AssetVocabularyService assetVocabularyService = Mockito.mock(
+			AssetVocabularyService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetVocabularyServiceUtil.class, "_service",
+			assetVocabularyService);
+		Mockito.when(
+			assetVocabularyService.fetchVocabulary(categoryTreeNodeId)
+		).thenReturn(
+			null
+		);
+
+		_testGetAssetCategoryTreeNodeTitle(
+			"Vocabulary", categoryTreeNodeId, StringPool.BLANK);
 	}
 
-	private void _testGetAssetCategoryTreeNodeTitleNonexisting(
-			String assetCategoryTreeNodeType)
+	private void _testGetAssetCategoryTreeNodeTitle(
+			String assetCategoryTreeNodeType, long groupId, long companyId,
+			String externalReferenceCode, String scopeExternalReferenceCode,
+			long scopeGroupId)
 		throws Exception {
+
+		String title = RandomTestUtil.randomString();
+
+		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+
+		Mockito.when(
+			assetCategory.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			title
+		);
+
+		AssetCategoryService assetCategoryService = Mockito.mock(
+			AssetCategoryService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
+
+		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
+
+		Mockito.when(
+			assetVocabulary.getTitle(Mockito.any(Locale.class))
+		).thenReturn(
+			title
+		);
+
+		AssetVocabularyService assetVocabularyService = Mockito.mock(
+			AssetVocabularyService.class);
+
+		ReflectionTestUtil.setFieldValue(
+			AssetVocabularyServiceUtil.class, "_service",
+			assetVocabularyService);
+
+		if (scopeGroupId == 0) {
+			Mockito.when(
+				assetCategoryService.fetchCategoryByExternalReferenceCode(
+					externalReferenceCode, groupId)
+			).thenReturn(
+				assetCategory
+			);
+
+			Mockito.when(
+				assetVocabularyService.fetchVocabularyByExternalReferenceCode(
+					externalReferenceCode, groupId)
+			).thenReturn(
+				assetVocabulary
+			);
+		}
+		else {
+			Mockito.when(
+				assetCategoryService.fetchCategoryByExternalReferenceCode(
+					externalReferenceCode, scopeGroupId)
+			).thenReturn(
+				assetCategory
+			);
+
+			Mockito.when(
+				assetVocabularyService.fetchVocabularyByExternalReferenceCode(
+					externalReferenceCode, scopeGroupId)
+			).thenReturn(
+				assetVocabulary
+			);
+
+			Group group = Mockito.mock(Group.class);
+
+			Mockito.when(
+				group.getGroupId()
+			).thenReturn(
+				scopeGroupId
+			);
+
+			GroupService groupService = Mockito.mock(GroupService.class);
+
+			ReflectionTestUtil.setFieldValue(
+				GroupServiceUtil.class, "_service", groupService);
+			Mockito.when(
+				groupService.fetchGroupByExternalReferenceCode(
+					scopeExternalReferenceCode, companyId)
+			).thenReturn(
+				group
+			);
+		}
+
+		FragmentEntryLink fragmentEntryLink = Mockito.mock(
+			FragmentEntryLink.class);
+
+		Mockito.when(
+			fragmentEntryLink.getGroupId()
+		).thenReturn(
+			groupId
+		);
+
+		Mockito.when(
+			fragmentEntryLink.getCompanyId()
+		).thenReturn(
+			companyId
+		);
+
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			Mockito.mock(FragmentEntryConfigurationParser.class);
+
+		JSONObject jsonObject = JSONUtil.put(
+			"categoryTreeNodeType", assetCategoryTreeNodeType
+		).put(
+			"externalReferenceCode", externalReferenceCode
+		);
+
+		if (Validator.isNotNull(scopeExternalReferenceCode)) {
+			jsonObject.put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode);
+		}
+
+		FragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		Mockito.when(
+			fragmentEntryConfigurationParser.getFieldValue(
+				null, null, fragmentRendererContext.getLocale(), "source")
+		).thenReturn(
+			jsonObject
+		);
 
 		FragmentCollectionFilterCategoryDisplayContext
 			fragmentCollectionFilterCategoryDisplayContext =
 				new FragmentCollectionFilterCategoryDisplayContext(
-					null, null, new DefaultFragmentRendererContext(null));
-
-		ReflectionTestUtil.setFieldValue(
-			fragmentCollectionFilterCategoryDisplayContext,
-			"_assetCategoryTreeNodeId", Long.valueOf(1));
-		ReflectionTestUtil.setFieldValue(
-			fragmentCollectionFilterCategoryDisplayContext,
-			"_assetCategoryTreeNodeType", assetCategoryTreeNodeType);
+					null, fragmentEntryConfigurationParser,
+					fragmentRendererContext);
 
 		Assert.assertEquals(
-			StringPool.BLANK,
+			title,
+			fragmentCollectionFilterCategoryDisplayContext.
+				getAssetCategoryTreeNodeTitle());
+	}
+
+	private void _testGetAssetCategoryTreeNodeTitle(
+			String assetCategoryTreeNodeType, long categoryTreeNodeId,
+			String title)
+		throws Exception {
+
+		FragmentEntryLink fragmentEntryLink = Mockito.mock(
+			FragmentEntryLink.class);
+
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			Mockito.mock(FragmentEntryConfigurationParser.class);
+
+		FragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		Mockito.when(
+			fragmentEntryConfigurationParser.getFieldValue(
+				null, null, fragmentRendererContext.getLocale(), "source")
+		).thenReturn(
+			JSONUtil.put(
+				"categoryTreeNodeId", categoryTreeNodeId
+			).put(
+				"categoryTreeNodeType", assetCategoryTreeNodeType
+			)
+		);
+
+		FragmentCollectionFilterCategoryDisplayContext
+			fragmentCollectionFilterCategoryDisplayContext =
+				new FragmentCollectionFilterCategoryDisplayContext(
+					null, fragmentEntryConfigurationParser,
+					fragmentRendererContext);
+
+		Assert.assertEquals(
+			title,
 			fragmentCollectionFilterCategoryDisplayContext.
 				getAssetCategoryTreeNodeTitle());
 	}

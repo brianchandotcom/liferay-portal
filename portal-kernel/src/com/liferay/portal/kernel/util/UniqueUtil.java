@@ -15,31 +15,25 @@ import com.liferay.portal.kernel.language.LanguageUtil;
  */
 public class UniqueUtil {
 
-	public static String getCopyValue(
+	public static String getUniqueValue(
+			String languageKey,
 			UnsafeFunction<String, Boolean, PortalException> unsafeFunction,
 			String value)
 		throws PortalException {
 
-		return getCopyValue(unsafeFunction, "copy", value);
-	}
+		String languageValue = LanguageUtil.get(
+			LocaleUtil.getSiteDefault(), languageKey);
 
-	public static String getCopyValue(
-			UnsafeFunction<String, Boolean, PortalException> unsafeFunction,
-			String copyLabelKey, String value)
-		throws PortalException {
-
-		String copy = LanguageUtil.get(
-			LocaleUtil.getSiteDefault(), copyLabelKey);
-
-		String copyValue = StringUtil.appendParentheticalSuffix(value, copy);
+		String uniqueValue = StringUtil.appendParentheticalSuffix(
+			value, languageValue);
 
 		for (int i = 1;; i++) {
-			if (unsafeFunction.apply(copyValue)) {
-				return copyValue;
+			if (unsafeFunction.apply(uniqueValue)) {
+				return uniqueValue;
 			}
 
-			copyValue = StringUtil.appendParentheticalSuffix(
-				value, copy + StringPool.SPACE + i);
+			uniqueValue = StringUtil.appendParentheticalSuffix(
+				value, languageValue + StringPool.SPACE + i);
 		}
 	}
 

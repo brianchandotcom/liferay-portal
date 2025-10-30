@@ -2372,13 +2372,14 @@ public class DefaultObjectEntryManagerImpl
 		Column<?, String> objectFieldColumn =
 			(Column<?, String>)table.getColumn(objectField.getDBColumnName());
 
-		return UniqueUtil.getCopyValue(
-			copyValue -> {
+		return UniqueUtil.getUniqueValue(
+			"copy",
+			uniqueValue -> {
 				long count = objectEntryLocalService.getValuesListCount(
 					new Long[] {groupId}, objectDefinition.getCompanyId(),
 					objectDefinition.getUserId(),
 					objectDefinition.getObjectDefinitionId(),
-					objectFieldColumn.eq(copyValue), false, null);
+					objectFieldColumn.eq(uniqueValue), false, null);
 
 				if (count == 0) {
 					return true;
@@ -3704,10 +3705,11 @@ public class DefaultObjectEntryManagerImpl
 
 		values.put(
 			titleObjectField.getName(),
-			UniqueUtil.getCopyValue(
-				copyValue -> _isUniqueName(
+			UniqueUtil.getUniqueValue(
+				"copy",
+				uniqueValue -> _isUniqueName(
 					objectDefinition, objectEntryFolder, objectFieldColumn,
-					copyValue),
+					uniqueValue),
 				titleValue));
 	}
 

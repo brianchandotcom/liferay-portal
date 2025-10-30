@@ -147,11 +147,12 @@ public class LayoutUtilityPageEntryLocalServiceImpl
 			layoutUtilityPageEntryPersistence.findByPrimaryKey(
 				sourceLayoutUtilityPageEntryId);
 
-		String name = UniqueUtil.getCopyValue(
-			copyValue -> {
+		String name = UniqueUtil.getUniqueValue(
+			"copy",
+			uniqueValue -> {
 				LayoutUtilityPageEntry layoutUtilityPageEntry =
 					layoutUtilityPageEntryPersistence.fetchByG_N_T(
-						groupId, copyValue,
+						groupId, uniqueValue,
 						sourceLayoutUtilityPageEntry.getType());
 
 				if (layoutUtilityPageEntry == null) {

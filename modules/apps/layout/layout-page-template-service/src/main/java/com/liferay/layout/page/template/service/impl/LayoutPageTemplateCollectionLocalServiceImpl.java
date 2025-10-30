@@ -381,11 +381,12 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			String sourceName, int type)
 		throws PortalException {
 
-		return UniqueUtil.getCopyValue(
-			copyValue -> {
+		return UniqueUtil.getUniqueValue(
+			"copy",
+			uniqueValue -> {
 				LayoutPageTemplateCollection layoutPageTemplateCollection =
 					layoutPageTemplateCollectionPersistence.fetchByG_P_N_T(
-						groupId, layoutPageTemplateCollectionId, copyValue,
+						groupId, layoutPageTemplateCollectionId, uniqueValue,
 						type);
 
 				if (layoutPageTemplateCollection == null) {

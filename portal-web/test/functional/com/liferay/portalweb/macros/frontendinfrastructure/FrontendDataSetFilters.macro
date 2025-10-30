@@ -109,9 +109,7 @@ definition {
 	@summary = "Default summary"
 	macro resetFilter(reset_filter = null) {
 		if (!(isSet(reset_filter))) {
-			ClickNoError(
-				locator1 = "FrontendDataSet#RESET_FILTERS",
-				reset_filter = "Reset Filters");
+			Button.click(button = "Clear");
 		}
 		else {
 			ClickNoError(

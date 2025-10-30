@@ -5,33 +5,28 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
-import {isolatedSiteTest} from '../../../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {waitForEditor} from '../../../../../utils/waitFor';
 import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
+import {SubTabName, TabName} from "../../pages/CKEditorSamplePage";
 import {balloonPageTest} from './fixtures/balloonPageTest';
 
 export const test = mergeTests(
-	apiHelpersTest,
 	balloonPageTest,
 	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
-	isolatedSiteTest,
 	loginTest()
 );
 
-test.beforeEach(async ({ckeditorSamplePage, page, site}) => {
-	await ckeditorSamplePage.createAndGotoSitePage({site});
-
-	await ckeditorSamplePage.selectTab('CKEditor 5');
-	await ckeditorSamplePage.selectTab('Balloon');
-
-	await waitForEditor({page});
+test.beforeEach(async ({ckeditorSamplePage}) => {
+	await ckeditorSamplePage.goto();
+	await ckeditorSamplePage.selectTab(
+		TabName.CK_EDITOR_5,
+		SubTabName.BALLOON
+	);
 });
 
 test(

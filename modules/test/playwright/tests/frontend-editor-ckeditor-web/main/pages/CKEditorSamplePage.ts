@@ -5,54 +5,64 @@
 
 import {Page, expect} from '@playwright/test';
 
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import {liferayConfig} from '../../../../liferay.config';
-import getRandomString from '../../../../utils/getRandomString';
-import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import POM from '../../../../utils/POM';
+import {EEditorType, waitForEditor} from "../../../../utils/waitFor";
 
-export class CKEditorSamplePage {
-	readonly apiHelpers: ApiHelpers;
-	readonly page: Page;
+export enum TabName {
+	CK_EDITOR_4 = 'CKEditor 4',
+	CK_EDITOR_5 = 'CKEditor 5',
+}
 
-	constructor(page: Page) {
-		this.apiHelpers = new ApiHelpers(page);
-		this.page = page;
+export enum SubTabName {
+	ADVANCED_CLASSIC = 'Advanced Classic',
+	ALLOY = 'Alloy',
+	BALLOON = 'Balloon',
+	BASIC_CLASSIC = 'Basic Classic',
+	CLASSIC = 'Classic',
+	INPUT_LOCALIZED = 'Input Localized',
+	LEGACY = 'Legacy',
+	REACT = 'React',
+	REACT_PLUS_CET = 'React + CET',
+}
+
+export class CKEditorSamplePage extends POM {
+	constructor(page: Page, url: string) {
+		super(page, url);
 	}
 
-	async createAndGotoSitePage({site}: {site: Site}) {
-		const widgetDefinition = getWidgetDefinition({
-			id: getRandomString(),
-			widgetName:
-				'com_liferay_editor_ckeditor_sample_web_internal_portlet_CKEditorSamplePortlet',
-		});
-
-		const title = getRandomString();
-
-		await this.apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([widgetDefinition]),
-			siteId: site.id,
-			title,
-		});
-
-		await this.page.goto(
-			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/${title}`
-		);
-
-		const productMenuToggle = this.page.getByLabel('Close Product Menu');
-
-		if (await productMenuToggle.isVisible()) {
-			await productMenuToggle.click();
-		}
-	}
-
-	async selectTab(label: string) {
+	async selectTab(tabName: TabName, subTabName: SubTabName) {
 		const navLink = this.page
-			.locator('.nav-link')
-			.filter({has: this.page.locator(`text="${label}"`)});
+			.locator('.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar')
+			.getByRole('link', {exact: true, name: tabName})
 
 		await navLink.click();
 
 		await expect(navLink).toHaveClass(/active/);
+
+		let editorType = EEditorType.CKEDITOR5;
+
+		if (tabName === TabName.CK_EDITOR_4) {
+			editorType = EEditorType.CKEDITOR4;
+		}
+
+		await waitForEditor({editorType, page: this.page});
+
+		const subNavLink = this.page
+			.locator('.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(2) .navbar')
+			.getByRole('link', {exact: true, name: subTabName})
+
+		await subNavLink.click();
+
+		await expect(subNavLink).toHaveClass(/active/);
+
+		if (subTabName === SubTabName.ALLOY) {
+			editorType = EEditorType.ALLOYEDITOR;
+		}
+
+		await waitForEditor({editorType, page: this.page});
+	}
+
+	override async waitFor() {
+		await waitForEditor({page: this.page});
 	}
 }

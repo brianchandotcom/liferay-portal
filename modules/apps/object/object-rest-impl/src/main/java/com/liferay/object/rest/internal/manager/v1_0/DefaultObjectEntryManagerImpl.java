@@ -3340,6 +3340,38 @@ public class DefaultObjectEntryManagerImpl
 					objectDefinition, serviceBuilderObjectEntry,
 					serviceBuilderParentObjectEntry)
 			).put(
+				"copy",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564")) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.ADD_ENTRY,
+						"postObjectEntryByObjectEntryFolderCopy",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
+				"copy-replace",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564")) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.ADD_ENTRY,
+						"postObjectEntryByObjectEntryFolderCopyReplace",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
 				"expire",
 				() -> {
 					if (!FeatureFlagManagerUtil.isEnabled(
@@ -3362,6 +3394,38 @@ public class DefaultObjectEntryManagerImpl
 					ActionKeys.VIEW, dtoConverterContext, "get",
 					objectDefinition, serviceBuilderObjectEntry,
 					serviceBuilderParentObjectEntry)
+			).put(
+				"move",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564")) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.ADD_ENTRY,
+						"postObjectEntryByObjectEntryFolderMove",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
+				"move-replace",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564")) {
+
+						return null;
+					}
+
+					return _addAction(
+						ActionKeys.ADD_ENTRY,
+						"postObjectEntryByObjectEntryFolderMoveReplace",
+						serviceBuilderObjectEntry,
+						dtoConverterContext.getUriInfo());
+				}
 			).put(
 				"permissions",
 				_addAction(

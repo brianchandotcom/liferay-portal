@@ -98,8 +98,6 @@ public class AddTemplateEntryMVCActionCommandTest {
 
 	@Test
 	public void testAddTemplateEntry() throws Exception {
-		_setUpActionRequest();
-
 		_invokeActionRequest(false);
 
 		List<TemplateEntry> templateEntries =
@@ -155,8 +153,6 @@ public class AddTemplateEntryMVCActionCommandTest {
 	@Test
 	@TestInfo("LPD-69505")
 	public void testAddTemplateEntryWithNoPermissions() throws Exception {
-		_setUpActionRequest();
-
 		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
 			_invokeActionRequest(true);
 
@@ -266,36 +262,7 @@ public class AddTemplateEntryMVCActionCommandTest {
 			boolean noPermissions)
 		throws Exception {
 
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		try {
-			if (noPermissions) {
-				_user = UserTestUtil.addUser();
-
-				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(_user));
-			}
-
-			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "doTransactionalCommand",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				_mockLiferayPortletActionRequest,
-				mockLiferayPortletActionResponse);
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-
-		return mockLiferayPortletActionResponse;
-	}
-
-	private void _setUpActionRequest() throws Exception {
-		_mockLiferayPortletActionRequest =
+		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
 		_infoItemClassDetails =
@@ -313,17 +280,44 @@ public class AddTemplateEntryMVCActionCommandTest {
 			_infoItemFormVariationKey = infoItemFormVariation.getKey();
 		}
 
-		_mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"infoItemClassName", _infoItemClassDetails.getClassName());
-		_mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"infoItemFormVariationKey", _infoItemFormVariationKey);
-		_mockLiferayPortletActionRequest.addParameter(
+		mockLiferayPortletActionRequest.addParameter(
 			"name", RandomTestUtil.randomString());
 
 		_initialTemplateEntries = _templateEntryLocalService.getTemplateEntries(
 			_group.getGroupId(), _infoItemClassDetails.getClassName(),
 			_infoItemFormVariationKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		try {
+			if (noPermissions) {
+				_user = UserTestUtil.addUser();
+
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(_user));
+			}
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				mockLiferayPortletActionResponse);
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
+
+		return mockLiferayPortletActionResponse;
 	}
 
 	@Inject
@@ -344,7 +338,6 @@ public class AddTemplateEntryMVCActionCommandTest {
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private List<TemplateEntry> _initialTemplateEntries;
-	private MockLiferayPortletActionRequest _mockLiferayPortletActionRequest;
 
 	@Inject(filter = "mvc.command.name=/template/add_template_entry")
 	private MVCActionCommand _mvcActionCommand;

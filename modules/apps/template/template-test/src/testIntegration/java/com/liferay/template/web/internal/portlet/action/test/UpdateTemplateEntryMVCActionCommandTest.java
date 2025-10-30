@@ -100,11 +100,7 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 	@Test
 	public void testUpdateTemplateEntry() throws Exception {
-		String script = "<#-- Modified script content -->";
-
-		ActionRequestSetupTest setup = _setUpActionRequest(script);
-
-		_invokeActionRequest(setup, false);
+		_invokeActionRequest(false);
 
 		TemplateEntry modifiedTemplateEntry =
 			_templateEntryLocalService.getTemplateEntry(
@@ -121,29 +117,26 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 			_templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
-		Assert.assertEquals(setup.name, ddmTemplate.getName(setup.languageId));
+		Assert.assertEquals(_name, ddmTemplate.getName(_languageId));
 		Assert.assertEquals(
-			setup.description, ddmTemplate.getDescription(setup.languageId));
-		Assert.assertEquals(script, ddmTemplate.getScript());
+			_description, ddmTemplate.getDescription(_languageId));
+		Assert.assertEquals(_MODIFIED_SCRIPT_CONTENT, ddmTemplate.getScript());
 	}
 
 	@Test(expected = PrincipalException.MustHavePermission.class)
 	@TestInfo("LPD-69505")
 	public void testUpdateTemplateEntryWithNoPermissions() throws Exception {
-		String script = "<#-- Modified script content -->";
-
-		ActionRequestSetupTest setup = _setUpActionRequest(script);
-
-		_invokeActionRequest(setup, true);
+		_invokeActionRequest(true);
 	}
 
 	private MockMultipartHttpServletRequest
-		_createMockMultipartHttpServletRequest(String script) {
+		_createMockMultipartHttpServletRequest() {
 
 		MockMultipartHttpServletRequest mockMultipartHttpServletRequest =
 			new MockMultipartHttpServletRequest();
 
-		byte[] bytes = script.getBytes(StandardCharsets.UTF_8);
+		byte[] bytes = _MODIFIED_SCRIPT_CONTENT.getBytes(
+			StandardCharsets.UTF_8);
 
 		mockMultipartHttpServletRequest.addFile(
 			new MockMultipartFile("scriptContent", bytes));
@@ -173,13 +166,13 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		return ArrayUtil.append(start.getBytes(), bytes, end.getBytes());
 	}
 
-	private MockLiferayPortletActionRequest _getMockLiferayPortletActionRequest(
-			String script)
+	private MockLiferayPortletActionRequest
+			_getMockLiferayPortletActionRequest()
 		throws Exception {
 
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest(
-				_createMockMultipartHttpServletRequest(script));
+				_createMockMultipartHttpServletRequest());
 
 		mockLiferayPortletActionRequest.addParameter(
 			"groupId", String.valueOf(_group.getGroupId()));
@@ -203,57 +196,24 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 		return themeDisplay;
 	}
 
-	private void _invokeActionRequest(
-			ActionRequestSetupTest setup, boolean noPermission)
-		throws Exception {
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-
-		try {
-			if (noPermission) {
-				_user = UserTestUtil.addUser();
-
-				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(_user));
-			}
-
-			ReflectionTestUtil.invoke(
-				_mvcActionCommand, "doTransactionalCommand",
-				new Class<?>[] {ActionRequest.class, ActionResponse.class},
-				setup.mockLiferayPortletActionRequest,
-				new MockLiferayPortletActionResponse());
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-		}
-	}
-
-	private ActionRequestSetupTest _setUpActionRequest(String script)
-		throws Exception {
-
-		ActionRequestSetupTest setup = new ActionRequestSetupTest();
-
+	private void _invokeActionRequest(boolean noPermission) throws Exception {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
-			_getMockLiferayPortletActionRequest(script);
-
-		setup.mockLiferayPortletActionRequest = mockLiferayPortletActionRequest;
+			_getMockLiferayPortletActionRequest();
 
 		mockLiferayPortletActionRequest.addParameter(
 			"ddmTemplateId", String.valueOf(_templateEntry.getDDMTemplateId()));
 
-		setup.name = RandomTestUtil.randomString();
-		setup.languageId = LocaleUtil.toLanguageId(
+		_name = RandomTestUtil.randomString();
+		_languageId = LocaleUtil.toLanguageId(
 			_portal.getSiteDefaultLocale(_group.getGroupId()));
 
 		mockLiferayPortletActionRequest.addParameter(
-			"name_" + setup.languageId, setup.name);
+			"name_" + _languageId, _name);
 
-		setup.description = RandomTestUtil.randomString();
+		_description = RandomTestUtil.randomString();
 
 		mockLiferayPortletActionRequest.addParameter(
-			"description_" + setup.languageId, setup.description);
+			"description_" + _languageId, _description);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"templateEntryId",
@@ -283,8 +243,31 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 					return method.invoke(_portal, args);
 				}));
 
-		return setup;
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		try {
+			if (noPermission) {
+				_user = UserTestUtil.addUser();
+
+				PermissionThreadLocal.setPermissionChecker(
+					_permissionCheckerFactory.create(_user));
+			}
+
+			ReflectionTestUtil.invoke(
+				_mvcActionCommand, "doTransactionalCommand",
+				new Class<?>[] {ActionRequest.class, ActionResponse.class},
+				mockLiferayPortletActionRequest,
+				new MockLiferayPortletActionResponse());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+		}
 	}
+
+	private static final String _MODIFIED_SCRIPT_CONTENT =
+		"<#-- Modified script content -->";
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
@@ -292,6 +275,7 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
 
+	private String _description;
 	private Group _group;
 
 	@Inject
@@ -300,8 +284,12 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
+	private String _languageId;
+
 	@Inject(filter = "mvc.command.name=/template/update_template_entry")
 	private MVCActionCommand _mvcActionCommand;
+
+	private String _name;
 
 	@Inject
 	private PermissionCheckerFactory _permissionCheckerFactory;
@@ -317,14 +305,5 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 
 	@DeleteAfterTestRun
 	private User _user;
-
-	private static class ActionRequestSetupTest {
-
-		public String description;
-		public String languageId;
-		public MockLiferayPortletActionRequest mockLiferayPortletActionRequest;
-		public String name;
-
-	}
 
 }

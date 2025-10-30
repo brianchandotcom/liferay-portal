@@ -10,7 +10,9 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalService;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
@@ -68,9 +70,14 @@ public class DLFileEntryModelDocumentContributor
 
 		for (DLFileEntryMetadata dlFileEntryMetadata : dlFileEntryMetadatas) {
 			try {
+				DDMStructure ddmStructure =
+					_ddmStructureLocalService.getStructure(
+						dlFileEntryMetadata.getDDMStructureId());
+
 				DDMFormValues ddmFormValues =
 					_ddmStorageEngineManager.getDDMFormValues(
-						dlFileEntryMetadata.getDDMStorageId());
+						dlFileEntryMetadata.getDDMStorageId(),
+						ddmStructure.getDDMForm());
 
 				if (ddmFormValues == null) {
 					continue;
@@ -167,6 +174,9 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private DDMStorageEngineManager _ddmStorageEngineManager;
+
+	@Reference
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 	@Reference
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService;

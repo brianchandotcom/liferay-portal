@@ -42,7 +42,10 @@ export default function SchedulePanel({
 						key={name}
 						label={label}
 						name={name}
-						neverExpire={!values.serverValue}
+						neverCheckbox={{
+							...values.neverCheckbox,
+							value: !values.serverValue,
+						}}
 						updateFieldData={onUpdateSchedule}
 					/>
 				);

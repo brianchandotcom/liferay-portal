@@ -190,18 +190,13 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							objectDefinitionId,
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					if (Objects.equals(
-							objectDefinitionId,
-							objectRelationship.getObjectDefinitionId1()) &&
-						FeatureFlagManagerUtil.isEnabled("LPD-50377")) {
-
+					if (!FeatureFlagManagerUtil.isEnabled("LPD-60546")) {
 						return;
 					}
 
 					ObjectDefinition relatedObjectDefinition = null;
 
-					if (FeatureFlagManagerUtil.isEnabled("LPD-60546") &&
-						!Objects.equals(
+					if (!Objects.equals(
 							objectDefinitionId,
 							objectRelationship.getObjectDefinitionId1())) {
 
@@ -374,7 +369,7 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						Objects.equals(
 							objectDefinition.getObjectDefinitionId(),
 							objectRelationship.getObjectDefinitionId2()) ||
-						!FeatureFlagManagerUtil.isEnabled("LPD-50377")) {
+						FeatureFlagManagerUtil.isEnabled("LPD-60546")) {
 
 						continue;
 					}

@@ -88,11 +88,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Jürgen Kappler
  */
-@FeatureFlags(
-	featureFlags = {
-		@FeatureFlag(value = "LPD-17564"), @FeatureFlag(value = "LPD-50377")
-	}
-)
+@FeatureFlags(featureFlags = @FeatureFlag(value = "LPD-17564"))
 @RunWith(Arquillian.class)
 public class ObjectEntryInfoItemFormProviderTest {
 

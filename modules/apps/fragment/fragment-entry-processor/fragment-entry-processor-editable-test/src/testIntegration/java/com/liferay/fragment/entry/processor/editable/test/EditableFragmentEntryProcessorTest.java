@@ -598,6 +598,7 @@ public class EditableFragmentEntryProcessorTest {
 	}
 
 	@Test
+	@TestInfo("LPD-67912")
 	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessPage()
 		throws Exception {
 
@@ -632,27 +633,12 @@ public class EditableFragmentEntryProcessorTest {
 			_portal.getLayoutURL(
 				_layout, _getThemeDisplay(LocaleUtil.getSiteDefault())),
 			element.attr("data-lfr-on-success-page-url"));
-	}
-
-	@Test
-	@TestInfo("LPD-67912")
-	public void testFragmentEntryProcessorEditableActionMappedActionOnSuccessPageReferencedByERC()
-		throws Exception {
-
-		long classNameId = _portal.getClassNameId(
-			ObjectDefinitionConstants.
-				CLASS_NAME_PREFIX_CUSTOM_OBJECT_DEFINITION +
-					RandomTestUtil.randomLong());
-		long classPK = RandomTestUtil.randomLong();
-		String fieldId =
-			ObjectAction.class.getSimpleName() + StringPool.UNDERLINE +
-				RandomTestUtil.randomLong();
 
 		Group group = GroupTestUtil.addGroup();
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(group);
 
-		Element element = _getElement(
+		element = _getElement(
 			"data-lfr-editable-id", "editable_action",
 			StringUtil.replace(
 				_readJSONFileToString(

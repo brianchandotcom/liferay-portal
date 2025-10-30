@@ -301,13 +301,13 @@ components:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                 -   properties:
                         value:
+                            $ref: "#/components/schemas/ColorPaletteValue"
                             # @review
                             description:
                                 The value of the fragment configuration field of type color palette.
-                            type: object
                         value_i18n:
                             additionalProperties:
-                                type: object
+                                $ref: "#/components/schemas/ColorPaletteValue"
                             # @review
                             description:
                                 The localized value of the fragment configuration field of type color palette.
@@ -315,6 +315,18 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type color palette.
+            type: object
+        ColorPaletteValue:
+            # @review
+            description:
+                The value of a field of type color palette.
+            properties:
+                color:
+                    type: string
+                cssClass:
+                    type: string
+                rgbValue:
+                    type: string
             type: object
         ColorPickerFragmentConfigurationFieldValue:
             allOf:

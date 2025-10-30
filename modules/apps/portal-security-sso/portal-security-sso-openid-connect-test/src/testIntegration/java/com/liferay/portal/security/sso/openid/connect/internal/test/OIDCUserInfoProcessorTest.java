@@ -227,9 +227,6 @@ public class OIDCUserInfoProcessorTest {
 		_testProcessUserInfo(
 			new String[] {"group1"}, "email", new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
-		_testProcessUserInfo(
-			new String[] {"group1"}, "email", new String[] {"group1"},
-			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
 		_emailAddress = null;
 

@@ -5,8 +5,8 @@
 
 import {Page, expect} from '@playwright/test';
 
-import POM from '../../../../utils/POM';
-import {EEditorType, waitForEditor} from "../../../../utils/waitFor";
+import POM from '../../../utils/POM';
+import {EEditorType, waitForEditor} from "../../../utils/waitFor";
 
 export enum TabName {
 	CK_EDITOR_4 = 'CKEditor 4',

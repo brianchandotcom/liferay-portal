@@ -7,9 +7,9 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
+import {SubTabName, TabName} from "../../../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
 import {ckeditor4PageTest} from '../../fixtures/ckeditor4PageTest';
-import {ckeditorSamplePageTest} from '../../fixtures/ckeditorSamplePageTest';
-import {SubTabName, TabName} from "../../pages/CKEditorSamplePage";
 
 export const test = mergeTests(
 	ckeditor4PageTest,

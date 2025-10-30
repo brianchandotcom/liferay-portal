@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
-import {ApiHelpers} from '../../../../helpers/ApiHelpers';
-import {liferayConfig} from '../../../../liferay.config';
-import getRandomString from '../../../../utils/getRandomString';
-import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {liferayConfig} from '../../../liferay.config';
+import getRandomString from '../../../utils/getRandomString';
+import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 import {CKEditorSamplePage} from '../pages/CKEditorSamplePage';
 
 const ckeditorSamplePageTest = isolatedSiteTest.extend<{

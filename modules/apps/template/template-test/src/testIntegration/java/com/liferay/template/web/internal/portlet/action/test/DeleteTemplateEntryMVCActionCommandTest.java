@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -86,23 +85,23 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			new MockLiferayPortletActionRequest();
 
-		_extraTemplateEntry = TemplateTestUtil.addAnyTemplateEntry(
+		TemplateEntry templateEntry = TemplateTestUtil.addAnyTemplateEntry(
 			_infoItemServiceRegistry, _serviceContext);
 
 		mockLiferayPortletActionRequest.addParameter(
 			"rowIds",
 			new String[] {
 				String.valueOf(_templateEntry.getTemplateEntryId()),
-				String.valueOf(_extraTemplateEntry.getTemplateEntryId())
+				String.valueOf(templateEntry.getTemplateEntryId())
 			});
 
 		_assertTemplateExists(_templateEntry);
-		_assertTemplateExists(_extraTemplateEntry);
+		_assertTemplateExists(templateEntry);
 
 		_invokeActionRequest(mockLiferayPortletActionRequest, false);
 
 		_assertTemplateNotExists(_templateEntry);
-		_assertTemplateNotExists(_extraTemplateEntry);
+		_assertTemplateNotExists(templateEntry);
 	}
 
 	@Test
@@ -162,10 +161,8 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 		try {
 			if (noPermissions) {
-				_user = UserTestUtil.addUser();
-
 				PermissionThreadLocal.setPermissionChecker(
-					_permissionCheckerFactory.create(_user));
+					_permissionCheckerFactory.create(UserTestUtil.addUser()));
 			}
 
 			ReflectionTestUtil.invoke(
@@ -181,9 +178,6 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	@Inject
 	private DDMTemplateLocalService _ddmTemplateLocalService;
-
-	@DeleteAfterTestRun
-	private TemplateEntry _extraTemplateEntry;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
@@ -204,8 +198,5 @@ public class DeleteTemplateEntryMVCActionCommandTest {
 
 	@Inject
 	private TemplateEntryLocalService _templateEntryLocalService;
-
-	@DeleteAfterTestRun
-	private User _user;
 
 }

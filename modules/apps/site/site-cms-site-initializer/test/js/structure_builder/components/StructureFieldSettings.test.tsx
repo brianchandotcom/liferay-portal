@@ -53,6 +53,7 @@ const DEFAULT_STATE: State = {
 		name: 'UntitledStructure',
 		spaces: [],
 		status: 'new',
+		system: false,
 		uuid: getUuid(),
 		workflows: {},
 	},

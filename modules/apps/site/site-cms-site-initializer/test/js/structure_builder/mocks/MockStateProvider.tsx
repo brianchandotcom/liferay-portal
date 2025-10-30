@@ -20,6 +20,7 @@ const DEFAULT_STRUCTURE: Structure = {
 	name: 'UntitledStructure',
 	spaces: [],
 	status: 'new',
+	system: false,
 	uuid: getUuid(),
 	workflows: {},
 };

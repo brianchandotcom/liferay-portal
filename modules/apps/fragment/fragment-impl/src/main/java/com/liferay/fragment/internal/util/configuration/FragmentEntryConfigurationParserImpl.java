@@ -792,6 +792,10 @@ public class FragmentEntryConfigurationParserImpl
 		JSONObject jsonObject = (JSONObject)_getFieldValue(
 			FragmentConfigurationFieldDataType.OBJECT, value);
 
+		if (jsonObject == null) {
+			return StringPool.POUND;
+		}
+
 		JSONObject layoutJSONObject = jsonObject.getJSONObject("layout");
 
 		if (layoutJSONObject == null) {

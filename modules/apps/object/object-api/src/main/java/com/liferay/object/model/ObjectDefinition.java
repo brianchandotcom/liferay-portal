@@ -81,6 +81,8 @@ public interface ObjectDefinition
 
 	public boolean isApproved();
 
+	public boolean isCMS();
+
 	public boolean isDefaultStorageType();
 
 	public boolean isLinkedToObjectFolder(long objectFolderId);

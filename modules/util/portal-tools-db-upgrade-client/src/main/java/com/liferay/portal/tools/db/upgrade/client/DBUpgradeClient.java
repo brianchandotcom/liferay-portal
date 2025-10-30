@@ -421,6 +421,10 @@ public class DBUpgradeClient {
 	}
 
 	private String[] _getDBTypes() {
+		if (_appServer == null) {
+			return _PORTAL_DATABASE_TYPES;
+		}
+
 		File portalShieldedContainerLibDir =
 			_appServer.getPortalShieldedContainerLibDir();
 

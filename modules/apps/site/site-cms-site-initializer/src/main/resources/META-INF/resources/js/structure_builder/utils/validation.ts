@@ -158,7 +158,7 @@ export function validateStructure({
 
 	const errors = new Map(currentErrors);
 
-	if (!isNullOrUndefined(erc)) {
+	if (!isNullOrUndefined(erc) && !data.system) {
 		if (!erc) {
 			errors.set('erc', 'empty');
 		}
@@ -173,7 +173,7 @@ export function validateStructure({
 		}
 	}
 
-	if (!isNullOrUndefined(name)) {
+	if (!isNullOrUndefined(name) && !data.system) {
 		const names = getStructureNames(objectDefinitions);
 
 		if (!name) {

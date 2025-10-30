@@ -1981,6 +1981,13 @@ components:
                 -   gridViewportDefinition
                 -   id
             type: object
+        HrefURLValue:
+            allOf:
+                -   $ref: "#/components/schemas/URLValue"
+                -   properties:
+                        href:
+                            type: string
+            type: object
         HtmlProperties:
             properties:
                 htmlTag:
@@ -3370,6 +3377,13 @@ components:
             description:
                 The navigation settings of a site page.
             type: object
+        SitePageURLValue:
+            allOf:
+                -   $ref: "#/components/schemas/URLValue"
+                -   properties:
+                        sitePage:
+                            $ref: "#/components/schemas/ItemExternalReference"
+            type: object
         SitePagesNavigationMenuValue:
             allOf:
                 -   $ref: "#/components/schemas/NavigationMenuValue"
@@ -3500,13 +3514,13 @@ components:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                 -   properties:
                         value:
+                            $ref: "#/components/schemas/URLValue"
                             # @review
                             description:
                                 The value of the fragment configuration field of type URL.
-                            type: object
                         value_i18n:
                             additionalProperties:
-                                type: object
+                                $ref: "#/components/schemas/URLValue"
                             # @review
                             description:
                                 The localized value of the fragment configuration field of type URL.
@@ -3514,6 +3528,21 @@ components:
             # @review
             description:
                 The value of a fragment configuration field of type URL.
+            type: object
+        URLValue:
+            # @review
+            description:
+                A value of a field of type URL.
+            discriminator:
+                mapping:
+                    Href: "#/components/schemas/HrefURLValue"
+                    SitePage: "#/components/schemas/SitePageURLValue"
+                propertyName:
+                    urlType
+            properties:
+                urlType:
+                    enum: [Href, SitePage]
+                    type: string
             type: object
         UtilityPage:
             description:

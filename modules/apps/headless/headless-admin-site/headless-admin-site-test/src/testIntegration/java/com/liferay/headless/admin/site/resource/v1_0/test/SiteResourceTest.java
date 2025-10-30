@@ -50,6 +50,7 @@ import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.site.initializer.SiteInitializer;
 
 import java.io.File;
@@ -79,6 +80,10 @@ import org.osgi.framework.ServiceRegistration;
  * @author Rubén Pulido
  */
 @FeatureFlag("LPD-41306")
+@LanguageIds(
+	availableLanguageIds = {"en_US", "es_ES", "pt_BR"},
+	defaultLanguageId = "en_US"
+)
 @RunWith(Arquillian.class)
 public class SiteResourceTest extends BaseSiteResourceTestCase {
 

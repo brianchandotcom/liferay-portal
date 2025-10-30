@@ -2333,7 +2333,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-67912")
-	public void testRenderEditionFormWithMappedLayoutReferencedByERC()
+	public void testRenderEditionFormWithSuccessMessageWithMappedLayout()
 		throws Exception {
 
 		MockObject mockObject = new MockObject(RandomTestUtil.randomLong());

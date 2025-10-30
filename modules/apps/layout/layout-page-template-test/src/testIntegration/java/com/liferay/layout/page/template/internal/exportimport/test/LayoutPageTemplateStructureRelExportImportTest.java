@@ -172,7 +172,9 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Test
 	@TestInfo("LPD-67912")
-	public void testFormContainerSuccessMessageWithPage() throws Exception {
+	public void testFormContainerSuccessMessageWithMappedLayout()
+		throws Exception {
+
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);
 		Layout layout2 = LayoutTestUtil.addTypeContentLayout(group);
 
@@ -239,7 +241,7 @@ public class LayoutPageTemplateStructureRelExportImportTest
 
 	@Test
 	@TestInfo("LPD-67912")
-	public void testFormContainerSuccessMessageWithPageFromGuestSite()
+	public void testFormContainerSuccessMessageWithMappedLayoutWithScope()
 		throws Exception {
 
 		Layout layout1 = LayoutTestUtil.addTypeContentLayout(group);

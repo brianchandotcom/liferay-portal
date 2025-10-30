@@ -19,14 +19,14 @@ import {usersAndOrganizationsPagesTest} from '../../../../fixtures/usersAndOrgan
 import {liferayConfig} from '../../../../liferay.config';
 import {getRandomInt} from '../../../../utils/getRandomInt';
 import getRandomString from '../../../../utils/getRandomString';
-import performLogin, {
+import {
 	performLoginViaApi,
 	performLogout,
 	userData,
 } from '../../../../utils/performLogin';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
-import {miniumSetUp} from '../../utils/commerce';
+import {configureBuyerUserForSite, miniumSetUp} from '../../utils/commerce';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -1059,128 +1059,236 @@ test('LPD-33783 Pending orders table displays correct fields', async ({
 	});
 });
 
-test('LPD-3440 As a order manager with buyer approval workflow, I can approve orders on pending orders page', async ({
-	apiHelpers,
-	commerceAdminChannelDetailsPage,
-	commerceAdminChannelsPage,
-	commerceLayoutsPage,
-	commerceMiniCartPage,
-	page,
-	pendingOrdersPage,
-}) => {
-	const {channel, site} = await miniumSetUp(apiHelpers);
+test(
+	'As a order manager with buyer approval workflow, I can manage order workflow status',
+	{tag: ['@LPD-3440', '@LPD-70123']},
+	async ({
+		apiHelpers,
+		commerceAdminChannelsPage,
+		commerceLayoutsPage,
+		commerceMiniCartPage,
+		commerceThemeMiniumCatalogPage,
+		page,
+		pendingOrdersPage,
+	}) => {
+		let account;
+		let channel;
+		let orderManagerUser;
+		let orderId;
+		let productName;
+		let site;
 
-	const account = await apiHelpers.headlessAdminUser.postAccount({
-		name: getRandomString(),
-		type: 'business',
-	});
+		await test.step('Create a Commerce Minium site', async () => {
+			const {channel: channelSetup, site: siteSetup} =
+				await miniumSetUp(apiHelpers);
 
-	const user =
-		await apiHelpers.headlessAdminUser.getUserAccountByEmailAddress(
-			'demo.unprivileged@liferay.com'
-		);
-	const rolesResponse = await apiHelpers.headlessAdminUser.getAccountRoles(
-		account.id
-	);
-
-	const accountRoleOrderManager = rolesResponse?.items?.filter((role) => {
-		return role.name === 'Order Manager';
-	});
-
-	await apiHelpers.headlessAdminUser.assignAccountRoles(
-		account.externalReferenceCode,
-		accountRoleOrderManager[0].id,
-		user.emailAddress
-	);
-	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
-		account.id,
-		['demo.unprivileged@liferay.com']
-	);
-	const siteRole =
-		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
-	await apiHelpers.headlessAdminUser.assignUserToSite(
-		siteRole.id,
-		site.id,
-		user.id
-	);
-
-	await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
-		'Single Approver (Version 1)',
-		channel.name
-	);
-
-	await (
-		await commerceAdminChannelDetailsPage.commerceChannelHealthChecksTableRowAction(
-			'Fix Issue',
-			'Commerce Cart'
-		)
-	).click();
-
-	const product = await apiHelpers.headlessCommerceAdminCatalog.getProducts(
-		new URLSearchParams({
-			filter: `name eq 'Abs Sensor'`,
-		})
-	);
-
-	const productId = product.items[0].productId;
-
-	const productSkus = await apiHelpers.headlessCommerceAdminCatalog
-		.getProduct(productId)
-		.then((product) => {
-			return product.skus;
+			channel = channelSetup;
+			site = siteSetup;
 		});
 
-	const sku = productSkus[0];
+		await test.step('Create a business account, a buyer user and an order manager user and assign them to the site', async () => {
+			account = await apiHelpers.headlessAdminUser.postAccount({
+				name: getRandomString(),
+				type: 'business',
+			});
 
-	const phoneNumber = '12345';
+			await configureBuyerUserForSite(
+				account,
+				apiHelpers,
+				site,
+				'demo.unprivileged@liferay.com'
+			);
 
-	const address = await apiHelpers.headlessCommerceAdminAccount.postAddress(
-		account.id,
-		{phoneNumber, regionISOCode: 'AL'}
-	);
+			const rolesResponse =
+				await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+			const accountRoleOrderManager = rolesResponse?.items?.filter(
+				(role) => {
+					return role.name === 'Order Manager';
+				}
+			);
 
-	await apiHelpers.headlessCommerceDeliveryCart.postCart(
-		{
-			accountId: account.id,
-			billingAddressId: address.id,
-			cartItems: [
-				{
-					options: '[]',
-					quantity: 1,
-					replacedSkuId: 0,
-					skuId: sku.id,
-				},
-			],
-			shippingAddressId: address.id,
-			shippingMethod: 'fixed',
-		},
-		channel.id
-	);
+			orderManagerUser =
+				await apiHelpers.headlessAdminUser.postUserAccount();
 
-	await page.goto(`/web/${site.name}`);
+			userData[orderManagerUser.alternateName] = {
+				name: orderManagerUser.givenName,
+				password: 'test',
+				surname: orderManagerUser.familyName,
+			};
 
-	await commerceMiniCartPage.miniCartButton.waitFor();
-	await commerceMiniCartPage.miniCartButton.click();
-	await commerceMiniCartPage.reviewOrderButton.waitFor();
-	await commerceMiniCartPage.reviewOrderButton.click();
-	await commerceMiniCartPage.submitButton.click();
+			await apiHelpers.headlessAdminUser.assignAccountRoles(
+				account.externalReferenceCode,
+				accountRoleOrderManager[0].id,
+				orderManagerUser.emailAddress
+			);
 
-	await expect(commerceMiniCartPage.submitButton).toBeHidden();
+			await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+				account.id,
+				[orderManagerUser.emailAddress]
+			);
 
-	await performLogout(page);
+			const siteRole =
+				await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+			await apiHelpers.headlessAdminUser.assignUserToSite(
+				siteRole.id,
+				site.id,
+				orderManagerUser.id
+			);
+		});
 
-	await performLogin(page, 'demo.unprivileged');
+		await test.step('Change commerce channel buyer order approval workflow and create an order', async () => {
+			await commerceAdminChannelsPage.changeCommerceChannelBuyerOrderApprovalWorkflow(
+				'Single Approver (Version 1)',
+				channel.name
+			);
 
-	await page.goto(`/web/${site.name}`);
+			const product = (
+				await apiHelpers.headlessCommerceAdminCatalog.getProducts(
+					new URLSearchParams({
+						filter: `name eq 'U-Joint'`,
+					})
+				)
+			).items[0];
 
-	await commerceLayoutsPage.pendingOrdersLink.click();
+			productName = product.name['en_US'];
+		});
 
-	await pendingOrdersPage.viewButton.click();
-	await pendingOrdersPage.approveButton.click();
-	await pendingOrdersPage.doneButton.click();
+		await test.step('As a Buyer submit the order', async () => {
+			await performLogout(page);
+			await performLoginViaApi({
+				page,
+				screenName: 'demo.unprivileged',
+			});
 
-	await expect(pendingOrdersPage.checkoutButton).toBeVisible();
-});
+			await page.goto(`/web/${site.name}`, {
+				waitUntil: 'networkidle',
+			});
+
+			await commerceThemeMiniumCatalogPage
+				.productCardAddToCartButton(productName)
+				.click();
+
+			await expect(commerceMiniCartPage.miniCartButton).toHaveClass(
+				'has-badge mini-cart-opener'
+			);
+
+			orderId = await commerceThemeMiniumCatalogPage.accountSelectorButton
+				.locator('.order-id')
+				.textContent();
+
+			apiHelpers.data.push({id: Number(orderId), type: 'order'});
+
+			await expect(
+				commerceThemeMiniumCatalogPage.accountSelectorOrderWorkflowStatus
+			).toContainText('Draft');
+
+			await commerceMiniCartPage.miniCartButton.click();
+
+			await expect(
+				commerceMiniCartPage.miniCartItem(productName)
+			).toBeVisible();
+
+			await commerceMiniCartPage.reviewOrderButton.click();
+
+			await expect(
+				await pendingOrdersPage.orderItemsTableRowLink(productName)
+			).toBeVisible();
+
+			await commerceMiniCartPage.submitButton.click();
+
+			await expect(
+				commerceThemeMiniumCatalogPage.accountSelectorOrderWorkflowStatus
+			).toContainText('Pending');
+		});
+
+		await test.step('As a Order Manager reject the order', async () => {
+			await performLogout(page);
+			await performLoginViaApi({
+				page,
+				screenName: orderManagerUser.alternateName,
+			});
+
+			await page.goto(`/web/${site.name}`, {
+				waitUntil: 'networkidle',
+			});
+
+			await commerceLayoutsPage.pendingOrdersLink.click();
+
+			await pendingOrdersPage.viewButton.click();
+
+			await expect(
+				await pendingOrdersPage.orderItemsTableRowLink(productName)
+			).toBeVisible();
+
+			await expect(pendingOrdersPage.saveButton).toBeVisible();
+			await expect(pendingOrdersPage.approveButton).toBeVisible();
+			await expect(pendingOrdersPage.rejectButton).toBeVisible();
+
+			await pendingOrdersPage.rejectButton.click();
+			await pendingOrdersPage.doneButton.click();
+
+			await expect(
+				commerceThemeMiniumCatalogPage.accountSelectorOrderWorkflowStatus
+			).toContainText('Pending');
+		});
+
+		await test.step('As a Buyer re-submit the order', async () => {
+			await performLogout(page);
+			await performLoginViaApi({
+				page,
+				screenName: 'demo.unprivileged',
+			});
+
+			await page.goto(`/web/${site.name}/pending-orders`, {
+				waitUntil: 'networkidle',
+			});
+
+			await pendingOrdersPage.viewButton.click();
+
+			await expect(
+				await pendingOrdersPage.orderItemsTableRowLink(productName)
+			).toBeVisible();
+
+			await commerceMiniCartPage.resubmitButton.click();
+			await pendingOrdersPage.doneButton.click();
+
+			await expect(
+				commerceThemeMiniumCatalogPage.accountSelectorOrderWorkflowStatus
+			).toContainText('Pending');
+		});
+
+		await test.step('As a Order Manager approve the order', async () => {
+			await performLogout(page);
+			await performLoginViaApi({
+				page,
+				screenName: orderManagerUser.alternateName,
+			});
+
+			await page.goto(`/web/${site.name}`, {
+				waitUntil: 'networkidle',
+			});
+
+			await commerceLayoutsPage.pendingOrdersLink.click();
+
+			await pendingOrdersPage.viewButton.click();
+
+			await expect(
+				await pendingOrdersPage.orderItemsTableRowLink(productName)
+			).toBeVisible();
+
+			await expect(pendingOrdersPage.saveButton).toBeVisible();
+			await expect(pendingOrdersPage.approveButton).toBeVisible();
+			await expect(pendingOrdersPage.rejectButton).toBeVisible();
+
+			await pendingOrdersPage.approveButton.click();
+			await pendingOrdersPage.doneButton.click();
+
+			await expect(
+				commerceThemeMiniumCatalogPage.accountSelectorOrderWorkflowStatus
+			).toContainText('Approved');
+		});
+	}
+);
 
 test(
 	'Can sort orders by create date',

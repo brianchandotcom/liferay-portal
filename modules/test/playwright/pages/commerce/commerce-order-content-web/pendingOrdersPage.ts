@@ -39,6 +39,8 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 	readonly panelList: Locator;
 	readonly questionsAndAnswersLink: Locator;
 	readonly questionAndAnswersText: Locator;
+	readonly rejectButton: Locator;
+	readonly saveButton: Locator;
 	readonly skuLink: (sku: string) => Locator;
 	readonly viewButton: Locator;
 
@@ -48,7 +50,10 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet .fds table'
 		);
 
-		this.approveButton = page.getByText('Approve');
+		this.approveButton = page.getByRole('button', {
+			exact: true,
+			name: 'Approve',
+		});
 		this.checkoutButton = page.getByText('Checkout');
 		this.createDateSortButton = page
 			.getByRole('columnheader', {name: 'Create Date'})
@@ -135,6 +140,8 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 		this.questionAndAnswersText = page
 			.locator('dt')
 			.filter({hasText: 'Questions and Answers'});
+		this.rejectButton = page.getByRole('button', {name: 'Reject'});
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.skuLink = (sku) => page.getByRole('link', {name: sku});
 		this.viewButton = page.getByLabel('View');
 	}

@@ -8,6 +8,7 @@ import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 export class CommerceThemeMiniumCatalogPage {
 	readonly accountSelectorButton: Locator;
 	readonly accountSelectorOrdersList: Locator;
+	readonly accountSelectorOrderWorkflowStatus: Locator;
 	readonly catalogSearch: Locator;
 	readonly clearSearchButton: Locator;
 	readonly configurationIFrame: FrameLocator;
@@ -46,6 +47,8 @@ export class CommerceThemeMiniumCatalogPage {
 			.locator('.account-selector-dropdown')
 			.getByRole('button');
 		this.accountSelectorOrdersList = page.locator('.orders-list');
+		this.accountSelectorOrderWorkflowStatus =
+			this.accountSelectorButton.locator('.workflow-status');
 		this.catalogSearch = page.getByTestId('searchInput');
 		this.clearSearchButton = page.getByRole('button', {
 			name: 'Clear Search',

@@ -250,13 +250,10 @@ public abstract class BaseWorkspaceGitRepository
 				return getBoolean("snapshot");
 			}
 
-			if (jobName.contains("master") &&
-				jobVariant.contains("modules-unit")) {
+			if ((jobName.contains("master") &&
+				 jobVariant.contains("modules-unit")) ||
+				jobVariant.contains("service-builder")) {
 
-				return false;
-			}
-
-			if (jobVariant.contains("service-builder")) {
 				return false;
 			}
 		}

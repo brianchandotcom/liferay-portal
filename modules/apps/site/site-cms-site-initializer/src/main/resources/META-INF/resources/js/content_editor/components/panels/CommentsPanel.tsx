@@ -118,7 +118,7 @@ export default function CommentsPanel({
 		status?: Status;
 	}) => {
 		let errorMessage = null;
-		let sucessMessage = Liferay.Language.get(
+		let successMessage = Liferay.Language.get(
 			'your-comment-has-been-posted'
 		);
 
@@ -183,7 +183,7 @@ export default function CommentsPanel({
 						: updateComments(comments)
 				);
 
-				sucessMessage = Liferay.Language.get(
+				successMessage = Liferay.Language.get(
 					'your-comment-has-been-edited'
 				);
 			}
@@ -199,7 +199,7 @@ export default function CommentsPanel({
 			});
 		}
 		else {
-			openToast({message: sucessMessage, type: 'success'});
+			openToast({message: successMessage, type: 'success'});
 
 			editor.setData('');
 		}

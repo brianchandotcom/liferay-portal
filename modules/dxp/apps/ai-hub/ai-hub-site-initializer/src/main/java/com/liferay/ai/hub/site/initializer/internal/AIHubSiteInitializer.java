@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.site.ai.hub.site.initializer.internal;
+package com.liferay.ai.hub.site.initializer.internal;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -19,8 +19,6 @@ import com.liferay.portal.workflow.constants.WorkflowDefinitionConstants;
 import com.liferay.portal.workflow.manager.WorkflowDefinitionManager;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
-
-import java.io.InputStream;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -112,8 +110,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			_localization.getXml(
 				titleMap, _language.getLanguageId(company.getLocale()),
 				"title"),
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
-			json.getBytes());
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, json.getBytes());
 	}
 
 	@Reference

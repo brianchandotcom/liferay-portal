@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Site AI Hub Site Initializer
-Bundle-SymbolicName: com.liferay.site.ai.hub.site.initializer
-Bundle-Version: 1.0.0
-Web-ContextPath: /site-ai-hub-site-initializer
--fixupmessages: Classes found in the wrong directory: ...;is:=ignore

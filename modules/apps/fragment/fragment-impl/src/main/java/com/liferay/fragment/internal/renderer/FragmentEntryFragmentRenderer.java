@@ -21,7 +21,6 @@ import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -376,11 +375,10 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		if (fragmentEntryLink.isTypeInput()) {
 			sb.append("; const input = ");
 			sb.append(
-				_toXSSSafeJSON(
-					JSONUtil.toString(
-						_getInputJSONObject(
-							fragmentEntryLink, fragmentRendererContext,
-							httpServletRequest))));
+				JSONUtil.toString(
+					_getInputJSONObject(
+						fragmentEntryLink, fragmentRendererContext,
+						httpServletRequest)));
 		}
 
 		sb.append("; const layoutMode = '");
@@ -539,15 +537,6 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 		_configurationPortalCache.put(key, entry);
 
 		return entry.getValue();
-	}
-
-	private String _toXSSSafeJSON(String json) {
-		return StringUtil.replace(
-			json,
-			new char[] {
-				CharPool.LESS_THAN, CharPool.GREATER_THAN, CharPool.AMPERSAND
-			},
-			new String[] {"\\u003C", "\\u003E", "\\u0026"});
 	}
 
 	private String _writePortletPaths(

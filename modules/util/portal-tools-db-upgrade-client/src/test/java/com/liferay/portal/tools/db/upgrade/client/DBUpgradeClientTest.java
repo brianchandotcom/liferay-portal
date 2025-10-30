@@ -267,8 +267,7 @@ public class DBUpgradeClientTest {
 					"db2 mariadb mysql oracle postgresql sqlserver"));
 		}
 		finally {
-			jarPath.toFile(
-			).delete();
+			Files.delete(jarPath);
 		}
 	}
 

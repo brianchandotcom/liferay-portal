@@ -218,6 +218,13 @@ public class DDMStructureWrapper
 	}
 
 	@Override
+	public DDMForm createFullHierarchyDDMForm(boolean copy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.createFullHierarchyDDMForm(copy);
+	}
+
+	@Override
 	public DDMStructureLayout fetchDDMStructureLayout() {
 		return model.fetchDDMStructureLayout();
 	}
@@ -509,6 +516,11 @@ public class DDMStructureWrapper
 	@Override
 	public DDMForm getFullHierarchyDDMForm() {
 		return model.getFullHierarchyDDMForm();
+	}
+
+	@Override
+	public DDMForm getFullHierarchyDDMForm(boolean copy) {
+		return model.getFullHierarchyDDMForm(copy);
 	}
 
 	@Override

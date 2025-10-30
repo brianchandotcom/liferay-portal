@@ -48,7 +48,6 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
-import com.liferay.object.constants.ObjectFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.definition.setting.util.ObjectDefinitionSettingUtil;
 import com.liferay.object.definition.util.ObjectDefinitionThreadLocal;
@@ -6263,14 +6262,7 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		if (Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.
-					EXTERNAL_REFERENCE_CODE_CONTENT_STRUCTURES) ||
-			Objects.equals(
-				objectDefinition.getObjectFolderExternalReferenceCode(),
-				ObjectFolderConstants.EXTERNAL_REFERENCE_CODE_FILE_TYPES)) {
-
+		if (objectDefinition.isCMS()) {
 			Group group = _groupLocalService.fetchGroup(
 				objectEntry.getCompanyId(), GroupConstants.CMS);
 

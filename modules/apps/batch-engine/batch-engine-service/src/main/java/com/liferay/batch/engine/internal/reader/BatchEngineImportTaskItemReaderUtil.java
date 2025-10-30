@@ -19,6 +19,7 @@ import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.exception.BatchEngineImportTaskExecutorException;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -80,29 +81,39 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 				String name = entry.getKey();
 
-				if (batchRestrictFields.contains(name)) {
-					continue;
+				try {
+					if (batchRestrictFields.contains(name)) {
+						continue;
+					}
+
+					Field field = declaredFields.get(name);
+
+					if (field == null) {
+						field = declaredFields.get(StringPool.UNDERLINE + name);
+					}
+
+					if (field != null) {
+						_setField(
+							batchEngineImportTask, field, item,
+							entry.getValue());
+
+						continue;
+					}
+
+					if (anySetterField != null) {
+						_setField(anySetterField, item, name, entry.getValue());
+					}
+					else {
+						extendedProperties.put(
+							entry.getKey(), (Serializable)entry.getValue());
+					}
 				}
-
-				Field field = declaredFields.get(name);
-
-				if (field == null) {
-					field = declaredFields.get(StringPool.UNDERLINE + name);
-				}
-
-				if (field != null) {
-					_setField(
-						batchEngineImportTask, field, item, entry.getValue());
-
-					continue;
-				}
-
-				if (anySetterField != null) {
-					_setField(anySetterField, item, name, entry.getValue());
-				}
-				else {
-					extendedProperties.put(
-						entry.getKey(), (Serializable)entry.getValue());
+				catch (Exception exception) {
+					throw new Exception(
+						StringBundler.concat(
+							"Unable to set field ", name, StringPool.COLON,
+							StringPool.SPACE, exception.getMessage()),
+						exception);
 				}
 			}
 

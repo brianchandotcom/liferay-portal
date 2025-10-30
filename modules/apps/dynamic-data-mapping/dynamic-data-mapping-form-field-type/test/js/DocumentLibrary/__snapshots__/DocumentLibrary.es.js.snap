@@ -78,9 +78,11 @@ exports[`Field DocumentLibrary has a helptext 1`] = `
         </span>
          you-need-to-be-signed-in-to-edit-this-field
       </div>
-      <div>
+      <span
+        class="form-help-text"
+      >
         Type something
-      </div>
+      </span>
     </div>
     <span
       class="sr-only"

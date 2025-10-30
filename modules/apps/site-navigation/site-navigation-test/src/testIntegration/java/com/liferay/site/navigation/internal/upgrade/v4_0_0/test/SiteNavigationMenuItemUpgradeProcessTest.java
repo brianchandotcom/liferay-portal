@@ -70,7 +70,7 @@ import org.junit.runner.RunWith;
  * @author Gislayne Vitorino
  */
 @RunWith(Arquillian.class)
-public class SiteNavigationMenuItemClassNameUpgradeProcessTest {
+public class SiteNavigationMenuItemUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -387,7 +387,7 @@ public class SiteNavigationMenuItemClassNameUpgradeProcessTest {
 
 	private static final String _CLASS_NAME =
 		"com.liferay.site.navigation.internal.upgrade.v4_0_0." +
-			"SiteNavigationMenuItemClassNameUpgradeProcess";
+			"SiteNavigationMenuItemUpgradeProcess";
 
 	@Inject(
 		filter = "(&(component.name=com.liferay.site.navigation.internal.upgrade.registry.SiteNavigationServiceUpgradeStepRegistrator))"

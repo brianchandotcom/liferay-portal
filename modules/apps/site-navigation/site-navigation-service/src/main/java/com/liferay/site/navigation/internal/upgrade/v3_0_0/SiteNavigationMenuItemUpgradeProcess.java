@@ -36,10 +36,9 @@ import java.util.Objects;
 /**
  * @author Joao Victor Alves
  */
-public class SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess
-	extends UpgradeProcess {
+public class SiteNavigationMenuItemUpgradeProcess extends UpgradeProcess {
 
-	public SiteNavigationMenuItemExternalReferenceCodeUpgradeProcess(
+	public SiteNavigationMenuItemUpgradeProcess(
 		AssetVocabularyLocalService assetVocabularyLocalService,
 		JournalArticleLocalService journalArticleLocalService,
 		KBArticleLocalService kbArticleLocalService,

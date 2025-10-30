@@ -17,6 +17,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
@@ -124,13 +125,25 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 		return HashMapBuilder.<String, Object>put(
 			"addCommentURL",
-			StringBundler.concat(
-				themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
-				GroupConstants.CMS_FRIENDLY_URL,
-				"/add_content_item_comment?classNameId=",
-				_classNameLocalService.getClassNameId(
-					objectEntry.getModelClassName()),
-				"&classPK=", objectEntry.getObjectEntryId())
+			() -> {
+				if (_discussionPermission.hasAddPermission(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getCompanyId(),
+						themeDisplay.getScopeGroupId(),
+						objectEntry.getModelClassName(),
+						objectEntry.getObjectEntryId())) {
+
+					return StringBundler.concat(
+						themeDisplay.getPortalURL(), themeDisplay.getPathMain(),
+						GroupConstants.CMS_FRIENDLY_URL,
+						"/add_content_item_comment?classNameId=",
+						_classNameLocalService.getClassNameId(
+							objectEntry.getModelClassName()),
+						"&classPK=", objectEntry.getObjectEntryId());
+				}
+
+				return null;
+			}
 		).put(
 			"comments",
 			() -> {
@@ -278,6 +291,9 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 
 	@Reference
 	private CommentManager _commentManager;
+
+	@Reference
+	private DiscussionPermission _discussionPermission;
 
 	@Reference
 	private JSONFactory _jsonFactory;

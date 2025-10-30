@@ -214,9 +214,7 @@ public class SiteMenuNavigationMenuValue
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(navigationMenuType);
-
 			sb.append("\"");
 		}
 

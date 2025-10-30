@@ -213,9 +213,7 @@ public class CollectionFragmentConfigurationFieldValue
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

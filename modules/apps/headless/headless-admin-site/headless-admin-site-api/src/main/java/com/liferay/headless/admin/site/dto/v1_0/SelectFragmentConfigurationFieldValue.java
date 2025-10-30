@@ -216,9 +216,7 @@ public class SelectFragmentConfigurationFieldValue
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

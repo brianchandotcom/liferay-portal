@@ -86,9 +86,7 @@ public class SelectFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(selectFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

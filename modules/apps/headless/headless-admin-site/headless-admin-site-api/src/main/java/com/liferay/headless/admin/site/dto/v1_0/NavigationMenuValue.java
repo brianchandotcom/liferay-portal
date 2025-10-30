@@ -167,9 +167,7 @@ public abstract class NavigationMenuValue implements Serializable {
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(navigationMenuType);
-
 			sb.append("\"");
 		}
 

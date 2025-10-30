@@ -140,9 +140,7 @@ public class SitePageURLValue extends URLValue implements Serializable {
 			sb.append("\"urlType\": ");
 
 			sb.append("\"");
-
 			sb.append(urlType);
-
 			sb.append("\"");
 		}
 

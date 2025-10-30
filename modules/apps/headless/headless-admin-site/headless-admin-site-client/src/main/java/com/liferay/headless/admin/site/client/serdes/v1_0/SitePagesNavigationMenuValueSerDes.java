@@ -58,9 +58,7 @@ public class SitePagesNavigationMenuValueSerDes {
 			sb.append("\"pageSetType\": ");
 
 			sb.append("\"");
-
 			sb.append(sitePagesNavigationMenuValue.getPageSetType());
-
 			sb.append("\"");
 		}
 
@@ -91,9 +89,7 @@ public class SitePagesNavigationMenuValueSerDes {
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(sitePagesNavigationMenuValue.getNavigationMenuType());
-
 			sb.append("\"");
 		}
 

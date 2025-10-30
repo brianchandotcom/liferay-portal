@@ -58,10 +58,8 @@ public class ContextualMenuNavigationMenuValueSerDes {
 			sb.append("\"contextualMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(
 				contextualMenuNavigationMenuValue.getContextualMenuType());
-
 			sb.append("\"");
 		}
 
@@ -73,10 +71,8 @@ public class ContextualMenuNavigationMenuValueSerDes {
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(
 				contextualMenuNavigationMenuValue.getNavigationMenuType());
-
 			sb.append("\"");
 		}
 

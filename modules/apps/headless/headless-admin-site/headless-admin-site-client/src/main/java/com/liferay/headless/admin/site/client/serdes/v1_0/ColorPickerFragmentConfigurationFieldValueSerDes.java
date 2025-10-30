@@ -95,9 +95,7 @@ public class ColorPickerFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(colorPickerFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

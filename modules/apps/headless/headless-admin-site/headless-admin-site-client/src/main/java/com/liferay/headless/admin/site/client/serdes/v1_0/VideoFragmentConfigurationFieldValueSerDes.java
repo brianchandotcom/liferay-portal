@@ -83,9 +83,7 @@ public class VideoFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(videoFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

@@ -85,9 +85,7 @@ public class CheckboxFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(checkboxFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

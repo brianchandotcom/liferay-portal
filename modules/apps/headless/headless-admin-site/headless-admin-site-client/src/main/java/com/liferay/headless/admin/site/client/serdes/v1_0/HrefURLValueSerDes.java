@@ -68,9 +68,7 @@ public class HrefURLValueSerDes {
 			sb.append("\"urlType\": ");
 
 			sb.append("\"");
-
 			sb.append(hrefURLValue.getUrlType());
-
 			sb.append("\"");
 		}
 

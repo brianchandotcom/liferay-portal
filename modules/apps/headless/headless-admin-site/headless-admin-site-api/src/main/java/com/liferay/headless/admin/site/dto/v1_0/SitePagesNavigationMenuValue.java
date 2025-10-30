@@ -193,9 +193,7 @@ public class SitePagesNavigationMenuValue
 			sb.append("\"pageSetType\": ");
 
 			sb.append("\"");
-
 			sb.append(pageSetType);
-
 			sb.append("\"");
 		}
 
@@ -226,9 +224,7 @@ public class SitePagesNavigationMenuValue
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(navigationMenuType);
-
 			sb.append("\"");
 		}
 

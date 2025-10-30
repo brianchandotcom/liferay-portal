@@ -95,7 +95,7 @@ public class GroupSelectorDisplayContext {
 			GroupItemSelectorProviderRegistryUtil.
 				getGroupItemSelectorProviderTypes();
 
-		groupItemSelectorProviderTypes.remove("space");
+		groupItemSelectorProviderTypes.remove("space-depot");
 
 		return groupItemSelectorProviderTypes;
 	}

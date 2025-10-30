@@ -16,21 +16,30 @@ function App() {
 
 			<hr />
 
-			<div>
-				<body className="test">
-					<p> This is a body without cadmin.</p>
-				</body>
+			<div className="cadmin-test-wrapper">
+				<div className="cadmin-test-unstyled">
+					<p> This is a regular div.</p>
+				</div>
 
-				<body className="cadmin">
-					<p> This is a body with cadmin.</p>
-				</body>
+				<div className="cadmin-test-styled">
+					<p> This is a regular div.</p>
+				</div>
 
-				<body className="blue-background cadmin">
-					<p>
-						This is a body with cadmin and CSS changes higher than
-						cadmin.
-					</p>
-				</body>
+				<div className="cadmin-test-styled-override">
+					<p> This is a regular div.</p>
+				</div>
+
+				<div className="cadmin cadmin-test-unstyled">
+					<p> This is a div with cadmin.</p>
+				</div>
+
+				<div className="cadmin cadmin-test-styled">
+					<p> This is a div with cadmin.</p>
+				</div>
+
+				<div className="cadmin cadmin-test-styled-override">
+					<p> This is a div with cadmin.</p>
+				</div>
 			</div>
 
 			<hr />

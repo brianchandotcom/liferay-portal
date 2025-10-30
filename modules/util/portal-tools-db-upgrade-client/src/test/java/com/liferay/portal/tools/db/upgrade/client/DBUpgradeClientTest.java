@@ -230,7 +230,7 @@ public class DBUpgradeClientTest {
 	}
 
 	@Test
-	public void testVerifyPortalUpgradeDatabasePropertiesOnDXP()
+	public void testVerifyPortalUpgradeDatabasePropertiesWithEmptyAnswersOnDXP()
 		throws Exception {
 
 		_createPortalUpgradeExtPropertiesFile();
@@ -253,9 +253,9 @@ public class DBUpgradeClientTest {
 
 		Files.createDirectories(_shieldedContainerLib.toPath());
 
-		Files.createFile(jarPath);
-
 		try {
+			Files.createFile(jarPath);
+
 			ReflectionTestUtil.invoke(
 				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
 				new Class<?>[0]);
@@ -265,56 +265,32 @@ public class DBUpgradeClientTest {
 			Assert.assertTrue(
 				consoleOutput.contains(
 					"db2 mariadb mysql oracle postgresql sqlserver"));
+
+			Properties properties = ReflectionTestUtil.getFieldValue(
+				_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
+
+			Assert.assertNotNull(properties);
+			Assert.assertEquals(
+				"com.mysql.cj.jdbc.Driver",
+				properties.getProperty("jdbc.default.driverClassName"));
+			Assert.assertEquals(
+				StringBundler.concat(
+					"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8",
+					"&dontTrackOpenResources=true",
+					"&holdResultsOpenOverStatementClose=true",
+					"&serverTimezone=GMT&useFastDateParsing=false",
+					"&useUnicode=true"),
+				properties.getProperty("jdbc.default.url"));
+			Assert.assertEquals(
+				StringPool.BLANK,
+				properties.getProperty("jdbc.default.username"));
+			Assert.assertEquals(
+				StringPool.BLANK,
+				properties.getProperty("jdbc.default.password"));
 		}
 		finally {
-			Files.delete(jarPath);
+			Files.deleteIfExists(jarPath);
 		}
-	}
-
-	@Test
-	public void testVerifyPortalUpgradeDatabasePropertiesWithEmptyAnswers()
-		throws Exception {
-
-		_createPortalUpgradeExtPropertiesFile();
-
-		String[] answers = {
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, StringPool.BLANK
-		};
-
-		_dbUpgradeClient = _createDBUpgradeClient(answers);
-
-		ReflectionTestUtil.setFieldValue(
-			_dbUpgradeClient, "_appServer", _mockAppServer);
-
-		ReflectionTestUtil.invoke(
-			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
-			new Class<?>[0]);
-
-		Properties properties = ReflectionTestUtil.getFieldValue(
-			_dbUpgradeClient, "_portalUpgradeDatabaseProperties");
-
-		String consoleOutput = _consoleOutputStream.toString();
-
-		Assert.assertTrue(consoleOutput.contains("mariadb mysql postgresql"));
-
-		Assert.assertNotNull(properties);
-		Assert.assertEquals(
-			"com.mysql.cj.jdbc.Driver",
-			properties.getProperty("jdbc.default.driverClassName"));
-		Assert.assertEquals(
-			StringBundler.concat(
-				"jdbc:mysql://localhost/lportal?characterEncoding=UTF-8",
-				"&dontTrackOpenResources=true",
-				"&holdResultsOpenOverStatementClose=true",
-				"&serverTimezone=GMT&useFastDateParsing=false",
-				"&useUnicode=true"),
-			properties.getProperty("jdbc.default.url"));
-		Assert.assertEquals(
-			StringPool.BLANK, properties.getProperty("jdbc.default.username"));
-		Assert.assertEquals(
-			StringPool.BLANK, properties.getProperty("jdbc.default.password"));
 	}
 
 	@Test

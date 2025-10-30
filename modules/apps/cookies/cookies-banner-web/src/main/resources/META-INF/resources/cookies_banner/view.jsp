@@ -24,15 +24,15 @@ CookiesBannerDisplayContext cookiesBannerDisplayContext = (CookiesBannerDisplayC
 				expand="<%= true %>"
 			>
 				<p class="mb-2 text-5 text-weight-semi-bold">
-					<%= cookiesBannerDisplayContext.getTitle(locale) %>
+					<%= HtmlUtil.escape(cookiesBannerDisplayContext.getTitle(locale)) %>
 				</p>
 
 				<p class="mb-0">
-					<%= cookiesBannerDisplayContext.getContent(locale) %>
+					<%= HtmlUtil.escape(cookiesBannerDisplayContext.getContent(locale)) %>
 
 					<clay:link
-						href="<%= cookiesBannerDisplayContext.getPrivacyPolicyLink() %>"
-						label="<%= cookiesBannerDisplayContext.getLinkDisplayText(locale) %>"
+						href="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getPrivacyPolicyLink()) %>"
+						label="<%= HtmlUtil.escape(cookiesBannerDisplayContext.getLinkDisplayText(locale)) %>"
 					/>
 				</p>
 			</clay:content-col>

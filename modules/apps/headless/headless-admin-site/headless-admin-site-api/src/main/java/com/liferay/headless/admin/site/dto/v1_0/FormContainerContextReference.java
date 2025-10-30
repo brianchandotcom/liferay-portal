@@ -150,9 +150,7 @@ public class FormContainerContextReference
 			sb.append("\"contextSource\": ");
 
 			sb.append("\"");
-
 			sb.append(contextSource);
-
 			sb.append("\"");
 		}
 
@@ -166,9 +164,7 @@ public class FormContainerContextReference
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

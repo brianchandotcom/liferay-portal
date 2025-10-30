@@ -92,9 +92,7 @@ public class SiteMenuNavigationMenuValueSerDes {
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(siteMenuNavigationMenuValue.getNavigationMenuType());
-
 			sb.append("\"");
 		}
 

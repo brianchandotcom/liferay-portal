@@ -90,9 +90,7 @@ public class SitePageFormContainerSubmissionResultSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(sitePageFormContainerSubmissionResult.getType());
-
 			sb.append("\"");
 		}
 

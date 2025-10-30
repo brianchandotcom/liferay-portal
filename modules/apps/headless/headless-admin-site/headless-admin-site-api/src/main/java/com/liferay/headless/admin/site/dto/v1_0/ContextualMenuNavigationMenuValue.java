@@ -148,9 +148,7 @@ public class ContextualMenuNavigationMenuValue
 			sb.append("\"contextualMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(contextualMenuType);
-
 			sb.append("\"");
 		}
 
@@ -164,9 +162,7 @@ public class ContextualMenuNavigationMenuValue
 			sb.append("\"navigationMenuType\": ");
 
 			sb.append("\"");
-
 			sb.append(navigationMenuType);
-
 			sb.append("\"");
 		}
 

@@ -184,9 +184,7 @@ public abstract class SuccessFormContainerSubmissionResult
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

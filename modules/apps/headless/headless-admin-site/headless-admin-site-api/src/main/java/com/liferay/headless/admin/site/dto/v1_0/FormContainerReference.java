@@ -167,9 +167,7 @@ public abstract class FormContainerReference implements Serializable {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

@@ -277,9 +277,7 @@ public class DisplayPageFormContainerSubmissionResult
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

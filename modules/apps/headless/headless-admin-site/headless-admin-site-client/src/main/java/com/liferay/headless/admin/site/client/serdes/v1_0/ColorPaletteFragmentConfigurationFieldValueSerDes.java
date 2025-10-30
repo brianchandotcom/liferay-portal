@@ -93,9 +93,7 @@ public class ColorPaletteFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(colorPaletteFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

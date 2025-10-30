@@ -78,9 +78,7 @@ public class StayInPageFormContainerSubmissionResultSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(stayInPageFormContainerSubmissionResult.getType());
-
 			sb.append("\"");
 		}
 

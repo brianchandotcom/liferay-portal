@@ -86,9 +86,7 @@ public class LengthFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(lengthFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

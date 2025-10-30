@@ -217,9 +217,7 @@ public class EmbeddedMessageFormContainerSubmissionResult
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

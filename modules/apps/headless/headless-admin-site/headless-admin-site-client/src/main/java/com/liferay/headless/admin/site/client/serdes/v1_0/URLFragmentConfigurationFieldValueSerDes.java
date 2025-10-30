@@ -81,9 +81,7 @@ public class URLFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(urlFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

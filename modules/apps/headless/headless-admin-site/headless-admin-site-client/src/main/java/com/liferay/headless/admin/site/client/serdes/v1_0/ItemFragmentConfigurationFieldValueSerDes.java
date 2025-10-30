@@ -82,9 +82,7 @@ public class ItemFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(itemFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

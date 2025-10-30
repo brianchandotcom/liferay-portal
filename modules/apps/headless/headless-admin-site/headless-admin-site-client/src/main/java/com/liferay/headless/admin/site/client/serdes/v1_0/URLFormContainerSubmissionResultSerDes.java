@@ -69,9 +69,7 @@ public class URLFormContainerSubmissionResultSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(urlFormContainerSubmissionResult.getType());
-
 			sb.append("\"");
 		}
 

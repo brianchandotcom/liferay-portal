@@ -156,9 +156,7 @@ public abstract class URLValue implements Serializable {
 			sb.append("\"urlType\": ");
 
 			sb.append("\"");
-
 			sb.append(urlType);
-
 			sb.append("\"");
 		}
 

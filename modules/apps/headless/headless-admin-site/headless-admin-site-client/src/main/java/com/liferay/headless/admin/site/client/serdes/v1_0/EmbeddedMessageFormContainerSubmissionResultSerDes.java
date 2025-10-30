@@ -92,9 +92,7 @@ public class EmbeddedMessageFormContainerSubmissionResultSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(embeddedMessageFormContainerSubmissionResult.getType());
-
 			sb.append("\"");
 		}
 

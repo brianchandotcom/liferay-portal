@@ -216,9 +216,7 @@ public class LengthFragmentConfigurationFieldValue
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

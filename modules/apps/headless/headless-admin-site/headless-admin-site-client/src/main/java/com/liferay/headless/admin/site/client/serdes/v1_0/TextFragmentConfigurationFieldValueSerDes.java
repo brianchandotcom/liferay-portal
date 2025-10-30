@@ -84,9 +84,7 @@ public class TextFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(textFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

@@ -107,9 +107,7 @@ public class DisplayPageFormContainerSubmissionResultSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(displayPageFormContainerSubmissionResult.getType());
-
 			sb.append("\"");
 		}
 

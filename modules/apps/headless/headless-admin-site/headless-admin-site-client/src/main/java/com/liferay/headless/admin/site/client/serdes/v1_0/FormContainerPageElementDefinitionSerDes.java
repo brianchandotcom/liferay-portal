@@ -193,9 +193,7 @@ public class FormContainerPageElementDefinitionSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerPageElementDefinition.getType());
-
 			sb.append("\"");
 		}
 

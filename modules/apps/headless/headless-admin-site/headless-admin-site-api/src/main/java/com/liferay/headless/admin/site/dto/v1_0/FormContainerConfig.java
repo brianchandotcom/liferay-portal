@@ -308,9 +308,7 @@ public class FormContainerConfig implements Serializable {
 			sb.append("\"formContainerType\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerType);
-
 			sb.append("\"");
 		}
 

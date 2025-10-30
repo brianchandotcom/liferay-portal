@@ -66,9 +66,7 @@ public class FormContainerConfigSerDes {
 			sb.append("\"formContainerType\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerConfig.getFormContainerType());
-
 			sb.append("\"");
 		}
 

@@ -64,9 +64,7 @@ public class SitePageURLValueSerDes {
 			sb.append("\"urlType\": ");
 
 			sb.append("\"");
-
 			sb.append(sitePageURLValue.getUrlType());
-
 			sb.append("\"");
 		}
 

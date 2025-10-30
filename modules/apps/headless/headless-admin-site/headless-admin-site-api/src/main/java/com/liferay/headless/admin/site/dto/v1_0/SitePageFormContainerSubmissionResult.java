@@ -220,9 +220,7 @@ public class SitePageFormContainerSubmissionResult
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

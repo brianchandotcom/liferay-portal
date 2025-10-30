@@ -218,9 +218,7 @@ public class NavigationMenuFragmentConfigurationFieldValue
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

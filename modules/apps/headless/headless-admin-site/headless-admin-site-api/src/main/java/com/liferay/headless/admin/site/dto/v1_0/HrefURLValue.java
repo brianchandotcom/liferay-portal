@@ -138,9 +138,7 @@ public class HrefURLValue extends URLValue implements Serializable {
 			sb.append("\"urlType\": ");
 
 			sb.append("\"");
-
 			sb.append(urlType);
-
 			sb.append("\"");
 		}
 

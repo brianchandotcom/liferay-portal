@@ -208,9 +208,7 @@ public class FormContainerClassSubtypeReference
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

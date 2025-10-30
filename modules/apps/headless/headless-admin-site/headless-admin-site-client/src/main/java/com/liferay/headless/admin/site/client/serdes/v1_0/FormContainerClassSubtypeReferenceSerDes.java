@@ -88,9 +88,7 @@ public class FormContainerClassSubtypeReferenceSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerClassSubtypeReference.getType());
-
 			sb.append("\"");
 		}
 

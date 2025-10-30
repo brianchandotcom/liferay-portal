@@ -158,9 +158,7 @@ public class StayInPageFormContainerSubmissionResult
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(type);
-
 			sb.append("\"");
 		}
 

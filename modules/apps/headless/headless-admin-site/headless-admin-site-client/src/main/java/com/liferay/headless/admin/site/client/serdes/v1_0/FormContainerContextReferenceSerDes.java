@@ -58,9 +58,7 @@ public class FormContainerContextReferenceSerDes {
 			sb.append("\"contextSource\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerContextReference.getContextSource());
-
 			sb.append("\"");
 		}
 
@@ -72,9 +70,7 @@ public class FormContainerContextReferenceSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(formContainerContextReference.getType());
-
 			sb.append("\"");
 		}
 

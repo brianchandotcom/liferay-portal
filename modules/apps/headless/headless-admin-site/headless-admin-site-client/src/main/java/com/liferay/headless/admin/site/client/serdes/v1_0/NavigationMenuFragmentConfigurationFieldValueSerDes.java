@@ -93,9 +93,7 @@ public class NavigationMenuFragmentConfigurationFieldValueSerDes {
 			sb.append("\"type\": ");
 
 			sb.append("\"");
-
 			sb.append(navigationMenuFragmentConfigurationFieldValue.getType());
-
 			sb.append("\"");
 		}
 

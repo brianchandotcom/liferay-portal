@@ -239,12 +239,7 @@ public class OIDCUserInfoProcessorTest {
 
 		_uuid = PortalUUIDUtil.generate();
 
-		try (SafeCloseable safeCloseable =
-				PrefsPropsTestUtil.swapWithSafeCloseable(
-					TestPropsValues.getCompanyId(),
-					PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED,
-					Boolean.FALSE.toString());
-			ConfigurationTemporarySwapper configurationTemporarySwapper =
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					_pid,
 					HashMapDictionaryBuilder.<String, Object>put(
@@ -255,7 +250,12 @@ public class OIDCUserInfoProcessorTest {
 						"matcherField", "screenName"
 					).put(
 						"openIdConnectClientId", _clientId
-					).build())) {
+					).build());
+			SafeCloseable safeCloseable =
+				PrefsPropsTestUtil.swapWithSafeCloseable(
+					TestPropsValues.getCompanyId(),
+					PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED,
+					Boolean.FALSE.toString())) {
 
 			_testProcessUserInfo(
 				new String[0], "screenName", new String[0],

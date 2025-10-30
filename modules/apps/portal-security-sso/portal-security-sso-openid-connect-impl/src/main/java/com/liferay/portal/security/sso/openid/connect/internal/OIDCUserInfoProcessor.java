@@ -574,9 +574,9 @@ public class OIDCUserInfoProcessor {
 
 		if (authServerWellKnownURI.equals(generatedLocalWellKnownURI)) {
 			filterString = StringBundler.concat(
-				"(&(companyId=", companyId, ")(tokenEndpoint=", tokenEndpoint,
-				")(issuerURL=", issuer, ")(openIdConnectClientId=", clientId,
-				"))");
+				"(&(companyId=", companyId, ")(issuerURL=", issuer,
+				")(openIdConnectClientId=", clientId, ")(tokenEndpoint=",
+				tokenEndpoint, "))");
 		}
 		else {
 			filterString = StringBundler.concat(
@@ -588,7 +588,7 @@ public class OIDCUserInfoProcessor {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);
 
-		if (configurations == null) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			return "email";
 		}
 

@@ -98,8 +98,7 @@ public interface ObjectFieldLocalService
 			List<ObjectFieldSetting> objectFieldSettings)
 		throws PortalException;
 
-	public void addOrUpdateObjectFieldResourceActionPLOEntries(
-			ObjectField objectField)
+	public void addOrUpdateObjectFieldPLOEntries(ObjectField objectField)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

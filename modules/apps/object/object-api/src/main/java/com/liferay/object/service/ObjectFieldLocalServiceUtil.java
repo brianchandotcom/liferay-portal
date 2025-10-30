@@ -89,12 +89,10 @@ public class ObjectFieldLocalServiceUtil {
 			readOnlyConditionExpression, required, state, objectFieldSettings);
 	}
 
-	public static void addOrUpdateObjectFieldResourceActionPLOEntries(
-			ObjectField objectField)
+	public static void addOrUpdateObjectFieldPLOEntries(ObjectField objectField)
 		throws PortalException {
 
-		getService().addOrUpdateObjectFieldResourceActionPLOEntries(
-			objectField);
+		getService().addOrUpdateObjectFieldPLOEntries(objectField);
 	}
 
 	public static ObjectField addOrUpdateSystemObjectField(

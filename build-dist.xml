@@ -1153,25 +1153,38 @@ org.apache.level=WARNING]]>
 				<available file="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}" />
 			</not>
 			<then>
-				<trycatch>
-					<try>
-						<mkdir dir="${app.server.parent.dir}" />
+				<if>
+					<isset property="env.JENKINS_HOME" />
+					<then>
+						<trycatch>
+							<try>
+								<mkdir dir="${app.server.parent.dir}" />
 
-						<mirrors-get
-							dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
-							src="http://files.liferay.com/private/apps/oracle/weblogicas/${app.server.weblogic.version.number}/${app.server.weblogic.zip.name}"
-							verbose="true"
-						/>
-					</try>
-					<catch>
-						<fail>
+								<mirrors-get
+									dest="${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}"
+									src="http://files.liferay.com/private/apps/oracle/weblogicas/${app.server.weblogic.version.number}/${app.server.weblogic.zip.name}"
+									verbose="true"
+								/>
+							</try>
+							<catch>
+								<fail>
 Please download the Weblogic custom zip file from
 http://mirrors/files.liferay.com/private/apps/oracle/weblogicas/${app.server.weblogic.version.number} and
 place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
 this task.
+								</fail>
+							</catch>
+						</trycatch>
+					</then>
+					<else>
+						<fail>
+Please download the Weblogic zip file from
+${app.server.weblogic.zip.url} and
+place it here: ${app.server.parent.dir}/${app.server.weblogic.custom.zip.name}. Then rerun
+this task.
 						</fail>
-					</catch>
-				</trycatch>
+					</else>
+				</if>
 			</then>
 		</if>
 

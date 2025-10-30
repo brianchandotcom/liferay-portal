@@ -1186,12 +1186,12 @@ components:
                                 The external reference code of the corresponding fragment instance in the draft of the
                                 page. Available only in the published page specification.
                             type: string
-                        fragmentConfig:
+                        fragmentConfigurationFieldValues:
                             additionalProperties:
                                 $ref: "#/components/schemas/FragmentConfigurationFieldValue"
                             # @review
                             description:
-                                The configuration values of the fragment instance.
+                                The fragment configuration field values of the fragment instance.
                             type: object
                         fragmentFields:
                             # @review

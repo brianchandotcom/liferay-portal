@@ -678,6 +678,34 @@ public class ObjectEntryFolderResourceImpl
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
+					"copy",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, serviceBuilderObjectEntryFolder,
+							"postObjectEntryFolderByParentObjectEntryFolder" +
+								"Copy");
+					}
+				).put(
+					"copy-replace",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, serviceBuilderObjectEntryFolder,
+							"postObjectEntryFolderByParentObjectEntryFolder" +
+								"CopyReplace");
+					}
+				).put(
 					"delete",
 					addAction(
 						ActionKeys.DELETE, serviceBuilderObjectEntryFolder,
@@ -687,6 +715,34 @@ public class ObjectEntryFolderResourceImpl
 					addAction(
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
 						"getObjectEntryFolder")
+				).put(
+					"move",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, serviceBuilderObjectEntryFolder,
+							"postObjectEntryFolderByParentObjectEntryFolder" +
+								"Move");
+					}
+				).put(
+					"move-replace",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return addAction(
+							ActionKeys.UPDATE, serviceBuilderObjectEntryFolder,
+							"postObjectEntryFolderByParentObjectEntryFolder" +
+								"MoveReplace");
+					}
 				).put(
 					"permissions",
 					addAction(

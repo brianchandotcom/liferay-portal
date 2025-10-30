@@ -3229,38 +3229,7 @@ public class ObjectEntryLocalServiceTest {
 	@FeatureFlag("LPD-31212")
 	@Test
 	public void testAddObjectEntryWithRichTextObjectField() throws Exception {
-		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
-			true,
-			Arrays.asList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), "name",
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-						).value(
-							Boolean.TRUE.toString()
-						).build()),
-					false)));
-
-		_addCustomObjectField(
-			new RichTextObjectFieldBuilder(
-			).labelMap(
-				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
-			).name(
-				"richText"
-			).objectDefinitionId(
-				objectDefinition.getObjectDefinitionId()
-			).build());
-
-		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
-
-		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
-			objectDefinition);
-
-		Map<String, Serializable> expectedValues =
+		_testAddObjectEntryWithRichTextObjectField(
 			HashMapBuilder.<String, Serializable>put(
 				"richText",
 				StringBundler.concat(
@@ -3273,21 +3242,28 @@ public class ObjectEntryLocalServiceTest {
 					"height=\"315\" src=",
 					"\"https://www.youtube.com/embed/6LjQ7Z99N74?rel=0\" ",
 					"width=\"560\"></iframe></div><p>&nbsp;</p>")
-			).build();
-
-		ObjectEntry objectEntry = _addObjectEntry(
-			TestPropsValues.getGroupId(),
-			objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.create(
-				expectedValues
 			).build());
+	}
 
-		Map<String, Serializable> actualValues = objectEntry.getValues();
+	@FeatureFlag("LPD-11235")
+	@Test
+	public void testAddObjectEntryWithRichTextObjectFieldWithCKEditor5()
+		throws Exception {
 
-		Assert.assertEquals(
-			expectedValues.get("richText"), actualValues.get("richText"));
-
-		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+		_testAddObjectEntryWithRichTextObjectField(
+			HashMapBuilder.<String, Serializable>put(
+				"richText",
+				StringBundler.concat(
+					"<figure class=\"media\"><div data-oembed-url=\"",
+					"https://www.youtube.com/watch?v=6LjQ7Z99N74\"><div ",
+					"style=\"position: relative; padding-bottom: 100%; ",
+					"height: 0; padding-bottom: 56.2493%;\"><iframe ",
+					"src=\"https://www.youtube.com/embed/6LjQ7Z99N74\" ",
+					"style=\"position: absolute; width: 100%; height: 100%; ",
+					"top: 0; left: 0;\" frameborder=\"0\" allow=\"autoplay; ",
+					"encrypted-media\" allowfullscreen=\"\"></iframe>",
+					"</div></div></figure>")
+			).build());
 	}
 
 	@Test
@@ -8377,6 +8353,56 @@ public class ObjectEntryLocalServiceTest {
 		_objectDefinition =
 			_objectDefinitionLocalService.updateObjectDefinition(
 				_objectDefinition);
+	}
+
+	private void _testAddObjectEntryWithRichTextObjectField(
+			Map<String, Serializable> expectedValues)
+		throws Exception {
+
+		ObjectDefinition objectDefinition = _publishCustomObjectDefinition(
+			true,
+			Arrays.asList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), "name",
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							Boolean.TRUE.toString()
+						).build()),
+					false)));
+
+		_addCustomObjectField(
+			new RichTextObjectFieldBuilder(
+			).labelMap(
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString())
+			).name(
+				"richText"
+			).objectDefinitionId(
+				objectDefinition.getObjectDefinitionId()
+			).build());
+
+		objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		objectDefinition = _objectDefinitionLocalService.updateObjectDefinition(
+			objectDefinition);
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			TestPropsValues.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.create(
+				expectedValues
+			).build());
+
+		Map<String, Serializable> actualValues = objectEntry.getValues();
+
+		Assert.assertEquals(
+			expectedValues.get("richText"), actualValues.get("richText"));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private void _testPartialUpdateObjectEntryExternalReferenceCode()

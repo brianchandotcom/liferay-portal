@@ -115,7 +115,7 @@ public class DDMIndexerImpl implements DDMIndexer {
 		for (Field field : fields) {
 			try {
 				DDMFormField ddmFormField = ddmStructure.getDDMFormField(
-					field.getName());
+					field.getName(), false);
 
 				String indexType = ddmFormField.getIndexType();
 

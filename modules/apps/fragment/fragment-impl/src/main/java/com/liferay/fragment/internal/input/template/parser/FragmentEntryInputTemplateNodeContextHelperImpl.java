@@ -852,8 +852,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		}
 
 		if (value instanceof InfoLocalizedValue) {
-			InfoLocalizedValue<String> infoLocalizedValue =
-				(InfoLocalizedValue<String>)value;
+			InfoLocalizedValue<?> infoLocalizedValue =
+				(InfoLocalizedValue<?>)value;
 
 			return infoLocalizedValue.getValues();
 		}

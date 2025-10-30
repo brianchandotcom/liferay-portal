@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
+import ButtonWithIcon from '../../../../components/ButtonWithIcon';
 import ClayModal, {useModal} from '@clayui/modal';
 
 import i18n from '../../../../i18n';
@@ -42,7 +43,7 @@ const DeactivateKeysModal: React.FC<DeactivateKeysModalProps> = ({
 							{i18n.translate('confirm-deactivation-terms')}
 						</h2>
 
-						<ClayButtonWithIcon
+						<ButtonWithIcon
 							aria-labelledby="close icon"
 							className="align-self-start"
 							displayType="unstyled"

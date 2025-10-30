@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import DropDown from '@clayui/drop-down';
 import {useNavigate} from 'react-router-dom';
 
@@ -117,7 +117,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 							<div onClick={(event) => event.stopPropagation()}>
 								<DropDown
 									trigger={
-										<ClayButtonWithIcon
+										<ButtonWithIcon
 											aria-label="Kebab Button"
 											displayType={null}
 											symbol="ellipsis-v"

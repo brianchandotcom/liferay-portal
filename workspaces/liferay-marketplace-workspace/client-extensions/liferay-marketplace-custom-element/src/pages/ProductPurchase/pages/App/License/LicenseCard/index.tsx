@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
 
@@ -71,7 +71,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({sku}) => {
 				</span>
 
 				<div className="align-items-center d-flex justify-content-between license__card__buttons__container p-1">
-					<ClayButtonWithIcon
+					<ButtonWithIcon
 						aria-label="Remove from Cart"
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 						disabled={cartItemsCount === MIN_ITEM}
@@ -86,7 +86,7 @@ const LicenseCard: React.FC<LicenseCardProps> = ({sku}) => {
 						{cartItemsCount}
 					</span>
 
-					<ClayButtonWithIcon
+					<ButtonWithIcon
 						aria-label="Add To Cart"
 						className="align-items-center d-flex justify-content-center license__card__buttons p-2"
 						disabled={cartItemsCount === MAX_ITEM}

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
@@ -118,8 +118,9 @@ const Table = <T extends Record<string, any>>({
 							},
 						}))}
 						trigger={
-							<ClayButtonWithIcon
+							<ButtonWithIcon
 								aria-label="actions"
+								className='btn-monospaced'
 								displayType="unstyled"
 								onClick={(event) => event.stopPropagation()}
 								symbol="ellipsis-v"

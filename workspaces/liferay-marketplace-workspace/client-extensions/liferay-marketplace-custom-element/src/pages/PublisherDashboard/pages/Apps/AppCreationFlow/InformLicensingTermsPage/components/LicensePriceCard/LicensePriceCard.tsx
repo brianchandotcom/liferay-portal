@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ButtonWithIcon from '../../../../../../../../components/ButtonWithIcon';
 import ClayForm, {ClayInput} from '@clayui/form';
 
 import './LicensePriceCard.scss';
@@ -14,7 +14,6 @@ import {useState} from 'react';
 import {FieldBase} from '../../../../../../../../components/FieldBase';
 import {LicensePrice} from '../../../AppContext/AppManageState';
 import CurrencySelector from '../CurrencySelector';
-import IconButton from '../IconButton';
 
 type LicensePriceCardProps = {
 	disabled?: boolean;
@@ -116,25 +115,28 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 					</ClayInput.Group>
 
 					{!!index && (
-						<ClayButtonWithIcon
+						<ButtonWithIcon
 							aria-label="Delete"
 							displayType={null}
 							onClick={() => onDelete(tierPrice.key)}
 							symbol="trash"
 							title="Delete"
-						/>
+							className="btn-monospaced"
+						/>	
 					)}
 				</div>
 			))}
-
-			<IconButton
-				className="icon-button py-3 w-100"
-				disabled={disabled}
-				displayType={null}
-				onClick={onAdd}
-			>
-				Add Price Tier
-			</IconButton>
+			<span>
+				<ButtonWithIcon
+					className="icon-button py-3 w-100"
+					disabled={disabled}
+					displayType={null}
+					onClick={onAdd}
+					symbol="plus"
+				>
+					Add Price Tier
+				</ButtonWithIcon>
+			</span>
 		</ClayForm.Group>
 	);
 };

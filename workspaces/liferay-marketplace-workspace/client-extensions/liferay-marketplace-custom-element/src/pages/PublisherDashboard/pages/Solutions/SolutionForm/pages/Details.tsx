@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
@@ -160,7 +161,7 @@ const Details = () => {
 					<ClayModal.Body className="mb-1">
 						<h1 className="d-flex justify-content-between">
 							Select Content Block
-							<ClayButtonWithIcon
+							<ButtonWithIcon
 								aria-label="Close"
 								className="inline-item"
 								displayType="unstyled"

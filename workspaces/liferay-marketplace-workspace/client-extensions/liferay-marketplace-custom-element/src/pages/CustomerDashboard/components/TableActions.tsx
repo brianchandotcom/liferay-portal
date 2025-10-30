@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ClayButtonWithIcon} from '@clayui/button';
+import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 
@@ -26,7 +26,7 @@ const TableActions: React.FC<TableActionsProps> = ({
 		<ClayDropDown
 			alignmentPosition={Align.BottomRight}
 			trigger={
-				<ClayButtonWithIcon
+				<ButtonWithIcon
 					aria-label="Menu"
 					displayType={null}
 					symbol="ellipsis-v"

@@ -13,7 +13,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
 	testIntegrationImplementation project(":apps:portal-workflow:portal-workflow-api")
 	testIntegrationImplementation project(":apps:site:site-api")
-	testIntegrationImplementation project(":dxp:apps:site:site-ai-hub-rest-api")
-	testIntegrationImplementation project(":dxp:apps:site:site-ai-hub-rest-client")
+	testIntegrationImplementation project(":dxp:apps:ai-hub:ai-hub-rest-api")
+	testIntegrationImplementation project(":dxp:apps:ai-hub:ai-hub-rest-client")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

@@ -7,12 +7,20 @@ package com.liferay.headless.asset.library.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.asset.library.client.dto.v1_0.UserGroup;
+import com.liferay.headless.asset.library.client.pagination.Page;
+import com.liferay.headless.asset.library.client.pagination.Pagination;
+import com.liferay.headless.asset.library.client.resource.v1_0.UserGroupResource;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -23,6 +31,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -49,6 +58,49 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	@Override
 	@Test
 	public void testBatchEngineDeleteImportTask() {
+	}
+
+	@Override
+	@Test
+	public void testGetAssetLibraryUserGroupsPage() throws Exception {
+		super.testGetAssetLibraryUserGroupsPage();
+
+		Page<UserGroup> adminUserUserGroupPage =
+			userGroupResource.getAssetLibraryUserGroupsPage(
+				testGetAssetLibraryUserGroupsPage_getAssetLibraryExternalReferenceCode(),
+				StringPool.BLANK, StringPool.BLANK, Pagination.of(1, 0),
+				StringPool.BLANK);
+
+		String password = RandomTestUtil.randomString();
+
+		User user = UserTestUtil.addUser(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			password, RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[] {testDepotEntry.getGroupId()},
+			ServiceContextTestUtil.getServiceContext());
+
+		_userLocalService.addGroupUser(testDepotEntry.getGroupId(), user);
+
+		UserGroupResource userUserGroupResource = UserGroupResource.builder(
+		).authentication(
+			user.getEmailAddress(), password
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		Page<UserGroup> userUserGroupPage =
+			userUserGroupResource.getAssetLibraryUserGroupsPage(
+				testGetAssetLibraryUserGroupsPage_getAssetLibraryExternalReferenceCode(),
+				StringPool.BLANK, StringPool.BLANK, Pagination.of(1, 0),
+				StringPool.BLANK);
+
+		Assert.assertEquals(
+			adminUserUserGroupPage.getTotalCount(),
+			userUserGroupPage.getTotalCount());
 	}
 
 	@Override
@@ -166,5 +218,8 @@ public class UserGroupResourceTest extends BaseUserGroupResourceTestCase {
 	@DeleteAfterTestRun
 	private List<com.liferay.portal.kernel.model.UserGroup> _userGroups =
 		new ArrayList<>();
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

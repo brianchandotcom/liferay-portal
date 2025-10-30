@@ -9,9 +9,11 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionSettingLocalService;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
 import com.liferay.site.cms.site.initializer.internal.display.context.BaseSectionDisplayContextHelper;
 
@@ -99,9 +101,9 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_baseSectionDisplayContextHelper = new BaseSectionDisplayContextHelper(
-			_depotEntryLocalService, _groupLocalService,
+			_depotEntryLocalService, _groupLocalService, _language,
 			_objectDefinitionSettingLocalService,
-			_objectEntryFolderModelResourcePermission);
+			_objectEntryFolderModelResourcePermission, _portal);
 	}
 
 	private BaseSectionDisplayContextHelper _baseSectionDisplayContextHelper;
@@ -113,6 +115,9 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	private GroupLocalService _groupLocalService;
 
 	@Reference
+	private Language _language;
+
+	@Reference
 	private ObjectDefinitionSettingLocalService
 		_objectDefinitionSettingLocalService;
 
@@ -121,5 +126,8 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	)
 	private ModelResourcePermission<ObjectEntryFolder>
 		_objectEntryFolderModelResourcePermission;
+
+	@Reference
+	private Portal _portal;
 
 }

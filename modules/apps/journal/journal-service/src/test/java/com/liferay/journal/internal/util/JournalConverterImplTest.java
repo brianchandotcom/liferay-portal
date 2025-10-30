@@ -191,8 +191,8 @@ public class JournalConverterImplTest {
 			"string", true, "checkbox_" + multiple, "checkbox_multiple");
 
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
-		List<String> optionValues = new ArrayList<>();
 		List<String> optionReferences = new ArrayList<>();
+		List<String> optionValues = new ArrayList<>();
 
 		int optionCount = 1;
 
@@ -202,19 +202,22 @@ public class JournalConverterImplTest {
 
 		for (int i = 0; i < optionCount; i++) {
 			String value = "Option" + RandomTestUtil.randomString();
-			String optionReference = RandomTestUtil.randomString();
-
-			optionValues.add(value);
-			optionReferences.add(optionReference);
 
 			ddmFormFieldOptions.addOption(value);
-			ddmFormFieldOptions.addOptionLabel(
+			ddmFormFieldOptions.addOpt_updateContentDynamicElementionLabel(
 				value, LocaleUtil.US, RandomTestUtil.randomString());
+
+			String optionReference = RandomTestUtil.randomString();
+
 			ddmFormFieldOptions.addOptionReference(value, optionReference);
+
+			optionReferences.add(optionReference);
+
+			optionValues.add(value);
 		}
 
-		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 		allOptionReferences.add(optionReferences);
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
 
 		Serializable fieldValue = optionValues.get(0);
 
@@ -255,16 +258,17 @@ public class JournalConverterImplTest {
 
 		String value = RandomTestUtil.randomString();
 
-		String optionReference = RandomTestUtil.randomString();
-
-		optionReferences.add(optionReference);
-
 		ddmFormFieldOptions.addOption(value);
 		ddmFormFieldOptions.addOptionLabel(
 			value, LocaleUtil.US, RandomTestUtil.randomString());
+
+		String optionReference = RandomTestUtil.randomString();
+
 		ddmFormFieldOptions.addOptionReference(value, optionReference);
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		optionReferences.add(optionReference);
 
 		Serializable fieldValue = value;
 

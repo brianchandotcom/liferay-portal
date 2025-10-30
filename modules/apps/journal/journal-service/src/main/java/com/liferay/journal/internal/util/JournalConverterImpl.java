@@ -572,14 +572,14 @@ public class JournalConverterImpl implements JournalConverter {
 				DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE, fieldType)) {
 
 			try {
+				JSONArray fieldValueJSONArray = _jsonFactory.createJSONArray(
+					fieldValue);
+
 				DDMFormFieldOptions ddmFormFieldOptions =
 					(DDMFormFieldOptions)ddmFormField.getProperty("options");
 
 				Map<String, LocalizedValue> options =
 					ddmFormFieldOptions.getOptions();
-
-				JSONArray fieldValueJSONArray = _jsonFactory.createJSONArray(
-					fieldValue);
 
 				if (options.size() > 1) {
 					dynamicContentElement.addCDATA(fieldValue);

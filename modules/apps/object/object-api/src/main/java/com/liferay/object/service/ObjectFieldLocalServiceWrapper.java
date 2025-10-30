@@ -87,12 +87,11 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
-	public void addOrUpdateObjectFieldResourceActionPLOEntries(
+	public void addOrUpdateObjectFieldPLOEntries(
 			com.liferay.object.model.ObjectField objectField)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		_objectFieldLocalService.addOrUpdateObjectFieldResourceActionPLOEntries(
-			objectField);
+		_objectFieldLocalService.addOrUpdateObjectFieldPLOEntries(objectField);
 	}
 
 	@Override

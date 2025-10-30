@@ -114,9 +114,9 @@ public class CopyTemplateEntryMVCActionCommandTest {
 				curTemplateEntry.getDDMTemplateId());
 
 			if ((ddmTemplate != null) &&
-				Objects.equals(_name, ddmTemplate.getName(_languageId)) &&
 				Objects.equals(
 					_description, ddmTemplate.getDescription(_languageId)) &&
+				Objects.equals(_name, ddmTemplate.getName(_languageId)) &&
 				Objects.equals(
 					originalDDMTemplate.getScript(), ddmTemplate.getScript())) {
 

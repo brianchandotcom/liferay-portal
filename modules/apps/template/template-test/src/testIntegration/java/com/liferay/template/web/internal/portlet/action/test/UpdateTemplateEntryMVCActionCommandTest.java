@@ -12,7 +12,6 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -117,9 +116,9 @@ public class UpdateTemplateEntryMVCActionCommandTest {
 			_templateEntry.getDDMTemplateId());
 
 		Assert.assertNotNull(ddmTemplate);
-		Assert.assertEquals(_name, ddmTemplate.getName(_languageId));
 		Assert.assertEquals(
 			_description, ddmTemplate.getDescription(_languageId));
+		Assert.assertEquals(_name, ddmTemplate.getName(_languageId));
 		Assert.assertEquals(_MODIFIED_SCRIPT_CONTENT, ddmTemplate.getScript());
 	}
 

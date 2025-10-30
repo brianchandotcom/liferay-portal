@@ -892,6 +892,10 @@ public class DataFactory {
 		return classNameId;
 	}
 
+	public String[] getObjectLayoutDataItemTypes() {
+		return BenchmarksPropsValues.OBJECT_LAYOUT_DATA_ITEM_TYPES;
+	}
+
 	public String getPortletId(String portletPrefix) {
 		return portletPrefix.concat(PortletIdCodec.generateInstanceId());
 	}

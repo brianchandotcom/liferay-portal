@@ -258,12 +258,14 @@ export class PagesAdminPage {
 			)
 			.getByText(themeName);
 
-		await themeCard.waitFor();
+		await themeCard.waitFor({state: 'visible'});
 
 		await clickAndExpectToBeHidden({
 			target: themeCard,
 			trigger: themeCard,
 		});
+
+		await themeCard.waitFor({state: 'detached'});
 
 		await this.configurationSaveButton.waitFor();
 

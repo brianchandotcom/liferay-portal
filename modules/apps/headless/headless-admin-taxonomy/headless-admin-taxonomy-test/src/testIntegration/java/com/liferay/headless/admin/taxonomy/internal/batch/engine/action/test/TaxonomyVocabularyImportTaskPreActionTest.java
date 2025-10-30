@@ -8,10 +8,21 @@ package com.liferay.headless.admin.taxonomy.internal.batch.engine.action.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
+import com.liferay.exportimport.test.rule.LazyReferencing;
+import com.liferay.exportimport.test.rule.LazyReferencingTestRule;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.internal.batch.engine.action.test.util.ExportImportTaskResourceTestUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -20,6 +31,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -43,6 +55,11 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@ClassRule
+	@Rule
+	public static final LazyReferencingTestRule lazyReferencingTestRule =
+		LazyReferencingTestRule.INSTANCE;
 
 	@Before
 	public void setUp() throws Exception {
@@ -125,6 +142,67 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 			_localGroup.getGroupId(), _user.getUserId());
 	}
 
+	@LazyReferencing
+	@Test
+	public void testImportWithUpsertAndKeepPermissions() throws Exception {
+		AssetVocabulary assetVocabulary = _getAssetVocabulary(
+			_user.getUserId());
+
+		String json = ExportImportTaskResourceTestUtil.executeExportTask(
+			_ITEM_CLASS_NAME, _localGroup.getGroupId());
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray(json);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		String roleExternalReferenceCode = RandomTestUtil.randomString();
+		String roleName = RandomTestUtil.randomString();
+
+		jsonObject.put(
+			"permissions",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"actionIds", JSONUtil.putAll("UPDATE")
+				).put(
+					"roleExternalReferenceCode", roleExternalReferenceCode
+				).put(
+					"roleName", roleName
+				)));
+
+		ExportImportTaskResourceTestUtil.executeImportTask(
+			_ITEM_CLASS_NAME, "UPSERT", _targetGroup.getGroupId(),
+			"KEEP_CREATOR",
+			JSONUtil.putAll(
+				jsonObject
+			).toString());
+
+		_assertAssetVocabulary(
+			assetVocabulary.getExternalReferenceCode(),
+			_targetGroup.getGroupId(), _user.getUserId());
+
+		Role role = _roleLocalService.getRoleByExternalReferenceCode(
+			roleExternalReferenceCode, _localGroup.getCompanyId());
+
+		Assert.assertEquals(
+			role.getExternalReferenceCode(), roleExternalReferenceCode);
+		Assert.assertEquals(role.getName(), roleName);
+		Assert.assertEquals(WorkflowConstants.STATUS_EMPTY, role.getStatus());
+
+		AssetVocabulary importedAssetVocabulary =
+			_assetVocabularyLocalService.
+				getAssetVocabularyByExternalReferenceCode(
+					assetVocabulary.getExternalReferenceCode(),
+					_targetGroup.getGroupId());
+
+		Class<?> clazz = assetVocabulary.getClass();
+
+		_resourcePermissionLocalService.hasResourcePermission(
+			_localGroup.getCompanyId(), clazz.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(importedAssetVocabulary.getVocabularyId()),
+			role.getRoleId(), ActionKeys.UPDATE);
+	}
+
 	@Test
 	public void testImportWithUpsertAndOverwriteCreator() throws Exception {
 		AssetVocabulary assetVocabulary = _getAssetVocabulary(
@@ -170,8 +248,17 @@ public class TaxonomyVocabularyImportTaskPreActionTest {
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
+	@Inject
+	private JSONFactory _jsonFactory;
+
 	@DeleteAfterTestRun
 	private Group _localGroup;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	@DeleteAfterTestRun
 	private Group _targetGroup;

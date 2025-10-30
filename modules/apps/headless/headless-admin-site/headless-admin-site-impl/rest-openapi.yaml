@@ -3382,6 +3382,22 @@ components:
             description:
                 The collection display's template list style.
             type: object
+        TemplateReference:
+            # @review
+            description:
+                The template's reference.
+            properties:
+                rendererKey:
+                    # @review
+                    description:
+                        The renderer's key.
+                    type: string
+                templateKey:
+                    # @review
+                    description:
+                        The template's key.
+                    type: string
+            type: object
         TextFragmentConfigurationFieldValue:
             allOf:
                 -   $ref: "#/components/schemas/FragmentConfigurationFieldValue"

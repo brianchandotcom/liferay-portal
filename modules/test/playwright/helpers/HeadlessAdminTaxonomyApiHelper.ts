@@ -48,6 +48,16 @@ interface postSiteKeywordProps {
 	siteId: string;
 }
 
+interface putTaxonomyCategoriesTaxonomyCategoryPermissions {
+	actionIds: string[];
+	roleName: string;
+}
+
+interface putTaxonomyVocabulariesTaxonomyVocabularyPermissions {
+	actionIds: string[];
+	roleName: string;
+}
+
 export class HeadlessAdminTaxonomyApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -211,6 +221,59 @@ export class HeadlessAdminTaxonomyApiHelper {
 	async deleteKeyword({id}: {id: number}) {
 		return this.apiHelpers.delete(
 			`${this.apiHelpers.baseUrl}${this.basePath}/keywords/${id}`
+		);
+	}
+
+	/**
+	 * It allows to add permission to a taxonomy category.
+	 *
+	 * @param id the id of the tag
+	 * @param actionIds the actionIds of the user
+	 * @param roleName the roleName of the user
+	 */
+
+	async putTaxonomyCategoriesTaxonomyCategoryPermissions(
+		id: number,
+		{actionIds, roleName}: putTaxonomyCategoriesTaxonomyCategoryPermissions
+	) {
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-categories/${id}/permissions`,
+			{
+				data: [
+					{
+						actionIds,
+						roleName,
+					},
+				],
+			}
+		);
+	}
+
+	/**
+	 * It allows to add permission to a taxonomy vocabulary.
+	 *
+	 * @param id the id of the tag
+	 * @param actionIds the actionIds of the user
+	 * @param roleName the roleName of the user
+	 */
+
+	async putTaxonomyVocabulariesTaxonomyVocabularyPermissions(
+		id: number,
+		{
+			actionIds,
+			roleName,
+		}: putTaxonomyVocabulariesTaxonomyVocabularyPermissions
+	) {
+		return this.apiHelpers.put(
+			`${this.apiHelpers.baseUrl}${this.basePath}/taxonomy-vocabularies/${id}/permissions`,
+			{
+				data: [
+					{
+						actionIds,
+						roleName,
+					},
+				],
+			}
 		);
 	}
 }

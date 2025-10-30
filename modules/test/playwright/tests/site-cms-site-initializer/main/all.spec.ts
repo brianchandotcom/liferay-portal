@@ -12,6 +12,11 @@ import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {
+	performLogout,
+	userData,
+} from '../../../utils/performLogin';
+import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
@@ -514,6 +519,194 @@ test(
 						autoClose: true,
 					}
 				);
+			});
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry1.id)
+			);
+		}
+	}
+);
+
+test(
+	'Info Panel Categories tab',
+	{tag: '@LPD-68491'},
+	async ({
+		apiHelpers,
+		assetsPage,
+		contentsPage,
+		infoPanelPage,
+		page,
+		spaceSummaryPage,
+	}) => {
+		const applicationName = 'cms/basic-web-contents';
+		let categoryLabel;
+		const categoryName = getRandomString();
+		const file1Title = `title ${getRandomString()}`;
+		const spaceName = 'Default';
+		const tagName = getRandomString();
+		let tagLabel;
+		let user;
+		const vocabularyName = getRandomString();
+
+		const siteId = await apiHelpers.headlessAdminUser
+			.getSiteByFriendlyUrlPath('cms')
+			.then((response) => response.id);
+
+		const vocabularyId = await apiHelpers.headlessAdminTaxonomy
+			.postSiteTaxonomyVocabulary({
+				assetLibraries: [{id: -1}],
+				assetTypes: [
+					{
+						required: true,
+						subtype: 'AllAssetSubtypes',
+						type: 'AllAssetTypes',
+					},
+				],
+				name: vocabularyName,
+				siteId,
+				visibilityType: 'PUBLIC',
+			})
+			.then((response) => response.id);
+
+		const categoryId = await apiHelpers.headlessAdminTaxonomy
+			.postTaxonomyVocabularyTaxonomyCategory({
+				name: categoryName,
+				vocabularyId,
+			})
+			.then((response) => response.id);
+
+		await apiHelpers.headlessAdminTaxonomy.putTaxonomyVocabulariesTaxonomyVocabularyPermissions(
+			vocabularyId,
+			{actionIds: ['VIEW'], roleName: 'Site Member'}
+		);
+
+		await apiHelpers.headlessAdminTaxonomy.putTaxonomyCategoriesTaxonomyCategoryPermissions(
+			categoryId,
+			{actionIds: ['VIEW'], roleName: 'Site Member'}
+		);
+
+		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
+			{
+				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+				title: file1Title,
+			},
+			applicationName,
+			spaceName
+		);
+
+		try {
+			await test.step('Create an user and add to the Space', async () => {
+				user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+				userData[user.alternateName] = {
+					name: user.givenName,
+					password: 'test',
+					surname: user.familyName,
+				};
+
+				await spaceSummaryPage.goto(spaceName);
+
+				await spaceSummaryPage.addUserOrUserGroup(user.name, 'users');
+			});
+
+			await test.step('Go to All Assets and open the Info Panel Categorization Tab', async () => {
+				await assetsPage.gotoAll();
+
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: file1Title,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
+
+				await infoPanelPage.selectTab('Categorization').click();
+			});
+
+			await test.step('Add a new tag to the content', async () => {
+				const tagsAutocomplete = page.getByPlaceholder('Add tag');
+
+				await tagsAutocomplete.fill(tagName);
+
+				const newTagOption = page.getByRole('option', {
+					name: 'Create New Tag:',
+				});
+
+				await newTagOption.waitFor();
+				await newTagOption.click();
+
+				tagLabel = page.locator('.label-item', {hasText: tagName});
+
+				await expect(tagLabel).toBeAttached();
+			});
+
+			await test.step('Add a new category to the content', async () => {
+				const categoriesAutocomplete =
+					page.getByPlaceholder('Add category');
+
+				await categoriesAutocomplete.fill(categoryName);
+
+				const option = page.getByRole('option', {name: categoryName});
+
+				await option.waitFor();
+				await option.click();
+
+				categoryLabel = page.locator('.label-item', {
+					hasText: categoryName,
+				});
+
+				await expect(categoryLabel).toBeAttached();
+			});
+
+			await test.step('Login as a space member and go to Info Panel Categorization tab', async () => {
+				await performLogout(page);
+
+				await performLogin(page, user.alternateName);
+
+				await page.goto(PORTLET_URLS.cmsAll);
+
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: file1Title,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
+
+				await infoPanelPage.selectTab('Categorization').click();
+			});
+
+			await test.step('Check that space member can see tags and vocabulary but cannot edit them', async () => {
+				await expect(tagLabel).toBeAttached();
+				await expect(categoryLabel).toBeAttached();
+				await expect(
+					page.getByLabel(tagName).getByLabel('Close')
+				).toBeDisabled();
+				await expect(
+					page.getByLabel(categoryName).getByLabel('Close')
+				).toBeDisabled();
+			});
+
+			await test.step('Check that space member can see tags and vocabulary but cannot edit them also in the Content Editor', async () => {
+				await assetsPage.dataSetFragmentPage
+					.assetLink(file1Title)
+					.click();
+
+				await contentsPage.openSidePanel('Categorization');
+
+				await expect(tagLabel).toBeAttached();
+				await expect(categoryLabel).toBeAttached();
+				await expect(
+					page.getByLabel(tagName).getByLabel('Close')
+				).toBeDisabled();
+				await expect(
+					page.getByLabel(categoryName).getByLabel('Close')
+				).toBeDisabled();
 			});
 		}
 		finally {

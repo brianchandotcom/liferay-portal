@@ -25,7 +25,7 @@ public abstract class BaseContentsSectionCMSTableFDSView
 			fdsTableSchemaBuilderFactory.create();
 
 		return fdsTableSchemaBuilder.add(
-			"embedded.title", "title",
+			"title", "title",
 			fdsTableSchemaField -> fdsTableSchemaField.setActionId(
 				"actionLink"
 			).setContentRenderer(

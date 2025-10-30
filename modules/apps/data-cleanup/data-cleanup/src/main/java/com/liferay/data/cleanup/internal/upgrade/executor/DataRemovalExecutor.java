@@ -134,6 +134,10 @@ public class DataRemovalExecutor {
 			}
 		}
 
+		if (dataRemovalConfiguration.removeClassNameOrphanData()) {
+			_classNameDataCleanupVerifyProcess.verify();
+		}
+
 		if (dataRemovalConfiguration.removeServiceComponentOrphanData()) {
 			_serviceComponentDataCleanupVerifyProcess.verify();
 		}
@@ -214,6 +218,11 @@ public class DataRemovalExecutor {
 			}
 		}
 	}
+
+	@Reference(
+		target = "(component.name=com.liferay.data.cleanup.internal.verify.ClassNameDataCleanupVerifyProcess)"
+	)
+	private VerifyProcess _classNameDataCleanupVerifyProcess;
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;

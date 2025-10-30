@@ -29,6 +29,12 @@ public interface DataRemovalConfiguration {
 	public boolean removeAnalyticsMessageData();
 
 	@Meta.AD(
+		deflt = "false", name = "remove-class-name-orphan-data",
+		required = false
+	)
+	public boolean removeClassNameOrphanData();
+
+	@Meta.AD(
 		deflt = "false", name = "remove-company-orphan-data", required = false
 	)
 	public boolean removeCompanyOrphanData();

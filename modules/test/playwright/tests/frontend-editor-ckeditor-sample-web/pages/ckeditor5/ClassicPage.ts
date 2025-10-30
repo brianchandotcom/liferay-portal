@@ -5,15 +5,15 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
-export class ClassicPage {
+import {CKEditorSamplePageTab} from "../CKEditorSamplePage";
+
+export class ClassicPage implements CKEditorSamplePageTab{
 	readonly editable: Locator;
 	readonly itemSelectorFrame: FrameLocator;
-	readonly page: Page;
 	readonly toolbar: {
 		buttonLabels: Locator;
 		container: Locator;
 	};
-	readonly videoSelectorFrame: FrameLocator;
 
 	constructor(page: Page) {
 		this.editable = page.locator('.ck-editor__editable');
@@ -21,8 +21,6 @@ export class ClassicPage {
 		this.itemSelectorFrame = page.frameLocator(
 			'iframe[title="Select Item"]'
 		);
-
-		this.page = page;
 
 		const toolbarContainer = page.getByLabel('Editor toolbar');
 

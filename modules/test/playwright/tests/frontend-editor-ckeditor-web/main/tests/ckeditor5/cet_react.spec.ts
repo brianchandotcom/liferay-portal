@@ -7,27 +7,16 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
-import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
-import {SubTabName, TabName} from "../../../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
-import {classicPageTest} from './fixtures/classicPageTest';
+import {reactPlusCETClassicPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor5/classicPageTest';
 
 export const test = mergeTests(
-	ckeditorSamplePageTest,
-	classicPageTest,
+	reactPlusCETClassicPageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest()
 );
-
-test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.goto();
-	await ckeditorSamplePage.selectTab(
-		TabName.CK_EDITOR_5,
-		SubTabName.REACT_PLUS_CET
-	);
-});
 
 test(
 	'Editor configuration is applied, merging existing and client extension customizations',

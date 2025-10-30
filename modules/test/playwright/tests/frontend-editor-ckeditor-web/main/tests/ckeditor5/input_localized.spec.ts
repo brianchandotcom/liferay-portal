@@ -8,12 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {featureFlagsTest} from '../../../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
-import {ckeditorSamplePageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
-import {SubTabName, TabName} from "../../../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
-import {inputLocalizedPageTest} from './fixtures/inputLocalizedPageTest';
+import {inputLocalizedPageTest} from '../../../../frontend-editor-ckeditor-sample-web/fixtures/ckeditor5/inputLocalizedPageTest';
 
 export const test = mergeTests(
-	ckeditorSamplePageTest,
 	featureFlagsTest({
 		'LPD-11235': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -21,14 +18,6 @@ export const test = mergeTests(
 	inputLocalizedPageTest,
 	loginTest()
 );
-
-test.beforeEach(async ({ckeditorSamplePage}) => {
-	await ckeditorSamplePage.goto();
-	await ckeditorSamplePage.selectTab(
-		TabName.CK_EDITOR_5,
-		SubTabName.INPUT_LOCALIZED
-	);
-});
 
 test(
 	'Editor and languages dropdown properly function',

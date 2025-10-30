@@ -53,7 +53,7 @@ describe('ScheduleField', () => {
 	});
 
 	it('renders ScheduleField with Never Expire checkbox', async () => {
-		renderComponent({neverExpire: true});
+		renderComponent({neverCheckbox: {label: 'never-expire', value: true}});
 
 		const input = screen.getByPlaceholderText('MM/DD/YYYY --:-- --');
 		const neverExpire = screen.getByLabelText('never-expire');

@@ -103,10 +103,9 @@
 									<execute failonerror="false">
 										<![CDATA[
 											docker rmi ${analytics.cloud.asah.image.names.list}
-											docker builder prune -f
-											docker container prune -f
-											docker image prune -f
-											docker volume prune -f
+
+											docker system prune --all --force &> /dev/null
+
 											docker system df
 										]]>
 									</execute>

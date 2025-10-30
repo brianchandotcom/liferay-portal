@@ -50,7 +50,7 @@ public class UniqueUtilTest {
 		Assert.assertEquals(
 			StringBundler.concat(value, " (", copyLabelValue, " 3)"),
 			UniqueUtil.getCopyValue(
-				copyValue -> copyValue.endsWith("3)"), copyLabelKey, value));
+				copyValue -> copyValue.endsWith(" 3)"), copyLabelKey, value));
 	}
 
 }

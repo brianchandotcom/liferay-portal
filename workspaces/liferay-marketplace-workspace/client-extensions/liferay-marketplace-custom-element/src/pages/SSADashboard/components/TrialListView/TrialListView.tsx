@@ -22,7 +22,7 @@ import {formatDate, formatDateTime} from '../../../../utils/date';
 import {safeJSONParse} from '../../../../utils/util';
 import {useSSADashboardOutlet} from '../../SSADashboardOutlet';
 import {EXTEND_TRIAL_STATUS_LABEL} from '../../constants';
-import CreateTrialModalForm from '../../pages/CreateTrialModalform';
+import CreateTrialModalForm from '../../modals/CreateTrialModalform';
 import ExtensionStatus from '../ExtensionStatus/ExtensionStatus';
 import TrialStatus from '../TrialStatus/TrialStatus';
 

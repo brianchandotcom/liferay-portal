@@ -5,8 +5,8 @@
 
 import useSWR from 'swr';
 
-import SearchBuilder from '../../core/SearchBuilder';
-import HeadlessTrialExtensionRequest from '../../services/rest/HeadlessTrialExtensionRequest';
+import SearchBuilder from '../../../core/SearchBuilder';
+import HeadlessTrialExtensionRequest from '../../../services/rest/HeadlessTrialExtensionRequest';
 
 const useSSATrialsExtend = (account: Account) =>
 	useSWR(account?.id ? '/o/c/trialextensionrequests' : null, () =>

@@ -12,9 +12,9 @@ import useModalContext from '../../../hooks/useModalContext';
 import i18n from '../../../i18n';
 import {useSSADashboardOutlet} from '../SSADashboardOutlet';
 import TrialListView from '../components/TrialListView/TrialListView';
-import useSSAActions from '../useSSAActions';
+import useSSAActions from '../hooks/useSSAActions';
 
-export default function SaaSTrials() {
+export default function MySaaSTrials() {
 	const {marketplaceUserAccount} = useMarketplaceContext();
 	const {onOpenModal} = useModalContext();
 	const {myTrialsInProgress} = useSSADashboardOutlet();

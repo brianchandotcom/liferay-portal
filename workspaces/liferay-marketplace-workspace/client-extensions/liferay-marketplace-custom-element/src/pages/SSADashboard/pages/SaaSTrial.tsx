@@ -9,7 +9,7 @@ import {useModal} from '@clayui/modal';
 import Page from '../../../components/Page';
 import i18n from '../../../i18n';
 import TrialListView from '../components/TrialListView/TrialListView';
-import useSSAActions from '../useSSAActions';
+import useSSAActions from '../hooks/useSSAActions';
 
 export default function SaaSTrials() {
 	const actions = useSSAActions();

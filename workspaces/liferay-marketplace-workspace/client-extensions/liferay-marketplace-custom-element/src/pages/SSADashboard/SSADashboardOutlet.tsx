@@ -13,7 +13,7 @@ import SearchBuilder from '../../core/SearchBuilder';
 import {OrderTypes, OrderWorkflowStatusCode} from '../../enums/Order';
 import {usePlacedOrders} from '../../hooks/data/usePlacedOrder';
 import HeadlessAdminUser from '../../services/rest/HeadlessAdminUser';
-import {useSSATrialsExtend} from './useSSATrialsExtend';
+import {useSSATrialsExtend} from './hooks/useSSATrialsExtend';
 
 const SSADashboardOutlet = () => {
 	const {marketplaceUserAccount, myUserAccount, properties} =

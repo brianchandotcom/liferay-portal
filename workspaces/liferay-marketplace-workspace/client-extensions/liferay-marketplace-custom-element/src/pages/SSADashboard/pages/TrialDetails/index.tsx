@@ -17,7 +17,7 @@ import useGetProductByOrderId from '../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../i18n';
 import {safeJSONParse} from '../../../../utils/util';
 import OrderDetailsHeader from '../../../CustomerDashboard/components/OrderDetailsHeader';
-import useSSAActions from '../../useSSAActions';
+import useSSAActions from '../../hooks/useSSAActions';
 import TrialDetailsBody from './TrialDetailsBody';
 
 type TrialActionsProps = {

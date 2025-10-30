@@ -6,16 +6,16 @@
 import {useMemo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-import {useMarketplaceContext} from '../../context/MarketplaceContext';
-import {OrderCustomFields, OrderStatus} from '../../enums/Order';
-import useModalContext from '../../hooks/useModalContext';
-import i18n from '../../i18n';
-import {Action} from '../../utils/constants';
-import {useSSADashboardOutlet} from './SSADashboardOutlet';
-import {ExtendRequestStatus} from './enums/SSATrials';
-import ExpireSSAModal from './pages/ExpireSSAModal';
-import ExtendRequestModal from './pages/ExtendRequestModal';
-import ExtendSSATrialModal from './pages/ExtendSSATrialModal';
+import {useMarketplaceContext} from '../../../context/MarketplaceContext';
+import {OrderCustomFields, OrderStatus} from '../../../enums/Order';
+import useModalContext from '../../../hooks/useModalContext';
+import i18n from '../../../i18n';
+import {Action} from '../../../utils/constants';
+import {useSSADashboardOutlet} from '../SSADashboardOutlet';
+import {ExtendRequestStatus} from '../enums/SSATrials';
+import ExpireSSAModal from '../modals/ExpireSSAModal';
+import ExtendRequestModal from '../modals/ExtendRequestModal';
+import ExtendSSATrialModal from '../modals/ExtendSSATrialModal';
 
 const getOrderExtendRequests =
 	(trialExtendRequests: APIResponse<TrialExtend>['items']) =>
@@ -43,7 +43,7 @@ const useSSAActions = () => {
 			{
 				name: i18n.translate('details'),
 				onClick: (order: PlacedOrder) =>
-					navigate(`/details/${order.id}`),
+					navigate(`details/${order.id}`),
 			},
 			{
 				disabled: (order: PlacedOrder) =>

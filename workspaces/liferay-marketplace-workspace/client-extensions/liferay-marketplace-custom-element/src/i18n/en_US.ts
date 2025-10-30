@@ -553,7 +553,9 @@ export default {
 	'save-as-a-draft-exit': 'Save as a Draft & Exit',
 	'save-as-draft': 'Save as Draft',
 	'save-this-address-for-future-orders':
-		'Save this address for future orders',
+	 'Save this address for future orders',
+	'scroll-to-bottom': 'Scroll to Bottom',
+	'scroll-to-top': 'Scroll to Top',
 	'search': 'Search',
 	'section-that-shows-the-latest-sales-made':
 		'Section that shows the latest sales made',
@@ -752,9 +754,12 @@ export default {
 	'x-results-for': '{0} Results for',
 	'x-saved-as-a-draft-successfully':
 		'<b>{0}</b> saved as a <b>draft</b> successfully',
+	'x-selected': 'X Selected',
 	'x-will-be-deleted-and-this-action-cant-be-undone-are-you-sure-you-want-to-delete-it':
 		'{0} will be deleted and this action can’t be undone. Are you sure you want to delete it?',
 	'yes': 'Yes',
+	'you-are-currently-on-a-text-element,-inside-of-a-list-box':
+		'You are currently on a text element, inside of a list box.',
 	'you-are-finalizing-your-connection-with-the-marketplace':
 		'We are finalizing your connection with the Marketplace. Please, do not close the window until the connection is fully completed, as it will close automatically once it is done.',
 	'you-can-paste-links-directly-from-youtube':

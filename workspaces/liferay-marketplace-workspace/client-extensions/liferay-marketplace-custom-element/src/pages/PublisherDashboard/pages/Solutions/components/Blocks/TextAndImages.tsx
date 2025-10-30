@@ -162,7 +162,6 @@ const TextAndImages: React.FC<BlockTypeProps<TextImageBlock>> = ({
 					status="info"
 				>
 					<ClayModal.Header
-						closeButtonAriaLabel={Liferay.Language.get('close')}
 					>
 						{i18n.translate('maximum-number-of-uploads-reached')}
 					</ClayModal.Header>

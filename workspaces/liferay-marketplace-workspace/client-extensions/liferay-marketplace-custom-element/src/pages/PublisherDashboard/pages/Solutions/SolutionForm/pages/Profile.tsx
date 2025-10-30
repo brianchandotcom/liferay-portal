@@ -209,7 +209,6 @@ const Profile = () => {
 								target: {name: 'categories', value},
 							})
 						}
-						placeholder="Select categories"
 						sourceItems={getFilteredItems(
 							categories,
 							defaultSourceItems?.categories
@@ -246,7 +245,6 @@ const Profile = () => {
 								target: {name: 'tags', value},
 							})
 						}
-						placeholder="Select tags"
 						sourceItems={getFilteredItems(
 							tags,
 							defaultSourceItems?.tags

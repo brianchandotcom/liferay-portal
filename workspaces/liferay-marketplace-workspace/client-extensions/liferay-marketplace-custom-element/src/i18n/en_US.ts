@@ -553,7 +553,7 @@ export default {
 	'save-as-a-draft-exit': 'Save as a Draft & Exit',
 	'save-as-draft': 'Save as Draft',
 	'save-this-address-for-future-orders':
-	 'Save this address for future orders',
+		'Save this address for future orders',
 	'scroll-to-bottom': 'Scroll to Bottom',
 	'scroll-to-top': 'Scroll to Top',
 	'search': 'Search',

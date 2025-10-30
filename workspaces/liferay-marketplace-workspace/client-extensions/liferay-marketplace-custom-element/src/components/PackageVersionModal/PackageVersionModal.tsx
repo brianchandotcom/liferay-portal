@@ -4,11 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import ButtonWithIcon from '../../components/ButtonWithIcon';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useEffect, useMemo, useState} from 'react';
+
+import ButtonWithIcon from '../../components/ButtonWithIcon';
 
 import './PackageVersionModal.scss';
 import useListTypeDefinition from '../../hooks/useListTypeDefinition';
@@ -88,8 +89,7 @@ export function PackageVersionModal({
 			className="package-version-modal-container"
 			observer={observer}
 		>
-			<ClayModal.Header
-			>
+			<ClayModal.Header>
 				{i18n.translate('select-compatible-versions')}
 			</ClayModal.Header>
 

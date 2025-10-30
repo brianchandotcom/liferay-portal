@@ -4,12 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import {ClaySelect} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useState} from 'react';
 
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import Form from '../../../../../../components/MarketplaceForm';
 import {
 	BlockDirections,

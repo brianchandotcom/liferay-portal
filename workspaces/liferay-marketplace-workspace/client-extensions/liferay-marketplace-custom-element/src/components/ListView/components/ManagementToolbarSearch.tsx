@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import {ClayInput} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import {useCallback, useContext, useEffect, useRef, useState} from 'react';
 
+import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import i18n from '../../../i18n';
 import {ListViewContext, ListViewTypes} from '../hooks/ListViewContext';
 

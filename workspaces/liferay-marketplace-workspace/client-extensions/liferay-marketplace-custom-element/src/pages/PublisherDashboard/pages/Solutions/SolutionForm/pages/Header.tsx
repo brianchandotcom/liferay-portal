@@ -365,8 +365,7 @@ const Header = () => {
 					size={'md' as any}
 					status="info"
 				>
-					<ClayModal.Header
-					>
+					<ClayModal.Header>
 						{i18n.translate('maximum-number-of-uploads-reached')}
 					</ClayModal.Header>
 					<ClayModal.Body className="pb-8">

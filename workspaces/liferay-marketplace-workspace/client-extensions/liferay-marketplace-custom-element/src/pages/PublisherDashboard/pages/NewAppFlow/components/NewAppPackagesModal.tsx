@@ -4,12 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import ButtonWithIcon from '../../../../../components/ButtonWithIcon';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayManagementToolbar from '@clayui/management-toolbar';
 import ClayModal, {useModal} from '@clayui/modal';
 import {useMemo, useState} from 'react';
 
+import ButtonWithIcon from '../../../../../components/ButtonWithIcon';
 import {
 	NewAppTypes,
 	useNewAppContext,

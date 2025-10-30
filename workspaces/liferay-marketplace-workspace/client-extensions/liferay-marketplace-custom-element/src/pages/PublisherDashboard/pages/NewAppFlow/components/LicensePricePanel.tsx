@@ -6,6 +6,7 @@
 import Panel from '@clayui/panel';
 import React from 'react';
 
+import ButtonWithIcon from '../../../../../components/ButtonWithIcon';
 import {Section} from '../../../../../components/Section/Section';
 import {
 	LicensePrice,
@@ -20,7 +21,6 @@ import {
 import i18n from '../../../../../i18n';
 import {currenciesCode} from '../../../../../utils/currencies';
 import {CurrencyFlag} from '../pages/Licensing/components/CurrencyModal';
-import ButtonWithIcon from '../../../../../components/ButtonWithIcon';
 import LicensePriceCard from './LicensePriceCard';
 
 const licensePrices = [
@@ -198,9 +198,9 @@ const LicensePricePanel: React.FC<LicensePricePanelProps> = ({
 												licenseType
 											)
 										}
-										symbol='plus'
+										symbol="plus"
 									>
-										<span className="text-capitalize">{`Add ${licenseType} asdafsdLicenses`}</span>
+										<span className="text-capitalize">{`Add ${licenseType} Licenses`}</span>
 									</ButtonWithIcon>
 								)}
 							</Section>

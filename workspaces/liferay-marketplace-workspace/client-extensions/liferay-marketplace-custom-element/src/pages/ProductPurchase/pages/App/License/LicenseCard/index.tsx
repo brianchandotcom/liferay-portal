@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import ClayIcon from '@clayui/icon';
 import {useSelector} from '@xstate/store/react';
 
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import {ProductLicense} from '../../../../../../enums/Product';
 import i18n from '../../../../../../i18n';
 import {useProductPurchaseOutletContext} from '../../../../ProductPurchaseOutlet';

@@ -4,9 +4,9 @@
  */
 
 import ClayButton from '@clayui/button';
-import ButtonWithIcon from '../../../../components/ButtonWithIcon';
 import ClayModal, {useModal} from '@clayui/modal';
 
+import ButtonWithIcon from '../../../../components/ButtonWithIcon';
 import i18n from '../../../../i18n';
 
 import './DeactivateKeysModal.scss';

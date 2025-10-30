@@ -24,7 +24,6 @@
 		"@clayui/sticker": "3.144.1",
 		"@clayui/table": "3.144.1",
 		"@clayui/tooltip": "3.144.1",
-
 		"@hookform/resolvers": "^3.1.1",
 		"@xstate/store": "^2.6.2",
 		"axios": "^1.6.7",

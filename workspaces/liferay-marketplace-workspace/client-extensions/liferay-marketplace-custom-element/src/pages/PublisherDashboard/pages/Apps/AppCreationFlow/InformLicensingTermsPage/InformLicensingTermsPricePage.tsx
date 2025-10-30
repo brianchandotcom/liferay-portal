@@ -215,10 +215,10 @@ export function InformLicensingTermsPricePage({
 					) : (
 						<ButtonWithIcon
 							className="icon-button py-3 w-100"
-							symbol='plus'
 							onClick={() =>
 								handleAddPriceTier(ProductLicenseTier.DEVELOPER)
 							}
+							symbol="plus"
 						>
 							{i18n.translate('add-developer-licenses')}
 						</ButtonWithIcon>

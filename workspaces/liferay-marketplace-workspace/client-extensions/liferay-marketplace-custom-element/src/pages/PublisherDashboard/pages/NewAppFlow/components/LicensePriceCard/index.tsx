@@ -5,10 +5,11 @@
 
 import ClayForm, {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
+
+import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 import {FieldBase} from '../../../../../../components/FieldBase';
 import {ProductLicenseTier} from '../../../../../../enums/Product';
 import {currenciesCode} from '../../../../../../utils/currencies';
-import ButtonWithIcon from '../../../../../../components/ButtonWithIcon';
 
 import './LicensePriceCard.scss';
 
@@ -120,8 +121,8 @@ const LicensePriceCard: React.FC<LicensePriceCardProps> = ({
 					index === 0 && licenseTier === ProductLicenseTier.STANDARD
 				) && (
 					<ButtonWithIcon
-						className='btn-monospaced'
 						aria-label="Delete"
+						className="btn-monospaced"
 						displayType={null}
 						onClick={() => onDelete(Number(key), currency)}
 						symbol="trash"

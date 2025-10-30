@@ -3,9 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ButtonWithIcon from '../../ButtonWithIcon';
 import ClayDropDown from '@clayui/drop-down';
 import Icon from '@clayui/icon';
+
+import ButtonWithIcon from '../../ButtonWithIcon';
 
 type TableKebabButtonProps = {
 	items: {

@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
@@ -12,6 +11,7 @@ import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import {KeyedMutator} from 'swr';
 
+import ButtonWithIcon from '../../../components/ButtonWithIcon';
 import {Action, SortDirection, SortOption} from '../../../utils/constants';
 import {Sort} from '../hooks/ListViewContext';
 
@@ -120,7 +120,7 @@ const Table = <T extends Record<string, any>>({
 						trigger={
 							<ButtonWithIcon
 								aria-label="actions"
-								className='btn-monospaced'
+								className="btn-monospaced"
 								displayType="unstyled"
 								onClick={(event) => event.stopPropagation()}
 								symbol="ellipsis-v"

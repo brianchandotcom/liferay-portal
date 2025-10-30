@@ -18,7 +18,6 @@ type MultiSelectProps<T> = {
 	multiselectKey: string;
 	onChange?: (values: T) => void;
 	onItemsChange: (values: T) => void;
-	placeholder?: string;
 	required?: boolean;
 	selectedItems: T[];
 	sourceItems: T[];
@@ -36,7 +35,6 @@ const MultiSelect: React.FC<MultiSelectProps<any>> = ({
 	multiselectKey,
 	onChange,
 	onItemsChange,
-	placeholder,
 	required,
 	selectedItems,
 	sourceItems,

@@ -142,7 +142,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			}
 		).put(
 			DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-			new String[] {ActionKeys.VIEW}
+			new String[] {ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW}
 		).put(
 			RoleConstants.CMS_ADMINISTRATOR, actionIds
 		).put(
@@ -203,7 +203,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 					}
 				).put(
 					DepotRolesConstants.ASSET_LIBRARY_MEMBER,
-					new String[] {ActionKeys.VIEW, ActionKeys.SUBSCRIBE}
+					new String[] {
+						ActionKeys.ADD_DISCUSSION, ActionKeys.VIEW,
+						ActionKeys.SUBSCRIBE
+					}
 				).put(
 					RoleConstants.CMS_ADMINISTRATOR, JSONUtil.putAll(actionIds)
 				).put(

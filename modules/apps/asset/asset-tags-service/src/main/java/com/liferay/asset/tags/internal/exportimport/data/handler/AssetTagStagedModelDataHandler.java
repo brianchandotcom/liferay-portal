@@ -218,9 +218,10 @@ public class AssetTagStagedModelDataHandler
 			return name;
 		}
 
-		return UniqueUtil.getCopyValue(
-			copyValue -> {
-				if (_assetTagLocalService.fetchTag(groupId, copyValue) ==
+		return UniqueUtil.getUniqueValue(
+			"duplicate",
+			uniqueValue -> {
+				if (_assetTagLocalService.fetchTag(groupId, uniqueValue) ==
 						null) {
 
 					return true;
@@ -228,7 +229,7 @@ public class AssetTagStagedModelDataHandler
 
 				return false;
 			},
-			"duplicate", name);
+			name);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

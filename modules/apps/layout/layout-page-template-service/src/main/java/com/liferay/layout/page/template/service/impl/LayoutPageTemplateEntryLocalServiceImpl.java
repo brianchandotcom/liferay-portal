@@ -294,11 +294,12 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntryPersistence.findByPrimaryKey(
 				sourceLayoutPageTemplateEntryId);
 
-		String name = UniqueUtil.getCopyValue(
-			copyValue -> {
+		String name = UniqueUtil.getUniqueValue(
+			"copy",
+			uniqueValue -> {
 				LayoutPageTemplateEntry layoutPageTemplateEntry =
 					layoutPageTemplateEntryPersistence.fetchByG_L_N_T(
-						groupId, layoutPageTemplateCollectionId, copyValue,
+						groupId, layoutPageTemplateCollectionId, uniqueValue,
 						sourceLayoutPageTemplateEntry.getType());
 
 				if (layoutPageTemplateEntry == null) {

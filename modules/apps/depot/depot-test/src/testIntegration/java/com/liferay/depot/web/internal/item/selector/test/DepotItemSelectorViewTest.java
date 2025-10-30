@@ -37,7 +37,9 @@ public class DepotItemSelectorViewTest {
 
 	@Test
 	public void testIsVisible() {
-		Assert.assertTrue(_depotItemSelectorView.isVisible(null, null));
+		Assert.assertTrue(
+			_assetLibraryDepotItemSelectorView.isVisible(null, null));
+		Assert.assertTrue(_spacesDepotItemSelectorView.isVisible(null, null));
 	}
 
 	@Test
@@ -48,7 +50,11 @@ public class DepotItemSelectorViewTest {
 		groupItemSelectorCriterion.setPortletId(RandomTestUtil.randomString());
 
 		Assert.assertFalse(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
+			_assetLibraryDepotItemSelectorView.isVisible(
+				groupItemSelectorCriterion, null));
+		Assert.assertFalse(
+			_spacesDepotItemSelectorView.isVisible(
+				groupItemSelectorCriterion, null));
 	}
 
 	@Test
@@ -60,15 +66,26 @@ public class DepotItemSelectorViewTest {
 			DLPortletKeys.DOCUMENT_LIBRARY_ADMIN);
 
 		Assert.assertTrue(
-			_depotItemSelectorView.isVisible(groupItemSelectorCriterion, null));
+			_assetLibraryDepotItemSelectorView.isVisible(
+				groupItemSelectorCriterion, null));
+		Assert.assertTrue(
+			_spacesDepotItemSelectorView.isVisible(
+				groupItemSelectorCriterion, null));
 	}
 
 	@Inject(
-		filter = "component.name=com.liferay.depot.web.internal.item.selector.DepotItemSelectorView"
+		filter = "component.name=com.liferay.depot.web.internal.item.selector.AssetLibraryDepotItemSelectorView"
 	)
-	private ItemSelectorView<GroupItemSelectorCriterion> _depotItemSelectorView;
+	private ItemSelectorView<GroupItemSelectorCriterion>
+		_assetLibraryDepotItemSelectorView;
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject(
+		filter = "component.name=com.liferay.depot.web.internal.item.selector.SpacesDepotItemSelectorView"
+	)
+	private ItemSelectorView<GroupItemSelectorCriterion>
+		_spacesDepotItemSelectorView;
 
 }

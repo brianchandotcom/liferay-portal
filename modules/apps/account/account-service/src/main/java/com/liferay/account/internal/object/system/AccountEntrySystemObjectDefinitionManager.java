@@ -209,7 +209,7 @@ public class AccountEntrySystemObjectDefinitionManager
 			long primaryKey, User user, Map<String, Object> values)
 		throws Exception {
 
-		AccountResource accountResource = _buildAccountResource(false);
+		AccountResource accountResource = _buildAccountResource(true);
 
 		Account account = accountResource.patchAccount(
 			primaryKey, _toAccount(values));

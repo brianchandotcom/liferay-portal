@@ -1250,3 +1250,94 @@ testWithRepeatableFF(
 		});
 	}
 );
+
+testWithRepeatableFF(
+	'Repetable text input is validated correctly',
+	{
+		tag: '@LPD-69446',
+	},
+	async ({contentsPage, page, structureBuilderPage}) => {
+
+		// Create structure
+
+		const structureLabel = `StructureName${getRandomInt()}`;
+
+		await structureBuilderPage.createStructureFromData({
+			label: structureLabel,
+			name: `StructureName${getRandomInt()}`,
+			page: structureBuilderPage,
+			publish: false,
+		});
+
+		// Add fields
+
+		await structureBuilderPage.addField('Text');
+
+		await page.getByLabel('Limit Characters').click();
+
+		const maximumNumberOfCharactersInput = page.getByLabel(
+			'Maximum Number of Characters'
+		);
+
+		maximumNumberOfCharactersInput.fill('5');
+
+		await maximumNumberOfCharactersInput.blur();
+
+		// Create repeatable group with two of them
+
+		await structureBuilderPage.createRepeatableGroup({
+			fields: [{label: 'Text'}],
+			label: 'Repeatable Group 1',
+		});
+
+		await structureBuilderPage.publishStructure();
+
+		// Go to CMS Contents
+
+		await contentsPage.goto();
+
+		// Create new content
+
+		await contentsPage.createContent(structureLabel);
+
+		const title = getRandomString();
+
+		await page.getByPlaceholder(`New ${structureLabel}`).fill(title);
+
+		// Fill the fields
+
+		const firstText = page.getByRole('textbox', {name: 'Text'}).first();
+
+		await firstText.fill('MoreThan5Characters');
+
+		// Save content
+
+		await contentsPage.publishButton.click();
+
+		// Check that the alert is displayed
+
+		await expect(
+			page.getByText('Value exceeds maximum length of 5 for field Text.')
+		).toBeVisible();
+
+		await expect(firstText).toHaveValue('MoreThan5Characters');
+
+		// Delete content
+
+		await contentsPage.goto();
+
+		const card = page
+			.locator('tr', {hasText: title})
+			.or(page.locator('.card-row', {hasText: title}));
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Delete'}),
+			trigger: card.locator('button'),
+		});
+
+		await waitForAlert(page, `Success:${title} was moved`, {
+			autoClose: false,
+		});
+	}
+);

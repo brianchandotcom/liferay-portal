@@ -406,6 +406,7 @@ public class NavigationMenuResourceTest
 			testGroup.getExternalReferenceCode(), _randomNavigationMenu(false));
 	}
 
+	@Override
 	protected NavigationMenu testPostSiteNavigationMenu_addNavigationMenu(
 			NavigationMenu navigationMenu)
 		throws Exception {

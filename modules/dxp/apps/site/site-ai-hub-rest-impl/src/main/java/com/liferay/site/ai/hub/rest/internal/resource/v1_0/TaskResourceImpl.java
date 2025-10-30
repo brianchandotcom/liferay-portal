@@ -5,13 +5,13 @@
 
 package com.liferay.site.ai.hub.rest.internal.resource.v1_0;
 
+import com.liferay.ai.hub.rest.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
-import com.liferay.site.ai.hub.rest.dto.v1_0.Task;
-import com.liferay.site.ai.hub.rest.resource.v1_0.TaskResource;
 
 import java.io.Serializable;
 

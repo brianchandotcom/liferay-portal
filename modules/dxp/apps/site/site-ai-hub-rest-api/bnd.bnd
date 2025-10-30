@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Site AI Hub REST API
-Bundle-SymbolicName: com.liferay.site.ai.hub.rest.api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.site.ai.hub.rest.dto.v1_0,\
-	com.liferay.site.ai.hub.rest.resource.v1_0

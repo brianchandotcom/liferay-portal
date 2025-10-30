@@ -26,7 +26,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.site.ai.hub.rest.internal.security.permission.LiberalPermissionChecker;
-import com.liferay.site.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 
 import jakarta.annotation.Generated;
 

@@ -10,7 +10,7 @@ import com.liferay.portal.vulcan.graphql.servlet.ServletData;
 import com.liferay.site.ai.hub.rest.internal.graphql.mutation.v1_0.Mutation;
 import com.liferay.site.ai.hub.rest.internal.graphql.query.v1_0.Query;
 import com.liferay.site.ai.hub.rest.internal.resource.v1_0.TaskResourceImpl;
-import com.liferay.site.ai.hub.rest.resource.v1_0.TaskResource;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 
 import jakarta.annotation.Generated;
 

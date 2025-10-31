@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
+import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.definition.util.ObjectDefinitionUtil;
 import com.liferay.object.definition.util.ObjectDefinitionValidationThreadLocal;
 import com.liferay.object.exception.DuplicateObjectFieldExternalReferenceCodeException;
@@ -79,11 +80,19 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.security.permission.ResourceActions;
+import com.liferay.portal.kernel.service.PortletLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Base64;
@@ -344,6 +353,24 @@ public class ObjectFieldLocalServiceImpl
 
 				counterLocalService.reset(
 					ObjectFieldUtil.getCounterName(objectField));
+			}
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					objectField.getCompanyId(), "LPD-17564") &&
+				objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				String actionId = objectField.getAttachmentDownloadActionKey();
+
+				_ploEntryLocalService.deletePLOEntries(
+					objectField.getCompanyId(), "action." + actionId);
+
+				ObjectDefinition objectDefinition =
+					_objectDefinitionPersistence.findByPrimaryKey(
+						objectField.getObjectDefinitionId());
+
+				_resourceActions.removeModelResource(
+					objectDefinition.getClassName(), actionId);
 			}
 
 			_objectFieldSettingLocalService.deleteObjectFieldObjectFieldSetting(
@@ -967,6 +994,25 @@ public class ObjectFieldLocalServiceImpl
 			return objectField;
 		}
 
+		if (FeatureFlagManagerUtil.isEnabled(
+				objectField.getCompanyId(), "LPD-17564") &&
+			objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			try {
+				ObjectDefinitionResourcePermissionUtil.populateResourceActions(
+					null, null, objectDefinition, objectFieldLocalService,
+					_portletLocalService, _resourceActions, null);
+
+				_updateResourcePermissions(
+					objectField.getAttachmentDownloadActionKey(),
+					objectDefinition);
+			}
+			catch (Exception exception) {
+				ReflectionUtil.throwException(exception);
+			}
+		}
+
 		if (!objectField.compareBusinessType(
 				ObjectFieldConstants.BUSINESS_TYPE_AGGREGATION) &&
 			!objectField.compareBusinessType(
@@ -1205,6 +1251,19 @@ public class ObjectFieldLocalServiceImpl
 		if (Objects.equals(
 				objectField.getBusinessType(),
 				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					objectField.getCompanyId(), "LPD-17564") &&
+				objectDefinition.isApproved()) {
+
+				String actionId = objectField.getAttachmentDownloadActionKey();
+
+				_ploEntryLocalService.deletePLOEntries(
+					objectField.getCompanyId(), "action." + actionId);
+
+				_resourceActions.removeModelResource(
+					objectDefinition.getClassName(), actionId);
+			}
 
 			ObjectFieldSetting objectFieldSetting =
 				_objectFieldSettingPersistence.fetchByOFI_N(
@@ -1566,6 +1625,14 @@ public class ObjectFieldLocalServiceImpl
 				newObjectField, objectDefinition, objectFieldBusinessType,
 				objectFieldSettings, oldObjectField);
 
+			if (FeatureFlagManagerUtil.isEnabled(
+					newObjectField.getCompanyId(), "LPD-17564") &&
+				businessType.equals(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				addOrUpdateObjectFieldResourceActionPLOEntries(newObjectField);
+			}
+
 			return newObjectField;
 		}
 
@@ -1594,6 +1661,29 @@ public class ObjectFieldLocalServiceImpl
 			objectFieldSettings, oldObjectField);
 
 		return newObjectField;
+	}
+
+	private void _updateResourcePermissions(
+			String actionId, ObjectDefinition objectDefinition)
+		throws PortalException {
+
+		Role role = _roleLocalService.getRole(
+			objectDefinition.getCompanyId(), RoleConstants.OWNER);
+
+		List<ResourcePermission> resourcePermissions =
+			_resourcePermissionLocalService.getResourcePermissions(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, role.getRoleId(), true);
+
+		for (ResourcePermission resourcePermission : resourcePermissions) {
+			if (!resourcePermission.hasActionId(actionId)) {
+				resourcePermission.addResourceAction(actionId);
+
+				_resourcePermissionLocalService.updateResourcePermission(
+					resourcePermission);
+			}
+		}
 	}
 
 	private void _validateBusinessType(
@@ -2111,6 +2201,9 @@ public class ObjectFieldLocalServiceImpl
 	@Reference
 	private PLOEntryLocalService _ploEntryLocalService;
 
+	@Reference
+	private PortletLocalService _portletLocalService;
+
 	private final Set<String> _readOnlyObjectFieldNames = SetUtil.fromArray(
 		"createDate", "creator", "id", "modifiedDate", "status");
 	private final Set<String> _reservedNames = SetUtil.fromArray(
@@ -2120,6 +2213,15 @@ public class ObjectFieldLocalServiceImpl
 		"modifieddate", "reviewdate", "status", "statusbyuserid",
 		"statusbyusername", "statusdate", "taxonomycategoryids", "userid",
 		"username");
+
+	@Reference
+	private ResourceActions _resourceActions;
+
+	@Reference
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Reference
+	private RoleLocalService _roleLocalService;
 
 	@Reference
 	private SystemObjectDefinitionManagerRegistry

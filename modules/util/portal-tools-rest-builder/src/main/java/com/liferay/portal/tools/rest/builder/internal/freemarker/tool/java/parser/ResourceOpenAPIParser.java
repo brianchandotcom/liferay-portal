@@ -635,7 +635,9 @@ public class ResourceOpenAPIParser {
 	}
 
 	private static String _addParameter(Parameter parameter) {
-		if (parameter == null) {
+		if ((parameter == null) ||
+			Objects.equals(parameter.getIn(), "context")) {
+
 			return "";
 		}
 
@@ -1253,6 +1255,12 @@ public class ResourceOpenAPIParser {
 
 		if (Objects.equals(parameterType, Sort[].class.getName()) &&
 			parameterNames.contains("sort")) {
+
+			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
+		}
+
+		if (Objects.equals(parameterType, "jakarta.ws.rs.sse.SseEventSink") &&
+			parameterNames.contains("sseEventSink")) {
 
 			return "@" + configYAML.getJavaEEPackage() + ".ws.rs.core.Context";
 		}

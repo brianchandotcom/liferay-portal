@@ -760,6 +760,10 @@ public class OpenAPIParserUtil {
 					new AbstractMap.SimpleImmutableEntry<>("permission", null),
 					"com.liferay.portal.vulcan.permission.Permission");
 				put(
+					new AbstractMap.SimpleImmutableEntry<>(
+						"sseEventSink", null),
+					"jakarta.ws.rs.sse.SseEventSink");
+				put(
 					new AbstractMap.SimpleImmutableEntry<>("string", null),
 					String.class.getName());
 				put(

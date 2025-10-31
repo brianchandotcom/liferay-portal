@@ -452,3 +452,30 @@ test(
 		);
 	}
 );
+
+test(
+	'Clicking on the breadcrumb does not reload the page',
+	{
+		tag: '@LPD-70296',
+	},
+	async ({page, structureBuilderPage}) => {
+
+		// Go to structure builder
+
+		await structureBuilderPage.goToCreateStructure();
+
+		// Add a field
+
+		await structureBuilderPage.addField('Text');
+
+		// Click on the breadcrumb
+
+		await page.locator('.breadcrumb-link', {hasText: 'Text'}).click();
+
+		// Check that the field is still present, meaning that the page was not reloaded
+
+		await expect(
+			page.locator('.treeview-link', {hasText: 'Text'})
+		).toBeVisible();
+	}
+);

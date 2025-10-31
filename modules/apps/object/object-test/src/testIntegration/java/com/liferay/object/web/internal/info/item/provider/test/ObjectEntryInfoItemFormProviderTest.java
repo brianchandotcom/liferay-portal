@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
+import com.liferay.portal.props.test.util.PropsTemporarySwapper;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -383,7 +384,13 @@ public class ObjectEntryInfoItemFormProviderTest {
 			_childObjectDefinition);
 
 		_childInfoForm = _getInfoForm(_childObjectDefinition);
-		_parentInfoForm = _getInfoForm(_parentObjectDefinition);
+
+		try (PropsTemporarySwapper propsTemporarySwapper =
+				new PropsTemporarySwapper(
+					"feature.flag.LPD-60546", Boolean.FALSE.toString())) {
+
+			_parentInfoForm = _getInfoForm(_parentObjectDefinition);
+		}
 
 		_assertInfoField("parentTextObjectFieldName", _childInfoForm);
 		_assertInfoField("parentTextObjectFieldName", _parentInfoForm);

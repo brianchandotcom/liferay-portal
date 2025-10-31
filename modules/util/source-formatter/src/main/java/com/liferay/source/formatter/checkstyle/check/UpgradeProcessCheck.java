@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
@@ -101,26 +102,11 @@ public class UpgradeProcessCheck extends BaseCheck {
 			detailAST, true, TokenTypes.METHOD_CALL);
 
 		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
-			DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
-				TokenTypes.DOT);
-
-			if (dotDetailAST != null) {
-				List<String> names = getNames(dotDetailAST, false);
-
-				if (names.size() == 2) {
-					String methodCallClassName = names.get(0);
-					String methodCallMethodName = names.get(1);
-
-					if ((methodCallClassName.endsWith("Table") &&
-						 methodCallMethodName.equals("create")) ||
-						methodCallClassName.equals("UpgradeProcessFactory")) {
-
-						continue;
-					}
-				}
+			if (_isValidMethodCall(methodCallDetailAST, methodCallDetailASTs)) {
+				continue;
 			}
 
-			log(detailAST, _MSG_AVOID_METHOD_CALLS);
+			log(methodCallDetailAST, _MSG_AVOID_METHOD_CALLS);
 		}
 	}
 
@@ -420,6 +406,95 @@ public class UpgradeProcessCheck extends BaseCheck {
 		}
 
 		return true;
+	}
+
+	private boolean _isValidMethodCall(
+		DetailAST detailAST, List<DetailAST> methodCallDetailASTs) {
+
+		methodCallDetailASTs = ListUtil.filter(
+			methodCallDetailASTs,
+			methodCallDetailAST -> {
+				DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
+					TokenTypes.DOT);
+
+				if (dotDetailAST == null) {
+					return false;
+				}
+
+				List<String> names = getNames(dotDetailAST, false);
+
+				if (names.size() != 2) {
+					return false;
+				}
+
+				String methodCallClassName = names.get(0);
+				String methodCallMethodName = names.get(1);
+
+				if ((methodCallClassName.endsWith("Table") &&
+					 methodCallMethodName.equals("create")) ||
+					methodCallClassName.equals("UpgradeProcessFactory")) {
+
+					return true;
+				}
+
+				return false;
+			});
+
+		DetailAST assignDetailAST = getParentWithTokenType(
+			detailAST, TokenTypes.ASSIGN);
+
+		if (assignDetailAST == null) {
+			return _isValidMethodCall(
+				detailAST.getLineNo(), methodCallDetailASTs);
+		}
+
+		DetailAST variableDefinitionDetailAST = null;
+		String variableName = null;
+
+		DetailAST parentDetailAST = assignDetailAST.getParent();
+
+		if (parentDetailAST.getType() == TokenTypes.EXPR) {
+			variableName = getName(assignDetailAST);
+
+			variableDefinitionDetailAST = getVariableDefinitionDetailAST(
+				assignDetailAST, variableName);
+		}
+		else if (parentDetailAST.getType() == TokenTypes.VARIABLE_DEF) {
+			variableDefinitionDetailAST = parentDetailAST;
+			variableName = getName(parentDetailAST);
+		}
+
+		if ((variableDefinitionDetailAST == null) || (variableName == null)) {
+			return true;
+		}
+
+		List<DetailAST> variableCallerDetailASTs = getVariableCallerDetailASTs(
+			variableDefinitionDetailAST);
+
+		for (DetailAST variableCallerDetailAST : variableCallerDetailASTs) {
+			if (_isValidMethodCall(
+					variableCallerDetailAST.getLineNo(),
+					methodCallDetailASTs)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _isValidMethodCall(
+		int lineNumber, List<DetailAST> methodCallDetailASTs) {
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
+			if ((lineNumber <= getEndLineNumber(methodCallDetailAST)) &&
+				(lineNumber >= getStartLineNumber(methodCallDetailAST))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String[] _ALTER_METHOD_NAMES = {

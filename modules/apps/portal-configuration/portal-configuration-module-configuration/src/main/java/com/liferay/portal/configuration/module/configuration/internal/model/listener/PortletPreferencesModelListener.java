@@ -153,6 +153,12 @@ public class PortletPreferencesModelListener
 					ServiceContext serviceContext =
 						ServiceContextThreadLocal.getServiceContext();
 
+					if ((serviceContext != null) &&
+						(serviceContext.getUserId() == 0)) {
+
+						serviceContext.setUserId(layout.getUserId());
+					}
+
 					_layoutLocalService.updateStatus(
 						serviceContext.getUserId(), layout.getPlid(),
 						WorkflowConstants.STATUS_DRAFT, serviceContext);

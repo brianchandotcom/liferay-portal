@@ -10,6 +10,7 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.info.collection.provider.InfoCollectionProvider;
 import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
 import com.liferay.info.item.InfoItemServiceRegistry;
@@ -40,7 +41,7 @@ public class CollectionUtil {
 
 		if (collectionReference instanceof ClassNameReference) {
 			return _getClassNameReferenceJSONObject(
-				collectionReference, infoItemServiceRegistry);
+				collectionReference, companyId, infoItemServiceRegistry);
 		}
 
 		return _getCollectionItemExternalReferenceJSONObject(
@@ -83,7 +84,7 @@ public class CollectionUtil {
 	}
 
 	private static JSONObject _getClassNameReferenceJSONObject(
-		CollectionReference collectionReference,
+		CollectionReference collectionReference, long companyId,
 		InfoItemServiceRegistry infoItemServiceRegistry) {
 
 		if (infoItemServiceRegistry == null) {
@@ -103,6 +104,10 @@ public class CollectionUtil {
 				classNameReference.getClassName());
 
 		if (infoCollectionProvider == null) {
+			LogUtil.logOptionalReference(
+				InfoCollectionProvider.class, classNameReference.getClassName(),
+				companyId);
+
 			return JSONUtil.put(
 				"key", classNameReference.getClassName()
 			).put(
@@ -157,19 +162,9 @@ public class CollectionUtil {
 			companyId, collectionItemExternalReference.getScope(),
 			scopeGroupId);
 
-		JSONObject jsonObject = JSONUtil.put(
-			"externalReferenceCode",
-			collectionItemExternalReference.getExternalReferenceCode()
-		).put(
-			"scopeExternalReferenceCode",
-			ItemScopeUtil.getItemScopeExternalReferenceCode(
-				collectionItemExternalReference.getScope(), scopeGroupId)
-		).put(
-			"type", InfoListItemSelectorReturnType.class.getName()
-		);
-
 		if (groupId == null) {
-			return jsonObject;
+			return _getCollectionItemExternalReferenceMissingReferenceJSONObject(
+				collectionItemExternalReference, scopeGroupId);
 		}
 
 		AssetListEntry assetListEntry =
@@ -179,20 +174,53 @@ public class CollectionUtil {
 					groupId);
 
 		if (assetListEntry == null) {
-			return jsonObject;
+			return _getCollectionItemExternalReferenceMissingReferenceJSONObject(
+				collectionItemExternalReference, scopeGroupId);
 		}
 
-		return jsonObject.put(
+		return JSONUtil.put(
 			"classNameId",
 			String.valueOf(PortalUtil.getClassNameId(AssetListEntry.class))
 		).put(
 			"classPK", assetListEntry.getAssetListEntryId()
 		).put(
+			"externalReferenceCode",
+			collectionItemExternalReference.getExternalReferenceCode()
+		).put(
 			"itemSubtype", assetListEntry.getAssetEntrySubtype()
 		).put(
 			"itemType", assetListEntry.getAssetEntryType()
 		).put(
+			"scopeExternalReferenceCode",
+			ItemScopeUtil.getItemScopeExternalReferenceCode(
+				collectionItemExternalReference.getScope(), groupId)
+		).put(
 			"title", assetListEntry.getTitle()
+		).put(
+			"type", InfoListItemSelectorReturnType.class.getName()
+		);
+	}
+
+	private static JSONObject
+			_getCollectionItemExternalReferenceMissingReferenceJSONObject(
+				CollectionItemExternalReference collectionItemExternalReference,
+				long groupId)
+		throws Exception {
+
+		LogUtil.logOptionalReference(
+			collectionItemExternalReference.getClassName(),
+			collectionItemExternalReference.getExternalReferenceCode(),
+			collectionItemExternalReference.getScope(), groupId);
+
+		return JSONUtil.put(
+			"externalReferenceCode",
+			collectionItemExternalReference.getExternalReferenceCode()
+		).put(
+			"scopeExternalReferenceCode",
+			ItemScopeUtil.getItemScopeExternalReferenceCode(
+				collectionItemExternalReference.getScope(), groupId)
+		).put(
+			"type", InfoListItemSelectorReturnType.class.getName()
 		);
 	}
 

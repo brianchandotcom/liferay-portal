@@ -52,7 +52,8 @@ public class EditAssetCategoryPropertiesMVCActionCommand
 			AssetCategory.class.getName(), actionRequest);
 
 		_assetCategoryService.updateCategory(
-			categoryId, category.getParentCategoryId(), category.getTitleMap(),
+			category.getExternalReferenceCode(), categoryId,
+			category.getParentCategoryId(), category.getTitleMap(),
 			category.getDescriptionMap(), category.getVocabularyId(),
 			categoryProperties, serviceContext);
 	}

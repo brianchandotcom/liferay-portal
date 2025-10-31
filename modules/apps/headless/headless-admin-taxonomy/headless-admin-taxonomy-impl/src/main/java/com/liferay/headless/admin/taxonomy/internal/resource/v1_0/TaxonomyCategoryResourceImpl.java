@@ -273,6 +273,7 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory, assetCategory.getGroupId(), taxonomyCategory);
 
 		assetCategory = _assetCategoryService.updateCategory(
+			taxonomyCategory.getExternalReferenceCode(),
 			assetCategory.getCategoryId(),
 			_getParentAssetCategoryId(
 				assetCategory, assetVocabularyId, assetCategory.getGroupId(),
@@ -957,6 +958,7 @@ public class TaxonomyCategoryResourceImpl
 
 		return _toTaxonomyCategory(
 			_assetCategoryService.updateCategory(
+				taxonomyCategory.getExternalReferenceCode(),
 				persistedAssetCategory.getCategoryId(),
 				_getParentAssetCategoryId(
 					persistedAssetCategory, assetVocabularyId, groupId,
@@ -1055,6 +1057,7 @@ public class TaxonomyCategoryResourceImpl
 			assetCategory, assetCategory.getGroupId(), taxonomyCategory);
 
 		return _assetCategoryService.updateCategory(
+			taxonomyCategory.getExternalReferenceCode(),
 			assetCategory.getCategoryId(),
 			_getParentAssetCategoryId(
 				assetCategory, assetVocabularyId, assetCategory.getGroupId(),

@@ -173,8 +173,8 @@ public class JournalConverterImpl implements JournalConverter {
 		if (dynamicElementElements == null) {
 
 			// This may happen when fields in the structure have been
-			// rearranged.  In this case, look for the field starting from the
-			// root again.  See LPP-69008.
+			// rearranged. In this case, look for the field starting from the
+			// root again. See LPP-69008.
 
 			dynamicElementElements = _getDynamicElementElements(
 				rootElement, ddmFormFieldName);

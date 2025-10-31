@@ -59,8 +59,16 @@ mockUseResource.mockReturnValue({
 const defaultProps = {
 	action: 'createFolder' as const,
 	assetLibraries: [
-		{groupId: SPACES[0].siteId, name: SPACES[0].name},
-		{groupId: SPACES[1].siteId, name: SPACES[1].name},
+		{
+			externalReferenceCode: 'erc-1',
+			groupId: SPACES[0].siteId,
+			name: SPACES[0].name,
+		},
+		{
+			externalReferenceCode: 'erc-2',
+			groupId: SPACES[1].siteId,
+			name: SPACES[1].name,
+		},
 	],
 	closeModal: () => {},
 	onSubmit: mockOnSubmit,
@@ -110,7 +118,11 @@ describe('CreationModalContent', () => {
 			<CreationModalContent
 				{...defaultProps}
 				assetLibraries={[
-					{groupId: SPACES[0].siteId, name: 'Only One Space'},
+					{
+						externalReferenceCode: 'erc-1',
+						groupId: SPACES[0].siteId,
+						name: 'Only One Space',
+					},
 				]}
 			/>
 		);

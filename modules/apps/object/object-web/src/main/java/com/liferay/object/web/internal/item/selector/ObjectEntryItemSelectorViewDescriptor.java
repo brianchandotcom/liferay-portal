@@ -19,7 +19,6 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.web.internal.util.ObjectEntryUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,6 +34,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -172,7 +172,8 @@ public class ObjectEntryItemSelectorViewDescriptor
 					_objectEntryManager.getObjectEntries(
 						_themeDisplay.getCompanyId(), _objectDefinition,
 						scopeGroup.getGroupKey(), null,
-						_getDTOConverterContext(), StringPool.BLANK,
+						_getDTOConverterContext(),
+						"status eq " + WorkflowConstants.STATUS_APPROVED,
 						Pagination.of(
 							searchContainer.getCur(),
 							searchContainer.getDelta()),

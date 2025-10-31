@@ -69,14 +69,14 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 
 		long fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 
-		DLFileEntryType dlFileEntryType =
-			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
-
-		if (dlFileEntryType.getFileEntryTypeId() ==
+		if (fileEntryTypeId ==
 				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
 
 			return;
 		}
+
+		DLFileEntryType dlFileEntryType =
+			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
 		serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
 

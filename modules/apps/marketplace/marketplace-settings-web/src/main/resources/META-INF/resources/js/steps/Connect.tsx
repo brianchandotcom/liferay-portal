@@ -6,8 +6,12 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
-import {createResourceURL, fetch, objectToFormData} from 'frontend-js-web';
-import pkceChallenge from 'pkce-challenge';
+import {
+	createResourceURL,
+	fetch,
+	objectToFormData,
+	pkceChallenge,
+} from 'frontend-js-web';
 import React from 'react';
 
 import Container from '../components/Container';
@@ -34,7 +38,7 @@ export default function Connect({
 	setAuthorization,
 }: ConnectProps) {
 	const onConnect = async () => {
-		const {code_challenge, code_verifier} = pkceChallenge();
+		const {code_challenge, code_verifier} = await pkceChallenge();
 
 		const urlSearchParams = new URLSearchParams({
 			client_id: oAuth2.clientId,

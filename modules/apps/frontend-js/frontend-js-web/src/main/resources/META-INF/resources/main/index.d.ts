@@ -872,3 +872,4 @@ export {loadModule} from './utils/client_extensions/loadModule';
  */
 export {default as dateUtils} from './utils/dateUtils';
 export {getObjectValueFromPath} from './utils/object/getObjectValueFromPath';
+export {default as pkceChallenge} from './utils/pkceChallenge';

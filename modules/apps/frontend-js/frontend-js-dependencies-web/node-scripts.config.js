@@ -37,7 +37,6 @@ module.exports = {
 		'moment/min/moment-with-locales',
 		'numeral',
 		'object-hash',
-		'pkce-challenge',
 		'qs',
 		'react-text-mask',
 		'text-mask-addons',

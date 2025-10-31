@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: 'a51de2eb56ac4846952bb87882733472258f9f9a8846ac88d76f302defdf879f',
+	hash: 'a88afbf866ca0ac00d0bddb08e980030c3051f0046023472d3d31c4986682fad',
 	imports: {
 		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
@@ -129,7 +129,6 @@ module.exports = {
 			'moment/min/moment-with-locales',
 			'numeral',
 			'object-hash',
-			'pkce-challenge',
 			'qs',
 			'react-text-mask',
 			'text-mask-addons',

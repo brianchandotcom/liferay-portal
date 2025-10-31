@@ -576,18 +576,26 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		super(url, parentBuild);
 	}
 
-	protected void addDownstreamBuilds(Collection<Build> builds) {
-		if (builds == null) {
+	protected void addDownstreamBuild(Build build) {
+		if (build == null) {
 			return;
 		}
-
-		builds.removeAll(Collections.singleton(null));
 
 		if (_downstreamBuilds == null) {
 			getDownstreamBuilds();
 		}
 
-		_downstreamBuilds.addAll(builds);
+		_downstreamBuilds.add(build);
+	}
+
+	protected void addDownstreamBuilds(Collection<Build> builds) {
+		if (builds == null) {
+			return;
+		}
+
+		for (Build build : builds) {
+			addDownstreamBuild(build);
+		}
 	}
 
 	protected void addDownstreamBuildsTimelineData(TimelineData timelineData) {

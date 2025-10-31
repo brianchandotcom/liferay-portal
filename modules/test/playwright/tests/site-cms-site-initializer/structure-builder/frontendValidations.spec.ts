@@ -369,3 +369,36 @@ test(
 		});
 	}
 );
+
+test(
+	'The Name and ERC fields are not validated in the system structure because they are disabled fields',
+	{tag: '@LPD-69987'},
+	async ({page, structureBuilderPage, structuresPage}) => {
+
+		// Edit External Video structure
+
+		await structuresPage.goto();
+
+		await structuresPage.execItemAction({
+			action: 'Edit',
+			filter: 'External Video',
+		});
+
+		// Check that the Name and ERC inputs are disabled
+
+		await expect(page.getByLabel('Content Structure Name')).toBeDisabled();
+
+		await expect(page.getByLabel('ERC')).toBeDisabled();
+
+		// Check that the Name and ERC fields are not validated
+
+		await expect(async () => {
+			await structureBuilderPage.publishButton.click({timeout: 1000});
+
+			await waitForAlert(
+				page,
+				'Remember to review the customized experience if needed'
+			);
+		}).toPass();
+	}
+);

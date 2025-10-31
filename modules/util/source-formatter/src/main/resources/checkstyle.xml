@@ -1030,7 +1030,7 @@
 			<property name="enabled" value="false" />
 			<message key="class.unnecessary" value="No need to create &quot;{0}&quot; class. Replace it by inline calls to the &quot;UpgradeProcessFactory&quot; class in the registrator class" />
 			<message key="if.statement.unnecessary" value="No need to use if-statement to wrap &quot;alterColumn*&quot; and &quot;alterTable*&quot; calls" />
-			<message key="method.calls.avoid" value="Only &quot;Table.create*&quot; and &quot;UpgradeProcessFactory.*&quot; calls are allowed in &quot;getPostUpgradeSteps&quot; and &quot;getPreUpgradeSteps&quot;" />
+			<message key="method.calls.avoid" value="Only &quot;Table.create*&quot; and &quot;UpgradeProcessFactory.*&quot; calls are allowed in &quot;getPostUpgradeSteps&quot; and &quot;getPreUpgradeSteps&quot;, see LPD-44331" />
 			<message key="upgrade.step.move.inside.post.upgrade.steps" value="Move &quot;{0}&quot; call inside &quot;getPostUpgradeSteps&quot; method" />
 			<message key="upgrade.step.move.inside.pre.upgrade.steps" value="Move &quot;{0}&quot; call inside &quot;getPreUpgradeSteps&quot; method" />
 		</module>

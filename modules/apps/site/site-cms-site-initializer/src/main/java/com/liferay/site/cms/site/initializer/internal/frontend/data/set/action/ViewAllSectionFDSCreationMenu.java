@@ -40,7 +40,7 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 		return _sectionDisplayContextHelper.getCreationMenu(
 			ActionUtil.getAllSectionCreationMenuDropdownItems(
 				httpServletRequest),
-			httpServletRequest);
+			httpServletRequest, null);
 	}
 
 	@Override

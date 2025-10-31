@@ -107,7 +107,8 @@ public abstract class BaseSectionDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"assetLibraries",
 			_sectionDisplayContextHelper.getDepotEntriesJSONArray(
-				httpServletRequest)
+				httpServletRequest,
+				getRootObjectEntryFolderExternalReferenceCode())
 		).put(
 			"autocompleteURL",
 			() -> StringBundler.concat(
@@ -297,7 +298,8 @@ public abstract class BaseSectionDisplayContext {
 
 	public CreationMenu getCreationMenu() {
 		return _sectionDisplayContextHelper.getCreationMenu(
-			getCreationMenuDropdownItems(), httpServletRequest);
+			getCreationMenuDropdownItems(), httpServletRequest,
+			getRootObjectEntryFolderExternalReferenceCode());
 	}
 
 	public List<DropdownItem> getCreationMenuDropdownItems() {

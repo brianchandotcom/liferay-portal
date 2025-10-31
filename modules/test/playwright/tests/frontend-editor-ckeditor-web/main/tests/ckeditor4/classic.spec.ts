@@ -14,13 +14,13 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
-	loginTest(),
+	loginTest()
 );
 
 test(
 	'Dropdown and context menus are visible when maximized',
 	{tag: ['@LPD-33712', '@LPD-38600']},
-	async ({classicPage, page}) => {
+	async ({classicPage: _classicPage, page}) => {
 		await test.step('Select Maximized toolbar control', async () => {
 			await page.getByRole('button', {name: 'Maximize'}).click();
 		});
@@ -162,7 +162,7 @@ test(
 test(
 	'Editor voice label is human readable',
 	{tag: ['@LPD-53923']},
-	async ({classicPage, page}) => {
+	async ({classicPage: _classicPage, page}) => {
 		const ckeVoiceLabel = page.locator('span.cke_voice_label').first();
 
 		await expect(ckeVoiceLabel).toHaveText('Rich Text Editor');
@@ -172,7 +172,7 @@ test(
 test(
 	'Check focus does not move when interacting with scrollbar',
 	{tag: ['@LPD-53923']},
-	async ({classicPage, page}) => {
+	async ({classicPage: _classicPage, page}) => {
 		const dragButton = page.locator(
 			'.cke_resizer.cke_resizer_vertical.cke_resizer_ltr'
 		);
@@ -233,9 +233,7 @@ test(
 		await body.press('ControlOrMeta+v');
 
 		await expect(
-			body.getByRole(
-				'img', { name: 'A beautiful redheaded man' }
-			)
+			body.getByRole('img', {name: 'A beautiful redheaded man'})
 		).toBeVisible();
 
 		await expect(
@@ -249,7 +247,7 @@ test(
 test(
 	'Verify source content can be previewed',
 	{tag: '@LRQA-67229'},
-	async ({classicPage, context, page}) => {
+	async ({classicPage, context}) => {
 		const newPage = await context.newPage();
 
 		await newPage.goto(
@@ -270,9 +268,9 @@ test(
 		await classicPage.toolbarButton('Preview').click();
 
 		await expect(
-			classicPage.previewFrame.getByRole(
-				'heading', { name: 'Sample document for editor' }
-			)
+			classicPage.previewFrame.getByRole('heading', {
+				name: 'Sample document for editor',
+			})
 		).toBeVisible();
 	}
 );

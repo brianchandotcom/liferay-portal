@@ -246,15 +246,15 @@ test(
 		await classicPage.editable.press('ControlOrMeta+v');
 
 		await expect(
-			classicPage.editable.getByRole(
-				'img', { name: 'A beautiful redheaded man' }
-			)
+			classicPage.editable.getByRole('img', {
+				name: 'A beautiful redheaded man',
+			})
 		).toBeVisible();
 
 		await expect(
-			classicPage.editable.getByRole(
-				'figure', { name: 'Top banana importers 1998 (' }
-			)
+			classicPage.editable.getByRole('figure', {
+				name: 'Top banana importers 1998 (',
+			})
 		).toBeVisible();
 	}
 );

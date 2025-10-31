@@ -10,8 +10,8 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {ckeditorSamplePageTest} from '../../frontend-editor-ckeditor-sample-web/fixtures/ckeditorSamplePageTest';
 import {
 	SubTabName,
-	TabName
-} from "../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage";
+	TabName,
+} from '../../frontend-editor-ckeditor-sample-web/pages/CKEditorSamplePage';
 
 export const test = mergeTests(
 	ckeditorSamplePageTest,

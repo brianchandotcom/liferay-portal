@@ -473,6 +473,9 @@ public abstract class BaseSectionDisplayContext {
 				null, "copy", "copy",
 				language.get(httpServletRequest, "copy-to"), null, null, null),
 			new FDSActionDropdownItem(
+				null, "move", "move", language.get(httpServletRequest, "move"),
+				null, null, null),
+			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(
 						httpServletRequest,

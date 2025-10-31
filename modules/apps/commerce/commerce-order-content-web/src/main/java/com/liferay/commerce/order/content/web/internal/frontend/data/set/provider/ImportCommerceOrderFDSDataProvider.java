@@ -14,6 +14,7 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
+import com.liferay.commerce.util.CommerceGroupThreadLocal;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
@@ -59,6 +60,9 @@ public class ImportCommerceOrderFDSDataProvider
 		if (commerceChannel == null) {
 			return Collections.emptyList();
 		}
+
+		CommerceGroupThreadLocal.setCommerceGroupWithSafeCloseable(
+			commerceChannel.getGroupId());
 
 		List<CommerceOrder> commerceOrders =
 			_commerceOrderService.getUserCommerceOrders(

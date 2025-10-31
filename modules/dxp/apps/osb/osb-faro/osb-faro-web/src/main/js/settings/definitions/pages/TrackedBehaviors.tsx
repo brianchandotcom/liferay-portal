@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import TrackedBehaviorsList from '../hocs/TrackedBehaviorsList';
 import {getDefinitions} from 'shared/util/breadcrumbs';

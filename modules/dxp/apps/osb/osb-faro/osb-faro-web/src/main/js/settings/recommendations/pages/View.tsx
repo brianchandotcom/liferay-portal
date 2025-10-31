@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import Constants, {JobRunStatuses} from 'shared/util/constants';
 import OutputVersionsCard from '../components/OutputVersionsCard';
 import React from 'react';

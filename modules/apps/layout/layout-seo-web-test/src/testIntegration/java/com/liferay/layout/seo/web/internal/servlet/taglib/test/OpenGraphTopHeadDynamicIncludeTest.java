@@ -151,6 +151,33 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 	}
 
 	@Test
+	public void testEscapeMetaTagValues() throws Exception {
+		String xssContent = "'\"><img src=x onerror=alert()>";
+
+		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
+			TestPropsValues.getUserId(), _layout.getGroupId(), false,
+			_layout.getLayoutId(), true,
+			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
+			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
+			Collections.singletonMap(LocaleUtil.US, xssContent),
+			_serviceContext);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_testWithLayoutSEOCompanyConfiguration(
+			() -> _dynamicInclude.include(
+				_getHttpServletRequest(), mockHttpServletResponse,
+				RandomTestUtil.randomString()),
+			false, true);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		Assert.assertTrue(
+			content.contains(HtmlUtil.escapeAttribute(xssContent)));
+	}
+
+	@Test
 	public void testIncludeCustomCanonicalURL() throws Exception {
 		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(), false,
@@ -1520,33 +1547,6 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 		_assertMetaTag(
 			document, "og:url",
 			PortalUtil.getCanonicalURL("", _getThemeDisplay(), _layout));
-	}
-
-	@Test
-	public void testMetaTagValuesAreEscaped() throws Exception {
-		String xssContent = "'\"><img src=x onerror=alert()>";
-
-		_layoutSEOEntryLocalService.updateLayoutSEOEntry(
-			TestPropsValues.getUserId(), _layout.getGroupId(), false,
-			_layout.getLayoutId(), true,
-			Collections.singletonMap(LocaleUtil.US, "http://example.com"),
-			false, Collections.emptyMap(), Collections.emptyMap(), 0, true,
-			Collections.singletonMap(LocaleUtil.US, xssContent),
-			_serviceContext);
-
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_testWithLayoutSEOCompanyConfiguration(
-			() -> _dynamicInclude.include(
-				_getHttpServletRequest(), mockHttpServletResponse,
-				RandomTestUtil.randomString()),
-			false, true);
-
-		String content = mockHttpServletResponse.getContentAsString();
-
-		Assert.assertTrue(
-			content.contains(HtmlUtil.escapeAttribute(xssContent)));
 	}
 
 	@Test

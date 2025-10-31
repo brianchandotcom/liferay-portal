@@ -107,6 +107,21 @@ public class FragmentEntryLinkModelListenerTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryLinkEscapeTextField() throws Exception {
+		String editableValues = _createEditableValues(
+			"element-text",
+			HtmlUtil.escape("<script>alert('xss');</script>Heading Example"));
+
+		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"BASIC_COMPONENT-heading"),
+			editableValues, _serviceContext);
+
+		Assert.assertEquals(
+			editableValues, fragmentEntryLink.getEditableValues());
+	}
+
+	@Test
 	public void testAddFragmentEntryLinkWithEmbeddedPortlet() throws Exception {
 		FragmentCollection fragmentCollection =
 			FragmentTestUtil.addFragmentCollection(
@@ -150,23 +165,6 @@ public class FragmentEntryLinkModelListenerTest {
 
 		Assert.assertEquals(
 			portletPreferences.toString(), 0, portletPreferences.size());
-	}
-
-	@Test
-	public void testAddFragmentEntryLinkWithEscapedTextField()
-		throws Exception {
-
-		String editableValues = _createEditableValues(
-			"element-text",
-			HtmlUtil.escape("<script>alert('xss');</script>Heading Example"));
-
-		FragmentEntryLink fragmentEntryLink = _addFragmentEntryLink(
-			_fragmentCollectionContributorRegistry.getFragmentEntry(
-				"BASIC_COMPONENT-heading"),
-			editableValues, _serviceContext);
-
-		Assert.assertEquals(
-			editableValues, fragmentEntryLink.getEditableValues());
 	}
 
 	@Test
@@ -281,9 +279,7 @@ public class FragmentEntryLinkModelListenerTest {
 	}
 
 	@Test
-	public void testUpdateFragmentEntryLinkWithEscapedTextField()
-		throws Exception {
-
+	public void testUpdateFragmentEntryLinkEscapeTextField() throws Exception {
 		String editableValues = _createEditableValues(
 			"element-text",
 			HtmlUtil.escape("<script>alert('xss');</script>Heading Example"));

@@ -73,7 +73,7 @@ public class FlagsEntryServiceTest {
 	}
 
 	@Test
-	public void testContentAttributesEscaped() throws Exception {
+	public void testEscapeContentAttributes() throws Exception {
 		MockSubscriptionSenderMessageListener
 			mockSubscriptionSenderMessageListener =
 				new MockSubscriptionSenderMessageListener();

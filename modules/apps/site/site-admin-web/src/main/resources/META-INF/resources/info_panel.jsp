@@ -114,7 +114,7 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 							%>
 
 							<p>
-								<liferay-ui:message arguments="<%= new String[] {groupOrganization.getName(), LanguageUtil.get(request, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(groupOrganization.getName()), LanguageUtil.get(request, groupOrganization.getType())} %>" key="this-site-belongs-to-x-which-is-an-organization-of-type-x" translateArguments="<%= false %>" />
 							</p>
 						</c:if>
 

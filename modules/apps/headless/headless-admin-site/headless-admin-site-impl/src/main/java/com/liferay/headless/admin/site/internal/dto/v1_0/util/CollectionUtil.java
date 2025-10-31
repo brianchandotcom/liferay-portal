@@ -10,8 +10,16 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
+import com.liferay.info.collection.provider.InfoCollectionProvider;
+import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
+import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -20,6 +28,24 @@ import java.util.Objects;
  * @author Lourdes Fernández Besada
  */
 public class CollectionUtil {
+
+	public static JSONObject getCollectionJSONObject(
+			CollectionReference collectionReference, long companyId,
+			InfoItemServiceRegistry infoItemServiceRegistry, long scopeGroupId)
+		throws Exception {
+
+		if (collectionReference == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		if (collectionReference instanceof ClassNameReference) {
+			return _getClassNameReferenceJSONObject(
+				collectionReference, infoItemServiceRegistry);
+		}
+
+		return _getCollectionItemExternalReferenceJSONObject(
+			collectionReference, companyId, scopeGroupId);
+	}
 
 	public static CollectionReference getCollectionReference(
 		long companyId, JSONObject jsonObject, long scopeGroupId) {
@@ -54,6 +80,120 @@ public class CollectionUtil {
 		classNameReference.setClassName(() -> key);
 
 		return classNameReference;
+	}
+
+	private static JSONObject _getClassNameReferenceJSONObject(
+		CollectionReference collectionReference,
+		InfoItemServiceRegistry infoItemServiceRegistry) {
+
+		if (infoItemServiceRegistry == null) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		ClassNameReference classNameReference =
+			(ClassNameReference)collectionReference;
+
+		if (Validator.isNull(classNameReference.getClassName())) {
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		InfoCollectionProvider infoCollectionProvider =
+			infoItemServiceRegistry.getInfoItemService(
+				InfoCollectionProvider.class,
+				classNameReference.getClassName());
+
+		if (infoCollectionProvider == null) {
+			return JSONUtil.put(
+				"key", classNameReference.getClassName()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			);
+		}
+
+		return JSONUtil.put(
+			"itemSubtype",
+			() -> {
+				if (!(infoCollectionProvider instanceof
+						SingleFormVariationInfoCollectionProvider)) {
+
+					return null;
+				}
+
+				SingleFormVariationInfoCollectionProvider<?>
+					singleFormVariationInfoCollectionProvider =
+						(SingleFormVariationInfoCollectionProvider<?>)
+							infoCollectionProvider;
+
+				return singleFormVariationInfoCollectionProvider.
+					getFormVariationKey();
+			}
+		).put(
+			"itemType", infoCollectionProvider.getCollectionItemClassName()
+		).put(
+			"key", infoCollectionProvider.getKey()
+		).put(
+			"title",
+			() -> infoCollectionProvider.getLabel(LocaleUtil.getDefault())
+		).put(
+			"type", InfoListProviderItemSelectorReturnType.class.getName()
+		);
+	}
+
+	private static JSONObject _getCollectionItemExternalReferenceJSONObject(
+			CollectionReference collectionReference, long companyId,
+			long scopeGroupId)
+		throws Exception {
+
+		CollectionItemExternalReference collectionItemExternalReference =
+			(CollectionItemExternalReference)collectionReference;
+
+		if (Validator.isNull(
+				collectionItemExternalReference.getExternalReferenceCode())) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
+		Long groupId = ItemScopeUtil.getItemGroupId(
+			companyId, collectionItemExternalReference.getScope(),
+			scopeGroupId);
+
+		JSONObject jsonObject = JSONUtil.put(
+			"externalReferenceCode",
+			collectionItemExternalReference.getExternalReferenceCode()
+		).put(
+			"scopeExternalReferenceCode",
+			ItemScopeUtil.getItemScopeExternalReferenceCode(
+				collectionItemExternalReference.getScope(), scopeGroupId)
+		).put(
+			"type", InfoListItemSelectorReturnType.class.getName()
+		);
+
+		if (groupId == null) {
+			return jsonObject;
+		}
+
+		AssetListEntry assetListEntry =
+			AssetListEntryLocalServiceUtil.
+				fetchAssetListEntryByExternalReferenceCode(
+					collectionItemExternalReference.getExternalReferenceCode(),
+					groupId);
+
+		if (assetListEntry == null) {
+			return jsonObject;
+		}
+
+		return jsonObject.put(
+			"classNameId",
+			String.valueOf(PortalUtil.getClassNameId(AssetListEntry.class))
+		).put(
+			"classPK", assetListEntry.getAssetListEntryId()
+		).put(
+			"itemSubtype", assetListEntry.getAssetEntrySubtype()
+		).put(
+			"itemType", assetListEntry.getAssetEntryType()
+		).put(
+			"title", assetListEntry.getTitle()
+		);
 	}
 
 	private static CollectionItemExternalReference

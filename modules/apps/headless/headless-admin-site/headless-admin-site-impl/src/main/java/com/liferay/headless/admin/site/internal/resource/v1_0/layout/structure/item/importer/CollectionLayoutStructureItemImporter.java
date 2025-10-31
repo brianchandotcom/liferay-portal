@@ -5,14 +5,11 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewportDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
@@ -21,15 +18,10 @@ import com.liferay.headless.admin.site.dto.v1_0.ListStyleDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionDisplayListStyleUtil;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
-import com.liferay.info.collection.provider.InfoCollectionProvider;
-import com.liferay.info.collection.provider.SingleFormVariationInfoCollectionProvider;
-import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.list.provider.item.selector.criterion.InfoListProviderItemSelectorReturnType;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
@@ -44,9 +36,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.util.Objects;
@@ -160,66 +149,6 @@ public class CollectionLayoutStructureItemImporter
 		return collectionStyledLayoutStructureItem;
 	}
 
-	private JSONObject _getClassNameReferenceJSONObject(
-		CollectionReference collectionReference,
-		LayoutStructureItemImporterContext layoutStructureItemImporterContext) {
-
-		InfoItemServiceRegistry infoItemServiceRegistry =
-			layoutStructureItemImporterContext.getInfoItemServiceRegistry();
-
-		if (infoItemServiceRegistry == null) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		ClassNameReference classNameReference =
-			(ClassNameReference)collectionReference;
-
-		if (Validator.isNull(classNameReference.getClassName())) {
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		InfoCollectionProvider infoCollectionProvider =
-			infoItemServiceRegistry.getInfoItemService(
-				InfoCollectionProvider.class,
-				classNameReference.getClassName());
-
-		if (infoCollectionProvider == null) {
-			return JSONUtil.put(
-				"key", classNameReference.getClassName()
-			).put(
-				"type", InfoListProviderItemSelectorReturnType.class.getName()
-			);
-		}
-
-		return JSONUtil.put(
-			"itemSubtype",
-			() -> {
-				if (!(infoCollectionProvider instanceof
-						SingleFormVariationInfoCollectionProvider)) {
-
-					return null;
-				}
-
-				SingleFormVariationInfoCollectionProvider<?>
-					singleFormVariationInfoCollectionProvider =
-						(SingleFormVariationInfoCollectionProvider<?>)
-							infoCollectionProvider;
-
-				return singleFormVariationInfoCollectionProvider.
-					getFormVariationKey();
-			}
-		).put(
-			"itemType", infoCollectionProvider.getCollectionItemClassName()
-		).put(
-			"key", infoCollectionProvider.getKey()
-		).put(
-			"title",
-			() -> infoCollectionProvider.getLabel(LocaleUtil.getDefault())
-		).put(
-			"type", InfoListProviderItemSelectorReturnType.class.getName()
-		);
-	}
-
 	private CollectionDisplayViewport _getCollectionDisplayViewport(
 		CollectionDisplayViewport.Id collectionDisplayViewportId,
 		CollectionDisplayViewport[] collectionDisplayViewports) {
@@ -238,66 +167,6 @@ public class CollectionLayoutStructureItemImporter
 		return null;
 	}
 
-	private JSONObject _getCollectionItemExternalReferenceJSONObject(
-			CollectionReference collectionReference,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
-		throws Exception {
-
-		CollectionItemExternalReference collectionItemExternalReference =
-			(CollectionItemExternalReference)collectionReference;
-
-		if (Validator.isNull(
-				collectionItemExternalReference.getExternalReferenceCode())) {
-
-			return JSONFactoryUtil.createJSONObject();
-		}
-
-		Long groupId = ItemScopeUtil.getItemGroupId(
-			layoutStructureItemImporterContext.getCompanyId(),
-			collectionItemExternalReference.getScope(),
-			layoutStructureItemImporterContext.getGroupId());
-
-		JSONObject jsonObject = JSONUtil.put(
-			"externalReferenceCode",
-			collectionItemExternalReference.getExternalReferenceCode()
-		).put(
-			"scopeExternalReferenceCode",
-			ItemScopeUtil.getItemScopeExternalReferenceCode(
-				collectionItemExternalReference.getScope(),
-				layoutStructureItemImporterContext.getGroupId())
-		).put(
-			"type", InfoListItemSelectorReturnType.class.getName()
-		);
-
-		if (groupId == null) {
-			return jsonObject;
-		}
-
-		AssetListEntry assetListEntry =
-			AssetListEntryLocalServiceUtil.
-				fetchAssetListEntryByExternalReferenceCode(
-					collectionItemExternalReference.getExternalReferenceCode(),
-					groupId);
-
-		if (assetListEntry == null) {
-			return jsonObject;
-		}
-
-		return jsonObject.put(
-			"classNameId",
-			String.valueOf(PortalUtil.getClassNameId(AssetListEntry.class))
-		).put(
-			"classPK", assetListEntry.getAssetListEntryId()
-		).put(
-			"itemSubtype", assetListEntry.getAssetEntrySubtype()
-		).put(
-			"itemType", assetListEntry.getAssetEntryType()
-		).put(
-			"title", assetListEntry.getTitle()
-		);
-	}
-
 	private JSONObject _getCollectionJSONObject(
 			CollectionSettings collectionSettings,
 			LayoutStructureItemImporterContext
@@ -311,18 +180,19 @@ public class CollectionLayoutStructureItemImporter
 			return JSONFactoryUtil.createJSONObject();
 		}
 
-		if (collectionReference instanceof ClassNameReference) {
-			JSONObject collectionJSONObject = _getClassNameReferenceJSONObject(
-				collectionReference, layoutStructureItemImporterContext);
+		JSONObject collectionJSONObject =
+			CollectionUtil.getCollectionJSONObject(
+				collectionReference,
+				layoutStructureItemImporterContext.getCompanyId(),
+				layoutStructureItemImporterContext.getInfoItemServiceRegistry(),
+				layoutStructureItemImporterContext.getGroupId());
 
+		if (collectionReference instanceof ClassNameReference) {
 			collectionJSONObject.put(
 				"config", collectionSettings.getCollectionConfig());
-
-			return collectionJSONObject;
 		}
 
-		return _getCollectionItemExternalReferenceJSONObject(
-			collectionReference, layoutStructureItemImporterContext);
+		return collectionJSONObject;
 	}
 
 	private void _setCollectionDisplayListStyle(

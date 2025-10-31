@@ -89,12 +89,11 @@ public class NewSpaceComponentSectionFragmentRenderer
 		if (_isFirstTimeAccess(themeDisplay)) {
 			return LanguageUtil.get(
 				httpServletRequest,
-				"spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files-first-space");
+				"spaces-are-essential-for-organizing-create-first-space");
 		}
 
 		return LanguageUtil.get(
-			httpServletRequest,
-			"spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files");
+			httpServletRequest, "spaces-are-essential-for-organizing");
 	}
 
 	private Boolean _isFirstTimeAccess(ThemeDisplay themeDisplay) {

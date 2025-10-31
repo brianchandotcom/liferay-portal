@@ -14,7 +14,6 @@ import com.liferay.object.rest.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -160,9 +159,7 @@ public class ServiceContextUtil {
 		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
 			objectEntry.getTaxonomyCategoryBriefs();
 
-		if ((taxonomyCategoryBriefs == null) ||
-			!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
-
+		if (taxonomyCategoryBriefs == null) {
 			return;
 		}
 

@@ -2706,9 +2706,7 @@ public class DefaultObjectEntryManagerImplTest
 		}
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
+	@FeatureFlag("LPD-32050")
 	@Test
 	public void testAddObjectEntryWithMissingTaxonomyCategoryBriefReference()
 		throws Exception {

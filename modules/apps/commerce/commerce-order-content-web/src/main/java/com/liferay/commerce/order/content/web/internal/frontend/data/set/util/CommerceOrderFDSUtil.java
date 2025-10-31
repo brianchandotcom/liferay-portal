@@ -201,12 +201,6 @@ public class CommerceOrderFDSUtil {
 					WorkflowConstants.getStatusLabel(
 						commerceOrder.getStatus()));
 
-				Date orderDate = commerceOrder.getCreateDate();
-
-				if (commerceOrder.getOrderDate() != null) {
-					orderDate = commerceOrder.getOrderDate();
-				}
-
 				String commerceOrderTypeName = StringPool.BLANK;
 
 				CommerceOrderType commerceOrderType =
@@ -223,12 +217,16 @@ public class CommerceOrderFDSUtil {
 					commerceOrder.getCommerceOrderId(),
 					commerceOrder.getCommerceAccountName(), amount,
 					commerceOrder.getUserName(),
-					_formatCommerceOrderCreateDate(
-						themeDisplay.getLocale(), orderDate,
+					_formatCommerceOrderDate(
+						themeDisplay.getLocale(), commerceOrder.getCreateDate(),
 						showCommerceOrderCreateTime,
 						themeDisplay.getTimeZone()),
-					commerceOrder.getName(), commerceOrderStatusLabel,
-					commerceOrderTypeName,
+					commerceOrder.getName(),
+					_formatCommerceOrderDate(
+						themeDisplay.getLocale(), commerceOrder.getOrderDate(),
+						showCommerceOrderCreateTime,
+						themeDisplay.getTimeZone()),
+					commerceOrderStatusLabel, commerceOrderTypeName,
 					commerceOrder.getPurchaseOrderNumber(),
 					workflowStatusLabel);
 			});
@@ -325,7 +323,7 @@ public class CommerceOrderFDSUtil {
 		).buildString();
 	}
 
-	private static String _formatCommerceOrderCreateDate(
+	private static String _formatCommerceOrderDate(
 		Locale locale, Date orderDate, boolean showCommerceOrderCreateTime,
 		TimeZone timeZone) {
 

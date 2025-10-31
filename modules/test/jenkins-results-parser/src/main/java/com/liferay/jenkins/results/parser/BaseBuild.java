@@ -438,6 +438,8 @@ public abstract class BaseBuild implements Build {
 		JSONObject buildReportJSONObject = new JSONObject();
 
 		buildReportJSONObject.put(
+			"buildParameters", getParameters()
+		).put(
 			"buildURL", getBuildURL()
 		).put(
 			"duration", getDuration()

@@ -223,8 +223,6 @@ public abstract class BaseTopLevelBuild
 	public JSONObject getBuildReportJSONObject() {
 		JSONObject buildReportJSONObject = super.getBuildReportJSONObject();
 
-		buildReportJSONObject.put("buildParameters", getParameters());
-
 		if (!(this instanceof ControllerTopLevelBuild)) {
 			buildReportJSONObject.put(
 				"testSuiteName", getTestSuiteName()

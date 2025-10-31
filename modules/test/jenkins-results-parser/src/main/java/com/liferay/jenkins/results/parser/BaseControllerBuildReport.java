@@ -5,9 +5,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 /**
@@ -15,28 +12,6 @@ import org.json.JSONObject;
  */
 public abstract class BaseControllerBuildReport
 	extends BaseBuildReport implements ControllerBuildReport {
-
-	@Override
-	public Map<String, String> getBuildParameters() {
-		Map<String, String> buildParameters = new HashMap<>();
-
-		JSONObject buildReportJSONObject = getBuildReportJSONObject();
-
-		if ((buildReportJSONObject == null) ||
-			!buildReportJSONObject.has("buildParameters")) {
-
-			return buildParameters;
-		}
-
-		JSONObject buildParametersJSONObject =
-			buildReportJSONObject.getJSONObject("buildParameters");
-
-		for (String key : buildParametersJSONObject.keySet()) {
-			buildParameters.put(key, buildParametersJSONObject.getString(key));
-		}
-
-		return buildParameters;
-	}
 
 	@Override
 	public JSONObject getBuildReportJSONObject() {

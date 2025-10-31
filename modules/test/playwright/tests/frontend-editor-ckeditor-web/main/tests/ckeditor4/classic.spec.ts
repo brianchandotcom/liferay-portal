@@ -211,3 +211,37 @@ test(
 		expect(ckeditorElementRect).toEqual(ckeditorElementRectChange);
 	}
 );
+
+test(
+	'Pasting HTML content works',
+	{tag: '@LPD-65963'},
+	async ({classicPage, context}) => {
+		const newPage = await context.newPage();
+
+		await newPage.goto(
+			'http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm'
+		);
+
+		await newPage.locator('body').focus();
+		await newPage.locator('html').press('ControlOrMeta+a');
+		await newPage.locator('html').press('ControlOrMeta+c');
+
+		const body = classicPage.editableFrame.locator('body');
+
+		await body.focus();
+		await body.press('ControlOrMeta+a');
+		await body.press('ControlOrMeta+v');
+
+		await expect(
+			body.getByRole(
+				'img', { name: 'A beautiful redheaded man' }
+			)
+		).toBeVisible();
+
+		await expect(
+			body.locator(
+				'table[summary="Sweden was the top importing country by far in 1998."]'
+			)
+		).toBeVisible();
+	}
+);

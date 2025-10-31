@@ -437,9 +437,8 @@ public class DBUpgradeClientTest {
 		portalUpgradeExtProperties.store(portalUpgradeExtPropertiesFile);
 	}
 
+	private static final AppServer _appServer = Mockito.mock(AppServer.class);
 	private static File _liferayHomeDir;
-	private static final AppServer _appServer = Mockito.mock(
-		AppServer.class);
 	private static File _rootDir;
 	private static File _shieldedContainerLib;
 	private static File _tomcatDir;

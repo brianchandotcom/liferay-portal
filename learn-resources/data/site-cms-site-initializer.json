@@ -2,7 +2,7 @@
 	"general": {
 		"en_US": {
 			"message": "Learn more about spaces.",
-			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-cms/spaces/creating-spaces"
+			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system-beta/spaces/creating-spaces"
 		}
 	},
 	"picklist-builder": {
@@ -14,7 +14,7 @@
 	"space-memberships": {
 		"en_US": {
 			"message": "Learn more about space memberships.",
-			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-cms/spaces/space-memberships"
+			"url": "https://learn.liferay.com/w/dxp/content-management-system/liferay-headless-content-management-system-beta/spaces/adding-and-managing-space-members"
 		}
 	}
 }

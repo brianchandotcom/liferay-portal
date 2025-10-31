@@ -15,6 +15,7 @@ import com.liferay.osb.faro.web.internal.request.filter.FaroContainerRequestFilt
 import com.liferay.osb.faro.web.internal.request.filter.FaroContainerResponseFilter;
 import com.liferay.osb.faro.web.internal.request.filter.SecurityFilter;
 import com.liferay.osb.faro.web.internal.request.filter.TokenAuthenticationFilter;
+import com.liferay.osb.faro.web.internal.response.filter.CacheContainerResponseFilter;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 
 import jakarta.ws.rs.core.Application;
@@ -51,6 +52,7 @@ public abstract class BaseApplication extends Application {
 		singletons.add(new SecurityFilter());
 		singletons.add(new TokenAuthenticationFilter());
 		singletons.addAll(getControllers());
+		singletons.add(new CacheContainerResponseFilter());
 
 		return singletons;
 	}

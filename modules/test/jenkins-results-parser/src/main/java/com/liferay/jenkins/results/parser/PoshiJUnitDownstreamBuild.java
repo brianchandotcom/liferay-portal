@@ -78,9 +78,10 @@ public class PoshiJUnitDownstreamBuild extends BaseDownstreamBuild {
 	}
 
 	protected PoshiJUnitDownstreamBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String url, TopLevelBuild topLevelBuild,
+		DownstreamBuildReport cachedDownstreamBuildReport) {
 
-		super(url, topLevelBuild);
+		super(url, topLevelBuild, cachedDownstreamBuildReport);
 	}
 
 	private List<String> _getPoshiTestNames() {

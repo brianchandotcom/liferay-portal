@@ -190,7 +190,9 @@ public class ObjectEntryInfoItemFormProviderUtil {
 							objectDefinitionId,
 							ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-					if (!FeatureFlagManagerUtil.isEnabled("LPD-60546")) {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-60546")) {
+
 						return;
 					}
 
@@ -369,7 +371,8 @@ public class ObjectEntryInfoItemFormProviderUtil {
 						Objects.equals(
 							objectDefinition.getObjectDefinitionId(),
 							objectRelationship.getObjectDefinitionId2()) ||
-						FeatureFlagManagerUtil.isEnabled("LPD-60546")) {
+						FeatureFlagManagerUtil.isEnabled(
+							objectDefinition.getCompanyId(), "LPD-60546")) {
 
 						continue;
 					}

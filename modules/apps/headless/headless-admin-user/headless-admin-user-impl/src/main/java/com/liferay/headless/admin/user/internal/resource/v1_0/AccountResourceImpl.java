@@ -323,7 +323,7 @@ public class AccountResourceImpl
 
 			@Override
 			public String getModelClassName() {
-				return com.liferay.mail.kernel.model.Account.class.getName();
+				return AccountEntry.class.getName();
 			}
 
 			@Override

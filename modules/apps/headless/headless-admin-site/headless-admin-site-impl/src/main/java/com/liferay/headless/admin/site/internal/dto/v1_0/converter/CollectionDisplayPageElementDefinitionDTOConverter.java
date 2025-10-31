@@ -5,25 +5,18 @@
 
 package com.liferay.headless.admin.site.internal.dto.v1_0.converter;
 
-import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalService;
-import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayPageElementDefinition;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewport;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionDisplayViewportDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
-import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionSettings;
 import com.liferay.headless.admin.site.dto.v1_0.EmptyCollectionConfig;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyle;
 import com.liferay.headless.admin.site.dto.v1_0.ListStyleDefinition;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.headless.admin.site.dto.v1_0.TemplateListStyle;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionDisplayListStyleUtil;
-import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ViewportIdUtil;
-import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
 import com.liferay.layout.converter.AlignConverter;
 import com.liferay.layout.converter.FlexWrapConverter;
 import com.liferay.layout.converter.JustifyConverter;
@@ -31,13 +24,9 @@ import com.liferay.layout.converter.VerticalAlignmentConverter;
 import com.liferay.layout.util.CollectionPaginationUtil;
 import com.liferay.layout.util.structure.CollectionStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.collection.EmptyCollectionOptions;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -48,7 +37,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -137,38 +125,6 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 			});
 
 		return collectionDisplayPageElementDefinition;
-	}
-
-	private Scope _getItemScope(
-			Long companyId, String itemExternalReferenceCode, long scopeGroupId)
-		throws PortalException {
-
-		if (Validator.isNull(itemExternalReferenceCode) ||
-			(companyId == null)) {
-
-			return null;
-		}
-
-		Group group = _groupLocalService.getGroupByExternalReferenceCode(
-			itemExternalReferenceCode, companyId);
-
-		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
-			return null;
-		}
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
 	}
 
 	private Map<String, Object> _toCollectionConfig(
@@ -381,79 +337,6 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 			new CollectionDisplayViewport[0]);
 	}
 
-	private CollectionItemExternalReference _toCollectionItemExternalReference(
-		AssetListEntry assetListEntry, long companyId, JSONObject jsonObject,
-		long scopeGroupId) {
-
-		CollectionItemExternalReference collectionItemExternalReference =
-			new CollectionItemExternalReference();
-
-		if (assetListEntry != null) {
-			collectionItemExternalReference.setExternalReferenceCode(
-				assetListEntry::getExternalReferenceCode);
-			collectionItemExternalReference.setScope(
-				() -> ItemScopeUtil.getItemScope(
-					assetListEntry.getGroupId(), scopeGroupId));
-
-			return collectionItemExternalReference;
-		}
-
-		String externalReferenceCode = jsonObject.getString(
-			"externalReferenceCode");
-
-		if (Validator.isNull(externalReferenceCode)) {
-			return null;
-		}
-
-		collectionItemExternalReference.setExternalReferenceCode(
-			() -> externalReferenceCode);
-		collectionItemExternalReference.setScope(
-			() -> _getItemScope(
-				companyId, jsonObject.getString("scopeExternalReferenceCode"),
-				scopeGroupId));
-
-		return collectionItemExternalReference;
-	}
-
-	private CollectionReference _toCollectionReference(
-		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
-		long companyId, long scopeGroupId) {
-
-		JSONObject jsonObject =
-			collectionStyledLayoutStructureItem.getCollectionJSONObject();
-
-		if (jsonObject == null) {
-			return null;
-		}
-
-		String type = jsonObject.getString("type");
-
-		if (Validator.isNull(type)) {
-			return null;
-		}
-
-		if (Objects.equals(
-				type, InfoListItemSelectorReturnType.class.getName())) {
-
-			return _toCollectionItemExternalReference(
-				_assetListEntryLocalService.fetchAssetListEntry(
-					jsonObject.getLong("classPK")),
-				companyId, jsonObject, scopeGroupId);
-		}
-
-		String key = jsonObject.getString("key", null);
-
-		if (Validator.isNull(key)) {
-			return null;
-		}
-
-		ClassNameReference classNameReference = new ClassNameReference();
-
-		classNameReference.setClassName(() -> key);
-
-		return classNameReference;
-	}
-
 	private CollectionSettings _toCollectionSettings(
 		CollectionStyledLayoutStructureItem collectionStyledLayoutStructureItem,
 		long companyId, long scopeGroupId) {
@@ -464,8 +347,10 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 					() -> _toCollectionConfig(
 						collectionStyledLayoutStructureItem));
 				setCollectionReference(
-					() -> _toCollectionReference(
-						collectionStyledLayoutStructureItem, companyId,
+					() -> CollectionUtil.getCollectionReference(
+						companyId,
+						collectionStyledLayoutStructureItem.
+							getCollectionJSONObject(),
 						scopeGroupId));
 			}
 		};
@@ -611,12 +496,6 @@ public class CollectionDisplayPageElementDefinitionDTOConverter
 				CollectionPaginationUtil.PAGINATION_TYPE_SIMPLE,
 				CollectionDisplayPageElementDefinition.PaginationType.SIMPLE
 			).build();
-
-	@Reference
-	private AssetListEntryLocalService _assetListEntryLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;

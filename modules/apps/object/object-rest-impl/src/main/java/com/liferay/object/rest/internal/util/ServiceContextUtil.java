@@ -73,7 +73,6 @@ public class ServiceContextUtil {
 				LocaleUtil.toLanguageId(locale),
 				objectEntry.getFriendlyUrlPath_i18n(),
 				objectEntry.getFriendlyUrlPath()));
-
 		serviceContext.setCompanyId(companyId);
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(locale));
 		serviceContext.setModelPermissions(modelPermissions);

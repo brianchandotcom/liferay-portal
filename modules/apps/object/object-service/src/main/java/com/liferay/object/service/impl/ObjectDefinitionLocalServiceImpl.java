@@ -1512,10 +1512,8 @@ public class ObjectDefinitionLocalServiceImpl
 				storageType, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT));
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableFormContainer(enableFormContainer);
-
 		objectDefinition.setEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization);
-
 		objectDefinition.setEnableIndexSearch(enableIndexSearch);
 		objectDefinition.setEnableLocalization(enableLocalization);
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
@@ -2683,10 +2681,8 @@ public class ObjectDefinitionLocalServiceImpl
 		objectDefinition.setEnableCategorization(enableCategorization);
 		objectDefinition.setEnableComments(enableComments);
 		objectDefinition.setEnableFormContainer(enableFormContainer);
-
 		objectDefinition.setEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization);
-
 		objectDefinition.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinition.setEnableObjectEntryHistory(enableObjectEntryHistory);
 

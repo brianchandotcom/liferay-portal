@@ -41,30 +41,20 @@ public class ImportStagedModelExceptionHandlerImpl
 		PortletDataContext portletDataContext,
 		PortletDataException portletDataException, T stagedModel) {
 
-		String externalReferenceCode = null;
-
-		if (stagedModel instanceof ExternalReferenceCodeModel) {
-			ExternalReferenceCodeModel externalReferenceCodeModel =
-				(ExternalReferenceCodeModel)stagedModel;
-
-			externalReferenceCode =
-				externalReferenceCodeModel.getExternalReferenceCode();
-		}
+		String externalReferenceCode = _getExternalReferenceCode(stagedModel);
 
 		Class<?> modelClass = stagedModel.getModelClass();
 
+		long groupId = _getGroupId(portletDataContext);
+
 		try {
-			String finalExternalReferenceCode = externalReferenceCode;
-
-			long groupId = _getGroupId(portletDataContext);
-
 			TransactionInvokerUtil.invoke(
 				_transactionConfig,
 				() -> {
 					_exportImportReportEntryLocalService.
 						addErrorExportImportReportEntry(
 							groupId, portletDataContext.getCompanyId(),
-							finalExternalReferenceCode,
+							externalReferenceCode,
 							ExportImportClassedModelUtil.getClassNameId(
 								stagedModel),
 							ExportImportClassedModelUtil.getClassPK(
@@ -101,12 +91,26 @@ public class ImportStagedModelExceptionHandlerImpl
 		long groupId = portletDataContext.getGroupId();
 
 		if (ExportImportReportEntryUtil.isCompanyScoped(
-				groupId, _groupLocalService)) {
+			groupId, _groupLocalService)) {
 
 			groupId = 0;
 		}
 
 		return groupId;
+	}
+
+	private String _getExternalReferenceCode(StagedModel stagedModel) {
+		String externalReferenceCode = null;
+
+		if (stagedModel instanceof ExternalReferenceCodeModel) {
+			ExternalReferenceCodeModel externalReferenceCodeModel =
+				(ExternalReferenceCodeModel)stagedModel;
+
+			externalReferenceCode =
+				externalReferenceCodeModel.getExternalReferenceCode();
+		}
+
+		return externalReferenceCode;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

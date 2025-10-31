@@ -269,10 +269,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		return new Site() {
 			{
 				active = RandomTestUtil.randomBoolean();
-				description = LinkedHashMapBuilder.put(
-					String.valueOf(LocaleUtil.getDefault()),
-					RandomTestUtil.randomString()
-				).build();
+				description = RandomTestUtil.randomString();
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				friendlyUrlPath =
@@ -363,10 +360,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 	private void _assertEquals(Group group, Site site) throws Exception {
 		Assert.assertEquals(site.getActive(), group.isActive());
 		Assert.assertEquals(
-			site.getDescription(
-			).get(
-				String.valueOf(LocaleUtil.getDefault())
-			),
+			site.getDescription(),
 			group.getDescription(LocaleUtil.getDefault()));
 		Assert.assertEquals(site.getFriendlyUrlPath(), group.getFriendlyURL());
 		Assert.assertEquals(
@@ -537,7 +531,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.POST));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.POST));
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
@@ -900,7 +894,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 		String description1 = RandomTestUtil.randomString();
 		String description2 = RandomTestUtil.randomString();
 
-		randomSite.setDescription(
+		randomSite.setDescription_i18n(
 			LinkedHashMapBuilder.put(
 				String.valueOf(LocaleUtil.getDefault()), description1
 			).put(
@@ -909,14 +903,16 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 
 		Site postSite = _testPostSite_addSite(randomSite);
 
-		Map<String, String> descriptionMap = postSite.getDescription();
+		Map<String, String> descriptionMap = postSite.getDescription_i18n();
 
 		Assert.assertEquals(
 			description1,
-			descriptionMap.get(String.valueOf(LocaleUtil.getDefault())));
+			descriptionMap.get(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.getDefault())));
 		Assert.assertEquals(
 			description2,
-			descriptionMap.get(String.valueOf(LocaleUtil.BRAZIL)));
+			descriptionMap.get(
+				LocaleUtil.toBCP47LanguageId(LocaleUtil.BRAZIL)));
 	}
 
 	private void _testPostSiteWithLocalizedName() throws Exception {
@@ -1074,7 +1070,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
@@ -1095,7 +1091,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(updatedSite.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		group = _groupLocalService.getGroupByExternalReferenceCode(
 			updatedSite.getExternalReferenceCode(),
@@ -1128,7 +1124,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		Group group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
@@ -1144,7 +1140,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
@@ -1160,7 +1156,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());
@@ -1187,7 +1183,7 @@ public class SiteResourceTest extends BaseSiteResourceTestCase {
 				JSONUtil.put(
 					_jsonFactory.createJSONObject(site.toString())
 				).toString(),
-				"headless-site/v1.0/sites/batch", Http.Method.PUT));
+				"headless-admin-site/v1.0/sites/batch", Http.Method.PUT));
 
 		group = _groupLocalService.getGroupByExternalReferenceCode(
 			site.getExternalReferenceCode(), TestPropsValues.getCompanyId());

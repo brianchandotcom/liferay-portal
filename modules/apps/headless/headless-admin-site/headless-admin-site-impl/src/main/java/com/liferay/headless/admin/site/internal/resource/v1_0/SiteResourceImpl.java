@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -464,8 +463,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				null, site.getParentSiteExternalReferenceCode(),
 				site.getParentSiteKey()),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, _getNameMap(site),
-			_getLocalizationMap(site.getDescription()),
-			_getType(site.getMembershipType()),
+			_getDescriptionMap(site), _getType(site.getMembershipType()),
 			_getTypeSettings(site.getTypeSettings(), null),
 			_isManualMembership(site.getManualMembership()),
 			_getMembershipRestriction(site.getMembershipRestriction()),
@@ -499,20 +497,18 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 		return group;
 	}
 
-	private Map<Locale, String> _getLocalizationMap(Map<String, String> map) {
-		if (map == null) {
+	private Map<Locale, String> _getDescriptionMap(Site site) {
+		if (Validator.isNotNull(site.getDescription_i18n())) {
+			return LocalizedMapUtil.getLocalizedMap(site.getDescription_i18n());
+		}
+
+		if (site.getDescription() == null) {
 			return null;
 		}
 
-		return _localization.getLocalizationMap(
-			map.keySet(
-			).toArray(
-				new String[0]
-			),
-			map.values(
-			).toArray(
-				new String[0]
-			));
+		return HashMapBuilder.put(
+			LocaleUtil.getDefault(), site.getDescription()
+		).build();
 	}
 
 	private int _getMembershipRestriction(Integer membershipRestriction) {
@@ -701,30 +697,14 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 	}
 
 	private Site _toSite(Group group) {
-		String[] availableLanguageIds = group.getAvailableLanguageIds();
-
 		return new Site() {
 			{
 				setActive(group::getActive);
 				setDescription(
-					() -> {
-						Map<String, String> descriptionMap =
-							new LinkedHashMap<>();
-
-						for (String availableLanguageId :
-								availableLanguageIds) {
-
-							String description = group.getDescription(
-								availableLanguageId, false);
-
-							if (Validator.isNotNull(description)) {
-								descriptionMap.put(
-									availableLanguageId, description);
-							}
-						}
-
-						return descriptionMap;
-					});
+					() -> group.getDescription(LocaleUtil.getDefault()));
+				setDescription_i18n(
+					() -> LocalizedMapUtil.getI18nMap(
+						group.getDescriptionMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
 				setFriendlyUrlPath(group::getFriendlyURL);
 				setId(group::getGroupId);
@@ -777,7 +757,7 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 				_getParentGroupId(
 					group, site.getParentSiteExternalReferenceCode(),
 					site.getParentSiteKey()),
-				_getNameMap(site), _getLocalizationMap(site.getDescription()),
+				_getNameMap(site), _getDescriptionMap(site),
 				_getType(site.getMembershipType()),
 				_getTypeSettings(
 					site.getTypeSettings(), group.getTypeSettingsProperties()),
@@ -818,9 +798,6 @@ public class SiteResourceImpl extends BaseSiteResourceImpl {
 
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
-
-	@Reference
-	private Localization _localization;
 
 	@Reference
 	private Portal _portal;

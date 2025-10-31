@@ -52,6 +52,13 @@ public abstract class BaseDownstreamBuildReport
 	}
 
 	@Override
+	public String getJobVariant() {
+		Map<String, String> buildParameters = getBuildParameters();
+
+		return buildParameters.get("JOB_VARIANT");
+	}
+
+	@Override
 	public int getPassCount() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 

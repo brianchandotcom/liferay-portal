@@ -18,6 +18,8 @@ public interface DownstreamBuildReport extends BuildReport {
 
 	public int getFailCount();
 
+	public String getJobVariant();
+
 	public int getPassCount();
 
 	public int getSkipCount();

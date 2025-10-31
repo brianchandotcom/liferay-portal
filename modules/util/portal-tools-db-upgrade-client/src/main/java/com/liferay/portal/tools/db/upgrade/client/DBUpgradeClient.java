@@ -431,7 +431,7 @@ public class DBUpgradeClient {
 		if (portalShieldedContainerLibDir != null) {
 			Path portalDaoDBPath = portalShieldedContainerLibDir.toPath(
 			).resolve(
-				_PORTAL_DAO_DB_JAR_NAME
+				"com.liferay.portal.dao.db.jar"
 			);
 
 			if (Files.exists(portalDaoDBPath)) {
@@ -966,9 +966,6 @@ public class DBUpgradeClient {
 	private static final String _GOGO_SHELL_PREFIX = "g! ";
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
-
-	private static final String _PORTAL_DAO_DB_JAR_NAME =
-		"com.liferay.portal.dao.db.jar";
 
 	private static final String[] _PORTAL_DATABASE_TYPES = {
 		"mariadb", "mysql", "postgresql"

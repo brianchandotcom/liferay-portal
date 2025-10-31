@@ -145,7 +145,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 		if (sourceJSONObject.has("categoryTreeNodeId")) {
 			long assetCategoryTreeNodeId = sourceJSONObject.getLong(
-				"categoryTreeNodeId", 0);
+				"categoryTreeNodeId");
 
 			_assetCategory = AssetCategoryServiceUtil.fetchCategory(
 				assetCategoryTreeNodeId);
@@ -173,7 +173,7 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 
 		if (sourceJSONObject.has("categoryTreeNodeId")) {
 			long assetCategoryTreeNodeId = sourceJSONObject.getLong(
-				"categoryTreeNodeId", 0);
+				"categoryTreeNodeId");
 
 			_assetVocabulary = AssetVocabularyServiceUtil.fetchVocabulary(
 				assetCategoryTreeNodeId);

@@ -6,12 +6,16 @@
 package com.liferay.object.web.internal.object.entries.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.constants.DepotConstants;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectLayoutBoxConstants;
 import com.liferay.object.constants.ObjectWebKeys;
 import com.liferay.object.display.context.ObjectEntryDisplayContext;
@@ -28,6 +32,7 @@ import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectLayoutLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -50,6 +55,7 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -176,15 +182,43 @@ public class ObjectEntryDisplayContextTest {
 
 	@Test
 	public void testGetAPIURL() throws Exception {
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			DepotConstants.TYPE_ASSET_LIBRARY,
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectDefinition depotObjectDefinition = _addObjectDefinition(
+			ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			depotObjectDefinition.getUserId(),
+			depotObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+			String.valueOf(depotEntry.getGroupId()));
+
+		ObjectEntry depotObjectEntry = _addObjectEntry(
+			depotObjectDefinition, String.valueOf(depotEntry.getGroupId()));
+
+		_testGetAPIURL(depotObjectDefinition, depotObjectEntry, null, null);
+
 		_testGetAPIURL(
+			_objectDefinitionLocalService.getObjectDefinition(
+				_companyObjectRelationshipA_AA.getObjectDefinitionId1()),
 			_companyObjectEntryAA, _companyObjectRelationshipA_AA,
 			_companyObjectEntryA);
 		_testGetAPIURL(
+			_objectDefinitionLocalService.getObjectDefinition(
+				_companyObjectRelationshipAA_AAA.getObjectDefinitionId1()),
 			_companyObjectEntryAAA, _companyObjectRelationshipAA_AAA,
 			_companyObjectEntryAA);
 		_testGetAPIURL(
+			_objectDefinitionLocalService.getObjectDefinition(
+				_siteObjectRelationshipA_AA.getObjectDefinitionId1()),
 			_siteObjectEntryAA, _siteObjectRelationshipA_AA, _siteObjectEntryA);
 		_testGetAPIURL(
+			_objectDefinitionLocalService.getObjectDefinition(
+				_siteObjectRelationshipAA_AAA.getObjectDefinitionId1()),
 			_siteObjectEntryAAA, _siteObjectRelationshipAA_AAA,
 			_siteObjectEntryAA);
 	}
@@ -429,7 +463,7 @@ public class ObjectEntryDisplayContextTest {
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
-			String externalReferenceCode, Locale locale,
+			String externalReferenceCode, long groupId, Locale locale,
 			ObjectDefinition objectDefinition, long objectRelationshipId,
 			String parentObjectEntryERC)
 		throws Exception {
@@ -443,6 +477,8 @@ public class ObjectEntryDisplayContextTest {
 		mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_DEFINITION, objectDefinition);
 		mockHttpServletRequest.setAttribute(
+			ObjectWebKeys.OBJECT_ENTRY_GROUP_ID, groupId);
+		mockHttpServletRequest.setAttribute(
 			ObjectWebKeys.OBJECT_ENTRY_READ_ONLY, Boolean.FALSE);
 		mockHttpServletRequest.setAttribute(
 			WebKeys.PORTLET_ID, objectDefinition.getPortletId());
@@ -452,7 +488,7 @@ public class ObjectEntryDisplayContextTest {
 		themeDisplay.setCompany(
 			_companyLocalService.getCompany(TestPropsValues.getCompanyId()));
 		themeDisplay.setLocale(locale);
-		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setScopeGroupId(groupId);
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(TestPropsValues.getUser());
 
@@ -477,45 +513,55 @@ public class ObjectEntryDisplayContextTest {
 		throws Exception {
 
 		return _getMockHttpServletRequest(
-			externalReferenceCode, LocaleUtil.getDefault(), objectDefinition,
-			objectRelationshipId, parentObjectEntryERC);
+			externalReferenceCode, _group.getGroupId(), LocaleUtil.getDefault(),
+			objectDefinition, objectRelationshipId, parentObjectEntryERC);
 	}
 
 	private void _testGetAPIURL(
-			ObjectEntry objectEntry, ObjectRelationship objectRelationship,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			ObjectRelationship objectRelationship,
 			ObjectEntry parentObjectEntry)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionLocalService.getObjectDefinition(
-				objectRelationship.getObjectDefinitionId1());
-
-		String apiURL = StringBundler.concat(
-			"/o", objectDefinition.getRESTContextPath(),
-			"/by-external-reference-code/",
-			parentObjectEntry.getExternalReferenceCode(), "/",
-			objectRelationship.getName());
+		String apiURL = "/o" + objectDefinition.getRESTContextPath();
 
 		if (Objects.equals(
 				objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT) ||
+			Objects.equals(
+				objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE)) {
 
-			apiURL = StringBundler.concat(
-				"/o", objectDefinition.getRESTContextPath(), "/scopes/",
-				_group.getGroupId(), "/by-external-reference-code/",
-				parentObjectEntry.getExternalReferenceCode(), "/",
-				objectRelationship.getName());
+			apiURL += "/scopes/" + objectEntry.getScopeId();
 		}
 
-		Assert.assertEquals(
-			apiURL,
-			_getAPIURL(
-				_getMockHttpServletRequest(
-					objectEntry.getExternalReferenceCode(),
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship.getObjectDefinitionId2()),
-					objectRelationship.getObjectRelationshipId(),
-					parentObjectEntry.getExternalReferenceCode())));
+		MockHttpServletRequest mockHttpServletRequest;
+
+		if ((objectRelationship != null) && (parentObjectEntry != null)) {
+			apiURL += StringBundler.concat(
+				"/by-external-reference-code/",
+				parentObjectEntry.getExternalReferenceCode(), "/",
+				objectRelationship.getName());
+
+			mockHttpServletRequest = _getMockHttpServletRequest(
+				objectEntry.getExternalReferenceCode(),
+				_objectDefinitionLocalService.getObjectDefinition(
+					objectRelationship.getObjectDefinitionId2()),
+				objectRelationship.getObjectRelationshipId(),
+				parentObjectEntry.getExternalReferenceCode());
+		}
+		else {
+			apiURL +=
+				"/by-external-reference-code/" +
+					objectEntry.getExternalReferenceCode();
+
+			mockHttpServletRequest = _getMockHttpServletRequest(
+				objectEntry.getExternalReferenceCode(),
+				objectEntry.getScopeId(), LocaleUtil.getDefault(),
+				objectDefinition, 0L, null);
+		}
+
+		Assert.assertEquals(apiURL, _getAPIURL(mockHttpServletRequest));
 	}
 
 	private void _testRenderDDMForm(String expectedStatusLabel, Locale locale)
@@ -540,8 +586,8 @@ public class ObjectEntryDisplayContextTest {
 		ObjectEntryDisplayContext objectEntryDisplayContext =
 			_objectEntryDisplayContextFactory.create(
 				_getMockHttpServletRequest(
-					objectEntry.getExternalReferenceCode(), locale,
-					_companyObjectDefinitionA, 0L, null));
+					objectEntry.getExternalReferenceCode(), _group.getGroupId(),
+					locale, _companyObjectDefinitionA, 0L, null));
 
 		try (AutoCloseable autoCloseable =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
@@ -610,6 +656,10 @@ public class ObjectEntryDisplayContextTest {
 	private static ObjectRelationship _companyObjectRelationshipA_AA;
 	private static ObjectRelationship _companyObjectRelationshipAA_AAA;
 	private static DefaultObjectEntryManager _defaultObjectEntryManager;
+
+	@Inject
+	private static DepotEntryLocalService _depotEntryLocalService;
+
 	private static DTOConverterContext _dtoConverterContext;
 
 	@Inject
@@ -619,6 +669,10 @@ public class ObjectEntryDisplayContextTest {
 
 	@Inject
 	private static ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private static ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Inject(
 		filter = "object.entry.manager.storage.type=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT

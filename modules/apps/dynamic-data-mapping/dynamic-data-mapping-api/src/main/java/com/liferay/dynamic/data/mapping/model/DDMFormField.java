@@ -162,6 +162,9 @@ public class DDMFormField implements Serializable {
 		nestedDDMFormField.setDDMForm(_ddmForm);
 
 		_nestedDDMFormFields.add(nestedDDMFormField);
+
+		_nestedDDMFormFieldMap.put(
+			nestedDDMFormField.getName(), nestedDDMFormField);
 	}
 
 	@Override
@@ -302,13 +305,15 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormField getNestedDDMFormFieldsMap(String name) {
-		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
-			if (Objects.equals(name, nestedDDMFormField.getName())) {
-				return nestedDDMFormField;
-			}
+		DDMFormField nestedDDMFormField = _nestedDDMFormFieldMap.get(name);
 
+		if (nestedDDMFormField != null) {
+			return nestedDDMFormField;
+		}
+
+		for (DDMFormField curNestedDDMFormField : _nestedDDMFormFields) {
 			DDMFormField nestedNestedDDMFormField =
-				nestedDDMFormField.getNestedDDMFormFieldsMap(name);
+				curNestedDDMFormField.getNestedDDMFormFieldsMap(name);
 
 			if (nestedNestedDDMFormField != null) {
 				return nestedNestedDDMFormField;
@@ -469,6 +474,9 @@ public class DDMFormField implements Serializable {
 	public void setDDMForm(DDMForm ddmForm) {
 		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
 			nestedDDMFormField.setDDMForm(ddmForm);
+
+			_nestedDDMFormFieldMap.put(
+				nestedDDMFormField.getName(), nestedDDMFormField);
 		}
 
 		_ddmForm = ddmForm;
@@ -545,6 +553,11 @@ public class DDMFormField implements Serializable {
 	}
 
 	public void setNestedDDMFormFields(List<DDMFormField> nestedDDMFormFields) {
+		for (DDMFormField nestedDDMFormField : nestedDDMFormFields) {
+			_nestedDDMFormFieldMap.put(
+				nestedDDMFormField.getName(), nestedDDMFormField);
+		}
+
 		_nestedDDMFormFields = nestedDDMFormFields;
 	}
 
@@ -719,6 +732,8 @@ public class DDMFormField implements Serializable {
 	@Property
 	private String _name = StringPool.BLANK;
 
+	private final Map<String, DDMFormField> _nestedDDMFormFieldMap =
+		new HashMap<>();
 	private List<DDMFormField> _nestedDDMFormFields;
 
 	@Property

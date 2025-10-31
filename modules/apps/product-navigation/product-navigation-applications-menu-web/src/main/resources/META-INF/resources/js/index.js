@@ -332,7 +332,7 @@ const SpacesPanel = ({cms}) => {
 
 					<a
 						className="btn btn-primary rounded-circle"
-						href="/web/cms/new-space"
+						href={cms.newSpaceURL}
 					>
 						{Liferay.Language.get('get-started')}
 					</a>

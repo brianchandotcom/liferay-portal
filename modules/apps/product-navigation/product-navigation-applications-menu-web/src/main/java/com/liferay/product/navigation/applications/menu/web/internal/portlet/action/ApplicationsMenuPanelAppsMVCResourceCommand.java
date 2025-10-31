@@ -268,6 +268,9 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 				company.getLogoId(), "&t=",
 				_webServerServletToken.getToken(company.getLogoId()))
 		).put(
+			"newSpaceURL",
+			_getNewSpaceCreationURL(httpServletRequest, themeDisplay)
+		).put(
 			"spaces",
 			() -> {
 				if (assetLibraryPage == null) {
@@ -342,6 +345,16 @@ public class ApplicationsMenuPanelAppsMVCResourceCommand
 		}
 
 		return 0;
+	}
+
+	private String _getNewSpaceCreationURL(
+			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		return StringBundler.concat(
+			themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/new-space?backURL=",
+			ParamUtil.getString(httpServletRequest, "backURL"));
 	}
 
 	private JSONObject _getPanelAppJSONObject(

@@ -7,7 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<style>
+<aui:style type="text/css">
 .cadmin-test-unstyled {
 	background-color: rgba(255, 0, 0, 0.8);
 }
@@ -19,7 +19,7 @@
 .cadmin-test-styled-override {
 	background-color: rgba(0, 0, 255, 0.8) !important;
 }
-</style>
+</aui:style>
 
 <div>
 	<react:component

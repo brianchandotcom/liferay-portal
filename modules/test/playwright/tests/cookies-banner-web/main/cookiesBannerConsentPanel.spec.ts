@@ -265,7 +265,7 @@ test(
 		await page.getByLabel('Privacy Policy Link').fill(script);
 		await page.getByLabel('Link Display Text', {exact: true}).fill(script);
 
-		await page.getByRole('button', {name: 'Save'}).click();
+		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
 
 		await waitForAlert(page);
 	}
@@ -302,7 +302,7 @@ test(
 			.getByLabel('Personalization Cookies Description', {exact: true})
 			.fill(script);
 
-		await page.getByRole('button', {name: 'Save'}).click();
+		await page.getByRole('button', {name: 'Save'}).dispatchEvent('click');
 
 		await waitForAlert(page);
 

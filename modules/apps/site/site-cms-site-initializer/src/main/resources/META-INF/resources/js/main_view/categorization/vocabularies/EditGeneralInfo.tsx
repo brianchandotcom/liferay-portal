@@ -70,6 +70,19 @@ export default function EditGeneralInfo({
 		return languageId.replace('_', '-');
 	};
 
+	const handleNameBlur = () => {
+		const name = vocabulary.name_i18n[getLanguageLabel(languageId)];
+
+		if (!name.trim()) {
+			setNameInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('name')
+				)
+			);
+		}
+	};
+
 	const onChangeDescription = (newDescription: string) => {
 		onChangeVocabulary(() => ({
 			...vocabulary,
@@ -168,6 +181,7 @@ export default function EditGeneralInfo({
 
 						<ClayInput
 							aria-label={Liferay.Language.get('name')}
+							onBlur={handleNameBlur}
 							onChange={({target: {value}}) =>
 								onChangeName(value)
 							}

@@ -21,16 +21,20 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateUtil;
@@ -186,7 +190,9 @@ public class ObjectFieldUtil {
 	public static String getAttachmentDownloadURL(
 			DLURLHelper dlURLHelper, FileEntry fileEntry, long groupId,
 			String objectDefinitionExternalReferenceCode,
-			String objectEntryExternalReferenceCode, ThemeDisplay themeDisplay)
+			ObjectEntry objectEntry, ObjectEntryService objectEntryService,
+			ObjectField objectField, PermissionChecker permissionChecker,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		String downloadURL = dlURLHelper.getDownloadURL(
@@ -210,7 +216,22 @@ public class ObjectFieldUtil {
 			objectDefinitionExternalReferenceCode);
 		downloadURL = HttpComponentsUtil.addParameter(
 			downloadURL, "objectEntryExternalReferenceCode",
-			objectEntryExternalReferenceCode);
+			objectEntry.getExternalReferenceCode());
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				fileEntry.getCompanyId(), "LPD-17564")) {
+
+			if (!_hasDownloadPermission(
+					objectField.getAttachmentDownloadActionKey(), fileEntry,
+					objectEntry, objectEntryService, permissionChecker)) {
+
+				return StringPool.BLANK;
+			}
+
+			downloadURL = HttpComponentsUtil.addParameter(
+				downloadURL, "objectFieldExternalReferenceCode",
+				objectField.getExternalReferenceCode());
+		}
 
 		return downloadURL;
 	}
@@ -431,6 +452,23 @@ public class ObjectFieldUtil {
 				_log.error(ddmExpressionException);
 			}
 		}
+	}
+
+	private static boolean _hasDownloadPermission(
+			String actionId, FileEntry fileEntry, ObjectEntry objectEntry,
+			ObjectEntryService objectEntryService,
+			PermissionChecker permissionChecker)
+		throws PortalException {
+
+		if (fileEntry.containsPermission(
+				permissionChecker, ActionKeys.DOWNLOAD) &&
+			objectEntryService.hasModelResourcePermission(
+				objectEntry, actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static void _validateNewValue(

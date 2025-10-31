@@ -21,6 +21,13 @@ import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +41,8 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
@@ -214,16 +223,36 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 						return url;
 					}
 
+					String objectDefinitionERC = GetterUtil.getString(
+						ddmFormField.getProperty(
+							"objectDefinitionExternalReferenceCode"));
+
+					String objectEntryERC = GetterUtil.getString(
+						ddmFormField.getProperty(
+							"objectEntryExternalReferenceCode"));
+
+					long groupId = GetterUtil.getLong(
+						ddmFormField.getProperty("groupId"));
+
+					ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.
+							fetchObjectDefinitionByExternalReferenceCode(
+								objectDefinitionERC, fileEntry.getCompanyId());
+
+					ObjectEntry objectEntry =
+						_objectEntryLocalService.fetchObjectEntry(
+							objectEntryERC, groupId,
+							objectDefinition.getObjectDefinitionId());
+
+					ObjectField objectField =
+						_objectFieldLocalService.fetchObjectField(
+							GetterUtil.getLong(
+								ddmFormField.getProperty("objectFieldId")));
+
 					return ObjectFieldUtil.getAttachmentDownloadURL(
-						_dlURLHelper, fileEntry,
-						GetterUtil.getLong(ddmFormField.getProperty("groupId")),
-						GetterUtil.getString(
-							ddmFormField.getProperty(
-								"objectDefinitionExternalReferenceCode")),
-						GetterUtil.getString(
-							ddmFormField.getProperty(
-								"objectEntryExternalReferenceCode")),
-						themeDisplay);
+						_dlURLHelper, fileEntry, groupId, objectDefinitionERC,
+						objectEntry, _objectEntryService, objectField,
+						_getPermissionChecker(themeDisplay), themeDisplay);
 				}
 			).put(
 				"title", fileEntry.getFileName()
@@ -275,6 +304,17 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				_groupLocalService.fetchGroup(groupId), groupId,
 				portletNamespace + "selectAttachmentEntry",
 				fileItemSelectorCriterion));
+	}
+
+	private PermissionChecker _getPermissionChecker(ThemeDisplay themeDisplay) {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			permissionChecker = themeDisplay.getPermissionChecker();
+		}
+
+		return permissionChecker;
 	}
 
 	private String _getURL(
@@ -354,6 +394,18 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 	private Language _language;
 
 	private volatile ObjectConfiguration _objectConfiguration;
+
+	@Reference
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
+
+	@Reference
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Reference
 	private UploadServletRequestConfigurationProvider

@@ -23,12 +23,14 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.util.LinkUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -174,8 +176,8 @@ public class SharedAssetDTOConverter
 	}
 
 	private FileEntry _getFileEntry(
-		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
-		long fileEntryId) {
+		long fileEntryId, ObjectDefinition objectDefinition,
+		ObjectEntry objectEntry, ObjectField objectField) {
 
 		FileEntry fileEntry = new FileEntry();
 
@@ -188,15 +190,15 @@ public class SharedAssetDTOConverter
 
 		fileEntry.setExternalReferenceCode(
 			dlFileEntry::getExternalReferenceCode);
-
 		fileEntry.setId(dlFileEntry::getFileEntryId);
 		fileEntry.setLink(
 			() -> toLink(
 				LinkUtil.toLink(
 					_dlAppService, dlFileEntry, _dlURLHelper,
 					objectEntry.getGroupId(),
-					objectDefinition.getExternalReferenceCode(),
-					objectEntry.getExternalReferenceCode(), _portal)));
+					objectDefinition.getExternalReferenceCode(), objectEntry,
+					_objectEntryService, objectField,
+					GuestOrUserUtil.getPermissionChecker(), _portal)));
 		fileEntry.setName(dlFileEntry::getFileName);
 		fileEntry.setThumbnailURL(
 			() -> {
@@ -259,8 +261,8 @@ public class SharedAssetDTOConverter
 
 				if (serializable instanceof Long) {
 					return _getFileEntry(
-						objectDefinition, objectEntry,
-						GetterUtil.getLong(serializable));
+						GetterUtil.getLong(serializable), objectDefinition,
+						objectEntry, objectField);
 				}
 			}
 		}
@@ -366,6 +368,9 @@ public class SharedAssetDTOConverter
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;

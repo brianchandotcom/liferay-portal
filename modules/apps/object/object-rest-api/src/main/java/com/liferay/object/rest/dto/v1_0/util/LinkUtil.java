@@ -9,10 +9,14 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.rest.dto.v1_0.Link;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.util.Portal;
 
 /**
@@ -23,8 +27,9 @@ public class LinkUtil {
 	public static Link toLink(
 		DLAppService dlAppService, DLFileEntry dlFileEntry,
 		DLURLHelper dlURLHelper, long groupId,
-		String objectDefinitionExternalReferenceCode,
-		String objectEntryExternalReferenceCode, Portal portal) {
+		String objectDefinitionExternalReferenceCode, ObjectEntry objectEntry,
+		ObjectEntryService objectEntryService, ObjectField objectField,
+		PermissionChecker permissionChecker, Portal portal) {
 
 		return new Link() {
 			{
@@ -36,7 +41,8 @@ public class LinkUtil {
 								dlAppService.getFileEntry(
 									dlFileEntry.getFileEntryId()),
 								groupId, objectDefinitionExternalReferenceCode,
-								objectEntryExternalReferenceCode, null);
+								objectEntry, objectEntryService, objectField,
+								permissionChecker, null);
 						}
 						catch (Exception exception) {
 							if (_log.isWarnEnabled()) {

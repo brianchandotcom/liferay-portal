@@ -71,6 +71,27 @@ public class CookiesBannerDisplayContext
 		LocalizedValuesMap titleLocalizedValuesMap =
 			cookiesConsentConfiguration.title();
 
+		if (!isConsentRenewalPeriodEnabled()) {
+			return HashMapBuilder.<String, Object>put(
+				"configurationNamespace",
+				CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION
+			).put(
+				"configurationURL", getConfigurationURL()
+			).put(
+				"includeDeclineAllButton", isIncludeDeclineAllButton()
+			).put(
+				"optionalConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getOptionalConsentCookieTypes())
+			).put(
+				"requiredConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getRequiredConsentCookieTypes())
+			).put(
+				"title", titleLocalizedValuesMap.get(locale)
+			).build();
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"configurationNamespace",
 			CookiesBannerPortletKeys.COOKIES_BANNER_CONFIGURATION

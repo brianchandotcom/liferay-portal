@@ -7,6 +7,7 @@ package com.liferay.cookies.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -22,6 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CookiesPreferenceHandlingConfiguration {
 
+	@ExtendedAttributeDefinition(featureFlagKey = "LPD-65277")
 	@Meta.AD(
 		deflt = "12", description = "cookie-consent-renewal-period-help",
 		max = "12", min = "1", name = "cookie-consent-renewal-period",
@@ -42,6 +44,7 @@ public interface CookiesPreferenceHandlingConfiguration {
 	)
 	public boolean explicitConsentMode();
 
+	@ExtendedAttributeDefinition(featureFlagKey = "LPD-65277")
 	@Meta.AD(deflt = "0", name = "modified-date", required = false)
 	public long modifiedDate();
 

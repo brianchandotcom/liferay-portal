@@ -28,10 +28,18 @@ import BaseFields from './SpaceBaseFields';
 
 export interface NewSpaceProps {
 	baseAddSpaceMembersURL: string;
+	backURL: string;
+	description: string;
 	learnResources: ILearnResourceContext;
 }
 
-const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
+const NewSpace = (props: NewSpaceProps) => {
+	const {
+		backURL,
+		baseAddSpaceMembersURL,
+		description: formDescription,
+		learnResources,
+	} = props;
 	const {
 		errors,
 		handleBlur,
@@ -95,9 +103,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 		<ClayLayout.Row className="m-2 m-md-4">
 			<ClayLayout.Col className="px-md-4 px-xl-9" lg={6}>
 				<NewSpaceFormSection
-					description={Liferay.Language.get(
-						'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
-					)}
+					description={formDescription}
 					learnResourceKey="general"
 					learnResources={learnResources}
 					onSubmit={handleSubmit}
@@ -121,7 +127,7 @@ const NewSpace = ({baseAddSpaceMembersURL, learnResources}: NewSpaceProps) => {
 					<ClayButton.Group className="mb-0 mt-4 w-100" spaced>
 						<ClayLink
 							className="btn btn-outline-borderless btn-outline-secondary"
-							href={`${Liferay.ThemeDisplay.getPathFriendlyURLPublic()}/cms`}
+							href={backURL}
 						>
 							{Liferay.Language.get('cancel')}
 						</ClayLink>

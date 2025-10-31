@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Language Lang
 Bundle-SymbolicName: com.liferay.portal.language.lang
-Bundle-Version: 1.0.266
+Bundle-Version: 1.0.267
 Provide-Capability:\
 	liferay.language.resources;\
 		resource.bundle.base.name="content.Language";\

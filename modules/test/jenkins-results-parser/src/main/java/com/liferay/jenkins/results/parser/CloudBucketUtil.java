@@ -422,7 +422,8 @@ public class CloudBucketUtil {
 		}
 
 		if (!sourceFileName.endsWith(_CHECKSUM_FILE_EXTENSION) &&
-			!sourceFileName.equals("build-database.json")) {
+			!sourceFileName.equals("build-database.json") &&
+			_VALIDATE_CHECKSUM) {
 
 			_createChecksumFile(replacedS3DestinationPath, sourceFile);
 		}

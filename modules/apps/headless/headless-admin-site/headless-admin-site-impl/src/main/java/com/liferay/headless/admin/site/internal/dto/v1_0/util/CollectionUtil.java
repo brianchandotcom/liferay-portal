@@ -62,12 +62,10 @@ public class CollectionUtil {
 	}
 
 	private static Scope _getItemScope(
-			Long companyId, String itemExternalReferenceCode, long scopeGroupId)
+			long companyId, String itemExternalReferenceCode, long scopeGroupId)
 		throws PortalException {
 
-		if (Validator.isNull(itemExternalReferenceCode) ||
-			(companyId == null)) {
-
+		if (Validator.isNull(itemExternalReferenceCode)) {
 			return null;
 		}
 

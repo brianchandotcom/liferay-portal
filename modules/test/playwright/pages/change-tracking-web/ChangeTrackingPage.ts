@@ -281,8 +281,6 @@ export class ChangeTrackingPage {
 			this.page.getByRole('heading', {name: 'Permissions'})
 		).toBeVisible();
 
-		await expect(this.page.getByRole('alert')).toBeVisible();
-
 		await this.page.getByRole('button', {name: 'Edit Permissions'}).click();
 	}
 

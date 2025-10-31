@@ -439,18 +439,22 @@ public class OIDCUserInfoProcessorTest {
 		};
 	}
 
+	private static final String _CLIENT_ID = RandomTestUtil.randomString();
+
 	private static final String _DISCOVERY_ENDPOINT =
 		"https://accounts.google.com/.well-known/openid-configuration";
+
+	private static final String _EMAIL_ADDRESS = StringUtil.toLowerCase(
+		RandomTestUtil.randomString() + "@liferay.com");
+
+	private static final String _ISSUER = RandomTestUtil.randomString();
+
+	private static final String _SCREEN_NAME = RandomTestUtil.randomString();
 
 	private static String _customOIDCUserInfoMapperJSON;
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
-
-	private static final String _CLIENT_ID = RandomTestUtil.randomString();
-
-	private static final String _EMAIL_ADDRESS = StringUtil.toLowerCase(
-		RandomTestUtil.randomString() + "@liferay.com");
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
@@ -460,8 +464,6 @@ public class OIDCUserInfoProcessorTest {
 
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
-
-	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	@Inject
 	private JSONFactory _jsonFactory;
@@ -479,7 +481,6 @@ public class OIDCUserInfoProcessorTest {
 	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;
 
 	private String _pid;
-	private static final String _SCREEN_NAME = RandomTestUtil.randomString();
 	private ServiceContext _serviceContext;
 
 	@Inject

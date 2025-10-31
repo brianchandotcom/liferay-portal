@@ -210,6 +210,27 @@ public class OIDCUserInfoProcessor {
 			null, serviceContext);
 	}
 
+	private void _addOpenIdConnectUser(String issuer, String subject, User user)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				user.getCompanyId(), "LPD-20879")) {
+
+			return;
+		}
+
+		OpenIdConnectUser openIdConnectUser =
+			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
+				user.getCompanyId(), issuer, subject);
+
+		if (openIdConnectUser != null) {
+			return;
+		}
+
+		_openIdConnectUserLocalService.addOpenIdConnectUser(
+			user.getUserId(), issuer, subject);
+	}
+
 	private User _addOrUpdateUser(
 			long companyId, String issuer, OAuthClientEntry oAuthClientEntry,
 			ServiceContext serviceContext, String tokenEndpoint,
@@ -813,28 +834,6 @@ public class OIDCUserInfoProcessor {
 		}
 
 		return false;
-	}
-
-	private void _addOpenIdConnectUser(
-			String issuer, String subject, User user)
-		throws Exception {
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				user.getCompanyId(), "LPD-20879")) {
-
-			return;
-		}
-
-		OpenIdConnectUser openIdConnectUser =
-			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
-				user.getCompanyId(), issuer, subject);
-
-		if (openIdConnectUser != null) {
-			return;
-		}
-
-		_openIdConnectUserLocalService.addOpenIdConnectUser(
-			user.getUserId(), issuer, subject);
 	}
 
 	private void _validate(

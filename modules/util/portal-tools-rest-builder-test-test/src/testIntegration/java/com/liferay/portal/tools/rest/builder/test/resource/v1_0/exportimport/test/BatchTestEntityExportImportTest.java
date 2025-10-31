@@ -690,8 +690,7 @@ public class BatchTestEntityExportImportTest {
 			_batchTestEntityResource.getBatchTestEntitiesPage();
 
 		Assert.assertEquals(
-			batchTestEntitiesCount + 2,
-			batchTestEntitiesPage.getTotalCount());
+			batchTestEntitiesCount + 2, batchTestEntitiesPage.getTotalCount());
 
 		sharedInternalModelBatchTestEntitiesPage =
 			_sharedInternalModelBatchTestEntityResource.
@@ -735,8 +734,7 @@ public class BatchTestEntityExportImportTest {
 			_batchTestEntityResource.getBatchTestEntitiesPage();
 
 		Assert.assertEquals(
-			batchTestEntitiesCount + 1,
-			batchTestEntitiesPage.getTotalCount());
+			batchTestEntitiesCount + 1, batchTestEntitiesPage.getTotalCount());
 
 		_assertEquals(
 			batchTestEntities1[1],

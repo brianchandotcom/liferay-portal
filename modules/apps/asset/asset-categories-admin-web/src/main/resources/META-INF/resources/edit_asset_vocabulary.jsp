@@ -52,6 +52,8 @@ renderResponse.setTitle((vocabulary == null) ? LanguageUtil.get(request, "add-vo
 		>
 			<aui:input label="name" name="title" placeholder="name" />
 
+			<aui:input label="external-reference-code" name="externalReferenceCode" placeholder="external-reference-code" />
+
 			<aui:input name="description" placeholder="description" />
 
 			<aui:input helpMessage="multi-valued-help" inlineLabel="right" label="allow-multiple-categories" labelCssClass="simple-toggle-switch" name="multiValued" type="toggle-switch" value="<%= (vocabulary != null) ? vocabulary.isMultiValued() : true %>" />

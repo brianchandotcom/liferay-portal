@@ -211,6 +211,7 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getVisibilityType());
 
 		assetVocabulary = _assetVocabularyService.updateVocabulary(
+			taxonomyVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), null,
 			LocalizedMapUtil.patchLocalizedMap(
 				assetVocabulary.getTitleMap(),
@@ -998,6 +999,7 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getVisibilityType());
 
 		return _assetVocabularyService.updateVocabulary(
+			taxonomyVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),

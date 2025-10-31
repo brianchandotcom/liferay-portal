@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
@@ -30,7 +30,6 @@ import {IPagination} from 'shared/types';
 import {Link} from 'react-router-dom';
 import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
-import {setBackURL} from 'shared/actions/settings';
 import {Sizes} from 'shared/util/constants';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
@@ -67,7 +66,7 @@ const connector = connect(
 			'data'
 		])
 	}),
-	{addAlert, close, open, setBackURL, updateDefaultChannelId}
+	{addAlert, close, open, updateDefaultChannelId}
 );
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -86,7 +85,6 @@ const ChannelList: React.FC<IChannelListProps> = ({
 	groupId,
 	history,
 	open,
-	setBackURL,
 	updateDefaultChannelId
 }) => {
 	const {selectedItems, selectionDispatch} = useSelectionContext();
@@ -264,12 +262,6 @@ const ChannelList: React.FC<IChannelListProps> = ({
 								defaultChannelId: null,
 								groupId
 							});
-
-							setBackURL(
-								toRoute(Routes.WORKSPACE_WITH_ID, {
-									groupId
-								})
-							);
 						}
 
 						selectionDispatch({type: ACTION_TYPES.clearAll});

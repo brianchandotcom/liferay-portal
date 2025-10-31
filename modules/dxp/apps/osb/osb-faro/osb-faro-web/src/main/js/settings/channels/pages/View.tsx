@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import Constants from 'shared/util/constants';
@@ -26,7 +26,6 @@ import {RootState} from 'shared/store';
 import {Routes, toRoute} from 'shared/util/router';
 import {SafeResults} from 'shared/hoc/util';
 import {sequence} from 'shared/util/promise';
-import {setBackURL} from 'shared/actions/settings';
 import {sub} from 'shared/util/lang';
 import {UNAUTHORIZED_ACCESS} from 'shared/util/request';
 import {updateDefaultChannelId} from 'shared/actions/preferences';
@@ -95,7 +94,7 @@ const connector = connect(
 			'data'
 		])
 	}),
-	{addAlert, close, open, setBackURL, updateDefaultChannelId}
+	{addAlert, close, open, updateDefaultChannelId}
 );
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -121,7 +120,6 @@ const View: React.FC<IViewProps> = ({
 	history,
 	id,
 	open,
-	setBackURL,
 	updateDefaultChannelId,
 	...otherProps
 }) => {
@@ -400,15 +398,6 @@ const View: React.FC<IViewProps> = ({
 															defaultChannelId: null,
 															groupId
 														});
-
-														setBackURL(
-															toRoute(
-																Routes.WORKSPACE_WITH_ID,
-																{
-																	groupId
-																}
-															)
-														);
 													}
 												})
 												.catch(err =>

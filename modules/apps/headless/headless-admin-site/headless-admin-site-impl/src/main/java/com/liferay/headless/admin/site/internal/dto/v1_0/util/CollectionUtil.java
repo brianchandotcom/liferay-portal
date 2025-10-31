@@ -10,13 +10,8 @@ import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
 import com.liferay.headless.admin.site.dto.v1_0.ClassNameReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionReference;
-import com.liferay.headless.admin.site.dto.v1_0.Scope;
 import com.liferay.item.selector.criteria.InfoListItemSelectorReturnType;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Objects;
@@ -61,36 +56,6 @@ public class CollectionUtil {
 		return classNameReference;
 	}
 
-	private static Scope _getItemScope(
-			long companyId, String itemExternalReferenceCode, long scopeGroupId)
-		throws PortalException {
-
-		if (Validator.isNull(itemExternalReferenceCode)) {
-			return null;
-		}
-
-		Group group = GroupLocalServiceUtil.getGroupByExternalReferenceCode(
-			itemExternalReferenceCode, companyId);
-
-		if ((group == null) || (group.getGroupId() == scopeGroupId)) {
-			return null;
-		}
-
-		return new Scope() {
-			{
-				setExternalReferenceCode(group::getExternalReferenceCode);
-				setType(
-					() -> {
-						if (group.getType() == GroupConstants.TYPE_DEPOT) {
-							return Type.ASSET_LIBRARY;
-						}
-
-						return Type.SITE;
-					});
-			}
-		};
-	}
-
 	private static CollectionItemExternalReference
 		_toCollectionItemExternalReference(
 			AssetListEntry assetListEntry, long companyId,
@@ -119,7 +84,7 @@ public class CollectionUtil {
 		collectionItemExternalReference.setExternalReferenceCode(
 			() -> externalReferenceCode);
 		collectionItemExternalReference.setScope(
-			() -> _getItemScope(
+			() -> ItemScopeUtil.getItemScope(
 				companyId, jsonObject.getString("scopeExternalReferenceCode"),
 				scopeGroupId));
 

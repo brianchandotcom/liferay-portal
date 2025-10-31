@@ -15,8 +15,11 @@ import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -32,6 +35,16 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 	@Override
 	public boolean compareBusinessType(String businessType) {
 		return Objects.equals(getBusinessType(), businessType);
+	}
+
+	@Override
+	public String getAttachmentDownloadActionKey() {
+		return StringBundler.concat(
+			ActionKeys.DOWNLOAD, StringPool.UNDERLINE,
+			getName(
+			).replaceAll(
+				"(?<!^)([A-Z])", "_$1"
+			).toUpperCase());
 	}
 
 	@Override

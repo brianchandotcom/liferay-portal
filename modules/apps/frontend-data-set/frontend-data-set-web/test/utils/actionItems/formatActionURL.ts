@@ -8,28 +8,38 @@ import formatActionURL from '../../../src/main/resources/META-INF/resources/util
 const specialChars = 'http://foo.bar?param=%áàäâ^/#{2}/ç';
 
 const item = {
-	id: 1235,
-	name: '#test_item_name',
-	urls: {
+	'bar:1': 1,
+	'delta:10': 10,
+	'id': 1235,
+	'name': '#test_item_name',
+	'urls': {
 		path: '/documents/34879/34881/%23small_pexels-photo-1000498.jpeg/2d193f5d-5b3f-1f7a-c221-8392333f56ba?version=1.0&t=1744616121055&download=true&objectDefinitionExternalReferenceCode=L_CMS_BASIC_DOCUMENT&objectEntryExternalReferenceCode=07dd3433-04b4-eec7-2d21-be307eb0a06c',
 		simple: 'https://www.liferay.com',
 		specialChars,
 		specialCharsEncoded: encodeURI(specialChars),
 		withBackURL: '/web/page?backURL=http://foo.bar',
+		withConfiguration: '/web/page?foo_fdsConfig={delta:10}',
+		withNestedConfiguration: '/web/page?foo_fdsConfig={foo:{bar:1}}',
 		withPPId: '/web/page?p_p_id=foo',
 		withRedirect: '/web/page?redirect=foo',
 	},
 };
 
 const encodedItem = {
-	id: encodeURIComponent(item.id),
-	name: encodeURIComponent(item.name),
-	urls: {
+	'bar:1': encodeURIComponent(item['bar:1']),
+	'delta:10': encodeURIComponent(item['delta:10']),
+	'id': encodeURIComponent(item.id),
+	'name': encodeURIComponent(item.name),
+	'urls': {
 		path: encodeURIComponent(item.urls.path),
 		simple: encodeURIComponent(item.urls.simple),
 		specialChars: encodeURIComponent(item.urls.specialChars),
 		specialCharsEncoded: encodeURIComponent(item.urls.specialCharsEncoded),
 		withBackURL: encodeURIComponent(item.urls.withBackURL),
+		withConfiguration: encodeURIComponent(item.urls.withConfiguration),
+		withNestedConfiguration: encodeURIComponent(
+			item.urls.withNestedConfiguration
+		),
 		withPPId: encodeURIComponent(item.urls.withPPId),
 		withRedirect: encodeURIComponent(item.urls.withRedirect),
 	},
@@ -103,6 +113,22 @@ describe('formatActionURL helper. No interpolation', () => {
 	it('Does not add the _redirect and _backURL parameters when target is not "link"', () => {
 		assertActionNonLinkURL('/test?p_p_id=random');
 	});
+
+	it('Does not interpolate _fdsConfig value when target is not "link"', () => {
+		assertActionNonLinkURL(item.urls.withConfiguration);
+	});
+
+	it('Does not interpolate _fdsConfig value when target is "link"', () => {
+		assertActionLinkURL(item.urls.withConfiguration);
+	});
+
+	it('Does not interpolate nested _fdsConfig value when target is not "link"', () => {
+		assertActionNonLinkURL(item.urls.withNestedConfiguration);
+	});
+
+	it('Does not interpolate nested _fdsConfig value when target is "link"', () => {
+		assertActionLinkURL(item.urls.withNestedConfiguration);
+	});
 });
 
 describe('formatActionURL helper. Full interpolation', () => {
@@ -120,6 +146,11 @@ describe('formatActionURL helper. Full interpolation', () => {
 
 		assertActionNonLinkURL('{urls.withBackURL}', item.urls.withBackURL);
 
+		assertActionNonLinkURL(
+			'{urls.withConfiguration}',
+			item.urls.withConfiguration
+		);
+
 		assertActionNonLinkURL('{urls.withPPId}', item.urls.withPPId);
 	});
 
@@ -136,6 +167,11 @@ describe('formatActionURL helper. Full interpolation', () => {
 		);
 
 		assertActionLinkURL('{urls.withBackURL}', item.urls.withBackURL);
+
+		assertActionLinkURL(
+			'{urls.withConfiguration}',
+			item.urls.withConfiguration
+		);
 
 		assertActionLinkURL('{urls.withPPId}', item.urls.withPPId);
 	});

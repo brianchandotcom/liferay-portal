@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FDS_CONFIG_PARAM_NAME} from '../configInURL';
+
 /**
  * Try to replace interpolated url arguments with item properties.
  * Set _redirect and/or backURL parameters to allow navigating back
@@ -26,6 +28,69 @@
 
 import getValueFromItem from '../getValueFromItem';
 
+const formatActionURLTokenRegex = new RegExp(
+	'(?<!' + FDS_CONFIG_PARAM_NAME + '=)(?:%7B|{)(.*?)(?:%7D|})',
+	'g'
+);
+
+const protectFDSConfigRegex = new RegExp(
+	'(' + FDS_CONFIG_PARAM_NAME + '=)([^&]*)',
+	'g'
+);
+
+const isFullInterpolation = function (url: string | undefined): boolean {
+	if (!url) {
+		return false;
+	}
+
+	return url?.startsWith('{') && url?.endsWith('}');
+};
+
+function protectFDSConfigValues(url: string) {
+	const protectedValues: string[] = [];
+
+	const sanitizedURL = url.replace(protectFDSConfigRegex, (match, key) => {
+		const value = match.substring(key.length);
+		protectedValues.push(value);
+
+		return `${key}__FDS_CONFIG_VALUE_${protectedValues.length - 1}__`;
+	});
+
+	const restore = (finalURL: string) => {
+		return finalURL.replace(
+			/__FDS_CONFIG_VALUE_(\d+)__/g,
+			(match, index) => protectedValues[parseInt(index, 10)]
+		);
+	};
+
+	return {restore, sanitizedURL};
+}
+
+export const replaceTokens = function (
+	url: string | undefined,
+	item: any
+): string {
+	if (!url) {
+		return '';
+	}
+
+	if (!item) {
+		return url;
+	}
+
+	const fullInterpolation = isFullInterpolation(url);
+
+	const {restore, sanitizedURL} = protectFDSConfigValues(url);
+
+	return restore(
+		sanitizedURL.replace(formatActionURLTokenRegex, (match, key) => {
+			const value = getValueFromItem(item, key.split('.'));
+
+			return fullInterpolation ? value : encodeURIComponent(value);
+		})
+	);
+};
+
 const formatActionURL = function (
 	url: string | undefined,
 	item: any,
@@ -35,24 +100,11 @@ const formatActionURL = function (
 		return '';
 	}
 
-	let fullInterpolation = false;
-
-	const replacedURL = url.replace(
-		/(?:%7B|{)(.*?)(?:%7D|})/g,
-		(match, key) => {
-			const value = getValueFromItem(item, key.split('.'));
-
-			if (match.length === url.length) {
-				fullInterpolation = true;
-			}
-
-			return fullInterpolation ? value : encodeURIComponent(value);
-		}
-	);
+	const replacedURL = replaceTokens(url, item);
 
 	const queryIndex = replacedURL.indexOf('?');
 
-	if (target !== 'link' || queryIndex === -1 || fullInterpolation) {
+	if (target !== 'link' || queryIndex === -1 || isFullInterpolation(url)) {
 		return replacedURL;
 	}
 

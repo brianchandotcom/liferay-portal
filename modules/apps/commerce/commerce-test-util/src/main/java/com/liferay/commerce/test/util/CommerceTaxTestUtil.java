@@ -30,13 +30,22 @@ public class CommerceTaxTestUtil {
 			long userId, long commerceChannelGroupId, boolean percentage)
 		throws PortalException {
 
-		String commerceTaxMethodEngineKey = "by-address";
+		return CommerceTaxMethodLocalServiceUtil.addCommerceTaxMethod(
+			userId, commerceChannelGroupId,
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), "by-address", percentage,
+			true);
+	}
+
+	public static CommerceTaxMethod addCommerceFixedTaxTaxMethod(
+			long userId, long commerceChannelGroupId, boolean percentage)
+		throws PortalException {
 
 		return CommerceTaxMethodLocalServiceUtil.addCommerceTaxMethod(
 			userId, commerceChannelGroupId,
 			RandomTestUtil.randomLocaleStringMap(),
-			RandomTestUtil.randomLocaleStringMap(), commerceTaxMethodEngineKey,
-			percentage, true);
+			RandomTestUtil.randomLocaleStringMap(), "fixed-tax", percentage,
+			true);
 	}
 
 	public static long addTaxCategoryId(long groupId) throws PortalException {

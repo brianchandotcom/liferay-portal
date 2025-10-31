@@ -9,6 +9,7 @@ import {commercePagesTest} from '../../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../fixtures/loginTest';
 import {taxCategoriesPageTest} from '../../../../fixtures/taxCategoriesPageTest';
+import {liferayConfig} from '../../../../liferay.config';
 import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -47,6 +48,55 @@ async function verifyFixedTaxRate(
 			)
 		).locator('.cell-rate')
 	).toHaveText(taxAmount);
+}
+
+async function verifyByAddressTaxRate(
+	commerceAdminChannelDetailsPage,
+	country: string,
+	name: string,
+	region: string,
+	taxAmount: string,
+	zip: string
+) {
+	const tableName = 'Tax Calculations';
+
+	await (
+		await commerceAdminChannelDetailsPage.generalCommerceAdminChannelTableLink(
+			'By Address'
+		)
+	).click();
+	await (
+		await commerceAdminChannelDetailsPage.taxRateSettingsTab(tableName)
+	).click();
+	await expect(
+		(
+			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
+		).getByText(country)
+	).toBeVisible();
+
+	await expect(
+		(
+			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
+		).getByText(name)
+	).toBeVisible();
+	await expect(
+		(
+			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
+		).getByText(region)
+	).toBeVisible();
+	await expect(
+		(
+			await commerceAdminChannelDetailsPage.getRowByTextFromSidePanelTable(
+				tableName,
+				name
+			)
+		).locator('.cell-rate')
+	).toHaveText(taxAmount);
+	await expect(
+		(
+			await commerceAdminChannelDetailsPage.sidePanelFrame(tableName)
+		).getByText(zip)
+	).toBeVisible();
 }
 
 test('LPD-31663 Activate Fixed Tax Engine and Add Tax Rate', async ({
@@ -148,11 +198,293 @@ test('LPD-31663 Activate Fixed Tax Engine and Add Tax Rate', async ({
 		await taxCategoriesPage.goto();
 
 		for (const taxCategory of taxCategories) {
+			await expect(async () => {
+				await (
+					await taxCategoriesPage.taxCategoriesTableRowActions(
+						taxCategory.name
+					)
+				).click();
+
+				await expect(taxCategoriesPage.deleteMenuItem).toBeVisible({
+					timeout: 500,
+				});
+			}).toPass();
+			await taxCategoriesPage.deleteMenuItem.click();
+
+			await waitForAlert(page);
+		}
+	}
+});
+
+test('LPD-31663 Activate By Address Tax Engine and Add Tax Rate', async ({
+	apiHelpers,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	newTaxCategoryPage,
+	page,
+	taxCategoriesPage,
+}) => {
+	const taxCategories = [
+		{
+			description: 'Test Description 1',
+			name: 'Test 1',
+			referenceCode: 'Test Reference 1',
+		},
+		{
+			description: 'Test Description 2',
+			name: 'Test 2',
+			referenceCode: 'Test Reference 2',
+		},
+	];
+
+	try {
+		await taxCategoriesPage.goto();
+
+		for (const taxCategory of taxCategories) {
+			await taxCategoriesPage.newButton.click();
+			await newTaxCategoryPage.externalReferenceCodeInput.fill(
+				taxCategory.referenceCode
+			);
+			await newTaxCategoryPage.nameInput.fill(taxCategory.name);
+			await newTaxCategoryPage.descriptionInput.fill(
+				taxCategory.description
+			);
+			await newTaxCategoryPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await expect(taxCategoriesPage.newButton).toBeVisible();
+		}
+
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				'guest'
+			);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.addByAddressTaxRate(
+			'7.5',
+			'Italy',
+			taxCategories[0].name,
+			'Roma',
+			'12345'
+		);
+		await verifyByAddressTaxRate(
+			commerceAdminChannelDetailsPage,
+			'Italy',
+			taxCategories[0].name,
+			'Roma',
+			'$ 7.50',
+			'12345'
+		);
+		await commerceAdminChannelDetailsPage.editByAddressTaxRate(
+			'10.0',
+			taxCategories[0].name
+		);
+		await verifyByAddressTaxRate(
+			commerceAdminChannelDetailsPage,
+			'Italy',
+			taxCategories[0].name,
+			'Roma',
+			'$ 10.00',
+			'12345'
+		);
+	}
+	finally {
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await taxCategoriesPage.goto();
+
+		for (const taxCategory of taxCategories) {
+			await expect(async () => {
+				await (
+					await taxCategoriesPage.taxCategoriesTableRowActions(
+						taxCategory.name
+					)
+				).click();
+
+				await expect(taxCategoriesPage.deleteMenuItem).toBeVisible({
+					timeout: 500,
+				});
+			}).toPass();
+			await taxCategoriesPage.deleteMenuItem.click();
+
+			await waitForAlert(page);
+		}
+	}
+});
+
+test("COMMERCE-7000 When the user updates a tax categories entry's details URL redirect part to '%22%3E%3Cscript%3Ealert(111)%3C/script%3E' and visits the link, then no XSS is present", async ({
+	apiHelpers,
+	newTaxCategoryPage,
+	page,
+	taxCategoriesPage,
+}) => {
+	try {
+		await taxCategoriesPage.goto();
+
+		await taxCategoriesPage.newButton.click();
+		await newTaxCategoryPage.externalReferenceCodeInput.fill(
+			'Test Reference 1'
+		);
+		await newTaxCategoryPage.nameInput.fill('Test 1');
+		await newTaxCategoryPage.descriptionInput.fill('Test Description 1');
+		await newTaxCategoryPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(taxCategoriesPage.newButton).toBeVisible();
+
+		const taxCategory = (
+			await apiHelpers.headlessCommerceAdminChannel.getTaxCategories()
+		).items[0];
+
+		const newUrl = `${liferayConfig.environment.baseUrl}/group/guest/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_mvcRenderCommandName=%2Fcp_tax_category%2Fedit_cp_tax_category&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_redirect=%22%3E%3Cscript%3Ealert(111)%3C/script%3E&_com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet_cpTaxCategoryId=${taxCategory.id}`;
+
+		let alertTriggered = false;
+
+		page.on('dialog', async (dialog) => {
+			if (dialog.type() === 'alert') {
+				alertTriggered = true;
+				await dialog.dismiss();
+			}
+		});
+
+		await page.goto(newUrl);
+
+		expect(alertTriggered).toBe(false);
+	}
+	finally {
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await taxCategoriesPage.goto();
+
+		await expect(async () => {
 			await (
-				await taxCategoriesPage.taxCategoriesTableRowActions(
-					taxCategory.name
-				)
+				await taxCategoriesPage.taxCategoriesTableRowActions('Test 1')
 			).click();
+
+			await expect(taxCategoriesPage.deleteMenuItem).toBeVisible({
+				timeout: 500,
+			});
+		}).toPass();
+		await taxCategoriesPage.deleteMenuItem.click();
+
+		await waitForAlert(page);
+	}
+});
+
+test('COMMERCE-6263 Configure tax properties at channel level', async ({
+	apiHelpers,
+	commerceAdminChannelDetailsPage,
+	commerceAdminChannelsPage,
+	newTaxCategoryPage,
+	page,
+	taxCategoriesPage,
+}) => {
+	const taxCategories = [
+		{
+			description: 'Test Description 1',
+			name: 'Test 1',
+			referenceCode: 'Test Reference 1',
+		},
+		{
+			description: 'Test Description 2',
+			name: 'Test 2',
+			referenceCode: 'Test Reference 2',
+		},
+	];
+
+	try {
+		await taxCategoriesPage.goto();
+
+		for (const taxCategory of taxCategories) {
+			await taxCategoriesPage.newButton.click();
+			await newTaxCategoryPage.externalReferenceCodeInput.fill(
+				taxCategory.referenceCode
+			);
+			await newTaxCategoryPage.nameInput.fill(taxCategory.name);
+			await newTaxCategoryPage.descriptionInput.fill(
+				taxCategory.description
+			);
+			await newTaxCategoryPage.saveButton.click();
+
+			await waitForAlert(page);
+
+			await expect(taxCategoriesPage.newButton).toBeVisible();
+		}
+
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				'guest'
+			);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.taxCategoryInput.fill(
+			taxCategories[0].name
+		);
+
+		await commerceAdminChannelDetailsPage
+			.searchedEntry(taxCategories[0].name)
+			.click();
+
+		await commerceAdminChannelDetailsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await expect(
+			commerceAdminChannelDetailsPage.taxCategoryInput
+		).toHaveValue(taxCategories[0].name);
+	}
+	finally {
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		await taxCategoriesPage.goto();
+
+		for (const taxCategory of taxCategories) {
+			await expect(async () => {
+				await (
+					await taxCategoriesPage.taxCategoriesTableRowActions(
+						taxCategory.name
+					)
+				).click();
+
+				await expect(taxCategoriesPage.deleteMenuItem).toBeVisible({
+					timeout: 500,
+				});
+			}).toPass();
 			await taxCategoriesPage.deleteMenuItem.click();
 
 			await waitForAlert(page);

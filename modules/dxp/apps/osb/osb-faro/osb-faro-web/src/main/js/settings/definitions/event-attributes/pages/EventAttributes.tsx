@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import TabsCard from '../components/TabsCard';
 import {getDefinitions} from 'shared/util/breadcrumbs';

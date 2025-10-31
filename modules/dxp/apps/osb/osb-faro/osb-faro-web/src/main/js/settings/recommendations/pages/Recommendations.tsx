@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import RecommendationList from '../hocs/RecommendationList';
 import {Router} from 'shared/types';

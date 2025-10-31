@@ -59,8 +59,6 @@ import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.delivery.client.serdes.v1_0.SitePageSerDes;
 import com.liferay.layout.admin.kernel.model.LayoutTypePortletConstants;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
-import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.oauth2.provider.scope.ScopeChecker;
@@ -78,11 +76,12 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactory;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -90,6 +89,7 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.permission.LayoutPermission;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -101,7 +101,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -201,6 +200,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-67244")
 	public void testGetSiteSitePage() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
 
@@ -224,6 +224,8 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 
 		_testVulcanCRUDItemDelegateGetItem();
+
+		_testGetSiteSitePageWithNoPermissions();
 	}
 
 	@Override
@@ -690,6 +692,63 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		).build();
 	}
 
+	private void _testGetSiteSitePageWithNoPermissions() throws Exception {
+		Layout layout = LayoutTestUtil.addTypeContentLayout(testGroup);
+
+		Role guestRole = _roleLocalService.getRole(
+			layout.getCompanyId(), RoleConstants.GUEST);
+		Role siteMemberRole = _roleLocalService.getRole(
+			layout.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		long[] roleIds = {guestRole.getRoleId(), siteMemberRole.getRoleId()};
+
+		for (long roleId : roleIds) {
+			_resourcePermissionLocalService.removeResourcePermission(
+				layout.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(layout.getPlid()), roleId, ActionKeys.VIEW);
+		}
+
+		User user = UserTestUtil.addUser(
+			testGroup.getCompanyId(), TestPropsValues.getUserId(),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + RandomTestUtil.nextLong() +
+				"@liferay.com",
+			RandomTestUtil.randomString(), LocaleUtil.getDefault(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			new long[] {TestPropsValues.getGroupId()},
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		PermissionChecker permissionChecker = _permissionCheckerFactory.create(
+			user);
+
+		Assert.assertFalse(
+			_layoutPermission.contains(
+				permissionChecker, layout, ActionKeys.VIEW));
+
+		SitePageResource.Builder builder = SitePageResource.builder();
+
+		SitePageResource noPermissionsSitePageResource = builder.authentication(
+			user.getEmailAddress(), user.getPasswordUnencrypted()
+		).header(
+			"X-Liferay-Accept-All-Languages", "true"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		String friendlyURL = layout.getFriendlyURL();
+
+		try {
+			noPermissionsSitePageResource.getSiteSitePage(
+				testGroup.getGroupId(), friendlyURL.substring(1));
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("NOT_FOUND", problem.getStatus());
+		}
+	}
+
 	private void _testPostSiteSitePageFailureDuplicateFriendlyURL()
 		throws Exception {
 
@@ -924,11 +983,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 
 		try {
 			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+				_permissionCheckerFactory.create(TestPropsValues.getUser()));
 
 			ExpandoTable expandoTable =
 				_expandoTableLocalService.addDefaultTable(
-					PortalUtil.getDefaultCompanyId(), Layout.class.getName());
+					_portal.getDefaultCompanyId(), Layout.class.getName());
 
 			String randomExpandoAttributeName = RandomTestUtil.randomString();
 
@@ -2157,12 +2216,7 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 	private LayoutLocalService _layoutLocalService;
 
 	@Inject
-	private LayoutPageTemplateStructureLocalService
-		_layoutPageTemplateStructureLocalService;
-
-	@Inject
-	private LayoutPageTemplateStructureRelLocalService
-		_layoutPageTemplateStructureRelLocalService;
+	private LayoutPermission _layoutPermission;
 
 	private final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
@@ -2170,6 +2224,9 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		}
 	};
 	private String _originalName;
+
+	@Inject
+	private PermissionCheckerFactory _permissionCheckerFactory;
 
 	@Inject
 	private Portal _portal;

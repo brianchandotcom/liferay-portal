@@ -463,6 +463,13 @@ public class ObjectFieldLocalServiceImpl
 				return ObjectEntryTable.INSTANCE.userId;
 			}
 
+			if (StringUtil.equals(
+					name,
+					ObjectEntryTable.INSTANCE.objectEntryFolderId.getName())) {
+
+				return ObjectEntryTable.INSTANCE.objectEntryFolderId;
+			}
+
 			ObjectField objectField = fetchObjectField(
 				objectDefinitionId, name);
 

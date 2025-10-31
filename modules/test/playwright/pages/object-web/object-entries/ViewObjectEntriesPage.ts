@@ -18,6 +18,7 @@ export class ViewObjectEntriesPage {
 	readonly dateTimeInput: Locator;
 	readonly deletionConfirmationModal: Locator;
 	readonly deleteFileButton: Locator;
+	readonly downloadFileButton: Locator;
 	readonly duplicateEntryErrorMessage: Locator;
 	readonly editObjectEntryForm: Locator;
 	readonly expirationDateInput: Locator;
@@ -26,6 +27,7 @@ export class ViewObjectEntriesPage {
 	readonly frontendDatasetActions: Locator;
 	readonly frontendDatasetDeleteAction: Locator;
 	readonly frontendDatasetItems: Locator;
+	readonly frontendDatasetPermissionsAction: Locator;
 	readonly frontendDatasetViewAction: Locator;
 	readonly neverExpire: Locator;
 	readonly neverReview: Locator;
@@ -61,6 +63,7 @@ export class ViewObjectEntriesPage {
 		this.deletionConfirmationModal = page
 			.getByRole('dialog')
 			.and(page.getByLabel('Delete Entry'));
+		this.downloadFileButton = page.getByRole('button', {name: 'Download'});
 		this.duplicateEntryErrorMessage = page.getByText(
 			'Error:The field values are already in use. Please choose unique values.'
 		);
@@ -82,6 +85,9 @@ export class ViewObjectEntriesPage {
 			name: 'Delete',
 		});
 		this.frontendDatasetItems = page.getByRole('cell').getByRole('link');
+		this.frontendDatasetPermissionsAction = page.getByRole('menuitem', {
+			name: 'Permissions',
+		});
 		this.frontendDatasetViewAction = page.getByRole('menuitem', {
 			name: 'View',
 		});

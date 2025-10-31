@@ -80,10 +80,7 @@ public class ViewSpacesDisplayContext {
 		).put(
 			"assetLibrariesCount", page.getTotalCount()
 		).put(
-			"newSpaceURL",
-			StringBundler.concat(
-				_themeDisplay.getPathFriendlyURLPublic(),
-				GroupConstants.CMS_FRIENDLY_URL, "/new-space")
+			"newSpaceURL", _getNewSpaceCreationURL()
 		).put(
 			"showAddButton",
 			_portletResourcePermission.contains(
@@ -122,6 +119,13 @@ public class ViewSpacesDisplayContext {
 		}
 
 		return assetLibraries;
+	}
+
+	private String _getNewSpaceCreationURL() {
+		return StringBundler.concat(
+			_themeDisplay.getPathFriendlyURLPublic(),
+			GroupConstants.CMS_FRIENDLY_URL, "/new-space?backURL=",
+			_themeDisplay.getURLCurrent());
 	}
 
 	private Page<AssetLibrary> _getPage() throws Exception {

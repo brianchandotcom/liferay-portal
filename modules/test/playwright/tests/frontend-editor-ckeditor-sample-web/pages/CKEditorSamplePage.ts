@@ -7,6 +7,7 @@ import {Page, expect} from '@playwright/test';
 
 import POM from '../../../utils/POM';
 import {EEditorType, waitForEditor} from "../../../utils/waitFor";
+import {AlloyPage} from './ckeditor4/AlloyPage';
 import {ClassicPage as CKEditor4ClassicPage} from './ckeditor4/ClassicPage';
 import {BalloonPage} from "./ckeditor5/BalloonPage";
 import {ClassicPage} from "./ckeditor5/ClassicPage";
@@ -97,6 +98,10 @@ export class CKEditorSamplePage extends POM {
 		}
 		else if (tabName === TabName.CK_EDITOR_4) {
 			switch (subTabName) {
+				case SubTabName.ALLOY:
+					visitedPage = new AlloyPage(this.page);
+					break;
+
 				case SubTabName.CLASSIC:
 					visitedPage = new CKEditor4ClassicPage(this.page);
 					break;

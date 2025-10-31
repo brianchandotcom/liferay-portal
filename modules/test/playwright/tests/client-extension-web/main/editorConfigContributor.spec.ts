@@ -13,14 +13,12 @@ import performLogin from '../../../utils/performLogin';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 import {clientExtensionsPageTest} from './fixtures/clientExtensionsPageTest';
 import {editEditorConfigContributorPageTest} from './fixtures/editEditorConfigContributorPageTest';
-import {editorSamplesPageTest} from './fixtures/editorSamplesPageTest';
 import {WaitAction} from './pages/EditClientExtensionsPage';
 import {EditEditorConfigContributorPage} from './pages/EditEditorConfigContributorPage';
 
 const test = mergeTests(
 	clientExtensionsPageTest,
 	editEditorConfigContributorPageTest,
-	editorSamplesPageTest,
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
@@ -98,35 +96,6 @@ test('Add a toolbar button to a CKEditor, by applying editor config contributor 
 	await expect(
 		newEditorConfigContributorPage.aiCreatorEditorToolbarButton
 	).toBeVisible();
-});
-
-test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
-	editorSamplesPage,
-	page,
-}) => {
-	await test.step('Navigate to the page with Alloy Editor sample', async () => {
-		await editorSamplesPage.goto();
-
-		await page.getByRole('link', {name: 'CKEditor 4'}).click();
-
-		await editorSamplesPage.selectTab({tabLabel: 'Alloy'});
-
-		await expect(
-			editorSamplesPage.alloyEditorContainer.getByText('Lorem ipsum')
-		).toBeInViewport();
-	});
-
-	await test.step('Check if client extension is applied', async () => {
-		await editorSamplesPage.alloyEditorContainer
-			.getByText('Lorem ipsum')
-			.selectText();
-
-		await expect(
-			editorSamplesPage.alloyEditorToolbarContainer.getByTitle(
-				'Insert Video'
-			)
-		).toBeInViewport();
-	});
 });
 
 test('CKEditor is still usable after deploying Client Extension @LPD-31017', async ({

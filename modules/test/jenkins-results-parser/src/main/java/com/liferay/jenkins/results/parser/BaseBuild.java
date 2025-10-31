@@ -1533,6 +1533,15 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public boolean isBuildCached() {
+		if (_cachedDownstreamBuildReport == null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isBuildCachingEnabled() {
 		Job job = getJob();
 
@@ -2063,13 +2072,41 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected BaseBuild(String url, Build parentBuild) {
-		_parentBuild = parentBuild;
+		this(url, parentBuild, null);
+	}
 
-		if (url.contains("buildWithParameters")) {
-			_setInvocationURL(url);
+	protected BaseBuild(
+		String url, Build parentBuild,
+		DownstreamBuildReport cachedDownstreamBuildReport) {
+
+		_parentBuild = parentBuild;
+		_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+
+		if (cachedDownstreamBuildReport != null) {
+			_buildURL = String.valueOf(
+				cachedDownstreamBuildReport.getBuildURL());
+			_duration = cachedDownstreamBuildReport.getDuration();
+			_jobName = cachedDownstreamBuildReport.getJobName();
+			_parameters = cachedDownstreamBuildReport.getBuildParameters();
+			_result = cachedDownstreamBuildReport.getResult();
+			_status = "completed";
+			_stopWatchRecordsGroup =
+				cachedDownstreamBuildReport.getStopWatchRecordsGroup();
+			_testrayAttachmentURLs.addAll(
+				cachedDownstreamBuildReport.getTestrayAttachmentURLs());
+			_testrayAttachmentURLsFound = true;
+
+			_jenkinsMaster = cachedDownstreamBuildReport.getJenkinsMaster();
+
+			_jenkinsCohort = _jenkinsMaster.getJenkinsCohort();
 		}
 		else {
-			_setBuildURL(url);
+			if (url.contains("buildWithParameters")) {
+				_setInvocationURL(url);
+			}
+			else {
+				_setBuildURL(url);
+			}
 		}
 
 		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
@@ -3590,6 +3627,7 @@ public abstract class BaseBuild implements Build {
 	private JSONObject _buildJSONObject;
 	private final BuildUpdater _buildUpdater;
 	private String _buildURL;
+	private final DownstreamBuildReport _cachedDownstreamBuildReport;
 	private Long _duration;
 	private Element _gitHubMessageElement;
 	private final List<Invocation> _invocations = new ArrayList<>();

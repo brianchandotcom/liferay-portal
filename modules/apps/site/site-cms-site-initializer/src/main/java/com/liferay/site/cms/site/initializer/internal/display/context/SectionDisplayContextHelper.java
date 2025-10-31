@@ -132,16 +132,20 @@ public class SectionDisplayContextHelper {
 	}
 
 	public CreationMenu getCreationMenu(
-		List<DropdownItem> dropdownItems,
-		HttpServletRequest httpServletRequest) {
+		List<DropdownItem> dropdownItems, HttpServletRequest httpServletRequest,
+		String rootObjectEntryFolderExternalReferenceCode) {
 
 		return new CreationMenu() {
 			{
-				if (_hasAddEntryPermission(httpServletRequest)) {
+				if (_hasAddEntryPermission(
+						httpServletRequest,
+						rootObjectEntryFolderExternalReferenceCode)) {
+
 					for (DropdownItem dropdownItem : dropdownItems) {
 						JSONArray depotEntriesJSONArray =
 							_getDepotEntriesJSONArray(
-								dropdownItem, httpServletRequest);
+								dropdownItem, httpServletRequest,
+								rootObjectEntryFolderExternalReferenceCode);
 
 						if (depotEntriesJSONArray == null) {
 							continue;
@@ -158,15 +162,17 @@ public class SectionDisplayContextHelper {
 	}
 
 	public JSONArray getDepotEntriesJSONArray(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		String rootObjectEntryFolderExternalReferenceCode) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ObjectEntryFolder objectEntryFolder = getObjectEntryFolder(
+		ObjectEntryFolder objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),
-			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM),
+			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder != null) {
 			return _getDepotEntriesJSONArray(
@@ -351,28 +357,6 @@ public class SectionDisplayContextHelper {
 				null));
 	}
 
-	protected ObjectEntryFolder getObjectEntryFolder(
-		long companyId, Object object) {
-
-		if (object instanceof DepotEntry) {
-			DepotEntry depotEntry = (DepotEntry)object;
-
-			return ObjectEntryFolderLocalServiceUtil.
-				fetchObjectEntryFolderByExternalReferenceCode(
-					getRootObjectEntryFolderExternalReferenceCode(),
-					depotEntry.getGroupId(), companyId);
-		}
-		else if (object instanceof ObjectEntryFolder) {
-			return (ObjectEntryFolder)object;
-		}
-
-		return null;
-	}
-
-	protected String getRootObjectEntryFolderExternalReferenceCode() {
-		return null;
-	}
-
 	private List<Long> _getAcceptedGroupIds(long objectDefinitionId) {
 		List<Long> acceptedGroupIds = new ArrayList<>();
 
@@ -397,7 +381,8 @@ public class SectionDisplayContextHelper {
 	}
 
 	private JSONArray _getDepotEntriesJSONArray(
-		DropdownItem dropdownItem, HttpServletRequest httpServletRequest) {
+		DropdownItem dropdownItem, HttpServletRequest httpServletRequest,
+		String rootObjectEntryFolderExternalReferenceCode) {
 
 		Map<String, Object> dropdownItemData =
 			(HashMap<String, Object>)dropdownItem.get("data");
@@ -407,17 +392,21 @@ public class SectionDisplayContextHelper {
 
 		if (objectDefinitionId != 0) {
 			return _getDepotEntriesJSONArray(
-				httpServletRequest, objectDefinitionId);
+				httpServletRequest, objectDefinitionId,
+				rootObjectEntryFolderExternalReferenceCode);
 		}
 
-		return getDepotEntriesJSONArray(httpServletRequest);
+		return getDepotEntriesJSONArray(
+			httpServletRequest, rootObjectEntryFolderExternalReferenceCode);
 	}
 
 	private JSONArray _getDepotEntriesJSONArray(
-		HttpServletRequest httpServletRequest, long objectDefinitionId) {
+		HttpServletRequest httpServletRequest, long objectDefinitionId,
+		String rootObjectEntryFolderExternalReferenceCode) {
 
 		if (_isAcceptAllGroups(objectDefinitionId)) {
-			return getDepotEntriesJSONArray(httpServletRequest);
+			return getDepotEntriesJSONArray(
+				httpServletRequest, rootObjectEntryFolderExternalReferenceCode);
 		}
 
 		List<Long> acceptedGroupIds = _getAcceptedGroupIds(objectDefinitionId);
@@ -430,9 +419,10 @@ public class SectionDisplayContextHelper {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ObjectEntryFolder objectEntryFolder = getObjectEntryFolder(
+		ObjectEntryFolder objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),
-			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM),
+			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder != null) {
 			if (!acceptedGroupIds.contains(objectEntryFolder.getGroupId())) {
@@ -504,15 +494,17 @@ public class SectionDisplayContextHelper {
 	}
 
 	private boolean _hasAddEntryPermission(
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		String rootObjectEntryFolderExternalReferenceCode) {
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		ObjectEntryFolder objectEntryFolder = getObjectEntryFolder(
+		ObjectEntryFolder objectEntryFolder = _getObjectEntryFolder(
 			themeDisplay.getCompanyId(),
-			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
+			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM),
+			rootObjectEntryFolderExternalReferenceCode);
 
 		if (objectEntryFolder == null) {
 			return true;

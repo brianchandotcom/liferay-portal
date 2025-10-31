@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceWrapper;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
 
@@ -62,18 +61,6 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 		return super.moveFileEntry(fileEntryId, newFolderId, serviceContext);
 	}
 
-	private boolean _isSystemFileEntryType(DLFileEntryType dlFileEntryType) {
-		if (dlFileEntryType.getFileEntryTypeId() ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			return true;
-		}
-
-		return ArrayUtil.contains(
-			_SYSTEM_FILE_ENTRY_TYPE_KEYS,
-			dlFileEntryType.getFileEntryTypeKey());
-	}
-
 	private void _populateServiceContext(
 			ServiceContext serviceContext, long fileEntryId)
 		throws PortalException {
@@ -85,7 +72,9 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 		DLFileEntryType dlFileEntryType =
 			_dlFileEntryTypeLocalService.getFileEntryType(fileEntryTypeId);
 
-		if (_isSystemFileEntryType(dlFileEntryType)) {
+		if (dlFileEntryType.getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
 			return;
 		}
 
@@ -116,10 +105,6 @@ public class FileEntryTypeDLAppServiceWrapper extends DLAppServiceWrapper {
 						dlFileEntryMetadata.getDDMStorageId())));
 		}
 	}
-
-	private static final String[] _SYSTEM_FILE_ENTRY_TYPE_KEYS = {
-		"DL_VIDEO_EXTERNAL_SHORTCUT", "GOOGLE_DRIVE"
-	};
 
 	@Reference
 	private DDMBeanTranslator _ddmBeanTranslator;

@@ -195,6 +195,27 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			long scopeGroupId)
 		throws Exception {
 
+		long itemGroupId = groupId;
+
+		if (scopeGroupId > 0) {
+			itemGroupId = scopeGroupId;
+
+			Group group = Mockito.mock(Group.class);
+
+			Mockito.when(
+				group.getGroupId()
+			).thenReturn(
+				scopeGroupId
+			);
+
+			Mockito.when(
+				GroupServiceUtil.fetchGroupByExternalReferenceCode(
+					scopeExternalReferenceCode, companyId)
+			).thenReturn(
+				group
+			);
+		}
+
 		String title = RandomTestUtil.randomString();
 
 		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
@@ -213,53 +234,19 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			title
 		);
 
-		if (scopeGroupId == 0) {
-			Mockito.when(
-				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
-					externalReferenceCode, groupId)
-			).thenReturn(
-				assetCategory
-			);
+		Mockito.when(
+			AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
+				externalReferenceCode, itemGroupId)
+		).thenReturn(
+			assetCategory
+		);
 
-			Mockito.when(
-				AssetVocabularyServiceUtil.
-					fetchVocabularyByExternalReferenceCode(
-						externalReferenceCode, groupId)
-			).thenReturn(
-				assetVocabulary
-			);
-		}
-		else {
-			Mockito.when(
-				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
-					externalReferenceCode, scopeGroupId)
-			).thenReturn(
-				assetCategory
-			);
-
-			Mockito.when(
-				AssetVocabularyServiceUtil.
-					fetchVocabularyByExternalReferenceCode(
-						externalReferenceCode, scopeGroupId)
-			).thenReturn(
-				assetVocabulary
-			);
-
-			Group group = Mockito.mock(Group.class);
-
-			Mockito.when(
-				group.getGroupId()
-			).thenReturn(
-				scopeGroupId
-			);
-
-			Mockito.when(
-				GroupServiceUtil.fetchGroupByExternalReferenceCode(
-					scopeExternalReferenceCode, companyId)
-			).thenReturn(
-				group
-			);
-		}
+		Mockito.when(
+			AssetVocabularyServiceUtil.fetchVocabularyByExternalReferenceCode(
+				externalReferenceCode, itemGroupId)
+		).thenReturn(
+			assetVocabulary
+		);
 
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);

@@ -6,16 +6,16 @@
 import {Locator, Page} from '@playwright/test';
 
 export class AlloyPage {
-    readonly alloyEditorContainer: Locator;
-    readonly alloyEditorToolbarContainer: Locator;
-    readonly balloonEditorContainer: Locator;
+	readonly alloyEditorContainer: Locator;
+	readonly alloyEditorToolbarContainer: Locator;
+	readonly balloonEditorContainer: Locator;
 
-    constructor(page: Page) {
-        this.alloyEditorContainer = page.locator('div[id$=sampleAlloyEditor]');
-        this.alloyEditorToolbarContainer = page.locator('.ae-toolbars');
+	constructor(page: Page) {
+		this.alloyEditorContainer = page.locator('div[id$=sampleAlloyEditor]');
+		this.alloyEditorToolbarContainer = page.locator('.ae-toolbars');
 
-        this.balloonEditorContainer = page.locator(
-            'div[id$=sampleBalloonEditor]'
-        );
-    }
+		this.balloonEditorContainer = page.locator(
+			'div[id$=sampleBalloonEditor]'
+		);
+	}
 }

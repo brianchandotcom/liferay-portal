@@ -5,7 +5,7 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {CKEditorSamplePageTab} from "../CKEditorSamplePage";
+import {CKEditorSamplePageTab} from '../CKEditorSamplePage';
 
 export class BalloonPage implements CKEditorSamplePageTab {
 	readonly editable: Locator;

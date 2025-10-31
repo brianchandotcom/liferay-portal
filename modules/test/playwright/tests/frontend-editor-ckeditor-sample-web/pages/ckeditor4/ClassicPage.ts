@@ -30,7 +30,7 @@ export class ClassicPage {
 	}
 
 	toolbarButton(name: string) {
-		return this.toolbar.getByRole('button', {name})
+		return this.toolbar.getByRole('button', {name});
 	}
 
 	async insertHTML(html: string) {

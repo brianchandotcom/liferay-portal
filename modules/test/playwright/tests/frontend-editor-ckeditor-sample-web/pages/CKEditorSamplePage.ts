@@ -6,12 +6,12 @@
 import {Page, expect} from '@playwright/test';
 
 import POM from '../../../utils/POM';
-import {EEditorType, waitForEditor} from "../../../utils/waitFor";
+import {EEditorType, waitForEditor} from '../../../utils/waitFor';
 import {AlloyPage} from './ckeditor4/AlloyPage';
 import {ClassicPage as CKEditor4ClassicPage} from './ckeditor4/ClassicPage';
-import {BalloonPage} from "./ckeditor5/BalloonPage";
-import {ClassicPage} from "./ckeditor5/ClassicPage";
-import {InputLocalizedPage} from "./ckeditor5/InputLocalizedPage";
+import {BalloonPage} from './ckeditor5/BalloonPage';
+import {ClassicPage} from './ckeditor5/ClassicPage';
+import {InputLocalizedPage} from './ckeditor5/InputLocalizedPage';
 
 export enum TabName {
 	CK_EDITOR_4 = 'CKEditor 4',
@@ -30,8 +30,7 @@ export enum SubTabName {
 	REACT_PLUS_CET = 'React + CET',
 }
 
-export interface CKEditorSamplePageTab {
-}
+export interface CKEditorSamplePageTab {}
 
 export class CKEditorSamplePage extends POM {
 	constructor(page: Page, url: string) {
@@ -39,14 +38,14 @@ export class CKEditorSamplePage extends POM {
 	}
 
 	async gotoTab<T extends CKEditorSamplePageTab>(
-		tabName: TabName, subTabName: SubTabName
+		tabName: TabName,
+		subTabName: SubTabName
 	): Promise<T | null> {
-
 		const navLink = this.page
 			.locator(
 				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(1) .navbar'
 			)
-			.getByRole('link', {exact: true, name: tabName})
+			.getByRole('link', {exact: true, name: tabName});
 
 		await navLink.click();
 
@@ -64,7 +63,7 @@ export class CKEditorSamplePage extends POM {
 			.locator(
 				'.portlet-ckeditor-sample .lfr-tooltip-scope:nth-child(2) .navbar'
 			)
-			.getByRole('link', {exact: true, name: subTabName})
+			.getByRole('link', {exact: true, name: subTabName});
 
 		await subNavLink.click();
 
@@ -94,6 +93,9 @@ export class CKEditorSamplePage extends POM {
 				case SubTabName.INPUT_LOCALIZED:
 					visitedPage = new InputLocalizedPage(this.page);
 					break;
+
+				default:
+					break;
 			}
 		}
 		else if (tabName === TabName.CK_EDITOR_4) {
@@ -104,6 +106,9 @@ export class CKEditorSamplePage extends POM {
 
 				case SubTabName.CLASSIC:
 					visitedPage = new CKEditor4ClassicPage(this.page);
+					break;
+
+				default:
 					break;
 			}
 		}

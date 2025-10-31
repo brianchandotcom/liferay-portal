@@ -799,33 +799,31 @@ public class ClusterCacheReplicationTest {
 	}
 
 	private static PortalCacheListener<?, ?> _getListenerByName(
-		PortalCache<?, ?> portalCache, String listenerName) {
+		PortalCache<?, ?> portalCache, String listenerClassName) {
 
-		PortalCache<?, ?> unwrapPortalCache = ReflectionTestUtil.getFieldValue(
+		portalCache = ReflectionTestUtil.getFieldValue(
 			portalCache, "_portalCache");
 
 		Object aggregatedPortalCacheListener = ReflectionTestUtil.getFieldValue(
-			unwrapPortalCache, "aggregatedPortalCacheListener");
+			portalCache, "aggregatedPortalCacheListener");
 
 		ConcurrentMap<PortalCacheListener<?, ?>, PortalCacheListenerScope>
 			portalCacheListeners = ReflectionTestUtil.getFieldValue(
 				aggregatedPortalCacheListener, "_portalCacheListeners");
 
-		PortalCacheListener<?, ?> portalCacheListener = null;
-
-		for (PortalCacheListener<?, ?> listener :
+		for (PortalCacheListener<?, ?> portalCacheListener :
 				portalCacheListeners.keySet()) {
 
-			if (Objects.equals(
-					listener.getClass(
-					).getName(),
-					listenerName)) {
+			Class<?> clazz = portalCacheListener.getClass();
 
-				portalCacheListener = listener;
+			if (Objects.equals(clazz.getName(), listenerClassName)) {
+				return portalCacheListener;
 			}
 		}
 
-		return portalCacheListener;
+		throw new IllegalStateException(
+			"Unable to locate PortalCacheListener with class name : " +
+				listenerClassName);
 	}
 
 	private static void _setReplicateProperties(

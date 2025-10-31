@@ -22,6 +22,7 @@ export class ExportImportPage {
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
+	readonly exportReportEntriesModal: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
 	readonly importModalButton: Locator;
@@ -39,7 +40,6 @@ export class ExportImportPage {
 	readonly updateDataAlert: Locator;
 	readonly updateDataMirrorWarningLabel: Locator;
 	readonly useCurrentUserAsAuthorCheckbox: Locator;
-	readonly viewDetails: Locator;
 	readonly warningHeader: Locator;
 
 	constructor(page: Page) {
@@ -63,6 +63,9 @@ export class ExportImportPage {
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');
+		this.exportReportEntriesModal = page.getByRole('dialog', {
+			name: 'Export Report Entries',
+		});
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importModalButton = page
@@ -83,7 +86,7 @@ export class ExportImportPage {
 			this.taskRow(taskName).getByRole('button');
 		this.taskRow = (taskName: string) =>
 			this.page.locator('[data-qa-id="row"]', {
-					hasText: taskName,
+				hasText: taskName,
 			});
 		this.taskSuccessLabel = (taskName: string) =>
 			this.taskRow(taskName).getByText('Successful');
@@ -100,7 +103,6 @@ export class ExportImportPage {
 		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
 			'Use the Current User as Author: Assign the current user as the author of all'
 		);
-		this.viewDetails = page.getByRole('menuitem', {name: 'View Details'});
 		this.warningHeader = page.getByRole('heading', {
 			name: 'Important Info About Your Import',
 		});
@@ -142,6 +144,17 @@ export class ExportImportPage {
 		}
 
 		await this.exportButton.click();
+	}
+
+	async clickTaskAction(
+		taskName: string,
+		action: 'Clear' | 'View Details' | 'Export Report Entries'
+	) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {name: action}),
+			trigger: this.taskActionsMenu(taskName),
+		});
 	}
 
 	async checkItemInNewlyCreatedImportProcess(
@@ -292,11 +305,7 @@ export class ExportImportPage {
 	async goToImportDetails(exportName: string) {
 		await expect(this.taskSuccessLabel(exportName)).toBeVisible();
 
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: this.viewDetails,
-			trigger: this.taskMenu(exportName),
-		});
+		await this.clickTaskAction(exportName, 'View Details');
 	}
 
 	async goToImportOptions(
@@ -335,5 +344,13 @@ export class ExportImportPage {
 			.click();
 
 		expect(this.page.getByText('Error Details').first()).toBeVisible();
+	}
+
+	async openExportReportEntriesModal(exportName) {
+		await this.taskSuccessLabel(exportName).waitFor();
+
+		await this.clickTaskAction(exportName, 'Export Report Entries');
+
+		await this.exportReportEntriesModal.waitFor();
 	}
 }

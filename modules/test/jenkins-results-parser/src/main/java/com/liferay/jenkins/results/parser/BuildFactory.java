@@ -17,12 +17,27 @@ import java.util.regex.Matcher;
  */
 public class BuildFactory {
 
+	public static Build newBuild(
+		Build parentBuild, DownstreamBuildReport downstreamBuildReport) {
+
+		return newBuild(
+			String.valueOf(downstreamBuildReport.getBuildURL()), parentBuild,
+			downstreamBuildReport.getJobVariant(), downstreamBuildReport);
+	}
+
 	public static Build newBuild(String url, Build parentBuild) {
 		return newBuild(url, parentBuild, null);
 	}
 
 	public static Build newBuild(
 		String url, Build parentBuild, String jobVariant) {
+
+		return newBuild(url, parentBuild, jobVariant, null);
+	}
+
+	public static Build newBuild(
+		String url, Build parentBuild, String jobVariant,
+		DownstreamBuildReport downstreamBuildReport) {
 
 		url = JenkinsResultsParserUtil.getLocalURL(url);
 
@@ -36,7 +51,12 @@ public class BuildFactory {
 		String axisVariable = matcher.group("axisVariable");
 
 		if (jobVariant == null) {
-			jobVariant = "";
+			if (downstreamBuildReport != null) {
+				jobVariant = downstreamBuildReport.getJobVariant();
+			}
+			else {
+				jobVariant = "";
+			}
 		}
 
 		if (axisVariable != null) {
@@ -70,7 +90,7 @@ public class BuildFactory {
 
 		if (jobName.equals("app-server-bundle-builder")) {
 			return new AppServerBundleDownstreamBuild(
-				url, (TopLevelBuild)parentBuild);
+				url, (TopLevelBuild)parentBuild, downstreamBuildReport);
 		}
 
 		if (jobName.contains("-downstream")) {
@@ -92,7 +112,7 @@ public class BuildFactory {
 					jobVariant.contains("test-portal-fixpack-environment")) {
 
 					return new PoshiJUnitDownstreamBuild(
-						url, (TopLevelBuild)parentBuild);
+						url, (TopLevelBuild)parentBuild, downstreamBuildReport);
 				}
 				else if (jobVariant.startsWith("integration") ||
 						 jobVariant.startsWith("js-unit") ||
@@ -101,11 +121,12 @@ public class BuildFactory {
 						 jobVariant.startsWith("playwright-js")) {
 
 					return new JUnitDownstreamBuild(
-						url, (TopLevelBuild)parentBuild);
+						url, (TopLevelBuild)parentBuild, downstreamBuildReport);
 				}
 			}
 
-			return new DefaultDownstreamBuild(url, (TopLevelBuild)parentBuild);
+			return new DefaultDownstreamBuild(
+				url, (TopLevelBuild)parentBuild, downstreamBuildReport);
 		}
 
 		if (jobName.contains("-source-format")) {

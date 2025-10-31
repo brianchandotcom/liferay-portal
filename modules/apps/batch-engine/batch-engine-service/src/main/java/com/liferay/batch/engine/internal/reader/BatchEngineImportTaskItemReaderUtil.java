@@ -186,7 +186,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return null;
 	}
 
-	private static Set<String> _getBatchRestrictFields(
+	private static Set<String> _getBatchRestrictFieldNames(
 		BatchEngineImportTask batchEngineImportTask) {
 
 		Map<String, Serializable> parameters =
@@ -304,14 +304,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 		Field anySetterField = _getAnySetterField(declaredFields);
 
-		Set<String> batchRestrictFields = _getBatchRestrictFields(
+		Set<String> batchRestrictFieldNames = _getBatchRestrictFieldNames(
 			batchEngineImportTask);
 
 		for (Map.Entry<String, Object> entry : fieldNameValueMap.entrySet()) {
 			String name = entry.getKey();
 
 			try {
-				if (batchRestrictFields.contains(name)) {
+				if (batchRestrictFieldNames.contains(name)) {
 					continue;
 				}
 

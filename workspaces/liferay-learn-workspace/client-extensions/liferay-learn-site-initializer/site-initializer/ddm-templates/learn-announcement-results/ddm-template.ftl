@@ -16,7 +16,7 @@
 </#list>
 
 <#assign
-	taxonomyVocabylaryId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies/by-external-reference-code/ANNOUCEMENT-TYPES?fields=id").id!0
+	taxonomyVocabylaryId = restClient.get("/headless-admin-taxonomy/v1.0/sites/${themeDisplay.getCompanyGroupId()}/taxonomy-vocabularies/by-external-reference-code/ANNOUNCEMENT_TYPES?fields=id").id!0
 
 	taxonomyCategories = restClient.get("/headless-admin-taxonomy/v1.0/taxonomy-vocabularies/${taxonomyVocabylaryId}/taxonomy-categories?fields=id,name")
 	taxonomyCategoriesMap = {}

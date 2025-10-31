@@ -9,15 +9,13 @@ import React from 'react';
 
 import {ExportReportEntriesModal} from './ExportReportEntriesModal';
 
-type ExportErrorsReportProps = {
-	backgroundTaskId: string;
-	filename: string;
-};
-
 export function ExportReportEntriesAction({
 	backgroundTaskId,
 	filename,
-}: ExportErrorsReportProps) {
+}: {
+	backgroundTaskId: string;
+	filename: string;
+}) {
 	const {observer, onOpenChange, open} = useModal();
 
 	return (
@@ -26,6 +24,7 @@ export function ExportReportEntriesAction({
 				className="dropdown-item"
 				displayType="unstyled"
 				onClick={() => onOpenChange(true)}
+				role="menuitem"
 			>
 				{Liferay.Language.get('export-report-entries')}
 			</ClayButton>

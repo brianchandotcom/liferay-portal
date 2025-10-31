@@ -80,7 +80,9 @@ export function ExportReportEntriesModal({
 				<div role="status">
 					<p className="mb-0">{currentMessage}</p>
 
-					<p><strong>{filename}</strong></p>
+					<p>
+						<strong>{filename}</strong>
+					</p>
 
 					<ClayLabel displayType={STATUS_MAP[status].displayType}>
 						{STATUS_MAP[status].label}

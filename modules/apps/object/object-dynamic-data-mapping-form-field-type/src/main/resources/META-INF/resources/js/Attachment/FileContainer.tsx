@@ -4,7 +4,6 @@
  */
 
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
-import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
@@ -35,23 +34,38 @@ export default function FileContainer({
 					<ClayButton
 						displayType="unstyled"
 						onClick={() => {
-							window.open(attachment.contentURL, '_blank');
+							if (attachment.contentURL) {
+								window.open(attachment.contentURL, '_blank');
+							}
 						}}
 					>
 						{attachment.title}
 					</ClayButton>
 
-					{Liferay.ThemeDisplay.isSignedIn() && (
-						<a
-							className="lfr-objects__attachment-download"
-							href={attachment.contentURL}
-						>
-							<ClayIcon symbol="download" />
-						</a>
-					)}
+					{Liferay.ThemeDisplay.isSignedIn() &&
+						attachment.contentURL && (
+							<div className="lfr-objects__attachment-download">
+								<ClayButtonWithIcon
+									aria-label={Liferay.Language.get(
+										'download'
+									)}
+									borderless
+									displayType="secondary"
+									monospaced
+									onClick={() =>
+										window.open(
+											attachment.contentURL,
+											'_blank'
+										)
+									}
+									symbol="download"
+									title={Liferay.Language.get('download')}
+								/>
+							</div>
+						)}
 
-					{!readOnly && (
-						<>
+					{!readOnly && attachment.title && (
+						<div className="lfr-objects__attachment-delete">
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get('delete')}
 								borderless
@@ -61,7 +75,7 @@ export default function FileContainer({
 								symbol="times-circle-full"
 								title={Liferay.Language.get('delete')}
 							/>
-						</>
+						</div>
 					)}
 				</div>
 			</>

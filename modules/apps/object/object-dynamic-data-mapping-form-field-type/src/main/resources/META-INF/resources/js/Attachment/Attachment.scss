@@ -30,34 +30,27 @@
 		gap: #{$gapTitleValue};
 		padding-top: #{$paddingTopTitle};
 
-		&:focus-within,
-		&:hover {
-			.lfr-objects__attachment-download {
-				color: black;
-				display: unset;
-				margin-bottom: #{$marginBottom};
-				margin-left: #{$marginLeft};
-				margin-right: #{$marginRight};
-			}
+		.lfr-objects__attachment-delete {
+			display: unset;
+			margin-bottom: #{$marginBottom};
+			margin-left: #{$marginLeft};
+			margin-right: #{$marginRight};
+		}
+
+		.lfr-objects__attachment-download {
+			display: unset;
+			margin-bottom: #{$marginBottom};
+			margin-left: #{$marginLeft};
 		}
 	}
 }
 
 .lfr-objects__attachment {
-	@include attachment(flex, 1rem, 1rem, 0, 0, 1rem, 0, 0);
+	@include attachment(flex, 1rem, 1rem, 0, 0, 5px, 0, 5px);
 }
 
 .col-ddm .col-md-4 {
 	.lfr-objects__attachment {
-		@include attachment(
-			block,
-			1rem,
-			0.2rem,
-			1rem,
-			5px,
-			0.5rem,
-			0.3rem,
-			0.5rem
-		);
+		@include attachment(block, 1rem, 0.2rem, 1rem, 5px, 0, 0.3rem, 0.5rem);
 	}
 }

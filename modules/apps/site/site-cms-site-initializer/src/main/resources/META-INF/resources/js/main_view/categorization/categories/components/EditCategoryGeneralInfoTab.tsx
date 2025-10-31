@@ -44,6 +44,19 @@ const EditCategoryGeneralInfoTab = ({
 		return languageId.replace('_', '-');
 	};
 
+	const handleNameBlur = () => {
+		const name = category.name_i18n[getLanguageLabel(languageId)];
+
+		if (!name.trim()) {
+			setNameInputError(
+				sub(
+					Liferay.Language.get('the-x-field-is-required'),
+					Liferay.Language.get('name')
+				)
+			);
+		}
+	};
+
 	const onChangeName = (newName: string) => {
 		if (newName) {
 			setNameInputError('');
@@ -131,6 +144,7 @@ const EditCategoryGeneralInfoTab = ({
 							aria-label={Liferay.Language.get('name')}
 							data-testid="name-input"
 							id="name"
+							onBlur={handleNameBlur}
 							onChange={({target: {value}}) =>
 								onChangeName(value)
 							}

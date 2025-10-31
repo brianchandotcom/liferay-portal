@@ -716,7 +716,7 @@ public class RenderLayoutStructureTagTest {
 
 	@Test
 	@TestInfo("LPD-69237")
-	public void testFormInputsAreEscaped() throws Exception {
+	public void testFormInputsEscaped() throws Exception {
 		String name = CharPool.LOWER_CASE_A + RandomTestUtil.randomString();
 
 		ObjectDefinition objectDefinition =

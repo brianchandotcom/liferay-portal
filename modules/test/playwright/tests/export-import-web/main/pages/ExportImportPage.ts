@@ -32,7 +32,8 @@ export class ExportImportPage {
 	readonly page: Page;
 	readonly pagesCheckbox: Locator;
 	readonly productMenuPage: ProductMenuPage;
-	readonly taskMenu: (taskName: string) => Locator;
+	readonly taskRow: (taskName: string) => Locator;
+	readonly taskActionsMenu: (taskName: string) => Locator;
 	readonly taskSuccessLabel: (taskName: string) => Locator;
 	readonly title: Locator;
 	readonly updateDataAlert: Locator;
@@ -78,18 +79,14 @@ export class ExportImportPage {
 			'[id="_com_liferay_exportimport_web_portlet_ImportPortlet_contentLink_com_liferay_layout_admin_web_portlet_GroupPagesPortlet"]'
 		);
 		this.productMenuPage = new ProductMenuPage(page);
-		this.taskMenu = (taskName: string) =>
-			this.page
-				.locator('[data-qa-id="row"]', {
+		this.taskActionsMenu = (taskName: string) =>
+			this.taskRow(taskName).getByRole('button');
+		this.taskRow = (taskName: string) =>
+			this.page.locator('[data-qa-id="row"]', {
 					hasText: taskName,
-				})
-				.getByRole('button');
+			});
 		this.taskSuccessLabel = (taskName: string) =>
-			this.page
-				.locator('[data-qa-id="row"]', {
-					hasText: taskName,
-				})
-				.getByText('Successful');
+			this.taskRow(taskName).getByText('Successful');
 		this.title = page.getByPlaceholder('Enter the name of the process');
 		this.updateDataAlert = page.locator('[role="alert"]', {
 			hasText:

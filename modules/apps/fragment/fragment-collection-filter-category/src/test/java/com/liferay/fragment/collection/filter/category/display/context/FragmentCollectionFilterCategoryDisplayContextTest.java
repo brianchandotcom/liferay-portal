@@ -65,36 +65,12 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 		long categoryTreeNodeId = RandomTestUtil.randomLong();
 		String title = RandomTestUtil.randomString();
 
-		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
-
-		Mockito.when(
-			assetCategory.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			title
-		);
-
-		Mockito.when(
-			AssetCategoryServiceUtil.fetchCategory(categoryTreeNodeId)
-		).thenReturn(
-			assetCategory
-		);
+		_setUpAssetCategoryServiceUtil(categoryTreeNodeId, title);
 
 		_testGetAssetCategoryTreeNodeTitle(
 			"Category", categoryTreeNodeId, title);
 
-		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
-
-		Mockito.when(
-			assetVocabulary.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			title
-		);
-
-		Mockito.when(
-			AssetVocabularyServiceUtil.fetchVocabulary(categoryTreeNodeId)
-		).thenReturn(
-			assetVocabulary
-		);
+		_setUpAssetVocabularyServiceUtil(title, categoryTreeNodeId);
 
 		_testGetAssetCategoryTreeNodeTitle(
 			"Vocabulary", categoryTreeNodeId, title);
@@ -127,23 +103,60 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 		long categoryTreeNodeId = 1L;
 
-		Mockito.when(
-			AssetCategoryServiceUtil.fetchCategory(categoryTreeNodeId)
-		).thenReturn(
-			null
-		);
+		_setUpAssetCategoryServiceUtil(categoryTreeNodeId, null);
 
 		_testGetAssetCategoryTreeNodeTitle(
 			"Category", categoryTreeNodeId, StringPool.BLANK);
 
-		Mockito.when(
-			AssetVocabularyServiceUtil.fetchVocabulary(categoryTreeNodeId)
-		).thenReturn(
-			null
-		);
+		_setUpAssetVocabularyServiceUtil(null, categoryTreeNodeId);
 
 		_testGetAssetCategoryTreeNodeTitle(
 			"Vocabulary", categoryTreeNodeId, StringPool.BLANK);
+	}
+
+	private void _setUpAssetCategoryServiceUtil(long categoryId, String title)
+		throws Exception {
+
+		AssetCategory assetCategory = null;
+
+		if (Validator.isNotNull(title)) {
+			assetCategory = Mockito.mock(AssetCategory.class);
+
+			Mockito.when(
+				assetCategory.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				title
+			);
+		}
+
+		Mockito.when(
+			AssetCategoryServiceUtil.fetchCategory(categoryId)
+		).thenReturn(
+			assetCategory
+		);
+	}
+
+	private void _setUpAssetVocabularyServiceUtil(
+			String title, long vocabularyId)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = null;
+
+		if (Validator.isNotNull(title)) {
+			assetVocabulary = Mockito.mock(AssetVocabulary.class);
+
+			Mockito.when(
+				assetVocabulary.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				title
+			);
+		}
+
+		Mockito.when(
+			AssetVocabularyServiceUtil.fetchVocabulary(vocabularyId)
+		).thenReturn(
+			assetVocabulary
+		);
 	}
 
 	private void _testGetAssetCategoryTreeNodeTitle(

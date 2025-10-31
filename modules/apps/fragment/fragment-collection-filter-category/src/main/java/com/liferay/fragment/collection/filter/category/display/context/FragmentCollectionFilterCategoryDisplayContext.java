@@ -196,33 +196,31 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 			return _assetCategories;
 		}
 
-		_assetCategories = Collections.emptyList();
+		List<AssetCategory> assetCategories = Collections.emptyList();
 
 		if (Objects.equals(_getAssetCategoryTreeNodeType(), "Category")) {
 			AssetCategory assetCategory = _fetchAssetCategory();
 
-			if (assetCategory == null) {
-				return _assetCategories;
+			if (assetCategory != null) {
+				assetCategories = AssetCategoryServiceUtil.getChildCategories(
+					assetCategory.getCategoryId());
 			}
-
-			_assetCategories = AssetCategoryServiceUtil.getChildCategories(
-				assetCategory.getCategoryId());
 		}
 		else if (Objects.equals(
 					_getAssetCategoryTreeNodeType(), "Vocabulary")) {
 
 			AssetVocabulary assetVocabulary = _fetchAssetVocabulary();
 
-			if (assetVocabulary == null) {
-				return _assetCategories;
+			if (assetVocabulary != null) {
+				assetCategories =
+					AssetCategoryServiceUtil.getVocabularyRootCategories(
+						assetVocabulary.getGroupId(),
+						assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS, null);
 			}
-
-			_assetCategories =
-				AssetCategoryServiceUtil.getVocabularyRootCategories(
-					assetVocabulary.getGroupId(),
-					assetVocabulary.getVocabularyId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, null);
 		}
+
+		_assetCategories = assetCategories;
 
 		return _assetCategories;
 	}

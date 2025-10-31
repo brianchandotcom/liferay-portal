@@ -2604,10 +2604,18 @@ public abstract class BaseBuild implements Build {
 		Element stopWatchRecordsExpanderAnchorElement =
 			getStopWatchRecordsExpanderAnchorElement();
 
+		Element cachedBuildElement = null;
+
+		if (isBuildCached()) {
+			cachedBuildElement = Dom4JUtil.getNewElement(
+				"span", null, "(cached build)");
+		}
+
 		Element nameCellElement = Dom4JUtil.getNewElement(
 			cellElementTagName, null, stopWatchRecordsExpanderAnchorElement,
 			Dom4JUtil.getNewAnchorElement(
-				getBuildURL(), null, getDisplayName()));
+				getBuildURL(), null, getDisplayName()),
+			cachedBuildElement);
 
 		int indent = getDepth() * PIXELS_WIDTH_INDENT;
 

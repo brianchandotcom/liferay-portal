@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Function;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -211,17 +212,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForRemoval =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener,
-							"_countDownLatchForRemove");
-
-					countDownLatchForRemoval.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getRemoveCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -453,16 +446,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForPut =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener, "_countDownLatchForPut");
-
-					countDownLatchForPut.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getPutCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -490,17 +476,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForRemoval =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener,
-							"_countDownLatchForRemove");
-
-					countDownLatchForRemoval.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getRemoveCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -570,17 +548,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForRemoval =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener,
-							"_countDownLatchForRemove");
-
-					countDownLatchForRemoval.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getRemoveCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -608,17 +578,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForRemovalAll =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener,
-							"_countDownLatchForRemoveAll");
-
-					countDownLatchForRemovalAll.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getRemoveAllCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -696,16 +658,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForPut =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener, "_countDownLatchForPut");
-
-					countDownLatchForPut.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getPutCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -735,17 +690,9 @@ public class ClusterCacheReplicationTest {
 						PortalCacheHelperUtil.getPortalCache(
 							PortalCacheManagerNames.MULTI_VM, testCacheName);
 
-					PortalCacheListener<?, ?> testPortalCacheListener =
-						_getListenerByName(
-							portalCache,
-							TestPortalCacheListener.class.getName());
-
-					CountDownLatch countDownLatchForUpdate =
-						ReflectionTestUtil.getFieldValue(
-							testPortalCacheListener,
-							"_countDownLatchForUpdate");
-
-					countDownLatchForUpdate.await();
+					TestPortalCacheListener.await(
+						portalCache,
+						TestPortalCacheListener::getUpdatedCountDownLatch);
 
 					return portalCache.get(testKey);
 				}));
@@ -754,15 +701,46 @@ public class ClusterCacheReplicationTest {
 	public static class TestPortalCacheListener
 		implements PortalCacheListener<String, String>, Serializable {
 
+		public static void await(
+				PortalCache<?, ?> portalCache,
+				Function<TestPortalCacheListener, CountDownLatch> function)
+			throws InterruptedException {
+
+			TestPortalCacheListener testPortalCacheListener =
+				(TestPortalCacheListener)_getListenerByName(
+					portalCache, TestPortalCacheListener.class.getName());
+
+			CountDownLatch countDownLatch = function.apply(
+				testPortalCacheListener);
+
+			countDownLatch.await();
+		}
+
 		public TestPortalCacheListener() {
-			_countDownLatchForPut = new CountDownLatch(1);
-			_countDownLatchForRemove = new CountDownLatch(1);
-			_countDownLatchForRemoveAll = new CountDownLatch(1);
-			_countDownLatchForUpdate = new CountDownLatch(1);
+			_putCountDownLatch = new CountDownLatch(1);
+			_removeCountDownLatch = new CountDownLatch(1);
+			_removeAllCountDownLatch = new CountDownLatch(1);
+			_updatedCountDownLatch = new CountDownLatch(1);
 		}
 
 		@Override
 		public void dispose() {
+		}
+
+		public CountDownLatch getPutCountDownLatch() {
+			return _putCountDownLatch;
+		}
+
+		public CountDownLatch getRemoveAllCountDownLatch() {
+			return _removeAllCountDownLatch;
+		}
+
+		public CountDownLatch getRemoveCountDownLatch() {
+			return _removeCountDownLatch;
+		}
+
+		public CountDownLatch getUpdatedCountDownLatch() {
+			return _updatedCountDownLatch;
 		}
 
 		@Override
@@ -785,7 +763,7 @@ public class ClusterCacheReplicationTest {
 				String value, int timeToLive)
 			throws PortalCacheException {
 
-			_countDownLatchForPut.countDown();
+			_putCountDownLatch.countDown();
 		}
 
 		@Override
@@ -794,7 +772,7 @@ public class ClusterCacheReplicationTest {
 				String value, int timeToLive)
 			throws PortalCacheException {
 
-			_countDownLatchForRemove.countDown();
+			_removeCountDownLatch.countDown();
 		}
 
 		@Override
@@ -803,20 +781,20 @@ public class ClusterCacheReplicationTest {
 				String value, int timeToLive)
 			throws PortalCacheException {
 
-			_countDownLatchForUpdate.countDown();
+			_updatedCountDownLatch.countDown();
 		}
 
 		@Override
 		public void notifyRemoveAll(PortalCache<String, String> portalCache)
 			throws PortalCacheException {
 
-			_countDownLatchForRemoveAll.countDown();
+			_removeAllCountDownLatch.countDown();
 		}
 
-		private final CountDownLatch _countDownLatchForPut;
-		private final CountDownLatch _countDownLatchForRemove;
-		private final CountDownLatch _countDownLatchForRemoveAll;
-		private final CountDownLatch _countDownLatchForUpdate;
+		private final CountDownLatch _putCountDownLatch;
+		private final CountDownLatch _removeAllCountDownLatch;
+		private final CountDownLatch _removeCountDownLatch;
+		private final CountDownLatch _updatedCountDownLatch;
 
 	}
 

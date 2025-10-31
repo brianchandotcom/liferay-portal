@@ -64,6 +64,17 @@ public abstract class BaseTopLevelBuild
 	extends BaseParentBuild implements TopLevelBuild {
 
 	@Override
+	public void addCachedDownstreamBuildReport(
+		DownstreamBuildReport downstreamBuildReport) {
+
+		if (downstreamBuildReport == null) {
+			return;
+		}
+
+		addDownstreamBuild(BuildFactory.newBuild(this, downstreamBuildReport));
+	}
+
+	@Override
 	public void addTestrayAttachmentURL(URL testrayAttachmentURL) {
 		if (_testrayAttachmentURLs.contains(testrayAttachmentURL)) {
 			return;

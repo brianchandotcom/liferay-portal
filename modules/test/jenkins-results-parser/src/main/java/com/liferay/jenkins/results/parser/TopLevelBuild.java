@@ -17,6 +17,9 @@ import org.dom4j.Element;
  */
 public interface TopLevelBuild extends ParentBuild {
 
+	public void addCachedDownstreamBuildReport(
+		DownstreamBuildReport downstreamBuildReport);
+
 	public String getAcceptanceUpstreamJobName();
 
 	public String getAcceptanceUpstreamJobURL();

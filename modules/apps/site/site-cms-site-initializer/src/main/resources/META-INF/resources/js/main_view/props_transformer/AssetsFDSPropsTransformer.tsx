@@ -9,6 +9,7 @@ import React from 'react';
 
 import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
+import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
 import formatActionURL from '../../common/utils/formatActionURL';
 import {
@@ -29,6 +30,7 @@ import deleteAssetEntriesBulkAction, {
 } from './actions/deleteAssetEntriesBulkAction';
 import deleteItemAction from './actions/deleteItemAction';
 import multipleFilesUploadAction from './actions/multipleFilesUploadAction';
+import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import {triggerAssetBulkAction} from './actions/triggerAssetBulkAction';
 import AuthorRenderer from './cell_renderers/AuthorRenderer';
@@ -45,6 +47,7 @@ const ACTIONS = {
 };
 
 export type AdditionalProps = {
+	assetLibraries: AssetLibrary[];
 	autocompleteURL: string;
 	baseFolderViewURL: string;
 	brokenLinksCheckerEnabled: boolean;
@@ -56,6 +59,7 @@ export type AdditionalProps = {
 	fileMimeTypeIcons: Record<string, string>;
 	objectDefinitionCssClasses: Record<string, string>;
 	objectDefinitionIcons: Record<string, string>;
+	objectEntryFolderExternalReferenceCode: string;
 	parentObjectEntryFolderExternalReferenceCode: string;
 	redirect: string;
 	rootObjectEntryFolderExternalReferenceCode: string;
@@ -132,7 +136,13 @@ export default function AssetsFDSPropsTransformer({
 			/>
 		),
 		itemsActions: itemsActions.map((action) => {
-			if (
+			if (action?.data?.id === 'copy') {
+				return {
+					...action,
+					isVisible: () => true,
+				};
+			}
+			else if (
 				action?.data?.id === 'default-permissions' ||
 				action?.data?.id === 'edit-and-propagate-default-permissions'
 			) {
@@ -205,7 +215,15 @@ export default function AssetsFDSPropsTransformer({
 			items: any;
 			loadData: () => {};
 		}) {
-			if (
+			if (action?.data?.id === 'copy') {
+				openFolderItemSelectorAction(
+					action?.data?.id,
+					additionalProps.assetLibraries,
+					itemData,
+					additionalProps.objectEntryFolderExternalReferenceCode
+				);
+			}
+			else if (
 				action?.data?.id === 'default-permissions' ||
 				action?.data?.id === 'edit-and-propagate-default-permissions'
 			) {

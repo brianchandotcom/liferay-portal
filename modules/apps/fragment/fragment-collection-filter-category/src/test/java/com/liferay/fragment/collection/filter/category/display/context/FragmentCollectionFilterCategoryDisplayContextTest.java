@@ -7,9 +7,7 @@ package com.liferay.fragment.collection.filter.category.display.context;
 
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetVocabulary;
-import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetCategoryServiceUtil;
-import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.asset.kernel.service.AssetVocabularyServiceUtil;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
@@ -19,9 +17,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,11 +25,14 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 
 /**
@@ -45,6 +44,20 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@AfterClass
+	public static void tearDownClass() {
+		_assetCategoryServiceUtilMockedStatic.close();
+		_assetVocabularyServiceUtilMockedStatic.close();
+		_groupServiceUtilMockedStatic.close();
+	}
+
+	@Before
+	public void setUp() {
+		_assetCategoryServiceUtilMockedStatic.reset();
+		_assetVocabularyServiceUtilMockedStatic.reset();
+		_groupServiceUtilMockedStatic.reset();
+	}
 
 	@Test
 	@TestInfo("LPD-69226")
@@ -60,13 +73,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			title
 		);
 
-		AssetCategoryService assetCategoryService = Mockito.mock(
-			AssetCategoryService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
 		Mockito.when(
-			assetCategoryService.fetchCategory(categoryTreeNodeId)
+			AssetCategoryServiceUtil.fetchCategory(categoryTreeNodeId)
 		).thenReturn(
 			assetCategory
 		);
@@ -82,14 +90,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			title
 		);
 
-		AssetVocabularyService assetVocabularyService = Mockito.mock(
-			AssetVocabularyService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetVocabularyServiceUtil.class, "_service",
-			assetVocabularyService);
 		Mockito.when(
-			assetVocabularyService.fetchVocabulary(categoryTreeNodeId)
+			AssetVocabularyServiceUtil.fetchVocabulary(categoryTreeNodeId)
 		).thenReturn(
 			assetVocabulary
 		);
@@ -125,13 +127,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 		long categoryTreeNodeId = 1L;
 
-		AssetCategoryService assetCategoryService = Mockito.mock(
-			AssetCategoryService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
 		Mockito.when(
-			assetCategoryService.fetchCategory(categoryTreeNodeId)
+			AssetCategoryServiceUtil.fetchCategory(categoryTreeNodeId)
 		).thenReturn(
 			null
 		);
@@ -139,14 +136,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 		_testGetAssetCategoryTreeNodeTitle(
 			"Category", categoryTreeNodeId, StringPool.BLANK);
 
-		AssetVocabularyService assetVocabularyService = Mockito.mock(
-			AssetVocabularyService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetVocabularyServiceUtil.class, "_service",
-			assetVocabularyService);
 		Mockito.when(
-			assetVocabularyService.fetchVocabulary(categoryTreeNodeId)
+			AssetVocabularyServiceUtil.fetchVocabulary(categoryTreeNodeId)
 		).thenReturn(
 			null
 		);
@@ -171,12 +162,6 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			title
 		);
 
-		AssetCategoryService assetCategoryService = Mockito.mock(
-			AssetCategoryService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetCategoryServiceUtil.class, "_service", assetCategoryService);
-
 		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
 
 		Mockito.when(
@@ -185,39 +170,34 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			title
 		);
 
-		AssetVocabularyService assetVocabularyService = Mockito.mock(
-			AssetVocabularyService.class);
-
-		ReflectionTestUtil.setFieldValue(
-			AssetVocabularyServiceUtil.class, "_service",
-			assetVocabularyService);
-
 		if (scopeGroupId == 0) {
 			Mockito.when(
-				assetCategoryService.fetchCategoryByExternalReferenceCode(
+				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
 					externalReferenceCode, groupId)
 			).thenReturn(
 				assetCategory
 			);
 
 			Mockito.when(
-				assetVocabularyService.fetchVocabularyByExternalReferenceCode(
-					externalReferenceCode, groupId)
+				AssetVocabularyServiceUtil.
+					fetchVocabularyByExternalReferenceCode(
+						externalReferenceCode, groupId)
 			).thenReturn(
 				assetVocabulary
 			);
 		}
 		else {
 			Mockito.when(
-				assetCategoryService.fetchCategoryByExternalReferenceCode(
+				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
 					externalReferenceCode, scopeGroupId)
 			).thenReturn(
 				assetCategory
 			);
 
 			Mockito.when(
-				assetVocabularyService.fetchVocabularyByExternalReferenceCode(
-					externalReferenceCode, scopeGroupId)
+				AssetVocabularyServiceUtil.
+					fetchVocabularyByExternalReferenceCode(
+						externalReferenceCode, scopeGroupId)
 			).thenReturn(
 				assetVocabulary
 			);
@@ -230,12 +210,8 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 				scopeGroupId
 			);
 
-			GroupService groupService = Mockito.mock(GroupService.class);
-
-			ReflectionTestUtil.setFieldValue(
-				GroupServiceUtil.class, "_service", groupService);
 			Mockito.when(
-				groupService.fetchGroupByExternalReferenceCode(
+				GroupServiceUtil.fetchGroupByExternalReferenceCode(
 					scopeExternalReferenceCode, companyId)
 			).thenReturn(
 				group
@@ -329,5 +305,15 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			fragmentCollectionFilterCategoryDisplayContext.
 				getAssetCategoryTreeNodeTitle());
 	}
+
+	private static final MockedStatic<AssetCategoryServiceUtil>
+		_assetCategoryServiceUtilMockedStatic = Mockito.mockStatic(
+			AssetCategoryServiceUtil.class);
+	private static final MockedStatic<AssetVocabularyServiceUtil>
+		_assetVocabularyServiceUtilMockedStatic = Mockito.mockStatic(
+			AssetVocabularyServiceUtil.class);
+	private static final MockedStatic<GroupServiceUtil>
+		_groupServiceUtilMockedStatic = Mockito.mockStatic(
+		GroupServiceUtil.class);
 
 }

@@ -485,6 +485,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="userId" />
 		</finder>
+		<finder name="C_BT" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="businessType" />
+		</finder>
 		<finder name="LTDI_S" return-type="Collection">
 			<finder-column name="listTypeDefinitionId" />
 			<finder-column name="state" />

@@ -49,6 +49,8 @@ public interface ObjectField extends ObjectFieldModel, PersistedModel {
 
 	public boolean compareBusinessType(String businessType);
 
+	public String getAttachmentDownloadActionKey();
+
 	public String[] getDBColumnNames();
 
 	public String getI18nObjectFieldName();

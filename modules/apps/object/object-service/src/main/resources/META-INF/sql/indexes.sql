@@ -46,6 +46,7 @@ create index IX_7D343B19 on ObjectEntryVersion (objectEntryId, status);
 create unique index IX_50DA0035 on ObjectEntryVersion (objectEntryId, version);
 create index IX_5C2CDBC9 on ObjectEntryVersion (uuid_[$COLUMN_LENGTH:75$]);
 
+create index IX_57E61DF5 on ObjectField (companyId, businessType[$COLUMN_LENGTH:75$]);
 create index IX_EAECE0E1 on ObjectField (companyId, userId);
 create index IX_6DCE835D on ObjectField (listTypeDefinitionId, state_);
 create index IX_87111650 on ObjectField (objectDefinitionId, businessType[$COLUMN_LENGTH:75$]);

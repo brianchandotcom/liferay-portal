@@ -87,6 +87,15 @@ public class ObjectFieldLocalServiceWrapper
 	}
 
 	@Override
+	public void addOrUpdateObjectFieldResourceActionPLOEntries(
+			com.liferay.object.model.ObjectField objectField)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_objectFieldLocalService.addOrUpdateObjectFieldResourceActionPLOEntries(
+			objectField);
+	}
+
+	@Override
 	public com.liferay.object.model.ObjectField addOrUpdateSystemObjectField(
 			String externalReferenceCode, long userId,
 			long listTypeDefinitionId, long objectDefinitionId,
@@ -590,6 +599,15 @@ public class ObjectFieldLocalServiceWrapper
 			getObjectFieldsMap(long companyId) {
 
 		return _objectFieldLocalService.getObjectFieldsMap(companyId);
+	}
+
+	@Override
+	public java.util.Map
+		<Long, java.util.List<com.liferay.object.model.ObjectField>>
+			getObjectFieldsMap(long companyId, String businessType) {
+
+		return _objectFieldLocalService.getObjectFieldsMap(
+			companyId, businessType);
 	}
 
 	/**

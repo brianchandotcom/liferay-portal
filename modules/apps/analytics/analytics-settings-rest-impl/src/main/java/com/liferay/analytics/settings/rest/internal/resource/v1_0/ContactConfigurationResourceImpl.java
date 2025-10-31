@@ -83,7 +83,7 @@ public class ContactConfigurationResourceImpl
 			accountsSelected,
 			_configurationProvider.getCompanyConfiguration(
 				AnalyticsConfiguration.class, contextCompany.getCompanyId()),
-			null, contactsSelected, null);
+			contactsSelected);
 
 		_analyticsSettingsManager.updateCompanyConfiguration(
 			contextCompany.getCompanyId(),

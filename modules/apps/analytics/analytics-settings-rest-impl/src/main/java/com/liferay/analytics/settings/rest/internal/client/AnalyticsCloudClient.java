@@ -406,8 +406,7 @@ public class AnalyticsCloudClient {
 	public AnalyticsDataSource updateAnalyticsDataSourceDetails(
 			Boolean accountsSelected,
 			AnalyticsConfiguration analyticsConfiguration,
-			Boolean commerceChannelsSelected, Boolean contactsSelected,
-			Boolean sitesSelected)
+			Boolean contactsSelected)
 		throws Exception {
 
 		try {
@@ -418,11 +417,7 @@ public class AnalyticsCloudClient {
 				JSONUtil.put(
 					"accountsSelected", accountsSelected
 				).put(
-					"commerceChannelsSelected", commerceChannelsSelected
-				).put(
 					"contactsSelected", contactsSelected
-				).put(
-					"sitesSelected", sitesSelected
 				).toString(),
 				ContentTypes.APPLICATION_JSON, StringPool.UTF8);
 			options.setLocation(

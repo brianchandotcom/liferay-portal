@@ -187,7 +187,7 @@ definition {
 		var userLoginInfo = JSONUtil2.formatJSONUser();
 
 		var curl = '''
-			${portalURL}/api/jsonws/layout/update-layout \
+			${portalURL}/api/jsonws/layout/update-type-settings \
 				-u ${userLoginInfo} \
 				-d groupId=${groupId} \
 				-d privateLayout=${privateLayout} \

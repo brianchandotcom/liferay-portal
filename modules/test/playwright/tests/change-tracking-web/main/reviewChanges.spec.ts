@@ -512,15 +512,15 @@ test('User time zone from theme display is applied to publication FDS', async ({
 	await test.step('Check date in different time zone', async () => {
 		await accountSettingsPage.goToDisplaySettings();
 
-		await accountSettingsPage.setTimeZone('Europe/Lisbon');
+		await accountSettingsPage.setTimeZone('Asia/Shanghai');
 
 		await changeTrackingPage.goto();
 
 		const utcTime = moment.utc();
 
-		// Add 1 hour offset to the UTC time
+		// Add 8 hour offset to the UTC time
 
-		const timeZoneTime = utcTime.add(1, 'hours');
+		const timeZoneTime = utcTime.add(8, 'hours');
 
 		await expect(
 			page

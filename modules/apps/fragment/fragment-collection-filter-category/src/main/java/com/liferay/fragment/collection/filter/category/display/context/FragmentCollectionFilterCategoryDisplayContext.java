@@ -135,14 +135,10 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	}
 
 	private AssetCategory _fetchAssetCategory() throws PortalException {
-		if (_assetCategory != null) {
+		if ((_assetCategory != null) ||
+			!Objects.equals(_getAssetCategoryTreeNodeType(), "Category")) {
+
 			return _assetCategory;
-		}
-
-		String assetCategoryTreeNodeType = _getAssetCategoryTreeNodeType();
-
-		if (!assetCategoryTreeNodeType.equals("Category")) {
-			return null;
 		}
 
 		JSONObject sourceJSONObject = _getSourceJSONObject();
@@ -167,14 +163,10 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	}
 
 	private AssetVocabulary _fetchAssetVocabulary() throws PortalException {
-		if (_assetVocabulary != null) {
+		if ((_assetVocabulary != null) ||
+			!Objects.equals(_getAssetCategoryTreeNodeType(), "Vocabulary")) {
+
 			return _assetVocabulary;
-		}
-
-		String assetCategoryTreeNodeType = _getAssetCategoryTreeNodeType();
-
-		if (!assetCategoryTreeNodeType.equals("Vocabulary")) {
-			return null;
 		}
 
 		JSONObject sourceJSONObject = _getSourceJSONObject();

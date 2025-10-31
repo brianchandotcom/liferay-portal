@@ -267,6 +267,7 @@ export default function ViewTags({
 						label: Liferay.Language.get('merge'),
 					},
 					{
+						className: 'text-danger',
 						data: {
 							permissionKey: 'delete',
 						},

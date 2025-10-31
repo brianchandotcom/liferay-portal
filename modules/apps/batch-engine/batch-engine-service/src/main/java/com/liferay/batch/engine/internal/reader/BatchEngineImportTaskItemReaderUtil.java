@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.jackson.databind.ObjectMapperProviderUtil;
 import java.io.IOException;
 import java.io.Serializable;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import java.util.ArrayList;
@@ -63,8 +64,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 			Class<? extends T> resolvedClass = _resolveClass(
 				fieldNameValueMap, itemClass);
 
-			item = resolvedClass.getDeclaredConstructor(
-			).newInstance();
+			Constructor<? extends T> constructor =
+				resolvedClass.getDeclaredConstructor();
+
+			item = constructor.newInstance();
 
 			Map<String, Serializable> extendedProperties = new HashMap<>();
 

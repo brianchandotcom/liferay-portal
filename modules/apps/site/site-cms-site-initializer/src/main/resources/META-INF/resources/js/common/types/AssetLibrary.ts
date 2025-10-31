@@ -4,6 +4,7 @@
  */
 
 export type AssetLibrary = {
+	externalReferenceCode: string;
 	groupId: number;
 	name: string;
 };

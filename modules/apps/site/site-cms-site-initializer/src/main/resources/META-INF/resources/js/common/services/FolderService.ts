@@ -15,6 +15,15 @@ export type TFolder = {
 
 const OBJECT_ENTRY_FOLDER_URL = '/o/headless-object/v1.0/object-entry-folders';
 
+async function copyFolder<DataType = unknown>(
+	objectEntryFolderId: number,
+	parentObjectEntryFolderId: number
+) {
+	return await ApiHelper.post<DataType>(
+		`${OBJECT_ENTRY_FOLDER_URL}/${objectEntryFolderId}/by-parent-object-entry-folder-id/${parentObjectEntryFolderId}/copy`
+	);
+}
+
 async function createFolder<DataType = unknown>(
 	groupId: number,
 	parentObjectEntryFolderExternalReferenceCode: string,
@@ -48,4 +57,4 @@ async function updateFolder(folderData: TFolder) {
 	);
 }
 
-export default {createFolder, getFolder, updateFolder};
+export default {copyFolder, createFolder, getFolder, updateFolder};

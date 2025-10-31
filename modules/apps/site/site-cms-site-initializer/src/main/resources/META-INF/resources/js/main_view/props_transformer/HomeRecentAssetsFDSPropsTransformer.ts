@@ -13,6 +13,7 @@ import openResetAssetPermissionModal from '../default_permission/ResetPermission
 import AssetNavigationModalContent from '../modal/asset_navigation_view/AssetNavigationModalContent';
 import {AdditionalProps} from './AssetsFDSPropsTransformer';
 import deleteItemAction from './actions/deleteItemAction';
+import openFolderItemSelectorAction from './actions/openFolderItemSelectorAction';
 import shareAction from './actions/shareAction';
 import AssetRenderer from './cell_renderers/AssetRenderer';
 
@@ -100,7 +101,15 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 			items: any;
 			loadData: () => {};
 		}) {
-			if (
+			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
+				openFolderItemSelectorAction(
+					action?.data?.id,
+					additionalProps.assetLibraries,
+					itemData,
+					additionalProps.objectEntryFolderExternalReferenceCode
+				);
+			}
+			else if (
 				action?.data?.id === 'default-permissions' ||
 				action?.data?.id === 'edit-and-propagate-default-permissions'
 			) {

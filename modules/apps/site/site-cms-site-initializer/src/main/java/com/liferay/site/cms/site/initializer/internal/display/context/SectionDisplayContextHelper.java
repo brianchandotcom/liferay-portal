@@ -61,9 +61,9 @@ import java.util.Map;
 /**
  * @author Daniel Sanz
  */
-public class BaseSectionDisplayContextHelper {
+public class SectionDisplayContextHelper {
 
-	public BaseSectionDisplayContextHelper(
+	public SectionDisplayContextHelper(
 		DepotEntryLocalService depotEntryLocalService,
 		GroupLocalService groupLocalService, Language language,
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
@@ -560,7 +560,7 @@ public class BaseSectionDisplayContextHelper {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseSectionDisplayContextHelper.class);
+		SectionDisplayContextHelper.class);
 
 	private static final List<Integer> _statuses = Arrays.asList(
 		WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_DRAFT,

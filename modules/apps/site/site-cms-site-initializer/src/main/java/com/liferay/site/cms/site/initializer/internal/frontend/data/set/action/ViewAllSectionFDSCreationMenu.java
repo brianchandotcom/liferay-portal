@@ -16,7 +16,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
-import com.liferay.site.cms.site.initializer.internal.display.context.BaseSectionDisplayContextHelper;
+import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
 import com.liferay.site.cms.site.initializer.internal.util.ActionUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {
-		return _baseSectionDisplayContextHelper.getCreationMenu(
+		return _sectionDisplayContextHelper.getCreationMenu(
 			ActionUtil.getAllSectionCreationMenuDropdownItems(
 				httpServletRequest),
 			httpServletRequest);
@@ -50,13 +50,11 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_baseSectionDisplayContextHelper = new BaseSectionDisplayContextHelper(
+		_sectionDisplayContextHelper = new SectionDisplayContextHelper(
 			_depotEntryLocalService, _groupLocalService, _language,
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderModelResourcePermission, _portal);
 	}
-
-	private BaseSectionDisplayContextHelper _baseSectionDisplayContextHelper;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
@@ -79,5 +77,7 @@ public class ViewAllSectionFDSCreationMenu implements FDSCreationMenu {
 
 	@Reference
 	private Portal _portal;
+
+	private SectionDisplayContextHelper _sectionDisplayContextHelper;
 
 }

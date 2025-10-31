@@ -15,7 +15,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames;
-import com.liferay.site.cms.site.initializer.internal.display.context.BaseSectionDisplayContextHelper;
+import com.liferay.site.cms.site.initializer.internal.display.context.SectionDisplayContextHelper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -37,18 +37,18 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 	public String getAdditionalAPIURLParameters(
 		HttpServletRequest httpServletRequest) {
 
-		String filter = _baseSectionDisplayContextHelper.appendStatus(
+		String filter = _sectionDisplayContextHelper.appendStatus(
 			"cmsKind eq 'object' and (cmsSection eq 'contents' or cmsSection " +
 				"eq 'files')");
 
 		if (httpServletRequest.getParameter("q") != null) {
 			return HttpComponentsUtil.addParameters(
-				_baseSectionDisplayContextHelper.getAdditionalAPIURLParameters(
+				_sectionDisplayContextHelper.getAdditionalAPIURLParameters(
 					filter, httpServletRequest, null),
 				"search", httpServletRequest.getParameter("q"));
 		}
 
-		return _baseSectionDisplayContextHelper.getAdditionalAPIURLParameters(
+		return _sectionDisplayContextHelper.getAdditionalAPIURLParameters(
 			filter, httpServletRequest, null);
 	}
 
@@ -100,13 +100,11 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_baseSectionDisplayContextHelper = new BaseSectionDisplayContextHelper(
+		_sectionDisplayContextHelper = new SectionDisplayContextHelper(
 			_depotEntryLocalService, _groupLocalService, _language,
 			_objectDefinitionSettingLocalService,
 			_objectEntryFolderModelResourcePermission, _portal);
 	}
-
-	private BaseSectionDisplayContextHelper _baseSectionDisplayContextHelper;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;
@@ -129,5 +127,7 @@ public class ViewAllSectionSystemFDSEntry implements SystemFDSEntry {
 
 	@Reference
 	private Portal _portal;
+
+	private SectionDisplayContextHelper _sectionDisplayContextHelper;
 
 }

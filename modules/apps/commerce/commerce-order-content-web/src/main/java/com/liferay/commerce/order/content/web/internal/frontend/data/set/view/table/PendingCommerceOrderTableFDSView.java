@@ -45,7 +45,7 @@ public class PendingCommerceOrderTableFDSView extends BaseTableFDSView {
 		).add(
 			"purchaseOrderNumber", "purchase-order-number"
 		).add(
-			"date", "create-date",
+			"createDate", "create-date",
 			fdsTableSchemaField -> fdsTableSchemaField.setSortable(true)
 		).add(
 			_addAccountNameStringFDSTableSchemaField()

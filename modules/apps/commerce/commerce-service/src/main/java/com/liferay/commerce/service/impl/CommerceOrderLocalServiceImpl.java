@@ -2343,7 +2343,6 @@ public class CommerceOrderLocalServiceImpl
 				CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
 		}
 		else {
-			sort.setFieldName(Field.CREATE_DATE);
 			sort.setType(Sort.LONG_TYPE);
 		}
 
@@ -3360,7 +3359,6 @@ public class CommerceOrderLocalServiceImpl
 				CommerceOrder.class, Sort.LONG_TYPE, Field.CREATE_DATE, "DESC");
 		}
 		else {
-			sort.setFieldName(Field.CREATE_DATE);
 			sort.setType(Sort.LONG_TYPE);
 		}
 

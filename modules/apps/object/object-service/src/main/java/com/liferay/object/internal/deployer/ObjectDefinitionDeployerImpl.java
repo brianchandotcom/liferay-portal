@@ -14,6 +14,7 @@ import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -42,6 +43,7 @@ import com.liferay.object.internal.workflow.ObjectEntryWorkflowHandler;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectLayout;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsPredicateProvider;
@@ -69,6 +71,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionLogic;
@@ -135,7 +138,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			dynamicQueryBatchIndexingActionableFactory,
 		GroupLocalService groupLocalService,
 		KaleoDefinitionLocalService kaleoDefinitionLocalService,
-		ListTypeLocalService listTypeLocalService,
+		Language language, ListTypeLocalService listTypeLocalService,
 		ObjectActionLocalService objectActionLocalService,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectDefinitionSettingLocalService objectDefinitionSettingLocalService,
@@ -172,6 +175,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			dynamicQueryBatchIndexingActionableFactory;
 		_groupLocalService = groupLocalService;
 		_kaleoDefinitionLocalService = kaleoDefinitionLocalService;
+		_language = language;
 		_listTypeLocalService = listTypeLocalService;
 		_objectActionLocalService = objectActionLocalService;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
@@ -216,10 +220,6 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<String, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			new ConcurrentHashMap<>();
 
-		Map<Long, List<ObjectAction>> objectActionsMap =
-			_objectActionLocalService.getObjectActionsMap(
-				companyId, true, ObjectActionTriggerConstants.KEY_STANDALONE);
-
 		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-34594")) {
 			ObjectDefinitionTreeUtil.populateRootObjectDefinitionIds(
 				objectDefinitions,
@@ -230,6 +230,12 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 							NAME_ROOT_OBJECT_DEFINITION_IDS));
 		}
 
+		Map<Long, List<ObjectAction>> objectActionsMap =
+			_objectActionLocalService.getObjectActionsMap(
+				companyId, true, ObjectActionTriggerConstants.KEY_STANDALONE);
+		Map<Long, List<ObjectField>> objectFieldsMap =
+			_objectFieldLocalService.getObjectFieldsMap(
+				companyId, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
 		Map<Long, List<ObjectLayout>> objectLayoutsMap =
 			_objectLayoutLocalService.getObjectLayoutsMap(companyId);
 		Map<Long, List<ObjectRelationship>> objectRelationshipsMap =
@@ -242,6 +248,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			serviceRegistrationsMap.put(
 				DBPartitionUtil.getPartitionKey(objectDefinitionId),
 				_deploy(
+					objectFieldsMap.getOrDefault(
+						objectDefinitionId, Collections.emptyList()),
 					objectDefinition,
 					objectLayoutsMap.getOrDefault(
 						objectDefinitionId, Collections.emptyList()),
@@ -257,7 +265,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	public List<ServiceRegistration<?>> deploy(
 		ObjectDefinition objectDefinition) {
 
-		return _deploy(objectDefinition, null, null, null);
+		return _deploy(null, objectDefinition, null, null, null);
 	}
 
 	@Override
@@ -275,6 +283,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 	}
 
 	private List<ServiceRegistration<?>> _deploy(
+		List<ObjectField> attachmentObjectFields,
 		ObjectDefinition objectDefinition, List<ObjectLayout> objectLayouts,
 		Map<Long, List<ObjectRelationship>> objectRelationshipsMap,
 		List<ObjectAction> standaloneObjectActions) {
@@ -285,7 +294,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 
 		try {
 			ObjectDefinitionResourcePermissionUtil.populateResourceActions(
-				_objectActionLocalService, objectDefinition,
+				attachmentObjectFields, _objectActionLocalService,
+				objectDefinition, _objectFieldLocalService,
 				_portletLocalService, _resourceActions,
 				standaloneObjectActions);
 		}
@@ -645,6 +655,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_dynamicQueryBatchIndexingActionableFactory;
 	private final GroupLocalService _groupLocalService;
 	private final KaleoDefinitionLocalService _kaleoDefinitionLocalService;
+	private final Language _language;
 	private final ListTypeLocalService _listTypeLocalService;
 	private final ObjectActionLocalService _objectActionLocalService;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;

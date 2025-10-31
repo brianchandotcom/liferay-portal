@@ -90,7 +90,7 @@ public class AMServlet extends HttpServlet {
 						HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE;
 				}
 
-				httpServletResponse.addHeader(
+				httpServletResponse.setHeader(
 					HttpHeaders.CACHE_CONTROL,
 					FileEntryHttpHeaderCustomizerUtil.getHttpHeaderValue(
 						_dlAppLocalService.getFileEntry(fileEntryId),

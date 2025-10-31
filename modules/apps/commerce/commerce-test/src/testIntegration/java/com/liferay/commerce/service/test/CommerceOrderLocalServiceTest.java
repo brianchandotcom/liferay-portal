@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.account.test.util.CommerceAccountTestUtil;
 import com.liferay.commerce.constants.CommerceAddressConstants;
+import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.model.CommerceAddress;
@@ -42,6 +43,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -51,6 +54,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -58,6 +62,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import java.math.BigDecimal;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.frutilla.FrutillaRule;
@@ -371,6 +376,66 @@ public class CommerceOrderLocalServiceTest {
 		Assert.assertNull(
 			localRepository.fetchFileEntryByExternalReferenceCode(
 				fileEntry.getExternalReferenceCode()));
+	}
+
+	@Test
+	public void testGetCommerceOrders() throws Exception {
+		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
+			_user.getUserId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString() + "@liferay.com",
+			RandomTestUtil.randomString(), new long[] {_user.getUserId()}, null,
+			_serviceContext);
+
+		CommerceOrder commerceOrder1 =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
+
+		CommerceOrder commerceOrder2 =
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
+
+		List<CommerceOrder> commerceOrders =
+			_commerceOrderLocalService.getCommerceOrders(
+				_user.getCompanyId(), _commerceChannel.getGroupId(),
+				new long[] {_accountEntry.getAccountEntryId()}, null,
+				new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, false,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new Sort(Field.CREATE_DATE, Sort.LONG_TYPE, false));
+
+		Assert.assertEquals(
+			commerceOrders.toString(), commerceOrder1, commerceOrders.get(0));
+		Assert.assertEquals(
+			commerceOrders.toString(), commerceOrder2, commerceOrders.get(1));
+
+		commerceOrder1.setOrderDate(
+			new Date(System.currentTimeMillis() + Time.YEAR));
+		commerceOrder1.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
+		commerceOrder2.setOrderDate(
+			new Date(System.currentTimeMillis() + Time.DAY));
+		commerceOrder2.setOrderStatus(
+			CommerceOrderConstants.ORDER_STATUS_PENDING);
+
+		commerceOrder1 = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder1);
+		commerceOrder2 = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder2);
+
+		commerceOrders = _commerceOrderLocalService.getCommerceOrders(
+			_user.getCompanyId(), _commerceChannel.getGroupId(),
+			new long[] {_accountEntry.getAccountEntryId()}, null,
+			new int[] {CommerceOrderConstants.ORDER_STATUS_OPEN}, true,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new Sort("orderDate", Sort.LONG_TYPE, false));
+
+		Assert.assertEquals(
+			commerceOrders.toString(), commerceOrder1, commerceOrders.get(1));
+		Assert.assertEquals(
+			commerceOrders.toString(), commerceOrder2, commerceOrders.get(0));
 	}
 
 	@Rule

@@ -32,6 +32,7 @@ import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePag
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 import {DocumentLibraryPage} from '../pages/users-admin-web/document-library-web/DocumentLibraryPage';
 import {SiteMembershipsPage} from '../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
+import {SitesAdminPage} from '../pages/users-admin-web/site-admin-web/SitesAdminPage';
 import {TagsEditPage} from '../tests/asset-tags-admin-web/main/pages/TagsEditPage';
 import {NotificationsPage} from '../tests/notifications-web/main/pages/NotificationsPage';
 
@@ -48,6 +49,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	siteConfigurationDetailsPage: SiteConfigurationDetailsPage;
 	siteMembershipsPage: SiteMembershipsPage;
 	siteSettingsPage: SiteSettingsPage;
+	sitesAdminPage: SitesAdminPage;
 	smtpMockServerPage: SMTPMockServerPage;
 	tagsEditPage: TagsEditPage;
 	teamsPage: TeamsPage;
@@ -101,6 +103,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	siteSettingsPage: async ({page}, use) => {
 		await use(new SiteSettingsPage(page));
+	},
+	sitesAdminPage: async ({page}, use) => {
+		await use(new SitesAdminPage(page));
 	},
 	smtpMockServerPage: async ({page}, use) => {
 		await use(new SMTPMockServerPage(page));

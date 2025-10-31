@@ -95,7 +95,10 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 
 			String nextSQLStatementPart = sqlStatementParts.get(i + 1);
 
-			if (nextSQLStatementPart.endsWith(".getNewUuidFunctionName()")) {
+			if (nextSQLStatementPart.contains("\"[$FALSE$]\"") ||
+				nextSQLStatementPart.contains("\"[$TRUE$]\"") ||
+				nextSQLStatementPart.endsWith(".getNewUuidFunctionName()")) {
+
 				continue;
 			}
 

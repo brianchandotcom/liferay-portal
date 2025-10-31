@@ -3203,6 +3203,8 @@ components:
                 active:
                     type: boolean
                 description:
+                    type: string
+                description_i18n:
                     additionalProperties:
                         type: string
                     type: object

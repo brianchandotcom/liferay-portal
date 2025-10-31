@@ -1,6 +1,6 @@
 import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import DeleteDataSource from 'settings/components/DeleteDataSource';
 import getCN from 'classnames';
 import React from 'react';

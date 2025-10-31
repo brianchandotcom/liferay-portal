@@ -1,6 +1,6 @@
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import autobind from 'autobind-decorator';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import FileDropTarget from 'shared/components/FileDropTarget';
 import Form, {
 	toPromise,

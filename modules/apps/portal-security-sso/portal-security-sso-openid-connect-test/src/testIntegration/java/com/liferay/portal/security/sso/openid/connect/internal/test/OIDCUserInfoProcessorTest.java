@@ -126,13 +126,6 @@ public class OIDCUserInfoProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_clientId = RandomTestUtil.randomString();
-
-		_emailAddress = StringUtil.toLowerCase(
-			RandomTestUtil.randomString() + "@liferay.com");
-
-		_issuer = RandomTestUtil.randomString();
-
 		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
 			TestPropsValues.getCompanyId(),
 			_classNameLocalService.getClassNameId(User.class.getName()),
@@ -164,14 +157,11 @@ public class OIDCUserInfoProcessorTest {
 			).put(
 				"matcherField", "email"
 			).put(
-				"openIdConnectClientId", _clientId
+				"openIdConnectClientId", _CLIENT_ID
 			).build());
-
-		_screenName = RandomTestUtil.randomString();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
-
 		_uuid = PortalUUIDUtil.generate();
 	}
 
@@ -199,7 +189,7 @@ public class OIDCUserInfoProcessorTest {
 			_serviceContext);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), _emailAddress);
+			TestPropsValues.getCompanyId(), _EMAIL_ADDRESS);
 
 		_userGroupLocalService.addUserUserGroups(
 			user.getUserId(), new long[] {userGroup.getUserGroupId()});
@@ -228,11 +218,11 @@ public class OIDCUserInfoProcessorTest {
 			new String[] {"group1"}, "email", new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		_emailAddress = null;
+		_EMAIL_ADDRESS = null;
 
 		user = UserTestUtil.addUser();
 
-		_screenName = user.getScreenName();
+		_SCREEN_NAME = user.getScreenName();
 
 		_uuid = PortalUUIDUtil.generate();
 
@@ -246,7 +236,7 @@ public class OIDCUserInfoProcessorTest {
 					).put(
 						"matcherField", "screenName"
 					).put(
-						"openIdConnectClientId", _clientId
+						"openIdConnectClientId", _CLIENT_ID
 					).build());
 			SafeCloseable safeCloseable =
 				PrefsPropsTestUtil.swapWithSafeCloseable(
@@ -285,16 +275,16 @@ public class OIDCUserInfoProcessorTest {
 	private User _fetchUser(String matcherField) throws Exception {
 		if (matcherField.equals("email")) {
 			return _userLocalService.fetchUserByEmailAddress(
-				TestPropsValues.getCompanyId(), _emailAddress);
+				TestPropsValues.getCompanyId(), _EMAIL_ADDRESS);
 		}
 
 		return _userLocalService.fetchUserByScreenName(
-			TestPropsValues.getCompanyId(), _screenName);
+			TestPropsValues.getCompanyId(), _SCREEN_NAME);
 	}
 
 	private OAuthClientEntry _getOAuthClientEntry() throws Exception {
 		return _oAuthClientEntryLocalService.getOAuthClientEntry(
-			TestPropsValues.getCompanyId(), _DISCOVERY_ENDPOINT, _clientId);
+			TestPropsValues.getCompanyId(), _DISCOVERY_ENDPOINT, _CLIENT_ID);
 	}
 
 	private void _testProcessUserInfo(
@@ -320,7 +310,7 @@ public class OIDCUserInfoProcessorTest {
 		JSONObject userInfoJSONObject = JSONUtil.put(
 			"birthdate", String.valueOf(RandomTestUtil.nextDate())
 		).put(
-			"email", _emailAddress
+			"email", _EMAIL_ADDRESS
 		).put(
 			"email_verified", true
 		).put(
@@ -336,7 +326,7 @@ public class OIDCUserInfoProcessorTest {
 		).put(
 			"phone_number_verified", "true"
 		).put(
-			"preferred_username", _screenName
+			"preferred_username", _SCREEN_NAME
 		).put(
 			"sub", _uuid
 		).put(
@@ -354,7 +344,7 @@ public class OIDCUserInfoProcessorTest {
 					long.class, String.class, OAuthClientEntry.class,
 					ServiceContext.class, String.class, String.class
 				},
-				TestPropsValues.getCompanyId(), _issuer, _getOAuthClientEntry(),
+				TestPropsValues.getCompanyId(), _ISSUER, _getOAuthClientEntry(),
 				_serviceContext, RandomTestUtil.randomString(),
 				userInfoJSONObject.toString());
 		}
@@ -368,7 +358,7 @@ public class OIDCUserInfoProcessorTest {
 
 		OpenIdConnectUser openIdConnectUser =
 			_openIdConnectUserLocalService.fetchOpenIdConnectUser(
-				TestPropsValues.getCompanyId(), _issuer, _uuid);
+				TestPropsValues.getCompanyId(), _ISSUER, _uuid);
 
 		Assert.assertEquals(user.getUserId(), openIdConnectUser.getUserId());
 
@@ -457,8 +447,10 @@ public class OIDCUserInfoProcessorTest {
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
-	private String _clientId;
-	private String _emailAddress;
+	private static final String _CLIENT_ID = RandomTestUtil.randomString();
+
+	private static final String _EMAIL_ADDRESS = StringUtil.toLowerCase(
+		RandomTestUtil.randomString() + "@liferay.com");
 
 	@Inject
 	private ExpandoColumnLocalService _expandoColumnLocalService;
@@ -469,7 +461,7 @@ public class OIDCUserInfoProcessorTest {
 	@Inject
 	private ExpandoValueLocalService _expandoValueLocalService;
 
-	private String _issuer;
+	private static final String _ISSUER = RandomTestUtil.randomString();
 
 	@Inject
 	private JSONFactory _jsonFactory;
@@ -487,7 +479,7 @@ public class OIDCUserInfoProcessorTest {
 	private OpenIdConnectUserLocalService _openIdConnectUserLocalService;
 
 	private String _pid;
-	private String _screenName;
+	private static final String _SCREEN_NAME = RandomTestUtil.randomString();
 	private ServiceContext _serviceContext;
 
 	@Inject

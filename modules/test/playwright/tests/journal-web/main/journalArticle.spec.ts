@@ -149,6 +149,39 @@ baseTest(
 );
 
 baseTest(
+	' Published After Draft can schedule',
+	{
+		tag: '@LPD-70137',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		await journalEditArticlePage.saveAsDraftWithPermissions(
+			getRandomString()
+		);
+
+		await page.getByRole('button', {name: 'Publish'}).click();
+
+		await page
+			.getByRole('menuitem', {name: 'Schedule Publication'})
+			.click();
+
+		await page
+			.getByPlaceholder('YYYY-MM-DD HH:mm')
+			.fill('9987-11-26 13:00');
+
+		await page
+			.getByLabel('Schedule Publication')
+			.getByRole('button', {name: 'Schedule'})
+			.click();
+
+		await expect(
+			page.locator('span').filter({hasText: 'Scheduled'}).nth(1)
+		).toBeVisible();
+	}
+);
+
+baseTest(
 	'Check alert message of duplicated friendly URL in french',
 	{
 		tag: '@LPD-32185',

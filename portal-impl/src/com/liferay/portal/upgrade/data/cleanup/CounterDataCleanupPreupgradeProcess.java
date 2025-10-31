@@ -227,28 +227,31 @@ public class CounterDataCleanupPreupgradeProcess
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				SQLTransformer.transform(
 					StringBundler.concat(
-						"select max(layoutId) from Layout where groupId = ",
-						groupId, " and privateLayout = ",
-						privateLayout ? "[$TRUE$]" : "[$FALSE$]")));
-			ResultSet resultSet = preparedStatement1.executeQuery()) {
+						"select max(layoutId) from Layout where groupId = ? ",
+						"and privateLayout = ",
+						privateLayout ? "[$TRUE$]" : "[$FALSE$]")))) {
 
-			if (resultSet.next()) {
-				long maxValue = resultSet.getLong(1);
+			preparedStatement1.setLong(1, groupId);
 
-				if (resultSet.wasNull()) {
-					_deleteCounter(counterName);
+			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
+				if (resultSet.next()) {
+					long maxValue = resultSet.getLong(1);
 
-					return;
-				}
+					if (resultSet.wasNull()) {
+						_deleteCounter(counterName);
 
-				if (counterValue >= maxValue) {
-					return;
-				}
+						return;
+					}
 
-				CounterLocalServiceUtil.reset(counterName, maxValue);
+					if (counterValue >= maxValue) {
+						return;
+					}
 
-				if (_log.isInfoEnabled()) {
-					_log.info(_getLogMessage(counterName, maxValue, null));
+					CounterLocalServiceUtil.reset(counterName, maxValue);
+
+					if (_log.isInfoEnabled()) {
+						_log.info(_getLogMessage(counterName, maxValue, null));
+					}
 				}
 			}
 		}

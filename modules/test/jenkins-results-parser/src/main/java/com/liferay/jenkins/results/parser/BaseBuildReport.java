@@ -10,7 +10,9 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +50,28 @@ public abstract class BaseBuildReport implements BuildReport {
 		}
 
 		return Integer.parseInt(matcher.group("buildNumber"));
+	}
+
+	@Override
+	public Map<String, String> getBuildParameters() {
+		Map<String, String> buildParameters = new HashMap<>();
+
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if ((buildReportJSONObject == null) ||
+			!buildReportJSONObject.has("buildParameters")) {
+
+			return buildParameters;
+		}
+
+		JSONObject buildParametersJSONObject =
+			buildReportJSONObject.getJSONObject("buildParameters");
+
+		for (String key : buildParametersJSONObject.keySet()) {
+			buildParameters.put(key, buildParametersJSONObject.getString(key));
+		}
+
+		return buildParameters;
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -82,28 +81,6 @@ public abstract class BaseTopLevelBuildReport
 		jsonArray.put(String.valueOf(testrayAttachmentURL));
 
 		buildReportJSONObject.put("testrayAttachmentURLs", jsonArray);
-	}
-
-	@Override
-	public Map<String, String> getBuildParameters() {
-		Map<String, String> buildParameters = new HashMap<>();
-
-		JSONObject buildReportJSONObject = getBuildReportJSONObject();
-
-		if ((buildReportJSONObject == null) ||
-			!buildReportJSONObject.has("buildParameters")) {
-
-			return buildParameters;
-		}
-
-		JSONObject buildParametersJSONObject =
-			buildReportJSONObject.getJSONObject("buildParameters");
-
-		for (String key : buildParametersJSONObject.keySet()) {
-			buildParameters.put(key, buildParametersJSONObject.getString(key));
-		}
-
-		return buildParameters;
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import com.liferay.jenkins.results.parser.testray.TestrayCloudObject;
 import java.net.URL;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Michael Hashimoto
@@ -24,8 +23,6 @@ public interface TopLevelBuildReport extends BuildReport {
 		List<DownstreamBuildReport> downstreamBuildReports);
 
 	public void addTestrayAttachmentURL(URL testrayAttachmentURL);
-
-	public Map<String, String> getBuildParameters();
 
 	public Job.BuildProfile getBuildProfile();
 

@@ -5,14 +5,10 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.util.Map;
-
 /**
  * @author Michael Hashimoto
  */
 public interface ControllerBuildReport extends BuildReport {
-
-	public Map<String, String> getBuildParameters();
 
 	public String getTestrayBuildDateString();
 

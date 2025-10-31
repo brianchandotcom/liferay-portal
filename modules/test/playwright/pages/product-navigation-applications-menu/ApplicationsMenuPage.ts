@@ -51,6 +51,7 @@ export class ApplicationsMenuPage {
 	private readonly metricsItem: Locator;
 	private readonly oAuth2Administration: Locator;
 	private readonly objectsMenuItem: Locator;
+	private readonly onDemandAdminItem: Locator;
 	private readonly page: Page;
 	private readonly passwordPoliciesAdminItem: Locator;
 	private readonly paymentsMenuItem: Locator;
@@ -239,6 +240,10 @@ export class ApplicationsMenuPage {
 		this.objectsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Objects',
+		});
+		this.onDemandAdminItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'On-Demand Admin',
 		});
 		this.page = page;
 		this.passwordPoliciesAdminItem = page.getByRole('menuitem', {
@@ -584,6 +589,11 @@ export class ApplicationsMenuPage {
 	async goToObjects() {
 		await this.goToControlPanel();
 		await this.objectsMenuItem.click();
+	}
+
+	async goToOnDemandAdmin() {
+		await this.goToControlPanel();
+		await this.onDemandAdminItem.click();
 	}
 
 	async goToPasswordPolicies() {

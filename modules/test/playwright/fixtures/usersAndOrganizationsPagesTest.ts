@@ -23,6 +23,7 @@ import {UserAssociatedDataSiteStagingPage} from '../pages/user-associated-data-w
 import {AssignUsersPage} from '../pages/users-admin-web/AssignUsersPage';
 import {EditOrganizationPage} from '../pages/users-admin-web/EditOrganizationPage';
 import {EditUserPage} from '../pages/users-admin-web/EditUserPage';
+import {OnDemandAdminPage} from '../pages/users-admin-web/OnDemandAdminPage';
 import {OrganizationUsersPage} from '../pages/users-admin-web/OrganizationUsersPage';
 import {SMTPMockServerPage} from '../pages/users-admin-web/SMTPMockServerPage';
 import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage';
@@ -40,6 +41,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	editUserPage: EditUserPage;
 	exportUserDataPage: ExportUserDataPage;
 	notificationsPage: NotificationsPage;
+	onDemandAdminPage: OnDemandAdminPage;
 	organizationUsersPage: OrganizationUsersPage;
 	personalDataErasurePage: PersonalDataErasurePage;
 	serviceAccountsPage: ServiceAccountsPage;
@@ -78,6 +80,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	notificationsPage: async ({page}, use) => {
 		await use(new NotificationsPage(page));
+	},
+	onDemandAdminPage: async ({page}, use) => {
+		await use(new OnDemandAdminPage(page));
 	},
 	organizationUsersPage: async ({page}, use) => {
 		await use(new OrganizationUsersPage(page));

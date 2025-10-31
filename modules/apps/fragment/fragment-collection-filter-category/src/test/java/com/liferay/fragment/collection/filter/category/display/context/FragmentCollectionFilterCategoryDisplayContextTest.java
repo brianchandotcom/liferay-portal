@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Locale;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -218,35 +219,40 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 		String title = RandomTestUtil.randomString();
 
-		AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
+		if (Objects.equals(assetCategoryTreeNodeType, "Category")) {
+			AssetCategory assetCategory = Mockito.mock(AssetCategory.class);
 
-		Mockito.when(
-			assetCategory.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			title
-		);
+			Mockito.when(
+				assetCategory.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				title
+			);
 
-		AssetVocabulary assetVocabulary = Mockito.mock(AssetVocabulary.class);
+			Mockito.when(
+				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
+					externalReferenceCode, itemGroupId)
+			).thenReturn(
+				assetCategory
+			);
+		}
+		else if (Objects.equals(assetCategoryTreeNodeType, "Vocabulary")) {
+			AssetVocabulary assetVocabulary = Mockito.mock(
+				AssetVocabulary.class);
 
-		Mockito.when(
-			assetVocabulary.getTitle(Mockito.any(Locale.class))
-		).thenReturn(
-			title
-		);
+			Mockito.when(
+				assetVocabulary.getTitle(Mockito.any(Locale.class))
+			).thenReturn(
+				title
+			);
 
-		Mockito.when(
-			AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
-				externalReferenceCode, itemGroupId)
-		).thenReturn(
-			assetCategory
-		);
-
-		Mockito.when(
-			AssetVocabularyServiceUtil.fetchVocabularyByExternalReferenceCode(
-				externalReferenceCode, itemGroupId)
-		).thenReturn(
-			assetVocabulary
-		);
+			Mockito.when(
+				AssetVocabularyServiceUtil.
+					fetchVocabularyByExternalReferenceCode(
+						externalReferenceCode, itemGroupId)
+			).thenReturn(
+				assetVocabulary
+			);
+		}
 
 		FragmentEntryLink fragmentEntryLink = Mockito.mock(
 			FragmentEntryLink.class);

@@ -261,6 +261,15 @@ public abstract class BaseSectionDisplayContext {
 				"L_CMS_BLOG", "blogs"
 			).build()
 		).put(
+			"objectEntryFolderExternalReferenceCode",
+			() -> {
+				if (objectEntryFolder == null) {
+					return null;
+				}
+
+				return objectEntryFolder.getExternalReferenceCode();
+			}
+		).put(
 			"parentObjectEntryFolderExternalReferenceCode",
 			_getParentObjectEntryFolderExternalReferenceCode()
 		).put(
@@ -458,6 +467,9 @@ public abstract class BaseSectionDisplayContext {
 				"download", "import-translation",
 				LanguageUtil.get(httpServletRequest, "import-translation"),
 				null, null, null),
+			new FDSActionDropdownItem(
+				null, "copy", "copy",
+				language.get(httpServletRequest, "copy-to"), null, null, null),
 			new FDSActionDropdownItem(
 				PortletURLBuilder.create(
 					portal.getControlPanelPortletURL(

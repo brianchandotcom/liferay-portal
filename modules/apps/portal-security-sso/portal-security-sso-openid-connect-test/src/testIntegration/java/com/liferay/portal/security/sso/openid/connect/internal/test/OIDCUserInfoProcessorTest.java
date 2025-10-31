@@ -189,7 +189,7 @@ public class OIDCUserInfoProcessorTest {
 			_serviceContext);
 
 		User user = _userLocalService.fetchUserByEmailAddress(
-			TestPropsValues.getCompanyId(), _EMAIL_ADDRESS);
+			TestPropsValues.getCompanyId(), _emailAddress);
 
 		_userGroupLocalService.addUserUserGroups(
 			user.getUserId(), new long[] {userGroup.getUserGroupId()});
@@ -218,11 +218,11 @@ public class OIDCUserInfoProcessorTest {
 			new String[] {"group1"}, "email", new String[] {"group1"},
 			OAuthClientEntryConstants.OIDC_USER_INFO_MAPPER_JSON);
 
-		_EMAIL_ADDRESS = null;
+		_emailAddress = null;
 
 		user = UserTestUtil.addUser();
 
-		_SCREEN_NAME = user.getScreenName();
+		_screenName = user.getScreenName();
 
 		_uuid = PortalUUIDUtil.generate();
 
@@ -275,11 +275,11 @@ public class OIDCUserInfoProcessorTest {
 	private User _fetchUser(String matcherField) throws Exception {
 		if (matcherField.equals("email")) {
 			return _userLocalService.fetchUserByEmailAddress(
-				TestPropsValues.getCompanyId(), _EMAIL_ADDRESS);
+				TestPropsValues.getCompanyId(), _emailAddress);
 		}
 
 		return _userLocalService.fetchUserByScreenName(
-			TestPropsValues.getCompanyId(), _SCREEN_NAME);
+			TestPropsValues.getCompanyId(), _screenName);
 	}
 
 	private OAuthClientEntry _getOAuthClientEntry() throws Exception {
@@ -310,7 +310,7 @@ public class OIDCUserInfoProcessorTest {
 		JSONObject userInfoJSONObject = JSONUtil.put(
 			"birthdate", String.valueOf(RandomTestUtil.nextDate())
 		).put(
-			"email", _EMAIL_ADDRESS
+			"email", _emailAddress
 		).put(
 			"email_verified", true
 		).put(
@@ -326,7 +326,7 @@ public class OIDCUserInfoProcessorTest {
 		).put(
 			"phone_number_verified", "true"
 		).put(
-			"preferred_username", _SCREEN_NAME
+			"preferred_username", _screenName
 		).put(
 			"sub", _uuid
 		).put(
@@ -444,14 +444,12 @@ public class OIDCUserInfoProcessorTest {
 	private static final String _DISCOVERY_ENDPOINT =
 		"https://accounts.google.com/.well-known/openid-configuration";
 
-	private static final String _EMAIL_ADDRESS = StringUtil.toLowerCase(
-		RandomTestUtil.randomString() + "@liferay.com");
-
 	private static final String _ISSUER = RandomTestUtil.randomString();
 
-	private static final String _SCREEN_NAME = RandomTestUtil.randomString();
-
 	private static String _customOIDCUserInfoMapperJSON;
+	private static String _emailAddress = StringUtil.toLowerCase(
+		RandomTestUtil.randomString() + "@liferay.com");
+	private static String _screenName = RandomTestUtil.randomString();
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;

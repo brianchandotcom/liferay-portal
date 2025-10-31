@@ -73,7 +73,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 					TokenTypes.SLIST);
 
 				if (slistDetailAST.getChildCount() == 1) {
-					return;
+					continue;
 				}
 
 				if ((methodDefDetailASTs.size() == 1) &&

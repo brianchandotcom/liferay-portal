@@ -1441,7 +1441,8 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService);
+				resourcePermissionLocalService, roleLocalService,
+				contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1540,7 +1541,8 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService);
+				resourcePermissionLocalService, roleLocalService,
+				contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1725,7 +1727,8 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService);
+				resourcePermissionLocalService, roleLocalService,
+				contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -2180,6 +2183,7 @@ public abstract class BaseERCScopedTestEntityResourceImpl
 			Permission permission = new Permission() {
 				{
 					actionIds = actionsIdsSet.toArray(new String[0]);
+					roleExternalReferenceCode = role.getExternalReferenceCode();
 					roleName = role.getName();
 				}
 			};

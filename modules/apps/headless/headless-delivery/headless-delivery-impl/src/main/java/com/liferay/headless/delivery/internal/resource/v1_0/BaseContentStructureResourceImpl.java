@@ -730,7 +730,8 @@ public abstract class BaseContentStructureResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, assetLibraryId,
 				portletName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService);
+				resourcePermissionLocalService, roleLocalService,
+				contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -823,7 +824,8 @@ public abstract class BaseContentStructureResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, resourceId,
 				resourceName, resourceActionLocalService,
-				resourcePermissionLocalService, roleLocalService);
+				resourcePermissionLocalService, roleLocalService,
+				contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -912,7 +914,7 @@ public abstract class BaseContentStructureResourceImpl
 			ModelPermissionsUtil.toModelPermissions(
 				contextCompany.getCompanyId(), permissions, siteId, portletName,
 				resourceActionLocalService, resourcePermissionLocalService,
-				roleLocalService);
+				roleLocalService, contextUser.getUserId());
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
@@ -1230,6 +1232,7 @@ public abstract class BaseContentStructureResourceImpl
 			Permission permission = new Permission() {
 				{
 					actionIds = actionsIdsSet.toArray(new String[0]);
+					roleExternalReferenceCode = role.getExternalReferenceCode();
 					roleName = role.getName();
 				}
 			};

@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer} from '@liferay/frontend-data-set-web';
+import {IInternalRenderer, replaceTokens} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {navigate, sessionStorage, sub} from 'frontend-js-web';
 
-import formatActionURL from '../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../modal/FilePreviewerModalContent';
 import confirmAndDeleteEntryAction from './actions/confirmAndDeleteEntryAction';
 import AssetVersionRenderer from './cell_renderers/AssetVersionRenderer';
@@ -178,7 +177,7 @@ export default function ViewVersionHistoryFDSPropsTransformer({
 							itemData.systemProperties.version.number
 						)}`
 					),
-					url: formatActionURL(itemData, action.href),
+					url: replaceTokens(action.href, itemData),
 				});
 			}
 			else if (action?.data?.id === 'view-file') {

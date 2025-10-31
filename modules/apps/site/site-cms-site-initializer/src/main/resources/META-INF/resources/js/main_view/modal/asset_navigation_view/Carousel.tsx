@@ -4,11 +4,11 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
-import formatActionURL from '../../../common/utils/formatActionURL';
 import ContentPreview from './ContentPreview';
 import FilePreview from './FilePreview';
 
@@ -76,7 +76,7 @@ export default function Carousel({
 					<FilePreview file={currentItem.embedded.file} />
 				) : (
 					<ContentPreview
-						url={formatActionURL(currentItem, contentViewURL)}
+						url={replaceTokens(contentViewURL, currentItem)}
 					/>
 				)}
 			</div>

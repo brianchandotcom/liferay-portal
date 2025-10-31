@@ -9,12 +9,12 @@ import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar';
 import {buildQueryString} from '@liferay/analytics-reports-js-components-web';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import ApiHelper from '../../../common/services/ApiHelper';
-import formatActionURL from '../../../common/utils/formatActionURL';
 import {ViewDashboardContext} from '../ViewDashboardContext';
 import {
 	AssetType,
@@ -140,7 +140,7 @@ function ExpiredAssetItem({
 						openModal({
 							size: 'full-screen',
 							title,
-							url: formatActionURL(title, href),
+							url: replaceTokens(href, title),
 						});
 					}}
 					symbol="view"

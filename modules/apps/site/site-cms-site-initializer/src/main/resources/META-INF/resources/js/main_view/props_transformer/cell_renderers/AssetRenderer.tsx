@@ -6,11 +6,11 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import {dateUtils, sub} from 'frontend-js-web';
 import React from 'react';
 
-import formatActionURL from '../../../common/utils/formatActionURL';
 import {getFileMimeTypeObjectDefinitionStickerValue} from '../utils/transformViewsItemProps';
 
 interface ActionItem {
@@ -54,7 +54,7 @@ export default function AssetRenderer({
 		return <>{title}</>;
 	}
 
-	const formattedHref = formatActionURL(itemData, selectedAction.href);
+	const formattedHref = replaceTokens(selectedAction.href, itemData);
 
 	return (
 		<div className="d-flex">

@@ -4,11 +4,11 @@
  */
 
 import ClayLink from '@clayui/link';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
 
-import formatActionURL from '../../../common/utils/formatActionURL';
 import FilePreviewerModalContent from '../../modal/FilePreviewerModalContent';
 
 interface ActionItem {
@@ -36,7 +36,7 @@ export default function AssetVersionRenderer({
 			return value ? <>{value}</> : null;
 		}
 
-		formattedHref = formatActionURL(itemData, selectedAction.href);
+		formattedHref = replaceTokens(selectedAction.href, itemData);
 	}
 
 	const title = sub(

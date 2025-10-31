@@ -4,11 +4,10 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import {Card, IView} from '@liferay/frontend-data-set-web';
+import {Card, IView, replaceTokens} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 import dateFormat from '../../../common/utils/dateFormat';
-import formatActionURL from '../../../common/utils/formatActionURL';
 
 import '../../../../css/props_transformer/TransformViewsItemProps.scss';
 
@@ -40,7 +39,7 @@ const getHrefLink = (item: any, props: Card) => {
 		return null;
 	}
 
-	return formatActionURL(item, selectedAction.href);
+	return replaceTokens(selectedAction.href, item);
 };
 
 const getThumbnailProps = (item: any) => {

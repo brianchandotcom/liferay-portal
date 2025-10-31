@@ -6,10 +6,10 @@
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import formatActionURL from '../../../common/utils/formatActionURL';
 import {getFileMimeTypeObjectDefinitionStickerValue} from '../utils/transformViewsItemProps';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
@@ -59,7 +59,7 @@ export default function SimpleActionLinkRenderer({
 		return <>{title}</>;
 	}
 
-	const formattedHref = formatActionURL(itemData, selectedAction.href);
+	const formattedHref = replaceTokens(selectedAction.href, itemData);
 
 	return (
 		<div className="align-items-center d-flex table-list-title">

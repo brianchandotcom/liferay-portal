@@ -3,7 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {IInternalRenderer, IView} from '@liferay/frontend-data-set-web';
+import {
+	IInternalRenderer,
+	IView,
+	replaceTokens,
+} from '@liferay/frontend-data-set-web';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
@@ -11,7 +15,6 @@ import StatusLabel from '../../common/components/StatusLabel';
 import {openAssetUsageListModal} from '../../common/components/asset_usage/utils';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {ISearchAssetObjectEntry} from '../../common/types/AssetType';
-import formatActionURL from '../../common/utils/formatActionURL';
 import {
 	OBJECT_ENTRY_FOLDER_CLASS_NAME,
 	getScopeExternalReferenceCode,
@@ -278,7 +281,7 @@ export default function AssetsFDSPropsTransformer({
 				openModal({
 					size: 'full-screen',
 					title: action.label,
-					url: formatActionURL(itemData, action.href),
+					url: replaceTokens(action.href, itemData),
 				});
 			}
 			else if (action?.data?.id === 'reset-to-default-permissions') {

@@ -7,10 +7,9 @@ import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import ClaySticker from '@clayui/sticker';
 import {ClayTooltipProvider} from '@clayui/tooltip';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import {sub} from 'frontend-js-web';
 import React, {useMemo} from 'react';
-
-import formatActionURL from '../../../common/utils/formatActionURL';
 
 const OBJECT_ENTRY_FOLDER_CLASS_NAME =
 	'com.liferay.object.model.ObjectEntryFolder';
@@ -81,7 +80,7 @@ export default function SharedItemRenderer({
 			return null;
 		}
 
-		return formatActionURL(itemData, selectedAction.href);
+		return replaceTokens(selectedAction.href, itemData);
 	}, [actions, itemData, options]);
 
 	return (

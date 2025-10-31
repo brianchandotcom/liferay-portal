@@ -4,11 +4,11 @@
  */
 
 import '@testing-library/jest-dom';
+import {replaceTokens} from '@liferay/frontend-data-set-web';
 import {fireEvent, render, screen} from '@testing-library/react';
 import {openModal} from 'frontend-js-components-web';
 import React from 'react';
 
-import formatActionURL from '../../../../../src/main/resources/META-INF/resources/js/common/utils/formatActionURL';
 import FilePreviewerModalContent from '../../../../../src/main/resources/META-INF/resources/js/main_view/modal/FilePreviewerModalContent';
 import AssetVersionRenderer from '../../../../../src/main/resources/META-INF/resources/js/main_view/props_transformer/cell_renderers/AssetVersionRenderer';
 
@@ -153,9 +153,9 @@ describe('AssetVersionRenderer modals', () => {
 			expect.objectContaining({
 				size: 'full-screen',
 				title: 'x-version-x',
-				url: formatActionURL(
-					testContentProps.itemData,
-					testViewContentAction.href
+				url: replaceTokens(
+					testViewContentAction.href,
+					testContentProps.itemData
 				),
 			})
 		);

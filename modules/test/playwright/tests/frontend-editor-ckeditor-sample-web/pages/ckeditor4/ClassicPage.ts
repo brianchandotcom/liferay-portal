@@ -10,6 +10,7 @@ export class ClassicPage {
 	readonly editableFrame: FrameLocator;
 	private readonly itemSelectorFrame: FrameLocator;
 	readonly page: Page;
+	readonly previewFrame: FrameLocator;
 	private readonly toolbar: Locator;
 
 	constructor(page: Page) {
@@ -23,7 +24,13 @@ export class ClassicPage {
 
 		this.page = page;
 
+		this.previewFrame = page.frameLocator('iframe.cke_wysiwyg_frame');
+
 		this.toolbar = page.locator('.cke_toolbox');
+	}
+
+	toolbarButton(name: string) {
+		return this.toolbar.getByRole('button', {name})
 	}
 
 	async insertHTML(html: string) {

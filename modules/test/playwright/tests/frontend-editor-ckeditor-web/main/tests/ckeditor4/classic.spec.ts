@@ -245,3 +245,34 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Verify source content can be previewed',
+	{tag: '@LRQA-67229'},
+	async ({classicPage, context, page}) => {
+		const newPage = await context.newPage();
+
+		await newPage.goto(
+			'http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm'
+		);
+
+		await newPage.locator('body').focus();
+		await newPage.locator('html').press('ControlOrMeta+a');
+		await newPage.locator('html').press('ControlOrMeta+c');
+
+		const body = classicPage.editableFrame.locator('body');
+
+		await body.focus();
+		await body.press('ControlOrMeta+a');
+		await body.press('ControlOrMeta+v');
+
+		await classicPage.toolbarButton('Source').click();
+		await classicPage.toolbarButton('Preview').click();
+
+		await expect(
+			classicPage.previewFrame.getByRole(
+				'heading', { name: 'Sample document for editor' }
+			)
+		).toBeVisible();
+	}
+);

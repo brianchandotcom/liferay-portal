@@ -590,6 +590,70 @@ autoSaveTest(
 );
 
 autoSaveTest(
+	'Web Content version and ID for structures with default value are hidden until auto save',
+	{
+		tag: '@LPD-70290',
+	},
+	async ({
+		apiHelpers,
+		journalEditArticlePage,
+		journalEditStructureDefaultValuesPage,
+		page,
+		site,
+	}) => {
+		const fieldName = 'Text1';
+		const structureName = getRandomString();
+
+		const dataDefinition = getDataStructureDefinition({
+			defaultLanguageId: 'en_US',
+			fields: [{name: fieldName, repeatable: true}],
+			name: structureName,
+		});
+
+		await apiHelpers.dataEngine.createStructure(site.id, dataDefinition);
+
+		await journalEditStructureDefaultValuesPage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		const content = getRandomString();
+
+		await journalEditStructureDefaultValuesPage.fillTextField(
+			fieldName,
+			content
+		);
+
+		await journalEditStructureDefaultValuesPage.save();
+
+		await journalEditArticlePage.goto({
+			siteUrl: site.friendlyUrlPath,
+			structureName,
+		});
+
+		await expect(page.getByText('Version', {exact: true})).toBeHidden();
+
+		await expect(page.getByText('0.0', {exact: true})).toBeHidden();
+
+		await expect(page.getByText('ID', {exact: true})).toBeHidden();
+
+		const title = getRandomString();
+
+		await journalEditArticlePage.fillTitle(title);
+
+		await journalEditArticlePage.changesSavedIndicator.waitFor();
+
+		await openFieldset(page, 'Basic Information');
+
+		await expect(page.getByText('1.0')).toBeVisible();
+
+		await expect(page.getByText('Draft', {exact: true})).toBeVisible();
+
+		await expect(page.getByText('ID', {exact: true})).toBeVisible();
+	}
+);
+
+autoSaveTest(
 	'Autosave is not enabled until all required fields are completed',
 	{
 		tag: '@LPD-34923',

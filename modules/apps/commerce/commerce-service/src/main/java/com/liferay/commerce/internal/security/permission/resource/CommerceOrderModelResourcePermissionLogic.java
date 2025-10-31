@@ -454,7 +454,7 @@ public class CommerceOrderModelResourcePermissionLogic
 						getOpenCommerceOrderVisibilityScope(
 							commerceOrder.getGroupId()))) {
 
-				return _hasOwnerPermission(permissionChecker, commerceOrder);
+				return false;
 			}
 
 			return _hasPermission(
@@ -475,7 +475,7 @@ public class CommerceOrderModelResourcePermissionLogic
 					getPlacedCommerceOrderVisibilityScope(
 						commerceOrder.getGroupId()))) {
 
-			return _hasOwnerPermission(permissionChecker, commerceOrder);
+			return false;
 		}
 
 		return _hasAncestorPermission(

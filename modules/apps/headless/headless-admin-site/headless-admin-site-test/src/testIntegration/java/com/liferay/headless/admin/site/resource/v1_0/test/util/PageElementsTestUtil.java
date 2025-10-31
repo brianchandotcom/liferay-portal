@@ -30,7 +30,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.FragmentItemExternalRefer
 import com.liferay.headless.admin.site.client.dto.v1_0.GridPageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.GridViewportDefinition;
-import com.liferay.headless.admin.site.client.dto.v1_0.HtmlProperties;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModulePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewport;
 import com.liferay.headless.admin.site.client.dto.v1_0.ModuleViewportDefinition;
@@ -238,7 +237,6 @@ public class PageElementsTestUtil {
 			return new ContainerPageElementDefinition() {
 				{
 					setContentVisibility(ContentVisibility.AUTO);
-					setHtmlProperties(new HtmlProperties());
 					setIndexed(Boolean.FALSE);
 					setType(Type.CONTAINER);
 				}

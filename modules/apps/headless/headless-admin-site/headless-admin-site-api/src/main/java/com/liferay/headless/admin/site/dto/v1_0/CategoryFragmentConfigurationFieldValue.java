@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
@@ -61,7 +60,7 @@ public class CategoryFragmentConfigurationFieldValue
 		description = "The value of the fragment configuration field of type category."
 	)
 	@Valid
-	public Object getValue() {
+	public ItemExternalReference getValue() {
 		if (_valueSupplier != null) {
 			value = _valueSupplier.get();
 
@@ -71,7 +70,7 @@ public class CategoryFragmentConfigurationFieldValue
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(ItemExternalReference value) {
 		this.value = value;
 
 		_valueSupplier = null;
@@ -79,7 +78,7 @@ public class CategoryFragmentConfigurationFieldValue
 
 	@JsonIgnore
 	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<ItemExternalReference, Exception> valueUnsafeSupplier) {
 
 		_valueSupplier = () -> {
 			try {
@@ -98,16 +97,16 @@ public class CategoryFragmentConfigurationFieldValue
 		description = "The value of the fragment configuration field of type category."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Object value;
+	protected ItemExternalReference value;
 
 	@JsonIgnore
-	private Supplier<Object> _valueSupplier;
+	private Supplier<ItemExternalReference> _valueSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The localized value of the fragment configuration field of type category."
 	)
 	@Valid
-	public Map<String, Object> getValue_i18n() {
+	public Map<String, ItemExternalReference> getValue_i18n() {
 		if (_value_i18nSupplier != null) {
 			value_i18n = _value_i18nSupplier.get();
 
@@ -117,7 +116,7 @@ public class CategoryFragmentConfigurationFieldValue
 		return value_i18n;
 	}
 
-	public void setValue_i18n(Map<String, Object> value_i18n) {
+	public void setValue_i18n(Map<String, ItemExternalReference> value_i18n) {
 		this.value_i18n = value_i18n;
 
 		_value_i18nSupplier = null;
@@ -125,7 +124,7 @@ public class CategoryFragmentConfigurationFieldValue
 
 	@JsonIgnore
 	public void setValue_i18n(
-		UnsafeSupplier<Map<String, Object>, Exception>
+		UnsafeSupplier<Map<String, ItemExternalReference>, Exception>
 			value_i18nUnsafeSupplier) {
 
 		_value_i18nSupplier = () -> {
@@ -145,10 +144,10 @@ public class CategoryFragmentConfigurationFieldValue
 		description = "The localized value of the fragment configuration field of type category."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Map<String, Object> value_i18n;
+	protected Map<String, ItemExternalReference> value_i18n;
 
 	@JsonIgnore
-	private Supplier<Map<String, Object>> _value_i18nSupplier;
+	private Supplier<Map<String, ItemExternalReference>> _value_i18nSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -180,7 +179,7 @@ public class CategoryFragmentConfigurationFieldValue
 
 		sb.append("{");
 
-		Object value = getValue();
+		ItemExternalReference value = getValue();
 
 		if (value != null) {
 			if (sb.length() > 1) {
@@ -189,20 +188,10 @@ public class CategoryFragmentConfigurationFieldValue
 
 			sb.append("\"value\": ");
 
-			if (value instanceof Map) {
-				sb.append(JSONFactoryUtil.createJSONObject((Map<?, ?>)value));
-			}
-			else if (value instanceof String) {
-				sb.append("\"");
-				sb.append(_escape((String)value));
-				sb.append("\"");
-			}
-			else {
-				sb.append(value);
-			}
+			sb.append(String.valueOf(value));
 		}
 
-		Map<String, Object> value_i18n = getValue_i18n();
+		Map<String, ItemExternalReference> value_i18n = getValue_i18n();
 
 		if (value_i18n != null) {
 			if (sb.length() > 1) {

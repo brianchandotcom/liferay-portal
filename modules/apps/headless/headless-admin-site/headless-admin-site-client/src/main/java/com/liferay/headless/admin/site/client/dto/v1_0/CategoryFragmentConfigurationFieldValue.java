@@ -27,16 +27,16 @@ public class CategoryFragmentConfigurationFieldValue
 		return CategoryFragmentConfigurationFieldValueSerDes.toDTO(json);
 	}
 
-	public Object getValue() {
+	public ItemExternalReference getValue() {
 		return value;
 	}
 
-	public void setValue(Object value) {
+	public void setValue(ItemExternalReference value) {
 		this.value = value;
 	}
 
 	public void setValue(
-		UnsafeSupplier<Object, Exception> valueUnsafeSupplier) {
+		UnsafeSupplier<ItemExternalReference, Exception> valueUnsafeSupplier) {
 
 		try {
 			value = valueUnsafeSupplier.get();
@@ -46,18 +46,18 @@ public class CategoryFragmentConfigurationFieldValue
 		}
 	}
 
-	protected Object value;
+	protected ItemExternalReference value;
 
-	public Map<String, Object> getValue_i18n() {
+	public Map<String, ItemExternalReference> getValue_i18n() {
 		return value_i18n;
 	}
 
-	public void setValue_i18n(Map<String, Object> value_i18n) {
+	public void setValue_i18n(Map<String, ItemExternalReference> value_i18n) {
 		this.value_i18n = value_i18n;
 	}
 
 	public void setValue_i18n(
-		UnsafeSupplier<Map<String, Object>, Exception>
+		UnsafeSupplier<Map<String, ItemExternalReference>, Exception>
 			value_i18nUnsafeSupplier) {
 
 		try {
@@ -68,7 +68,7 @@ public class CategoryFragmentConfigurationFieldValue
 		}
 	}
 
-	protected Map<String, Object> value_i18n;
+	protected Map<String, ItemExternalReference> value_i18n;
 
 	@Override
 	public CategoryFragmentConfigurationFieldValue clone()

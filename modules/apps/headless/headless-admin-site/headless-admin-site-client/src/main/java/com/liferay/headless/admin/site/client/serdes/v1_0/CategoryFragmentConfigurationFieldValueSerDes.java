@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.CategoryFragmentConfigurationFieldValue;
+import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -62,17 +63,9 @@ public class CategoryFragmentConfigurationFieldValueSerDes {
 
 			sb.append("\"value\": ");
 
-			if (categoryFragmentConfigurationFieldValue.getValue() instanceof
-					String) {
-
-				sb.append("\"");
-				sb.append(
-					(String)categoryFragmentConfigurationFieldValue.getValue());
-				sb.append("\"");
-			}
-			else {
-				sb.append(categoryFragmentConfigurationFieldValue.getValue());
-			}
+			sb.append(
+				String.valueOf(
+					categoryFragmentConfigurationFieldValue.getValue()));
 		}
 
 		if (categoryFragmentConfigurationFieldValue.getValue_i18n() != null) {
@@ -197,13 +190,15 @@ public class CategoryFragmentConfigurationFieldValueSerDes {
 			if (Objects.equals(jsonParserFieldName, "value")) {
 				if (jsonParserFieldValue != null) {
 					categoryFragmentConfigurationFieldValue.setValue(
-						(Object)jsonParserFieldValue);
+						ItemExternalReferenceSerDes.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "value_i18n")) {
 				if (jsonParserFieldValue != null) {
 					categoryFragmentConfigurationFieldValue.setValue_i18n(
-						(Map<String, Object>)jsonParserFieldValue);
+						(Map<String, ItemExternalReference>)
+							jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

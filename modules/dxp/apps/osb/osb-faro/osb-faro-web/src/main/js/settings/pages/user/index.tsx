@@ -1,5 +1,5 @@
 import * as API from 'shared/api';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import BundleRouter from 'route-middleware/BundleRouter';
 import Card from 'shared/components/Card';
 import ClayBadge from '@clayui/badge';

@@ -1,7 +1,7 @@
 import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import autobind from 'autobind-decorator';
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import ClayButton from '@clayui/button';
 import ClayLink from '@clayui/link';
 import DataTransformationList from 'settings/components/data-transformation-list';

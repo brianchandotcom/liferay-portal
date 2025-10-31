@@ -1,4 +1,4 @@
-import BasePage from '../BasePage';
+import BasePage from '../base-page/BasePage';
 import mockStore from 'test/mock-store';
 import React from 'react';
 import {cleanup, render} from '@testing-library/react';

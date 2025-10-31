@@ -1,7 +1,6 @@
 import Breadcrumbs from 'shared/components/Breadcrumbs';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import ClayToolbar from '@clayui/toolbar';
 import DocumentTitle from 'shared/components/DocumentTitle';
 import getCN from 'classnames';
 import MaintenanceAlert from 'shared/components/MaintenanceAlert';
@@ -10,11 +9,11 @@ import NotificationAlertList, {
 } from 'shared/components/NotificationAlertList';
 import React from 'react';
 import TextTruncate from 'shared/components/TextTruncate';
+import Toolbar from './Toolbar';
 import {IBreadcrumbArgs} from 'shared/util/breadcrumbs';
-import {Link, matchPath, useLocation, useParams} from 'react-router-dom';
+import {matchPath, useLocation, useParams} from 'react-router-dom';
 import {PageActions} from 'shared/components/base-page/Header';
 import {Routes, toRoute} from 'shared/util/router';
-import {Text} from '@clayui/core';
 import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 import {useStore} from 'react-redux';
 
@@ -125,46 +124,20 @@ const SettingsBasePage: React.FC<ISettingsBasePageProps> = ({
 	const notificationResponse = useNotificationsAPI(groupId);
 
 	const store = useStore();
-	const backURL = store.getState().getIn(['settings', 'backURL']);
 	const recommendationsEnabled = store
 		.getState()
 		.getIn(['projects', groupId, 'data', 'recommendationsEnabled'], false);
 
 	return (
 		<div className='settings-root'>
-			<ClayToolbar className='bg-white mb-4'>
-				<ClayToolbar.Nav className='mx-4'>
-					<ClayToolbar.Item>
-						<div className='component-action'>
-							<Link
-								aria-label={Liferay.Language.get('back')}
-								className='text-secondary'
-								to={
-									backURL ||
-									toRoute(Routes.WORKSPACE_WITH_ID, {
-										groupId
-									})
-								}
-							>
-								<ClayIcon
-									className='mb-1'
-									symbol='angle-left'
-								/>
-							</Link>
-						</div>
-					</ClayToolbar.Item>
-
-					<ClayToolbar.Item className='pl-0'>
-						<ClayToolbar.Section>
-							<span className='text-dark'>
-								<Text size={5} weight='bold'>
-									{Liferay.Language.get('settings')}
-								</Text>
-							</span>
-						</ClayToolbar.Section>
-					</ClayToolbar.Item>
-				</ClayToolbar.Nav>
-			</ClayToolbar>
+			<Toolbar
+				backURL={{
+					label: Liferay.Language.get('settings'),
+					url: toRoute(Routes.WORKSPACE_WITH_ID, {
+						groupId
+					})
+				}}
+			/>
 
 			<div className='content-wrapper'>
 				<nav className='section-side settings-side-bar'>

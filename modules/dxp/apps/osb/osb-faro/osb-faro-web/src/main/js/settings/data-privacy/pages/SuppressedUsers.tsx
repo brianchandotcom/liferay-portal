@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import SuppressedUserList from '../hocs/SuppressedUserList';
 import {getDataPrivacy} from 'shared/util/breadcrumbs';

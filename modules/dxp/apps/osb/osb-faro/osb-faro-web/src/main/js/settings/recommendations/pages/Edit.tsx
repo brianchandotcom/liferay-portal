@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import React from 'react';
 import RecommendationStepCard from '../components/recommendation-step-card';
 import withRecommendation from 'shared/hoc/WithRecommendation';

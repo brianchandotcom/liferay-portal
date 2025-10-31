@@ -1,4 +1,4 @@
-import BasePage from 'settings/components/BasePage';
+import BasePage from 'settings/components/base-page/BasePage';
 import ClayLink from '@clayui/link';
 import EVENT_ATTRIBUTE_DEFINITION_QUERY, {
 	EVENT_ATTRIBUTE_DEFINITION_WITH_RECENT_VALUES_QUERY,

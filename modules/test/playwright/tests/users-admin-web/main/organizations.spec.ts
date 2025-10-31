@@ -279,3 +279,72 @@ test(
 		);
 	}
 );
+
+test(
+	'User should not be able to trigger stored XSS using organization name via info panel',
+	{tag: ['@LPD-70029']},
+	async ({
+		editOrganizationPage,
+		page,
+		sitesAdminPage,
+		usersAndOrganizationsPage,
+	}) => {
+		await usersAndOrganizationsPage.goToOrganizations();
+
+		await usersAndOrganizationsPage.organizationsLink.click();
+		await usersAndOrganizationsPage.addOrganizationButton.click();
+
+		const organizationName =
+			'"><img src=x onerror=prompt(document.cookie)></img>';
+
+		await editOrganizationPage.nameInput.fill(organizationName);
+		await editOrganizationPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		try {
+			await editOrganizationPage.organizationSiteLink.click();
+			await editOrganizationPage.createSiteToggle.click();
+			await editOrganizationPage.organizationSiteSaveButton.click();
+
+			await waitForAlert(page);
+
+			await sitesAdminPage.goto();
+			await sitesAdminPage.searchSite(organizationName);
+
+			await sitesAdminPage.infoPanelButton.click();
+
+			await page.getByTitle('Select', {exact: true}).check();
+
+			let dialogTriggered = false;
+
+			await page
+				.waitForEvent('dialog', {timeout: 500})
+				.then(async (dialog) => {
+					dialogTriggered = true;
+					await dialog.dismiss();
+				})
+				.catch(() => {});
+
+			await expect(sitesAdminPage.componentTitle).toContainText(
+				organizationName
+			);
+
+			expect(dialogTriggered).toBe(false);
+		}
+		finally {
+			page.once('dialog', async (dialog) => {
+				await dialog.accept();
+			});
+
+			await usersAndOrganizationsPage.goToOrganizations();
+
+			await (
+				await usersAndOrganizationsPage.organizationsTable.rowActions(
+					organizationName
+				)
+			).click();
+			await usersAndOrganizationsPage.deleteOrganizationMenuItem.click();
+		}
+	}
+);

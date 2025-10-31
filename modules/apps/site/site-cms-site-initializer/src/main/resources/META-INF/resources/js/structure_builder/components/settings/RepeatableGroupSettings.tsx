@@ -36,19 +36,11 @@ export default function RepeatableGroupSettings({
 					<ClayTabs.Item>
 						{Liferay.Language.get('general')}
 					</ClayTabs.Item>
-
-					<ClayTabs.Item>
-						{Liferay.Language.get('search')}
-					</ClayTabs.Item>
 				</ClayTabs.List>
 
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
 						<GeneralTab disabled={disabled} group={group} />
-					</ClayTabs.TabPane>
-
-					<ClayTabs.TabPane className="px-0">
-						<SearchTab />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -99,8 +91,4 @@ function GeneralTab({
 			/>
 		</div>
 	);
-}
-
-function SearchTab() {
-	return <div />;
 }

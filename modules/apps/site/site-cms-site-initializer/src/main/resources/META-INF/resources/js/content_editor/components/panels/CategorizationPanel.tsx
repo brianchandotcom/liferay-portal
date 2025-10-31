@@ -13,17 +13,17 @@ import {
 } from '../ContentEditorSidePanel';
 
 export default function CategorizationPanel({
+	assetLibraryId,
 	categorizationFields,
 	cmsGroupId,
 	contentAPIURL,
-	groupId,
 	hasUpdatePermission,
 	onUpdateCategorization,
 }: {
+	assetLibraryId: number | string;
 	categorizationFields: CategorizationFields;
 	cmsGroupId: number | string;
 	contentAPIURL: string;
-	groupId: number | string;
 	hasUpdatePermission: boolean;
 	onUpdateCategorization: (props: UpdateCategorizationProps) => void;
 }) {
@@ -54,13 +54,13 @@ export default function CategorizationPanel({
 	return (
 		<div className="px-3">
 			<AssetCategorization
+				assetLibraryId={assetLibraryId}
 				categorization={{
 					keywords: assetTagNames.value,
 					taxonomyCategoryBriefs: assetCategoryIds.value,
 				}}
 				cmsGroupId={cmsGroupId}
 				getObjectEntryURL={contentAPIURL}
-				groupId={groupId}
 				hasUpdatePermission={hasUpdatePermission}
 				inputSize="sm"
 				onUpdateCategorization={updateCategorization}

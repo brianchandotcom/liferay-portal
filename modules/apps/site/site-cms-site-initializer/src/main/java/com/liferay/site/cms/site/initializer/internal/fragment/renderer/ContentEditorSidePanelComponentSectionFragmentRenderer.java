@@ -145,6 +145,8 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 				return null;
 			}
 		).put(
+			"assetLibraryId", objectEntry.getGroupId()
+		).put(
 			"cmsGroupId", themeDisplay.getScopeGroupId()
 		).put(
 			"comments",
@@ -239,8 +241,6 @@ public class ContentEditorSidePanelComponentSectionFragmentRenderer
 					expirationDate, "yyyy-MM-dd'T'HH:mm",
 					themeDisplay.getLocale());
 			}
-		).put(
-			"groupId", objectEntry.getGroupId()
 		).put(
 			"hasUpdatePermission",
 			() -> {

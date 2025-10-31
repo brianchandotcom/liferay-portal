@@ -27,6 +27,7 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 	return render(
 		<ContentEditorSidePanel
 			addCommentURL="addCommentURL"
+			assetLibraryId="123"
 			cmsGroupId="21000"
 			comments={[]}
 			contentAPIURL="contentAPIURL"
@@ -36,7 +37,6 @@ const renderComponent = ({isSubscribed = false} = {}) => {
 			entryClassName=""
 			expirationDate={EXPIRATION_DATE}
 			getCommentsURL="getCommentsURL"
-			groupId="123"
 			hasUpdatePermission={true}
 			id="contentId"
 			isSubscribed={isSubscribed}

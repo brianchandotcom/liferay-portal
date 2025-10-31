@@ -27,6 +27,7 @@ import SchedulePanel from './panels/SchedulePanel';
 
 type Props = {
 	addCommentURL: string;
+	assetLibraryId: string;
 	cmsGroupId: string;
 	comments: Comment[];
 	contentAPIURL: string;
@@ -36,7 +37,6 @@ type Props = {
 	entryClassName: string;
 	expirationDate: string;
 	getCommentsURL: string;
-	groupId: string;
 	hasUpdatePermission: boolean;
 	id: string;
 	isSubscribed: boolean;

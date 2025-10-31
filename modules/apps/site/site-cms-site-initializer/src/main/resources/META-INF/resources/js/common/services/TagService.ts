@@ -7,22 +7,22 @@ import {Tag} from '../types/Tag';
 import ApiHelper from './ApiHelper';
 
 async function createTag({
+	assetLibraryId,
 	cmsGroupId,
-	groupId,
 	name,
 }: {
+	assetLibraryId: number | string | null | undefined;
 	cmsGroupId: number | string;
-	groupId: number | string | null | undefined;
 	name: string;
 }) {
 	let requestBody;
 
-	if (groupId === null || groupId === undefined) {
+	if (assetLibraryId === null || assetLibraryId === undefined) {
 		requestBody = {name};
 	}
 	else {
 		requestBody = {
-			assetLibraries: [{id: groupId}],
+			assetLibraries: [{id: assetLibraryId}],
 			name,
 		};
 	}

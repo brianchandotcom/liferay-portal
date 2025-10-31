@@ -27,9 +27,9 @@ const CategorizationTabContent = () => {
 
 	return (
 		<AssetCategorization
+			assetLibraryId={assetLibrary?.groupId}
 			cmsGroupId={cmsGroupId}
 			getObjectEntryURL={get.href}
-			groupId={assetLibrary?.groupId}
 			hasUpdatePermission={!!update?.href}
 			updateObjectEntryURL={update?.href}
 		/>

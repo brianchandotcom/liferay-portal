@@ -160,6 +160,36 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 	}
 
 	private void _testGetAssetCategoryTreeNodeTitle(
+			FragmentEntryLink fragmentEntryLink, JSONObject jsonObject,
+			String title)
+		throws Exception {
+
+		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
+			Mockito.mock(FragmentEntryConfigurationParser.class);
+
+		FragmentRendererContext fragmentRendererContext =
+			new DefaultFragmentRendererContext(fragmentEntryLink);
+
+		Mockito.when(
+			fragmentEntryConfigurationParser.getFieldValue(
+				null, null, fragmentRendererContext.getLocale(), "source")
+		).thenReturn(
+			jsonObject
+		);
+
+		FragmentCollectionFilterCategoryDisplayContext
+			fragmentCollectionFilterCategoryDisplayContext =
+				new FragmentCollectionFilterCategoryDisplayContext(
+					null, fragmentEntryConfigurationParser,
+					fragmentRendererContext);
+
+		Assert.assertEquals(
+			title,
+			fragmentCollectionFilterCategoryDisplayContext.
+				getAssetCategoryTreeNodeTitle());
+	}
+
+	private void _testGetAssetCategoryTreeNodeTitle(
 			String assetCategoryTreeNodeType, long groupId, long companyId,
 			String externalReferenceCode, String scopeExternalReferenceCode,
 			long scopeGroupId)
@@ -246,40 +276,16 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			companyId
 		);
 
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
-			Mockito.mock(FragmentEntryConfigurationParser.class);
-
-		JSONObject jsonObject = JSONUtil.put(
-			"categoryTreeNodeType", assetCategoryTreeNodeType
-		).put(
-			"externalReferenceCode", externalReferenceCode
-		);
-
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			jsonObject.put(
-				"scopeExternalReferenceCode", scopeExternalReferenceCode);
-		}
-
-		FragmentRendererContext fragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		Mockito.when(
-			fragmentEntryConfigurationParser.getFieldValue(
-				null, null, fragmentRendererContext.getLocale(), "source")
-		).thenReturn(
-			jsonObject
-		);
-
-		FragmentCollectionFilterCategoryDisplayContext
-			fragmentCollectionFilterCategoryDisplayContext =
-				new FragmentCollectionFilterCategoryDisplayContext(
-					null, fragmentEntryConfigurationParser,
-					fragmentRendererContext);
-
-		Assert.assertEquals(
-			title,
-			fragmentCollectionFilterCategoryDisplayContext.
-				getAssetCategoryTreeNodeTitle());
+		_testGetAssetCategoryTreeNodeTitle(
+			fragmentEntryLink,
+			JSONUtil.put(
+				"categoryTreeNodeType", assetCategoryTreeNodeType
+			).put(
+				"externalReferenceCode", externalReferenceCode
+			).put(
+				"scopeExternalReferenceCode", scopeExternalReferenceCode
+			),
+			title);
 	}
 
 	private void _testGetAssetCategoryTreeNodeTitle(
@@ -287,36 +293,14 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			String title)
 		throws Exception {
 
-		FragmentEntryLink fragmentEntryLink = Mockito.mock(
-			FragmentEntryLink.class);
-
-		FragmentEntryConfigurationParser fragmentEntryConfigurationParser =
-			Mockito.mock(FragmentEntryConfigurationParser.class);
-
-		FragmentRendererContext fragmentRendererContext =
-			new DefaultFragmentRendererContext(fragmentEntryLink);
-
-		Mockito.when(
-			fragmentEntryConfigurationParser.getFieldValue(
-				null, null, fragmentRendererContext.getLocale(), "source")
-		).thenReturn(
+		_testGetAssetCategoryTreeNodeTitle(
+			Mockito.mock(FragmentEntryLink.class),
 			JSONUtil.put(
 				"categoryTreeNodeId", categoryTreeNodeId
 			).put(
 				"categoryTreeNodeType", assetCategoryTreeNodeType
-			)
-		);
-
-		FragmentCollectionFilterCategoryDisplayContext
-			fragmentCollectionFilterCategoryDisplayContext =
-				new FragmentCollectionFilterCategoryDisplayContext(
-					null, fragmentEntryConfigurationParser,
-					fragmentRendererContext);
-
-		Assert.assertEquals(
-			title,
-			fragmentCollectionFilterCategoryDisplayContext.
-				getAssetCategoryTreeNodeTitle());
+			),
+			title);
 	}
 
 	private static final MockedStatic<AssetCategoryServiceUtil>
@@ -327,6 +311,6 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			AssetVocabularyServiceUtil.class);
 	private static final MockedStatic<GroupServiceUtil>
 		_groupServiceUtilMockedStatic = Mockito.mockStatic(
-		GroupServiceUtil.class);
+			GroupServiceUtil.class);
 
 }

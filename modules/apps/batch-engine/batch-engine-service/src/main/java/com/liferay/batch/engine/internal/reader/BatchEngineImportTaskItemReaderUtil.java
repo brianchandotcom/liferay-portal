@@ -176,7 +176,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 	}
 
-	private static Field _findAnySetterField(Map<String, Field> fields) {
+	private static Field _getAnySetterField(Map<String, Field> fields) {
 		for (Field field : fields.values()) {
 			if (field.isAnnotationPresent(JsonAnySetter.class)) {
 				return field;
@@ -302,7 +302,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			Map<String, Object> fieldNameValueMap, Object item)
 		throws Exception {
 
-		Field anySetterField = _findAnySetterField(declaredFields);
+		Field anySetterField = _getAnySetterField(declaredFields);
 
 		Set<String> batchRestrictFields = _getBatchRestrictFields(
 			batchEngineImportTask);

@@ -5,7 +5,6 @@ import client from 'shared/apollo/client';
 import ErrorPage from 'shared/pages/ErrorPage';
 import Loading from 'shared/components/Loading';
 import ModalRenderer from 'shared/components/ModalRenderer';
-import pathToRegexp from 'path-to-regexp';
 import React, {lazy, Suspense, useEffect, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import store from 'shared/store';
@@ -31,7 +30,6 @@ import {Project} from 'shared/util/records';
 import {Provider, useSelector} from 'react-redux';
 import {Routes} from 'shared/util/router';
 import {saveState} from 'shared/store/local-storage';
-import {setBackURL} from 'shared/actions/settings';
 import {throttle} from 'lodash';
 import {useFetchCurrentUser} from 'shared/hooks/useCurrentUser';
 
@@ -71,8 +69,6 @@ const OAuthReceive = lazy(
 		)
 );
 
-const SETTINGS_PATH_REGEX = pathToRegexp(Routes.SETTINGS, null, {end: false});
-
 const RoutesContainer = ({children}) => {
 	const location = useLocation();
 
@@ -87,16 +83,6 @@ const RoutesContainer = ({children}) => {
 	);
 
 	const {data: currentUser, loading} = useFetchCurrentUser(groupId);
-
-	useEffect(() => {
-		const {
-			location: {pathname, search}
-		} = window;
-
-		if (!SETTINGS_PATH_REGEX.test(pathname)) {
-			store.dispatch(setBackURL(`${pathname}${search}`));
-		}
-	}, [location]);
 
 	useEffect(() => {
 		if (currentUser?.id && project?.corpProjectName) {

@@ -14,7 +14,6 @@ import normalizer from './normalizer';
 import preferences from './preferences';
 import projects from './projects';
 import segments from './segments';
-import settings from './settings';
 import sidebar from './sidebar';
 import store from './store';
 import users from './users';
@@ -40,7 +39,6 @@ export default composeReducers(
 		preferences,
 		projects,
 		segments,
-		settings,
 		sidebar,
 		users
 	})

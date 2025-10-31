@@ -12,6 +12,7 @@ import com.liferay.cookies.configuration.consent.CookiesConsentConfiguration;
 import com.liferay.layout.utility.page.kernel.provider.LayoutUtilityPageEntryLayoutProvider;
 import com.liferay.portal.kernel.cookies.ConsentCookieType;
 import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -35,7 +36,14 @@ public class BaseCookiesBannerDisplayContext {
 		LayoutUtilityPageEntryLayoutProvider
 			layoutUtilityPageEntryLayoutProvider) {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
 		_cookiesConfigurationProvider = cookiesConfigurationProvider;
+
+		_consentRenewalPeriodEnabled = FeatureFlagManagerUtil.isEnabled(
+			themeDisplay.getCompanyId(), "LPD-65277");
 		this.httpServletRequest = httpServletRequest;
 		this.layoutUtilityPageEntryLayoutProvider =
 			layoutUtilityPageEntryLayoutProvider;
@@ -87,6 +95,10 @@ public class BaseCookiesBannerDisplayContext {
 				false, CookiesConstants.NAME_CONSENT_TYPE_NECESSARY, true));
 
 		return _requiredConsentCookieTypes;
+	}
+
+	public boolean isConsentRenewalPeriodEnabled() {
+		return _consentRenewalPeriodEnabled;
 	}
 
 	public boolean isIncludeDeclineAllButton() {
@@ -197,6 +209,7 @@ public class BaseCookiesBannerDisplayContext {
 		BaseCookiesBannerDisplayContext.class);
 
 	private int _consentRenewalPeriod;
+	private final boolean _consentRenewalPeriodEnabled;
 	private final CookiesConfigurationProvider _cookiesConfigurationProvider;
 	private long _modifiedDate;
 	private List<ConsentCookieType> _optionalConsentCookieTypes;

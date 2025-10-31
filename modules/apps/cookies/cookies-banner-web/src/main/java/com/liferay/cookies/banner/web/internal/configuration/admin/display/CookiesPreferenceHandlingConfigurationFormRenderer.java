@@ -12,6 +12,7 @@ import com.liferay.cookies.banner.web.internal.display.context.CookiesPreference
 import com.liferay.cookies.configuration.CookiesConfigurationProvider;
 import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -49,6 +50,21 @@ public class CookiesPreferenceHandlingConfigurationFormRenderer
 	@Override
 	public Map<String, Object> getRequestParameters(
 		HttpServletRequest httpServletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				themeDisplay.getCompanyId(), "LPD-65277")) {
+
+			return HashMapBuilder.<String, Object>put(
+				"enabled", ParamUtil.getBoolean(httpServletRequest, "enabled")
+			).put(
+				"explicitConsentMode",
+				ParamUtil.getBoolean(httpServletRequest, "explicitConsentMode")
+			).build();
+		}
 
 		return HashMapBuilder.<String, Object>put(
 			"consentRenewalPeriod",

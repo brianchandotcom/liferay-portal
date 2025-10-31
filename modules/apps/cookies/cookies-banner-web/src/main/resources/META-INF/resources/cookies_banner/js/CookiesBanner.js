@@ -26,7 +26,7 @@ let openCookieConsentModal = () => {
 export default function ({
 	configurationNamespace,
 	configurationURL,
-	consentRenewalPeriod,
+	consentRenewalPeriod = 12,
 	includeDeclineAllButton,
 	modifiedDate = 0,
 	namespace,

@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
@@ -19,7 +20,13 @@ const cookieKeys = [
 	'USER_CONSENT_CONFIGURED_DATE',
 ];
 
-export const test = mergeTests(loginTest(), systemSettingsPageTest);
+export const test = mergeTests(
+	loginTest(),
+	featureFlagsTest({
+		'LPD-65277': {enabled: true},
+	}),
+	systemSettingsPageTest
+);
 
 test.afterEach(async ({systemSettingsPage}) => {
 	await systemSettingsPage.goToSystemSetting('Privacy', 'Cookie Manager');

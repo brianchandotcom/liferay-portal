@@ -42,6 +42,20 @@ public class CookiesBannerConfigurationDisplayContext
 	}
 
 	public Map<String, Object> getContext() {
+		if (!isConsentRenewalPeriodEnabled()) {
+			return HashMapBuilder.<String, Object>put(
+				"optionalConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getOptionalConsentCookieTypes())
+			).put(
+				"requiredConsentCookieTypeNames",
+				getConsentCookieTypeNamesJSONArray(
+					getRequiredConsentCookieTypes())
+			).put(
+				"showButtons", isShowButtons()
+			).build();
+		}
+
 		return HashMapBuilder.<String, Object>put(
 			"consentRenewalPeriod", getConsentRenewalPeriod()
 		).put(

@@ -5,8 +5,10 @@
 
 import {EConfigInURLBehavior, IConfigInURL} from './types';
 
+export const FDS_CONFIG_PARAM_NAME = '_fdsConfig';
+
 function getConfigParamName(id: string): string {
-	return `${id}_fdsConfig`;
+	return `${id}${FDS_CONFIG_PARAM_NAME}`;
 }
 
 export function readConfigFromURL(id: string): Partial<IConfigInURL> | null {

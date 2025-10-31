@@ -654,8 +654,11 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 		_saveBadBuildURLsInBuildDatabase(getBadBuildURLs());
 	}
 
-	protected BaseDownstreamBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	protected BaseDownstreamBuild(
+		String url, TopLevelBuild topLevelBuild,
+		DownstreamBuildReport cachedDownstreamBuildReport) {
+
+		super(url, topLevelBuild, cachedDownstreamBuildReport);
 	}
 
 	@Override

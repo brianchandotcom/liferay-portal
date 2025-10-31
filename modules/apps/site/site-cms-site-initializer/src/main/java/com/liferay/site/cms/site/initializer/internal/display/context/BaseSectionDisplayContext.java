@@ -91,14 +91,14 @@ public abstract class BaseSectionDisplayContext {
 			themeDisplay.getCompanyId(),
 			httpServletRequest.getAttribute(InfoDisplayWebKeys.INFO_ITEM));
 
-		_baseSectionDisplayContextHelper = new BaseSectionDisplayContextHelper(
+		_sectionDisplayContextHelper = new SectionDisplayContextHelper(
 			depotEntryLocalService, groupLocalService, language,
 			objectDefinitionSettingLocalService,
 			objectEntryFolderModelResourcePermission, portal);
 	}
 
 	public String getAdditionalAPIURLParameters() {
-		return _baseSectionDisplayContextHelper.getAdditionalAPIURLParameters(
+		return _sectionDisplayContextHelper.getAdditionalAPIURLParameters(
 			getCMSSectionFilterString(), httpServletRequest,
 			getRootObjectEntryFolderExternalReferenceCode());
 	}
@@ -106,7 +106,7 @@ public abstract class BaseSectionDisplayContext {
 	public Map<String, Object> getAdditionalProps() {
 		return HashMapBuilder.<String, Object>put(
 			"assetLibraries",
-			_baseSectionDisplayContextHelper.getDepotEntriesJSONArray(
+			_sectionDisplayContextHelper.getDepotEntriesJSONArray(
 				httpServletRequest)
 		).put(
 			"autocompleteURL",
@@ -296,7 +296,7 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	public CreationMenu getCreationMenu() {
-		return _baseSectionDisplayContextHelper.getCreationMenu(
+		return _sectionDisplayContextHelper.getCreationMenu(
 			getCreationMenuDropdownItems(), httpServletRequest);
 	}
 
@@ -307,7 +307,7 @@ public abstract class BaseSectionDisplayContext {
 	public abstract Map<String, Object> getEmptyState();
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return _baseSectionDisplayContextHelper.getFDSActionDropdownItems(
+		return _sectionDisplayContextHelper.getFDSActionDropdownItems(
 			httpServletRequest);
 	}
 
@@ -325,7 +325,7 @@ public abstract class BaseSectionDisplayContext {
 	}
 
 	protected String appendStatus(String filterString) {
-		return _baseSectionDisplayContextHelper.appendStatus(filterString);
+		return _sectionDisplayContextHelper.appendStatus(filterString);
 	}
 
 	protected abstract String getCMSSectionFilterString();
@@ -484,9 +484,8 @@ public abstract class BaseSectionDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSectionDisplayContext.class);
 
-	private final BaseSectionDisplayContextHelper
-		_baseSectionDisplayContextHelper;
 	private final DLConfiguration _dlConfiguration;
 	private final ObjectDefinitionService _objectDefinitionService;
+	private final SectionDisplayContextHelper _sectionDisplayContextHelper;
 
 }

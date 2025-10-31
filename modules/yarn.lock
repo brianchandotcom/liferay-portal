@@ -6447,11 +6447,6 @@ cross-undici-fetch@^0.1.19:
     undici "^5.0.0"
     web-streams-polyfill "^3.2.0"
 
-crypto-js@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz"
-  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
-
 cson-parser@^4.0.8:
   version "4.0.9"
   resolved "https://registry.yarnpkg.com/cson-parser/-/cson-parser-4.0.9.tgz#eef0cf77edd057f97861ef800300c8239224eedb"
@@ -13633,13 +13628,6 @@ pirates@^4.0.1, pirates@^4.0.4:
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/pirates/-/pirates-4.0.7.tgz#643b4a18c4257c8a65104b73f3049ce9a0a15e22"
   integrity sha512-TfySrs/5nm8fQJDcBDuUng3VOUKsd7S+zqvbOTiGXHfxX4wK31ard+hoNuvkicM/2YFzlpDgABOevKSsB4G/FA==
-
-pkce-challenge@3.0.0, pkce-challenge@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/pkce-challenge/-/pkce-challenge-3.0.0.tgz"
-  integrity sha512-sQ8sJJJuLhA5pFnoxayMCrFnBMNj7DDpa+TWxOXl4B24oXHlVSADi/3Bowm66QuzWkBuF6DhmaelCdlC2JKwsg==
-  dependencies:
-    crypto-js "^4.1.1"
 
 pkg-dir@^3.0.0:
   version "3.0.0"

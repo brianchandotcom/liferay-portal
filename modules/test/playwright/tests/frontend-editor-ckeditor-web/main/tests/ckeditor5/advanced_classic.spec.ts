@@ -226,3 +226,35 @@ test(
 		await expect(videoButton).toBeEnabled();
 	}
 );
+
+test(
+	'Pasting HTML content works',
+	{tag: '@LPD-65963'},
+	async ({classicPage, context}) => {
+		const newPage = await context.newPage();
+
+		await newPage.goto(
+			'http://www.standards-schmandards.com/exhibits/wysiwyg/sampledoc.htm'
+		);
+
+		await newPage.locator('body').focus();
+		await newPage.locator('html').press('ControlOrMeta+a');
+		await newPage.locator('html').press('ControlOrMeta+c');
+
+		await classicPage.editable.focus();
+		await classicPage.editable.press('ControlOrMeta+a');
+		await classicPage.editable.press('ControlOrMeta+v');
+
+		await expect(
+			classicPage.editable.getByRole(
+				'img', { name: 'A beautiful redheaded man' }
+			)
+		).toBeVisible();
+
+		await expect(
+			classicPage.editable.getByRole(
+				'figure', { name: 'Top banana importers 1998 (' }
+			)
+		).toBeVisible();
+	}
+);

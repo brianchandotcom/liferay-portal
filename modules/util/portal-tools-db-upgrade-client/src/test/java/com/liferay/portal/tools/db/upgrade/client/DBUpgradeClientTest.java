@@ -291,15 +291,14 @@ public class DBUpgradeClientTest {
 		ReflectionTestUtil.setFieldValue(
 			_dbUpgradeClient, "_appServer", _mockAppServer);
 
-		Path jarPath = _shieldedContainerLib.toPath(
-		).resolve(
-			"com.liferay.portal.dao.db.jar"
-		);
+		Path path = _shieldedContainerLib.toPath();
+
+		path = path.resolve("com.liferay.portal.dao.db.jar");
 
 		Files.createDirectories(_shieldedContainerLib.toPath());
 
 		try {
-			Files.createFile(jarPath);
+			Files.createFile(path);
 
 			ReflectionTestUtil.invoke(
 				_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -334,7 +333,7 @@ public class DBUpgradeClientTest {
 				properties.getProperty("jdbc.default.password"));
 		}
 		finally {
-			Files.deleteIfExists(jarPath);
+			Files.deleteIfExists(path);
 		}
 	}
 

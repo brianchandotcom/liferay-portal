@@ -61,7 +61,21 @@ public class SiteSerDes {
 
 			sb.append("\"description\": ");
 
-			sb.append(_toJSON(site.getDescription()));
+			sb.append("\"");
+
+			sb.append(_escape(site.getDescription()));
+
+			sb.append("\"");
+		}
+
+		if (site.getDescription_i18n() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"description_i18n\": ");
+
+			sb.append(_toJSON(site.getDescription_i18n()));
 		}
 
 		if (site.getExternalReferenceCode() != null) {
@@ -268,6 +282,14 @@ public class SiteSerDes {
 			map.put("description", String.valueOf(site.getDescription()));
 		}
 
+		if (site.getDescription_i18n() == null) {
+			map.put("description_i18n", null);
+		}
+		else {
+			map.put(
+				"description_i18n", String.valueOf(site.getDescription_i18n()));
+		}
+
 		if (site.getExternalReferenceCode() == null) {
 			map.put("externalReferenceCode", null);
 		}
@@ -395,6 +417,9 @@ public class SiteSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
 				return true;
 			}
 			else if (Objects.equals(
@@ -462,7 +487,12 @@ public class SiteSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "description")) {
 				if (jsonParserFieldValue != null) {
-					site.setDescription(
+					site.setDescription((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "description_i18n")) {
+				if (jsonParserFieldValue != null) {
+					site.setDescription_i18n(
 						(Map<String, String>)jsonParserFieldValue);
 				}
 			}

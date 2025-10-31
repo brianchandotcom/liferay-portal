@@ -566,13 +566,12 @@ public class OIDCUserInfoProcessor {
 			return "email";
 		}
 
-		String localWellKnownURI =
-			OpenIdConnectProviderUtil.generateLocalWellKnownURI(
-				issuer, tokenEndpoint);
-
 		String filterString = null;
 
-		if (authServerWellKnownURI.equals(localWellKnownURI)) {
+		if (authServerWellKnownURI.equals(
+				OpenIdConnectProviderUtil.generateLocalWellKnownURI(
+					issuer, tokenEndpoint))) {
+
 			filterString = StringBundler.concat(
 				"(&(companyId=", companyId, ")(issuerURL=", issuer,
 				")(openIdConnectClientId=", clientId, ")(tokenEndpoint=",

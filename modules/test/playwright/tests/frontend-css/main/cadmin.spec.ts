@@ -63,15 +63,21 @@ test(
 
 		await test.step('Assert cadmin component default theme background color', async () => {
 			for (const {cadminColor, regularColor, selector} of elements) {
-				const regularEl = page.locator(`${selector}:not(.cadmin)`);
+				const regularElement = page.locator(`${selector}:not(.cadmin)`);
 
-				expect(regularEl).toBeVisible();
-				expect(regularEl).toHaveCSS('background-color', regularColor);
+				expect(regularElement).toBeVisible();
+				expect(regularElement).toHaveCSS(
+					'background-color',
+					regularColor
+				);
 
-				const cadminEl = page.locator(`${selector}.cadmin`);
+				const cadminElement = page.locator(`${selector}.cadmin`);
 
-				expect(cadminEl).toBeVisible();
-				expect(cadminEl).toHaveCSS('background-color', cadminColor);
+				expect(cadminElement).toBeVisible();
+				expect(cadminElement).toHaveCSS(
+					'background-color',
+					cadminColor
+				);
 			}
 		});
 	}

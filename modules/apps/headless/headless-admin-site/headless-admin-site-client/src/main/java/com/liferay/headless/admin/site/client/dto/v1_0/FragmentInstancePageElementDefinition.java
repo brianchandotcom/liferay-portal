@@ -179,27 +179,35 @@ public class FragmentInstancePageElementDefinition
 
 	protected String draftFragmentInstanceExternalReferenceCode;
 
-	public Map<String, Object> getFragmentConfig() {
-		return fragmentConfig;
+	public Map<String, FragmentConfigurationFieldValue>
+		getFragmentConfigurationFieldValues() {
+
+		return fragmentConfigurationFieldValues;
 	}
 
-	public void setFragmentConfig(Map<String, Object> fragmentConfig) {
-		this.fragmentConfig = fragmentConfig;
+	public void setFragmentConfigurationFieldValues(
+		Map<String, FragmentConfigurationFieldValue>
+			fragmentConfigurationFieldValues) {
+
+		this.fragmentConfigurationFieldValues =
+			fragmentConfigurationFieldValues;
 	}
 
-	public void setFragmentConfig(
-		UnsafeSupplier<Map<String, Object>, Exception>
-			fragmentConfigUnsafeSupplier) {
+	public void setFragmentConfigurationFieldValues(
+		UnsafeSupplier<Map<String, FragmentConfigurationFieldValue>, Exception>
+			fragmentConfigurationFieldValuesUnsafeSupplier) {
 
 		try {
-			fragmentConfig = fragmentConfigUnsafeSupplier.get();
+			fragmentConfigurationFieldValues =
+				fragmentConfigurationFieldValuesUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected Map<String, Object> fragmentConfig;
+	protected Map<String, FragmentConfigurationFieldValue>
+		fragmentConfigurationFieldValues;
 
 	public FragmentField[] getFragmentFields() {
 		return fragmentFields;

@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.CustomCSSViewport;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentField;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.FragmentViewport;
@@ -203,16 +204,19 @@ public class FragmentInstancePageElementDefinitionSerDes {
 			sb.append("\"");
 		}
 
-		if (fragmentInstancePageElementDefinition.getFragmentConfig() != null) {
+		if (fragmentInstancePageElementDefinition.
+				getFragmentConfigurationFieldValues() != null) {
+
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentConfig\": ");
+			sb.append("\"fragmentConfigurationFieldValues\": ");
 
 			sb.append(
 				_toJSON(
-					fragmentInstancePageElementDefinition.getFragmentConfig()));
+					fragmentInstancePageElementDefinition.
+						getFragmentConfigurationFieldValues()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getFragmentFields() != null) {
@@ -562,14 +566,17 @@ public class FragmentInstancePageElementDefinitionSerDes {
 						getDraftFragmentInstanceExternalReferenceCode()));
 		}
 
-		if (fragmentInstancePageElementDefinition.getFragmentConfig() == null) {
-			map.put("fragmentConfig", null);
+		if (fragmentInstancePageElementDefinition.
+				getFragmentConfigurationFieldValues() == null) {
+
+			map.put("fragmentConfigurationFieldValues", null);
 		}
 		else {
 			map.put(
-				"fragmentConfig",
+				"fragmentConfigurationFieldValues",
 				String.valueOf(
-					fragmentInstancePageElementDefinition.getFragmentConfig()));
+					fragmentInstancePageElementDefinition.
+						getFragmentConfigurationFieldValues()));
 		}
 
 		if (fragmentInstancePageElementDefinition.getFragmentFields() == null) {
@@ -769,7 +776,10 @@ public class FragmentInstancePageElementDefinitionSerDes {
 
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentConfig")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fragmentConfigurationFieldValues")) {
+
 				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentFields")) {
@@ -887,10 +897,15 @@ public class FragmentInstancePageElementDefinitionSerDes {
 							(String)jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(jsonParserFieldName, "fragmentConfig")) {
+			else if (Objects.equals(
+						jsonParserFieldName,
+						"fragmentConfigurationFieldValues")) {
+
 				if (jsonParserFieldValue != null) {
-					fragmentInstancePageElementDefinition.setFragmentConfig(
-						(Map<String, Object>)jsonParserFieldValue);
+					fragmentInstancePageElementDefinition.
+						setFragmentConfigurationFieldValues(
+							(Map<String, FragmentConfigurationFieldValue>)
+								jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "fragmentFields")) {

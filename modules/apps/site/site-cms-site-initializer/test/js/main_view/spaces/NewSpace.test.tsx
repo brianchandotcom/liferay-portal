@@ -26,7 +26,9 @@ const mockLearnResources = {
 
 describe('NewSpace', () => {
 	const props: NewSpaceProps = {
+		backURL: 'https://localhost/web/cms',
 		baseAddSpaceMembersURL: 'fake-add-member-url/',
+		description: 'section-description',
 		learnResources: mockLearnResources,
 	};
 
@@ -36,10 +38,6 @@ describe('NewSpace', () => {
 		apiPostSpy = jest
 			.spyOn(ApiHelper, 'post')
 			.mockResolvedValue({data: {id: 'fake-id'}, error: null});
-
-		global.Liferay.ThemeDisplay.getPathFriendlyURLPublic = jest
-			.fn()
-			.mockReturnValue('https://localhost/web');
 	});
 
 	afterEach(() => {
@@ -53,11 +51,7 @@ describe('NewSpace', () => {
 			screen.getByRole('heading', {name: 'add-space'})
 		).toBeInTheDocument();
 
-		expect(
-			screen.getByText(
-				'spaces-are-essential-for-organizing-defining-and-managing-your-content-and-files'
-			)
-		).toBeInTheDocument();
+		expect(screen.getByText('section-description')).toBeInTheDocument();
 
 		expect(
 			screen.getByRole('button', {name: 'continue'})

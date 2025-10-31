@@ -77,7 +77,7 @@ public class DBUpgradeClientTest {
 			portalDir, "WEB-INF/shielded-container-lib");
 
 		Mockito.when(
-			_mockAppServer.getPortalShieldedContainerLibDir()
+			_appServer.getPortalShieldedContainerLibDir()
 		).thenReturn(
 			_shieldedContainerLib
 		);
@@ -190,7 +190,7 @@ public class DBUpgradeClientTest {
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.setFieldValue(
-			_dbUpgradeClient, "_appServer", _mockAppServer);
+			_dbUpgradeClient, "_appServer", _appServer);
 
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -243,7 +243,7 @@ public class DBUpgradeClientTest {
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.setFieldValue(
-			_dbUpgradeClient, "_appServer", _mockAppServer);
+			_dbUpgradeClient, "_appServer", _appServer);
 
 		ReflectionTestUtil.invoke(
 			_dbUpgradeClient, "_verifyPortalUpgradeDatabaseProperties",
@@ -289,7 +289,7 @@ public class DBUpgradeClientTest {
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
 
 		ReflectionTestUtil.setFieldValue(
-			_dbUpgradeClient, "_appServer", _mockAppServer);
+			_dbUpgradeClient, "_appServer", _appServer);
 
 		Path path = _shieldedContainerLib.toPath();
 
@@ -438,7 +438,7 @@ public class DBUpgradeClientTest {
 	}
 
 	private static File _liferayHomeDir;
-	private static final AppServer _mockAppServer = Mockito.mock(
+	private static final AppServer _appServer = Mockito.mock(
 		AppServer.class);
 	private static File _rootDir;
 	private static File _shieldedContainerLib;

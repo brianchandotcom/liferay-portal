@@ -56,7 +56,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 
 <c:choose>
 	<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
-		<p class="article-version-status <%= (article != null) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />articleVersionStatusWrapper">
+		<p class="article-version-status <%= ((article == null) || article.isNew()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />articleVersionStatusWrapper">
 			<b><liferay-ui:message key="version" /></b>: <span id="<portlet:namespace />displayedVersion"><%= (article != null) ? article.getVersion() : "" %></span>
 
 			<c:if test="<%= article != null %>">
@@ -137,7 +137,7 @@ DDMStructure ddmStructure = journalEditArticleDisplayContext.getDDMStructure();
 
 		<c:choose>
 			<c:when test='<%= FeatureFlagManagerUtil.isEnabled("LPD-11228") %>'>
-				<p class="article-id <%= (article != null) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />articleIdWrapper">
+				<p class="article-id <%= ((article == null) || article.isNew()) ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />articleIdWrapper">
 					<b><liferay-ui:message key="id" /></b>: <span id="<portlet:namespace />displayedArticleId"><%= (article != null) ? article.getArticleId() : "" %></span>
 				</p>
 			</c:when>

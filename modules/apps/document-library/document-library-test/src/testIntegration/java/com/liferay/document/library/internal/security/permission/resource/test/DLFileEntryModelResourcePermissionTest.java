@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -46,12 +47,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.springframework.mock.web.MockHttpServletRequest;
 
 /**
  * @author Jürgen Kappler
@@ -71,6 +75,18 @@ public class DLFileEntryModelResourcePermissionTest {
 		_user = UserTestUtil.addUser();
 
 		_permissionChecker = PermissionCheckerFactoryUtil.create(_user);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), TestPropsValues.getUserId());
+
+		_serviceContext.setRequest(new MockHttpServletRequest());
+
+		ServiceContextThreadLocal.pushServiceContext(_serviceContext);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	@Test
@@ -105,10 +121,6 @@ public class DLFileEntryModelResourcePermissionTest {
 	public void testContainsWithScheduledFileEntryAndRegularUser()
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				_group.getGroupId(), TestPropsValues.getUserId());
-
 		DLFileEntry dlFileEntry = _dlFileEntryLocalService.addFileEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -118,13 +130,13 @@ public class DLFileEntryModelResourcePermissionTest {
 			new ByteArrayInputStream(new byte[0]), 0,
 			new Date(System.currentTimeMillis() + Time.MONTH),
 			new Date(System.currentTimeMillis() + Time.YEAR), new Date(),
-			serviceContext);
+			_serviceContext);
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
 		_dlFileEntryLocalService.updateStatus(
 			TestPropsValues.getUserId(), dlFileVersion.getFileVersionId(),
-			WorkflowConstants.STATUS_SCHEDULED, serviceContext,
+			WorkflowConstants.STATUS_SCHEDULED, _serviceContext,
 			new HashMap<>());
 
 		Assert.assertFalse(
@@ -176,6 +188,8 @@ public class DLFileEntryModelResourcePermissionTest {
 
 	@Inject
 	private RoleLocalService _roleLocalService;
+
+	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
 	private User _user;

@@ -33,6 +33,7 @@ const SPACES_URL = `${window.location.origin}/o/headless-asset-library/v1.0/asse
 
 const SUCCESS_MESSAGE_KEYS = {
 	copy: 'x-was-successfully-copied-to-x',
+	move: 'x-was-successfully-moved-to-x',
 };
 
 const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
@@ -152,7 +153,10 @@ function FolderItemSelectorModalContent({
 				);
 			}
 			else {
-
+				promise = FolderService.moveFolder(
+					itemData.embedded.id,
+					folder.id
+				);
 			}
 
 			promise.then(({error}: {error: any}) => {

@@ -136,7 +136,7 @@ export default function AssetsFDSPropsTransformer({
 			/>
 		),
 		itemsActions: itemsActions.map((action) => {
-			if (action?.data?.id === 'copy') {
+			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
 				return {
 					...action,
 					isVisible: () => true,
@@ -215,7 +215,7 @@ export default function AssetsFDSPropsTransformer({
 			items: any;
 			loadData: () => {};
 		}) {
-			if (action?.data?.id === 'copy') {
+			if (action?.data?.id === 'copy' || action?.data?.id === 'move') {
 				openFolderItemSelectorAction(
 					action?.data?.id,
 					additionalProps.assetLibraries,

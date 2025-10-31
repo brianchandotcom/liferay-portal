@@ -50,6 +50,15 @@ async function getFolder(folderId: string): Promise<TFolder> {
 	throw new Error(error);
 }
 
+async function moveFolder<DataType = unknown>(
+	objectEntryFolderId: number,
+	parentObjectEntryFolderId: number
+) {
+	return await ApiHelper.post<DataType>(
+		`${OBJECT_ENTRY_FOLDER_URL}/${objectEntryFolderId}/by-parent-object-entry-folder-id/${parentObjectEntryFolderId}/move`
+	);
+}
+
 async function updateFolder(folderData: TFolder) {
 	return await ApiHelper.patch(
 		folderData,
@@ -57,4 +66,4 @@ async function updateFolder(folderData: TFolder) {
 	);
 }
 
-export default {copyFolder, createFolder, getFolder, updateFolder};
+export default {copyFolder, createFolder, getFolder, moveFolder, updateFolder};

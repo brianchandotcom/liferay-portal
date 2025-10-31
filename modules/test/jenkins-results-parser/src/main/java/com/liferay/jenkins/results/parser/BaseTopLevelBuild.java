@@ -71,7 +71,12 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
-		addDownstreamBuild(BuildFactory.newBuild(this, downstreamBuildReport));
+		Build downstreamBuild = BuildFactory.newBuild(
+			this, downstreamBuildReport);
+
+		addDownstreamBuild(downstreamBuild);
+
+		downstreamBuild.saveBuildURLInBuildDatabase();
 	}
 
 	@Override
@@ -927,6 +932,8 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
+		boolean foundDownstreamBuilds = false;
+
 		BuildDatabase buildDatabase = getBuildDatabase();
 
 		Properties properties = buildDatabase.getProperties(
@@ -953,6 +960,28 @@ public abstract class BaseTopLevelBuild
 		if (!urlAxisNames.isEmpty()) {
 			addDownstreamBuilds(urlAxisNames);
 
+			foundDownstreamBuilds = true;
+		}
+
+		properties = buildDatabase.getProperties(
+			CACHED_BUILD_URLS_PROPERTIES_KEY);
+
+		Set<String> cachedBuildURLs = properties.stringPropertyNames();
+
+		if (!cachedBuildURLs.isEmpty()) {
+			for (String cachedBuildURL : cachedBuildURLs) {
+				Build downstreamBuild = BuildFactory.newBuild(
+					cachedBuildURL, this, null);
+
+				downstreamBuild.setBuildCached(true);
+
+				addDownstreamBuild(downstreamBuild);
+			}
+
+			foundDownstreamBuilds = true;
+		}
+
+		if (foundDownstreamBuilds) {
 			return;
 		}
 

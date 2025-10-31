@@ -438,6 +438,8 @@ public abstract class BaseBuild implements Build {
 		JSONObject buildReportJSONObject = new JSONObject();
 
 		buildReportJSONObject.put(
+			"buildCached", String.valueOf(isBuildCached())
+		).put(
 			"buildParameters", getParameters()
 		).put(
 			"buildURL", getBuildURL()
@@ -1534,11 +1536,7 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public boolean isBuildCached() {
-		if (_cachedDownstreamBuildReport == null) {
-			return false;
-		}
-
-		return true;
+		return _buildCached;
 	}
 
 	@Override
@@ -1680,6 +1678,11 @@ public abstract class BaseBuild implements Build {
 		}
 
 		_archiveRootDir = archiveRootDir;
+	}
+
+	@Override
+	public void setBuildCached(boolean buildCached) {
+		_buildCached = buildCached;
 	}
 
 	@Override
@@ -2083,8 +2086,8 @@ public abstract class BaseBuild implements Build {
 		_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
 
 		if (cachedDownstreamBuildReport != null) {
-			_buildURL = String.valueOf(
-				cachedDownstreamBuildReport.getBuildURL());
+			_buildCached = true;
+			_buildURL = cachedDownstreamBuildReport.getBuildURL() + "/";
 			_duration = cachedDownstreamBuildReport.getDuration();
 			_jobName = cachedDownstreamBuildReport.getJobName();
 			_parameters = cachedDownstreamBuildReport.getBuildParameters();
@@ -3104,6 +3107,9 @@ public abstract class BaseBuild implements Build {
 	protected static final String BUILD_URLS_PROPERTIES_KEY =
 		"build-urls.properties";
 
+	protected static final String CACHED_BUILD_URLS_PROPERTIES_KEY =
+		"cached-build-urls.properties";
+
 	protected static final int PIXELS_WIDTH_INDENT = 35;
 
 	protected static final Pattern jobNamePattern = Pattern.compile(
@@ -3621,6 +3627,7 @@ public abstract class BaseBuild implements Build {
 	private final Map<String, BranchInformation> _branchInformationMap =
 		new HashMap<>();
 	private String _branchName;
+	private boolean _buildCached;
 	private BuildDatabase _buildDatabase;
 	private String _buildDescription;
 	private Boolean _buildDurationsEnabled;

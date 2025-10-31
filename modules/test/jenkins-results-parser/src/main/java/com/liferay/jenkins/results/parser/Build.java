@@ -205,6 +205,8 @@ public interface Build {
 
 	public void setArchiveRootDir(File archiveRootDir);
 
+	public void setBuildCached(boolean buildCached);
+
 	public void setBuildURL(String buildURL);
 
 	public void setCompareToUpstream(boolean compareToUpstream);

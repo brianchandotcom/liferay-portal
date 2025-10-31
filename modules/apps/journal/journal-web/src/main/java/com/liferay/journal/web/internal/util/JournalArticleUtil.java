@@ -322,7 +322,9 @@ public class JournalArticleUtil {
 			article = journalArticleService.getArticle(
 				groupId, articleId, version);
 
-			if (article.isDraft() && (version == 1.0)) {
+			if (article.isDraft() && (version == 1.0) &&
+				(displayDateYear == 0)) {
+
 				Calendar calendar = CalendarFactoryUtil.getCalendar(
 					serviceContext.getTimeZone());
 

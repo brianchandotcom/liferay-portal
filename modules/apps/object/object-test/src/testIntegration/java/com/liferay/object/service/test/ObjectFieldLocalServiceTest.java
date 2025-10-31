@@ -1564,7 +1564,7 @@ public class ObjectFieldLocalServiceTest {
 					).build())
 			).build());
 
-		String actionId =
+		String attachmentDownloadActionKey =
 			attachmentObjectField.getAttachmentDownloadActionKey();
 
 		ObjectDefinition objectDefinition =
@@ -1572,10 +1572,11 @@ public class ObjectFieldLocalServiceTest {
 
 		Assert.assertNotNull(
 			_resourceActionLocalService.fetchResourceAction(
-				objectDefinition.getClassName(), actionId));
+				objectDefinition.getClassName(), attachmentDownloadActionKey));
 		Assert.assertNotNull(
 			_ploEntryLocalService.fetchPLOEntry(
-				objectDefinition.getCompanyId(), "action." + actionId,
+				objectDefinition.getCompanyId(),
+				"action." + attachmentDownloadActionKey,
 				attachmentObjectField.getDefaultLanguageId()));
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
@@ -1616,10 +1617,11 @@ public class ObjectFieldLocalServiceTest {
 			() -> _dlAppLocalService.getFileEntry(persistedFileEntryId));
 		Assert.assertNull(
 			_resourceActionLocalService.fetchResourceAction(
-				objectDefinition.getClassName(), actionId));
+				objectDefinition.getClassName(), attachmentDownloadActionKey));
 		Assert.assertNull(
 			_ploEntryLocalService.fetchPLOEntry(
-				objectDefinition.getCompanyId(), "action." + actionId,
+				objectDefinition.getCompanyId(),
+				"action." + attachmentDownloadActionKey,
 				attachmentObjectField.getDefaultLanguageId()));
 
 		// Delete object field business type auto increment

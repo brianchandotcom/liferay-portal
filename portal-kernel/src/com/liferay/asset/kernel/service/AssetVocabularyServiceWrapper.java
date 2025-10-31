@@ -328,29 +328,33 @@ public class AssetVocabularyServiceWrapper
 
 	@Override
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, java.util.Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long vocabularyId,
+			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String settings)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings);
+			externalReferenceCode, vocabularyId, titleMap, descriptionMap,
+			settings);
 	}
 
 	@Override
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, java.util.Map<java.util.Locale, String> titleMap,
+			String externalReferenceCode, long vocabularyId,
+			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String settings, int visibilityType)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, titleMap, descriptionMap, settings, visibilityType);
+			externalReferenceCode, vocabularyId, titleMap, descriptionMap,
+			settings, visibilityType);
 	}
 
 	@Override
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, String title,
+			String externalReferenceCode, long vocabularyId, String title,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			String settings, int visibilityType,
@@ -358,8 +362,8 @@ public class AssetVocabularyServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetVocabularyService.updateVocabulary(
-			vocabularyId, title, titleMap, descriptionMap, settings,
-			visibilityType, serviceContext);
+			externalReferenceCode, vocabularyId, title, titleMap,
+			descriptionMap, settings, visibilityType, serviceContext);
 	}
 
 	@Override

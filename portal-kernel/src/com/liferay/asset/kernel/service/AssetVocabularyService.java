@@ -201,20 +201,21 @@ public interface AssetVocabularyService extends BaseService {
 		throws PortalException;
 
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings)
+			String externalReferenceCode, long vocabularyId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings)
 		throws PortalException;
 
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			int visibilityType)
+			String externalReferenceCode, long vocabularyId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings, int visibilityType)
 		throws PortalException;
 
 	public AssetVocabulary updateVocabulary(
-			long vocabularyId, String title, Map<Locale, String> titleMap,
-			Map<Locale, String> descriptionMap, String settings,
-			int visibilityType, ServiceContext serviceContext)
+			String externalReferenceCode, long vocabularyId, String title,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			String settings, int visibilityType, ServiceContext serviceContext)
 		throws PortalException;
 
 }

@@ -9,6 +9,7 @@ import java.net.URL;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -18,6 +19,8 @@ import org.json.JSONObject;
 public interface BuildReport {
 
 	public int getBuildNumber();
+
+	public Map<String, String> getBuildParameters();
 
 	public JSONObject getBuildReportJSONObject();
 

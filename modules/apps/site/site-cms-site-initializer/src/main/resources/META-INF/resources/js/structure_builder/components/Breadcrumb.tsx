@@ -42,6 +42,7 @@ export default function Breadcrumb({uuid}: {uuid: Uuid}) {
 				return {
 					active: true,
 					label: item.label,
+					onClick: () => {},
 				};
 			}
 

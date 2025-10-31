@@ -262,13 +262,15 @@ public class FragmentCollectionFilterCategoryDisplayContext {
 	private long _getScopeGroupId(String scopeExternalReferenceCode)
 		throws PortalException {
 
-		if (Validator.isNotNull(scopeExternalReferenceCode)) {
-			Group group = GroupServiceUtil.fetchGroupByExternalReferenceCode(
-				scopeExternalReferenceCode, _fragmentEntryLink.getCompanyId());
+		if (Validator.isNull(scopeExternalReferenceCode)) {
+			return _fragmentEntryLink.getGroupId();
+		}
 
-			if (group != null) {
-				return group.getGroupId();
-			}
+		Group group = GroupServiceUtil.fetchGroupByExternalReferenceCode(
+			scopeExternalReferenceCode, _fragmentEntryLink.getCompanyId());
+
+		if (group != null) {
+			return group.getGroupId();
 		}
 
 		return _fragmentEntryLink.getGroupId();

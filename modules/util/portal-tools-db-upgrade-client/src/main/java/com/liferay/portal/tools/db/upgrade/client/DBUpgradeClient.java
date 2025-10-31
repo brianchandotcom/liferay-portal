@@ -429,12 +429,9 @@ public class DBUpgradeClient {
 			_appServer.getPortalShieldedContainerLibDir();
 
 		if (portalShieldedContainerLibDir != null) {
-			Path portalDaoDBPath = portalShieldedContainerLibDir.toPath(
-			).resolve(
-				"com.liferay.portal.dao.db.jar"
-			);
+			Path path = portalShieldedContainerLibDir.toPath();
 
-			if (Files.exists(portalDaoDBPath)) {
+			if (Files.exists(path.resolve("com.liferay.portal.dao.db.jar"))) {
 				return _DATABASE_TYPES_DXP;
 			}
 		}

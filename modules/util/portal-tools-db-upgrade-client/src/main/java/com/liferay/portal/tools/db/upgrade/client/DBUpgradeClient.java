@@ -422,7 +422,7 @@ public class DBUpgradeClient {
 
 	private String[] _getDBTypes() {
 		if (_appServer == null) {
-			return _PORTAL_DATABASE_TYPES;
+			return _DATABASE_TYPES_PORTAL;
 		}
 
 		File portalShieldedContainerLibDir =
@@ -435,11 +435,11 @@ public class DBUpgradeClient {
 			);
 
 			if (Files.exists(portalDaoDBPath)) {
-				return _DXP_DATABASE_TYPES;
+				return _DATABASE_TYPES_DXP;
 			}
 		}
 
-		return _PORTAL_DATABASE_TYPES;
+		return _DATABASE_TYPES_PORTAL;
 	}
 
 	private File _getResolvedDir(
@@ -959,7 +959,7 @@ public class DBUpgradeClient {
 		"jboss", "tomcat", "weblogic", "wildfly"
 	};
 
-	private static final String[] _DXP_DATABASE_TYPES = {
+	private static final String[] _DATABASE_TYPES_DXP = {
 		"db2", "mariadb", "mysql", "oracle", "postgresql", "sqlserver"
 	};
 
@@ -967,7 +967,7 @@ public class DBUpgradeClient {
 
 	private static final String _JAVA_HOME = System.getenv("JAVA_HOME");
 
-	private static final String[] _PORTAL_DATABASE_TYPES = {
+	private static final String[] _DATABASE_TYPES_PORTAL = {
 		"mariadb", "mysql", "postgresql"
 	};
 

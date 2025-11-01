@@ -7,6 +7,7 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.contributor.util.FragmentCollectionContributorRegistryUtil;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.FragmentRenderer;
@@ -20,12 +21,13 @@ import com.liferay.headless.admin.site.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.util.FragmentConfigurationFieldValuesUtil;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructureUtil;
 import com.liferay.headless.admin.site.internal.util.LogUtil;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -151,7 +153,7 @@ public class FragmentLayoutStructureItemImporter
 					fragmentInstancePageElementDefinition.getJs()),
 				GetterUtil.getString(
 					fragmentInstancePageElementDefinition.getConfiguration()),
-				StringPool.BLANK,
+				_getEditableValues(fragmentInstancePageElementDefinition),
 				fragmentInstancePageElementDefinition.getNamespace(), 0,
 				fragmentEntryReference.getRendererKey(),
 				_getType(fragmentInstancePageElementDefinition),
@@ -161,6 +163,22 @@ public class FragmentLayoutStructureItemImporter
 			serviceContext.setCreateDate(createDate);
 			serviceContext.setUuid(uuid);
 		}
+	}
+
+	private String _getEditableValues(
+			FragmentInstancePageElementDefinition
+				fragmentInstancePageElementDefinition)
+		throws Exception {
+
+		return JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			FragmentConfigurationFieldValuesUtil.
+				getFreeMarkerFragmentEntryProcessorJSONObject(
+					fragmentInstancePageElementDefinition.getConfiguration(),
+					fragmentInstancePageElementDefinition.
+						getFragmentConfigurationFieldValues())
+		).toString();
 	}
 
 	private FragmentEntryReference _getFragmentEntryReference(
@@ -314,7 +332,6 @@ public class FragmentLayoutStructureItemImporter
 			_getOriginalFragmentEntryLinkERC(
 				fragmentInstancePageElementDefinition,
 				layoutStructureItemImporterContext));
-
 		fragmentEntryLink.setFragmentEntryERC(
 			fragmentEntryReference.getFragmentEntryERC());
 		fragmentEntryLink.setFragmentEntryScopeERC(
@@ -331,6 +348,8 @@ public class FragmentLayoutStructureItemImporter
 		fragmentEntryLink.setConfiguration(
 			GetterUtil.getString(
 				fragmentInstancePageElementDefinition.getConfiguration()));
+		fragmentEntryLink.setEditableValues(
+			_getEditableValues(fragmentInstancePageElementDefinition));
 		fragmentEntryLink.setNamespace(
 			fragmentInstancePageElementDefinition.getNamespace());
 		fragmentEntryLink.setRendererKey(

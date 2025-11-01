@@ -71,6 +71,7 @@ import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstance;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetInstancePageElementDefinition;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPermission;
 import com.liferay.headless.admin.site.client.problem.Problem;
+import com.liferay.headless.admin.site.resource.v1_0.test.util.FragmentConfigurationTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageElementsTestUtil;
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalFolderConstants;
@@ -92,6 +93,8 @@ import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -536,7 +539,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private FragmentEntry _addFragmentEntry(
-			long groupId, ServiceContext serviceContext)
+			String configuration, long groupId, ServiceContext serviceContext)
 		throws Exception {
 
 		FragmentCollection fragmentCollection =
@@ -553,7 +556,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				"<h1 data-lfr-editable-id=\"element-text\" ",
 				"data-lfr-editable-type=\"text\">",
 				RandomTestUtil.randomString(), "</h1>"),
-			StringPool.BLANK, false, "{}", null, 0, false, false,
+			StringPool.BLANK, false, configuration, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
@@ -2181,15 +2184,18 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
 					Collections.emptyMap(),
 					_addFragmentEntry(
-						irrelevantGroup.getGroupId(), serviceContext),
+						null, irrelevantGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
 					Collections.emptyMap(),
-					_addFragmentEntry(testGroup.getGroupId(), serviceContext),
+					_addFragmentEntry(
+						null, testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration();
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementAndMissingOptionalReference(
 			externalReferenceCode,
@@ -2233,6 +2239,115 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					PageElementsTestUtil.
 						getFragmentInstancePageElementDefinition(
 							Collections.emptyMap(), fragmentRenderer))));
+	}
+
+	private void _testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration()
+		throws Exception {
+
+		String checkboxFieldName = RandomTestUtil.randomString();
+		String lengthFieldName = RandomTestUtil.randomString();
+		String selectFieldName = RandomTestUtil.randomString();
+
+		String selectValue1 = RandomTestUtil.randomString();
+		String selectValue2 = RandomTestUtil.randomString();
+		String selectValue3 = RandomTestUtil.randomString();
+
+		String textFieldName = RandomTestUtil.randomString();
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
+			FragmentConfigurationTestUtil.getConfiguration(
+				HashMapBuilder.<String, Map<String, Object>>put(
+					checkboxFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomBoolean()
+					).put(
+						"type", "checkbox"
+					).build()
+				).put(
+					lengthFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomString()
+					).put(
+						"type", "length"
+					).build()
+				).put(
+					selectFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", selectValue3
+					).put(
+						"type", "select"
+					).put(
+						"typeOptions",
+						JSONUtil.put(
+							"validValues",
+							JSONUtil.putAll(
+								JSONUtil.put(
+									"label", RandomTestUtil.randomString()
+								).put(
+									"value", selectValue1
+								),
+								JSONUtil.put(
+									"label", RandomTestUtil.randomString()
+								).put(
+									"value", selectValue2
+								),
+								JSONUtil.put(
+									"label", RandomTestUtil.randomString()
+								).put(
+									"value", selectValue3
+								)))
+					).build()
+				).put(
+					textFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomBoolean()
+					).put(
+						"type", "text"
+					).build()
+				).build()),
+			HashMapBuilder.<String, Object>put(
+				checkboxFieldName, RandomTestUtil.randomBoolean()
+			).put(
+				lengthFieldName, RandomTestUtil.randomString()
+			).put(
+				selectFieldName, selectValue1
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				checkboxFieldName, RandomTestUtil.randomBoolean()
+			).put(
+				lengthFieldName, RandomTestUtil.randomString()
+			).put(
+				selectFieldName, selectValue2
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			).build());
+	}
+
+	private void
+			_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
+				String configuration,
+				Map<String, Object>... configurationValuesMaps)
+		throws Exception {
+
+		String externalReferenceCode = RandomTestUtil.randomString();
+
+		FragmentEntry fragmentEntry = _addFragmentEntry(
+			configuration, testGroup.getGroupId(),
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+
+		for (Map<String, Object> configurationValuesMap :
+				configurationValuesMaps) {
+
+			_testPutSitePageSpecificationPageExperiencePageElement(
+				_getFragmentInstancePageElement(
+					externalReferenceCode,
+					PageElementsTestUtil.
+						getFragmentInstancePageElementDefinition(
+							configurationValuesMap, fragmentEntry,
+							testGroup.getGroupId())));
+		}
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()
@@ -2314,6 +2429,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Inject
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
 
 	private Layout _layout;
 

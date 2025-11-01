@@ -36,7 +36,7 @@ describe('ResetPermissionModalContent', () => {
 		resetAssetPermissionSpy.mockRestore();
 	});
 
-	it('handles OK button and successfully resets permissions', async () => {
+	it('handles Confirm button and successfully resets permissions', async () => {
 		resetAssetPermissionSpy.mockResolvedValue({});
 
 		const loadDataFn = jest.fn();
@@ -53,12 +53,12 @@ describe('ResetPermissionModalContent', () => {
 
 		const modalConfig = (Liferay.Util.openModal as jest.Mock).mock
 			.calls[0][0];
-		const okButton = modalConfig.buttons.find(
-			(button: any) => button.label === 'ok'
+		const confirmButton = modalConfig.buttons.find(
+			(button: any) => button.label === 'confirm'
 		);
 		const processCloseFn = jest.fn();
 
-		await okButton.onClick({processClose: processCloseFn});
+		await confirmButton.onClick({processClose: processCloseFn});
 
 		await waitFor(() => {
 			expect(resetAssetPermissionSpy).toHaveBeenCalledWith({
@@ -74,7 +74,7 @@ describe('ResetPermissionModalContent', () => {
 		});
 	});
 
-	it('handles OK button and shows error on failure', async () => {
+	it('handles Confirm button and shows error on failure', async () => {
 		const error = new Error('Failed to reset');
 		resetAssetPermissionSpy.mockRejectedValue(error);
 
@@ -91,12 +91,12 @@ describe('ResetPermissionModalContent', () => {
 
 		const modalConfig = (Liferay.Util.openModal as jest.Mock).mock
 			.calls[0][0];
-		const okButton = modalConfig.buttons.find(
-			(button: any) => button.label === 'ok'
+		const confirmButton = modalConfig.buttons.find(
+			(button: any) => button.label === 'confirm'
 		);
 		const processCloseFn = jest.fn();
 
-		await okButton.onClick({processClose: processCloseFn});
+		await confirmButton.onClick({processClose: processCloseFn});
 
 		await waitFor(() => {
 			expect(resetAssetPermissionSpy).toHaveBeenCalledWith({

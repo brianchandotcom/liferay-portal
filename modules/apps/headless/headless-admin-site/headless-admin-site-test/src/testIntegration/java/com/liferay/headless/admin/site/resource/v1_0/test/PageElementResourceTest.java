@@ -553,7 +553,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				"<h1 data-lfr-editable-id=\"element-text\" ",
 				"data-lfr-editable-type=\"text\">",
 				RandomTestUtil.randomString(), "</h1>"),
-			StringPool.BLANK, false, StringPool.BLANK, null, 0, false, false,
+			StringPool.BLANK, false, "{}", null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
@@ -1600,7 +1600,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		fragmentEntry.setHtml(StringPool.BLANK);
 		fragmentEntry.setJs(StringPool.BLANK);
 		fragmentEntry.setCacheable(RandomTestUtil.randomBoolean());
-		fragmentEntry.setConfiguration(StringPool.BLANK);
+		fragmentEntry.setConfiguration("{}");
 		fragmentEntry.setType(FragmentConstants.TYPE_COMPONENT);
 		fragmentEntry.setTypeOptions(StringPool.BLANK);
 
@@ -2161,11 +2161,13 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
-					"BASIC_COMPONENT-button", testGroup.getGroupId())));
+					Collections.emptyMap(), "BASIC_COMPONENT-button",
+					testGroup.getGroupId())));
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(),
 					"com.liferay.fragment.internal.renderer." +
 						"ContentObjectFragmentRenderer",
 					testGroup.getGroupId())));
@@ -2177,6 +2179,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(),
 					_addFragmentEntry(
 						irrelevantGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
@@ -2184,6 +2187,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			_getFragmentInstancePageElement(
 				externalReferenceCode,
 				PageElementsTestUtil.getFragmentInstancePageElementDefinition(
+					Collections.emptyMap(),
 					_addFragmentEntry(testGroup.getGroupId(), serviceContext),
 					testGroup.getGroupId())));
 
@@ -2213,7 +2217,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					externalReferenceCode,
 					PageElementsTestUtil.
 						getFragmentInstancePageElementDefinition(
-							fragmentEntry, testGroup.getGroupId()))));
+							Collections.emptyMap(), fragmentEntry,
+							testGroup.getGroupId()))));
 	}
 
 	private void
@@ -2227,7 +2232,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					externalReferenceCode,
 					PageElementsTestUtil.
 						getFragmentInstancePageElementDefinition(
-							fragmentRenderer))));
+							Collections.emptyMap(), fragmentRenderer))));
 	}
 
 	private void _testPutSitePageSpecificationPageExperiencePageElementWithGridPageElement()

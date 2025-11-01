@@ -28,11 +28,14 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageElementDefinition;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -42,6 +45,7 @@ public class PageElementsTestUtil {
 
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
+			Map<String, Object> configurationValuesMap,
 			FragmentEntry fragmentEntry, long scopeGroupId) {
 
 		return new FragmentInstancePageElementDefinition() {
@@ -52,6 +56,13 @@ public class PageElementsTestUtil {
 					() -> new String[] {RandomTestUtil.randomString()});
 				setCustomCSS(RandomTestUtil::randomString);
 				setDatePropagated(RandomTestUtil::nextDate);
+				setFragmentConfigurationFieldValues(
+					() ->
+						FragmentConfigurationFieldValueTestUtil.
+							getFragmentConfigurationFieldValuesMap(
+								JSONFactoryUtil.createJSONObject(
+									fragmentEntry.getConfiguration()),
+								configurationValuesMap));
 				setFragmentInstanceExternalReferenceCode(
 					RandomTestUtil::randomString);
 				setFragmentReference(
@@ -98,21 +109,29 @@ public class PageElementsTestUtil {
 
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
+			Map<String, Object> configurationValuesMap,
 			FragmentRenderer fragmentRenderer) {
+
+		JSONObject configurationJSONObject =
+			fragmentRenderer.getConfigurationJSONObject(
+				new DefaultFragmentRendererContext(null));
 
 		return new FragmentInstancePageElementDefinition() {
 			{
 				setConfiguration(
 					() -> GetterUtil.getString(
-						JSONFactoryUtil.toString(
-							fragmentRenderer.getConfigurationJSONObject(
-								new DefaultFragmentRendererContext(null)))));
-
+						JSONFactoryUtil.toString(configurationJSONObject)));
 				setCss(() -> StringPool.BLANK);
 				setCssClasses(
 					() -> new String[] {RandomTestUtil.randomString()});
 				setCustomCSS(RandomTestUtil::randomString);
 				setDatePropagated(RandomTestUtil::nextDate);
+				setFragmentConfigurationFieldValues(
+					() ->
+						FragmentConfigurationFieldValueTestUtil.
+							getFragmentConfigurationFieldValuesMap(
+								configurationJSONObject,
+								configurationValuesMap));
 				setFragmentInstanceExternalReferenceCode(
 					RandomTestUtil::randomString);
 				setFragmentReference(
@@ -139,21 +158,23 @@ public class PageElementsTestUtil {
 
 	public static FragmentInstancePageElementDefinition
 		getFragmentInstancePageElementDefinition(
-			String key, long scopeGroupId) {
+			Map<String, Object> configurationValuesMap, String key,
+			long scopeGroupId) {
 
 		FragmentEntry fragmentEntry =
 			FragmentCollectionContributorRegistryUtil.getFragmentEntry(key);
 
 		if (fragmentEntry != null) {
 			return getFragmentInstancePageElementDefinition(
-				fragmentEntry, scopeGroupId);
+				configurationValuesMap, fragmentEntry, scopeGroupId);
 		}
 
 		FragmentRenderer fragmentRenderer =
 			FragmentRendererRegistryUtil.getFragmentRenderer(key);
 
 		if (fragmentRenderer != null) {
-			return getFragmentInstancePageElementDefinition(fragmentRenderer);
+			return getFragmentInstancePageElementDefinition(
+				configurationValuesMap, fragmentRenderer);
 		}
 
 		return null;
@@ -234,7 +255,8 @@ public class PageElementsTestUtil {
 
 		if (Objects.equals(type, PageElementDefinition.Type.FRAGMENT)) {
 			return getFragmentInstancePageElementDefinition(
-				"BASIC_COMPONENT-heading", scopeGroupId);
+				Collections.emptyMap(), "BASIC_COMPONENT-heading",
+				scopeGroupId);
 		}
 
 		if (Objects.equals(

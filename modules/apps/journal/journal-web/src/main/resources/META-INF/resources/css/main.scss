@@ -300,4 +300,16 @@ $productMenuWidth: 320px;
 	.lfr-lock-error-indicator {
 		cursor: pointer;
 	}
+
+	.form-group-sm .btn {
+		&.rounded-0-left {
+			border-bottom-left-radius: 0;
+			border-top-left-radius: 0;
+		}
+
+		&.rounded-0-right {
+			border-bottom-right-radius: 0;
+			border-top-right-radius: 0;
+		}
+	}
 }

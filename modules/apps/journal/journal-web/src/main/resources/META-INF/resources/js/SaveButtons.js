@@ -230,33 +230,27 @@ export default function SaveButtons({
 				</ClayButton>
 			) : null}
 
+			<ClayButton
+				className="rounded-0-right"
+				disabled={saveButtonDisabled}
+				displayType="primary"
+				onClick={() => onClick(ACTION_PUBLISH)}
+				title={publishButtonLabel}
+				type="submit"
+			>
+				{publishButtonLabel}
+			</ClayButton>
+
 			<ClayDropDown
 				hasLeftSymbols
 				trigger={
 					<ClayButton
-						aria-label={
-							workflowEnabled
-								? Liferay.Language.get(
-										'select-and-confirm-submit-for-workflow-settings'
-									)
-								: Liferay.Language.get(
-										'select-and-confirm-publish-settings'
-									)
-						}
+						aria-label={Liferay.Language.get('publish-options')}
+						className="border-left px-2 rounded-0-left"
 						disabled={saveButtonDisabled}
-						title={
-							workflowEnabled
-								? Liferay.Language.get(
-										'select-and-confirm-submit-for-workflow-settings'
-									)
-								: Liferay.Language.get(
-										'select-and-confirm-publish-settings'
-									)
-						}
+						title={Liferay.Language.get('publish-options')}
 					>
-						{publishButtonLabel}
-
-						<span className="inline-item inline-item-after">
+						<span className="inline-item">
 							<ClayIcon symbol="caret-bottom" />
 						</span>
 					</ClayButton>

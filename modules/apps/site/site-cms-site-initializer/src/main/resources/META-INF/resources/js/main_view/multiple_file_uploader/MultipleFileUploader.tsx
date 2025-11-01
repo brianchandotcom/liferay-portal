@@ -240,7 +240,7 @@ export default function MultipleFileUploader({
 										>
 											<ClayLayout.ContentCol>
 												<ClaySticker
-													className="border border-secondary"
+													className="sticker-border-secondary"
 													displayType="secondary"
 													size="lg"
 												>

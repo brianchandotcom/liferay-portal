@@ -174,7 +174,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 			// This may happen when fields in the structure have been
 			// rearranged. In this case, look for the field starting from the
-			// root again. See LPP-69008.
+			// root again. See LPD-69008.
 
 			dynamicElementElements = _getDynamicElementElements(
 				rootElement, ddmFormFieldName);

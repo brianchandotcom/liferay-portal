@@ -98,6 +98,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -2257,6 +2258,25 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String selectValue2 = RandomTestUtil.randomString();
 		String selectValue3 = RandomTestUtil.randomString();
 
+		JSONObject typeOptionsJSONObject = JSONUtil.put(
+			"validValues",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"label", RandomTestUtil.randomString()
+				).put(
+					"value", selectValue1
+				),
+				JSONUtil.put(
+					"label", RandomTestUtil.randomString()
+				).put(
+					"value", selectValue2
+				),
+				JSONUtil.put(
+					"label", RandomTestUtil.randomString()
+				).put(
+					"value", selectValue3
+				)));
+
 		String textFieldName = RandomTestUtil.randomString();
 
 		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
@@ -2282,30 +2302,72 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					).put(
 						"type", "select"
 					).put(
-						"typeOptions",
-						JSONUtil.put(
-							"validValues",
-							JSONUtil.putAll(
-								JSONUtil.put(
-									"label", RandomTestUtil.randomString()
-								).put(
-									"value", selectValue1
-								),
-								JSONUtil.put(
-									"label", RandomTestUtil.randomString()
-								).put(
-									"value", selectValue2
-								),
-								JSONUtil.put(
-									"label", RandomTestUtil.randomString()
-								).put(
-									"value", selectValue3
-								)))
+						"typeOptions", typeOptionsJSONObject
 					).build()
 				).put(
 					textFieldName,
 					HashMapBuilder.<String, Object>put(
 						"defaultValue", RandomTestUtil.randomBoolean()
+					).put(
+						"type", "text"
+					).build()
+				).build()),
+			HashMapBuilder.<String, Object>put(
+				checkboxFieldName, RandomTestUtil.randomBoolean()
+			).put(
+				lengthFieldName, RandomTestUtil.randomString()
+			).put(
+				selectFieldName, selectValue1
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.<String, Object>put(
+				checkboxFieldName, RandomTestUtil.randomBoolean()
+			).put(
+				lengthFieldName, RandomTestUtil.randomString()
+			).put(
+				selectFieldName, selectValue2
+			).put(
+				textFieldName, RandomTestUtil.randomString()
+			).build());
+
+		_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
+			FragmentConfigurationTestUtil.getConfiguration(
+				HashMapBuilder.<String, Map<String, Object>>put(
+					checkboxFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomBoolean()
+					).put(
+						"localized", true
+					).put(
+						"type", "checkbox"
+					).build()
+				).put(
+					lengthFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomString()
+					).put(
+						"localized", true
+					).put(
+						"type", "length"
+					).build()
+				).put(
+					selectFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", selectValue3
+					).put(
+						"localized", true
+					).put(
+						"type", "select"
+					).put(
+						"typeOptions", typeOptionsJSONObject
+					).build()
+				).put(
+					textFieldName,
+					HashMapBuilder.<String, Object>put(
+						"defaultValue", RandomTestUtil.randomBoolean()
+					).put(
+						"localized", true
 					).put(
 						"type", "text"
 					).build()

@@ -2390,6 +2390,25 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				textFieldName, RandomTestUtil.randomString()
 			).build());
+
+		_assertProblemException(
+			"BAD_REQUEST", null,
+			() ->
+				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
+					FragmentConfigurationTestUtil.getConfiguration(
+						HashMapBuilder.<String, Map<String, Object>>put(
+							selectFieldName,
+							HashMapBuilder.<String, Object>put(
+								"defaultValue", selectValue3
+							).put(
+								"type", "select"
+							).put(
+								"typeOptions", typeOptionsJSONObject
+							).build()
+						).build()),
+					HashMapBuilder.<String, Object>put(
+						selectFieldName, RandomTestUtil.randomString()
+					).build()));
 	}
 
 	private void

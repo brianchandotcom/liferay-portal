@@ -14,6 +14,8 @@ import com.liferay.headless.admin.site.dto.v1_0.SelectFragmentConfigurationField
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentConfigurationFieldValueTypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.LocalizedValueUtil;
+import com.liferay.petra.function.UnsafeFunction;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 
@@ -71,8 +73,9 @@ public class FragmentConfigurationFieldValuesUtil {
 	}
 
 	private static Object _fromFragmentConfigurationFieldValue(
-		FragmentConfigurationFieldValue fragmentConfigurationFieldValue,
-		FragmentConfigurationField fragmentConfigurationField) {
+			FragmentConfigurationFieldValue fragmentConfigurationFieldValue,
+			FragmentConfigurationField fragmentConfigurationField)
+		throws Exception {
 
 		if (Objects.equals(
 				fragmentConfigurationFieldValue.getType(),
@@ -113,8 +116,21 @@ public class FragmentConfigurationFieldValuesUtil {
 					(SelectFragmentConfigurationFieldValue)
 						fragmentConfigurationFieldValue;
 
+			JSONObject typeOptionsJSONObject =
+				fragmentConfigurationField.getTypeOptionsJSONObject();
+
+			JSONArray validValuesJSONArray = typeOptionsJSONObject.getJSONArray(
+				"validValues");
+
 			return _getConfigurationObject(
 				fragmentConfigurationField.isLocalizable(),
+				value -> {
+					if (_isValidValue(validValuesJSONArray, value)) {
+						return value;
+					}
+
+					throw new UnsupportedOperationException();
+				},
 				selectFragmentConfigurationFieldValue.getValue(),
 				selectFragmentConfigurationFieldValue.getValue_i18n());
 		}
@@ -138,13 +154,37 @@ public class FragmentConfigurationFieldValuesUtil {
 	}
 
 	private static <T> Object _getConfigurationObject(
-		boolean localizable, T value, Map<String, T> valuesMap) {
+			boolean localizable, T value, Map<String, T> valuesMap)
+		throws Exception {
+
+		return _getConfigurationObject(
+			localizable, curValue -> curValue, value, valuesMap);
+	}
+
+	private static <T, R> Object _getConfigurationObject(
+			boolean localizable, UnsafeFunction<T, R, Exception> unsafeFunction,
+			T value, Map<String, T> valuesMap)
+		throws Exception {
 
 		if (!localizable) {
-			return value;
+			return unsafeFunction.apply(value);
 		}
 
-		return LocalizedValueUtil.toJSONObject(valuesMap, curValue -> curValue);
+		return LocalizedValueUtil.toJSONObject(valuesMap, unsafeFunction);
+	}
+
+	private static boolean _isValidValue(
+		JSONArray validValuesJSONArray, String value) {
+
+		for (int i = 0; i < validValuesJSONArray.length(); i++) {
+			JSONObject jsonObject = validValuesJSONArray.getJSONObject(i);
+
+			if (Objects.equals(jsonObject.getString("value"), value)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }

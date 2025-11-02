@@ -833,8 +833,8 @@ public class ClusterCacheReplicationTest {
 	}
 
 	private static void _setReplicateProperties(
-		PortalCache<?, ?> portalCache, String replicateProperty,
-		boolean value) {
+		PortalCache<?, ?> portalCache, String fieldName,
+		boolean fieldValue) {
 
 		PortalCacheListener<?, ?> portalCacheListener = _getPortalCacheListener(
 			_CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR, portalCache);
@@ -843,7 +843,7 @@ public class ClusterCacheReplicationTest {
 			portalCacheListener, "_portalCacheReplicator");
 
 		ReflectionTestUtil.setFieldValue(
-			portalCacheReplicator, replicateProperty, value);
+			portalCacheReplicator, fieldName, fieldValue);
 	}
 
 	private static final String _CLASS_NAME_EHCACHE_PORTAL_CACHE_REPLICATOR =

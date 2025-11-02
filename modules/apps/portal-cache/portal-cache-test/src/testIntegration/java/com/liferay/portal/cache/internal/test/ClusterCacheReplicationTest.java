@@ -95,13 +95,14 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testDoNotReplicatePut() throws Exception {
+
+		// Assert empty on node 1, set up property
+
 		String testCacheName = ClusterCacheReplicationTest.class.getName();
 
 		String testKey = "testKey";
 		String testValue = "testValue";
 		String updateValue = "test.value.update";
-
-		// Assert empty on node 1, set up property
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -134,7 +135,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 can see the value it just put
+		// Assert node 1 can see the value it just put
 
 		Assert.assertEquals(
 			testValue,
@@ -161,7 +162,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 can see the value it just put
+		// Assert node 2 can see the value it just put
 
 		Assert.assertEquals(
 			updateValue,
@@ -176,7 +177,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 has the old value, because put is not replicate
+		// Assert node 1 has the old value, because put is not replicate
 
 		Assert.assertEquals(
 			testValue,
@@ -189,7 +190,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 is empty after removal
+		// Assert node 1 is empty after removal
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -203,7 +204,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 is also empty now, because remove is still replicate
+		// Assert node 2 is also empty, because remove is still replicate
 
 		Assert.assertNull(
 			_tomcatNode2.syncExecute(
@@ -222,6 +223,9 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testEntityCacheFinderCacheSynchronization() throws Exception {
+
+		// Assert node 1 does not see any UserGroup with testing prefix
+
 		String userGroupNamePrefix =
 			ClusterCacheReplicationTest.class.getSimpleName();
 
@@ -231,14 +235,12 @@ public class ClusterCacheReplicationTest {
 					TestPropsValues.getCompanyId(), userGroupNamePrefix + "%",
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
-		// Assert node 1 does not see any UserGroup with testing prefix
-
 		List<UserGroup> userGroups = _tomcatNode1.syncExecute(
 			getUserGroupsClusterExecutable);
 
 		Assert.assertTrue(userGroups.toString(), userGroups.isEmpty());
 
-		// Add UserGroup1 on node 1
+		// Add user group1 on node 1
 
 		String userGroupName1 = userGroupNamePrefix + "_userGroup1";
 
@@ -253,14 +255,14 @@ public class ClusterCacheReplicationTest {
 
 		Assert.assertEquals(userGroupName1, userGroup1.getName());
 
-		// Assert node 2 can see UserGroup1
+		// Assert node 2 can see user group 1
 
 		userGroups = _tomcatNode2.syncExecute(getUserGroupsClusterExecutable);
 
 		Assert.assertEquals(userGroups.toString(), 1, userGroups.size());
 		Assert.assertEquals(userGroup1, userGroups.get(0));
 
-		// Add UserGroup2 on node 1
+		// Add user group 2 on node 1
 
 		String userGroupName2 = userGroupNamePrefix + "_userGroup2";
 
@@ -275,7 +277,7 @@ public class ClusterCacheReplicationTest {
 
 		Assert.assertEquals(userGroupName2, userGroup2.getName());
 
-		// Assert node 2 can see UserGroup1 and UserGroup2
+		// Assert node 2 can see user group 1 and user group 2
 
 		userGroups = _tomcatNode2.syncExecute(getUserGroupsClusterExecutable);
 
@@ -283,7 +285,7 @@ public class ClusterCacheReplicationTest {
 		Assert.assertEquals(userGroup1, userGroups.get(0));
 		Assert.assertEquals(userGroup2, userGroups.get(1));
 
-		// Remove UserGroup1 and UserGroup2 on node 2
+		// Remove user group 1 and user group 2 on node 2
 
 		userGroups = _tomcatNode2.syncExecute(
 			() -> {
@@ -295,7 +297,7 @@ public class ClusterCacheReplicationTest {
 
 		Assert.assertTrue(userGroups.toString(), userGroups.isEmpty());
 
-		// Assert node 1 sees no UserGroup
+		// Assert node 1 sees no user group
 
 		userGroups = _tomcatNode1.syncExecute(getUserGroupsClusterExecutable);
 
@@ -304,13 +306,14 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testPingPongFlushing() throws Exception {
+
+		// Assert empty and put value on node 1
+
 		String testCacheName = ClusterCacheReplicationTest.class.getName();
 
 		String testKey = "testKey";
 		String testValue1 = "testValue1";
 		String testValue2 = "testValue2";
-
-		// Assert empty and put value on node 1
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -383,12 +386,13 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testReplicateByCopy() throws Exception {
+
+		// Assert node 1 is empty
+
 		String testCacheName = ClusterCacheReplicationTest.class.getName();
 
 		String testKey = "testKey";
 		String testValue = "testValue";
-
-		// Assert node 1 is empty
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -421,7 +425,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 can see the value it just put
+		// Assert node 1 can see the value it just put
 
 		Assert.assertEquals(
 			testValue,
@@ -436,7 +440,8 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 has the same value because replicatePutsViaCopy=true
+		// Assert node 2 has the same value because "replicatePutsViaCopy" is
+		// set to true
 
 		Assert.assertEquals(
 			testValue,
@@ -453,7 +458,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 is empty after removal
+		// Assert node 1 is empty after removal
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -467,7 +472,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 is also empty
+		// Assert node 2 is also empty
 
 		Assert.assertNull(
 			_tomcatNode2.syncExecute(
@@ -486,12 +491,13 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testReplicateByRemove() throws Exception {
+
+		// Assert node 1 is empty
+
 		String testCacheName = ClusterCacheReplicationTest.class.getName();
 
 		String testKey = "testKey";
 		String testValue = "testValue";
-
-		// Assert node 1 is empty
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -555,7 +561,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 is empty after removeAll
+		// Assert node 1 is empty after removeAll
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -569,7 +575,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 is still empty, and triggered notifyEntryRemoved
+		// Assert node 2 is still empty, and triggered notifyEntryRemoved
 
 		Assert.assertNull(
 			_tomcatNode2.syncExecute(
@@ -588,13 +594,14 @@ public class ClusterCacheReplicationTest {
 
 	@Test
 	public void testReplicateByUpdateViaCopy() throws Exception {
+
+		// Assert node 1 is empty
+
 		String testCacheName = ClusterCacheReplicationTest.class.getName();
 
 		String testKey = "testKey";
 		String testValue = "testValue";
 		String updateValue = "test.value.update";
-
-		// Assert node 1 is empty
 
 		Assert.assertNull(
 			_tomcatNode1.syncExecute(
@@ -633,7 +640,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 can see the value it just put
+		// Assert node 1 can see the value it just put
 
 		Assert.assertEquals(
 			testValue,
@@ -648,7 +655,8 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node2 has the same value because replicatePutsViaCopy=true
+		// Assert node 2 has the same value because "replicatePutsViaCopy" is
+		// set to true
 
 		Assert.assertEquals(
 			testValue,
@@ -665,7 +673,7 @@ public class ClusterCacheReplicationTest {
 					return portalCache.get(testKey);
 				}));
 
-		// Assert node1 can see the value it just update
+		// Assert node 1 can see the value it just update
 
 		Assert.assertEquals(
 			updateValue,

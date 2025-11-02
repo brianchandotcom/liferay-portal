@@ -145,13 +145,11 @@ public class ObjectEntryFolderModelListenerTest {
 		ObjectEntryFolder rootObjectEntryFolder = _addObjectEntryFolder(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
-		_assertDefaultPermissions(rootJSONObject, rootObjectEntryFolder);
 		_assertResourcePermissions(rootJSONObject, rootObjectEntryFolder, null);
 
 		ObjectEntryFolder childObjectEntryFolder = _addObjectEntryFolder(
 			rootObjectEntryFolder.getObjectEntryFolderId());
 
-		_assertDefaultPermissions(rootJSONObject, childObjectEntryFolder);
 		_assertResourcePermissions(
 			rootJSONObject, childObjectEntryFolder, null);
 
@@ -190,7 +188,6 @@ public class ObjectEntryFolderModelListenerTest {
 		childObjectEntryFolder = _addObjectEntryFolder(
 			rootObjectEntryFolder.getObjectEntryFolderId());
 
-		_assertDefaultPermissions(rootJSONObject, childObjectEntryFolder);
 		_assertResourcePermissions(
 			rootJSONObject, childObjectEntryFolder, randomActionId);
 	}
@@ -254,26 +251,24 @@ public class ObjectEntryFolderModelListenerTest {
 			RandomTestUtil.randomString(), new ServiceContext());
 	}
 
-	private void _assertDefaultPermissions(
-			JSONObject expectedJSONObject, ObjectEntryFolder objectEntryFolder)
-		throws Exception {
-
-		JSONObject actualJSONObject = CMSDefaultPermissionUtil.getJSONObject(
-			objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
-			objectEntryFolder.getExternalReferenceCode(),
-			objectEntryFolder.getModelClassName(), _filterFactory);
-
-		Assert.assertEquals(
-			expectedJSONObject.toString(), actualJSONObject.toString());
-	}
-
 	private void _assertResourcePermissions(
-			JSONObject defaultPermissionsJSONObject,
+			JSONObject expectedDefaultPermissionsJSONObject,
 			ObjectEntryFolder objectEntryFolder, String randomActionId)
 		throws Exception {
 
-		JSONObject jsonObject = defaultPermissionsJSONObject.getJSONObject(
-			"OBJECT_ENTRY_FOLDERS");
+		JSONObject actualDefaultPermissionsJSONObject =
+			CMSDefaultPermissionUtil.getJSONObject(
+				objectEntryFolder.getCompanyId(), objectEntryFolder.getUserId(),
+				objectEntryFolder.getExternalReferenceCode(),
+				objectEntryFolder.getModelClassName(), _filterFactory);
+
+		Assert.assertEquals(
+			expectedDefaultPermissionsJSONObject.toString(),
+			actualDefaultPermissionsJSONObject.toString());
+
+		JSONObject jsonObject =
+			expectedDefaultPermissionsJSONObject.getJSONObject(
+				"OBJECT_ENTRY_FOLDERS");
 
 		for (String roleName : jsonObject.keySet()) {
 			Set<String> actions = JSONUtil.toStringSet(

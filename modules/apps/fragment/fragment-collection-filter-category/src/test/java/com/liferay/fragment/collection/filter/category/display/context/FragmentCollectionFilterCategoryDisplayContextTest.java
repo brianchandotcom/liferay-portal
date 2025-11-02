@@ -192,10 +192,10 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			long scopeGroupId)
 		throws Exception {
 
-		long itemGroupId = groupId;
+		long assetCategoryGroupId = groupId;
 
 		if (scopeGroupId > 0) {
-			itemGroupId = scopeGroupId;
+			assetCategoryGroupId = scopeGroupId;
 
 			Group group = Mockito.mock(Group.class);
 
@@ -226,7 +226,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 			Mockito.when(
 				AssetCategoryServiceUtil.fetchCategoryByExternalReferenceCode(
-					externalReferenceCode, itemGroupId)
+					externalReferenceCode, assetCategoryGroupId)
 			).thenReturn(
 				assetCategory
 			);
@@ -244,7 +244,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 			Mockito.when(
 				AssetVocabularyServiceUtil.
 					fetchVocabularyByExternalReferenceCode(
-						externalReferenceCode, itemGroupId)
+						externalReferenceCode, assetCategoryGroupId)
 			).thenReturn(
 				assetVocabulary
 			);

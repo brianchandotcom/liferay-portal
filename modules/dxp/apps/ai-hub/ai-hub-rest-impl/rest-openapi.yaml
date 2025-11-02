@@ -44,3 +44,16 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Task"
             tags: ["Task"]
+    "/tasks/subscribe":
+        get:
+            operationId: getTaskSubscribe
+            parameters:
+                -   in: context
+                    name: sseEventSink
+                    schema:
+                        type: sseEventSink
+            responses:
+                200:
+                    content:
+                        text/event-stream: {}
+            tags: ["Task"]

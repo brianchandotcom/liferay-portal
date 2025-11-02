@@ -271,7 +271,7 @@ public class ObjectEntryFolderModelListenerTest {
 				"OBJECT_ENTRY_FOLDERS");
 
 		for (String roleName : jsonObject.keySet()) {
-			Set<String> actions = JSONUtil.toStringSet(
+			Set<String> actionIds = JSONUtil.toStringSet(
 				jsonObject.getJSONArray(roleName));
 
 			ResourcePermission resourcePermission = _fetchResourcePermission(
@@ -289,20 +289,16 @@ public class ObjectEntryFolderModelListenerTest {
 					Objects.equals(actionId, ActionKeys.DELETE)) {
 
 					Assert.assertFalse(
-						"actionId: " + actionId,
 						resourcePermission.hasActionId(actionId));
 				}
 				else {
 					Assert.assertEquals(
-						"actionId: " + actionId, actions.contains(actionId),
+						actionIds.toString(), actionIds.contains(actionId),
 						resourcePermission.hasActionId(actionId));
 				}
 			}
 
-			Assert.assertFalse(
-				String.format(
-					"Role '%s', actionId '%s'", roleName, randomActionId),
-				resourcePermission.hasActionId(randomActionId));
+			Assert.assertFalse(resourcePermission.hasActionId(randomActionId));
 		}
 	}
 

@@ -182,6 +182,23 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
+	public void testGetTaskSubscribe() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		Task task = testGetTaskSubscribe_addTask();
+
+		assertHttpResponseStatusCode(
+			204, taskResource.getTaskSubscribeHttpResponse(null));
+
+		assertHttpResponseStatusCode(
+			404, taskResource.getTaskSubscribeHttpResponse(null));
+	}
+
+	protected Task testGetTaskSubscribe_addTask() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testPostTask() throws Exception {
 		Task randomTask = randomTask();
 

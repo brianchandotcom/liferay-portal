@@ -71,6 +71,24 @@ public abstract class BaseTaskResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/ai-hub/v1.0/tasks/subscribe'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {@io.swagger.v3.oas.annotations.tags.Tag(name = "Task")}
+	)
+	@jakarta.ws.rs.GET
+	@jakarta.ws.rs.Path("/tasks/subscribe")
+	@jakarta.ws.rs.Produces("text/event-stream")
+	@Override
+	public void getTaskSubscribe(
+			@jakarta.ws.rs.core.Context jakarta.ws.rs.sse.SseEventSink
+				sseEventSink)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -X 'POST' 'http://localhost:8080/o/ai-hub/v1.0/tasks' -d $'{"context": ___, "type": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.tags.Tags(

@@ -70,6 +70,7 @@ public class FragmentCollectionFilterCategoryDisplayContextTest {
 
 		_testGetAssetCategoryTreeNodeTitle(
 			"Category", categoryTreeNodeId, title);
+
 		_testGetAssetCategoryTreeNodeTitle(
 			"Category", RandomTestUtil.randomLong(),
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),

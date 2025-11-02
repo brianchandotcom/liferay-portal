@@ -179,6 +179,21 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListenerTest {
 				String.valueOf(objectEntry.getObjectEntryId()),
 				guestRole.getRoleId(), attachmentDownloadActionKey));
 
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				ownerRole.getRoleId(), attachmentDownloadActionKey));
+		Assert.assertTrue(
+			_resourcePermissionLocalService.hasResourcePermission(
+				objectDefinition.getCompanyId(),
+				objectDefinition.getClassName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(objectEntry.getObjectEntryId()),
+				powerUserRole.getRoleId(), attachmentDownloadActionKey));
+
 		Role userRole = _roleLocalService.getRole(
 			objectDefinition.getCompanyId(), RoleConstants.USER);
 
@@ -189,22 +204,6 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListenerTest {
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(objectEntry.getObjectEntryId()),
 				userRole.getRoleId(), attachmentDownloadActionKey));
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				ownerRole.getRoleId(), attachmentDownloadActionKey));
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				objectDefinition.getCompanyId(),
-				objectDefinition.getClassName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(objectEntry.getObjectEntryId()),
-				powerUserRole.getRoleId(), attachmentDownloadActionKey));
 
 		FeatureFlagTestUtil.invokeFeatureFlagListeners(
 			objectDefinition.getCompanyId(), false, "LPD-17564");

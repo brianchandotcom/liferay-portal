@@ -44,6 +44,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface TaskResource {
 
+	public void getTaskSubscribe(jakarta.ws.rs.sse.SseEventSink sseEventSink)
+		throws Exception;
+
 	public Task postTask(Task task) throws Exception;
 
 	public Response postTaskBatch(String callbackURL, Object object)

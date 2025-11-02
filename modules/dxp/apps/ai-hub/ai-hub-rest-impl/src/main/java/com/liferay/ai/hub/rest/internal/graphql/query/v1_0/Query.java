@@ -5,6 +5,8 @@
 
 package com.liferay.ai.hub.rest.internal.graphql.query.v1_0;
 
+import com.liferay.ai.hub.rest.dto.v1_0.Task;
+import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -12,6 +14,9 @@ import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
+import com.liferay.portal.vulcan.graphql.annotation.GraphQLName;
+import com.liferay.portal.vulcan.pagination.Page;
 
 import jakarta.annotation.Generated;
 
@@ -20,6 +25,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import jakarta.ws.rs.core.UriInfo;
 
+import java.util.Map;
 import java.util.function.BiFunction;
 
 import org.osgi.service.component.ComponentServiceObjects;
@@ -30,6 +36,59 @@ import org.osgi.service.component.ComponentServiceObjects;
  */
 @Generated("")
 public class Query {
+
+	public static void setTaskResourceComponentServiceObjects(
+		ComponentServiceObjects<TaskResource>
+			taskResourceComponentServiceObjects) {
+
+		_taskResourceComponentServiceObjects =
+			taskResourceComponentServiceObjects;
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {taskSubscribe(sseEventSink: ___){}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField
+	public void taskSubscribe(
+			@GraphQLName("sseEventSink") jakarta.ws.rs.sse.SseEventSink
+				sseEventSink)
+		throws Exception {
+	}
+
+	@GraphQLName("TaskPage")
+	public class TaskPage {
+
+		public TaskPage(Page taskPage) {
+			actions = taskPage.getActions();
+
+			items = taskPage.getItems();
+			lastPage = taskPage.getLastPage();
+			page = taskPage.getPage();
+			pageSize = taskPage.getPageSize();
+			totalCount = taskPage.getTotalCount();
+		}
+
+		@GraphQLField
+		protected Map<String, Map<String, String>> actions;
+
+		@GraphQLField
+		protected java.util.Collection<Task> items;
+
+		@GraphQLField
+		protected long lastPage;
+
+		@GraphQLField
+		protected long page;
+
+		@GraphQLField
+		protected long pageSize;
+
+		@GraphQLField
+		protected long totalCount;
+
+	}
 
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
@@ -49,6 +108,25 @@ public class Query {
 			componentServiceObjects.ungetService(resource);
 		}
 	}
+
+	private void _populateResourceContext(TaskResource taskResource)
+		throws Exception {
+
+		taskResource.setContextAcceptLanguage(_acceptLanguage);
+		taskResource.setContextCompany(_company);
+		taskResource.setContextHttpServletRequest(_httpServletRequest);
+		taskResource.setContextHttpServletResponse(_httpServletResponse);
+		taskResource.setContextUriInfo(_uriInfo);
+		taskResource.setContextUser(_user);
+		taskResource.setGroupLocalService(_groupLocalService);
+		taskResource.setResourceActionLocalService(_resourceActionLocalService);
+		taskResource.setResourcePermissionLocalService(
+			_resourcePermissionLocalService);
+		taskResource.setRoleLocalService(_roleLocalService);
+	}
+
+	private static ComponentServiceObjects<TaskResource>
+		_taskResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;

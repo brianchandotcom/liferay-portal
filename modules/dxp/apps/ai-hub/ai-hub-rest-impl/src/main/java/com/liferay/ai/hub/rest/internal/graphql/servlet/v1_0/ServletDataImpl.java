@@ -36,6 +36,9 @@ public class ServletDataImpl implements ServletData {
 	public void activate(BundleContext bundleContext) {
 		Mutation.setTaskResourceComponentServiceObjects(
 			_taskResourceComponentServiceObjects);
+
+		Query.setTaskResourceComponentServiceObjects(
+			_taskResourceComponentServiceObjects);
 	}
 
 	public String getApplicationName() {
@@ -80,6 +83,11 @@ public class ServletDataImpl implements ServletData {
 						"mutation#createTaskBatch",
 						new ObjectValuePair<>(
 							TaskResourceImpl.class, "postTaskBatch"));
+
+					put(
+						"query#taskSubscribe",
+						new ObjectValuePair<>(
+							TaskResourceImpl.class, "getTaskSubscribe"));
 				}
 			};
 

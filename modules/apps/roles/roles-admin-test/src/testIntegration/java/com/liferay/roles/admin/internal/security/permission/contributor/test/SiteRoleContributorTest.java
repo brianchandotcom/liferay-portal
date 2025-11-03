@@ -13,10 +13,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -24,6 +26,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -46,6 +49,9 @@ import org.junit.runner.RunWith;
 /**
  * @author Alicia García
  */
+@FeatureFlags(
+	featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
+)
 @RunWith(Arquillian.class)
 public class SiteRoleContributorTest {
 
@@ -67,9 +73,6 @@ public class SiteRoleContributorTest {
 		UserTestUtil.setUser(_user);
 	}
 
-	@FeatureFlags(
-		featureFlags = {@FeatureFlag("LPD-17564"), @FeatureFlag("LPD-32050")}
-	)
 	@Test
 	public void testContribute() throws Exception {
 		PermissionChecker permissionChecker =
@@ -100,6 +103,39 @@ public class SiteRoleContributorTest {
 				role.getRoleId()));
 	}
 
+	@Test
+	public void testContributeWithUserGroup() throws Exception {
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		Role role = _roleLocalService.fetchRole(
+			_group.getCompanyId(), RoleConstants.SITE_MEMBER);
+
+		Assert.assertFalse(
+			ArrayUtil.contains(
+				permissionChecker.getRoleIds(
+					_user.getUserId(), _group.getGroupId()),
+				role.getRoleId()));
+
+		_depotEntry = _depotEntryLocalService.addDepotEntry(
+			HashMapBuilder.put(
+				LocaleUtil.getDefault(), RandomTestUtil.randomString()
+			).build(),
+			Collections.emptyMap(), DepotConstants.TYPE_SPACE,
+			ServiceContextTestUtil.getServiceContext());
+
+		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+		_userGroupLocalService.addGroupUserGroup(
+			_depotEntry.getGroupId(), userGroup);
+		_userGroupLocalService.addUserUserGroup(_user.getUserId(), userGroup);
+
+		Assert.assertTrue(
+			ArrayUtil.contains(
+				permissionChecker.getRoleIds(
+					_user.getUserId(), _group.getGroupId()),
+				role.getRoleId()));
+	}
+
 	@DeleteAfterTestRun
 	private DepotEntry _depotEntry;
 
@@ -113,6 +149,9 @@ public class SiteRoleContributorTest {
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
 
 	@Inject
 	private UserLocalService _userLocalService;

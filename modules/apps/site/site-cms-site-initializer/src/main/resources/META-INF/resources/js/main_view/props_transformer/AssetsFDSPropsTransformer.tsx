@@ -220,6 +220,7 @@ export default function AssetsFDSPropsTransformer({
 					action?.data?.id,
 					additionalProps.assetLibraries,
 					itemData,
+					loadData,
 					additionalProps.objectEntryFolderExternalReferenceCode
 				);
 			}

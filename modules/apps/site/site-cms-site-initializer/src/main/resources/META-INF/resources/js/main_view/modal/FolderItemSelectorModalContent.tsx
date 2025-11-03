@@ -19,6 +19,7 @@ export type TFolderItemSelectorModalContent = {
 	action: Action;
 	assetLibraries: AssetLibrary[];
 	itemData: ItemData;
+	loadData: () => {};
 	objectEntryFolderExternalReferenceCode: string | undefined;
 };
 
@@ -94,6 +95,7 @@ function FolderItemSelectorModalContent({
 	action,
 	assetLibraries,
 	itemData,
+	loadData,
 	objectEntryFolderExternalReferenceCode,
 }: TFolderItemSelectorModalContent) {
 	const [selectedItemType, setSelectedItemType] = useState<
@@ -162,6 +164,10 @@ function FolderItemSelectorModalContent({
 			}
 
 			promise.then(({error}: {error: any}) => {
+				if (!error) {
+					loadData();
+				}
+
 				displayToast(
 					error,
 					folder,
@@ -177,6 +183,10 @@ function FolderItemSelectorModalContent({
 					String(folder.id)
 				)
 			).then(({error}: {error: any}) => {
+				if (!error) {
+					loadData();
+				}
+
 				displayToast(
 					error,
 					folder,

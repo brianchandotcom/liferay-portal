@@ -19,11 +19,11 @@ import {
 	ProductWorkflowStatusCode,
 } from '../../../../../enums/Product';
 import i18n from '../../../../../i18n';
-import {ProductTypeOptions} from '../constants/productTypes';
 import CloudResourceRequirements from '../components/CloudResourceRequirements';
 import {NewAppPackageVersionModal} from '../components/NewAppPackagesModal';
 import NewAppUploadAppPackagesComponent from '../components/NewAppUploadPackage';
 import {BUILD_UPLOAD_OPTIONS} from '../constants';
+import {ProductTypeOptions} from '../constants/productTypes';
 
 type ProductTypeOption = {
 	description: string;

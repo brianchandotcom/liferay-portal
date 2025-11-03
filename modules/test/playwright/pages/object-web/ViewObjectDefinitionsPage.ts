@@ -83,6 +83,12 @@ export class ViewObjectDefinitionsPage {
 
 	async clickEditObjectDefinitionLink(objectDefinitionLabel: string) {
 		await this.page
+			.getByPlaceholder('Search')
+			.fill(objectDefinitionLabel.replace(/ /g, ''));
+
+		await this.page.keyboard.press('Enter');
+
+		await this.page
 			.getByRole('link', {exact: true, name: objectDefinitionLabel})
 			.click();
 	}

@@ -6047,9 +6047,9 @@ public class DataFactory {
 
 			nonhiddenFragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(
-					layoutModels.get(1), null, segmentsExperienceId, css, html,
-					js, StringPool.BLANK, editValueJSON,
-					paragraphRenderNamespace, 0, renderKey));
+					layoutModels.get(1), null, segmentsExperienceId,
+					_escape(css), _escape(html), _escape(js), StringPool.BLANK,
+					editValueJSON, paragraphRenderNamespace, 0, renderKey));
 		}
 
 		if (addSubmitFragmentEntryLink) {
@@ -6057,12 +6057,14 @@ public class DataFactory {
 				newFragmentEntryLinkModel(
 					layoutModels.get(1), null, segmentsExperienceId,
 					StringPool.BLANK,
-					_readFile(
-						_getFragmentComponentInputStream(
-							"inputs", "submit-button", "html")),
-					_readFile(
-						_getFragmentComponentInputStream(
-							"inputs", "submit-button", "js")),
+					_escape(
+						_readFile(
+							_getFragmentComponentInputStream(
+								"inputs", "submit-button", "html"))),
+					_escape(
+						_readFile(
+							_getFragmentComponentInputStream(
+								"inputs", "submit-button", "js"))),
 					StringPool.BLANK,
 					_readFile(
 						"fragment_component" +
@@ -9004,6 +9006,11 @@ public class DataFactory {
 		catch (ReflectiveOperationException reflectiveOperationException) {
 			ReflectionUtil.throwException(reflectiveOperationException);
 		}
+	}
+
+	private String _escape(String value) {
+		return StringUtil.replace(
+			value, CharPool.APOSTROPHE, StringPool.DOUBLE_APOSTROPHE);
 	}
 
 	private String _generateData(

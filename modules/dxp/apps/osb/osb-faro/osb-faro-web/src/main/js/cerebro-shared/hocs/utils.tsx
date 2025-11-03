@@ -46,6 +46,7 @@ const withEmpty: TWithEmpty = ({
 	emptyTitle,
 	primary
 } = {}) => Component => ({
+	filterEnabled = false,
 	items,
 	noResultsRenderer,
 	query,
@@ -53,7 +54,7 @@ const withEmpty: TWithEmpty = ({
 	...otherProps
 }) => {
 	if (items && !items.length && !total) {
-		if (query) {
+		if (query || filterEnabled) {
 			return (
 				<NoResultsDisplay
 					description={Liferay.Language.get(

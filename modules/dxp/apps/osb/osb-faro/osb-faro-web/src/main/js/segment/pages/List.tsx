@@ -608,6 +608,7 @@ export const List: React.FC<IListProps> = ({
 							delta={delta}
 							filterBy={filterBy}
 							filterByOptions={FILTER_BY_OPTIONS}
+							filterEnabled={!!selectedSegmentTypes.length}
 							items={data?.items}
 							loading={loading}
 							noResultsRenderer={

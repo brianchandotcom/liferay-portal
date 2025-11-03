@@ -564,6 +564,10 @@ public abstract class BaseObjectEntryFolderResourceImpl
 				objectEntryFolder.getPermissions());
 		}
 
+		if (objectEntryFolder.getScope() != null) {
+			existingObjectEntryFolder.setScope(objectEntryFolder.getScope());
+		}
+
 		if (objectEntryFolder.getTitle() != null) {
 			existingObjectEntryFolder.setTitle(objectEntryFolder.getTitle());
 		}
@@ -661,6 +665,10 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		if (objectEntryFolder.getPermissions() != null) {
 			existingObjectEntryFolder.setPermissions(
 				objectEntryFolder.getPermissions());
+		}
+
+		if (objectEntryFolder.getScope() != null) {
+			existingObjectEntryFolder.setScope(objectEntryFolder.getScope());
 		}
 
 		if (objectEntryFolder.getTitle() != null) {

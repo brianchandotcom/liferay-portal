@@ -282,7 +282,7 @@ public class ObjectEntryFolderSerDes {
 
 			sb.append("\"scope\": ");
 
-			sb.append(String.valueOf(objectEntryFolder.getScope()));
+			sb.append(objectEntryFolder.getScope());
 		}
 
 		if (objectEntryFolder.getScopeId() != null) {
@@ -810,7 +810,8 @@ public class ObjectEntryFolderSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+						com.liferay.headless.object.client.scope.Scope.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "scopeId")) {

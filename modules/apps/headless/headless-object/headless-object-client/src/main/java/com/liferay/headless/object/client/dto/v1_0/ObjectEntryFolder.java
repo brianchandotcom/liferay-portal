@@ -409,15 +409,19 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Date removedDate;
 
-	public Scope getScope() {
+	public com.liferay.headless.object.client.scope.Scope getScope() {
 		return scope;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(com.liferay.headless.object.client.scope.Scope scope) {
 		this.scope = scope;
 	}
 
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+	public void setScope(
+		UnsafeSupplier
+			<com.liferay.headless.object.client.scope.Scope, Exception>
+				scopeUnsafeSupplier) {
+
 		try {
 			scope = scopeUnsafeSupplier.get();
 		}
@@ -426,7 +430,7 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 		}
 	}
 
-	protected Scope scope;
+	protected com.liferay.headless.object.client.scope.Scope scope;
 
 	public Long getScopeId() {
 		return scopeId;

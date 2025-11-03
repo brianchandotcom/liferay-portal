@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ReleaseConstants;
 import com.liferay.portal.kernel.model.ServiceComponent;
-import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
@@ -33,16 +32,17 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luis Ortiz
  */
-@Component(
-	property = "run.on.portal.upgrade=true", service = VerifyProcess.class
-)
 public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
+
+	public ServiceComponentDataCleanupVerifyProcess(
+		ServiceComponentLocalService serviceComponentLocalService) {
+
+		_serviceComponentLocalService = serviceComponentLocalService;
+	}
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -136,10 +136,6 @@ public class ServiceComponentDataCleanupVerifyProcess extends VerifyProcess {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceComponentDataCleanupVerifyProcess.class);
 
-	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
-	private ModuleServiceLifecycle _moduleServiceLifecycle;
-
-	@Reference
-	private ServiceComponentLocalService _serviceComponentLocalService;
+	private final ServiceComponentLocalService _serviceComponentLocalService;
 
 }

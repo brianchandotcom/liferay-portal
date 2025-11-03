@@ -16,6 +16,8 @@ import com.liferay.data.cleanup.internal.upgrade.OutdatedPublishedCTCollectionUp
 import com.liferay.data.cleanup.internal.upgrade.PublishedCTSContentDataUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.WidgetLayoutTypeSettingsUpgradeProcess;
 import com.liferay.data.cleanup.internal.upgrade.util.ConfigurationUtil;
+import com.liferay.data.cleanup.internal.verify.ClassNameDataCleanupVerifyProcess;
+import com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.layout.manager.ContentManager;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.data.cleanup.DataCleanupPreupgradeProcess;
 import com.liferay.portal.kernel.util.Portal;
@@ -135,11 +138,18 @@ public class DataRemovalExecutor {
 		}
 
 		if (dataRemovalConfiguration.removeClassNameOrphanData()) {
-			_classNameDataCleanupVerifyProcess.verify();
+			VerifyProcess verifyProcess = new ClassNameDataCleanupVerifyProcess(
+				_classNameLocalService);
+
+			verifyProcess.verify();
 		}
 
 		if (dataRemovalConfiguration.removeServiceComponentOrphanData()) {
-			_serviceComponentDataCleanupVerifyProcess.verify();
+			VerifyProcess verifyProcess =
+				new ServiceComponentDataCleanupVerifyProcess(
+					_serviceComponentLocalService);
+
+			verifyProcess.verify();
 		}
 	}
 
@@ -219,11 +229,6 @@ public class DataRemovalExecutor {
 		}
 	}
 
-	@Reference(
-		target = "(component.name=com.liferay.data.cleanup.internal.verify.ClassNameDataCleanupVerifyProcess)"
-	)
-	private VerifyProcess _classNameDataCleanupVerifyProcess;
-
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
 
@@ -272,9 +277,7 @@ public class DataRemovalExecutor {
 	@Reference
 	private ReleaseLocalService _releaseLocalService;
 
-	@Reference(
-		target = "(component.name=com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess)"
-	)
-	private VerifyProcess _serviceComponentDataCleanupVerifyProcess;
+	@Reference
+	private ServiceComponentLocalService _serviceComponentLocalService;
 
 }

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.model.ResourceAction;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.module.util.BundleUtil;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
-import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionService;
@@ -226,7 +226,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 
 		Assert.assertEquals("VIEW", actionKeys[0]);
 
-		_layoutLocalService.deleteLayout(layout.getPlid());
+		_layoutService.deleteLayout(layout.getPlid(), _serviceContext);
 		_resourceActionLocalService.deleteResourceAction(
 			resourceAction.getResourceActionId());
 	}
@@ -237,13 +237,12 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 				"WidgetInstanceMapper");
 
 		Constructor<?> constructor = clazz.getDeclaredConstructor(
-			LayoutLocalService.class, PortletLocalService.class,
+			LayoutService.class, PortletLocalService.class,
 			PortletPermissionsExporter.class,
 			PortletPreferencesPortletConfigurationExporter.class);
 
 		return constructor.newInstance(
-			_layoutLocalService, _portletLocalService,
-			_portletPermissionsExporter,
+			_layoutService, _portletLocalService, _portletPermissionsExporter,
 			_portletPreferencesPortletConfigurationExporter);
 	}
 
@@ -271,7 +270,7 @@ public class WidgetInstanceDefinitionDTOConverterTest {
 	private Group _group;
 
 	@Inject
-	private LayoutLocalService _layoutLocalService;
+	private LayoutService _layoutService;
 
 	@Inject
 	private PortletLocalService _portletLocalService;

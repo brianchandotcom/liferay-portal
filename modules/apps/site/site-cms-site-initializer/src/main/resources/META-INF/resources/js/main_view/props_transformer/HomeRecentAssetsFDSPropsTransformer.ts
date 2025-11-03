@@ -106,6 +106,7 @@ export default function HomeRecentAssetsFDSPropsTransformer({
 					action?.data?.id,
 					additionalProps.assetLibraries,
 					itemData,
+					loadData,
 					additionalProps.objectEntryFolderExternalReferenceCode
 				);
 			}

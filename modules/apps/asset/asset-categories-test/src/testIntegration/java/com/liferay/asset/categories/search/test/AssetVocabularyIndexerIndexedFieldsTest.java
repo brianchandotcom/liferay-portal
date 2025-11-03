@@ -218,6 +218,12 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 			Field.VISIBILITY_TYPE,
 			String.valueOf(assetVocabulary.getVisibilityType())
 		).put(
+			"categoriesCount",
+			String.valueOf(assetVocabulary.getCategoriesCount())
+		).put(
+			"categoriesCount_sortable",
+			String.valueOf(assetVocabulary.getCategoriesCount())
+		).put(
 			"classNameIds",
 			() -> {
 				AssetVocabularySettingsHelper assetVocabularySettingsHelper =

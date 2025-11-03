@@ -269,20 +269,20 @@ public class AnnotationLocatorTest {
 		_methodListLocate(
 			SuperClass.class,
 			Arrays.asList(
-				new Annotation[] {_mix(2), _method(5), _type(5)},
+				new Annotation[] {_mix(5), _method(5), _type(5)},
 				new Annotation[] {_method(2), _mix(2), _type(5)},
 				new Annotation[] {_method(2), _mix(2), _type(6)},
-				new Annotation[] {_mix(2), _method(6), _type(6)},
+				new Annotation[] {_mix(6), _method(6), _type(6)},
 				new Annotation[0], new Annotation[0]));
 
 		_methodListLocate(
 			TestInterface2.class,
 			Arrays.asList(
-				new Annotation[] {_mix(3), _method(6), _type(6)},
+				new Annotation[] {_mix(6), _method(6), _type(6)},
 				new Annotation[0],
 				new Annotation[] {_method(3), _mix(3), _type(6)},
-				new Annotation[] {_mix(3), _method(6), _type(6)},
-				new Annotation[] {_mix(3), _method(4), _type(4)},
+				new Annotation[] {_mix(6), _method(6), _type(6)},
+				new Annotation[] {_mix(4), _method(4), _type(4)},
 				new Annotation[] {_method(3), _mix(3)}));
 
 		_methodListLocate(
@@ -313,14 +313,14 @@ public class AnnotationLocatorTest {
 		_methodListLocate(
 			SuperInterface1.class,
 			Arrays.asList(
-				new Annotation[] {_mix(7), _method(9), _type(9)},
+				new Annotation[] {_mix(9), _method(9), _type(9)},
 				new Annotation[0], new Annotation[] {_method(7), _mix(7)},
 				new Annotation[0], new Annotation[0], new Annotation[0]));
 
 		_methodListLocate(
 			OriginInterface2.class,
 			Arrays.asList(
-				new Annotation[] {_mix(8), _method(9), _type(9)},
+				new Annotation[] {_mix(9), _method(9), _type(9)},
 				new Annotation[] {_method(8), _mix(8)}, new Annotation[0],
 				new Annotation[0], new Annotation[0], new Annotation[0]));
 

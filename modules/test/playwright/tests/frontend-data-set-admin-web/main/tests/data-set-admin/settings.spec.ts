@@ -66,7 +66,7 @@ test.describe('Default Visualization Mode', () => {
 			).toContainText('Not Configured');
 		});
 
-		await test.step('Navigate to Visualization Mode section if  "Not Configured"', async () => {
+		await test.step('Navigate to Visualization Mode section if "Not Configured"', async () => {
 			await expect(
 				settingsPage.goToVisualizationModesLink
 			).toBeInViewport();

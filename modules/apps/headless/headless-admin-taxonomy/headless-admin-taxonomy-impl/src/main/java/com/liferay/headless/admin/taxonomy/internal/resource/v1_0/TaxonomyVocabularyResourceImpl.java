@@ -998,8 +998,7 @@ public class TaxonomyVocabularyResourceImpl
 				taxonomyVocabulary.getVisibilityType());
 
 		return _assetVocabularyService.updateVocabulary(
-			assetVocabulary.getVocabularyId(), taxonomyVocabulary.getName(),
-			titleMap, descriptionMap,
+			assetVocabulary.getVocabularyId(), null, titleMap, descriptionMap,
 			_getSettings(
 				taxonomyVocabulary.getAssetTypes(),
 				assetVocabulary.getGroupId(),

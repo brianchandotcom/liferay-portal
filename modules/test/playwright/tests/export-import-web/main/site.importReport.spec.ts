@@ -163,13 +163,11 @@ test(
 		await exportImportPage.openExportReportEntriesModal(exportName);
 
 		await expect(
-			exportImportPage.exportReportEntriesModal.getByRole('progressbar')
+			exportImportPage.exportReportEntriesModalProgressbar
 		).toHaveAttribute('aria-valuenow', '100');
 
 		const downloadPromise = page.waitForEvent('download');
-		await exportImportPage.exportReportEntriesModal
-			.getByRole('button', {name: 'Download'})
-			.click();
+		await exportImportPage.exportReportEntriesModalDownloadButton.click();
 
 		const download = await downloadPromise;
 		const suggestedFilename = download.suggestedFilename();

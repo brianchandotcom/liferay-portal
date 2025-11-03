@@ -23,6 +23,8 @@ export class ExportImportPage {
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
 	readonly exportReportEntriesModal: Locator;
+	readonly exportReportEntriesModalDownloadButton: Locator;
+	readonly exportReportEntriesModalProgressbar: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
 	readonly importModalButton: Locator;
@@ -66,6 +68,12 @@ export class ExportImportPage {
 		this.exportReportEntriesModal = page.getByRole('dialog', {
 			name: 'Export Report Entries',
 		});
+		this.exportReportEntriesModalDownloadButton =
+			this.exportReportEntriesModal.getByRole('button', {
+				name: 'Download',
+			});
+		this.exportReportEntriesModalProgressbar =
+			this.exportReportEntriesModal.getByRole('progressbar');
 		this.fileSelector = page.getByRole('button', {name: 'Select File'});
 		this.importButton = page.getByRole('button', {name: 'Import'});
 		this.importModalButton = page

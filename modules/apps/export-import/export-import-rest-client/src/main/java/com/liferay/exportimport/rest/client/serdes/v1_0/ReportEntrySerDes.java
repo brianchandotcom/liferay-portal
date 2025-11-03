@@ -205,7 +205,7 @@ public class ReportEntrySerDes {
 
 			sb.append("\"scope\": ");
 
-			sb.append(String.valueOf(reportEntry.getScope()));
+			sb.append(reportEntry.getScope());
 		}
 
 		if (reportEntry.getStatus() != null) {
@@ -516,7 +516,8 @@ public class ReportEntrySerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					reportEntry.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+						com.liferay.exportimport.rest.client.scope.Scope.toDTO(
+							(String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "status")) {

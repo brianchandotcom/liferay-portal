@@ -79,6 +79,28 @@ public class FormContainerConfig implements Cloneable, Serializable {
 
 	protected FormContainerType formContainerType;
 
+	public LocalizationConfig getLocalizationConfig() {
+		return localizationConfig;
+	}
+
+	public void setLocalizationConfig(LocalizationConfig localizationConfig) {
+		this.localizationConfig = localizationConfig;
+	}
+
+	public void setLocalizationConfig(
+		UnsafeSupplier<LocalizationConfig, Exception>
+			localizationConfigUnsafeSupplier) {
+
+		try {
+			localizationConfig = localizationConfigUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected LocalizationConfig localizationConfig;
+
 	public Integer getNumberOfSteps() {
 		return numberOfSteps;
 	}

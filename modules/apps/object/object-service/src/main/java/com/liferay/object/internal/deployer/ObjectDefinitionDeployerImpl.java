@@ -14,7 +14,6 @@ import com.liferay.notification.handler.NotificationHandler;
 import com.liferay.notification.term.evaluator.NotificationTermEvaluator;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.definition.security.permission.resource.util.ObjectDefinitionResourcePermissionUtil;
 import com.liferay.object.definition.tree.util.ObjectDefinitionTreeUtil;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
@@ -229,8 +228,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_objectActionLocalService.getObjectActionsMap(
 				companyId, true, ObjectActionTriggerConstants.KEY_STANDALONE);
 		Map<Long, List<ObjectField>> objectFieldsMap =
-			_objectFieldLocalService.getObjectFieldsMap(
-				companyId, ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT);
+			_objectFieldLocalService.getObjectFieldsMap(companyId);
 		Map<Long, List<ObjectLayout>> objectLayoutsMap =
 			_objectLayoutLocalService.getObjectLayoutsMap(companyId);
 		Map<Long, List<ObjectRelationship>> objectRelationshipsMap =

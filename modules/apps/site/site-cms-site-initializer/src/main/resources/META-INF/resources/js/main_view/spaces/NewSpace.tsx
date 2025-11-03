@@ -27,8 +27,8 @@ import {NewSpaceFormSection} from './NewSpaceFormSection';
 import BaseFields from './SpaceBaseFields';
 
 export interface NewSpaceProps {
-	baseAddSpaceMembersURL: string;
 	backURL: string;
+	baseAddSpaceMembersURL: string;
 	description: string;
 	learnResources: ILearnResourceContext;
 }

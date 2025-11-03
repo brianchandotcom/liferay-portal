@@ -59,7 +59,6 @@
 		<field name="enableFormContainer" type="boolean" />
 		<field name="enableFriendlyURLCustomization" type="boolean" />
 		<field name="enableIndexSearch" type="boolean" />
-		<field name="enableLocalization" type="boolean" />
 		<field name="enableObjectEntryDraft" type="boolean" />
 		<field name="enableObjectEntryHistory" type="boolean" />
 		<field name="enableObjectEntrySchedule" type="boolean" />

@@ -166,9 +166,6 @@ public class ObjectDefinitionPersistenceTest {
 		newObjectDefinition.setEnableIndexSearch(
 			RandomTestUtil.randomBoolean());
 
-		newObjectDefinition.setEnableLocalization(
-			RandomTestUtil.randomBoolean());
-
 		newObjectDefinition.setEnableObjectEntryDraft(
 			RandomTestUtil.randomBoolean());
 
@@ -286,9 +283,6 @@ public class ObjectDefinitionPersistenceTest {
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableIndexSearch(),
 			newObjectDefinition.isEnableIndexSearch());
-		Assert.assertEquals(
-			existingObjectDefinition.isEnableLocalization(),
-			newObjectDefinition.isEnableLocalization());
 		Assert.assertEquals(
 			existingObjectDefinition.isEnableObjectEntryDraft(),
 			newObjectDefinition.isEnableObjectEntryDraft());
@@ -569,15 +563,15 @@ public class ObjectDefinitionPersistenceTest {
 			"active", true, "className", true, "dbTableName", true,
 			"enableCategorization", true, "enableComments", true,
 			"enableFormContainer", true, "enableFriendlyURLCustomization", true,
-			"enableIndexSearch", true, "enableLocalization", true,
-			"enableObjectEntryDraft", true, "enableObjectEntryHistory", true,
-			"enableObjectEntrySchedule", true, "enableObjectEntrySubscription",
-			true, "enableObjectEntryVersioning", true, "friendlyURLSeparator",
-			true, "label", true, "modifiable", true, "name", true,
-			"panelAppOrder", true, "panelCategoryKey", true,
-			"pkObjectFieldDBColumnName", true, "pkObjectFieldName", true,
-			"pluralLabel", true, "portlet", true, "scope", true, "storageType",
-			true, "system", true, "version", true, "status", true);
+			"enableIndexSearch", true, "enableObjectEntryDraft", true,
+			"enableObjectEntryHistory", true, "enableObjectEntrySchedule", true,
+			"enableObjectEntrySubscription", true,
+			"enableObjectEntryVersioning", true, "friendlyURLSeparator", true,
+			"label", true, "modifiable", true, "name", true, "panelAppOrder",
+			true, "panelCategoryKey", true, "pkObjectFieldDBColumnName", true,
+			"pkObjectFieldName", true, "pluralLabel", true, "portlet", true,
+			"scope", true, "storageType", true, "system", true, "version", true,
+			"status", true);
 	}
 
 	@Test
@@ -940,8 +934,6 @@ public class ObjectDefinitionPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableIndexSearch(RandomTestUtil.randomBoolean());
-
-		objectDefinition.setEnableLocalization(RandomTestUtil.randomBoolean());
 
 		objectDefinition.setEnableObjectEntryDraft(
 			RandomTestUtil.randomBoolean());

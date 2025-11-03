@@ -45,7 +45,6 @@ create table ObjectDefinition (
 	enableFormContainer BOOLEAN,
 	enableFriendlyURLCustomization BOOLEAN,
 	enableIndexSearch BOOLEAN,
-	enableLocalization BOOLEAN,
 	enableObjectEntryDraft BOOLEAN,
 	enableObjectEntryHistory BOOLEAN,
 	enableObjectEntrySchedule BOOLEAN,

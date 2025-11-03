@@ -61,7 +61,6 @@ public class ObjectDefinitionWrapper
 			"enableFriendlyURLCustomization",
 			isEnableFriendlyURLCustomization());
 		attributes.put("enableIndexSearch", isEnableIndexSearch());
-		attributes.put("enableLocalization", isEnableLocalization());
 		attributes.put("enableObjectEntryDraft", isEnableObjectEntryDraft());
 		attributes.put(
 			"enableObjectEntryHistory", isEnableObjectEntryHistory());
@@ -232,13 +231,6 @@ public class ObjectDefinitionWrapper
 
 		if (enableIndexSearch != null) {
 			setEnableIndexSearch(enableIndexSearch);
-		}
-
-		Boolean enableLocalization = (Boolean)attributes.get(
-			"enableLocalization");
-
-		if (enableLocalization != null) {
-			setEnableLocalization(enableLocalization);
 		}
 
 		Boolean enableObjectEntryDraft = (Boolean)attributes.get(
@@ -522,16 +514,6 @@ public class ObjectDefinitionWrapper
 	@Override
 	public boolean getEnableIndexSearch() {
 		return model.getEnableIndexSearch();
-	}
-
-	/**
-	 * Returns the enable localization of this object definition.
-	 *
-	 * @return the enable localization of this object definition
-	 */
-	@Override
-	public boolean getEnableLocalization() {
-		return model.getEnableLocalization();
 	}
 
 	/**
@@ -1129,16 +1111,6 @@ public class ObjectDefinitionWrapper
 	}
 
 	/**
-	 * Returns <code>true</code> if this object definition is enable localization.
-	 *
-	 * @return <code>true</code> if this object definition is enable localization; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isEnableLocalization() {
-		return model.isEnableLocalization();
-	}
-
-	/**
 	 * Returns <code>true</code> if this object definition is enable object entry draft.
 	 *
 	 * @return <code>true</code> if this object definition is enable object entry draft; <code>false</code> otherwise
@@ -1406,16 +1378,6 @@ public class ObjectDefinitionWrapper
 	@Override
 	public void setEnableIndexSearch(boolean enableIndexSearch) {
 		model.setEnableIndexSearch(enableIndexSearch);
-	}
-
-	/**
-	 * Sets whether this object definition is enable localization.
-	 *
-	 * @param enableLocalization the enable localization of this object definition
-	 */
-	@Override
-	public void setEnableLocalization(boolean enableLocalization) {
-		model.setEnableLocalization(enableLocalization);
 	}
 
 	/**

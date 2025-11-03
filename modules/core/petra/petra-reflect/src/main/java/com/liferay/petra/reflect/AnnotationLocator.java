@@ -9,11 +9,14 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -33,7 +36,9 @@ public class AnnotationLocator {
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
-			_mergeAnnotations(clazz.getAnnotations(), indexMap);
+			_mergeAnnotations(
+				clazz.getAnnotations(), indexMap, Collections.emptySet(),
+				false);
 
 			_queueSuperTypes(queue, clazz);
 		}
@@ -53,6 +58,9 @@ public class AnnotationLocator {
 			queue.offer(targetClass);
 		}
 
+		Set<Class<? extends Annotation>> concludedAnnotationClasses =
+			new HashSet<>();
+
 		Map<Class<? extends Annotation>, Annotation> indexMap =
 			new LinkedHashMap<>();
 
@@ -63,7 +71,9 @@ public class AnnotationLocator {
 				clazz, method.getName(), method.getParameterTypes());
 
 			if (specificMethod != null) {
-				_mergeAnnotations(specificMethod.getAnnotations(), indexMap);
+				_mergeAnnotations(
+					specificMethod.getAnnotations(), indexMap,
+					concludedAnnotationClasses, true);
 			}
 
 			Method publicMethod = ReflectionUtil.fetchMethod(
@@ -73,7 +83,9 @@ public class AnnotationLocator {
 
 				// Ensure the class has a publicly inherited method
 
-				_mergeAnnotations(clazz.getAnnotations(), indexMap);
+				_mergeAnnotations(
+					clazz.getAnnotations(), indexMap,
+					concludedAnnotationClasses, false);
 			}
 
 			_queueSuperTypes(queue, clazz);
@@ -173,11 +185,26 @@ public class AnnotationLocator {
 
 	private static void _mergeAnnotations(
 		Annotation[] sourceAnnotations,
-		Map<Class<? extends Annotation>, Annotation> indexMap) {
+		Map<Class<? extends Annotation>, Annotation> indexMap,
+		Set<Class<? extends Annotation>> concludedAnnotationClasses,
+		boolean fromMethod) {
 
 		for (Annotation sourceAnnotation : sourceAnnotations) {
-			indexMap.putIfAbsent(
-				sourceAnnotation.annotationType(), sourceAnnotation);
+			Class<? extends Annotation> annotationType =
+				sourceAnnotation.annotationType();
+
+			if (concludedAnnotationClasses.contains(annotationType)) {
+				continue;
+			}
+
+			if (fromMethod) {
+				indexMap.put(annotationType, sourceAnnotation);
+
+				concludedAnnotationClasses.add(annotationType);
+			}
+			else {
+				indexMap.putIfAbsent(annotationType, sourceAnnotation);
+			}
 		}
 	}
 

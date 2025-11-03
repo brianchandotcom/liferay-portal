@@ -45,7 +45,7 @@ public class WidgetTemplatesTemplateDisplayContextTest {
 	@Before
 	public void setUp() {
 		_setUpPortletLocalService();
-		_setUpThemeDisplay();
+		_setUpThemeDisplayAndPermissionMocks();
 	}
 
 	@After
@@ -155,7 +155,7 @@ public class WidgetTemplatesTemplateDisplayContextTest {
 		);
 	}
 
-	private void _setUpThemeDisplay() {
+	private void _setUpThemeDisplayAndPermissionMocks() {
 		_portletPermissionUtilMockedStatic = Mockito.mockStatic(
 			PortletPermissionUtil.class);
 

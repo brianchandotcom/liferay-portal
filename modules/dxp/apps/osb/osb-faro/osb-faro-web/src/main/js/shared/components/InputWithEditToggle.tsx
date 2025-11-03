@@ -1,22 +1,43 @@
 import autobind from 'autobind-decorator';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLabel from '@clayui/label';
 import Form from 'shared/components/form';
 import getCN from 'classnames';
 import Label from 'shared/components/form/Label';
 import Loading, {Align} from 'shared/components/Loading';
 import React from 'react';
+import {Text as ClayText} from '@clayui/core';
 import {Formik} from 'formik';
+
+export enum FontSize {
+	Size1 = 1,
+	Size2 = 2,
+	Size3 = 3,
+	Size4 = 4,
+	Size5 = 5,
+	Size6 = 6,
+	Size7 = 7,
+	Size8 = 8,
+	Size9 = 9,
+	Size10 = 10,
+	Size11 = 11
+}
+
 interface IInputWithEditToggleProps {
 	className?: string;
+	hasBoldTitle?: boolean;
+	hasDataSourceLabel?: boolean;
 	editable: boolean;
 	inputWidth?: number;
-	label: string;
+	isDataSourceConnected?: boolean;
+	label?: string;
 	name?: string;
 	onSubmit: (value, name) => Promise<any>;
 	required: boolean;
 	validate: (value) => Promise<any>;
 	value: string;
+	valueFontSize?: FontSize;
 }
 
 interface IInputWithEditToggleState {
@@ -29,8 +50,12 @@ export default class InputWithEditToggle extends React.Component<
 > {
 	static defaultProps = {
 		editable: true,
+		hasBoldTitle: false,
+		hasDataSourceLabel: false,
+		isDataSourceConnected: false,
 		name: 'name',
-		required: false
+		required: false,
+		valueFontSize: FontSize.Size4
 	};
 
 	state = {
@@ -77,15 +102,26 @@ export default class InputWithEditToggle extends React.Component<
 			props: {
 				className,
 				editable,
+				hasBoldTitle,
+				hasDataSourceLabel,
 				inputWidth,
+				isDataSourceConnected,
 				label,
 				name,
 				required,
 				validate,
-				value
+				value,
+				valueFontSize
 			},
 			state: {editing}
 		} = this;
+
+		const statusLabel = isDataSourceConnected
+			? {displayType: 'success', text: Liferay.Language.get('connected')}
+			: {
+					displayType: 'secondary',
+					text: Liferay.Language.get('disconnected')
+			  };
 
 		return (
 			<div
@@ -105,81 +141,125 @@ export default class InputWithEditToggle extends React.Component<
 							className='input-with-edit-toggle-editor'
 							onSubmit={handleSubmit}
 						>
+							{hasDataSourceLabel && (
+								<ClayLabel
+									className='mb-2'
+									displayType={statusLabel.displayType as any}
+								>
+									{statusLabel.text}
+								</ClayLabel>
+							)}
+
 							{label && (
 								<Label required={required}>{label}</Label>
 							)}
 
 							<Form.Group autoFit className='align-items-center'>
-								<Form.Input
-									contentAfter={
-										editing ? (
-											<>
-												<ClayButton
-													aria-label={Liferay.Language.get(
-														'cancel'
-													)}
-													className='button-root'
-													displayType='secondary'
-													onClick={() => {
-														this.handleEditToggle();
+								{hasBoldTitle && !editing ? (
+									<>
+										<ClayText
+											size={valueFontSize as any}
+											weight='bold'
+										>
+											{value}
+										</ClayText>
 
-														resetForm();
-													}}
-													size='sm'
-												>
-													<ClayIcon
-														className='icon-root'
-														symbol='times'
-													/>
-												</ClayButton>
+										<ClayButton
+											aria-label={Liferay.Language.get(
+												'edit'
+											)}
+											borderless
+											className='button-root'
+											disabled={!editable}
+											displayType='secondary'
+											onClick={this.handleEditToggle}
+											outline
+											size='sm'
+										>
+											<ClayIcon
+												className='icon-root'
+												symbol='pencil'
+											/>
+										</ClayButton>
+									</>
+								) : (
+									<Form.Input
+										contentAfter={
+											editing ? (
+												<>
+													<ClayButton
+														aria-label={Liferay.Language.get(
+															'cancel'
+														)}
+														className='button-root'
+														displayType='secondary'
+														onClick={() => {
+															this.handleEditToggle();
 
-												<ClayButton
-													aria-label={Liferay.Language.get(
-														'submit'
-													)}
-													className='button-root'
-													disabled={!isValid}
-													displayType='primary'
-													size='sm'
-													type='submit'
-												>
-													{isSubmitting && (
-														<Loading
-															align={Align.Left}
+															resetForm();
+														}}
+														size='sm'
+													>
+														<ClayIcon
+															className='icon-root'
+															symbol='times'
 														/>
-													)}
+													</ClayButton>
 
+													<ClayButton
+														aria-label={Liferay.Language.get(
+															'submit'
+														)}
+														className='button-root'
+														disabled={!isValid}
+														displayType='primary'
+														size='sm'
+														type='submit'
+													>
+														{isSubmitting && (
+															<Loading
+																align={
+																	Align.Left
+																}
+															/>
+														)}
+
+														<ClayIcon
+															className='icon-root'
+															symbol='check'
+														/>
+													</ClayButton>
+												</>
+											) : (
+												<ClayButton
+													aria-label={Liferay.Language.get(
+														'edit'
+													)}
+													className='button-root'
+													disabled={!editable}
+													displayType='secondary'
+													onClick={
+														this.handleEditToggle
+													}
+													size='sm'
+												>
 													<ClayIcon
 														className='icon-root'
-														symbol='check'
+														symbol='pencil'
 													/>
 												</ClayButton>
-											</>
-										) : (
-											<ClayButton
-												aria-label={Liferay.Language.get(
-													'edit'
-												)}
-												className='button-root'
-												disabled={!editable}
-												displayType='secondary'
-												onClick={this.handleEditToggle}
-												size='sm'
-											>
-												<ClayIcon
-													className='icon-root'
-													symbol='pencil'
-												/>
-											</ClayButton>
-										)
-									}
-									disabled={
-										!editing || !editable || isSubmitting
-									}
-									name={name}
-									validate={validate}
-									width={inputWidth}
-								/>
+											)
+										}
+										disabled={
+											!editing ||
+											!editable ||
+											isSubmitting
+										}
+										name={name}
+										validate={validate}
+										width={inputWidth}
+									/>
+								)}
 							</Form.Group>
 						</Form.Form>
 					)}

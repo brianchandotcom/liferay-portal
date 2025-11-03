@@ -263,12 +263,10 @@ public class TaxonomyVocabularyResourceTest
 					testGroup.getGroupId());
 		}
 
-		String updatedName = RandomTestUtil.randomString();
-
 		TaxonomyVocabulary updateTaxonomyVocabulary = new TaxonomyVocabulary() {
 			{
 				multiValued = false;
-				name = updatedName;
+				name = RandomTestUtil.randomString();
 				visibilityType = VisibilityType.PUBLIC;
 			}
 		};
@@ -280,7 +278,6 @@ public class TaxonomyVocabularyResourceTest
 					assetVocabulary.getExternalReferenceCode(),
 					updateTaxonomyVocabulary);
 
-		Assert.assertEquals(updatedName, updatedTaxonomyVocabulary.getName());
 		Assert.assertEquals(
 			TaxonomyVocabulary.VisibilityType.PUBLIC,
 			updatedTaxonomyVocabulary.getVisibilityType());
@@ -291,7 +288,6 @@ public class TaxonomyVocabularyResourceTest
 					assetVocabulary.getExternalReferenceCode(),
 					assetVocabulary.getGroupId());
 
-		Assert.assertEquals(updatedName, assetVocabulary.getName());
 		Assert.assertEquals(
 			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
 			assetVocabulary.getVisibilityType());

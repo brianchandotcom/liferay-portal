@@ -43,59 +43,57 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: detailsDataSetERC});
 });
 
-test.describe('Data Set Details', () => {
-	test.describe('Advanced Optional Parameters', () => {
-		test('Parameters persist after saving @LPD-25241', async ({
-			detailsPage,
-			page,
-		}) => {
-			await test.step('Navigate to Details section', async () => {
-				await detailsPage.goto({
-					dataSetLabel,
-				});
-			});
-
-			await test.step('Fill parameters input', async () => {
-				await detailsPage.parametersInput.fill('sort=name:asc');
-			});
-
-			await test.step('Save the data set', async () => {
-				await detailsPage.saveButton.click();
-
-				await waitForAlert(page);
-			});
-
-			await test.step('Reload the page', async () => {
-				await page.reload();
-			});
-
-			await test.step('Check that the parameters input persisted', async () => {
-				await expect(detailsPage.parametersInput).toHaveValue(
-					'sort=name:asc'
-				);
+test.describe('Advanced Optional Parameters', () => {
+	test('Parameters persist after saving @LPD-25241', async ({
+		detailsPage,
+		page,
+	}) => {
+		await test.step('Navigate to Details section', async () => {
+			await detailsPage.goto({
+				dataSetLabel,
 			});
 		});
 
-		test('URL Preview encodes the parameters input @LPD-25241', async ({
-			detailsPage,
-		}) => {
-			await test.step('Navigate to Details section', async () => {
-				await detailsPage.goto({
-					dataSetLabel,
-				});
-			});
+		await test.step('Fill parameters input', async () => {
+			await detailsPage.parametersInput.fill('sort=name:asc');
+		});
 
-			await test.step('Fill parameters input', async () => {
-				await detailsPage.parametersInput.fill(
-					'filter=name eq "Test Test"'
-				);
-			});
+		await test.step('Save the data set', async () => {
+			await detailsPage.saveButton.click();
 
-			await test.step('Check the URL Preview input properly displays the REST endpoint with the encoded parameters', async () => {
-				await expect(detailsPage.urlPreviewInput).toHaveValue(
-					`${API_ENDPOINT_PATH}/by-external-reference-code/${detailsDataSetERC}/dataSetToDataSetTableSections?filter=name%20eq%20%22Test%20Test%22`
-				);
+			await waitForAlert(page);
+		});
+
+		await test.step('Reload the page', async () => {
+			await page.reload();
+		});
+
+		await test.step('Check that the parameters input persisted', async () => {
+			await expect(detailsPage.parametersInput).toHaveValue(
+				'sort=name:asc'
+			);
+		});
+	});
+
+	test('URL Preview encodes the parameters input @LPD-25241', async ({
+		detailsPage,
+	}) => {
+		await test.step('Navigate to Details section', async () => {
+			await detailsPage.goto({
+				dataSetLabel,
 			});
+		});
+
+		await test.step('Fill parameters input', async () => {
+			await detailsPage.parametersInput.fill(
+				'filter=name eq "Test Test"'
+			);
+		});
+
+		await test.step('Check the URL Preview input properly displays the REST endpoint with the encoded parameters', async () => {
+			await expect(detailsPage.urlPreviewInput).toHaveValue(
+				`${API_ENDPOINT_PATH}/by-external-reference-code/${detailsDataSetERC}/dataSetToDataSetTableSections?filter=name%20eq%20%22Test%20Test%22`
+			);
 		});
 	});
 });

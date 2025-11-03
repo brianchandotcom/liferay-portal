@@ -35,12 +35,14 @@ const valueInputElement = document.getElementById(
 	`${fragmentElementId}-value-input`
 );
 
-buttonElement.addEventListener('click', toggleDropdown);
-buttonElement.addEventListener('blur', handleResultListBlur);
-uiInputElement.addEventListener('click', toggleDropdown);
-uiInputElement.addEventListener('input', debounce(handleInputChange, 1000));
-uiInputElement.addEventListener('blur', handleInputBlur);
-uiInputElement.addEventListener('keydown', handleInputKeyDown);
+if (!input.readOnly) {
+	buttonElement.addEventListener('click', toggleDropdown);
+	buttonElement.addEventListener('blur', handleResultListBlur);
+	uiInputElement.addEventListener('click', toggleDropdown);
+	uiInputElement.addEventListener('input', debounce(handleInputChange, 1000));
+	uiInputElement.addEventListener('blur', handleInputBlur);
+	uiInputElement.addEventListener('keydown', handleInputKeyDown);
+}
 
 window.addEventListener('resize', handleWindowResizeOrScroll, {
 	passive: true,
@@ -64,17 +66,22 @@ else {
 
 		if (selectedOption) {
 			lastSearchQuery = selectedOption.label.toLowerCase();
-			valueInputElement.value = selectedOption.value;
 
-			const selectedOptionElement = optionListElement.querySelector(
-				'.active.dropdown-item'
-			);
+			if (valueInputElement) {
+				valueInputElement.value = selectedOption.value;
+			}
 
-			if (selectedOptionElement) {
-				optionListElement.setAttribute(
-					'aria-activedescendant',
-					selectedOptionElement.id
+			if (optionListElement) {
+				const selectedOptionElement = optionListElement.querySelector(
+					'.active.dropdown-item'
 				);
+
+				if (selectedOptionElement) {
+					optionListElement.setAttribute(
+						'aria-activedescendant',
+						selectedOptionElement.id
+					);
+				}
 			}
 		}
 	}
@@ -216,7 +223,7 @@ else {
 					}
 				});
 
-				optionListElement.addEventListener('click', (event) => {
+				optionListElement?.addEventListener('click', (event) => {
 					const translationInput = getTranslationInput({
 						inputId: uiInputElement.id,
 						inputName: input.name,
@@ -268,7 +275,7 @@ else {
 					),
 				});
 
-				optionListElement.addEventListener(
+				optionListElement?.addEventListener(
 					'click',
 					handleResultListClick
 				);

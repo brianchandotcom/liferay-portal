@@ -265,6 +265,16 @@ export class PagesAdminPage {
 		});
 	}
 
+	async expectCurrentThemeToBe(themeName: string) {
+		const currentThemeIndicator = this.page
+			.locator(
+				'[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_currentThemeContainer"]'
+			)
+			.getByLabel(themeName, {exact: true});
+
+		await expect(currentThemeIndicator).toBeVisible();
+	}
+
 	async changeTheme(themeName: string) {
 		await this.openThemeSelector();
 

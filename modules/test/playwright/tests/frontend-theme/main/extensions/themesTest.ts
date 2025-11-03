@@ -10,6 +10,7 @@ import {appManagerPagesTest} from '../../../../fixtures/appManagerPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../../fixtures/pagesAdminPagesTest';
+import {BundleBlacklistPage} from '../../../../pages/marketplace-app-manager-web/BundleBlacklistPage';
 import {AssertionFixture} from '../fixtures/AssertionFixture';
 import {DesignFixture} from '../fixtures/DesignFixture';
 import {PageFixture} from '../fixtures/PageFixture';
@@ -52,9 +53,12 @@ export const themesTest = test.extend<FixturesExtension>({
 		{appManagerPage, page, pageEditorPage, pagesAdminPage, site},
 		use
 	) => {
+		const bundleBlacklistPage = new BundleBlacklistPage(page);
+
 		await use(
 			new ThemeFixture(
 				appManagerPage,
+				bundleBlacklistPage,
 				page,
 				pageEditorPage,
 				pagesAdminPage,

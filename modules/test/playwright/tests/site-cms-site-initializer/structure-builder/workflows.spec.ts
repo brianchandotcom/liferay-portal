@@ -36,7 +36,7 @@ test(
 
 		const spaceName = `Space ${getRandomString()}`;
 
-		const {id: externalReferenceCode} =
+		const {externalReferenceCode} =
 			await apiHelpers.headlessAssetLibrary.createAssetLibrary({
 				name: spaceName,
 				settings: {},

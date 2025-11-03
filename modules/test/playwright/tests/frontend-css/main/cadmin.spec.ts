@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Locator, expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
@@ -22,6 +22,11 @@ const test = mergeTests(
 	}),
 	loginTest()
 );
+
+function assertBackgroundColor(element: Locator, color: string) {
+	expect(element).toBeVisible();
+	expect(element).toHaveCSS('background-color', color);
+}
 
 test(
 	"Verifies admin component displays it's default theme after applying a theme and that CSS can be overridden",
@@ -64,20 +69,10 @@ test(
 		await test.step('Assert cadmin component default theme background color', async () => {
 			for (const {cadminColor, regularColor, selector} of elements) {
 				const regularElement = page.locator(`${selector}:not(.cadmin)`);
-
-				expect(regularElement).toBeVisible();
-				expect(regularElement).toHaveCSS(
-					'background-color',
-					regularColor
-				);
-
 				const cadminElement = page.locator(`${selector}.cadmin`);
 
-				expect(cadminElement).toBeVisible();
-				expect(cadminElement).toHaveCSS(
-					'background-color',
-					cadminColor
-				);
+				assertBackgroundColor(regularElement, regularColor);
+				assertBackgroundColor(cadminElement, cadminColor);
 			}
 		});
 	}

@@ -81,7 +81,8 @@ public class JavaModuleUniqueVerifyProcessCheck extends BaseJavaTermCheck {
 			extendedClassNames = javaClass.getExtendedClassNames(true);
 
 			if (extendedClassNames.contains(
-					"com.liferay.portal.verify.VerifyProcess")) {
+					"com.liferay.portal.verify.VerifyProcess") &&
+				javaClass.hasAnnotation("Component")) {
 
 				extendedVerifyProcessClassCount++;
 			}

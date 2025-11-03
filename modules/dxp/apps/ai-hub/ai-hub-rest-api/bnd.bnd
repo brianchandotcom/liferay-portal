@@ -3,4 +3,5 @@ Bundle-SymbolicName: com.liferay.ai.hub.rest.api
 Bundle-Version: 1.0.2
 Export-Package:\
 	com.liferay.ai.hub.rest.dto.v1_0,\
-	com.liferay.ai.hub.rest.resource.v1_0
+	com.liferay.ai.hub.rest.resource.v1_0,\
+	com.liferay.ai.hub.rest.resource.v1_0.util

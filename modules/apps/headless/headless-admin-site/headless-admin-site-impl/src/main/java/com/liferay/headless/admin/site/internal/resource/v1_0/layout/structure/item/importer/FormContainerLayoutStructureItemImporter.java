@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefiniti
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.Layout;
+import com.liferay.headless.admin.site.dto.v1_0.LocalizationConfig;
 import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.dto.v1_0.StayInPageFormContainerSubmissionResult;
@@ -176,6 +177,36 @@ public class FormContainerLayoutStructureItemImporter
 			formStyledLayoutStructureItem.setFlexWrap(null);
 			formStyledLayoutStructureItem.setJustify(null);
 			formStyledLayoutStructureItem.setWidthType(null);
+		}
+
+		LocalizationConfig localizationConfig =
+			formContainerConfig.getLocalizationConfig();
+
+		if (localizationConfig != null) {
+			formStyledLayoutStructureItem.setLocalizationConfigJSONObject(
+				JSONUtil.put(
+					"unlocalizedFieldsMessage",
+					_toFragmentInlineValueJSONObject(
+						localizationConfig.getUnlocalizedFieldsMessage())
+				).put(
+					"unlocalizedFieldsState",
+					() -> {
+						LocalizationConfig.UnlocalizedFieldsState
+							unlocalizedFieldsState =
+								localizationConfig.getUnlocalizedFieldsState();
+
+						if ((unlocalizedFieldsState == null) ||
+							Objects.equals(
+								unlocalizedFieldsState,
+								LocalizationConfig.UnlocalizedFieldsState.
+									DISABLED)) {
+
+							return "disabled";
+						}
+
+						return "read-only";
+					}
+				));
 		}
 
 		formStyledLayoutStructureItem.setNumberOfSteps(

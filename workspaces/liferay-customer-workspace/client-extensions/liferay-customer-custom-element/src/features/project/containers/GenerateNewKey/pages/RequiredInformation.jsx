@@ -281,6 +281,7 @@ const RequiredInformation = ({
 										name: 'provisionedCount',
 									},
 								],
+								externalReferenceCode: licenseKey.productPurchaseKey,
 							},
 						},
 					});

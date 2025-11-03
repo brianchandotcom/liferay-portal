@@ -402,6 +402,7 @@ const SelectSubscription = ({
 											name: 'provisionedCount',
 										},
 									],
+									externalReferenceCode: selectedSubscription?.productPurchaseKey,
 								},
 							},
 						});

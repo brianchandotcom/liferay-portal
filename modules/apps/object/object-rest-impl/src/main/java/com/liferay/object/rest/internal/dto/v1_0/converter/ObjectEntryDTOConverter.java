@@ -1589,60 +1589,63 @@ public class ObjectEntryDTOConverter
 			int versionInt)
 		throws Exception {
 
+		boolean enableObjectEntryVersioning =
+			objectDefinition.isEnableObjectEntryVersioning();
+
 		Group group = _groupLocalService.fetchGroup(groupId);
 
-		ObjectDefinitionBrief objectDefinitionBrief =
+		ObjectDefinitionBrief nestedObjectDefinitionBrief =
 			NestedFieldsSupplier.supply(
 				"systemProperties.objectDefinitionBrief",
 				nestedField -> _toObjectDefinitionBrief(
 					locale, objectDefinition));
 
-		boolean enableObjectEntryVersioning =
-			objectDefinition.isEnableObjectEntryVersioning();
-
-		if ((group == null) && (objectDefinitionBrief == null) &&
-			!enableObjectEntryVersioning) {
+		if (!enableObjectEntryVersioning && (group == null) &&
+			(nestedObjectDefinitionBrief == null)) {
 
 			return null;
 		}
 
-		SystemProperties systemProperties = new SystemProperties();
+		return new SystemProperties() {
+			{
+				setObjectDefinitionBrief(() -> nestedObjectDefinitionBrief);
+				setScope(
+					() -> {
+						if (group == null) {
+							return null;
+						}
 
-		if (group != null) {
-			systemProperties.setScope(
-				() -> {
-					Scope scope = new Scope();
+						Scope scope = new Scope();
 
-					scope.setExternalReferenceCode(
-						group::getExternalReferenceCode);
-					scope.setType(
-						() -> {
-							if (group.getType() == GroupConstants.TYPE_DEPOT) {
-								return Scope.Type.ASSET_LIBRARY;
+						scope.setExternalReferenceCode(
+							group::getExternalReferenceCode);
+						scope.setType(
+							() -> {
+								if (group.getType() ==
+										GroupConstants.TYPE_DEPOT) {
+
+									return Scope.Type.ASSET_LIBRARY;
+								}
+
+								return Scope.Type.SITE;
+							});
+
+						return scope;
+					});
+				setVersion(
+					() -> {
+						if (!enableObjectEntryVersioning) {
+							return null;
+						}
+
+						return new Version() {
+							{
+								setNumber(() -> versionInt);
 							}
-
-							return Scope.Type.SITE;
-						});
-
-					return scope;
-				});
-		}
-
-		if (objectDefinitionBrief != null) {
-			systemProperties.setObjectDefinitionBrief(
-				() -> objectDefinitionBrief);
-		}
-
-		if (enableObjectEntryVersioning) {
-			systemProperties.setVersion(
-				() -> new Version() {
-					{
-						setNumber(() -> versionInt);
-					}
-				});
-		}
-
-		return systemProperties;
+						};
+					});
+			}
+		};
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

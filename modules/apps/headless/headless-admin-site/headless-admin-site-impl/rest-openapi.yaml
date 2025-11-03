@@ -892,6 +892,20 @@ components:
                 formContainerType:
                     enum: [Multistep, Simple]
                     type: string
+                localizationConfig:
+                    properties:
+                        unlocalizedFieldsMessageFragmentInlineValue:
+                            $ref: "#/components/schemas/FragmentInlineValue"
+                            # @review
+                            description:
+                                The message displayed in the unlocalized fields.
+                        unlocalizedFieldsState:
+                            # @review
+                            description:
+                                The state of the unlocalized fields.
+                            enum: [Disabled, ReadOnly]
+                            type: string
+                    type: object
                 numberOfSteps:
                     # @review
                     description:

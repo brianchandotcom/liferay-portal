@@ -142,7 +142,7 @@ public class ItemExternalReference implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public Scope getScope() {
+	public com.liferay.portal.vulcan.scope.Scope getScope() {
 		if (_scopeSupplier != null) {
 			scope = _scopeSupplier.get();
 
@@ -152,14 +152,17 @@ public class ItemExternalReference implements Serializable {
 		return scope;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(com.liferay.portal.vulcan.scope.Scope scope) {
 		this.scope = scope;
 
 		_scopeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+	public void setScope(
+		UnsafeSupplier<com.liferay.portal.vulcan.scope.Scope, Exception>
+			scopeUnsafeSupplier) {
+
 		_scopeSupplier = () -> {
 			try {
 				return scopeUnsafeSupplier.get();
@@ -175,10 +178,10 @@ public class ItemExternalReference implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Scope scope;
+	protected com.liferay.portal.vulcan.scope.Scope scope;
 
 	@JsonIgnore
-	private Supplier<Scope> _scopeSupplier;
+	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -240,7 +243,7 @@ public class ItemExternalReference implements Serializable {
 			sb.append("\"");
 		}
 
-		Scope scope = getScope();
+		com.liferay.portal.vulcan.scope.Scope scope = getScope();
 
 		if (scope != null) {
 			if (sb.length() > 1) {
@@ -249,7 +252,7 @@ public class ItemExternalReference implements Serializable {
 
 			sb.append("\"scope\": ");
 
-			sb.append(String.valueOf(scope));
+			sb.append(scope);
 		}
 
 		sb.append("}");

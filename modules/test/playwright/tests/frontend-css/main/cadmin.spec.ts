@@ -32,24 +32,6 @@ test(
 	"Verifies admin component displays it's default theme after applying a theme and that CSS can be overridden",
 	{tag: '@LPD-66827'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
-		const elements = [
-			{
-				cadminColor: 'rgba(0, 0, 0, 0)',
-				regularColor: 'rgba(255, 0, 0, 0.8)',
-				selector: '.cadmin-test-wrapper > .cadmin-test-unstyled',
-			},
-			{
-				cadminColor: 'rgba(0, 0, 0, 0)',
-				regularColor: 'rgba(0, 0, 255, 0.8)',
-				selector: '.cadmin-test-wrapper > .cadmin-test-styled',
-			},
-			{
-				cadminColor: 'rgba(0, 0, 255, 0.8)',
-				regularColor: 'rgba(0, 0, 255, 0.8)',
-				selector: '.cadmin-test-wrapper > .cadmin-test-styled-override',
-			},
-		];
-
 		await test.step('Create a new site with test widget', async () => {
 			const layout = await apiHelpers.headlessDelivery.createSitePage({
 				pageDefinition: getPageDefinition(),
@@ -67,12 +49,35 @@ test(
 		});
 
 		await test.step('Assert cadmin component default theme background color', async () => {
-			for (const {cadminColor, regularColor, selector} of elements) {
-				const regularElement = page.locator(`${selector}:not(.cadmin)`);
-				const cadminElement = page.locator(`${selector}.cadmin`);
+			const elements = [
+				{
+					cadminColor: 'rgba(0, 0, 0, 0)',
+					regularColor: 'rgba(255, 0, 0, 0.8)',
+					selector: '.cadmin-test-wrapper > .cadmin-test-unstyled',
+				},
+				{
+					cadminColor: 'rgba(0, 0, 0, 0)',
+					regularColor: 'rgba(0, 0, 255, 0.8)',
+					selector: '.cadmin-test-wrapper > .cadmin-test-styled',
+				},
+				{
+					cadminColor: 'rgba(0, 0, 255, 0.8)',
+					regularColor: 'rgba(0, 0, 255, 0.8)',
+					selector:
+						'.cadmin-test-wrapper > .cadmin-test-styled-override',
+				},
+			];
 
-				assertBackgroundColor(regularElement, regularColor);
-				assertBackgroundColor(cadminElement, cadminColor);
+			for (const {cadminColor, regularColor, selector} of elements) {
+				assertBackgroundColor(
+					page.locator(`${selector}:not(.cadmin)`),
+					regularColor
+				);
+
+				assertBackgroundColor(
+					page.locator(`${selector}.cadmin`),
+					cadminColor
+				);
 			}
 		});
 	}

@@ -195,6 +195,53 @@ public class DDMIndexerImplTest {
 	}
 
 	@Test
+	public void testFormWithCheckboxMultipleField() throws JSONException {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
+			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
+
+		DDMFormField ddmFormField = DDMFormTestUtil.createDDMFormField(
+			_FIELD_NAME, RandomTestUtil.randomString(),
+			DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE, "string", true, false,
+			false);
+
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		ddmFormFieldOptions.addOptionLabel("apple", LocaleUtil.US, "Apple");
+		ddmFormFieldOptions.addOptionLabel(
+			"pineapple", LocaleUtil.US, "Pineapple");
+
+		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);
+
+		ddmFormField.setIndexType("keyword");
+
+		ddmForm.addDDMFormField(ddmFormField);
+
+		Document document = _createDocument();
+
+		_ddmIndexer.addAttributes(
+			document, _createDDMStructure(ddmForm),
+			_createDDMFormValues(
+				ddmForm,
+				DDMFormValuesTestUtil.createDDMFormFieldValue(
+					_FIELD_NAME,
+					DDMFormValuesTestUtil.createLocalizedValue(
+						"[\"pineapple\",\"apple\"]", LocaleUtil.US))));
+
+		FieldValuesAssert.assertFieldValues(
+			HashMapBuilder.put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US", "[apple, pineapple]"
+			).put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String",
+				"[Apple, Pineapple]"
+			).put(
+				"ddmFieldArray.ddmFieldValueKeyword_en_US_String_sortable",
+				"[apple, pineapple]"
+			).build(),
+			"ddmFieldArray.ddmFieldValueKeyword_en_US", document,
+			StringPool.BLANK);
+	}
+
+	@Test
 	public void testFormWithLegacyDDMIndexFieldsEnabled() {
 		DDMIndexer ddmIndexer = _createDDMIndexer(true);
 

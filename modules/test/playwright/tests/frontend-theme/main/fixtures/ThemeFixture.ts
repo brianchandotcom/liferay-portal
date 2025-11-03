@@ -11,6 +11,7 @@ import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/P
 import {AppManagerPage} from '../../../../pages/marketplace-app-manager-web/AppManagerPage';
 import {BundleBlacklistPage} from '../../../../pages/marketplace-app-manager-web/BundleBlacklistPage';
 import {doAndGoBack} from '../../../../utils/doAndGoBack';
+import {waitForAlert} from '../../../../utils/waitForAlert';
 
 export class ThemeFixture {
 	private readonly testThemeName = 'test-theme-7-4';
@@ -48,6 +49,41 @@ export class ThemeFixture {
 			await this.appManagerPage.uploadAppFromLocalDirectory(
 				this.testThemeAppName,
 				path.resolve(this.testThemeAppPath)
+			);
+		});
+	}
+
+	async uninstallTestTheme(testPageName: string) {
+		await doAndGoBack(this.page, async () => {
+			await this.appManagerPage.uninstallApp(this.testThemeAppName);
+
+			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+
+			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
+
+			await this.pagesAdminPage.expectThemeToBeDeactivated(
+				this.testThemeName
+			);
+		});
+	}
+
+	async redeployTestTheme(testPageName: string) {
+		await doAndGoBack(this.page, async () => {
+			await this.bundleBlacklistPage.goto();
+
+			await this.bundleBlacklistPage.blacklistBundleSymbolicInput.fill(
+				''
+			);
+			await this.bundleBlacklistPage.updateButton.click();
+
+			await waitForAlert(this.page);
+
+			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+
+			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
+
+			await this.pagesAdminPage.expectThemeToBeActivated(
+				this.testThemeName
 			);
 		});
 	}
@@ -92,15 +128,33 @@ export class ThemeFixture {
 		await this.changePageTheme(pageName, this.testThemeName);
 	}
 
-	async changePageTheme(pageName: string, theme: string) {
+	async changePageTheme(pageName: string, themeName: string) {
 		await doAndGoBack(this.page, async () => {
 			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
 
-			await this.pagesAdminPage.changeTheme(theme);
+			await this.pagesAdminPage.changeTheme(themeName);
 
 			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+		});
+	}
+
+	async expectCurrentThemeToBeClassic(pageName: string) {
+		await this.expectCurrentThemeToBe(pageName, 'Classic');
+	}
+
+	async expectCurrentThemeToBeTestTheme(pageName: string) {
+		await this.expectCurrentThemeToBe(pageName, this.testThemeName);
+	}
+
+	async expectCurrentThemeToBe(pageName: string, themeName: string) {
+		await doAndGoBack(this.page, async () => {
+			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+
+			await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
+
+			await this.pagesAdminPage.expectCurrentThemeToBe(themeName);
 		});
 	}
 

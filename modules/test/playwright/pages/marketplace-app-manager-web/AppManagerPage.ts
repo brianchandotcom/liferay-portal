@@ -129,4 +129,22 @@ export class AppManagerPage {
 
 		await waitForAlert(this.page);
 	}
+
+	async uninstallApp(appName: string) {
+		await this.goto();
+
+		await this.expectAppToExist(appName);
+
+		this.page.once('dialog', (dialog) => dialog.accept());
+
+		await expect(async () => {
+			await this.appRowOptionsMenu(appName).click();
+
+			await expect(this.uninstallLink).toBeVisible();
+
+			await this.uninstallLink.click({timeout: 1000});
+
+			await waitForAlert(this.page);
+		}).toPass();
+	}
 }

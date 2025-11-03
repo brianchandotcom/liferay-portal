@@ -22,73 +22,125 @@ const test = mergeTests(
 	})
 );
 
-test('Verifies test theme background color', async ({
-	page,
-	pageFixture,
-	themeFixture,
-}) => {
-	const sitePageName = getRandomString();
-	const sitePage = await pageFixture.createPage(sitePageName);
+test(
+	'Verifies test theme background color',
+	{tag: '@LPD-70288'},
+	async ({page, pageFixture, themeFixture}) => {
+		const sitePageName = getRandomString();
+		const sitePage = await pageFixture.createPage(sitePageName);
 
-	const getBody = () => page.locator('body');
-
-	await pageFixture.goToPage(sitePage);
-
-	expect(getBody()).toHaveCSS('background-color', CLASSIC_BACKGROUND_COLOR);
-
-	await themeFixture.addTestTheme();
-	await themeFixture.changePageThemeToTestTheme(sitePageName);
-	await themeFixture.publishPage(sitePageName);
-
-	expect(page.locator('body')).toHaveCSS(
-		'background-color',
-		TEST_THEME_BACKGROUND_COLOR
-	);
-});
-
-test('A theme can be deactivated and reactivated', async ({
-	page,
-	pageFixture,
-	themeFixture,
-}) => {
-	const [sitePageName, sitePage] =
-		await test.step('Create site page', async () => {
-			const sitePageName = getRandomString();
-			const sitePage = await pageFixture.createPage(sitePageName);
-
-			return [sitePageName, sitePage];
-		});
-
-	await test.step('Set page theme to test theme', async () => {
-		await themeFixture.addTestTheme();
-		await themeFixture.changePageThemeToTestTheme(sitePageName);
-		await themeFixture.publishPage(sitePageName);
-
-		await pageFixture.goToPage(sitePage);
-
-		expect(page.locator('body')).toHaveCSS(
-			'background-color',
-			TEST_THEME_BACKGROUND_COLOR
-		);
-	});
-
-	await test.step('Deactivates test theme', async () => {
-		await themeFixture.deactivateTestTheme(sitePageName);
 		await pageFixture.goToPage(sitePage);
 
 		expect(page.locator('body')).toHaveCSS(
 			'background-color',
 			CLASSIC_BACKGROUND_COLOR
 		);
-	});
 
-	await test.step('Reactivates test theme', async () => {
-		await themeFixture.activateTestTheme(sitePageName);
-		await pageFixture.goToPage(sitePage);
+		await themeFixture.addTestTheme();
+		await themeFixture.changePageThemeToTestTheme(sitePageName);
+		await themeFixture.publishPage(sitePageName);
 
-		expect(page.locator('body')).toHaveCSS(
+		await expect(page.locator('body')).toHaveCSS(
 			'background-color',
 			TEST_THEME_BACKGROUND_COLOR
 		);
-	});
-});
+	}
+);
+
+test(
+	'A custom theme can be deactivated and reactivated',
+	{tag: '@LPD-70288'},
+	async ({page, pageFixture, themeFixture}) => {
+		const [sitePageName, sitePage] =
+			await test.step('Create site page', async () => {
+				const sitePageName = getRandomString();
+				const sitePage = await pageFixture.createPage(sitePageName);
+
+				return [sitePageName, sitePage];
+			});
+
+		await test.step('Set page theme to test theme', async () => {
+			await themeFixture.addTestTheme();
+			await themeFixture.changePageThemeToTestTheme(sitePageName);
+			await themeFixture.publishPage(sitePageName);
+
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				TEST_THEME_BACKGROUND_COLOR
+			);
+		});
+
+		await test.step('Deactivates test theme', async () => {
+			await themeFixture.deactivateTestTheme(sitePageName);
+			await themeFixture.expectCurrentThemeToBeClassic(sitePageName);
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				CLASSIC_BACKGROUND_COLOR
+			);
+		});
+
+		await test.step('Reactivates test theme', async () => {
+			await themeFixture.activateTestTheme(sitePageName);
+			await themeFixture.expectCurrentThemeToBeTestTheme(sitePageName);
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				TEST_THEME_BACKGROUND_COLOR
+			);
+		});
+	}
+);
+
+test(
+	'A custom theme can be uninstalled and redeployed',
+	{tag: '@LPD-70288'},
+	async ({page, pageFixture, themeFixture}) => {
+		const [sitePageName, sitePage] =
+			await test.step('Create site page', async () => {
+				const sitePageName = getRandomString();
+				const sitePage = await pageFixture.createPage(sitePageName);
+
+				return [sitePageName, sitePage];
+			});
+
+		await test.step('Set page theme to test theme', async () => {
+			await themeFixture.addTestTheme();
+			await themeFixture.changePageThemeToTestTheme(sitePageName);
+			await themeFixture.publishPage(sitePageName);
+
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				TEST_THEME_BACKGROUND_COLOR
+			);
+		});
+
+		await test.step('Uninstall test theme', async () => {
+			await themeFixture.uninstallTestTheme(sitePageName);
+			await themeFixture.expectCurrentThemeToBeClassic(sitePageName);
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				CLASSIC_BACKGROUND_COLOR
+			);
+		});
+
+		await test.step('Redeploy test theme', async () => {
+			await themeFixture.redeployTestTheme(sitePageName);
+			await themeFixture.expectCurrentThemeToBeTestTheme(sitePageName);
+			await pageFixture.goToPage(sitePage);
+
+			await expect(page.locator('body')).toHaveCSS(
+				'background-color',
+				TEST_THEME_BACKGROUND_COLOR
+			);
+		});
+	}
+);

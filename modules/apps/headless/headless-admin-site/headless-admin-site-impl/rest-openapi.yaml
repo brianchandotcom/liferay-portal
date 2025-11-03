@@ -538,6 +538,29 @@ components:
                             type: string
                     type: object
             type: object
+        DisplayPageFormContainerSubmissionResult:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        defaultDisplayPage:
+                            # @review
+                            description:
+                                Default display page when a form container submission is successful.
+                            type: boolean
+                        itemReference:
+                            $ref: "#/components/schemas/ItemExternalReference"
+                            # @review
+                            description:
+                                A reference to a site page when a form container submission is successful.
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
+            description:
+                The definition of a submission result of type page.
+            type: object
         DisplayPageTemplate:
             # @review
             description:
@@ -3392,11 +3415,6 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
                 -   properties:
-                        defaultDisplayPage:
-                            # @review
-                            description:
-                                Default display page when a form container submission is successful.
-                            type: boolean
                         itemReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
@@ -3480,6 +3498,7 @@ components:
                 The form container success form container submission result.
             discriminator:
                 mapping:
+                    DisplayPageFormContainerSubmissionResult: "#/components/schemas/DisplayPageFormContainerSubmissionResult"
                     EmbeddedMessageFormContainerSubmissionResult : "#/components/schemas/EmbeddedMessageFormContainerSubmissionResult"
                     NotificationMessageFormContainerSubmissionResult : "#/components/schemas/NotificationMessageFormContainerSubmissionResult"
                     SitePageFormContainerSubmissionResult: "#/components/schemas/SitePageFormContainerSubmissionResult"
@@ -3490,7 +3509,7 @@ components:
                     # @review
                     description:
                         The form container success form container submission result type.
-                    enum: [EmbeddedMessageFormContainerSubmissionResult,NotificationMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
+                    enum: [DisplayPageFormContainerSubmissionResult,EmbeddedMessageFormContainerSubmissionResult,NotificationMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
                     type: string
             type: object
         SuccessNotificationMessage:

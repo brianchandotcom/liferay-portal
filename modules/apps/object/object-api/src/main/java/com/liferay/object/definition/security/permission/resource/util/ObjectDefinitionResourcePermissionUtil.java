@@ -137,6 +137,12 @@ public class ObjectDefinitionResourcePermissionUtil {
 		String objectFieldPermissionKeys = StringPool.BLANK;
 
 		for (ObjectField objectField : objectFields) {
+			if (!objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+				continue;
+			}
+
 			objectFieldLocalService.addOrUpdateObjectFieldPLOEntries(
 				objectField);
 

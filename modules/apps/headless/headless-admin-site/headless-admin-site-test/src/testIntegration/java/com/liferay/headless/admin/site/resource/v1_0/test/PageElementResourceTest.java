@@ -15,7 +15,7 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.list.constants.AssetListEntryTypeConstants;
 import com.liferay.asset.list.model.AssetListEntry;
-import com.liferay.asset.list.service.AssetListEntryLocalServiceUtil;
+import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
@@ -653,6 +653,14 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		return _assetCategoryLocalService.addCategory(
 			TestPropsValues.getUserId(), groupId, RandomTestUtil.randomString(),
 			assetVocabulary.getVocabularyId(), serviceContext);
+	}
+
+	private AssetListEntry _getAssetListEntry(long groupId) throws Exception {
+		return _assetListEntryLocalService.addAssetListEntry(
+			null, TestPropsValues.getUserId(), groupId,
+			RandomTestUtil.randomString(),
+			AssetListEntryTypeConstants.TYPE_DYNAMIC,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	private AssetVocabulary _getAssetVocabulary(long groupId) throws Exception {
@@ -1720,7 +1728,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 	}
 
 	private void _testMissingOptionalReference(
-			UnsafeRunnable<Exception> unsafeRunnable)
+			int count, UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
@@ -1731,15 +1739,17 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
-			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+			Assert.assertEquals(
+				logEntries.toString(), count, logEntries.size());
 
-			LogEntry logEntry = logEntries.get(0);
+			for (LogEntry logEntry : logEntries) {
+				String message = logEntry.getMessage();
 
-			String message = logEntry.getMessage();
-
-			Assert.assertTrue(
-				message,
-				message.startsWith("Optional reference generated for missing"));
+				Assert.assertTrue(
+					message,
+					message.startsWith(
+						"Optional reference generated for missing"));
+			}
 		}
 	}
 
@@ -1788,11 +1798,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				CollectionDisplayPageElementDefinition.PaginationType.NONE,
 				RandomTestUtil.randomString()));
 
-		AssetListEntry assetListEntry =
-			AssetListEntryLocalServiceUtil.addAssetListEntry(
-				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC, new ServiceContext());
+		AssetListEntry assetListEntry = _getAssetListEntry(
+			testGroup.getGroupId());
 
 		PageElement postCollectionDisplayPageElement =
 			_testPostSitePageSpecificationPageExperiencePageElement(
@@ -2048,11 +2055,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				CollectionDisplayPageElementDefinition.PaginationType.NONE,
 				externalReferenceCode));
 
-		AssetListEntry assetListEntry =
-			AssetListEntryLocalServiceUtil.addAssetListEntry(
-				null, TestPropsValues.getUserId(), testGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				AssetListEntryTypeConstants.TYPE_DYNAMIC, new ServiceContext());
+		AssetListEntry assetListEntry = _getAssetListEntry(
+			testGroup.getGroupId());
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getCollectionDisplayPageElement(
@@ -2287,6 +2291,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testMissingOptionalReference(
+			1,
 			() -> _testPutSitePageSpecificationPageExperiencePageElement(
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
@@ -2302,6 +2307,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		throws Exception {
 
 		_testMissingOptionalReference(
+			1,
 			() -> _testPutSitePageSpecificationPageExperiencePageElement(
 				_getFragmentInstancePageElement(
 					externalReferenceCode,
@@ -2316,6 +2322,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		String categoryFieldName = RandomTestUtil.randomString();
 		String checkboxFieldName = RandomTestUtil.randomString();
+		String collectionFieldName = RandomTestUtil.randomString();
 		String lengthFieldName = RandomTestUtil.randomString();
 		String selectFieldName = RandomTestUtil.randomString();
 
@@ -2359,6 +2366,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"type", "checkbox"
 					).build()
 				).put(
+					collectionFieldName,
+					HashMapBuilder.<String, Object>put(
+						"type", "collectionSelector"
+					).build()
+				).put(
 					lengthFieldName,
 					HashMapBuilder.<String, Object>put(
 						"defaultValue", RandomTestUtil.randomString()
@@ -2387,6 +2399,8 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				checkboxFieldName, RandomTestUtil.randomBoolean()
 			).put(
+				collectionFieldName, _getAssetListEntry(testGroup.getGroupId())
+			).put(
 				lengthFieldName, RandomTestUtil.randomString()
 			).put(
 				selectFieldName, selectValue1
@@ -2399,6 +2413,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				checkboxFieldName, RandomTestUtil.randomBoolean()
 			).put(
+				collectionFieldName,
+				"com.liferay.asset.internal.info.collection.provider." +
+					"HighestRatedAssetsInfoCollectionProvider"
+			).put(
 				lengthFieldName, RandomTestUtil.randomString()
 			).put(
 				selectFieldName, selectValue2
@@ -2408,6 +2426,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			Collections.emptyMap());
 
 		_testMissingOptionalReference(
+			2,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
 					FragmentConfigurationTestUtil.getConfiguration(
@@ -2426,6 +2445,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 								"localized", true
 							).put(
 								"type", "checkbox"
+							).build()
+						).put(
+							collectionFieldName,
+							HashMapBuilder.<String, Object>put(
+								"type", "collectionSelector"
 							).build()
 						).put(
 							lengthFieldName,
@@ -2463,6 +2487,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					).put(
 						checkboxFieldName, RandomTestUtil.randomBoolean()
 					).put(
+						collectionFieldName,
+						_getAssetListEntry(irrelevantGroup.getGroupId())
+					).put(
 						lengthFieldName, RandomTestUtil.randomString()
 					).put(
 						selectFieldName, selectValue1
@@ -2482,6 +2509,15 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						).build()
 					).put(
 						checkboxFieldName, RandomTestUtil.randomBoolean()
+					).put(
+						collectionFieldName,
+						HashMapBuilder.put(
+							"externalReferenceCode",
+							RandomTestUtil.randomString()
+						).put(
+							"scopeExternalReferenceCode",
+							RandomTestUtil.randomString()
+						).build()
 					).put(
 						lengthFieldName, RandomTestUtil.randomString()
 					).put(
@@ -2610,6 +2646,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Inject
 	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
+	private AssetListEntryLocalService _assetListEntryLocalService;
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;

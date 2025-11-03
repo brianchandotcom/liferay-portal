@@ -30,7 +30,7 @@ function assertBackgroundColor(element: Locator, color: string) {
 
 test(
 	"Verifies admin component displays it's default theme after applying a theme and that CSS can be overridden",
-	{tag: '@LPS-122068'},
+	{tag: '@LPD-66827'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		const elements = [
 			{

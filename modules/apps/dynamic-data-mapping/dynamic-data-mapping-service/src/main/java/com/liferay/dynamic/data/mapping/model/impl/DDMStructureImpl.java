@@ -146,7 +146,18 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 
 	@Override
 	public DDMForm getDDMForm() {
-		return new DDMForm(_getDDMForm(ddmFormUpdateEntityCacheBiConsumer));
+		return getDDMForm(true);
+	}
+
+	@Override
+	public DDMForm getDDMForm(boolean copy) {
+		DDMForm ddmForm = _getDDMForm(ddmFormUpdateEntityCacheBiConsumer);
+
+		if (copy) {
+			ddmForm = new DDMForm(ddmForm);
+		}
+
+		return ddmForm;
 	}
 
 	@Override

@@ -716,6 +716,30 @@ public class ObjectEntryFolderResourceImpl
 						ActionKeys.VIEW, serviceBuilderObjectEntryFolder,
 						"getObjectEntryFolder")
 				).put(
+					"get-by-scope",
+					() -> {
+						if (!FeatureFlagManagerUtil.isEnabled(
+								contextCompany.getCompanyId(), "LPD-17564")) {
+
+							return null;
+						}
+
+						return ActionUtil.addAction(
+							ActionKeys.VIEW,
+							ObjectEntryFolderResourceImpl.class,
+							serviceBuilderObjectEntryFolder.
+								getObjectEntryFolderId(),
+							"getScopeScopeKeyObjectEntryFoldersPage", null,
+							_objectEntryFolderModelResourcePermission,
+							HashMapBuilder.put(
+								"scopeKey",
+								String.valueOf(
+									serviceBuilderObjectEntryFolder.
+										getGroupId())
+							).build(),
+							contextUriInfo);
+					}
+				).put(
 					"move",
 					() -> {
 						if (!FeatureFlagManagerUtil.isEnabled(

@@ -12,9 +12,6 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +27,7 @@ import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.frontend.data.set.filter.VocabularyAssetTypesSelectionFDSFilter;
+import com.liferay.site.cms.site.initializer.internal.util.VocabularyUtil;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,34 +65,14 @@ public class ViewVocabulariesDisplayContext {
 
 		List<Map<String, String>> selectOptions = new ArrayList<>();
 
-		List<ObjectFolder> objectFolders = new ArrayList<>();
-
-		objectFolders.add(
+		VocabularyUtil.buildObjectDefinitionSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()));
-		objectFolders.add(
+				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()),
+			selectOptions);
+		VocabularyUtil.buildObjectDefinitionSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()));
-
-		for (ObjectFolder objectFolder : objectFolders) {
-			for (ObjectDefinition objectDefinition :
-					ObjectDefinitionLocalServiceUtil.
-						getObjectFolderObjectDefinitions(
-							objectFolder.getObjectFolderId())) {
-
-				selectOptions.add(
-					HashMapBuilder.put(
-						"label", objectDefinition.getLabelCurrentValue()
-					).put(
-						"restricted", Boolean.FALSE.toString()
-					).put(
-						"value",
-						String.valueOf(
-							PortalUtil.getClassNameId(
-								objectDefinition.getClassName()))
-					).build());
-			}
-		}
+				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()),
+			selectOptions);
 
 		return selectOptions;
 	}

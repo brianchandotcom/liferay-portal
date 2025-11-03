@@ -5,9 +5,6 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectFolder;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
 import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +17,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.site.cms.site.initializer.internal.util.VocabularyUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -44,34 +42,14 @@ public class EditVocabularyDisplayContext {
 
 		List<Map<String, String>> selectOptions = new ArrayList<>();
 
-		List<ObjectFolder> objectFolders = new ArrayList<>();
-
-		objectFolders.add(
+		VocabularyUtil.buildObjectDefinitionSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()));
-		objectFolders.add(
+				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()),
+			selectOptions);
+		VocabularyUtil.buildObjectDefinitionSelectOptions(
 			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()));
-
-		for (ObjectFolder objectFolder : objectFolders) {
-			for (ObjectDefinition objectDefinition :
-					ObjectDefinitionLocalServiceUtil.
-						getObjectFolderObjectDefinitions(
-							objectFolder.getObjectFolderId())) {
-
-				selectOptions.add(
-					HashMapBuilder.put(
-						"restricted", Boolean.FALSE.toString()
-					).put(
-						"type", objectDefinition.getLabelCurrentValue()
-					).put(
-						"typeId",
-						String.valueOf(
-							PortalUtil.getClassNameId(
-								objectDefinition.getClassName()))
-					).build());
-			}
-		}
+				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()),
+			selectOptions);
 
 		return selectOptions;
 	}

@@ -77,7 +77,7 @@ export function ExportReportEntriesModal({
 			</Modal.Header>
 
 			<Modal.Body className="text-3">
-				<div role="status">
+				<div id={`${importProcessId}status`} role="status">
 					<p className="mb-0">{currentMessage}</p>
 
 					<p>
@@ -89,7 +89,10 @@ export function ExportReportEntriesModal({
 					</ClayLabel>
 				</div>
 
-				<ClayProgressBar value={progress} />
+				<ClayProgressBar
+					aria-labelledby={`${importProcessId}status`}
+					value={progress}
+				/>
 			</Modal.Body>
 
 			<Modal.Footer

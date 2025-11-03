@@ -125,11 +125,18 @@ public class DDMFormValuesToFieldsConverterImpl
 			ddmFormField, ddmFormFieldAvailableLocales, ddmFormFieldValue,
 			ddmStructureId, defaultLocale, fields);
 
-		_addFieldsDisplayValue(
-			fields.get(DDMImpl.FIELDS_DISPLAY_NAME),
-			StringBundler.concat(
-				ddmFormFieldValue.getName(), DDMImpl.INSTANCE_SEPARATOR,
-				ddmFormFieldValue.getInstanceId()));
+		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
+
+		String[] fieldsDisplayValues = StringUtil.split(
+			(String)fieldsDisplayField.getValue());
+
+		fieldsDisplayField.setValue(
+			StringUtil.merge(
+				ArrayUtil.append(
+					fieldsDisplayValues,
+					StringBundler.concat(
+						ddmFormFieldValue.getName(), DDMImpl.INSTANCE_SEPARATOR,
+						ddmFormFieldValue.getInstanceId()))));
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
@@ -138,17 +145,6 @@ public class DDMFormValuesToFieldsConverterImpl
 				ddmFormFieldAvailableLocales, ddmFormFieldsMap,
 				nestedDDMFormFieldValue, ddmStructureId, defaultLocale, fields);
 		}
-	}
-
-	private void _addFieldsDisplayValue(
-		Field fieldsDisplayField, String fieldsDisplayValue) {
-
-		String[] fieldsDisplayValues = StringUtil.split(
-			(String)fieldsDisplayField.getValue());
-
-		fieldsDisplayField.setValue(
-			StringUtil.merge(
-				ArrayUtil.append(fieldsDisplayValues, fieldsDisplayValue)));
 	}
 
 	private Field _createField(

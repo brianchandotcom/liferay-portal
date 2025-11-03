@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import com.liferay.headless.object.dto.v1_0.Scope;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -96,7 +95,7 @@ public class SystemProperties implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
-	public Scope getScope() {
+	public com.liferay.portal.vulcan.scope.Scope getScope() {
 		if (_scopeSupplier != null) {
 			scope = _scopeSupplier.get();
 
@@ -106,14 +105,17 @@ public class SystemProperties implements Serializable {
 		return scope;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(com.liferay.portal.vulcan.scope.Scope scope) {
 		this.scope = scope;
 
 		_scopeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+	public void setScope(
+		UnsafeSupplier<com.liferay.portal.vulcan.scope.Scope, Exception>
+			scopeUnsafeSupplier) {
+
 		_scopeSupplier = () -> {
 			try {
 				return scopeUnsafeSupplier.get();
@@ -129,10 +131,10 @@ public class SystemProperties implements Serializable {
 
 	@GraphQLField
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Scope scope;
+	protected com.liferay.portal.vulcan.scope.Scope scope;
 
 	@JsonIgnore
-	private Supplier<Scope> _scopeSupplier;
+	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	@Valid
@@ -216,7 +218,7 @@ public class SystemProperties implements Serializable {
 			sb.append(String.valueOf(objectDefinitionBrief));
 		}
 
-		Scope scope = getScope();
+		com.liferay.portal.vulcan.scope.Scope scope = getScope();
 
 		if (scope != null) {
 			if (sb.length() > 1) {

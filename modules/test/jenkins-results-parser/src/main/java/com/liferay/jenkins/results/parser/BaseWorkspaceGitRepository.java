@@ -259,6 +259,7 @@ public abstract class BaseWorkspaceGitRepository
 		}
 
 		if (directoryName.equals("liferay-release-tool-ee") &&
+			!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
 			jobVariant.startsWith("portal-license")) {
 
 			return false;

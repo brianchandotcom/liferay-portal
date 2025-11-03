@@ -5,28 +5,35 @@
 
 import {Locator, Page} from '@playwright/test';
 
-import {reloadUntil} from './reloadUntil';
-
 interface Parameters {
 	beforeReload?: () => Promise<void>;
+	condition: (element: Locator) => Promise<boolean>;
 
 	maxAttempts?: number;
 	myLocator: Locator;
 	page: Page;
 }
 
-export async function reloadUntilVisible({
+export async function reloadUntil({
 	beforeReload,
+	condition,
 	maxAttempts = 5,
 	myLocator,
 	page,
 }: Parameters) {
-	await reloadUntil({
-		beforeReload,
-		condition: async (element) => await element.isVisible(),
+	let attempts = 0;
 
-		maxAttempts,
-		myLocator,
-		page,
-	});
+	while (attempts < maxAttempts) {
+		await beforeReload?.();
+
+		const element = myLocator.first();
+
+		if (!(await condition(element))) {
+			await page.reload();
+		}
+		else {
+			break;
+		}
+		attempts++;
+	}
 }

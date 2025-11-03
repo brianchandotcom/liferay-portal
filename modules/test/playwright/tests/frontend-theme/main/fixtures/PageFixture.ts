@@ -14,10 +14,10 @@ import getPageDefinition from '../../../layout-content-page-editor-web/main/util
 
 export class PageFixture {
 	constructor(
-		private apiHelpers: ApiHelpers,
-		private page: Page,
-		private pageEditorPage: PageEditorPage,
-		private site: Site
+		private readonly apiHelpers: ApiHelpers,
+		private readonly page: Page,
+		private readonly pageEditorPage: PageEditorPage,
+		private readonly site: Site
 	) {}
 
 	async goToPage(page: Layout) {

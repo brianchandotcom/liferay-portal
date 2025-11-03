@@ -9,6 +9,8 @@ import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {reloadUntilNotVisible} from '../../utils/reloadUntilNotVisible';
+import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
@@ -245,31 +247,75 @@ export class PagesAdminPage {
 		await this.saveConfiguration();
 	}
 
-	async changeTheme(themeName: string) {
-		await this.defineCustomThemeRadio.click();
-
-		await this.page
-			.getByRole('button', {name: 'Change Current Theme'})
-			.click();
-
-		const themeCard = this.page
-			.frameLocator(
-				'iframe[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectTheme_iframe_"]'
-			)
-			.getByText(themeName);
-
-		await themeCard.waitFor({state: 'visible'});
-
-		await clickAndExpectToBeHidden({
-			target: themeCard,
-			trigger: themeCard,
+	async expectThemeToBeDeactivated(themeName: string) {
+		await reloadUntilNotVisible({
+			beforeReload: async () => await this.openThemeSelector(),
+			maxAttempts: 10,
+			myLocator: this.getThemeCard(themeName),
+			page: this.page,
 		});
+	}
 
-		await themeCard.waitFor({state: 'detached'});
+	async expectThemeToBeActivated(themeName: string) {
+		await reloadUntilVisible({
+			beforeReload: async () => await this.openThemeSelector(),
+			maxAttempts: 10,
+			myLocator: this.getThemeCard(themeName),
+			page: this.page,
+		});
+	}
+
+	async changeTheme(themeName: string) {
+		await this.openThemeSelector();
+
+		await this.selectTheme(themeName);
 
 		await this.configurationSaveButton.waitFor();
 
 		await this.saveConfiguration();
+	}
+
+	async selectTheme(themeName: string) {
+		await expect(async () => {
+			const themeCard = this.getThemeCard(themeName);
+
+			await themeCard.waitFor({state: 'visible'});
+
+			await clickAndExpectToBeHidden({
+				target: themeCard,
+				trigger: themeCard,
+			});
+
+			await themeCard.waitFor({state: 'detached'});
+		}).toPass();
+	}
+
+	getThemeCard(themeName: string) {
+		return this.page
+			.frameLocator(
+				'iframe[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_selectTheme_iframe_"]'
+			)
+			.getByLabel(`Select ${themeName}`, {exact: true});
+	}
+
+	async openThemeSelector() {
+		await expect(async () => {
+			const changeThemeButton = this.page.getByRole('button', {
+				name: 'Change Current Theme',
+			});
+
+			await this.defineCustomThemeRadio.click();
+
+			expect(changeThemeButton).toBeEnabled();
+
+			await this.page
+				.getByRole('button', {name: 'Change Current Theme'})
+				.click();
+
+			await this.page
+				.getByRole('heading', {name: 'Available Themes'})
+				.waitFor({state: 'visible'});
+		}).toPass();
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {

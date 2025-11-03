@@ -15,7 +15,7 @@ interface Parameters {
 	page: Page;
 }
 
-export async function reloadUntilVisible({
+export async function reloadUntilNotVisible({
 	beforeReload,
 	maxAttempts = 5,
 	myLocator,
@@ -23,7 +23,7 @@ export async function reloadUntilVisible({
 }: Parameters) {
 	await reloadUntil({
 		beforeReload,
-		condition: async (element) => await element.isVisible(),
+		condition: async (element) => await element.isHidden(),
 
 		maxAttempts,
 		myLocator,

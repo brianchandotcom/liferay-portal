@@ -6,6 +6,7 @@
 import {mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../../fixtures/apiHelpersTest';
+import {appManagerPagesTest} from '../../../../fixtures/appManagerPagesTest';
 import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../../fixtures/pagesAdminPagesTest';
@@ -25,7 +26,8 @@ const test = mergeTests(
 	apiHelpersTest,
 	isolatedSiteTest,
 	pageEditorPagesTest,
-	pagesAdminPagesTest
+	pagesAdminPagesTest,
+	appManagerPagesTest
 );
 
 export const themesTest = test.extend<FixturesExtension>({
@@ -46,7 +48,18 @@ export const themesTest = test.extend<FixturesExtension>({
 		await use(new PageFixture(apiHelpers, page, pageEditorPage, site));
 	},
 
-	themeFixture: async ({pagesAdminPage, site}, use) => {
-		await use(new ThemeFixture(pagesAdminPage, site));
+	themeFixture: async (
+		{appManagerPage, page, pageEditorPage, pagesAdminPage, site},
+		use
+	) => {
+		await use(
+			new ThemeFixture(
+				appManagerPage,
+				page,
+				pageEditorPage,
+				pagesAdminPage,
+				site
+			)
+		);
 	},
 });

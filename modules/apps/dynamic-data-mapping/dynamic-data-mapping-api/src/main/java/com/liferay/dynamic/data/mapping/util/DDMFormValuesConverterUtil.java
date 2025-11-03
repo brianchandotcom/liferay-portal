@@ -62,7 +62,6 @@ public class DDMFormValuesConverterUtil {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
 
-		ddmFormFieldValue.setInstanceId(StringUtil.randomString());
 		ddmFormFieldValue.setName(ddmFormField.getName());
 
 		if (ddmFormField.isLocalizable()) {

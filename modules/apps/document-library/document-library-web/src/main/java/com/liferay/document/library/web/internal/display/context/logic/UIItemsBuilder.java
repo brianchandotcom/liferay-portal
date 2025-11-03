@@ -830,11 +830,15 @@ public class UIItemsBuilder {
 	}
 
 	public boolean isHistoryActionAvailable() throws PortalException {
-		if (_fileShortcut == null) {
-			return true;
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.isHistoryActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isHistoryActionAvailable())) {
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public boolean isMoveActionAvailable() throws PortalException {

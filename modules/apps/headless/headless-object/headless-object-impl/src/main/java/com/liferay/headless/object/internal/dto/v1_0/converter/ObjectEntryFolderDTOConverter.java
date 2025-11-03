@@ -21,7 +21,7 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -152,8 +152,7 @@ public class ObjectEntryFolderDTOConverter
 						return null;
 					});
 				setScope(
-					() -> ScopeUtil.toScope(
-						group, dtoConverterContext.getLocale()));
+					() -> Scope.of(group, dtoConverterContext.getLocale()));
 				setScopeId(objectEntryFolder::getGroupId);
 				setScopeKey(
 					() -> {

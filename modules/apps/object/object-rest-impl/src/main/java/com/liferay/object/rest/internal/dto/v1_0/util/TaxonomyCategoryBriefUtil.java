@@ -12,7 +12,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import jakarta.ws.rs.core.MultivaluedMap;
@@ -36,7 +36,7 @@ public class TaxonomyCategoryBriefUtil {
 					() -> _toTaxonomyCategory(
 						assetCategory.getCategoryId(), dtoConverterContext));
 				setScope(
-					() -> ScopeUtil.toScope(
+					() -> Scope.of(
 						assetCategory.getGroupId(),
 						dtoConverterContext.getLocale()));
 				setTaxonomyCategoryExternalReferenceCode(

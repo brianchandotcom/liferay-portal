@@ -200,7 +200,6 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.scope.Scope;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
 import com.liferay.portal.vulcan.util.GroupUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
@@ -11644,7 +11643,7 @@ public class ObjectEntryResourceTest {
 
 		fileEntry1.setExternalReferenceCode(RandomTestUtil.randomString());
 
-		Scope scope = ScopeUtil.toScope(_group, LocaleUtil.getDefault());
+		Scope scope = Scope.of(_group, LocaleUtil.getDefault());
 
 		fileEntry1.setScope(scope);
 
@@ -15769,7 +15768,7 @@ public class ObjectEntryResourceTest {
 					return null;
 				}
 
-				Scope scope = ScopeUtil.toScope(
+				Scope scope = Scope.of(
 					dlFileEntry.getGroupId(), LocaleUtil.getDefault());
 
 				return JSONFactoryUtil.createJSONObject(scope.toString());
@@ -18315,8 +18314,7 @@ public class ObjectEntryResourceTest {
 
 		Group group = GroupTestUtil.addGroup();
 
-		testFileEntry.setScope(
-			ScopeUtil.toScope(group, LocaleUtil.getDefault()));
+		testFileEntry.setScope(Scope.of(group, LocaleUtil.getDefault()));
 
 		String externalReferenceCode3 =
 			testFileEntry.getExternalReferenceCode();
@@ -19829,7 +19827,7 @@ public class ObjectEntryResourceTest {
 			boolean withEmbeddedTaxonomyCategory)
 		throws Exception {
 
-		Scope scope = ScopeUtil.toScope(
+		Scope scope = Scope.of(
 			taxonomyCategory.getSiteId(), LocaleUtil.getDefault());
 
 		JSONObject jsonObject = JSONUtil.put(

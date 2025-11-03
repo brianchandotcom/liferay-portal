@@ -12,7 +12,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.scope.Scope;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 /**
  * @author Rubén Pulido
@@ -62,8 +61,7 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return ScopeUtil.toScope(
-			itemScopeGroupId, LocaleUtil.getMostRelevantLocale());
+		return Scope.of(itemScopeGroupId, LocaleUtil.getMostRelevantLocale());
 	}
 
 	public static Scope getItemScope(
@@ -78,20 +76,15 @@ public class ItemScopeUtil {
 			itemGroupExternalReferenceCode, companyId);
 
 		if (group == null) {
-			return new Scope() {
-				{
-					setExternalReferenceCode(
-						() -> itemGroupExternalReferenceCode);
-					setType(() -> Type.SITE);
-				}
-			};
+			return Scope.ofReference(
+				itemGroupExternalReferenceCode, Scope.Type.SITE);
 		}
 
 		if (group.getGroupId() == scopeGroupId) {
 			return null;
 		}
 
-		return ScopeUtil.toScope(group, LocaleUtil.getMostRelevantLocale());
+		return Scope.of(group, LocaleUtil.getMostRelevantLocale());
 	}
 
 	public static String getItemScopeExternalReferenceCode(

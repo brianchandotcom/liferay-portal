@@ -33,7 +33,6 @@ const SPACE: Partial<Space> = {
 	name: 'Cool Space',
 	settings: {
 		logoColor: 'outline-2',
-		mimeTypeLimits: [{maximumSize: 1024, mimeType: 'application/json'}],
 		sharingEnabled: true,
 		trashEnabled: true,
 		trashEntriesMaxAge: 0,
@@ -102,14 +101,6 @@ describe('SpaceGeneralSettings', () => {
 				name: /enable-sharing/,
 			})
 		).toBeChecked();
-
-		expect(screen.getByRole('textbox', {name: /mime-type/})).toHaveValue(
-			'application/json'
-		);
-
-		expect(
-			screen.getByRole('spinbutton', {name: /maximum-file-size/})
-		).toHaveValue(1024);
 	});
 
 	it('checks the accessibility of the general settings', async () => {
@@ -207,20 +198,6 @@ describe('SpaceGeneralSettings', () => {
 		await closeToast();
 	});
 
-	it('adds and remove fields for the mime type limit', async () => {
-		renderComponent();
-
-		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
-
-		await userEvent.click(screen.getByLabelText('add-x'));
-
-		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(2);
-
-		await userEvent.click(screen.getAllByLabelText('remove-x')[1]);
-
-		expect(screen.getAllByLabelText('maximum-file-size').length).toBe(1);
-	});
-
 	describe('Errors', () => {
 		it('does not save the name field when there is an error and the field is focused', async () => {
 			renderComponent();
@@ -253,75 +230,6 @@ describe('SpaceGeneralSettings', () => {
 			).toBeInTheDocument();
 
 			expect(nameInput).toHaveFocus();
-		});
-
-		it('does not save the form when the Maximum File Size field has an error and the field is focused', async () => {
-			renderComponent();
-
-			const maximumSizeInput = screen.getByLabelText('maximum-file-size');
-
-			await userEvent.type(maximumSizeInput, '123.123');
-
-			await userEvent.click(screen.getByRole('button', {name: 'save'}));
-
-			expect(
-				screen.getByText('please-enter-a-valid-number')
-			).toBeInTheDocument();
-
-			expect(maximumSizeInput).toHaveFocus();
-		});
-
-		it('saves the form when a maximum file size field has an error and this field is removed', async () => {
-			renderComponent();
-
-			await userEvent.click(screen.getByLabelText('add-x'));
-
-			const inputs = screen.getAllByLabelText('maximum-file-size');
-
-			const [firstInput, secondInput] = inputs;
-
-			await userEvent.type(firstInput, '123.123');
-
-			firstInput.blur();
-
-			await userEvent.type(secondInput, '123');
-
-			secondInput.blur();
-
-			await waitFor(() => {
-				expect(
-					screen.getByText('please-enter-a-valid-number')
-				).toBeInTheDocument();
-			});
-
-			await userEvent.click(screen.getAllByLabelText('remove-x')[0]);
-
-			await waitFor(() => {
-				expect(
-					screen.queryByText('please-enter-a-valid-number')
-				).not.toBeInTheDocument();
-			});
-
-			await userEvent.click(screen.getByRole('button', {name: 'save'}));
-
-			await waitFor(() => {
-				const {externalReferenceCode} = SPACE;
-
-				expect(SpaceService.updateSpace).toBeCalledWith(
-					externalReferenceCode,
-					expect.objectContaining({
-						settings: expect.objectContaining({
-							mimeTypeLimits: [
-								{maximumSize: '123', mimeType: ''},
-							],
-						}),
-					})
-				);
-
-				expect(
-					screen.getByText(/was-saved-successfully/)
-				).toBeInTheDocument();
-			});
 		});
 	});
 });

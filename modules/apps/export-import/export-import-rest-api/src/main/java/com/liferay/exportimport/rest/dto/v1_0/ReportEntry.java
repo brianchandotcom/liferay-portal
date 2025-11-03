@@ -577,7 +577,7 @@ public class ReportEntry implements Serializable {
 		description = "The reported item's scope."
 	)
 	@Valid
-	public Scope getScope() {
+	public com.liferay.portal.vulcan.scope.Scope getScope() {
 		if (_scopeSupplier != null) {
 			scope = _scopeSupplier.get();
 
@@ -587,14 +587,17 @@ public class ReportEntry implements Serializable {
 		return scope;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(com.liferay.portal.vulcan.scope.Scope scope) {
 		this.scope = scope;
 
 		_scopeSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+	public void setScope(
+		UnsafeSupplier<com.liferay.portal.vulcan.scope.Scope, Exception>
+			scopeUnsafeSupplier) {
+
 		_scopeSupplier = () -> {
 			try {
 				return scopeUnsafeSupplier.get();
@@ -610,10 +613,10 @@ public class ReportEntry implements Serializable {
 
 	@GraphQLField(description = "The reported item's scope.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	protected Scope scope;
+	protected com.liferay.portal.vulcan.scope.Scope scope;
 
 	@JsonIgnore
-	private Supplier<Scope> _scopeSupplier;
+	private Supplier<com.liferay.portal.vulcan.scope.Scope> _scopeSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The report entry's 's status."
@@ -899,7 +902,7 @@ public class ReportEntry implements Serializable {
 			sb.append(String.valueOf(origin));
 		}
 
-		Scope scope = getScope();
+		com.liferay.portal.vulcan.scope.Scope scope = getScope();
 
 		if (scope != null) {
 			if (sb.length() > 1) {
@@ -908,7 +911,7 @@ public class ReportEntry implements Serializable {
 
 			sb.append("\"scope\": ");
 
-			sb.append(String.valueOf(scope));
+			sb.append(scope);
 		}
 
 		Status status = getStatus();

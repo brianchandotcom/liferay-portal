@@ -280,15 +280,21 @@ public class ReportEntry implements Cloneable, Serializable {
 
 	protected Origin origin;
 
-	public Scope getScope() {
+	public com.liferay.exportimport.rest.client.scope.Scope getScope() {
 		return scope;
 	}
 
-	public void setScope(Scope scope) {
+	public void setScope(
+		com.liferay.exportimport.rest.client.scope.Scope scope) {
+
 		this.scope = scope;
 	}
 
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
+	public void setScope(
+		UnsafeSupplier
+			<com.liferay.exportimport.rest.client.scope.Scope, Exception>
+				scopeUnsafeSupplier) {
+
 		try {
 			scope = scopeUnsafeSupplier.get();
 		}
@@ -297,7 +303,7 @@ public class ReportEntry implements Cloneable, Serializable {
 		}
 	}
 
-	protected Scope scope;
+	protected com.liferay.exportimport.rest.client.scope.Scope scope;
 
 	public Status getStatus() {
 		return status;

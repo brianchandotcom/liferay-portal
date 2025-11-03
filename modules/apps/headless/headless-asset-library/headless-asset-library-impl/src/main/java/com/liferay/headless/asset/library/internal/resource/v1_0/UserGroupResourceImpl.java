@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
 import com.liferay.portal.kernel.service.UserGroupService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
@@ -149,7 +148,7 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 			return;
 		}
 
-		if (!_userService.hasGroupUser(groupId, contextUser.getUserId())) {
+		if (!_groupService.hasUserGroup(contextUser.getUserId(), groupId)) {
 			throw new PrincipalException.MustHavePermission(
 				contextUser.getUserId(), ActionKeys.VIEW);
 		}
@@ -282,8 +281,5 @@ public class UserGroupResourceImpl extends BaseUserGroupResourceImpl {
 
 	@Reference
 	private UserGroupService _userGroupService;
-
-	@Reference
-	private UserService _userService;
 
 }

@@ -143,7 +143,7 @@ public class UserAccountResourceImpl extends BaseUserAccountResourceImpl {
 			return;
 		}
 
-		if (!_userService.hasGroupUser(groupId, contextUser.getUserId())) {
+		if (!_groupService.hasUserGroup(contextUser.getUserId(), groupId)) {
 			throw new PrincipalException.MustHavePermission(
 				contextUser.getUserId(), ActionKeys.VIEW);
 		}

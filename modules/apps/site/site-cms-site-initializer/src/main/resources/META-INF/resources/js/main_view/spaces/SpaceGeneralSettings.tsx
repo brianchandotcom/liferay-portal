@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
+import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
-import classNames from 'classnames';
-import {FormikHelpers, FormikTouched, useFormik} from 'formik';
+import {useFormik} from 'formik';
 import {openToast, useId} from 'frontend-js-components-web';
-import {navigate, sub} from 'frontend-js-web';
+import {navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {FieldText} from '../../common/components/forms';
@@ -23,20 +22,10 @@ import {
 	validate,
 } from '../../common/components/forms/validations';
 import SpaceService from '../../common/services/SpaceService';
-import {LogoColor, MimeTypeLimit, Space} from '../../common/types/Space';
+import {LogoColor, Space} from '../../common/types/Space';
 import focusInvalidElement from '../../common/utils/focusInvalidElement';
-import getRandomId from '../../structure_builder/utils/getRandomId';
 import SpaceBaseFields from './SpaceBaseFields';
 import SpacePanel from './SpacePanel';
-
-type Touched = FormikTouched<Record<string, any>>;
-
-const getInitialMimeTypeLimit = () =>
-	({
-		id: getRandomId(),
-		maximumSize: '',
-		mimeType: '',
-	}) as MimeTypeLimit;
 
 export default function SpaceGeneralSettings({
 	backURL,
@@ -52,22 +41,13 @@ export default function SpaceGeneralSettings({
 	const [initialERC, setInitialERC] = useState(space.externalReferenceCode);
 
 	const id = useId();
-	const mimeTypeLimits = space.settings?.mimeTypeLimits;
-	const mimeTypeLimitsWithIds = mimeTypeLimits?.length
-		? mimeTypeLimits.map((limit) => ({
-				...limit,
-				id: limit.id ?? getRandomId(),
-			}))
-		: [getInitialMimeTypeLimit()];
 
 	const {
 		errors,
 		handleBlur,
 		handleChange,
 		handleSubmit,
-		setErrors,
 		setFieldValue,
-		setTouched,
 		submitForm,
 		touched,
 		values,
@@ -76,7 +56,6 @@ export default function SpaceGeneralSettings({
 			description: space.description,
 			erc: initialERC,
 			logoColor: space.settings?.logoColor as LogoColor,
-			mimeTypeLimits: mimeTypeLimitsWithIds,
 			name: space.name,
 			sharingEnabled: space.settings?.sharingEnabled ?? false,
 			trashEnabled: space.settings?.trashEnabled ?? true,
@@ -89,7 +68,6 @@ export default function SpaceGeneralSettings({
 				description,
 				erc,
 				logoColor = 'outline-0',
-				mimeTypeLimits,
 				name,
 				sharingEnabled,
 				trashEnabled,
@@ -102,11 +80,6 @@ export default function SpaceGeneralSettings({
 				name,
 				settings: {
 					logoColor,
-					mimeTypeLimits: mimeTypeLimits
-						?.map(({id: _id, ...rest}) => rest)
-						.filter((mimeTypeLimit) =>
-							Object.values(mimeTypeLimit).some((value) => value)
-						),
 					sharingEnabled,
 					trashEnabled,
 					trashEntriesMaxAge: Number(trashEntriesMaxAge),
@@ -244,19 +217,6 @@ export default function SpaceGeneralSettings({
 				</>
 			</SpacePanel>
 
-			<SpacePanel title={Liferay.Language.get('mime-type-limit')}>
-				<p>{Liferay.Language.get('file-size-mime-type-description')}</p>
-
-				<MimeTypeLimitFields
-					errors={errors}
-					mimeTypeLimits={values.mimeTypeLimits}
-					setErrors={setErrors}
-					setFieldValue={setFieldValue}
-					setTouched={setTouched}
-					touched={touched}
-				/>
-			</SpacePanel>
-
 			<SpacePanel title={Liferay.Language.get('recycle-bin')}>
 				<>
 					<p className="mb-4">
@@ -309,169 +269,5 @@ export default function SpaceGeneralSettings({
 				</ClayButton>
 			</ClayButton.Group>
 		</form>
-	);
-}
-
-function MimeTypeLimitFields({
-	errors,
-	mimeTypeLimits,
-	setErrors,
-	setFieldValue,
-	setTouched,
-	touched,
-}: {
-	errors: Errors;
-	mimeTypeLimits: MimeTypeLimit[];
-	setErrors: (errors: Errors) => void;
-	setFieldValue: FormikHelpers<Record<string, any>>['setFieldValue'];
-	setTouched: (touched: Touched) => void;
-	touched: Touched;
-}) {
-	const addError = (fieldName: string, errorMessage: string) => {
-		setErrors({...errors, [fieldName]: errorMessage});
-	};
-
-	const addRow = () => {
-		setFieldValue('mimeTypeLimits', [
-			...mimeTypeLimits,
-			getInitialMimeTypeLimit(),
-		]);
-	};
-
-	const removeError = (fieldName: string) => {
-		const nextErrors = {...errors};
-
-		delete nextErrors[fieldName];
-
-		setErrors(nextErrors);
-	};
-
-	const removeRow = (
-		{currentTarget}: {currentTarget: HTMLElement},
-		fieldName: string
-	) => {
-		removeError(fieldName);
-
-		setFieldValue(
-			'mimeTypeLimits',
-			mimeTypeLimits.filter(({id}) => currentTarget.id !== `${id}button`),
-			false
-		);
-	};
-
-	return (
-		<>
-			{mimeTypeLimits.map(({id, maximumSize, mimeType}, index) => {
-				const fieldName = `${id}maximumSize`;
-
-				return (
-					<div
-						className={classNames('position-relative pt-3', {
-							'mb-0': index === mimeTypeLimits.length - 1,
-						})}
-						key={id}
-					>
-						<div className="row">
-							<FieldText
-								formGroupProps={{
-									className: 'col-12 col-sm-6',
-								}}
-								helpIcon={Liferay.Language.get(
-									'mime-type-help-message'
-								)}
-								id={`${id}text`}
-								label={Liferay.Language.get('mime-type')}
-								name={`${id}mimeType`}
-								onChange={({target: {value}}) => {
-									setFieldValue(
-										`mimeTypeLimits[${index}].mimeType`,
-										value
-									);
-								}}
-								value={mimeType}
-							/>
-
-							<FieldText
-								errorMessage={
-									touched[fieldName]
-										? (errors?.[fieldName] as string)
-										: undefined
-								}
-								formGroupProps={{
-									className: 'col-12 col-sm-6',
-								}}
-								helpIcon={Liferay.Language.get(
-									'maximum-file-size-help-message'
-								)}
-								label={Liferay.Language.get(
-									'maximum-file-size'
-								)}
-								name={fieldName}
-								onBlur={() =>
-									setTouched({
-										...touched,
-										[fieldName]: true,
-									})
-								}
-								onChange={({target}) => {
-									const errorMessage = validNumber(
-										target.value
-									);
-
-									if (errorMessage) {
-										addError(fieldName, errorMessage);
-									}
-									else {
-										removeError(fieldName);
-									}
-
-									setFieldValue(
-										`mimeTypeLimits[${index}].maximumSize`,
-										target.value,
-										false
-									);
-								}}
-								type="number"
-								value={maximumSize.toString()}
-							/>
-						</div>
-
-						<div
-							className="position-absolute"
-							style={{right: 0, top: 0}}
-						>
-							{mimeTypeLimits.length > 1 ? (
-								<ClayButtonWithIcon
-									aria-label={sub(
-										Liferay.Language.get('remove-x'),
-										Liferay.Language.get('mime-type-limit')
-									)}
-									className="mr-1 rounded-circle"
-									id={`${id}button`}
-									onClick={(event) =>
-										removeRow(event, fieldName)
-									}
-									size="xs"
-									symbol="hr"
-									title={Liferay.Language.get('remove')}
-								/>
-							) : null}
-
-							<ClayButtonWithIcon
-								aria-label={sub(
-									Liferay.Language.get('add-x'),
-									Liferay.Language.get('mime-type-limit')
-								)}
-								className="rounded-circle"
-								onClick={addRow}
-								size="xs"
-								symbol="plus"
-								title={Liferay.Language.get('add')}
-							/>
-						</div>
-					</div>
-				);
-			})}
-		</>
 	);
 }

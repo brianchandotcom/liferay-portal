@@ -7,13 +7,18 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.model.ObjectDefinition;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -27,6 +32,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Marco Galluzzi
@@ -34,10 +40,12 @@ import java.util.List;
 public class ViewStructureUsagesDisplayContext {
 
 	public ViewStructureUsagesDisplayContext(
-		HttpServletRequest httpServletRequest, Language language) {
+		HttpServletRequest httpServletRequest, Language language,
+		ObjectDefinition objectDefinition) {
 
 		_httpServletRequest = httpServletRequest;
 		_language = language;
+		_objectDefinition = objectDefinition;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -49,6 +57,39 @@ public class ViewStructureUsagesDisplayContext {
 			"filter=(objectDefinitionId eq ",
 			ParamUtil.getLong(_httpServletRequest, "objectDefinitionId"),
 			" and status in (", _STATUSES, "))&nestedFields=embedded");
+	}
+
+	public Map<String, Object> getBreadcrumbProps() throws PortalException {
+		return HashMapBuilder.<String, Object>put(
+			"breadcrumbItems",
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"active", false
+				).put(
+					"href",
+					() -> PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							_themeDisplay.getScopeGroupId(), false,
+							"/structures"),
+						_themeDisplay)
+				).put(
+					"label",
+					LanguageUtil.get(_themeDisplay.getLocale(), "structures")
+				)
+			).put(
+				JSONUtil.put(
+					"active", true
+				).put(
+					"label",
+					LanguageUtil.format(
+						_themeDisplay.getLocale(), "x-usages",
+						_objectDefinition.getLabel(
+							_themeDisplay.getLanguageId()))
+				)
+			)
+		).put(
+			"hideSpace", true
+		).build();
 	}
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
@@ -108,6 +149,7 @@ public class ViewStructureUsagesDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final Language _language;
+	private final ObjectDefinition _objectDefinition;
 	private final ThemeDisplay _themeDisplay;
 
 }

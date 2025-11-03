@@ -18,7 +18,7 @@ import com.liferay.asset.list.model.AssetListEntry;
 import com.liferay.asset.list.service.AssetListEntryLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -924,6 +924,17 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		return _getPageElement(
 			containerPageElementDefinition, pageElementExternalReferenceCode);
+	}
+
+	private FileEntry _getFileEntry(long groupId) throws Exception {
+		return _dlAppLocalService.addFileEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(), groupId,
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + StringPool.PERIOD +
+				ContentTypes.IMAGE_JPEG,
+			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
+			new byte[0], null, null, null,
+			ServiceContextTestUtil.getServiceContext(groupId));
 	}
 
 	private FormContainerConfig _getFormContainerConfig(
@@ -1857,14 +1868,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				"FileEntry_fileName", null, false,
 				RandomTestUtil.randomString()));
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + StringPool.PERIOD +
-				ContentTypes.IMAGE_JPEG,
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, null,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
 
 		_testPostSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
@@ -2119,14 +2123,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				null, RandomTestUtil.randomString(), null, null,
 				"FileEntry_fileName", null, false, externalReferenceCode));
 
-		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-			testGroup.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + StringPool.PERIOD +
-				ContentTypes.IMAGE_JPEG,
-			MimeTypesUtil.getExtensionContentType(ContentTypes.IMAGE_JPEG),
-			new byte[0], null, null, null,
-			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId()));
+		FileEntry fileEntry = _getFileEntry(testGroup.getGroupId());
 
 		_testPutSitePageSpecificationPageExperiencePageElement(
 			_getContainerPageElement(
@@ -2382,6 +2379,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 		String categoryFieldName = RandomTestUtil.randomString();
 		String checkboxFieldName = RandomTestUtil.randomString();
 		String collectionFieldName = RandomTestUtil.randomString();
+		String itemFieldName = RandomTestUtil.randomString();
 		String lengthFieldName = RandomTestUtil.randomString();
 		String selectFieldName = RandomTestUtil.randomString();
 
@@ -2430,6 +2428,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						"type", "collectionSelector"
 					).build()
 				).put(
+					itemFieldName,
+					HashMapBuilder.<String, Object>put(
+						"type", "itemSelector"
+					).build()
+				).put(
 					lengthFieldName,
 					HashMapBuilder.<String, Object>put(
 						"defaultValue", RandomTestUtil.randomString()
@@ -2460,6 +2463,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			).put(
 				collectionFieldName, _getAssetListEntry(testGroup.getGroupId())
 			).put(
+				itemFieldName,
+				HashMapBuilder.put(
+					"item", _getFileEntry(testGroup.getGroupId())
+				).build()
+			).put(
 				lengthFieldName, RandomTestUtil.randomString()
 			).put(
 				selectFieldName, selectValue1
@@ -2476,6 +2484,11 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 				"com.liferay.asset.internal.info.collection.provider." +
 					"HighestRatedAssetsInfoCollectionProvider"
 			).put(
+				itemFieldName,
+				HashMapBuilder.put(
+					"item", _getFileEntry(irrelevantGroup.getGroupId())
+				).build()
+			).put(
 				lengthFieldName, RandomTestUtil.randomString()
 			).put(
 				selectFieldName, selectValue2
@@ -2485,7 +2498,7 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			Collections.emptyMap());
 
 		_testMissingOptionalReference(
-			2,
+			3,
 			() ->
 				_testPutSitePageSpecificationPageExperiencePageElementWithFragmentPageElementWithConfiguration(
 					FragmentConfigurationTestUtil.getConfiguration(
@@ -2509,6 +2522,16 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 							collectionFieldName,
 							HashMapBuilder.<String, Object>put(
 								"type", "collectionSelector"
+							).build()
+						).put(
+							itemFieldName,
+							HashMapBuilder.<String, Object>put(
+								"localized", true
+							).put(
+								"type", "itemSelector"
+							).put(
+								"typeOptions",
+								JSONUtil.put("enableSelectTemplate", true)
 							).build()
 						).put(
 							lengthFieldName,
@@ -2549,6 +2572,22 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						collectionFieldName,
 						_getAssetListEntry(irrelevantGroup.getGroupId())
 					).put(
+						itemFieldName,
+						HashMapBuilder.<String, Object>put(
+							"item",
+							JournalTestUtil.addArticle(
+								irrelevantGroup.getGroupId(),
+								JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)
+						).put(
+							"template",
+							HashMapBuilder.put(
+								"infoItemRendererKey",
+								"com.liferay.journal.web.internal.info.item." +
+									"renderer." +
+										"JournalArticleTitleInfoItemRenderer"
+							).build()
+						).build()
+					).put(
 						lengthFieldName, RandomTestUtil.randomString()
 					).put(
 						selectFieldName, selectValue1
@@ -2576,6 +2615,25 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 						).put(
 							"scopeExternalReferenceCode",
 							RandomTestUtil.randomString()
+						).build()
+					).put(
+						itemFieldName,
+						HashMapBuilder.put(
+							"item",
+							HashMapBuilder.put(
+								"className", JournalArticle.class.getName()
+							).put(
+								"externalReferenceCode",
+								RandomTestUtil.randomString()
+							).put(
+								"scopeExternalReferenceCode",
+								RandomTestUtil.randomString()
+							).build()
+						).put(
+							"template",
+							HashMapBuilder.put(
+								"templateKey", RandomTestUtil.randomString()
+							).build()
 						).build()
 					).put(
 						lengthFieldName, RandomTestUtil.randomString()
@@ -2759,6 +2817,9 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 	@Inject
 	private AssetVocabularyLocalService _assetVocabularyLocalService;
+
+	@Inject
+	private DLAppLocalService _dlAppLocalService;
 
 	private Layout _draftLayout;
 

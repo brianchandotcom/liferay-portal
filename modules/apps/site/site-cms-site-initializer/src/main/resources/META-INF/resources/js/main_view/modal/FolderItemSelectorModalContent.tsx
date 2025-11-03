@@ -104,10 +104,12 @@ function FolderItemSelectorModalContent({
 			? getSpaceFoldersURL(itemData.embedded.scopeId)
 			: SPACES_URL
 	);
+	const [schemaKey, setSchemaKey] = useState(0);
 
 	const {observer, onOpenChange, open} = useModal();
 
 	function onSpaceClick({scopeId}: {scopeId: number}) {
+		setSchemaKey((prev) => prev + 1);
 		setSelectedItemType('folder');
 		setURL(getSpaceFoldersURL(scopeId));
 	}
@@ -265,6 +267,7 @@ function FolderItemSelectorModalContent({
 					}}
 					itemTypeLabel={Liferay.Language.get('folders')}
 					items={[]}
+					key={schemaKey}
 					locator={
 						selectedItemType === 'folder'
 							? {

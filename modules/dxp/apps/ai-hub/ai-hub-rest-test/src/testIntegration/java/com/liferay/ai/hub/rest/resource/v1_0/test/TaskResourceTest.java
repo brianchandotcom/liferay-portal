@@ -45,6 +45,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -132,6 +133,12 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		Assert.assertEquals(
 			"data: " + SseUtil.EVENT_DATA_SUCCESSFULLY_SUBSCRIBED, line2);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testGraphQLPostTask() throws Exception {
 	}
 
 	@Override

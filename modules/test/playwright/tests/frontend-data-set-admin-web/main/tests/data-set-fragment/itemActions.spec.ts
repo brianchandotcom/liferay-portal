@@ -467,7 +467,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/{dataSetId}/dataSetToDataSetTableSections/{dataSetTableSectionId}`;
+		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/by-external-reference-code/{r_dataSetToDataSetTableSections_l_dataSetERC}/dataSetToDataSetTableSections/{externalReferenceCode}`;
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'delete';
 		const nonAvailableHeadlessItemActionName =
@@ -612,7 +612,7 @@ test.describe('Item Actions in Data Set fragment', () => {
 		page,
 	}) => {
 		const asyncItemActionName = 'Async item action';
-		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/table-sections/{id}`;
+		const asyncItemActionUrl = `/o${API_ENDPOINT_PATH}/by-external-reference-code/{r_dataSetToDataSetTableSections_l_dataSetERC}/dataSetToDataSetTableSections/{externalReferenceCode}`;
 		const asyncItemNewLabel = getRandomString();
 		const headlessItemActionName = 'Headless item action';
 		const headlessItemActionPermissionKey = 'update';

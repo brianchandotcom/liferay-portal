@@ -548,7 +548,7 @@ components:
                             description:
                                 Default display page when a form container submission is successful.
                             type: boolean
-                        itemReference:
+                        itemExternalReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:
@@ -3415,7 +3415,7 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
                 -   properties:
-                        itemReference:
+                        itemExternalReference:
                             $ref: "#/components/schemas/ItemExternalReference"
                             # @review
                             description:

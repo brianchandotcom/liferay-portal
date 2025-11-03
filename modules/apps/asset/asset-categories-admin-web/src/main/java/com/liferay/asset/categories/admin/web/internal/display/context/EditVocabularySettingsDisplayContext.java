@@ -172,14 +172,14 @@ public class EditVocabularySettingsDisplayContext {
 
 	public long[] getSelectedClassNameIds() {
 		if (_vocabulary != null) {
-			long[] filteredSelectedClassNameIds = ArrayUtil.filter(
+			long[] selectedClassNameIds = ArrayUtil.filter(
 				_vocabulary.getSelectedClassNameIds(),
 				classNameId ->
 					ClassNameLocalServiceUtil.fetchClassName(classNameId) !=
 						null);
 
-			if (ArrayUtil.isNotEmpty(filteredSelectedClassNameIds)) {
-				return filteredSelectedClassNameIds;
+			if (ArrayUtil.isNotEmpty(selectedClassNameIds)) {
+				return selectedClassNameIds;
 			}
 		}
 

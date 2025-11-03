@@ -58,7 +58,7 @@ public class AssetVocabularyStagedModelDataHandlerTest
 		String classNameIds =
 			_portal.getClassNameId(JournalArticle.class.getName()) + ":-1";
 
-		AssetVocabulary importAssetVocabulary = _getImportAssetVocabulary(
+		AssetVocabulary importedAssetVocabulary = _getImportedAssetVocabulary(
 			UnicodePropertiesBuilder.create(
 				true
 			).put(
@@ -69,13 +69,13 @@ public class AssetVocabularyStagedModelDataHandlerTest
 				"selectedClassNameIds", classNameIds
 			).build());
 
-		Assert.assertNotNull(importAssetVocabulary);
+		Assert.assertNotNull(importedAssetVocabulary);
 
 		UnicodeProperties importedTypeSettingsUnicodeProperties =
 			UnicodePropertiesBuilder.create(
 				true
 			).fastLoad(
-				importAssetVocabulary.getSettings()
+				importedAssetVocabulary.getSettings()
 			).build();
 
 		Assert.assertEquals(
@@ -94,7 +94,7 @@ public class AssetVocabularyStagedModelDataHandlerTest
 		throws Exception {
 
 		Assert.assertNotNull(
-			_getImportAssetVocabulary(
+			_getImportedAssetVocabulary(
 				UnicodePropertiesBuilder.create(
 					true
 				).put(
@@ -172,7 +172,7 @@ public class AssetVocabularyStagedModelDataHandlerTest
 				stagingGroup.getGroupId()));
 	}
 
-	private AssetVocabulary _getImportAssetVocabulary(
+	private AssetVocabulary _getImportedAssetVocabulary(
 			UnicodeProperties typeSettingsUnicodeProperties)
 		throws Exception {
 

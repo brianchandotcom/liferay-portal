@@ -394,19 +394,34 @@ export class PageEditorPage {
 		await this.waitForChangesSaved();
 	}
 
-	async chooseCollectionDisplayCollection(type: string, title: string) {
+	async chooseCollectionDisplayCollection(
+		type: string,
+		title: string,
+		options?: {search?: boolean}
+	) {
 		await this.page.getByLabel('Select Collection', {exact: true}).click();
 
-		await this.page
-			.frameLocator('iframe[title="Select"]')
-			.getByRole('link', {name: type})
-			.click();
+		const iframe = this.page.frameLocator('iframe[title="Select"]');
+
+		await iframe.getByRole('link', {name: type}).click();
+
+		// Filter Collection in case there are multiple pages
+
+		if (options?.search) {
+			await expect(async () => {
+				await iframe.getByPlaceholder('Search for').fill(title);
+
+				await expect(iframe.getByPlaceholder('Search for')).toHaveValue(
+					title
+				);
+			}).toPass();
+
+			await iframe.getByLabel('Search for', {exact: true}).click();
+		}
 
 		await clickAndExpectToBeHidden({
 			target: this.page.locator('.modal-dialog'),
-			trigger: this.page
-				.frameLocator('iframe[title="Select"]')
-				.getByRole('button', {name: 'Select ' + title}),
+			trigger: iframe.getByRole('button', {name: `Select ${title}`}),
 		});
 	}
 

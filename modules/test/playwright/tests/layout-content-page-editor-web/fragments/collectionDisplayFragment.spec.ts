@@ -249,7 +249,8 @@ testWithIsolatedSite(
 
 		await pageEditorPage.chooseCollectionDisplayCollection(
 			'Collection Providers',
-			'Highest Rated Assets'
+			'Highest Rated Assets',
+			{search: true}
 		);
 
 		await pageEditorPage.waitForChangesSaved();

@@ -35,8 +35,7 @@ public class ObjectDefinitionServiceUtil {
 			String externalReferenceCode, long objectFolderId, String className,
 			boolean enableComments, boolean enableFormContainer,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<java.util.Locale, String> labelMap, String name,
@@ -53,7 +52,7 @@ public class ObjectDefinitionServiceUtil {
 		return getService().addCustomObjectDefinition(
 			externalReferenceCode, objectFolderId, className, enableComments,
 			enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			enableIndexSearch, enableObjectEntryDraft,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
@@ -74,8 +73,8 @@ public class ObjectDefinitionServiceUtil {
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
+			boolean enableIndexSearch, boolean enableObjectEntryDraft,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<java.util.Locale, String> labelMap, String name,
@@ -92,7 +91,7 @@ public class ObjectDefinitionServiceUtil {
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
 			enableComments, enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			enableIndexSearch, enableObjectEntryDraft,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
@@ -188,8 +187,8 @@ public class ObjectDefinitionServiceUtil {
 			boolean active, String className, boolean enableCategorization,
 			boolean enableComments, boolean enableFormContainer,
 			boolean enableFriendlyURLCustomization, boolean enableIndexSearch,
-			boolean enableLocalization, boolean enableObjectEntryDraft,
-			boolean enableObjectEntryHistory, boolean enableObjectEntrySchedule,
+			boolean enableObjectEntryDraft, boolean enableObjectEntryHistory,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			Map<java.util.Locale, String> labelMap, String name,
@@ -209,12 +208,12 @@ public class ObjectDefinitionServiceUtil {
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
 			className, enableCategorization, enableComments,
 			enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryHistory, enableObjectEntrySchedule,
-			enableObjectEntrySubscription, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope, status,
-			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
+			enableIndexSearch, enableObjectEntryDraft, enableObjectEntryHistory,
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
+			status, objectDefinitionSettings, objectFields,
+			workflowDefinitionLinks);
 	}
 
 	public static ObjectDefinition updateExternalReferenceCode(

@@ -47,8 +47,7 @@ public class ObjectDefinitionServiceHttp {
 				long objectFolderId, String className, boolean enableComments,
 				boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
-				boolean enableIndexSearch, boolean enableLocalization,
-				boolean enableObjectEntryDraft,
+				boolean enableIndexSearch, boolean enableObjectEntryDraft,
 				boolean enableObjectEntrySchedule,
 				boolean enableObjectEntrySubscription,
 				boolean enableObjectEntryVersioning,
@@ -75,11 +74,11 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, externalReferenceCode, objectFolderId, className,
 				enableComments, enableFormContainer,
 				enableFriendlyURLCustomization, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft,
-				enableObjectEntrySchedule, enableObjectEntrySubscription,
-				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
-				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
-				scope, storageType, objectDefinitionSettings, objectFields,
+				enableObjectEntryDraft, enableObjectEntrySchedule,
+				enableObjectEntrySubscription, enableObjectEntryVersioning,
+				friendlyURLSeparator, labelMap, name, panelAppOrder,
+				panelCategoryKey, pluralLabelMap, portlet, scope, storageType,
+				objectDefinitionSettings, objectFields,
 				workflowDefinitionLinks);
 
 			Object returnObj = null;
@@ -159,8 +158,7 @@ public class ObjectDefinitionServiceHttp {
 				long userId, long objectFolderId, String className,
 				boolean enableComments, boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
-				boolean enableIndexSearch, boolean enableLocalization,
-				boolean enableObjectEntryDraft,
+				boolean enableIndexSearch, boolean enableObjectEntryDraft,
 				boolean enableObjectEntrySchedule,
 				boolean enableObjectEntrySubscription,
 				boolean enableObjectEntryVersioning,
@@ -187,11 +185,11 @@ public class ObjectDefinitionServiceHttp {
 				methodKey, externalReferenceCode, userId, objectFolderId,
 				className, enableComments, enableFormContainer,
 				enableFriendlyURLCustomization, enableIndexSearch,
-				enableLocalization, enableObjectEntryDraft,
-				enableObjectEntrySchedule, enableObjectEntrySubscription,
-				enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
-				name, panelAppOrder, panelCategoryKey, pluralLabelMap, portlet,
-				scope, objectDefinitionSettings, objectFields,
+				enableObjectEntryDraft, enableObjectEntrySchedule,
+				enableObjectEntrySubscription, enableObjectEntryVersioning,
+				friendlyURLSeparator, labelMap, name, panelAppOrder,
+				panelCategoryKey, pluralLabelMap, portlet, scope,
+				objectDefinitionSettings, objectFields,
 				workflowDefinitionLinks);
 
 			Object returnObj = null;
@@ -663,8 +661,7 @@ public class ObjectDefinitionServiceHttp {
 				boolean active, String className, boolean enableCategorization,
 				boolean enableComments, boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
-				boolean enableIndexSearch, boolean enableLocalization,
-				boolean enableObjectEntryDraft,
+				boolean enableIndexSearch, boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
 				boolean enableObjectEntrySchedule,
 				boolean enableObjectEntrySubscription,
@@ -695,7 +692,7 @@ public class ObjectDefinitionServiceHttp {
 				objectFolderId, titleObjectFieldId, accountEntryRestricted,
 				active, className, enableCategorization, enableComments,
 				enableFormContainer, enableFriendlyURLCustomization,
-				enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+				enableIndexSearch, enableObjectEntryDraft,
 				enableObjectEntryHistory, enableObjectEntrySchedule,
 				enableObjectEntrySubscription, enableObjectEntryVersioning,
 				friendlyURLSeparator, labelMap, name, panelAppOrder,
@@ -876,11 +873,10 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			String.class, java.util.Map.class, String.class, String.class,
-			String.class, java.util.Map.class, boolean.class, String.class,
-			String.class, java.util.List.class, java.util.List.class,
-			java.util.List.class
+			boolean.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			java.util.Map.class, boolean.class, String.class, String.class,
+			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _addObjectDefinitionParameterTypes1 =
 		new Class[] {
@@ -890,9 +886,9 @@ public class ObjectDefinitionServiceHttp {
 		new Class[] {
 			String.class, long.class, long.class, String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, boolean.class,
-			String.class, java.util.Map.class, String.class, String.class,
-			String.class, java.util.Map.class, boolean.class, String.class,
+			boolean.class, boolean.class, boolean.class, String.class,
+			java.util.Map.class, String.class, String.class, String.class,
+			java.util.Map.class, boolean.class, String.class,
 			java.util.List.class, java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[] _deleteObjectDefinitionParameterTypes3 =
@@ -929,10 +925,10 @@ public class ObjectDefinitionServiceHttp {
 			long.class, boolean.class, boolean.class, String.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, boolean.class,
-			boolean.class, boolean.class, boolean.class, String.class,
-			java.util.Map.class, String.class, String.class, String.class,
-			boolean.class, java.util.Map.class, String.class, int.class,
-			java.util.List.class, java.util.List.class, java.util.List.class
+			boolean.class, boolean.class, String.class, java.util.Map.class,
+			String.class, String.class, String.class, boolean.class,
+			java.util.Map.class, String.class, int.class, java.util.List.class,
+			java.util.List.class, java.util.List.class
 		};
 	private static final Class<?>[]
 		_updateExternalReferenceCodeParameterTypes15 = new Class[] {

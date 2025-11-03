@@ -69,7 +69,7 @@ public class ObjectDefinitionCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(87);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -115,8 +115,6 @@ public class ObjectDefinitionCacheModel
 		sb.append(enableFriendlyURLCustomization);
 		sb.append(", enableIndexSearch=");
 		sb.append(enableIndexSearch);
-		sb.append(", enableLocalization=");
-		sb.append(enableLocalization);
 		sb.append(", enableObjectEntryDraft=");
 		sb.append(enableObjectEntryDraft);
 		sb.append(", enableObjectEntryHistory=");
@@ -237,7 +235,6 @@ public class ObjectDefinitionCacheModel
 		objectDefinitionImpl.setEnableFriendlyURLCustomization(
 			enableFriendlyURLCustomization);
 		objectDefinitionImpl.setEnableIndexSearch(enableIndexSearch);
-		objectDefinitionImpl.setEnableLocalization(enableLocalization);
 		objectDefinitionImpl.setEnableObjectEntryDraft(enableObjectEntryDraft);
 		objectDefinitionImpl.setEnableObjectEntryHistory(
 			enableObjectEntryHistory);
@@ -371,8 +368,6 @@ public class ObjectDefinitionCacheModel
 
 		enableIndexSearch = objectInput.readBoolean();
 
-		enableLocalization = objectInput.readBoolean();
-
 		enableObjectEntryDraft = objectInput.readBoolean();
 
 		enableObjectEntryHistory = objectInput.readBoolean();
@@ -473,8 +468,6 @@ public class ObjectDefinitionCacheModel
 		objectOutput.writeBoolean(enableFriendlyURLCustomization);
 
 		objectOutput.writeBoolean(enableIndexSearch);
-
-		objectOutput.writeBoolean(enableLocalization);
 
 		objectOutput.writeBoolean(enableObjectEntryDraft);
 
@@ -589,7 +582,6 @@ public class ObjectDefinitionCacheModel
 	public boolean enableFormContainer;
 	public boolean enableFriendlyURLCustomization;
 	public boolean enableIndexSearch;
-	public boolean enableLocalization;
 	public boolean enableObjectEntryDraft;
 	public boolean enableObjectEntryHistory;
 	public boolean enableObjectEntrySchedule;

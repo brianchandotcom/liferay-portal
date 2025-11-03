@@ -453,27 +453,6 @@ public interface ObjectDefinitionModel
 	public void setEnableIndexSearch(boolean enableIndexSearch);
 
 	/**
-	 * Returns the enable localization of this object definition.
-	 *
-	 * @return the enable localization of this object definition
-	 */
-	public boolean getEnableLocalization();
-
-	/**
-	 * Returns <code>true</code> if this object definition is enable localization.
-	 *
-	 * @return <code>true</code> if this object definition is enable localization; <code>false</code> otherwise
-	 */
-	public boolean isEnableLocalization();
-
-	/**
-	 * Sets whether this object definition is enable localization.
-	 *
-	 * @param enableLocalization the enable localization of this object definition
-	 */
-	public void setEnableLocalization(boolean enableLocalization);
-
-	/**
 	 * Returns the enable object entry draft of this object definition.
 	 *
 	 * @return the enable object entry draft of this object definition

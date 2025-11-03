@@ -34,8 +34,8 @@ public class ObjectDefinitionLocalServiceWrapper
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
+			boolean enableIndexSearch, boolean enableObjectEntryDraft,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			java.util.Map<java.util.Locale, String> labelMap, String name,
@@ -53,7 +53,7 @@ public class ObjectDefinitionLocalServiceWrapper
 		return _objectDefinitionLocalService.addCustomObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, className,
 			enableComments, enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
+			enableIndexSearch, enableObjectEntryDraft,
 			enableObjectEntrySchedule, enableObjectEntrySubscription,
 			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
 			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
@@ -107,8 +107,8 @@ public class ObjectDefinitionLocalServiceWrapper
 			String externalReferenceCode, long userId, long objectFolderId,
 			String className, String dbTableName, boolean enableComments,
 			boolean enableFormContainer, boolean enableFriendlyURLCustomization,
-			boolean enableIndexSearch, boolean enableLocalization,
-			boolean enableObjectEntryDraft, boolean enableObjectEntrySchedule,
+			boolean enableIndexSearch, boolean enableObjectEntryDraft,
+			boolean enableObjectEntrySchedule,
 			boolean enableObjectEntrySubscription,
 			boolean enableObjectEntryVersioning, String friendlyURLSeparator,
 			java.util.Map<java.util.Locale, String> labelMap,
@@ -130,13 +130,13 @@ public class ObjectDefinitionLocalServiceWrapper
 			externalReferenceCode, userId, objectFolderId, className,
 			dbTableName, enableComments, enableFormContainer,
 			enableFriendlyURLCustomization, enableIndexSearch,
-			enableLocalization, enableObjectEntryDraft,
-			enableObjectEntrySchedule, enableObjectEntrySubscription,
-			enableObjectEntryVersioning, friendlyURLSeparator, labelMap,
-			modifiable, name, panelAppOrder, panelCategoryKey,
-			pkObjectFieldDBColumnName, pkObjectFieldName, pluralLabelMap,
-			portlet, scope, titleObjectFieldName, version, status,
-			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
+			enableObjectEntryDraft, enableObjectEntrySchedule,
+			enableObjectEntrySubscription, enableObjectEntryVersioning,
+			friendlyURLSeparator, labelMap, modifiable, name, panelAppOrder,
+			panelCategoryKey, pkObjectFieldDBColumnName, pkObjectFieldName,
+			pluralLabelMap, portlet, scope, titleObjectFieldName, version,
+			status, objectDefinitionSettings, objectFields,
+			workflowDefinitionLinks);
 	}
 
 	/**
@@ -697,8 +697,7 @@ public class ObjectDefinitionLocalServiceWrapper
 				boolean active, String className, boolean enableCategorization,
 				boolean enableComments, boolean enableFormContainer,
 				boolean enableFriendlyURLCustomization,
-				boolean enableIndexSearch, boolean enableLocalization,
-				boolean enableObjectEntryDraft,
+				boolean enableIndexSearch, boolean enableObjectEntryDraft,
 				boolean enableObjectEntryHistory,
 				boolean enableObjectEntrySchedule,
 				boolean enableObjectEntrySubscription,
@@ -723,12 +722,12 @@ public class ObjectDefinitionLocalServiceWrapper
 			objectFolderId, titleObjectFieldId, accountEntryRestricted, active,
 			className, enableCategorization, enableComments,
 			enableFormContainer, enableFriendlyURLCustomization,
-			enableIndexSearch, enableLocalization, enableObjectEntryDraft,
-			enableObjectEntryHistory, enableObjectEntrySchedule,
-			enableObjectEntrySubscription, enableObjectEntryVersioning,
-			friendlyURLSeparator, labelMap, name, panelAppOrder,
-			panelCategoryKey, portlet, pluralLabelMap, scope, status,
-			objectDefinitionSettings, objectFields, workflowDefinitionLinks);
+			enableIndexSearch, enableObjectEntryDraft, enableObjectEntryHistory,
+			enableObjectEntrySchedule, enableObjectEntrySubscription,
+			enableObjectEntryVersioning, friendlyURLSeparator, labelMap, name,
+			panelAppOrder, panelCategoryKey, portlet, pluralLabelMap, scope,
+			status, objectDefinitionSettings, objectFields,
+			workflowDefinitionLinks);
 	}
 
 	@Override

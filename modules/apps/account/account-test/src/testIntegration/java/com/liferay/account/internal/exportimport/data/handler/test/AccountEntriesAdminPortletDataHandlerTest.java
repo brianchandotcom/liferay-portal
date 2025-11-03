@@ -26,7 +26,6 @@ import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandler
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
-import com.liferay.mail.kernel.model.Account;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -375,7 +374,8 @@ public class AccountEntriesAdminPortletDataHandlerTest {
 			ClassUtil.getClassName(portletDataHandler),
 			CoreMatchers.containsString("BatchEnginePortletDataHandler"));
 		Assert.assertEquals(
-			Account.class.getName(), portletDataHandler.getClassNames()[0]);
+			AccountEntry.class.getName(),
+			portletDataHandler.getClassNames()[0]);
 		Assert.assertEquals(
 			AccountPortletKeys.ACCOUNT_ENTRIES_ADMIN,
 			portletDataHandler.getName());

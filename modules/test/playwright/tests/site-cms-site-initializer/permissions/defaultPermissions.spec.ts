@@ -32,6 +32,23 @@ type VerifyPermissionsOptions = {
 	permissions: Array<{action: string; checked: boolean; role: string}>;
 };
 
+async function checkModalHeader(heading: string, menuitem: string, page) {
+	await expect(async () => {
+		await page.getByRole('button', {exact: true, name: 'Actions'}).click();
+		await page.getByRole('menuitem', {exact: true, name: menuitem}).click();
+
+		await expect(page.getByRole('heading', {name: heading})).toBeVisible();
+	}).toPass({timeout: 5000});
+
+	await expect(async () => {
+		await page.keyboard.press('Escape');
+
+		await expect(
+			page.getByRole('heading', {name: heading})
+		).not.toBeVisible();
+	}).toPass({timeout: 5000});
+}
+
 async function clickMenuItem(menuitem: string, page, objectName?: string) {
 	await expect(async () => {
 		if (!objectName) {
@@ -702,104 +719,22 @@ test(
 				page.getByRole('link', {name: folderName}).first()
 			).toBeVisible();
 
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Actions'})
-					.click();
-				await page
-					.getByRole('menuitem', {exact: true, name: 'Permissions'})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {name: 'Permissions'})
-				).toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Close'})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {name: 'Permissions'})
-				).not.toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Actions'})
-					.click();
-				await page
-					.getByRole('menuitem', {
-						exact: true,
-						name: 'Default Permissions',
-					})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: 'Edit Default Permissions',
-					})
-				).toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Close'})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: 'Edit Default Permissions',
-					})
-				).not.toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Actions'})
-					.click();
-				await page
-					.getByRole('menuitem', {name: 'Edit and Propagate Default'})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: 'Edit Default Permissions',
-					})
-				).toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Close'})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: 'Edit Default Permissions',
-					})
-				).not.toBeVisible();
-			}).toPass({timeout: 5000});
-
-			await expect(async () => {
-				await page
-					.getByRole('button', {exact: true, name: 'Actions'})
-					.click();
-				await page
-					.getByRole('menuitem', {
-						name: 'Reset to Default Permissions',
-					})
-					.click();
-
-				await expect(
-					page.getByRole('heading', {
-						name: 'Confirm Reset Permissions -',
-					})
-				).toBeVisible();
-
-				await page.getByRole('button', {name: 'Cancel'}).click();
-			}).toPass({timeout: 5000});
+			await checkModalHeader('Permissions', 'Permissions', page);
+			await checkModalHeader(
+				'Edit Default Permissions',
+				'Default Permissions',
+				page
+			);
+			await checkModalHeader(
+				'Edit Default Permissions',
+				'Edit and Propagate Default Permissions',
+				page
+			);
+			await checkModalHeader(
+				'Confirm Reset to Default Permissions',
+				'Reset to Default Permissions',
+				page
+			);
 		}
 		finally {
 			await goToAllSpaces(page);

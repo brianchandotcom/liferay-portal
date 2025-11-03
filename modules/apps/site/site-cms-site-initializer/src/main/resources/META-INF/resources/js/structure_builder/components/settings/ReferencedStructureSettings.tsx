@@ -18,7 +18,6 @@ import Breadcrumb from '../Breadcrumb';
 import ERCInput from '../ERCInput';
 import Input from '../Input';
 import SpacesSelector from '../SpacesSelector';
-import WorkflowTab from './WorkflowTab';
 
 export default function ReferencedStructureSettings({
 	referencedStructure,
@@ -75,10 +74,6 @@ export default function ReferencedStructureSettings({
 				<ClayTabs.Panels fade>
 					<ClayTabs.TabPane className="px-0">
 						<GeneralTab referencedStructure={referencedStructure} />
-					</ClayTabs.TabPane>
-
-					<ClayTabs.TabPane className="px-0">
-						<WorkflowTab disabled={true} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>

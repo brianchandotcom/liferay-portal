@@ -18,7 +18,6 @@ const lazyRoutes = {
 	'finance-dashboard': React.lazy(
 		() => import('./pages/FinanceDashboard/FinanceDashboardRouter')
 	),
-	'get-app': React.lazy(() => import('./pages/GetApp/GetAppRouter')),
 	'license-agreement': React.lazy(
 		() => import('./pages/LicenseAgreementPage')
 	),

@@ -15,7 +15,7 @@ import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOr
 import i18n from '../../../../../../../i18n';
 import {getProductSpecification} from '../../../../../../../utils/productUtils';
 import {safeJSONParse} from '../../../../../../../utils/util';
-import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
+import useGetResourceInfo from '../../../../../../ProductPurchase/hooks/useGetResourceInfo';
 import {InstallStatus} from '../types';
 
 export type ProvisioningRow = ReturnType<

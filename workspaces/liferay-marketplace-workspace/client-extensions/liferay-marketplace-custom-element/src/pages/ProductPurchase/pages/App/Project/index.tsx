@@ -13,7 +13,7 @@ import {MarketplaceContext} from '../../../../../context/MarketplaceContext';
 import i18n from '../../../../../i18n';
 import {Liferay} from '../../../../../liferay/liferay';
 import {getProductPriceModel} from '../../../../../utils/productUtils';
-import useGetResourceInfo from '../../../../GetApp/hooks/useGetResourceInfo';
+import useGetResourceInfo from '../../../../ProductPurchase/hooks/useGetResourceInfo';
 import {useProductPurchaseOutletContext} from '../../../ProductPurchaseOutlet';
 import ProductPurchaseApp from '../../../services/ProductPurchaseApp';
 import {productPurchaseStore} from '../../../store/AppPurchaseStore';

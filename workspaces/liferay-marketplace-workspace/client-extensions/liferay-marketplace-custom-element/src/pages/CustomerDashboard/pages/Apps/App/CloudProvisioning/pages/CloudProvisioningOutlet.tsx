@@ -23,8 +23,7 @@ import consoleOAuth2 from '../../../../../../../services/oauth/Console';
 import {ConsoleUserProject} from '../../../../../../../services/oauth/types';
 import {scrollToTop} from '../../../../../../../utils/browser';
 import {convertSize} from '../../../../../../../utils/filesize';
-import useGetResourceInfo from '../../../../../../GetApp/hooks/useGetResourceInfo';
-
+import useGetResourceInfo from '../../../../../../ProductPurchase/hooks/useGetResourceInfo';
 import '../index.scss';
 
 const verifyAvailabilityToInstall = (

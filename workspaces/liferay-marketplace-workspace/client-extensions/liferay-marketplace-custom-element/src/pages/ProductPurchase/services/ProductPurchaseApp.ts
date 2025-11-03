@@ -12,8 +12,8 @@ import {
 	getSkuByOptionValueKey,
 } from '../../../utils/productUtils';
 import {getSiteURL} from '../../../utils/site';
-import {getProductOrderTypes} from '../../GetApp/utils/getProductOrderTypes';
-import {getProductSpecificationValues} from '../../GetApp/utils/getProductSpecificationValues';
+import {getProductOrderTypes} from '../../../utils/getProductOrderTypes';
+import {getProductSpecificationValues} from '../../../utils/getProductSpecificationValues';
 import ProductPurchase from './ProductPurchase';
 
 type ProductPurchaseCartOptions = {

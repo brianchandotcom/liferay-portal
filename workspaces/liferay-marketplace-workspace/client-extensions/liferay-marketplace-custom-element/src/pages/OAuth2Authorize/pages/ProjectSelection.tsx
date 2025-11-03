@@ -12,7 +12,7 @@ import i18n from '../../../i18n';
 import {Liferay} from '../../../liferay/liferay';
 import {convertSize} from '../../../utils/filesize';
 import ContactSupport from '../../CustomerDashboard/pages/Apps/App/CloudProvisioning/components/ContactSupport';
-import {ProductCardRevamp} from '../../GetApp/components/ProductCard/ProductCard';
+import {ProductCardRevamp} from '../../ProductPurchase/components/ProductCard/ProductCard';
 import {useOAuth2OutletContext} from '../OAuth2AuthorizeOutlet';
 
 type ProjectSelectionProps = {

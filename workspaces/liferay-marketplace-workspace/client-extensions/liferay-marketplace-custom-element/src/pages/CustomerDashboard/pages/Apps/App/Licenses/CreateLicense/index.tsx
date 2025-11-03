@@ -16,8 +16,8 @@ import useGetProductByOrderId from '../../../../../../../hooks/useGetProductByOr
 import {Liferay} from '../../../../../../../liferay/liferay';
 import zodSchema from '../../../../../../../schema/zod';
 import provisioningOAuth2 from '../../../../../../../services/oauth/Provisioning';
-import ProductCard from '../../../../../../GetApp/components/ProductCard/ProductCard';
-import StepWizard from '../../../../../../GetApp/components/StepWizard/StepWizard';
+import ProductCard from '../../../../../../ProductPurchase/components/ProductCard/ProductCard';
+import StepWizard from '../../../../../../ProductPurchase/components/StepWizard/StepWizard';
 import AccountEmailInfo from './AccountInfo';
 import LicenseDetails from './LicenseDetails';
 import SelectSubscription from './SelectSubscription';

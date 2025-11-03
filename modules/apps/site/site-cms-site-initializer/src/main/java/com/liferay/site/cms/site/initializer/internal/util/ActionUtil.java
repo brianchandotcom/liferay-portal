@@ -195,11 +195,21 @@ public class ActionUtil {
 			addedFragmentEntryLinks,
 			JSONUtil.put(
 				"placeholder",
-				JSONUtil.put(
-					LocaleUtil.US.toString(),
-					LanguageUtil.format(
-						serviceContext.getLocale(), "new-x",
-						infoForm.getLabel(serviceContext.getLocale())))),
+				() -> {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					for (Locale locale :
+							LanguageUtil.getCompanyAvailableLocales(
+								layout.getCompanyId())) {
+
+						jsonObject.put(
+							LocaleUtil.toLanguageId(locale),
+							LanguageUtil.format(
+								locale, "new-x", infoForm.getLabel(locale)));
+					}
+
+					return jsonObject;
+				}),
 			formManager, "INPUTS-inline-text-input",
 			infoForm.getInfoField("ObjectField_title"), layout, layoutStructure,
 			formStyledLayoutStructureItem, false, segmentsExperienceId,

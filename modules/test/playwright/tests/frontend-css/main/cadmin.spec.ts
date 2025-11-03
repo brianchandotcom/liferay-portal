@@ -29,7 +29,7 @@ function assertBackgroundColor(element: Locator, color: string) {
 }
 
 test(
-	"Verifies admin component displays it's default theme after applying a theme and that CSS can be overridden",
+	'Assert cadmin component precedence over CSS from the applied theme',
 	{tag: '@LPD-66827'},
 	async ({apiHelpers, page, pageEditorPage, site}) => {
 		await test.step('Create a new site with test widget', async () => {

@@ -52,6 +52,10 @@ public interface TopLevelBuildReport extends BuildReport {
 
 	public long getTopLevelPassiveDuration();
 
+	public long getTotalActualDuration();
+
+	public long getTotalCachedDuration();
+
 	public long getTotalDuration();
 
 }

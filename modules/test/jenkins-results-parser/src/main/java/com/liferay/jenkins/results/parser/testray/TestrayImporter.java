@@ -1415,7 +1415,7 @@ public class TestrayImporter {
 		propertiesMap.put(
 			"testray.total.cpu.use.time",
 			JenkinsResultsParserUtil.toDurationString(
-				_topLevelBuildReport.getTotalDuration()));
+				_topLevelBuildReport.getTotalActualDuration()));
 
 		_addPropertyElements(
 			rootElement.addElement("properties"), propertiesMap);

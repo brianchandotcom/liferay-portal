@@ -333,6 +333,28 @@ public abstract class BaseTopLevelBuildReport
 	}
 
 	@Override
+	public long getTotalActualDuration() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return 0L;
+		}
+
+		return buildReportJSONObject.optLong("totalActualDuration");
+	}
+
+	@Override
+	public long getTotalCachedDuration() {
+		JSONObject buildReportJSONObject = getBuildReportJSONObject();
+
+		if (buildReportJSONObject == null) {
+			return 0L;
+		}
+
+		return buildReportJSONObject.optLong("totalCachedDuration");
+	}
+
+	@Override
 	public long getTotalDuration() {
 		JSONObject buildReportJSONObject = getBuildReportJSONObject();
 

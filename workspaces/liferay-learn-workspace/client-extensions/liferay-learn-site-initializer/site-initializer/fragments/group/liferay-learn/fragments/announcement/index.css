@@ -30,7 +30,7 @@
 		padding-bottom: 1.5rem;
 		padding-left: 0.5rem;
 		padding-top: 0;
-		width: 100%;
+		width: 100% !important;
 	}
 
 	.announcement-group-top {

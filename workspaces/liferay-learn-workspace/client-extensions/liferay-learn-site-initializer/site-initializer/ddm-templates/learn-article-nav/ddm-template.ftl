@@ -12,16 +12,12 @@
 		<#if parentJSONObject?has_content && parentJSONObject.getString("url")?has_content>
 			<#if breadcrumbJSONArray.length() gt 1>
 				<div class="learn-article-nav-item learn-article-nav-parent menu-trigger menu-trigger-capabilities">
-					<div class="mr-2 menu-toggler-icon">
-						<a href='${parentJSONObject.getString("url")}'>
-							<@clay["icon"] symbol="angle-left" />
-						</a>
-					</div>
+					<a class="primary-item-toc" href='${parentJSONObject.getString("url")}'>
+						<@clay["icon"] symbol="angle-left" />
 
-					<span>
-						${parentJSONObject.getString("title")}
-					</span>
-					<span class="liferay-nav-item-right-arrow"></span>
+						<span>${parentJSONObject.getString("title")}</span>
+						<span class="liferay-nav-item-right-arrow"></span>
+					</a>
 				</div>
 			</#if>
 		</#if>
@@ -98,8 +94,16 @@
 </script>
 
 <style>
-	.learn-article-nav-parent .menu-toggler-icon {
-		display: none;
+	.learn-article-nav-item .liferay-nav-item {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.learn-article-nav-parent {
+		border-bottom: 1px solid #E2E2E4;
+		padding: 8px;
 	}
 
 	.learn-article-nav-parent span {
@@ -108,6 +112,10 @@
 
 	.learn-article-page-container {
 		padding: 0 1.5rem 1.5rem 1.5rem;
+	}
+
+	.liferay-nav-item {
+		margin-top: 5px;
 	}
 
 	.liferay-nav-item-border {
@@ -139,6 +147,29 @@
 		transform: rotate(90deg);
 	}
 
+	.primary-item-toc {
+		align-items: center;
+		border-radius: 8px;
+		display: flex;
+		gap: 12px;
+		padding: 8px 12px !important;
+		width: 100% !important;
+	}
+
+	.primary-item-toc:hover {
+		background-color: var(--color-action-neutral-hover-10, #eaecee);
+		color: var(--color-action-primary-hover, #0053f0) !important;
+		transition: box-shadow 0.1s linear, background-color 0.1s linear;
+	}
+
+	.primary-item-toc .liferay-nav-item-right-arrow {
+		display: none;
+	}
+
+	.primary-item-toc svg {
+		margin-top: 0;
+	}
+
 	.table-of-contents-documentation {
 		display: none;
 	}
@@ -147,7 +178,6 @@
 	.menu-trigger-capabilities {
 		align-items: center;
 		justify-content: space-between;
-		padding: 16px 20px;
 	}
 
 	.table-of-contents-documentation span {
@@ -172,7 +202,7 @@
 			margin-bottom: 40px;
 		}
 
-		.learn-article-nav-parent .menu-toggler-icon {
+		.learn-article-nav-parent .primary-item-toc svg {
 			display: none;
 		}
 
@@ -187,20 +217,34 @@
 
 		.menu-trigger-capabilities {
 			justify-content: space-between !important;
-			padding: 16px 20px;
+			padding: 8px;
 		}
 
 		.menu-trigger-capabilities .liferay-nav-item-right-arrow {
 			display: flex !important;
 		}
 
+		.primary-item-toc {
+			justify-content: space-between;
+		}
+
+		.primary-item-toc:hover {
+			background: none;
+			color: var(--color-neutral-10, #282934) !important;
+		}
+
+		.primary-item-toc .liferay-nav-item-right-arrow {
+			display: flex;
+		}
+
 		.table-of-contents-documentation {
 			display: flex;
+			padding: 16px 18px;
 		}
 	}
 
 	@media (min-width: 1025px) {
-		.learn-article-nav-parent .menu-toggler-icon {
+		.learn-article-nav-parent .primary-item-toc {
 			display: flex;
 		}
 

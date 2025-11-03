@@ -698,15 +698,7 @@ pre[class*='language-'] {
 
 			a {
 				width: 100%;
-
-				&:hover {
-					background-color: var(
-						--color-action-primary-hover-10,
-						#edf3fe
-					);
-					color: var(--color-action-primary-hover, #0053f0);
-				}
-
+			
 				&.selected {
 					background-color: var(
 						--color-action-primary-active-20,
@@ -729,18 +721,8 @@ pre[class*='language-'] {
 				border-radius: var(--border-radius, 0.5rem);
 				color: var(--color-neutral-10, #282934);
 				padding: var(--spacer-2, 0.5rem);
-
-				&:hover {
-					background-color: var(
-						--color-action-neutral-hover-10,
-						#eaecee
-					);
-					transition:
-						box-shadow 0.1s linear,
-						background-color 0.1s linear;
 				}
 			}
-		}
 
 		.selected a {
 			background-color: var(--color-action-primary-active-20, #e6edfb);
@@ -1028,10 +1010,6 @@ pre[class*='language-'] {
 				width: 100%;
 
 				&:hover {
-					background-color: var(
-						--color-action-primary-hover-10,
-						#edf3fe
-					);
 					color: var(--color-action-primary-hover, #0053f0);
 				}
 

@@ -127,78 +127,78 @@
 							</div>
 						</#list>
 					</div>
-				</#if>
-
-				<div class="learn-article-categories-tags">
-					<#list taxonomyVocabularies as vocabulary>
-						<div class="align-items-baseline d-flex mt-2">
-							<div class="learn-article-category-title mr-2">
-								${vocabulary}:
-							</div>
-							<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
-								<div class="learn-article-category-tag mr-2">
-									<a
-										class="label tag-container"
-										href="/search?${vocabulary?lower_case?replace(" ", "-", "r")}=${taxonomyCategory.categoryId}"
-									>
-										<span>${taxonomyCategory.categoryName}</span>
-									</a>
+				<#else>
+					<div class="learn-article-categories-tags">
+						<#list taxonomyVocabularies as vocabulary>
+							<div class="align-items-baseline d-flex mt-2">
+								<div class="learn-article-category-title mr-2">
+									${vocabulary}:
 								</div>
-							</#list>
-						</div>
-					</#list>
-				</div>
-
-				<div class="article-related-how-to">
-					<#setting url_escaping_charset='UTF-8' />
-
-					<#if (structuredContent.keywords?has_content && structuredContent.keywords?size > 0)>
-						<#assign
-							queryParams = {
-								"fields": "dateModified,id,title",
-								"filter": "(knowledgeArticleType eq 'howTo') and (status eq 0) and (sourceTeam eq 'Enablement')",
-								"pageSize": "3",
-								"search": structuredContent.keywords[0],
-								"sort": "dateModified:desc"
-							}
-							queryParts = []
-						/>
-
-						<#list queryParams?keys as key>
-							<#assign
-								value = queryParams[key]
-
-								queryParts = queryParts + ["${key?url}=${value?url}"]
-							/>
-						</#list>
-
-						<#assign knowledgeArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) />
-
-						<#if (knowledgeArticles.totalCount)?has_content && (knowledgeArticles.totalCount > 0)>
-							<div class="how-to-container">
-								<div class="how-to-container-header">
-									${languageUtil.get(locale, 'how-to-related-to-this-article')}
-								</div>
-
-								<div class="how-to-cards-container" id="how-to-cards-container">
-									<#list knowledgeArticles.items as knowledgeArticle>
-										<a class="how-to-card" href="${(themeDisplay.getCanonicalURL()!)!''}/l/${knowledgeArticle.id}/">
-											<div class="how-to-card-header">
-												${knowledgeArticle.title!}
-											</div>
-
-											<div class="how-to-card-date-published">
-												<#assign date = knowledgeArticle.dateModified?datetime("yyyy-MM-dd'T'HH:mm:ss'Z'") />
-
-												${languageUtil.get(locale, 'published-date')}: ${date?string["MMM dd, yy hh:mm a"]}
-											</div>
+								<#list taxonomyCategoriesMap[vocabulary]?sort_by("categoryName") as taxonomyCategory>
+									<div class="learn-article-category-tag mr-2">
+										<a
+											class="label tag-container"
+											href="/search?${vocabulary?lower_case?replace(" ", "-", "r")}=${taxonomyCategory.categoryId}"
+										>
+											<span>${taxonomyCategory.categoryName}</span>
 										</a>
-									</#list>
-								</div>
+									</div>
+								</#list>
 							</div>
+						</#list>
+					</div>
+
+					<div class="article-related-how-to">
+						<#setting url_escaping_charset='UTF-8' />
+
+						<#if (structuredContent.keywords?has_content && structuredContent.keywords?size > 0)>
+							<#assign
+								queryParams = {
+									"fields": "dateModified,id,title",
+									"filter": "(knowledgeArticleType eq 'howTo') and (status eq 0) and (sourceTeam eq 'Enablement')",
+									"pageSize": "3",
+									"search": structuredContent.keywords[0],
+									"sort": "dateModified:desc"
+								}
+								queryParts = []
+							/>
+
+							<#list queryParams?keys as key>
+								<#assign
+									value = queryParams[key]
+
+									queryParts = queryParts + ["${key?url}=${value?url}"]
+								/>
+							</#list>
+
+							<#assign knowledgeArticles = restClient.get("/c/p2s3knowledgearticles/?" + queryParts?join('&')) />
+
+							<#if (knowledgeArticles.totalCount)?has_content && (knowledgeArticles.totalCount > 0)>
+								<div class="how-to-container">
+									<div class="how-to-container-header">
+										${languageUtil.get(locale, 'how-to-related-to-this-article')}
+									</div>
+
+									<div class="how-to-cards-container" id="how-to-cards-container">
+										<#list knowledgeArticles.items as knowledgeArticle>
+											<a class="how-to-card" href="${themeDisplay.getCanonicalURL()}/l/${knowledgeArticle.id}/">
+												<div class="how-to-card-header">
+													${knowledgeArticle.title}
+												</div>
+
+												<div class="how-to-card-date-published">
+													<#assign date = knowledgeArticle.dateModified?datetime("MMM dd, yy hh:mm")?string />
+
+													${languageUtil.get(locale, 'published-date')}: ${date}
+												</div>
+											</a>
+										</#list>
+									</div>
+								</div>
+							</#if>
 						</#if>
-					</#if>
-				</div>
+					</div>
+				</#if>
 			</div>
 		</div>
 	</div>

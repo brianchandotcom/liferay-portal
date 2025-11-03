@@ -14,6 +14,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FormContainerPageElementDefiniti
 import com.liferay.headless.admin.site.dto.v1_0.FormContainerReference;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentInlineValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
+import com.liferay.headless.admin.site.dto.v1_0.LocalizationConfig;
 import com.liferay.headless.admin.site.dto.v1_0.SitePageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.dto.v1_0.StayInPageFormContainerSubmissionResult;
 import com.liferay.headless.admin.site.dto.v1_0.SuccessFormContainerSubmissionResult;
@@ -145,6 +146,8 @@ public class FormContainerPageElementDefinitionDTOConverter
 
 						return FormContainerType.MULTISTEP;
 					});
+				setLocalizationConfig(
+					() -> _toLocalizationConfig(formStyledLayoutStructureItem));
 				setNumberOfSteps(
 					formStyledLayoutStructureItem::getNumberOfSteps);
 				setSuccessFormContainerSubmissionResult(
@@ -290,6 +293,38 @@ public class FormContainerPageElementDefinitionDTOConverter
 			});
 
 		return itemExternalReference;
+	}
+
+	private LocalizationConfig _toLocalizationConfig(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem) {
+
+		JSONObject jsonObject =
+			formStyledLayoutStructureItem.getLocalizationConfigJSONObject();
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		return new LocalizationConfig() {
+			{
+				setUnlocalizedFieldsMessageFragmentInlineValue(
+					() -> _toFragmentInlineValue(
+						jsonObject.getJSONObject("unlocalizedFieldsMessage")));
+				setUnlocalizedFieldsState(
+					() -> {
+						String unlocalizedFieldsState = jsonObject.getString(
+							"unlocalizedFieldsState");
+
+						if (StringUtil.equals(
+								"read-only", unlocalizedFieldsState)) {
+
+							return UnlocalizedFieldsState.READ_ONLY;
+						}
+
+						return UnlocalizedFieldsState.DISABLED;
+					});
+			}
+		};
 	}
 
 	private SuccessFormContainerSubmissionResult

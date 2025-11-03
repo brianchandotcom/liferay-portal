@@ -13,15 +13,21 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.headless.admin.site.dto.v1_0.CategoryFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.CheckboxFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.CollectionFragmentConfigurationFieldValue;
+import com.liferay.headless.admin.site.dto.v1_0.ContextualMenuNavigationMenuValue;
 import com.liferay.headless.admin.site.dto.v1_0.FragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.ItemFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.dto.v1_0.ItemValue;
 import com.liferay.headless.admin.site.dto.v1_0.LengthFragmentConfigurationFieldValue;
+import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuFragmentConfigurationFieldValue;
+import com.liferay.headless.admin.site.dto.v1_0.NavigationMenuValue;
 import com.liferay.headless.admin.site.dto.v1_0.SelectFragmentConfigurationFieldValue;
+import com.liferay.headless.admin.site.dto.v1_0.SiteMenuNavigationMenuValue;
+import com.liferay.headless.admin.site.dto.v1_0.SitePagesNavigationMenuValue;
 import com.liferay.headless.admin.site.dto.v1_0.TemplateReference;
 import com.liferay.headless.admin.site.dto.v1_0.TextFragmentConfigurationFieldValue;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.CollectionUtil;
+import com.liferay.headless.admin.site.internal.dto.v1_0.util.ContextualMenuTypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.FragmentConfigurationFieldValueTypeUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.InfoItemUtil;
 import com.liferay.headless.admin.site.internal.dto.v1_0.util.ItemScopeUtil;
@@ -30,11 +36,17 @@ import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.scope.Scope;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.model.SiteNavigationMenuItem;
+import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.util.Objects;
 
@@ -113,6 +125,14 @@ public class FragmentConfigurationFieldValueDTOConverter
 			return _getLengthFragmentConfigurationFieldValue(
 				fragmentConfigurationField,
 				fragmentFragmentConfigurationFieldValue);
+		}
+
+		if (Objects.equals(
+				type, FragmentConfigurationFieldValue.Type.NAVIGATION_MENU)) {
+
+			return _getNavigationMenuFragmentConfigurationFieldValue(
+				dtoConverterContext, fragmentConfigurationField,
+				(JSONObject)fragmentFragmentConfigurationFieldValue);
 		}
 
 		if (Objects.equals(type, FragmentConfigurationFieldValue.Type.SELECT)) {
@@ -308,6 +328,22 @@ public class FragmentConfigurationFieldValueDTOConverter
 		return collectionFragmentConfigurationFieldValue;
 	}
 
+	private ContextualMenuNavigationMenuValue
+		_getContextualMenuNavigationMenuValue(String contextualMenu) {
+
+		if (Validator.isNull(contextualMenu)) {
+			return null;
+		}
+
+		ContextualMenuNavigationMenuValue contextualMenuNavigationMenuValue =
+			new ContextualMenuNavigationMenuValue();
+
+		contextualMenuNavigationMenuValue.setContextualMenuType(
+			() -> ContextualMenuTypeUtil.toExternalType(contextualMenu));
+
+		return contextualMenuNavigationMenuValue;
+	}
+
 	private ItemExternalReference _getInfoItemExternalReference(
 		long companyId, JSONObject jsonObject, long scopeGroupId) {
 
@@ -462,6 +498,94 @@ public class FragmentConfigurationFieldValueDTOConverter
 	}
 
 	private FragmentConfigurationFieldValue
+			_getNavigationMenuFragmentConfigurationFieldValue(
+				DTOConverterContext dtoConverterContext,
+				FragmentConfigurationField fragmentConfigurationField,
+				JSONObject jsonObject)
+		throws Exception {
+
+		Long companyId = (Long)dtoConverterContext.getAttribute("companyId");
+		Long scopeGroupId = (Long)dtoConverterContext.getAttribute(
+			"scopeGroupId");
+
+		if ((companyId == null) || (scopeGroupId == null)) {
+			throw new UnsupportedOperationException();
+		}
+
+		NavigationMenuFragmentConfigurationFieldValue
+			navigationMenuFragmentConfigurationFieldValue =
+				new NavigationMenuFragmentConfigurationFieldValue() {
+					{
+						setType(Type.NAVIGATION_MENU);
+					}
+				};
+
+		if (fragmentConfigurationField.isLocalizable()) {
+			navigationMenuFragmentConfigurationFieldValue.setValue_i18n(
+				() -> LocalizedValueUtil.toLocalizedValues(
+					jsonObject,
+					key -> _getNavigationMenuValue(
+						companyId, jsonObject.getJSONObject(key),
+						scopeGroupId)));
+		}
+		else {
+			navigationMenuFragmentConfigurationFieldValue.setValue(
+				() -> _getNavigationMenuValue(
+					companyId, jsonObject, scopeGroupId));
+		}
+
+		return navigationMenuFragmentConfigurationFieldValue;
+	}
+
+	private NavigationMenuValue _getNavigationMenuValue(
+			long companyId, JSONObject jsonObject, long scopeGroupId)
+		throws Exception {
+
+		if (JSONUtil.isEmpty(jsonObject)) {
+			return null;
+		}
+
+		String parentSiteNavigationMenuItemExternalReferenceCode =
+			jsonObject.getString(
+				"parentSiteNavigationMenuItemExternalReferenceCode", null);
+		long parentSiteNavigationMenuItemId = jsonObject.getLong(
+			"parentSiteNavigationMenuItemId");
+		String siteNavigationMenuExternalReferenceCode = jsonObject.getString(
+			"siteNavigationMenuExternalReferenceCode");
+		long siteNavigationMenuId = jsonObject.getLong("siteNavigationMenuId");
+
+		if (!jsonObject.has("privateLayout") &&
+			Validator.isNull(
+				parentSiteNavigationMenuItemExternalReferenceCode) &&
+			(parentSiteNavigationMenuItemId == 0) &&
+			Validator.isNull(siteNavigationMenuExternalReferenceCode) &&
+			(siteNavigationMenuId == 0)) {
+
+			return _getContextualMenuNavigationMenuValue(
+				jsonObject.getString("contextualMenu"));
+		}
+
+		ItemExternalReference itemExternalReference =
+			_getSiteNavigationMenuItemExternalReference(
+				companyId, siteNavigationMenuExternalReferenceCode,
+				jsonObject.getString(
+					"siteNavigationMenuScopeExternalReferenceCode"),
+				scopeGroupId, siteNavigationMenuId);
+
+		if (itemExternalReference != null) {
+			return _getSiteMenuNavigationMenuValue(
+				itemExternalReference,
+				parentSiteNavigationMenuItemExternalReferenceCode,
+				parentSiteNavigationMenuItemId);
+		}
+
+		return _getSitePagesNavigationMenuValue(
+			parentSiteNavigationMenuItemExternalReferenceCode,
+			parentSiteNavigationMenuItemId,
+			jsonObject.getBoolean("privateLayout"));
+	}
+
+	private FragmentConfigurationFieldValue
 		_getSelectFragmentConfigurationFieldValue(
 			FragmentConfigurationField fragmentConfigurationField,
 			Object fragmentFragmentConfigurationFieldValue) {
@@ -488,6 +612,109 @@ public class FragmentConfigurationFieldValueDTOConverter
 		}
 
 		return selectFragmentConfigurationFieldValue;
+	}
+
+	private SiteMenuNavigationMenuValue _getSiteMenuNavigationMenuValue(
+		ItemExternalReference itemExternalReference,
+		String parentSiteNavigationMenuItemExternalReferenceCode,
+		long parentSiteNavigationMenuItemId) {
+
+		SiteMenuNavigationMenuValue siteMenuNavigationMenuValue =
+			new SiteMenuNavigationMenuValue();
+
+		siteMenuNavigationMenuValue.setNavigationMenuItemExternalReference(
+			() -> itemExternalReference);
+
+		siteMenuNavigationMenuValue.setParentMenuItemExternalReferenceCode(
+			() -> {
+				SiteNavigationMenuItem siteNavigationMenuItem =
+					_siteNavigationMenuItemLocalService.
+						fetchSiteNavigationMenuItem(
+							parentSiteNavigationMenuItemId);
+
+				if (siteNavigationMenuItem != null) {
+					return siteNavigationMenuItem.getExternalReferenceCode();
+				}
+
+				return parentSiteNavigationMenuItemExternalReferenceCode;
+			});
+
+		return siteMenuNavigationMenuValue;
+	}
+
+	private ItemExternalReference _getSiteNavigationMenuItemExternalReference(
+			long companyId, String externalReferenceCode,
+			String scopeExternalReferenceCode, long scopeGroupId,
+			long siteNavigationMenuId)
+		throws Exception {
+
+		if (siteNavigationMenuId > 0) {
+			SiteNavigationMenu siteNavigationMenu =
+				_siteNavigationMenuLocalService.fetchSiteNavigationMenu(
+					siteNavigationMenuId);
+
+			if (siteNavigationMenu != null) {
+				return _getItemExternalReference(
+					SiteNavigationMenu.class.getName(),
+					siteNavigationMenu.getExternalReferenceCode(),
+					ItemScopeUtil.getItemScope(
+						siteNavigationMenu.getGroupId(), scopeGroupId));
+			}
+		}
+
+		if (Validator.isNotNull(externalReferenceCode)) {
+			return _getItemExternalReference(
+				SiteNavigationMenu.class.getName(), externalReferenceCode,
+				ItemScopeUtil.getItemScope(
+					companyId, scopeExternalReferenceCode, scopeGroupId));
+		}
+
+		return null;
+	}
+
+	private SitePagesNavigationMenuValue _getSitePagesNavigationMenuValue(
+		String parentSiteNavigationMenuItemExternalReferenceCode,
+		long parentSiteNavigationMenuItemId, Boolean privateLayout) {
+
+		SitePagesNavigationMenuValue sitePagesNavigationMenuValue =
+			new SitePagesNavigationMenuValue();
+
+		sitePagesNavigationMenuValue.setPageSetType(
+			() -> {
+				if (GetterUtil.getBoolean(privateLayout)) {
+					return SitePagesNavigationMenuValue.PageSetType.
+						PRIVATE_PAGES;
+				}
+
+				return SitePagesNavigationMenuValue.PageSetType.PUBLIC_PAGES;
+			});
+
+		sitePagesNavigationMenuValue.setParentSitePageExternalReferenceCode(
+			() -> {
+				if (Validator.isNull(
+						parentSiteNavigationMenuItemExternalReferenceCode) &&
+					(parentSiteNavigationMenuItemId <= 0)) {
+
+					return null;
+				}
+
+				Layout layout = _layoutLocalService.fetchLayout(
+					parentSiteNavigationMenuItemId);
+
+				if (layout != null) {
+					return layout.getExternalReferenceCode();
+				}
+
+				if (Validator.isNull(
+						parentSiteNavigationMenuItemExternalReferenceCode)) {
+
+					return null;
+				}
+
+				return parentSiteNavigationMenuItemExternalReferenceCode;
+			});
+
+		return sitePagesNavigationMenuValue;
 	}
 
 	private FragmentConfigurationFieldValue
@@ -527,5 +754,15 @@ public class FragmentConfigurationFieldValueDTOConverter
 
 	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

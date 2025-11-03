@@ -3398,6 +3398,29 @@ public class DefaultObjectEntryManagerImpl
 					objectDefinition, serviceBuilderObjectEntry,
 					serviceBuilderParentObjectEntry)
 			).put(
+				"get-by-scope",
+				() -> {
+					if (!FeatureFlagManagerUtil.isEnabled(
+							serviceBuilderObjectEntry.getCompanyId(),
+							"LPD-17564")) {
+
+						return null;
+					}
+
+					return ActionUtil.addAction(
+						ActionKeys.VIEW, ObjectEntryResourceImpl.class,
+						serviceBuilderObjectEntry.getObjectEntryId(),
+						"getScopeScopeKeyPage", null,
+						_objectEntryService.getModelResourcePermission(
+							serviceBuilderObjectEntry.getObjectDefinitionId()),
+						HashMapBuilder.put(
+							"scopeKey",
+							String.valueOf(
+								serviceBuilderObjectEntry.getGroupId())
+						).build(),
+						dtoConverterContext.getUriInfo());
+				}
+			).put(
 				"move",
 				() -> {
 					if (!FeatureFlagManagerUtil.isEnabled(

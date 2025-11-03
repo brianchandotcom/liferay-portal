@@ -77,13 +77,9 @@
 								</div>
 
 								<div class="col paragraph">
-									<p class="disclaimer-how-to d-none">
-										<@liferay_ui["message"] key="knowledge-article-header-disclaimer-how-to" />
-									</p>
+									<p class="disclaimer-how-to d-none">${languageUtil.get(locale, "knowledge-article-header-disclaimer-how-to")}</p>
 
-									<p class="disclaimer-default d-none">
-										<@liferay_ui["message"] key="knowledge-article-header-disclaimer" />
-									</p>
+									<p class="disclaimer-default d-none">${languageUtil.get(locale, "knowledge-article-header-disclaimer")}</p>
 								</div>
 							</div>
 						</div>

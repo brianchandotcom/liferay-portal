@@ -60,6 +60,14 @@ public interface TopLevelBuild extends ParentBuild {
 
 	public TopLevelBuildReport getTopLevelBuildReport();
 
+	public long getTotalActualDuration();
+
+	public int getTotalActualSlavesUsedCount();
+
+	public long getTotalCachedDuration();
+
+	public int getTotalCachedSlavesUsedCount();
+
 	public Element getValidationGitHubMessageElement();
 
 }

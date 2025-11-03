@@ -2548,19 +2548,6 @@ components:
                     description:
                         The localized text to display when an action is executed.
             type: object
-        NotificationMessageFormContainerSubmissionResult:
-            # @review
-            allOf:
-                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
-                -   properties:
-                        successNotificationMessage:
-                            $ref: "#/components/schemas/SuccessNotificationMessage"
-                            # @review
-                            description:
-                                The success notification message.
-            description:
-                The definition of a submission result of type notification message.
-            type: object
         OpenGraphSettings:
             # @review
             description:
@@ -3492,6 +3479,19 @@ components:
                     minimum: 0
                     type: number
             type: object
+        StayInPageFormContainerSubmissionResult:
+            # @review
+            allOf:
+                -   $ref: "#/components/schemas/SuccessFormContainerSubmissionResult"
+                -   properties:
+                        successNotificationMessage:
+                            $ref: "#/components/schemas/SuccessNotificationMessage"
+                            # @review
+                            description:
+                                The success notification message.
+            description:
+                The definition of a submission result of type stay in page.
+            type: object
         SuccessFormContainerSubmissionResult:
             # @review
             description:
@@ -3500,8 +3500,8 @@ components:
                 mapping:
                     DisplayPageFormContainerSubmissionResult: "#/components/schemas/DisplayPageFormContainerSubmissionResult"
                     EmbeddedMessageFormContainerSubmissionResult : "#/components/schemas/EmbeddedMessageFormContainerSubmissionResult"
-                    NotificationMessageFormContainerSubmissionResult : "#/components/schemas/NotificationMessageFormContainerSubmissionResult"
                     SitePageFormContainerSubmissionResult: "#/components/schemas/SitePageFormContainerSubmissionResult"
+                    StayInPageFormContainerSubmissionResult : "#/components/schemas/StayInPageFormContainerSubmissionResult"
                     URLFormContainerSubmissionResult: "#/components/schemas/URLFormContainerSubmissionResult"
                 propertyName: type
             properties:
@@ -3509,7 +3509,7 @@ components:
                     # @review
                     description:
                         The form container success form container submission result type.
-                    enum: [DisplayPageFormContainerSubmissionResult,EmbeddedMessageFormContainerSubmissionResult,NotificationMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
+                    enum: [DisplayPageFormContainerSubmissionResult,EmbeddedMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult,StayInPageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
                     type: string
             type: object
         SuccessNotificationMessage:

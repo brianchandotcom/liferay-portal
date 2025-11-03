@@ -54,7 +54,7 @@
 										"fragmentLink": {
 											"value": {
 												"href": {
-													"value": "https://liferay.okta.com/enduser/settings"
+													"value": "https://login.liferay.com/enduser/settings"
 												}
 											}
 										}

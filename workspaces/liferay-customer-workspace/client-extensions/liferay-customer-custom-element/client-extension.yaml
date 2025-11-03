@@ -11,7 +11,7 @@ liferay-customer-custom-element:
     portletCategoryName: category.client-extensions
     properties:
         about-the-overview-page-url: https://support.liferay.com/w/about-the-overview-page-video-tutorial
-        account-settings-url: https://liferay.okta.com/enduser/settings
+        account-settings-url: https://login.liferay.com/enduser/settings
         article-deactivate-key-url: https://support.liferay.com/w/how-do-i-manage-my-activation-keys-when-upgrading-or-replacing-servers
         article-deploying-activation-keys-url: https://learn.liferay.com/w/dxp/installation-and-upgrades/setting-up-liferay/activating-liferay-dxp
         article-getting-started-with-liferay-enterprise-search-url: https://support.liferay.com/w/les-getting-started-with-liferay-enterprise-search

@@ -1,0 +1,46 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.data.cleanup.internal.verify;
+
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ServiceComponentLocalService;
+import com.liferay.portal.verify.VerifyProcess;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Luis Ortiz
+ */
+@Component(
+	property = "run.on.portal.upgrade=true", service = VerifyProcess.class
+)
+public class DataCleanupVerifyProcess extends VerifyProcess {
+
+	@Override
+	protected void doVerify() throws Exception {
+		VerifyProcess verifyProcess = new ClassNameDataCleanupVerifyProcess(
+			_classNameLocalService);
+
+		verifyProcess.verify();
+
+		verifyProcess = new ServiceComponentDataCleanupVerifyProcess(
+			_serviceComponentLocalService);
+
+		verifyProcess.verify();
+	}
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference(target = ModuleServiceLifecycle.PORTLETS_INITIALIZED)
+	private ModuleServiceLifecycle _moduleServiceLifecycle;
+
+	@Reference
+	private ServiceComponentLocalService _serviceComponentLocalService;
+
+}

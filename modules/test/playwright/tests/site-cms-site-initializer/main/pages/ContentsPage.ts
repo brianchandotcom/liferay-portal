@@ -30,6 +30,12 @@ type Field =
 			nth?: number;
 			type: 'Checkbox';
 			value: boolean;
+	  }
+	| {
+			label: string;
+			nth?: number;
+			type: 'Picklist';
+			value: string;
 	  };
 
 export class ContentsPage {
@@ -184,6 +190,14 @@ export class ContentsPage {
 			}
 			else if (field.type === 'Checkbox') {
 				await element.setChecked(field.value);
+			}
+			else if (field.type === 'Picklist') {
+				await element.clear();
+				await clickAndExpectToBeVisible({
+					autoClick: true,
+					target: this.page.getByRole('option', {name: field.value}),
+					trigger: element,
+				});
 			}
 		}
 	}

@@ -75,7 +75,7 @@ public class DLFileEntryModelDocumentContributor
 				DDMFormValues ddmFormValues =
 					_ddmStorageEngineManager.getDDMFormValues(
 						dlFileEntryMetadata.getDDMStorageId(),
-						ddmStructure.getDDMForm());
+						ddmStructure.getDDMForm(false));
 
 				if (ddmFormValues == null) {
 					continue;

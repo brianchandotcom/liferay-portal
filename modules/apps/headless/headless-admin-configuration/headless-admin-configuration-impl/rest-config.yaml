@@ -1,0 +1,14 @@
+apiDir: ../headless-admin-configuration-api/src/main/java
+apiPackagePath: com.liferay.headless.admin.configuration
+application:
+    baseURI: /headless-admin-configuration
+    className: HeadlessAdminConfigurationApplication
+    name: Liferay.Headless.Admin.Configuration
+author: Thiago Buarque
+clientDir: ../headless-admin-configuration-client/src/main/java
+compatibilityVersion: 13
+forcePredictableOperationId: true
+generateBatch: true
+generateGraphQL: false
+javaEEPackage: jakarta
+testDir: ../headless-admin-configuration-test/src/testIntegration/java

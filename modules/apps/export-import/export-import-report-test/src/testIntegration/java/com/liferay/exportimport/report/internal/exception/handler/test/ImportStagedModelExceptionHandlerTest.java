@@ -7,7 +7,6 @@ package com.liferay.exportimport.report.internal.exception.handler.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.expando.kernel.model.ExpandoBridge;
-import com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames;
 import com.liferay.exportimport.kernel.configuration.constants.ExportImportConfigurationConstants;
 import com.liferay.exportimport.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -21,36 +20,30 @@ import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalSer
 import com.liferay.exportimport.report.constants.ExportImportReportEntryConstants;
 import com.liferay.exportimport.report.model.ExportImportReportEntry;
 import com.liferay.exportimport.report.service.ExportImportReportEntryLocalService;
-import com.liferay.exportimport.rest.client.dto.v1_0.ReportEntry;
-import com.liferay.exportimport.rest.client.pagination.Page;
-import com.liferay.exportimport.rest.client.pagination.Pagination;
-import com.liferay.exportimport.rest.client.resource.v1_0.ReportEntryResource;
 import com.liferay.exportimport.test.util.ExportImportTestUtil;
-import com.liferay.portal.background.task.model.BackgroundTask;
-import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ExternalReferenceCodeModel;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.PropsValues;
+import com.liferay.portal.search.document.Document;
+import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
+import com.liferay.portal.search.searcher.SearchResponse;
+import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -102,6 +95,35 @@ public class ImportStagedModelExceptionHandlerTest {
 	}
 
 	protected Group testGroup;
+
+	private void _assertExportImportReportEntryIndexed(
+		long classPK, long companyId, long exportImportConfigurationId) {
+
+		SearchResponse searchResponse = _searcher.search(
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				companyId
+			).emptySearchEnabled(
+				true
+			).fields(
+				Field.CLASS_PK
+			).modelIndexerClasses(
+				ExportImportReportEntry.class
+			).query(
+				_queries.term(
+					"exportImportConfigurationId_long",
+					exportImportConfigurationId)
+			).build());
+
+		Assert.assertEquals(1, searchResponse.getCount());
+
+		List<Document> documents = searchResponse.getDocuments();
+
+		Document document = documents.get(0);
+
+		Assert.assertEquals(
+			classPK, GetterUtil.getLong(document.getValue(Field.CLASS_PK)));
+	}
 
 	private void _test(long expectedGroupId, String expectedScope, Group group)
 		throws Exception {
@@ -171,41 +193,6 @@ public class ImportStagedModelExceptionHandlerTest {
 			serviceRegistration.unregister();
 		}
 
-		BackgroundTask backgroundTask =
-			_backgroundTaskLocalService.addBackgroundTask(
-				TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-				RandomTestUtil.randomString(),
-				BackgroundTaskExecutorNames.
-					LAYOUT_IMPORT_BACKGROUND_TASK_EXECUTOR,
-				HashMapBuilder.<String, Serializable>put(
-					"exportImportConfigurationId",
-					portletDataContext.getExportImportProcessId()
-				).build(),
-				null);
-
-		Company testCompany = CompanyLocalServiceUtil.getCompany(
-			group.getCompanyId());
-
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
-
-		ReportEntryResource reportEntryResource = ReportEntryResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		Page<ReportEntry> importProcessErrorsPage =
-			reportEntryResource.getImportProcessErrorsPage(
-				backgroundTask.getBackgroundTaskId(), null, null,
-				Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, importProcessErrorsPage.getTotalCount());
-
 		Assert.assertEquals(
 			exportImportReportEntriesCount + 1,
 			_exportImportReportEntryLocalService.
@@ -251,10 +238,11 @@ public class ImportStagedModelExceptionHandlerTest {
 		Assert.assertEquals(
 			group.getExternalReferenceCode(),
 			exportImportReportEntry.getScopeKey());
-	}
 
-	@Inject
-	private BackgroundTaskLocalService _backgroundTaskLocalService;
+		_assertExportImportReportEntryIndexed(
+			classPK, group.getCompanyId(),
+			exportImportConfiguration.getExportImportConfigurationId());
+	}
 
 	@Inject
 	private ClassNameLocalService _classNameLocalService;
@@ -274,6 +262,15 @@ public class ImportStagedModelExceptionHandlerTest {
 
 	@Inject
 	private GroupLocalService _groupLocalService;
+
+	@Inject
+	private Queries _queries;
+
+	@Inject
+	private Searcher _searcher;
+
+	@Inject
+	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
 
 	private class TestStagedModel
 		implements ExternalReferenceCodeModel, StagedModel {

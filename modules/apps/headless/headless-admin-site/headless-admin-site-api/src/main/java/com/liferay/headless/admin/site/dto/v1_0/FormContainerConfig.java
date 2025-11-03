@@ -157,6 +157,49 @@ public class FormContainerConfig implements Serializable {
 	@JsonIgnore
 	private Supplier<FormContainerType> _formContainerTypeSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public LocalizationConfig getLocalizationConfig() {
+		if (_localizationConfigSupplier != null) {
+			localizationConfig = _localizationConfigSupplier.get();
+
+			_localizationConfigSupplier = null;
+		}
+
+		return localizationConfig;
+	}
+
+	public void setLocalizationConfig(LocalizationConfig localizationConfig) {
+		this.localizationConfig = localizationConfig;
+
+		_localizationConfigSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setLocalizationConfig(
+		UnsafeSupplier<LocalizationConfig, Exception>
+			localizationConfigUnsafeSupplier) {
+
+		_localizationConfigSupplier = () -> {
+			try {
+				return localizationConfigUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected LocalizationConfig localizationConfig;
+
+	@JsonIgnore
+	private Supplier<LocalizationConfig> _localizationConfigSupplier;
+
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The form container page element's number of steps."
 	)
@@ -310,6 +353,18 @@ public class FormContainerConfig implements Serializable {
 			sb.append("\"");
 			sb.append(formContainerType);
 			sb.append("\"");
+		}
+
+		LocalizationConfig localizationConfig = getLocalizationConfig();
+
+		if (localizationConfig != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"localizationConfig\": ");
+
+			sb.append(String.valueOf(localizationConfig));
 		}
 
 		Integer numberOfSteps = getNumberOfSteps();

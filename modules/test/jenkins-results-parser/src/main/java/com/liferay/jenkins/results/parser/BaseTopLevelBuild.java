@@ -243,6 +243,10 @@ public abstract class BaseTopLevelBuild
 			buildReportJSONObject.put(
 				"testSuiteName", getTestSuiteName()
 			).put(
+				"totalActualDuration", getTotalActualDuration()
+			).put(
+				"totalCachedDuration", getTotalCachedDuration()
+			).put(
 				"totalDuration", getTotalDuration()
 			);
 		}

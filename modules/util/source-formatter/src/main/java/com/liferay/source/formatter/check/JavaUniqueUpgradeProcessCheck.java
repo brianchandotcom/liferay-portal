@@ -66,14 +66,15 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 			String methodName = javaMethod.getName();
 
 			if (methodName.equals("register")) {
-				_checkRegistryRegister(
-					fileName, absolutePath, javaMethod,
-					javaClass.getImportNames(), javaClass.getPackageName());
+				_checkUniqueUpgradeProcess(
+					fileName, absolutePath, "registry.register", javaMethod,
+					javaClass.getImportNames(), javaClass.getPackageName(), 2);
 			}
 			else if (methodName.equals("registerUpgradeProcesses")) {
-				_checkUpgradeVersionTreeMap(
-					fileName, absolutePath, javaMethod,
-					javaClass.getImportNames(), javaClass.getPackageName());
+				_checkUniqueUpgradeProcess(
+					fileName, absolutePath, "upgradeVersionTreeMap.put",
+					javaMethod, javaClass.getImportNames(),
+					javaClass.getPackageName(), 1);
 			}
 		}
 
@@ -85,16 +86,17 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 		return new String[] {JAVA_CLASS};
 	}
 
-	private void _checkRegistryRegister(
-		String fileName, String absolutePath, JavaMethod javaMethod,
-		List<String> imports, String packageName) {
+	private void _checkUniqueUpgradeProcess(
+		String fileName, String absolutePath, String methodName,
+		JavaMethod javaMethod, List<String> imports, String packageName,
+		int upgradeStepsParameterIndex) {
 
 		String content = javaMethod.getContent();
 
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf("registry.register(", x + 1);
+			x = content.indexOf(methodName + "(", x + 1);
 
 			if (x == -1) {
 				return;
@@ -104,7 +106,7 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 				content.substring(x));
 
 			List<String> upgradeSteps = parameterList.subList(
-				2, parameterList.size());
+				upgradeStepsParameterIndex, parameterList.size());
 
 			if (upgradeSteps.size() < 2) {
 				continue;
@@ -122,55 +124,6 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 					fileName,
 					"Only one UpgradeProcess can be added in \"registry." +
 						"register\", see LPD-44331",
-					javaMethod.getLineNumber(x));
-			}
-
-			if (_hasTableCreateOrUpgradeProcessFactoryCalls(upgradeSteps)) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Do not combine an UpgradeProcessFactory or ",
-						"UpgradeTableBuilder upgrade process with a standard ",
-						"UpgradeProcess class under the same schema version, ",
-						"see LPD-44331"),
-					javaMethod.getLineNumber(x));
-			}
-		}
-	}
-
-	private void _checkUpgradeVersionTreeMap(
-		String fileName, String absolutePath, JavaMethod javaMethod,
-		List<String> imports, String packageName) {
-
-		String content = javaMethod.getContent();
-
-		int x = -1;
-
-		while (true) {
-			x = content.indexOf("upgradeVersionTreeMap.put(", x + 1);
-
-			if (x == -1) {
-				return;
-			}
-
-			List<String> parameterList = JavaSourceUtil.getParameterList(
-				content.substring(x));
-
-			List<String> upgradeSteps = parameterList.subList(
-				1, parameterList.size());
-
-			int upgradeProcessCount = _getUpgradeProcessCount(
-				absolutePath, imports, packageName, upgradeSteps);
-
-			if (upgradeProcessCount == 0) {
-				continue;
-			}
-
-			if (upgradeProcessCount > 1) {
-				addMessage(
-					fileName,
-					"Only one UpgradeProcess can be added in " +
-						"\"upgradeVersionTreeMap.put\", see LPD-44331",
 					javaMethod.getLineNumber(x));
 			}
 

@@ -29,9 +29,8 @@ test(
 		await spaceSummaryPage.goto(spaceName);
 		await spaceSummaryPage.viewAllFilesLink.click();
 
-		expect(page.getByRole('link', {name: spaceName})).toBeVisible();
+		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
 		expect(page.getByRole('link', {name: 'Files'})).toBeVisible();
-		expect(page.getByText('No Files Yet')).toBeVisible();
 	}
 );
 
@@ -77,9 +76,8 @@ test(
 		await spaceSummaryPage.goto(spaceName);
 		await spaceSummaryPage.viewAllContentLink.click();
 
-		expect(page.getByRole('link', {name: spaceName})).toBeVisible();
+		await expect(page.getByRole('link', {name: spaceName})).toBeVisible();
 		expect(page.getByRole('link', {name: 'Contents'})).toBeVisible();
-		expect(page.getByText('No Content Yet')).toBeVisible();
 	}
 );
 

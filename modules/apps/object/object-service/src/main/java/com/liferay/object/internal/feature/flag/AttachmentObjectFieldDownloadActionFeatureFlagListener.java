@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.language.override.service.PLOEntryLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +43,7 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListener
 	public void onValue(
 		long companyId, String featureFlagKey, boolean enabled) {
 
-		if (!Objects.equals(featureFlagKey, "LPD-17564")) {
+		if (!Objects.equals(featureFlagKey, "LPD-17564") || !enabled) {
 			return;
 		}
 
@@ -68,55 +67,43 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListener
 				String attachmentDownloadActionKey =
 					objectField.getAttachmentDownloadActionKey();
 
-				if (enabled) {
-					ResourceAction resourceAction =
-						_resourceActionLocalService.fetchResourceAction(
-							objectDefinition.getClassName(),
-							attachmentDownloadActionKey);
-
-					if (resourceAction != null) {
-						continue;
-					}
-
-					try {
-						ObjectDefinitionResourcePermissionUtil.
-							populateResourceActions(
-								null, null, objectDefinition,
-								_objectFieldLocalService,
-								Collections.singletonList(objectField),
-								_portletLocalService, _resourceActions);
-
-						_objectFieldLocalService.
-							addOrUpdateObjectFieldPLOEntries(objectField);
-
-						for (ResourcePermission resourcePermission :
-								resourcePermissions) {
-
-							if (!resourcePermission.hasActionId(
-									attachmentDownloadActionKey) &&
-								resourcePermission.isViewActionId()) {
-
-								resourcePermission.addResourceAction(
-									attachmentDownloadActionKey);
-
-								_resourcePermissionLocalService.
-									updateResourcePermission(
-										resourcePermission);
-							}
-						}
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
-				}
-				else {
-					_ploEntryLocalService.deletePLOEntries(
-						objectField.getCompanyId(),
-						"action." + attachmentDownloadActionKey);
-
-					_resourceActions.removeModelResource(
+				ResourceAction resourceAction =
+					_resourceActionLocalService.fetchResourceAction(
 						objectDefinition.getClassName(),
 						attachmentDownloadActionKey);
+
+				if (resourceAction != null) {
+					continue;
+				}
+
+				try {
+					ObjectDefinitionResourcePermissionUtil.
+						populateResourceActions(
+							null, null, objectDefinition,
+							_objectFieldLocalService,
+							Collections.singletonList(objectField),
+							_portletLocalService, _resourceActions);
+
+					_objectFieldLocalService.addOrUpdateObjectFieldPLOEntries(
+						objectField);
+
+					for (ResourcePermission resourcePermission :
+							resourcePermissions) {
+
+						if (!resourcePermission.hasActionId(
+								attachmentDownloadActionKey) &&
+							resourcePermission.isViewActionId()) {
+
+							resourcePermission.addResourceAction(
+								attachmentDownloadActionKey);
+
+							_resourcePermissionLocalService.
+								updateResourcePermission(resourcePermission);
+						}
+					}
+				}
+				catch (Exception exception) {
+					_log.error(exception);
 				}
 			}
 		}
@@ -130,9 +117,6 @@ public class AttachmentObjectFieldDownloadActionFeatureFlagListener
 
 	@Reference
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	@Reference
-	private PLOEntryLocalService _ploEntryLocalService;
 
 	@Reference
 	private PortletLocalService _portletLocalService;

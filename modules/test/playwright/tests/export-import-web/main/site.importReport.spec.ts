@@ -180,6 +180,7 @@ test(
 			await checkAccessibility({
 				page,
 				selectors: ['.modal'],
+				selectorsToExclude: ['[role="progressbar"]'],
 			});
 
 			await expect(

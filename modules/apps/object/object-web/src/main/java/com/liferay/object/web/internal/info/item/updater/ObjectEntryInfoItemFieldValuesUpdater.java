@@ -36,7 +36,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 
 import java.text.DateFormat;
 
@@ -257,8 +257,7 @@ public class ObjectEntryInfoItemFieldValuesUpdater
 				return new TaxonomyCategoryBrief() {
 					{
 						setScope(
-							() -> ScopeUtil.toScope(
-								assetCategory.getGroupId(), locale));
+							() -> Scope.of(assetCategory.getGroupId(), locale));
 						setTaxonomyCategoryExternalReferenceCode(
 							assetCategory::getExternalReferenceCode);
 						setTaxonomyCategoryId(() -> assetCategoryId);

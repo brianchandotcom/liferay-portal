@@ -210,7 +210,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
@@ -2756,7 +2756,7 @@ public class DefaultObjectEntryManagerImplTest
 					new TaxonomyCategoryBrief[] {
 						new TaxonomyCategoryBrief() {
 							{
-								scope = ScopeUtil.toScope(
+								scope = Scope.of(
 									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode1;
@@ -2764,7 +2764,7 @@ public class DefaultObjectEntryManagerImplTest
 						},
 						new TaxonomyCategoryBrief() {
 							{
-								scope = ScopeUtil.toScope(
+								scope = Scope.of(
 									_group, LocaleUtil.getDefault());
 								taxonomyCategoryExternalReferenceCode =
 									taxonomyCategoryExternalReferenceCode2;

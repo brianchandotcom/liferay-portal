@@ -115,7 +115,7 @@ import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.jaxrs.extension.ExtendedEntity;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.permission.PermissionUtil;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalService;
@@ -883,7 +883,7 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 
-				return ScopeUtil.toScope(
+				return Scope.of(
 					dlFileEntry.getGroupId(), dtoConverterContext.getLocale());
 			});
 		fileEntry.setThumbnailURL(
@@ -1617,7 +1617,7 @@ public class ObjectEntryDTOConverter
 							return null;
 						}
 
-						return ScopeUtil.toScope(groupId, locale);
+						return Scope.of(groupId, locale);
 					});
 				setVersion(
 					() -> {

@@ -3,13 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.vulcan.util;
+package com.liferay.portal.vulcan.scope;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portal.vulcan.scope.Scope;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -22,7 +20,7 @@ import org.mockito.Mockito;
 /**
  * @author Petteri Karttunen
  */
-public class ScopeUtilTest {
+public class ScopeTest {
 
 	@ClassRule
 	@Rule
@@ -41,46 +39,46 @@ public class ScopeUtilTest {
 	}
 
 	@Test
-	public void testToScopeNull() throws Exception {
-		Assert.assertNull(ScopeUtil.toScope(null, null));
+	public void testScopeOfNull() {
+		Assert.assertNull(Scope.of(null, null));
 	}
 
 	@Test
-	public void testToScopeTypeAssetLibrary() throws Exception {
+	public void testScopeOfTypeAssetLibrary() {
 		Mockito.when(
 			_group.isDepot()
 		).thenReturn(
 			true
 		);
 
-		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.ASSET_LIBRARY);
+		_assertScope(Scope.of(_group, null), Scope.Type.ASSET_LIBRARY);
 	}
 
 	@Test
-	public void testToScopeTypeNull() throws Exception {
-		_assertScope(ScopeUtil.toScope(_group, null), null);
+	public void testScopeOfTypeNull() {
+		_assertScope(Scope.of(_group, null), null);
 	}
 
 	@Test
-	public void testToScopeTypeSite() throws Exception {
+	public void testScopeOfTypeSite() {
 		Mockito.when(
 			_group.isSite()
 		).thenReturn(
 			true
 		);
 
-		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.SITE);
+		_assertScope(Scope.of(_group, null), Scope.Type.SITE);
 	}
 
 	@Test
-	public void testToScopeTypeSpace() throws Exception {
+	public void testScopeOfTypeSpace() {
 		Mockito.when(
 			_group.isCMS()
 		).thenReturn(
 			true
 		);
 
-		_assertScope(ScopeUtil.toScope(_group, null), Scope.Type.SPACE);
+		_assertScope(Scope.of(_group, null), Scope.Type.SPACE);
 	}
 
 	private void _assertScope(Scope scope, Scope.Type scopeType) {

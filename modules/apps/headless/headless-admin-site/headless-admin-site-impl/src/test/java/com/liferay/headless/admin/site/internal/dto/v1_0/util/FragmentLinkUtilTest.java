@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.vulcan.scope.Scope;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -228,8 +227,7 @@ public class FragmentLinkUtilTest {
 			_getFragmentLink(
 				JournalArticle.class.getName(),
 				journalArticleExternalReferenceCode, "JournalArticle_title",
-				null,
-				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+				null, Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -363,7 +361,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
-				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+				Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -455,8 +453,7 @@ public class FragmentLinkUtilTest {
 			_getFragmentLink(
 				JournalArticle.class.getName(),
 				journalArticleExternalReferenceCode, "JournalArticle_title",
-				null,
-				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+				null, Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -533,7 +530,7 @@ public class FragmentLinkUtilTest {
 		Assert.assertEquals(
 			_getFragmentLink(
 				Layout.class.getName(), layoutExternalReferenceCode, null, null,
-				ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+				Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 			FragmentLinkUtil.toFragmentLink(
 				_COMPANY_ID, _infoItemServiceRegistry,
 				JSONUtil.put(
@@ -724,7 +721,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
-					null, ScopeUtil.toScope(group, LocaleUtil.getDefault())),
+					null, Scope.of(group, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -887,8 +884,7 @@ public class FragmentLinkUtilTest {
 				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
-					null,
-					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+					null, Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -971,8 +967,7 @@ public class FragmentLinkUtilTest {
 				_getFragmentLink(
 					JournalArticle.class.getName(),
 					journalArticleExternalReferenceCode, "JournalArticle_title",
-					null,
-					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+					null, Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}
@@ -1040,8 +1035,7 @@ public class FragmentLinkUtilTest {
 				_COMPANY_ID,
 				_getFragmentLink(
 					Layout.class.getName(), layoutExternalReferenceCode, null,
-					null,
-					ScopeUtil.toScope(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
+					null, Scope.of(_ITEM_GROUP_ID, LocaleUtil.getDefault())),
 				_infoItemServiceRegistry, _SCOPE_GROUP_ID
 			).toString());
 	}

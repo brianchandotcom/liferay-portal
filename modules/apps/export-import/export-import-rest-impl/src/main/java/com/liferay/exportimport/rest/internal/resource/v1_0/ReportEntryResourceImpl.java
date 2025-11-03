@@ -38,7 +38,7 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
-import com.liferay.portal.vulcan.scope.ScopeUtil;
+import com.liferay.portal.vulcan.scope.Scope;
 import com.liferay.portal.vulcan.util.SearchUtil;
 
 import jakarta.ws.rs.NotFoundException;
@@ -226,7 +226,7 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 					() -> _toModelName(exportImportReportEntry.getModelName()));
 				setOrigin(() -> _toOrigin(exportImportReportEntry.getOrigin()));
 				setScope(
-					() -> ScopeUtil.toScope(
+					() -> Scope.of(
 						exportImportReportEntry.getGroupId(),
 						contextAcceptLanguage.getPreferredLocale()));
 				setStatus(() -> _toStatus(exportImportReportEntry.getStatus()));

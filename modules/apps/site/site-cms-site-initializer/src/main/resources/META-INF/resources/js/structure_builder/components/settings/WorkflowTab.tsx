@@ -19,7 +19,7 @@ import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectStructureSpaces from '../../selectors/selectStructureSpaces';
 import selectStructureWorkflows from '../../selectors/selectStructureWorkflows';
 
-export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
+export default function WorkflowTab() {
 	const {data: spaces, status: spacesStatus} = useCache('spaces');
 	const {data: workflows, status: workflowsStatus} = useCache('workflows');
 
@@ -44,13 +44,9 @@ export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
 				)}
 			</p>
 
-			<DefaultWorkflowSelector
-				disabled={disabled}
-				workflows={workflows}
-			/>
+			<DefaultWorkflowSelector workflows={workflows} />
 
 			<SpaceWorkflowPanel
-				disabled={disabled}
 				spaces={availableSpaces}
 				workflows={workflows}
 			/>
@@ -58,13 +54,7 @@ export default function WorkflowTab({disabled = false}: {disabled?: boolean}) {
 	);
 }
 
-function DefaultWorkflowSelector({
-	disabled,
-	workflows,
-}: {
-	disabled: boolean;
-	workflows: Workflow[];
-}) {
+function DefaultWorkflowSelector({workflows}: {workflows: Workflow[]}) {
 	const dispatch = useStateDispatch();
 
 	const structureWorkflows = useSelector(selectStructureWorkflows);
@@ -86,7 +76,6 @@ function DefaultWorkflowSelector({
 			</label>
 
 			<ClaySelectWithOption
-				disabled={disabled}
 				id={selectId}
 				onChange={(event) =>
 					dispatch({
@@ -102,11 +91,9 @@ function DefaultWorkflowSelector({
 }
 
 function SpaceWorkflowPanel({
-	disabled,
 	spaces,
 	workflows,
 }: {
-	disabled: boolean;
 	spaces: Space[];
 	workflows: Workflow[];
 }) {
@@ -167,7 +154,6 @@ function SpaceWorkflowPanel({
 
 									<ClayTable.Cell>
 										<SpaceWorkflowSelector
-											disabled={disabled}
 											spaceERC={
 												space.externalReferenceCode
 											}
@@ -184,11 +170,9 @@ function SpaceWorkflowPanel({
 }
 
 function SpaceWorkflowSelector({
-	disabled,
 	spaceERC,
 	workflows,
 }: {
-	disabled: boolean;
 	spaceERC: Space['externalReferenceCode'];
 	workflows: Workflow[];
 }) {
@@ -214,7 +198,6 @@ function SpaceWorkflowSelector({
 		<ClayForm.Group className="mb-0">
 			<ClaySelectWithOption
 				aria-label={Liferay.Language.get('select-workflow')}
-				disabled={disabled}
 				onChange={(event) =>
 					dispatch({
 						name: event.target.value,

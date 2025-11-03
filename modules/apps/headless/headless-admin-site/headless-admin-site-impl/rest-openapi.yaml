@@ -3498,18 +3498,18 @@ components:
                 The form container success form container submission result.
             discriminator:
                 mapping:
-                    DisplayPageFormContainerSubmissionResult: "#/components/schemas/DisplayPageFormContainerSubmissionResult"
-                    EmbeddedMessageFormContainerSubmissionResult : "#/components/schemas/EmbeddedMessageFormContainerSubmissionResult"
-                    SitePageFormContainerSubmissionResult: "#/components/schemas/SitePageFormContainerSubmissionResult"
-                    StayInPageFormContainerSubmissionResult : "#/components/schemas/StayInPageFormContainerSubmissionResult"
-                    URLFormContainerSubmissionResult: "#/components/schemas/URLFormContainerSubmissionResult"
+                    DisplayPage: "#/components/schemas/DisplayPageFormContainerSubmissionResult"
+                    EmbeddedMessage : "#/components/schemas/EmbeddedMessageFormContainerSubmissionResult"
+                    SitePage: "#/components/schemas/SitePageFormContainerSubmissionResult"
+                    StayInPage : "#/components/schemas/StayInPageFormContainerSubmissionResult"
+                    Url: "#/components/schemas/URLFormContainerSubmissionResult"
                 propertyName: type
             properties:
                 type:
                     # @review
                     description:
                         The form container success form container submission result type.
-                    enum: [DisplayPageFormContainerSubmissionResult,EmbeddedMessageFormContainerSubmissionResult, SitePageFormContainerSubmissionResult,StayInPageFormContainerSubmissionResult, URLFormContainerSubmissionResult]
+                    enum: [DisplayPage,EmbeddedMessage, SitePage,StayInPage, Url]
                     type: string
             type: object
         SuccessNotificationMessage:

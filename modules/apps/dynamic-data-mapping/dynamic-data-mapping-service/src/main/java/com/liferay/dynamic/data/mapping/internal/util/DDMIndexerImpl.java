@@ -594,8 +594,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 		else if (type.equals(DDMFormFieldTypeConstants.RICH_TEXT)) {
 			sb.append(_htmlParser.extractText(valueString));
 		}
-		else if (type.equals(DDMFormFieldTypeConstants.SELECT) ||
-				 type.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
+		else if (type.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+				 type.equals(DDMFormFieldTypeConstants.SELECT)) {
 
 			JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
 
@@ -768,8 +768,8 @@ public class DDMIndexerImpl implements DDMIndexer {
 				document.addGeoLocation(
 					name.concat("_geolocation"), latitude, longitude);
 			}
-			else if (type.equals(DDMFormFieldTypeConstants.SELECT) ||
-					 type.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE)) {
+			else if (type.equals(DDMFormFieldTypeConstants.CHECKBOX_MULTIPLE) ||
+					 type.equals(DDMFormFieldTypeConstants.SELECT)) {
 
 				document.addKeyword(
 					_getFieldName(name), _toStringArray(sortableValue));

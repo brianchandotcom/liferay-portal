@@ -75,9 +75,49 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 	await expect(page.getByText(providerName1)).toBeVisible();
 	await expect(page.getByText(providerName2)).toBeVisible();
 
-	// Assert a factory configuration can be edited
+	// Assert a single/multiple factory configuration can be exported
 
-	const firstRow = page.locator('tbody tr').first();
+		page.on('download', async (download) => {
+      const fileName = download.suggestedFilename();
+
+      if (fileName.includes(".zip")) {
+          expect(fileName).toEqual(
+            expect.stringMatching(
+              'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.zip'
+            )
+          );
+      } else {
+        expect(fileName).toEqual(
+          expect.stringMatching(
+            'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.scoped~(.*).config'
+          )
+        );
+
+        const path = await download.path();
+
+        const fileContent = await readFile(path, 'utf-8');
+
+        expect(
+          fileContent.includes(`providerName="${providerName1}"`)
+        ).toBeTruthy();
+      }
+		});
+
+    await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Export Entries'}),
+			trigger: page.getByRole('button', {name: 'Actions'}).first(),
+		});
+
+  	const firstRow = page.locator('tbody tr').first();
+
+    await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Export'}),
+			trigger: firstRow.getByRole('button', {name: 'Actions'}),
+		});
+
+	// Assert a factory configuration can be edited
 
 	const oldProviderName = await firstRow.innerText();
 

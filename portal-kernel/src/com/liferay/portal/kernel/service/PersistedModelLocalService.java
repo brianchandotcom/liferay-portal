@@ -9,6 +9,7 @@ import com.liferay.petra.sql.dsl.query.DSLQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
+import com.liferay.portal.kernel.transaction.Transactional;
 
 import java.io.Serializable;
 
@@ -30,20 +31,24 @@ public interface PersistedModelLocalService {
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
+	@Transactional(readOnly = true)
 	public default <T> T dslQuery(DSLQuery dslQuery) {
 		return dslQuery(dslQuery, true);
 	}
 
+	@Transactional(readOnly = true)
 	public default <T> T dslQuery(DSLQuery dslQuery, boolean useFinderCache) {
 		BasePersistence<?> basePersistence = getBasePersistence();
 
 		return (T)basePersistence.dslQuery(dslQuery, useFinderCache);
 	}
 
+	@Transactional(readOnly = true)
 	public default int dslQueryCount(DSLQuery dslQuery) {
 		return dslQueryCount(dslQuery, true);
 	}
 
+	@Transactional(readOnly = true)
 	public default int dslQueryCount(
 		DSLQuery dslQuery, boolean useFinderCache) {
 

@@ -176,14 +176,26 @@
 	markupView="lexicon"
 	persistState=true
 >
-	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
+	<#assign
+		vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![]
+
+		customTitle =
+			{
+				"Applicable Versions": "Product Version",
+				"Capability": "Capabilities",
+				"Feature": "Features"
+			}
+
+		title = (vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')
+	/>
+
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="p-4 search-facet search-facet-display-vocabulary"
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
+		title="${(themeDisplay.getURLCurrent()?contains('/sales-enablement/'))?then(customTitle[title]!title, title)}"
 	>
 		<#if vocabularyNames?has_content>
 			<ul class="learn-treeview treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
@@ -261,24 +273,23 @@
 	document.addEventListener('DOMContentLoaded', () => {
 		const panels = document.querySelectorAll('.panel-group .panel');
 
-		panels.forEach(panel => {
-			if (window.innerWidth <= 768) {
-				const panelBody = panel.querySelector('.panel-collapse');
+	panels.forEach(panel => {
+		const panelBody = panel.querySelector('.panel-collapse');
+		const panelHeaderButton = panel.querySelector('.panel-header-link');
 
-				if (panelBody) {
-					panelBody.classList.remove('show');
-					panelBody.classList.add('collapse');
-				}
-
-				const panelHeaderButton = panel.querySelector('.panel-header-link');
-
-				if (panelHeaderButton) {
-					panelHeaderButton.classList.add('collapsed');
-					panelHeaderButton.setAttribute('aria-expanded', 'false');
-				}
+		if (window.innerWidth <= 768) {
+			if (panelBody) {
+				panelBody.classList.remove('show');
+				panelBody.classList.add('collapse');
 			}
-		});
+
+			if (panelHeaderButton) {
+				panelHeaderButton.classList.add('collapsed');
+				panelHeaderButton.setAttribute('aria-expanded', 'false');
+			}
+		}
 	});
+});
 </@>
 
 <style>

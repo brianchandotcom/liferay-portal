@@ -17,6 +17,7 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {objectDefitionRequestData} from './utils/objectDefitionRequestData';
 import {getTempFile} from '../../../utils/temp';
 import {readFileFromZip} from '../../../utils/zip';
+import {checkAccessibility} from '../../../utils/checkAccessibility';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
@@ -161,6 +162,10 @@ test(
 		await exportImportPage.import(exportFilePath);
 
 		await exportImportPage.openExportReportEntriesModal(exportName);
+
+		await checkAccessibility({page, selectors: [
+			'.modal'
+		]});
 
 		await expect(
 			exportImportPage.exportReportEntriesModalProgressbar

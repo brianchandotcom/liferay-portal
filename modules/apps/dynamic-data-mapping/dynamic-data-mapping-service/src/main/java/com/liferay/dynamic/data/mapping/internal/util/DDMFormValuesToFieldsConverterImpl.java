@@ -20,11 +20,9 @@ import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -63,19 +61,27 @@ public class DDMFormValuesToFieldsConverterImpl
 
 		Fields fields = new Fields();
 
-		fields.put(
-			new Field(
-				ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
-				StringPool.BLANK));
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
 
-		for (DDMFormFieldValue ddmFormFieldValue :
-				ddmFormValues.getDDMFormFieldValues()) {
+		StringBundler fieldDisplayNamesSB = new StringBundler(
+			ddmFormFieldValues.size() * 4);
 
+		for (DDMFormFieldValue ddmFormFieldValue : ddmFormFieldValues) {
 			_addFields(
 				ddmFormFieldAvailableLocales, ddmFormFieldsMap,
 				ddmFormFieldValue, ddmStructure.getStructureId(),
-				ddmFormValues.getDefaultLocale(), fields);
+				ddmFormValues.getDefaultLocale(), fields, fieldDisplayNamesSB);
 		}
+
+		if (!ddmFormFieldValues.isEmpty()) {
+			fieldDisplayNamesSB.setIndex(fieldDisplayNamesSB.index() - 1);
+		}
+
+		fields.put(
+			new Field(
+				ddmStructure.getStructureId(), DDMImpl.FIELDS_DISPLAY_NAME,
+				fieldDisplayNamesSB.toString()));
 
 		return fields;
 	}
@@ -115,7 +121,8 @@ public class DDMFormValuesToFieldsConverterImpl
 			Map<String, Set<Locale>> ddmFormFieldAvailableLocales,
 			Map<String, DDMFormField> ddmFormFieldsMap,
 			DDMFormFieldValue ddmFormFieldValue, long ddmStructureId,
-			Locale defaultLocale, Fields fields)
+			Locale defaultLocale, Fields fields,
+			StringBundler fieldDisplayNamesSB)
 		throws PortalException {
 
 		DDMFormField ddmFormField = ddmFormFieldsMap.get(
@@ -125,25 +132,18 @@ public class DDMFormValuesToFieldsConverterImpl
 			ddmFormField, ddmFormFieldAvailableLocales, ddmFormFieldValue,
 			ddmStructureId, defaultLocale, fields);
 
-		Field fieldsDisplayField = fields.get(DDMImpl.FIELDS_DISPLAY_NAME);
-
-		String[] fieldsDisplayValues = StringUtil.split(
-			(String)fieldsDisplayField.getValue());
-
-		fieldsDisplayField.setValue(
-			StringUtil.merge(
-				ArrayUtil.append(
-					fieldsDisplayValues,
-					StringBundler.concat(
-						ddmFormFieldValue.getName(), DDMImpl.INSTANCE_SEPARATOR,
-						ddmFormFieldValue.getInstanceId()))));
+		fieldDisplayNamesSB.append(ddmFormFieldValue.getName());
+		fieldDisplayNamesSB.append(DDMImpl.INSTANCE_SEPARATOR);
+		fieldDisplayNamesSB.append(ddmFormFieldValue.getInstanceId());
+		fieldDisplayNamesSB.append(StringPool.COMMA);
 
 		for (DDMFormFieldValue nestedDDMFormFieldValue :
 				ddmFormFieldValue.getNestedDDMFormFieldValues()) {
 
 			_addFields(
 				ddmFormFieldAvailableLocales, ddmFormFieldsMap,
-				nestedDDMFormFieldValue, ddmStructureId, defaultLocale, fields);
+				nestedDDMFormFieldValue, ddmStructureId, defaultLocale, fields,
+				fieldDisplayNamesSB);
 		}
 	}
 

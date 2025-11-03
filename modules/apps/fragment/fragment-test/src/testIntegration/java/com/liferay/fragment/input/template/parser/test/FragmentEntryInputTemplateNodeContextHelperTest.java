@@ -287,7 +287,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		SessionMessages.add(
 			httpServletRequest, "infoFormParameterMap",
 			HashMapBuilder.<String, Object>put(
-				"myRichText", localeMap
+				"ObjectField_myRichText", localeMap
 			).build());
 
 		ServiceContext serviceContext =
@@ -334,7 +334,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		SessionMessages.add(
 			httpServletRequest, "infoFormParameterMap",
 			HashMapBuilder.<String, Object>put(
-				"myText", value
+				"ObjectField_myText", value
 			).build());
 
 		ServiceContext serviceContext =

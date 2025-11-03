@@ -82,7 +82,7 @@ public class ItemExternalReferenceSerDes {
 
 			sb.append("\"scope\": ");
 
-			sb.append(String.valueOf(itemExternalReference.getScope()));
+			sb.append(itemExternalReference.getScope());
 		}
 
 		sb.append("}");
@@ -187,7 +187,8 @@ public class ItemExternalReferenceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					itemExternalReference.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+						com.liferay.headless.admin.site.client.scope.Scope.
+							toDTO((String)jsonParserFieldValue));
 				}
 			}
 		}

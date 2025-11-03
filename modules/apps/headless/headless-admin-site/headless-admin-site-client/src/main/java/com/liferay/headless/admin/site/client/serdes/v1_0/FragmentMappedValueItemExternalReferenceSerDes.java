@@ -97,9 +97,7 @@ public class FragmentMappedValueItemExternalReferenceSerDes {
 
 			sb.append("\"scope\": ");
 
-			sb.append(
-				String.valueOf(
-					fragmentMappedValueItemExternalReference.getScope()));
+			sb.append(fragmentMappedValueItemExternalReference.getScope());
 		}
 
 		if (fragmentMappedValueItemExternalReference.getType() != null) {
@@ -242,7 +240,8 @@ public class FragmentMappedValueItemExternalReferenceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					fragmentMappedValueItemExternalReference.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+						com.liferay.headless.admin.site.client.scope.Scope.
+							toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

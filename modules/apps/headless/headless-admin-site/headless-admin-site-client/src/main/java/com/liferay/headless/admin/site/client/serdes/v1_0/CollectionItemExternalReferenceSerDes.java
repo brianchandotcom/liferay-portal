@@ -90,8 +90,7 @@ public class CollectionItemExternalReferenceSerDes {
 
 			sb.append("\"scope\": ");
 
-			sb.append(
-				String.valueOf(collectionItemExternalReference.getScope()));
+			sb.append(collectionItemExternalReference.getScope());
 		}
 
 		if (collectionItemExternalReference.getCollectionType() != null) {
@@ -227,7 +226,8 @@ public class CollectionItemExternalReferenceSerDes {
 			else if (Objects.equals(jsonParserFieldName, "scope")) {
 				if (jsonParserFieldValue != null) {
 					collectionItemExternalReference.setScope(
-						ScopeSerDes.toDTO((String)jsonParserFieldValue));
+						com.liferay.headless.admin.site.client.scope.Scope.
+							toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "collectionType")) {

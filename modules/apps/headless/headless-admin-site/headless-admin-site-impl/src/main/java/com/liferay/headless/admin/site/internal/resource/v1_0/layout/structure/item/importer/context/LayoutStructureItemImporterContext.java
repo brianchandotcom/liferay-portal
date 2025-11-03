@@ -7,7 +7,10 @@ package com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.
 
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.info.item.InfoItemServiceRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -37,6 +40,16 @@ public class LayoutStructureItemImporterContext {
 		return _fragmentEntryProcessorRegistry;
 	}
 
+	public Group getGroup() throws PortalException {
+		if (_group != null) {
+			return _group;
+		}
+
+		_group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+		return _group;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -60,6 +73,7 @@ public class LayoutStructureItemImporterContext {
 	private final long _companyId;
 	private final FragmentEntryProcessorRegistry
 		_fragmentEntryProcessorRegistry;
+	private Group _group;
 	private final long _groupId;
 	private final InfoItemServiceRegistry _infoItemServiceRegistry;
 	private final Layout _layout;

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.mail.MailMessage;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
-import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -69,7 +68,6 @@ public class InviteUsersMVCResourceCommandTest {
 			0, RandomTestUtil.randomString(), null);
 	}
 
-	@FeatureFlag("LPD-11212")
 	@Test
 	public void testGetInviteUsersEmailNotificationBody() throws Exception {
 		_testGetInviteUsers(_ctCollection);
@@ -101,7 +99,6 @@ public class InviteUsersMVCResourceCommandTest {
 					"/>")));
 	}
 
-	@FeatureFlag("LPD-11212")
 	@Test
 	public void testGetInviteUsersWithCustomEmailFromAddressAndEmailFromName()
 		throws Exception {
@@ -134,7 +131,6 @@ public class InviteUsersMVCResourceCommandTest {
 		}
 	}
 
-	@FeatureFlag("LPD-11212")
 	@Test
 	public void testGetInviteUsersWithCustomInvitationEmailBodyAndInvitationEmailSubject()
 		throws Exception {

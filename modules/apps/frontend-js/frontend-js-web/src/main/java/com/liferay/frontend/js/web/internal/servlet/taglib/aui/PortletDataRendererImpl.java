@@ -8,7 +8,6 @@ package com.liferay.frontend.js.web.internal.servlet.taglib.aui;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
-import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.servlet.taglib.aui.AMDRequire;
 import com.liferay.portal.kernel.servlet.taglib.aui.ESImport;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
@@ -66,9 +65,7 @@ public class PortletDataRendererImpl implements PortletDataRenderer {
 			writer.write("<script");
 			writer.write(
 				ContentSecurityPolicyNonceProviderUtil.getNonceAttribute(null));
-			writer.write(" type=\"");
-			writer.write(FrontendESMUtil.getScriptType());
-			writer.write("\">\n");
+			writer.write(" type=\"module\">\n");
 		}
 
 		// Write ES prologue

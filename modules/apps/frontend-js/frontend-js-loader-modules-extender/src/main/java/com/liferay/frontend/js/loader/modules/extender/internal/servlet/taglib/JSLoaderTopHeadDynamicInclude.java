@@ -11,7 +11,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProvider;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.frontend.esm.FrontendESMUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
@@ -82,9 +81,8 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 		printWriter.write(Boolean.toString(_details.exposeGlobal()));
 		printWriter.write(", logLevel: '");
 		printWriter.write(_details.logLevel());
-		printWriter.write("', moduleType: '");
-		printWriter.write(FrontendESMUtil.getScriptType());
-		printWriter.write("', namespace:'Liferay', nonce: '");
+		printWriter.write("', moduleType: 'module', namespace:'Liferay', ");
+		printWriter.write("nonce: '");
 		printWriter.write(
 			_contentSecurityPolicyNonceProvider.getNonce(httpServletRequest));
 		printWriter.write(
@@ -105,8 +103,8 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest);
 
 		printWriter.write(
-			absolutePortalURLBuilder.forBundleScript(
-				_bundle, "/loader.js"
+			absolutePortalURLBuilder.forWebContextScript(
+				"frontend-js-loader-modules-extender", "/loader.js"
 			).build());
 
 		printWriter.write("\" type=\"");

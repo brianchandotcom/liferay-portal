@@ -377,7 +377,7 @@ public abstract class BaseSectionDisplayContext {
 					"/{embedded.id}?redirect=", themeDisplay.getURLCurrent()),
 				"pencil", "editFolder",
 				LanguageUtil.get(httpServletRequest, "edit"), "get", "update",
-				"update",
+				null,
 				HashMapBuilder.<String, Object>put(
 					"entryClassName", ObjectEntryFolder.class.getName()
 				).build()),

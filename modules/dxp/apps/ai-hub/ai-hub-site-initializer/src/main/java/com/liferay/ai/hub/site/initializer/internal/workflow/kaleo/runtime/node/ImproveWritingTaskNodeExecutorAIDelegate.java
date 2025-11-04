@@ -105,10 +105,10 @@ public class ImproveWritingTaskNodeExecutorAIDelegate
 			executionContext.getKaleoInstanceToken();
 
 		try {
-			BiConsumer<String, String> consumer =
+			BiConsumer<String, String> biConsumer =
 				(BiConsumer)workflowContext.get("broadcast");
 
-			consumer.accept(
+			biConsumer.accept(
 				aiMessage.text(),
 				String.valueOf(kaleoInstanceToken.getKaleoInstanceId()));
 

@@ -72,9 +72,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Override
 	@Test
 	public void testGetTaskSubscribe() throws Exception {
-		List<String> lines = new ArrayList<>();
-
 		CountDownLatch countDownLatch = new CountDownLatch(2);
+		List<String> lines = new ArrayList<>();
 
 		HttpClient httpClient = HttpClient.newBuilder(
 		).connectTimeout(
@@ -112,8 +111,8 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 							continue;
 						}
 
-						lines.add(line);
 						countDownLatch.countDown();
+						lines.add(line);
 					}
 				}
 				catch (Exception exception) {

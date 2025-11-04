@@ -27,53 +27,57 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 	instanceSettingsPage,
 	page,
 }) => {
-
-	// Assert multiple factory configurations can be created
-
 	const providerName1 = getRandomString();
-
-	await instanceSettingsPage.goToInstanceSetting(
-		'SSO',
-		'OpenID Connect Provider Connection'
-	);
-
-	await page.getByRole('link', {name: 'Add'}).click();
-
-	await page.getByLabel('Provider Name').fill(providerName1);
-
-	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
-
-	await page
-		.getByLabel('OpenID Connect Client Secret')
-		.fill(getRandomString());
-
-	await instanceSettingsPage.saveAndWaitForAlert({
-		autoClose: true,
-		type: 'success',
-	});
-
 	const providerName2 = getRandomString();
 
-	await page.getByRole('link', {name: 'Add'}).click();
+	await test.step('Add factory configurations', async () => {
+		await instanceSettingsPage.goToInstanceSetting(
+			'SSO',
+			'OpenID Connect Provider Connection'
+		);
 
-	await page.getByLabel('Provider Name').fill(providerName2);
+		await page.getByRole('link', {name: 'Add'}).click();
 
-	await page.getByLabel('OpenID Connect Client ID').fill(getRandomString());
+		await page.getByLabel('Provider Name').fill(providerName1);
 
-	await page
-		.getByLabel('OpenID Connect Client Secret')
-		.fill(getRandomString());
+		await page
+			.getByLabel('OpenID Connect Client ID')
+			.fill(getRandomString());
 
-	await instanceSettingsPage.saveAndWaitForAlert({
-		autoClose: true,
-		type: 'success',
+		await page
+			.getByLabel('OpenID Connect Client Secret')
+			.fill(getRandomString());
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
+
+		await page.getByRole('link', {name: 'Add'}).click();
+
+		await page.getByLabel('Provider Name').fill(providerName2);
+
+		await page
+			.getByLabel('OpenID Connect Client ID')
+			.fill(getRandomString());
+
+		await page
+			.getByLabel('OpenID Connect Client Secret')
+			.fill(getRandomString());
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
 	});
 
-	await expect(
-		await page.locator('td.lfr-provider-name-column').count()
-	).toBe(2);
-	await expect(page.getByText(providerName1)).toBeVisible();
-	await expect(page.getByText(providerName2)).toBeVisible();
+	await test.step('Assert that the factory configurations were created successfully', async () => {
+		await expect(
+			await page.locator('td.lfr-provider-name-column').count()
+		).toBe(2);
+		await expect(page.getByText(providerName1)).toBeVisible();
+		await expect(page.getByText(providerName2)).toBeVisible();
+	});
 
 	// Assert a single/multiple factory configuration can be exported
 

@@ -1,11 +1,12 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 import {Locator, Page} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../utils/portletUrls';
+import {waitForAlert} from '../../utils/waitForAlert';
 
 export class BundleBlacklistPage {
 	readonly blacklistBundleSymbolicInput: Locator;
@@ -21,6 +22,16 @@ export class BundleBlacklistPage {
 	}
 
 	async goto() {
-		this.page.goto(PORTLET_URLS.systemBundleBlacklist);
+		await this.page.goto(PORTLET_URLS.systemBundleBlacklist);
+	}
+
+	async updateBundleBlacklist(content: string) {
+		await this.goto();
+
+		await this.blacklistBundleSymbolicInput.fill(content);
+
+		await this.updateButton.click();
+
+		await waitForAlert(this.page);
 	}
 }

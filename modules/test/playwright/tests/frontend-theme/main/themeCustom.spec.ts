@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {mergeTests} from '@playwright/test';
 
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
@@ -12,36 +12,42 @@ import {
 	CLASSIC_BACKGROUND_COLOR,
 	TEST_THEME_BACKGROUND_COLOR,
 } from './constants';
-import {themesTest} from './extensions/themesTest';
+import {frontendThemePagesTest} from './fixtures/frontendThemePagesTest';
 
 const test = mergeTests(
-	themesTest,
+	frontendThemePagesTest,
 	loginTest(),
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	})
 );
 
+test.beforeEach(async ({themeHelper}) => {
+	await themeHelper.installTestTheme();
+});
+
+test.afterEach(async ({themeHelper}) => {
+	await themeHelper.uninstallTestTheme();
+});
+
 test(
 	'Verifies test theme background color',
 	{tag: '@LPD-70288'},
-	async ({page, pageFixture, themeFixture}) => {
+	async ({pageHelper, themeHelper}) => {
 		const sitePageName = getRandomString();
-		const sitePage = await pageFixture.createPage(sitePageName);
+		const sitePage = await pageHelper.createPage(sitePageName);
 
-		await pageFixture.goToPage(sitePage);
+		await pageHelper.goToPage(sitePage);
 
-		expect(page.locator('body')).toHaveCSS(
-			'background-color',
+		await pageHelper.expectBodyToHaveBackgroundColor(
 			CLASSIC_BACKGROUND_COLOR
 		);
 
-		await themeFixture.addTestTheme();
-		await themeFixture.changePageThemeToTestTheme(sitePageName);
-		await themeFixture.publishPage(sitePageName);
+		await themeHelper.changePageThemeToTestTheme(sitePageName);
 
-		await expect(page.locator('body')).toHaveCSS(
-			'background-color',
+		await themeHelper.publishPage(sitePageName);
+
+		await pageHelper.expectBodyToHaveBackgroundColor(
 			TEST_THEME_BACKGROUND_COLOR
 		);
 	}
@@ -50,46 +56,48 @@ test(
 test(
 	'A custom theme can be deactivated and reactivated',
 	{tag: '@LPD-70288'},
-	async ({page, pageFixture, themeFixture}) => {
+	async ({pageHelper, themeHelper}) => {
 		const [sitePageName, sitePage] =
 			await test.step('Create site page', async () => {
 				const sitePageName = getRandomString();
-				const sitePage = await pageFixture.createPage(sitePageName);
+
+				const sitePage = await pageHelper.createPage(sitePageName);
 
 				return [sitePageName, sitePage];
 			});
 
 		await test.step('Set page theme to test theme', async () => {
-			await themeFixture.addTestTheme();
-			await themeFixture.changePageThemeToTestTheme(sitePageName);
-			await themeFixture.publishPage(sitePageName);
+			await themeHelper.changePageThemeToTestTheme(sitePageName);
 
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.publishPage(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				TEST_THEME_BACKGROUND_COLOR
 			);
 		});
 
 		await test.step('Deactivates test theme', async () => {
-			await themeFixture.deactivateTestTheme(sitePageName);
-			await themeFixture.expectCurrentThemeToBeClassic(sitePageName);
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.deactivateTestTheme(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await themeHelper.expectCurrentThemeToBeClassic(sitePageName);
+
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				CLASSIC_BACKGROUND_COLOR
 			);
 		});
 
 		await test.step('Reactivates test theme', async () => {
-			await themeFixture.activateTestTheme(sitePageName);
-			await themeFixture.expectCurrentThemeToBeTestTheme(sitePageName);
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.activateTestTheme(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await themeHelper.expectCurrentThemeToBeTestTheme(sitePageName);
+
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				TEST_THEME_BACKGROUND_COLOR
 			);
 		});
@@ -97,48 +105,50 @@ test(
 );
 
 test(
-	'A custom theme can be uninstalled and redeployed',
+	'A custom theme can be uninstalled and reinstalled',
 	{tag: '@LPD-70288'},
-	async ({page, pageFixture, themeFixture}) => {
+	async ({pageHelper, themeHelper}) => {
 		const [sitePageName, sitePage] =
 			await test.step('Create site page', async () => {
 				const sitePageName = getRandomString();
-				const sitePage = await pageFixture.createPage(sitePageName);
+
+				const sitePage = await pageHelper.createPage(sitePageName);
 
 				return [sitePageName, sitePage];
 			});
 
 		await test.step('Set page theme to test theme', async () => {
-			await themeFixture.addTestTheme();
-			await themeFixture.changePageThemeToTestTheme(sitePageName);
-			await themeFixture.publishPage(sitePageName);
+			await themeHelper.changePageThemeToTestTheme(sitePageName);
 
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.publishPage(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				TEST_THEME_BACKGROUND_COLOR
 			);
 		});
 
 		await test.step('Uninstall test theme', async () => {
-			await themeFixture.uninstallTestTheme(sitePageName);
-			await themeFixture.expectCurrentThemeToBeClassic(sitePageName);
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.uninstallTestTheme(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await themeHelper.expectCurrentThemeToBeClassic(sitePageName);
+
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				CLASSIC_BACKGROUND_COLOR
 			);
 		});
 
 		await test.step('Redeploy test theme', async () => {
-			await themeFixture.redeployTestTheme(sitePageName);
-			await themeFixture.expectCurrentThemeToBeTestTheme(sitePageName);
-			await pageFixture.goToPage(sitePage);
+			await themeHelper.reinstallTestTheme(sitePageName);
 
-			await expect(page.locator('body')).toHaveCSS(
-				'background-color',
+			await themeHelper.expectCurrentThemeToBeTestTheme(sitePageName);
+
+			await pageHelper.goToPage(sitePage);
+
+			await pageHelper.expectBodyToHaveBackgroundColor(
 				TEST_THEME_BACKGROUND_COLOR
 			);
 		});

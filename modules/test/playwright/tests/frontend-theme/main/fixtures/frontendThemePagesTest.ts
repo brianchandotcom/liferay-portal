@@ -11,16 +11,12 @@ import {isolatedSiteTest} from '../../../../fixtures/isolatedSiteTest';
 import {pageEditorPagesTest} from '../../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../../fixtures/pagesAdminPagesTest';
 import {BundleBlacklistPage} from '../../../../pages/marketplace-app-manager-web/BundleBlacklistPage';
-import {AssertionFixture} from '../fixtures/AssertionFixture';
-import {DesignFixture} from '../fixtures/DesignFixture';
-import {PageFixture} from '../fixtures/PageFixture';
-import {ThemeFixture} from '../fixtures/ThemeFixture';
+import {PageHelper} from '../helpers/PageHelper';
+import {ThemeHelper} from '../helpers/ThemeHelper';
 
-interface FixturesExtension {
-	assertionFixture: AssertionFixture;
-	designFixture: DesignFixture;
-	pageFixture: PageFixture;
-	themeFixture: ThemeFixture;
+interface FrontendThemePagesTest {
+	pageHelper: PageHelper;
+	themeHelper: ThemeHelper;
 }
 
 const test = mergeTests(
@@ -31,32 +27,19 @@ const test = mergeTests(
 	appManagerPagesTest
 );
 
-export const themesTest = test.extend<FixturesExtension>({
-	assertionFixture: async ({page}, use) => {
-		await use(new AssertionFixture(page));
+export const frontendThemePagesTest = test.extend<FrontendThemePagesTest>({
+	pageHelper: async ({apiHelpers, page, pageEditorPage, site}, use) => {
+		await use(new PageHelper(apiHelpers, page, pageEditorPage, site));
 	},
 
-	designFixture: async (
-		{page, pageEditorPage, pagesAdminPage, site},
-		use
-	) => {
-		await use(
-			new DesignFixture(page, pageEditorPage, pagesAdminPage, site)
-		);
-	},
-
-	pageFixture: async ({apiHelpers, page, pageEditorPage, site}, use) => {
-		await use(new PageFixture(apiHelpers, page, pageEditorPage, site));
-	},
-
-	themeFixture: async (
+	themeHelper: async (
 		{appManagerPage, page, pageEditorPage, pagesAdminPage, site},
 		use
 	) => {
 		const bundleBlacklistPage = new BundleBlacklistPage(page);
 
 		await use(
-			new ThemeFixture(
+			new ThemeHelper(
 				appManagerPage,
 				bundleBlacklistPage,
 				page,

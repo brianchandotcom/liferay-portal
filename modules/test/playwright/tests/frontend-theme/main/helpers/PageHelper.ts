@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {ApiHelpers} from '../../../../helpers/ApiHelpers';
 import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/PageEditorPage';
@@ -12,7 +12,7 @@ import getRandomString from '../../../../utils/getRandomString';
 import getContainerDefinition from '../../../layout-content-page-editor-web/main/utils/getContainerDefinition';
 import getPageDefinition from '../../../layout-content-page-editor-web/main/utils/getPageDefinition';
 
-export class PageFixture {
+export class PageHelper {
 	constructor(
 		private readonly apiHelpers: ApiHelpers,
 		private readonly page: Page,
@@ -39,7 +39,7 @@ export class PageFixture {
 				getContainerDefinition({id: fragmentId}),
 			]);
 
-			await this.pageEditorPage.goto(page, this.site.friendlyUrlPath);
+			await this.goToPageEditor(page);
 
 			await this.pageEditorPage.changeFragmentConfiguration({
 				fieldLabel: 'CSS Classes',
@@ -65,5 +65,17 @@ export class PageFixture {
 			siteId: this.site.id,
 			title: pageName,
 		});
+	}
+
+	async expectToHaveBackgroundColor(locator: Locator, color: string) {
+		await expect(locator).toBeVisible();
+		await expect(locator).toHaveCSS('background-color', color);
+	}
+
+	async expectBodyToHaveBackgroundColor(color: string) {
+		await this.expectToHaveBackgroundColor(
+			this.page.locator('body'),
+			color
+		);
 	}
 }

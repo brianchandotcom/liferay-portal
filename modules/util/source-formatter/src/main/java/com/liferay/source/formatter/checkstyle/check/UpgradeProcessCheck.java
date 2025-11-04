@@ -332,6 +332,20 @@ public class UpgradeProcessCheck extends BaseCheck {
 		return true;
 	}
 
+	private boolean _isInsideAllowedMethodCalls(
+		int lineNumber, List<DetailAST> methodCallDetailASTs) {
+
+		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
+			if ((lineNumber <= getEndLineNumber(methodCallDetailAST)) &&
+				(lineNumber >= getStartLineNumber(methodCallDetailAST))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isUnnecessaryIfStatement(DetailAST detailAST) {
 		DetailAST exprDetailAST = detailAST.findFirstToken(TokenTypes.EXPR);
 
@@ -411,7 +425,7 @@ public class UpgradeProcessCheck extends BaseCheck {
 	private boolean _isValidMethodCall(
 		DetailAST detailAST, List<DetailAST> methodCallDetailASTs) {
 
-		methodCallDetailASTs = ListUtil.filter(
+		List<DetailAST> allowedMethodCallDetailASTs = ListUtil.filter(
 			methodCallDetailASTs,
 			methodCallDetailAST -> {
 				DetailAST dotDetailAST = methodCallDetailAST.findFirstToken(
@@ -444,8 +458,8 @@ public class UpgradeProcessCheck extends BaseCheck {
 			detailAST, TokenTypes.ASSIGN);
 
 		if (assignDetailAST == null) {
-			return _isValidMethodCall(
-				detailAST.getLineNo(), methodCallDetailASTs);
+			return _isInsideAllowedMethodCalls(
+				detailAST.getLineNo(), allowedMethodCallDetailASTs);
 		}
 
 		DetailAST variableDefinitionDetailAST = null;
@@ -472,23 +486,9 @@ public class UpgradeProcessCheck extends BaseCheck {
 			variableDefinitionDetailAST);
 
 		for (DetailAST variableCallerDetailAST : variableCallerDetailASTs) {
-			if (_isValidMethodCall(
+			if (_isInsideAllowedMethodCalls(
 					variableCallerDetailAST.getLineNo(),
-					methodCallDetailASTs)) {
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	private boolean _isValidMethodCall(
-		int lineNumber, List<DetailAST> methodCallDetailASTs) {
-
-		for (DetailAST methodCallDetailAST : methodCallDetailASTs) {
-			if ((lineNumber <= getEndLineNumber(methodCallDetailAST)) &&
-				(lineNumber >= getStartLineNumber(methodCallDetailAST))) {
+					allowedMethodCallDetailASTs)) {
 
 				return true;
 			}

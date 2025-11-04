@@ -109,15 +109,20 @@ public class ObjectDefinitionModelListener
 			return;
 		}
 
+		boolean match = false;
+
 		List<String> classNameIdsList = new LinkedList<>();
 
 		for (String curClassNameId : classNameIds) {
-			classNameIdsList.add(curClassNameId);
+			if (classNameId.equals(curClassNameId)) {
+				match = true;
+			}
+			else {
+				classNameIdsList.add(curClassNameId);
+			}
 		}
 
-		if (!classNameIdsList.removeIf(
-				curClassNameId -> curClassNameId.equals(classNameId))) {
-
+		if (!match) {
 			return;
 		}
 

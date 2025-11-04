@@ -10,6 +10,10 @@ package com.liferay.portal.workflow.constants;
  */
 public class WorkflowDefinitionConstants {
 
+	public static final String
+		EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR =
+			"L_FIX_SPELLING_AND_GRAMMAR";
+
 	public static final String EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING =
 		"L_IMPROVE_WRITING";
 
@@ -19,6 +23,9 @@ public class WorkflowDefinitionConstants {
 
 	public static final String EXTERNAL_REFERENCE_CODE_SINGLE_APPROVER =
 		"L_SINGLE_APPROVER";
+
+	public static final String NAME_FIX_SPELLING_AND_GRAMMAR =
+		"Fix Spelling and Grammar";
 
 	public static final String NAME_IMPROVE_WRITING = "Improve Writing";
 

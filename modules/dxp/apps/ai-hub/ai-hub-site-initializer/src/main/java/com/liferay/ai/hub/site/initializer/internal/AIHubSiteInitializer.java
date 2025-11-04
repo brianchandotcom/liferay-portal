@@ -76,18 +76,17 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		return FeatureFlagManagerUtil.isEnabled(companyId, "LPD-62272");
 	}
 
-	private void _initialize(long groupId) throws Exception {
-		Group group = _groupLocalService.getGroup(groupId);
+	private void _deployWorkflowDefinition(
+			Company company, String externalReferenceCode, String fileName,
+			String workflowDefinitionName)
+		throws Exception {
 
 		int count = _workflowDefinitionManager.getWorkflowDefinitionsCount(
-			group.getCompanyId(),
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
+			company.getCompanyId(), workflowDefinitionName);
 
 		if (count > 0) {
 			return;
 		}
-
-		Company company = _companyLocalService.getCompany(group.getCompanyId());
 
 		Map<String, String> titleMap = new HashMap<>();
 
@@ -96,21 +95,37 @@ public class AIHubSiteInitializer implements SiteInitializer {
 
 			titleMap.put(
 				_language.getLanguageId(locale),
-				_language.get(
-					locale, WorkflowDefinitionConstants.NAME_IMPROVE_WRITING));
+				_language.get(locale, workflowDefinitionName));
 		}
 
 		String json = StringUtil.read(
-			AIHubSiteInitializer.class.getResourceAsStream(
-				"dependencies/improve-writing-workflow-definition.json"));
+			AIHubSiteInitializer.class.getResourceAsStream(fileName));
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
-			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
-			company.getCompanyId(), PrincipalThreadLocal.getUserId(),
+			externalReferenceCode, company.getCompanyId(),
+			PrincipalThreadLocal.getUserId(),
 			_localization.getXml(
 				titleMap, _language.getLanguageId(company.getLocale()),
 				"title"),
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING, json.getBytes());
+			workflowDefinitionName, json.getBytes());
+	}
+
+	private void _initialize(long groupId) throws Exception {
+		Group group = _groupLocalService.getGroup(groupId);
+
+		Company company = _companyLocalService.getCompany(group.getCompanyId());
+
+		_deployWorkflowDefinition(
+			company,
+			WorkflowDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
+			"dependencies/fix-spelling-and-grammar-workflow-definition.json",
+			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);
+		_deployWorkflowDefinition(
+			company,
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
+			"dependencies/improve-writing-workflow-definition.json",
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
 	}
 
 	@Reference

@@ -37,7 +37,7 @@ public class MVCCVersionUpgradeProcessTest extends MVCCVersionUpgradeProcess {
 		dropTable(_HIBERNATE_MAPPING_TABLE_NAME);
 		dropTable(_TABLE_NAME);
 
-		connection.close();
+		DataAccess.cleanUp(connection);
 	}
 
 	@Test

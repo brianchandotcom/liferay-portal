@@ -16,6 +16,8 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.sql.Connection;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -37,9 +39,10 @@ public class QuartzTriggersUpgradeProcessTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
 		_db = DBManagerUtil.getDB();
 
-		_dbInspector = new DBInspector(DataAccess.getConnection());
+		_dbInspector = new DBInspector(_connection);
 	}
 
 	@AfterClass
@@ -47,6 +50,8 @@ public class QuartzTriggersUpgradeProcessTest {
 		if (_dbInspector.hasIndex("QUARTZ_TRIGGERS", "IX_186442A4")) {
 			_db.runSQL("drop index IX_186442A4 on table QUARTZ_TRIGGERS");
 		}
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test
@@ -68,6 +73,7 @@ public class QuartzTriggersUpgradeProcessTest {
 		"com.liferay.portal.scheduler.quartz.internal.upgrade.v1_0_5." +
 			"QuartzTriggersUpgradeProcess";
 
+	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
 

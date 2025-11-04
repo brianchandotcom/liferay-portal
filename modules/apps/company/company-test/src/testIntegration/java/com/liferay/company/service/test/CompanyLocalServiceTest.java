@@ -219,6 +219,8 @@ public class CompanyLocalServiceTest {
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
 		}
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Before

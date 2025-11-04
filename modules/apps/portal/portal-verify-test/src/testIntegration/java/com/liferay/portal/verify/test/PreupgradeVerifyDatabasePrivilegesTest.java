@@ -64,11 +64,11 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@AfterClass
 	public static void tearDownClass() {
-		DataAccess.cleanUp(_connection);
-
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
 		}
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Before
@@ -93,8 +93,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 		InfrastructureUtil.setDataSource(_dataSource);
 
 		if (_db.getDBType() == DBType.POSTGRESQL) {
-			DBInspector dbInspector = new DBInspector(
-				DataAccess.getConnection());
+			DBInspector dbInspector = new DBInspector(_connection);
 
 			_db.runSQL(
 				StringBundler.concat(
@@ -271,7 +270,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	private void _createTestUser() throws Exception {
-		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+		DBInspector dbInspector = new DBInspector(_connection);
 
 		if (_db.getDBType() == DBType.POSTGRESQL) {
 			_db.runSQL(
@@ -334,7 +333,7 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 	}
 
 	private void _revokePrivileges(String privilege) throws Exception {
-		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+		DBInspector dbInspector = new DBInspector(_connection);
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
 			StringBundler.concat(

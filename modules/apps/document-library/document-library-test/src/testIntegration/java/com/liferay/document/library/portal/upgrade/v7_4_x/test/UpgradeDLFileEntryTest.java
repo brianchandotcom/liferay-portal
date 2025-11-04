@@ -171,17 +171,17 @@ public class UpgradeDLFileEntryTest {
 	private void _unsetExternalReferenceCode(DLFileEntry dlFileEntry)
 		throws Exception {
 
-		Connection connection = DataAccess.getConnection();
+		try (Connection connection = DataAccess.getConnection()) {
+			Statement statement = connection.createStatement();
 
-		Statement statement = connection.createStatement();
+			int rowCount = statement.executeUpdate(
+				StringBundler.concat(
+					"update DLFileEntry set externalReferenceCode = '' where ",
+					"ctCollectionId = ", dlFileEntry.getCtCollectionId(),
+					" and fileEntryId = ", dlFileEntry.getFileEntryId()));
 
-		int rowCount = statement.executeUpdate(
-			StringBundler.concat(
-				"update DLFileEntry set externalReferenceCode = '' where ",
-				"ctCollectionId = ", dlFileEntry.getCtCollectionId(),
-				" and fileEntryId = ", dlFileEntry.getFileEntryId()));
-
-		Assert.assertEquals(1, rowCount);
+			Assert.assertEquals(1, rowCount);
+		}
 	}
 
 	@Inject

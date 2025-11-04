@@ -109,62 +109,66 @@ public class LayoutFriendlyURLEntryUpgradeProcessTest {
 	public void testUpgradeDuplicateFriendlyURLEntryLocalization()
 		throws Exception {
 
-		DB db = DBManagerUtil.getDB();
-		DBInspector dbInspector = new DBInspector(DataAccess.getConnection());
+		try (Connection connection = DataAccess.getConnection()) {
+			DB db = DBManagerUtil.getDB();
+			DBInspector dbInspector = new DBInspector(connection);
 
-		Layout layout = null;
+			Layout layout = null;
 
-		try {
-			String name = RandomTestUtil.randomString();
+			try {
+				String name = RandomTestUtil.randomString();
 
-			layout = LayoutTestUtil.addTypePortletLayout(
-				_group.getGroupId(), false,
-				HashMapBuilder.put(
-					LocaleUtil.US, name
-				).build(),
-				HashMapBuilder.put(
-					LocaleUtil.US,
+				layout = LayoutTestUtil.addTypePortletLayout(
+					_group.getGroupId(), false,
+					HashMapBuilder.put(
+						LocaleUtil.US, name
+					).build(),
+					HashMapBuilder.put(
+						LocaleUtil.US,
+						_friendlyURLNormalizer.normalizeWithEncoding(
+							StringPool.SLASH + name)
+					).build());
+
+				_insertLayoutFriendlyURLEntry(
+					layout,
 					_friendlyURLNormalizer.normalizeWithEncoding(
-						StringPool.SLASH + name)
-				).build());
-
-			_insertLayoutFriendlyURLEntry(
-				layout,
-				_friendlyURLNormalizer.normalizeWithEncoding(
-					StringPool.SLASH + name),
-				LanguageUtil.getLanguageId(LocaleUtil.SPAIN));
-
-			db.runSQL(
-				"create unique index IX_8AB5CAE on " +
-					"FriendlyURLEntryLocalization (groupId, classNameId, " +
-						"urlTitle[$COLUMN_LENGTH:255$])");
-			db.runSQL(
-				"create unique index IX_C753170C on " +
-					"FriendlyURLEntryLocalization (groupId, classNameId, " +
-						"urlTitle[$COLUMN_LENGTH:255$], ctCollectionId)");
-
-			_entityCache.clearCache(LayoutFriendlyURLImpl.class);
-			_finderCache.clearCache(LayoutFriendlyURLImpl.class);
-
-			_assertUpgrade(layout);
-		}
-		finally {
-			if (dbInspector.hasIndex(
-					"FriendlyURLEntryLocalization", "IX_8AB5CAE")) {
+						StringPool.SLASH + name),
+					LanguageUtil.getLanguageId(LocaleUtil.SPAIN));
 
 				db.runSQL(
-					"drop index IX_8AB5CAE on FriendlyURLEntryLocalization");
-			}
-
-			if (dbInspector.hasIndex(
-					"FriendlyURLEntryLocalization", "IX_C753170C")) {
-
+					"create unique index IX_8AB5CAE on " +
+						"FriendlyURLEntryLocalization (groupId, classNameId, " +
+							"urlTitle[$COLUMN_LENGTH:255$])");
 				db.runSQL(
-					"drop index IX_C753170C on FriendlyURLEntryLocalization");
-			}
+					"create unique index IX_C753170C on " +
+						"FriendlyURLEntryLocalization (groupId, classNameId, " +
+							"urlTitle[$COLUMN_LENGTH:255$], ctCollectionId)");
 
-			if (layout != null) {
-				_layoutLocalService.deleteLayout(layout);
+				_entityCache.clearCache(LayoutFriendlyURLImpl.class);
+				_finderCache.clearCache(LayoutFriendlyURLImpl.class);
+
+				_assertUpgrade(layout);
+			}
+			finally {
+				if (dbInspector.hasIndex(
+						"FriendlyURLEntryLocalization", "IX_8AB5CAE")) {
+
+					db.runSQL(
+						"drop index IX_8AB5CAE on " +
+							"FriendlyURLEntryLocalization");
+				}
+
+				if (dbInspector.hasIndex(
+						"FriendlyURLEntryLocalization", "IX_C753170C")) {
+
+					db.runSQL(
+						"drop index IX_C753170C on " +
+							"FriendlyURLEntryLocalization");
+				}
+
+				if (layout != null) {
+					_layoutLocalService.deleteLayout(layout);
+				}
 			}
 		}
 	}

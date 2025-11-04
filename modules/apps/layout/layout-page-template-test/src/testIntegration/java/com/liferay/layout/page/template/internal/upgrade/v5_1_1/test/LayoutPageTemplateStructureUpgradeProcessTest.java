@@ -64,7 +64,7 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	public static void setUpClass() throws Exception {
 		_connection = DataAccess.getConnection();
 		_db = DBManagerUtil.getDB();
-		_dbInspector = new DBInspector(DataAccess.getConnection());
+		_dbInspector = new DBInspector(_connection);
 
 		_addLegacyColumns();
 	}
@@ -72,6 +72,8 @@ public class LayoutPageTemplateStructureUpgradeProcessTest {
 	@AfterClass
 	public static void tearDownClass() throws Exception {
 		_dropLegacyColumns();
+
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test

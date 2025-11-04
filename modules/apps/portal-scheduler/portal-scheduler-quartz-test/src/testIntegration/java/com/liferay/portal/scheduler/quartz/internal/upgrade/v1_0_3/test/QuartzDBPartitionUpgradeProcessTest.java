@@ -21,6 +21,9 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
+import java.sql.Connection;
+
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,9 +38,15 @@ public class QuartzDBPartitionUpgradeProcessTest
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_connection = DataAccess.getConnection();
 		_db = DBManagerUtil.getDB();
 
-		_dbInspector = new DBInspector(DataAccess.getConnection());
+		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test
@@ -102,6 +111,7 @@ public class QuartzDBPartitionUpgradeProcessTest
 		new Index("IX_99108B6E", "QUARTZ_TRIGGERS", false)
 	};
 
+	private static Connection _connection;
 	private static DB _db;
 	private static DBInspector _dbInspector;
 

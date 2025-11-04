@@ -214,12 +214,18 @@ public class ObjectFieldUtil {
 		downloadURL = HttpComponentsUtil.addParameter(
 			downloadURL, "objectDefinitionExternalReferenceCode",
 			objectDefinitionExternalReferenceCode);
+
+		if (objectEntry == null) {
+			return downloadURL;
+		}
+
 		downloadURL = HttpComponentsUtil.addParameter(
 			downloadURL, "objectEntryExternalReferenceCode",
 			objectEntry.getExternalReferenceCode());
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				fileEntry.getCompanyId(), "LPD-17564")) {
+				fileEntry.getCompanyId(), "LPD-17564") ||
+			(objectField == null)) {
 
 			return downloadURL;
 		}

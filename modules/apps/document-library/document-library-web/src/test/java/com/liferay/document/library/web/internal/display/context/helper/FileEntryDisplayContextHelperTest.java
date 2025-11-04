@@ -186,6 +186,26 @@ public class FileEntryDisplayContextHelperTest {
 			fileEntryDisplayContextHelper.isCopyActionAvailable());
 	}
 
+	@Test
+	public void testIsHistoryActionAvailable() throws PortalException {
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isSignedIn()
+		).thenReturn(
+			false
+		);
+
+		FileEntry fileEntry = Mockito.mock(FileEntry.class);
+
+		FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
+			new FileEntryDisplayContextHelper(permissionChecker, fileEntry);
+
+		Assert.assertFalse(
+			fileEntryDisplayContextHelper.isHistoryActionAvailable());
+	}
+
 	public class MockModelResourcePermission
 		implements ModelResourcePermission<FileEntry> {
 

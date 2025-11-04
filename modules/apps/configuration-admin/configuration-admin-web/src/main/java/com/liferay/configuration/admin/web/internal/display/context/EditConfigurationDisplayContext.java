@@ -6,9 +6,9 @@
 package com.liferay.configuration.admin.web.internal.display.context;
 
 import com.liferay.configuration.admin.menu.ConfigurationMenuItem;
+import com.liferay.configuration.admin.util.ConfigurationPIDUtil;
 import com.liferay.configuration.admin.web.internal.constants.ConfigurationAdminWebKeys;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
-import com.liferay.configuration.admin.web.internal.util.ConfigurationPIDUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
@@ -71,7 +71,7 @@ public class EditConfigurationDisplayContext {
 						"/configuration_admin/edit_configuration");
 					portletURL.setParameter(
 						"pid",
-						ConfigurationPIDUtil.getUnscopedPid(
+						ConfigurationPIDUtil.getRawPid(
 							_configurationModel.getID()));
 				}
 

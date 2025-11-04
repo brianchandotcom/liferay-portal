@@ -29,12 +29,12 @@ public class SseUtil {
 		try {
 			_sseBroadcaster.broadcast(
 				sse.newEventBuilder(
-				).name(
-					name
 				).data(
 					String.class, data
 				).id(
 					id
+				).name(
+					name
 				).build());
 		}
 		catch (Exception exception) {

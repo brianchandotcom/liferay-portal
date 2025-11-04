@@ -101,9 +101,6 @@ definition {
 		else if (${widgetName} == "Cookies Banner Configuration") {
 			var portletId = "com_liferay_cookies_banner_web_portlet_CookiesBannerConfigurationPortlet";
 		}
-		else if (${widgetName} == "CSS Cadmin Sample") {
-			var portletId = "com_liferay_frontend_css_cadmin_sample_web_internal_portlet_CadminSampleWebPortlet";
-		}
 		else if (${widgetName} == "Custom Facet") {
 			var portletId = "com_liferay_portal_search_web_custom_facet_portlet_CustomFacetPortlet";
 		}

@@ -80,7 +80,6 @@ module.exports = {
 		'@liferay/fragment-video-streaming': [],
 		'@liferay/friendly-url-taglib': [],
 		'@liferay/friendly-url-web': [],
-		'@liferay/frontend-css-cadmin-sample-web': [],
 		'@liferay/frontend-css-cadmin-web': [],
 		'@liferay/frontend-css-common': [],
 		'@liferay/frontend-data-set-admin-web': [],

@@ -76,7 +76,8 @@ public class ObjectDefinitionModelListener
 					assetListEntrySegmentsEntryRels) {
 
 				_removeClassNameIdFromTypeSettings(
-					assetListEntrySegmentsEntryRel, classNameId);
+					assetListEntrySegmentsEntryRel,
+					String.valueOf(classNameId));
 			}
 		}
 		catch (PortalException portalException) {
@@ -86,7 +87,7 @@ public class ObjectDefinitionModelListener
 
 	private void _removeClassNameIdFromTypeSettings(
 			AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel,
-			long classNameId)
+			String classNameId)
 		throws PortalException {
 
 		String typeSettings = assetListEntrySegmentsEntryRel.getTypeSettings();
@@ -102,21 +103,20 @@ public class ObjectDefinitionModelListener
 		String classNameIdsValue = unicodeProperties.getProperty(
 			"classNameIds");
 
-		long[] classNameIdValues = GetterUtil.getLongValues(
-			StringUtil.split(classNameIdsValue));
+		String[] classNameIdValues = StringUtil.split(classNameIdsValue);
 
 		if (ArrayUtil.isEmpty(classNameIdValues)) {
 			return;
 		}
 
-		List<Long> classNameIds = new LinkedList<>();
+		List<String> classNameIds = new LinkedList<>();
 
-		for (long curClassNameId : classNameIdValues) {
+		for (String curClassNameId : classNameIdValues) {
 			classNameIds.add(curClassNameId);
 		}
 
 		if (!classNameIds.removeIf(
-				curClassNameId -> curClassNameId == classNameId)) {
+				curClassNameId -> curClassNameId.equals(classNameId))) {
 
 			return;
 		}
@@ -130,7 +130,7 @@ public class ObjectDefinitionModelListener
 					anyAssetTypeValue, Boolean.FALSE.toString())) {
 
 				unicodeProperties.setProperty(
-					"anyAssetType", String.valueOf(classNameIds.get(0)));
+					"anyAssetType", classNameIds.get(0));
 				unicodeProperties.setProperty(
 					"classNameIds",
 					StringUtil.merge(
@@ -147,8 +147,7 @@ public class ObjectDefinitionModelListener
 			}
 
 			unicodeProperties.setProperty(
-				"classNameIds",
-				StringUtil.merge(ArrayUtil.toLongArray(classNameIds)));
+				"classNameIds", StringUtil.merge(classNameIds));
 		}
 		else {
 			unicodeProperties.setProperty(
@@ -167,7 +166,7 @@ public class ObjectDefinitionModelListener
 			return;
 		}
 
-		if (GetterUtil.getLong(anyAssetTypeValue) == classNameId) {
+		if (anyAssetTypeValue.equals(classNameId)) {
 			unicodeProperties.setProperty(
 				"anyAssetType", Boolean.TRUE.toString());
 		}

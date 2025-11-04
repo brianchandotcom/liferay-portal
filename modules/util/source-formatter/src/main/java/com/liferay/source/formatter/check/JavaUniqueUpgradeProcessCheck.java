@@ -53,15 +53,13 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 		}
 
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
-			if (!childJavaTerm.isJavaMethod()) {
+			if (!childJavaTerm.hasAnnotation("Override") ||
+				!childJavaTerm.isJavaMethod()) {
+
 				continue;
 			}
 
 			JavaMethod javaMethod = (JavaMethod)childJavaTerm;
-
-			if (!childJavaTerm.hasAnnotation("Override")) {
-				return javaTerm.getContent();
-			}
 
 			String methodName = javaMethod.getName();
 

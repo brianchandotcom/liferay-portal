@@ -74,7 +74,6 @@ export default async function main() {
 		// CSS exports bundling
 
 		bundleCSSExports(projectExports),
-		writeCSSExportsLoaderModules(projectExports, projectWebContextPath),
 
 		// AMD bridging
 
@@ -99,6 +98,8 @@ export default async function main() {
 			projectExports
 		),
 	]);
+
+	await writeCSSExportsLoaderModules(projectExports, projectWebContextPath);
 
 	await writeTimings(start, endConfig);
 }

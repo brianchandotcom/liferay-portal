@@ -117,6 +117,11 @@ public class AIHubSiteInitializer implements SiteInitializer {
 
 		_deployWorkflowDefinition(
 			company,
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
+			"dependencies/change-tone-workflow-definition.json",
+			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
+		_deployWorkflowDefinition(
+			company,
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
 			"dependencies/fix-spelling-and-grammar-workflow-definition.json",

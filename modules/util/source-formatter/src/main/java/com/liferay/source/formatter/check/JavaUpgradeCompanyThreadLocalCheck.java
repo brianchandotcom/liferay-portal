@@ -29,25 +29,13 @@ public class JavaUpgradeCompanyThreadLocalCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkCompanyThreadLocalCall(
-			fileName, content, "CompanyThreadLocal.setCompanyId");
-		_checkCompanyThreadLocalCall(
-			fileName, content,
-			"CompanyThreadLocal.setCompanyIdWithSafeCloseable");
-
-		return content;
-	}
-
-	private void _checkCompanyThreadLocalCall(
-		String fileName, String content, String methodName) {
-
 		int x = -1;
 
 		while (true) {
-			x = content.indexOf(methodName + "(", x + 1);
+			x = content.indexOf("CompanyThreadLocal.setCompanyId", x + 1);
 
 			if (x == -1) {
-				return;
+				return content;
 			}
 
 			if (ToolsUtil.isInsideQuotes(content, x)) {
@@ -55,7 +43,9 @@ public class JavaUpgradeCompanyThreadLocalCheck extends BaseFileCheck {
 			}
 
 			addMessage(
-				fileName, "Do not use " + methodName + " in upgrade classes",
+				fileName,
+				"Do not use CompanyThreadLocal.setCompanyId* in upgrade " +
+					"classes",
 				getLineNumber(content, x));
 		}
 	}

@@ -965,7 +965,7 @@
 		</check>
 		<check name="JavaUpgradeCompanyThreadLocalCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that we do not use `CompanyThreadLocal.setCompanyId` and `CompanyThreadLocal.setCompanyIdWithSafeCloseable` in upgrade classes." />
+			<description name="Checks that we do not use `CompanyThreadLocal.setCompanyId*` in upgrade classes." />
 		</check>
 		<check name="JavaUpgradeConnectionCheck">
 			<category name="Bug Prevention" />

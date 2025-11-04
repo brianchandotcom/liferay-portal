@@ -2075,14 +2075,13 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected BaseBuild(String buildURL, Build parentBuild) {
-		this(buildURL, parentBuild, null);
+		this(buildURL, null, parentBuild);
 	}
 
 	protected BaseBuild(
-		String buildURL, Build parentBuild,
-		DownstreamBuildReport cachedDownstreamBuildReport) {
+		String buildURL, DownstreamBuildReport cachedDownstreamBuildReport,
+		Build parentBuild) {
 
-		_parentBuild = parentBuild;
 		_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
 
 		if (cachedDownstreamBuildReport != null) {
@@ -2111,6 +2110,8 @@ public abstract class BaseBuild implements Build {
 				_setBuildURL(buildURL);
 			}
 		}
+
+		_parentBuild = parentBuild;
 
 		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
 			TopLevelBuild topLevelBuild = getTopLevelBuild();

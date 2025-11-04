@@ -111,6 +111,8 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 			List<String> tableNames = dbInspector.getTableNames(null);
 			List<String> usedTableNames = new ArrayList<>();
 
+			tableNames.remove(dbInspector.normalizeName("ClassName_"));
+
 			for (String tableName : tableNames) {
 				if (!dbInspector.hasColumn(tableName, "classNameId")) {
 					continue;

@@ -297,6 +297,13 @@ public class DDMStructureWrapper
 	}
 
 	@Override
+	public DDMFormField getDDMFormField(String fieldName, boolean copy)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return model.getDDMFormField(fieldName, copy);
+	}
+
+	@Override
 	public DDMFormField getDDMFormFieldByFieldReference(String fieldReference)
 		throws com.liferay.portal.kernel.exception.PortalException {
 

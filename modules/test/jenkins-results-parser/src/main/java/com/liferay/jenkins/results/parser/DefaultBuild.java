@@ -14,8 +14,8 @@ import org.dom4j.Element;
  */
 public class DefaultBuild extends BaseBuild {
 
-	public DefaultBuild(String url) {
-		super(url);
+	public DefaultBuild(String buildURL) {
+		super(buildURL);
 
 		getDuration();
 	}

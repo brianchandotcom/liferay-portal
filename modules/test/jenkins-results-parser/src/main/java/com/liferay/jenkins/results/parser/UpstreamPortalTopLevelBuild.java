@@ -16,9 +16,9 @@ public class UpstreamPortalTopLevelBuild
 	extends PortalTopLevelBuild implements PortalWorkspaceBuild {
 
 	public UpstreamPortalTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

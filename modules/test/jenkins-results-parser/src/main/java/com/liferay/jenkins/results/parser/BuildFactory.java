@@ -25,27 +25,27 @@ public class BuildFactory {
 			downstreamBuildReport.getJobVariant(), downstreamBuildReport);
 	}
 
-	public static Build newBuild(String url, Build parentBuild) {
-		return newBuild(url, parentBuild, null);
+	public static Build newBuild(String buildURL, Build parentBuild) {
+		return newBuild(buildURL, parentBuild, null);
 	}
 
 	public static Build newBuild(
-		String url, Build parentBuild, String jobVariant) {
+		String buildURL, Build parentBuild, String jobVariant) {
 
-		return newBuild(url, parentBuild, jobVariant, null);
+		return newBuild(buildURL, parentBuild, jobVariant, null);
 	}
 
 	public static Build newBuild(
-		String url, Build parentBuild, String jobVariant,
+		String buildURL, Build parentBuild, String jobVariant,
 		DownstreamBuildReport downstreamBuildReport) {
 
-		url = JenkinsResultsParserUtil.getLocalURL(url);
+		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
-		Matcher matcher = _buildURLMultiPattern.find(url);
+		Matcher matcher = _buildURLMultiPattern.find(buildURL);
 
 		if (matcher == null) {
 			throw new IllegalArgumentException(
-				"Invalid Jenkins build URL: " + url);
+				"Invalid Jenkins build URL: " + buildURL);
 		}
 
 		String axisVariable = matcher.group("axisVariable");
@@ -68,7 +68,7 @@ public class BuildFactory {
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
 				jobVariant = JenkinsResultsParserUtil.getBuildParameter(
-					url, "JOB_VARIANT", parentBuild);
+					buildURL, "JOB_VARIANT", parentBuild);
 			}
 
 			if ((jobVariant != null) &&
@@ -76,21 +76,22 @@ public class BuildFactory {
 				 jobVariant.contains("test-portal-environment") ||
 				 jobVariant.contains("test-portal-fixpack-environment"))) {
 
-				return new PoshiAxisBuild(url, (BatchBuild)parentBuild);
+				return new PoshiAxisBuild(buildURL, (BatchBuild)parentBuild);
 			}
 
-			return new AxisBuild(url, (BatchBuild)parentBuild);
+			return new AxisBuild(buildURL, (BatchBuild)parentBuild);
 		}
 
 		String jobName = matcher.group("jobName");
 
 		if (jobName.contains("-controller")) {
-			return new ControllerTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new ControllerTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("app-server-bundle-builder")) {
 			return new AppServerBundleDownstreamBuild(
-				url, (TopLevelBuild)parentBuild, downstreamBuildReport);
+				buildURL, (TopLevelBuild)parentBuild, downstreamBuildReport);
 		}
 
 		if (jobName.contains("-downstream")) {
@@ -103,7 +104,7 @@ public class BuildFactory {
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
 				jobVariant = JenkinsResultsParserUtil.getBuildParameter(
-					url, "JOB_VARIANT", parentBuild);
+					buildURL, "JOB_VARIANT", parentBuild);
 			}
 
 			if (jobVariant != null) {
@@ -112,7 +113,8 @@ public class BuildFactory {
 					jobVariant.contains("test-portal-fixpack-environment")) {
 
 					return new PoshiJUnitDownstreamBuild(
-						url, (TopLevelBuild)parentBuild, downstreamBuildReport);
+						buildURL, (TopLevelBuild)parentBuild,
+						downstreamBuildReport);
 				}
 				else if (jobVariant.startsWith("integration") ||
 						 jobVariant.startsWith("js-unit") ||
@@ -121,126 +123,135 @@ public class BuildFactory {
 						 jobVariant.startsWith("playwright-js")) {
 
 					return new JUnitDownstreamBuild(
-						url, (TopLevelBuild)parentBuild, downstreamBuildReport);
+						buildURL, (TopLevelBuild)parentBuild,
+						downstreamBuildReport);
 				}
 			}
 
 			return new DefaultDownstreamBuild(
-				url, (TopLevelBuild)parentBuild, downstreamBuildReport);
+				buildURL, (TopLevelBuild)parentBuild, downstreamBuildReport);
 		}
 
 		if (jobName.contains("-source-format")) {
-			return new SourceFormatBuild(url, (TopLevelBuild)parentBuild);
+			return new SourceFormatBuild(buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("-validation")) {
-			return new ValidationBuild(url, (TopLevelBuild)parentBuild);
+			return new ValidationBuild(buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("root-cause-analysis-tool-batch")) {
-			return new FreestyleBatchBuild(url, (TopLevelBuild)parentBuild);
+			return new FreestyleBatchBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		for (String batchToken : _TOKENS_BATCH) {
 			if (jobName.contains(batchToken)) {
 				if (jobName.contains("qa-websites")) {
 					return new QAWebsitesBatchBuild(
-						url, (TopLevelBuild)parentBuild);
+						buildURL, (TopLevelBuild)parentBuild);
 				}
 
-				return new BatchBuild(url, (TopLevelBuild)parentBuild);
+				return new BatchBuild(buildURL, (TopLevelBuild)parentBuild);
 			}
 		}
 
 		if (jobName.contains("legacy")) {
-			return new LegacyTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new LegacyTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("root-cause-analysis-tool")) {
 			return new RootCauseAnalysisToolBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.startsWith("test-jenkins-acceptance-pullrequest")) {
-			return new JenkinsTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new JenkinsTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.startsWith("test-plugins-acceptance-pullrequest")) {
 			return new PullRequestPluginsTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-plugins-extraapps")) {
 			return new ExtraAppsPluginsTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-plugins-marketplaceapp")) {
 			return new MarketplaceAppPluginsTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-portal-app-release")) {
 			return new PortalAppReleaseTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("forward-pullrequest") ||
 			jobName.startsWith("test-portal-acceptance-pullrequest")) {
 
 			return new PullRequestPortalTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.startsWith("test-portal-aws(")) {
-			return new PortalAWSTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new PortalAWSTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.startsWith("test-portal-environment(") ||
 			jobName.startsWith("test-portal-environment-release(") ||
 			jobName.startsWith("test-portal-fixpack-environment(")) {
 
-			return new PortalEnvironmentBuild(url, (TopLevelBuild)parentBuild);
+			return new PortalEnvironmentBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-portal-fixpack-release")) {
 			return new PortalFixpackReleasePortalTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-portal-hotfix-release")) {
 			return new PortalHotfixReleasePortalTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.equals("test-portal-release")) {
 			return new PortalReleasePortalTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.matches("test-subrepository-acceptance-pullrequest.*")) {
 			return new PullRequestSubrepositoryTopLevelBuild(
-				url, (TopLevelBuild)parentBuild);
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("plugins")) {
-			return new PluginsTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new PluginsTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("portal")) {
 			if (jobName.contains("upstream")) {
 				return new UpstreamPortalTopLevelBuild(
-					url, (TopLevelBuild)parentBuild);
+					buildURL, (TopLevelBuild)parentBuild);
 			}
 
-			return new PortalTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new PortalTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
 		if (jobName.contains("qa-websites")) {
-			return new QAWebsitesTopLevelBuild(url, (TopLevelBuild)parentBuild);
+			return new QAWebsitesTopLevelBuild(
+				buildURL, (TopLevelBuild)parentBuild);
 		}
 
-		return new DefaultTopLevelBuild(url, (TopLevelBuild)parentBuild);
+		return new DefaultTopLevelBuild(buildURL, (TopLevelBuild)parentBuild);
 	}
 
 	public static synchronized Build newBuildFromArchive(
@@ -256,7 +267,7 @@ public class BuildFactory {
 						"file:", archiveRootDir.getPath(), "/");
 			}
 
-			String url = JenkinsResultsParserUtil.combine(
+			String buildURL = JenkinsResultsParserUtil.combine(
 				Build.DEPENDENCIES_URL_TOKEN, "/", archiveName, "/",
 				"archive.properties");
 
@@ -266,7 +277,7 @@ public class BuildFactory {
 				archiveProperties.load(
 					new StringReader(
 						JenkinsResultsParserUtil.toString(
-							JenkinsResultsParserUtil.getLocalURL(url))));
+							JenkinsResultsParserUtil.getLocalURL(buildURL))));
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(
@@ -286,8 +297,8 @@ public class BuildFactory {
 		return newBuildFromArchive(null, archiveName);
 	}
 
-	public static DefaultBuild newDefaultBuild(String url) {
-		return new DefaultBuild(url);
+	public static DefaultBuild newDefaultBuild(String buildURL) {
+		return new DefaultBuild(buildURL);
 	}
 
 	private static final String _BUILD_URL_SUFFIX_REGEX =

@@ -36,10 +36,10 @@ public class DefaultDownstreamBuild extends BaseDownstreamBuild {
 	}
 
 	protected DefaultDownstreamBuild(
-		String url, TopLevelBuild topLevelBuild,
+		String buildURL, TopLevelBuild topLevelBuild,
 		DownstreamBuildReport cachedDownstreamBuildReport) {
 
-		super(url, topLevelBuild, cachedDownstreamBuildReport);
+		super(buildURL, topLevelBuild, cachedDownstreamBuildReport);
 	}
 
 }

@@ -25,9 +25,9 @@ public class PullRequestPortalTopLevelBuild
 	implements PortalWorkspaceBuild, PullRequestBuild {
 
 	public PullRequestPortalTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 
 		setCompareToUpstream(true);
 

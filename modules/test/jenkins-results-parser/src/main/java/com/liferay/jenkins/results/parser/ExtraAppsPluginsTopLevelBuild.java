@@ -14,9 +14,9 @@ import java.util.regex.Pattern;
 public class ExtraAppsPluginsTopLevelBuild extends PluginsTopLevelBuild {
 
 	public ExtraAppsPluginsTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

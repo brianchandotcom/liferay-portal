@@ -15,9 +15,9 @@ public class PullRequestSubrepositoryTopLevelBuild
 			   PullRequestBuild, WorkspaceBuild {
 
 	public PullRequestSubrepositoryTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

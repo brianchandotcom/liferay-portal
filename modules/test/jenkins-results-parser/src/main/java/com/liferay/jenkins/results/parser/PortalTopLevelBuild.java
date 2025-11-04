@@ -17,8 +17,8 @@ public class PortalTopLevelBuild
 			   PluginsBranchInformationBuild, PortalBranchInformationBuild,
 			   PortalFixpackReleaseBuild, PortalReleaseBuild {
 
-	public PortalTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public PortalTopLevelBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

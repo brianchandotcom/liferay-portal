@@ -18,9 +18,9 @@ public class MarketplaceAppPluginsTopLevelBuild
 	extends PluginsTopLevelBuild implements PortalReleaseBuild {
 
 	public MarketplaceAppPluginsTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

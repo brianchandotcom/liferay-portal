@@ -67,14 +67,14 @@ public class RootCauseAnalysisToolBuild extends DefaultTopLevelBuild {
 		_workspaceGitRepository = workspaceGitRepository;
 	}
 
-	protected RootCauseAnalysisToolBuild(String url) {
-		this(url, null);
+	protected RootCauseAnalysisToolBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
 	protected RootCauseAnalysisToolBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	protected Element getBuildDurationCellElement(

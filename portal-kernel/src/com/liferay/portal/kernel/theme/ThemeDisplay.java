@@ -2005,16 +2005,18 @@ public class ThemeDisplay
 				prefix, StringPool.SLASH, _theme.getServletContextName(),
 				unhashedFileURIPath, unhashedFileURIName));
 
-		if (Validator.isNotNull(hashedFileURI)) {
-			if (proxyPath.isEmpty()) {
-				return hashedFileURI;
-			}
-
-			return proxyPath + hashedFileURI;
+		if (Validator.isNull(hashedFileURI)) {
+			return PortalUtil.getStaticResourceURL(
+				getRequest(), staticResourceURLPath + staticResourceURLName);
 		}
 
-		return PortalUtil.getStaticResourceURL(
-			getRequest(), staticResourceURLPath + staticResourceURLName);
+		try {
+			return PortalUtil.getCDNHost(getRequest()) + proxyPath +
+				hashedFileURI;
+		}
+		catch (PortalException portalException) {
+			throw new RuntimeException(portalException);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ThemeDisplay.class);

@@ -37,10 +37,36 @@ public class ExportImportTaskUtil {
 					"/JSON", _getQueryString(parameters)),
 				Http.Method.POST));
 
-		String externalReferenceCode = exportTask.getExternalReferenceCode();
+		return _executeExportTask(
+			expectedExecuteStatus, exportTask.getExternalReferenceCode());
+	}
+
+	public static ImportTask postImportTask(
+			String body, String className, String expectedExecuteStatus,
+			Map<String, String> parameters)
+		throws Exception {
+
+		return _executeImportTask(
+			body, className, expectedExecuteStatus, Http.Method.POST,
+			parameters);
+	}
+
+	public static ImportTask putImportTask(
+			String body, String className, String expectedExecuteStatus,
+			Map<String, String> parameters)
+		throws Exception {
+
+		return _executeImportTask(
+			body, className, expectedExecuteStatus, Http.Method.PUT,
+			parameters);
+	}
+
+	private static ExportTask _executeExportTask(
+			String expectedExecuteStatus, String externalReferenceCode)
+		throws Exception {
 
 		while (true) {
-			exportTask = ExportTaskSerDes.toDTO(
+			ExportTask exportTask = ExportTaskSerDes.toDTO(
 				HTTPTestUtil.invokeToString(
 					null,
 					"headless-batch-engine/v1.0/export-task/by-external-" +
@@ -56,16 +82,14 @@ public class ExportImportTaskUtil {
 					expectedExecuteStatus,
 					exportTask.getExecuteStatusAsString());
 
-				break;
+				return exportTask;
 			}
 		}
-
-		return exportTask;
 	}
 
-	public static ImportTask postImportTask(
+	private static ImportTask _executeImportTask(
 			String body, String className, String expectedExecuteStatus,
-			Map<String, String> parameters)
+			Http.Method method, Map<String, String> parameters)
 		throws Exception {
 
 		ImportTask importTask = ImportTaskSerDes.toDTO(
@@ -74,16 +98,15 @@ public class ExportImportTaskUtil {
 				StringBundler.concat(
 					"headless-batch-engine/v1.0/import-task/", className,
 					_getQueryString(parameters)),
-				Http.Method.POST));
-
-		String externalReferenceCode = importTask.getExternalReferenceCode();
+				method));
 
 		while (true) {
 			importTask = ImportTaskSerDes.toDTO(
 				HTTPTestUtil.invokeToString(
 					null,
 					"headless-batch-engine/v1.0/import-task/by-external-" +
-						"reference-code/" + externalReferenceCode,
+						"reference-code/" +
+							importTask.getExternalReferenceCode(),
 					Http.Method.GET));
 
 			if (StringUtil.equals(
@@ -95,11 +118,9 @@ public class ExportImportTaskUtil {
 					expectedExecuteStatus,
 					importTask.getExecuteStatusAsString());
 
-				break;
+				return importTask;
 			}
 		}
-
-		return importTask;
 	}
 
 	private static String _getQueryString(Map<String, String> parameters) {

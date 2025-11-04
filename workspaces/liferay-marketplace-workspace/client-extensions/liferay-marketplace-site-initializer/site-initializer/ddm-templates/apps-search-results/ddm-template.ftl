@@ -8,7 +8,7 @@
 			<#list entries as entry>
 				<#if entry?has_content>
 					<#assign
-						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ commerceContext.getCommerceChannelId() +"/products/"+ entry.getCProductId() +"?accountId=-1&images.accountId=-1&nestedFields=productSpecifications,categories,images")
+						product = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/"+ commerceContext.getCommerceChannelId() +"/products/"+ entry.getCProductId() +"?accountId=-1&nestedFields=productSpecifications,categories")
 
 						categories = product.categories![]
 						productSpecifications = product.productSpecifications![]

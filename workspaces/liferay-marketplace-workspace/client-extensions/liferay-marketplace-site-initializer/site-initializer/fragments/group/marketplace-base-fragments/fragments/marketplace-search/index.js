@@ -12,9 +12,6 @@ const categoriesListItems = document.querySelectorAll(
 const categoriesTrigger = document.querySelector('.categories-trigger');
 const channelId = Liferay.CommerceContext.commerceChannelId;
 const clearInputButton = document.querySelector('.clear-input-button');
-const listSectionContainers = document.querySelectorAll(
-	'.list-section-container'
-);
 const menu = document.querySelector('.marketplace-nav-menu-container');
 const navContainer = document.querySelector('.search-nav-container-full');
 const overlay = document.querySelector('.results-overlay');
@@ -37,6 +34,11 @@ const searchResultsContainer = document.querySelector(
 );
 const spritemap = `${Liferay.ThemeDisplay.getPathThemeImages()}/clay/icons.svg`;
 
+const featuredSectionContainer = document.querySelector('.featured-section');
+let listSectionContainers = document.querySelectorAll(
+	'.list-section-container'
+);
+
 const searchToggle = {
 	hide() {
 		state.isSearchExpanded = false;
@@ -55,7 +57,7 @@ const searchToggle = {
 		}, 300);
 	},
 
-	show() {
+	async show() {
 		state.isSearchExpanded = true;
 
 		menu.classList.add('hidden');
@@ -63,6 +65,18 @@ const searchToggle = {
 		searchDropdown.style.display = 'block';
 		scrollControl.lock();
 		renderRecentSearches();
+
+		await featuredSection({
+			pageSize: 3,
+			specificationValue: configuration.featured1.featuredKeyword,
+			title: configuration.featured1.title,
+		});
+
+		await featuredSection({
+			pageSize: 3,
+			specificationValue: configuration.featured2.featuredKeywordS,
+			title: configuration.featured2.title,
+		});
 
 		setTimeout(() => {
 			searchIcon.classList.add('expanded');
@@ -79,30 +93,29 @@ const searchToggle = {
 };
 
 const searchStorage = {
-	clear() {
-		localStorage.removeItem(SEARCH_STORAGE_KEY);
+	clear(storageKey) {
+		localStorage.removeItem(storageKey);
 	},
 
-	delete(term) {
+	delete(term, storageKey) {
 		localStorage.setItem(
-			SEARCH_STORAGE_KEY,
+			storageKey,
 			JSON.stringify(this.get().filter((item) => item !== term))
 		);
 	},
 
-	get() {
-		return JSON.parse(localStorage.getItem(SEARCH_STORAGE_KEY)) || [];
+	get(storageKey) {
+		return JSON.parse(localStorage.getItem(storageKey)) || [];
 	},
 
-	save(term) {
+	save(term, storageKey) {
 		term = term.trim();
 
 		if (!term) {
 			return;
 		}
 
-		const searchItems =
-			JSON.parse(localStorage.getItem(SEARCH_STORAGE_KEY)) || [];
+		const searchItems = JSON.parse(localStorage.getItem(storageKey)) || [];
 
 		const searchItemsLimited = [
 			term,
@@ -111,10 +124,7 @@ const searchStorage = {
 			),
 		].slice(0, 5);
 
-		localStorage.setItem(
-			SEARCH_STORAGE_KEY,
-			JSON.stringify(searchItemsLimited)
-		);
+		localStorage.setItem(storageKey, JSON.stringify(searchItemsLimited));
 	},
 };
 
@@ -159,7 +169,7 @@ async function fetchSearchResults(category, query) {
 		return renderNoResults(trimmed);
 	}
 
-	searchStorage.save(trimmed);
+	searchStorage.save(trimmed, SEARCH_STORAGE_KEY);
 
 	const resultsList = document.createElement('ul');
 
@@ -172,19 +182,23 @@ async function fetchSearchResults(category, query) {
 
 	for (const product of items) {
 		const itemHTML = `
-            <li class="results-items-list w-100">
-                <a class="align-items-center border-radius-medium d-flex flex-row mb-0 text-dark text-decoration-none w-100" href="/web/marketplace/p/${product.slug}?keyword=${trimmed}">
-                    <div class="image-container mr-2 rounded">
-                        <img alt="${product.name}" class="app-search-bar-image" draggable="false" height="56" src="${product.urlImage?.replace('https://', 'http://') || ''}" width="56" />
-                    </div>
+				<li class="results-items-list w-100">
+					<a class="align-items-center border-radius-medium d-flex flex-row mb-0 text-dark text-decoration-none w-100" href="/web/marketplace/p/${product.slug}?keyword=${trimmed}">
+						<div class="image-container mr-2 rounded">
+							<img alt="${product.name}" class="app-search-bar-image" draggable="false" height="56" src="${product.urlImage?.replace('https://', 'http://') || ''}" width="56" />
+						</div>
 
-                    <div class="app-name font-weight-bold w-100">${product.name.replace(searchRegex, '<mark>$1</mark>')}</div>
-                </a>
-            </li>
-        `;
+						<div class="app-name font-weight-bold w-100">${product.name.replace(searchRegex, '<mark>$1</mark>')}</div>
+					</a>
+				</li>
+			`;
 
 		resultsList.insertAdjacentHTML('beforeend', itemHTML);
 	}
+
+	listSectionContainers = document.querySelectorAll(
+		'.list-section-container'
+	);
 
 	listSectionContainers.forEach((sectionContainer) =>
 		sectionContainer.classList.add('hidden')
@@ -286,15 +300,26 @@ async function main() {
 		});
 	});
 
-	search.addEventListener('click', () => {
+	search.addEventListener('click', (event) => {
+		event.stopPropagation();
+
 		if (!state.isSearchExpanded) {
+			state.isSearchExpanded = true;
+			searchToggle.show();
+		}
+
+		if (state.isSearchExpanded && state.isDropdownExpanded) {
+			state.isDropdownExpanded = false;
+			searchDropdown.classList.remove('expanded');
 			state.isSearchExpanded = true;
 			searchToggle.show();
 		}
 	});
 
 	navContainer.addEventListener('click', (event) => {
+		event.stopPropagation();
 		if (
+			!results.contains(event.target) &&
 			!search.contains(event.target) &&
 			!searchDropdown.contains(event.target)
 		) {
@@ -426,7 +451,10 @@ async function main() {
 			}
 
 			if (searchInput.value.trim()) {
-				searchStorage.save(searchInput.value.trim());
+				searchStorage.save(
+					searchInput.value.trim(),
+					SEARCH_STORAGE_KEY
+				);
 
 				const data = await getProducts(
 					state.categorySelected !== 'All Categories'
@@ -497,29 +525,33 @@ const removeAllQueryParams = (url) => {
 };
 
 function renderNoResults(query) {
+	listSectionContainers = document.querySelectorAll(
+		'.list-section-container'
+	);
+
 	listSectionContainers.forEach((sectionElement) =>
 		sectionElement.classList.add('hidden')
 	);
 
 	searchResultsContainer.innerHTML = `
-        <ul class="recent-searches-list w-100">
-            <li class="py-3 results-items-list w-100">
-            	<div class="align-items-center d-flex search-no-results-container">
-                	<svg class="lexicon-icon lexicon-icon-warning mr-2" width="16" height="16">
-                		<use href="${spritemap}#warning"></use>
-                	</svg>
+		<ul class="recent-searches-list w-100">
+			<li class="py-3 results-items-list w-100">
+				<div class="align-items-center d-flex search-no-results-container">
+					<svg class="lexicon-icon lexicon-icon-warning mr-2" height="16" width="16">
+						<use href="${spritemap}#warning"></use>
+					</svg>
 
-                	<span>Oops! No results for <strong>"${query}"</strong></span>
-           		</div>
-            </li>
-        </ul>
-    `;
+					<span>Oops! No results for <strong>"${query}"</strong></span>
+				</div>
+			</li>
+		</ul>
+	`;
 
 	searchResultsContainer.style.display = 'block';
 }
 
 function renderRecentSearches() {
-	const searches = searchStorage.get();
+	const searches = searchStorage.get(SEARCH_STORAGE_KEY);
 	recentSearchesContainer.innerHTML = '';
 
 	if (!searches.length) {
@@ -531,19 +563,19 @@ function renderRecentSearches() {
 	recentSearchesContainer.style.display = 'block';
 
 	const titleHTML = `
-        <div class="align-items-center d-flex justify-content-between results-title-container w-100">
-            <h4 class="m-0 text-black-50 text-nowrap">Recent Searches</h4>
-            <div class="divider-horizontal flex-grow-1 mx-3"></div>
-            <button class="btn font-weight-bold p-0 section-action-button text-nowrap">Clear All</button>
-        </div>
-    `;
+		<div class="align-items-center d-flex justify-content-between results-title-container w-100">
+			<h4 class="m-0 text-black-50 text-nowrap">Recent Searches</h4>
+			<div class="divider-horizontal flex-grow-1 mx-3"></div>
+			<button class="btn font-weight-bold p-0 section-action-button text-nowrap">Clear All</button>
+		</div>
+	`;
 
 	recentSearchesContainer.insertAdjacentHTML('beforeend', titleHTML);
 
 	recentSearchesContainer
 		.querySelector('button')
 		.addEventListener('click', () => {
-			searchStorage.clear();
+			searchStorage.clear(SEARCH_STORAGE_KEY);
 			renderRecentSearches();
 		});
 
@@ -557,19 +589,19 @@ function renderRecentSearches() {
 		li.className = 'results-items-list w-100';
 
 		li.innerHTML = `
-            <a class="align-items-center d-flex text-dark text-decoration-none w-100">
-                <svg class="lexicon-icon lexicon-icon-restore mr-2" width="16" height="16">
-                    <use href="${spritemap}#restore"></use>
-                </svg>
-                <span class="font-weight-bold w-100">${term}</span>
-            </a>
+			<a class="align-items-center d-flex text-dark text-decoration-none w-100">
+				<svg class="lexicon-icon lexicon-icon-restore mr-2" height="16" width="16">
+					<use href="${spritemap}#restore"></use>
+				</svg>
+				<span class="font-weight-bold w-100">${term}</span>
+			</a>
 
-            <button class="bg-transparent border-0 btn btn-sm text-muted">
-                <svg class="lexicon-icon lexicon-icon-times" width="14" height="14">
-                    <use href="${spritemap}#times"></use>
-                </svg>
-            </button>
-        `;
+			<button class="bg-transparent border-0 btn btn-sm text-muted">
+				<svg class="lexicon-icon lexicon-icon-times" height="14" width="14">
+					<use href="${spritemap}#times"></use>
+				</svg>
+			</button>
+		`;
 
 		li.querySelector('a').addEventListener('click', () =>
 			onclickNavigateTo(term)
@@ -577,7 +609,7 @@ function renderRecentSearches() {
 
 		li.querySelector('button').addEventListener('click', (event) => {
 			event.stopPropagation();
-			searchStorage.delete(term);
+			searchStorage.delete(term, SEARCH_STORAGE_KEY);
 			renderRecentSearches();
 		});
 
@@ -637,15 +669,15 @@ function showFeedbackAlert(text) {
 		'search-info-panel expanded d-flex align-items-center justify-content-between';
 
 	panel.innerHTML = `
-        <div class="container-fluid container-fluid-max-xl d-flex justify-content-between">
-            <div class="align-items-center d-flex">${text}</div>
-            <button class="btn btn-sm border-0 bg-transparent text-muted" style="cursor:pointer">
-                <svg class="lexicon-icon lexicon-icon-times" width="14" height="14">
-                    <use href="${spritemap}#times"></use>
-                </svg>
-            </button>
-        </div>
-    `;
+		<div class="container-fluid container-fluid-max-xl d-flex justify-content-between">
+			<div class="align-items-center d-flex">${text}</div>
+			<button class="btn btn-sm border-0 bg-transparent text-muted" style="cursor:pointer">
+				<svg class="lexicon-icon lexicon-icon-times" height="14" width="14">
+					<use href="${spritemap}#times"></use>
+				</svg>
+			</button>
+		</div>
+	`;
 
 	panel.querySelector('button').addEventListener('click', (event) => {
 		event.stopPropagation();
@@ -661,6 +693,163 @@ function showFeedbackAlert(text) {
 
 	navContainer.appendChild(panel);
 	navContainer.classList.add('expanded');
+}
+
+async function getCatalogProducts(options = {}) {
+	const searchParams = new URLSearchParams({
+		accountId: options.accountId || '-1',
+		pageSize: options.pageSize || 12,
+	});
+
+	if (options.filter) {
+		searchParams.set('filter', options.filter);
+	}
+
+	if (options.search) {
+		searchParams.set('search', encodeURIComponent(options.search));
+	}
+
+	const response = await Liferay.Util.fetch(
+		`/o/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?${searchParams}`
+	);
+
+	return response.json();
+}
+
+async function featuredSection({
+	pageSize = 3,
+	specificationValue = 'Highlights',
+	title = 'Highlights',
+} = {}) {
+	const normalizedClass = specificationValue
+		.toLowerCase()
+		.replace(/\s+/g, '-');
+
+	if (featuredSectionContainer.querySelector(`.${normalizedClass}`)) {
+		return;
+	}
+
+	const featuredCache = searchStorage.get(specificationValue.trim());
+
+	let featuredSectionItems = featuredCache[0]
+		? JSON.parse(featuredCache[0])
+		: [];
+
+	if (!featuredSectionItems.length) {
+		const response = await getCatalogProducts({
+			accountId: '-1',
+			filter: `specificationValues/any(x:(x eq '${specificationValue}'))`,
+			pageSize,
+		});
+
+		searchStorage.save(JSON.stringify(response?.items), specificationValue);
+
+		featuredSectionItems = response?.items;
+	}
+
+	if (!featuredSectionItems.length) {
+		return;
+	}
+
+	const featuredSectionHTML = document.createElement('div');
+	featuredSectionHTML.classList.add(
+		'align-items-start',
+		'd-flex',
+		'flex-column',
+		'justify-content-start',
+		'list-section-container',
+		'w-100',
+		`${normalizedClass}`
+	);
+
+	const featuredTitleContainer = document.createElement('div');
+	featuredTitleContainer.classList.add(
+		'align-items-center',
+		'd-flex',
+		'justify-content-between',
+		'results-title-container',
+		'w-100'
+	);
+
+	const featuredTitle = document.createElement('h4');
+	featuredTitle.classList.add('m-0', 'text-black-50', 'text-nowrap');
+	featuredTitle.textContent = title;
+
+	const divider = document.createElement('div');
+	divider.classList.add('divider-horizontal', 'mx-3');
+
+	const viewAllLink = document.createElement('a');
+	viewAllLink.classList.add(
+		'font-weight-bold',
+		'p-0',
+		'section-action-button',
+		'text-nowrap'
+	);
+	viewAllLink.href = `/web/marketplace/applications?our-selection=${specificationValue}`;
+
+	const viewAllSpan = document.createElement('span');
+	viewAllSpan.classList.add('text-black-50', 'text-nowrap');
+	viewAllSpan.textContent = 'view-all';
+
+	viewAllLink.appendChild(viewAllSpan);
+
+	featuredTitleContainer.appendChild(featuredTitle);
+	featuredTitleContainer.appendChild(divider);
+	featuredTitleContainer.appendChild(viewAllLink);
+
+	const resultsListContainer = document.createElement('ul');
+	resultsListContainer.classList.add('results-list-container', 'w-100');
+
+	for (const product of featuredSectionItems) {
+		if (!product) {
+			continue;
+		}
+
+		const listItem = document.createElement('li');
+		listItem.classList.add('results-items-list', 'w-100');
+
+		const productLink = document.createElement('a');
+		productLink.classList.add(
+			'align-items-center',
+			'd-flex',
+			'flex-row',
+			'mb-0',
+			'text-dark',
+			'text-decoration-none',
+			'w-100'
+		);
+		productLink.href = `/web/marketplace/p/${product.slug}`;
+		productLink.target = '_self';
+
+		const imageContainer = document.createElement('div');
+		imageContainer.classList.add('image-container', 'mr-2', 'rounded');
+
+		const productImage = document.createElement('img');
+		productImage.alt = product.name;
+		productImage.classList.add('app-search-bar-image');
+		productImage.draggable = false;
+		productImage.height = 56;
+		productImage.width = 56;
+		productImage.src =
+			product.urlImage?.replace('https://', 'http://') || '';
+
+		imageContainer.appendChild(productImage);
+
+		const productNameDiv = document.createElement('div');
+		productNameDiv.classList.add('font-weight-bold', 'w-100');
+		productNameDiv.textContent = product.name;
+
+		productLink.appendChild(imageContainer);
+		productLink.appendChild(productNameDiv);
+
+		listItem.appendChild(productLink);
+		resultsListContainer.appendChild(listItem);
+	}
+
+	featuredSectionHTML.appendChild(featuredTitleContainer);
+	featuredSectionHTML.appendChild(resultsListContainer);
+
+	featuredSectionContainer.appendChild(featuredSectionHTML);
 }
 
 main();

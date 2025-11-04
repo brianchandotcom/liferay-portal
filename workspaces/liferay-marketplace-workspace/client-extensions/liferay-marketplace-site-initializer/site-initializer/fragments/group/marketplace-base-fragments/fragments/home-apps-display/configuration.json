@@ -4,6 +4,17 @@
 			"fields": [
 				{
 					"dataType": "string",
+					"defaultValue": "000000",
+					"label": "Channel Id",
+					"name": "channelId",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
 					"defaultValue": "Highlights",
 					"description": "apps-section-title",
 					"label": "Section Title",

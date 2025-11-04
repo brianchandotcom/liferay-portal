@@ -123,33 +123,33 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		});
 	});
 
-	// Assert a factory configuration can be edited
+	await test.step('Assert that factory configurations were edited', async () => {
+		const firstRow = page.locator('tbody tr').first();
 
-	const firstRow = page.locator('tbody tr').first();
+		const oldProviderName = await firstRow.innerText();
 
-	const oldProviderName = await firstRow.innerText();
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByText('Edit').first(),
+			trigger: firstRow.getByRole('button'),
+		});
 
-	await clickAndExpectToBeVisible({
-		autoClick: true,
-		target: page.getByText('Edit').first(),
-		trigger: firstRow.getByRole('button'),
+		const newProviderName = getRandomString();
+
+		await page.getByLabel('Provider Name').fill(newProviderName);
+
+		await instanceSettingsPage.saveAndWaitForAlert({
+			autoClose: true,
+			type: 'success',
+		});
+
+		await expect(
+			await page.locator('tbody tr').first().innerText()
+		).not.toBe(oldProviderName);
+		await expect(
+			(await page.locator('tbody tr').first().innerText()).trim()
+		).toBe(newProviderName);
 	});
-
-	const newProviderName = getRandomString();
-
-	await page.getByLabel('Provider Name').fill(newProviderName);
-
-	await instanceSettingsPage.saveAndWaitForAlert({
-		autoClose: true,
-		type: 'success',
-	});
-
-	await expect(await page.locator('tbody tr').first().innerText()).not.toBe(
-		oldProviderName
-	);
-	await expect(
-		(await page.locator('tbody tr').first().innerText()).trim()
-	).toBe(newProviderName);
 
 	// Assert a factory configuration can be deleted
 

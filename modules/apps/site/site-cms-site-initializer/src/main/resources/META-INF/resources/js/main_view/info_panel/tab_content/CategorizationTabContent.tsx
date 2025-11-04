@@ -15,6 +15,10 @@ const CategorizationTabContent = () => {
 		objectEntries = [],
 	} = useContext(AssetTypeInfoPanelContext);
 
+	if (!objectEntries[0].actions) {
+		return null;
+	}
+
 	const [
 		{
 			actions: {get, update},

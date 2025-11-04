@@ -24,7 +24,7 @@ const AssetTypeInfoPanelContent = ({
 	items: ISearchAssetObjectEntry[];
 }) => {
 	const assetInfo: ISearchAssetTypeInformation =
-		objectEntries?.length === 1
+		objectEntries?.length === 1 && objectEntries[0]?.actions
 			? getBaseAssetInformation(objectEntries[0])
 			: {};
 

@@ -2,7 +2,9 @@ import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
-import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
+import ClayButton from '@clayui/button';
+import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
 import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
@@ -12,11 +14,10 @@ import React, {lazy, Suspense, useContext} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
-import {CSVType} from 'shared/components/download-report/utils';
-import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
+import {formatUTCDate} from 'shared/util/date';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
-import {SegmentStates} from 'shared/util/constants';
+import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {Switch, useParams} from 'react-router-dom';
 import {useRequest} from 'shared/hooks/useRequest';
 
@@ -59,13 +60,19 @@ const NAV_ITEMS = [
 	}
 ];
 
+const SEGMENTS_LANGUAGE_MAP = {
+	[SegmentTypes.Batch]: Liferay.Language.get('batch-segment'),
+	[SegmentTypes.RealTime]: Liferay.Language.get('real-time-segment')
+};
+
 export const SegmentProfileRoutes = () => {
 	const contextType = useContext(ChannelContext);
 
 	const checkDisabled = () => segment.state === SegmentStates.Disabled;
 
 	const {channelId, groupId, id} = useParams();
-	const {data, error, loading} = useRequest({
+
+	const {data, error, loading, refetch} = useRequest({
 		dataSourceFn: API.individualSegment.fetch,
 		variables: {
 			groupId,
@@ -166,68 +173,53 @@ export const SegmentProfileRoutes = () => {
 				groupId={groupId}
 			>
 				<BasePage.Row>
-					<BasePage.Header.TitleSection title={title}>
+					<BasePage.Header.TitleSection
+						className='mb-3'
+						subtitle={`Last update: ${formatUTCDate(
+							segment.dateModified,
+							'MMM DD, YYYY hh:mm a'
+						)
+							.replace('am', 'a.m.')
+							.replace('pm', 'p.m.')}`}
+						title={title}
+					>
 						<Label display='secondary' size='lg' uppercase>
-							{Liferay.Language.get('segment')}
+							{SEGMENTS_LANGUAGE_MAP[segment.segmentType]}
 						</Label>
 					</BasePage.Header.TitleSection>
-
-					<BasePage.Header.Section>
-						<BasePage.Header.PageActions
-							actions={[
-								{
-									button: true,
-									displayType: 'secondary',
-									href: toRoute(
-										Routes.CONTACTS_SEGMENT_EDIT,
-										{
-											channelId,
-											groupId,
-											id,
-											type: SEGMENTS
-										}
-									),
-									label: Liferay.Language.get('edit-segment')
-								}
-							]}
-						/>
-					</BasePage.Header.Section>
 				</BasePage.Row>
-
-				<BasePage.Header.NavBar
-					items={NAV_ITEMS}
-					routeParams={{channelId, groupId, id}}
-				/>
 			</BasePage.Header>
 
-			{getMatchedRoute(NAV_ITEMS) === Routes.CONTACTS_SEGMENT && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						<DownloadPDFReport
-							disabled={false}
-							showDateRange={false}
-							subtitle={selectedChannel?.name}
-							title={title}
-						/>
-					</div>
-				</BasePage.SubHeader>
-			)}
-
-			{getMatchedRoute(NAV_ITEMS) ===
-				Routes.CONTACTS_SEGMENT_MEMBERSHIP && (
-				<BasePage.SubHeader>
-					<div className='d-flex justify-content-end w-100'>
-						<DownloadStaticCSVReport
-							disabled={checkDisabled()}
-							segmentId={segment.id}
-							type={CSVType.Membership}
-							typeLang={Liferay.Language.get(
-								'segment-membership'
-							)}
-						/>
-					</div>
-				</BasePage.SubHeader>
-			)}
+			<BasePage.SubHeader>
+				<div className='d-flex justify-content-end w-100'>
+					<ClayButton
+						borderless
+						button
+						className='button-root'
+						disabled={loading}
+						displayType='secondary'
+						key={Liferay.Language.get('refresh-data')}
+						onClick={refetch}
+					>
+						<ClayIcon className='mr-2' symbol='reload' />
+						{Liferay.Language.get('refresh-data')}
+					</ClayButton>
+					<ClayLink
+						borderless
+						button
+						className='button-root'
+						displayType='secondary'
+						href={toRoute(Routes.CONTACTS_SEGMENT_EDIT, {
+							channelId,
+							groupId,
+							id
+						})}
+					>
+						<ClayIcon className='mr-2' symbol='pencil' />
+						{Liferay.Language.get('edit-segment')}
+					</ClayLink>
+				</div>
+			</BasePage.SubHeader>
 
 			<EmbeddedAlertList alerts={getAlerts()} />
 

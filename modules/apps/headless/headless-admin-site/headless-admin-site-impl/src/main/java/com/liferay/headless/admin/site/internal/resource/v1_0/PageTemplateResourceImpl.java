@@ -601,24 +601,8 @@ public class PageTemplateResourceImpl
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.
-				fetchFirstLayoutPageTemplateEntry(
+				getFirstLayoutPageTemplateEntry(
 					layoutPrototype.getLayoutPrototypeId());
-
-		if (layoutPageTemplateEntry == null) {
-			layoutPageTemplateEntry =
-				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-					widgetPageTemplate.getExternalReferenceCode(), groupId,
-					layoutPageTemplateCollectionId, widgetPageTemplate.getKey(),
-					0, 0, widgetPageTemplate.getName(),
-					LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE,
-					FileEntryUtil.getPreviewFileEntryId(
-						groupId, getResourceName(), serviceContext,
-						widgetPageTemplate.getThumbnail(), contextUser),
-					false, 0, 0L, 0,
-					PageSpecificationUtil.getPublishedStatus(
-						widgetPageTemplate.getPageSpecifications()),
-					serviceContext);
-		}
 
 		if (widgetPageTemplate.getExternalReferenceCode() != null) {
 			layoutPageTemplateEntry.setExternalReferenceCode(

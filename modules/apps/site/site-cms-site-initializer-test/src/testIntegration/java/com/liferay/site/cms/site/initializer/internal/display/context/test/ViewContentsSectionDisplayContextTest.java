@@ -58,7 +58,7 @@ public class ViewContentsSectionDisplayContextTest
 			getFDSActionDropdownItems();
 
 		Assert.assertEquals(
-			fdsActionDropdownItems.toString(), 17,
+			fdsActionDropdownItems.toString(), 19,
 			fdsActionDropdownItems.size());
 
 		assertFDSActionDropdownItem(
@@ -98,21 +98,27 @@ public class ViewContentsSectionDisplayContextTest
 			fdsActionDropdownItems.get(11), "download", "import-translation",
 			"import-translation", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(12), "password-policies", "permissions",
+			fdsActionDropdownItems.get(12), "copy", "copy", "copy-to", null,
+			"item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(13), "move", "move", "move", null,
+			"item");
+		assertFDSActionDropdownItem(
+			fdsActionDropdownItems.get(14), "password-policies", "permissions",
 			"permissions", "get", "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(13), "password-policies",
+			fdsActionDropdownItems.get(15), "password-policies",
 			"default-permissions", "default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(14), "password-policies",
+			fdsActionDropdownItems.get(16), "password-policies",
 			"edit-and-propagate-default-permissions",
 			"edit-and-propagate-default-permissions", null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(15), "password-policies",
+			fdsActionDropdownItems.get(17), "password-policies",
 			"reset-to-default-permissions", "reset-to-default-permissions",
 			null, "item");
 		assertFDSActionDropdownItem(
-			fdsActionDropdownItems.get(16), "trash", "delete", "delete", null,
+			fdsActionDropdownItems.get(18), "trash", "delete", "delete", null,
 			"item");
 	}
 

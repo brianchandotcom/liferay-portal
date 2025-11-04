@@ -124,19 +124,19 @@ public class LearnRestController extends BaseRestController {
 						content, 0, fileName, languageCode, voiceName));
 			}
 
-			OffsetDateTime documentDateModified = OffsetDateTime.parse(
-				jsonObject.getString("dateModified")
-			).truncatedTo(
-				ChronoUnit.MINUTES
-			);
-
-			OffsetDateTime lessonDateModified = OffsetDateTime.parse(
+			OffsetDateTime offsetDateTime = OffsetDateTime.parse(
 				lessonJSONObject.getString("dateModified")
 			).truncatedTo(
 				ChronoUnit.MINUTES
 			);
 
-			if (lessonDateModified.isAfter(documentDateModified)) {
+			if (offsetDateTime.isAfter(
+					OffsetDateTime.parse(
+						jsonObject.getString("dateModified")
+					).truncatedTo(
+						ChronoUnit.MINUTES
+					))) {
+
 				return ResponseEntity.ok(
 					_generateAudioResource(
 						content, _documentFolderId, fileName, languageCode,

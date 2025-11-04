@@ -717,7 +717,8 @@ test(
 
 			await expect(async () => {
 				await page
-					.getByRole('button', {exact: true, name: 'Close'})
+					.getByLabel('Permissions')
+					.getByLabel('Close')
 					.click();
 
 				await expect(

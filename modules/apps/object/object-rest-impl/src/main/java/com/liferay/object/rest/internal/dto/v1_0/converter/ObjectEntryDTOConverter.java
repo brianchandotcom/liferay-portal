@@ -1589,9 +1589,6 @@ public class ObjectEntryDTOConverter
 			int versionInt)
 		throws Exception {
 
-		boolean enableObjectEntryVersioning =
-			objectDefinition.isEnableObjectEntryVersioning();
-
 		Group group = _groupLocalService.fetchGroup(groupId);
 
 		ObjectDefinitionBrief nestedObjectDefinitionBrief =
@@ -1600,8 +1597,8 @@ public class ObjectEntryDTOConverter
 				nestedField -> _toObjectDefinitionBrief(
 					locale, objectDefinition));
 
-		if (!enableObjectEntryVersioning && (group == null) &&
-			(nestedObjectDefinitionBrief == null)) {
+		if (!objectDefinition.isEnableObjectEntryVersioning() &&
+			(group == null) && (nestedObjectDefinitionBrief == null)) {
 
 			return null;
 		}
@@ -1634,7 +1631,7 @@ public class ObjectEntryDTOConverter
 					});
 				setVersion(
 					() -> {
-						if (!enableObjectEntryVersioning) {
+						if (!objectDefinition.isEnableObjectEntryVersioning()) {
 							return null;
 						}
 

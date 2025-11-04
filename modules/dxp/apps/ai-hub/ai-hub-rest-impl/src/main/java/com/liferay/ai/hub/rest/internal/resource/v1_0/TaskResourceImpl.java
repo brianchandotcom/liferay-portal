@@ -77,9 +77,9 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	private Map<String, Serializable> _toWorkflowContext(Task task)
 		throws Exception {
 
-		Map<String, ?> context = task.getContext();
-
 		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		Map<String, ?> context = task.getContext();
 
 		for (Map.Entry<String, ?> entry : context.entrySet()) {
 			Object value = entry.getValue();

@@ -15,7 +15,7 @@ import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
 import {formatUTCDate} from 'shared/util/date';
-import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
+import {Routes, SEGMENTS, toRoute} from 'shared/util/router';
 import {Segment} from 'shared/util/records';
 import {SegmentStates, SegmentTypes} from 'shared/util/constants';
 import {Switch, useParams} from 'react-router-dom';
@@ -37,38 +37,13 @@ const Distribution = lazy(() =>
 	import(/* webpackChunkName: "SegmentDistribution" */ './Distribution')
 );
 
-const NAV_ITEMS = [
-	{
-		exact: true,
-		label: Liferay.Language.get('overview'),
-		route: Routes.CONTACTS_SEGMENT
-	},
-	{
-		exact: true,
-		label: Liferay.Language.get('membership'),
-		route: Routes.CONTACTS_SEGMENT_MEMBERSHIP
-	},
-	{
-		exact: false,
-		label: Liferay.Language.get('interests'),
-		route: Routes.CONTACTS_SEGMENT_INTERESTS
-	},
-	{
-		exact: true,
-		label: Liferay.Language.get('distribution'),
-		route: Routes.CONTACTS_SEGMENT_DISTRIBUTION
-	}
-];
-
 const SEGMENTS_LANGUAGE_MAP = {
 	[SegmentTypes.Batch]: Liferay.Language.get('batch-segment'),
 	[SegmentTypes.RealTime]: Liferay.Language.get('real-time-segment')
 };
 
 export const SegmentProfileRoutes = () => {
-	const contextType = useContext(ChannelContext);
-
-	const checkDisabled = () => segment.state === SegmentStates.Disabled;
+	const {selectedChannel} = useContext(ChannelContext);
 
 	const {channelId, groupId, id} = useParams();
 
@@ -82,6 +57,8 @@ export const SegmentProfileRoutes = () => {
 	});
 
 	const segment = new Segment(data);
+
+	const title = segment.name || Liferay.Language.get('unknown');
 
 	if (loading) {
 		return <Loading />;
@@ -103,6 +80,8 @@ export const SegmentProfileRoutes = () => {
 			/>
 		);
 	}
+
+	const checkDisabled = () => segment.state === SegmentStates.Disabled;
 
 	const getAlerts = () => {
 		if (segment.state === SegmentStates.InProgress) {
@@ -128,33 +107,12 @@ export const SegmentProfileRoutes = () => {
 		}
 	};
 
-	const getClassNameForRoute = matchedRoute => {
-		switch (matchedRoute) {
-			case Routes.CONTACTS_SEGMENT_DISTRIBUTION:
-				return getCN('segment-distribution-root');
-			case Routes.CONTACTS_SEGMENT_INTERESTS:
-				return getCN('contacts-interests-root');
-			case Routes.CONTACTS_SEGMENT:
-				return getCN('segment-overview-root', 'overview-root');
-			case Routes.CONTACTS_SEGMENT_MEMBERSHIP:
-			default:
-				return;
-		}
-	};
-
-	const matchedRoute = getMatchedRoute(NAV_ITEMS);
-
-	const {selectedChannel} = contextType;
-
-	const componentProps = {segment};
-
-	const title = segment.name || Liferay.Language.get('unknown');
-
 	return (
 		<BasePage
 			className={getCN(
 				'segment-profile-root',
-				getClassNameForRoute(matchedRoute)
+				'segment-overview-root',
+				'overview-root'
 			)}
 			documentTitle={`${segment.name} - ${Liferay.Language.get(
 				'segment'
@@ -223,30 +181,25 @@ export const SegmentProfileRoutes = () => {
 
 			<EmbeddedAlertList alerts={getAlerts()} />
 
-			<BasePage.Body
-				disabled={checkDisabled()}
-				pageContainer={
-					matchedRoute !== Routes.CONTACTS_SEGMENT_DISTRIBUTION
-				}
-			>
+			<BasePage.Body disabled={checkDisabled()}>
 				<Suspense fallback={<Loading />}>
 					<Switch>
 						<BundleRouter
-							componentProps={componentProps}
+							componentProps={{segment}}
 							data={Membership}
 							exact
 							path={Routes.CONTACTS_SEGMENT_MEMBERSHIP}
 						/>
 
 						<BundleRouter
-							componentProps={componentProps}
+							componentProps={{segment}}
 							data={InterestDetails}
 							exact
 							path={Routes.CONTACTS_SEGMENT_INTEREST_DETAILS}
 						/>
 
 						<BundleRouter
-							componentProps={componentProps}
+							componentProps={{segment}}
 							data={Interests}
 							destructured={false}
 							exact
@@ -254,14 +207,14 @@ export const SegmentProfileRoutes = () => {
 						/>
 
 						<BundleRouter
-							componentProps={componentProps}
+							componentProps={{segment}}
 							data={Distribution}
 							exact
 							path={Routes.CONTACTS_SEGMENT_DISTRIBUTION}
 						/>
 
 						<BundleRouter
-							componentProps={componentProps}
+							componentProps={{segment}}
 							data={Overview}
 							exact
 							path={Routes.CONTACTS_SEGMENT}

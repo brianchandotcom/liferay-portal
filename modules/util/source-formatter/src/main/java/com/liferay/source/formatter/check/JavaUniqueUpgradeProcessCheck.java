@@ -120,8 +120,8 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 			if (upgradeProcessCount > 1) {
 				addMessage(
 					fileName,
-					"Only one UpgradeProcess can be added in \"registry." +
-						"register\", see LPD-44331",
+					"Only one UpgradeProcess can be added in \"" + methodName +
+						"\", see LPD-44331",
 					javaMethod.getLineNumber(x));
 			}
 

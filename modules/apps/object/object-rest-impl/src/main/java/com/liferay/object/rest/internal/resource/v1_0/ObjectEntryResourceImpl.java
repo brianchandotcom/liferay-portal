@@ -6,6 +6,8 @@
 package com.liferay.object.rest.internal.resource.v1_0;
 
 import com.liferay.exportimport.vulcan.batch.engine.ExportImportVulcanBatchEngineTaskItemDelegate;
+import com.liferay.headless.delivery.dto.v1_0.Comment;
+import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.exception.ObjectEntryValidationException;
 import com.liferay.object.model.ObjectDefinition;
@@ -41,6 +43,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -729,6 +732,33 @@ public class ObjectEntryResourceImpl
 	}
 
 	@Override
+	public Comment postByExternalReferenceCodeComment(
+			String externalReferenceCode, Comment comment)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments()) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		ObjectEntry objectEntry = defaultObjectEntryManager.getObjectEntry(
+			contextCompany.getCompanyId(), _getDTOConverterContext(null),
+			externalReferenceCode, _objectDefinition, null);
+
+		return CommentUtil.toComment(
+			_commentManager.addEntityComment(
+				comment.getExternalReferenceCode(), objectEntry.getScopeId(),
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				comment.getText()),
+			_commentManager, PortalUtil.getPortal());
+	}
+
+	@Override
 	public void postByExternalReferenceCodeSubscribe(
 			String externalReferenceCode)
 		throws Exception {
@@ -970,6 +1000,33 @@ public class ObjectEntryResourceImpl
 		return defaultObjectEntryManager.expireObjectEntryByVersion(
 			_getDTOConverterContext(null), externalReferenceCode,
 			_objectDefinition, scopeKey, version);
+	}
+
+	@Override
+	public Comment postScopeScopeKeyByExternalReferenceCodeComment(
+			String scopeKey, String externalReferenceCode, Comment comment)
+		throws Exception {
+
+		if (!_objectDefinition.isEnableComments()) {
+			throw new UnsupportedOperationException();
+		}
+
+		DefaultObjectEntryManager defaultObjectEntryManager =
+			DefaultObjectEntryManagerProvider.provide(
+				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
+					_objectDefinition.getStorageType()));
+
+		ObjectEntry objectEntry = defaultObjectEntryManager.getObjectEntry(
+			contextCompany.getCompanyId(), _getDTOConverterContext(null),
+			externalReferenceCode, _objectDefinition, scopeKey);
+
+		return CommentUtil.toComment(
+			_commentManager.addEntityComment(
+				comment.getExternalReferenceCode(), objectEntry.getScopeId(),
+				ObjectEntry.class.getName(), objectEntry.getId(),
+				comment.getText()),
+			_commentManager, PortalUtil.getPortal());
 	}
 
 	@Override

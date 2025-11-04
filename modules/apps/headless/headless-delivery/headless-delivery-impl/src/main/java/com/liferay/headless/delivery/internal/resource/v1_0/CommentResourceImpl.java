@@ -11,7 +11,7 @@ import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.headless.common.spi.odata.entity.CommentEntityModel;
 import com.liferay.headless.delivery.dto.v1_0.Comment;
-import com.liferay.headless.delivery.internal.dto.v1_0.util.CommentUtil;
+import com.liferay.headless.delivery.dto.v1_0.util.CommentUtil;
 import com.liferay.headless.delivery.resource.v1_0.CommentResource;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;

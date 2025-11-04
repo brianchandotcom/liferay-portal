@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.search.Bufferable;
+import com.liferay.portal.kernel.search.BufferableThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -50,7 +51,8 @@ public class BufferedIndexerInvocationHandler implements InvocationHandler {
 		IndexerRequestBuffer indexerRequestBuffer = IndexerRequestBuffer.get();
 
 		if ((annotation == null) || (args.length == 0) || (args.length > 2) ||
-			(indexerRequestBuffer == null)) {
+			(indexerRequestBuffer == null) ||
+			!BufferableThreadLocal.isEnabled()) {
 
 			return method.invoke(_indexer, args);
 		}

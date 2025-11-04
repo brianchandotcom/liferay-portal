@@ -1908,10 +1908,10 @@
     "@clayui/sticker" "^3.147.0"
     classnames "^2.2.6"
 
-"@clayui/charts@3.144.1":
-  version "3.144.1"
-  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.144.1.tgz#d8143af6a125d894a74c7881d8bd6ed31de6c37f"
-  integrity sha512-DNOZKhW/Ku0Om8wbmUrVtUIGxjN3lRvzUnuwXaUZlq2Zqn+9IRFe35Pq4aB+2CtbVvj2ci9lk0fggKXWQiPDfA==
+"@clayui/charts@3.154.0":
+  version "3.154.0"
+  resolved "https://registry.yarnpkg.com/@clayui/charts/-/charts-3.154.0.tgz#a0c8cb24901f9c151c09540982c94110f31aab2c"
+  integrity sha512-l4G036NuBBJ7m/GuFxR/d0Lw8jCsYDa4peFwGllRxtkt9bKE/6LPirVj44ihcPbRNmlKyiNg3Um8B/HIDqNuuQ==
   dependencies:
     billboard.js "^1.8.0"
     classnames "^2.2.6"
@@ -1958,10 +1958,10 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
-"@clayui/css@3.153.0":
-  version "3.153.0"
-  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.153.0.tgz#999886cce04fb3342f5c43e60c1b3d34c7f41274"
-  integrity sha512-1N59XGlDVIUoBswlL8pH/BbzSR5ONgMztfB3wV0KmukzJ7JvUFXgYvuGBlKYmQaA/0XBaEknf4SwxXgaJf2/GQ==
+"@clayui/css@3.154.0":
+  version "3.154.0"
+  resolved "https://registry.yarnpkg.com/@clayui/css/-/css-3.154.0.tgz#def58b5b990d2d966ed9b7e24e4950627259699c"
+  integrity sha512-6BFXFGnyFIm8+fhA3RZuvkEwGH0SRx/0GdnVfc+ERUbyQHOP7EXcfqak+JRyPajCdfdRweNYjoTvNis7q8nISQ==
 
 "@clayui/data-provider@3.151.0", "@clayui/data-provider@^3.151.0":
   version "3.151.0"

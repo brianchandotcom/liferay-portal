@@ -27,8 +27,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	instanceSettingsPage,
 	page,
 }) => {
-	const providerName1 = getRandomString();
-	const providerName2 = getRandomString();
+	const providersNames = [getRandomString(), getRandomString()];
 
 	await test.step('Add factory configurations', async () => {
 		await instanceSettingsPage.goToInstanceSetting(
@@ -36,47 +35,32 @@ test('Asserts that a user can manage factory configurations', async ({
 			'OpenID Connect Provider Connection'
 		);
 
-		await page.getByRole('link', {name: 'Add'}).click();
+		for (const providerName of providersNames) {
+			await page.getByRole('link', {name: 'Add'}).click();
 
-		await page.getByLabel('Provider Name').fill(providerName1);
+			await page.getByLabel('Provider Name').fill(providerName);
 
-		await page
-			.getByLabel('OpenID Connect Client ID')
-			.fill(getRandomString());
+			await page
+				.getByLabel('OpenID Connect Client ID')
+				.fill(getRandomString());
 
-		await page
-			.getByLabel('OpenID Connect Client Secret')
-			.fill(getRandomString());
+			await page
+				.getByLabel('OpenID Connect Client Secret')
+				.fill(getRandomString());
 
-		await instanceSettingsPage.saveAndWaitForAlert({
-			autoClose: true,
-			type: 'success',
-		});
-
-		await page.getByRole('link', {name: 'Add'}).click();
-
-		await page.getByLabel('Provider Name').fill(providerName2);
-
-		await page
-			.getByLabel('OpenID Connect Client ID')
-			.fill(getRandomString());
-
-		await page
-			.getByLabel('OpenID Connect Client Secret')
-			.fill(getRandomString());
-
-		await instanceSettingsPage.saveAndWaitForAlert({
-			autoClose: true,
-			type: 'success',
-		});
+			await instanceSettingsPage.saveAndWaitForAlert({
+				autoClose: true,
+				type: 'success',
+			});
+		}
 	});
 
 	await test.step('Assert that the factory configurations were created successfully', async () => {
 		await expect(
 			await page.locator('td.lfr-provider-name-column').count()
 		).toBe(2);
-		await expect(page.getByText(providerName1)).toBeVisible();
-		await expect(page.getByText(providerName2)).toBeVisible();
+		await expect(page.getByText(providersNames[0])).toBeVisible();
+		await expect(page.getByText(providersNames[1])).toBeVisible();
 	});
 
 	await test.step('Assert that single factory configuration was exported', async () => {
@@ -104,7 +88,7 @@ test('Asserts that a user can manage factory configurations', async ({
 		const fileContent = await readFile(path, 'utf-8');
 
 		expect(
-			fileContent.includes(`providerName="${providerName1}"`)
+			fileContent.includes(`providerName="${providersNames[0]}"`)
 		).toBeTruthy();
 	});
 

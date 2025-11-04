@@ -9,7 +9,6 @@ import com.liferay.ai.hub.rest.dto.v1_0.Task;
 import com.liferay.ai.hub.rest.resource.v1_0.TaskResource;
 import com.liferay.ai.hub.rest.resource.v1_0.util.SseUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -42,7 +41,7 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	@Override
 	public void getTaskSubscribe(SseEventSink sseEventSink) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-62272")) {
+				contextCompany.getCompanyId(), "LPD-62272")) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -53,14 +52,14 @@ public class TaskResourceImpl extends BaseTaskResourceImpl {
 	@Override
 	public Task postTask(Task task) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				CompanyThreadLocal.getCompanyId(), "LPD-62272")) {
+				contextCompany.getCompanyId(), "LPD-62272")) {
 
 			throw new UnsupportedOperationException();
 		}
 
 		WorkflowInstance workflowInstance =
 			_workflowInstanceManager.startWorkflowInstance(
-				CompanyThreadLocal.getCompanyId(),
+				contextCompany.getCompanyId(),
 				WorkflowConstants.DEFAULT_GROUP_ID,
 				PrincipalThreadLocal.getUserId(), task.getType(), 1, null,
 				_toWorkflowContext(task));

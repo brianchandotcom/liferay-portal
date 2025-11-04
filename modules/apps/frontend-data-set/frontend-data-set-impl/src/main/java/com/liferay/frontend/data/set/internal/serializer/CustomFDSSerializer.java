@@ -1033,7 +1033,9 @@ public class CustomFDSSerializer
 
 		String type = MapUtil.getString(properties, "type");
 
-		if (Objects.equals(type, "date") || Objects.equals(type, "date-time")) {
+		if (Objects.equals(type, "date") || Objects.equals(type, "date-time") ||
+			Objects.equals(type, "date_time")) {
+
 			return _serializeFilterDateOrDateTime(fieldName, properties, type);
 		}
 
@@ -1079,7 +1081,7 @@ public class CustomFDSSerializer
 			}
 		).put(
 			"entityFieldTypeCollection",
-			(boolean)properties.get("entityFieldTypeCollection")
+			GetterUtil.getBoolean(properties.get("entityFieldTypeCollection"))
 		).put(
 			"id", fieldName
 		).put(
@@ -1186,7 +1188,10 @@ public class CustomFDSSerializer
 				if(_isCollection(
 						String.valueOf(properties.get("fieldName")),
 						sourceType) ||
-					!(boolean)properties.get("entityFieldTypeCollection")) {
+					(!(boolean)properties.get("entityFieldTypeCollection") &&
+					 !Objects.equals(
+						 properties.get("entityFieldType"),
+						 FDSEntityFieldTypes.BOOLEAN))) {
 
 					return FDSEntityFieldTypes.COLLECTION;
 				}

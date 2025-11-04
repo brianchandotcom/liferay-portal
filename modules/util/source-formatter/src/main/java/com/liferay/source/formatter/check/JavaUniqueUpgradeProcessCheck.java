@@ -125,28 +125,27 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 					javaMethod.getLineNumber(x));
 			}
 
-			if (!_containsTableCreateOrUpgradeProcessFactoryCalls(
-					upgradeSteps)) {
-
+			if (!_containsTableCreateOrUpgradeFactoryCalls(upgradeSteps)) {
 				continue;
 			}
 
 			addMessage(
 				fileName,
 				StringBundler.concat(
-					"Do not combine an UpgradeProcessFactory or ",
-					"UpgradeTableBuilder upgrade process with a standard ",
-					"UpgradeProcess under the same schema version, see LPD-",
-					"44331"),
+					"Do not combine an UpgradeModulesFactory, ",
+					"UpgradeProcessFactory or UpgradeTableBuilder upgrade ",
+					"process with a standard UpgradeProcess under the same ",
+					"schema version, see LPD-44331"),
 				javaMethod.getLineNumber(x));
 		}
 	}
 
-	private boolean _containsTableCreateOrUpgradeProcessFactoryCalls(
+	private boolean _containsTableCreateOrUpgradeFactoryCalls(
 		List<String> upgradeSteps) {
 
 		for (String upgradeStep : upgradeSteps) {
 			if (upgradeStep.matches("\\w+Table\\.create\\(\\)") ||
+				upgradeStep.startsWith("UpgradeModulesFactory.") ||
 				upgradeStep.startsWith("UpgradeProcessFactory.")) {
 
 				return true;

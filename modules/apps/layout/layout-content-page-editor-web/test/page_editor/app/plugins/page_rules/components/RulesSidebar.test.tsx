@@ -10,6 +10,7 @@ import '@testing-library/jest-dom';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/constants/layoutDataItemTypes';
 import {StoreAPIContextProvider} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/contexts/StoreContext';
+import {State} from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/reducers';
 import deleteRule from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/thunks/deleteRule';
 import {
 	CACHE_KEYS,
@@ -18,6 +19,7 @@ import {
 	setCacheItem,
 } from '../../../../../../src/main/resources/META-INF/resources/page_editor/app/utils/cache';
 import RulesSidebar from '../../../../../../src/main/resources/META-INF/resources/page_editor/plugins/page_rules/components/RulesSidebar';
+import {Rule} from '../../../../../../src/main/resources/META-INF/resources/page_editor/types/Rule';
 
 jest.mock(
 	'../../../../../../src/main/resources/META-INF/resources/page_editor/app/config/index',
@@ -38,51 +40,53 @@ jest.mock(
 	() => jest.fn()
 );
 
-const renderComponent = ({rules = []} = {}) =>
+const renderComponent = ({rules = []}: {rules?: Rule[]} = {}) =>
 	render(
 		<StoreAPIContextProvider
 			dispatch={() => Promise.resolve()}
-			getState={() => ({
-				fragmentEntryLinks: {
-					fragmentEntryLink1: {
-						name: 'Fragment 1',
-					},
-					fragmentEntryLink2: {
-						fragmentEntryType: 'input',
-						name: 'Fragment 2',
-					},
-					fragmentEntryLink3: {
-						fragmentEntryType: 'input',
-						name: 'Fragment 3',
-					},
-				},
-				layoutData: {
-					items: {
-						formItem1: {
-							config: {
-								fragmentEntryLinkId: 'fragmentEntryLink2',
-							},
-							itemId: 'formItem1',
-							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+			getState={() =>
+				({
+					fragmentEntryLinks: {
+						fragmentEntryLink1: {
+							name: 'Fragment 1',
 						},
-						formItem2: {
-							config: {
-								fragmentEntryLinkId: 'fragmentEntryLink3',
-							},
-							itemId: 'formItem2',
-							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						fragmentEntryLink2: {
+							fragmentEntryType: 'input',
+							name: 'Fragment 2',
 						},
-						item1: {
-							config: {
-								fragmentEntryLinkId: 'fragmentEntryLink1',
-							},
-							itemId: 'item1',
-							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						fragmentEntryLink3: {
+							fragmentEntryType: 'input',
+							name: 'Fragment 3',
 						},
 					},
-					pageRules: rules,
-				},
-			})}
+					layoutData: {
+						items: {
+							formItem1: {
+								config: {
+									fragmentEntryLinkId: 'fragmentEntryLink2',
+								},
+								itemId: 'formItem1',
+								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							},
+							formItem2: {
+								config: {
+									fragmentEntryLinkId: 'fragmentEntryLink3',
+								},
+								itemId: 'formItem2',
+								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							},
+							item1: {
+								config: {
+									fragmentEntryLinkId: 'fragmentEntryLink1',
+								},
+								itemId: 'item1',
+								type: LAYOUT_DATA_ITEM_TYPES.fragment,
+							},
+						},
+						pageRules: rules || [],
+					},
+				}) as unknown as State
+			}
 		>
 			<RulesSidebar />
 		</StoreAPIContextProvider>
@@ -114,6 +118,7 @@ describe('RulesSidebar', () => {
 			rules: [
 				{
 					actions: [],
+					conditionType: 'any',
 					conditions: [],
 					id: 'rule-1',
 					name: 'Rule 1',
@@ -153,7 +158,7 @@ describe('RulesSidebar', () => {
 			],
 		});
 
-		const rule = document.querySelector('li');
+		const rule = document.querySelector('li')!;
 
 		expect(rule.textContent).toBe(
 			'Rule 1ifuseris-the-useruser1showFragment 1'
@@ -189,7 +194,7 @@ describe('RulesSidebar', () => {
 			],
 		});
 
-		const rule = document.querySelector('li');
+		const rule = document.querySelector('li')!;
 
 		expect(rule.textContent).toBe(
 			'Rule 1ifFragment 3is-equal-totruedisableFragment 2'
@@ -282,12 +287,14 @@ describe('RulesSidebar', () => {
 				rules: [
 					{
 						actions: [],
+						conditionType: 'all',
 						conditions: [],
 						id: 'rule',
 						name: 'rule',
 					},
 					{
 						actions: [],
+						conditionType: 'all',
 						conditions: [],
 						id: 'rule-1',
 						name: 'rule 1',
@@ -303,7 +310,7 @@ describe('RulesSidebar', () => {
 				jest.advanceTimersByTime(100);
 			});
 
-			const modalTitle = document.querySelector('.modal-title');
+			const modalTitle = document.querySelector('.modal-title')!;
 
 			expect(modalTitle.innerHTML).toBe('new-rule');
 
@@ -315,6 +322,7 @@ describe('RulesSidebar', () => {
 				rules: [
 					{
 						actions: [],
+						conditionType: 'all',
 						conditions: [],
 						id: 'rule-1',
 						name: 'rule 1',
@@ -323,7 +331,7 @@ describe('RulesSidebar', () => {
 			});
 
 			const openOptionsButton =
-				document.querySelector('.dropdown-toggle');
+				document.querySelector('.dropdown-toggle')!;
 
 			fireEvent.click(openOptionsButton);
 
@@ -337,7 +345,7 @@ describe('RulesSidebar', () => {
 				jest.advanceTimersByTime(100);
 			});
 
-			const modalTitle = document.querySelector('.modal-title');
+			const modalTitle = document.querySelector('.modal-title')!;
 
 			expect(modalTitle.innerHTML).toBe('edit-rule');
 
@@ -349,6 +357,7 @@ describe('RulesSidebar', () => {
 				rules: [
 					{
 						actions: [],
+						conditionType: 'all',
 						conditions: [],
 						id: 'rule-1',
 						name: 'rule 1',
@@ -357,7 +366,7 @@ describe('RulesSidebar', () => {
 			});
 
 			const openOptionsButton =
-				document.querySelector('.dropdown-toggle');
+				document.querySelector('.dropdown-toggle')!;
 
 			fireEvent.click(openOptionsButton);
 

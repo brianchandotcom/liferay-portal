@@ -1241,62 +1241,30 @@ exports[`View should render a Liferay data-source page 1`] = `
                       <div
                         class="input-with-edit-toggle-root definition-item-root"
                       >
-                        <form
-                          class="form-root input-with-edit-toggle-editor"
+                        <div
+                          class="d-inline-flex"
                         >
-                          <label
-                            class="form-control-label label-root required"
+                          <span
+                            class="text-8 font-weight-bold"
                           >
-                            <span
-                              class="content-container"
-                            >
-                              Name
-                            </span>
-                          </label>
-                          <div
-                            class="form-group align-items-center form-group-autofit"
+                            Liferay123
+                          </span>
+                          <button
+                            aria-label="Edit"
+                            class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+                            data-testid="edit"
+                            type="button"
                           >
-                            <div
-                              class=""
-                              style="flex-basis: 100%; flex-grow: 0;"
+                            <svg
+                              class="lexicon-icon lexicon-icon-pencil icon-root"
+                              role="presentation"
                             >
-                              <div
-                                class="input-group content-after"
-                              >
-                                <div
-                                  class="input-group-item"
-                                >
-                                  <input
-                                    class="input-root form-control"
-                                    disabled=""
-                                    id="dataSourceName"
-                                    name="dataSourceName"
-                                    type="text"
-                                    value="Liferay123"
-                                  />
-                                </div>
-                                <div
-                                  class="input-group-item input-group-item-shrink"
-                                >
-                                  <button
-                                    aria-label="Edit"
-                                    class="button-root btn btn-sm btn-secondary"
-                                    type="button"
-                                  >
-                                    <svg
-                                      class="lexicon-icon lexicon-icon-pencil icon-root"
-                                      role="presentation"
-                                    >
-                                      <use
-                                        href="#pencil"
-                                      />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
+                              <use
+                                href="#pencil"
+                              />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     </div>
                     <div
@@ -1737,7 +1705,7 @@ exports[`View should render a Salesforce data-source page 1`] = `
         class="content section-main"
       >
         <div
-          class="settings-base-page-root data-source-base-page-root salesforce-data-source-root"
+          class="settings-base-page-root"
         >
           <div
             class="maintenance-alert-root"
@@ -1765,330 +1733,396 @@ exports[`View should render a Salesforce data-source page 1`] = `
               </span>
             </li>
           </ol>
-          <div
-            class="content-header"
-          >
+          <div>
             <div
-              class="header-text"
+              class="mb-5"
             >
-              <div
-                class="d-flex"
+              <span
+                class="label mb-2 label-success"
               >
-                <h3
-                  class="title-text text-truncate"
+                <span
+                  class="label-item label-item-expand"
+                >
+                  ACTIVE
+                </span>
+              </span>
+              <div
+                class="input-with-edit-toggle-root definition-item-root"
+              >
+                <div
+                  class="d-inline-flex"
                 >
                   <span
-                    class="text-truncate"
-                    data-tooltip="false"
-                    title=""
+                    class="text-8 font-weight-bold"
                   >
-                    Configure Salesforce
+                    Salesforce{seed}
                   </span>
-                </h3>
-              </div>
-              <div
-                class="description"
-              >
-                Salesforce{seed} - https://login.salesforce.com
+                  <button
+                    aria-label="Edit"
+                    class="button-root btn btn-outline-borderless btn-sm btn-outline-secondary"
+                    data-testid="edit"
+                    type="button"
+                  >
+                    <svg
+                      class="lexicon-icon lexicon-icon-pencil icon-root"
+                      role="presentation"
+                    >
+                      <use
+                        href="#pencil"
+                      />
+                    </svg>
+                  </button>
+                </div>
               </div>
             </div>
             <div
-              class="page-actions-container"
-            />
-          </div>
-          <div>
-            <div
-              class="page-container"
+              class="p-4 sheet"
             >
               <div
-                class="content-main"
+                class="row justify-content-center"
               >
                 <div
-                  class="sheet data-source-base-tabs-root page-display"
+                  class="col-12"
                 >
                   <div
-                    class="sheet-body"
+                    class="mb-5"
                   >
-                    <ul
-                      class="nav-root nav nav-underline"
-                      role="tablist"
+                    <span
+                      class="text-6 font-weight-bold"
                     >
-                      <li
-                        class="nav-item active"
-                        role="presentation"
-                      >
-                        <a
-                          class="nav-link active"
-                          href="/workspace/23/settings/data-source/24"
-                          role="tab"
-                        >
-                          <div
-                            class="h4"
-                          >
-                            Authorization
-                          </div>
-                        </a>
-                      </li>
-                      <li
-                        class="nav-item"
-                        role="presentation"
-                      >
-                        <a
-                          class="nav-link"
-                          href="/workspace/23/settings/data-source/24/salesforce/configuration-status"
-                          role="tab"
-                        >
-                          <div
-                            class="h4"
-                          >
-                            Configure Data Source
-                          </div>
-                          <span
-                            class="badge badge-primary ml-2"
-                          >
-                            <span
-                              class="badge-item badge-item-expand"
-                            >
-                              2
-                            </span>
-                          </span>
-                        </a>
-                      </li>
-                    </ul>
+                      Authentication
+                    </span>
                   </div>
-                  <form
-                    class="form-root oauth-form-root"
+                  <div
+                    class="sheet-section"
                   >
+                    <span
+                      class="text-3 text-secondary font-weight-semi-bold"
+                    >
+                      CONNECTION STATUS
+                    </span>
+                    <hr
+                      class="my-2"
+                    />
                     <div
-                      class="sheet-body"
+                      class="font-weight-semi-bold mb-4 mt-3 alert alert-success"
                     >
                       <div
-                        class="sheet-section"
+                        class="alert-autofit-row autofit-row"
+                        role="alert"
                       >
                         <div
-                          class="sheet-text"
+                          class="autofit-col"
                         >
-                          Please enter the URL of the target instance to start configuring the 
-                          Salesforce
-                           Data Source. You will need to enter the credentials of the data source's administrator. If you need help setting this up, please refer to the 
-                          <a
-                            class=""
-                            href="https://developer.salesforce.com/page/Connected_Apps"
-                          >
-                            documentation
-                          </a>
-                          .
-                        </div>
-                        <div
-                          class="callback-url"
-                        >
-                          <b>
-                            Analytics Cloud Callback URL:
-                          </b>
-                          <pre>
-                            http://liferay.com/oauth/receive
-                          </pre>
-                        </div>
-                      </div>
-                      <div
-                        class="sheet-section"
-                      >
-                        <h3
-                          class="sheet-subtitle"
-                        >
-                          Data Source
-                        </h3>
-                        <div
-                          class=""
-                        >
-                          <label
-                            class="form-control-label label-root required"
-                            for="dataSourceName"
-                          >
-                            <span
-                              class="content-container"
-                            >
-                              Name
-                            </span>
-                          </label>
-                          <input
-                            class="input-root form-control"
-                            disabled=""
-                            id="dataSourceName"
-                            name="dataSourceName"
-                            type="text"
-                            value="Salesforce{seed}"
-                          />
-                        </div>
-                        <div
-                          class=""
-                        >
-                          <label
-                            class="form-control-label label-root required"
-                            for="url"
-                          >
-                            <span
-                              class="content-container"
-                            >
-                              URL
-                            </span>
-                          </label>
-                          <input
-                            class="input-root form-control"
-                            disabled=""
-                            id="url"
-                            name="url"
-                            type="text"
-                            value="https://login.salesforce.com"
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="sheet-section"
-                      >
-                        <h3
-                          class="sheet-subtitle"
-                        >
-                          Client Credentials
-                        </h3>
-                        <div
-                          class=""
-                        >
-                          <label
-                            class="form-control-label label-root required"
-                            for="consumerKey"
-                          >
-                            <span
-                              class="content-container"
-                            >
-                              Consumer Key/Client ID
-                            </span>
-                          </label>
-                          <input
-                            autocomplete="new-password"
-                            class="input-root form-control"
-                            disabled=""
-                            id="consumerKey"
-                            name="consumerKey"
-                            type="text"
-                            value="oAuthMockClientId-1"
-                          />
-                        </div>
-                        <div
-                          class=""
-                        >
-                          <label
-                            class="form-control-label label-root required"
-                            for="consumerSecret"
-                          >
-                            <span
-                              class="content-container"
-                            >
-                              Consumer Secret/Client Secret
-                            </span>
-                          </label>
                           <div
-                            class="input-group"
+                            class="autofit-section"
                           >
-                            <div
-                              class="input-group-item"
+                            <span
+                              class="alert-indicator"
                             >
-                              <input
-                                autocomplete="new-password"
-                                class="input-root form-control input-group-inset input-group-inset-after"
-                                disabled=""
-                                id="consumerSecret"
-                                name="consumerSecret"
-                                type="password"
-                                value="oAuthMockClientSecret-1"
-                              />
-                              <div
-                                class="input-group-inset-item input-group-inset-item-after"
+                              <svg
+                                class="lexicon-icon lexicon-icon-check-circle-full"
+                                role="presentation"
                               >
-                                <button
-                                  aria-label="Watch"
-                                  class="button-root btn btn-unstyled"
-                                  disabled=""
-                                  type="button"
-                                >
-                                  <svg
-                                    class="lexicon-icon lexicon-icon-view icon-root"
-                                    role="presentation"
-                                  >
-                                    <use
-                                      href="#view"
-                                    />
-                                  </svg>
-                                </button>
-                              </div>
-                            </div>
+                                <use
+                                  href="#check-circle-full"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="autofit-col autofit-col-expand"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            You have successfully authenticated your token with Liferay Analytics Cloud. You can now select the data to sync.
                           </div>
                         </div>
                       </div>
-                      <div
-                        class="sheet-section"
+                    </div>
+                    <div
+                      class="sheet-section"
+                    >
+                      <span
+                        class="text-3 text-secondary font-weight-semi-bold"
                       >
-                        <h5>
-                          OAuth Owner
-                        </h5>
+                        DATA SOURCE DETAILS
+                      </span>
+                      <hr
+                        class="my-2"
+                      />
+                      <div
+                        class="input-group d-flex mt-3"
+                      >
                         <div
-                          class="oauth-owner disabled"
+                          class="input-group-item mr-3 input-group-item-shrink"
                         >
-                          <em>
-                            Authorize to add a new owner.
-                          </em>
+                          <label
+                            for="dataSourceType"
+                          >
+                            Data Source Type
+                          </label>
+                          <input
+                            class="form-control"
+                            readonly=""
+                            type="text"
+                            value="Salesforce"
+                          />
+                        </div>
+                        <div
+                          class="input-group-item ml-0 input-group-item-shrink"
+                        >
+                          <label
+                            for="dataSourceId"
+                          >
+                            Data Source ID
+                          </label>
+                          <input
+                            class="form-control"
+                            readonly=""
+                            type="text"
+                            value="1"
+                          />
                         </div>
                       </div>
                     </div>
-                    <div
-                      class="sheet-footer form-actions"
+                    <button
+                      aria-label="Disconnect Data Source"
+                      class="btn btn-sm btn-outline-danger"
+                      type="button"
                     >
-                      <button
-                        class="button-root edit btn btn-secondary"
-                        type="button"
+                      <svg
+                        class="lexicon-icon lexicon-icon-logout mr-2"
+                        role="presentation"
                       >
-                        Edit
-                      </button>
-                    </div>
-                  </form>
+                        <use
+                          href="#logout"
+                        />
+                      </svg>
+                      Disconnect Data Source
+                    </button>
+                  </div>
                 </div>
               </div>
+            </div>
+            <div
+              class="mt-4 p-4 sheet"
+            >
               <div
-                class="content-side"
+                class="row justify-content-center"
               >
                 <div
-                  class="panel-root data-source-status-root"
+                  class="col-12"
                 >
                   <div
-                    class="panel-header"
-                    role="button"
-                    tabindex="0"
+                    class="mb-5"
                   >
-                    <div
-                      class="panel-title"
+                    <span
+                      class="text-6 font-weight-bold"
                     >
-                      <div>
-                        Current Status:
-                      </div>
-                    </div>
-                    <div
-                      class="panel-title-label"
-                    >
-                      <div
-                        class="label label-root label-info label-lg label-uppercase"
-                      >
-                        <span
-                          class="label-item"
-                        >
-                          Authenticated
-                        </span>
-                      </div>
-                    </div>
+                      Synced Data
+                    </span>
                   </div>
                   <div
-                    class="panel-body"
+                    class="sheet-section"
                   >
-                    You have successfully authenticated your client id and secret with you data source. You can now configure your data.
+                    <div
+                      class="mt-3 alert alert-warning"
+                    >
+                      <div
+                        class="alert-autofit-row autofit-row"
+                        role="alert"
+                      >
+                        <div
+                          class="autofit-col"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            <span
+                              class="alert-indicator"
+                            >
+                              <svg
+                                class="lexicon-icon lexicon-icon-warning-full"
+                                role="presentation"
+                              >
+                                <use
+                                  href="#warning-full"
+                                />
+                              </svg>
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          class="autofit-col autofit-col-expand"
+                        >
+                          <div
+                            class="autofit-section"
+                          >
+                            <strong
+                              class="lead"
+                            >
+                              Warning
+                            </strong>
+                            The data source setup is almost complete. Sync data to start seeing results as activities occur on your sites.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <span
+                      class="text-4 text-secondary"
+                    >
+                      To configure your Salesforce data source, go to your Salesforce environment to update this app connection.
+                    </span>
+                    <div
+                      class="pt-1"
+                    >
+                      <ul
+                        class="list-group mb-0 show-quick-actions-on-hover"
+                      >
+                        <li
+                          class="list-group-item list-group-item-flex"
+                        >
+                          <div
+                            class="autofit-col"
+                          >
+                            <svg
+                              aria-label="Accounts"
+                              class="lexicon-icon lexicon-icon-briefcase mr-2 mt-1 text-secondary"
+                              role="presentation"
+                            >
+                              <use
+                                href="#briefcase"
+                              />
+                            </svg>
+                          </div>
+                          <div
+                            class="autofit-col autofit-col-expand"
+                          >
+                            <p
+                              class="list-group-title"
+                            >
+                              Accounts
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              Represents fields from the Account object within Salesforce.
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              0 items synced
+                            </p>
+                          </div>
+                          <div
+                            class="autofit-col"
+                            style="width: 120px;"
+                          >
+                            <label
+                              class="toggle-switch simple-toggle-switch toggle-switch-sm"
+                            >
+                              <span
+                                class="toggle-switch-check-bar"
+                              >
+                                <input
+                                  class="toggle-switch-check"
+                                  id="accounts"
+                                  role="switch"
+                                  type="checkbox"
+                                  value=""
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  class="toggle-switch-bar"
+                                >
+                                  <span
+                                    class="toggle-switch-handle"
+                                  />
+                                </span>
+                              </span>
+                              <span
+                                class="toggle-switch-label"
+                              >
+                                Disconnected
+                              </span>
+                            </label>
+                          </div>
+                        </li>
+                        <li
+                          class="list-group-item list-group-item-flex"
+                        >
+                          <div
+                            class="autofit-col"
+                          >
+                            <svg
+                              aria-label="Individuals"
+                              class="lexicon-icon lexicon-icon-users mr-2 mt-1 text-secondary"
+                              role="presentation"
+                            >
+                              <use
+                                href="#users"
+                              />
+                            </svg>
+                          </div>
+                          <div
+                            class="autofit-col autofit-col-expand"
+                          >
+                            <p
+                              class="list-group-title"
+                            >
+                              Individuals
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              Represents fields from the Contact or Lead object within Salesforce.
+                            </p>
+                            <p
+                              class="list-group-text"
+                            >
+                              0 items synced
+                            </p>
+                          </div>
+                          <div
+                            class="autofit-col"
+                            style="width: 120px;"
+                          >
+                            <label
+                              class="toggle-switch simple-toggle-switch toggle-switch-sm"
+                            >
+                              <span
+                                class="toggle-switch-check-bar"
+                              >
+                                <input
+                                  class="toggle-switch-check"
+                                  id="individuals"
+                                  name="Individuals"
+                                  role="switch"
+                                  type="checkbox"
+                                  value=""
+                                />
+                                <span
+                                  aria-hidden="true"
+                                  class="toggle-switch-bar"
+                                >
+                                  <span
+                                    class="toggle-switch-handle"
+                                  />
+                                </span>
+                              </span>
+                              <span
+                                class="toggle-switch-label"
+                              >
+                                Disconnected
+                              </span>
+                            </label>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>

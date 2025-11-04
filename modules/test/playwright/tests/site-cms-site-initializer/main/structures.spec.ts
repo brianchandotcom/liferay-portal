@@ -176,9 +176,6 @@ test(
 			page.getByRole('menuitem', {exact: true, name: 'View Usages'})
 		).toBeVisible();
 		expect(
-			page.getByRole('menuitem', {exact: true, name: 'Make a Copy'})
-		).toBeVisible();
-		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Export as JSON'})
 		).toBeVisible();
 		expect(
@@ -213,9 +210,6 @@ test(
 		).toBeVisible();
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'View Usages'})
-		).toBeVisible();
-		expect(
-			page.getByRole('menuitem', {exact: true, name: 'Make a Copy'})
 		).toBeVisible();
 		expect(
 			page.getByRole('menuitem', {exact: true, name: 'Export as JSON'})

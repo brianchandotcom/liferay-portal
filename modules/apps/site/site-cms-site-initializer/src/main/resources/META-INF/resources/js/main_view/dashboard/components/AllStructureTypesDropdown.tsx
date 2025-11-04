@@ -61,7 +61,7 @@ const AllStructureTypesDropdown: React.FC<IAllFiltersDropdown> = ({
 			icon="edit-layout"
 			items={structures}
 			loading={loading}
-			onActiveChange={() => setDropdownActive(!dropdownActive)}
+			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
 			onSearch={async (value) => {
 				setLoading(true);
 

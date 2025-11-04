@@ -70,7 +70,7 @@ const AllTagsDropdown: React.FC<IAllFiltersDropdown> = ({
 			icon="tag"
 			items={tags}
 			loading={loading}
-			onActiveChange={() => setDropdownActive(!dropdownActive)}
+			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
 			onSearch={async (value) => {
 				setLoading(true);
 

@@ -73,7 +73,7 @@ const AllVocabulariesDropdown: React.FC<IAllFiltersDropdown> = ({
 			icon="vocabulary"
 			items={vocabularies}
 			loading={loading}
-			onActiveChange={() => setDropdownActive(!dropdownActive)}
+			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
 			onSearch={async (value) => {
 				setLoading(true);
 

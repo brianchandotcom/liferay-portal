@@ -4,9 +4,9 @@
 	},
 	"description": "Liferay Sample Editor Config Contributor",
 	"devDependencies": {
-		"@ckeditor/ckeditor5-core": "46.0.2",
-		"@ckeditor/ckeditor5-fullscreen": "46.0.2",
-		"@ckeditor/ckeditor5-ui": "46.0.2",
+		"@ckeditor/ckeditor5-core": "46.0.3",
+		"@ckeditor/ckeditor5-fullscreen": "46.0.3",
+		"@ckeditor/ckeditor5-ui": "46.0.3",
 		"typescript": "^5.0.4"
 	},
 	"main": "./src/index.ts",

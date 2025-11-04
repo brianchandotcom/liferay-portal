@@ -5,6 +5,7 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.configuration.admin.util.ConfigurationPIDUtil;
 import com.liferay.configuration.admin.web.internal.display.context.ConfigurationScopeDisplayContext;
 import com.liferay.configuration.admin.web.internal.model.ConfigurationModel;
 import com.liferay.petra.string.StringBundler;
@@ -376,14 +377,14 @@ public class ConfigurationModelRetrieverImpl
 	private String _getScopedPidFilterString(
 		String pid, ExtendedObjectClassDefinition.Scope scope) {
 
-		String unscopedPId = ConfigurationPIDUtil.getUnscopedPid(pid);
+		String rawPid = ConfigurationPIDUtil.getRawPid(pid);
 
 		String filterString = StringBundler.concat(
 			StringPool.OPEN_PARENTHESIS, StringPool.PIPE,
 			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, unscopedPId),
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid),
 			_getPropertyFilterString(
-				ConfigurationAdmin.SERVICE_FACTORYPID, unscopedPId + ".scoped"),
+				ConfigurationAdmin.SERVICE_FACTORYPID, rawPid + ".scoped"),
 			StringPool.CLOSE_PARENTHESIS);
 
 		if (pid.contains("~")) {
@@ -439,7 +440,7 @@ public class ConfigurationModelRetrieverImpl
 				StringPool.OPEN_PARENTHESIS, StringPool.AMPERSAND,
 				_getPropertyFilterString(
 					ConfigurationAdmin.SERVICE_FACTORYPID,
-					ConfigurationPIDUtil.getUnscopedPid(pid)),
+					ConfigurationPIDUtil.getRawPid(pid)),
 				_getPropertyFilterString(Constants.SERVICE_PID, pid),
 				StringPool.CLOSE_PARENTHESIS);
 		}

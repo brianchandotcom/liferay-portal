@@ -126,11 +126,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 
 		String line1 = lines.get(0);
 
-		Assert.assertEquals("event:Subscribe", line1);
+		Assert.assertEquals("event: Subscribe", line1);
 
 		String line2 = lines.get(1);
 
-		Assert.assertEquals("data:successfully subscribed", line2);
+		Assert.assertEquals("data: Successfully Subscribed", line2);
 	}
 
 	@Ignore

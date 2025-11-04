@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
@@ -78,7 +79,60 @@ export class AppManagerPage {
 		await this.applicationsMenuPage.goToAppManager();
 	}
 
-	async expectAppToExist(appName: string) {
+	async deactivateApp(appName: string) {
+		await this.goto();
+
+		await this.searchAppAndExpectToBeVisible(appName);
+
+		this.page.once('dialog', (dialog) => dialog.accept());
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.deactivateLink,
+			trigger: this.appRowOptionsMenu(appName),
+		});
+
+		await waitForAlert(this.page);
+
+		await this.searchAppAndExpectToBeVisible(appName, 'Resolved');
+	}
+
+	async activateApp(appName: string) {
+		await this.goto();
+
+		await this.searchAppAndExpectToBeVisible(appName);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.activateLink,
+			trigger: this.appRowOptionsMenu(appName),
+		});
+
+		await waitForAlert(this.page);
+
+		await this.searchAppAndExpectToBeVisible(appName, 'Active');
+	}
+
+	async uninstallApp(appName: string) {
+		await this.goto();
+
+		await this.searchAppAndExpectToBeVisible(appName);
+
+		this.page.once('dialog', (dialog) => dialog.accept());
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.uninstallLink,
+			trigger: this.appRowOptionsMenu(appName),
+		});
+
+		await waitForAlert(this.page);
+	}
+
+	async searchAppAndExpectToBeVisible(
+		appName: string,
+		expectedStatus?: string
+	) {
 		await expect(async () => {
 			await expect(this.searchInput).toBeEnabled();
 
@@ -89,62 +143,12 @@ export class AppManagerPage {
 			await expect(this.appLink(appName)).toBeVisible({
 				timeout: 2000,
 			});
-		}).toPass();
-	}
 
-	async deactivateApp(appName: string) {
-		await this.goto();
-
-		await this.expectAppToExist(appName);
-
-		this.page.once('dialog', (dialog) => dialog.accept());
-
-		await expect(async () => {
-			await this.appRowOptionsMenu(appName).click({delay: 1000});
-
-			await expect(this.deactivateLink).toBeVisible();
-
-			await this.deactivateLink.click({timeout: 2000});
-		}).toPass();
-
-		await waitForAlert(this.page);
-
-		await this.expectAppToExist(appName);
-
-		await expect(this.appRow(appName)).toContainText('Resolved');
-	}
-
-	async activateApp(appName: string) {
-		await this.goto();
-
-		await this.expectAppToExist(appName);
-
-		await expect(async () => {
-			await this.appRowOptionsMenu(appName).click({delay: 1000});
-
-			await expect(this.activateLink).toBeVisible();
-
-			await this.activateLink.click({timeout: 2000});
-		}).toPass();
-
-		await waitForAlert(this.page);
-	}
-
-	async uninstallApp(appName: string) {
-		await this.goto();
-
-		await this.expectAppToExist(appName);
-
-		this.page.once('dialog', (dialog) => dialog.accept());
-
-		await expect(async () => {
-			await this.appRowOptionsMenu(appName).click();
-
-			await expect(this.uninstallLink).toBeVisible();
-
-			await this.uninstallLink.click({timeout: 1000});
-
-			await waitForAlert(this.page);
+			if (expectedStatus !== undefined) {
+				await expect(this.appRow(appName)).toContainText(
+					expectedStatus
+				);
+			}
 		}).toPass();
 	}
 }

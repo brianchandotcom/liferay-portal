@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Page, expect} from '@playwright/test';
 import path from 'path';
 
 import {PagesAdminPage} from '../../../../pages/layout-admin-web/PagesAdminPage';
@@ -11,9 +11,10 @@ import {PageEditorPage} from '../../../../pages/layout-content-page-editor-web/P
 import {AppManagerPage} from '../../../../pages/marketplace-app-manager-web/AppManagerPage';
 import {BundleBlacklistPage} from '../../../../pages/marketplace-app-manager-web/BundleBlacklistPage';
 import {doAndGoBack} from '../../../../utils/doAndGoBack';
-import {waitForAlert} from '../../../../utils/waitForAlert';
+import {reloadUntilNotVisible} from '../../../../utils/reloadUntilNotVisible';
+import {reloadUntilVisible} from '../../../../utils/reloadUntilVisible';
 
-export class ThemeFixture {
+export class ThemeHelper {
 	private readonly testThemeName = 'test-theme-7-4';
 	private readonly testThemeAppName = 'test-theme';
 	private readonly testThemeAppPath = path.join(
@@ -44,8 +45,10 @@ export class ThemeFixture {
 		private readonly site: Site
 	) {}
 
-	async addTestTheme() {
+	async installTestTheme() {
 		await doAndGoBack(this.page, async () => {
+			await this.bundleBlacklistPage.updateBundleBlacklist('');
+
 			await this.appManagerPage.uploadAppFromLocalDirectory(
 				this.testThemeAppName,
 				path.resolve(this.testThemeAppPath)
@@ -53,38 +56,35 @@ export class ThemeFixture {
 		});
 	}
 
-	async uninstallTestTheme(testPageName: string) {
+	async uninstallTestTheme(testPageName?: string) {
 		await doAndGoBack(this.page, async () => {
 			await this.appManagerPage.uninstallApp(this.testThemeAppName);
 
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+			if (testPageName !== undefined) {
+				await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 
-			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
+				await this.pagesAdminPage.goToDesignTabConfiguration(
+					testPageName
+				);
 
-			await this.pagesAdminPage.expectThemeToBeDeactivated(
-				this.testThemeName
-			);
+				await this.expectThemeToBeDeactivated(this.testThemeName);
+			}
 		});
 	}
 
-	async redeployTestTheme(testPageName: string) {
+	async reinstallTestTheme(testPageName?: string) {
 		await doAndGoBack(this.page, async () => {
-			await this.bundleBlacklistPage.goto();
+			await this.bundleBlacklistPage.updateBundleBlacklist('');
 
-			await this.bundleBlacklistPage.blacklistBundleSymbolicInput.fill(
-				''
-			);
-			await this.bundleBlacklistPage.updateButton.click();
+			if (testPageName !== undefined) {
+				await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
 
-			await waitForAlert(this.page);
+				await this.pagesAdminPage.goToDesignTabConfiguration(
+					testPageName
+				);
 
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
-
-			await this.pagesAdminPage.expectThemeToBeActivated(
-				this.testThemeName
-			);
+				await this.expectThemeToBeActivated(this.testThemeName);
+			}
 		});
 	}
 
@@ -96,9 +96,7 @@ export class ThemeFixture {
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
 
-			await this.pagesAdminPage.expectThemeToBeDeactivated(
-				this.testThemeName
-			);
+			await this.expectThemeToBeDeactivated(this.testThemeName);
 		});
 	}
 
@@ -110,9 +108,7 @@ export class ThemeFixture {
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(testPageName);
 
-			await this.pagesAdminPage.expectThemeToBeActivated(
-				this.testThemeName
-			);
+			await this.expectThemeToBeActivated(this.testThemeName);
 		});
 	}
 
@@ -140,6 +136,44 @@ export class ThemeFixture {
 		});
 	}
 
+	async publishPage(pageName: string) {
+		await doAndGoBack(this.page, async () => {
+			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
+
+			await this.pagesAdminPage.editPage(pageName);
+
+			await this.pageEditorPage.publishPage();
+		});
+	}
+
+	async expectThemeToBeDeactivated(themeName: string) {
+		const themeCard = this.pagesAdminPage.getThemeCard(themeName);
+
+		await reloadUntilNotVisible({
+			beforeReload: async () =>
+				await this.pagesAdminPage.openThemeSelector(),
+			maxAttempts: 10,
+			myLocator: themeCard,
+			page: this.page,
+		});
+
+		await expect(themeCard).toBeHidden();
+	}
+
+	async expectThemeToBeActivated(themeName: string) {
+		const themeCard = this.pagesAdminPage.getThemeCard(themeName);
+
+		await reloadUntilVisible({
+			beforeReload: async () =>
+				await this.pagesAdminPage.openThemeSelector(),
+			maxAttempts: 10,
+			myLocator: themeCard,
+			page: this.page,
+		});
+
+		await expect(themeCard).toBeVisible();
+	}
+
 	async expectCurrentThemeToBeClassic(pageName: string) {
 		await this.expectCurrentThemeToBe(pageName, 'Classic');
 	}
@@ -154,17 +188,13 @@ export class ThemeFixture {
 
 			await this.pagesAdminPage.goToDesignTabConfiguration(pageName);
 
-			await this.pagesAdminPage.expectCurrentThemeToBe(themeName);
-		});
-	}
+			const currentThemeIndicator = this.page
+				.locator(
+					'[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_currentThemeContainer"]'
+				)
+				.getByLabel(themeName, {exact: true});
 
-	async publishPage(pageName: string) {
-		await doAndGoBack(this.page, async () => {
-			await this.pagesAdminPage.goto(this.site.friendlyUrlPath);
-
-			await this.pagesAdminPage.editPage(pageName);
-
-			await this.pageEditorPage.publishPage();
+			await expect(currentThemeIndicator).toBeVisible();
 		});
 	}
 }

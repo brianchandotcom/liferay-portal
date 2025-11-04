@@ -9,8 +9,6 @@ import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import fillAndClickOutside from '../../utils/fillAndClickOutside';
 import {PORTLET_URLS} from '../../utils/portletUrls';
-import {reloadUntilNotVisible} from '../../utils/reloadUntilNotVisible';
-import {reloadUntilVisible} from '../../utils/reloadUntilVisible';
 import {waitForAlert} from '../../utils/waitForAlert';
 import {PageEditorPage} from '../layout-content-page-editor-web/PageEditorPage';
 
@@ -247,34 +245,6 @@ export class PagesAdminPage {
 		await this.saveConfiguration();
 	}
 
-	async expectThemeToBeDeactivated(themeName: string) {
-		await reloadUntilNotVisible({
-			beforeReload: async () => await this.openThemeSelector(),
-			maxAttempts: 10,
-			myLocator: this.getThemeCard(themeName),
-			page: this.page,
-		});
-	}
-
-	async expectThemeToBeActivated(themeName: string) {
-		await reloadUntilVisible({
-			beforeReload: async () => await this.openThemeSelector(),
-			maxAttempts: 10,
-			myLocator: this.getThemeCard(themeName),
-			page: this.page,
-		});
-	}
-
-	async expectCurrentThemeToBe(themeName: string) {
-		const currentThemeIndicator = this.page
-			.locator(
-				'[id="_com_liferay_layout_admin_web_portlet_GroupPagesPortlet_currentThemeContainer"]'
-			)
-			.getByLabel(themeName, {exact: true});
-
-		await expect(currentThemeIndicator).toBeVisible();
-	}
-
 	async changeTheme(themeName: string) {
 		await this.openThemeSelector();
 
@@ -289,7 +259,7 @@ export class PagesAdminPage {
 		await expect(async () => {
 			const themeCard = this.getThemeCard(themeName);
 
-			await themeCard.waitFor({state: 'visible'});
+			await themeCard.waitFor({state: 'visible', timeout: 2000});
 
 			await clickAndExpectToBeHidden({
 				target: themeCard,
@@ -316,11 +286,9 @@ export class PagesAdminPage {
 
 			await this.defineCustomThemeRadio.click();
 
-			expect(changeThemeButton).toBeEnabled();
+			await expect(changeThemeButton).toBeEnabled();
 
-			await this.page
-				.getByRole('button', {name: 'Change Current Theme'})
-				.click();
+			await changeThemeButton.click();
 
 			await this.page
 				.getByRole('heading', {name: 'Available Themes'})

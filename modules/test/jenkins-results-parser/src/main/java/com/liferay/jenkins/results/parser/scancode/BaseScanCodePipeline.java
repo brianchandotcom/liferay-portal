@@ -418,9 +418,12 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 			));
 
 		if (_cloudBucketURL != null) {
+			String fileName = _cloudBucketURL.substring(
+				_cloudBucketURL.lastIndexOf("/") + 1);
+
 			sb.append("\n*Cloud Bucket tar.gz:* ");
 			sb.append("<");
-			sb.append(_cloudBucketURL);
+			sb.append(_PROXY_SERVER_URL + fileName);
 			sb.append("|");
 			sb.append(_projectNameFromURL + ".tar.gz");
 			sb.append(">");
@@ -605,6 +608,9 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 
 	private static final String _CONTENT_TYPE =
 		"'Content-Type: application/json;'";
+
+	private static final String _PROXY_SERVER_URL =
+		"https://scancode-results.liferay.com/inbox/";
 
 	private static final Pattern _buildNumberPattern = Pattern.compile(
 		"job/.*/(\\d+)/?$");

@@ -16,21 +16,26 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import deleteRule from '../../../app/thunks/deleteRule';
-import useActionValues from '../../../app/utils/useActionValues';
-import useConditionValues from '../../../app/utils/useConditionValues';
+import useActionValues, {
+	ActionValues,
+} from '../../../app/utils/useActionValues';
+import useConditionValues, {
+	ConditionValues,
+} from '../../../app/utils/useConditionValues';
+import {Rule} from '../../../types/Rule';
 import RulesModal from './RulesModal';
 
 export default function RulesList() {
 	const [modalVisible, setModalVisible] = useState(false);
-	const [editingRule, setEditingRule] = useState(null);
-	const [savedRuleId, setSavedRuleId] = useState(null);
+	const [editingRule, setEditingRule] = useState<Rule | null>(null);
+	const [savedRuleId, setSavedRuleId] = useState<string | null>(null);
 
 	const rules = useSelector((state) => state.layoutData.pageRules);
 	const dispatch = useDispatch();
 
 	const onCreateRule = () => setModalVisible(true);
 
-	const onDeleteRule = (rule) => {
+	const onDeleteRule = (rule: Rule) => {
 		dispatch(
 			deleteRule({
 				ruleId: rule.id,
@@ -45,7 +50,7 @@ export default function RulesList() {
 		);
 	};
 
-	const onEditRule = (rule) => {
+	const onEditRule = (rule: Rule) => {
 		setEditingRule(rule);
 
 		setModalVisible(true);
@@ -66,7 +71,7 @@ export default function RulesList() {
 
 			<ClayList className="pt-3">
 				{rules.map((rule) => (
-					<Rule
+					<RuleItem
 						key={rule.id}
 						onDelete={onDeleteRule}
 						onEdit={onEditRule}
@@ -95,12 +100,25 @@ export default function RulesList() {
 	);
 }
 
-function Rule({onDelete, onEdit, rule, savedRuleId, setSavedRuleId}) {
-	const [triggerElement, setTriggerElement] = useState();
+function RuleItem({
+	onDelete,
+	onEdit,
+	rule,
+	savedRuleId,
+	setSavedRuleId,
+}: {
+	onDelete: (rule: Rule) => void;
+	onEdit: (rule: Rule) => void;
+	rule: Rule;
+	savedRuleId: string | null;
+	setSavedRuleId: (id: string | null) => void;
+}) {
+	const [triggerElement, setTriggerElement] =
+		useState<HTMLButtonElement | null>(null);
 
 	useEffect(() => {
 		if (savedRuleId === rule.id) {
-			triggerElement.focus();
+			triggerElement?.focus();
 
 			setSavedRuleId(null);
 		}
@@ -192,7 +210,13 @@ function Rule({onDelete, onEdit, rule, savedRuleId, setSavedRuleId}) {
 	);
 }
 
-function Condition({condition, index}) {
+function Condition({
+	condition,
+	index,
+}: {
+	condition: ConditionValues;
+	index: number;
+}) {
 	return (
 		<>
 			<span
@@ -216,7 +240,7 @@ function Condition({condition, index}) {
 	);
 }
 
-function Action({action}) {
+function Action({action}: {action: ActionValues}) {
 	return (
 		<>
 			{action.prefix ? (
@@ -234,7 +258,11 @@ function Action({action}) {
 	);
 }
 
-function getRuleAriaLabel(name, conditions, actions) {
+function getRuleAriaLabel(
+	name: string,
+	conditions: ConditionValues[],
+	actions: ActionValues[]
+) {
 	const conditionsDescription = conditions
 		.map((condition) => condition.description)
 		.join(' ');

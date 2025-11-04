@@ -18,26 +18,21 @@ import java.util.regex.Matcher;
 public class BuildFactory {
 
 	public static Build newBuild(
-		Build parentBuild, DownstreamBuildReport downstreamBuildReport) {
+		DownstreamBuildReport cachedDownstreamBuildReport, Build parentBuild) {
 
 		return newBuild(
-			String.valueOf(downstreamBuildReport.getBuildURL()), parentBuild,
-			downstreamBuildReport.getJobVariant(), downstreamBuildReport);
+			String.valueOf(cachedDownstreamBuildReport.getBuildURL()),
+			cachedDownstreamBuildReport,
+			cachedDownstreamBuildReport.getJobVariant(), parentBuild);
 	}
 
 	public static Build newBuild(String buildURL, Build parentBuild) {
-		return newBuild(buildURL, parentBuild, null);
+		return newBuild(buildURL, null, null, parentBuild);
 	}
 
 	public static Build newBuild(
-		String buildURL, Build parentBuild, String jobVariant) {
-
-		return newBuild(buildURL, parentBuild, jobVariant, null);
-	}
-
-	public static Build newBuild(
-		String buildURL, Build parentBuild, String jobVariant,
-		DownstreamBuildReport downstreamBuildReport) {
+		String buildURL, DownstreamBuildReport cachedDownstreamBuildReport,
+		String jobVariant, Build parentBuild) {
 
 		buildURL = JenkinsResultsParserUtil.getLocalURL(buildURL);
 
@@ -51,8 +46,8 @@ public class BuildFactory {
 		String axisVariable = matcher.group("axisVariable");
 
 		if (jobVariant == null) {
-			if (downstreamBuildReport != null) {
-				jobVariant = downstreamBuildReport.getJobVariant();
+			if (cachedDownstreamBuildReport != null) {
+				jobVariant = cachedDownstreamBuildReport.getJobVariant();
 			}
 			else {
 				jobVariant = "";
@@ -91,7 +86,8 @@ public class BuildFactory {
 
 		if (jobName.equals("app-server-bundle-builder")) {
 			return new AppServerBundleDownstreamBuild(
-				buildURL, (TopLevelBuild)parentBuild, downstreamBuildReport);
+				buildURL, (TopLevelBuild)parentBuild,
+				cachedDownstreamBuildReport);
 		}
 
 		if (jobName.contains("-downstream")) {
@@ -114,7 +110,7 @@ public class BuildFactory {
 
 					return new PoshiJUnitDownstreamBuild(
 						buildURL, (TopLevelBuild)parentBuild,
-						downstreamBuildReport);
+						cachedDownstreamBuildReport);
 				}
 				else if (jobVariant.startsWith("integration") ||
 						 jobVariant.startsWith("js-unit") ||
@@ -124,12 +120,13 @@ public class BuildFactory {
 
 					return new JUnitDownstreamBuild(
 						buildURL, (TopLevelBuild)parentBuild,
-						downstreamBuildReport);
+						cachedDownstreamBuildReport);
 				}
 			}
 
 			return new DefaultDownstreamBuild(
-				buildURL, (TopLevelBuild)parentBuild, downstreamBuildReport);
+				buildURL, (TopLevelBuild)parentBuild,
+				cachedDownstreamBuildReport);
 		}
 
 		if (jobName.contains("-source-format")) {
@@ -252,6 +249,12 @@ public class BuildFactory {
 		}
 
 		return new DefaultTopLevelBuild(buildURL, (TopLevelBuild)parentBuild);
+	}
+
+	public static Build newBuild(
+		String buildURL, String jobVariant, Build parentBuild) {
+
+		return newBuild(buildURL, null, jobVariant, parentBuild);
 	}
 
 	public static synchronized Build newBuildFromArchive(

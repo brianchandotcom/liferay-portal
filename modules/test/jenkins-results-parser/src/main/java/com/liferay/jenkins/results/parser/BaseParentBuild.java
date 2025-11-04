@@ -84,7 +84,7 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 						public Build call() {
 							try {
 								return BuildFactory.newBuild(
-									buildURL, thisBuild, axisName);
+									buildURL, axisName, thisBuild);
 							}
 							catch (RuntimeException runtimeException) {
 								if (!isFromArchive()) {

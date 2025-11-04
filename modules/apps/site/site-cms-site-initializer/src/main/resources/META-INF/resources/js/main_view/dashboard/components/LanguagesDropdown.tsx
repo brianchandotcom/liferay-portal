@@ -62,7 +62,7 @@ const LanguagesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			filterByValue="languages"
 			icon="automatic-translate"
 			items={languages}
-			onActiveChange={() => setDropdownActive(!dropdownActive)}
+			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
 			onSearch={(value) => {
 				setLanguages(
 					value

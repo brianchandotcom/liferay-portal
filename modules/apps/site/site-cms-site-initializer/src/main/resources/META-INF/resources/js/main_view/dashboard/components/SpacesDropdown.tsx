@@ -63,7 +63,7 @@ const SpacesDropdown: React.FC<React.HTMLAttributes<HTMLElement>> = ({
 			icon="box-container"
 			items={spaces}
 			loading={loading}
-			onActiveChange={() => setDropdownActive(!dropdownActive)}
+			onActiveChange={() => setDropdownActive((prevState) => !prevState)}
 			onSearch={async (value) => {
 				setLoading(true);
 

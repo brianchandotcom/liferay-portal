@@ -49,6 +49,7 @@ export function writeConfigInURL(
 
 	const currentConfig = readConfigFromURL(id);
 
+	let currentConfigChanged: boolean = false;
 	Object.keys(config).forEach((key: string) => {
 		const configKey: keyof IConfigInURL = key as keyof IConfigInURL;
 
@@ -57,11 +58,12 @@ export function writeConfigInURL(
 
 			if (currentConfig && currentConfig[configKey]) {
 				delete currentConfig[configKey];
+				currentConfigChanged = true;
 			}
 		}
 	});
 
-	if (contains(config, currentConfig)) {
+	if (contains(config, currentConfig) && !currentConfigChanged) {
 		return;
 	}
 

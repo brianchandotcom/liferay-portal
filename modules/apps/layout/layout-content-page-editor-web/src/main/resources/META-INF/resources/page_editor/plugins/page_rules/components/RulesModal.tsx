@@ -17,12 +17,22 @@ import {v4 as uuidv4} from 'uuid';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
+import {Rule} from '../../../types/Rule';
+import {Action} from './Action';
+import {Condition} from './Condition';
 import {
+	ConditionType,
 	RuleBuilderActionSection,
 	RuleBuilderConditionSection,
 } from './RuleBuilderSection';
 
-export default function RulesModal({editingRule, onCloseModal}) {
+export default function RulesModal({
+	editingRule,
+	onCloseModal,
+}: {
+	editingRule?: Rule | null;
+	onCloseModal: (id: string | undefined) => void;
+}) {
 	const {observer, onClose} = useModal({
 		onClose: () => onCloseModal(editingRule?.id),
 	});
@@ -41,13 +51,13 @@ export default function RulesModal({editingRule, onCloseModal}) {
 	const [nameError, setNameError] = useState(false);
 	const [ruleError, setRuleError] = useState(false);
 
-	const [actions, setActions] = useState(
-		() => editingRule?.actions || [{id: uuidv4()}]
+	const [actions, setActions] = useState<Action[]>(
+		() => editingRule?.actions || [{id: uuidv4(), type: undefined}]
 	);
-	const [conditions, setConditions] = useState(
-		() => editingRule?.conditions || [{id: uuidv4()}]
+	const [conditions, setConditions] = useState<Condition[]>(
+		() => editingRule?.conditions || [{id: uuidv4(), type: undefined}]
 	);
-	const [conditionType, setConditionType] = useState('all');
+	const [conditionType, setConditionType] = useState<ConditionType>('all');
 
 	const onSave = () => {
 		if (!name) {
@@ -216,8 +226,8 @@ export default function RulesModal({editingRule, onCloseModal}) {
 	);
 }
 
-function getDefaultName(rules) {
-	const nameIsUsed = (rules, name) =>
+function getDefaultName(rules: Rule[]) {
+	const nameIsUsed = (rules: Rule[], name: string) =>
 		rules.some((rule) => rule.name === name);
 
 	let name = Liferay.Language.get('rule');
@@ -232,8 +242,14 @@ function getDefaultName(rules) {
 	return name;
 }
 
-function ErrorAlert({setVisible, visible}) {
-	const alertRef = useRef();
+function ErrorAlert({
+	setVisible,
+	visible,
+}: {
+	setVisible: (visible: boolean) => void;
+	visible: boolean;
+}) {
+	const alertRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		if (visible) {

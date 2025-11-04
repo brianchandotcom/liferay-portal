@@ -723,52 +723,6 @@ public class CommentResourceImpl extends BaseCommentResourceImpl {
 		return false;
 	}
 
-	private Comment _postComment(
-			UnsafeSupplier<Long, ? extends Exception> addCommentUnsafeSupplier,
-			String className, long classPK, long groupId)
-		throws Exception {
-
-		_discussionPermission.checkAddPermission(
-			PermissionThreadLocal.getPermissionChecker(),
-			contextCompany.getCompanyId(), groupId, className, classPK);
-
-		try {
-			long commentId = addCommentUnsafeSupplier.get();
-
-			return CommentUtil.toComment(
-				_commentManager.fetchComment(commentId), _commentManager,
-				_portal);
-		}
-		catch (DiscussionMaxCommentsException discussionMaxCommentsException) {
-			throw new ClientErrorException(
-				"Maximum number of comments has been reached", 422,
-				discussionMaxCommentsException);
-		}
-		catch (DuplicateCommentException duplicateCommentException) {
-			throw new ClientErrorException(
-				"A comment with the same text already exists", 409,
-				duplicateCommentException);
-		}
-		catch (MessageSubjectException messageSubjectException) {
-			throw new ClientErrorException(
-				"Comment text is null", 422, messageSubjectException);
-		}
-	}
-
-	private Comment _postEntityComment(
-			String externalReferenceCode, long groupId, String className,
-			long classPK, String text)
-		throws Exception {
-
-		return _postComment(
-			() -> _commentManager.addComment(
-				externalReferenceCode, _getUserId(), groupId, className,
-				classPK, StringPool.BLANK, StringPool.BLANK,
-				StringBundler.concat("<p>", text, "</p>"),
-				_createServiceContextFunction()),
-			className, classPK, groupId);
-	}
-
 	private Comment _postParentCommentComment(
 			String externalReferenceCode, long groupId, long parentCommentId,
 			String className, long classPK, String text)

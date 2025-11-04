@@ -112,12 +112,17 @@ export default function dragAndDropReducer(state, action, config) {
 						fieldNameGenerator,
 						fieldPage: sourceFieldPage,
 						generateFieldNameUsingFieldLabel,
-						pages,
+						pages: updatedPages,
 					});
 				}
 			}
 
 			if (targetFieldName) {
+				updatedPages[sourceFieldPage].rows = removeNestedEmptyRows(
+					updatedPages,
+					sourceFieldPage
+				);
+
 				updatedPages = deleteField({
 					clean: true,
 					defaultLanguageId,
@@ -126,7 +131,7 @@ export default function dragAndDropReducer(state, action, config) {
 					fieldNameGenerator,
 					fieldPage: sourceFieldPage,
 					generateFieldNameUsingFieldLabel,
-					pages,
+					pages: updatedPages,
 				});
 
 				return sectionAdded(

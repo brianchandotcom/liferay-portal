@@ -29,14 +29,14 @@ export default function getScssLoaderPlugin(projectWebContextPath) {
 				async (args) => {
 					const projectPath = path.relative(SRC_PATH, args.path);
 
+					const projectBasePath = projectPath.replace(/\.scss$/, '');
+
 					const cssFiles = await fs.readdir(
 						path.join(
 							BUILD_SASS_CACHE_PATH,
 							path.dirname(projectPath)
 						)
 					);
-
-					const projectBasePath = projectPath.replace(/\.scss$/, '');
 
 					const cssBasename = cssFiles.find((cssFile) =>
 						cssFile.startsWith(

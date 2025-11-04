@@ -57,6 +57,7 @@ async function bundle(
 	const esbuildConfig = {
 		alias: projectAlias,
 		bundle: true,
+		entryNames: '[dir]/[name].([hash])',
 		entryPoints: [entryPoint],
 		format: 'esm',
 		outdir: BUILD_MAIN_EXPORTS_PATH,
@@ -103,14 +104,17 @@ async function bundle(
 
 	const flatModuleName = getFlatName(moduleName);
 
-	await runEsbuild(esbuildConfig, flatModuleName);
+	const {metafile} = await runEsbuild(esbuildConfig, flatModuleName);
+	const {outputs} = metafile;
 
-	await relocateSourcemap(
-		path.join(
-			BUILD_MAIN_EXPORTS_PATH,
-			'exports',
-			`${flatModuleName}.js.map`
-		),
-		projectWebContextPath
-	);
+	await Promise.all([
+		...Object.keys(outputs).map(async (output) => {
+			if (output.endsWith('.map')) {
+				return relocateSourcemap(
+					path.join(output),
+					projectWebContextPath
+				);
+			}
+		}),
+	]);
 }

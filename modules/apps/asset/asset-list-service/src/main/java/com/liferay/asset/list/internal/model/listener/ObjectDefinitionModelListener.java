@@ -100,22 +100,22 @@ public class ObjectDefinitionModelListener
 			typeSettings
 		).build();
 
-		String classNameIdsValue = unicodeProperties.getProperty(
+		String classNameIdsString = unicodeProperties.getProperty(
 			"classNameIds");
 
-		String[] classNameIdValues = StringUtil.split(classNameIdsValue);
+		String[] classNameIds = StringUtil.split(classNameIdsString);
 
-		if (ArrayUtil.isEmpty(classNameIdValues)) {
+		if (ArrayUtil.isEmpty(classNameIds)) {
 			return;
 		}
 
-		List<String> classNameIds = new LinkedList<>();
+		List<String> classNameIdsList = new LinkedList<>();
 
-		for (String curClassNameId : classNameIdValues) {
-			classNameIds.add(curClassNameId);
+		for (String curClassNameId : classNameIds) {
+			classNameIdsList.add(curClassNameId);
 		}
 
-		if (!classNameIds.removeIf(
+		if (!classNameIdsList.removeIf(
 				curClassNameId -> curClassNameId.equals(classNameId))) {
 
 			return;
@@ -124,13 +124,13 @@ public class ObjectDefinitionModelListener
 		String anyAssetTypeValue = GetterUtil.getString(
 			unicodeProperties.getProperty("anyAssetType"));
 
-		if (!classNameIds.isEmpty()) {
-			if ((classNameIds.size() == 1) &&
+		if (!classNameIdsList.isEmpty()) {
+			if ((classNameIdsList.size() == 1) &&
 				StringUtil.equalsIgnoreCase(
 					anyAssetTypeValue, Boolean.FALSE.toString())) {
 
 				unicodeProperties.setProperty(
-					"anyAssetType", classNameIds.get(0));
+					"anyAssetType", classNameIdsList.get(0));
 				unicodeProperties.setProperty(
 					"classNameIds",
 					StringUtil.merge(
@@ -147,7 +147,7 @@ public class ObjectDefinitionModelListener
 			}
 
 			unicodeProperties.setProperty(
-				"classNameIds", StringUtil.merge(classNameIds));
+				"classNameIds", StringUtil.merge(classNameIdsList));
 		}
 		else {
 			unicodeProperties.setProperty(

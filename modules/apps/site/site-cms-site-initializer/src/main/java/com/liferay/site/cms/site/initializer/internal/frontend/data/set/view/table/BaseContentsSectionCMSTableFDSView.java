@@ -30,8 +30,6 @@ public abstract class BaseContentsSectionCMSTableFDSView
 				"actionLink"
 			).setContentRenderer(
 				"simpleActionLinkTableCellRenderer"
-			).setSortable(
-				true
 			)
 		).add(
 			"embedded.systemProperties.objectDefinitionBrief.label", "type",

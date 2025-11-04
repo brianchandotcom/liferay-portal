@@ -54,6 +54,9 @@ public class AIHubSiteInitializerTest {
 		siteInitializer.initialize(_group.getGroupId());
 
 		_assertWorkflowDefinitionExists(
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
+			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
+		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
 			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);

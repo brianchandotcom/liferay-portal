@@ -367,6 +367,24 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testIncorrectMethodCallsInUpgradeSteps() throws Exception {
+		test(
+			SourceProcessorTestParameters.create(
+				"IncorrectMethodCallsInUpgradeSteps.testjava"
+			).addExpectedMessage(
+				"Only \"Table.create*\" and \"UpgradeProcessFactory.*\" " +
+					"calls are allowed in \"getPostUpgradeSteps\" and \"" +
+						"getPreUpgradeSteps\", see LPD-44331",
+				35
+			).addExpectedMessage(
+				"Only \"Table.create*\" and \"UpgradeProcessFactory.*\" " +
+					"calls are allowed in \"getPostUpgradeSteps\" and \"" +
+						"getPreUpgradeSteps\", see LPD-44331",
+				38
+			));
+	}
+
+	@Test
 	public void testIncorrectOperatorOrder() throws Exception {
 		test(
 			SourceProcessorTestParameters.create(

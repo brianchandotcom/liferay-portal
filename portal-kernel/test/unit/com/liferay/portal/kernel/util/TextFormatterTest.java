@@ -123,6 +123,13 @@ public class TextFormatterTest {
 	}
 
 	@Test
+	public void testFormatR() {
+		_testFormat("formatId", "FORMAT_ID", TextFormatter.R);
+		_testFormat(
+			"friendlyURLMapper", "FRIENDLY_URL_MAPPER", TextFormatter.R);
+	}
+
+	@Test
 	public void testformatStorageSizeOneB() throws Exception {
 		long bytes = 1;
 

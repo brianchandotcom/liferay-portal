@@ -1094,3 +1094,67 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'FDS Table content disappears after clicking "Show Details" and then "Expire"',
+	{tag: '@LPD-69267'},
+	async ({apiHelpers, assetsPage, page}) => {
+		const applicationName = 'cms/basic-web-contents';
+		const file1Title = `Title ${getRandomString()}`;
+		const spaceName = 'Default';
+		let objectEntry;
+
+		try {
+			await test.step('Create an object and go to All section', async () => {
+				objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+					{
+						objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+						title: file1Title,
+					},
+					applicationName,
+					spaceName
+				);
+
+				await page.goto(PORTLET_URLS.cmsAll);
+			});
+
+			await test.step('Select the asset, open the Side Panel and then expire the asset', async () => {
+				await assetsPage.execItemAction({
+					action: 'Show Details',
+					filter: file1Title,
+				});
+
+				await expect(
+					page.getByRole('heading', {name: file1Title})
+				).toBeVisible();
+
+				await page.getByLabel('Close the side panel.').click();
+
+				await assetsPage.execItemAction({
+					action: 'Expire',
+					filter: file1Title,
+				});
+
+				await waitForAlert(page);
+			});
+
+			await test.step('Expect that FDS table content is visible', async () => {
+				await expect(
+					assetsPage
+						.getItem(objectEntry[0])
+						.getByRole('cell', {name: 'expired'})
+				).toBeVisible();
+
+				await expect(
+					assetsPage.dataSetFragmentPage.assetLink(file1Title)
+				).toBeVisible();
+			});
+		}
+		finally {
+			await apiHelpers.objectEntry.deleteObjectEntry(
+				applicationName,
+				String(objectEntry.id)
+			);
+		}
+	}
+);

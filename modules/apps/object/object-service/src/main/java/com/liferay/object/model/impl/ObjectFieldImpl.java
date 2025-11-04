@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -40,11 +40,9 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 	@Override
 	public String getAttachmentDownloadActionKey() {
-		String name = getName();
-
 		return StringBundler.concat(
 			ActionKeys.DOWNLOAD, StringPool.UNDERLINE,
-			StringUtil.toUpperCase(name.replaceAll("(?<!^)([A-Z])", "_$1")));
+			TextFormatter.format(getName(), TextFormatter.R));
 	}
 
 	@Override

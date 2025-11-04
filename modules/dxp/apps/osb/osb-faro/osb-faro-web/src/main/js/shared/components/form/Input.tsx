@@ -184,9 +184,13 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		} else if (contentAfter) {
 			return (
 				<Input.Group className='content-after'>
-					<Input.GroupItem>{inputComponent}</Input.GroupItem>
+					<Input.GroupItem className='input-group-prepend'>
+						{inputComponent}
+					</Input.GroupItem>
 
-					<Input.GroupItem shrink>{contentAfter}</Input.GroupItem>
+					<Input.GroupItem className='input-group-append' shrink>
+						{contentAfter}
+					</Input.GroupItem>
 				</Input.Group>
 			);
 		} else {
@@ -235,7 +239,12 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		return (
 			<div className={classes} style={style}>
 				{label && (
-					<Label htmlFor={name} popover={popover} required={required}>
+					<Label
+						className='mb-1'
+						htmlFor={name}
+						popover={popover}
+						required={required}
+					>
 						{label}
 					</Label>
 				)}

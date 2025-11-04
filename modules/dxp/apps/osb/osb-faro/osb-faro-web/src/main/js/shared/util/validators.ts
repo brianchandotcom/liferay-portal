@@ -73,7 +73,10 @@ export const validateIsInteger = (value: string) => {
 	return toPromise(error);
 };
 
-export function validateRequired(value: {value: any} | string | Array<string>) {
+export function validateRequired(
+	value: {value: any} | string | Array<string>,
+	errorMessage?: string
+) {
 	let error = '';
 
 	if (
@@ -82,7 +85,7 @@ export function validateRequired(value: {value: any} | string | Array<string>) {
 		(isArray(value) && !value.length) ||
 		(!isArray(value) && isObject(value) && !value.value)
 	) {
-		error = Liferay.Language.get('required');
+		error = errorMessage || Liferay.Language.get('required');
 	}
 
 	return toPromise(error);
@@ -170,4 +173,9 @@ export const validateProtocol = validatePattern(
 	Liferay.Language.get(
 		'your-url-is-missing-the-protocol.-please-include-http-or-https'
 	)
+);
+
+export const validateSalesforceDomain = validatePattern(
+	/^https:\/\/([A-Za-z0-9-]+\.)*(salesforce\.com|force\.com|salesforce-sites\.com)(:\d+)?(\/.*)?$/,
+	Liferay.Language.get('please-enter-a-valid-salesforce-data-source-url')
 );

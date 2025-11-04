@@ -79,39 +79,8 @@ test('Asserts that a user can manage factory configurations', async ({
 		await expect(page.getByText(providerName2)).toBeVisible();
 	});
 
-	await test.step('Assert that single/multiple factory configurations were exported', async () => {
-		page.on('download', async (download) => {
-			const fileName = download.suggestedFilename();
-
-			if (fileName.includes('.zip')) {
-				expect(fileName).toEqual(
-					expect.stringMatching(
-						'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.zip'
-					)
-				);
-			}
-			else {
-				expect(fileName).toEqual(
-					expect.stringMatching(
-						'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.scoped~(.*).config'
-					)
-				);
-
-				const path = await download.path();
-
-				const fileContent = await readFile(path, 'utf-8');
-
-				expect(
-					fileContent.includes(`providerName="${providerName1}"`)
-				).toBeTruthy();
-			}
-		});
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'Export Entries'}),
-			trigger: page.getByRole('button', {name: 'Actions'}).first(),
-		});
+	await test.step('Assert that single factory configuration was exported', async () => {
+		const downloadPromise = page.waitForEvent('download');
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
@@ -121,6 +90,40 @@ test('Asserts that a user can manage factory configurations', async ({
 				.first()
 				.getByRole('button', {name: 'Actions'}),
 		});
+
+		const download = await downloadPromise;
+
+		expect(download.suggestedFilename()).toEqual(
+			expect.stringMatching(
+				'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.scoped~(.*).config'
+			)
+		);
+
+		const path = await download.path();
+
+		const fileContent = await readFile(path, 'utf-8');
+
+		expect(
+			fileContent.includes(`providerName="${providerName1}"`)
+		).toBeTruthy();
+	});
+
+	await test.step('Assert that multiple factory configuration was exported', async () => {
+		const downloadPromise = page.waitForEvent('download');
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Export Entries'}),
+			trigger: page.getByRole('button', {name: 'Actions'}).first(),
+		});
+
+		const download = await downloadPromise;
+
+		expect(download.suggestedFilename()).toEqual(
+			expect.stringMatching(
+				'com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration.zip'
+			)
+		);
 	});
 
 	await test.step('Assert that factory configurations were edited', async () => {

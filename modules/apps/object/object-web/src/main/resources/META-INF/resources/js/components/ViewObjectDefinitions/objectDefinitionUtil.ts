@@ -494,7 +494,7 @@ export async function getUpdatedModelBuilderStructurePayload(
 
 					const objectDefinitionsFilteredByObjectFolder =
 						await API.getObjectDefinitions({
-							filter: `objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`,
+							filter: `hidden eq false and objectFolderExternalReferenceCode eq '${objectFolder.externalReferenceCode}'`,
 						});
 
 					const linkedObjectDefinitions: ObjectDefinition[] = [];

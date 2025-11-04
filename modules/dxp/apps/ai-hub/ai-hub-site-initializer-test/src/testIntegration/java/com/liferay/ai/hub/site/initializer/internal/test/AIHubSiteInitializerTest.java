@@ -63,6 +63,9 @@ public class AIHubSiteInitializerTest {
 		_assertWorkflowDefinitionExists(
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_LONGER,
 			WorkflowDefinitionConstants.NAME_MAKE_LONGER);
+		_assertWorkflowDefinitionExists(
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
+			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
 	private void _assertWorkflowDefinitionExists(

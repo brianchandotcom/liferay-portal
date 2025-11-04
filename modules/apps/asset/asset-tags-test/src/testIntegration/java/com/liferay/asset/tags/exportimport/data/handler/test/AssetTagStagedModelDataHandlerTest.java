@@ -41,8 +41,8 @@ public class AssetTagStagedModelDataHandlerTest
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testExportImportDuplicatedTags() throws Exception {
-		int initialGroupTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
+	public void testExportImportDuplicateTags() throws Exception {
+		int groupTagsCount = AssetTagLocalServiceUtil.getGroupTagsCount(
 			liveGroup.getGroupId());
 
 		String name = RandomTestUtil.randomString();
@@ -52,7 +52,7 @@ public class AssetTagStagedModelDataHandlerTest
 		_exportImportDeletedTag(name);
 
 		Assert.assertEquals(
-			initialGroupTagsCount + 3,
+			groupTagsCount + 3,
 			AssetTagLocalServiceUtil.getGroupTagsCount(liveGroup.getGroupId()));
 
 		AssetTagLocalServiceUtil.getTag(liveGroup.getGroupId(), name);

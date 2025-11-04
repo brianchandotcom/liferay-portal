@@ -168,7 +168,7 @@ public class AssetTagStagedModelDataHandler
 			importedAssetTag = _assetTagLocalService.addTag(
 				assetTag.getExternalReferenceCode(), userId,
 				portletDataContext.getScopeGroupId(),
-				_getUniqueTagName(
+				_getUniqueName(
 					portletDataContext.getScopeGroupId(), assetTag.getName()),
 				serviceContext);
 		}
@@ -187,7 +187,7 @@ public class AssetTagStagedModelDataHandler
 				importedAssetTag = _assetTagLocalService.updateTag(
 					existingAssetTag.getExternalReferenceCode(), userId,
 					existingAssetTag.getTagId(),
-					_getUniqueTagName(
+					_getUniqueName(
 						portletDataContext.getScopeGroupId(),
 						assetTag.getName()),
 					serviceContext);
@@ -209,7 +209,7 @@ public class AssetTagStagedModelDataHandler
 		return serviceContext;
 	}
 
-	private String _getUniqueTagName(long groupId, String name)
+	private String _getUniqueName(long groupId, String name)
 		throws PortalException {
 
 		AssetTag assetTag = _assetTagLocalService.fetchTag(groupId, name);

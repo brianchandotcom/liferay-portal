@@ -30,6 +30,7 @@ import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,6 +70,7 @@ public class ObjectEntryResourceImpl
 	implements ExportImportVulcanBatchEngineTaskItemDelegate<ObjectEntry> {
 
 	public ObjectEntryResourceImpl(
+		CommentManager commentManager,
 		DTOConverterRegistry dtoConverterRegistry,
 		EntityModelProvider entityModelProvider,
 		ObjectDefinition objectDefinition,
@@ -84,6 +86,7 @@ public class ObjectEntryResourceImpl
 			systemObjectDefinitionManagerRegistry,
 		UserLocalService userLocalService) {
 
+		_commentManager = commentManager;
 		_dtoConverterRegistry = dtoConverterRegistry;
 		_entityModelProvider = entityModelProvider;
 		_objectDefinition = objectDefinition;
@@ -1446,6 +1449,7 @@ public class ObjectEntryResourceImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryResourceImpl.class);
 
+	private final CommentManager _commentManager;
 	private final DTOConverterRegistry _dtoConverterRegistry;
 	private final EntityModelProvider _entityModelProvider;
 

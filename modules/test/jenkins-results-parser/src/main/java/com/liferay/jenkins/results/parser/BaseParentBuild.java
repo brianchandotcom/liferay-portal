@@ -30,6 +30,19 @@ import org.dom4j.Element;
 public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 
 	@Override
+	public void addCachedDownstreamBuild(Build build) {
+		if ((build == null) || _downstreamBuilds.contains(build)) {
+			return;
+		}
+
+		build.setBuildCached(true);
+
+		build.saveBuildURLInBuildDatabase();
+
+		addDownstreamBuild(build);
+	}
+
+	@Override
 	public void addDownstreamBuilds(Map<String, String> urlAxisNames) {
 		if (urlAxisNames.isEmpty()) {
 			return;

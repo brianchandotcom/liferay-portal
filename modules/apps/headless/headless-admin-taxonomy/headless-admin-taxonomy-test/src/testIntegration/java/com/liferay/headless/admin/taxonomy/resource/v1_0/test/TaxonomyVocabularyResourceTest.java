@@ -248,49 +248,12 @@ public class TaxonomyVocabularyResourceTest
 		_testGetTaxonomyVocabularyWithoutPermissionsAction();
 	}
 
+	@Override
 	@Test
-	public void testPutTaxonomyVocabularyUpdatesEmptyVocabulary()
-		throws Exception {
+	public void testPutTaxonomyVocabulary() throws Exception {
+		super.testPutTaxonomyVocabulary();
 
-		AssetVocabulary assetVocabulary;
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
-
-			assetVocabulary =
-				_assetVocabularyLocalService.getOrAddEmptyVocabulary(
-					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
-					testGroup.getGroupId());
-		}
-
-		TaxonomyVocabulary updateTaxonomyVocabulary = new TaxonomyVocabulary() {
-			{
-				multiValued = false;
-				name = RandomTestUtil.randomString();
-				visibilityType = VisibilityType.PUBLIC;
-			}
-		};
-
-		TaxonomyVocabulary updatedTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putSiteTaxonomyVocabularyByExternalReferenceCode(
-					assetVocabulary.getGroupId(),
-					assetVocabulary.getExternalReferenceCode(),
-					updateTaxonomyVocabulary);
-
-		Assert.assertEquals(
-			TaxonomyVocabulary.VisibilityType.PUBLIC,
-			updatedTaxonomyVocabulary.getVisibilityType());
-
-		assetVocabulary =
-			_assetVocabularyLocalService.
-				getAssetVocabularyByExternalReferenceCode(
-					assetVocabulary.getExternalReferenceCode(),
-					assetVocabulary.getGroupId());
-
-		Assert.assertEquals(
-			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
-			assetVocabulary.getVisibilityType());
+		_testPutTaxonomyVocabularyUpdatesEmptyVocabulary();
 	}
 
 	@Override
@@ -548,6 +511,50 @@ public class TaxonomyVocabularyResourceTest
 				postTaxonomyVocabulary.getId());
 
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
+	}
+
+	private void _testPutTaxonomyVocabularyUpdatesEmptyVocabulary()
+		throws Exception {
+
+		AssetVocabulary assetVocabulary;
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {
+
+			assetVocabulary =
+				_assetVocabularyLocalService.getOrAddEmptyVocabulary(
+					RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+					testGroup.getGroupId());
+		}
+
+		TaxonomyVocabulary updateTaxonomyVocabulary = new TaxonomyVocabulary() {
+			{
+				multiValued = false;
+				name = RandomTestUtil.randomString();
+				visibilityType = VisibilityType.PUBLIC;
+			}
+		};
+
+		TaxonomyVocabulary updatedTaxonomyVocabulary =
+			taxonomyVocabularyResource.
+				putSiteTaxonomyVocabularyByExternalReferenceCode(
+					assetVocabulary.getGroupId(),
+					assetVocabulary.getExternalReferenceCode(),
+					updateTaxonomyVocabulary);
+
+		Assert.assertEquals(
+			TaxonomyVocabulary.VisibilityType.PUBLIC,
+			updatedTaxonomyVocabulary.getVisibilityType());
+
+		assetVocabulary =
+			_assetVocabularyLocalService.
+				getAssetVocabularyByExternalReferenceCode(
+					assetVocabulary.getExternalReferenceCode(),
+					assetVocabulary.getGroupId());
+
+		Assert.assertEquals(
+			AssetVocabularyConstants.VISIBILITY_TYPE_PUBLIC,
+			assetVocabulary.getVisibilityType());
 	}
 
 	@Inject

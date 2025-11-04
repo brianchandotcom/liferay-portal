@@ -18,13 +18,16 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.DuplicateOrganizationException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
+import com.liferay.portal.kernel.exception.OrganizationNameException;
 import com.liferay.portal.kernel.exception.OrganizationParentException;
 import com.liferay.portal.kernel.lazy.referencing.LazyReferencingThreadLocal;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
 import com.liferay.portal.kernel.model.SystemEvent;
@@ -120,6 +123,52 @@ public class OrganizationLocalServiceTest {
 		Assert.assertFalse(
 			_organizationLocalService.hasUserOrganization(
 				user.getUserId(), organization.getOrganizationId()));
+
+		try {
+			_organizationLocalService.addOrganization(
+				user.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				organization.getName(), false);
+
+			Assert.fail();
+		}
+		catch (DuplicateOrganizationException duplicateOrganizationException) {
+			Assert.assertEquals(
+				duplicateOrganizationException.getMessage(),
+				"There is another organization named " +
+					organization.getName());
+		}
+
+		try {
+			_organizationLocalService.addOrganization(
+				user.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, null,
+				false);
+
+			Assert.fail();
+		}
+		catch (OrganizationNameException.MustNotBeNull
+					organizationNameException) {
+
+			Assert.assertNotNull(organizationNameException);
+		}
+
+		try {
+			int maxLength = ModelHintsUtil.getMaxLength(
+				Organization.class.getName(), "name");
+
+			_organizationLocalService.addOrganization(
+				user.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+				RandomTestUtil.randomString(maxLength + 1), false);
+
+			Assert.fail();
+		}
+		catch (OrganizationNameException.MustNotExceedMaximumLength
+					organizationNameException) {
+
+			Assert.assertNotNull(organizationNameException);
+		}
 	}
 
 	@Test

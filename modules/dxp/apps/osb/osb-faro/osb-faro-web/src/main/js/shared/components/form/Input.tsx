@@ -252,12 +252,7 @@ export default class FormInput extends React.Component<IFormInputProps> {
 		return (
 			<div className={classes} style={style}>
 				{label && (
-					<Label
-						className='mb-1'
-						htmlFor={name}
-						popover={popover}
-						required={required}
-					>
+					<Label htmlFor={name} popover={popover} required={required}>
 						{label}
 					</Label>
 				)}

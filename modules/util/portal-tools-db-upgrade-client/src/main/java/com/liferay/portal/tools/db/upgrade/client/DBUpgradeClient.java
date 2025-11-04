@@ -807,10 +807,21 @@ public class DBUpgradeClient {
 				_appServer.getServerDetectorServerId());
 		}
 		else {
-			String dirName = _appServerProperties.getProperty("dir");
-
 			File liferayHome = new File(
 				_portalUpgradeExtProperties.getProperty("liferay.home"));
+
+			_appServer = AppServer.getAppServer(liferayHome, value);
+
+			if (_appServer == null) {
+				System.err.println(
+					value + " is an unsupported application server.");
+
+				throw new IOException(
+					"Invalid configuration in " +
+						_appServerPropertiesFile.getName());
+			}
+
+			String dirName = _appServerProperties.getProperty("dir");
 
 			if (!_verifyDirName(
 					true, liferayHome, dirName,
@@ -828,6 +839,8 @@ public class DBUpgradeClient {
 			}
 
 			dirName = dir.getCanonicalPath();
+
+			_appServer.setDirName(dirName);
 
 			_appServerProperties.setProperty("dir", dirName);
 
@@ -853,9 +866,9 @@ public class DBUpgradeClient {
 						_appServerPropertiesFile.getName());
 			}
 
-			_appServer = new AppServer(
-				dirName, extraLibDirNames, globalLibDirName, portalDirName,
-				value);
+			_appServer.setExtraLibDirNames(extraLibDirNames);
+			_appServer.setGlobalLibDirName(globalLibDirName);
+			_appServer.setPortalDirName(portalDirName);
 		}
 	}
 

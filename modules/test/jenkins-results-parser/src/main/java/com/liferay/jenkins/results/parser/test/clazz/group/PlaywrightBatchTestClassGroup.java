@@ -867,9 +867,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 	private void _sendNotification(String message) {
 		String topLevelBuildURL = System.getenv("TOP_LEVEL_BUILD_URL");
 
-		if (!topLevelBuildURL.contains("(release)") ||
+		if (!topLevelBuildURL.contains("(release)") &&
 			!topLevelBuildURL.contains(
-				"test-portal-acceptance-upstream-dxp(master)") ||
+				"test-portal-acceptance-upstream-dxp(master)") &&
 			!topLevelBuildURL.contains(
 				"test-portal-testsuite-upstream(master)")) {
 

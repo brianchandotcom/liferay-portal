@@ -44,9 +44,6 @@ public class WidgetTemplatesTemplateDisplayContextTest {
 
 	@Before
 	public void setUp() {
-		_portletPermissionUtilMockedStatic = Mockito.mockStatic(
-			PortletPermissionUtil.class);
-
 		_setUpGroup();
 		_setUpPortletLocalService();
 		_setUpThemeDisplay();
@@ -191,8 +188,9 @@ public class WidgetTemplatesTemplateDisplayContextTest {
 		PortletLocalService.class);
 	private MockedStatic<PortletLocalServiceUtil>
 		_portletLocalServiceUtilMockedStatic;
-	private MockedStatic<PortletPermissionUtil>
-		_portletPermissionUtilMockedStatic;
+	private final MockedStatic<PortletPermissionUtil>
+		_portletPermissionUtilMockedStatic = Mockito.mockStatic(
+			PortletPermissionUtil.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 }

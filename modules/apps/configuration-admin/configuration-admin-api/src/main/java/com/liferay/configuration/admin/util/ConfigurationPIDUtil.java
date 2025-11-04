@@ -12,7 +12,7 @@ import com.liferay.petra.string.StringPool;
  */
 public class ConfigurationPIDUtil {
 
-	public static String getUnscopedPid(String pid) {
+	public static String getRawPid(String pid) {
 		pid = pid.replaceFirst("\\.scoped.*", StringPool.BLANK);
 
 		return pid.replaceFirst("~.*", StringPool.BLANK);

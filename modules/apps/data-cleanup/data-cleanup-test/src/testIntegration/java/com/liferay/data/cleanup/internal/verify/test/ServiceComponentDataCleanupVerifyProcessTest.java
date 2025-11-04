@@ -13,6 +13,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.ServiceComponent;
+import com.liferay.portal.kernel.module.util.BundleUtil;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.service.ServiceComponentLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,6 +23,8 @@ import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.VerifyProcess;
+
+import java.lang.reflect.Constructor;
 
 import java.sql.Connection;
 
@@ -34,6 +38,8 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Luis Ortiz
@@ -73,6 +79,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 				List<String> messages = logCapture.getMessages();
 
 				Assert.assertTrue(
+					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
 							"Content of table ",
@@ -111,6 +118,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 				List<String> messages = logCapture.getMessages();
 
 				Assert.assertTrue(
+					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
 							"Content of table ",
@@ -149,7 +157,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
-				Assert.assertTrue(messages.isEmpty());
+				Assert.assertTrue(messages.toString(), messages.isEmpty());
 			},
 			() -> {
 				if (serviceComponentAtomicReference.get() != null) {
@@ -173,6 +181,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 				List<String> messages = logCapture.getMessages();
 
 				Assert.assertTrue(
+					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
 							"Table ",
@@ -199,7 +208,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 			logCapture -> {
 				List<String> messages = logCapture.getMessages();
 
-				Assert.assertTrue(messages.isEmpty());
+				Assert.assertTrue(messages.toString(), messages.isEmpty());
 			},
 			() -> {
 				if (serviceComponentAtomicReference.get() != null) {
@@ -223,6 +232,7 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 				List<String> messages = logCapture.getMessages();
 
 				Assert.assertTrue(
+					messages.toString(),
 					messages.contains(
 						StringBundler.concat(
 							"Table ",
@@ -273,6 +283,19 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		return null;
 	}
 
+	private VerifyProcess _getVerifyProcess() throws Exception {
+		Bundle bundle = BundleUtil.getBundle(
+			SystemBundleUtil.getBundleContext(), "com.liferay.data.cleanup");
+
+		Class<?> verifyProcessClass = bundle.loadClass(_VERIFY_CLASS_NAME);
+
+		Constructor<?> constructor = verifyProcessClass.getConstructor(
+			ServiceComponentLocalService.class);
+
+		return (VerifyProcess)constructor.newInstance(
+			_serviceComponentLocalService);
+	}
+
 	private void _test(
 			UnsafeConsumer<LogCapture, Exception> assertUnsafeConsumer,
 			UnsafeRunnable<Exception> cleanUpDataUnsafeRunnable,
@@ -282,11 +305,11 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		initializeDataUnsafeRunnable.run();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.data.cleanup.internal.verify." +
-					"ServiceComponentDataCleanupVerifyProcess",
-				LoggerTestUtil.INFO)) {
+				_VERIFY_CLASS_NAME, LoggerTestUtil.INFO)) {
 
-			_serviceComponentDataCleanupVerifyProcess.verify();
+			VerifyProcess verifyProcess = _getVerifyProcess();
+
+			verifyProcess.verify();
 
 			assertUnsafeConsumer.accept(logCapture);
 		}
@@ -295,16 +318,15 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		}
 	}
 
+	private static final String _VERIFY_CLASS_NAME =
+		"com.liferay.data.cleanup.internal.verify." +
+			"ServiceComponentDataCleanupVerifyProcess";
+
 	private static Connection _connection;
 	private static DBInspector _dbInspector;
 
 	@Inject
 	private CounterLocalService _counterLocalService;
-
-	@Inject(
-		filter = "(&(component.name=com.liferay.data.cleanup.internal.verify.ServiceComponentDataCleanupVerifyProcess))"
-	)
-	private VerifyProcess _serviceComponentDataCleanupVerifyProcess;
 
 	@Inject
 	private ServiceComponentLocalService _serviceComponentLocalService;

@@ -26,6 +26,12 @@ public class DropZoneLayoutStructureItemImporter
 			PageElement pageElement)
 		throws Exception {
 
+		PageElement[] pageElements = pageElement.getPageElements();
+
+		if ((pageElements != null) && (pageElements.length > 1)) {
+			throw new UnsupportedOperationException();
+		}
+
 		DropZoneLayoutStructureItem dropZoneLayoutStructureItem =
 			(DropZoneLayoutStructureItem)layoutStructure.getLayoutStructureItem(
 				pageElement.getExternalReferenceCode());

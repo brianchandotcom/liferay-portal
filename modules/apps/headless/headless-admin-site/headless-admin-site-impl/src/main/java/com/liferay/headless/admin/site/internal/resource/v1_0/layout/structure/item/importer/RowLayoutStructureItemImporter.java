@@ -83,20 +83,21 @@ public class RowLayoutStructureItemImporter
 			gridPageElementDefinition.getGridViewports();
 
 		if (ArrayUtil.isEmpty(gridViewports)) {
-			rowStyledLayoutStructureItem.setViewportConfiguration(
-				ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
-				JSONUtil.put("modulesPerRow", 1));
+			rowStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(
+					ViewportSize.MOBILE_LANDSCAPE.getViewportSizeId(),
+					JSONUtil.put("modulesPerRow", 1)));
 		}
 		else {
-			_setViewportConfiguration(
+			_updateItemConfig(
 				JSONUtil.put("modulesPerRow", 1),
 				GridViewport.Id.LANDSCAPE_MOBILE, gridViewports,
 				rowStyledLayoutStructureItem);
-			_setViewportConfiguration(
+			_updateItemConfig(
 				JSONFactoryUtil.createJSONObject(),
 				GridViewport.Id.PORTRAIT_MOBILE, gridViewports,
 				rowStyledLayoutStructureItem);
-			_setViewportConfiguration(
+			_updateItemConfig(
 				JSONFactoryUtil.createJSONObject(), GridViewport.Id.TABLET,
 				gridViewports, rowStyledLayoutStructureItem);
 		}
@@ -128,27 +129,6 @@ public class RowLayoutStructureItemImporter
 		}
 
 		return null;
-	}
-
-	private void _setViewportConfiguration(
-		JSONObject defaultViewportJSONObject, GridViewport.Id gridViewportId,
-		GridViewport[] gridViewports,
-		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
-
-		GridViewport gridViewport = _getGridViewport(
-			gridViewportId, gridViewports);
-
-		String viewportId = ViewportIdUtil.toInternalValue(
-			gridViewportId.getValue());
-
-		if (gridViewport != null) {
-			rowStyledLayoutStructureItem.setViewportConfiguration(
-				viewportId, _toViewportJSONObject(gridViewport));
-		}
-		else {
-			rowStyledLayoutStructureItem.setViewportConfiguration(
-				viewportId, defaultViewportJSONObject);
-		}
 	}
 
 	private JSONObject _toViewportJSONObject(GridViewport gridViewport) {
@@ -196,6 +176,27 @@ public class RowLayoutStructureItemImporter
 					verticalAlignment.getValue());
 			}
 		);
+	}
+
+	private void _updateItemConfig(
+		JSONObject defaultViewportJSONObject, GridViewport.Id gridViewportId,
+		GridViewport[] gridViewports,
+		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
+
+		GridViewport gridViewport = _getGridViewport(
+			gridViewportId, gridViewports);
+
+		String viewportId = ViewportIdUtil.toInternalValue(
+			gridViewportId.getValue());
+
+		if (gridViewport != null) {
+			rowStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(viewportId, _toViewportJSONObject(gridViewport)));
+		}
+		else {
+			rowStyledLayoutStructureItem.updateItemConfig(
+				JSONUtil.put(viewportId, defaultViewportJSONObject));
+		}
 	}
 
 }

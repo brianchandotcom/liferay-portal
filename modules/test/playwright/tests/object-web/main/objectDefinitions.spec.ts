@@ -4,6 +4,7 @@
  */
 
 import {
+	ObjectDefinition,
 	ObjectDefinitionAPI,
 	ObjectFolderAPI,
 	ObjectRelationshipAPI,
@@ -320,6 +321,42 @@ test.describe('Manage object definitions through Model Builder', () => {
 				hasText: objectDefinition1.label['en_US'],
 			})
 		).toBeHidden();
+	});
+
+	test('hidden system object definitions are not displayed', async ({
+		modelBuilderDiagramPage,
+		page,
+	}) => {
+		const hiddenObjectDefinitionNames = [
+			'FunctionalCookieEntry',
+			'NecessaryCookieEntry',
+			'PerformanceCookieEntry',
+			'PersonalizationCookieEntry',
+		];
+
+		const responsePromise = page.waitForResponse((response) =>
+			response
+				.url()
+				.includes(
+					'/object-definitions?pageSize=-1&filter=hidden%20eq%20false'
+				)
+		);
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		const response = await responsePromise;
+
+		const body = await response.json();
+
+		const objectDefinitionNames = body.items.map(
+			(item: ObjectDefinition) => item.name
+		);
+
+		expect(
+			objectDefinitionNames.every(
+				(name: string) => !hiddenObjectDefinitionNames.includes(name)
+			)
+		).toBeTruthy();
 	});
 
 	test('linked object definitions are created when object definitions are related and put into different folders', async ({

@@ -15,7 +15,6 @@ import com.liferay.layout.util.structure.RowStyledLayoutStructureItem;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
@@ -23,7 +22,6 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
@@ -110,31 +108,26 @@ public class GridPageElementDefinitionDTOConverter
 	}
 
 	private GridViewport _toGridViewport(
-		GridViewport.Id gridViewportId,
-		Map<String, JSONObject> rowViewportConfigurationJSONObjects) {
+		GridViewport.Id gridViewportId, JSONObject jsonObject) {
 
 		String viewportId = ViewportIdUtil.toInternalValue(
 			gridViewportId.getValue());
 
-		if (!rowViewportConfigurationJSONObjects.containsKey(viewportId)) {
+		if (!jsonObject.has(viewportId)) {
 			return null;
 		}
 
-		JSONObject rowViewportConfigurationJSONObject =
-			rowViewportConfigurationJSONObjects.get(viewportId);
+		JSONObject viewportJSONObject = jsonObject.getJSONObject(viewportId);
 
-		if (JSONUtil.isEmpty(rowViewportConfigurationJSONObject)) {
+		if (JSONUtil.isEmpty(viewportJSONObject)) {
 			return null;
 		}
 
 		return new GridViewport() {
 			{
-				setCustomCSS(
-					() -> rowViewportConfigurationJSONObject.getString(
-						"customCSS"));
+				setCustomCSS(() -> viewportJSONObject.getString("customCSS"));
 				setGridViewportDefinition(
-					() -> _toGridViewportDefinition(
-						rowViewportConfigurationJSONObject));
+					() -> _toGridViewportDefinition(viewportJSONObject));
 				setId(() -> gridViewportId);
 			}
 		};
@@ -177,18 +170,11 @@ public class GridPageElementDefinitionDTOConverter
 	private GridViewport[] _toGridViewports(
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem) {
 
-		Map<String, JSONObject> rowViewportConfigurationJSONObjects =
-			rowStyledLayoutStructureItem.getViewportConfigurationJSONObjects();
-
-		if (MapUtil.isEmpty(rowViewportConfigurationJSONObjects)) {
-			return null;
-		}
-
 		List<GridViewport> gridViewports = new ArrayList<>() {
 			{
 				GridViewport gridViewport = _toGridViewport(
 					GridViewport.Id.LANDSCAPE_MOBILE,
-					rowViewportConfigurationJSONObjects);
+					rowStyledLayoutStructureItem.getItemConfigJSONObject());
 
 				if (gridViewport != null) {
 					add(gridViewport);
@@ -196,7 +182,7 @@ public class GridPageElementDefinitionDTOConverter
 
 				gridViewport = _toGridViewport(
 					GridViewport.Id.PORTRAIT_MOBILE,
-					rowViewportConfigurationJSONObjects);
+					rowStyledLayoutStructureItem.getItemConfigJSONObject());
 
 				if (gridViewport != null) {
 					add(gridViewport);
@@ -204,7 +190,7 @@ public class GridPageElementDefinitionDTOConverter
 
 				gridViewport = _toGridViewport(
 					GridViewport.Id.TABLET,
-					rowViewportConfigurationJSONObjects);
+					rowStyledLayoutStructureItem.getItemConfigJSONObject());
 
 				if (gridViewport != null) {
 					add(gridViewport);

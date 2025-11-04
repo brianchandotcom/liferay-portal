@@ -2083,6 +2083,7 @@ public abstract class BaseBuild implements Build {
 		Build parentBuild) {
 
 		_cachedDownstreamBuildReport = cachedDownstreamBuildReport;
+		_parentBuild = parentBuild;
 
 		if (cachedDownstreamBuildReport != null) {
 			_buildCached = true;
@@ -2110,8 +2111,6 @@ public abstract class BaseBuild implements Build {
 				_setBuildURL(buildURL);
 			}
 		}
-
-		_parentBuild = parentBuild;
 
 		if (!fromArchive && JenkinsResultsParserUtil.isCINode()) {
 			TopLevelBuild topLevelBuild = getTopLevelBuild();

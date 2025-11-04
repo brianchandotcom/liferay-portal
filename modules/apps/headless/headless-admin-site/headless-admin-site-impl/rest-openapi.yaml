@@ -3819,6 +3819,18 @@ components:
             description:
                 A URL image value.
             type: object
+        URLReference:
+            # @review
+            description:
+                A unique reference to a URL which remains constant across environments.
+            properties:
+                externalReferenceCode:
+                    type: string
+                url:
+                    type: string
+            required:
+                -   url
+            type: object
         URLValue:
             # @review
             description:
@@ -3834,18 +3846,6 @@ components:
                     enum: [Href, SitePage]
                     type: string
             type: object
-        URLReference:
-          # @review
-          description:
-            A unique reference to a URL which remains constant across environments.
-          properties:
-            externalReferenceCode:
-              type: string
-            url:
-              type: string
-          required:
-            - url
-          type: object
         UtilityPage:
             description:
                 The definition of a Utility Page.

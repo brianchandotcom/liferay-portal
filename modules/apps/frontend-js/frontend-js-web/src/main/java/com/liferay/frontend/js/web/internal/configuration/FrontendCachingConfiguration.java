@@ -7,7 +7,6 @@ package com.liferay.frontend.js.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedAttributeDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -30,9 +29,6 @@ public interface FrontendCachingConfiguration {
 	)
 	public long cssStyleSheetsMaxAge();
 
-	@ExtendedAttributeDefinition(
-		visibilityControllerKey = "com.liferay.frontend.js.web.internal.configuration.admin.display.FrontendCachingConfigurationVisibilityController"
-	)
 	@Meta.AD(
 		deflt = "86400", description = "es-modules-max-age-help",
 		name = "es-modules-max-age", required = false
@@ -46,9 +42,6 @@ public interface FrontendCachingConfiguration {
 	)
 	public boolean sendNoCacheForCSSStyleSheets();
 
-	@ExtendedAttributeDefinition(
-		visibilityControllerKey = "com.liferay.frontend.js.web.internal.configuration.admin.display.FrontendCachingConfigurationVisibilityController"
-	)
 	@Meta.AD(
 		deflt = "false", description = "send-no-cache-for-es-modules-help",
 		name = "send-no-cache-for-es-modules", required = false

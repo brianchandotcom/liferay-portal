@@ -41,8 +41,12 @@ export default function RulesSidebar() {
 
 			<SearchResultsMessage numberOfResults={filteredRules.length} />
 
-			<div className="overflow-auto p-3">
-				{rules.length ? <RulesList /> : <RulesEmptyState />}
+			<div className="border-top overflow-auto p-3">
+				{filteredRules.length ? (
+					<RulesList rules={filteredRules} />
+				) : (
+					<RulesEmptyState />
+				)}
 			</div>
 		</>
 	);

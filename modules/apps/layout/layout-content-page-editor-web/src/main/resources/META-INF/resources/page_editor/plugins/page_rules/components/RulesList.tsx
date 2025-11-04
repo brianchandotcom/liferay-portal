@@ -25,12 +25,11 @@ import useConditionValues, {
 import {Rule} from '../../../types/Rule';
 import RulesModal from './RulesModal';
 
-export default function RulesList() {
+export default function RulesList({rules}: {rules: Rule[]}) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingRule, setEditingRule] = useState<Rule | null>(null);
 	const [savedRuleId, setSavedRuleId] = useState<string | null>(null);
 
-	const rules = useSelector((state) => state.layoutData.pageRules);
 	const dispatch = useDispatch();
 
 	const onCreateRule = () => setModalVisible(true);

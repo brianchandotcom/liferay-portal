@@ -749,7 +749,7 @@ paths:
             tags: ["ObjectEntry"]
     "/by-external-reference-code/{externalReferenceCode}/comments":
         post:
-            operationId: postByExternalReferenceCodeComments
+            operationId: postByExternalReferenceCodeComment
             parameters:
                 -   in: path
                     name: externalReferenceCode
@@ -1400,7 +1400,7 @@ paths:
             tags: ["Collaborator"]
     "/scopes/{scopeKey}/by-external-reference-code/{externalReferenceCode}/comments":
         post:
-            operationId: postScopeScopeKeyByExternalReferenceCodeComments
+            operationId: postScopeScopeKeyByExternalReferenceCodeComment
             parameters:
                 -   in: path
                     name: scopeKey

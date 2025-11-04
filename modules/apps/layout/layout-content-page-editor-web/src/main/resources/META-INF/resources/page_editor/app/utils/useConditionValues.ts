@@ -29,11 +29,22 @@ type Props = {
 	items: Item[];
 };
 
+export type ConditionValues = {
+	condition: string | undefined;
+	description: string;
+	field?: Condition['field'];
+	id: string;
+	options?: NonNullable<Condition['options']>['type'];
+	prefix: string;
+	type: string | undefined;
+	value: string | undefined;
+};
+
 export default function useConditionValues({
 	conditionType,
 	conditions,
 	items,
-}: Props) {
+}: Props): ConditionValues[] {
 	const roles = useCache({
 		fetcher: () => RulesService.getRoles(),
 		key: [CACHE_KEYS.roles],

@@ -15,7 +15,7 @@ import com.liferay.jenkins.results.parser.test.clazz.TestClassFactory;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -129,8 +129,26 @@ public class AxisTestClassGroup extends BaseTestClassGroup {
 
 		BatchTestClassGroup batchTestClassGroup = getBatchTestClassGroup();
 
-		return new ArrayList<>(
-			batchTestClassGroup.getCachedDownstreamBuildReports(getAxisName()));
+		List<DownstreamBuildReport> cachedDownstreamBuildReports =
+			batchTestClassGroup.getCachedDownstreamBuildReports(getAxisName());
+
+		if ((cachedDownstreamBuildReports == null) ||
+			cachedDownstreamBuildReports.isEmpty()) {
+
+			return null;
+		}
+
+		for (DownstreamBuildReport cachedDownstreamBuildReport :
+				cachedDownstreamBuildReports) {
+
+			if ((cachedDownstreamBuildReport != null) &&
+				!cachedDownstreamBuildReport.isFailing()) {
+
+				return Collections.singletonList(cachedDownstreamBuildReport);
+			}
+		}
+
+		return null;
 	}
 
 	public String getDownstreamJobName() {

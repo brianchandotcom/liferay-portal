@@ -5,12 +5,15 @@
 
 package com.liferay.jenkins.results.parser.test.clazz.group;
 
+import com.liferay.jenkins.results.parser.DownstreamBuildReport;
 import com.liferay.jenkins.results.parser.TestClassReport;
 import com.liferay.jenkins.results.parser.test.clazz.ModulesTestClass;
 import com.liferay.jenkins.results.parser.test.clazz.TestClass;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONObject;
 
@@ -18,6 +21,24 @@ import org.json.JSONObject;
  * @author Michael Hashimoto
  */
 public class ModulesAxisTestClassGroup extends AxisTestClassGroup {
+
+	public List<DownstreamBuildReport> getCachedDownstreamBuildReports() {
+		if (!isBuildCachingEnabled() || !isResultsCached()) {
+			return null;
+		}
+
+		Set<DownstreamBuildReport> cachedDownstreamBuildReports =
+			new HashSet<>();
+
+		for (ModulesTestClass modulesTestClass : getModulesTestClasses()) {
+			DownstreamBuildReport downstreamBuildReport =
+				modulesTestClass.getCachedDownstreamBuildReport();
+
+			cachedDownstreamBuildReports.add(downstreamBuildReport);
+		}
+
+		return new ArrayList<>(cachedDownstreamBuildReports);
+	}
 
 	public List<ModulesTestClass> getModulesTestClasses() {
 		List<ModulesTestClass> modulesTestClasses = new ArrayList<>();

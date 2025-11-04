@@ -6,7 +6,7 @@
 /]
 
 [#if request?has_content]
-	[#list request.getCookies() as cookie]
+	[#list request.getCookies()![] as cookie]
 		[#if cookie.getName() == "CP_LAST_VIEWED_PROJECT_" + themeDisplay.getUserId()]
 			[#assign lastViewedProjectERC = cookie.getValue()!""]
 

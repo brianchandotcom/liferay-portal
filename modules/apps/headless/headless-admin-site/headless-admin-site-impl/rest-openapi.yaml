@@ -3958,17 +3958,29 @@ components:
                 A URL image value.
             type: object
         URLNavigationMenuItemSettings:
+          description:
+            Type-specific settings for a "URL" navigation menu item type.
+          properties:
+            url:
+              description:
+                The URL that this navigation menu item will take the user to.
+              type: string
+            useNewTab:
+              description:
+                Whether the target URL will open in a new tab instead of the same tab.
+              type: boolean
+          type: object
+        URLReference:
+            # @review
             description:
-                Type-specific settings for a "URL" navigation menu item type.
+                A unique reference to a URL which remains constant across environments.
             properties:
-                url:
-                    description:
-                        The URL that this navigation menu item will take the user to.
+                externalReferenceCode:
                     type: string
-                useNewTab:
-                    description:
-                        Whether the target URL will open in a new tab instead of the same tab.
-                    type: boolean
+                url:
+                    type: string
+            required:
+                -   url
             type: object
         URLValue:
             # @review
@@ -3985,18 +3997,6 @@ components:
                     enum: [Href, SitePage]
                     type: string
             type: object
-        URLReference:
-          # @review
-          description:
-            A unique reference to a URL which remains constant across environments.
-          properties:
-            externalReferenceCode:
-              type: string
-            url:
-              type: string
-          required:
-            - url
-          type: object
         UtilityPage:
             description:
                 The definition of a Utility Page.

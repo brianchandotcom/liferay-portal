@@ -42,7 +42,7 @@ jobs:
                 run: |
                     DIST_DIR="${{runner.temp}}/aws/dist"
 
-                    rm -rf "${DIST_DIR}"
+                    rm -fr "${DIST_DIR}"
 
                     mkdir --parents "${DIST_DIR}"
 
@@ -155,7 +155,7 @@ jobs:
                 run: |
                     DIST_DIR="${{runner.temp}}/default/dist"
 
-                    rm -rf "${DIST_DIR}"
+                    rm -fr "${DIST_DIR}"
 
                     mkdir --parents "${DIST_DIR}"
 

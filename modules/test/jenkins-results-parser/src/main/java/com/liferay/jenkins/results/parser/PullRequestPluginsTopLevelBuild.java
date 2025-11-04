@@ -15,9 +15,9 @@ public class PullRequestPluginsTopLevelBuild
 	extends PluginsTopLevelBuild implements PullRequestBuild {
 
 	public PullRequestPluginsTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 
 		StringBuilder sb = new StringBuilder();
 

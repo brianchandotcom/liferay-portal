@@ -10,8 +10,10 @@ package com.liferay.jenkins.results.parser;
  */
 public class PortalAWSTopLevelBuild extends PortalTopLevelBuild {
 
-	public PortalAWSTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public PortalAWSTopLevelBuild(
+		String buildURL, TopLevelBuild topLevelBuild) {
+
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

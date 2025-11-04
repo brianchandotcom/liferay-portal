@@ -15,8 +15,8 @@ public class PluginsTopLevelBuild
 	implements PluginsBranchInformationBuild, PortalBranchInformationBuild,
 			   PortalWorkspaceBuild {
 
-	public PluginsTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public PluginsTopLevelBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

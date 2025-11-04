@@ -908,12 +908,12 @@ public abstract class BaseTopLevelBuild
 
 	}
 
-	protected BaseTopLevelBuild(String url) {
-		this(url, null);
+	protected BaseTopLevelBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected BaseTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	protected BaseTopLevelBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 
 		Properties buildProperties = null;
 

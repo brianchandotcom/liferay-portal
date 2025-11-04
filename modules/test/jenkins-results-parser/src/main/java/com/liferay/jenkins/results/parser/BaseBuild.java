@@ -2070,16 +2070,16 @@ public abstract class BaseBuild implements Build {
 		return false;
 	}
 
-	protected BaseBuild(String url) {
-		this(url, null);
+	protected BaseBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected BaseBuild(String url, Build parentBuild) {
-		this(url, parentBuild, null);
+	protected BaseBuild(String buildURL, Build parentBuild) {
+		this(buildURL, parentBuild, null);
 	}
 
 	protected BaseBuild(
-		String url, Build parentBuild,
+		String buildURL, Build parentBuild,
 		DownstreamBuildReport cachedDownstreamBuildReport) {
 
 		_parentBuild = parentBuild;
@@ -2104,11 +2104,11 @@ public abstract class BaseBuild implements Build {
 			_jenkinsCohort = _jenkinsMaster.getJenkinsCohort();
 		}
 		else {
-			if (url.contains("buildWithParameters")) {
-				_setInvocationURL(url);
+			if (buildURL.contains("buildWithParameters")) {
+				_setInvocationURL(buildURL);
 			}
 			else {
-				_setBuildURL(url);
+				_setBuildURL(buildURL);
 			}
 		}
 

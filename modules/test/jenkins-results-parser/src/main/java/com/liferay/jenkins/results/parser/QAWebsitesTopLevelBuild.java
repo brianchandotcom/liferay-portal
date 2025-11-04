@@ -15,8 +15,10 @@ public class QAWebsitesTopLevelBuild
 	extends DefaultTopLevelBuild
 	implements QAWebsitesBranchInformationBuild, WorkspaceBuild {
 
-	public QAWebsitesTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public QAWebsitesTopLevelBuild(
+		String buildURL, TopLevelBuild topLevelBuild) {
+
+		super(buildURL, topLevelBuild);
 
 		findDownstreamBuilds();
 	}

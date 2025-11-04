@@ -205,12 +205,12 @@ public class SourceFormatBuild
 		return workspace;
 	}
 
-	protected SourceFormatBuild(String url) {
-		this(url, null);
+	protected SourceFormatBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected SourceFormatBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	protected SourceFormatBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

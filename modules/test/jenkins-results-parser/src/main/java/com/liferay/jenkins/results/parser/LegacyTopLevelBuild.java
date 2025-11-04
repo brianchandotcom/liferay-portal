@@ -11,12 +11,12 @@ package com.liferay.jenkins.results.parser;
 public class LegacyTopLevelBuild
 	extends DefaultTopLevelBuild implements PortalWorkspaceBuild {
 
-	public LegacyTopLevelBuild(String url) {
-		super(url);
+	public LegacyTopLevelBuild(String buildURL) {
+		super(buildURL);
 	}
 
-	public LegacyTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public LegacyTopLevelBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

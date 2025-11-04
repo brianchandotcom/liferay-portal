@@ -94,9 +94,19 @@ definition {
 				value1 = "${userEmailAddress},");
 		}
 		else {
-			Type.sendKeys(
+			Type.typeKeys(
 				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
 				value1 = ${userEmailAddress});
+
+			// LPD-70505 Set a minium pause to wait for component to load.
+
+			Pause(value1 = 1000);
+
+			// Force the component to load.
+
+			KeyPress(
+				locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_INPUT",
+				value1 = "\BACK_SPACE");
 
 			Click(locator1 = "Sharing#MODAL_INVITE_TO_COLLABORATE_DROPDOWN");
 

@@ -3,10 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.headless.delivery.internal.dto.v1_0.util;
+package com.liferay.headless.delivery.dto.v1_0.util;
 
 import com.liferay.headless.delivery.dto.v1_0.Comment;
-import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

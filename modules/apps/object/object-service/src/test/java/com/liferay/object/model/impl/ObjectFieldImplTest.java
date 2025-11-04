@@ -26,6 +26,13 @@ public class ObjectFieldImplTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
+	public void testGetAttachmentDownloadActionKey() {
+		_testGetAttachmentDownloadActionKey("formatId", "DOWNLOAD_FORMAT_ID");
+		_testGetAttachmentDownloadActionKey(
+			"friendlyURLMapper", "DOWNLOAD_FRIENDLY_URL_MAPPER");
+	}
+
+	@Test
 	public void testGetReadOnly() {
 		_testGetReadOnly(
 			ObjectFieldConstants.READ_ONLY_CONDITIONAL,
@@ -39,6 +46,17 @@ public class ObjectFieldImplTest {
 		_testGetReadOnly(
 			ObjectFieldConstants.READ_ONLY_TRUE,
 			ObjectFieldConstants.READ_ONLY_TRUE);
+	}
+
+	private void _testGetAttachmentDownloadActionKey(
+		String objectFieldName, String expectedActionKey) {
+
+		ObjectField objectField = new ObjectFieldImpl();
+
+		objectField.setName(objectFieldName);
+
+		Assert.assertEquals(
+			expectedActionKey, objectField.getAttachmentDownloadActionKey());
 	}
 
 	private void _testGetReadOnly(

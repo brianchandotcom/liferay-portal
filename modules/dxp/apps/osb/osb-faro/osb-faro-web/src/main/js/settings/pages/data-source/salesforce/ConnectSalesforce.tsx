@@ -181,25 +181,26 @@ interface IConnectSalesForceStepProps {
 }
 
 const ConnectSalesForceStep: React.FC<IConnectSalesForceStepProps> = ({
-	onNext,
-	onPrev
-}) => (
-	<ClayForm
-		onSubmit={event => {
-			event.preventDefault();
+	addAlert,
+	groupId,
+	onNext
+}) => {
+	const history = useHistory();
 
-			onNext();
-		}}
-	>
-		{'working in progress...'}
-
-		<ButtonGroup
-			nextButtonLabel={Liferay.Language.get('continue')}
-			onCancel={onPrev}
-			prevButtonLabel={Liferay.Language.get('previous')}
+	return (
+		<ConnectSalesforceAuth
+			addAlert={addAlert}
+			onCancel={() => {
+				history.push(
+					toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {
+						groupId
+					})
+				);
+			}}
+			onSubmit={onNext}
 		/>
-	</ClayForm>
-);
+	);
+};
 
 const SyncSalesforceDataStep = ({onNext, onPrev}) => (
 	<ClayForm

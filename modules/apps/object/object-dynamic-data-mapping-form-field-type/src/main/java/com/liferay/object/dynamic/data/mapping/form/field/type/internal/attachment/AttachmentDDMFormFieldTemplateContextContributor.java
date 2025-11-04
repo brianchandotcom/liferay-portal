@@ -22,6 +22,7 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.object.field.attachment.AttachmentManager;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
@@ -235,14 +236,19 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 								objectDefinitionExternalReferenceCode,
 								fileEntry.getCompanyId());
 
-					return ObjectFieldUtil.getAttachmentDownloadURL(
-						_dlURLHelper, fileEntry, groupId,
-						objectDefinitionExternalReferenceCode,
-						_objectEntryLocalService.fetchObjectEntry(
+					ObjectEntry objectEntry = null;
+
+					if (objectDefinition != null) {
+						objectEntry = _objectEntryLocalService.fetchObjectEntry(
 							GetterUtil.getString(
 								ddmFormField.getProperty(
 									"objectEntryExternalReferenceCode")),
-							groupId, objectDefinition.getObjectDefinitionId()),
+							groupId, objectDefinition.getObjectDefinitionId());
+					}
+
+					return ObjectFieldUtil.getAttachmentDownloadURL(
+						_dlURLHelper, fileEntry, groupId,
+						objectDefinitionExternalReferenceCode, objectEntry,
 						_objectEntryService,
 						_objectFieldLocalService.fetchObjectField(
 							GetterUtil.getLong(

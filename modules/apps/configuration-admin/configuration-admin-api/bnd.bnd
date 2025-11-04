@@ -7,4 +7,5 @@ Export-Package:\
 	com.liferay.configuration.admin.definition,\
 	com.liferay.configuration.admin.display,\
 	com.liferay.configuration.admin.exportimport,\
-	com.liferay.configuration.admin.menu
+	com.liferay.configuration.admin.menu,\
+	com.liferay.configuration.admin.util

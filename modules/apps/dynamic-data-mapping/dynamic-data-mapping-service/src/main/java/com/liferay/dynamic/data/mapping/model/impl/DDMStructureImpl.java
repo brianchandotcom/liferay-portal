@@ -139,7 +139,20 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 	public DDMFormField getDDMFormField(String fieldName)
 		throws PortalException {
 
-		return new DDMFormField(_getDDMFormField(fieldName));
+		return getDDMFormField(fieldName, true);
+	}
+
+	@Override
+	public DDMFormField getDDMFormField(String fieldName, boolean copy)
+		throws PortalException {
+
+		DDMFormField ddmFormField = _getDDMFormField(fieldName);
+
+		if (copy) {
+			ddmFormField = new DDMFormField(ddmFormField);
+		}
+
+		return ddmFormField;
 	}
 
 	@Override

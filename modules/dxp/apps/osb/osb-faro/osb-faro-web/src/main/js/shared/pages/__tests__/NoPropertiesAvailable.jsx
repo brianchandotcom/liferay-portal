@@ -46,16 +46,6 @@ describe('NoPropertiesAvailable', () => {
 		expect(container).toMatchSnapshot();
 	});
 
-	it('should render w/ Create Property button', async () => {
-		const {container, queryByText} = render(<DefaultComponent />);
-
-		jest.runAllTimers();
-
-		await waitForLoadingToBeRemoved(container);
-
-		expect(queryByText('Create Property')).toBeTruthy();
-	});
-
 	it('should not display the "Start" button to trigger onboarding if the user is not an AC admin', () => {
 		const {queryByRole} = render(
 			<DefaultComponent

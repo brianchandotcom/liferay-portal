@@ -7,13 +7,13 @@ import {Analytics} from '../../../core/Analytics';
 import {ProductSpecificationKey, SkuOptions} from '../../../enums/Product';
 import HeadlessCommerceDeliveryCart from '../../../services/rest/HeadlessCommerceDeliveryCart';
 import {postEmailAppInformation} from '../../../utils/api';
+import {getProductOrderTypes} from '../../../utils/getProductOrderTypes';
+import {getProductSpecificationValues} from '../../../utils/getProductSpecificationValues';
 import {
 	getProductPriceModel,
 	getSkuByOptionValueKey,
 } from '../../../utils/productUtils';
 import {getSiteURL} from '../../../utils/site';
-import {getProductOrderTypes} from '../../../utils/getProductOrderTypes';
-import {getProductSpecificationValues} from '../../../utils/getProductSpecificationValues';
 import ProductPurchase from './ProductPurchase';
 
 type ProductPurchaseCartOptions = {

@@ -6,7 +6,7 @@
 import {useCallback, useEffect} from 'react';
 
 import {Liferay} from '../liferay/liferay';
-import {useGetAppContext} from '../pages/GetApp/GetAppContextProvider';
+import {useGetAppContext} from '../utils/GetAppContextProvider';
 import fetcher from '../services/fetcher';
 import HeadlessCommerceDeliveryCart from '../services/rest/HeadlessCommerceDeliveryCart';
 import {createCart} from '../utils/api';

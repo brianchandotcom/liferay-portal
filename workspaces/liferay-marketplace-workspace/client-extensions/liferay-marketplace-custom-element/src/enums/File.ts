@@ -34,3 +34,10 @@ export const ACCEPT_FILE_TYPES = {
 	'image/jpg': ['.jpg'],
 	'image/png': ['.png'],
 };
+
+export enum GetAppStepTypes {
+	ACCOUNT = 'account',
+	LICENSES = 'licenses',
+	PAYMENT = 'payment',
+	PROJECT = 'project',
+}

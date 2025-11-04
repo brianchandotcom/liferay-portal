@@ -10,8 +10,8 @@ import {Outlet, useOutletContext} from 'react-router-dom';
 import {useMarketplaceContext} from '../../context/MarketplaceContext';
 import zodSchema, {z, zodResolver} from '../../schema/zod';
 import {ConsoleUserProject} from '../../services/oauth/types';
-import useGetResourceInfo from '../ProductPurchase/hooks/useGetResourceInfo';
 import useAccounts from '../ProductPurchase/hooks/useAccounts';
+import useGetResourceInfo from '../ProductPurchase/hooks/useGetResourceInfo';
 
 type Schema = z.infer<typeof zodSchema.installProductSchema>;
 

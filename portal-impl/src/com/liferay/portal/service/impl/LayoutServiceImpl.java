@@ -709,10 +709,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public Layout getLayout(long plid) throws PortalException {
 		Layout layout = layoutLocalService.getLayout(plid);
 
-		if (layout != null) {
-			LayoutPermissionUtil.check(
-				getPermissionChecker(), layout, ActionKeys.VIEW);
-		}
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
 
 		return layout;
 	}
@@ -724,10 +722,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Layout layout = layoutLocalService.getLayout(
 			groupId, privateLayout, layoutId);
 
-		if (layout != null) {
-			LayoutPermissionUtil.check(
-				getPermissionChecker(), layout, ActionKeys.VIEW);
-		}
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
 
 		return layout;
 	}
@@ -740,10 +736,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		Layout layout = layoutLocalService.getLayoutByExternalReferenceCode(
 			externalReferenceCode, groupId);
 
-		if (layout != null) {
-			LayoutPermissionUtil.check(
-				getPermissionChecker(), layout, ActionKeys.VIEW);
-		}
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), layout, ActionKeys.VIEW);
 
 		return layout;
 	}

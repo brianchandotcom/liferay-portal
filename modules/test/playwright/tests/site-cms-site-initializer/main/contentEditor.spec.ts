@@ -996,14 +996,7 @@ test(
 	}
 );
 
-const testWithRepeatableFF = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-50377': {enabled: true},
-	})
-);
-
-testWithRepeatableFF(
+test(
 	'Create item with repeatable groups',
 	{
 		tag: ['@LPD-50378', '@LPD-68645'],
@@ -1140,7 +1133,7 @@ testWithRepeatableFF(
 	}
 );
 
-testWithRepeatableFF(
+test(
 	'Create item with referenced structure',
 	{
 		tag: '@LPD-50378',
@@ -1251,7 +1244,7 @@ testWithRepeatableFF(
 	}
 );
 
-testWithRepeatableFF(
+test(
 	'Repetable text input is validated correctly',
 	{
 		tag: '@LPD-69446',

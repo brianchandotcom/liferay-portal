@@ -60,7 +60,7 @@ public class CacheControlWebServerTest extends BaseWebServerTestCase {
 			TestPropsValues.getUser(), null);
 
 		Assert.assertEquals(
-			HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE,
+			"must-revalidate, max-age=600",
 			mockHttpServletResponse.getHeader(HttpHeaders.CACHE_CONTROL));
 	}
 

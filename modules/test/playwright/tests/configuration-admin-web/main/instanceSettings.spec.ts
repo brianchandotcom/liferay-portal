@@ -151,26 +151,28 @@ test('Asserts that a user can create/update/delete factory configurations', asyn
 		).toBe(newProviderName);
 	});
 
-	// Assert a factory configuration can be deleted
+	await test.step('Assert that factory configurations were deleted', async () => {
+		while (
+			(await page.locator('td.lfr-provider-name-column').count()) > 0
+		) {
+			const row = page.locator('tbody tr').first();
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByText('Delete').first(),
+				trigger: row.getByRole('button'),
+			});
 
-	while ((await page.locator('td.lfr-provider-name-column').count()) > 0) {
-		const row = page.locator('tbody tr').first();
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByText('Delete').first(),
-			trigger: row.getByRole('button'),
-		});
+			await expect(
+				page.getByText('Success:Your request completed successfully.')
+			).toBeVisible();
+
+			await page.reload();
+		}
 
 		await expect(
-			page.getByText('Success:Your request completed successfully.')
-		).toBeVisible();
-
-		await page.reload();
-	}
-
-	await expect(
-		await page.locator('td.lfr-provider-name-column').count()
-	).toBe(0);
+			await page.locator('td.lfr-provider-name-column').count()
+		).toBe(0);
+	});
 });
 
 test('Asserts that a user can export a configuration', async ({

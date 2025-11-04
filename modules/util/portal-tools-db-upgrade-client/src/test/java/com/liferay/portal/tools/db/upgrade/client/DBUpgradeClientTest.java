@@ -130,9 +130,9 @@ public class DBUpgradeClientTest {
 		_createPortalUpgradeExtPropertiesFile();
 
 		String[] answers = {
-			StringPool.BLANK, "invalidAppServerDirName",
+			"invalidAppServer", StringPool.BLANK, "invalidAppServerDirName",
 			_tomcatDir.getAbsolutePath(), "invalidExtraLibDirName", "bin",
-			"globalLibDirName", "lib", "portalDirNsme", "webapps/ROOT"
+			"globalLibDirName", "lib", "portalDirName", "webapps/ROOT"
 		};
 
 		_dbUpgradeClient = _createDBUpgradeClient(answers);
@@ -143,12 +143,16 @@ public class DBUpgradeClientTest {
 		String errorOutput = _errorByteArrayOutputStream.toString();
 
 		Assert.assertTrue(
+			errorOutput.contains("is an unsupported application server"));
+
+		Assert.assertTrue(
 			errorOutput.contains("does not exist or is not a directory"));
 
 		AppServer appServer = ReflectionTestUtil.getFieldValue(
 			_dbUpgradeClient, "_appServer");
 
 		Assert.assertNotNull(appServer);
+		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 		Assert.assertEquals(_tomcatDir, appServer.getDir());
 		Assert.assertEquals("bin", appServer.getExtraLibDirNames());
 		Assert.assertEquals("lib", appServer.getGlobalLibDirName());
@@ -176,12 +180,50 @@ public class DBUpgradeClientTest {
 			_dbUpgradeClient, "_appServer");
 
 		Assert.assertNotNull(appServer);
+		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 		Assert.assertEquals(
 			new File(_liferayHomeDir, "tomcat"), appServer.getDir());
 		Assert.assertEquals("/bin", appServer.getExtraLibDirNames());
 		Assert.assertEquals("/lib", appServer.getGlobalLibDirName());
 		Assert.assertEquals("/webapps/ROOT", appServer.getPortalDirName());
 		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
+	}
+
+	@Test
+	public void testVerifyAppServerPropertiesWithInvalidAppServerName()
+		throws Exception {
+
+		_createPortalUpgradeExtPropertiesFile();
+
+		File appServerPropertiesFile = new File(
+			_rootDir, "app-server.properties");
+
+		Properties appServerProperties = new Properties();
+
+		appServerProperties.setProperty(
+			"server.detector.server.id", "invalidAppServer");
+
+		appServerProperties.store(appServerPropertiesFile);
+
+		_dbUpgradeClient = _createDBUpgradeClient(new String[0]);
+
+		try {
+			ReflectionTestUtil.invoke(
+				_dbUpgradeClient, "_verifyAppServerProperties",
+				new Class<?>[0]);
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				"Invalid configuration in app-server.properties",
+				exception.getMessage());
+
+			String errorOutput = _errorByteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				errorOutput.contains("is an unsupported application server"));
+		}
 	}
 
 	@Test
@@ -217,7 +259,7 @@ public class DBUpgradeClientTest {
 				"Invalid configuration in app-server.properties",
 				exception.getMessage());
 
-			String errorOutput = _errorOutputStream.toString();
+			String errorOutput = _errorByteArrayOutputStream.toString();
 
 			Assert.assertTrue(
 				errorOutput.contains("does not exist or is not a directory"));
@@ -239,6 +281,7 @@ public class DBUpgradeClientTest {
 		AppServer appServer = ReflectionTestUtil.getFieldValue(
 			_dbUpgradeClient, "_appServer");
 
+		Assert.assertEquals("tomcat", appServer.getServerDetectorServerId());
 		Assert.assertEquals(_tomcatDir, appServer.getDir());
 		Assert.assertEquals("bin", appServer.getExtraLibDirNames());
 		Assert.assertEquals("lib", appServer.getGlobalLibDirName());
@@ -496,7 +539,7 @@ public class DBUpgradeClientTest {
 				"Invalid configuration in portal-upgrade-ext.properties",
 				exception.getMessage());
 
-			String errorOutput = _errorOutputStream.toString();
+			String errorOutput = _errorByteArrayOutputStream.toString();
 
 			Assert.assertTrue(
 				errorOutput.contains("does not exist or is not a directory"));

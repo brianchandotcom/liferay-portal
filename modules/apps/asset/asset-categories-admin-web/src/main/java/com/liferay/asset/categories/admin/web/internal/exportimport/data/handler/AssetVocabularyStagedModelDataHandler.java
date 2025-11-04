@@ -224,6 +224,7 @@ public class AssetVocabularyStagedModelDataHandler
 				vocabulary.getName(), 2);
 
 			importedVocabulary = _assetVocabularyLocalService.updateVocabulary(
+				existingVocabulary.getExternalReferenceCode(),
 				existingVocabulary.getVocabularyId(), StringPool.BLANK,
 				_getVocabularyTitleMap(
 					portletDataContext.getScopeGroupId(), vocabulary, name),

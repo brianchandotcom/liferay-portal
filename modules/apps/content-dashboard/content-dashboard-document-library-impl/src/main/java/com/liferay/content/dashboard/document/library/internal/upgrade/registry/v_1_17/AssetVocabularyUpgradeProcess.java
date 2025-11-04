@@ -82,6 +82,7 @@ public class AssetVocabularyUpgradeProcess extends UpgradeProcess {
 		}
 
 		return _assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
 			assetVocabulary.getDescriptionMap(),
 			assetVocabularySettingsHelper.toString());

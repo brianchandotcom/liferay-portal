@@ -69,6 +69,7 @@ public class AssetVocabularyUtil {
 		}
 
 		assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
 			assetVocabulary.getDescriptionMap(),
 			assetVocabularySettingsHelper.toString(), visibilityType);

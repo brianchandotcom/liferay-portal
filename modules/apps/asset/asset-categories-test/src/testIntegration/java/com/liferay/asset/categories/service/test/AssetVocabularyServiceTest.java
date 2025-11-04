@@ -668,7 +668,7 @@ public class AssetVocabularyServiceTest {
 		String title = RandomTestUtil.randomString(nameMaxLength);
 
 		vocabulary = _assetVocabularyLocalService.updateVocabulary(
-			vocabulary.getVocabularyId(),
+			vocabulary.getExternalReferenceCode(), vocabulary.getVocabularyId(),
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN, title + RandomTestUtil.randomString(10)
 			).put(

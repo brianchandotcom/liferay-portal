@@ -370,6 +370,7 @@ public class JournalFeedTypeUpgradeProcess extends UpgradeProcess {
 			requireds);
 
 		return _assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
 			assetVocabulary.getDescriptionMap(),
 			assetVocabularySettingsHelper.toString());

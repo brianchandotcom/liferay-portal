@@ -58,6 +58,7 @@ public class ERAssetVocabularyLocalServiceImpl
 		}
 		else {
 			assetVocabulary = _assetVocabularyLocalService.updateVocabulary(
+				assetVocabulary.getExternalReferenceCode(),
 				assetVocabulary.getVocabularyId(), title, titleMap,
 				descriptionMap, settings, assetVocabulary.getVisibilityType(),
 				serviceContext);

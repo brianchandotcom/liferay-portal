@@ -103,6 +103,7 @@ public class AssetVocabularyLocalServiceTest {
 			String title = RandomTestUtil.randomString();
 
 			vocabulary = _assetVocabularyLocalService.updateVocabulary(
+				vocabulary.getExternalReferenceCode(),
 				vocabulary.getVocabularyId(),
 				HashMapBuilder.put(
 					locale, title

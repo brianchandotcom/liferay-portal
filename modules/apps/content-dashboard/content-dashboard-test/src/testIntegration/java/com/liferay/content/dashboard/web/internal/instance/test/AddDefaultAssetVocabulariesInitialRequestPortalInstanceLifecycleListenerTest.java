@@ -97,6 +97,7 @@ public class
 			classNameIds, classTypePKs, requireds);
 
 		_assetVocabularyLocalService.updateVocabulary(
+			assetVocabulary.getExternalReferenceCode(),
 			assetVocabulary.getVocabularyId(), assetVocabulary.getTitleMap(),
 			assetVocabulary.getDescriptionMap(),
 			assetVocabularySettingsHelper.toString(),

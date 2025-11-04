@@ -35,7 +35,9 @@ jobs:
                 name: Log in to GAR
                 run: |
                     echo "${{secrets.GAR_PASSWORD}}" \
-                        | helm registry login "${GAR_REGISTRY}" --password-stdin --username _json_key_base64
+                        | helm registry login "${GAR_REGISTRY}" \
+                            --password-stdin \
+                            --username _json_key_base64
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push Helm chart
                 run: |
@@ -74,7 +76,9 @@ jobs:
             -   name: Log in to ECR
                 run: |
                     aws ecr get-login-password --region us-east-1 \
-                        | helm registry login "${ECR_REGISTRY}" --password-stdin --username AWS
+                        | helm registry login "${ECR_REGISTRY}" \
+                            --password-stdin \
+                            --username AWS
             -   name: Checkout code
                 uses: actions/checkout@v4
             -   env:
@@ -151,7 +155,9 @@ jobs:
                 name: Log in to GAR
                 run: |
                     echo "${{secrets.GAR_PASSWORD}}" \
-                        | helm registry login "${GAR_REGISTRY}" --password-stdin --username _json_key_base64
+                        | helm registry login "${GAR_REGISTRY}" \
+                            --password-stdin \
+                            --username _json_key_base64
             -   if: ${{steps.verify_version.outputs.should_publish == 'true'}}
                 name: Package and push Helm chart
                 run: |

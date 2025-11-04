@@ -1039,7 +1039,7 @@ test.describe('Select From List input field', () => {
 					},
 					scope: 'company',
 					status: {code: 0},
-					titleObjectFieldName: 'AppleType',
+					titleObjectFieldName: 'appleType',
 				});
 
 			apiHelpers.data.push({

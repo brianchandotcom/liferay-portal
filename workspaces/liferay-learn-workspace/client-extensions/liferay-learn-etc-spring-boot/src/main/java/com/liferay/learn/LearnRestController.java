@@ -278,24 +278,21 @@ public class LearnRestController extends BaseRestController {
 	}
 
 	private String _convertHTMLListToTextInline(String html) {
-		html = _convertHTMLTableToTextInline(html);
-
 		Matcher matcher = _liPattern.matcher(html);
-
 		StringBuffer stringBuffer = new StringBuffer();
 
 		while (matcher.find()) {
 			String closingTag = matcher.group(3);
-			String innerContent = matcher.group(
-				2
-			).trim();
+			String innerContent = StringUtil.trim(matcher.group(
+					2
+			));
 			String openingTag = matcher.group(1);
 
-			String text = innerContent.replaceAll(
+			String text = StringUtil.trim(innerContent.replaceAll(
 				"(?s)<[^>]+>", " "
 			).replaceAll(
 				"\\s+", " "
-			).trim();
+			));
 
 			if (!text.matches(".*[.!?;:]$")) {
 				int lastCloseTagIndex = innerContent.lastIndexOf("</");
@@ -329,11 +326,11 @@ public class LearnRestController extends BaseRestController {
 
 		html = stringBuffer.toString();
 
-		return html.replaceAll(
+		return StringUtil.trim(html.replaceAll(
 			"(?s)<[^>]+>", " "
 		).replaceAll(
 			"\\s+", " "
-		).trim();
+		));
 	}
 
 	private String _convertHTMLTableToTextInline(String html) {
@@ -360,9 +357,9 @@ public class LearnRestController extends BaseRestController {
 
 					while (headCellsMatcher.find()) {
 						headers.add(
-							_decodeBasicHTMLEntities(
+							_htmlReplace(
 								headCellsMatcher.group(1)
-							).trim());
+							));
 					}
 				}
 			}
@@ -409,9 +406,9 @@ public class LearnRestController extends BaseRestController {
 				List<String> cells = new ArrayList<>();
 
 				while (cellMatcher.find()) {
-					String raw = _decodeBasicHTMLEntities(
+					String raw = _htmlReplace(
 						cellMatcher.group(1)
-					).trim();
+					);
 
 					if (Objects.equals(raw, "✔") || Objects.equals(raw, "✓")) {
 						raw = "supported";
@@ -450,8 +447,8 @@ public class LearnRestController extends BaseRestController {
 				}
 			}
 
-			String trimmedTableDescriptionText = tableDescription.toString(
-			).trim();
+			String trimmedTableDescriptionText = StringUtil.trim(tableDescription.toString(
+			));
 
 			String replacement = trimmedTableDescriptionText + " ";
 
@@ -464,18 +461,18 @@ public class LearnRestController extends BaseRestController {
 		return stringBuffer.toString();
 	}
 
-	private String _decodeBasicHTMLEntities(String string) {
+	private String _htmlReplace(String string) {
 		if (string == null) {
 			return "";
 		}
 
-		return StringUtil.replace(
+		return StringUtil.trim(StringUtil.replace(
 			string,
 			new String[] {
 				"&nbsp;", "&NBSP;", "\u00A0", "&amp;", "&lt;", "&gt;", "&quot;",
 				"&#39;"
 			},
-			new String[] {" ", " ", " ", "&", "<", ">", "\"", "'"});
+			new String[] {" ", " ", " ", "&", "<", ">", "\"", "'"}));
 	}
 
 	private Map<String, Object> _generateAudioResource(
@@ -821,14 +818,14 @@ public class LearnRestController extends BaseRestController {
 		List<String> parts = new ArrayList<>();
 		StringBundler sb = new StringBundler();
 
-		String ssmlContent = ssml.replaceFirst(
+		String ssmlContent = StringUtil.trim(ssml.replaceFirst(
 			"^<speak>", ""
 		).replaceFirst(
 			"</speak>$", ""
-		).trim();
+		));
 
 		String[] sentences = _convertHTMLListToTextInline(
-			_decodeBasicHTMLEntities(ssmlContent)
+			_convertHTMLTableToTextInline(_htmlReplace(ssmlContent))
 		).split(
 			"(?<=[.!?])\\s+"
 		);
@@ -836,8 +833,8 @@ public class LearnRestController extends BaseRestController {
 		for (String sentence : sentences) {
 			if ((sb.length() + sentence.length()) > maxLength) {
 				parts.add(
-					sb.toString(
-					).trim());
+					StringUtil.trim(sb.toString(
+					)));
 				sb = new StringBundler();
 			}
 
@@ -851,7 +848,7 @@ public class LearnRestController extends BaseRestController {
 		if (sb.length() > 0) {
 			parts.add(
 				sb.toString(
-				).trim());
+				));
 		}
 
 		return parts;

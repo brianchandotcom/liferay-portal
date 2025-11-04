@@ -3,7 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {act, fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom';
@@ -271,6 +272,83 @@ describe('RulesSidebar', () => {
 				'Rule 1: if Fragment 3 is-equal-to true disable fragment Fragment 2'
 			)
 		).toBeInTheDocument();
+	});
+
+	it('filters rules', async () => {
+		const rules = [
+			{
+				actions: [],
+				conditionType: 'any',
+				conditions: [],
+				id: 'apple-rule',
+				name: 'Apple',
+			},
+			{
+				actions: [],
+				conditionType: 'any',
+				conditions: [],
+				id: 'blackberry-rule',
+				name: 'Blackberry',
+			},
+			{
+				actions: [],
+				conditionType: 'any',
+				conditions: [],
+				id: 'orange-rule',
+				name: 'Orange',
+			},
+		] as Rule[];
+
+		renderComponent({
+			rules: [
+				{
+					actions: [],
+					conditionType: 'any',
+					conditions: [],
+					id: 'apple-rule',
+					name: 'Apple',
+				},
+				{
+					actions: [],
+					conditionType: 'any',
+					conditions: [],
+					id: 'blackberry-rule',
+					name: 'Blackberry',
+				},
+				{
+					actions: [],
+					conditionType: 'any',
+					conditions: [],
+					id: 'orange-rule',
+					name: 'Orange',
+				},
+			],
+		});
+
+		const newRuleButton = screen.getByText('new-rule');
+
+		for (const rule of rules) {
+			expect(await screen.findByText(rule.name)).toBeInTheDocument();
+		}
+
+		const search = await screen.findByPlaceholderText(/search/i);
+		await userEvent.type(search, 'app');
+
+		await waitFor(() => {
+			expect(screen.getByText('Apple')).toBeInTheDocument();
+			expect(screen.queryByText('Blackberry')).not.toBeInTheDocument();
+			expect(screen.queryByText('Orange')).not.toBeInTheDocument();
+			expect(newRuleButton).not.toBeInTheDocument();
+		});
+
+		await userEvent.clear(search);
+		await userEvent.type(search, 'fruit');
+
+		await waitFor(() => {
+			expect(screen.queryByText('Apple')).not.toBeInTheDocument();
+			expect(screen.getByText('no-rules-yet')).toBeInTheDocument();
+			expect(newRuleButton).not.toBeInTheDocument();
+		});
 	});
 
 	describe('Rules Modal', () => {

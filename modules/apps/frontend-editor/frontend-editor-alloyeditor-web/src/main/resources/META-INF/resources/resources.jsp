@@ -8,6 +8,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String alloyEditorServletContextName = PortalWebResourcesUtil.getServletContext(
+	PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR
+).getServletContextName();
+String ckEditorServletContextName = PortalWebResourcesUtil.getServletContext(
+	PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR
+).getServletContextName();
 String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_NAMESPACE + ":editorName");
 %>
 
@@ -16,18 +22,14 @@ String editorName = (String)request.getAttribute(AlloyEditorConstants.ATTRIBUTE_
 >
 	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/assets/alloy-editor-atlas.css") %>' rel="stylesheet" senna="temporary" type="text/css" />
 
-	<%
-	long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR);
-	%>
-
 	<aui:script senna="temporary" type="text/javascript">
 		window.ALLOYEDITOR_BASEPATH =
 			'<%= PortalUtil.getPathProxy() + application.getContextPath() %>/alloyeditor/';
 	</aui:script>
 
-	<aui:script id='<%= namespace + "ckEditorScript" %>' senna="temporary" src='<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>' type="text/javascript"></aui:script>
+	<aui:script hashedFile="<%= true %>" id='<%= namespace + "ckEditorScript" %>' senna="temporary" src='<%= ckEditorServletContextName + "/ckeditor/ckeditor.js" %>' type="text/javascript"></aui:script>
 
-	<aui:script id='<%= namespace + "alloyEditorScript" %>' senna="temporary" src='<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_ALLOYEDITOR) + "/alloyeditor/alloy-editor-no-ckeditor-min.js", javaScriptLastModified)) %>' type="text/javascript"></aui:script>
+	<aui:script hashedFile="<%= true %>" id='<%= namespace + "alloyEditorScript" %>' senna="temporary" src='<%= alloyEditorServletContextName + "/alloyeditor/alloy-editor-no-ckeditor-min.js" %>' type="text/javascript"></aui:script>
 
 	<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.alloyeditor.web#" + editorName + "#additionalResources" %>' />
 

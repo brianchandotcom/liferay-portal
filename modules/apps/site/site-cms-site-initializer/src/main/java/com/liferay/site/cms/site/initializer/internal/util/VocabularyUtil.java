@@ -8,9 +8,13 @@ package com.liferay.site.cms.site.initializer.internal.util;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
+import com.liferay.object.service.ObjectFolderLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.PortalUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +23,25 @@ import java.util.Map;
  */
 public class VocabularyUtil {
 
-	public static void buildObjectDefinitionSelectOptions(
+	public static List<Map<String, String>> getAvailableAssetTypeOptions(
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		List<Map<String, String>> selectOptions = new ArrayList<>();
+
+		_buildObjectDefinitionSelectOptions(
+			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
+				"L_CMS_CONTENT_STRUCTURES", themeDisplay.getCompanyId()),
+			selectOptions);
+		_buildObjectDefinitionSelectOptions(
+			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
+				"L_CMS_FILE_TYPES", themeDisplay.getCompanyId()),
+			selectOptions);
+
+		return selectOptions;
+	}
+
+	private static void _buildObjectDefinitionSelectOptions(
 		ObjectFolder objectFolder, List<Map<String, String>> selectOptions) {
 
 		for (ObjectDefinition objectDefinition :

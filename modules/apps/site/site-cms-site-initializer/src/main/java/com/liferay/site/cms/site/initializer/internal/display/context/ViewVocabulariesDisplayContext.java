@@ -12,7 +12,6 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -32,7 +31,6 @@ import com.liferay.taglib.security.PermissionsURLTag;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -58,23 +56,6 @@ public class ViewVocabulariesDisplayContext {
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
 				_themeDisplay.getCompanyId()),
 			AssetRendererFactory::isCategorizable);
-	}
-
-	public List<Map<String, String>> getClassNameIdOptions()
-		throws PortalException {
-
-		List<Map<String, String>> selectOptions = new ArrayList<>();
-
-		VocabularyUtil.buildObjectDefinitionSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()),
-			selectOptions);
-		VocabularyUtil.buildObjectDefinitionSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()),
-			selectOptions);
-
-		return selectOptions;
 	}
 
 	public CreationMenu getCreationMenu() {
@@ -144,7 +125,7 @@ public class ViewVocabulariesDisplayContext {
 	public List<FDSFilter> getFDSFilters() throws Exception {
 		return ListUtil.fromArray(
 			new VocabularyAssetTypesSelectionFDSFilter(
-				getClassNameIdOptions()));
+				VocabularyUtil.getAvailableAssetTypeOptions(_themeDisplay)));
 	}
 
 	public Map<String, Object> getReactData() throws PortalException {

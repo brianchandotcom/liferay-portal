@@ -5,9 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
-import com.liferay.object.service.ObjectFolderLocalServiceUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
@@ -21,8 +19,6 @@ import com.liferay.site.cms.site.initializer.internal.util.VocabularyUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,26 +33,10 @@ public class EditVocabularyDisplayContext {
 		_themeDisplay = themeDisplay;
 	}
 
-	public List<Map<String, String>> getClassNameIdOptions()
-		throws PortalException {
-
-		List<Map<String, String>> selectOptions = new ArrayList<>();
-
-		VocabularyUtil.buildObjectDefinitionSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_CONTENT_STRUCTURES", _themeDisplay.getCompanyId()),
-			selectOptions);
-		VocabularyUtil.buildObjectDefinitionSelectOptions(
-			ObjectFolderLocalServiceUtil.getObjectFolderByExternalReferenceCode(
-				"L_CMS_FILE_TYPES", _themeDisplay.getCompanyId()),
-			selectOptions);
-
-		return selectOptions;
-	}
-
 	public Map<String, Object> getReactData() throws Exception {
 		return HashMapBuilder.<String, Object>put(
-			"availableAssetTypes", getClassNameIdOptions()
+			"availableAssetTypes",
+			VocabularyUtil.getAvailableAssetTypeOptions(_themeDisplay)
 		).put(
 			"backURL",
 			PortalUtil.getLayoutFullURL(

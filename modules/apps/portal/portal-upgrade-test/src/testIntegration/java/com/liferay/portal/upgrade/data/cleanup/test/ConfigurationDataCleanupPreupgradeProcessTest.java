@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.test.log.LogCapture;
@@ -27,7 +28,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.data.cleanup.ConfigurationDataCleanupPreupgradeProcess;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -71,17 +75,11 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		connection = DataAccess.getConnection();
-
 		_test(0, _getNonexistentCompanyId(), "companyId", "Company");
-
-		connection = DataAccess.getConnection();
 
 		_test(
 			TestPropsValues.getCompanyId(), _getNonexistentCompanyId(),
 			"companyId", "Company");
-
-		connection = DataAccess.getConnection();
 
 		_test(
 			TestPropsValues.getGroupId(), _getNonexistentGroupId(), "groupId",
@@ -104,6 +102,21 @@ public class ConfigurationDataCleanupPreupgradeProcessTest
 		finally {
 			runSQL("delete from Company where companyId = " + companyId);
 		}
+	}
+
+	protected long[] getGroupIds() throws Exception {
+		List<Long> groupIds = new ArrayList<>();
+
+		try (PreparedStatement preparedStatement = _connection.prepareStatement(
+				"select groupId from Group_");
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				groupIds.add(resultSet.getLong("groupId"));
+			}
+		}
+
+		return ArrayUtil.toArray(groupIds.toArray(new Long[0]));
 	}
 
 	private long _getNonexistentCompanyId() throws Exception {

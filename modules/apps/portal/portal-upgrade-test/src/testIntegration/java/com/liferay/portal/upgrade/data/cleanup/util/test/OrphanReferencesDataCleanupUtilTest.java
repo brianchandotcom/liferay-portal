@@ -31,6 +31,7 @@ import java.sql.Connection;
 
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
@@ -56,6 +57,11 @@ public class OrphanReferencesDataCleanupUtilTest {
 		_db = DBManagerUtil.getDB();
 
 		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test

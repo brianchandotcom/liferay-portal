@@ -45,6 +45,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -71,6 +72,11 @@ public class DDMDataCleanupPreupgradeProcessTest
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Before

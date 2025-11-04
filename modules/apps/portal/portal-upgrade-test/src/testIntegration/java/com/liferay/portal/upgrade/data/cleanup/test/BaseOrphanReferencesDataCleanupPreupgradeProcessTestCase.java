@@ -25,6 +25,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.Connection;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -46,6 +47,11 @@ public abstract class BaseOrphanReferencesDataCleanupPreupgradeProcessTestCase {
 		db = DBManagerUtil.getDB();
 
 		dbInspector = new DBInspector(connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		DataAccess.cleanUp(connection);
 	}
 
 	@Test

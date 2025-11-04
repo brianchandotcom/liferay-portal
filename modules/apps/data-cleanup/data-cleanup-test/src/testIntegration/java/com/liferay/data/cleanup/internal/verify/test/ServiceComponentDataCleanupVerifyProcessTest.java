@@ -27,6 +27,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -50,6 +51,11 @@ public class ServiceComponentDataCleanupVerifyProcessTest {
 		_connection = DataAccess.getConnection();
 
 		_dbInspector = new DBInspector(_connection);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		DataAccess.cleanUp(_connection);
 	}
 
 	@Test

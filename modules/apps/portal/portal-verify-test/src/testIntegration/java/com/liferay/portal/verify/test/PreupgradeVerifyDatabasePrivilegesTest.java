@@ -64,6 +64,8 @@ public class PreupgradeVerifyDatabasePrivilegesTest
 
 	@AfterClass
 	public static void tearDownClass() {
+		DataAccess.cleanUp(_connection);
+
 		if (_safeCloseable != null) {
 			_safeCloseable.close();
 		}

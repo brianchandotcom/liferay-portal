@@ -26,6 +26,8 @@ export default function RulesSidebar() {
 		[rules, search]
 	);
 
+	const noFilteredResults = !search.length;
+
 	return (
 		<>
 			<SidebarPanelHeader>
@@ -43,9 +45,12 @@ export default function RulesSidebar() {
 
 			<div className="border-top overflow-auto p-3">
 				{filteredRules.length ? (
-					<RulesList rules={filteredRules} />
+					<RulesList
+						rules={filteredRules}
+						showNewRuleButton={noFilteredResults}
+					/>
 				) : (
-					<RulesEmptyState />
+					<RulesEmptyState showNewRuleButton={noFilteredResults} />
 				)}
 			</div>
 		</>

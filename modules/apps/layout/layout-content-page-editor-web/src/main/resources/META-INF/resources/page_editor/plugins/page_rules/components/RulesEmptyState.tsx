@@ -9,7 +9,11 @@ import React, {useState} from 'react';
 
 import RulesModal from './RulesModal';
 
-export default function RulesEmptyState() {
+export default function RulesEmptyState({
+	showNewRuleButton,
+}: {
+	showNewRuleButton: boolean;
+}) {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	return (
@@ -25,14 +29,16 @@ export default function RulesEmptyState() {
 					title={Liferay.Language.get('no-rules-yet')}
 				/>
 
-				<ClayButton
-					className="mt-2"
-					displayType="secondary"
-					onClick={() => setModalVisible(true)}
-					size="sm"
-				>
-					{Liferay.Language.get('new-rule')}
-				</ClayButton>
+				{showNewRuleButton ? (
+					<ClayButton
+						className="mt-2"
+						displayType="secondary"
+						onClick={() => setModalVisible(true)}
+						size="sm"
+					>
+						{Liferay.Language.get('new-rule')}
+					</ClayButton>
+				) : null}
 			</div>
 
 			{modalVisible && (

@@ -25,7 +25,13 @@ import useConditionValues, {
 import {Rule} from '../../../types/Rule';
 import RulesModal from './RulesModal';
 
-export default function RulesList({rules}: {rules: Rule[]}) {
+export default function RulesList({
+	rules,
+	showNewRuleButton,
+}: {
+	rules: Rule[];
+	showNewRuleButton: boolean;
+}) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [editingRule, setEditingRule] = useState<Rule | null>(null);
 	const [savedRuleId, setSavedRuleId] = useState<string | null>(null);
@@ -57,18 +63,20 @@ export default function RulesList({rules}: {rules: Rule[]}) {
 
 	return (
 		<>
-			<ClayButton
-				className="w-100"
-				displayType="secondary"
-				onClick={onCreateRule}
-				size="sm"
-			>
-				<ClayIcon className="mr-2" symbol="plus" />
+			{showNewRuleButton ? (
+				<ClayButton
+					className="mb-3 w-100"
+					displayType="secondary"
+					onClick={onCreateRule}
+					size="sm"
+				>
+					<ClayIcon className="mr-2" symbol="plus" />
 
-				{Liferay.Language.get('new-rule')}
-			</ClayButton>
+					{Liferay.Language.get('new-rule')}
+				</ClayButton>
+			) : null}
 
-			<ClayList className="pt-3">
+			<ClayList>
 				{rules.map((rule) => (
 					<RuleItem
 						key={rule.id}

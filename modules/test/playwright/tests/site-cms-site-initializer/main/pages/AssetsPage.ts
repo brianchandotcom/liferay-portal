@@ -116,6 +116,7 @@ export class AssetsPage {
 		action:
 			| 'Delete'
 			| 'Download'
+			| 'Expire'
 			| 'Share'
 			| 'Show Details'
 			| 'View'

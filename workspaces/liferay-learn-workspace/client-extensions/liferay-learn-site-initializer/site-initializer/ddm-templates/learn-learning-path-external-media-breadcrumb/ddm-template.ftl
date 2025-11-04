@@ -10,7 +10,7 @@
 	<#assign
 		learningPathId = (themeDisplay.getURLCurrent())?matches("(?<=learning-path=)[^&]*")[0]
 
-		learningPathName = restClient.get("/c/learningpaths/${learningPathId}?fields=name").name
+		learningPathName = restClient.get("/c/p2s3learningpaths/${learningPathId}?fields=name").name
 	/>
 
 	<div class="breadcrumb breadcrumb-lp">

@@ -1,9 +1,9 @@
 <#assign
 	assetEntryId = ObjectEntry_objectEntryId.getData()
 
-	response = restClient.get("/c/quizes/${assetEntryId}?fields=r_quiz_c_module.r_module_c_course.title&nestedFields=course,module&nestedFieldsDepth=2")
+	response = restClient.get("/c/p2s3quizes/${assetEntryId}?fields=p2s3ModuleToP2S3Quizzes.p2s3CourseToP2S3Modules.title&nestedFields=p2s3CourseToP2S3Modules,p2s3ModuleToP2S3Quizzes&nestedFieldsDepth=2")
 
-	pageTitle = response.r_quiz_c_module.r_module_c_course.title + " - " +.data_model["ObjectRelationship#C_Module#quiz_title"].getData() + " - " + ObjectField_title.getData()
+	pageTitle = response.p2s3ModuleToP2S3Quizzes.p2s3CourseToP2S3Modules.title + " - " +.data_model["ObjectRelationship#C_P2S3Module#p2s3ModuleToP2S3Quizzes_title"].getData() + " - " + ObjectField_title.getData()
 />
 
 <#if pageTitle?has_content>

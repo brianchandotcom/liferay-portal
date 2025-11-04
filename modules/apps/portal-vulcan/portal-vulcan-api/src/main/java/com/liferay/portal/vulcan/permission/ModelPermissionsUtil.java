@@ -40,14 +40,23 @@ public class ModelPermissionsUtil {
 
 		for (Permission permission : permissions) {
 			String[] actionIds = permission.getActionIds();
-			Role role = roleLocalService.getOrAddEmptyRole(
-				permission.getRoleExternalReferenceCode(), companyId, userId,
-				null, 0, permission.getRoleName(),
-				RoleConstants.getLabelType(permission.getRoleType()));
+
+			Role role = null;
+
+			if (permission.getRoleExternalReferenceCode() != null) {
+				role = roleLocalService.getOrAddEmptyRole(
+					permission.getRoleExternalReferenceCode(), companyId,
+					userId, null, 0, permission.getRoleName(),
+					RoleConstants.getLabelType(permission.getRoleType()));
+			}
+			else {
+				role = roleLocalService.getRole(
+					companyId, permission.getRoleName());
+			}
 
 			if (actionIds.length > 0) {
 				modelPermissions.addRolePermissions(
-					role.getName(), permission.getActionIds());
+					permission.getRoleName(), permission.getActionIds());
 
 				continue;
 			}

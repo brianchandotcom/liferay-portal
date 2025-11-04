@@ -16,15 +16,15 @@
 		border: 1px solid $mainLighten74;
 		border-radius: 8px;
 		height: calc(100vh - 101px);
-		padding: 2rem 0 0;
+		padding: 0;
 	}
 
 	&__onboarding-image {
 		background-image: url('/o/osb-faro-web/dist/sprite.svg#ac_onboarding-usage');
-		background-position: 60px center;
+		background-position: 150px 0;
 		background-repeat: no-repeat;
 		background-size: 730px 100%;
-		height: 100%;
+		height: 924px;
 	}
 
 	@media screen and (max-width: 768px) {

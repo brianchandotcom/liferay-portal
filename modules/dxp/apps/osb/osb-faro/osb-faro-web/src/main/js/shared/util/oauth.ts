@@ -43,16 +43,16 @@ export const EVENT_TYPES = {
 /**
  * The types of errors that `getTempCredentials` can reject with.
  */
-export const ERROR_TYPES = {
-	AC_RECEIVE_CALLBACK_ERROR: 'AC_RECEIVE_CALLBACK_ERROR',
-	OTHER: 'OTHER',
-	TIMEOUT: 'TIMEOUT',
-	WINDOW_BLOCKED: 'WINDOW_BLOCKED',
-	WINDOW_CLOSED: 'WINDOW_CLOSED'
-};
+export enum ERROR_TYPES {
+	AC_RECEIVE_CALLBACK_ERROR = 'AC_RECEIVE_CALLBACK_ERROR',
+	OTHER = 'OTHER',
+	TIMEOUT = 'TIMEOUT',
+	WINDOW_BLOCKED = 'WINDOW_BLOCKED',
+	WINDOW_CLOSED = 'WINDOW_CLOSED'
+}
 
-function createError(message, type) {
-	const error = new Error(message);
+function createError(message: string, type: ERROR_TYPES) {
+	const error = new Error(message) as Error & {type: ERROR_TYPES};
 	error.type = type;
 
 	return error;
@@ -96,7 +96,11 @@ export function openOAuthWindow({
 	authWindow,
 	timeout = DEFAULT_TIMEOUT,
 	url
-} = {}) {
+}: {
+	authWindow: typeof window;
+	timeout?: number;
+	url: string;
+}) {
 	authWindow.location.href = url;
 
 	authWindow.focus();
@@ -243,6 +247,15 @@ export function getTempCredentials({
 	groupId,
 	timeout,
 	type
+}: {
+	authWindow: typeof window;
+	baseUrl: string;
+	callbackUrl?: string;
+	consumerKey: string;
+	consumerSecret: string;
+	groupId: string;
+	timeout?: number;
+	type: string;
 }) {
 	if (!authWindow) {
 		return Promise.reject(
@@ -276,7 +289,7 @@ export function getTempCredentials({
 			openOAuthWindow({
 				authWindow,
 				timeout,
-				url: response.oAuthAuthorizationURL
+				url: `${response.oAuthAuthorizationURL}&prompt=consent`
 			}).then(({code, token, verifier}) => ({
 				...response,
 				oAuthCallbackURL: callbackUrl,

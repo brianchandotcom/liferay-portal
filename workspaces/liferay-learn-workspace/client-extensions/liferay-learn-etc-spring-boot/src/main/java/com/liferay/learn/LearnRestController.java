@@ -287,27 +287,18 @@ public class LearnRestController extends BaseRestController {
 			String openingTag = matcher.group(1);
 
 			String text = StringUtil.trim(
-				innerContent.replaceAll(
-					"(?s)<[^>]+>", " "
-				).replaceAll(
-					"\\s+", " "
-				));
+				_replace(
+					_replace(innerContent, " ", "(?s)<[^>]+>"), " ", "\\s+"));
 
 			if (!text.matches(".*[.!?;:]$")) {
 				int lastCloseTagIndex = innerContent.lastIndexOf("</");
 
 				if (lastCloseTagIndex != -1) {
-					String contentBeforeClosingTag = innerContent.substring(
-						0, lastCloseTagIndex
-					).replaceAll(
-						"\\s+$", ""
-					);
-					String closingTagAndContentAfter = innerContent.substring(
-						lastCloseTagIndex);
-
 					innerContent = StringBundler.concat(
-						contentBeforeClosingTag, ".",
-						closingTagAndContentAfter);
+						_replace(
+							innerContent.substring(0, lastCloseTagIndex), "",
+							"\\s+$"),
+						".", innerContent.substring(lastCloseTagIndex));
 				}
 				else {
 					innerContent = innerContent + ".";
@@ -323,14 +314,10 @@ public class LearnRestController extends BaseRestController {
 
 		matcher.appendTail(stringBuffer);
 
-		html = stringBuffer.toString();
-
 		return StringUtil.trim(
-			html.replaceAll(
-				"(?s)<[^>]+>", " "
-			).replaceAll(
-				"\\s+", " "
-			));
+			_replace(
+				_replace(stringBuffer.toString(), " ", "(?s)<[^>]+>"), " ",
+				"\\s+"));
 	}
 
 	private String _convertHTMLTableToTextInline(String html) {
@@ -356,7 +343,7 @@ public class LearnRestController extends BaseRestController {
 						headTrMatcher.group(1));
 
 					while (headCellsMatcher.find()) {
-						headers.add(_htmlReplace(headCellsMatcher.group(1)));
+						headers.add(_unescapeHTML(headCellsMatcher.group(1)));
 					}
 				}
 			}
@@ -370,12 +357,10 @@ public class LearnRestController extends BaseRestController {
 
 			Matcher trMatcher = _trPattern.matcher(bodyHTML);
 
-			StringBuilder tableDescription = new StringBuilder("Table: ");
+			StringBundler tableSB = new StringBundler("Table: ");
 
 			if (!headers.isEmpty()) {
-				StringBundler sb = new StringBundler();
-
-				sb.append("Column headings: ");
+				StringBundler sb = new StringBundler("Column headings: ");
 
 				for (int i = 0; i < headers.size(); i++) {
 					sb.append(headers.get(i));
@@ -388,7 +373,7 @@ public class LearnRestController extends BaseRestController {
 					}
 				}
 
-				tableDescription.append(sb);
+				tableSB.append(sb);
 			}
 
 			int row = 0;
@@ -396,14 +381,11 @@ public class LearnRestController extends BaseRestController {
 			while (trMatcher.find()) {
 				row++;
 
-				String tr = trMatcher.group(1);
-
-				Matcher cellMatcher = _cellPattern.matcher(tr);
-
+				Matcher cellMatcher = _cellPattern.matcher(trMatcher.group(1));
 				List<String> cells = new ArrayList<>();
 
 				while (cellMatcher.find()) {
-					String raw = _htmlReplace(cellMatcher.group(1));
+					String raw = _unescapeHTML(cellMatcher.group(1));
 
 					if (Objects.equals(raw, "✔") || Objects.equals(raw, "✓")) {
 						raw = "supported";
@@ -416,39 +398,25 @@ public class LearnRestController extends BaseRestController {
 				}
 
 				if (!cells.isEmpty()) {
-					tableDescription.append(
-						"Row "
-					).append(
-						row
-					).append(
-						". "
-					);
+					tableSB.append("Row ");
+					tableSB.append(row);
+					tableSB.append(". ");
 
 					for (int c = 0; c < cells.size(); c++) {
-						String colName =
+						tableSB.append(
 							(c < headers.size()) ? headers.get(c) :
-								("Column " + (c + 1));
-
-						tableDescription.append(
-							colName
-						).append(
-							": "
-						).append(
-							cells.get(c)
-						).append(
-							". "
-						);
+								("Column " + (c + 1)));
+						tableSB.append(": ");
+						tableSB.append(cells.get(c));
+						tableSB.append(". ");
 					}
 				}
 			}
 
-			String trimmedTableDescriptionText = StringUtil.trim(
-				tableDescription.toString());
-
-			String replacement = trimmedTableDescriptionText + " ";
-
 			tableMatcher.appendReplacement(
-				stringBuffer, Matcher.quoteReplacement(replacement));
+				stringBuffer,
+				Matcher.quoteReplacement(
+					StringUtil.trim(tableSB.toString()) + " "));
 		}
 
 		tableMatcher.appendTail(stringBuffer);
@@ -465,7 +433,7 @@ public class LearnRestController extends BaseRestController {
 			new ByteArrayOutputStream();
 
 		List<String> ssmls = _splitSsml(
-			content.replaceAll("\\bLiferay\\b", "Life-ray"), 5000);
+			_replace(content, "Life-ray", "\\bLiferay\\b"), 5000);
 
 		for (String ssml : ssmls) {
 			String response = post(
@@ -742,21 +710,6 @@ public class LearnRestController extends BaseRestController {
 		return map;
 	}
 
-	private String _htmlReplace(String string) {
-		if (string == null) {
-			return "";
-		}
-
-		return StringUtil.trim(
-			StringUtil.replace(
-				string,
-				new String[] {
-					"&nbsp;", "&NBSP;", "\u00A0", "&amp;", "&lt;", "&gt;",
-					"&quot;", "&#39;"
-				},
-				new String[] {" ", " ", " ", "&", "<", ">", "\"", "'"}));
-	}
-
 	private void _postUserBadge(long quizId, long userId) {
 		JSONArray jsonArray = new JSONObject(
 			get(
@@ -810,19 +763,25 @@ public class LearnRestController extends BaseRestController {
 			).toUri());
 	}
 
+	private String _replace(String s, String replacement, String regex) {
+		Pattern pattern = Pattern.compile(regex);
+
+		return pattern.matcher(
+			s
+		).replaceAll(
+			replacement
+		);
+	}
+
 	private List<String> _splitSsml(String ssml, int maxLength) {
 		List<String> parts = new ArrayList<>();
 		StringBundler sb = new StringBundler();
 
 		String ssmlContent = StringUtil.trim(
-			ssml.replaceFirst(
-				"^<speak>", ""
-			).replaceFirst(
-				"</speak>$", ""
-			));
+			_replace(_replace(ssml, "", "^<speak>"), "", "</speak>$"));
 
 		String[] sentences = _convertHTMLListToTextInline(
-			_convertHTMLTableToTextInline(_htmlReplace(ssmlContent))
+			_convertHTMLTableToTextInline(_unescapeHTML(ssmlContent))
 		).split(
 			"(?<=[.!?])\\s+"
 		);
@@ -833,11 +792,8 @@ public class LearnRestController extends BaseRestController {
 				sb = new StringBundler();
 			}
 
-			sb.append(
-				sentence
-			).append(
-				" "
-			);
+			sb.append(sentence);
+			sb.append(" ");
 		}
 
 		if (sb.length() > 0) {
@@ -865,6 +821,14 @@ public class LearnRestController extends BaseRestController {
 		).put(
 			"title", objectDefinitionMap.get("pluralLabel")
 		).build();
+	}
+
+	private String _unescapeHTML(String html) {
+		if (html == null) {
+			return "";
+		}
+
+		return StringUtil.trim(HtmlUtil.unescape(html));
 	}
 
 	private static final Pattern _cellPattern = Pattern.compile(

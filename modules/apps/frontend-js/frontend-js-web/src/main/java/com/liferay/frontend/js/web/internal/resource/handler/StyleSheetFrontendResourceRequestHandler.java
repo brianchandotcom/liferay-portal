@@ -8,10 +8,13 @@ package com.liferay.frontend.js.web.internal.resource.handler;
 import com.liferay.frontend.js.web.internal.configuration.FrontendCachingConfiguration;
 import com.liferay.frontend.js.web.internal.resource.FrontendResource;
 import com.liferay.frontend.js.web.internal.resource.StyleSheetFrontendResource;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistry;
 import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,6 +86,10 @@ public class StyleSheetFrontendResourceRequestHandler
 		SortedMap<String, String> tokens = _getTokens(httpServletRequest);
 
 		if (requestHash != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Handling request: " + requestURI);
+			}
+
 			return _createFrontendResource(
 				requestHash, tokens == null, requestURI, tokens);
 		}
@@ -91,7 +98,18 @@ public class StyleSheetFrontendResourceRequestHandler
 			requestURI);
 
 		if (hashedFileURI == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Handling request: " + requestURI);
+			}
+
 			return _createFrontendResource(null, false, requestURI, tokens);
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				StringBundler.concat(
+					"Handling request ", requestURI, " [static file: ",
+					hashedFileURI, StringPool.CLOSE_BRACKET));
 		}
 
 		return _createFrontendResource(
@@ -165,6 +183,9 @@ public class StyleSheetFrontendResourceRequestHandler
 
 		return tokens;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StyleSheetFrontendResourceRequestHandler.class);
 
 	private final FrontendCachingConfiguration _frontendCachingConfiguration;
 	private final HashedFilesRegistry _hashedFilesRegistry;

@@ -13,7 +13,12 @@ import getPageDefinition from '../../../layout-content-page-editor-web/main/util
 import getWidgetDefinition from '../../../layout-content-page-editor-web/main/utils/getWidgetDefinition';
 
 export class FDSSamplePage {
-	readonly activeFiltersToolbar: Locator;
+	readonly activeFiltersToolbar: {
+		clearButton: Locator;
+		clearSearchButton: Locator;
+		container: Locator;
+		searchResume: Locator;
+	};
 	private readonly apiHelpers: ApiHelpers;
 	readonly bulkActions: {
 		actionsDropdownButton: Locator;
@@ -68,7 +73,22 @@ export class FDSSamplePage {
 	readonly visualizationModeSelector: Locator;
 
 	constructor(page: Page) {
-		this.activeFiltersToolbar = page.getByTestId('activeFiltersToolbar');
+		const activeFiltersToolbarContainer: Locator = page.getByTestId(
+			'activeFiltersToolbar'
+		);
+
+		const searchResume =
+			activeFiltersToolbarContainer.locator('.search-resume');
+		this.activeFiltersToolbar = {
+			clearButton: activeFiltersToolbarContainer.getByRole('button', {
+				name: 'Clear',
+			}),
+			clearSearchButton: searchResume.getByRole('button', {
+				name: 'Clear Search',
+			}),
+			container: activeFiltersToolbarContainer,
+			searchResume,
+		};
 		this.apiHelpers = new ApiHelpers(page);
 		this.bulkActions = {
 			actionsDropdownButton: page

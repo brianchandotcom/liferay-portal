@@ -111,7 +111,7 @@ test(
 				});
 
 				await expect(
-					fdsSamplePage.activeFiltersToolbar
+					fdsSamplePage.activeFiltersToolbar.container
 				).not.toBeVisible();
 			});
 		});
@@ -273,7 +273,7 @@ test(
 				).toBeEmpty();
 
 				await expect(
-					fdsSamplePage.activeFiltersToolbar
+					fdsSamplePage.activeFiltersToolbar.container
 				).not.toBeVisible();
 			});
 		});

@@ -79,13 +79,12 @@ test(
 			});
 
 			await test.step('Check that the search resume displays "Search:Sample55"', async () => {
-				const searchResume =
-					fdsSamplePage.activeFiltersToolbar.locator(
-						'.search-resume'
-					);
-
-				await expect(searchResume).toBeVisible();
-				await expect(searchResume).toContainText('Search:Sample55');
+				await expect(
+					fdsSamplePage.activeFiltersToolbar.searchResume
+				).toBeVisible();
+				await expect(
+					fdsSamplePage.activeFiltersToolbar.searchResume
+				).toContainText('Search:Sample55');
 			});
 		});
 
@@ -102,10 +101,7 @@ test(
 
 		await test.step('Clicking the "Clear Search" icon on the search resume clears the search', async () => {
 			await test.step('Click on the "Clear Search" icon in the search resume', async () => {
-				await fdsSamplePage.activeFiltersToolbar
-					.locator('.search-resume')
-					.getByRole('button', {name: 'Clear Search'})
-					.click();
+				await fdsSamplePage.activeFiltersToolbar.clearSearchButton.click();
 
 				await expect(
 					page.getByText('75 Results Found for:')
@@ -120,7 +116,7 @@ test(
 
 			await test.step('Check the search resume label is not displayed', async () => {
 				await expect(
-					fdsSamplePage.activeFiltersToolbar.locator('.search-resume')
+					fdsSamplePage.activeFiltersToolbar.searchResume
 				).not.toBeVisible();
 			});
 		});

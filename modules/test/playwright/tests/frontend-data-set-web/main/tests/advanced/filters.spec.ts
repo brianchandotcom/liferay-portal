@@ -70,9 +70,7 @@ test(
 			});
 
 			await test.step('Click on clear filters button', async () => {
-				await fdsSamplePage.activeFiltersToolbar
-					.getByRole('button', {name: 'Clear'})
-					.click();
+				await fdsSamplePage.activeFiltersToolbar.clearButton.click();
 
 				await page
 					.getByText('This is a description for sample 1.')

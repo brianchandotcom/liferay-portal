@@ -545,6 +545,7 @@ test(
 		let categoryLabel;
 		const categoryName = getRandomString();
 		const file1Title = `title ${getRandomString()}`;
+		let objectEntry;
 		const spaceName = 'Default';
 		const tagName = getRandomString();
 		let tagLabel;
@@ -588,16 +589,16 @@ test(
 			{actionIds: ['VIEW'], roleName: 'Site Member'}
 		);
 
-		const objectEntry1 = await apiHelpers.objectEntry.postObjectEntry(
-			{
-				objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
-				title: file1Title,
-			},
-			applicationName,
-			spaceName
-		);
-
 		try {
+			objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+				{
+					objectEntryFolderExternalReferenceCode: 'L_CONTENTS',
+					title: file1Title,
+				},
+				applicationName,
+				spaceName
+			);
+
 			await test.step('Create an user and add to the Space', async () => {
 				user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -613,7 +614,7 @@ test(
 			});
 
 			await test.step('Go to All Assets and open the Info Panel Categorization Tab', async () => {
-				await assetsPage.gotoAll();
+				await page.goto(PORTLET_URLS.cmsAll);
 
 				await assetsPage.execItemAction({
 					action: 'Show Details',
@@ -669,6 +670,8 @@ test(
 
 				await page.goto(PORTLET_URLS.cmsAll);
 
+				await expect(assetsPage.getItem(file1Title)).toBeVisible();
+
 				await assetsPage.execItemAction({
 					action: 'Show Details',
 					filter: file1Title,
@@ -697,6 +700,12 @@ test(
 					.assetLink(file1Title)
 					.click();
 
+				await expect(
+					page.getByRole('heading', {
+						name: `Edit ${objectEntry.title}`,
+					})
+				).toBeVisible();
+
 				await contentsPage.openSidePanel('Categorization');
 
 				await expect(tagLabel).toBeAttached();
@@ -710,9 +719,17 @@ test(
 			});
 		}
 		finally {
+			await performLogout(page);
+
+			await performLogin(page, 'test');
+
 			await apiHelpers.objectEntry.deleteObjectEntry(
 				applicationName,
-				String(objectEntry1.id)
+				String(objectEntry.id)
+			);
+
+			await apiHelpers.headlessAdminTaxonomy.deleteTaxonomyVocabulary(
+				vocabularyId
 			);
 		}
 	}
@@ -795,9 +812,7 @@ test(
 			await test.step('Select 1 asset and delete it using the Bulk Action', async () => {
 				await assetsPage.gotoAll();
 
-				await expect(
-					assetsPage.taskStatusFormsButton
-				).not.toBeVisible();
+				await expect(assetsPage.taskStatusFormsButton).toBeHidden();
 
 				await assetsPage
 					.getItem(filesNames[0])
@@ -1141,7 +1156,7 @@ test(
 			await test.step('Expect that FDS table content is visible', async () => {
 				await expect(
 					assetsPage
-						.getItem(objectEntry[0])
+						.getItem(file1Title)
 						.getByRole('cell', {name: 'expired'})
 				).toBeVisible();
 

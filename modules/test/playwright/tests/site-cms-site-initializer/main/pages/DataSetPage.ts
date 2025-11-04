@@ -33,7 +33,7 @@ export class DataSetPage {
 		};
 
 		this.page = page;
-		this.selectAllLink = page.getByRole('link', {
+		this.selectAllLink = page.getByRole('button', {
 			exact: true,
 			name: 'Select All',
 		});

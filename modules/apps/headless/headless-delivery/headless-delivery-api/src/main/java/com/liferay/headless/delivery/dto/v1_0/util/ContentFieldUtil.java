@@ -322,9 +322,9 @@ public class ContentFieldUtil {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					valueString);
 
-				long fileEntryId = jsonObject.getLong("fileEntryId");
+				FileEntry fileEntry = _getFileEntry(dlAppService, valueString);
 
-				if (fileEntryId == 0) {
+				if (fileEntry == null) {
 					return new ContentFieldValue();
 				}
 
@@ -332,8 +332,9 @@ public class ContentFieldUtil {
 					{
 						setImage(
 							() -> _toImage(
-								dlURLHelper, dlAppService, fileEntryId, uriInfo,
-								jsonObject, locale));
+								dlURLHelper, dlAppService,
+								fileEntry.getFileEntryId(), uriInfo, jsonObject,
+								locale));
 					}
 				};
 			}
@@ -542,6 +543,18 @@ public class ContentFieldUtil {
 
 		if (classPK != 0) {
 			return dlAppService.getFileEntry(classPK);
+		}
+
+		long fileEntryId = jsonObject.getLong("fileEntryId");
+
+		if (fileEntryId != 0) {
+			return dlAppService.getFileEntry(fileEntryId);
+		}
+
+		long id = jsonObject.getLong("id");
+
+		if (id != 0) {
+			return dlAppService.getFileEntry(id);
 		}
 
 		long groupId = jsonObject.getLong("groupId");

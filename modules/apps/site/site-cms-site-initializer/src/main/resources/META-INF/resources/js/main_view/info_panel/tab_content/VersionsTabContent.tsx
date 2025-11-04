@@ -28,6 +28,10 @@ const VersionsTabContent = () => {
 	}>({count: 0, items: []});
 
 	const getObjectEntriesVersions = useCallback(async () => {
+		if (!objectEntries[0].actions) {
+			return null;
+		}
+
 		const [
 			{
 				actions: {

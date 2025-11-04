@@ -1215,9 +1215,28 @@ public class ObjectEntryDTOConverter
 				return serializable;
 			}
 
+			String[] keys = null;
+
+			if (serializable instanceof Object[]) {
+				keys = TransformUtil.transform(
+					(Object[])serializable,
+					object -> {
+						if (!(object instanceof Map)) {
+							return null;
+						}
+
+						return MapUtil.getString(
+							(Map<String, String>)object, "key");
+					},
+					String.class);
+			}
+			else if (serializable instanceof String) {
+				keys = StringUtil.split(
+					(String)serializable, StringPool.COMMA_AND_SPACE);
+			}
+
 			return (Serializable)TransformUtil.transformToList(
-				StringUtil.split(
-					(String)serializable, StringPool.COMMA_AND_SPACE),
+				keys,
 				key -> _getListEntry(
 					dtoConverterContext, key,
 					objectField.getListTypeDefinitionId()));

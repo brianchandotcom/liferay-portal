@@ -33,6 +33,16 @@ test(
 	'Assert cadmin component precedence over CSS from the applied theme',
 	{tag: '@LPD-66827'},
 	async ({apiHelpers, page, pagesAdminPage, site}) => {
+		async function addCustomCSSToPage(pageName: string, css: string) {
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.addCustomCSS(pageName, css);
+
+			await pagesAdminPage.goto(site.friendlyUrlPath);
+
+			await pagesAdminPage.editPage(pageName);
+		}
+
 		const {pageName} = await test.step('Create a new page', async () => {
 			const pageName = getRandomString();
 			await apiHelpers.headlessDelivery.createSitePage({
@@ -47,9 +57,7 @@ test(
 		await test.step('Add smaller precedence CSS rules to the theme', async () => {
 			const lowerPrecedenceCSS = `${ELEMENT_SELECTOR} { background-color: ${OVERRIDE_COLOR}; }`;
 
-			await pagesAdminPage.addCustomCSS(pageName, lowerPrecedenceCSS);
-
-			await pagesAdminPage.editPage(pageName);
+			await addCustomCSSToPage(pageName, lowerPrecedenceCSS);
 
 			await expect(page.locator(ELEMENT_SELECTOR)).toHaveCSS(
 				'background-color',
@@ -60,9 +68,7 @@ test(
 		await test.step('Add higher precedence CSS rules to the theme', async () => {
 			const higherPrecedenceCSS = `${ELEMENT_SELECTOR} { background-color: ${OVERRIDE_COLOR} !important; }`;
 
-			await pagesAdminPage.addCustomCSS(pageName, higherPrecedenceCSS);
-
-			await pagesAdminPage.editPage(pageName);
+			await addCustomCSSToPage(pageName, higherPrecedenceCSS);
 
 			await expect(page.locator(ELEMENT_SELECTOR)).toHaveCSS(
 				'background-color',

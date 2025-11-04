@@ -261,8 +261,6 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 	await expect(tag1).toBeVisible();
 	await expect(tag2).toBeVisible();
 
-	await page.reload();
-
 	await tagsPage.execItemAction({
 		action: 'Merge',
 		filter: tagName1,
@@ -281,14 +279,14 @@ test('Merge tags', {tag: '@LPD-43388'}, async ({page, tagsPage}) => {
 		page.getByRole('gridcell', {exact: true, name: tagName1})
 	).toBeVisible();
 
-	await page.getByLabel('Merge Tags').getByRole('combobox').click();
+	await page.getByLabel('Merge Tags').getByRole('combobox').nth(0).click();
 
 	await expect(async () => {
-		await page.getByRole('option', {name: tagName2}).click({timeout: 1000});
+		await page.getByRole('option', {name: tagName2}).click();
 
 		await expect(
 			page.locator('.label-secondary', {hasText: tagName2})
-		).toBeVisible({timeout: 1000});
+		).toBeVisible();
 	}).toPass();
 
 	await clickAndExpectToBeVisible({

@@ -12,6 +12,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ListEntry;
@@ -44,6 +45,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -82,6 +84,15 @@ public class ObjectEntryDTOConverterTest {
 		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			false, false, true,
 			ListUtil.fromArray(
+				new MultiselectPicklistObjectFieldBuilder(
+				).labelMap(
+					LocalizedMapUtil.getLocalizedMap(
+						RandomTestUtil.randomString())
+				).listTypeDefinitionId(
+					listTypeDefinition.getListTypeDefinitionId()
+				).name(
+					"multiselectPicklist"
+				).build(),
 				new PicklistObjectFieldBuilder(
 				).labelMap(
 					LocalizedMapUtil.getLocalizedMap(
@@ -101,6 +112,9 @@ public class ObjectEntryDTOConverterTest {
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
+					"multiselectPicklist",
+					"listTypeEntryKey1, listTypeEntryKey2"
+				).put(
 					"picklist", "listTypeEntryKey1"
 				).build(),
 				ServiceContextTestUtil.getServiceContext(
@@ -109,6 +123,21 @@ public class ObjectEntryDTOConverterTest {
 		ObjectEntry objectEntry = _toDTO(serviceBuilderObjectEntry);
 
 		Map<String, Object> properties = objectEntry.getProperties();
+
+		List<ListEntry> listEntries = (List<ListEntry>)properties.get(
+			"multiselectPicklist");
+
+		Assert.assertEquals(listEntries.toString(), 2, listEntries.size());
+		Assert.assertEquals(
+			"listTypeEntryKey1",
+			listEntries.get(
+				0
+			).getKey());
+		Assert.assertEquals(
+			"listTypeEntryKey2",
+			listEntries.get(
+				1
+			).getKey());
 
 		ListEntry listEntry = (ListEntry)properties.get("picklist");
 

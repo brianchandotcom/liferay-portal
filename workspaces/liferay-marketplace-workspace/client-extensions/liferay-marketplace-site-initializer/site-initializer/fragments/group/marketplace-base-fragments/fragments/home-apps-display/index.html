@@ -17,14 +17,8 @@
 		</div>
 
 		[#if configuration.specificationFilterValue?has_content]
-			[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]
-
-			[#if channel?has_content]
-				[#assign channelId = channel.items[0].id /]
-			[/#if]
-
-			[#if channelId?has_content]
-				[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&images.accountId=-1&nestedFields=categories,productSpecifications,images&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
+			[#if configuration.channelId?has_content]
+				[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${configuration.channelId}/products?accountId=-1&nestedFields=categories,productSpecifications&pageSize=${configuration.pageSize}&filter=specificationValues/any(x:contains(x,'${configuration.specificationFilterValue}'))") /]
 			[/#if]
 
 			<div id="section-body">
@@ -62,17 +56,19 @@
 
 									<div class="d-flex flex-column w-100">
 										[#if productType?has_content]
-											<span class="d-flex justify-content-end">
-												[#if productType.name == 'Other']
-													<div class="app-type-badge"></div>
-												[#else]
-													[#assign badgeType = productType.name?lower_case?replace(" ", "-", "r")?replace("/", "-", "r")]
+											[#if configuration.cardSize != 'small']
+												<span class="d-flex justify-content-end">
+													[#if productType.name == 'Other']
+														<div class="app-type-badge"></div>
+													[#else]
+														[#assign badgeType = productType.name?lower_case?replace(" ", "-", "r")?replace("/", "-", "r")]
 
-													<div class="app-type-badge ${badgeType}">
-														${productType.name}
-													</div>
-												[/#if]
-											</span>
+														<div class="app-type-badge ${badgeType} font-weight-bold">
+															${productType.name}
+														</div>
+													[/#if]
+												</span>
+											[/#if]
 										[/#if]
 
 										<div class="app-name font-weight-bold mb-1">
@@ -127,7 +123,7 @@
 											[#if principalCategory?has_content]
 												[#assign tagName=stringUtil.shorten(htmlUtil.stripHtml(principalCategory.name!""), 100, "...") /]
 
-												<div class="my-1">
+												<div class="d-flex my-1 tags-container">
 													<span class="mr-3 product-tag px-2 py-1 rounded text-nowrap" title="${principalCategory.name}">
 														${tagName}
 													</span>

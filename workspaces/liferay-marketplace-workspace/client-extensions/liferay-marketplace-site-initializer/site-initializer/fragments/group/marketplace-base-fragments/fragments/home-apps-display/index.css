@@ -11,6 +11,10 @@
     text-overflow: ellipsis;
 }
 
+.home-apps-display .tags-container {
+    gap: 8px;
+}
+
 .home-apps-display .app-name {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

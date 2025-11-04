@@ -1,55 +1,3 @@
-[#macro section sectionTitle specificationValue pageSize=3]
-	[#if specificationValue?has_content]
-		[#assign channel = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels?accountId=-1") /]
-
-		[#if channel?has_content]
-			[#assign channelItems = channel.items![] /]
-
-			[#if channelItems?has_content ]
-				[#assign channelId = channelItems[0].id /]
-
-				[#if channelId?has_content]
-					[#assign response = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products?accountId=-1&filter=specificationValues/any(x:contains(x,'${specificationValue}'))&pageSize=${pageSize}&sort=name:asc")/]
-				[/#if]
-
-				[#assign products = response.items /]
-
-				[#if products?has_content]
-					<div class="align-items-start d-flex flex-column justify-content-start list-section-container w-100">
-						<div class="align-items-center d-flex justify-content-between results-title-container w-100">
-							<h4 class="m-0 text-black-50 text-nowrap">${sectionTitle}</h4>
-
-							<div class="divider-horizontal mx-3"></div>
-
-							<a class="font-weight-bold p-0 section-action-button text-nowrap" href="/web/marketplace/applications?our-selection=${specificationValue}">
-								<span class="text-black-50 text-nowrap">${languageUtil.get(locale, "view-all")}</span>
-							</a>
-						</div>
-
-						<ul class="results-list-container w-100">
-							[#list products as product]
-								[#if product?has_content]
-									<li class="results-items-list w-100">
-										<a class="align-items-center d-flex flex-row mb-0 text-dark text-decoration-none w-100" href="/web/marketplace/p/${product.slug}" target="_self">
-											<div class="image-container mr-2 rounded">
-												<img alt="${product.name}" class="app-search-bar-image" draggable="false" height="56" src="${(product.urlImage?replace('https://', 'http://'))?js_string}" width="56" />
-											</div>
-
-											<div class="font-weight-bold w-100">
-												${product.name}
-											</div>
-										</a>
-									</li>
-								[/#if]
-							[/#list]
-						</ul>
-					</div>
-				[/#if]
-			[/#if]
-		[/#if]
-	[/#if]
-[/#macro]
-
 <div class="align-items-end d-flex flex-column justify-content-center marketplace-search-container">
 	<div class="align-items-center d-flex justify-content-between search">
 		<div class="align-items-center d-flex p-relative w-100">
@@ -87,10 +35,7 @@
 				<div class="recent-searches-list-container w-100"></div>
 			</div>
 
-			[@section sectionTitle="Highlights" specificationValue="Highlights" pageSize="3" /]
-
-			[@section sectionTitle="What is new" specificationValue="What is new" pageSize="3" /]
-
+			<div class="d-flex featured-section flex-column w-100"></div>
 		</div>
 
 		<div class="d-flex flex-row p-3 results-footer w-100">

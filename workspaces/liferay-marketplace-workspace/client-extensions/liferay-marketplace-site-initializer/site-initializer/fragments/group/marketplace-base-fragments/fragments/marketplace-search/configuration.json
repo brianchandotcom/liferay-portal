@@ -4,6 +4,34 @@
 			"fields": [
 				{
 					"dataType": "string",
+					"defaultValue": {
+						"featuredKeyword": "Highlights",
+						"title": "Highlights"
+					},
+					"label": "Featured  1",
+					"name": "featured1",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": {
+						"featuredKeyword": "What is new",
+						"title": "What's New"
+					},
+					"label": "Featured 2",
+					"name": "featured2",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"fields": [
+				{
+					"dataType": "string",
 					"defaultValue": [
 						{
 							"color": "#FFB46E",

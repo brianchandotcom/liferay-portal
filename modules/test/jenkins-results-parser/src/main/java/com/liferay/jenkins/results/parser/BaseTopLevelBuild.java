@@ -71,12 +71,8 @@ public abstract class BaseTopLevelBuild
 			return;
 		}
 
-		Build downstreamBuild = BuildFactory.newBuild(
-			cachedDownstreamBuildReport, this);
-
-		addDownstreamBuild(downstreamBuild);
-
-		downstreamBuild.saveBuildURLInBuildDatabase();
+		addCachedDownstreamBuild(
+			BuildFactory.newBuild(cachedDownstreamBuildReport, this));
 	}
 
 	@Override

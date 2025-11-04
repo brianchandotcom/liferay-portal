@@ -53,15 +53,24 @@ public class AIHubSiteInitializerTest {
 
 		siteInitializer.initialize(_group.getGroupId());
 
+		_assertWorkflowDefinitionExists(
+			WorkflowDefinitionConstants.
+				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
+			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);
+		_assertWorkflowDefinitionExists(
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
+	}
+
+	private void _assertWorkflowDefinitionExists(
+			String externalReferenceCode, String name)
+		throws Exception {
+
 		WorkflowDefinition workflowDefinition =
 			_workflowDefinitionManager.getWorkflowDefinition(
-				WorkflowDefinitionConstants.
-					EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
-				_group.getCompanyId());
+				externalReferenceCode, _group.getCompanyId());
 
-		Assert.assertEquals(
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
-			workflowDefinition.getName());
+		Assert.assertEquals(name, workflowDefinition.getName());
 	}
 
 	@DeleteAfterTestRun

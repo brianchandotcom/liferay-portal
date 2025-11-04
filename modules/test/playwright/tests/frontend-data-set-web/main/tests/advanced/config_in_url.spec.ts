@@ -892,15 +892,20 @@ for (const spaConfiguration of spaConfigurations) {
 				const checkSearchParam = (searchParam: string) =>
 					assertSearchParam(searchParam, 'advanced', page);
 
+				const clearSearchParam = async () => {
+					await fdsSamplePage.activeFiltersToolbar.clearSearchButton.click();
+
+					await assertSearchParam('', 'advanced', page);
+				};
 				await test.step('Change search parameter via UI several times', async () => {
 					await setSearchParam('test1');
-					await setSearchParam('test2');
+					await clearSearchParam();
 					await setSearchParam('test3');
 				});
 
 				await test.step('Check back navigation', async () => {
 					await page.goBack();
-					await checkSearchParam('test2');
+					await checkSearchParam('');
 					await page.goBack();
 					await checkSearchParam('test1');
 
@@ -912,19 +917,19 @@ for (const spaConfiguration of spaConfigurations) {
 					await page.goForward();
 					await checkSearchParam('test1');
 					await page.goForward();
-					await checkSearchParam('test2');
+					await checkSearchParam('');
 					await page.goForward();
 					await checkSearchParam('test3');
 				});
 
 				await test.step('Mix navigation and change via UI', async () => {
 					await page.goBack();
-					await checkSearchParam('test2');
+					await checkSearchParam('');
 
 					await setSearchParam('test4');
 
 					await page.goBack();
-					await checkSearchParam('test2');
+					await checkSearchParam('');
 					await page.goForward();
 					await checkSearchParam('test4');
 					expect(await page.goForward()).toBeNull();

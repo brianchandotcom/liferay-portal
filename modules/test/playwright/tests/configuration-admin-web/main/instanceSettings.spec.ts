@@ -23,7 +23,7 @@ export const test = mergeTests(
 	siteSettingsPagesTest
 );
 
-test('Asserts that a user can create/update/delete factory configurations', async ({
+test('Asserts that a user can manage factory configurations', async ({
 	instanceSettingsPage,
 	page,
 }) => {

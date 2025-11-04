@@ -1,5 +1,5 @@
 import {EntityTypes} from '../constants';
-import {Map, Record} from 'immutable';
+import {fromJS, Map, Record} from 'immutable';
 
 interface ISegment {
 	activeIndividualCount: number;
@@ -75,6 +75,6 @@ export default class Segment
 	userName: string;
 
 	constructor(props = {}) {
-		super(props);
+		super(fromJS(props));
 	}
 }

@@ -1,8 +1,10 @@
+import * as API from 'shared/api';
 import * as breadcrumbs from 'shared/util/breadcrumbs';
 import BasePage from 'shared/components/base-page';
 import BundleRouter from 'route-middleware/BundleRouter';
 import DownloadPDFReport from 'shared/components/download-report/DownloadPDFReport';
 import EmbeddedAlertList from 'shared/components/EmbeddedAlertList';
+import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import Loading from 'shared/components/Loading';
@@ -10,13 +12,13 @@ import React, {lazy, Suspense, useContext} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
-import {compose} from 'shared/hoc';
 import {CSVType} from 'shared/components/download-report/utils';
 import {DownloadStaticCSVReport} from 'shared/components/download-report/DownloadStaticCSVReport';
 import {getMatchedRoute, Routes, SEGMENTS, toRoute} from 'shared/util/router';
+import {Segment} from 'shared/util/records';
 import {SegmentStates} from 'shared/util/constants';
-import {Switch, withRouter} from 'react-router-dom';
-import {withSegment} from 'shared/hoc/WithSegment';
+import {Switch, useParams} from 'react-router-dom';
+import {useRequest} from 'shared/hooks/useRequest';
 
 const Overview = lazy(() =>
 	import(/* webpackChunkName: "SegmentOverview" */ './Overview')
@@ -57,17 +59,46 @@ const NAV_ITEMS = [
 	}
 ];
 
-export const SegmentProfileRoutes = ({
-	channelId,
-	className,
-	groupId,
-	id,
-	segment
-}) => {
-	const checkDisabled = () => segment.get('state') === SegmentStates.Disabled;
+export const SegmentProfileRoutes = () => {
+	const contextType = useContext(ChannelContext);
+
+	const checkDisabled = () => segment.state === SegmentStates.Disabled;
+
+	const {channelId, groupId, id} = useParams();
+	const {data, error, loading} = useRequest({
+		dataSourceFn: API.individualSegment.fetch,
+		variables: {
+			groupId,
+			includeReferencedObjects: true,
+			segmentId: id
+		}
+	});
+
+	const segment = new Segment(data);
+
+	if (loading) {
+		return <Loading />;
+	}
+
+	if (error) {
+		return (
+			<ErrorPage
+				href={toRoute(Routes.CONTACTS_LIST_ENTITY, {
+					channelId,
+					groupId,
+					type: SEGMENTS
+				})}
+				linkLabel={Liferay.Language.get('go-to-segments')}
+				message={Liferay.Language.get(
+					'the-segment-you-are-looking-for-does-not-exist'
+				)}
+				subtitle={Liferay.Language.get('segment-not-found')}
+			/>
+		);
+	}
 
 	const getAlerts = () => {
-		if (segment.get('state') === SegmentStates.InProgress) {
+		if (segment.state === SegmentStates.InProgress) {
 			return [
 				{
 					alertType: AlertTypes.Info,
@@ -93,26 +124,22 @@ export const SegmentProfileRoutes = ({
 	const getClassNameForRoute = matchedRoute => {
 		switch (matchedRoute) {
 			case Routes.CONTACTS_SEGMENT_DISTRIBUTION:
-				return getCN('segment-distribution-root', className);
+				return getCN('segment-distribution-root');
 			case Routes.CONTACTS_SEGMENT_INTERESTS:
-				return getCN('contacts-interests-root', className);
+				return getCN('contacts-interests-root');
 			case Routes.CONTACTS_SEGMENT:
-				return getCN(
-					'segment-overview-root',
-					'overview-root',
-					className
-				);
+				return getCN('segment-overview-root', 'overview-root');
 			case Routes.CONTACTS_SEGMENT_MEMBERSHIP:
 			default:
-				return className;
+				return;
 		}
 	};
 
 	const matchedRoute = getMatchedRoute(NAV_ITEMS);
 
-	const componentProps = {segment};
+	const {selectedChannel} = contextType;
 
-	const {selectedChannel} = useContext(ChannelContext);
+	const componentProps = {segment};
 
 	const title = segment.name || Liferay.Language.get('unknown');
 
@@ -192,7 +219,7 @@ export const SegmentProfileRoutes = ({
 					<div className='d-flex justify-content-end w-100'>
 						<DownloadStaticCSVReport
 							disabled={checkDisabled()}
-							segmentId={segment.get('id')}
+							segmentId={segment.id}
 							type={CSVType.Membership}
 							typeLang={Liferay.Language.get(
 								'segment-membership'
@@ -256,4 +283,4 @@ export const SegmentProfileRoutes = ({
 	);
 };
 
-export default compose(withRouter, withSegment(true))(SegmentProfileRoutes);
+export default SegmentProfileRoutes;

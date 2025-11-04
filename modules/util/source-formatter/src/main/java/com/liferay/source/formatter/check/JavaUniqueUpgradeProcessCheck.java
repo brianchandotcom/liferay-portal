@@ -125,17 +125,35 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 					javaMethod.getLineNumber(x));
 			}
 
-			if (_hasTableCreateOrUpgradeProcessFactoryCalls(upgradeSteps)) {
-				addMessage(
-					fileName,
-					StringBundler.concat(
-						"Do not combine an UpgradeProcessFactory or ",
-						"UpgradeTableBuilder upgrade process with a standard ",
-						"UpgradeProcess class under the same schema version, ",
-						"see LPD-44331"),
-					javaMethod.getLineNumber(x));
+			if (!_containsTableCreateOrUpgradeProcessFactoryCalls(
+					upgradeSteps)) {
+
+				continue;
+			}
+
+			addMessage(
+				fileName,
+				StringBundler.concat(
+					"Do not combine an UpgradeProcessFactory or ",
+					"UpgradeTableBuilder upgrade process with a standard ",
+					"UpgradeProcess under the same schema version, see LPD-",
+					"44331"),
+				javaMethod.getLineNumber(x));
+		}
+	}
+
+	private boolean _containsTableCreateOrUpgradeProcessFactoryCalls(
+		List<String> upgradeSteps) {
+
+		for (String upgradeStep : upgradeSteps) {
+			if (upgradeStep.matches("\\w+Table\\.create\\(\\)") ||
+				upgradeStep.startsWith("UpgradeProcessFactory.")) {
+
+				return true;
 			}
 		}
+
+		return false;
 	}
 
 	private int _getUpgradeProcessCount(
@@ -185,20 +203,6 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 		}
 
 		return upgradeProcessCount;
-	}
-
-	private boolean _hasTableCreateOrUpgradeProcessFactoryCalls(
-		List<String> upgradeSteps) {
-
-		for (String upgradeStep : upgradeSteps) {
-			if (upgradeStep.matches("\\w+Table\\.create\\(\\)") ||
-				upgradeStep.startsWith("UpgradeProcessFactory.")) {
-
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	private static final Pattern _classNamePattern = Pattern.compile(

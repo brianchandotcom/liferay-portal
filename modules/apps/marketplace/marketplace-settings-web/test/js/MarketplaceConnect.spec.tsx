@@ -7,6 +7,7 @@ import {
 	cleanup,
 	fireEvent,
 	render,
+	waitFor,
 	waitForElementToBeRemoved,
 } from '@testing-library/react';
 import fetch from 'jest-fetch-mock';
@@ -135,7 +136,9 @@ describe('MarketplaceConnect', () => {
 
 		fireEvent.click(connectButton);
 
-		expect(windowOpenSpy).toBeCalledTimes(1);
+		await waitFor(() => {
+			expect(windowOpenSpy).toBeCalledTimes(1);
+		});
 
 		const {searchParams} = new URL(windowOpenSpy.mock.calls[0][0]);
 

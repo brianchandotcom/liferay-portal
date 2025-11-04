@@ -27,7 +27,6 @@ public class LayoutUtil {
 	public static Layout toLayout(JSONObject jsonObject) {
 		if (JSONUtil.isEmpty(jsonObject) ||
 			((jsonObject.getString("align", null) == null) &&
-			 (jsonObject.getString("contentVisibility", null) == null) &&
 			 (jsonObject.getString("flexWrap", null) == null) &&
 			 (jsonObject.getString("justify", null) == null) &&
 			 (jsonObject.getString("widthType", null) == null))) {

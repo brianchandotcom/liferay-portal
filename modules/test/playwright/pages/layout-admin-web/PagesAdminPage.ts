@@ -593,4 +593,16 @@ export class PagesAdminPage {
 
 		await this.page.getByLabel('Select All Items').waitFor();
 	}
+
+	async addCustomCSS(css: string) {
+		await this.page
+			.getByRole('radio', {name: 'Define a custom theme for'})
+			.click();
+
+		await this.page
+			.getByRole('textbox', {exact: true, name: 'CSS'})
+			.fill(css);
+
+		await this.saveConfiguration();
+	}
 }

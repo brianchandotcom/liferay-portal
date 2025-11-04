@@ -16,6 +16,7 @@ export class PagesAdminPage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
+	readonly defineCustomThemeRadioButton: Locator;
 	readonly newButton: Locator;
 	readonly newTemplatePageButton: Locator;
 
@@ -52,6 +53,9 @@ export class PagesAdminPage {
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
+		this.defineCustomThemeRadioButton = this.page.getByRole('radio', {
+			name: 'Define a custom theme for',
+		});
 	}
 
 	getPageMenuItem(pageName: string): Locator {
@@ -238,9 +242,7 @@ export class PagesAdminPage {
 	}
 
 	async changeTheme(themeName: string) {
-		await this.page
-			.getByRole('radio', {name: 'Define a custom theme for'})
-			.click();
+		await this.defineCustomThemeRadioButton.click();
 
 		await this.page
 			.getByRole('button', {name: 'Change Current Theme'})
@@ -594,10 +596,10 @@ export class PagesAdminPage {
 		await this.page.getByLabel('Select All Items').waitFor();
 	}
 
-	async addCustomCSS(css: string) {
-		await this.page
-			.getByRole('radio', {name: 'Define a custom theme for'})
-			.click();
+	async addCustomCSS(pageName: string, css: string) {
+		await this.goToDesignTabConfiguration(pageName);
+
+		await this.defineCustomThemeRadioButton.click();
 
 		await this.page
 			.getByRole('textbox', {exact: true, name: 'CSS'})

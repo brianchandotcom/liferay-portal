@@ -13,7 +13,6 @@ import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import getPageDefinition from '../../layout-content-page-editor-web/main/utils/getPageDefinition';
-import {DesignFixture} from './fixtures/DesignFixture';
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -33,13 +32,7 @@ const ELEMENT_SELECTOR = '.cadmin .control-menu-level-1-dark';
 test(
 	'Assert cadmin component precedence over CSS from the applied theme',
 	{tag: '@LPD-66827'},
-	async ({apiHelpers, page, pageEditorPage, pagesAdminPage, site}) => {
-		const designFixture = new DesignFixture(
-			pageEditorPage,
-			pagesAdminPage,
-			site
-		);
-
+	async ({apiHelpers, page, pagesAdminPage, site}) => {
 		const {pageName} = await test.step('Create a new page', async () => {
 			const pageName = getRandomString();
 			await apiHelpers.headlessDelivery.createSitePage({
@@ -54,7 +47,9 @@ test(
 		await test.step('Add smaller precedence CSS rules to the theme', async () => {
 			const lowerPrecedenceCSS = `${ELEMENT_SELECTOR} { background-color: ${OVERRIDE_COLOR}; }`;
 
-			await designFixture.addCustomCSS(pageName, lowerPrecedenceCSS);
+			await pagesAdminPage.addCustomCSS(pageName, lowerPrecedenceCSS);
+
+			await pagesAdminPage.editPage(pageName);
 
 			await expect(page.locator(ELEMENT_SELECTOR)).toHaveCSS(
 				'background-color',
@@ -65,7 +60,9 @@ test(
 		await test.step('Add higher precedence CSS rules to the theme', async () => {
 			const higherPrecedenceCSS = `${ELEMENT_SELECTOR} { background-color: ${OVERRIDE_COLOR} !important; }`;
 
-			await designFixture.addCustomCSS(pageName, higherPrecedenceCSS);
+			await pagesAdminPage.addCustomCSS(pageName, higherPrecedenceCSS);
+
+			await pagesAdminPage.editPage(pageName);
 
 			await expect(page.locator(ELEMENT_SELECTOR)).toHaveCSS(
 				'background-color',

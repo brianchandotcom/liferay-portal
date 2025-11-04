@@ -20,6 +20,9 @@ public class WorkflowDefinitionConstants {
 	public static final String EXTERNAL_REFERENCE_CODE_MAKE_LONGER =
 		"L_MAKE_LONGER";
 
+	public static final String EXTERNAL_REFERENCE_CODE_MAKE_SHORTER =
+		"L_MAKE_SHORTER";
+
 	public static final String
 		EXTERNAL_REFERENCE_CODE_MESSAGE_BOARDS_USER_STATS_MODERATION =
 			"L_MESSAGE_BOARDS_USER_STATS_MODERATION";
@@ -33,6 +36,8 @@ public class WorkflowDefinitionConstants {
 	public static final String NAME_IMPROVE_WRITING = "Improve Writing";
 
 	public static final String NAME_MAKE_LONGER = "Make Longer";
+
+	public static final String NAME_MAKE_SHORTER = "Make Shorter";
 
 	public static final String NAME_MESSAGE_BOARDS_USER_STATS_MODERATION =
 		"Message Boards User Stats Moderation";

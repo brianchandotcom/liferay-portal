@@ -131,6 +131,11 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_LONGER,
 			"dependencies/make-longer-workflow-definition.json",
 			WorkflowDefinitionConstants.NAME_MAKE_LONGER);
+		_deployWorkflowDefinition(
+			company,
+			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
+			"dependencies/make-shorter-workflow-definition.json",
+			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
 	}
 
 	@Reference

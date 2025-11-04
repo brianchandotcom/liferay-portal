@@ -59,9 +59,7 @@ test(
 		await spaceLink.click();
 
 		await expect(
-			page.locator('nav a.breadcrumb-link', {
-				hasText: spaceName,
-			})
+			page.getByRole('heading', {name: spaceName})
 		).toBeVisible();
 	}
 );

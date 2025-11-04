@@ -598,6 +598,10 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 			getDownstreamBuilds();
 		}
 
+		if (build.isBuildCached() && _downstreamBuilds.contains(build)) {
+			return;
+		}
+
 		_downstreamBuilds.add(build);
 	}
 

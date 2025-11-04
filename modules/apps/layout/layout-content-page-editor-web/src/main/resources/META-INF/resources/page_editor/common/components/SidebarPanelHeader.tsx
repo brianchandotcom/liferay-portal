@@ -10,12 +10,19 @@ import React from 'react';
 import {switchSidebarPanel} from '../../app/actions/index';
 import {useDispatch, useSelector} from '../../app/contexts/StoreContext';
 
+type Props = {
+	children: React.ReactNode;
+	iconLeft?: React.ReactNode;
+	iconRight?: React.ReactNode;
+	showCloseButton?: boolean;
+};
+
 export default function SidebarPanelHeader({
 	children,
 	iconLeft = null,
 	iconRight = null,
 	showCloseButton = true,
-}) {
+}: Props) {
 	const dispatch = useDispatch();
 
 	const sidebar = useSelector((state) => state.sidebar);
@@ -45,11 +52,11 @@ export default function SidebarPanelHeader({
 							})
 						);
 
-						document
-							.querySelector(
+						(
+							document.querySelector(
 								`[data-panel-id="${sidebar.panelId}"]`
-							)
-							?.focus();
+							) as HTMLElement
+						)?.focus();
 					}}
 					size="sm"
 					symbol="times"

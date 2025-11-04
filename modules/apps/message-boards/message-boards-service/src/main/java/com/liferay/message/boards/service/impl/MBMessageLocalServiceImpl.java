@@ -1998,6 +1998,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		for (MBMessage message : messages) {
 			message.setUserName(userName);
+			message.setModifiedDate(message.getModifiedDate());
 
 			mbMessagePersistence.update(message);
 		}

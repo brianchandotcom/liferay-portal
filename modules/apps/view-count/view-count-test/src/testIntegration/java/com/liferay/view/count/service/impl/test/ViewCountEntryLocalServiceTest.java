@@ -37,7 +37,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
 
-import org.hibernate.engine.jdbc.batch.internal.BatchingBatch;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
 
 import org.junit.Assert;
@@ -91,10 +90,8 @@ public class ViewCountEntryLocalServiceTest {
 			_createSessionFactoryProxy(
 				countDownLatch, sessionFactory, viewCountEntries));
 
-		try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
-				SqlExceptionHelper.class.getName(), LoggerTestUtil.OFF);
-			LogCapture logCapture2 = LoggerTestUtil.configureLog4JLogger(
-				BatchingBatch.class.getName(), LoggerTestUtil.OFF)) {
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				SqlExceptionHelper.class.getName(), LoggerTestUtil.OFF)) {
 
 			FutureTask<Void> futureTask = new FutureTask<>(
 				new CompanyInheritableThreadLocalCallable<>(

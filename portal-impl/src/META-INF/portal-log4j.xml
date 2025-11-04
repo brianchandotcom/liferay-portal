@@ -216,6 +216,7 @@
 		<Logger level="ERROR" name="org.apache.velocity" />
 		<Logger level="ERROR" name="org.apache.xbean" />
 		<Logger level="ERROR" name="org.hibernate" />
+		<Logger level="OFF" name="org.hibernate.engine.jdbc.batch.internal.BatchingBatch" />
 		<Logger level="OFF" name="org.hibernate.event.def.AbstractFlushingEventListener" />
 		<Logger level="ERROR" name="org.hibernate.util.JDBCExceptionReporter" />
 		<Logger level="ERROR" name="org.jabsorb" />

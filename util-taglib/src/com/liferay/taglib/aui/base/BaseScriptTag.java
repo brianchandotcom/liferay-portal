@@ -40,6 +40,14 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 		return _fetchPriority;
 	}
 
+	public boolean getHashedFile() {
+		return _hashedFile;
+	}
+
+	public void setHashedFile(boolean hashedFile) {
+		_hashedFile = hashedFile;
+	}
+
 	public java.lang.String getId() {
 		return _id;
 	}
@@ -138,6 +146,7 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 		_crossOrigin = null;
 		_defer = false;
 		_fetchPriority = null;
+		_hashedFile = false;
 		_id = null;
 		_integrity = null;
 		_referrerPolicy = null;
@@ -161,6 +170,7 @@ public abstract class BaseScriptTag extends com.liferay.taglib.util.PositionTagS
 	private java.lang.String _crossOrigin = null;
 	private boolean _defer = false;
 	private java.lang.String _fetchPriority = null;
+	private boolean _hashedFile;
 	private java.lang.String _id = null;
 	private java.lang.String _integrity = null;
 	private java.lang.String _referrerPolicy = null;

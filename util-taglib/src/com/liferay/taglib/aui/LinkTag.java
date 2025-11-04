@@ -7,11 +7,9 @@ package com.liferay.taglib.aui;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.content.security.policy.ContentSecurityPolicyNonceProviderUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.frontend.hashed.files.HashedFilesRegistryUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseLinkTag;
+import com.liferay.taglib.util.HashedFileUtil;
 
 import jakarta.servlet.jsp.JspException;
 import jakarta.servlet.jsp.JspWriter;
@@ -52,26 +50,7 @@ public class LinkTag extends BaseLinkTag {
 
 			if (Validator.isNotNull(href)) {
 				if (getHashedFile()) {
-					String prefix = PortalUtil.getPathModule();
-
-					String proxyPath = PortalUtil.getPathProxy();
-
-					prefix = prefix.substring(proxyPath.length());
-
-					String hashedFileURI =
-						HashedFilesRegistryUtil.getHashedFileURI(
-							prefix + StringPool.SLASH + href);
-
-					if (hashedFileURI != null) {
-						try {
-							href =
-								PortalUtil.getCDNHost(getRequest()) +
-									proxyPath + hashedFileURI;
-						}
-						catch (PortalException portalException) {
-							throw new RuntimeException(portalException);
-						}
-					}
+					href = HashedFileUtil.getURL(getRequest(), href);
 				}
 
 				_write(jspWriter, "href", href);

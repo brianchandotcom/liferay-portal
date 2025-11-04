@@ -59,7 +59,7 @@ public class SseUtil {
 			).name(
 				"Subscribe"
 			).data(
-				String.class, "successfully subscribed"
+				String.class, "Successfully Subscribed"
 			).build());
 	}
 

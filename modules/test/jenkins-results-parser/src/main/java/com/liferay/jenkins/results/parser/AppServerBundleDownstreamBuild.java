@@ -16,10 +16,10 @@ import java.util.Map;
 public class AppServerBundleDownstreamBuild extends BaseDownstreamBuild {
 
 	protected AppServerBundleDownstreamBuild(
-		String url, TopLevelBuild topLevelBuild,
+		String buildURL, TopLevelBuild topLevelBuild,
 		DownstreamBuildReport cachedDownstreamBuildReport) {
 
-		super(url, topLevelBuild, cachedDownstreamBuildReport);
+		super(buildURL, topLevelBuild, cachedDownstreamBuildReport);
 	}
 
 	protected void createBuildFailureObjectRef() throws IOException {

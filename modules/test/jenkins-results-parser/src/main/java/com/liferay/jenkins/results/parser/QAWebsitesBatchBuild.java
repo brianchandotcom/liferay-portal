@@ -26,9 +26,11 @@ public class QAWebsitesBatchBuild extends BatchBuild {
 	}
 
 	protected QAWebsitesBatchBuild(
-		String url, TopLevelBuild parentTopLevelBuild) {
+		String buildURL, TopLevelBuild parentTopLevelBuild) {
 
-		super(JenkinsResultsParserUtil.getLocalURL(url), parentTopLevelBuild);
+		super(
+			JenkinsResultsParserUtil.getLocalURL(buildURL),
+			parentTopLevelBuild);
 
 		findDownstreamBuilds();
 	}

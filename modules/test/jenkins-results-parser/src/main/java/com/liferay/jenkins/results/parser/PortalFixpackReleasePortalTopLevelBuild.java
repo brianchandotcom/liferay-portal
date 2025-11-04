@@ -18,9 +18,9 @@ public class PortalFixpackReleasePortalTopLevelBuild
 	extends PortalTopLevelBuild implements PortalWorkspaceBuild {
 
 	public PortalFixpackReleasePortalTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

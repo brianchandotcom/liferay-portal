@@ -19,9 +19,9 @@ public class PortalHotfixReleasePortalTopLevelBuild
 	implements PortalHotfixReleaseBuild, PortalWorkspaceBuild {
 
 	public PortalHotfixReleasePortalTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

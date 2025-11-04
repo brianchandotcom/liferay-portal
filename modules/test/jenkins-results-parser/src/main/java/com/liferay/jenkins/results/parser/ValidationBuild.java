@@ -194,12 +194,12 @@ public class ValidationBuild extends BaseBuild {
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}
 
-	protected ValidationBuild(String url) {
-		this(url, null);
+	protected ValidationBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected ValidationBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	protected ValidationBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 	}
 
 	protected Element getBaseBranchDetailsElement() {

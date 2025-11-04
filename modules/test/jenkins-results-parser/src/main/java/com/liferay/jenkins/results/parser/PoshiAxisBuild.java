@@ -75,12 +75,12 @@ public class PoshiAxisBuild extends AxisBuild {
 		return testResults;
 	}
 
-	protected PoshiAxisBuild(String url) {
-		this(url, null);
+	protected PoshiAxisBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected PoshiAxisBuild(String url, BatchBuild parentBatchBuild) {
-		super(url, parentBatchBuild);
+	protected PoshiAxisBuild(String buildURL, BatchBuild parentBatchBuild) {
+		super(buildURL, parentBatchBuild);
 	}
 
 	private List<String> _getPoshiTestNames() {

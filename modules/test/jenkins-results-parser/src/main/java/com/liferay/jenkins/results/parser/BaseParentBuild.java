@@ -581,12 +581,12 @@ public abstract class BaseParentBuild extends BaseBuild implements ParentBuild {
 		super.update();
 	}
 
-	protected BaseParentBuild(String url) {
-		super(url);
+	protected BaseParentBuild(String buildURL) {
+		super(buildURL);
 	}
 
-	protected BaseParentBuild(String url, Build parentBuild) {
-		super(url, parentBuild);
+	protected BaseParentBuild(String buildURL, Build parentBuild) {
+		super(buildURL, parentBuild);
 	}
 
 	protected void addDownstreamBuild(Build build) {

@@ -21,9 +21,9 @@ public class PortalReleasePortalTopLevelBuild
 	extends PortalTopLevelBuild implements PortalWorkspaceBuild {
 
 	public PortalReleasePortalTopLevelBuild(
-		String url, TopLevelBuild topLevelBuild) {
+		String buildURL, TopLevelBuild topLevelBuild) {
 
-		super(url, topLevelBuild);
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

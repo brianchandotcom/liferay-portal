@@ -470,12 +470,12 @@ public class AxisBuild extends BaseBuild {
 			BUILD_URLS_PROPERTIES_KEY, getAxisName(), getBuildURL(), false);
 	}
 
-	protected AxisBuild(String url) {
-		this(url, null);
+	protected AxisBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected AxisBuild(String url, BatchBuild parentBatchBuild) {
-		super(JenkinsResultsParserUtil.getLocalURL(url), parentBatchBuild);
+	protected AxisBuild(String buildURL, BatchBuild parentBatchBuild) {
+		super(JenkinsResultsParserUtil.getLocalURL(buildURL), parentBatchBuild);
 	}
 
 	@Override

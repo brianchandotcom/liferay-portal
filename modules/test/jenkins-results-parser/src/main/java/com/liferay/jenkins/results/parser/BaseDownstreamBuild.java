@@ -662,10 +662,10 @@ public class BaseDownstreamBuild extends BaseBuild implements DownstreamBuild {
 	}
 
 	protected BaseDownstreamBuild(
-		String url, TopLevelBuild topLevelBuild,
+		String buildURL, TopLevelBuild topLevelBuild,
 		DownstreamBuildReport cachedDownstreamBuildReport) {
 
-		super(url, topLevelBuild, cachedDownstreamBuildReport);
+		super(buildURL, topLevelBuild, cachedDownstreamBuildReport);
 	}
 
 	@Override

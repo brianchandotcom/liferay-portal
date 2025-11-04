@@ -291,12 +291,12 @@ public class BatchBuild extends BaseParentBuild {
 			BUILD_URLS_PROPERTIES_KEY, getBatchName(), getBuildURL(), false);
 	}
 
-	protected BatchBuild(String url) {
-		this(url, null);
+	protected BatchBuild(String buildURL) {
+		this(buildURL, null);
 	}
 
-	protected BatchBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	protected BatchBuild(String buildURL, TopLevelBuild topLevelBuild) {
+		super(buildURL, topLevelBuild);
 
 		String jobVariant = getJobVariant();
 

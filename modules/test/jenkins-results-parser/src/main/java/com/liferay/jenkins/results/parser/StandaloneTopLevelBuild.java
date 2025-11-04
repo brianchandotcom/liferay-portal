@@ -10,12 +10,14 @@ package com.liferay.jenkins.results.parser;
  */
 public class StandaloneTopLevelBuild extends BaseTopLevelBuild {
 
-	public StandaloneTopLevelBuild(String url) {
-		super(url);
+	public StandaloneTopLevelBuild(String buildURL) {
+		super(buildURL);
 	}
 
-	public StandaloneTopLevelBuild(String url, TopLevelBuild topLevelBuild) {
-		super(url, topLevelBuild);
+	public StandaloneTopLevelBuild(
+		String buildURL, TopLevelBuild topLevelBuild) {
+
+		super(buildURL, topLevelBuild);
 	}
 
 	@Override

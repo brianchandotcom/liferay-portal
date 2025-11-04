@@ -65,14 +65,14 @@ public abstract class BaseTopLevelBuild
 
 	@Override
 	public void addCachedDownstreamBuildReport(
-		DownstreamBuildReport downstreamBuildReport) {
+		DownstreamBuildReport cachedDownstreamBuildReport) {
 
-		if (downstreamBuildReport == null) {
+		if (cachedDownstreamBuildReport == null) {
 			return;
 		}
 
 		Build downstreamBuild = BuildFactory.newBuild(
-			this, downstreamBuildReport);
+			cachedDownstreamBuildReport, this);
 
 		addDownstreamBuild(downstreamBuild);
 
@@ -1003,7 +1003,7 @@ public abstract class BaseTopLevelBuild
 		if (!cachedBuildURLs.isEmpty()) {
 			for (String cachedBuildURL : cachedBuildURLs) {
 				Build downstreamBuild = BuildFactory.newBuild(
-					cachedBuildURL, this, null);
+					cachedBuildURL, null, this);
 
 				downstreamBuild.setBuildCached(true);
 

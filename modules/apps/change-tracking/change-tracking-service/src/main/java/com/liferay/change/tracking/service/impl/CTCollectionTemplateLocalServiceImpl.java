@@ -5,6 +5,7 @@
 
 package com.liferay.change.tracking.service.impl;
 
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.exception.CTCollectionDescriptionException;
 import com.liferay.change.tracking.exception.CTCollectionNameException;
 import com.liferay.change.tracking.model.CTCollection;
@@ -91,6 +92,20 @@ public class CTCollectionTemplateLocalServiceImpl
 	public CTCollectionTemplate deleteCTCollectionTemplate(
 			CTCollectionTemplate ctCollectionTemplate)
 		throws PortalException {
+
+		long ctDefaultCTCollectionTemplateId =
+			_ctSettingsConfigurationHelper.getDefaultCTCollectionTemplateId(
+				ctCollectionTemplate.getCompanyId());
+
+		if (ctDefaultCTCollectionTemplateId ==
+				ctCollectionTemplate.getCtCollectionTemplateId()) {
+
+			_ctSettingsConfigurationHelper.save(
+				ctCollectionTemplate.getCompanyId(),
+				HashMapBuilder.<String, Object>put(
+					"defaultCTCollectionTemplateId", 0
+				).build());
+		}
 
 		ctCollectionTemplatePersistence.remove(ctCollectionTemplate);
 
@@ -247,6 +262,9 @@ public class CTCollectionTemplateLocalServiceImpl
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CTSettingsConfigurationHelper _ctSettingsConfigurationHelper;
 
 	@Reference
 	private JSONStorageEntryLocalService _jsonStorageEntryLocalService;

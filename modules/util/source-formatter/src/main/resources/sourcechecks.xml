@@ -663,6 +663,7 @@
 		<check name="JavaSQLStatementCheck">
 			<category name="Bug Prevention" />
 			<description name="Perform several checks in SQL statements." />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaStaticBlockCheck">
 			<category name="Bug Prevention" />

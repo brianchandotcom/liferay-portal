@@ -165,7 +165,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 	@Test
 	public void testUpgradeDLFileEntryKernelCounter() throws Exception {
 		long fileEntryId =
-			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) + 10;
+			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) +
+				1000;
 		long name = CounterLocalServiceUtil.increment(
 			DLFileEntry.class.getName());
 
@@ -219,7 +220,8 @@ public class CounterDataCleanupPreupgradeProcessTest
 	@Test
 	public void testUpgradeKernelCounter() throws Exception {
 		long roleId =
-			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) + 10;
+			CounterLocalServiceUtil.getCurrentId(Counter.class.getName()) +
+				1000;
 
 		_test(
 			(UnsafeRunnable<Exception>)() -> runSQL(
@@ -331,7 +333,7 @@ public class CounterDataCleanupPreupgradeProcessTest
 	@Test
 	public void testUpgradeSpecificCounter() throws Exception {
 		long regionId =
-			CounterLocalServiceUtil.getCurrentId(Region.class.getName()) + 10;
+			CounterLocalServiceUtil.getCurrentId(Region.class.getName()) + 1000;
 
 		_test(
 			(UnsafeRunnable<Exception>)() -> runSQL(

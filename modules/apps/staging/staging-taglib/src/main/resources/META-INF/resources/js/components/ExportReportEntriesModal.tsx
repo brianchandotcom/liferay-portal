@@ -12,35 +12,35 @@ import classNames from 'classnames';
 import React from 'react';
 
 import {
-	StatusKey,
+	Status,
 	useBatchEngineExportTask,
 } from '../hooks/useBatchEngineExportTask';
 import {downloadFile} from '../utils/downloadFile';
 
 import type {Observer} from '@clayui/modal/lib/types';
 
-type Status = {
+type StatusInfo = {
 	displayType: 'success' | 'info' | 'danger';
 	label: string;
 	message: string;
 };
 
-const STATUS_MAP: Record<StatusKey, Status> = {
-	COMPLETED: {
+const STATUS_MAP: Record<Status, StatusInfo> = {
+	[Status.COMPLETED]: {
 		displayType: 'success',
 		label: Liferay.Language.get('completed'),
 		message: Liferay.Language.get(
 			'your-file-has-been-generated-and-is-ready-to-download'
 		),
 	},
-	FAILED: {
+	[Status.FAILED]: {
 		displayType: 'danger',
 		label: Liferay.Language.get('failed'),
 		message: Liferay.Language.get(
 			'please-try-again-an-unexpected-error-occurred-while-creating-the-file'
 		),
 	},
-	STARTED: {
+	[Status.STARTED]: {
 		displayType: 'info',
 		label: Liferay.Language.get('running'),
 		message: Liferay.Language.get('your-file-is-being-created'),
@@ -62,7 +62,7 @@ export function ExportReportEntriesModal({
 		useBatchEngineExportTask(importProcessId);
 
 	const currentMessage =
-		status === 'FAILED' && errorMessage
+		status === Status.FAILED && errorMessage
 			? errorMessage
 			: STATUS_MAP[status].message;
 
@@ -109,7 +109,7 @@ export function ExportReportEntriesModal({
 							className={classNames(
 								`btn-${STATUS_MAP[status].displayType}`
 							)}
-							disabled={status !== 'COMPLETED'}
+							disabled={status !== Status.COMPLETED}
 							onClick={() => {
 								if (!downloadURL) {
 									return;
@@ -118,7 +118,7 @@ export function ExportReportEntriesModal({
 								downloadFile(downloadURL, filename);
 							}}
 						>
-							{status === 'STARTED' && (
+							{status === Status.STARTED && (
 								<span className="inline-item inline-item-before">
 									<ClayLoadingIndicator size="xs" />
 								</span>

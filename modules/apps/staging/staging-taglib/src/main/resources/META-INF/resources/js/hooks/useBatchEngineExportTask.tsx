@@ -6,44 +6,48 @@
 import {fetch} from 'frontend-js-web';
 import {useEffect, useReducer, useRef} from 'react';
 
-export type StatusKey = 'COMPLETED' | 'FAILED' | 'STARTED';
+export enum Status {
+	COMPLETED = 'COMPLETED',
+	FAILED = 'FAILED',
+	STARTED = 'STARTED',
+}
 
 type State = {
 	downloadURL?: string;
 	errorMessage?: string;
 	progress: number;
-	status: StatusKey;
+	status: Status;
 };
 
 type Action =
-	| {payload: {progress: number}; type: 'STARTED'}
-	| {payload: {downloadURL: string}; type: 'COMPLETED'}
-	| {payload?: {errorMessage?: string}; type: 'FAILED'};
+	| {payload: {progress: number}; type: Status.STARTED}
+	| {payload: {downloadURL: string}; type: Status.COMPLETED}
+	| {payload?: {errorMessage?: string}; type: Status.FAILED};
 
 const initialState: State = {
 	downloadURL: undefined,
 	errorMessage: undefined,
 	progress: 0,
-	status: 'STARTED',
+	status: Status.STARTED,
 };
 
 const POLL_INTERVAL = 1000;
 
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
-		case 'STARTED':
-			return {progress: action.payload.progress, status: 'STARTED'};
-		case 'COMPLETED':
+		case Status.STARTED:
+			return {progress: action.payload.progress, status: Status.STARTED};
+		case Status.COMPLETED:
 			return {
 				downloadURL: action.payload.downloadURL,
 				progress: 100,
-				status: 'COMPLETED',
+				status: Status.COMPLETED,
 			};
-		case 'FAILED':
+		case Status.FAILED:
 			return {
 				errorMessage: action.payload?.errorMessage,
 				progress: state.progress,
-				status: 'FAILED',
+				status: Status.FAILED,
 			};
 		default:
 			return state;
@@ -76,7 +80,7 @@ export function useBatchEngineExportTask(importProcessId: string) {
 
 					const data = await response.json();
 
-					if (data.executeStatus === 'STARTED') {
+					if (data.executeStatus === Status.STARTED) {
 						const {processedItemsCount, totalItemsCount} = data;
 
 						const progress =
@@ -90,20 +94,20 @@ export function useBatchEngineExportTask(importProcessId: string) {
 
 						dispatch({
 							payload: {progress},
-							type: 'STARTED',
+							type: Status.STARTED,
 						});
 					}
-					else if (data.executeStatus === 'COMPLETED') {
+					else if (data.executeStatus === Status.COMPLETED) {
 						dispatch({
 							payload: {downloadURL},
-							type: 'COMPLETED',
+							type: Status.COMPLETED,
 						});
 						stopPolling();
 					}
-					else if (data.executeStatus === 'FAILED') {
+					else if (data.executeStatus === Status.FAILED) {
 						dispatch({
 							payload: {errorMessage: data.errorMessage},
-							type: 'FAILED',
+							type: Status.FAILED,
 						});
 						stopPolling();
 					}
@@ -111,7 +115,7 @@ export function useBatchEngineExportTask(importProcessId: string) {
 				catch (error: any) {
 					dispatch({
 						payload: {errorMessage: error.message},
-						type: 'FAILED',
+						type: Status.FAILED,
 					});
 					stopPolling();
 				}
@@ -138,7 +142,7 @@ export function useBatchEngineExportTask(importProcessId: string) {
 			catch (error: any) {
 				dispatch({
 					payload: {errorMessage: error.message},
-					type: 'FAILED',
+					type: Status.FAILED,
 				});
 			}
 		};

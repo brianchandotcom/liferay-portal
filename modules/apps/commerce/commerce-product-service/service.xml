@@ -1517,6 +1517,7 @@
 		<exception>CommerceCatalogProducts</exception>
 		<exception>CommerceCatalogSystem</exception>
 		<exception>CommerceChannelAccountEntryRelType</exception>
+		<exception>CommerceChannelName</exception>
 		<exception>CommerceChannelType</exception>
 		<exception>CPAttachmentFileEntryCDNURL</exception>
 		<exception>CPAttachmentFileEntryDisplayDate</exception>

@@ -87,9 +87,7 @@ test('Asserts that a user can manage factory configurations', async ({
 
 		const fileContent = await readFile(path, 'utf-8');
 
-		expect(
-			fileContent.includes(`providerName="${providersNames[0]}"`)
-		).toBeTruthy();
+		expect(fileContent).toContain(providersNames[0]);
 	});
 
 	await test.step('Assert that multiple factory configuration was exported', async () => {

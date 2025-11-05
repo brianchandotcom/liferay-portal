@@ -543,8 +543,6 @@ public class AssetVocabularyLocalServiceImpl
 
 		vocabulary = assetVocabularyPersistence.update(vocabulary);
 
-		// Resources
-
 		if (serviceContext.isAddGroupPermissions() ||
 			serviceContext.isAddGuestPermissions()) {
 

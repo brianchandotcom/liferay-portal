@@ -517,7 +517,7 @@ public class TaxonomyVocabularyResourceTest
 	private void _testPutTaxonomyVocabularyUpdatesEmptyVocabulary()
 		throws Exception {
 
-		AssetVocabulary assetVocabulary;
+		AssetVocabulary assetVocabulary = null;
 
 		try (SafeCloseable safeCloseable =
 				LazyReferencingThreadLocal.setEnabledWithSafeCloseable(true)) {

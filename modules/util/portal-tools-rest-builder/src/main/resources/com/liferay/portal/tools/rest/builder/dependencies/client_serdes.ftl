@@ -392,7 +392,7 @@ public class ${schemaName}SerDes {
 							${schemaVarName}.set${capitalizedPropertyName}(toIntegers((Object[])jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "String[]")>
 							${schemaVarName}.set${capitalizedPropertyName}(toStrings((Object[])jsonParserFieldValue));
-						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.custom.field.CustomField") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission")>
+						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.custom.field.CustomField") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.scope.Scope")>
 							${schemaVarName}.set${capitalizedPropertyName}(${propertyType}.toDTO((String)jsonParserFieldValue));
 						<#elseif stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.custom.field.CustomField[]") || stringUtil.equals(propertyType, "${configYAML.apiPackagePath}.client.permission.Permission[]")>
 							Object[] jsonParserFieldValues = (Object[])jsonParserFieldValue;

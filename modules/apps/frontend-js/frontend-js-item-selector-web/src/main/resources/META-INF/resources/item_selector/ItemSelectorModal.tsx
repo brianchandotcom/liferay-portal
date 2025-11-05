@@ -74,6 +74,12 @@ export interface IItemSelectorModalProps<T> {
 	};
 
 	/**
+	 * Represents a customizable message that can be rendered as a React node.
+	 * It will show up above the Frontend Data Set.
+	 */
+	message?: React.ReactNode;
+
+	/**
 	 * Flag for if multiple items can be selected.
 	 */
 	multiSelect?: boolean;
@@ -118,6 +124,7 @@ function ItemSelectorModal<T extends Record<string, any>>({
 		label: 'title',
 		value: 'id',
 	},
+	message,
 	multiSelect = false,
 	observer,
 	onItemsChange,
@@ -164,6 +171,8 @@ function ItemSelectorModal<T extends Record<string, any>>({
 						/>
 					</ClayLayout.Container>
 				)}
+
+				{message}
 
 				<FrontendDataSet
 					{...fdsProps}

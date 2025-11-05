@@ -6,9 +6,9 @@
 import {useCallback, useEffect} from 'react';
 
 import {Liferay} from '../liferay/liferay';
-import {useGetAppContext} from '../utils/GetAppContextProvider';
 import fetcher from '../services/fetcher';
 import HeadlessCommerceDeliveryCart from '../services/rest/HeadlessCommerceDeliveryCart';
+import {useGetAppContext} from '../utils/GetAppContextProvider';
 import {createCart} from '../utils/api';
 
 const channelId = Liferay.CommerceContext.commerceChannelId;

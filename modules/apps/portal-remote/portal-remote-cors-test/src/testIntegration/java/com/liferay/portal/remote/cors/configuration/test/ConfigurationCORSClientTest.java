@@ -51,13 +51,32 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	@Test
 	public void testDuplicateConfiguration() throws Exception {
 		_createFactoryConfiguration(
-			_companyId, "/o/cors-app/duplicate/path/*",
-			"http://www.liferay.com");
+			"http://www.liferay.com", _companyId, false,
+			"/o/cors-app/duplicate/path/*");
 
 		try {
 			_createFactoryConfiguration(
-				_companyId, "/o/cors-app/duplicate/path/*",
-				"http://www.google.com");
+				"http://www.google.com", _companyId, false,
+				"/o/cors-app/duplicate/path/*");
+		}
+		catch (RuntimeException runtimeException) {
+			Throwable throwable = runtimeException.getCause();
+
+			Assert.assertTrue(
+				throwable instanceof ConfigurationModelListenerException);
+		}
+	}
+
+	@Test
+	public void testDuplicateInstanceConfiguration() throws Exception {
+		_createFactoryConfiguration(
+			"http://www.liferay.com", _companyId, true,
+			"/o/cors-app/duplicate-instance/path/*");
+
+		try {
+			_createFactoryConfiguration(
+				"http://www.google.com", _companyId, true,
+				"/o/cors-app/duplicate-instance/path/*");
 		}
 		catch (RuntimeException runtimeException) {
 			Throwable throwable = runtimeException.getCause();
@@ -70,10 +89,11 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	@Test
 	public void testNonoverwrittenConfiguration() throws Exception {
 		_createFactoryConfiguration(
-			0, "/o/cors-app/system/only/path/*", "http://www.liferay.com");
+			"http://www.liferay.com", 0, false,
+			"/o/cors-app/system/only/path/*");
 		_createFactoryConfiguration(
-			_companyId, "/o/cors-app/instance/only/path/*",
-			"http://www.google.com");
+			"http://www.google.com", _companyId, true,
+			"/o/cors-app/instance/only/path/*");
 
 		registerJaxRsApplication(
 			new CORSTestApplication(), "",
@@ -92,10 +112,11 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	@Test
 	public void testOverwrittenConfiguration() throws Exception {
 		_createFactoryConfiguration(
-			0, "/o/cors-app/overwritten/path/*", "http://www.google.com");
+			"http://www.google.com", 0, false,
+			"/o/cors-app/overwritten/path/*");
 		_createFactoryConfiguration(
-			_companyId, "/o/cors-app/overwritten/path/*",
-			"http://www.liferay.com");
+			"http://www.liferay.com", _companyId, true,
+			"/o/cors-app/overwritten/path/*");
 
 		registerJaxRsApplication(
 			new CORSTestApplication(), "",
@@ -112,11 +133,19 @@ public class ConfigurationCORSClientTest extends BaseCORSClientTestCase {
 	}
 
 	private void _createFactoryConfiguration(
-			long companyId, String urlPattern, String allowedOrigin)
+			String allowedOrigin, long companyId, Boolean scoped,
+			String urlPattern)
 		throws Exception {
 
+		String portalCorsConfigurationClassName =
+			PortalCORSConfiguration.class.getName();
+
+		if (scoped) {
+			portalCorsConfigurationClassName += ".scoped";
+		}
+
 		createFactoryConfiguration(
-			PortalCORSConfiguration.class.getName(),
+			portalCorsConfigurationClassName,
 			HashMapDictionaryBuilder.<String, Object>put(
 				"companyId", companyId
 			).put(

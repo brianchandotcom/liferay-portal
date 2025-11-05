@@ -5,14 +5,12 @@
 
 package com.liferay.portal.kernel.upgrade;
 
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.resource.bundle.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -69,15 +67,11 @@ public abstract class BaseLocalizedColumnUpgradeProcess extends UpgradeProcess {
 			long companyId, ResourceBundleLoader resourceBundleLoader)
 		throws SQLException {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
-
-			return LocalizationUtil.updateLocalization(
-				ResourceBundleUtil.getLocalizationMap(
-					resourceBundleLoader, localizationMapKey),
-				"", localizationXMLKey,
-				UpgradeProcessUtil.getDefaultLanguageId(companyId));
-		}
+		return LocalizationUtil.updateLocalization(
+			ResourceBundleUtil.getLocalizationMap(
+				resourceBundleLoader, localizationMapKey),
+			"", localizationXMLKey,
+			UpgradeProcessUtil.getDefaultLanguageId(companyId));
 	}
 
 	private void _upgrade(

@@ -111,14 +111,14 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that factory configurations were edited', async () => {
-		const firstRow = page.locator('tbody tr').first();
+		const firstRowLocator = page.locator('tbody tr').first();
 
-		const oldProviderName = await firstRow.innerText();
+		const oldProviderName = await firstRowLocator.innerText();
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByText('Edit').first(),
-			trigger: firstRow.getByRole('button'),
+			trigger: firstRowLocator.getByRole('button'),
 		});
 
 		const newProviderName = getRandomString();
@@ -131,10 +131,10 @@ test('Asserts that a user can manage factory configurations', async ({
 		});
 
 		await expect(
-			await page.locator('tbody tr').first().innerText()
+			await firstRowLocator.innerText()
 		).not.toBe(oldProviderName);
 		await expect(
-			(await page.locator('tbody tr').first().innerText()).trim()
+			(await firstRowLocator.innerText()).trim()
 		).toBe(newProviderName);
 	});
 

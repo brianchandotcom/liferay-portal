@@ -11,6 +11,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -135,6 +137,11 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 	@Override
 	@Test
 	public void testPostTask() throws Exception {
+		_testPostTask();
+		_testPostTaskWithScope();
+	}
+
+	private void _testPostTask() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			JSONUtil.put(
 				"context", JSONUtil.put("text", RandomTestUtil.randomString())
@@ -151,6 +158,29 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		Assert.assertEquals(
 			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
 			workflowInstance.getWorkflowDefinitionName());
+	}
+
+	private void _testPostTaskWithScope() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			JSONUtil.put(
+				"context", JSONUtil.put("text", RandomTestUtil.randomString())
+			).put(
+				"scope",
+				JSONUtil.put(
+					"externalReferenceCode", group.getExternalReferenceCode())
+			).put(
+				"type", WorkflowDefinitionConstants.NAME_IMPROVE_WRITING
+			).toString(),
+			"ai-hub/v1.0/tasks", Http.Method.POST);
+
+		WorkflowInstance workflowInstance =
+			_workflowInstanceManager.getWorkflowInstance(
+				TestPropsValues.getCompanyId(),
+				jsonObject.getLong("externalReferenceCode"));
+
+		Assert.assertEquals(group.getGroupId(), workflowInstance.getGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

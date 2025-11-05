@@ -4,14 +4,24 @@
  */
 
 import {openModal, openSelectionModal} from 'frontend-js-components-web';
-import {createPortletURL, fetch, objectToFormData} from 'frontend-js-web';
+import {
+	COOKIE_TYPES,
+	createPortletURL,
+	fetch,
+	objectToFormData,
+	sessionStorage,
+} from 'frontend-js-web';
 
 export default function decorateAddSiteNavigationMenuItemOptions({
 	addSiteNavigationMenuItemOptions,
 	portletNamespace,
 }) {
 	const onItemAdd = () => {
-		window.sessionStorage.setItem(`${portletNamespace}itemAdded`, true);
+		sessionStorage.setItem(
+			`${portletNamespace}itemAdded`,
+			true,
+			COOKIE_TYPES.FUNCTIONAL
+		);
 	};
 
 	const onClick = ({

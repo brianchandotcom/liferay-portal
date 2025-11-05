@@ -5,6 +5,7 @@
 
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
+import {COOKIE_TYPES, sessionStorage} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
@@ -59,7 +60,7 @@ export function AppLayout({
 	useEffect(() => {
 		const key = `${portletNamespace}itemAdded`;
 
-		const itemAdded = window.sessionStorage.getItem(key);
+		const itemAdded = sessionStorage.getItem(key, COOKIE_TYPES.FUNCTIONAL);
 
 		if (itemAdded) {
 			appLayoutContentRef.current?.scrollTo(
@@ -67,7 +68,7 @@ export function AppLayout({
 				appLayoutContentRef.current?.scrollHeight
 			);
 
-			window.sessionStorage.removeItem(key);
+			sessionStorage.removeItem(key);
 		}
 	}, [portletNamespace]);
 

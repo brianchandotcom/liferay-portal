@@ -835,6 +835,11 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
+                        addNewFragmentEntries:
+                            # @review
+                            description:
+                                Whether to add new fragment entries automatically in the allowed fragments list.
+                            type: boolean
                         allowedFragments:
                             # @review
                             description:

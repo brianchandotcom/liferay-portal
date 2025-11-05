@@ -82,6 +82,7 @@ export const productTypeRoutes = {
 		routes: [
 			{
 				element: SolutionProvisioningForm,
+				index: true,
 				path: '',
 				title: i18n.translate('form'),
 			},

@@ -90,6 +90,7 @@ import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -548,8 +549,10 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 			fragmentCollection.getFragmentCollectionId(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			StringPool.BLANK,
-			"<h1 data-lfr-editable-id=\"element-text\" " +
-				"data-lfr-editable-type=\"text\">Heading Example</h1>",
+			StringBundler.concat(
+				"<h1 data-lfr-editable-id=\"element-text\" ",
+				"data-lfr-editable-type=\"text\">",
+				RandomTestUtil.randomString(), "</h1>"),
 			StringPool.BLANK, false, StringPool.BLANK, null, 0, false, false,
 			FragmentConstants.TYPE_COMPONENT, null,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);

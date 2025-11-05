@@ -195,12 +195,12 @@ test(
 
 			const content = await readFileFromZip('export.csv', filePath);
 
-			await expect(content).toContain(
-				'classExternalReferenceCode,errorMessage,modelName,status.code,status.extendedProperties,status.label,status.xClassName,type.code,type.extendedProperties,type.label,type.xClassName'
+			await expect(content).toMatch(
+				/^classExternalReferenceCode,errorMessage,modelName,status.code,status.extendedProperties,status.label,status.xClassName,type.code,type.extendedProperties,type.label,type.xClassName\r?\n/
 			);
 
 			await expect(content).toContain(
-				'No value was provided for required object field ""mandatoryField"""'
+				'"No value was provided for required object field ""mandatoryField"""'
 			);
 		});
 	}

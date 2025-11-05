@@ -297,6 +297,14 @@ public abstract class BaseTaskResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("scope", additionalAssertFieldName)) {
+				if (task.getScope() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("type", additionalAssertFieldName)) {
 				if (task.getType() == null) {
 					valid = false;
@@ -437,6 +445,14 @@ public abstract class BaseTaskResourceTestCase {
 						task1.getExternalReferenceCode(),
 						task2.getExternalReferenceCode())) {
 
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("scope", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(task1.getScope(), task2.getScope())) {
 					return false;
 				}
 
@@ -607,6 +623,11 @@ public abstract class BaseTaskResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("scope")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("type")) {

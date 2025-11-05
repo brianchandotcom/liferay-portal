@@ -486,9 +486,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 							"symbolLeft", "simple-circle"
 						));
 				}
-				else if (FeatureFlagManagerUtil.isEnabled(
-							themeDisplay.getCompanyId(), "LPD-20556")) {
-
+				else {
 					Layout layout = themeDisplay.getLayout();
 
 					Layout previewLayout = null;
@@ -698,12 +696,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				getConflictInfoURL.setResourceID(
 					"/change_tracking/get_conflict_info");
 
-				if (FeatureFlagManagerUtil.isEnabled(
-						themeDisplay.getCompanyId(), "LPD-20556")) {
-
-					data.put(
-						"getConflictInfoURL", getConflictInfoURL.toString());
-				}
+				data.put("getConflictInfoURL", getConflictInfoURL.toString());
 			}
 
 			data.put("timelineClassNameId", classNameId);
@@ -719,12 +712,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/change_tracking/delete_ct_collection"
 				).buildString());
 
-			String timelineEditURL = null;
-
-			if (FeatureFlagManagerUtil.isEnabled(
-					themeDisplay.getCompanyId(), "LPD-20556")) {
-
-				timelineEditURL = PortletURLBuilder.create(
+			data.put(
+				"timelineEditURL",
+				PortletURLBuilder.create(
 					_portal.getControlPanelPortletURL(
 						httpServletRequest, themeDisplay.getScopeGroup(),
 						CTPortletKeys.PUBLICATIONS, 0, 0,
@@ -733,10 +723,7 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 					"/change_tracking/checkout_ct_collection"
 				).setRedirect(
 					_portal.getCurrentURL(httpServletRequest)
-				).buildString();
-			}
-
-			data.put("timelineEditURL", timelineEditURL);
+				).buildString());
 
 			data.put("timelineIconClass", "change-tracking-timeline-icon");
 			data.put("timelineIconName", "time");

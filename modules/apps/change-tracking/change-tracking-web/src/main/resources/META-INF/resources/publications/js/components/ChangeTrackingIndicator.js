@@ -760,48 +760,46 @@ export default function ChangeTrackingIndicator({
 					{showWarning ? renderWarning() : renderDropdown()}
 				</ClayLayout.ContentCol>
 
-				{Liferay.FeatureFlags['LPD-20556'] ? (
-					<>
-						{timelineItemsURL ? (
-							<ClayLayout.ContentCol>
-								<div className="autofit-col row-divider">
-									<div />
-								</div>
-							</ClayLayout.ContentCol>
-						) : null}
-
+				<>
+					{timelineItemsURL ? (
 						<ClayLayout.ContentCol>
-							<div
-								className="c-inner"
-								style={{
-									padding: '1px',
-									width: '21px',
-								}}
-								tabIndex="-1"
-								title="Timeline"
-							>
-								{renderTimeline()}
+							<div className="autofit-col row-divider">
+								<div />
 							</div>
 						</ClayLayout.ContentCol>
+					) : null}
 
-						<ClayLayout.ContentCol>
-							<div
-								className="c-inner"
-								data-qa-id={Liferay.Language.get(
-									'production-conflict'
-								)}
-								style={{
-									margin: '2px',
-									padding: '1px',
-									width: '16px !important',
-								}}
-								tabIndex="-1"
-							>
-								{renderConflictIcon()}
-							</div>
-						</ClayLayout.ContentCol>
-					</>
-				) : null}
+					<ClayLayout.ContentCol>
+						<div
+							className="c-inner"
+							style={{
+								padding: '1px',
+								width: '21px',
+							}}
+							tabIndex="-1"
+							title="Timeline"
+						>
+							{renderTimeline()}
+						</div>
+					</ClayLayout.ContentCol>
+
+					<ClayLayout.ContentCol>
+						<div
+							className="c-inner"
+							data-qa-id={Liferay.Language.get(
+								'production-conflict'
+							)}
+							style={{
+								margin: '2px',
+								padding: '1px',
+								width: '16px !important',
+							}}
+							tabIndex="-1"
+						>
+							{renderConflictIcon()}
+						</div>
+					</ClayLayout.ContentCol>
+				</>
 			</ClayLayout.ContentRow>
 		</>
 	);

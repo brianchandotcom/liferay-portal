@@ -7,16 +7,12 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import getRandomString from '../../../utils/getRandomString';
 import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {journalPagesTest} from '../../journal-web/main/fixtures/journalPagesTest';
 
 export const test = mergeTests(
-	featureFlagsTest({
-		'LPD-20556': {enabled: true},
-	}),
 	apiHelpersTest,
 	changeTrackingPagesTest,
 	journalPagesTest

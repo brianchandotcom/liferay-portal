@@ -8,7 +8,6 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../../fixtures/changeTrackingPagesTest';
 import {documentLibraryPagesTest} from '../../../fixtures/documentLibraryPages.fixtures';
-import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -26,9 +25,6 @@ export const test = mergeTests(
 	isolatedSiteTest,
 	journalPagesTest,
 	apiHelpersTest,
-	featureFlagsTest({
-		'LPD-20556': {enabled: true},
-	}),
 	changeTrackingPagesTest
 );
 

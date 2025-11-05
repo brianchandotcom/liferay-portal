@@ -176,7 +176,7 @@ export class FDSSamplePage {
 			),
 		};
 
-		this.toggleInfoPanelButton = page.getByLabel('Toggle Info Panel');
+		this.toggleInfoPanelButton = page.getByLabel('Show Info Panel').or(page.getByLabel('Hide Info Panel'));
 
 		this.visualizationModeSelector = page.getByLabel(/View Selected/);
 	}

@@ -10,7 +10,7 @@ import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useContext} from 'react';
+import React, {lazy, Suspense, useContext, useEffect, useState} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
@@ -58,11 +58,23 @@ export const SegmentProfileRoutes = () => {
 
 	const segment = new Segment(data);
 
-	const title = segment.name || Liferay.Language.get('unknown');
+	const [segmentDetails, setSegmentDetails] = useState({
+		dateModified: segment.dateModified,
+		name: segment.name,
+		segmentType: segment.segmentType
+	});
 
-	if (loading) {
-		return <Loading />;
-	}
+	useEffect(() => {
+		if (data && !loading) {
+			setSegmentDetails({
+				dateModified: segment.dateModified,
+				name: segment.name,
+				segmentType: segment.segmentType
+			});
+		}
+	}, [data, loading]);
+
+	const title = segmentDetails.name || Liferay.Language.get('unknown');
 
 	if (error) {
 		return (
@@ -114,7 +126,7 @@ export const SegmentProfileRoutes = () => {
 				'segment-overview-root',
 				'overview-root'
 			)}
-			documentTitle={`${segment.name} - ${Liferay.Language.get(
+			documentTitle={`${segmentDetails.name} - ${Liferay.Language.get(
 				'segment'
 			)}`}
 		>
@@ -126,7 +138,7 @@ export const SegmentProfileRoutes = () => {
 						label: selectedChannel && selectedChannel.name
 					}),
 					breadcrumbs.getSegments({channelId, groupId}),
-					breadcrumbs.getEntityName({label: segment.name})
+					breadcrumbs.getEntityName({label: segmentDetails.name})
 				]}
 				groupId={groupId}
 			>
@@ -134,7 +146,7 @@ export const SegmentProfileRoutes = () => {
 					<BasePage.Header.TitleSection
 						className='mb-3'
 						subtitle={`Last update: ${formatUTCDate(
-							segment.dateModified,
+							segmentDetails.dateModified,
 							'MMM DD, YYYY hh:mm a'
 						)
 							.replace('am', 'a.m.')
@@ -142,7 +154,7 @@ export const SegmentProfileRoutes = () => {
 						title={title}
 					>
 						<Label display='secondary' size='lg' uppercase>
-							{SEGMENTS_LANGUAGE_MAP[segment.segmentType]}
+							{SEGMENTS_LANGUAGE_MAP[segmentDetails.segmentType]}
 						</Label>
 					</BasePage.Header.TitleSection>
 				</BasePage.Row>
@@ -159,7 +171,11 @@ export const SegmentProfileRoutes = () => {
 						key={Liferay.Language.get('refresh-data')}
 						onClick={refetch}
 					>
-						<ClayIcon className='mr-2' symbol='reload' />
+						{loading ? (
+							<Loading align='false' className='mr-2 mt-n1' />
+						) : (
+							<ClayIcon className='mr-2' symbol='reload' />
+						)}
 						{Liferay.Language.get('refresh-data')}
 					</ClayButton>
 					<ClayLink

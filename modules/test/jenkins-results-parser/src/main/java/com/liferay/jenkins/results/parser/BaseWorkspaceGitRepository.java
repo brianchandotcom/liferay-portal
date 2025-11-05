@@ -1004,18 +1004,24 @@ public abstract class BaseWorkspaceGitRepository
 				 jobVariant.contains("service-builder")) &&
 				directoryPath.contains("liferay-portal")) {
 
-				String commitCommand =
-					"git init; git add .; git commit -m \"LRCI-XXXX Temp\"";
+				File dotGitArchiveFile = new File(
+					baseRepositoryDir, _getDotGitArchiveName());
+
+				CloudBucketUtil.downloadS3File(
+					dotGitArchiveFile,
+					_getGitArchiveS3BucketPath(_getDotGitArchiveName()));
+
+				JenkinsResultsParserUtil.unzip(dotGitArchiveFile, directory);
 
 				GitUtil.ExecutionResult executionResult =
 					GitUtil.executeBashCommands(
 						GitUtil.RETRIES_SIZE_MAX, GitUtil.MILLIS_RETRY_DELAY,
-						GitUtil.MILLIS_TIMEOUT, directory, commitCommand);
+						GitUtil.MILLIS_TIMEOUT, directory, "git reset");
 
 				if (executionResult.getExitValue() != 0) {
 					throw new RuntimeException(
 						JenkinsResultsParserUtil.combine(
-							"Unable to commit temp file",
+							"Unable to reset git directory: " + directory,
 							executionResult.getStandardError()));
 				}
 			}

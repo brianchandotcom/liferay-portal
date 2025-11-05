@@ -1,21 +1,23 @@
 import * as API from 'shared/api';
-import ClayAlert from '@clayui/alert';
+import BasePage from 'settings/components/base-page/BasePage';
+import ClayAlert, {DisplayType} from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
+import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import InputWithEditToggle, {
 	FontSize
 } from 'shared/components/InputWithEditToggle';
 import List from '@clayui/list';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import ReconnectSalesforce from './ReconnectSalesforce';
 import {addAlert} from '../../../shared/actions/alerts';
 import {Alert} from 'shared/types';
 import {ClayInput, ClayToggle} from '@clayui/form';
 import {close, modalTypes, open} from 'shared/actions/modals';
 import {connect, ConnectedProps} from 'react-redux';
-import {DataSource, User} from 'shared/util/records';
+import {ConnectSalesforceAuth} from './ConnectSalesforceAuth';
+import {DataSource} from 'shared/util/records';
 import {DataSourceStates} from 'shared/util/constants';
 import {
 	fetchDataSource,
@@ -23,12 +25,15 @@ import {
 } from 'shared/actions/data-sources';
 import {sequence} from 'shared/util/promise';
 import {sub} from 'shared/util/lang';
+import {SubHeader} from 'shared/components/revamping/SubHeader';
 import {Text} from '@clayui/core';
 import {
 	toPromise,
 	validateMaxLength,
 	validateRequired
 } from 'shared/components/form';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
+import {useParams} from 'react-router-dom';
 import {validateUniqueName} from 'shared/util/data-sources';
 
 const connector = connect(null, {
@@ -42,30 +47,27 @@ const connector = connect(null, {
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
 interface ISalesforceOverviewProps extends PropsFromRedux {
-	currentUser: User;
 	dataSource: DataSource;
-	groupId: string;
-	id: string;
 }
 
 const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	addAlert,
 	close,
-	currentUser,
 	dataSource,
 	fetchDataSource,
-	groupId,
-	id,
 	open,
 	updateSalesforceDataSource
 }) => {
+	const {groupId, id} = useParams();
+	const currentUser = useCurrentUser();
+
 	type Alert = {
-		displayType: string;
+		displayType: DisplayType;
 		message: string;
 	};
 
 	const initialAlert: Alert = {
-		displayType: '',
+		displayType: 'success',
 		message: ''
 	};
 
@@ -78,7 +80,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	);
 
 	useEffect(() => {
-		let displayType = 'success';
+		let displayType = 'success' as DisplayType;
 
 		let messageKey = Liferay.Language.get(
 			'you-have-successfully-authenticated-your-token-with-liferay-analytics-cloud.-you-can-now-select-the-data-to-sync'
@@ -107,11 +109,11 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	const handleDisconnectClick = useCallback(() => {
 		open(modalTypes.CONFIRMATION_MODAL, {
 			message: (
-				<p className='text-4'>
+				<Text as='p' size={4}>
 					{Liferay.Language.get(
 						'this-action-will-stop-syncing-data-from-your-dxp-instance-to-this-analytics-cloud-workspace.-the-data-that-was-already-synced-will-remain-available-in-the-properties-the-data-source-was-connected-to.-are-you-sure-you-want-to-continue'
 					)}
-				</p>
+				</Text>
 			),
 			modalVariant: 'modal-warning',
 			onClose: close,
@@ -184,7 +186,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 	);
 
 	return (
-		<>
+		<BasePage>
 			<ClayLayout.ContainerFluid view>
 				<ClayLayout.SheetHeader>
 					<InputWithEditToggle
@@ -226,35 +228,108 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 									).toUpperCase()}
 								</Text>
 
-								<hr className='my-2' />
+								<SubHeader
+									title={Liferay.Language.get(
+										'data-source-details'
+									)}
+								/>
 
 								{alert && (
 									<ClayAlert
-										className='font-weight-semi-bold mt-3'
-										displayType={alert.displayType as any}
+										className='font-weight-semi-bold mb-4 mt-3'
+										displayType={alert.displayType}
 									>
 										{alert.message}
 									</ClayAlert>
 								)}
 
-								{!isDataSourceConnected ? (
-									<ReconnectSalesforce
-										addAlert={addAlert}
-										setAccounts={setAccounts}
-										setIndividuals={setIndividuals}
-										setIsDataSourceConnected={
-											setIsDataSourceConnected
-										}
+								<ClayLayout.SheetSection>
+									<SubHeader
+										title={Liferay.Language.get(
+											'data-source-details'
+										)}
 									/>
+
+									<ClayInput.Group className='d-flex mt-3'>
+										<ClayInput.GroupItem
+											className='mr-3'
+											shrink
+										>
+											<label htmlFor='dataSourceType'>
+												{Liferay.Language.get(
+													'data-source-type'
+												)}
+											</label>
+
+											<ClayInput
+												readOnly
+												type='text'
+												value={Liferay.Language.get(
+													'salesforce'
+												)}
+											/>
+										</ClayInput.GroupItem>
+
+										<ClayInput.GroupItem
+											className='ml-0'
+											shrink
+										>
+											<label htmlFor='dataSourceId'>
+												{Liferay.Language.get(
+													'data-source-id'
+												)}
+											</label>
+
+											<ClayInput
+												readOnly
+												type='text'
+												value={dataSource.id}
+											/>
+										</ClayInput.GroupItem>
+									</ClayInput.Group>
+								</ClayLayout.SheetSection>
+
+								{!isDataSourceConnected ? (
+									<>
+										<div className='mb-3'>
+											<Text color='secondary' size={4}>
+												{Liferay.Language.get(
+													'to-reestablish-the-connection-between-salesforce-and-liferay-analytics-cloud,-generate-a-token-and-paste-the-code-on-the-input-below'
+												)}
+											</Text>
+
+											<ClayLink
+												className='ml-1'
+												href=''
+												key='DOCUMENTATION'
+												target='_blank'
+											>
+												{Liferay.Language.get(
+													'learn-more-about-data-sources'
+												)}
+											</ClayLink>
+										</div>
+
+										<ConnectSalesforceAuth
+											addAlert={
+												(addAlert as unknown) as Alert.AddAlert
+											}
+											onSubmit={() => {
+												// TODO: Verify data source status after submitting.
+
+												setIsDataSourceConnected(true);
+											}}
+										/>
+									</>
 								) : (
 									<ClayButton
 										aria-label={Liferay.Language.get(
 											'disconnect-data-source'
 										)}
-										className='mt-5'
 										displayType='danger'
 										onClick={handleDisconnectClick}
 										outline
+										size='sm'
 									>
 										<ClayIcon
 											className='mr-2'
@@ -267,63 +342,11 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 									</ClayButton>
 								)}
 							</ClayLayout.SheetSection>
-
-							<ClayLayout.SheetSection>
-								<Text
-									color='secondary'
-									size={3}
-									weight='semi-bold'
-								>
-									{Liferay.Language.get(
-										'data-source-details'
-									).toUpperCase()}
-								</Text>
-
-								<hr className='my-2' />
-
-								<ClayInput.Group className='d-flex mt-3'>
-									<ClayInput.GroupItem
-										className='mr-3'
-										shrink
-									>
-										<label htmlFor='dataSourceType'>
-											{Liferay.Language.get(
-												'data-source-type'
-											)}
-										</label>
-
-										<ClayInput
-											disabled
-											type='text'
-											value={Liferay.Language.get(
-												'salesforce'
-											)}
-										/>
-									</ClayInput.GroupItem>
-
-									<ClayInput.GroupItem
-										className='ml-0'
-										shrink
-									>
-										<label htmlFor='dataSourceId'>
-											{Liferay.Language.get(
-												'data-source-id'
-											)}
-										</label>
-
-										<ClayInput
-											disabled
-											type='text'
-											value={dataSource.id}
-										/>
-									</ClayInput.GroupItem>
-								</ClayInput.Group>
-							</ClayLayout.SheetSection>
 						</ClayLayout.Col>
 					</ClayLayout.Row>
 				</ClayLayout.Sheet>
 
-				<ClayLayout.Sheet className='p-4'>
+				<ClayLayout.Sheet className='mt-4 p-4'>
 					<ClayLayout.Row justify='center'>
 						<ClayLayout.Col size={12}>
 							<div className='mb-5'>
@@ -347,16 +370,14 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 										</ClayAlert>
 									)}
 
-								<p className='mb-0'>
-									<Text color='secondary' size={4}>
-										{Liferay.Language.get(
-											'to-configure-your-salesforce-data-source,-go-to-your-salesforce-environment-to-update-this-app-connection'
-										)}
-									</Text>
-								</p>
+								<Text color='secondary' size={4}>
+									{Liferay.Language.get(
+										'to-configure-your-salesforce-data-source,-go-to-your-salesforce-environment-to-update-this-app-connection'
+									)}
+								</Text>
 
-								<div className='p-1'>
-									<ClayList>
+								<div className='pt-1'>
+									<ClayList className='mb-0'>
 										<ClayList.Item flex>
 											<ClayList.ItemField>
 												<ClayIcon
@@ -395,8 +416,13 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 											<ClayList.ItemField>
 												<ClayToggle
+													disabled={
+														!isDataSourceConnected
+													}
 													id='accounts'
-													label='Disconnected'
+													label={Liferay.Language.get(
+														'disconnected'
+													)}
 													onToggle={value => {
 														setAccounts(!accounts);
 
@@ -413,7 +439,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 															});
 														}
 													}}
-													toggled={accounts}
+													toggled={
+														accounts &&
+														isDataSourceConnected
+													}
 												/>
 											</ClayList.ItemField>
 										</ClayList.Item>
@@ -456,8 +485,13 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 
 											<ClayList.ItemField>
 												<ClayToggle
+													disabled={
+														!isDataSourceConnected
+													}
 													id='individuals'
-													label='Disconnected'
+													label={Liferay.Language.get(
+														'disconnected'
+													)}
 													onToggle={value => {
 														setIndividuals(
 															!individuals
@@ -476,7 +510,10 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 															});
 														}
 													}}
-													toggled={individuals}
+													toggled={
+														individuals &&
+														isDataSourceConnected
+													}
 												/>
 											</ClayList.ItemField>
 										</ClayList.Item>
@@ -487,7 +524,7 @@ const SalesforceOverview: React.FC<ISalesforceOverviewProps> = ({
 					</ClayLayout.Row>
 				</ClayLayout.Sheet>
 			</ClayLayout.ContainerFluid>
-		</>
+		</BasePage>
 	);
 };
 

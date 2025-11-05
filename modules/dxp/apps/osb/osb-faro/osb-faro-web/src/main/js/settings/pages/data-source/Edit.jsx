@@ -1,6 +1,6 @@
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
-import Salesforce from './Salesforce';
+import SalesforceOverview from 'settings/components/salesforce/SalesforceOverview';
 import {compose, withAdminPermission, withDataSource} from 'shared/hoc';
 import {ConfigureCSV} from './ConfigureCSV';
 import {DataSource} from 'shared/util/records';
@@ -9,7 +9,7 @@ import {PropTypes} from 'prop-types';
 
 const PAGE_MAP = {
 	[DataSourceTypes.Csv]: ConfigureCSV,
-	[DataSourceTypes.Salesforce]: Salesforce
+	[DataSourceTypes.Salesforce]: SalesforceOverview
 };
 
 export class Edit extends React.Component {

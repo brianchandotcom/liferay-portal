@@ -190,6 +190,7 @@ const ConnectSalesForceStep: React.FC<IConnectSalesForceStepProps> = ({
 	return (
 		<ConnectSalesforceAuth
 			addAlert={addAlert}
+			buttonProps={{block: true}}
 			onCancel={() => {
 				history.push(
 					toRoute(Routes.SETTINGS_DATA_SOURCE_LIST, {

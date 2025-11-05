@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,23 @@ public class RouteTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testMatchingRoute() {
+		Map<String, String> parameters = HashMapBuilder.put(
+			"action", "view"
+		).put(
+			"id", "123"
+		).build();
+
+		Route route = new Route("{action}/{id:\\d+}");
+
+		String url = route.parametersToUrl(parameters);
+
+		Assert.assertEquals(url, "view/123", url);
+
+		Assert.assertEquals(Collections.emptyMap(), parameters);
+	}
 
 	@Test
 	public void testNonmatchingRoute() {

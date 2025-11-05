@@ -22,9 +22,11 @@ import org.osgi.service.component.annotations.Component;
 public class ImproveWritingTaskNodeExecutorAIDelegate
 	extends BaseTaskNodeExecutorAIDelegate {
 
+	public static final String KEY = "improveWriting";
+
 	@Override
 	public String getKey() {
-		return "improveWriting";
+		return KEY;
 	}
 
 	@Override

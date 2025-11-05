@@ -21,9 +21,11 @@ import org.osgi.service.component.annotations.Component;
 public class ChangeToneTaskNodeExecutorAIDelegate
 	extends BaseTaskNodeExecutorAIDelegate {
 
+	public static final String KEY = "changeTone";
+
 	@Override
 	public String getKey() {
-		return "changeTone";
+		return KEY;
 	}
 
 	@Override

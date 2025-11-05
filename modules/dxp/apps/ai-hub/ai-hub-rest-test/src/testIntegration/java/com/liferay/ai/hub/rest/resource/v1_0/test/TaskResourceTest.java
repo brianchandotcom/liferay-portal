@@ -45,7 +45,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -131,12 +130,6 @@ public class TaskResourceTest extends BaseTaskResourceTestCase {
 		String line2 = lines.get(1);
 
 		Assert.assertEquals("data: Successfully Subscribed", line2);
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLPostTask() throws Exception {
 	}
 
 	@Override

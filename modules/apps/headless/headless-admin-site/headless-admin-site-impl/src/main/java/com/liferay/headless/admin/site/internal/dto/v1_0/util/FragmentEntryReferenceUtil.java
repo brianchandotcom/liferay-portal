@@ -63,15 +63,21 @@ public class FragmentEntryReferenceUtil {
 							groupId);
 			}
 
+			String fragmentEntryKey = null;
+
 			if (fragmentEntry == null) {
 				LogUtil.logOptionalReference(
 					fragmentItemExternalReference.getClassName(),
 					fragmentItemExternalReference.getExternalReferenceCode(),
 					fragmentItemExternalReference.getScope(), scopeGroupId);
 			}
+			else {
+				fragmentEntryKey = fragmentEntry.getFragmentEntryKey();
+			}
 
 			return new FragmentEntryReference(
 				fragmentItemExternalReference.getExternalReferenceCode(),
+				fragmentEntryKey,
 				ItemScopeUtil.getItemScopeExternalReferenceCode(
 					fragmentItemExternalReference.getScope(), scopeGroupId),
 				null);
@@ -103,22 +109,27 @@ public class FragmentEntryReferenceUtil {
 		}
 
 		return new FragmentEntryReference(
-			null, null, defaultFragmentReference.getDefaultFragmentKey());
+			null, null, null, defaultFragmentReference.getDefaultFragmentKey());
 	}
 
 	public static class FragmentEntryReference {
 
 		public FragmentEntryReference(
-			String fragmentEntryERC, String fragmentEntryScopeERC,
-			String rendererKey) {
+			String fragmentEntryERC, String fragmentEntryKey,
+			String fragmentEntryScopeERC, String rendererKey) {
 
 			_fragmentEntryERC = fragmentEntryERC;
+			_fragmentEntryKey = fragmentEntryKey;
 			_fragmentEntryScopeERC = fragmentEntryScopeERC;
 			_rendererKey = rendererKey;
 		}
 
 		public String getFragmentEntryERC() {
 			return _fragmentEntryERC;
+		}
+
+		public String getFragmentEntryKey() {
+			return _fragmentEntryKey;
 		}
 
 		public String getFragmentEntryScopeERC() {
@@ -130,6 +141,7 @@ public class FragmentEntryReferenceUtil {
 		}
 
 		private final String _fragmentEntryERC;
+		private final String _fragmentEntryKey;
 		private final String _fragmentEntryScopeERC;
 		private final String _rendererKey;
 

@@ -43,10 +43,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=permission.object",
+	property = "bulk.selection.action.key=permissions.object",
 	service = BulkSelectionAction.class
 )
-public class PermissionObjectBulkSelectionAction
+public class PermissionsObjectBulkSelectionAction
 	implements BulkSelectionAction<Object> {
 
 	@Override
@@ -225,7 +225,7 @@ public class PermissionObjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PermissionObjectBulkSelectionAction.class);
+		PermissionsObjectBulkSelectionAction.class);
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

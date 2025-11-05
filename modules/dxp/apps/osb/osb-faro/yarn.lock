@@ -1303,6 +1303,13 @@
     react-transition-group "^4.4.1"
     warning "^4.0.3"
 
+"@clayui/empty-state@^3.144.1":
+  version "3.144.1"
+  resolved "https://registry.yarnpkg.com/@clayui/empty-state/-/empty-state-3.144.1.tgz#2d01cb1f74027aeac7d524e0c2e622a45da4b513"
+  integrity sha512-aBcZVWFVOFf6UoeVTQ7p8oCZXsQrqljfTzFz3p8jlanBjxtZMfWwIfaiTO7BCc2px/duBCVdX/zSx8QmGjpG8w==
+  dependencies:
+    classnames "^2.2.6"
+
 "@clayui/form@^3.148.0":
   version "3.148.0"
   resolved "https://registry.yarnpkg.com/@clayui/form/-/form-3.148.0.tgz#446a8175362714bd5ad5bbb9e2d340c3c043a8d6"

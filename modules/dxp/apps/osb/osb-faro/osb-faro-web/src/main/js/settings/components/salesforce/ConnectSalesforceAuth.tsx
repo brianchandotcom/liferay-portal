@@ -10,6 +10,7 @@ import {Alert} from 'shared/types';
 import {createSalesforce} from 'shared/api/data-source';
 import {DataSourceStatuses} from 'shared/util/constants';
 import {
+	ERROR_TYPES,
 	getOAuthWindowErrorMessage,
 	getTempCredentials
 } from 'shared/util/oauth';
@@ -23,6 +24,72 @@ import {
 	validateRequired,
 	validateSalesforceDomain
 } from 'shared/util/validators';
+
+/**
+ * The salesforceAuthErrorMessage function aims to map all the errors returned
+ * by Salesforce and display them in a more user-friendly way,
+ * grouping them by message type.
+ *
+ * More about it here https://help.salesforce.com/s/articleView?id=xcloud.remoteaccess_oauth_flow_errors.htm
+ */
+
+function salesforceAuthErrorMessage(errMessage: string) {
+	const findErrMessage = (value: string) => errMessage.includes(value);
+	const errorGroups = [
+		{
+			matches: [
+				'access_denied',
+				'immediate_unsuccessful',
+				'authorization_pending'
+			],
+			messageKey: Liferay.Language.get(
+				'you-did-not-grant-access-to-the-application.-please-approve-the-request-and-try-again'
+			)
+		},
+		{
+			matches: [
+				'inactive_user',
+				'inactive_org',
+				'invalid_app_access',
+				'NO_ACCESS'
+			],
+			messageKey: Liferay.Language.get(
+				'your-account-or-organization-is-not-eligible-for-sign-in.-contact-your-administrator-for-assistance'
+			)
+		},
+		{
+			matches: [
+				'invalid_grant',
+				'authentication failure',
+				'rate_limit_exceeded'
+			],
+			messageKey: Liferay.Language.get(
+				'we-could-not-verify-your-sign-in.-check-your-credentials-and-try-again'
+			)
+		},
+		{
+			matches: [
+				'invalid_client',
+				'invalid_client_id',
+				'invalid_assertion_type',
+				'unsupported_response_type'
+			],
+			messageKey: Liferay.Language.get(
+				'the-application-credentials-or-configuration-are-invalid.-verify-the-client-settings-and-try-again'
+			)
+		}
+	];
+
+	for (const {matches, messageKey} of errorGroups) {
+		if (matches.some(findErrMessage)) {
+			return messageKey;
+		}
+	}
+
+	return Liferay.Language.get(
+		'there-was-an-error-processing-your-request.-try-again.-if-the-problem-persists,-please-contact-support'
+	);
+}
 
 interface IConnectSalesforceAuthProps {
 	addAlert: Alert.AddAlert;
@@ -112,8 +179,8 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 									addAlert({
 										alertType: Alert.Types.Success,
 										message: Liferay.Language.get(
-											'token-authenticated-successfully'
-										) // TODO: Define correct message
+											'connection-established-successfully'
+										)
 									});
 
 									onSubmit();
@@ -132,7 +199,11 @@ const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
 					.catch(err => {
 						addAlert({
 							alertType: Alert.Types.Error,
-							message: getOAuthWindowErrorMessage(err),
+							message:
+								err.type ===
+								ERROR_TYPES.AC_RECEIVE_CALLBACK_ERROR
+									? salesforceAuthErrorMessage(err.message)
+									: getOAuthWindowErrorMessage(err),
 							timeout: false
 						});
 

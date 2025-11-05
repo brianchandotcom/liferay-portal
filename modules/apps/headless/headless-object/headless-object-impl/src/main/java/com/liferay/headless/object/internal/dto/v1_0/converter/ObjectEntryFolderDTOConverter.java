@@ -13,6 +13,7 @@ import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
@@ -152,7 +153,18 @@ public class ObjectEntryFolderDTOConverter
 						return null;
 					});
 				setScope(
-					() -> Scope.of(group, dtoConverterContext.getLocale()));
+					() -> {
+						if (group == null) {
+							return null;
+						}
+
+						Scope.Type type =
+							(group.getType() == GroupConstants.TYPE_DEPOT) ?
+								Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
+
+						return Scope.ofReference(
+							group.getExternalReferenceCode(), type);
+					});
 				setScopeId(objectEntryFolder::getGroupId);
 				setScopeKey(
 					() -> {

@@ -7,8 +7,8 @@ package com.liferay.headless.admin.site.internal.dto.v1_0.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.scope.Scope;
@@ -61,7 +61,12 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return Scope.of(itemScopeGroupId, LocaleUtil.getMostRelevantLocale());
+		Group group = GroupLocalServiceUtil.getGroup(itemScopeGroupId);
+
+		Scope.Type type = (group.getType() == GroupConstants.TYPE_DEPOT) ?
+			Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
+
+		return Scope.ofReference(group.getExternalReferenceCode(), type);
 	}
 
 	public static Scope getItemScope(
@@ -84,7 +89,10 @@ public class ItemScopeUtil {
 			return null;
 		}
 
-		return Scope.of(group, LocaleUtil.getMostRelevantLocale());
+		Scope.Type type = (group.getType() == GroupConstants.TYPE_DEPOT) ?
+			Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
+
+		return Scope.ofReference(group.getExternalReferenceCode(), type);
 	}
 
 	public static String getItemScopeExternalReferenceCode(

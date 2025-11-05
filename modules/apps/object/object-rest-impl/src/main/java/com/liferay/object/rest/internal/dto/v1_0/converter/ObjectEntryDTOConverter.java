@@ -76,6 +76,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -756,7 +757,6 @@ public class ObjectEntryDTOConverter
 	}
 
 	private FileEntry _getFileEntry(
-			DTOConverterContext dtoConverterContext,
 			ObjectDefinition objectDefinition,
 			com.liferay.object.model.ObjectEntry objectEntry,
 			ObjectField objectField, long fileEntryId, String objectFieldName)
@@ -883,8 +883,15 @@ public class ObjectEntryDTOConverter
 					return null;
 				}
 
-				return Scope.of(
-					dlFileEntry.getGroupId(), dtoConverterContext.getLocale());
+				Group group = _groupLocalService.getGroup(
+					dlFileEntry.getGroupId());
+
+				Scope.Type type =
+					(group.getType() == GroupConstants.TYPE_DEPOT) ?
+						Scope.Type.ASSET_LIBRARY : Scope.Type.SITE;
+
+				return Scope.ofReference(
+					group.getExternalReferenceCode(), type);
 			});
 		fileEntry.setThumbnailURL(
 			() -> NestedFieldsSupplier.supply(
@@ -1162,8 +1169,8 @@ public class ObjectEntryDTOConverter
 			}
 
 			return _getFileEntry(
-				dtoConverterContext, objectDefinition, objectEntry, objectField,
-				fileEntryId, objectField.getName());
+				objectDefinition, objectEntry, objectField, fileEntryId,
+				objectField.getName());
 		}
 		else if (objectField.compareBusinessType(
 					ObjectFieldConstants.BUSINESS_TYPE_DATE) ||

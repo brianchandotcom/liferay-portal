@@ -835,13 +835,13 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        fragmentSettings:
+                        allowedFragmentItemExternalReferences:
                             # @review
                             description:
-                                The drop zone page element's allowed or unallowed fragments.
-                            oneOf:
-                                -   $ref: "#/components/schemas/FragmentSettingsAllowed"
-                                -   $ref: "#/components/schemas/FragmentSettingsUnallowed"
+                                A list of allowed fragments.
+                            items:
+                                $ref: "#/components/schemas/ItemExternalReference"
+                            type: array
             # @review
             description:
                 Represent a page element definition of a drop zone.
@@ -1574,29 +1574,6 @@ components:
                         The fragment reference's type (DefaultFragmentReference, FragmentItemExternalReference).
                     enum: [DefaultFragmentReference, FragmentItemExternalReference]
                     type: string
-            type: object
-        FragmentSettingsAllowed:
-            # @review
-            description:
-                Represents the settings of allowed fragments in a page drop zone.
-            properties:
-                allowedFragmentItemExternalReferences:
-                    # @review
-                    description:
-                        A list of allowed fragments.
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
-            type: object
-        FragmentSettingsUnallowed:
-            # @review
-            description:
-                Represents the settings of unallowed fragments in a page drop zone.
-            properties:
-                unallowedFragmentItemExternalReferences:
-                    items:
-                        $ref: "#/components/schemas/ItemExternalReference"
-                    type: array
             type: object
         FragmentStyle:
             # @review

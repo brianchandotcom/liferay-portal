@@ -100,7 +100,7 @@ public class NewSpaceComponentSectionFragmentRenderer
 				"your-content-and-files");
 	}
 
-	private Boolean _isFirstTimeAccess(ThemeDisplay themeDisplay) {
+	private boolean _isFirstTimeAccess(ThemeDisplay themeDisplay) {
 		Company company = themeDisplay.getCompany();
 
 		ExpandoBridge bridge = company.getExpandoBridge();

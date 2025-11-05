@@ -17,8 +17,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.junit.AfterClass;
@@ -212,7 +210,7 @@ public class CustomSQLTest {
 
 	private static class TestCustomSQL extends CustomSQL {
 
-		public TestCustomSQL() throws SQLException {
+		public TestCustomSQL() throws Exception {
 		}
 
 		@Override

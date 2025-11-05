@@ -31,7 +31,6 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -113,7 +112,7 @@ public class UpgradeCalendarResourceTest {
 	}
 
 	protected long getCalendarResourceUserId(CalendarResource calendarResource)
-		throws SQLException {
+		throws Exception {
 
 		try (Connection connection = DataAccess.getConnection()) {
 			PreparedStatement preparedStatement = connection.prepareStatement(

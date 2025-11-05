@@ -826,7 +826,7 @@ public class CompanyLocalServiceDBPartitionTest
 
 	private void _assertCompanyConfiguration(
 			long companyId, Configuration configuration)
-		throws SQLException {
+		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -980,9 +980,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
-	private void _checkPartitionDoesNotExist(long companyId)
-		throws SQLException {
-
+	private void _checkPartitionDoesNotExist(long companyId) throws Exception {
 		List<String> partitionNames = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();

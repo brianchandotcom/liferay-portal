@@ -23,7 +23,6 @@ import java.lang.reflect.Field;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +92,7 @@ public class IndexEntryTest {
 	private boolean _hasIndex(
 			DatabaseMetaData databaseMetaData, FinderPath finderPath,
 			List<IndexMetadata> indexMetadatas, boolean unique)
-		throws SQLException {
+		throws Exception {
 
 		for (IndexMetadata indexMetadata : indexMetadatas) {
 			String[] expectedIndexColumnNames = finderPath.getColumnNames();

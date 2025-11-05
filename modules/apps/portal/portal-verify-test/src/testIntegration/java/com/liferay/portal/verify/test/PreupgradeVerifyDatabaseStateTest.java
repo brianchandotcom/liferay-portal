@@ -33,7 +33,6 @@ import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.sql.Connection;
-import java.sql.SQLException;
 
 import java.util.Set;
 import java.util.TreeSet;
@@ -183,9 +182,7 @@ public class PreupgradeVerifyDatabaseStateTest
 	}
 
 	@Test
-	public void testVerifyPreupgradePartiallyUpgradedTable()
-		throws SQLException {
-
+	public void testVerifyPreupgradePartiallyUpgradedTable() throws Exception {
 		ServiceComponent serviceComponent = _getServiceComponent();
 
 		String originalData = serviceComponent.getData();

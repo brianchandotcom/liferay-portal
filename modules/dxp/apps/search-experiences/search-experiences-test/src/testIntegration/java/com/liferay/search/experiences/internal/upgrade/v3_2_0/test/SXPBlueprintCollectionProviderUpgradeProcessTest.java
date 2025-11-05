@@ -36,7 +36,6 @@ import com.liferay.search.experiences.service.SXPBlueprintLocalService;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import java.util.Collections;
 
@@ -173,7 +172,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 
 	private void _createNewPortalPreferenceValue(
 			boolean enabled, Connection connection)
-		throws SQLException {
+		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -271,7 +270,7 @@ public class SXPBlueprintCollectionProviderUpgradeProcessTest {
 
 	private void _updatePortalPreferenceValue(
 			boolean enabled, Connection connection)
-		throws SQLException {
+		throws Exception {
 
 		if (_initialFeatureFlagValue != enabled) {
 			try (PreparedStatement preparedStatement =

@@ -42,6 +42,7 @@ import java.lang.reflect.Method;
 
 import java.sql.PreparedStatement;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -2600,7 +2601,7 @@ public class CTTableMapperTest {
 		implements MappingSqlQuery<Void> {
 
 		@Override
-		public List<Void> execute(Object... params) throws Exception {
+		public List<Void> execute(Object... params) throws SQLException {
 			Assert.assertEquals(Arrays.toString(params), 1, params.length);
 
 			PreparedStatement preparedStatement =

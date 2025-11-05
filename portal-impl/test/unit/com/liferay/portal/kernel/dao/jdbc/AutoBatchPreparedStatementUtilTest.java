@@ -31,7 +31,6 @@ import java.lang.reflect.Modifier;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -316,7 +315,7 @@ public class AutoBatchPreparedStatementUtilTest {
 
 	protected void doTestConcurrentWaitingForFutures(
 			boolean supportBatchUpdates)
-		throws SQLException {
+		throws Exception {
 
 		TestNoticeableFuture<Void> testNoticeableFuture =
 			new TestNoticeableFuture<>();

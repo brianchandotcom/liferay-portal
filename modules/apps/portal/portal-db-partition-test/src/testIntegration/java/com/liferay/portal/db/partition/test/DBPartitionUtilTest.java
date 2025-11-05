@@ -40,7 +40,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import java.util.ArrayList;
@@ -120,7 +119,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	@Test
 	@TestInfo("LPS-198239")
 	public void testAccessDefaultCompanyByCompanyThreadLocal()
-		throws SQLException {
+		throws Exception {
 
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(

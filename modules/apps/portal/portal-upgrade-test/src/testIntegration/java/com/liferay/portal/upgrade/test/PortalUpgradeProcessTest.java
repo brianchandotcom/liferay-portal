@@ -442,7 +442,7 @@ public class PortalUpgradeProcessTest {
 		}
 
 		public void updateSchemaVersion(Version newSchemaVersion)
-			throws SQLException {
+			throws Exception {
 
 			PortalUpgradeProcess.updateSchemaVersion(
 				connection, newSchemaVersion);

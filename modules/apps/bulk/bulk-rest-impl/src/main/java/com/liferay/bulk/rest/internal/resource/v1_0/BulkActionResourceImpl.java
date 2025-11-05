@@ -9,15 +9,12 @@ import com.liferay.bulk.rest.dto.v1_0.BulkAction;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
-import com.liferay.bulk.rest.dto.v1_0.KeywordBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
-import com.liferay.bulk.rest.internal.odata.entity.v1_0.BulkActionEntityModel;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
 import com.liferay.bulk.selection.BulkSelection;
 import com.liferay.bulk.selection.BulkSelectionAction;
 import com.liferay.bulk.selection.BulkSelectionFactoryRegistry;
-import com.liferay.bulk.selection.BulkSelectionInputParameters;
 import com.liferay.bulk.selection.BulkSelectionRunner;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -45,14 +42,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
-import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.Permission;
-
-import jakarta.ws.rs.core.MultivaluedMap;
 
 import java.io.Serializable;
 
@@ -74,13 +68,6 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BulkActionResource.class
 )
 public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
-
-	@Override
-	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
-		throws Exception {
-
-		return _entityModel;
-	}
 
 	@Override
 	public BulkActionTask postBulkAction(
@@ -222,16 +209,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkAction.Type type) {
 
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
-			return _defaultPermissionObjectTagsBulkSelectionAction;
+			return _defaultPermissionObjectsBulkSelectionAction;
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
-			return _deleteObjectBulkSelectionAction;
-		}
-		else if (BulkAction.Type.KEYWORD_BULK_ACTION.equals(type)) {
-			return _editObjectTagsBulkSelectionAction;
+			return _deleteObjectsBulkSelectionAction;
 		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
-			return _permissionObjectTagsBulkSelectionAction;
+			return _permissionObjectsTagsBulkSelectionAction;
 		}
 
 		throw new UnsupportedOperationException();
@@ -257,31 +241,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
 			return HashMapBuilder.<String, Serializable>put(
 				"bulkActionTaskId", bulkActionTask.getId()
-			).build();
-		}
-		else if (BulkAction.Type.KEYWORD_BULK_ACTION.equals(type)) {
-			return HashMapBuilder.<String, Serializable>put(
-				BulkSelectionInputParameters.ASSET_ENTRY_BULK_SELECTION, true
-			).put(
-				"append", true
-			).put(
-				"bulkActionTaskId", bulkActionTask.getId()
-			).put(
-				"toAddTagNames",
-				() -> {
-					KeywordBulkAction keywordBulkAction =
-						(KeywordBulkAction)bulkAction;
-
-					return keywordBulkAction.getKeywordsToAdd();
-				}
-			).put(
-				"toRemoveTagNames",
-				() -> {
-					KeywordBulkAction keywordBulkAction =
-						(KeywordBulkAction)bulkAction;
-
-					return keywordBulkAction.getKeywordsToRemove();
-				}
 			).build();
 		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
@@ -393,23 +352,20 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		return permissionList.toArray(new Permission[0]);
 	}
 
-	private static final EntityModel _entityModel = new BulkActionEntityModel();
-
 	@Reference
 	private BulkSelectionFactoryRegistry _bulkSelectionFactoryRegistry;
 
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
 
-	@Reference(target = "(bulk.selection.action.key=default.permission.object)")
+	@Reference(
+		target = "(bulk.selection.action.key=default.permission.objects)"
+	)
 	private BulkSelectionAction<Object>
-		_defaultPermissionObjectTagsBulkSelectionAction;
+		_defaultPermissionObjectsBulkSelectionAction;
 
-	@Reference(target = "(bulk.selection.action.key=delete.object)")
-	private BulkSelectionAction<Object> _deleteObjectBulkSelectionAction;
-
-	@Reference(target = "(bulk.selection.action.key=edit.object.tags)")
-	private BulkSelectionAction<Object> _editObjectTagsBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=delete.objects)")
+	private BulkSelectionAction<Object> _deleteObjectsBulkSelectionAction;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
@@ -431,9 +387,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@Reference(target = "(bulk.selection.action.key=permission.object)")
+	@Reference(target = "(bulk.selection.action.key=permission.objects)")
 	private BulkSelectionAction<Object>
-		_permissionObjectTagsBulkSelectionAction;
+		_permissionObjectsTagsBulkSelectionAction;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

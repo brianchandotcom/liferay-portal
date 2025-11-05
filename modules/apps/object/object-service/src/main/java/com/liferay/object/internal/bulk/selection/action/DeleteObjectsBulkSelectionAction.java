@@ -31,10 +31,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Sbarra
  */
 @Component(
-	property = "bulk.selection.action.key=delete.object",
+	property = "bulk.selection.action.key=delete.objects",
 	service = BulkSelectionAction.class
 )
-public class DeleteObjectBulkSelectionAction
+public class DeleteObjectsBulkSelectionAction
 	implements BulkSelectionAction<Object> {
 
 	@Override
@@ -122,7 +122,7 @@ public class DeleteObjectBulkSelectionAction
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DeleteObjectBulkSelectionAction.class);
+		DeleteObjectsBulkSelectionAction.class);
 
 	@Reference
 	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;

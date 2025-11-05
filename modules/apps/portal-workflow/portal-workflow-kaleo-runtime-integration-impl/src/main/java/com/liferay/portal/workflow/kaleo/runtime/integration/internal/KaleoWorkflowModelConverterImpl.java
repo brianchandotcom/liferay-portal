@@ -269,6 +269,7 @@ public class KaleoWorkflowModelConverterImpl
 					return _toWorkflowNode(kaleoNode);
 				}));
 		defaultWorkflowInstance.setEndDate(kaleoInstance.getCompletionDate());
+		defaultWorkflowInstance.setGroupId(kaleoInstance.getGroupId());
 		defaultWorkflowInstance.setStartDate(kaleoInstance.getCreateDate());
 
 		if (workflowContext != null) {

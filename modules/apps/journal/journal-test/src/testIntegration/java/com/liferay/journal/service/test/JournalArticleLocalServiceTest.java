@@ -1737,6 +1737,13 @@ public class JournalArticleLocalServiceTest {
 
 		Assert.assertEquals(
 			ddmTemplateScript2, journalArticleDisplay.getContent());
+
+		journalArticleDisplay = _journalArticleLocalService.getArticleDisplay(
+			journalArticle, ddmTemplate2.getTemplateKey(), Constants.VIEW,
+			defaultLanguageId, 1, null, null);
+
+		Assert.assertEquals(
+			ddmTemplateScript2, journalArticleDisplay.getContent());
 	}
 
 	@Test

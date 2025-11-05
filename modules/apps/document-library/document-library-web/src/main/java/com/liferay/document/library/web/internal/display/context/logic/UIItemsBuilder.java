@@ -944,6 +944,19 @@ public class UIItemsBuilder {
 		return false;
 	}
 
+	public boolean isViewUsagesActionAvailable() throws PortalException {
+		if (((_fileShortcut != null) &&
+			 !_fileShortcutDisplayContextHelper.
+				 isViewUsagesActionAvailable()) ||
+			((_fileShortcut == null) &&
+			 !_fileEntryDisplayContextHelper.isViewUsagesActionAvailable())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	public boolean isViewVersionActionAvailable() {
 		if (_fileShortcut == null) {
 			return true;

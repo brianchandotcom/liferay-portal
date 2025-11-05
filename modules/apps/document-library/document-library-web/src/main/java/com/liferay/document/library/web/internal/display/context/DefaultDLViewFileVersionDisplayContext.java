@@ -146,6 +146,7 @@ public class DefaultDLViewFileVersionDisplayContext
 						_uiItemsBuilder::isHistoryActionAvailable,
 						_uiItemsBuilder.createHistoryDropdownItem()
 					).add(
+						_uiItemsBuilder::isViewUsagesActionAvailable,
 						_uiItemsBuilder.createViewUsagesDropdownItem()
 					).build());
 				dropdownGroupItem.setSeparator(true);

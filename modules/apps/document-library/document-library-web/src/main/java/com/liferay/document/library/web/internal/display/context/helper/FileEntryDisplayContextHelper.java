@@ -255,6 +255,10 @@ public class FileEntryDisplayContextHelper {
 		return false;
 	}
 
+	public boolean isViewUsagesActionAvailable() {
+		return _permissionChecker.isOmniadmin();
+	}
+
 	private boolean _hasPreviousVersions() {
 		if (_fileEntry == null) {
 			return false;

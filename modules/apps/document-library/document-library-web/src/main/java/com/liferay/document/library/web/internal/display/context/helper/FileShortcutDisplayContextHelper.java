@@ -123,6 +123,10 @@ public class FileShortcutDisplayContextHelper {
 		return hasUpdatePermission();
 	}
 
+	public boolean isViewUsagesActionAvailable() throws PortalException {
+		return _permissionChecker.isOmniadmin();
+	}
+
 	private boolean _isExternalRepository() {
 		if ((_fileShortcut != null) &&
 			RepositoryUtil.isExternalRepository(

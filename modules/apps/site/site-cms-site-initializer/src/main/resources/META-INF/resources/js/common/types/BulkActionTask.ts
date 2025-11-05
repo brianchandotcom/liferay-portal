@@ -28,6 +28,10 @@ export interface IBulkActionFDSDataItemTransformed {
 	name: string;
 }
 
+export interface IBulkactionSelectionScope {
+	selectAll: boolean;
+}
+
 export interface IBulkActionTask {
 	actionName: string;
 	dateCreated: string;
@@ -108,6 +112,6 @@ export interface IBulkActionTaskType {
 
 export type TBulkActionTaskDTO = {
 	bulkActionItems: IBulkActionFDSDataItemTransformed[] | [];
-	selectAll: IBulkActionFDSData['selectAll'];
+	selectionScope: IBulkactionSelectionScope | null;
 	type: keyof IBulkActionTaskType;
 } & IBulkActionTaskType[keyof IBulkActionTaskType];

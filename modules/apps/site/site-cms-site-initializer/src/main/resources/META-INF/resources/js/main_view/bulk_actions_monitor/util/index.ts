@@ -77,7 +77,7 @@ export function composeCreateTaskDTO(
 					name,
 				}) as IBulkActionFDSDataItemTransformed
 		),
-		selectAll,
+		selectionScope: {selectAll: selectAll ? true : null},
 		type: actionKey,
 		...keyValues,
 	} as TBulkActionTaskDTO;

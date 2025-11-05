@@ -94,6 +94,14 @@ public class CMSDefaultPermissionUtil {
 			String className, FilterFactory<Predicate> filterFactory)
 		throws PortalException {
 
+		if (classExternalReferenceCode.equals(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_CONTENTS) ||
+			classExternalReferenceCode.equals(
+				ObjectEntryFolderConstants.EXTERNAL_REFERENCE_CODE_FILES)) {
+
+			return JSONFactoryUtil.createJSONObject();
+		}
+
 		ObjectEntry objectEntry = fetchObjectEntry(
 			companyId, userId, classExternalReferenceCode, className,
 			filterFactory);

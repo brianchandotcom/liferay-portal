@@ -14,7 +14,9 @@ import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutStructu
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -63,38 +65,97 @@ public class DropZoneLayoutStructureItemImporter
 		}
 
 		dropZoneLayoutStructureItem.setAllowNewFragmentEntries(
-			dropZoneLayoutStructureItem.isAllowNewFragmentEntries());
-		dropZoneLayoutStructureItem.setFragmentEntryKeys(
-			_getFragmentEntryKeys(
+			dropZonePageElementDefinition.getAddNewFragmentEntries());
+
+		List<FragmentEntryReferenceUtil.FragmentEntryReference>
+			fragmentEntryReferences = _getFragmentEntryReference(
 				dropZonePageElementDefinition,
-				layoutStructureItemImporterContext));
+				layoutStructureItemImporterContext);
+
+		if (fragmentEntryReferences != null) {
+			dropZoneLayoutStructureItem.setFragmentEntriesJSONArray(
+				_toFragmentEntriesJSONArray(fragmentEntryReferences));
+			dropZoneLayoutStructureItem.setFragmentEntryKeys(
+				_toFragmentEntryKeys(fragmentEntryReferences));
+		}
+		else {
+			dropZoneLayoutStructureItem.setFragmentEntriesJSONArray(null);
+			dropZoneLayoutStructureItem.setFragmentEntryKeys(null);
+		}
 
 		return dropZoneLayoutStructureItem;
 	}
 
-	private List<String> _getFragmentEntryKeys(
-			DropZonePageElementDefinition dropZonePageElementDefinition,
-			LayoutStructureItemImporterContext
-				layoutStructureItemImporterContext)
+	private List<FragmentEntryReferenceUtil.FragmentEntryReference>
+			_getFragmentEntryReference(
+				DropZonePageElementDefinition dropZonePageElementDefinition,
+				LayoutStructureItemImporterContext
+					layoutStructureItemImporterContext)
 		throws Exception {
 
-		if (ArrayUtil.isEmpty(
-				dropZonePageElementDefinition.getAllowedFragments())) {
-
+		if (dropZonePageElementDefinition.getAllowedFragments() == null) {
 			return null;
 		}
 
-		List<String> fragmentKeys = new ArrayList<>();
+		List<FragmentEntryReferenceUtil.FragmentEntryReference>
+			fragmentEntryReferences = new ArrayList<>();
 
 		for (FragmentReference fragmentReference :
 				dropZonePageElementDefinition.getAllowedFragments()) {
 
-			FragmentEntryReferenceUtil.FragmentEntryReference
-				fragmentEntryReference =
-					FragmentEntryReferenceUtil.getFragmentEntryReference(
-						layoutStructureItemImporterContext.getCompanyId(),
-						fragmentReference,
-						layoutStructureItemImporterContext.getGroupId());
+			fragmentEntryReferences.add(
+				FragmentEntryReferenceUtil.getFragmentEntryReference(
+					layoutStructureItemImporterContext.getCompanyId(),
+					fragmentReference,
+					layoutStructureItemImporterContext.getGroupId()));
+		}
+
+		return fragmentEntryReferences;
+	}
+
+	private JSONArray _toFragmentEntriesJSONArray(
+		List<FragmentEntryReferenceUtil.FragmentEntryReference>
+			fragmentEntryReferences) {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (FragmentEntryReferenceUtil.FragmentEntryReference
+				fragmentEntryReference : fragmentEntryReferences) {
+
+			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
+				jsonArray.put(
+					JSONUtil.put(
+						"fragmentEntryRendererKey",
+						fragmentEntryReference.getRendererKey()));
+			}
+			else if (Validator.isNotNull(
+						fragmentEntryReference.getFragmentEntryKey())) {
+
+				jsonArray.put(
+					JSONUtil.put(
+						"fragmentEntryERC",
+						fragmentEntryReference.getFragmentEntryERC()
+					).put(
+						"fragmentEntryKey",
+						fragmentEntryReference.getFragmentEntryKey()
+					).put(
+						"fragmentEntryScopeERC",
+						fragmentEntryReference.getFragmentEntryScopeERC()
+					));
+			}
+		}
+
+		return jsonArray;
+	}
+
+	private List<String> _toFragmentEntryKeys(
+		List<FragmentEntryReferenceUtil.FragmentEntryReference>
+			fragmentEntryReferences) {
+
+		List<String> fragmentKeys = new ArrayList<>();
+
+		for (FragmentEntryReferenceUtil.FragmentEntryReference
+				fragmentEntryReference : fragmentEntryReferences) {
 
 			if (Validator.isNotNull(fragmentEntryReference.getRendererKey())) {
 				fragmentKeys.add(fragmentEntryReference.getRendererKey());

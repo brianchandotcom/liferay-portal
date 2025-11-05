@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {FrameLocator, Locator, Page} from '@playwright/test';
+import {FrameLocator, Locator, Page, expect} from '@playwright/test';
 
 import {waitForAlert} from '../../utils/waitForAlert';
 
@@ -20,6 +20,27 @@ export class AssetPublisherPage {
 			'iframe[title*="Configuration"]'
 		);
 		this.itemSelector = this.page.getByLabel('Select Items');
+	}
+
+	async assertCommunicationEnabled(
+		fields = ['assetEntryId', 'categoryId', 'resetCur', 'tags', 'tag'],
+		shouldBeEnabled = true
+	) {
+		const idPrefix =
+			'_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_lfr-prp-mapping-p_r_p_';
+
+		for (const field of fields) {
+			const locator = this.configurationIframe.locator(
+				`[id="${idPrefix}${field}"]`
+			);
+
+			if (shouldBeEnabled) {
+				await expect(locator).toBeEnabled();
+			}
+			else {
+				await expect(locator).toBeDisabled();
+			}
+		}
 	}
 
 	async changeAssetSelection(type: 'Collection' | 'Dynamic' | 'Manual') {

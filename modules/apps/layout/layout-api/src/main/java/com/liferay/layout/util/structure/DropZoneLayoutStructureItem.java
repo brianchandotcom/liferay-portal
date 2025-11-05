@@ -49,6 +49,9 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 				_allowNewFragmentEntries,
 				dropZoneLayoutStructureItem._allowNewFragmentEntries) ||
 			!Objects.equals(
+				_fragmentEntriesJSONArray,
+				dropZoneLayoutStructureItem._fragmentEntriesJSONArray) ||
+			!Objects.equals(
 				_fragmentEntryKeys,
 				dropZoneLayoutStructureItem._fragmentEntryKeys)) {
 
@@ -56,6 +59,10 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 		}
 
 		return super.equals(object);
+	}
+
+	public JSONArray getFragmentEntriesJSONArray() {
+		return _fragmentEntriesJSONArray;
 	}
 
 	public List<String> getFragmentEntryKeys() {
@@ -66,6 +73,8 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 	public JSONObject getItemConfigJSONObject() {
 		return JSONUtil.put(
 			"allowNewFragmentEntries", _allowNewFragmentEntries
+		).put(
+			"fragmentEntries", _fragmentEntriesJSONArray
 		).put(
 			"fragmentEntryKeys", _fragmentEntryKeys
 		);
@@ -89,6 +98,12 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 		_allowNewFragmentEntries = allowNewFragmentEntries;
 	}
 
+	public void setFragmentEntriesJSONArray(
+		JSONArray fragmentEntriesJSONArray) {
+
+		_fragmentEntriesJSONArray = fragmentEntriesJSONArray;
+	}
+
 	public void setFragmentEntryKeys(List<String> fragmentEntryKeys) {
 		_fragmentEntryKeys = fragmentEntryKeys;
 	}
@@ -98,6 +113,11 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 		if (itemConfigJSONObject.has("allowNewFragmentEntries")) {
 			setAllowNewFragmentEntries(
 				itemConfigJSONObject.getBoolean("allowNewFragmentEntries"));
+		}
+
+		if (itemConfigJSONObject.has("fragmentEntries")) {
+			setFragmentEntriesJSONArray(
+				itemConfigJSONObject.getJSONArray("fragmentEntries"));
 		}
 
 		if (itemConfigJSONObject.has("fragmentEntryKeys")) {
@@ -110,6 +130,7 @@ public class DropZoneLayoutStructureItem extends LayoutStructureItem {
 	}
 
 	private boolean _allowNewFragmentEntries = true;
+	private JSONArray _fragmentEntriesJSONArray;
 	private List<String> _fragmentEntryKeys;
 
 }

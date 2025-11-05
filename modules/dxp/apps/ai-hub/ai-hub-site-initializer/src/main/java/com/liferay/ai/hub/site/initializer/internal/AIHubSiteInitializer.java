@@ -106,7 +106,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		String json = StringUtil.replace(
 			StringUtil.read(
 				AIHubSiteInitializer.class.getResourceAsStream(
-					_WRITING_ASSISTANT_WORKFLOW_DEFINITION_JSON_NAME)),
+					"dependencies" +
+						"/writing-assistant-workflow-definition.json.tpl")),
 			new String[] {
 				"__WORKFLOW_DEFINITION_NAME__", "__WORKFLOW_TASK_NAME__"
 			},
@@ -153,10 +154,6 @@ public class AIHubSiteInitializer implements SiteInitializer {
 			WorkflowDefinitionConstants.NAME_MAKE_SHORTER,
 			MakeShorterTaskNodeExecutorAIDelegate.KEY);
 	}
-
-	private static final String
-		_WRITING_ASSISTANT_WORKFLOW_DEFINITION_JSON_NAME =
-			"dependencies/writing-assistant-workflow-definition.json.tpl";
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

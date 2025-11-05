@@ -535,6 +535,16 @@ export class PagesAdminPage {
 		}
 	}
 
+	async showChildPages(parentName: string) {
+		const pageItem = this.page
+			.getByRole('menuitem')
+			.filter({hasText: parentName});
+
+		await pageItem
+			.locator('.miller-columns-item-child-indicator')
+			.click({force: true});
+	}
+
 	async changePagesPermissions(pageNames: string[], permissionIds: string[]) {
 
 		// Select the pages

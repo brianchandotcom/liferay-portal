@@ -152,3 +152,117 @@ test(
 		);
 	}
 );
+
+test(
+	'User cannot create child pages for pages derived from a site template',
+	{tag: '@LPD-70284'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		page,
+		pagesAdminPage,
+		productMenuPage,
+		sitesPage,
+		uiElementsPage,
+	}) => {
+
+		// Create site template
+
+		const siteTemplateName = 'SiteTemplate-' + getRandomString();
+
+		const layoutSetPrototype = await createSiteTemplate({
+			apiHelpers,
+			layoutsUpdateable: false,
+			page,
+			productMenuPage,
+			templateName: siteTemplateName,
+		});
+
+		apiHelpers.data.push({
+			id: layoutSetPrototype.layoutSetPrototypeId,
+			type: 'layoutSetPrototype',
+		});
+
+		// Add new template page
+
+		const templatePageName = 'Test Page-' + getRandomString();
+		await productMenuPage.goToPages();
+		await page.getByRole('link', {name: 'Add Site Template Page'}).click();
+		await pagesAdminPage.addPage({name: templatePageName});
+		await uiElementsPage.publishButton.click();
+		await expect(
+			page.getByLabel(templatePageName, {exact: true})
+		).toBeVisible();
+
+		// Create site based on that template
+
+		await applicationsMenuPage.goToSites();
+
+		const siteName = 'Site-' + getRandomString();
+
+		const siteId = await sitesPage.createSite({
+			isCustom: true,
+			siteName,
+			templateName: siteTemplateName,
+		});
+
+		apiHelpers.data.push({id: siteId, type: 'site'});
+
+		// Add new page on created site
+
+		await productMenuPage.goToPages();
+
+		if (
+			await page.getByRole('heading', {name: 'No Pages yet.'}).isVisible()
+		) {
+			await productMenuPage.goToPages();
+		}
+
+		await expect(
+			page.getByLabel(templatePageName, {exact: true})
+		).toBeVisible();
+
+		const pageName = 'Test Page-' + getRandomString();
+		await productMenuPage.goToPages();
+		await pagesAdminPage.newButton.click();
+		await pagesAdminPage.addPage({
+			name: pageName,
+		});
+
+		await uiElementsPage.publishButton.click();
+
+		// Check that for the page created on template child pages cannot be added
+
+		await productMenuPage.goToPages();
+
+		const pageCreatedOnTemplate = page
+			.getByRole('menuitem')
+			.filter({hasText: templatePageName});
+
+		await expect(pageCreatedOnTemplate).toBeVisible();
+		await expect(
+			pageCreatedOnTemplate.getByLabel('Add Child Page')
+		).toHaveCount(0);
+
+		// Check that for the page created on site child pages can be added
+
+		await expect(page.getByLabel(pageName, {exact: true})).toBeVisible();
+
+		const childPageName = 'Child Page-' + getRandomString();
+
+		await pagesAdminPage.createNewPage({
+			name: childPageName,
+			parent: pageName,
+		});
+
+		await uiElementsPage.anySuccessAlert.waitFor({state: 'hidden'});
+
+		await productMenuPage.goToPages();
+
+		await pagesAdminPage.showChildPages(pageName);
+
+		await expect(
+			page.getByRole('menuitem').filter({hasText: childPageName})
+		).toBeVisible();
+	}
+);

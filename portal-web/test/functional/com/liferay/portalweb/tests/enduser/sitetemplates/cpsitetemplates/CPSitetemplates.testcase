@@ -225,67 +225,6 @@ definition {
 		}
 	}
 
-	@description = "This is a use case for 118486. User should not be able to create child pages for pages derived from site templates."
-	@priority = 3
-	test AssertNoChildPageOptionForPageDerivedFromSiteTemplate {
-		task ("Given: User adds new site template and a new site based on this site template") {
-			SiteTemplates.addCP(siteTemplateName = "Site Template Name");
-
-			Site.openSitesAdmin();
-
-			Site.addSiteTemplateCP(
-				siteName = "Site Name",
-				siteTemplateName = "Site Template Name",
-				siteTemplateTab = "Custom Site Templates");
-		}
-
-		task ("When: User adds a new page to the site") {
-			Navigator.openSiteURL(siteName = "Site Name");
-
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			PagesAdmin.addPage(pageName = "Test Page");
-		}
-
-		task ("Then: User shouldn't be able to create child page for the Home page ") {
-			ProductMenu.gotoPortlet(
-				category = "Site Builder",
-				portlet = "Pages");
-
-			MouseOver(
-				key_itemName = "Home",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-
-			AssertElementNotPresent(
-				key_pageName = "Home",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM_PLUS_ICON");
-
-			Click(
-				key_itemName = "Home",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-
-			AssertElementNotPresent(
-				key_text = "New",
-				locator1 = "Button#ANY");
-		}
-
-		task ("And: But should be able to add child page to Test Page") {
-			Click(
-				key_itemName = "Test Page",
-				locator1 = "PagesAdmin#LIST_GROUP_ITEM");
-
-			Click(
-				key_text = "New",
-				locator1 = "Button#ANY");
-
-			AssertElementPresent(
-				key_menuItem = "Add Child Page of Test Page",
-				locator1 = "MenuItem#ANY_MENU_ITEM");
-		}
-	}
-
 	@description = "This is a use case for LPS-166286. TC-1: Verify that site template propagation works well after the conflicting layout friendly URL is modified."
 	@priority = 3
 	test AssertSiteTemplatePropagationAfterConflictingFriendlyURLIsModified {

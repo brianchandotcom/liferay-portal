@@ -167,7 +167,9 @@ public class ObjectDLFileEntryModelResourcePermissionConfigurator
 			return null;
 		}
 
-		_log.error("Unable to verify download permission for " + className);
+		if (_log.isWarnEnabled()) {
+			_log.warn("Unable to verify download permission for " + className);
+		}
 
 		return false;
 	}

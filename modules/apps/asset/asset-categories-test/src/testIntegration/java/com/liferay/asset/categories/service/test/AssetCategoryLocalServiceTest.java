@@ -465,8 +465,8 @@ public class AssetCategoryLocalServiceTest {
 			assetCategory, assetCategoryTitle);
 
 		assetCategory = _assetCategoryLocalService.updateCategory(
-			assetCategory.getUserId(), assetCategory.getCategoryId(),
-			assetCategory.getParentCategoryId(),
+			assetCategory.getExternalReferenceCode(), assetCategory.getUserId(),
+			assetCategory.getCategoryId(), assetCategory.getParentCategoryId(),
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN,
 				assetCategoryTitle + RandomTestUtil.randomString(10)
@@ -904,6 +904,7 @@ public class AssetCategoryLocalServiceTest {
 			String name = RandomTestUtil.randomString();
 
 			assetCategory = _assetCategoryLocalService.updateCategory(
+				assetCategory.getExternalReferenceCode(),
 				TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				Collections.singletonMap(LocaleUtil.getSiteDefault(), name),
@@ -943,6 +944,7 @@ public class AssetCategoryLocalServiceTest {
 				assetCategory.getVocabularyId()));
 
 		_assetCategoryLocalService.updateCategory(
+			assetCategory.getExternalReferenceCode(),
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 			assetCategory.getParentCategoryId(),
 			Collections.singletonMap(LocaleUtil.FRANCE, "Qualification"),
@@ -973,6 +975,7 @@ public class AssetCategoryLocalServiceTest {
 		).build();
 
 		assetCategory = _assetCategoryLocalService.updateCategory(
+			assetCategory.getExternalReferenceCode(),
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 			assetCategory.getParentCategoryId(), titleMap,
 			HashMapBuilder.put(
@@ -1014,6 +1017,7 @@ public class AssetCategoryLocalServiceTest {
 			assetVocabulary.getVocabularyId(), serviceContext);
 
 		assetCategory1 = _assetCategoryLocalService.updateCategory(
+			assetCategory1.getExternalReferenceCode(),
 			TestPropsValues.getUserId(), assetCategory1.getCategoryId(),
 			assetCategory2.getCategoryId(),
 			Collections.singletonMap(

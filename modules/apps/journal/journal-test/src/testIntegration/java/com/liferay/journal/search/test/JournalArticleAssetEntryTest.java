@@ -154,6 +154,7 @@ public class JournalArticleAssetEntryTest {
 		String updatedAssetCategoryTitle = RandomTestUtil.randomString();
 
 		_assetCategoryLocalService.updateCategory(
+			assetCategory.getExternalReferenceCode(),
 			TestPropsValues.getUserId(), assetCategory.getCategoryId(),
 			assetCategory.getParentCategoryId(),
 			HashMapBuilder.put(

@@ -267,7 +267,8 @@ public class AssetCategoryStagedModelDataHandler
 				parentCategoryId, category.getName(), vocabularyId, 2);
 
 			importedCategory = _assetCategoryLocalService.updateCategory(
-				userId, existingCategory.getCategoryId(), parentCategoryId,
+				existingCategory.getExternalReferenceCode(), userId,
+				existingCategory.getCategoryId(), parentCategoryId,
 				_getCategoryTitleMap(
 					portletDataContext.getScopeGroupId(), category, name),
 				category.getDescriptionMap(), vocabularyId, properties,

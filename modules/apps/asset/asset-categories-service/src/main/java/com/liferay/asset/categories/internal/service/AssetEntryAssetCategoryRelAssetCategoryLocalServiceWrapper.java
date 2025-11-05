@@ -97,10 +97,10 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 
 	@Override
 	public AssetCategory updateCategory(
-			long userId, long categoryId, long parentCategoryId,
-			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			long vocabularyId, String[] categoryProperties,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long categoryId,
+			long parentCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, long vocabularyId,
+			String[] categoryProperties, ServiceContext serviceContext)
 		throws PortalException {
 
 		String name = titleMap.get(LocaleUtil.getSiteDefault());
@@ -116,8 +116,9 @@ public class AssetEntryAssetCategoryRelAssetCategoryLocalServiceWrapper
 		}
 
 		return super.updateCategory(
-			userId, categoryId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
+			externalReferenceCode, userId, categoryId, parentCategoryId,
+			titleMap, descriptionMap, vocabularyId, categoryProperties,
+			serviceContext);
 	}
 
 	private List<AssetCategory> _getAssetCategoriesByEntryId(

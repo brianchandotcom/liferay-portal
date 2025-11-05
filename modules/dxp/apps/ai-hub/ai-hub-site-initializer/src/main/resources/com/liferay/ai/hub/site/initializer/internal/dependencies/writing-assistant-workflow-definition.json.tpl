@@ -81,10 +81,6 @@
 					"#value": "end"
 				},
 				{
-					"#tag-name": "description",
-					"#value": "Conclude the workflow."
-				},
-				{
 					"#cdata-value": [
 						"{",
 						"    \"terminal\": true,",
@@ -114,10 +110,6 @@
 				{
 					"#tag-name": "name",
 					"#value": "__WORKFLOW_TASK_NAME__"
-				},
-				{
-					"#tag-name": "description",
-					"#value": "Ask a user to work on the item."
 				},
 				{
 					"#cdata-value": [

@@ -204,6 +204,15 @@ public class FileEntryDisplayContextHelperTest {
 
 		Assert.assertFalse(
 			fileEntryDisplayContextHelper.isHistoryActionAvailable());
+
+		Mockito.when(
+			permissionChecker.isSignedIn()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			fileEntryDisplayContextHelper.isHistoryActionAvailable());
 	}
 
 	public class MockModelResourcePermission

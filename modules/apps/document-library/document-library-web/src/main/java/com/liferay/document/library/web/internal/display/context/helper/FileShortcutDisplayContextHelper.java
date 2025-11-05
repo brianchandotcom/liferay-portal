@@ -108,11 +108,7 @@ public class FileShortcutDisplayContextHelper {
 	}
 
 	public boolean isHistoryActionAvailable() throws PortalException {
-		if (_permissionChecker.isSignedIn() && hasViewPermission()) {
-			return true;
-		}
-
-		return false;
+		return _permissionChecker.isSignedIn();
 	}
 
 	public boolean isMoveActionAvailable() throws PortalException {

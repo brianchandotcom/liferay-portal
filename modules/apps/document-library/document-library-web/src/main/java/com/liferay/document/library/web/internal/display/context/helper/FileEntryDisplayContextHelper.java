@@ -224,11 +224,7 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isHistoryActionAvailable() throws PortalException {
-		if (_permissionChecker.isSignedIn() && hasViewPermission()) {
-			return true;
-		}
-
-		return false;
+		return _permissionChecker.isSignedIn();
 	}
 
 	public boolean isLockedByMe() {

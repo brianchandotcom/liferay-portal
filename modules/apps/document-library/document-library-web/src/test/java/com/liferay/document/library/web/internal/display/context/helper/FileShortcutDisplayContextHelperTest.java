@@ -46,6 +46,15 @@ public class FileShortcutDisplayContextHelperTest {
 
 		Assert.assertFalse(
 			fileShortcutDisplayContextHelper.isCopyActionAvailable());
+
+		Mockito.when(
+			permissionChecker.isSignedIn()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			fileShortcutDisplayContextHelper.isHistoryActionAvailable());
 	}
 
 	@Test

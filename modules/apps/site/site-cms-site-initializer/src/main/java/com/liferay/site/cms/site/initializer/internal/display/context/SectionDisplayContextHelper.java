@@ -81,13 +81,14 @@ public class SectionDisplayContextHelper {
 		_portal = portal;
 	}
 
-	public String appendStatus(String filter) {
+	public String appendStatus(String filterString) {
 		return StringBundler.concat(
-			filter, " and status in (", StringUtil.merge(_statuses, ", "), ")");
+			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
+			")");
 	}
 
 	public String getAdditionalAPIURLParameters(
-		String filter, HttpServletRequest httpServletRequest,
+		String filterString, HttpServletRequest httpServletRequest,
 		String rootObjectEntryFolderExternalReferenceCode) {
 
 		ThemeDisplay themeDisplay =
@@ -120,7 +121,7 @@ public class SectionDisplayContextHelper {
 			}
 		}
 		else {
-			sb.append(filter);
+			sb.append(filterString);
 		}
 
 		sb.append("&nestedFields=embedded,file.metadata,");

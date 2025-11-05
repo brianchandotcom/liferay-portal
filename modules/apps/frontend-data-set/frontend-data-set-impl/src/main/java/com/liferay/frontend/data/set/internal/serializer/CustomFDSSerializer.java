@@ -545,10 +545,10 @@ public class CustomFDSSerializer
 		String defaultVisualizationMode = String.valueOf(
 			dataSetObjectEntryProperties.get("defaultVisualizationMode"));
 
+		JSONArray tableViewSchemaFieldsJSONArray = null;
+
 		JSONArray systemViewsJSONArray = _systemFDSSerializer.serializeViews(
 			fdsName, httpServletRequest);
-
-		JSONArray tableViewSchemaFieldsJSONArray = null;
 
 		for (int i = 0; i < systemViewsJSONArray.length(); i++) {
 			JSONObject systemViewJSONObject =

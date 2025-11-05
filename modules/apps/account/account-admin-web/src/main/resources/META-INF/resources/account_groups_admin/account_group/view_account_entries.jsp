@@ -71,7 +71,7 @@ renderResponse.setTitle(accountGroupDisplay.getName());
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-expand table-title"
 					name="name"
-					property="name"
+					value="<%= HtmlUtil.escape(accountEntryDisplay.getName()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

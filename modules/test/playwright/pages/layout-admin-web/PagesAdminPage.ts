@@ -16,7 +16,6 @@ export class PagesAdminPage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
-	readonly defineCustomThemeRadioButton: Locator;
 	readonly newButton: Locator;
 	readonly newTemplatePageButton: Locator;
 
@@ -53,9 +52,6 @@ export class PagesAdminPage {
 		);
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
-		this.defineCustomThemeRadioButton = this.page.getByRole('radio', {
-			name: 'Define a custom theme for',
-		});
 	}
 
 	getPageMenuItem(pageName: string): Locator {
@@ -241,8 +237,14 @@ export class PagesAdminPage {
 		await this.saveConfiguration();
 	}
 
+	async clickOnDefineCustomThemeRadio() {
+		await this.page
+			.getByRole('radio', {name: 'Define a custom theme for'})
+			.click();
+	}
+
 	async changeTheme(themeName: string) {
-		await this.defineCustomThemeRadioButton.click();
+		await this.clickOnDefineCustomThemeRadio();
 
 		await this.page
 			.getByRole('button', {name: 'Change Current Theme'})
@@ -372,7 +374,11 @@ export class PagesAdminPage {
 	}
 
 	async clickOnTab(name: string) {
-		await this.page.getByRole('link', {name}).click();
+		await expect(async () => {
+			await this.page.getByRole('link', {name}).click();
+
+			await expect(this.page.getByRole('heading', {name})).toBeVisible();
+		}).toPass({timeout: 4000});
 	}
 
 	async deletePage(name: string) {
@@ -599,7 +605,7 @@ export class PagesAdminPage {
 	async addCustomCSS(pageName: string, css: string) {
 		await this.goToDesignTabConfiguration(pageName);
 
-		await this.defineCustomThemeRadioButton.click();
+		await this.clickOnDefineCustomThemeRadio();
 
 		await this.page
 			.getByRole('textbox', {exact: true, name: 'CSS'})

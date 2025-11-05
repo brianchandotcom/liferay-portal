@@ -326,80 +326,74 @@ export default function ViewWorkflowTasks({
 
 	return (
 		<div className="container-fluid">
-			<div className="align-items-center d-flex justify-content-between mb-4 mt-1">
+			<div className="align-items-center d-flex justify-content-between mb-4">
 				<div className="align-items-xl-center d-flex flex-column flex-xl-row justify-content-between">
 					<span className="font-weight-semi-bold mr-3 text-4">
 						{Liferay.Language.get('my-workflow-tasks')}
 					</span>
 
-					{workflowTasks.totalCount > 0 && (
-						<ClayDropdown
-							className="filter-dropdown"
-							closeOnClick
-							hasLeftSymbols
-							trigger={
-								<ClayButton displayType="secondary" size="sm">
-									<span>
-										{selectedItem.label}
+					<ClayDropdown
+						className="filter-dropdown"
+						closeOnClick
+						hasLeftSymbols
+						trigger={
+							<ClayButton displayType="secondary" size="sm">
+								<span>
+									{selectedItem.label}
 
-										<ClayIcon
-											className="ml-2"
-											symbol="caret-bottom"
-										/>
-									</span>
-								</ClayButton>
-							}
-						>
-							{filterItems.map((item) => (
-								<ClayDropdown.Item
-									active={item.value === selectedItem.value}
-									key={item.value}
-									onClick={() => {
-										setSelectedItem(item);
-									}}
-									symbolLeft={
-										item.value === selectedItem.value
-											? 'check'
-											: ''
-									}
-								>
-									{item.label}
-								</ClayDropdown.Item>
-							))}
-						</ClayDropdown>
-					)}
+									<ClayIcon
+										className="ml-2"
+										symbol="caret-bottom"
+									/>
+								</span>
+							</ClayButton>
+						}
+					>
+						{filterItems.map((item) => (
+							<ClayDropdown.Item
+								active={item.value === selectedItem.value}
+								key={item.value}
+								onClick={() => {
+									setSelectedItem(item);
+								}}
+								symbolLeft={
+									item.value === selectedItem.value
+										? 'check'
+										: ''
+								}
+							>
+								{item.label}
+							</ClayDropdown.Item>
+						))}
+					</ClayDropdown>
 				</div>
 
-				{workflowTasks.totalCount > 0 && (
-					<ClayTooltipProvider>
-						<ClayButton
-							aria-label={sub(
-								Liferay.Language.get('open-x'),
-								`${Liferay.Language.get('my-workflow-tasks')}: ${selectedItem.label}`
-							)}
-							borderless
-							className="btn btn-secondary btn-sm cms-btn-icon-only cms-btn-secondary ml-2"
-							displayType="secondary"
-							onClick={() =>
-								window.open(
-									selectedItem.value === 'assigned-to-me'
-										? myWorkflowTasksURL
-										: myRolesWorkflowTasksURL,
-									'_blank'
-								)
-							}
-							title={sub(
-								Liferay.Language.get(
-									'open-x-in-full-page-view'
-								),
-								`"${selectedItem.label}"`
-							)}
-							type="button"
-						>
-							<ClayIcon symbol="shortcut" />
-						</ClayButton>
-					</ClayTooltipProvider>
-				)}
+				<ClayTooltipProvider>
+					<ClayButton
+						aria-label={sub(
+							Liferay.Language.get('open-x'),
+							`${Liferay.Language.get('my-workflow-tasks')}: ${selectedItem.label}`
+						)}
+						borderless
+						className="btn btn-secondary btn-sm cms-btn-icon-only cms-btn-secondary ml-2"
+						displayType="secondary"
+						onClick={() =>
+							window.open(
+								selectedItem.value === 'assigned-to-me'
+									? myWorkflowTasksURL
+									: myRolesWorkflowTasksURL,
+								'_blank'
+							)
+						}
+						title={sub(
+							Liferay.Language.get('open-x-in-full-page-view'),
+							`"${selectedItem.label}"`
+						)}
+						type="button"
+					>
+						<ClayIcon symbol="shortcut" />
+					</ClayButton>
+				</ClayTooltipProvider>
 			</div>
 
 			<div className="cms-fds-fluid cms-section home-custom-empty-state">

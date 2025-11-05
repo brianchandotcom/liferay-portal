@@ -10,7 +10,14 @@ import ErrorPage from 'shared/pages/ErrorPage';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
 import Loading from 'shared/components/Loading';
-import React, {lazy, Suspense, useContext, useEffect, useState} from 'react';
+import React, {
+	lazy,
+	Suspense,
+	useContext,
+	useEffect,
+	useMemo,
+	useState
+} from 'react';
 import RouteNotFound from 'shared/components/RouteNotFound';
 import {AlertTypes} from 'shared/components/Alert';
 import {ChannelContext} from 'shared/context/channel';
@@ -56,7 +63,7 @@ export const SegmentProfileRoutes = () => {
 		}
 	});
 
-	const segment = new Segment(data);
+	const segment = useMemo(() => new Segment(data), [data]);
 
 	const [segmentDetails, setSegmentDetails] = useState({
 		dateModified: segment.dateModified,
@@ -73,6 +80,10 @@ export const SegmentProfileRoutes = () => {
 			});
 		}
 	}, [data, loading]);
+
+	if (loading && !segmentDetails.name) {
+		return <Loading />;
+	}
 
 	const title = segmentDetails.name || Liferay.Language.get('unknown');
 

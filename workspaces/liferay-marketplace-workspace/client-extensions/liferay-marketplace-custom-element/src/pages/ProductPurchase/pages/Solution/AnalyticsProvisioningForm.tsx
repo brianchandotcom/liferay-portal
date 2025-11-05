@@ -18,6 +18,7 @@ import {Input} from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading';
 import ProductPurchase from '../../../../components/ProductPurchase';
 import Select from '../../../../components/Select/Select';
+import useListTypeDefinition from '../../../../hooks/useListTypeDefinition';
 import {Liferay} from '../../../../liferay/liferay';
 import zodSchema from '../../../../schema/zod';
 import analyticsOAuth2 from '../../../../services/oauth/Analytics';
@@ -30,12 +31,40 @@ type MultiSelectValue = {
 	value: string;
 };
 
-const DATA_CENTER_OPTIONS = [
-	{
-		key: 'internal',
-		name: 'Internal',
+function CustomerPortalLink() {
+	return (
+		<a
+			href="https://support.liferay.com"
+			referrerPolicy="no-referrer"
+			target="_blank"
+		>
+			Customer Portal
+		</a>
+	);
+}
+
+const emptyStateMessages = {
+	UNABLE_TO_PROVISION: {
+		description: (
+			<>
+				It was not possible to provision your Analytics Cloud workspace
+				for this account. Go to the <CustomerPortalLink /> to contact
+				your account manager or the Sales team for assistance.
+			</>
+		),
+		title: 'Unable to provision your workspace',
 	},
-];
+	WORKSPACE_ALREADY_EXISTS: {
+		description: (
+			<>
+				A workspace has already been provisioned for this account. If
+				you need an additional workspace, contact your account manager
+				or the Sales team through the <CustomerPortalLink />.
+			</>
+		),
+		title: 'This account already has an active\n Analytics Cloud workspace',
+	},
+};
 
 const AnalyticsProvisioning = () => {
 	const [incidentReportContactsText, setIncidentReportContactsText] =
@@ -43,6 +72,10 @@ const AnalyticsProvisioning = () => {
 
 	const {handlePurchase, product, selectedAccount, setAlert} =
 		useProductPurchaseOutletContext();
+
+	const {data: acRegionsResponse} = useListTypeDefinition('AC-REGIONS');
+
+	const acRegions = acRegionsResponse?.listTypeEntries ?? [];
 
 	const accountKey = selectedAccount.externalReferenceCode;
 
@@ -56,12 +89,8 @@ const AnalyticsProvisioning = () => {
 			return analyticsOAuth2.getPlan(accountKey);
 		},
 		{
-			onSuccess: (productPurchase) => {
-				if (!productPurchase) {
-					return;
-				}
-
-				if (productPurchase?.product?.name?.includes('Basic')) {
+			onSuccess: (response) => {
+				if (response?.plan?.includes('Basic')) {
 					setAlert(
 						<span>
 							The basic plan supports up to 1,000 known
@@ -84,7 +113,7 @@ const AnalyticsProvisioning = () => {
 			_refIncidentReportContacts: [],
 			acceptTerms: false,
 			allowedEmailDomains: [],
-			dataCenterLocation: DATA_CENTER_OPTIONS[0].key,
+			dataCenterLocation: acRegions[0]?.externalReferenceCode,
 			incidentReportContacts: [],
 			subscriptionType: 'Basic Plan',
 			workspaceOwnerEmail: Liferay.ThemeDisplay.getUserEmailAddress(),
@@ -94,14 +123,11 @@ const AnalyticsProvisioning = () => {
 	});
 
 	const subscriptionType = useMemo(() => {
-		if (!analyticsPlan?.product) {
+		if (!analyticsPlan?.plan) {
 			return 'Basic Plan';
 		}
 
-		const name = analyticsPlan?.product?.name?.replace(
-			'Analytics Cloud',
-			''
-		);
+		const name = analyticsPlan?.plan?.replace('Analytics Cloud ', '');
 
 		return `${name} Plan`;
 	}, [analyticsPlan]);
@@ -125,9 +151,18 @@ const AnalyticsProvisioning = () => {
 		return <Loading />;
 	}
 
-	if (error?.status) {
+	const emptyState = error
+		? emptyStateMessages[
+				error.info?.error as keyof typeof emptyStateMessages
+			] || emptyStateMessages.UNABLE_TO_PROVISION
+		: null;
+
+	if (emptyState) {
 		return (
-			<div className="align-items-center d-flex flex-column justify-content-center px-4 text-center">
+			<div
+				className="align-items-center d-flex flex-column justify-content-center px-4 text-center"
+				id="analytics-form-empty-state"
+			>
 				<div className="analytics-form-alert">
 					<ClayIcon
 						color="#0B5FFF"
@@ -136,15 +171,9 @@ const AnalyticsProvisioning = () => {
 					/>
 				</div>
 
-				<h2>DXP Version not Currently Supported</h2>
+				<h3 className="mb-4">{emptyState.title}</h3>
 
-				<small>
-					DXP versions below 7.4 are no longer supported. To access
-					Analytics Cloud, <a href="">upgrade to the latest DXP</a>{' '}
-					version or <a href="">visit the Customer Portal</a> to
-					contact your account manager about Liferay Analytics Cloud
-					plan options.
-				</small>
+				<small>{emptyState.description}</small>
 			</div>
 		);
 	}
@@ -190,7 +219,10 @@ const AnalyticsProvisioning = () => {
 				boldLabel
 				helpText={`Select a server to store your data. This could have implications to your organization's policy on user data storage.`}
 				label="Data Center Location"
-				options={DATA_CENTER_OPTIONS}
+				options={acRegions.map(({externalReferenceCode, name}) => ({
+					key: externalReferenceCode,
+					name,
+				}))}
 				required
 			/>
 

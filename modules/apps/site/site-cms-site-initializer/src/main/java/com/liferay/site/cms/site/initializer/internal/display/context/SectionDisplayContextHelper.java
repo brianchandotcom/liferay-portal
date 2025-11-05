@@ -81,10 +81,9 @@ public class SectionDisplayContextHelper {
 		_portal = portal;
 	}
 
-	public String appendStatus(String filterString) {
+	public String appendStatus(String filter) {
 		return StringBundler.concat(
-			filterString, " and status in (", StringUtil.merge(_statuses, ", "),
-			")");
+			filter, " and status in (", StringUtil.merge(_statuses, ", "), ")");
 	}
 
 	public String getAdditionalAPIURLParameters(

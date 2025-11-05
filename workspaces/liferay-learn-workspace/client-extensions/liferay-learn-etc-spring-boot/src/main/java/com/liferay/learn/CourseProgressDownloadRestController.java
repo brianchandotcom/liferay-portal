@@ -5,14 +5,10 @@
 
 package com.liferay.learn;
 
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,10 +18,8 @@ import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +31,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
 /**
  * @author Lucas Emanuel
@@ -86,10 +83,10 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromUriString(
-						"/o/c/quizes/"
+						"/o/c/p2s3quizes/"
 					).queryParam(
 						"fields",
-						"id,r_quiz_c_module,r_quiz_c_module.r_module_c_courseId"
+						"id,r_p2s3ModuleToP2S3Quizzes_c_p2s3Module,r_p2s3ModuleToP2S3Quizzes_c_p2s3Module.r_p2s3CourseToP2S3Modules_c_p2s3CourseId"
 					).queryParam(
 						"filter", "isKnowledgeCheck eq false"
 					).queryParam(
@@ -109,14 +106,14 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 				JSONObject quizJSONObject = jsonArray.getJSONObject(j);
 
 				JSONObject moduleJSONObject = quizJSONObject.optJSONObject(
-					"r_quiz_c_module", null);
+					"r_p2s3ModuleToP2S3Quizzes_c_p2s3Module", null);
 
 				if (moduleJSONObject == null) {
 					continue;
 				}
 
 				_courseQuizzes.put(
-					moduleJSONObject.getLong("r_module_c_courseId"),
+					moduleJSONObject.getLong("r_p2s3CourseToP2S3Modules_c_p2s3CourseId"),
 					quizJSONObject.getLong("id"));
 			}
 		}
@@ -143,7 +140,7 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 					get(
 						_getAuthorization(),
 						UriComponentsBuilder.fromUriString(
-							"/o/c/enrollments/"
+							"/o/c/p2s3enrollments/"
 						).queryParam(
 							"filter",
 							"active eq true and dateModified lt {endDate} " +
@@ -168,10 +165,10 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 
 					JSONObject courseJSONObject =
 						enrollmentJSONObject.optJSONObject(
-							"r_courseEnrollment_c_course");
+							"r_p2s3CourseToP2S3Enrollments_c_p2s3Course");
 					JSONObject userJSONObject =
 						enrollmentJSONObject.optJSONObject(
-							"r_userenrollments_user");
+							"r_lUserToP2S3Enrollments_userId");
 
 					if ((courseJSONObject == null) ||
 						(userJSONObject == null)) {

@@ -5,19 +5,8 @@
 
 package com.liferay.learn;
 
-import com.google.auth.oauth2.GoogleCredentials;
-
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -27,7 +16,6 @@ import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -43,6 +31,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import com.google.auth.oauth2.GoogleCredentials;
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Nilton Vieira
@@ -62,7 +59,7 @@ public class LearnRestController extends BaseRestController {
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromPath(
-						"/o/c/lessons/" + lessonId
+						"/o/c/p2s3lessons/" + lessonId
 					).queryParam(
 						"fields", "contentRawText"
 					).build(
@@ -174,7 +171,7 @@ public class LearnRestController extends BaseRestController {
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromPath(
-						"/o/c/quizquestions"
+						"/o/c/p2s3quizquestions"
 					).queryParam(
 						"filter", "quizId eq '" + quizId + "'"
 					).queryParam(
@@ -209,11 +206,11 @@ public class LearnRestController extends BaseRestController {
 				get(
 					_getAuthorization(),
 					UriComponentsBuilder.fromPath(
-						"/o/c/quizes/" + quizId
+						"/o/c/p2s3quizes/" + quizId
 					).queryParam(
 						"fields",
 						StringBundler.concat(
-							"id,r_quiz_c_moduleId,durationMinutes,passingScore",
+							"id,r_p2s3ModuleToP2S3Quizzes_c_p2s3ModuleId,durationMinutes,passingScore",
 							",isKnowledgeCheck,quizQuestions.id,quizQuestions.",
 							"position,quizQuestions.question,quizQuestions.",
 							"questionType,quizQuestions.questionTotalScore,",
@@ -409,7 +406,7 @@ public class LearnRestController extends BaseRestController {
 			get(
 				_getAuthorization(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/quizes/" + quizId + "/quizBadge"
+					"/o/c/p2s3quizes/" + quizId + "/quizBadge"
 				).queryParam(
 					"fields", "id"
 				).build(
@@ -428,7 +425,7 @@ public class LearnRestController extends BaseRestController {
 			get(
 				_getAuthorization(),
 				UriComponentsBuilder.fromPath(
-					"/o/c/userbadges"
+					"/o/c/p2s3userbadges"
 				).queryParam(
 					"filter",
 					StringBundler.concat(
@@ -449,10 +446,10 @@ public class LearnRestController extends BaseRestController {
 			).put(
 				"quizId", quizId
 			).put(
-				"r_userBadges_userId", userId
+				"r_lUserToP2S3UserBadges_userId", userId
 			).toString(),
 			UriComponentsBuilder.fromPath(
-				"/o/c/userbadges"
+				"/o/c/p2s3userbadges"
 			).build(
 			).toUri());
 	}

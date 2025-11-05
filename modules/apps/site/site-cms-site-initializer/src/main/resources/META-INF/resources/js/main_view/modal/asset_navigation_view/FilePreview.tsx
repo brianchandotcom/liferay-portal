@@ -14,7 +14,6 @@ import {IAssetFile} from '../../../common/types/AssetType';
 export default function FilePreview({
 	file: {
 		alternativeText,
-		link,
 		metadata: {numberOfPages} = {},
 		mimeType,
 		name,
@@ -39,7 +38,7 @@ export default function FilePreview({
 					totalPages={numberOfPages}
 				/>
 			) : hasImagePreview ? (
-				<ImagePreviewer alt={name} imageURL={link.href} />
+				<ImagePreviewer alt={name} imageURL={previewURL} />
 			) : isVideo ? (
 				<DLVideoIframe videoPreviewURL={previewURL} />
 			) : (

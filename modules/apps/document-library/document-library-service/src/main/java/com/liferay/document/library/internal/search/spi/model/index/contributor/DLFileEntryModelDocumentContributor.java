@@ -19,7 +19,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesIndexer;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -58,8 +61,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
@@ -174,8 +179,22 @@ public class DLFileEntryModelDocumentContributor
 	}
 
 	@Activate
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
+		modified(properties);
+
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, DDMFormValuesIndexer.class);
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected void modified(Map<String, Object> properties) {
 		_dlIndexerConfiguration = ConfigurableUtil.createConfigurable(
 			DLIndexerConfiguration.class, properties);
 	}
@@ -328,6 +347,12 @@ public class DLFileEntryModelDocumentContributor
 
 					sb.append(StringPool.SPACE);
 
+					for (DDMFormValuesIndexer ddmFormValuesIndexer :
+							_serviceTrackerList) {
+
+						ddmFormValuesIndexer.index(document, ddmFormValues);
+					}
+
 					_ddmIndexer.addAttributes(
 						document, ddmStructure, ddmFormValues);
 				}
@@ -380,6 +405,8 @@ public class DLFileEntryModelDocumentContributor
 
 	@Reference
 	private RelatedEntryIndexerRegistry _relatedEntryIndexerRegistry;
+
+	private ServiceTrackerList<DDMFormValuesIndexer> _serviceTrackerList;
 
 	@Reference
 	private TextEmbeddingDocumentContributor _textEmbeddingDocumentContributor;

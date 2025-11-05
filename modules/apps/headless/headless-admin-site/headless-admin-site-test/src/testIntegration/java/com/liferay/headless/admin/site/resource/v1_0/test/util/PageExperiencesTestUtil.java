@@ -63,7 +63,8 @@ public class PageExperiencesTestUtil {
 		return getPageExperiences(
 			contentPageSpecificationExternalReferenceCode,
 			PageElementsTestUtil.getPageElements(
-				RandomTestUtil.randomInt(1, 3), StringPool.BLANK, scopeGroupId));
+				RandomTestUtil.randomInt(1, 3), StringPool.BLANK,
+				scopeGroupId));
 	}
 
 	public static PageExperience[] getPageExperiences(

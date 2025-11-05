@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import Alert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
 import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
@@ -290,6 +291,21 @@ function FolderItemSelectorModalContent({
 									label: 'name',
 									value: 'id',
 								}
+					}
+					message={
+						<Alert
+							className="alert-dismissible alert-fluid p-3"
+							displayType="warning"
+							title="Warning"
+						>
+							{action === 'copy'
+								? Liferay.Language.get(
+										'only-categories-and-tags-also-available-in-the-destination-will-be-copied'
+									)
+								: Liferay.Language.get(
+										'only-categories-and-tags-also-available-in-the-destination-will-be-retained'
+									)}
+						</Alert>
 					}
 					observer={observer}
 					onItemsChange={(items: Folder[]) => {

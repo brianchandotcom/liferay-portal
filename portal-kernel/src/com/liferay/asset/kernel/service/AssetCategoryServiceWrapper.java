@@ -449,7 +449,8 @@ public class AssetCategoryServiceWrapper
 
 	@Override
 	public AssetCategory updateCategory(
-			long categoryId, long parentCategoryId,
+			String externalReferenceCode, long categoryId,
+			long parentCategoryId,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			long vocabularyId, String[] categoryProperties,
@@ -457,8 +458,8 @@ public class AssetCategoryServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _assetCategoryService.updateCategory(
-			categoryId, parentCategoryId, titleMap, descriptionMap,
-			vocabularyId, categoryProperties, serviceContext);
+			externalReferenceCode, categoryId, parentCategoryId, titleMap,
+			descriptionMap, vocabularyId, categoryProperties, serviceContext);
 	}
 
 	@Override

@@ -1641,7 +1641,8 @@ public class AssetCategoryServiceHttp {
 	}
 
 	public static com.liferay.asset.kernel.model.AssetCategory updateCategory(
-			HttpPrincipal httpPrincipal, long categoryId, long parentCategoryId,
+			HttpPrincipal httpPrincipal, String externalReferenceCode,
+			long categoryId, long parentCategoryId,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
 			long vocabularyId, String[] categoryProperties,
@@ -1654,8 +1655,8 @@ public class AssetCategoryServiceHttp {
 				_updateCategoryParameterTypes39);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, categoryId, parentCategoryId, titleMap,
-				descriptionMap, vocabularyId, categoryProperties,
+				methodKey, externalReferenceCode, categoryId, parentCategoryId,
+				titleMap, descriptionMap, vocabularyId, categoryProperties,
 				serviceContext);
 
 			Object returnObj = null;
@@ -1839,8 +1840,8 @@ public class AssetCategoryServiceHttp {
 		};
 	private static final Class<?>[] _updateCategoryParameterTypes39 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class, java.util.Map.class,
-			long.class, String[].class,
+			String.class, long.class, long.class, java.util.Map.class,
+			java.util.Map.class, long.class, String[].class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

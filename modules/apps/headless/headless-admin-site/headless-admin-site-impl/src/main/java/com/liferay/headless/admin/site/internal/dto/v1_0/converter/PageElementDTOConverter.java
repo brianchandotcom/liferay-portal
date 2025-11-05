@@ -157,7 +157,13 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_DROP_ZONE)) {
 
-			return new DropZonePageElementDefinition();
+			DropZonePageElementDefinition dropZonePageElementDefinition =
+				new DropZonePageElementDefinition();
+
+			dropZonePageElementDefinition.setType(
+				PageElementDefinition.Type.DROP_ZONE);
+
+			return dropZonePageElementDefinition;
 		}
 
 		if (Objects.equals(
@@ -173,7 +179,13 @@ public class PageElementDTOConverter
 				layoutStructureItem.getItemType(),
 				LayoutDataItemTypeConstants.TYPE_FORM_STEP)) {
 
-			return new FormStepPageElementDefinition();
+			FormStepPageElementDefinition formStepPageElementDefinition =
+				new FormStepPageElementDefinition();
+
+			formStepPageElementDefinition.setType(
+				PageElementDefinition.Type.FORM_STEP);
+
+			return formStepPageElementDefinition;
 		}
 
 		if (Objects.equals(

@@ -845,7 +845,7 @@ components:
                             description:
                                 A list of allowed fragments.
                             items:
-                                $ref: "#/components/schemas/ItemExternalReference"
+                                $ref: "#/components/schemas/FragmentReference"
                             type: array
             # @review
             description:

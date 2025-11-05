@@ -254,12 +254,12 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	private UnicodeProperties _createUnicodeProperties(
-		String anyAssetTypeValue, long[] classNameIds) {
+		String anyAssetType, long[] classNameIds) {
 
 		return UnicodePropertiesBuilder.create(
 			true
 		).put(
-			"anyAssetType", anyAssetTypeValue
+			"anyAssetType", anyAssetType
 		).put(
 			"classNameIds", () -> StringUtil.merge(classNameIds)
 		).put(

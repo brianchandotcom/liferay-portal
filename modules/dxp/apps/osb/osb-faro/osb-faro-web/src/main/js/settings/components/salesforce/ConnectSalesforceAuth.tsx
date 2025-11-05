@@ -24,7 +24,21 @@ import {
 	validateSalesforceDomain
 } from 'shared/util/validators';
 
-const ConnectSalesforceAuth = ({addAlert, onCancel, onSubmit}) => {
+interface IConnectSalesforceAuthProps {
+	addAlert: Alert.AddAlert;
+	onCancel?: () => void;
+	onSubmit: () => void;
+	buttonProps?: {
+		block: boolean;
+	};
+}
+
+const ConnectSalesforceAuth: React.FC<IConnectSalesforceAuthProps> = ({
+	addAlert,
+	buttonProps,
+	onCancel,
+	onSubmit
+}) => {
 	const {groupId} = useParams();
 
 	const [isUrlCopied, setIsUrlCopied] = useState(false);
@@ -254,6 +268,7 @@ const ConnectSalesforceAuth = ({addAlert, onCancel, onSubmit}) => {
 								/>
 							</ClayButton>
 						}
+						contentAfterEnableMagnet
 						id='clientId'
 						label={Liferay.Language.get('consumer-key-client-id')}
 						name='clientId'
@@ -297,6 +312,7 @@ const ConnectSalesforceAuth = ({addAlert, onCancel, onSubmit}) => {
 								/>
 							</ClayButton>
 						}
+						contentAfterEnableMagnet
 						id='clientSecret'
 						label={Liferay.Language.get(
 							'consumer-secret-client-secret'
@@ -322,7 +338,7 @@ const ConnectSalesforceAuth = ({addAlert, onCancel, onSubmit}) => {
 					/>
 
 					<ClayButton
-						block
+						block={buttonProps?.block}
 						disabled={isSubmitting}
 						loading={isSubmitting}
 						type='submit'

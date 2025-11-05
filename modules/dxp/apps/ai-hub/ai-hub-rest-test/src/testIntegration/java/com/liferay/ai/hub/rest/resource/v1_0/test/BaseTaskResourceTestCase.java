@@ -21,7 +21,6 @@ import com.liferay.ai.hub.rest.client.serdes.v1_0.TaskSerDes;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsValues;
@@ -60,7 +58,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -214,125 +211,8 @@ public abstract class BaseTaskResourceTestCase {
 	}
 
 	@Test
-	public void testGraphQLPostTask() throws Exception {
-		Task randomTask = randomTask();
-
-		Task task = testGraphQLTask_addTask(randomTask);
-
-		Assert.assertTrue(equals(randomTask, task));
-	}
-
-	@Test
 	public void testBatchEngineDeleteImportTask() throws Exception {
 		Assert.assertTrue(true);
-	}
-
-	protected Task testGraphQLTask_addTask() throws Exception {
-		return testGraphQLTask_addTask(randomTask());
-	}
-
-	protected Task testGraphQLTask_addTask(Task task) throws Exception {
-		JSONDeserializer<Task> jsonDeserializer =
-			JSONFactoryUtil.createJSONDeserializer();
-
-		StringBuilder sb = new StringBuilder("{");
-
-		for (java.lang.reflect.Field field : getDeclaredFields(Task.class)) {
-			if (getGraphQLValue(field.get(task)) != null) {
-				if (sb.length() > 1) {
-					sb.append(", ");
-				}
-
-				sb.append(field.getName());
-				sb.append(": ");
-				sb.append(getGraphQLValue(field.get(task)));
-			}
-		}
-
-		sb.append("}");
-
-		List<GraphQLField> graphQLFields = getGraphQLFields();
-
-		return jsonDeserializer.deserialize(
-			JSONUtil.getValueAsString(
-				invokeGraphQLMutation(
-					new GraphQLField(
-						"createTask",
-						new HashMap<String, Object>() {
-							{
-								put("task", sb.toString());
-							}
-						},
-						graphQLFields)),
-				"JSONObject/data", "JSONObject/createTask"),
-			Task.class);
-	}
-
-	protected String getGraphQLValue(Object value) throws Exception {
-		if (value == null) {
-			return null;
-		}
-		else if (value instanceof Boolean || value instanceof Number) {
-			return value.toString();
-		}
-		else if (value instanceof Date date) {
-			return "\"" +
-				DateUtil.getDate(
-					date, "yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.getDefault(),
-					TimeZone.getTimeZone("UTC")) + "\"";
-		}
-		else if (value instanceof Enum<?> enm) {
-			return enm.name();
-		}
-		else if (value instanceof Map<?, ?> map) {
-			List<String> entries = new ArrayList<>();
-
-			for (Map.Entry<?, ?> entry : map.entrySet()) {
-				String graphQLValue = getGraphQLValue(entry.getValue());
-
-				if (graphQLValue != null) {
-					entries.add(entry.getKey() + ": " + graphQLValue);
-				}
-			}
-
-			return "{" + String.join(", ", entries) + "}";
-		}
-		else if (value instanceof Object[] array) {
-			List<String> entries = new ArrayList<>();
-
-			for (Object entry : array) {
-				String graphQLValue = getGraphQLValue(entry);
-
-				if (graphQLValue != null) {
-					entries.add(graphQLValue);
-				}
-			}
-
-			return "[" + String.join(", ", entries) + "]";
-		}
-		else if (value instanceof String) {
-			return "\"" + value + "\"";
-		}
-		else {
-			List<String> entries = new ArrayList<>();
-
-			Class<?> clazz = value.getClass();
-			java.lang.reflect.Field[] declaredFields = getDeclaredFields(clazz);
-
-			if (declaredFields.length == 0) {
-				declaredFields = getDeclaredFields(clazz.getSuperclass());
-			}
-
-			for (java.lang.reflect.Field field : declaredFields) {
-				String graphQLValue = getGraphQLValue(field.get(value));
-
-				if (graphQLValue != null) {
-					entries.add(field.getName() + ": " + graphQLValue);
-				}
-			}
-
-			return "{" + String.join(", ", entries) + "}";
-		}
 	}
 
 	protected void assertContains(Task task, List<Task> tasks) {

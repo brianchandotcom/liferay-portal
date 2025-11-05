@@ -7,7 +7,7 @@ import Alert from '@clayui/alert';
 import {useModal} from '@clayui/modal';
 import {IFrontendDataSetProps, IView} from '@liferay/frontend-data-set-web';
 import {ItemSelectorModal} from '@liferay/frontend-js-item-selector-web';
-import {openToast} from 'frontend-js-components-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
@@ -15,6 +15,9 @@ import ApiHelper, {RequestResult} from '../../common/services/ApiHelper';
 import FolderService from '../../common/services/FolderService';
 import {AssetLibrary} from '../../common/types/AssetLibrary';
 import {displayErrorToast} from '../../common/utils/toastUtil';
+import DuplicatedAssetFolderNamesModalContent, {
+	Option,
+} from './DuplicatedAssetFolderNamesModalContent';
 
 export type TFolderItemSelectorModalContent = {
 	action: Action;
@@ -24,7 +27,7 @@ export type TFolderItemSelectorModalContent = {
 	objectEntryFolderExternalReferenceCode: string | undefined;
 };
 
-type Action = 'copy' | 'move';
+export type Action = 'copy' | 'move';
 
 type Folder = {
 	id: number;
@@ -92,6 +95,77 @@ const displayToast = (
 	}
 };
 
+function executeFolderAction(
+	action: Action,
+	folder: Folder,
+	itemData: ItemData,
+	loadData: () => {},
+	replace = false
+) {
+	displayInfoToast(action, folder, itemData);
+
+	let promise: Promise<RequestResult<unknown>>;
+
+	if (action === 'copy') {
+		promise = replace
+			? FolderService.copyReplaceFolder(itemData.embedded.id, folder.id)
+			: FolderService.copyFolder(itemData.embedded.id, folder.id);
+	}
+	else {
+		promise = replace
+			? FolderService.moveReplaceFolder(itemData.embedded.id, folder.id)
+			: FolderService.moveFolder(itemData.embedded.id, folder.id);
+	}
+
+	promise.then(({error}: {error: any}) => {
+		if (!error) {
+			loadData();
+		}
+
+		displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+	});
+}
+
+function executeAssetAction(
+	action: Action,
+	folder: Folder,
+	itemData: ItemData,
+	loadData: () => {},
+	replace = false
+) {
+	displayInfoToast(action, folder, itemData);
+
+	ApiHelper.post<any>(
+		itemData.actions[`${action}${replace ? '-replace' : ''}`].href.replace(
+			'{objectEntryFolderId}',
+			String(folder.id)
+		)
+	).then(({error}: {error: any}) => {
+		if (!error) {
+			loadData();
+		}
+
+		displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+	});
+}
+
+function openDuplicatedAssetFolderNamesModal(
+	action: Action,
+	itemData: ItemData,
+	onContinueClick: (operation: Option) => void
+) {
+	openModal({
+		contentComponent: ({closeModal}: {closeModal: () => void}) =>
+			DuplicatedAssetFolderNamesModalContent({
+				action,
+				closeModal,
+				itemData,
+				onContinueClick,
+			}),
+		size: 'md',
+	});
+}
+
 function FolderItemSelectorModalContent({
 	action,
 	assetLibraries,
@@ -143,47 +217,67 @@ function FolderItemSelectorModalContent({
 	};
 
 	const handleOnItemsChange = (folder: Folder) => {
-		displayInfoToast(action, folder, itemData);
-
 		if (
 			itemData.entryClassName ===
 			'com.liferay.object.model.ObjectEntryFolder'
 		) {
-			let promise: Promise<RequestResult<unknown>>;
-
-			if (action === 'copy') {
-				promise = FolderService.copyFolder(
-					itemData.embedded.id,
-					folder.id
-				);
-			}
-			else {
-				promise = FolderService.moveFolder(
-					itemData.embedded.id,
-					folder.id
-				);
-			}
-
-			promise.then(({error}: {error: any}) => {
-				if (!error) {
-					loadData();
+			FolderService.searchFolder(
+				itemData.embedded.scopeId,
+				itemData.title,
+				folder.id
+			).then(({data, error}: any) => {
+				if (error) {
+					displayErrorToast(error);
 				}
-
-				displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+				else {
+					if (data?.items.length > 0) {
+						openDuplicatedAssetFolderNamesModal(
+							action,
+							itemData,
+							(operation: Option) => {
+								executeFolderAction(
+									action,
+									folder,
+									itemData,
+									loadData,
+									operation === 'replace'
+								);
+							}
+						);
+					}
+					else {
+						executeFolderAction(action, folder, itemData, loadData);
+					}
+				}
 			});
 		}
 		else {
-			ApiHelper.post<any>(
-				itemData.actions[action].href.replace(
-					'{objectEntryFolderId}',
-					String(folder.id)
-				)
-			).then(({error}: {error: any}) => {
-				if (!error) {
-					loadData();
+			ApiHelper.get(
+				`${itemData.actions['get-by-scope'].href}?filter=title eq '${itemData.title}' and folderId eq ${folder.id}`
+			).then(({data, error}: any) => {
+				if (error) {
+					displayErrorToast(error);
 				}
-
-				displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
+				else {
+					if (data?.items.length > 0) {
+						openDuplicatedAssetFolderNamesModal(
+							action,
+							itemData,
+							(operation: Option) => {
+								executeAssetAction(
+									action,
+									folder,
+									itemData,
+									loadData,
+									operation === 'replace'
+								);
+							}
+						);
+					}
+					else {
+						executeAssetAction(action, folder, itemData, loadData);
+					}
+				}
 			});
 		}
 	};

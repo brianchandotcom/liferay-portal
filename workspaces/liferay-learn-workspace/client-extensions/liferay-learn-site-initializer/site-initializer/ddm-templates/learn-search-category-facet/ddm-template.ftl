@@ -124,33 +124,22 @@
 					/>
 
 					<#list termDisplayContexts as termDisplayContext>
-						<#assign hideClass = "" />
+						<#assign
+							cssClassTreeItem = (termDisplayContextCount gt 8)?then("d-none", "") + "tree-item-category"
+							hideClass = ""
+						/>
 
-						<#if termDisplayContextCount lte 8>
-							<@treeview_item
-								cssClassTreeItem = "tree-item-category"
-								frequency = termDisplayContext.getFrequency()
-								frequencyVisible = termDisplayContext.isFrequencyVisible()
-								id = termDisplayContext.getFilterValue()
-								name = htmlUtil.escape(termDisplayContext.getBucketText())
-								selectable = true
-								selected = termDisplayContext.isSelected()
-								termDisplayContextClass = hideClass
-								vocabularyName = vocabularyName
-							/>
-						<#else>
-							<@treeview_item
-								cssClassTreeItem = "tree-item-category d-none"
-								frequency = termDisplayContext.getFrequency()
-								frequencyVisible = termDisplayContext.isFrequencyVisible()
-								id = termDisplayContext.getFilterValue()
-								name = htmlUtil.escape(termDisplayContext.getBucketText())
-								selectable = true
-								selected = termDisplayContext.isSelected()
-								termDisplayContextClass = hideClass
-								vocabularyName = vocabularyName
-							/>
-						</#if>
+						<@treeview_item
+							cssClassTreeItem = cssClassTreeItem
+							frequency = termDisplayContext.getFrequency()
+							frequencyVisible = termDisplayContext.isFrequencyVisible()
+							id = termDisplayContext.getFilterValue()
+							name = htmlUtil.escape(termDisplayContext.getBucketText())
+							selectable = true
+							selected = termDisplayContext.isSelected()
+							termDisplayContextClass = hideClass
+							vocabularyName = vocabularyName
+						/>
 
 						<#assign termDisplayContextCount++ />
 					</#list>

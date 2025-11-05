@@ -223,7 +223,6 @@ public class ObjectDefinitionModelListenerTest {
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
 				updatedUnicodeProperties.getProperty("anyAssetType")));
-
 		Assert.assertArrayEquals(
 			ArrayUtil.remove(classNameIds, objectClassNameId),
 			GetterUtil.getLongValues(

@@ -24,6 +24,15 @@ async function copyFolder<DataType = unknown>(
 	);
 }
 
+async function copyReplaceFolder<DataType = unknown>(
+	objectEntryFolderId: number,
+	parentObjectEntryFolderId: number
+) {
+	return await ApiHelper.post<DataType>(
+		`${OBJECT_ENTRY_FOLDER_URL}/${objectEntryFolderId}/by-parent-object-entry-folder-id/${parentObjectEntryFolderId}/copy-replace`
+	);
+}
+
 async function createFolder<DataType = unknown>(
 	groupId: number,
 	parentObjectEntryFolderExternalReferenceCode: string,
@@ -59,6 +68,25 @@ async function moveFolder<DataType = unknown>(
 	);
 }
 
+async function moveReplaceFolder<DataType = unknown>(
+	objectEntryFolderId: number,
+	parentObjectEntryFolderId: number
+) {
+	return await ApiHelper.post<DataType>(
+		`${OBJECT_ENTRY_FOLDER_URL}/${objectEntryFolderId}/by-parent-object-entry-folder-id/${parentObjectEntryFolderId}/move-replace`
+	);
+}
+
+async function searchFolder<DataType = unknown>(
+	groupId: number,
+	folderName: string,
+	parentFolderId: number
+) {
+	return await ApiHelper.get<DataType>(
+		`/o/headless-object/v1.0/scopes/${groupId}/object-entry-folders?filter=title eq '${folderName}' and folderId eq ${parentFolderId}`
+	);
+}
+
 async function updateFolder(folderData: TFolder) {
 	return await ApiHelper.patch(
 		folderData,
@@ -66,4 +94,13 @@ async function updateFolder(folderData: TFolder) {
 	);
 }
 
-export default {copyFolder, createFolder, getFolder, moveFolder, updateFolder};
+export default {
+	copyFolder,
+	copyReplaceFolder,
+	createFolder,
+	getFolder,
+	moveFolder,
+	moveReplaceFolder,
+	searchFolder,
+	updateFolder,
+};

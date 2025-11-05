@@ -6,6 +6,7 @@
 package com.liferay.change.tracking.web.internal.configuration.helper;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,12 +29,15 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.change.tracking.configuration.CTSettingsConfiguration",
 	service = CTSettingsConfigurationHelper.class
 )
-public class CTSettingsConfigurationHelper {
+public class CTSettingsConfigurationHelperImpl
+	implements CTSettingsConfigurationHelper {
 
+	@Override
 	public CTSettingsConfiguration getCTSettingsConfiguration(long companyId) {
 		return _getCTSettingsConfiguration(companyId);
 	}
 
+	@Override
 	public long getDefaultCTCollectionTemplateId(long companyId) {
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
@@ -41,6 +45,7 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.defaultCTCollectionTemplateId();
 	}
 
+	@Override
 	public long getDefaultSandboxCTCollectionTemplateId(long companyId) {
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
@@ -48,6 +53,7 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.defaultSandboxCTCollectionTemplateId();
 	}
 
+	@Override
 	public boolean isDefaultCTCollectionTemplate(
 		long companyId, long ctCollectionTemplateId) {
 
@@ -63,6 +69,7 @@ public class CTSettingsConfigurationHelper {
 		return false;
 	}
 
+	@Override
 	public boolean isDefaultSandboxCTCollectionTemplate(
 		long companyId, long ctCollectionTemplateId) {
 
@@ -78,6 +85,7 @@ public class CTSettingsConfigurationHelper {
 		return false;
 	}
 
+	@Override
 	public boolean isEnabled(long companyId) {
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
@@ -85,6 +93,7 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.enabled();
 	}
 
+	@Override
 	public boolean isSandboxEnabled(long companyId) {
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
@@ -92,6 +101,7 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.sandboxEnabled();
 	}
 
+	@Override
 	public boolean isUnapprovedChangesAllowed(long companyId) {
 		CTSettingsConfiguration ctSettingsConfiguration =
 			_getCTSettingsConfiguration(companyId);
@@ -99,6 +109,7 @@ public class CTSettingsConfigurationHelper {
 		return ctSettingsConfiguration.unapprovedChangesAllowed();
 	}
 
+	@Override
 	public void save(long companyId, Map<String, Object> properties)
 		throws PortalException {
 

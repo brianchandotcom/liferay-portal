@@ -28,6 +28,7 @@ import jakarta.ws.rs.core.Application;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MultivaluedMap;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.sse.SseEventSink;
 
 import java.util.Collections;
 import java.util.concurrent.CountDownLatch;
@@ -154,6 +155,13 @@ public class SafeReleaseInstanceResourceProviderTest {
 			HTTPTestUtil.invokeToHttpCode(
 				StringPool.BLANK, "test-vulcan/test/0", Http.Method.GET));
 
+		// Server Sent Events
+
+		Assert.assertEquals(
+			200,
+			HTTPTestUtil.invokeToHttpCode(
+				StringPool.BLANK, "test-vulcan/sse", Http.Method.GET));
+
 		// Valid site ID
 
 		Assert.assertEquals(
@@ -187,6 +195,7 @@ public class SafeReleaseInstanceResourceProviderTest {
 
 		@Override
 		public void setContextCompany(Company contextCompany) {
+			_contextCompany = contextCompany;
 		}
 
 		@GET
@@ -206,12 +215,23 @@ public class SafeReleaseInstanceResourceProviderTest {
 			throw new NotFoundException();
 		}
 
+		@GET
+		@Path("/sse")
+		@Produces("text/event-stream")
+		public void testServerSentEvents(@Context SseEventSink sseEventSink) {
+			Assert.assertNotNull(_contextCompany);
+
+			sseEventSink.close();
+		}
+
 		@Override
 		protected void finalize() throws Throwable {
 			super.finalize();
 
 			_instancesCountDownLatch.countDown();
 		}
+
+		private Company _contextCompany;
 
 	}
 

@@ -201,9 +201,9 @@ public class ClassNameDataCleanupVerifyProcessTest {
 
 				try (PreparedStatement preparedStatement =
 						_connection.prepareStatement(
-							"delete from Address where addressId = " +
-								addressId)) {
+							"delete from Address where addressId = ?")) {
 
+					preparedStatement.setLong(1, addressId);
 					preparedStatement.executeUpdate();
 				}
 			},
@@ -215,11 +215,12 @@ public class ClassNameDataCleanupVerifyProcessTest {
 
 				try (PreparedStatement preparedStatement =
 						_connection.prepareStatement(
-							StringBundler.concat(
-								"insert into Address (mvccVersion, ",
-								"ctCollectionId, addressId, classNameId) ",
-								"values (0, 0, ", addressId, ", ",
-								className.getClassNameId(), ")"))) {
+							"insert into Address (mvccVersion, " +
+								"ctCollectionId, addressId, classNameId) " +
+									"values (0, 0, ?, ?)")) {
+
+					preparedStatement.setLong(1, addressId);
+					preparedStatement.setLong(2, className.getClassNameId());
 
 					preparedStatement.executeUpdate();
 				}

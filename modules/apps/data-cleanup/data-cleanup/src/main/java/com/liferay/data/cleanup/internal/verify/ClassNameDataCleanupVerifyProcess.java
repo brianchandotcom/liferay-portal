@@ -120,14 +120,17 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 
 				try (PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							StringBundler.concat(
-								"select 1 from ", tableName,
-								" where classNameId = ",
-								className.getClassNameId()));
-					ResultSet resultSet = preparedStatement.executeQuery()) {
+							"select 1 from " + tableName +
+								" where classNameId = ?")) {
 
-					if (resultSet.next()) {
-						usedTableNames.add(tableName);
+					preparedStatement.setLong(1, className.getClassNameId());
+
+					try (ResultSet resultSet =
+							preparedStatement.executeQuery()) {
+
+						if (resultSet.next()) {
+							usedTableNames.add(tableName);
+						}
 					}
 				}
 			}

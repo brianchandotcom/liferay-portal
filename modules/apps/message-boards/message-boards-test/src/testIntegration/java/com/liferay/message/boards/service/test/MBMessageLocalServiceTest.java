@@ -19,12 +19,14 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -42,6 +44,7 @@ import java.io.InputStream;
 
 import java.text.DateFormat;
 
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -492,6 +495,40 @@ public class MBMessageLocalServiceTest {
 		mbThread = message.getThread();
 
 		Assert.assertNotEquals(mbThread.getModifiedDate(), date);
+	}
+
+	@Test
+	public void testUpdateUserName() throws Exception {
+		User user = UserTestUtil.addUser(_group.getGroupId());
+
+		MBMessage mbMessage = MBMessageLocalServiceUtil.addMessage(
+			user.getUserId(), RandomTestUtil.randomString(),
+			_group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			MBMessageConstants.DEFAULT_FORMAT, Collections.emptyList(), false,
+			0.0, false,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId()));
+
+		Date expectedModifiedDate = mbMessage.getModifiedDate();
+
+		user = UserLocalServiceUtil.updateUser(
+			user.getUserId(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, false, StringPool.BLANK, StringPool.BLANK,
+			"TestUser" + RandomTestUtil.nextLong(),
+			"UserServiceTest." + RandomTestUtil.nextLong() + "@liferay.com",
+			false, null, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, RandomTestUtil.randomString(), StringPool.BLANK,
+			RandomTestUtil.randomString(), 0, 0, true, Calendar.JANUARY, 1,
+			1970, StringPool.BLANK, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, null, null,
+			null, null, null, ServiceContextTestUtil.getServiceContext());
+
+		mbMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+			mbMessage.getMessageId());
+
+		Assert.assertEquals(user.getFullName(), mbMessage.getUserName());
+		Assert.assertEquals(expectedModifiedDate, mbMessage.getModifiedDate());
 	}
 
 	protected MBMessage addMessage() throws Exception {

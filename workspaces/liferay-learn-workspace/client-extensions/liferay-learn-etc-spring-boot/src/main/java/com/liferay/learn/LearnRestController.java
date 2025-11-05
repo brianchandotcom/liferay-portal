@@ -34,6 +34,9 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -536,7 +539,7 @@ public class LearnRestController extends BaseRestController {
 				).method(
 					method
 				).uri(
-					uri
+					uri.toString()
 				).contentType(
 					MediaType.MULTIPART_FORM_DATA
 				).header(
@@ -828,7 +831,12 @@ public class LearnRestController extends BaseRestController {
 			return "";
 		}
 
-		return StringUtil.trim(HtmlUtil.unescape(html));
+		return StringUtils.trim(
+			StringEscapeUtils.unescapeHtml4(
+				html
+			).replace(
+				'\u00A0', ' '
+			));
 	}
 
 	private static final Pattern _cellPattern = Pattern.compile(

@@ -26,16 +26,12 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Validator;
 
-import jakarta.ws.rs.core.Application;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Raymond Augé
@@ -218,9 +214,6 @@ public abstract class BaseConfigurationFactory {
 				oAuth2Application.getOAuth2ApplicationId(), scopeAliasesList);
 		}
 	}
-
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
-	protected Collection<Application> applications;
 
 	@Reference
 	protected CompanyLocalService companyLocalService;

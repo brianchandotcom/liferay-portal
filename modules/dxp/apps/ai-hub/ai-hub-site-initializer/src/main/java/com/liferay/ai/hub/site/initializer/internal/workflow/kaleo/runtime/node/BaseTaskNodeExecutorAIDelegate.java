@@ -49,15 +49,15 @@ public abstract class BaseTaskNodeExecutorAIDelegate
 				"gemini-2.5-flash-lite"
 			).build();
 
-		Assistant assistant = AiServices.builder(
-			Assistant.class
+		WritingAssistant writingAssistant = AiServices.builder(
+			WritingAssistant.class
 		).systemMessageProvider(
 			object -> getSystemMessage(workflowContext)
 		).streamingChatModel(
 			vertexAiGeminiStreamingChatModel
 		).build();
 
-		assistant.rewrite(
+		writingAssistant.rewrite(
 			getUserMessage(workflowContext)
 		).onCompleteResponse(
 			response -> _completeResponse(
@@ -67,9 +67,9 @@ public abstract class BaseTaskNodeExecutorAIDelegate
 		).start();
 	}
 
-	public interface Assistant {
+	public interface WritingAssistant {
 
-		public TokenStream rewrite(String text);
+		public TokenStream rewrite(String userMessage);
 
 	}
 

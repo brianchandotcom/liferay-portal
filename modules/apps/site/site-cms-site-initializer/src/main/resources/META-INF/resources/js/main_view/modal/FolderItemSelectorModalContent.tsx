@@ -33,9 +33,9 @@ type Folder = {
 
 const SPACES_URL = `${window.location.origin}/o/headless-asset-library/v1.0/asset-libraries?filter=type eq 'Space'`;
 
-const SUCCESS_MESSAGE_KEYS = {
-	copy: 'x-was-successfully-copied-to-x',
-	move: 'x-was-successfully-moved-to-x',
+const SUCCESS_MESSAGES = {
+	copy: Liferay.Language.get('x-was-successfully-copied-to-x'),
+	move: Liferay.Language.get('x-was-successfully-moved-to-x'),
 };
 
 const FDS_DEFAULT_PROPS: Partial<IFrontendDataSetProps> = {
@@ -57,9 +57,9 @@ const displayInfoToast = (
 ) => {
 	openToast({
 		message: sub(
-			Liferay.Language.get(
-				action === 'copy' ? 'copying-x-to-x' : 'moving-x-to-x'
-			),
+			action === 'copy'
+				? Liferay.Language.get('copying-x-to-x')
+				: Liferay.Language.get('moving-x-to-x'),
 			`${Liferay.Util.escapeHTML(itemData.embedded.title)}`,
 			`<strong>${Liferay.Util.escapeHTML(folder.title)}</strong>`
 		),
@@ -67,9 +67,9 @@ const displayInfoToast = (
 	});
 };
 
-const displaySuccessToast = (messageKey: string, ...args: string[]) => {
+const displaySuccessToast = (message: string, ...args: string[]) => {
 	openToast({
-		message: sub(Liferay.Language.get(messageKey), args),
+		message: sub(message, args),
 		type: 'success',
 	});
 };
@@ -78,14 +78,14 @@ const displayToast = (
 	error: any,
 	folder: Folder,
 	itemData: ItemData,
-	messageKey: string
+	message: string
 ) => {
 	if (error) {
 		displayErrorToast(error);
 	}
 	else {
 		displaySuccessToast(
-			messageKey,
+			message,
 			`${Liferay.Util.escapeHTML(itemData.embedded.title)}`,
 			`<strong>${Liferay.Util.escapeHTML(folder.title)}</strong>`
 		);
@@ -169,12 +169,7 @@ function FolderItemSelectorModalContent({
 					loadData();
 				}
 
-				displayToast(
-					error,
-					folder,
-					itemData,
-					SUCCESS_MESSAGE_KEYS[action]
-				);
+				displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
 			});
 		}
 		else {
@@ -188,12 +183,7 @@ function FolderItemSelectorModalContent({
 					loadData();
 				}
 
-				displayToast(
-					error,
-					folder,
-					itemData,
-					SUCCESS_MESSAGE_KEYS[action]
-				);
+				displayToast(error, folder, itemData, SUCCESS_MESSAGES[action]);
 			});
 		}
 	};

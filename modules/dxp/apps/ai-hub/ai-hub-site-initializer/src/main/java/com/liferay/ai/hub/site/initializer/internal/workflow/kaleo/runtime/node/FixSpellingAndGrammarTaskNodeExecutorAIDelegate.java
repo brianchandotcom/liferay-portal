@@ -21,9 +21,11 @@ import org.osgi.service.component.annotations.Component;
 public class FixSpellingAndGrammarTaskNodeExecutorAIDelegate
 	extends BaseTaskNodeExecutorAIDelegate {
 
+	public static final String KEY = "fixSpellingAndGrammar";
+
 	@Override
 	public String getKey() {
-		return "fixSpellingAndGrammar";
+		return KEY;
 	}
 
 	@Override

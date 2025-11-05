@@ -2,7 +2,7 @@
 	"#child-nodes": [
 		{
 			"#tag-name": "name",
-			"#value": "Make Longer"
+			"#value": "__WORKFLOW_DEFINITION_NAME__"
 		},
 		{
 			"#tag-name": "version",
@@ -47,7 +47,7 @@
 									"#child-nodes": [
 										{
 											"#tag-name": "label",
-											"#value": "Make Longer",
+											"#value": "__WORKFLOW_DEFINITION_NAME__",
 											"language-id": "en_US"
 										}
 									],
@@ -55,11 +55,11 @@
 								},
 								{
 									"#tag-name": "name",
-									"#value": "makeLonger"
+									"#value": "__WORKFLOW_TASK_NAME__"
 								},
 								{
 									"#tag-name": "target",
-									"#value": "makeLonger"
+									"#value": "__WORKFLOW_TASK_NAME__"
 								},
 								{
 									"#tag-name": "default",
@@ -113,7 +113,11 @@
 			"#child-nodes": [
 				{
 					"#tag-name": "name",
-					"#value": "makeLonger"
+					"#value": "__WORKFLOW_TASK_NAME__"
+				},
+				{
+					"#tag-name": "description",
+					"#value": "Ask a user to work on the item."
 				},
 				{
 					"#cdata-value": [
@@ -138,7 +142,7 @@
 					"#child-nodes": [
 						{
 							"#tag-name": "label",
-							"#value": "Make Longer Task",
+							"#value": "__WORKFLOW_DEFINITION_NAME__",
 							"language-id": "en_US"
 						}
 					],

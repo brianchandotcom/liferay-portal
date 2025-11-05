@@ -5,6 +5,11 @@
 
 package com.liferay.ai.hub.site.initializer.internal;
 
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.ChangeToneTaskNodeExecutorAIDelegate;
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.FixSpellingAndGrammarTaskNodeExecutorAIDelegate;
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.ImproveWritingTaskNodeExecutorAIDelegate;
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.MakeLongerTaskNodeExecutorAIDelegate;
+import com.liferay.ai.hub.site.initializer.internal.workflow.kaleo.runtime.node.MakeShorterTaskNodeExecutorAIDelegate;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -77,8 +82,8 @@ public class AIHubSiteInitializer implements SiteInitializer {
 	}
 
 	private void _deployWorkflowDefinition(
-			Company company, String externalReferenceCode, String fileName,
-			String workflowDefinitionName)
+			Company company, String externalReferenceCode,
+			String workflowDefinitionName, String workflowTaskName)
 		throws Exception {
 
 		int count = _workflowDefinitionManager.getWorkflowDefinitionsCount(
@@ -98,8 +103,14 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				_language.get(locale, workflowDefinitionName));
 		}
 
-		String json = StringUtil.read(
-			AIHubSiteInitializer.class.getResourceAsStream(fileName));
+		String json = StringUtil.replace(
+			StringUtil.read(
+				AIHubSiteInitializer.class.getResourceAsStream(
+					_WRITING_ASSISTANT_WORKFLOW_DEFINITION_JSON_NAME)),
+			new String[] {
+				"__WORKFLOW_DEFINITION_NAME__", "__WORKFLOW_TASK_NAME__"
+			},
+			new String[] {workflowDefinitionName, workflowTaskName});
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			externalReferenceCode, company.getCompanyId(),
@@ -118,30 +129,34 @@ public class AIHubSiteInitializer implements SiteInitializer {
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_CHANGE_TONE,
-			"dependencies/change-tone-workflow-definition.json",
-			WorkflowDefinitionConstants.NAME_CHANGE_TONE);
+			WorkflowDefinitionConstants.NAME_CHANGE_TONE,
+			ChangeToneTaskNodeExecutorAIDelegate.KEY);
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.
 				EXTERNAL_REFERENCE_CODE_FIX_SPELLING_AND_GRAMMAR,
-			"dependencies/fix-spelling-and-grammar-workflow-definition.json",
-			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR);
+			WorkflowDefinitionConstants.NAME_FIX_SPELLING_AND_GRAMMAR,
+			FixSpellingAndGrammarTaskNodeExecutorAIDelegate.KEY);
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_IMPROVE_WRITING,
-			"dependencies/improve-writing-workflow-definition.json",
-			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING);
+			WorkflowDefinitionConstants.NAME_IMPROVE_WRITING,
+			ImproveWritingTaskNodeExecutorAIDelegate.KEY);
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_LONGER,
-			"dependencies/make-longer-workflow-definition.json",
-			WorkflowDefinitionConstants.NAME_MAKE_LONGER);
+			WorkflowDefinitionConstants.NAME_MAKE_LONGER,
+			MakeLongerTaskNodeExecutorAIDelegate.KEY);
 		_deployWorkflowDefinition(
 			company,
 			WorkflowDefinitionConstants.EXTERNAL_REFERENCE_CODE_MAKE_SHORTER,
-			"dependencies/make-shorter-workflow-definition.json",
-			WorkflowDefinitionConstants.NAME_MAKE_SHORTER);
+			WorkflowDefinitionConstants.NAME_MAKE_SHORTER,
+			MakeShorterTaskNodeExecutorAIDelegate.KEY);
 	}
+
+	private static final String
+		_WRITING_ASSISTANT_WORKFLOW_DEFINITION_JSON_NAME =
+			"dependencies/writing-assistant-workflow-definition.json.tpl";
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

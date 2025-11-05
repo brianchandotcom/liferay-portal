@@ -18,8 +18,6 @@ import com.liferay.portal.vulcan.util.ObjectMapperUtil;
 
 import jakarta.annotation.Generated;
 
-import jakarta.validation.Valid;
-
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 import java.io.Serializable;
@@ -35,60 +33,18 @@ import java.util.function.Supplier;
  * @generated
  */
 @Generated("")
-@GraphQLName("Task")
+@GraphQLName("Scope")
 @JsonFilter("Liferay.Vulcan")
-@XmlRootElement(name = "Task")
-public class Task implements Serializable {
+@XmlRootElement(name = "Scope")
+public class Scope implements Serializable {
 
-	public static Task toDTO(String json) {
-		return ObjectMapperUtil.readValue(Task.class, json);
+	public static Scope toDTO(String json) {
+		return ObjectMapperUtil.readValue(Scope.class, json);
 	}
 
-	public static Task unsafeToDTO(String json) {
-		return ObjectMapperUtil.unsafeReadValue(Task.class, json);
+	public static Scope unsafeToDTO(String json) {
+		return ObjectMapperUtil.unsafeReadValue(Scope.class, json);
 	}
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Map<String, ?> getContext() {
-		if (_contextSupplier != null) {
-			context = _contextSupplier.get();
-
-			_contextSupplier = null;
-		}
-
-		return context;
-	}
-
-	public void setContext(Map<String, ?> context) {
-		this.context = context;
-
-		_contextSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setContext(
-		UnsafeSupplier<Map<String, ?>, Exception> contextUnsafeSupplier) {
-
-		_contextSupplier = () -> {
-			try {
-				return contextUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	protected Map<String, ?> context;
-
-	@JsonIgnore
-	private Supplier<Map<String, ?>> _contextSupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema
 	public String getExternalReferenceCode() {
@@ -125,90 +81,11 @@ public class Task implements Serializable {
 	}
 
 	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	@Valid
-	public Scope getScope() {
-		if (_scopeSupplier != null) {
-			scope = _scopeSupplier.get();
-
-			_scopeSupplier = null;
-		}
-
-		return scope;
-	}
-
-	public void setScope(Scope scope) {
-		this.scope = scope;
-
-		_scopeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setScope(UnsafeSupplier<Scope, Exception> scopeUnsafeSupplier) {
-		_scopeSupplier = () -> {
-			try {
-				return scopeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected Scope scope;
-
-	@JsonIgnore
-	private Supplier<Scope> _scopeSupplier;
-
-	@io.swagger.v3.oas.annotations.media.Schema
-	public String getType() {
-		if (_typeSupplier != null) {
-			type = _typeSupplier.get();
-
-			_typeSupplier = null;
-		}
-
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-
-		_typeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
-		_typeSupplier = () -> {
-			try {
-				return typeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String type;
-
-	@JsonIgnore
-	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -216,13 +93,13 @@ public class Task implements Serializable {
 			return true;
 		}
 
-		if (!(object instanceof Task)) {
+		if (!(object instanceof Scope)) {
 			return false;
 		}
 
-		Task task = (Task)object;
+		Scope scope = (Scope)object;
 
-		return Objects.equals(toString(), task.toString());
+		return Objects.equals(toString(), scope.toString());
 	}
 
 	@Override
@@ -236,18 +113,6 @@ public class Task implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		Map<String, ?> context = getContext();
-
-		if (context != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"context\": ");
-
-			sb.append(_toJSON(context));
-		}
 
 		String externalReferenceCode = getExternalReferenceCode();
 
@@ -265,34 +130,6 @@ public class Task implements Serializable {
 			sb.append("\"");
 		}
 
-		Scope scope = getScope();
-
-		if (scope != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"scope\": ");
-
-			sb.append(String.valueOf(scope));
-		}
-
-		String type = getType();
-
-		if (type != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"type\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(type));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -300,7 +137,7 @@ public class Task implements Serializable {
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		accessMode = io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY,
-		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Task",
+		defaultValue = "com.liferay.ai.hub.rest.dto.v1_0.Scope",
 		name = "x-class-name"
 	)
 	public String xClassName;

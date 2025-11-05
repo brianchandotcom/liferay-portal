@@ -15,6 +15,7 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.channel.CommerceChannelTypeRegistry;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
+import com.liferay.commerce.product.exception.CommerceChannelNameException;
 import com.liferay.commerce.product.exception.CommerceChannelTypeException;
 import com.liferay.commerce.product.exception.DuplicateCommerceChannelAccountEntryIdException;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -40,6 +41,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -58,6 +61,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -103,6 +107,13 @@ public class CommerceChannelLocalServiceImpl
 
 		CommerceChannel commerceChannel = commerceChannelPersistence.create(
 			commerceChannelId);
+
+		name = SanitizerUtil.sanitize(
+			user.getCompanyId(), siteGroupId, user.getUserId(),
+			CommerceChannel.class.getName(), commerceChannelId,
+			ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, name, null);
+
+		_validateName(name);
 
 		commerceChannel.setExternalReferenceCode(externalReferenceCode);
 		commerceChannel.setCompanyId(user.getCompanyId());
@@ -462,6 +473,14 @@ public class CommerceChannelLocalServiceImpl
 		CommerceChannel commerceChannel =
 			commerceChannelPersistence.findByPrimaryKey(commerceChannelId);
 
+		name = SanitizerUtil.sanitize(
+			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
+			commerceChannel.getUserId(), CommerceChannel.class.getName(),
+			commerceChannelId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, name,
+			null);
+
+		_validateName(name);
+
 		long oldSiteGroupId = commerceChannel.getSiteGroupId();
 
 		commerceChannel.setAccountEntryId(accountEntryId);
@@ -667,6 +686,12 @@ public class CommerceChannelLocalServiceImpl
 					"There is another commerce channel with account entry ID " +
 						accountEntryId);
 			}
+		}
+	}
+
+	private void _validateName(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new CommerceChannelNameException();
 		}
 	}
 

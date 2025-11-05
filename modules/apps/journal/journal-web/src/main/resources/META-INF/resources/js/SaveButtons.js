@@ -85,7 +85,7 @@ export default function SaveButtons({
 		});
 	}, [portletNamespace]);
 
-	const onClick = async (action) => {
+	const onClick = async (action, directSubmit = false) => {
 		const titleInputComponent = Liferay.component(
 			`${portletNamespace}titleMapAsXML`
 		);
@@ -96,7 +96,7 @@ export default function SaveButtons({
 			return;
 		}
 
-		if (articleId && !showPublishModal) {
+		if (directSubmit || (articleId && !showPublishModal)) {
 			handleButtonClick(action);
 
 			await validateRequiredFields(formId);
@@ -234,7 +234,7 @@ export default function SaveButtons({
 				className="rounded-0-right"
 				disabled={saveButtonDisabled}
 				displayType="primary"
-				onClick={() => onClick(ACTION_PUBLISH)}
+				onClick={() => onClick(ACTION_PUBLISH, true)}
 				title={publishButtonLabel}
 				type="submit"
 			>
@@ -257,34 +257,22 @@ export default function SaveButtons({
 				}
 			>
 				<ClayDropDown.ItemList>
-					<ClayDropDown.Item
-						form={formId}
-						onClick={() => onClick(ACTION_PUBLISH)}
-						symbolLeft="arrow-right-full"
-						type={showPublishModal ? 'button' : 'submit'}
-					>
-						{articleId
-							? workflowEnabled
-								? showPublishModal
-									? Liferay.Language.get(
-											'submit-for-workflow-with-permissions'
-										)
-									: Liferay.Language.get(
-											'submit-for-workflow'
-										)
-								: showPublishModal
-									? Liferay.Language.get(
-											'publish-with-permissions'
-										)
-									: Liferay.Language.get('publish')
-							: workflowEnabled
+					{(!articleId || showPublishModal) && (
+						<ClayDropDown.Item
+							form={formId}
+							onClick={() => onClick(ACTION_PUBLISH)}
+							symbolLeft="arrow-right-full"
+							type="button"
+						>
+							{workflowEnabled
 								? Liferay.Language.get(
 										'submit-for-workflow-with-permissions'
 									)
 								: Liferay.Language.get(
 										'publish-with-permissions'
 									)}
-					</ClayDropDown.Item>
+						</ClayDropDown.Item>
+					)}
 
 					<ClayDropDown.Item
 						onClick={async () => {

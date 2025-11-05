@@ -24,8 +24,9 @@ export function SelectedMenuItemIdProvider({children}) {
 	const selectedMenuItemIdKey = `${portletNamespace}_selectedMenuItemId`;
 
 	const [selectedMenuItemId, setSelectedMenuItemId] = useState(() => {
-		const persistedSelectedMenuItemId = window.sessionStorage.getItem(
-			selectedMenuItemIdKey
+		const persistedSelectedMenuItemId = sessionStorage.getItem(
+			selectedMenuItemIdKey,
+			COOKIE_TYPES.PERSONALIZATION
 		);
 
 		sessionStorage.removeItem(selectedMenuItemIdKey);

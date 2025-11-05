@@ -3910,6 +3910,130 @@ ${poshi.runner.testsuite.testcase.name}</echo>
 		</sequential>
 	</macrodef>
 
+	<macrodef name="run-portal-startup-space-in-path-test">
+		<attribute name="database.type" />
+		<attribute name="database.version" />
+		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
+
+		<sequential>
+			<run-batch-test>
+				<test-action>
+					<database-test-run-test database.type="@{database.type}" database.version="@{database.version}" stop.app.server="true">
+						<test-action>
+							<local name="junit.failure.count" />
+							<local name="junit.failure.message" />
+
+							<trycatch property="junit.failure.message">
+								<try>
+									<sequential>
+										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
+											<param name="database.type" value="@{database.type}" />
+										</antcall>
+
+										<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
+											<param name="database.type" value="@{database.type}" />
+										</antcall>
+
+										<antcall inheritAll="false" target="prepare-system-ext-properties" />
+
+										<antcall inheritAll="false" target="start-app-server" />
+									</sequential>
+								</try>
+								<finally>
+									<condition else="0" property="junit.failure.count" value="1">
+										<isset property="junit.failure.message" />
+									</condition>
+
+									<get-junit-failure-message-element />
+
+									<generate-backend-batch-junit-report
+										junit.failure.count="${junit.failure.count}"
+										junit.failure.message.element="${junit.failure.message.element}"
+										test.class.name="PortalStartupSpaceInPath"
+										test.command.name="portalStartupSpaceInPath"
+									/>
+								</finally>
+							</trycatch>
+
+							<antcall inheritall="false" target="stop-app-server" />
+						</test-action>
+					</database-test-run-test>
+				</test-action>
+
+				<test-set-up>
+					<if>
+						<and>
+							<or>
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
+								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
+							</or>
+							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
+						</and>
+						<then>
+							<sequential>
+								<prepare-release-test-environment
+									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
+									test.fix.pack.base.url="${test.fix.pack.base.url}"
+									test.license.xml.url="${test.license.xml.url}"
+									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
+									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
+									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
+									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
+									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
+									test.sql.zip.url="${test.sql.zip.url}"
+								/>
+
+								<propertyfile file="app.server.${env.HOSTNAME}.properties">
+									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
+								</propertyfile>
+
+								<propertyfile file="build.${env.HOSTNAME}.properties">
+									<entry key="liferay.home" value="${project.dir}/bun dles" />
+								</propertyfile>
+
+								<move
+									file="bundles"
+									tofile="bun dles"
+								/>
+							</sequential>
+						</then>
+						<elseif>
+							<and>
+								<or>
+									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
+									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
+								</or>
+								<available file="liferay-portal-source.tar.gz" />
+							</and>
+							<then>
+								<sequential>
+									<propertyfile file="app.server.${env.HOSTNAME}.properties">
+										<entry key="app.server.parent.dir" value="${project.dir}/bundles" />
+									</propertyfile>
+
+									<propertyfile file="build.${env.HOSTNAME}.properties">
+										<entry key="liferay.home" value="${project.dir}/bun dles" />
+									</propertyfile>
+
+									<prepare-test-environment />
+
+									<move
+										file="bundles"
+										tofile="bun dles"
+									/>
+								</sequential>
+							</then>
+						</elseif>
+						<else>
+							<prepare-test-build />
+						</else>
+					</if>
+				</test-set-up>
+			</run-batch-test>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="run-poshi-validation">
 		<sequential>
 			<antcall target="run-poshi-validation" />
@@ -9351,491 +9475,19 @@ ${output.content}</echo>
 	</target>
 
 	<target name="portal-startup-space-in-path-mysql84">
-		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
-
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="mysql" database.version="8.4" stop.app.server="true">
-						<test-action>
-							<local name="junit.failure.count" />
-							<local name="junit.failure.message" />
-
-							<trycatch property="junit.failure.message">
-								<try>
-									<sequential>
-										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall inheritAll="false" target="prepare-system-ext-properties" />
-
-										<antcall inheritAll="false" target="start-app-server" />
-									</sequential>
-								</try>
-								<finally>
-									<condition else="0" property="junit.failure.count" value="1">
-										<isset property="junit.failure.message" />
-									</condition>
-
-									<get-junit-failure-message-element />
-
-									<generate-backend-batch-junit-report
-										junit.failure.count="${junit.failure.count}"
-										junit.failure.message.element="${junit.failure.message.element}"
-										test.class.name="PortalStartupSpaceInPath"
-										test.command.name="portalStartupSpaceInPath"
-									/>
-								</finally>
-							</trycatch>
-
-							<antcall inheritall="false" target="stop-app-server" />
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<if>
-						<and>
-							<or>
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
-							</or>
-							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
-						</and>
-						<then>
-							<sequential>
-								<prepare-release-test-environment
-									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-									test.fix.pack.base.url="${test.fix.pack.base.url}"
-									test.license.xml.url="${test.license.xml.url}"
-									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
-									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-									test.sql.zip.url="${test.sql.zip.url}"
-								/>
-
-								<propertyfile file="app.server.${env.HOSTNAME}.properties">
-									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<propertyfile file="build.${env.HOSTNAME}.properties">
-									<entry key="liferay.home" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<move
-									file="bundles"
-									tofile="bun dles"
-								/>
-							</sequential>
-						</then>
-						<elseif>
-							<and>
-								<or>
-									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
-								</or>
-								<available file="liferay-portal-source.tar.gz" />
-							</and>
-							<then>
-								<sequential>
-									<propertyfile file="app.server.${env.HOSTNAME}.properties">
-										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<propertyfile file="build.${env.HOSTNAME}.properties">
-										<entry key="liferay.home" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<prepare-test-environment />
-
-									<move
-										file="bundles"
-										tofile="bun dles"
-									/>
-								</sequential>
-							</then>
-						</elseif>
-						<else>
-							<prepare-test-build />
-						</else>
-					</if>
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
+		<run-portal-startup-space-in-path-test database.type="mysql" database.version="8.4" />
 	</target>
 
 	<target name="portal-startup-space-in-path-mysql84-jdk21_zulu">
-		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
-
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="mysql" database.version="8.4" stop.app.server="true">
-						<test-action>
-							<local name="junit.failure.count" />
-							<local name="junit.failure.message" />
-
-							<trycatch property="junit.failure.message">
-								<try>
-									<sequential>
-										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall inheritAll="false" target="prepare-system-ext-properties" />
-
-										<antcall inheritAll="false" target="start-app-server" />
-									</sequential>
-								</try>
-								<finally>
-									<condition else="0" property="junit.failure.count" value="1">
-										<isset property="junit.failure.message" />
-									</condition>
-
-									<get-junit-failure-message-element />
-
-									<generate-backend-batch-junit-report
-										junit.failure.count="${junit.failure.count}"
-										junit.failure.message.element="${junit.failure.message.element}"
-										test.class.name="PortalStartupSpaceInPath"
-										test.command.name="portalStartupSpaceInPath"
-									/>
-								</finally>
-							</trycatch>
-
-							<antcall inheritall="false" target="stop-app-server" />
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<if>
-						<and>
-							<or>
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
-							</or>
-							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
-						</and>
-						<then>
-							<sequential>
-								<prepare-release-test-environment
-									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-									test.fix.pack.base.url="${test.fix.pack.base.url}"
-									test.license.xml.url="${test.license.xml.url}"
-									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
-									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-									test.sql.zip.url="${test.sql.zip.url}"
-								/>
-
-								<propertyfile file="app.server.${env.HOSTNAME}.properties">
-									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<propertyfile file="build.${env.HOSTNAME}.properties">
-									<entry key="liferay.home" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<move
-									file="bundles"
-									tofile="bun dles"
-								/>
-							</sequential>
-						</then>
-						<elseif>
-							<and>
-								<or>
-									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
-								</or>
-								<available file="liferay-portal-source.tar.gz" />
-							</and>
-							<then>
-								<sequential>
-									<propertyfile file="app.server.${env.HOSTNAME}.properties">
-										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<propertyfile file="build.${env.HOSTNAME}.properties">
-										<entry key="liferay.home" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<prepare-test-environment />
-
-									<move
-										file="bundles"
-										tofile="bun dles"
-									/>
-								</sequential>
-							</then>
-						</elseif>
-						<else>
-							<prepare-test-build />
-						</else>
-					</if>
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
+		<run-portal-startup-space-in-path-test database.type="mysql" database.version="8.4" />
 	</target>
 
 	<target name="portal-startup-space-in-path-postgresql163">
-		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
-
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="postgresql" database.version="16.3" stop.app.server="true">
-						<test-action>
-							<local name="junit.failure.count" />
-							<local name="junit.failure.message" />
-
-							<trycatch property="junit.failure.message">
-								<try>
-									<sequential>
-										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall inheritAll="false" target="prepare-system-ext-properties" />
-
-										<antcall inheritAll="false" target="start-app-server" />
-									</sequential>
-								</try>
-								<finally>
-									<condition else="0" property="junit.failure.count" value="1">
-										<isset property="junit.failure.message" />
-									</condition>
-
-									<get-junit-failure-message-element />
-
-									<generate-backend-batch-junit-report
-										junit.failure.count="${junit.failure.count}"
-										junit.failure.message.element="${junit.failure.message.element}"
-										test.class.name="PortalStartupSpaceInPath"
-										test.command.name="portalStartupSpaceInPath"
-									/>
-								</finally>
-							</trycatch>
-
-							<antcall inheritall="false" target="stop-app-server" />
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<if>
-						<and>
-							<or>
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
-							</or>
-							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
-						</and>
-						<then>
-							<sequential>
-								<prepare-release-test-environment
-									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-									test.fix.pack.base.url="${test.fix.pack.base.url}"
-									test.license.xml.url="${test.license.xml.url}"
-									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
-									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-									test.sql.zip.url="${test.sql.zip.url}"
-								/>
-
-								<propertyfile file="app.server.${env.HOSTNAME}.properties">
-									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<propertyfile file="build.${env.HOSTNAME}.properties">
-									<entry key="liferay.home" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<move
-									file="bundles"
-									tofile="bun dles"
-								/>
-							</sequential>
-						</then>
-						<elseif>
-							<and>
-								<or>
-									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
-								</or>
-								<available file="liferay-portal-source.tar.gz" />
-							</and>
-							<then>
-								<sequential>
-									<propertyfile file="app.server.${env.HOSTNAME}.properties">
-										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<propertyfile file="build.${env.HOSTNAME}.properties">
-										<entry key="liferay.home" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<prepare-test-environment />
-
-									<move
-										file="bundles"
-										tofile="bun dles"
-									/>
-								</sequential>
-							</then>
-						</elseif>
-						<else>
-							<prepare-test-build />
-						</else>
-					</if>
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
+		<run-portal-startup-space-in-path-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="portal-startup-space-in-path-postgresql163-jdk21_zulu">
-		<propertycopy from="app.server.${app.server.type}.version" name="app.server.version" />
-
-		<sequential>
-			<run-batch-test>
-				<test-action>
-					<database-test-run-test database.type="postgresql" database.version="16.3" stop.app.server="true">
-						<test-action>
-							<local name="junit.failure.count" />
-							<local name="junit.failure.message" />
-
-							<trycatch property="junit.failure.message">
-								<try>
-									<sequential>
-										<antcall inheritAll="false" target="prepare-log4j-ext-xml">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall if:set="env.JENKINS_HOME" inheritAll="false" target="prepare-portal-ext-properties">
-											<param name="database.type" value="@{database.type}" />
-										</antcall>
-
-										<antcall inheritAll="false" target="prepare-system-ext-properties" />
-
-										<antcall inheritAll="false" target="start-app-server" />
-									</sequential>
-								</try>
-								<finally>
-									<condition else="0" property="junit.failure.count" value="1">
-										<isset property="junit.failure.message" />
-									</condition>
-
-									<get-junit-failure-message-element />
-
-									<generate-backend-batch-junit-report
-										junit.failure.count="${junit.failure.count}"
-										junit.failure.message.element="${junit.failure.message.element}"
-										test.class.name="PortalStartupSpaceInPath"
-										test.command.name="portalStartupSpaceInPath"
-									/>
-								</finally>
-							</trycatch>
-
-							<antcall inheritall="false" target="stop-app-server" />
-						</test-action>
-					</database-test-run-test>
-				</test-action>
-
-				<test-set-up>
-					<if>
-						<and>
-							<or>
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.war.url}" />
-								<matches pattern="(file|https?)://" string="${test.portal.bundle.zip.url}" />
-							</or>
-							<matches pattern="(file|https?)://" string="${test.sql.zip.url}" />
-						</and>
-						<then>
-							<sequential>
-								<prepare-release-test-environment
-									test.build.fix.pack.zip.url="${test.build.fix.pack.zip.url}"
-									test.fix.pack.base.url="${test.fix.pack.base.url}"
-									test.license.xml.url="${test.license.xml.url}"
-									test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-									test.portal.bundle.elasticsearch.zip.url="${test.portal.bundle.elasticsearch.zip.url}"
-									test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-									test.portal.bundle.tools.zip.url="${test.portal.bundle.tools.zip.url}"
-									test.portal.bundle.war.url="${test.portal.bundle.war.url}"
-									test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
-									test.sql.zip.url="${test.sql.zip.url}"
-								/>
-
-								<propertyfile file="app.server.${env.HOSTNAME}.properties">
-									<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<propertyfile file="build.${env.HOSTNAME}.properties">
-									<entry key="liferay.home" value="${project.dir}/bun dles" />
-								</propertyfile>
-
-								<move
-									file="bundles"
-									tofile="bun dles"
-								/>
-							</sequential>
-						</then>
-						<elseif>
-							<and>
-								<or>
-									<available file="liferay-portal-bundle-${app.server.type}.tar.gz" />
-									<available file="liferay-portal-bundle-${app.server.type}-${app.server.version}.tar.gz" />
-								</or>
-								<available file="liferay-portal-source.tar.gz" />
-							</and>
-							<then>
-								<sequential>
-									<propertyfile file="app.server.${env.HOSTNAME}.properties">
-										<entry key="app.server.parent.dir" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<propertyfile file="build.${env.HOSTNAME}.properties">
-										<entry key="liferay.home" value="${project.dir}/bun dles" />
-									</propertyfile>
-
-									<prepare-test-environment />
-
-									<move
-										file="bundles"
-										tofile="bun dles"
-									/>
-								</sequential>
-							</then>
-						</elseif>
-						<else>
-							<prepare-test-build />
-						</else>
-					</if>
-				</test-set-up>
-			</run-batch-test>
-		</sequential>
+		<run-portal-startup-space-in-path-test database.type="postgresql" database.version="16.3" />
 	</target>
 
 	<target name="poshi-validation">

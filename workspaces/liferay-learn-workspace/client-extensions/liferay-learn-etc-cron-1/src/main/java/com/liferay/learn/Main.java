@@ -159,7 +159,9 @@ public class Main {
 			GetterUtil.getBoolean(
 				System.getenv("LIFERAY_LEARN_ETC_CRON_OFFLINE")),
 			GetterUtil.getBoolean(
-				System.getenv("LIFERAY_LEARN_ETC_SKIP_DIFF_CHECK")));
+				System.getenv("LIFERAY_LEARN_ETC_SKIP_DIFF_CHECK")),
+			GetterUtil.getBoolean(
+				System.getenv("LIFERAY_LEARN_ETC_SKIP_JAPANESE_CONTENT")));
 
 		String exceptionMessage = null;
 
@@ -227,7 +229,7 @@ public class Main {
 			String latestHashFileName, String liferayDataDefinitionKey,
 			String liferayOAuthClientId, String liferayOAuthClientSecret,
 			String liferaySiteFriendlyUrlPath, URL liferayURL, File baseDir,
-			boolean offline, boolean skipDiffCheck)
+			boolean offline, boolean skipDiffCheck, boolean skipJapaneseContent)
 		throws Exception {
 
 		_liferayOAuthClientId = liferayOAuthClientId;
@@ -235,6 +237,7 @@ public class Main {
 		_liferayURL = liferayURL;
 		_offline = offline;
 		_skipDiffCheck = skipDiffCheck;
+		_skipJapaneseContent = skipJapaneseContent;
 
 		_lastestHashFileName = latestHashFileName;
 
@@ -1535,7 +1538,7 @@ public class Main {
 		File japaneseFile = new File(
 			StringUtil.replace(fileName, "/en/", "/ja/"));
 
-		if (japaneseFile.exists()) {
+		if (!_skipJapaneseContent && japaneseFile.exists()) {
 			String japaneseText = FileUtils.readFileToString(
 				japaneseFile, StandardCharsets.UTF_8);
 
@@ -1746,6 +1749,7 @@ public class Main {
 	private Parser _parser;
 	private SiteResource _siteResource;
 	private final boolean _skipDiffCheck;
+	private final boolean _skipJapaneseContent;
 	private final Map<String, Long> _structuredContentFolderIds =
 		new HashMap<>();
 	private StructuredContentFolderResource _structuredContentFolderResource;

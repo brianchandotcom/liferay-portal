@@ -50,14 +50,14 @@ public class JavaSQLStatementCheck extends BaseFileCheck {
 					continue;
 				}
 
-				int lineNumber = getLineNumber(content, x);
-
 				List<String> sqlStatementParts = _splitSQLStatementParts(
 					content, methodCall, methodName, parameterList, x);
 
 				if (sqlStatementParts.isEmpty()) {
 					continue;
 				}
+
+				int lineNumber = getLineNumber(content, x);
 
 				_checkSQLBooleanValues(fileName, sqlStatementParts, lineNumber);
 

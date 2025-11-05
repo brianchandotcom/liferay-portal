@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CriteriaSidebarCollapse should render 1`] = `
+exports[`CriteriaSidebarCollapse should render correctly 1`] = `
 <div>
   <ul
     class="property-subgroups-list active"

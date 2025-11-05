@@ -249,13 +249,7 @@ exports[`DynamicSegmentEdit should render 1`] = `
             >
               <ul
                 class="property-subgroups-list active"
-              >
-                <li
-                  class="empty-message"
-                >
-                  No results were found.
-                </li>
-              </ul>
+              />
             </div>
           </div>
         </div>

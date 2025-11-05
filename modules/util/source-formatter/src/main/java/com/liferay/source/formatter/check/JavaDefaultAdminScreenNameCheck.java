@@ -22,6 +22,8 @@ public class JavaDefaultAdminScreenNameCheck extends BaseFileCheck {
 				"/portal-impl/src/com/liferay/portal/service/impl" +
 					"/CompanyLocalServiceImpl.java") ||
 			absolutePath.endsWith(
+				"/portal-impl/src/com/liferay/portal/util/PropsValues.java") ||
+			absolutePath.endsWith(
 				"/portal-kernel/src/com/liferay/portal/kernel/util" +
 					"/PropsValues.java")) {
 

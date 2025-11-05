@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.client.serdes.v1_0;
 
 import com.liferay.headless.admin.site.client.dto.v1_0.DropZonePageElementDefinition;
+import com.liferay.headless.admin.site.client.dto.v1_0.FragmentReference;
 import com.liferay.headless.admin.site.client.json.BaseJSONParser;
 
 import jakarta.annotation.Generated;
@@ -50,25 +51,42 @@ public class DropZonePageElementDefinitionSerDes {
 
 		sb.append("{");
 
-		if (dropZonePageElementDefinition.getFragmentSettings() != null) {
+		if (dropZonePageElementDefinition.getAddNewFragmentEntries() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"fragmentSettings\": ");
+			sb.append("\"addNewFragmentEntries\": ");
 
-			if (dropZonePageElementDefinition.getFragmentSettings() instanceof
-					String) {
+			sb.append(dropZonePageElementDefinition.getAddNewFragmentEntries());
+		}
 
-				sb.append("\"");
+		if (dropZonePageElementDefinition.getAllowedFragments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"allowedFragments\": ");
+
+			sb.append("[");
+
+			for (int i = 0;
+				 i < dropZonePageElementDefinition.getAllowedFragments().length;
+				 i++) {
+
 				sb.append(
-					(String)
-						dropZonePageElementDefinition.getFragmentSettings());
-				sb.append("\"");
+					String.valueOf(
+						dropZonePageElementDefinition.getAllowedFragments()
+							[i]));
+
+				if ((i + 1) < dropZonePageElementDefinition.
+						getAllowedFragments().length) {
+
+					sb.append(", ");
+				}
 			}
-			else {
-				sb.append(dropZonePageElementDefinition.getFragmentSettings());
-			}
+
+			sb.append("]");
 		}
 
 		if (dropZonePageElementDefinition.getType() != null) {
@@ -105,14 +123,24 @@ public class DropZonePageElementDefinitionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (dropZonePageElementDefinition.getFragmentSettings() == null) {
-			map.put("fragmentSettings", null);
+		if (dropZonePageElementDefinition.getAddNewFragmentEntries() == null) {
+			map.put("addNewFragmentEntries", null);
 		}
 		else {
 			map.put(
-				"fragmentSettings",
+				"addNewFragmentEntries",
 				String.valueOf(
-					dropZonePageElementDefinition.getFragmentSettings()));
+					dropZonePageElementDefinition.getAddNewFragmentEntries()));
+		}
+
+		if (dropZonePageElementDefinition.getAllowedFragments() == null) {
+			map.put("allowedFragments", null);
+		}
+		else {
+			map.put(
+				"allowedFragments",
+				String.valueOf(
+					dropZonePageElementDefinition.getAllowedFragments()));
 		}
 
 		if (dropZonePageElementDefinition.getType() == null) {
@@ -142,7 +170,10 @@ public class DropZonePageElementDefinitionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "fragmentSettings")) {
+			if (Objects.equals(jsonParserFieldName, "addNewFragmentEntries")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "allowedFragments")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {
@@ -157,10 +188,28 @@ public class DropZonePageElementDefinitionSerDes {
 			DropZonePageElementDefinition dropZonePageElementDefinition,
 			String jsonParserFieldName, Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "fragmentSettings")) {
+			if (Objects.equals(jsonParserFieldName, "addNewFragmentEntries")) {
 				if (jsonParserFieldValue != null) {
-					dropZonePageElementDefinition.setFragmentSettings(
-						(Object)jsonParserFieldValue);
+					dropZonePageElementDefinition.setAddNewFragmentEntries(
+						(Boolean)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "allowedFragments")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					FragmentReference[] allowedFragmentsArray =
+						new FragmentReference[jsonParserFieldValues.length];
+
+					for (int i = 0; i < allowedFragmentsArray.length; i++) {
+						allowedFragmentsArray[i] =
+							FragmentReferenceSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					dropZonePageElementDefinition.setAllowedFragments(
+						allowedFragmentsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "type")) {

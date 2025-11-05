@@ -5,7 +5,7 @@
 
 package com.liferay.change.tracking.web.internal.template;
 
-import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;

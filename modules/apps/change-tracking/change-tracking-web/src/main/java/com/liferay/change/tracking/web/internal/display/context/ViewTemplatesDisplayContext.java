@@ -5,9 +5,9 @@
 
 package com.liferay.change.tracking.web.internal.display.context;
 
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.model.CTCollectionTemplate;
 import com.liferay.change.tracking.service.CTCollectionTemplateService;
-import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.security.permission.resource.CTCollectionTemplatePermission;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;

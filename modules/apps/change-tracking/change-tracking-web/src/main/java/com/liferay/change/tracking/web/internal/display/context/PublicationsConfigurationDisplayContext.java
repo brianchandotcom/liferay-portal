@@ -6,9 +6,9 @@
 package com.liferay.change.tracking.web.internal.display.context;
 
 import com.liferay.change.tracking.configuration.CTSettingsConfiguration;
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.constants.CTActionKeys;
 import com.liferay.change.tracking.model.CTCollection;
-import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;

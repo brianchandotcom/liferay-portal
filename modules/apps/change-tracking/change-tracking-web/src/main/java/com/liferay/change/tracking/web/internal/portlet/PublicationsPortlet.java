@@ -5,12 +5,12 @@
 
 package com.liferay.change.tracking.web.internal.portlet;
 
+import com.liferay.change.tracking.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.service.CTCollectionLocalService;
 import com.liferay.change.tracking.service.CTPreferencesLocalService;
 import com.liferay.change.tracking.service.CTRemoteLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.change.tracking.web.internal.configuration.helper.CTSettingsConfigurationHelper;
 import com.liferay.change.tracking.web.internal.constants.CTWebKeys;
 import com.liferay.change.tracking.web.internal.display.context.PublicationsDisplayContext;
 import com.liferay.change.tracking.web.internal.helper.PublicationHelper;

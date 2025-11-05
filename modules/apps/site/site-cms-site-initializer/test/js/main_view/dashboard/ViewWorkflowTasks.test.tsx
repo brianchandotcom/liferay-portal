@@ -9,65 +9,6 @@ import React from 'react';
 
 import ViewWorkflowTasks from '../../../../src/main/resources/META-INF/resources/js/main_view/home/ViewWorkflowTasks';
 
-jest.mock('frontend-js-web', () => {
-	const actual = jest.requireActual('frontend-js-web');
-
-	return {
-		...actual,
-		createPortletURL: (
-			base: string,
-			parameters: Record<string, any> = {}
-		) => {
-			try {
-				const url = new URL(base, 'http://localhost');
-				Object.entries(parameters).forEach(([k, v]) =>
-					url.searchParams.set(k, String(v))
-				);
-
-				return {toString: () => url.toString()};
-			}
-			catch {
-				return {toString: () => String(base)};
-			}
-		},
-	};
-});
-
-jest.mock(
-	'../../../../src/main/resources/META-INF/resources/js/common/services/WorkflowService',
-	() => {
-		const mockResult = {
-			items: [
-				{
-					assignedDate: new Date().toISOString(),
-					auditUser: 'Test User',
-					auditUserImageURL: '',
-					completed: false,
-					dateDue: new Date().toISOString(),
-					id: 123,
-					name: 'review',
-					objectReviewed: {
-						assetTitle: 'Mock Asset',
-						assetType: 'MockType',
-					},
-					workflowLogs: [],
-				},
-			],
-			totalCount: 1,
-		};
-
-		return {
-			__esModule: true,
-			getWorkflowTasksAssignedToMe: jest
-				.fn()
-				.mockResolvedValue(mockResult),
-			getWorkflowTasksAssignedToMyRoles: jest
-				.fn()
-				.mockResolvedValue(mockResult),
-		};
-	}
-);
-
 describe('[CMS Dashboard] Components: ViewWorkflowTasks', () => {
 	const originalWindowOpen = window.open;
 
@@ -86,48 +27,44 @@ describe('[CMS Dashboard] Components: ViewWorkflowTasks', () => {
 		objectDefinitions: [],
 	};
 
-	it('renders correctly', async () => {
+	it('renders correctly', () => {
 		render(<ViewWorkflowTasks {...defaultProps} />);
 
 		expect(screen.getByText('my-workflow-tasks')).toBeInTheDocument();
 		expect(
-			await screen.findByRole('button', {name: 'assigned-to-me'})
+			screen.getByRole('button', {name: 'assigned-to-me'})
 		).toBeInTheDocument();
 
-		fireEvent.click(
-			await screen.findByRole('button', {name: 'assigned-to-me'})
-		);
+		fireEvent.click(screen.getByRole('button', {name: 'assigned-to-me'}));
 
 		expect(
-			await screen.findByRole('menuitem', {name: 'assigned-to-my-roles'})
+			screen.getByRole('menuitem', {name: 'assigned-to-my-roles'})
 		).toBeInTheDocument();
 
-		expect(await screen.findByLabelText('open-x')).toBeInTheDocument();
+		expect(screen.getByLabelText('open-x')).toBeInTheDocument();
 	});
 
-	it('opens expected link after picking "Assigned to My Roles"', async () => {
+	it('opens expected link after picking "Assigned to My Roles"', () => {
 		render(<ViewWorkflowTasks {...defaultProps} />);
 
-		fireEvent.click(await screen.findByLabelText('open-x'));
+		fireEvent.click(screen.getByLabelText('open-x'));
 
 		expect(window.open).toHaveBeenCalledWith(
 			defaultProps.myWorkflowTasksURL,
 			'_blank'
 		);
 
-		fireEvent.click(
-			await screen.findByRole('button', {name: 'assigned-to-me'})
-		);
+		fireEvent.click(screen.getByRole('button', {name: 'assigned-to-me'}));
 
 		expect(
-			await screen.findByRole('menuitem', {name: 'assigned-to-my-roles'})
+			screen.getByRole('menuitem', {name: 'assigned-to-my-roles'})
 		).toBeInTheDocument();
 
 		fireEvent.click(
-			await screen.findByRole('menuitem', {name: 'assigned-to-my-roles'})
+			screen.getByRole('menuitem', {name: 'assigned-to-my-roles'})
 		);
 
-		fireEvent.click(await screen.findByLabelText('open-x'));
+		fireEvent.click(screen.getByLabelText('open-x'));
 
 		expect(window.open).toHaveBeenCalledWith(
 			defaultProps.myRolesWorkflowTasksURL,

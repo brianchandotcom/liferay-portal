@@ -29,6 +29,8 @@ public interface WorkflowInstance extends WorkflowModel {
 
 	public Date getEndDate();
 
+	public long getGroupId();
+
 	public WorkflowInstance getParentWorkflowInstance();
 
 	public long getParentWorkflowInstanceId();
@@ -48,6 +50,8 @@ public interface WorkflowInstance extends WorkflowModel {
 	}
 
 	public boolean isComplete();
+
+	public void setGroupId(long groupId);
 
 	public void setParentWorkflowInstance(
 		WorkflowInstance parentWorkflowInstance);

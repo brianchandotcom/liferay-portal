@@ -46,6 +46,11 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	}
 
 	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
 	public WorkflowInstance getParentWorkflowInstance() {
 		return _parentWorkflowInstance;
 	}
@@ -119,6 +124,11 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 	}
 
 	@Override
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
+	@Override
 	public void setParentWorkflowInstance(
 		WorkflowInstance parentWorkflowInstance) {
 
@@ -150,6 +160,7 @@ public class DefaultWorkflowInstance implements Serializable, WorkflowInstance {
 		new ArrayList<>();
 	private List<WorkflowNode> _currentWorkflowNodes;
 	private Date _endDate;
+	private long _groupId;
 	private WorkflowInstance _parentWorkflowInstance;
 	private Date _startDate;
 	private Map<String, Serializable> _workflowContext;

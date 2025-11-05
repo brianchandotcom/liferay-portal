@@ -4,7 +4,6 @@
  */
 
 import {MarketplaceSpringBootOAuth2} from './OAuth2Client';
-import {ProductPurchase} from './types';
 
 class AnalyticsOAuth2 extends MarketplaceSpringBootOAuth2 {
 	async getPages(
@@ -14,7 +13,7 @@ class AnalyticsOAuth2 extends MarketplaceSpringBootOAuth2 {
 	}
 
 	async getPlan(accountId: string) {
-		return this.get<ProductPurchase>(`/plan/${accountId}`);
+		return this.get<{key?: string; plan: string}>(`/plan/${accountId}`);
 	}
 
 	async getProject(projectId: string) {

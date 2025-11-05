@@ -23,7 +23,7 @@ export default class ProductPurchaseAnalytics extends ProductPurchase {
 	) {
 		return analyticsOAuth2.provisioning(orderId, {
 			corpProjectName: form.workspaceName,
-			corpProjectUuid: `KOR-${new Date().getTime()}`,
+			corpProjectUuid: this.account.externalReferenceCode,
 			emailAddressDomains: form.allowedEmailDomains,
 			friendlyURL: form.friendlyWorkspaceURL
 				? `/${sanitizeStringForURL(form.friendlyWorkspaceURL)}`

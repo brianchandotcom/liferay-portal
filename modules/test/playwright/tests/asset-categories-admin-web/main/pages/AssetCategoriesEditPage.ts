@@ -14,6 +14,7 @@ export class AssetCategoriesEditPage {
 	readonly cancelButton: Locator;
 	readonly deleteButton: Locator;
 	readonly descriptionField: Locator;
+	readonly externalReferenceCodeInput: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly propertiesTab: Locator;
@@ -26,6 +27,9 @@ export class AssetCategoriesEditPage {
 		this.descriptionField = page
 			.frameLocator('iframe[title="editor"]')
 			.getByRole('textbox');
+		this.externalReferenceCodeInput = page.getByPlaceholder(
+			'External Reference Code'
+		);
 		this.nameInput = page.getByPlaceholder('Name');
 		this.page = page;
 		this.propertiesTab = page.getByRole('link', {name: 'properties'});
@@ -61,6 +65,11 @@ export class AssetCategoriesEditPage {
 		if (save) {
 			await this.save();
 		}
+	}
+
+	async fillExternalReferenceCode(externalReferenceCode: string) {
+		await this.descriptionField.waitFor();
+		await this.externalReferenceCodeInput.fill(externalReferenceCode);
 	}
 
 	async fillName(name: string) {

@@ -41,11 +41,15 @@ test('User can add, edit, delete a category and add a subcategory.', async ({
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
 	const categoryNameChanged = 'category-1-changed';
+	const categoryERCChanged = 'category-1-erc-changed';
 
 	await test.step('edit', async () => {
 		await assetCategoriesEditPage.goto(categoryName);
 
 		await assetCategoriesEditPage.fillName(categoryNameChanged);
+		await assetCategoriesEditPage.fillExternalReferenceCode(
+			categoryERCChanged
+		);
 		await assetCategoriesEditPage.save(`Success:${categoryNameChanged}`);
 
 		await expect(

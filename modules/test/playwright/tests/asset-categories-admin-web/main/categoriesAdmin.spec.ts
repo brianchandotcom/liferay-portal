@@ -36,6 +36,7 @@ test('Add, edit and delete a vocabulary', async ({
 	await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
 
 	const vocabularyDescription = 'Vocabulary Description';
+	const vocabularyExternalReferenceCode = 'vocabulary-erc-vocabulary-1';
 	const vocabularyName = 'Vocabulary 1';
 
 	await test.step('Add a vocabulary with description', async () => {
@@ -43,6 +44,7 @@ test('Add, edit and delete a vocabulary', async ({
 
 		await vocabulariesEditPage.add({
 			description: vocabularyDescription,
+			externalReferenceCode: vocabularyExternalReferenceCode,
 			name: vocabularyName,
 		});
 
@@ -59,6 +61,10 @@ test('Add, edit and delete a vocabulary', async ({
 		await vocabulariesEditPage.goto(vocabularyName);
 
 		await vocabulariesEditPage.fillName(newVocabularyName);
+
+		await expect(
+			vocabulariesEditPage.externalReferenceCodeInput
+		).toHaveValue(vocabularyExternalReferenceCode);
 
 		await vocabulariesEditPage.saveButton.click();
 

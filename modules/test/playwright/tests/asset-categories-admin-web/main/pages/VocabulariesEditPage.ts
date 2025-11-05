@@ -13,6 +13,7 @@ export class VocabulariesEditPage {
 	readonly assetTypeSelect: Locator;
 	readonly deleteButton: Locator;
 	readonly descriptionInput: Locator;
+	readonly externalReferenceCodeInput: Locator;
 	readonly nameInput: Locator;
 	readonly page: Page;
 	readonly removeRowButton: Locator;
@@ -25,6 +26,9 @@ export class VocabulariesEditPage {
 		});
 		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.descriptionInput = page.getByPlaceholder('Description');
+		this.externalReferenceCodeInput = page.getByPlaceholder(
+			'External Reference Code'
+		);
 		this.nameInput = page.getByPlaceholder('Name');
 		this.page = page;
 		this.removeRowButton = page.getByRole('button', {
@@ -39,13 +43,19 @@ export class VocabulariesEditPage {
 	async add({
 		assetTypes,
 		description,
+		externalReferenceCode,
 		name,
 	}: {
 		assetTypes?: string[];
 		description?: string;
+		externalReferenceCode?: string;
 		name: string;
 	}) {
 		await this.fillName(name);
+
+		if (externalReferenceCode) {
+			await this.externalReferenceCodeInput.fill(externalReferenceCode);
+		}
 
 		if (description) {
 			await this.descriptionInput.fill(description);

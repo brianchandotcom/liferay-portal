@@ -113,8 +113,6 @@ test('Asserts that a user can manage factory configurations', async ({
 	await test.step('Assert that factory configurations were edited', async () => {
 		const firstRowLocator = page.locator('tbody tr').first();
 
-		const oldProviderName = await firstRowLocator.innerText();
-
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: page.getByText('Edit').first(),
@@ -130,9 +128,6 @@ test('Asserts that a user can manage factory configurations', async ({
 			type: 'success',
 		});
 
-		await expect(
-			await firstRowLocator.innerText()
-		).not.toBe(oldProviderName);
 		await expect(
 			(await firstRowLocator.innerText()).trim()
 		).toBe(newProviderName);

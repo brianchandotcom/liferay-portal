@@ -40,6 +40,7 @@ import java.net.URI;
 import java.net.URL;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -333,6 +334,9 @@ public class OAuthClientEntryLocalServiceImpl
 
 			HTTPRequest httpRequest = new HTTPRequest(
 				HTTPRequest.Method.GET, new URL(authServerWellKnownURI));
+
+			httpRequest.setConnectTimeout((int)TimeUnit.SECONDS.toMillis(5));
+			httpRequest.setReadTimeout((int)TimeUnit.SECONDS.toMillis(5));
 
 			HTTPResponse httpResponse = httpRequest.send();
 

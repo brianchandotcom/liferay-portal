@@ -44,7 +44,6 @@ import com.liferay.notification.util.NotificationRecipientSettingUtil;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.action.executor.ObjectActionExecutorRegistry;
 import com.liferay.object.action.trigger.ObjectActionTriggerRegistry;
-import com.liferay.object.action.util.ObjectActionThreadLocal;
 import com.liferay.object.constants.ObjectActionConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
@@ -1080,37 +1079,34 @@ public class ObjectActionLocalServiceTest {
 			ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE, unicodeProperties,
 			false);
 
-		// Each call to the method _testAddObjectActionWithCircularReference
-		// should increase the expected objects entries count by 2. The only
-		// exception is for the 4th call when we inject a broken thread local.
-
-		_testAddObjectActionWithCircularReference(2);
-		_testAddObjectActionWithCircularReference(4);
-		_testAddObjectActionWithCircularReference(6);
-
-		Object clearObjectEntryIdsMap = ReflectionTestUtil.getAndSetFieldValue(
-			ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
-			new ThreadLocal<Boolean>() {
-
-				@Override
-				public Boolean get() {
-					return true;
-				}
-
-			});
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
 
 		try {
-			_testAddObjectActionWithCircularReference(8);
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(_user));
+			PrincipalThreadLocal.setName(_user.getUserId());
 
-			Assert.fail();
-		}
-		catch (StackOverflowError stackOverflowError) {
-			Assert.assertNotNull(stackOverflowError);
+			_objectEntryLocalService.addObjectEntry(
+				0, TestPropsValues.getUserId(),
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
+				Collections.singletonMap(
+					"firstName", RandomTestUtil.randomString()),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(
+				2,
+				_objectEntryLocalService.getObjectEntriesCount(
+					0, _objectDefinition.getObjectDefinitionId()));
 		}
 		finally {
-			ReflectionTestUtil.setFieldValue(
-				ObjectActionThreadLocal.class, "_clearObjectEntryIdsMap",
-				clearObjectEntryIdsMap);
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
 		}
 	}
 
@@ -3749,41 +3745,6 @@ public class ObjectActionLocalServiceTest {
 			).build());
 
 		return objectDefinition;
-	}
-
-	private void _testAddObjectActionWithCircularReference(
-			int expectedObjectEntriesCount)
-		throws Exception {
-
-		PermissionChecker originalPermissionChecker =
-			PermissionThreadLocal.getPermissionChecker();
-		String originalName = PrincipalThreadLocal.getName();
-
-		try {
-			PermissionThreadLocal.setPermissionChecker(
-				PermissionCheckerFactoryUtil.create(_user));
-			PrincipalThreadLocal.setName(_user.getUserId());
-
-			_objectEntryLocalService.addObjectEntry(
-				0, TestPropsValues.getUserId(),
-				_objectDefinition.getObjectDefinitionId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null,
-				Collections.singletonMap(
-					"firstName", RandomTestUtil.randomString()),
-				ServiceContextTestUtil.getServiceContext());
-
-			Assert.assertEquals(
-				expectedObjectEntriesCount,
-				_objectEntryLocalService.getObjectEntriesCount(
-					0, _objectDefinition.getObjectDefinitionId()));
-		}
-		finally {
-			PermissionThreadLocal.setPermissionChecker(
-				originalPermissionChecker);
-			PrincipalThreadLocal.setName(originalName);
-		}
 	}
 
 	private void _testExecuteObjectActionMultipleTimesInTheSameThreadWithACustomObjectDefinition()

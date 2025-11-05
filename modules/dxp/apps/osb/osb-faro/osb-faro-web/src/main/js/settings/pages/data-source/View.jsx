@@ -3,7 +3,7 @@ import LiferayDataSource from './Liferay';
 import LiferayDataSourceOld from './LiferayOld';
 import omitDefinedProps from 'shared/util/omitDefinedProps';
 import React from 'react';
-import Salesforce from './Salesforce';
+import SalesforceOverview from 'settings/components/salesforce/SalesforceOverview';
 import {compose, withDataSource} from 'shared/hoc';
 import {DataSource} from 'shared/util/records';
 import {DataSourceTypes} from 'shared/util/constants';
@@ -14,7 +14,7 @@ import {withRouter} from 'react-router-dom';
 const PAGE_MAP = {
 	[DataSourceTypes.Csv]: CSV,
 	[DataSourceTypes.Liferay]: LiferayDataSource,
-	[DataSourceTypes.Salesforce]: Salesforce
+	[DataSourceTypes.Salesforce]: SalesforceOverview
 };
 
 const getPageComponent = dataSource =>

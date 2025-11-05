@@ -80,4 +80,34 @@ public class FileShortcutDisplayContextHelperTest {
 			fileShortcutDisplayContextHelper.isHistoryActionAvailable());
 	}
 
+	@Test
+	public void testIsViewUsagesActionAvailable() throws PortalException {
+		PermissionChecker permissionChecker = Mockito.mock(
+			PermissionChecker.class);
+
+		Mockito.when(
+			permissionChecker.isOmniadmin()
+		).thenReturn(
+			false
+		);
+
+		FileShortcut fileShortcut = Mockito.mock(FileShortcut.class);
+
+		FileShortcutDisplayContextHelper fileShortcutDisplayContextHelper =
+			new FileShortcutDisplayContextHelper(
+				permissionChecker, fileShortcut);
+
+		Assert.assertFalse(
+			fileShortcutDisplayContextHelper.isViewUsagesActionAvailable());
+
+		Mockito.when(
+			permissionChecker.isOmniadmin()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			fileShortcutDisplayContextHelper.isViewUsagesActionAvailable());
+	}
+
 }

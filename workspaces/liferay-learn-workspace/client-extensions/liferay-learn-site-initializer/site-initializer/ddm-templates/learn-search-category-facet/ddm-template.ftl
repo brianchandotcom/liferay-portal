@@ -154,7 +154,8 @@
 
 						<#assign termDisplayContextCount++ />
 					</#list>
-						 <#if termDisplayContextCount gt 8>
+
+					<#if termDisplayContextCount gt 8>
 						<@clay.button
 							cssClass="btn-unstyled facet-clear-btn view-all-btn c-mt-3"
 							displayType="link"
@@ -186,7 +187,9 @@
 				"Feature": "Features"
 			}
 
-		title = (vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')
+		vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![]
+
+		vocabularyTitle = (vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')
 	/>
 
 	<@liferay_ui.panel
@@ -195,7 +198,7 @@
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="${(themeDisplay.getURLCurrent()?contains('/sales-enablement/'))?then(customTitle[title]!title, title)}"
+		title="${(themeDisplay.getURLCurrent()?contains('/sales-enablement/'))?then(customTitle[vocabularyTitle]!vocabularyTitle, vocabularyTitle)}"
 	>
 		<#if vocabularyNames?has_content>
 			<ul class="learn-treeview treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">

@@ -58,8 +58,9 @@ public class ERAssetCategoryLocalServiceImpl
 		}
 		else {
 			assetCategory = _assetCategoryLocalService.updateCategory(
-				userId, assetCategory.getCategoryId(), parentCategoryId,
-				titleMap, descriptionMap, vocabularyId, categoryProperties,
+				assetCategory.getExternalReferenceCode(), userId,
+				assetCategory.getCategoryId(), parentCategoryId, titleMap,
+				descriptionMap, vocabularyId, categoryProperties,
 				serviceContext);
 		}
 

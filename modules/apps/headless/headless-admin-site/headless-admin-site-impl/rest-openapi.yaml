@@ -835,7 +835,7 @@ components:
             allOf:
                 -   $ref: "#/components/schemas/PageElementDefinition"
                 -   properties:
-                        allowedFragmentItemExternalReferences:
+                        allowedFragments:
                             # @review
                             description:
                                 A list of allowed fragments.

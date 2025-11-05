@@ -663,6 +663,67 @@ public abstract class BaseWorkspaceGitRepository
 		return _propertyOptions;
 	}
 
+	private File _archiveDotGitDir() {
+		List<String> commands = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("git clone --depth 1 --no-checkout file://");
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		File workingDirectory = gitWorkingDirectory.getWorkingDirectory();
+
+		sb.append(workingDirectory);
+
+		sb.append(" ");
+
+		File clonedWorkingDirectory = new File(
+			workingDirectory, getDirectoryName() + "-git");
+
+		sb.append(clonedWorkingDirectory);
+
+		commands.add(sb.toString());
+
+		sb.setLength(0);
+
+		sb.append("cp ");
+		sb.append(new File(workingDirectory, ".git/config"));
+		sb.append(" ");
+		sb.append(new File(clonedWorkingDirectory, ".git/config"));
+
+		commands.add(sb.toString());
+
+		sb.setLength(0);
+
+		sb.append("cd ");
+		sb.append(clonedWorkingDirectory);
+
+		commands.add(sb.toString());
+
+		sb.setLength(0);
+		sb.append("zip -r ");
+
+		File archiveFile = new File(workingDirectory, _getDotGitArchiveName());
+
+		sb.append(archiveFile);
+
+		sb.append(" .git");
+
+		commands.add(sb.toString());
+
+		try {
+			JenkinsResultsParserUtil.executeBashCommands(
+				commands.toArray(new String[0]));
+		}
+		catch (IOException | TimeoutException exception) {
+			throw new RuntimeException(
+				"Unable to archive " + workingDirectory + "/.git", exception);
+		}
+
+		return archiveFile;
+	}
+
 	private LocalGitBranch _createPullRequestLocalGitBranch() {
 		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
 
@@ -849,16 +910,26 @@ public abstract class BaseWorkspaceGitRepository
 		return getString("base_branch_username");
 	}
 
+	private String _getDotGitArchiveName() {
+		return getDirectoryName() + "-git.zip";
+	}
+
 	private String _getGitArchiveName() {
 		return getDirectoryName() + ".zip";
 	}
 
 	private String _getGitArchiveS3BucketPath() throws IOException {
+		return _getGitArchiveS3BucketPath(_getGitArchiveName());
+	}
+
+	private String _getGitArchiveS3BucketPath(String archiveName)
+		throws IOException {
+
 		return JenkinsResultsParserUtil.combine(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"cloud.ci.s3.bucket.dist.path"),
 			"/git-archives/", getDirectoryName(), "/", getBaseBranchSHA(), "/",
-			getSenderBranchSHA(), "/", _getGitArchiveName());
+			getSenderBranchSHA(), "/", archiveName);
 	}
 
 	private String _getSenderBranchHeadSHA() {
@@ -962,6 +1033,12 @@ public abstract class BaseWorkspaceGitRepository
 
 			CloudBucketUtil.uploadS3File(
 				_getGitArchiveS3BucketPath(), archiveFile);
+
+			File dotGitDirArchiveFile = _archiveDotGitDir();
+
+			CloudBucketUtil.uploadS3File(
+				_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
+				dotGitDirArchiveFile);
 		}
 
 		_setSnapshot(true);

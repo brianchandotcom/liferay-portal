@@ -144,8 +144,8 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 							" has been deleted because it is not in use");
 				}
 			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn(
+			else if (_log.isInfoEnabled()) {
+				_log.info(
 					StringBundler.concat(
 						"ClassName ", value,
 						" has not been found but is referenced in the next ",

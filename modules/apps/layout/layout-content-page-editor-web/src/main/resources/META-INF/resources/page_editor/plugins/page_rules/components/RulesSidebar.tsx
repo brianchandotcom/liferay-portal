@@ -26,7 +26,7 @@ export default function RulesSidebar() {
 		[rules, search]
 	);
 
-	const noFilteredResults = !search.length;
+	const isSearching = Boolean(search.length);
 
 	return (
 		<>
@@ -46,11 +46,11 @@ export default function RulesSidebar() {
 			<div className="border-top overflow-auto p-3">
 				{filteredRules.length ? (
 					<RulesList
+						isSearching={isSearching}
 						rules={filteredRules}
-						showNewRuleButton={noFilteredResults}
 					/>
 				) : (
-					<RulesEmptyState showNewRuleButton={noFilteredResults} />
+					<RulesEmptyState showNewRuleButton={!isSearching} />
 				)}
 			</div>
 		</>

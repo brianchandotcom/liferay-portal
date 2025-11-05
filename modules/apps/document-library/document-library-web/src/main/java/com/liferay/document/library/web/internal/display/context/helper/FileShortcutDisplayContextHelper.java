@@ -124,7 +124,11 @@ public class FileShortcutDisplayContextHelper {
 	}
 
 	public boolean isViewUsagesActionAvailable() throws PortalException {
-		return _permissionChecker.isOmniadmin();
+		if (_fileShortcut == null) {
+			return false;
+		}
+
+		return _permissionChecker.isGroupAdmin(_fileShortcut.getGroupId());
 	}
 
 	private boolean _isExternalRepository() {

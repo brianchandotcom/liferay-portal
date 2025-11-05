@@ -217,16 +217,15 @@ public class FileEntryDisplayContextHelperTest {
 
 	@Test
 	public void testIsViewUsagesActionAvailable() throws PortalException {
+		FileEntry fileEntry = Mockito.mock(FileEntry.class);
 		PermissionChecker permissionChecker = Mockito.mock(
 			PermissionChecker.class);
 
 		Mockito.when(
-			permissionChecker.isOmniadmin()
+			permissionChecker.isGroupAdmin(fileEntry.getGroupId())
 		).thenReturn(
 			false
 		);
-
-		FileEntry fileEntry = Mockito.mock(FileEntry.class);
 
 		FileEntryDisplayContextHelper fileEntryDisplayContextHelper =
 			new FileEntryDisplayContextHelper(permissionChecker, fileEntry);
@@ -235,7 +234,7 @@ public class FileEntryDisplayContextHelperTest {
 			fileEntryDisplayContextHelper.isViewUsagesActionAvailable());
 
 		Mockito.when(
-			permissionChecker.isOmniadmin()
+			permissionChecker.isGroupAdmin(fileEntry.getGroupId())
 		).thenReturn(
 			true
 		);

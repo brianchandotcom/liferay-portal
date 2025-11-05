@@ -256,7 +256,11 @@ public class FileEntryDisplayContextHelper {
 	}
 
 	public boolean isViewUsagesActionAvailable() {
-		return _permissionChecker.isOmniadmin();
+		if (_fileEntry == null) {
+			return false;
+		}
+
+		return _permissionChecker.isGroupAdmin(_fileEntry.getGroupId());
 	}
 
 	private boolean _hasPreviousVersions() {

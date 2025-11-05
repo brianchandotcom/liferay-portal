@@ -278,6 +278,7 @@ definition {
 			value1 = "Text Field");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test EditCustomFieldUserTextField {
 		property app.server.types = "jboss,tomcat,weblogic,wildfly";

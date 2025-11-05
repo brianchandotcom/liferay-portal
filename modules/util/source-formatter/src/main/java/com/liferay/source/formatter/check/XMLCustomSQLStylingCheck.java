@@ -43,6 +43,7 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 		_checkScalability(fileName, absolutePath, content);
 		_checkUnionStatement(fileName, content);
 
+		content = _fixBooleanValues(content);
 		content = _fixIncorrectAndOr(content);
 		content = _fixLowerCaseKeywords(content);
 		content = _fixMissingCountValue(content);
@@ -276,6 +277,14 @@ public class XMLCustomSQLStylingCheck extends BaseFileCheck {
 					getLineNumber(content, matcher.start(3)));
 			}
 		}
+	}
+
+	private String _fixBooleanValues(String content) {
+		content = content.replaceAll(
+			"(?i)(=\\s*)(false)\\b", "$1[\\$FALSE\\$]");
+		content = content.replaceAll("(?i)(=\\s*)(true)\\b", "$1[\\$TRUE\\$]");
+
+		return content;
 	}
 
 	private String _fixIncorrectAndOr(String content) {

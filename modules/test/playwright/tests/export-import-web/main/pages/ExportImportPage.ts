@@ -35,8 +35,8 @@ export class ExportImportPage {
 	readonly page: Page;
 	readonly pagesCheckbox: Locator;
 	readonly productMenuPage: ProductMenuPage;
-	readonly taskRow: (taskName: string) => Locator;
 	readonly taskActionsMenu: (taskName: string) => Locator;
+	readonly taskRow: (taskName: string) => Locator;
 	readonly taskSuccessLabel: (taskName: string) => Locator;
 	readonly title: Locator;
 	readonly updateDataAlert: Locator;

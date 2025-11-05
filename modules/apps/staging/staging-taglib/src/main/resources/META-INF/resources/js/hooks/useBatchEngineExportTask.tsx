@@ -25,13 +25,9 @@ type Action =
 	| {payload?: {errorMessage?: string}; type: Status.FAILED};
 
 const initialState: State = {
-	downloadURL: undefined,
-	errorMessage: undefined,
 	progress: 0,
 	status: Status.STARTED,
 };
-
-const POLL_INTERVAL = 1000;
 
 function reducer(state: State, action: Action): State {
 	switch (action.type) {
@@ -112,14 +108,19 @@ export function useBatchEngineExportTask(importProcessId: string) {
 						stopPolling();
 					}
 				}
-				catch (error: any) {
+				catch (error) {
 					dispatch({
-						payload: {errorMessage: error.message},
+						payload: {
+							errorMessage:
+								error instanceof Error
+									? error?.message
+									: undefined,
+						},
 						type: Status.FAILED,
 					});
 					stopPolling();
 				}
-			}, POLL_INTERVAL);
+			}, 1000);
 		};
 
 		const startTask = async () => {
@@ -139,9 +140,12 @@ export function useBatchEngineExportTask(importProcessId: string) {
 
 				startPolling(externalReferenceCode);
 			}
-			catch (error: any) {
+			catch (error) {
 				dispatch({
-					payload: {errorMessage: error.message},
+					payload: {
+						errorMessage:
+							error instanceof Error ? error?.message : undefined,
+					},
 					type: Status.FAILED,
 				});
 			}

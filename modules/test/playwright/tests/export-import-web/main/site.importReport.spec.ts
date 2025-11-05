@@ -113,9 +113,6 @@ test(
 		const exportName = `MyExport-${getRandomString()}`;
 
 		await test.step('Setup', async () => {
-
-			// Create Object Definition
-
 			const objectDefinitionAPIClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionAPI);
 
@@ -131,14 +128,10 @@ test(
 				type: 'objectDefinition',
 			});
 
-			// Create Object Entry
-
 			await apiHelpers.objectEntry.postObjectEntry(
 				{externalReferenceCode: '', name: 'test'},
 				'c/tests/scopes/Guest'
 			);
-
-			// Export Object Entries
 
 			await exportImportPage.goToExport();
 
@@ -151,7 +144,7 @@ test(
 			const exportFilePath =
 				await exportImportPage.downloadExportProcess(exportName);
 
-			// Add a mandatory field to Object Definition
+			// Add a mandatory field to Object Definition to generate report issues on import
 
 			const objectFieldAPIClient =
 				await apiHelpers.buildRestClient(ObjectFieldAPI);
@@ -166,8 +159,6 @@ test(
 					required: true,
 				}
 			);
-
-			// Import exported entries to generate report issues
 
 			await exportImportPage.goToImport();
 

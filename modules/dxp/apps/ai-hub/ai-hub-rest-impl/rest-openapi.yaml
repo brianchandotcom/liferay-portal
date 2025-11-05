@@ -1,5 +1,10 @@
 components:
     schemas:
+        Scope:
+            properties:
+                externalReferenceCode:
+                    type: string
+            type: object
         Task:
             properties:
                 context:
@@ -9,6 +14,8 @@ components:
                 externalReferenceCode:
                     readOnly: true
                     type: string
+                scope:
+                    $ref: "#/components/schemas/Scope"
                 type:
                     type: string
             type: object

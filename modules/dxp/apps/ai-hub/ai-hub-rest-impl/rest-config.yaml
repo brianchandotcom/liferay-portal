@@ -8,5 +8,6 @@ author: Feliphe Marinho
 clientDir: ../ai-hub-rest-client/src/main/java
 compatibilityVersion: 13
 forcePredictableOperationId: true
+generateGraphQL: false
 javaEEPackage: jakarta
 testDir: ../ai-hub-rest-test/src/testIntegration/java

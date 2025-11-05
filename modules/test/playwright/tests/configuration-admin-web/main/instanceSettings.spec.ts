@@ -126,9 +126,9 @@ test('Asserts that a user can manage factory configurations', async ({
 			type: 'success',
 		});
 
-		await expect(
-			(await firstRowLocator.innerText()).trim()
-		).toBe(newProviderName);
+		await expect((await firstRowLocator.innerText()).trim()).toBe(
+			newProviderName
+		);
 	});
 
 	await test.step('Assert that factory configurations were deleted', async () => {

@@ -31,6 +31,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -76,19 +77,32 @@ public class AuthorSelectionFDSFilter extends BaseSelectionFDSFilter {
 
 		long[] depotEntryGroupIds = _getDepotEntryGroupIds();
 
-		Set<User> userSet = new HashSet<>(_getUsers(depotEntryGroupIds, null));
-
-		userSet.addAll(_getUsers(null, _getUserGroupIds(depotEntryGroupIds)));
-
-		if (userSet.isEmpty()) {
+		if (depotEntryGroupIds.length == 0) {
 			return selectionFDSFilterItems;
 		}
 
-		List<User> userList = new ArrayList<>(userSet);
+		TreeSet<User> users = new TreeSet<>(
+			Comparator.comparing(User::getFullName));
 
-		userList.sort(Comparator.comparing(User::getFullName));
+		users.addAll(
+			_userLocalService.searchBySocial(
+				CompanyThreadLocal.getCompanyId(), depotEntryGroupIds, null,
+				null, QueryUtil.ALL_POS, QueryUtil.ALL_POS));
 
-		for (User user : userList) {
+		long[] userGroupIds = _getUserGroupIds(depotEntryGroupIds);
+
+		if (userGroupIds.length > 0) {
+			users.addAll(
+				_userLocalService.searchBySocial(
+					CompanyThreadLocal.getCompanyId(), null, userGroupIds, null,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS));
+		}
+
+		if (users.isEmpty()) {
+			return selectionFDSFilterItems;
+		}
+
+		for (User user : users) {
 			selectionFDSFilterItems.add(
 				new SelectionFDSFilterItem(
 					user.getFullName(), user.getUserId()));
@@ -129,12 +143,6 @@ public class AuthorSelectionFDSFilter extends BaseSelectionFDSFilter {
 		}
 
 		return ArrayUtil.toLongArray(userGroupIds);
-	}
-
-	private List<User> _getUsers(long[] groupIds, long[] userGroupIds) {
-		return _userLocalService.searchBySocial(
-			CompanyThreadLocal.getCompanyId(), groupIds, userGroupIds, null,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private boolean _isAssetLibraryAdminOrAssetLibraryMember(long groupId) {

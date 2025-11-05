@@ -12,11 +12,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import com.liferay.petra.function.UnsafeSupplier;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.graphql.annotation.GraphQLField;
@@ -90,6 +92,21 @@ public class Scope implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Scope.class, json);
 	}
 
+	@Override
+	public boolean equals(Object object) {
+		if (this == object) {
+			return true;
+		}
+
+		if (!(object instanceof Scope)) {
+			return false;
+		}
+
+		Scope scope = (Scope)object;
+
+		return Objects.equals(toString(), scope.toString());
+	}
+
 	@Schema(description = "The scope's external reference code.")
 	public String getExternalReferenceCode() {
 		if (_externalReferenceCodeSupplier != null) {
@@ -143,6 +160,13 @@ public class Scope implements Serializable {
 		}
 
 		return type.toString();
+	}
+
+	@Override
+	public int hashCode() {
+		String string = toString();
+
+		return string.hashCode();
 	}
 
 	public void setExternalReferenceCode(String externalReferenceCode) {
@@ -231,6 +255,78 @@ public class Scope implements Serializable {
 				throw new RuntimeException(exception);
 			}
 		};
+	}
+
+	public String toString() {
+		StringBundler sb = new StringBundler(22);
+
+		sb.append("{");
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
+
+			sb.append("\"");
+		}
+
+		String key = getKey();
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
+		}
+
+		String label = getLabel();
+
+		if (label != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"label\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(label));
+
+			sb.append("\"");
+		}
+
+		Type type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+			sb.append(type);
+			sb.append("\"");
+		}
+
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	@Schema(
@@ -325,6 +421,17 @@ public class Scope implements Serializable {
 
 	private Scope() {
 	}
+
+	private String _escape(Object object) {
+		return StringUtil.replace(
+			String.valueOf(object), _JSON_ESCAPE_STRINGS[0],
+			_JSON_ESCAPE_STRINGS[1]);
+	}
+
+	private static final String[][] _JSON_ESCAPE_STRINGS = {
+		{"\\", "\"", "\b", "\f", "\n", "\r", "\t"},
+		{"\\\\", "\\\"", "\\b", "\\f", "\\n", "\\r", "\\t"}
+	};
 
 	private static final Log _log = LogFactoryUtil.getLog(Scope.class);
 

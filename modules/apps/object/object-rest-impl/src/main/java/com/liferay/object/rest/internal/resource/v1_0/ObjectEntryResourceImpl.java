@@ -37,12 +37,10 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -419,7 +417,8 @@ public class ObjectEntryResourceImpl
 				String modelResourceNamePrefix =
 					ResourceActionsUtil.getModelResourceNamePrefix();
 
-				return modelResourceNamePrefix.concat(_objectDefinition.getClassName());
+				return modelResourceNamePrefix.concat(
+					_objectDefinition.getResourceName());
 			}
 
 			@Override

@@ -11,6 +11,7 @@ import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.SelectionScope;
+import com.liferay.bulk.rest.dto.v1_0.TaxonomyCategoryBulkAction;
 import com.liferay.bulk.rest.internal.selection.v1_0.BulkActionBulkSelectionFactory;
 import com.liferay.bulk.rest.resource.v1_0.BulkActionResource;
 import com.liferay.bulk.selection.BulkSelection;
@@ -63,6 +64,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.rest.dto.v1_0.SearchResult;
 import com.liferay.portal.search.rest.resource.v1_0.SearchResultResource;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
@@ -86,6 +88,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import jakarta.ws.rs.core.MultivaluedMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -98,6 +101,14 @@ import org.osgi.service.component.annotations.ServiceScope;
 	scope = ServiceScope.PROTOTYPE, service = BulkActionResource.class
 )
 public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
+
+	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+		return _entityModel;
+	}
+
+	private static final EntityModel _entityModel = new BulkActionEntityModel();
 
 	@Override
 	public BulkActionTask postBulkAction(

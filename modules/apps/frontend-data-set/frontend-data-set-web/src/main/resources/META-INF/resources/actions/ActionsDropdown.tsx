@@ -198,6 +198,7 @@ function ActionsDropdown({
 			<ClayDropDownWithItems
 				active={menuActive}
 				items={items}
+				menuElementAttrs={{onClick: (event) => event.stopPropagation()}}
 				onActiveChange={() =>
 					onMenuActiveChange && onMenuActiveChange(!menuActive)
 				}
@@ -206,6 +207,7 @@ function ActionsDropdown({
 						className="component-action dropdown-toggle"
 						disabled={loading}
 						displayType="unstyled"
+						onClick={(event) => event.stopPropagation()}
 					>
 						<ClayIcon symbol="ellipsis-v" />
 

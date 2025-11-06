@@ -362,6 +362,27 @@ public class SharedAsset implements Cloneable, Serializable {
 
 	protected String title;
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public void setVisible(
+		UnsafeSupplier<Boolean, Exception> visibleUnsafeSupplier) {
+
+		try {
+			visible = visibleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean visible;
+
 	@Override
 	public SharedAsset clone() throws CloneNotSupportedException {
 		return (SharedAsset)super.clone();

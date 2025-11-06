@@ -1174,6 +1174,14 @@ public abstract class BaseSharedAssetResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (sharedAsset.getVisible() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1465,6 +1473,16 @@ public abstract class BaseSharedAssetResourceTestCase {
 			if (Objects.equals("title", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						sharedAsset1.getTitle(), sharedAsset2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						sharedAsset1.getVisible(), sharedAsset2.getVisible())) {
 
 					return false;
 				}
@@ -1994,6 +2012,11 @@ public abstract class BaseSharedAssetResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("visible")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2057,6 +2080,7 @@ public abstract class BaseSharedAssetResourceTestCase {
 				siteName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());
+				visible = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

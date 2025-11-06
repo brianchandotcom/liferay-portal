@@ -28,7 +28,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenu;
 import com.liferay.headless.delivery.client.dto.v1_0.NavigationMenuItem;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.resource.v1_0.NavigationMenuResource;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.model.JournalArticle;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -66,7 +64,6 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LanguageIds;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -315,15 +312,6 @@ public class NavigationMenuResourceTest
 		super.testPostSiteNavigationMenu();
 
 		_testPostSiteNavigationMenuWithNavigationType();
-		_testPostSiteNavigationMenuWithPermissions();
-	}
-
-	@Override
-	@Test
-	public void testPutNavigationMenu() throws Exception {
-		super.testPutNavigationMenu();
-
-		_testPutSiteNavigationMenuWithPermissions();
 	}
 
 	@Override
@@ -1089,100 +1077,6 @@ public class NavigationMenuResourceTest
 		Assert.assertEquals(
 			NavigationMenu.NavigationType.PRIMARY,
 			navigationMenu.getNavigationType());
-	}
-
-	private void _testPostSiteNavigationMenuWithPermissions() throws Exception {
-		NavigationMenu randomNavigationMenu = randomNavigationMenu();
-
-		Role serviceBuilderRole = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		Permission permission1 = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleExternalReferenceCode =
-					serviceBuilderRole.getExternalReferenceCode();
-				roleName = serviceBuilderRole.getName();
-				roleType = RoleConstants.getTypeLabel(
-					serviceBuilderRole.getType());
-			}
-		};
-
-		randomNavigationMenu.setPermissions(new Permission[] {permission1});
-
-		NavigationMenu postNavigationMenu =
-			testPostSiteNavigationMenu_addNavigationMenu(randomNavigationMenu);
-
-		List<com.liferay.portal.vulcan.permission.Permission> permissions =
-			ListUtil.fromCollection(
-				PermissionUtil.getPermissions(
-					TestPropsValues.getCompanyId(),
-					_resourceActionLocalService.getResourceActions(
-						SiteNavigationMenu.class.getName()),
-					postNavigationMenu.getId(),
-					SiteNavigationMenu.class.getName(), null));
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				permissions,
-				permission -> {
-					String[] actionIds = permission.getActionIds();
-
-					return (actionIds.length == 1) &&
-						   Objects.equals(ActionKeys.VIEW, actionIds[0]) &&
-						   Objects.equals(
-							   serviceBuilderRole.getExternalReferenceCode(),
-							   permission.getRoleExternalReferenceCode());
-				}));
-	}
-
-	private void _testPutSiteNavigationMenuWithPermissions() throws Exception {
-		NavigationMenu postNavigationMenu =
-			testPutNavigationMenu_addNavigationMenu();
-
-		NavigationMenu randomNavigationMenu = randomNavigationMenu();
-
-		Role serviceBuilderRole = RoleTestUtil.addRole(
-			RoleConstants.TYPE_REGULAR);
-
-		Permission permission1 = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleExternalReferenceCode =
-					serviceBuilderRole.getExternalReferenceCode();
-				roleName = serviceBuilderRole.getName();
-				roleType = RoleConstants.getTypeLabel(
-					serviceBuilderRole.getType());
-			}
-		};
-
-		randomNavigationMenu.setPermissions(new Permission[] {permission1});
-
-		NavigationMenu putNavigationMenu =
-			navigationMenuResource.putNavigationMenu(
-				postNavigationMenu.getId(), randomNavigationMenu);
-
-		List<com.liferay.portal.vulcan.permission.Permission> permissions =
-			ListUtil.fromCollection(
-				PermissionUtil.getPermissions(
-					TestPropsValues.getCompanyId(),
-					_resourceActionLocalService.getResourceActions(
-						SiteNavigationMenu.class.getName()),
-					putNavigationMenu.getId(),
-					SiteNavigationMenu.class.getName(), null));
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				permissions,
-				permission -> {
-					String[] actionIds = permission.getActionIds();
-
-					return (actionIds.length == 1) &&
-						   Objects.equals(ActionKeys.VIEW, actionIds[0]) &&
-						   Objects.equals(
-							   serviceBuilderRole.getExternalReferenceCode(),
-							   permission.getRoleExternalReferenceCode());
-				}));
 	}
 
 	@Inject

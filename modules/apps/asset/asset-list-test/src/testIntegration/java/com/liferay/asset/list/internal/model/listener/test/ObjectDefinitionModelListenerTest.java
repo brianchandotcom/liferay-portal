@@ -63,13 +63,13 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testChangeAnyAssetTypeWhenOneClassNameIdRemains()
+	public void testAnyAssetTypeClassNameIdMultipleClassNameIds()
 		throws Exception {
 
-		long journalArticleClassNameId = _portal.getClassNameId(
-			JournalArticle.class.getName());
-
 		ObjectDefinition objectDefinition = _addObjectDefinition();
+
+		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
+			TestPropsValues.getCompanyId(), true);
 
 		long objectClassNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
@@ -78,28 +78,25 @@ public class ObjectDefinitionModelListenerTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()),
 			_createUnicodeProperties(
-				Boolean.FALSE.toString(),
-				new long[] {objectClassNameId, journalArticleClassNameId}));
+				String.valueOf(objectClassNameId), classNameIds));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		UnicodeProperties updatedUnicodeProperties =
 			_getUpdatedUnicodeProperties(assetListEntry);
 
-		Assert.assertEquals(
-			String.valueOf(journalArticleClassNameId),
-			updatedUnicodeProperties.getProperty("anyAssetType"));
-		Assert.assertEquals(
-			StringUtil.merge(
-				AssetRendererFactoryRegistryUtil.getClassNameIds(
-					TestPropsValues.getCompanyId(), true)),
-			updatedUnicodeProperties.getProperty("classNameIds"));
+		Assert.assertTrue(
+			GetterUtil.getBoolean(
+				updatedUnicodeProperties.getProperty("anyAssetType")));
+		Assert.assertArrayEquals(
+			ArrayUtil.remove(classNameIds, objectClassNameId),
+			GetterUtil.getLongValues(
+				StringUtil.split(
+					updatedUnicodeProperties.getProperty("classNameIds"))));
 	}
 
 	@Test
-	public void testKeepAnyAssetTypeFalseWhenMultipleClassNameIdsRemain()
-		throws Exception {
-
+	public void testAnyAssetTypeFalseMultipleClassNameIds() throws Exception {
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		long blogsEntryClassNameId = _portal.getClassNameId(
@@ -136,7 +133,7 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testNoRemainingClassNameIds() throws Exception {
+	public void testAnyAssetTypeFalseNoClassNameIds() throws Exception {
 		ObjectDefinition objectDefinition1 = _addObjectDefinition();
 		ObjectDefinition objectDefinition2 = _addObjectDefinition();
 
@@ -169,11 +166,11 @@ public class ObjectDefinitionModelListenerTest {
 	}
 
 	@Test
-	public void testRemovalFromAnyAssetType() throws Exception {
-		ObjectDefinition objectDefinition = _addObjectDefinition();
+	public void testAnyAssetTypeFalseSingleClassNameId() throws Exception {
+		long journalArticleClassNameId = _portal.getClassNameId(
+			JournalArticle.class.getName());
 
-		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(
-			TestPropsValues.getCompanyId(), true);
+		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		long objectClassNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
@@ -182,25 +179,26 @@ public class ObjectDefinitionModelListenerTest {
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()),
 			_createUnicodeProperties(
-				String.valueOf(objectClassNameId), classNameIds));
+				Boolean.FALSE.toString(),
+				new long[] {objectClassNameId, journalArticleClassNameId}));
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
 		UnicodeProperties updatedUnicodeProperties =
 			_getUpdatedUnicodeProperties(assetListEntry);
 
-		Assert.assertTrue(
-			GetterUtil.getBoolean(
-				updatedUnicodeProperties.getProperty("anyAssetType")));
-		Assert.assertArrayEquals(
-			ArrayUtil.remove(classNameIds, objectClassNameId),
-			GetterUtil.getLongValues(
-				StringUtil.split(
-					updatedUnicodeProperties.getProperty("classNameIds"))));
+		Assert.assertEquals(
+			String.valueOf(journalArticleClassNameId),
+			updatedUnicodeProperties.getProperty("anyAssetType"));
+		Assert.assertEquals(
+			StringUtil.merge(
+				AssetRendererFactoryRegistryUtil.getClassNameIds(
+					TestPropsValues.getCompanyId(), true)),
+			updatedUnicodeProperties.getProperty("classNameIds"));
 	}
 
 	@Test
-	public void testRemovalFromClassNameIds() throws Exception {
+	public void testAnyAssetTypeTrueMultipleClassNameIds() throws Exception {
 		ObjectDefinition objectDefinition = _addObjectDefinition();
 
 		long[] classNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(

@@ -941,7 +941,8 @@ public abstract class BaseWorkspaceGitRepository
 
 			String jobName = System.getenv("JOB_NAME");
 
-			if (jobName.equals("forward-pullrequest") ||
+			if (jobName.equals("app-server-bundle-builder") ||
+				jobName.equals("forward-pullrequest") ||
 				jobName.equals("publish-testray-report") ||
 				jobName.equals("test-portal-source-format") ||
 				jobName.contains("validation")) {
@@ -952,6 +953,7 @@ public abstract class BaseWorkspaceGitRepository
 			if ((jobName.contains("master") &&
 				 !JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
 				 jobVariant.contains("modules-unit")) ||
+				jobVariant.contains("rest-builder") ||
 				jobVariant.contains("service-builder")) {
 
 				return true;
@@ -997,15 +999,7 @@ public abstract class BaseWorkspaceGitRepository
 
 			JenkinsResultsParserUtil.unzip(gitArchiveFile, directory);
 
-			String jobVariant = System.getenv("JOB_VARIANT");
-
-			String directoryPath = directory.getPath();
-
-			if ((jobVariant.contains("app-server-bundle-builder") ||
-				 jobVariant.contains("rest-builder") ||
-				 jobVariant.contains("service-builder")) &&
-				directoryPath.contains("liferay-portal")) {
-
+			if (_isDotGitDirArchiveRequired()) {
 				File dotGitArchiveFile = new File(
 					baseRepositoryDir, _getDotGitArchiveName());
 

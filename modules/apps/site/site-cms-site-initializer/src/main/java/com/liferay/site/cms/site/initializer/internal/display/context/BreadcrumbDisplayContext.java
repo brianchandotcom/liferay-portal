@@ -157,7 +157,7 @@ public class BreadcrumbDisplayContext {
 								"href",
 								StringBundler.concat(
 									"/o/headless-asset-library/v1.0",
-									"/asset-libraries",
+									"/asset-libraries/",
 									group.getExternalReferenceCode())
 							).put(
 								"label",

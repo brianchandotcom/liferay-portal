@@ -1,3 +1,10 @@
+@media (max-width: 764px) {
+	.learn-article-page-container {
+		flex-wrap: wrap;
+		position: relative;
+	}
+}
+
 @media (max-width: 1024px) {
 	:not(pre) > code[class*='language-'] {
 		word-wrap: break-word;

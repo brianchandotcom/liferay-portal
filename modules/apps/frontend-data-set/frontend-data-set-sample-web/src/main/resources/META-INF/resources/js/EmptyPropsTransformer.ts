@@ -18,6 +18,5 @@ export default function propsTransformer({...otherProps}: any) {
 	return {
 		...otherProps,
 		creationMenu: customCreationMenu,
-		hideManagementBarInEmptyState: true,
 	};
 }

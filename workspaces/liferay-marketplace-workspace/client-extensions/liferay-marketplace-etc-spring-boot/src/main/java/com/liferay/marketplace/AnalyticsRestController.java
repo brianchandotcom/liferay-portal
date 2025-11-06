@@ -94,7 +94,7 @@ public class AnalyticsRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			_koroneikiService.getAccount(accountKey);
+			_koroneikiService.getKoroneikiAccount(accountKey);
 		}
 		catch (Exception exception) {
 			_log.error(exception);

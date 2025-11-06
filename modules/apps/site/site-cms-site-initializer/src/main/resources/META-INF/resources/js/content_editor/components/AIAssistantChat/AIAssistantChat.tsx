@@ -28,6 +28,11 @@ const AIAssistantChat: React.FC = () => {
 	const [isGenerating, setIsGenerating] = useState<boolean>(false);
 	const [messages, setMessages] = useState<message[]>([]);
 	const [message, setMessage] = useState<string>('');
+	const [quickActions, setQuickActions] = useState<string[]>([
+		'Generate Content',
+		'Generate Title',
+		'Translate',
+	]);
 	const eventSourceRef = useRef<EventSource | null>(null);
 	const eventSourceReference = useRef<string | null>(null);
 	const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -253,40 +258,10 @@ const AIAssistantChat: React.FC = () => {
 					{!messages.length && (
 						<>
 							{Liferay.Language.get('quick-actions')}
-							<ClayLayout.ContentRow className="align-items-center mb-3 mt-2">
-								<ClayLayout.ContentCol className="mr-2">
-									<ClayButton
-										className="ai-assistant-chat__quick-actions-button pl-2 pr-2"
-										displayType="unstyled"
-										small
-									>
-										<ClayIcon
-											className="mr-2"
-											height={12}
-											spritemap={Liferay.Icons.spritemap}
-											symbol="stars"
-											width={12}
-										/>
-										Generate Content
-									</ClayButton>
-								</ClayLayout.ContentCol>
-
-								<ClayLayout.ContentCol>
-									<ClayButton
-										className="ai-assistant-chat__quick-actions-button pl-2 pr-2"
-										displayType="unstyled"
-										small
-									>
-										<ClayIcon
-											className="mr-2"
-											height={12}
-											spritemap={Liferay.Icons.spritemap}
-											symbol="stars"
-											width={12}
-										/>
-										Generate Title
-									</ClayButton>
-								</ClayLayout.ContentCol>
+							<ClayLayout.ContentRow className="align-items-center mb-3 mt-2">	
+								{quickActions.map((action, index) => (
+									<QuickAction action={action} key={index} />
+								))}
 							</ClayLayout.ContentRow>
 						</>
 					)}
@@ -300,9 +275,7 @@ const AIAssistantChat: React.FC = () => {
 								adjustTextareaHeight(event.target);
 							}}
 							onKeyDown={(event: React.KeyboardEvent<HTMLTextAreaElement>) => {
-								if (event.key === ' ' || event.code === 'Space' || event.key === 'Spacebar') {
-									event.stopPropagation();
-								}
+								event.stopPropagation();
 							}}
 							placeholder="Ask me anything..."
 							rows={1}
@@ -313,7 +286,7 @@ const AIAssistantChat: React.FC = () => {
 							<ClayIcon
 								height={12}
 								spritemap={Liferay.Icons.spritemap}
-								symbol="order-arrow-up"
+								symbol={isGenerating ? "square" : "order-arrow-up"}
 								width={12}
 							/>
 						</ClayButton>

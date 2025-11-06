@@ -34,14 +34,15 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
 			addCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long commerceInventoryWarehouseId,
-				java.math.BigDecimal quantity, String sku,
+				java.math.BigDecimal quantity,
+				java.math.BigDecimal reservedQuantity, String sku,
 				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemService.
 			addCommerceInventoryWarehouseItem(
 				externalReferenceCode, commerceInventoryWarehouseId, quantity,
-				sku, unitOfMeasureKey);
+				reservedQuantity, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -49,14 +50,15 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
 				long commerceInventoryWarehouseId,
-				java.math.BigDecimal quantity, String sku,
+				java.math.BigDecimal quantity,
+				java.math.BigDecimal reservedQuantity, String sku,
 				String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemService.
 			addOrUpdateCommerceInventoryWarehouseItem(
 				externalReferenceCode, companyId, commerceInventoryWarehouseId,
-				quantity, sku, unitOfMeasureKey);
+				quantity, reservedQuantity, sku, unitOfMeasureKey);
 	}
 
 	@Override
@@ -281,26 +283,14 @@ public class CommerceInventoryWarehouseItemServiceWrapper
 			updateCommerceInventoryWarehouseItem(
 				long commerceInventoryWarehouseItemId,
 				java.math.BigDecimal quantity,
-				java.math.BigDecimal reservedQuantity, long mvccVersion)
+				java.math.BigDecimal reservedQuantity, String unitOfMeasureKey,
+				long mvccVersion)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceInventoryWarehouseItemService.
 			updateCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItemId, quantity, reservedQuantity,
-				mvccVersion);
-	}
-
-	@Override
-	public com.liferay.commerce.inventory.model.CommerceInventoryWarehouseItem
-			updateCommerceInventoryWarehouseItem(
-				long commerceInventoryWarehouseItemId, long mvccVersion,
-				java.math.BigDecimal quantity, String unitOfMeasureKey)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceInventoryWarehouseItemService.
-			updateCommerceInventoryWarehouseItem(
-				commerceInventoryWarehouseItemId, mvccVersion, quantity,
-				unitOfMeasureKey);
+				unitOfMeasureKey, mvccVersion);
 	}
 
 	@Override

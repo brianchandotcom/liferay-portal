@@ -48,14 +48,16 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 	 */
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String sku, String unitOfMeasureKey)
+			BigDecimal quantity, BigDecimal reservedQuantity, String sku,
+			String unitOfMeasureKey)
 		throws PortalException;
 
 	public CommerceInventoryWarehouseItem
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
 				long commerceInventoryWarehouseId, BigDecimal quantity,
-				String sku, String unitOfMeasureKey)
+				BigDecimal reservedQuantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException;
 
 	public void deleteCommerceInventoryWarehouseItem(
@@ -170,12 +172,8 @@ public interface CommerceInventoryWarehouseItemService extends BaseService {
 
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId, BigDecimal quantity,
-			BigDecimal reservedQuantity, long mvccVersion)
-		throws PortalException;
-
-	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, long mvccVersion,
-			BigDecimal quantity, String unitOfMeasureKey)
+			BigDecimal reservedQuantity, String unitOfMeasureKey,
+			long mvccVersion)
 		throws PortalException;
 
 }

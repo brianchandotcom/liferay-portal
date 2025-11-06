@@ -218,14 +218,17 @@ public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 			// Add folder
 
+			String externalReferenceCode = ParamUtil.getString(
+				actionRequest, "externalReferenceCode");
+
 			long repositoryId = ParamUtil.getLong(
 				actionRequest, "repositoryId");
 			long parentFolderId = ParamUtil.getLong(
 				actionRequest, "parentFolderId");
 
 			_dlAppService.addFolder(
-				null, repositoryId, parentFolderId, name, description,
-				serviceContext);
+				externalReferenceCode, repositoryId, parentFolderId, name,
+				description, serviceContext);
 		}
 		else {
 

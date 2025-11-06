@@ -30,20 +30,20 @@ public class AnnotationLocator {
 
 		queue.offer(targetClass);
 
-		Map<Class<? extends Annotation>, Annotation> indexMap =
+		Map<Class<? extends Annotation>, Annotation> indexAnnotations =
 			new LinkedHashMap<>();
 
 		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
 			_mergeAnnotations(
-				Collections.emptySet(), indexMap, false,
+				Collections.emptySet(), indexAnnotations, false,
 				clazz.getAnnotations());
 
 			_queueSuperTypes(clazz, queue);
 		}
 
-		return indexMap;
+		return indexAnnotations;
 	}
 
 	public static Map<Class<? extends Annotation>, Annotation> index(
@@ -51,7 +51,7 @@ public class AnnotationLocator {
 
 		Set<Class<? extends Annotation>> concludedAnnotationClasses =
 			new HashSet<>();
-		Map<Class<? extends Annotation>, Annotation> indexMap =
+		Map<Class<? extends Annotation>, Annotation> indexAnnotations =
 			new LinkedHashMap<>();
 
 		Class<?> clazz = null;
@@ -71,7 +71,7 @@ public class AnnotationLocator {
 
 			if (specificMethod != null) {
 				_mergeAnnotations(
-					concludedAnnotationClasses, indexMap, true,
+					concludedAnnotationClasses, indexAnnotations, true,
 					specificMethod.getAnnotations());
 			}
 
@@ -83,21 +83,21 @@ public class AnnotationLocator {
 				// Ensure the class has a publicly inherited method
 
 				_mergeAnnotations(
-					concludedAnnotationClasses, indexMap, false,
+					concludedAnnotationClasses, indexAnnotations, false,
 					clazz.getAnnotations());
 			}
 
 			_queueSuperTypes(clazz, queue);
 		}
 
-		return indexMap;
+		return indexAnnotations;
 	}
 
 	public static List<Annotation> locate(Class<?> targetClass) {
-		Map<Class<? extends Annotation>, Annotation> indexMap = index(
+		Map<Class<? extends Annotation>, Annotation> indexAnnotations = index(
 			targetClass);
 
-		return new ArrayList<>(indexMap.values());
+		return new ArrayList<>(indexAnnotations.values());
 	}
 
 	public static <T extends Annotation> T locate(
@@ -124,10 +124,10 @@ public class AnnotationLocator {
 	}
 
 	public static List<Annotation> locate(Method method, Class<?> targetClass) {
-		Map<Class<? extends Annotation>, Annotation> indexMap = index(
+		Map<Class<? extends Annotation>, Annotation> indexAnnotations = index(
 			method, targetClass);
 
-		return new ArrayList<>(indexMap.values());
+		return new ArrayList<>(indexAnnotations.values());
 	}
 
 	public static <T extends Annotation> T locate(
@@ -184,7 +184,7 @@ public class AnnotationLocator {
 
 	private static void _mergeAnnotations(
 		Set<Class<? extends Annotation>> concludedAnnotationClasses,
-		Map<Class<? extends Annotation>, Annotation> indexMap,
+		Map<Class<? extends Annotation>, Annotation> indexAnnotations,
 		boolean fromMethod, Annotation[] sourceAnnotations) {
 
 		for (Annotation sourceAnnotation : sourceAnnotations) {
@@ -196,12 +196,12 @@ public class AnnotationLocator {
 			}
 
 			if (fromMethod) {
-				indexMap.put(annotationClass, sourceAnnotation);
+				indexAnnotations.put(annotationClass, sourceAnnotation);
 
 				concludedAnnotationClasses.add(annotationClass);
 			}
 			else {
-				indexMap.putIfAbsent(annotationClass, sourceAnnotation);
+				indexAnnotations.putIfAbsent(annotationClass, sourceAnnotation);
 			}
 		}
 	}

@@ -327,7 +327,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 
 		_testPostSitePageSpecificationPageExperiencePageElementWithCollectionDisplayPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithContainerPageElement();
-		_testPostSitePageSpecificationPageExperiencePageElementWithDropZonePageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithFragmentPageElement();
 		_testPostSitePageSpecificationPageExperiencePageElementWithGridPageElement();
@@ -1902,14 +1901,6 @@ public class PageElementResourceTest extends BasePageElementResourceTestCase {
 					LocaleUtil.US.toString(), "https://www.liferay.com"
 				).build(),
 				false, RandomTestUtil.randomString()));
-	}
-
-	private void _testPostSitePageSpecificationPageExperiencePageElementWithDropZonePageElement()
-		throws Exception {
-
-		_testPostSitePageSpecificationPageExperiencePageElement(
-			_randomPageElement(
-				PageElementDefinition.Type.DROP_ZONE, StringPool.BLANK));
 	}
 
 	private void _testPostSitePageSpecificationPageExperiencePageElementWithFormContainerPageElement()

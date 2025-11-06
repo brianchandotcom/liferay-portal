@@ -194,22 +194,25 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				SQLTransformer.transform(
-					StringBundler.concat(
-						"select ", columnName,
-						" from UpgradeKernelPackageTest where id =", id)));
-			ResultSet resultSet = preparedStatement.executeQuery()) {
+					"select " + columnName +
+						" from UpgradeKernelPackageTest where id = ?"))) {
 
-			if (expectedValue == null) {
-				Assert.assertFalse(
-					"Entry with id " + id + "should not exsit",
-					resultSet.next());
-			}
-			else {
-				Assert.assertTrue(
-					"Entry with id " + id + " should exist", resultSet.next());
+			preparedStatement.setLong(1, id);
 
-				Assert.assertEquals(
-					expectedValue, resultSet.getString(columnName));
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (expectedValue == null) {
+					Assert.assertFalse(
+						"Entry with id " + id + "should not exsit",
+						resultSet.next());
+				}
+				else {
+					Assert.assertTrue(
+						"Entry with id " + id + " should exist",
+						resultSet.next());
+
+					Assert.assertEquals(
+						expectedValue, resultSet.getString(columnName));
+				}
 			}
 		}
 	}

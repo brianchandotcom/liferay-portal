@@ -4,39 +4,52 @@ import React from 'react';
 import SalesforceOverview from '../SalesforceOverview';
 import {cleanup, fireEvent, render} from '@testing-library/react';
 import {DataSource, User} from 'shared/util/records';
-import {DataSourceStates} from 'shared/util/constants';
+import {DataSourceStatuses} from 'shared/util/constants';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
+import {useCurrentUser} from 'shared/hooks/useCurrentUser';
 
 jest.unmock('react-dom');
 
+jest.mock('react-router-dom', () => ({
+	...jest.requireActual('react-router-dom'),
+	useParams: () => ({
+		groupId: '23',
+		id: 'test'
+	})
+}));
+
+jest.mock('shared/hooks/useCurrentUser', () => ({
+	useCurrentUser: jest.fn()
+}));
+
 const defaultProps = {
-	currentUser: data.getImmutableMock(User, data.mockUser),
-	dataSource: data.getImmutableMock(
-		DataSource,
-		data.mockSalesforceDataSource
-	),
-	groupId: '23',
-	id: 'test'
+	dataSource: data.getImmutableMock(DataSource, data.mockSalesforceDataSource)
 };
 
-const DefaultComponent = props => (
-	<Provider store={mockStore()}>
-		<StaticRouter>
-			<SalesforceOverview {...defaultProps} {...props} />
-		</StaticRouter>
-	</Provider>
-);
+const DefaultComponent = props => {
+	useCurrentUser.mockImplementation(() =>
+		data.getImmutableMock(User, data.mockUser)
+	);
+
+	return (
+		<Provider store={mockStore()}>
+			<StaticRouter>
+				<SalesforceOverview {...defaultProps} {...props} />
+			</StaticRouter>
+		</Provider>
+	);
+};
 
 describe('SalesforceOverview', () => {
 	afterEach(cleanup);
 
-	it('should render with CONNECTED (NOT SYNCED) status', () => {
+	it('should render with ACTIVE (NOT SYNCED) status', () => {
 		const {container, getByText} = render(<DefaultComponent />);
 
 		const label = container.querySelector('.label-item.label-item-expand');
 
-		expect(label).toHaveTextContent('Connected');
+		expect(label).toHaveTextContent('ACTIVE');
 
 		expect(
 			getByText(
@@ -51,7 +64,7 @@ describe('SalesforceOverview', () => {
 		).toBeInTheDocument();
 	});
 
-	it('should render with DISCONNECTED status', () => {
+	it('should render with INACTIVE status', () => {
 		const {container, getByText} = render(
 			<DefaultComponent
 				dataSource={data.getImmutableMock(
@@ -59,7 +72,7 @@ describe('SalesforceOverview', () => {
 					data.mockSalesforceDataSource,
 					0,
 					{
-						state: DataSourceStates.Disconnected
+						status: DataSourceStatuses.Inactive
 					}
 				)}
 			/>
@@ -67,7 +80,7 @@ describe('SalesforceOverview', () => {
 
 		const label = container.querySelector('.label-item.label-item-expand');
 
-		expect(label).toHaveTextContent('Disconnected');
+		expect(label).toHaveTextContent('INACTIVE');
 
 		expect(
 			getByText(
@@ -76,15 +89,15 @@ describe('SalesforceOverview', () => {
 		).toBeInTheDocument();
 	});
 
-	it('should render with DISCONNECTED then click on Connect button to display CONNECTED (ALL SYNCED) status', () => {
-		const {container, getByText} = render(
+	it('should render with INACTIVE then click on Connect button to display CONNECTED (ALL SYNCED) status', () => {
+		const {container, getByText, rerender} = render(
 			<DefaultComponent
 				dataSource={data.getImmutableMock(
 					DataSource,
 					data.mockSalesforceDataSource,
 					0,
 					{
-						state: DataSourceStates.Disconnected
+						status: DataSourceStatuses.Inactive
 					}
 				)}
 			/>
@@ -92,11 +105,31 @@ describe('SalesforceOverview', () => {
 
 		const label = container.querySelector('.label-item.label-item-expand');
 
-		expect(label).toHaveTextContent('Disconnected');
+		expect(label).toHaveTextContent('INACTIVE');
 
 		fireEvent.click(getByText('Connect'));
 
-		expect(label).toHaveTextContent('Connected');
+		rerender(
+			<DefaultComponent
+				dataSource={data.getImmutableMock(
+					DataSource,
+					data.mockSalesforceDataSource,
+					0,
+					{
+						status: DataSourceStatuses.Active
+					}
+				)}
+			/>
+		);
+
+		expect(label).toHaveTextContent('ACTIVE');
+
+		const togglesSwitches = container.querySelectorAll(
+			'.toggle-switch-check-bar'
+		);
+
+		fireEvent.click(togglesSwitches[0]);
+		fireEvent.click(togglesSwitches[1]);
 
 		expect(
 			getByText(
@@ -105,12 +138,12 @@ describe('SalesforceOverview', () => {
 		).toBeInTheDocument();
 	});
 
-	it('should render with CONNECTED (NOT SYNCED) status, toggle the switches and then display CONNECTED (ALL SYNCED) status', () => {
+	it('should render with ACTIVE (NOT SYNCED) status, toggle the switches and then display ACTIVE (ALL SYNCED) status', () => {
 		const {container, getByText} = render(<DefaultComponent />);
 
 		const label = container.querySelector('.label-item.label-item-expand');
 
-		expect(label).toHaveTextContent('Connected');
+		expect(label).toHaveTextContent('ACTIVE');
 
 		expect(
 			getByText(

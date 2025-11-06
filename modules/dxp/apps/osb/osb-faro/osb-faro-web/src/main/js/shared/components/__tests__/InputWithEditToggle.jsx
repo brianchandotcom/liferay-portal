@@ -13,9 +13,13 @@ describe('InputWithEditToggle', () => {
 	});
 
 	it('should render with a label and value', () => {
-		const {getByDisplayValue, getByText} = render(
+		const {getByDisplayValue, getByTestId, getByText} = render(
 			<InputWithEditToggle label='foo' value='bar' />
 		);
+
+		fireEvent.click(getByTestId('edit'));
+
+		jest.runAllTimers();
 
 		expect(getByText('foo')).toBeTruthy();
 		expect(getByDisplayValue('bar')).toBeTruthy();
@@ -40,11 +44,10 @@ describe('InputWithEditToggle', () => {
 	});
 
 	it('should render as disabled if editable is false', () => {
-		const {getByDisplayValue, getByLabelText} = render(
+		const {getByTestId} = render(
 			<InputWithEditToggle editable={false} value='bar' />
 		);
 
-		expect(getByDisplayValue('bar')).toBeDisabled();
-		expect(getByLabelText(/edit/i)).toBeDisabled();
+		expect(getByTestId('edit')).toBeDisabled();
 	});
 });

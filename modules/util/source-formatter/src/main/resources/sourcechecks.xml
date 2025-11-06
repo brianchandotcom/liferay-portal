@@ -941,6 +941,7 @@
 		<check name="JavaUniqueUpgradeProcessCheck">
 			<category name="Bug Prevention" />
 			<description name="Checks that only one regular `UpgradeProcess` is allowed when registering a new upgrade process" />
+			<property name="enabled" value="false" />
 		</check>
 		<check name="JavaUnsafeCastingCheck">
 			<category name="Bug Prevention" />

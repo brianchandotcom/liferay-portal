@@ -7,6 +7,7 @@ package com.liferay.portal.db;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -160,20 +161,14 @@ public class DBResourceUtil {
 		Set<String> tableNames = new HashSet<>();
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"select data_ from ServiceComponent where buildNumber = ",
-					"(select max(buildNumber) from ServiceComponent ",
-					"TEMP_TABLE where ServiceComponent.buildNamespace = ",
-					"TEMP_TABLE.buildNamespace) and ", sqlCondition))) {
+				_SERVICE_COMPONENT_DATA_SQL + sqlCondition);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			DBInspector dbInspector = new DBInspector(connection);
 
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					tableNames.addAll(
-						parseCreateTableSQL(
-							dbInspector, resultSet.getString(1)));
-				}
+			while (resultSet.next()) {
+				tableNames.addAll(
+					parseCreateTableSQL(dbInspector, resultSet.getString(1)));
 			}
 		}
 
@@ -227,6 +222,13 @@ public class DBResourceUtil {
 			return null;
 		}
 	}
+
+	private static final String _SERVICE_COMPONENT_DATA_SQL =
+		StringBundler.concat(
+			"select data_ from ServiceComponent where buildNumber = (select ",
+			"max(buildNumber) from ServiceComponent ServiceComponent2 where ",
+			"ServiceComponent.buildNamespace = ",
+			"ServiceComponent2.buildNamespace) and ");
 
 	private static final Log _log = LogFactoryUtil.getLog(DBResourceUtil.class);
 

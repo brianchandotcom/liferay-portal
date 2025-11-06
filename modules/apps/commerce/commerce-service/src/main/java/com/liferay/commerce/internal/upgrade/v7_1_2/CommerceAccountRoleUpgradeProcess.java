@@ -58,12 +58,14 @@ public class CommerceAccountRoleUpgradeProcess extends UpgradeProcess {
 					"on Group_.classNameId = '",
 					_classNameLocalService.getClassNameId(AccountEntry.class),
 					"' and Group_.groupId = UserGroupRole.groupId where ",
-					"Role_.type_ =", RoleConstants.TYPE_SITE));
+					"Role_.type_ = ?"));
 			PreparedStatement preparedStatement2 =
 				AutoBatchPreparedStatementUtil.autoBatch(
 					connection,
 					"update Role_ set classNameId = ?, classPK = ?, type_ = " +
 						"? where ctCollectionId = ? and roleId = ?")) {
+
+			preparedStatement1.setInt(1, RoleConstants.TYPE_SITE);
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

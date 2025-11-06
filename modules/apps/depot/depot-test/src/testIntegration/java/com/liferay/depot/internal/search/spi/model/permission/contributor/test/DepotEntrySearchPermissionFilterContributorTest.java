@@ -53,6 +53,10 @@ public class DepotEntrySearchPermissionFilterContributorTest {
 
 	@Test
 	public void testContribute() throws Exception {
+		User user = UserTestUtil.addUser();
+
+		long count = _getDepotEntrySearchCount(user);
+
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
@@ -60,21 +64,19 @@ public class DepotEntrySearchPermissionFilterContributorTest {
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), StringUtil.randomString()
 			).build(),
-			DepotConstants.TYPE_SPACE,
+			DepotConstants.TYPE_ASSET_LIBRARY,
 			ServiceContextTestUtil.getServiceContext());
-
-		User user = UserTestUtil.addUser();
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 
 		_userGroupLocalService.addGroupUserGroup(
 			_depotEntry.getGroupId(), userGroup);
 
-		Assert.assertEquals(0, _getDepotEntrySearchCount(user));
+		Assert.assertEquals(count, _getDepotEntrySearchCount(user));
 
 		_userGroupLocalService.addUserUserGroup(user.getUserId(), userGroup);
 
-		Assert.assertEquals(1, _getDepotEntrySearchCount(user));
+		Assert.assertEquals(count + 1, _getDepotEntrySearchCount(user));
 	}
 
 	private long _getDepotEntrySearchCount(User user) throws Exception {

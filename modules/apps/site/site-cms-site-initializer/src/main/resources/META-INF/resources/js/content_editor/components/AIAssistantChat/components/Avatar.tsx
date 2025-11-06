@@ -5,21 +5,7 @@
 
 import React from 'react';
 
-function getInitials(name: string): string {
-	const normalizedName = name?.trim();
-
-	if (!normalizedName) {
-		return '';
-	}
-
-	const names = normalizedName.split(/\s+/);
-
-	if (names.length > 1) {
-		return `${names[0].charAt(0)}${names[1].charAt(0)}`.toUpperCase();
-	}
-
-	return normalizedName.substring(0, 2).toUpperCase();
-}
+import getInitials from '../utils/getUserInitials';
 
 const Avatar: React.FC<{image?: string; name: string}> = ({image, name}) => {
 	return (

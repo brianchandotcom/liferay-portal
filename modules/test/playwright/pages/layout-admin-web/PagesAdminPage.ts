@@ -144,11 +144,7 @@ export class PagesAdminPage {
 			.filter({hasText: template})
 			.click();
 
-		const loadingAnimation = this.page.locator(
-			'.modal-body-iframe .loading-animation'
-		);
-		await loadingAnimation.waitFor();
-		await loadingAnimation.waitFor({state: 'hidden'});
+		await this.pageTitleBox.waitFor();
 
 		await fillAndClickOutside(this.page, this.pageTitleBox, name);
 

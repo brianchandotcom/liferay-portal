@@ -749,27 +749,55 @@ public class ObjectEntryFolderResourceTest
 	private Map<String, Map<String, String>> _getExpectedActions(
 		long objectEntryFolderId, boolean sharingEnabled) {
 
-		String href =
-			"http://localhost:8080/o/headless-object/v1.0" +
-				"/object-entry-folders/" + objectEntryFolderId;
+		String baseHref = "http://localhost:8080/o/headless-object/v1.0";
+
+		String objectEntryFoldersHref =
+			baseHref + "/object-entry-folders/" + objectEntryFolderId;
+
+		String byParentObjectEntryFolderIdHref =
+			objectEntryFoldersHref +
+				"/by-parent-object-entry-folder-id/{parentObjectEntryFolderId}";
 
 		return HashMapBuilder.<String, Map<String, String>>put(
-			"delete", _getActionValue(href, "DELETE")
+			"copy",
+			_getActionValue(byParentObjectEntryFolderIdHref + "/copy", "POST")
 		).put(
-			"get", _getActionValue(href, "GET")
+			"copy-replace",
+			_getActionValue(
+				byParentObjectEntryFolderIdHref + "/copy-replace", "POST")
 		).put(
-			"permissions", _getActionValue(href + "/permissions", "GET")
+			"delete", _getActionValue(objectEntryFoldersHref, "DELETE")
+		).put(
+			"get", _getActionValue(objectEntryFoldersHref, "GET")
+		).put(
+			"get-by-scope",
+			_getActionValue(
+				StringBundler.concat(
+					baseHref, "/scopes/",
+					testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey(),
+					"/object-entry-folders"),
+				"GET")
+		).put(
+			"move",
+			_getActionValue(byParentObjectEntryFolderIdHref + "/move", "POST")
+		).put(
+			"move-replace",
+			_getActionValue(
+				byParentObjectEntryFolderIdHref + "/move-replace", "POST")
+		).put(
+			"permissions",
+			_getActionValue(objectEntryFoldersHref + "/permissions", "GET")
 		).put(
 			"share",
 			() -> {
 				if (sharingEnabled) {
-					return _getActionValue(href, "GET");
+					return _getActionValue(objectEntryFoldersHref, "GET");
 				}
 
 				return null;
 			}
 		).put(
-			"update", _getActionValue(href, "PATCH")
+			"update", _getActionValue(objectEntryFoldersHref, "PATCH")
 		).build();
 	}
 

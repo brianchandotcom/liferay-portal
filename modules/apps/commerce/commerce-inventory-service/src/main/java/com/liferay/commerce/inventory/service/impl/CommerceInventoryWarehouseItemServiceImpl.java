@@ -41,7 +41,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem addCommerceInventoryWarehouseItem(
 			String externalReferenceCode, long commerceInventoryWarehouseId,
-			BigDecimal quantity, String sku, String unitOfMeasureKey)
+			BigDecimal quantity, BigDecimal reservedQuantity, String sku,
+			String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -51,7 +52,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 		return commerceInventoryWarehouseItemLocalService.
 			addCommerceInventoryWarehouseItem(
 				externalReferenceCode, getUserId(),
-				commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey);
+				commerceInventoryWarehouseId, quantity, reservedQuantity, sku,
+				unitOfMeasureKey);
 	}
 
 	@Override
@@ -59,7 +61,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 			addOrUpdateCommerceInventoryWarehouseItem(
 				String externalReferenceCode, long companyId,
 				long commerceInventoryWarehouseId, BigDecimal quantity,
-				String sku, String unitOfMeasureKey)
+				BigDecimal reservedQuantity, String sku,
+				String unitOfMeasureKey)
 		throws PortalException {
 
 		_commerceInventoryWarehouseModelResourcePermission.check(
@@ -69,7 +72,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 		return commerceInventoryWarehouseItemLocalService.
 			addOrUpdateCommerceInventoryWarehouseItem(
 				externalReferenceCode, companyId, getUserId(),
-				commerceInventoryWarehouseId, quantity, sku, unitOfMeasureKey);
+				commerceInventoryWarehouseId, quantity, reservedQuantity, sku,
+				unitOfMeasureKey);
 	}
 
 	@Override
@@ -409,7 +413,8 @@ public class CommerceInventoryWarehouseItemServiceImpl
 	@Override
 	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
 			long commerceInventoryWarehouseItemId, BigDecimal quantity,
-			BigDecimal reservedQuantity, long mvccVersion)
+			BigDecimal reservedQuantity, String unitOfMeasureKey,
+			long mvccVersion)
 		throws PortalException {
 
 		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
@@ -428,32 +433,7 @@ public class CommerceInventoryWarehouseItemServiceImpl
 		return commerceInventoryWarehouseItemLocalService.
 			updateCommerceInventoryWarehouseItem(
 				getUserId(), commerceInventoryWarehouseItemId, quantity,
-				reservedQuantity, mvccVersion);
-	}
-
-	@Override
-	public CommerceInventoryWarehouseItem updateCommerceInventoryWarehouseItem(
-			long commerceInventoryWarehouseItemId, long mvccVersion,
-			BigDecimal quantity, String unitOfMeasureKey)
-		throws PortalException {
-
-		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
-			commerceInventoryWarehouseItemLocalService.
-				fetchCommerceInventoryWarehouseItem(
-					commerceInventoryWarehouseItemId);
-
-		if (commerceInventoryWarehouseItem != null) {
-			_commerceInventoryWarehouseModelResourcePermission.check(
-				getPermissionChecker(),
-				commerceInventoryWarehouseItem.
-					getCommerceInventoryWarehouseId(),
-				ActionKeys.UPDATE);
-		}
-
-		return commerceInventoryWarehouseItemLocalService.
-			updateCommerceInventoryWarehouseItem(
-				getUserId(), commerceInventoryWarehouseItemId, mvccVersion,
-				quantity, unitOfMeasureKey);
+				reservedQuantity, unitOfMeasureKey, mvccVersion);
 	}
 
 	@Reference(

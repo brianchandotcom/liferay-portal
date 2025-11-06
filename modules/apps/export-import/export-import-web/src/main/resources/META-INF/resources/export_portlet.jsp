@@ -77,6 +77,7 @@ PortletURL portletURL = PortletURLBuilder.createRenderURL(
 			<portlet:param name="tabs2" value="export" />
 			<portlet:param name="tabs3" value="current-and-previous" />
 			<portlet:param name="portletResource" value="<%= portletResource %>" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 		</liferay-portlet:renderURL>
 
 		<aui:form action='<%= exportURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">

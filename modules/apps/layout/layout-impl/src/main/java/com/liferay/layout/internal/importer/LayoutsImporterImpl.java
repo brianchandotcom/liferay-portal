@@ -930,32 +930,47 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private void _handleEntryImportException(
-		Exception exception,
-		List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
-		String name, String typeName, String zipPath) {
+			PortalException portalException,
+			List<LayoutsImporterResultEntry> layoutsImporterResultEntries,
+			String name, String typeName, String zipPath)
+		throws PortalException {
 
-		String messageException = StringPool.BLANK;
 		String[] messageArgs;
 		String messageKey;
 
-		if (exception instanceof NoSuchClassTypeException) {
+		if (portalException instanceof DropzoneLayoutStructureItemException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
+			throw new PortalException(portalException);
+		}
+		else if (portalException instanceof NoSuchClassTypeException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
 			messageArgs = new String[] {zipPath};
 			messageKey = _MESSAGE_KEY_TYPE_INVALID;
 		}
-		else if (exception instanceof PortletIdException) {
-			messageException =
-				"Unable to add uninstanceable portlet with ID " +
-					exception.getMessage() + " more than once";
-			messageArgs = new String[] {zipPath, exception.getMessage()};
+		else if (portalException instanceof PortletIdException) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Unable to add uninstanceable portlet with ID " +
+						portalException.getMessage() + " more than once",
+					portalException);
+			}
+
+			messageArgs = new String[] {zipPath, portalException.getMessage()};
 			messageKey = _MESSAGE_UNINSTANCEABLE_PORTLET_ID_EXCEPTION;
 		}
 		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn(portalException);
+			}
+
 			messageArgs = new String[] {zipPath, typeName};
 			messageKey = _MESSAGE_KEY_NAME_INVALID;
-		}
-
-		if (_log.isWarnEnabled()) {
-			_log.warn(messageException, exception);
 		}
 
 		layoutsImporterResultEntries.add(
@@ -1634,28 +1649,12 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							_MESSAGE_KEY_IGNORED)));
 			}
 		}
-		catch (DropzoneLayoutStructureItemException
-					dropzoneLayoutStructureItemException) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(dropzoneLayoutStructureItemException);
-			}
-
-			throw new PortalException(dropzoneLayoutStructureItemException);
-		}
 		catch (PortalException portalException) {
 			_handleEntryImportException(
 				portalException, layoutsImporterResultEntries, name,
 				_toTypeName(layoutPageTemplateEntryType), zipPath);
 
 			return null;
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			throw new PortalException(exception);
 		}
 
 		return layoutPageTemplateEntry;
@@ -1828,26 +1827,10 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 							_MESSAGE_KEY_IGNORED)));
 			}
 		}
-		catch (DropzoneLayoutStructureItemException
-					dropzoneLayoutStructureItemException) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(dropzoneLayoutStructureItemException);
-			}
-
-			throw new PortalException(dropzoneLayoutStructureItemException);
-		}
 		catch (PortalException portalException) {
 			_handleEntryImportException(
 				portalException, layoutsImporterResultEntries, name,
 				"utility page", zipPath);
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(exception);
-			}
-
-			throw new PortalException(exception);
 		}
 	}
 

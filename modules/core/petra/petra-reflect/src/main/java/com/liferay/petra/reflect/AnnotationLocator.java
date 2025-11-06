@@ -49,6 +49,13 @@ public class AnnotationLocator {
 	public static Map<Class<? extends Annotation>, Annotation> index(
 		Method method, Class<?> targetClass) {
 
+		Set<Class<? extends Annotation>> concludedAnnotationClasses =
+			new HashSet<>();
+		Map<Class<? extends Annotation>, Annotation> indexMap =
+			new LinkedHashMap<>();
+
+		Class<?> clazz = null;
+
 		Queue<Class<?>> queue = new LinkedList<>();
 
 		if (targetClass == null) {
@@ -57,14 +64,6 @@ public class AnnotationLocator {
 		else {
 			queue.offer(targetClass);
 		}
-
-		Set<Class<? extends Annotation>> concludedAnnotationClasses =
-			new HashSet<>();
-
-		Map<Class<? extends Annotation>, Annotation> indexMap =
-			new LinkedHashMap<>();
-
-		Class<?> clazz = null;
 
 		while ((clazz = queue.poll()) != null) {
 			Method specificMethod = ReflectionUtil.fetchDeclaredMethod(

@@ -10,7 +10,7 @@ import React from 'react';
 
 import FilePreview from '../../../common/components/FilePreview';
 import {ISearchAssetObjectEntry} from '../../../common/types/AssetType';
-import ContentPreview from './ContentPreview';
+import ContentPreview from '../../../common/components/ContentPreview';
 
 const Arrow = ({
 	ariaLabel,

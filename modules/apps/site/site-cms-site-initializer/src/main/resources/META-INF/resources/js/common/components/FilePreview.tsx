@@ -9,7 +9,7 @@ import {ImagePreviewer} from 'document-library-preview-image';
 import {DLVideoIframe} from 'document-library-video';
 import React from 'react';
 
-import {IAssetFile} from '../../../common/types/AssetType';
+import {IAssetFile} from '../types/AssetType';
 
 export default function FilePreview({
 	file: {

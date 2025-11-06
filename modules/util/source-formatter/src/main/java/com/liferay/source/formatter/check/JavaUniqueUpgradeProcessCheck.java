@@ -44,12 +44,10 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 		List<String> implementedClassNames =
 			javaClass.getImplementedClassNames();
 
-		String content = javaClass.getContent();
-
 		if (!implementedClassNames.contains("PortalUpgradeProcessRegistry") &&
 			!implementedClassNames.contains("UpgradeStepRegistrator")) {
 
-			return content;
+			return javaClass.getContent();
 		}
 
 		for (JavaTerm childJavaTerm : javaClass.getChildJavaTerms()) {
@@ -76,7 +74,7 @@ public class JavaUniqueUpgradeProcessCheck extends BaseJavaTermCheck {
 			}
 		}
 
-		return content;
+		return javaClass.getContent();
 	}
 
 	@Override

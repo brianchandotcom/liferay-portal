@@ -19,6 +19,15 @@ import formatActionURL from '../utils/actionItems/formatActionURL';
 import isLink from '../utils/isLink';
 import {IActionsDropdown, IItemsActions} from '../utils/types';
 
+type TClayDropDownItem = NonNullable<
+	React.ComponentProps<typeof ClayDropDownWithItems>['items']
+>[number] &
+	React.HTMLAttributes<HTMLLIElement>;
+
+function isDefined(value: any) {
+	return value !== null && value !== undefined;
+}
+
 function ActionsDropdown({
 	actions,
 	itemData,
@@ -45,53 +54,66 @@ function ActionsDropdown({
 				(action) => !!action.icon
 			);
 
-			return currentActions
-				.map((action) => {
-					const {
-						className,
-						disabled,
-						icon,
-						items: nestedItems,
-						label,
-						separator,
-						type,
-					} = action;
+			return currentActions.flatMap((action, index) => {
+				const {
+					className,
+					disabled,
+					icon,
+					items: nestedItems,
+					label,
+					separator,
+					type,
+				} = action;
 
-					const newItem: any = {
-						className,
-						disabled,
-						href:
-							action.href &&
-							formatActionURL(
-								action.href,
-								itemData,
-								action.target
-							),
-						label,
-						onClick: (event: any) => {
-							onClick({
-								action,
-								closeMenu: () =>
-									onMenuActiveChange &&
-									onMenuActiveChange(false),
-								event,
-							});
-						},
-						separator,
-						type,
-					};
+				const newItem: TClayDropDownItem = {};
 
-					if (hasIconsInGroup) {
-						newItem.symbolLeft = icon;
-					}
+				if (isDefined(className)) {
+					newItem.className = className;
+				}
 
-					if (nestedItems?.length) {
-						newItem.items = mapActionsToItems(nestedItems);
-					}
+				if (isDefined(disabled)) {
+					newItem.disabled = disabled;
+				}
 
-					return newItem;
-				})
-				.filter(Boolean);
+				if (isDefined(action.href)) {
+					newItem.href = formatActionURL(
+						action.href,
+						itemData,
+						action.target
+					);
+				}
+
+				if (nestedItems?.length) {
+					newItem.items = mapActionsToItems(nestedItems);
+				}
+
+				if (isDefined(label)) {
+					newItem.label = label;
+				}
+
+				newItem.onClick = (event: any) => {
+					onClick({
+						action,
+						closeMenu: () =>
+							onMenuActiveChange && onMenuActiveChange(false),
+						event,
+					});
+				};
+
+				if (hasIconsInGroup) {
+					newItem.symbolLeft = icon;
+				}
+
+				if (isDefined(type)) {
+					newItem.type = type;
+				}
+
+				if (separator && index > 0 && nestedItems?.length) {
+					return [{type: 'divider'}, newItem];
+				}
+
+				return [newItem];
+			});
 		};
 
 		return mapActionsToItems(actions);

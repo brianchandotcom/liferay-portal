@@ -326,7 +326,18 @@ public class CustomFDSSerializer
 		Map<String, Object> properties = getDataSetObjectEntryProperties(
 			fdsName, httpServletRequest);
 
-		return (boolean)properties.get("hideManagementBarInEmptyState");
+		Object hideManagementBarInEmptyState = properties.get(
+			"hideManagementBarInEmptyState");
+
+		if (hideManagementBarInEmptyState == null) {
+			return false;
+		}
+
+		if (hideManagementBarInEmptyState instanceof Boolean) {
+			return (boolean)hideManagementBarInEmptyState;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -957,8 +968,13 @@ public class CustomFDSSerializer
 	}
 
 	private boolean _isCollection(String fieldName, String sourceType) {
-		return fieldName.contains(StringPool.OPEN_BRACKET) &&
-			   Objects.equals(sourceType, "OBJECT_PICKLIST");
+		if (fieldName.contains(StringPool.OPEN_BRACKET) &&
+			Objects.equals(sourceType, "OBJECT_PICKLIST")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private JSONObject _serializeFilter(

@@ -97,7 +97,7 @@ public class CISystemStatusReportUtil {
 	}
 
 	public static void writeConfigJSFile(String filePath) throws IOException {
-		int maxYAxes = 2370;
+		int maxYAxes = 1320;
 
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
 			maxYAxes = 1210;

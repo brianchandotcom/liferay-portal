@@ -119,6 +119,7 @@ public class ObjectEntryPerformanceTest {
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
+				_customObjectDefinition.getCompanyId(),
 				_customObjectDefinition.getStorageType());
 
 		DTOConverterContext dtoConverterContext =

@@ -126,7 +126,7 @@ public class ObjectEntryDisplayContextImplTest {
 
 		Mockito.when(
 			objectEntryManagerRegistry.getObjectEntryManager(
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)
+				companyId, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)
 		).thenReturn(
 			objectEntryManager
 		);

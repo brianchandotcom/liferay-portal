@@ -1009,6 +1009,7 @@ public class BatchEngineBrokerTest {
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					objectDefinition.getCompanyId(),
 					objectDefinition.getStorageType()));
 
 		return _objectMapper.convertValue(

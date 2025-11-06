@@ -82,6 +82,7 @@ public class ObjectEntryInfoItemActionExecutor
 			DefaultObjectEntryManager defaultObjectEntryManager =
 				DefaultObjectEntryManagerProvider.provide(
 					_objectEntryManagerRegistry.getObjectEntryManager(
+						_objectDefinition.getCompanyId(),
 						_objectDefinition.getStorageType()));
 
 			ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();

@@ -82,6 +82,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		_checkCurrentObjectEntry(
@@ -162,6 +163,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getRelatedObjectEntry(
@@ -181,6 +183,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =
@@ -236,6 +239,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getRelatedObjectEntry(
@@ -271,6 +275,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.getRelatedObjectEntry(
@@ -292,6 +297,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
@@ -312,6 +318,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
@@ -334,6 +341,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.partialUpdateRelatedObjectEntry(
@@ -354,6 +362,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.addRelatedObjectEntry(
@@ -374,6 +383,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.addRelatedObjectEntry(
@@ -393,6 +403,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.addRelatedObjectEntry(
@@ -447,6 +458,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =
@@ -484,6 +496,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		return defaultObjectEntryManager.updateRelatedObjectEntry(
@@ -540,6 +553,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		defaultObjectEntryManager.deleteRelatedObjectEntry(
@@ -584,6 +598,7 @@ public class ObjectEntryRelatedObjectsResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType()));
 
 		ObjectRelationship objectRelationship =

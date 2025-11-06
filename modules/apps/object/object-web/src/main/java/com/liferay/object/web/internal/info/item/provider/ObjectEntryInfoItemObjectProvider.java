@@ -121,6 +121,7 @@ public class ObjectEntryInfoItemObjectProvider
 
 		ObjectEntryManager objectEntryManager =
 			_objectEntryManagerRegistry.getObjectEntryManager(
+				_objectDefinition.getCompanyId(),
 				_objectDefinition.getStorageType());
 
 		try {

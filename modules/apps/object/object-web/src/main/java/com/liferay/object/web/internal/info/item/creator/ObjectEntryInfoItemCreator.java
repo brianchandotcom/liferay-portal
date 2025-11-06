@@ -63,6 +63,7 @@ public class ObjectEntryInfoItemCreator
 
 			ObjectEntryManager objectEntryManager =
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					_objectDefinition.getCompanyId(),
 					_objectDefinition.getStorageType());
 
 			ServiceContext serviceContext =

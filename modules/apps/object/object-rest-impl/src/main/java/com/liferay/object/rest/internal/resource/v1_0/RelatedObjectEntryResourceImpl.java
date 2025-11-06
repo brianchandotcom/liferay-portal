@@ -110,6 +110,7 @@ public class RelatedObjectEntryResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					systemObjectDefinition.getCompanyId(),
 					systemObjectDefinition.getStorageType()));
 
 		if (relatedObjectDefinition.isUnmodifiableSystemObject()) {
@@ -244,6 +245,7 @@ public class RelatedObjectEntryResourceImpl
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
+					systemObjectDefinition.getCompanyId(),
 					systemObjectDefinition.getStorageType()));
 
 		ObjectDefinition relatedObjectDefinition = _getRelatedObjectDefinition(

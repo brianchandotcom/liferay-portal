@@ -145,6 +145,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 						DefaultObjectEntryManagerProvider.provide(
 							_dataSetObjectEntryManagerRegistry.
 								getObjectEntryManager(
+									dataSetObjectDefinition.getCompanyId(),
 									dataSetObjectDefinition.getStorageType()));
 
 					dataSetObjectEntry =

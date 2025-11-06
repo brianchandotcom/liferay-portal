@@ -91,42 +91,6 @@ public class AnalyticsRestController extends BaseRestController {
 			).toUri());
 	}
 
-	@GetMapping("project/{projectId}/data-source")
-	public String getProjectDataSource(
-			@RequestParam(defaultValue = "1", required = false) int cur,
-			@RequestParam(defaultValue = "20", required = false) int delta,
-			@PathVariable String projectId)
-		throws Exception {
-
-		return get(
-			"Basic " + _analyticsAuthBasic,
-			UriComponentsBuilder.fromUriString(
-				_analyticsAuthUrl
-			).path(
-				"/o/faro/contacts/" + projectId + "/data_source"
-			).queryParam(
-				"cur", cur
-			).queryParam(
-				"delta", delta
-			).build(
-			).toUri());
-	}
-
-	@GetMapping("project/{projectId}/data-source/token")
-	public String getProjectDataSourceToken(@PathVariable String projectId)
-		throws Exception {
-
-		return get(
-			Collections.singletonMap(
-				HttpHeaders.AUTHORIZATION, "Basic " + _analyticsAuthBasic),
-			UriComponentsBuilder.fromUriString(
-				_analyticsAuthUrl
-			).path(
-				"/o/faro/contacts/" + projectId + "/data_source/token"
-			).build(
-			).toUri());
-	}
-
 	@GetMapping("project/{projectId}/email-address-domains")
 	public String getProjectEmailAddressDomains(@PathVariable String projectId)
 		throws Exception {

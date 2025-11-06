@@ -228,6 +228,69 @@ public class ClassNameDataCleanupVerifyProcessTest {
 	}
 
 	@Test
+	public void testLiferayNotFoundUsedInResourcePermissionClassNameIsNotDeleted()
+		throws Exception {
+
+		AtomicReference<ClassName> classNameAtomicReference =
+			new AtomicReference<>();
+		String classNameValue =
+			"com.liferay.test." + RandomTestUtil.randomString();
+		long resourcePermissionId = RandomTestUtil.nextLong();
+
+		_test(
+			logCapture -> {
+				List<String> messages = logCapture.getMessages();
+
+				Assert.assertTrue(
+					messages.toString(),
+					messages.contains(
+						StringBundler.concat(
+							"ClassName ", classNameValue,
+							" has not been found but is referenced in the ",
+							"next tables: ",
+							_dbInspector.normalizeName("ResourcePermission"))));
+
+				ClassName className = _classNameLocalService.fetchClassName(
+					classNameValue);
+
+				Assert.assertEquals(classNameValue, className.getValue());
+			},
+			() -> {
+				if (classNameAtomicReference.get() != null) {
+					_classNameLocalService.deleteClassName(
+						classNameAtomicReference.get());
+				}
+
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"delete from ResourcePermission where " +
+								"resourcePermissionId = ?")) {
+
+					preparedStatement.setLong(1, resourcePermissionId);
+					preparedStatement.executeUpdate();
+				}
+			},
+			() -> {
+				ClassName className = _classNameLocalService.addClassName(
+					classNameValue);
+
+				classNameAtomicReference.set(className);
+
+				try (PreparedStatement preparedStatement =
+						_connection.prepareStatement(
+							"insert into ResourcePermission (mvccVersion, " +
+								"ctCollectionId, resourcePermissionId, name) " +
+									"values (0, 0, ?, ?)")) {
+
+					preparedStatement.setLong(1, resourcePermissionId);
+					preparedStatement.setString(2, classNameValue);
+
+					preparedStatement.executeUpdate();
+				}
+			});
+	}
+
+	@Test
 	public void testModulesNotStartedVerifyNotRun() throws Exception {
 		AtomicReference<Bundle> bundleAtomicReference = new AtomicReference<>();
 

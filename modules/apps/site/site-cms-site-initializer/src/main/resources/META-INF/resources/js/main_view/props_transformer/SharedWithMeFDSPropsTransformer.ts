@@ -60,7 +60,8 @@ export default function SharedWithMeFDSPropsTransformer({
 						Boolean(
 							item?.className !==
 								OBJECT_ENTRY_FOLDER_CLASS_NAME &&
-								item?.actionIds?.includes('UPDATE')
+								item?.actionIds?.includes('UPDATE') &&
+								item?.visible
 						),
 				};
 			}
@@ -74,13 +75,16 @@ export default function SharedWithMeFDSPropsTransformer({
 				return {
 					...action,
 					isVisible: (item: any) =>
-						Boolean(item?.actionIds?.includes('UPDATE')),
+						Boolean(
+							item?.actionIds?.includes('UPDATE') && item?.visible
+						),
 				};
 			}
 			else if (action?.data?.id === 'share') {
 				return {
 					...action,
-					isVisible: (item: any) => Boolean(item?.shareable),
+					isVisible: (item: any) =>
+						Boolean(item?.shareable && item?.visible),
 				};
 			}
 			else if (action?.data?.id === 'view-content') {

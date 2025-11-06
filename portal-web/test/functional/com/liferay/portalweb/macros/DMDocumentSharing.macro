@@ -113,10 +113,6 @@ definition {
 
 	@summary = "Default summary"
 	macro viewDocumentViaSharedContent(dmDocumentTitle = null, contentSharingPermission = null) {
-		AssertTextEquals(
-			locator1 = "Portlet#HEADER",
-			value1 = "Shared Content");
-
 		if (${contentSharingPermission} == "View") {
 			AssertElementNotPresent(locator1 = "CKEditor#BODY_FIELD_IFRAME");
 

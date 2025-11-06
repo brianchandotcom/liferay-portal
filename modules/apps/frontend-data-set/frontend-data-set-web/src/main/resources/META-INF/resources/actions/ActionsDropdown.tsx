@@ -47,10 +47,19 @@ function ActionsDropdown({
 
 			return currentActions
 				.map((action) => {
-					const {items: nestedItems, ...item} = action;
+					const {
+						className,
+						disabled,
+						icon,
+						items: nestedItems,
+						label,
+						separator,
+						type,
+					} = action;
 
 					const newItem: any = {
-						...item,
+						className,
+						disabled,
 						href:
 							action.href &&
 							formatActionURL(
@@ -58,6 +67,7 @@ function ActionsDropdown({
 								itemData,
 								action.target
 							),
+						label,
 						onClick: (event: any) => {
 							onClick({
 								action,
@@ -67,10 +77,12 @@ function ActionsDropdown({
 								event,
 							});
 						},
+						separator,
+						type,
 					};
 
 					if (hasIconsInGroup) {
-						newItem.symbolLeft = item.icon;
+						newItem.symbolLeft = icon;
 					}
 
 					if (nestedItems?.length) {

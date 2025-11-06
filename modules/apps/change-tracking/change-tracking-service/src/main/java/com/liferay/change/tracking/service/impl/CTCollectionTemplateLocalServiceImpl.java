@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.time.Instant;
 import java.time.LocalDate;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -93,18 +94,25 @@ public class CTCollectionTemplateLocalServiceImpl
 			CTCollectionTemplate ctCollectionTemplate)
 		throws PortalException {
 
-		long ctDefaultCTCollectionTemplateId =
-			_ctSettingsConfigurationHelper.getDefaultCTCollectionTemplateId(
-				ctCollectionTemplate.getCompanyId());
+		Map<String, Object> properties = new HashMap<>();
 
-		if (ctDefaultCTCollectionTemplateId ==
-				ctCollectionTemplate.getCtCollectionTemplateId()) {
-
-			_ctSettingsConfigurationHelper.save(
+		if (_ctSettingsConfigurationHelper.isDefaultCTCollectionTemplate(
 				ctCollectionTemplate.getCompanyId(),
-				HashMapBuilder.<String, Object>put(
-					"defaultCTCollectionTemplateId", 0
-				).build());
+				ctCollectionTemplate.getCtCollectionTemplateId())) {
+
+			properties.put("defaultCTCollectionTemplateId", 0);
+		}
+
+		if (_ctSettingsConfigurationHelper.isDefaultSandboxCTCollectionTemplate(
+				ctCollectionTemplate.getCompanyId(),
+				ctCollectionTemplate.getCtCollectionTemplateId())) {
+
+			properties.put("defaultSandboxCTCollectionTemplateId", 0);
+		}
+
+		if (!properties.isEmpty()) {
+			_ctSettingsConfigurationHelper.save(
+				ctCollectionTemplate.getCompanyId(), properties);
 		}
 
 		ctCollectionTemplatePersistence.remove(ctCollectionTemplate);

@@ -8,6 +8,7 @@ package com.liferay.portal.verify.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.db.DBResourceUtil;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -25,6 +26,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.PortalUpgradeProcess;
@@ -34,6 +38,7 @@ import com.liferay.portal.verify.test.util.BaseVerifyProcessTestCase;
 
 import java.sql.Connection;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -84,6 +89,28 @@ public class PreupgradeVerifyDatabaseStateTest
 			if (_safeCloseable != null) {
 				_safeCloseable.close();
 			}
+		}
+	}
+
+	@Test
+	public void testMissingColumnName() throws Exception {
+		_renameColumn("UserTracker", "companyId", "companyId_backup LONG");
+
+		try {
+			testVerify();
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertEquals(
+				StringBundler.concat(
+					"Column ", _getNormalizedName("companyId"),
+					" is missing for ", _getNormalizedName("UserTracker"),
+					_getPartitionSuffix(), StringPool.NEW_LINE),
+				exception.getMessage());
+		}
+		finally {
+			_renameColumn("UserTracker", "companyId_backup", "companyId LONG");
 		}
 	}
 
@@ -219,9 +246,48 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 	}
 
+	@Test
+	public void testWrongColumnType() throws Exception {
+		_alterColumnType("Address", "city", "VARCHAR(100)");
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				PreupgradeVerifyDatabaseState.class.getName(),
+				LoggerTestUtil.WARN)) {
+
+			testVerify();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertEquals(logEntries.toString(), 1, logEntries.size());
+
+			LogEntry logEntry = logEntries.get(0);
+
+			Assert.assertEquals(
+				logEntry.getMessage(),
+				StringBundler.concat(
+					"Column ", _getNormalizedName("city"),
+					" is not defined as VARCHAR(75) null for ",
+					_getNormalizedName("Address"), _getPartitionSuffix()));
+		}
+		finally {
+			_alterColumnType("Address", "city", "VARCHAR(75)");
+		}
+	}
+
 	@Override
 	protected VerifyProcess getVerifyProcess() {
 		return new PreupgradeVerifyDatabaseState();
+	}
+
+	private void _alterColumnType(
+			String tableName, String columnName, String columnType)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		try (Connection connection = DataAccess.getConnection()) {
+			db.alterColumnType(connection, tableName, columnName, columnType);
+		}
 	}
 
 	private String _getNormalizedName(String tableName) throws Exception {
@@ -230,6 +296,19 @@ public class PreupgradeVerifyDatabaseStateTest
 
 			return dbInspector.normalizeName(tableName);
 		}
+	}
+
+	private String _getPartitionSuffix() {
+		String partitionSuffix = StringPool.BLANK;
+
+		if (PropsValues.DATABASE_PARTITION_ENABLED) {
+			String partitionName = DBPartitionUtil.getPartitionName(
+				CompanyThreadLocal.getNonsystemCompanyId());
+
+			partitionSuffix = " in " + partitionName;
+		}
+
+		return partitionSuffix;
 	}
 
 	private ServiceComponent _getServiceComponent() {
@@ -244,6 +323,18 @@ public class PreupgradeVerifyDatabaseStateTest
 		}
 
 		return null;
+	}
+
+	private void _renameColumn(
+			String tableName, String oldColumnName, String newColumnDefinition)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		try (Connection connection = DataAccess.getConnection()) {
+			db.alterColumnName(
+				connection, tableName, oldColumnName, newColumnDefinition);
+		}
 	}
 
 	private void _renameView(String fromViewName, String toViewName)

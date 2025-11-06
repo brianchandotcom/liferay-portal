@@ -6,7 +6,6 @@
 package com.liferay.bulk.rest.internal.resource.v1_0;
 
 import com.liferay.bulk.rest.dto.v1_0.BulkAction;
-import com.liferay.bulk.rest.dto.v1_0.BulkActionItem;
 import com.liferay.bulk.rest.dto.v1_0.BulkActionTask;
 import com.liferay.bulk.rest.dto.v1_0.DefaultPermissionBulkAction;
 import com.liferay.bulk.rest.dto.v1_0.PermissionBulkAction;
@@ -32,10 +31,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.search.IndexerRegistry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.Permission;
 
@@ -85,7 +83,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkActionBulkSelectionFactory bulkActionBulkSelectionFactory =
 			_getBulkActionBulkSelectionFactory(
 				blueprintExternalReferenceCode, emptySearch, entryClassNames,
-				scope, search, filter, pagination, sorts, bulkAction);
+				scope, search, filter, sorts, bulkAction);
 
 		BulkSelection<Object> bulkSelection =
 			bulkActionBulkSelectionFactory.create();
@@ -103,16 +101,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			_getInputMap(bulkAction, bulkActionTask, type));
 
 		return bulkActionTask;
-	}
-
-	@Override
-	public Page<BulkActionItem> postBulkActionItemPreviewPage(
-			Boolean fetchChildren, String search, Filter filter,
-			Pagination pagination, Sort[] sorts, BulkAction bulkAction)
-		throws Exception {
-
-		return super.postBulkActionItemPreviewPage(
-			fetchChildren, search, filter, pagination, sorts, bulkAction);
 	}
 
 	private BulkActionTask _addBulkActionTask(BulkAction.Type type)
@@ -137,19 +125,15 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build(),
 			new ServiceContext());
 
-		Map<String, Serializable> values = objectEntry.getValues();
-
 		return new BulkActionTask() {
 			{
-				setActionName(
-					() -> GetterUtil.getString(values.get("actionName")));
+				setActionName(() -> GetterUtil.getString(type.toString()));
 				setAuthor(objectEntry::getUserName);
 				setCreatedDate(objectEntry::getCreateDate);
-				setExecuteStatus(
-					() -> GetterUtil.getString(values.get("executionStatus")));
+				setExecuteStatus(() -> GetterUtil.getString("initial"));
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setId(objectEntry::getObjectEntryId);
-				setType(() -> GetterUtil.getString(values.get("type")));
+				setType(() -> GetterUtil.getString(type.toString()));
 			}
 		};
 	}
@@ -157,15 +141,15 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private BulkActionBulkSelectionFactory _getBulkActionBulkSelectionFactory(
 		String blueprintExternalReferenceCode, Boolean emptySearch,
 		String entryClassNames, String scope, String search, Filter filter,
-		Pagination pagination, Sort[] sorts, BulkAction bulkAction) {
+		Sort[] sorts, BulkAction bulkAction) {
 
 		return new BulkActionBulkSelectionFactory.Builder(
 		).bulkSelectionFactoryRegistry(
 			_bulkSelectionFactoryRegistry
-		).indexerRegistry(
-			_indexerRegistry
 		).filterFactory(
 			_filterFactory
+		).groupLocalService(
+			_groupLocalService
 		).localization(
 			_localization
 		).searcher(
@@ -192,8 +176,6 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			search
 		).filter(
 			filter
-		).pagination(
-			pagination
 		).sorts(
 			sorts
 		).bulkAction(
@@ -209,13 +191,13 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkAction.Type type) {
 
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
-			return _defaultPermissionObjectsBulkSelectionAction;
+			return _defaultPermissionObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
-			return _deleteObjectsBulkSelectionAction;
+			return _deleteObjectBulkSelectionAction;
 		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
-			return _permissionObjectsTagsBulkSelectionAction;
+			return _permissionObjectBulkSelectionAction;
 		}
 
 		throw new UnsupportedOperationException();
@@ -225,10 +207,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 		BulkAction bulkAction, BulkActionTask bulkActionTask,
 		BulkAction.Type type) {
 
+		HashMapBuilder.HashMapWrapper<String, Serializable> hashMapWrapper =
+			HashMapBuilder.<String, Serializable>put(
+				"bulkActionTaskId", bulkActionTask.getId());
+
 		if (BulkAction.Type.DEFAULT_PERMISSION_BULK_ACTION.equals(type)) {
-			return HashMapBuilder.<String, Serializable>put(
-				"bulkActionTaskId", bulkActionTask.getId()
-			).put(
+			return hashMapWrapper.put(
 				"defaultPermissions",
 				() -> {
 					DefaultPermissionBulkAction defaultPermissionBulkAction =
@@ -239,16 +223,10 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 			).build();
 		}
 		else if (BulkAction.Type.DELETE_BULK_ACTION.equals(type)) {
-			return HashMapBuilder.<String, Serializable>put(
-				"bulkActionTaskId", bulkActionTask.getId()
-			).build();
+			return hashMapWrapper.build();
 		}
 		else if (BulkAction.Type.PERMISSION_BULK_ACTION.equals(type)) {
-			return HashMapBuilder.<String, Serializable>put(
-				"bulkActionTaskId", bulkActionTask.getId()
-			).put(
-				"companyId", contextCompany.getCompanyId()
-			).put(
+			return hashMapWrapper.put(
 				"permissions",
 				() -> {
 					PermissionBulkAction permissionBulkAction =
@@ -312,10 +290,9 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private Permission[] _getPermissions(
 		String className, JSONObject jsonObject, Map<String, Role> roles) {
 
+		List<Permission> permissionList = new ArrayList<>(jsonObject.length());
 		List<String> resourceActions = ResourceActionsUtil.getResourceActions(
 			className);
-
-		List<Permission> permissionList = new ArrayList<>(jsonObject.length());
 
 		Iterator<String> iterator = jsonObject.keys();
 
@@ -358,14 +335,12 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private BulkSelectionRunner _bulkSelectionRunner;
 
-	@Reference(
-		target = "(bulk.selection.action.key=default.permission.objects)"
-	)
+	@Reference(target = "(bulk.selection.action.key=default.permission.object)")
 	private BulkSelectionAction<Object>
-		_defaultPermissionObjectsBulkSelectionAction;
+		_defaultPermissionObjectBulkSelectionAction;
 
-	@Reference(target = "(bulk.selection.action.key=delete.objects)")
-	private BulkSelectionAction<Object> _deleteObjectsBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=delete.object)")
+	private BulkSelectionAction<Object> _deleteObjectBulkSelectionAction;
 
 	@Reference(
 		target = "(filter.factory.key=" + ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT + ")"
@@ -373,7 +348,7 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	private FilterFactory<Predicate> _filterFactory;
 
 	@Reference
-	private IndexerRegistry _indexerRegistry;
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -387,9 +362,8 @@ public class BulkActionResourceImpl extends BaseBulkActionResourceImpl {
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;
 
-	@Reference(target = "(bulk.selection.action.key=permission.objects)")
-	private BulkSelectionAction<Object>
-		_permissionObjectsTagsBulkSelectionAction;
+	@Reference(target = "(bulk.selection.action.key=permission.object)")
+	private BulkSelectionAction<Object> _permissionObjectBulkSelectionAction;
 
 	@Reference
 	private RoleLocalService _roleLocalService;

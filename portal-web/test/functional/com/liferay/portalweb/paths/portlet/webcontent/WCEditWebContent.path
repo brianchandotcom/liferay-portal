@@ -114,6 +114,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_OPTIONS_BUTTON</td>
+	<td>//button[contains(@class, 'dropdown-item') and contains(@aria-label, 'Publish Options')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PUBLISH_WITH_PERMISSIONS_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Publish With Permissions')]</td>
 	<td></td>

@@ -12,6 +12,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -74,21 +76,35 @@ public class ObjectEntryManagerRegistryImpl
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, ObjectEntryManager.class, null,
 			(serviceReference, emitter) -> {
-				ObjectEntryManager objectEntryManager =
-					bundleContext.getService(serviceReference);
+				try {
+					ObjectEntryManager objectEntryManager =
+						bundleContext.getService(serviceReference);
 
-				String key = objectEntryManager.getStorageType();
+					String key = objectEntryManager.getStorageType();
 
-				if (objectEntryManager instanceof CompanyScoped) {
-					CompanyScoped objectEntryManagerCompanyScoped =
-						(CompanyScoped)objectEntryManager;
+					if (objectEntryManager instanceof CompanyScoped) {
+						CompanyScoped objectEntryManagerCompanyScoped =
+							(CompanyScoped)objectEntryManager;
 
-					key = _getCompanyScopedKey(
-						key,
-						objectEntryManagerCompanyScoped.getAllowedCompanyId());
+						key = _getCompanyScopedKey(
+							key,
+							objectEntryManagerCompanyScoped.
+								getAllowedCompanyId());
+					}
+
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							StringBundler.concat(
+								"Registering object entry manager with key ",
+								key, " and class ",
+								objectEntryManager.getClass()));
+					}
+
+					emitter.emit(key);
 				}
-
-				emitter.emit(key);
+				catch (Exception exception) {
+					_log.error("Unable to get object entry manager", exception);
+				}
 			});
 	}
 
@@ -100,6 +116,9 @@ public class ObjectEntryManagerRegistryImpl
 	private String _getCompanyScopedKey(String key, long company) {
 		return StringBundler.concat(key, StringPool.POUND, company);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryManagerRegistryImpl.class);
 
 	private ServiceTrackerMap<String, ObjectEntryManager> _serviceTrackerMap;
 

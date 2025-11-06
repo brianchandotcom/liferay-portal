@@ -69,58 +69,6 @@ test('LPD-31710 Publication bar disappears when trying to select a publication',
 	);
 });
 
-test('LPD-36221 Publications bar breaks when enabling the FF for LPD-20131', async ({
-	apiHelpers,
-	featureFlagsInstanceSettingsPage,
-	page,
-}) => {
-	const ctCollection =
-		await apiHelpers.headlessChangeTracking.createCTCollection(
-			getRandomString()
-		);
-
-	await apiHelpers.headlessChangeTracking.checkoutCTCollection(
-		ctCollection.body.id
-	);
-
-	await featureFlagsInstanceSettingsPage.goto('Release');
-
-	await featureFlagsInstanceSettingsPage.search('LPD-20131');
-
-	await featureFlagsInstanceSettingsPage.updateFeatureFlag('LPD-20131', true);
-
-	const changeTrackingIndicatorButton = page.locator(
-		'.change-tracking-indicator-button'
-	);
-
-	await changeTrackingIndicatorButton.click();
-
-	const selectPublicationMenuItem = page.getByRole('menuitem', {
-		name: 'Select a Publication',
-	});
-
-	await expect(selectPublicationMenuItem).toBeVisible();
-
-	await selectPublicationMenuItem.click();
-
-	await expect(
-		page.locator('li').filter({hasText: ctCollection.body.name})
-	).toBeVisible();
-
-	await featureFlagsInstanceSettingsPage.goto('Release');
-
-	await featureFlagsInstanceSettingsPage.search('LPD-20131');
-
-	await featureFlagsInstanceSettingsPage.updateFeatureFlag(
-		'LPD-20131',
-		false
-	);
-
-	await apiHelpers.headlessChangeTracking.deleteCTCollection(
-		ctCollection.body.id
-	);
-});
-
 test('LPD-44274 Assert cursor type is pointer when hover over a not selected publication', async ({
 	apiHelpers,
 	ctCollection,

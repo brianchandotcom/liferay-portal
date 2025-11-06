@@ -230,44 +230,6 @@ public abstract class BaseWorkspaceGitRepository
 		return getString("sender_branch_username");
 	}
 
-	public boolean isSnapshot() {
-		String directoryName = getDirectoryName();
-
-		String jobVariant = System.getenv("JOB_VARIANT");
-
-		if (directoryName.contains("liferay-portal")) {
-			String jobName = System.getenv("JOB_NAME");
-
-			if (jobName.equals("forward-pullrequest") ||
-				jobName.equals("publish-testray-report") ||
-				jobName.equals("test-portal-source-format") ||
-				jobName.contains("validation")) {
-
-				return false;
-			}
-
-			if (JenkinsResultsParserUtil.isNullOrEmpty(jobVariant)) {
-				return getBoolean("snapshot");
-			}
-
-			if ((jobName.contains("master") &&
-				 jobVariant.contains("modules-unit")) ||
-				jobVariant.contains("service-builder")) {
-
-				return false;
-			}
-		}
-
-		if (directoryName.equals("liferay-release-tool-ee") &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
-			jobVariant.startsWith("portal-license")) {
-
-			return false;
-		}
-
-		return getBoolean("snapshot");
-	}
-
 	@Override
 	public List<List<LocalGitCommit>> partitionLocalGitCommits(
 		List<LocalGitCommit> localGitCommits, int count) {
@@ -557,7 +519,7 @@ public abstract class BaseWorkspaceGitRepository
 		validateKeys(_REQUIRED_KEYS);
 
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			_snapshot = isSnapshot();
+			_snapshot = getBoolean("snapshot");
 		}
 	}
 
@@ -967,6 +929,46 @@ public abstract class BaseWorkspaceGitRepository
 		return _upstreamRemoteGitRef;
 	}
 
+	private boolean _isDotGitDirArchiveRequired() {
+		String directoryName = getDirectoryName();
+
+		String jobVariant = System.getenv("JOB_VARIANT");
+
+		if (directoryName.contains("liferay-portal")) {
+			if (!_snapshot) {
+				return true;
+			}
+
+			String jobName = System.getenv("JOB_NAME");
+
+			if (jobName.equals("forward-pullrequest") ||
+				jobName.equals("publish-testray-report") ||
+				jobName.equals("test-portal-source-format") ||
+				jobName.contains("validation")) {
+
+				return true;
+			}
+
+			if ((jobName.contains("master") &&
+				 !JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+				 jobVariant.contains("modules-unit")) ||
+				jobVariant.contains("service-builder")) {
+
+				return true;
+			}
+		}
+
+		if (directoryName.equals("liferay-release-tool-ee") &&
+			(!_snapshot ||
+			 (!JenkinsResultsParserUtil.isNullOrEmpty(jobVariant) &&
+			  jobVariant.startsWith("portal-license")))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private boolean _isPullRequest() {
 		return PullRequest.isValidGitHubPullRequestURL(getGitHubURL());
 	}
@@ -1040,11 +1042,13 @@ public abstract class BaseWorkspaceGitRepository
 			CloudBucketUtil.uploadS3File(
 				_getGitArchiveS3BucketPath(), archiveFile);
 
-			File dotGitDirArchiveFile = _archiveDotGitDir();
+			if (_isDotGitDirArchiveRequired()) {
+				File dotGitDirArchiveFile = _archiveDotGitDir();
 
-			CloudBucketUtil.uploadS3File(
-				_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
-				dotGitDirArchiveFile);
+				CloudBucketUtil.uploadS3File(
+					_getGitArchiveS3BucketPath(dotGitDirArchiveFile.getName()),
+					dotGitDirArchiveFile);
+			}
 		}
 
 		_setSnapshot(true);

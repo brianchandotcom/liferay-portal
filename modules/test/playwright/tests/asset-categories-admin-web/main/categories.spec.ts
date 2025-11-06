@@ -11,6 +11,9 @@ import {loginTest} from '../../../fixtures/loginTest';
 import {createCategories} from '../../../helpers/CreateCategories';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {assetCategoriesPagesTest} from './fixtures/assetCategoriesAdminPagesTest';
+import {
+	clickAndExpectToBeVisible
+} from "../../../utils/clickAndExpectToBeVisible";
 
 const test = mergeTests(
 	apiHelpersTest,
@@ -57,6 +60,33 @@ test('User can add, edit, delete a category and add a subcategory.', async ({
 		).toBeVisible();
 	});
 
+	await test.step('add a category with duplicate external code reference', async () => {
+		await assetCategoriesAdminPage.gotoAction(
+			'Add Subcategory',
+			categoryNameChanged
+		);
+
+		const subcategoryName = 'Subcategory name';
+
+		await assetCategoriesEditPage.fillName(subcategoryName);
+		await assetCategoriesEditPage.fillExternalReferenceCode(
+			categoryERCChanged
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: assetCategoriesEditPage.saveButton,
+			trigger: page.getByText(
+				'Please enter a unique external reference code.',
+				{
+					exact: true,
+				}
+			),
+		});
+
+		await assetCategoriesAdminPage.goto(site.friendlyUrlPath);
+	});
+
 	await test.step('add a subcategory', async () => {
 		await assetCategoriesAdminPage.gotoAction(
 			'Add Subcategory',
@@ -66,6 +96,7 @@ test('User can add, edit, delete a category and add a subcategory.', async ({
 		const subcategoryName = 'Subcategory name';
 
 		await assetCategoriesEditPage.fillName(subcategoryName);
+
 		await assetCategoriesEditPage.save(`Success:${subcategoryName}`);
 
 		await expect(

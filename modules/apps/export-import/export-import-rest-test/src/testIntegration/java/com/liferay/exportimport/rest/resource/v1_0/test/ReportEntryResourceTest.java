@@ -17,12 +17,18 @@ import com.liferay.exportimport.rest.client.dto.v1_0.ReportEntry;
 import com.liferay.exportimport.rest.client.dto.v1_0.Type;
 import com.liferay.exportimport.rest.client.pagination.Page;
 import com.liferay.exportimport.rest.client.pagination.Pagination;
+import com.liferay.exportimport.rest.client.resource.v1_0.ReportEntryResource;
 import com.liferay.portal.background.task.model.BackgroundTask;
 import com.liferay.portal.background.task.service.BackgroundTaskLocalService;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsValues;
 import com.liferay.portal.test.rule.FeatureFlag;
 import com.liferay.portal.test.rule.Inject;
 
@@ -73,6 +79,7 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 		super.testGetImportProcessReportEntriesPage();
 
 		_testGetImportProcessReportEntriesPageWithEmptyExportImportReportEntry();
+		_testGetImportProcessReportEntriesPageWithLocalizedSearchTerm();
 	}
 
 	@Override
@@ -178,6 +185,37 @@ public class ReportEntryResourceTest extends BaseReportEntryResourceTestCase {
 			null, Pagination.of(1, 10), null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+	}
+
+	private void _testGetImportProcessReportEntriesPageWithLocalizedSearchTerm()
+		throws Exception {
+
+		User user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+
+		reportEntryResource = ReportEntryResource.builder(
+		).authentication(
+			user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.SPAIN
+		).build();
+
+		ReportEntry reportEntry = randomReportEntry();
+
+		reportEntry.setModelName("example-text");
+
+		_addReportEntry(reportEntry);
+
+		Page<ReportEntry> page =
+			reportEntryResource.getImportProcessReportEntriesPage(
+				testGetImportProcessReportEntriesPage_getImportProcessId(),
+				"Texto de ejemplo", null,
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(1, page.getTotalCount());
+
+		assertContains(reportEntry, (List<ReportEntry>)page.getItems());
 	}
 
 	@DeleteAfterTestRun

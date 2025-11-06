@@ -161,7 +161,7 @@ test.describe('Configuration', () => {
 				})
 				.click();
 
-			await pagesAdminPage.clickOnDefineCustomThemeRadio();
+			await pagesAdminPage.defineCustomThemeRadio.click();
 
 			await page.getByRole('checkbox', {name: 'Show Footer'}).uncheck();
 

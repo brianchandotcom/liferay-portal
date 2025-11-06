@@ -16,6 +16,7 @@ export class PagesAdminPage {
 	readonly page: Page;
 
 	readonly addButton: Locator;
+	readonly defineCustomThemeRadio: Locator;
 	readonly newButton: Locator;
 	readonly newTemplatePageButton: Locator;
 
@@ -36,6 +37,9 @@ export class PagesAdminPage {
 		this.configurationSaveButton = page.getByRole('button', {
 			exact: true,
 			name: 'Save',
+		});
+		this.defineCustomThemeRadio = this.page.getByRole('radio', {
+			name: 'Define a custom theme for',
 		});
 		this.javaScriptClientExtensionsTab = page.getByRole('tab', {
 			name: 'JavaScript',
@@ -238,7 +242,7 @@ export class PagesAdminPage {
 	}
 
 	async changeTheme(themeName: string) {
-		await this.clickOnDefineCustomThemeRadio();
+		await this.defineCustomThemeRadio.click();
 
 		await this.page
 			.getByRole('button', {name: 'Change Current Theme'})
@@ -257,12 +261,6 @@ export class PagesAdminPage {
 		await this.configurationSaveButton.waitFor({state: 'visible'});
 
 		await this.saveConfiguration();
-	}
-
-	async clickOnDefineCustomThemeRadio() {
-		await this.page
-			.getByRole('radio', {name: 'Define a custom theme for'})
-			.click();
 	}
 
 	async clickOnJavaScriptClientExtensionsTab() {
@@ -605,7 +603,7 @@ export class PagesAdminPage {
 	async addCustomCSS(pageName: string, css: string) {
 		await this.goToDesignTabConfiguration(pageName);
 
-		await this.clickOnDefineCustomThemeRadio();
+		await this.defineCustomThemeRadio.click();
 
 		await this.page
 			.getByRole('textbox', {exact: true, name: 'CSS'})

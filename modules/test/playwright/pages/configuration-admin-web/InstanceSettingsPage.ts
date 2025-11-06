@@ -113,6 +113,16 @@ export class InstanceSettingsPage {
 		});
 	}
 
+	async editFactoryEntry(entryName: string) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('link', {name: 'Edit'}),
+			trigger: this.page
+				.locator(`tbody tr:has-text("${entryName}")`)
+				.getByRole('button', {name: 'Actions'}),
+		});
+	}
+
 	async goToSSO() {
 		await this.goto();
 		await this.page.getByRole('link', {name: 'SSO'}).click();

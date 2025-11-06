@@ -95,14 +95,8 @@ test('Asserts that a user can manage factory configurations', async ({
 		);
 	});
 
-	await test.step('Assert that factory configurations were edited', async () => {
-		const firstRowLocator = page.locator('tbody tr').first();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: page.getByText('Edit').first(),
-			trigger: firstRowLocator.getByRole('button'),
-		});
+	await test.step('Assert that factory configurations can be edited', async () => {
+		await instanceSettingsPage.editFactoryEntry(providersNames[0]);
 
 		const newProviderName = getRandomString();
 
@@ -113,9 +107,8 @@ test('Asserts that a user can manage factory configurations', async ({
 			type: 'success',
 		});
 
-		await expect((await firstRowLocator.innerText()).trim()).toBe(
-			newProviderName
-		);
+		expect(page.locator(`tbody tr:has-text("${providersNames[0]}")`)).not.toBeVisible();
+		expect(page.locator(`tbody tr:has-text("${newProviderName}")`)).toBeVisible();
 	});
 
 	await test.step('Assert that factory configurations were deleted', async () => {

@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -170,20 +169,6 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 		return null;
 	}
 
-	private String _toModelName(String modelName) {
-		String modelResourceKey = "model.resource." + modelName;
-
-		String value = _language.get(
-			contextAcceptLanguage.getPreferredLocale(), modelResourceKey);
-
-		if (!StringUtil.equals(modelResourceKey, value)) {
-			return value;
-		}
-
-		return _language.get(
-			contextAcceptLanguage.getPreferredLocale(), modelName);
-	}
-
 	private Origin _toOrigin(int origin) {
 		return new Origin() {
 			{
@@ -223,7 +208,9 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 							exportImportReportEntry.getErrorStacktrace()));
 				setId(exportImportReportEntry::getExportImportReportEntryId);
 				setModelName(
-					() -> _toModelName(exportImportReportEntry.getModelName()));
+					() -> _language.get(
+						contextAcceptLanguage.getPreferredLocale(),
+						exportImportReportEntry.getModelName()));
 				setOrigin(() -> _toOrigin(exportImportReportEntry.getOrigin()));
 				setScope(
 					() -> Scope.of(

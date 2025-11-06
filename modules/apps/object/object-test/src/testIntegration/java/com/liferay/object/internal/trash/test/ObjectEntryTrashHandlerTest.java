@@ -110,6 +110,24 @@ public class ObjectEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@Override
 	@Test
+	public void testMoveBaseModelToTrash() throws Exception {
+		super.testMoveBaseModelToTrash();
+
+		BaseModel<?> baseModel1 = addBaseModel(
+			group,
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		moveBaseModelToTrash((Long)baseModel1.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		Assert.assertTrue(
+			trashHandler.isInTrash((Long)baseModel1.getPrimaryKeyObj()));
+	}
+
+	@Override
+	@Test
 	public void testTrashAndRestoreWithApprovedStatus() throws Exception {
 
 		// TODO LPD-59712

@@ -6,10 +6,10 @@
 package com.liferay.marketplace.service;
 
 import com.liferay.headless.admin.user.client.custom.field.CustomField;
-import com.liferay.headless.admin.user.client.dto.v1_0.Account;
 import com.liferay.headless.admin.user.client.dto.v1_0.PostalAddress;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
@@ -44,6 +44,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class KoroneikiService {
+
+	public Account getAccount(String accountId) throws Exception {
+		AccountResource accountResource = getAccountResource();
+
+		return accountResource.getAccount(accountId);
+	}
 
 	public AccountResource getAccountResource() throws Exception {
 		return AccountResource.builder(
@@ -80,6 +86,8 @@ public class KoroneikiService {
 			"API_TOKEN", _koroneikiAuthToken
 		).endpoint(
 			new URL(_koroneikiAuthURL)
+		).parameters(
+			"nestedFields", "productConsumptions"
 		).build();
 	}
 
@@ -104,8 +112,9 @@ public class KoroneikiService {
 	}
 
 	public void postAccountAccountKeyProductPurchase(
-			Account account, Jwt jwt, String licenseUsageType,
-			OrderItem orderItem, Map<String, String> productSpecificationsMap)
+			com.liferay.headless.admin.user.client.dto.v1_0.Account account,
+			Jwt jwt, String licenseUsageType, OrderItem orderItem,
+			Map<String, String> productSpecificationsMap)
 		throws Exception {
 
 		ZonedDateTime zonedDateTime = ZonedDateTime.now();
@@ -164,8 +173,9 @@ public class KoroneikiService {
 		}
 	}
 
-	public com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-			postKoroneikiAccount(Account account, Jwt jwt)
+	public Account postKoroneikiAccount(
+			com.liferay.headless.admin.user.client.dto.v1_0.Account account,
+			Jwt jwt)
 		throws Exception {
 
 		String code = account.getName(
@@ -175,20 +185,17 @@ public class KoroneikiService {
 
 		AccountResource accountResource = getAccountResource();
 
-		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page
-			<com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account>
-				page = accountResource.getAccountsPage(
-					"", "code eq '" + code + "'", Pagination.of(1, 5), "");
+		com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page<Account>
+			page = accountResource.getAccountsPage(
+				"", "code eq '" + code + "'", Pagination.of(1, 5), "");
 
-		com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account
-			koroneikiAccount = page.fetchFirstItem();
+		Account koroneikiAccount = page.fetchFirstItem();
 
 		if (koroneikiAccount != null) {
 			return koroneikiAccount;
 		}
 
-		koroneikiAccount =
-			new com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account();
+		koroneikiAccount = new Account();
 
 		koroneikiAccount.setCode(code);
 
@@ -240,9 +247,7 @@ public class KoroneikiService {
 
 		koroneikiAccount.setPostalAddresses(koroneikiPostalAddresses);
 
-		koroneikiAccount.setStatus(
-			com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.Account.
-				Status.ACTIVE);
+		koroneikiAccount.setStatus(Account.Status.ACTIVE);
 		koroneikiAccount.setWebsite(customFieldsMap.get("Homepage URL"));
 
 		return accountResource.postAccount(

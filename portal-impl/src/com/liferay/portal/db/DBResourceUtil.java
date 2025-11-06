@@ -27,10 +27,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,12 +124,32 @@ public class DBResourceUtil {
 			"/com/liferay/portal/tools/sql/dependencies/portal-tables.sql");
 	}
 
+	public static Map<String, List<String>>
+			getServiceComponentModuleTableColumnDefinitions(
+				Connection connection)
+		throws Exception {
+
+		return _getServiceComponentTableColumnDefinitions(
+			connection, "buildNamespace like 'com.liferay%'");
+	}
+
 	public static Set<String> getServiceComponentModuleTableNames(
 			Connection connection)
 		throws Exception {
 
 		return _getServiceComponentTableNames(
 			connection, "buildNamespace like 'com.liferay%'");
+	}
+
+	public static Map<String, List<String>>
+			getServiceComponentPortalTableColumnDefinitions(
+				Connection connection)
+		throws Exception {
+
+		return _getServiceComponentTableColumnDefinitions(
+			connection,
+			"buildNamespace = '" +
+				ReleaseConstants.DEFAULT_SERVLET_CONTEXT_NAME + "'");
 	}
 
 	public static Set<String> getServiceComponentPortalTableNames(
@@ -152,6 +175,26 @@ public class DBResourceUtil {
 		}
 
 		return tableNames;
+	}
+
+	private static Map<String, List<String>>
+			_getServiceComponentTableColumnDefinitions(
+				Connection connection, String sqlCondition)
+		throws Exception {
+
+		Map<String, List<String>> tableColumnDefinitions = new HashMap<>();
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				_SERVICE_COMPONENT_DATA_SQL + sqlCondition);
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				tableColumnDefinitions.putAll(
+					_parseTableColumnDefinitionsSQL(resultSet.getString(1)));
+			}
+		}
+
+		return tableColumnDefinitions;
 	}
 
 	private static Set<String> _getServiceComponentTableNames(
@@ -200,6 +243,51 @@ public class DBResourceUtil {
 		).putAll(
 			_getTablesPrimaryKeyColumnNames(_inlinedPrimaryKeyPattern, sql)
 		).build();
+	}
+
+	private static Map<String, List<String>> _parseTableColumnDefinitionsSQL(
+		String sql) {
+
+		Map<String, List<String>> tableColumnDefinitionsSQL = new TreeMap<>();
+
+		String tableName = null;
+
+		for (String line : StringUtil.splitLines(sql)) {
+			line = line.trim();
+
+			if (line.contains("create table ")) {
+				String createTableSQL = line.substring(
+					line.indexOf("create table "));
+
+				tableName =
+					StringUtil.split(createTableSQL, StringPool.SPACE)[2];
+
+				tableColumnDefinitionsSQL.put(tableName, new ArrayList<>());
+
+				continue;
+			}
+
+			if (line.isEmpty() || line.startsWith("primary key") ||
+				line.startsWith(")") || line.startsWith(";") ||
+				line.startsWith("<") || line.startsWith("]]>") ||
+				line.startsWith("create ")) {
+
+				continue;
+			}
+
+			line = StringUtil.replaceLast(
+				line, CharPool.COMMA, StringPool.BLANK);
+
+			line = StringUtil.removeSubstring(line, "primary key");
+
+			tableColumnDefinitionsSQL.get(
+				tableName
+			).add(
+				line.trim()
+			);
+		}
+
+		return tableColumnDefinitionsSQL;
 	}
 
 	private static String _read(Bundle bundle, String path) {

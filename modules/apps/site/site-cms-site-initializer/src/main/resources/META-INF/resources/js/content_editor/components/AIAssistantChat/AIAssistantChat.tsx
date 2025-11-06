@@ -1,0 +1,245 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import ClayButton from '@clayui/button';
+import ClayDropDown from '@clayui/drop-down';
+import ClayForm, {ClayInput} from '@clayui/form';
+import ClayIcon from '@clayui/icon';
+import ClayLayout from '@clayui/layout';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
+import React, {useRef, useState} from 'react';
+
+import AssistantMessageBalloon from './components/AssistantMessageBalloon';
+import UserMessageBalloon from './components/UserMessageBalloon';
+
+import './chat.scss';
+
+interface message {
+	sender: string;
+	text: string;
+}
+
+const AIAssistantChat: React.FC = () => {
+	const [active, setActive] = useState<boolean>(false);
+	const [isGenerating, setIsGenerating] = useState<boolean>(false);
+	const [messages, setMessages] = useState<message[]>([]);
+	const [message, setMessage] = useState<message>();
+	const triggerRef = useRef<HTMLButtonElement | null>(null);
+	const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+	function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+		event.preventDefault();
+		if (!message?.text.trim()) {
+			return;
+		}
+		setMessages((previousMessages) => {
+			setTimeout(() => {
+				messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+			}, 0);
+
+			return [...previousMessages, message];
+		});
+
+		setMessage({sender: '', text: ''});
+
+		setIsGenerating(true);
+
+		setTimeout(() => {
+			setAIAssistantResponse();
+		}, 1000);
+	}
+
+	function setAIAssistantResponse() {
+		if (!message?.text.trim()) {
+			return;
+		}
+		setMessages((previousMessages) => {
+			setTimeout(() => {
+				messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
+			}, 0);
+
+			return [
+				...previousMessages,
+				{
+					sender: 'assistant',
+					text: 'I’ve generated the content for you! Check your editor.',
+				},
+			];
+		});
+
+		setMessage({sender: '', text: ''});
+
+		setIsGenerating(false);
+	}
+
+	return (
+		<ClayDropDown
+			active={active}
+			alignmentPosition={4}
+			className="d-flex p-0"
+			hasRightSymbols={false}
+			menuElementAttrs={{
+				style: {
+					height: 552,
+					maxHeight: 'none',
+					maxWidth: 'none',
+					overflow: 'hidden',
+					width: 448,
+				},
+			}}
+			onActiveChange={setActive}
+			trigger={
+				<ClayButton
+					aria-label={Liferay.Language.get('cancel')}
+					borderless
+					className="text-primary"
+					displayType="secondary"
+					ref={triggerRef}
+				>
+					<ClayIcon
+						className="mr-2"
+						height={16}
+						spritemap={Liferay.Icons.spritemap}
+						symbol="stars"
+						width={16}
+					/>
+
+					{Liferay.Language.get('ai-assistant')}
+				</ClayButton>
+			}
+		>
+			<div className="ai-assistant-chat__dropdown-container d-flex flex-column">
+				<div className="flex-shrink-0 p-3">
+					<ClayLayout.ContentRow className="align-items-center border-bottom justify-content-between mb-3 pb-2">
+						<ClayLayout.ContentCol className="ai-assistant-chat__dropdown-title font-weight-semi-bold">
+							{Liferay.Language.get('ai-assistant')}
+						</ClayLayout.ContentCol>
+
+						<ClayLayout.ContentCol>
+							<ClayButton
+								aria-label={Liferay.Language.get('close')}
+								borderless
+								displayType="unstyled"
+								onClick={() => setActive(false)}
+							>
+								<ClayIcon
+									className="ai-assistant-chat__dropdown-close-button"
+									spritemap={Liferay.Icons.spritemap}
+									symbol="times"
+								/>
+							</ClayButton>
+						</ClayLayout.ContentCol>
+					</ClayLayout.ContentRow>
+				</div>
+
+				<div className="ai-assistant-chat__messages-container flex-grow-1 overflow-auto px-3">
+					<AssistantMessageBalloon
+						message="Hi! I can help you generate content, titles, tags, or
+						translate your work. What would you like to do?"
+					/>
+
+					{messages.map((item, index) =>
+						item.sender === 'user' ? (
+							<UserMessageBalloon
+								key={index}
+								message={item.text}
+							/>
+						) : (
+							<AssistantMessageBalloon
+								key={index}
+								message={item.text}
+							/>
+						)
+					)}
+
+					{isGenerating && (
+						<div className="ai-assistant-chat-balloon d-flex flex-row mb-2 rounded">
+							<div className="align-items-center d-flex ml-2">
+								<ClayLoadingIndicator />
+							</div>
+
+							<span className="ai-assistant-chat__generating-loading-text font-weight-semi-bold m-2 tex">
+								Generating...
+							</span>
+						</div>
+					)}
+
+					<div ref={messagesEndRef} />
+				</div>
+
+				<ClayForm
+					className="flex-shrink-0 p-3"
+					onSubmit={(event) => onSubmit(event)}
+				>
+					{!messages.length && (
+						<>
+							{Liferay.Language.get('quick-actions')}
+							<ClayLayout.ContentRow className="align-items-center mb-3 mt-2">
+								<ClayLayout.ContentCol className="mr-2">
+									<ClayButton
+										className="ai-assistant-chat__quick-actions-button pl-2 pr-2"
+										displayType="unstyled"
+										small
+									>
+										<ClayIcon
+											className="mr-2"
+											height={12}
+											spritemap={Liferay.Icons.spritemap}
+											symbol="stars"
+											width={12}
+										/>
+										Generate Content
+									</ClayButton>
+								</ClayLayout.ContentCol>
+
+								<ClayLayout.ContentCol>
+									<ClayButton
+										className="ai-assistant-chat__quick-actions-button pl-2 pr-2"
+										displayType="unstyled"
+										small
+									>
+										<ClayIcon
+											className="mr-2"
+											height={12}
+											spritemap={Liferay.Icons.spritemap}
+											symbol="stars"
+											width={12}
+										/>
+										Generate Title
+									</ClayButton>
+								</ClayLayout.ContentCol>
+							</ClayLayout.ContentRow>
+						</>
+					)}
+
+					<div className="border-top d-flex flex-row mb-4 pt-4">
+						<ClayInput
+							className="mr-2"
+							onChange={(event) =>
+								setMessage({
+									sender: 'user',
+									text: event.target.value,
+								})
+							}
+							placeholder="Ask me anything..."
+							value={message?.text}
+						/>
+
+						<ClayButton displayType="primary" type="submit">
+							<ClayIcon
+								height={12}
+								spritemap={Liferay.Icons.spritemap}
+								symbol="order-arrow-up"
+								width={12}
+							/>
+						</ClayButton>
+					</div>
+				</ClayForm>
+			</div>
+		</ClayDropDown>
+	);
+};
+
+export default AIAssistantChat;

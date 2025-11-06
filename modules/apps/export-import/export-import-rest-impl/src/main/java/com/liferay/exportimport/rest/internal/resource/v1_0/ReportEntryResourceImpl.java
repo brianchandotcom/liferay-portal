@@ -103,8 +103,11 @@ public class ReportEntryResourceImpl extends BaseReportEntryResourceImpl {
 			filter, ExportImportReportEntry.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			searchContext -> searchContext.setCompanyId(
-				contextCompany.getCompanyId()),
+			searchContext -> {
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setLocale(
+					contextAcceptLanguage.getPreferredLocale());
+			},
 			sorts,
 			document -> _toReportEntry(
 				_exportImportReportEntryLocalService.getExportImportReportEntry(

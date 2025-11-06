@@ -423,7 +423,7 @@ public class MarketplaceService extends BaseService {
 				new HashMapBuilder<String, Object>().put(
 					"cc", jsonObject.getString("cc")
 				).put(
-					"ccType", jsonObject.getString("ccType")
+					"ccType", jsonObject.optString("ccType")
 				).put(
 					"from", jsonObject.getString("from")
 				).put(

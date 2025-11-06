@@ -7,6 +7,8 @@ package com.liferay.layout.page.template.internal.upgrade.v5_1_0;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
@@ -38,13 +40,17 @@ public class LayoutPageTemplateStructureUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		DB db = DBManagerUtil.getDB();
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select layoutPageTemplateStructureId, companyId, userId," +
 					"classPK from LayoutPageTemplateStructure");
-			SafeCloseable safeCloseable1 = addTemporaryIndex(
-				"FragmentEntryLink", false, "segmentsExperienceId", "plid");
-			SafeCloseable safeCloseable2 = addTemporaryIndex(
-				"SegmentsExperiment", false, "plid", "segmentsExperienceId")) {
+			SafeCloseable safeCloseable1 = db.addTemporaryIndex(
+				connection, "FragmentEntryLink", false, "segmentsExperienceId",
+				"plid");
+			SafeCloseable safeCloseable2 = db.addTemporaryIndex(
+				connection, "SegmentsExperiment", false, "plid",
+				"segmentsExperienceId")) {
 
 			try (ResultSet resultSet = preparedStatement1.executeQuery()) {
 				while (resultSet.next()) {

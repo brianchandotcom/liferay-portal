@@ -7,6 +7,8 @@ package com.liferay.message.boards.internal.upgrade.v3_1_0;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
@@ -29,8 +31,10 @@ public class UrlSubjectUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (SafeCloseable safeCloseable = addTemporaryIndex(
-				"MBMessage", false, "subject")) {
+		DB db = DBManagerUtil.getDB();
+
+		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
+				connection, "MBMessage", false, "subject")) {
 
 			_populateUrlSubject();
 		}

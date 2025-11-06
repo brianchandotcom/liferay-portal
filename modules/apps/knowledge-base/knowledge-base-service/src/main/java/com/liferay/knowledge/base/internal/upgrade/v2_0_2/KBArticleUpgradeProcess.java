@@ -8,6 +8,8 @@ package com.liferay.knowledge.base.internal.upgrade.v2_0_2;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,8 +28,11 @@ public class KBArticleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (SafeCloseable safeCloseable = addTemporaryIndex(
-				"KBArticle", false, "groupId", "kbFolderId", "urlTitle")) {
+		DB db = DBManagerUtil.getDB();
+
+		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
+				connection, "KBArticle", false, "groupId", "kbFolderId",
+				"urlTitle")) {
 
 			boolean changed = true;
 

@@ -6,7 +6,9 @@
 package com.liferay.portal.kernel.upgrade.data.cleanup;
 
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.data.cleanup.util.OrphanReferencesDataCleanupUtil;
@@ -102,8 +104,10 @@ public class TableOrphanReferencesDataCleanupPreupgradeProcess
 				targetTableName, "DLFileEntryMetadata") &&
 			StringUtil.equalsIgnoreCase(targetColumnName, "DDMStorageId")) {
 
-			safeCloseable = addTemporaryIndex(
-				"DLFileEntryMetadata", false, "DDMStorageId");
+			DB db = DBManagerUtil.getDB();
+
+			safeCloseable = db.addTemporaryIndex(
+				connection, "DLFileEntryMetadata", false, "DDMStorageId");
 		}
 
 		try {

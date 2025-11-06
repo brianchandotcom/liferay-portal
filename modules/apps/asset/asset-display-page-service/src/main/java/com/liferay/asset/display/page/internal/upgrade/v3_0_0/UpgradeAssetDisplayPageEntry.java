@@ -10,6 +10,8 @@ import com.liferay.asset.display.page.upgrade.BaseUpgradeAssetDisplayPageEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -24,8 +26,11 @@ public class UpgradeAssetDisplayPageEntry
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		try (SafeCloseable safeCloseable = addTemporaryIndex(
-				"AssetDisplayPageEntry", false, "classNameId", "type_")) {
+		DB db = DBManagerUtil.getDB();
+
+		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
+				connection, "AssetDisplayPageEntry", false, "classNameId",
+				"type_")) {
 
 			upgradeAssetDisplayPageTypes(
 				"BlogsEntry", "entryId", "com.liferay.blogs.model.BlogsEntry");

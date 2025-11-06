@@ -13,6 +13,8 @@ import com.liferay.layout.util.constants.LayoutClassedModelUsageConstants;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -348,9 +350,11 @@ public class JournalArticleLayoutClassedModelUsageUpgradeProcess
 			String usageType, String... indexColumnNames)
 		throws Exception {
 
+		DB db = DBManagerUtil.getDB();
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			SafeCloseable safeCloseable = addTemporaryIndex(
-				"AssetEntry", false, indexColumnNames)) {
+			SafeCloseable safeCloseable = db.addTemporaryIndex(
+				connection, "AssetEntry", false, indexColumnNames)) {
 
 			processConcurrently(
 				SQLTransformer.transform(sql),

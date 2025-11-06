@@ -9,6 +9,8 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -50,8 +52,10 @@ public class UpgradeGroup extends UpgradeProcess {
 
 		alterColumnType("Group_", "name", "STRING null");
 
-		try (SafeCloseable safeCloseable = addTemporaryIndex(
-				"Group_", false, "classNameId", "classPK")) {
+		DB db = DBManagerUtil.getDB();
+
+		try (SafeCloseable safeCloseable = db.addTemporaryIndex(
+				connection, "Group_", false, "classNameId", "classPK")) {
 
 			updateGlobalGroupName();
 			updateGroupsNames();

@@ -196,6 +196,8 @@ public class DDMIndexerImplTest {
 
 	@Test
 	public void testFormWithCheckboxMultipleField() throws JSONException {
+		Document document = _createDocument();
+
 		DDMForm ddmForm = DDMFormTestUtil.createDDMForm(
 			SetUtil.fromArray(LocaleUtil.US), LocaleUtil.US);
 
@@ -216,8 +218,6 @@ public class DDMIndexerImplTest {
 
 		ddmForm.addDDMFormField(ddmFormField);
 
-		Document document = _createDocument();
-
 		_ddmIndexer.addAttributes(
 			document, _createDDMStructure(ddmForm),
 			_createDDMFormValues(
@@ -225,7 +225,7 @@ public class DDMIndexerImplTest {
 				DDMFormValuesTestUtil.createDDMFormFieldValue(
 					_FIELD_NAME,
 					DDMFormValuesTestUtil.createLocalizedValue(
-						"[\"pineapple\",\"apple\"]", LocaleUtil.US))));
+						"[\"apple\",\"pineapple\"]", LocaleUtil.US))));
 
 		FieldValuesAssert.assertFieldValues(
 			HashMapBuilder.put(

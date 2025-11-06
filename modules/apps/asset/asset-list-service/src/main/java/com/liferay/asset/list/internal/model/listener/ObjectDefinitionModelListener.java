@@ -41,6 +41,17 @@ public class ObjectDefinitionModelListener
 	public void onBeforeRemove(ObjectDefinition objectDefinition)
 		throws ModelListenerException {
 
+		try {
+			_onBeforeRemove(objectDefinition);
+		}
+		catch (PortalException portalException) {
+			throw new ModelListenerException(portalException);
+		}
+	}
+
+	private void _onBeforeRemove(ObjectDefinition objectDefinition)
+		throws PortalException {
+
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
 
@@ -48,39 +59,30 @@ public class ObjectDefinitionModelListener
 			return;
 		}
 
-		try {
-			List<AssetListEntrySegmentsEntryRel>
-				assetListEntrySegmentsEntryRels =
-					_assetListEntrySegmentsEntryRelLocalService.dslQuery(
-						DSLQueryFactoryUtil.select(
-							AssetListEntrySegmentsEntryRelTable.INSTANCE
-						).from(
-							AssetListEntrySegmentsEntryRelTable.INSTANCE
-						).where(
-							AssetListEntrySegmentsEntryRelTable.INSTANCE.
-								companyId.eq(
-									objectDefinition.getCompanyId()
-								).and(
-									AssetListEntrySegmentsEntryRelTable.
-										INSTANCE.typeSettings.like(
-											"%" + classNameId + "%")
-								)
-						));
+		List<AssetListEntrySegmentsEntryRel> assetListEntrySegmentsEntryRels =
+			_assetListEntrySegmentsEntryRelLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					AssetListEntrySegmentsEntryRelTable.INSTANCE
+				).from(
+					AssetListEntrySegmentsEntryRelTable.INSTANCE
+				).where(
+					AssetListEntrySegmentsEntryRelTable.INSTANCE.companyId.eq(
+						objectDefinition.getCompanyId()
+					).and(
+						AssetListEntrySegmentsEntryRelTable.INSTANCE.
+							typeSettings.like("%" + classNameId + "%")
+					)
+				));
 
-			if (ListUtil.isEmpty(assetListEntrySegmentsEntryRels)) {
-				return;
-			}
-
-			for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
-					assetListEntrySegmentsEntryRels) {
-
-				_removeClassNameIdFromTypeSettings(
-					assetListEntrySegmentsEntryRel,
-					String.valueOf(classNameId));
-			}
+		if (ListUtil.isEmpty(assetListEntrySegmentsEntryRels)) {
+			return;
 		}
-		catch (PortalException portalException) {
-			throw new ModelListenerException(portalException);
+
+		for (AssetListEntrySegmentsEntryRel assetListEntrySegmentsEntryRel :
+				assetListEntrySegmentsEntryRels) {
+
+			_removeClassNameIdFromTypeSettings(
+				assetListEntrySegmentsEntryRel, String.valueOf(classNameId));
 		}
 	}
 

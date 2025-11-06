@@ -82,17 +82,17 @@ public class ObjectDefinitionModelListenerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		UnicodeProperties updatedUnicodeProperties =
-			_getUpdatedUnicodeProperties(assetListEntry);
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			assetListEntry);
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				updatedUnicodeProperties.getProperty("anyAssetType")));
+				unicodeProperties.getProperty("anyAssetType")));
 		Assert.assertArrayEquals(
 			ArrayUtil.remove(classNameIds, objectClassNameId),
 			GetterUtil.getLongValues(
 				StringUtil.split(
-					updatedUnicodeProperties.getProperty("classNameIds"))));
+					unicodeProperties.getProperty("classNameIds"))));
 	}
 
 	@Test
@@ -120,18 +120,18 @@ public class ObjectDefinitionModelListenerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		UnicodeProperties updatedUnicodeProperties =
-			_getUpdatedUnicodeProperties(assetListEntry);
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			assetListEntry);
 
 		Assert.assertEquals(
 			Boolean.FALSE.toString(),
-			updatedUnicodeProperties.getProperty("anyAssetType"));
+			unicodeProperties.getProperty("anyAssetType"));
 
 		Assert.assertArrayEquals(
 			new long[] {journalArticleClassNameId, blogsEntryClassNameId},
 			GetterUtil.getLongValues(
 				StringUtil.split(
-					updatedUnicodeProperties.getProperty("classNameIds"))));
+					unicodeProperties.getProperty("classNameIds"))));
 	}
 
 	@Test
@@ -154,17 +154,17 @@ public class ObjectDefinitionModelListenerTest {
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
-		UnicodeProperties updatedUnicodeProperties =
-			_getUpdatedUnicodeProperties(assetListEntry);
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			assetListEntry);
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				updatedUnicodeProperties.getProperty("anyAssetType")));
+				unicodeProperties.getProperty("anyAssetType")));
 		Assert.assertEquals(
 			StringUtil.merge(
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
 					TestPropsValues.getCompanyId(), true)),
-			updatedUnicodeProperties.getProperty("classNameIds"));
+			unicodeProperties.getProperty("classNameIds"));
 	}
 
 	@Test
@@ -186,17 +186,17 @@ public class ObjectDefinitionModelListenerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		UnicodeProperties updatedUnicodeProperties =
-			_getUpdatedUnicodeProperties(assetListEntry);
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			assetListEntry);
 
 		Assert.assertEquals(
 			String.valueOf(journalArticleClassNameId),
-			updatedUnicodeProperties.getProperty("anyAssetType"));
+			unicodeProperties.getProperty("anyAssetType"));
 		Assert.assertEquals(
 			StringUtil.merge(
 				AssetRendererFactoryRegistryUtil.getClassNameIds(
 					TestPropsValues.getCompanyId(), true)),
-			updatedUnicodeProperties.getProperty("classNameIds"));
+			unicodeProperties.getProperty("classNameIds"));
 	}
 
 	@Test
@@ -218,17 +218,17 @@ public class ObjectDefinitionModelListenerTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 
-		UnicodeProperties updatedUnicodeProperties =
-			_getUpdatedUnicodeProperties(assetListEntry);
+		UnicodeProperties unicodeProperties = _getUnicodeProperties(
+			assetListEntry);
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				updatedUnicodeProperties.getProperty("anyAssetType")));
+				unicodeProperties.getProperty("anyAssetType")));
 		Assert.assertArrayEquals(
 			ArrayUtil.remove(classNameIds, objectClassNameId),
 			GetterUtil.getLongValues(
 				StringUtil.split(
-					updatedUnicodeProperties.getProperty("classNameIds"))));
+					unicodeProperties.getProperty("classNameIds"))));
 	}
 
 	private AssetListEntry _addAssetListEntry(
@@ -267,7 +267,7 @@ public class ObjectDefinitionModelListenerTest {
 		).build();
 	}
 
-	private UnicodeProperties _getUpdatedUnicodeProperties(
+	private UnicodeProperties _getUnicodeProperties(
 			AssetListEntry assetListEntry)
 		throws Exception {
 

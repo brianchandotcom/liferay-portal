@@ -16,6 +16,7 @@ import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../../fixtures/pageManagementSiteTest';
+import {pagesAdminPagesTest} from '../../../fixtures/pagesAdminPagesTest';
 import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../../utils/getRandomInt';
@@ -23,7 +24,6 @@ import getRandomString from '../../../utils/getRandomString';
 import {performLogout} from '../../../utils/performLogin';
 import getBasicWebContentStructureId from '../../../utils/structured-content/getBasicWebContentStructureId';
 import {blogsPagesTest} from '../../blogs-web/main/fixtures/blogsPagesTest';
-import { pagesAdminPagesTest } from '../../../fixtures/pagesAdminPagesTest';
 
 const test = mergeTests(
 	blogsPagesTest,
@@ -112,7 +112,13 @@ test.describe('Configuration', () => {
 		{
 			tag: ['@LPS-86191', '@LPS-96438'],
 		},
-		async ({apiHelpers, displayPageTemplatesPage, page, pagesAdminPage, site}) => {
+		async ({
+			apiHelpers,
+			displayPageTemplatesPage,
+			page,
+			pagesAdminPage,
+			site,
+		}) => {
 
 			// Create a display page template for Basic Web Content and mark as default
 

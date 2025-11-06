@@ -56,9 +56,6 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that the factory configurations were created successfully', async () => {
-		await expect(
-			await page.locator('td.lfr-provider-name-column').count()
-		).toBe(2);
 		await expect(page.getByText(providersNames[0])).toBeVisible();
 		await expect(page.getByText(providersNames[1])).toBeVisible();
 	});

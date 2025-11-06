@@ -27,7 +27,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	instanceSettingsPage,
 	page,
 }) => {
-	const providersNames = [getRandomString(), getRandomString()];
+	const providerNames = [getRandomString(), getRandomString()];
 
 	await test.step('Add factory configurations', async () => {
 		await instanceSettingsPage.goToInstanceSetting(
@@ -35,7 +35,7 @@ test('Asserts that a user can manage factory configurations', async ({
 			'OpenID Connect Provider Connection'
 		);
 
-		for (const providerName of providersNames) {
+		for (const providerName of providerNames) {
 			await page.getByRole('link', {name: 'Add'}).click();
 
 			await page.getByLabel('Provider Name').fill(providerName);
@@ -56,7 +56,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that the factory configurations were created successfully', async () => {
-		for (const providerName of providersNames) {
+		for (const providerName of providerNames) {
 			await expect(page.getByText(providerName)).toBeVisible();
 		}
 	});
@@ -64,7 +64,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	await test.step('Assert that a single factory configuration can be exported', async () => {
 		const downloadPromise = page.waitForEvent('download');
 
-		await instanceSettingsPage.exportFactoryEntry(providersNames[0]);
+		await instanceSettingsPage.exportFactoryEntry(providerNames[0]);
 
 		const download = await downloadPromise;
 
@@ -78,7 +78,7 @@ test('Asserts that a user can manage factory configurations', async ({
 
 		const fileContent = await readFile(path, 'utf-8');
 
-		expect(fileContent).toContain(providersNames[0]);
+		expect(fileContent).toContain(providerNames[0]);
 	});
 
 	await test.step('Assert that multiple factory configuration entries can be exported', async () => {
@@ -96,7 +96,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that factory configurations can be edited', async () => {
-		await instanceSettingsPage.editFactoryEntry(providersNames[0]);
+		await instanceSettingsPage.editFactoryEntry(providerNames[0]);
 
 		const newProviderName = getRandomString();
 
@@ -108,10 +108,10 @@ test('Asserts that a user can manage factory configurations', async ({
 		});
 
 		expect(
-			page.locator(`tbody tr:has-text("${providersNames[0]}")`)
+			page.locator(`tbody tr:has-text("${providerNames[0]}")`)
 		).toBeHidden();
 
-		providersNames[0] = newProviderName;
+		providerNames[0] = newProviderName;
 
 		expect(
 			page.locator(`tbody tr:has-text("${newProviderName}")`)
@@ -119,7 +119,7 @@ test('Asserts that a user can manage factory configurations', async ({
 	});
 
 	await test.step('Assert that factory configurations can be deleted', async () => {
-		for (const providerName of providersNames) {
+		for (const providerName of providerNames) {
 			await instanceSettingsPage.deleteFactoryEntry(providerName);
 
 			await waitForAlert(page);

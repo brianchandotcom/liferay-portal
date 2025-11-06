@@ -12,6 +12,9 @@
 		"liferay-npm-bundler": "^2.8.0"
 	},
 	"name": "react-provider",
+	"overrides": {
+		"jszip": "3.8.0"
+	},
 	"scripts": {
 		"build": "npm run copy-assets && liferay-npm-bundler",
 		"copy-assets": "lnbs-copy-assets",

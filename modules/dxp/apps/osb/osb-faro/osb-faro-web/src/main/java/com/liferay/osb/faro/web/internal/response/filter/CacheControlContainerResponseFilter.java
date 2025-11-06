@@ -18,7 +18,8 @@ import java.io.IOException;
  * @author Marcos Martins
  */
 @Priority(1)
-public class CacheContainerResponseFilter implements ContainerResponseFilter {
+public class CacheControlContainerResponseFilter
+	implements ContainerResponseFilter {
 
 	@Override
 	public void filter(

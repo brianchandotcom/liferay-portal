@@ -44,7 +44,8 @@ public class ObjectActionCourseRestController extends BaseRestController {
 					"id,p2s3CourseToP2S3Modules.lessonDurationMinutes,p2s3CourseToP2S3Modules.lessons," +
 						"p2s3CourseToP2S3Modules.quizDurationMinutes,p2s3CourseToP2S3Modules.quizzes"
 				).queryParam(
-					"filter", "p2s3CourseToP2S3Modules/id eq '" + _getModuleId(json) + "'"
+					"filter",
+					"p2s3CourseToP2S3Modules/id eq '" + _getModuleId(json) + "'"
 				).queryParam(
 					"nestedFields", "p2s3CourseToP2S3Modules"
 				).build(
@@ -81,10 +82,12 @@ public class ObjectActionCourseRestController extends BaseRestController {
 			"values");
 
 		if (valuesJSONObject.has("r_p2s3ModuleToP2S3Lessons_c_p2s3ModuleId")) {
-			return valuesJSONObject.getLong("r_p2s3ModuleToP2S3Lessons_c_p2s3ModuleId");
+			return valuesJSONObject.getLong(
+				"r_p2s3ModuleToP2S3Lessons_c_p2s3ModuleId");
 		}
 
-		return valuesJSONObject.getLong("r_p2s3ModuleToP2S3Quizzes_c_p2s3ModuleId");
+		return valuesJSONObject.getLong(
+			"r_p2s3ModuleToP2S3Quizzes_c_p2s3ModuleId");
 	}
 
 	private JSONObject _getPayloadJSONObject(JSONArray moduleJSONArray) {

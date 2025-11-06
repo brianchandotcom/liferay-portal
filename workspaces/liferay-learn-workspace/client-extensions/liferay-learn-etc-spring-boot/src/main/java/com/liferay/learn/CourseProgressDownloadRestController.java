@@ -5,10 +5,14 @@
 
 package com.liferay.learn;
 
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,8 +22,10 @@ import java.util.Map;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,9 +37,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
 
 /**
  * @author Lucas Emanuel
@@ -113,7 +116,8 @@ public class CourseProgressDownloadRestController extends BaseRestController {
 				}
 
 				_courseQuizzes.put(
-					moduleJSONObject.getLong("r_p2s3CourseToP2S3Modules_c_p2s3CourseId"),
+					moduleJSONObject.getLong(
+						"r_p2s3CourseToP2S3Modules_c_p2s3CourseId"),
 					quizJSONObject.getLong("id"));
 			}
 		}

@@ -5,8 +5,19 @@
 
 package com.liferay.learn;
 
+import com.google.auth.oauth2.GoogleCredentials;
+
+import com.liferay.client.extension.util.spring.boot3.BaseRestController;
+import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -16,6 +27,7 @@ import java.util.Objects;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -31,15 +43,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import com.google.auth.oauth2.GoogleCredentials;
-import com.liferay.client.extension.util.spring.boot3.BaseRestController;
-import com.liferay.client.extension.util.spring.boot3.client.LiferayOAuth2AccessTokenManager;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Nilton Vieira
@@ -219,7 +222,8 @@ public class LearnRestController extends BaseRestController {
 							",p2s3QuizToP2S3QuizQuestions.p2s3QuizQuestionToP2S3QuizAnswers.answer,p2s3QuizToP2S3QuizQuestions.",
 							"p2s3QuizQuestionToP2S3QuizAnswers.score")
 					).queryParam(
-						"nestedFields", "p2s3QuizToP2S3QuizQuestions,p2s3QuizQuestionToP2S3QuizAnswers"
+						"nestedFields",
+						"p2s3QuizToP2S3QuizQuestions,p2s3QuizQuestionToP2S3QuizAnswers"
 					).queryParam(
 						"nestedFieldsDepth", "2"
 					).queryParam(

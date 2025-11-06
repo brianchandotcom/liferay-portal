@@ -1,0 +1,39 @@
+@import 'atlas-variables';
+
+.ai-assistant-chat__dropdown-container {
+	height: 100%;
+	width: 100%;
+
+	.ai-assistant-chat__dropdown-title {
+		color: #272833;
+	}
+
+	.ai-assistant-chat__dropdown-close-button {
+		color: #6b6c7e;
+		height: 12;
+		width: 12;
+	}
+
+	.ai-assistant-chat__messages-container {
+		min-height: 0;
+	}
+
+	.ai-assistant-chat__quick-actions-button {
+		background: #f7f8f9;
+		padding-bottom: 3px;
+		padding-top: 3px;
+	}
+
+	.ai-assistant-chat__quick-actions-button:hover {
+		background: #27283314;
+	}
+
+	.ai-assistant-chat__generating-loading-text {
+		align-self: center;
+		color: #0b5fff;
+	}
+
+	.ai-assistant-chat__ai-assistant-message-balloon {
+		background: #f7f8f9;
+	}
+}

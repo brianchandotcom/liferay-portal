@@ -108,7 +108,7 @@ public class AIHubSiteInitializer implements SiteInitializer {
 				AIHubSiteInitializer.class.getResourceAsStream(
 					"dependencies/workflow-definition.json.tpl")),
 			new String[] {
-				"__WORKFLOW_DEFINITION_NAME__", "__WORKFLOW_TASK_NAME__"
+				"[$WORKFLOW_DEFINITION_NAME$]", "[$WORKFLOW_TASK_NAME$]"
 			},
 			new String[] {workflowDefinitionName, workflowTaskName});
 

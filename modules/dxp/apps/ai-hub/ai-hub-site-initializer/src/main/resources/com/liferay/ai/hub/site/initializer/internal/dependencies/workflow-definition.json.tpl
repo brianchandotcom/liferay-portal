@@ -2,7 +2,7 @@
 	"#child-nodes": [
 		{
 			"#tag-name": "name",
-			"#value": "__WORKFLOW_DEFINITION_NAME__"
+			"#value": "[$WORKFLOW_DEFINITION_NAME$]"
 		},
 		{
 			"#tag-name": "version",
@@ -47,7 +47,7 @@
 									"#child-nodes": [
 										{
 											"#tag-name": "label",
-											"#value": "__WORKFLOW_DEFINITION_NAME__",
+											"#value": "[$WORKFLOW_DEFINITION_NAME$]",
 											"language-id": "en_US"
 										}
 									],
@@ -55,11 +55,11 @@
 								},
 								{
 									"#tag-name": "name",
-									"#value": "__WORKFLOW_TASK_NAME__"
+									"#value": "[$WORKFLOW_TASK_NAME$]"
 								},
 								{
 									"#tag-name": "target",
-									"#value": "__WORKFLOW_TASK_NAME__"
+									"#value": "[$WORKFLOW_TASK_NAME$]"
 								},
 								{
 									"#tag-name": "default",
@@ -109,7 +109,7 @@
 			"#child-nodes": [
 				{
 					"#tag-name": "name",
-					"#value": "__WORKFLOW_TASK_NAME__"
+					"#value": "[$WORKFLOW_TASK_NAME$]"
 				},
 				{
 					"#cdata-value": [
@@ -134,7 +134,7 @@
 					"#child-nodes": [
 						{
 							"#tag-name": "label",
-							"#value": "__WORKFLOW_DEFINITION_NAME__",
+							"#value": "[$WORKFLOW_DEFINITION_NAME$]",
 							"language-id": "en_US"
 						}
 					],

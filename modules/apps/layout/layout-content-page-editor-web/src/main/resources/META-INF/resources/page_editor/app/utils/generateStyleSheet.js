@@ -52,6 +52,10 @@ export default function generateStyleSheet(styles, {itemsWithTopper} = {}) {
 	css += '.lfr-layout-structure-item-row {overflow: hidden;} ';
 	css += '.portlet-borderless .portlet-content {padding: 0;}';
 
+	if (config.isCMS) {
+		css += '.has-control-menu {--control-menu-height: 0px;}';
+	}
+
 	Object.entries(styles).forEach(([itemId, {customCSS, styles}]) => {
 		let itemCSS = '';
 		let topperCSS = '';

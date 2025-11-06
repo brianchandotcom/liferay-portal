@@ -9,6 +9,8 @@
 
 <%
 ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEditorDisplayContext)request.getAttribute(ContentPageEditorWebKeys.LIFERAY_SHARED_CONTENT_PAGE_EDITOR_DISPLAY_CONTEXT);
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
 <liferay-editor:resources
@@ -17,6 +19,14 @@ ContentPageEditorDisplayContext contentPageEditorDisplayContext = (ContentPageEd
 
 <liferay-util:html-top>
 	<aui:link hashedFile="<%= true %>" href="layout-content-page-editor-web/page_editor/app/components/App.css" rel="stylesheet" />
+
+	<c:if test="<%= group.isCMS() %>">
+		<aui:style type="text/css">
+			.control-menu {
+				display: none;
+			}
+		</aui:style>
+	</c:if>
 </liferay-util:html-top>
 
 <div id="<portlet:namespace />pageEditor">

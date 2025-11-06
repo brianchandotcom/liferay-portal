@@ -292,6 +292,55 @@ public class DataSourceFactoryUtil {
 		}
 	}
 
+	private static Map<String, String> _addDefaultParameters(
+		String[][] defaultParameters,
+		Map<String, String> existingParameterValues) {
+
+		for (String[] parameter : defaultParameters) {
+			if (existingParameterValues.containsKey(parameter[0])) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Skipped " + Arrays.toString(parameter));
+				}
+			}
+			else {
+				existingParameterValues.put(parameter[0], parameter[1]);
+			}
+		}
+
+		return existingParameterValues;
+	}
+
+	private static String _buildURL(
+		String baseURL, char parameterDelimiter, Map<String, String> parameters,
+		char urlDelimiter) {
+
+		if (parameters.isEmpty()) {
+			return baseURL;
+		}
+
+		StringBundler sb = new StringBundler((parameters.size() * 4) + 2);
+
+		sb.append(baseURL);
+		sb.append(urlDelimiter);
+
+		for (Map.Entry<String, String> entry : parameters.entrySet()) {
+			sb.append(entry.getKey());
+
+			String value = entry.getValue();
+
+			if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
+				sb.append(CharPool.EQUAL);
+				sb.append(value);
+			}
+
+			sb.append(parameterDelimiter);
+		}
+
+		sb.setIndex(sb.index() - 1);
+
+		return sb.toString();
+	}
+
 	private static void _downloadAndInstallJar(
 			URL url, Path path, URLClassLoader urlClassLoader, String sha1)
 		throws Exception {
@@ -313,6 +362,29 @@ public class DataSourceFactoryUtil {
 				StringBundler.concat(
 					"Installed ", path, " to ", urlClassLoader));
 		}
+	}
+
+	private static Map<String, String> _getExistingParameterValues(
+		char delimiter, String paramString) {
+
+		Map<String, String> existingParameterValues = new TreeMap<>();
+
+		for (String parameterString :
+				StringUtil.split(paramString, delimiter)) {
+
+			String[] parameter = StringUtil.split(
+				parameterString, CharPool.EQUAL);
+
+			if (parameter.length == 2) {
+				existingParameterValues.put(parameter[0], parameter[1]);
+			}
+			else {
+				existingParameterValues.put(
+					parameterString, _MALFORMED_PARAMETER_PLACE_HOLDER);
+			}
+		}
+
+		return existingParameterValues;
 	}
 
 	private static void _populateIBMCipherSuites(Class<?> clazz) {
@@ -350,77 +422,55 @@ public class DataSourceFactoryUtil {
 	}
 
 	private static String _rewriteJDBCURL(String url) {
-		if (!url.startsWith("jdbc:mariadb://") &&
-			!url.startsWith("jdbc:mysql://")) {
+		if (url.startsWith("jdbc:mariadb://") ||
+			url.startsWith("jdbc:mysql://")) {
 
-			return url;
+			return _rewriteJDBCURL(
+				_MYSQL_DEFAULT_PARAMETERS, CharPool.AMPERSAND, url,
+				CharPool.QUESTION);
 		}
+
+		if (url.startsWith("jdbc:postgresql://")) {
+			return _rewriteJDBCURL(
+				_POSTGRESQL_DEFAULT_PARAMETERS, CharPool.AMPERSAND, url,
+				CharPool.QUESTION);
+		}
+
+		if (url.startsWith("jdbc:sqlserver://")) {
+			return _rewriteJDBCURL(
+				_SQLSERVER_DEFAULT_PARAMETERS, CharPool.SEMICOLON, url,
+				CharPool.SEMICOLON);
+		}
+
+		return url;
+	}
+
+	private static String _rewriteJDBCURL(
+		String[][] defaultParameters, char parameterDelimiter, String url,
+		char urlDelimiter) {
 
 		Map<String, String> existingParameterValues = new TreeMap<>();
 
-		int index = url.indexOf(CharPool.QUESTION);
+		String baseURL = url;
+
+		int index = url.indexOf(urlDelimiter, url.indexOf("://") + 3);
 
 		if (index != -1) {
-			String queryString = url.substring(index + 1);
+			baseURL = url.substring(0, index);
 
-			for (String parameterString :
-					StringUtil.split(queryString, CharPool.AMPERSAND)) {
+			String paramString = url.substring(index + 1);
 
-				String[] parameter = StringUtil.split(
-					parameterString, CharPool.EQUAL);
-
-				if (parameter.length == 2) {
-					existingParameterValues.put(parameter[0], parameter[1]);
-				}
-				else {
-					existingParameterValues.put(
-						parameterString, _MALFORMED_PARAMETER_PLACE_HOLDER);
-				}
+			if (!paramString.isEmpty()) {
+				existingParameterValues = _getExistingParameterValues(
+					parameterDelimiter, paramString);
 			}
 		}
 
-		for (String[] parameter : _MYSQL_DEFAULT_PARAMETERS) {
-			if (existingParameterValues.containsKey(parameter[0])) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skipped " + Arrays.toString(parameter));
-				}
-			}
-			else {
-				existingParameterValues.put(parameter[0], parameter[1]);
-			}
-		}
+		existingParameterValues = _addDefaultParameters(
+			defaultParameters, existingParameterValues);
 
-		StringBundler sb = new StringBundler(
-			(existingParameterValues.size() * 4) + 2);
-
-		if (index == -1) {
-			sb.append(url);
-			sb.append(CharPool.QUESTION);
-		}
-		else {
-			sb.append(url.substring(0, index + 1));
-		}
-
-		for (Map.Entry<String, String> entry :
-				existingParameterValues.entrySet()) {
-
-			sb.append(entry.getKey());
-
-			String value = entry.getValue();
-
-			if (!_MALFORMED_PARAMETER_PLACE_HOLDER.equals(value)) {
-				sb.append(CharPool.EQUAL);
-				sb.append(value);
-			}
-
-			sb.append(CharPool.AMPERSAND);
-		}
-
-		if (!existingParameterValues.isEmpty()) {
-			sb.setIndex(sb.index() - 1);
-		}
-
-		String newURL = sb.toString();
+		String newURL = _buildURL(
+			baseURL, parameterDelimiter, existingParameterValues, urlDelimiter);
 
 		if (!Objects.equals(url, newURL) && _log.isInfoEnabled()) {
 			_log.info(
@@ -551,6 +601,14 @@ public class DataSourceFactoryUtil {
 		{"rewriteBatchedStatements", "true"}, {"serverTimezone", "GMT"},
 		{"useFastDateParsing", "false"}, {"useLocalSessionState", "true"},
 		{"useLocalTransactionState", "true"}, {"useUnicode", "true"}
+	};
+
+	private static final String[][] _POSTGRESQL_DEFAULT_PARAMETERS = {
+		{"reWriteBatchedInserts", "true"}
+	};
+
+	private static final String[][] _SQLSERVER_DEFAULT_PARAMETERS = {
+		{"useBulkCopyForBatchInsert", "true"}
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

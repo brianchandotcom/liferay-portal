@@ -18,8 +18,11 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -48,16 +51,46 @@ public class CTCollectionTemplateServiceImpl
 		throws PortalException {
 
 		_portletResourcePermission.check(
-			getPermissionChecker(), null, CTActionKeys.ADD_PUBLICATION);
+			getPermissionChecker(), null, CTActionKeys.ADD_TEMPLATE);
 
 		return ctCollectionTemplateLocalService.addCTCollectionTemplate(
 			getUserId(), name, description, json);
 	}
 
 	@Override
+	public CTCollectionTemplate deleteCTCollectionTemplate(
+			long ctCollectionTemplateId)
+		throws PortalException {
+
+		_ctCollectionTemplateModelResourcePermission.check(
+			getPermissionChecker(), ctCollectionTemplateId, ActionKeys.DELETE);
+
+		return ctCollectionTemplateLocalService.deleteCTCollectionTemplate(
+			ctCollectionTemplateId);
+	}
+
+	@Override
 	public List<CTCollectionTemplate> getCTCollectionTemplates(
 		String keywords, int start, int end,
 		OrderByComparator<CTCollectionTemplate> orderByComparator) {
+
+		try {
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			if (!permissionChecker.hasPermission(
+					null, CTCollectionTemplate.class.getName(),
+					CompanyThreadLocal.getCompanyId(), ActionKeys.VIEW)) {
+
+				return null;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 
 		String[] keywordsArray = _customSQL.keywords(
 			keywords, true, WildcardMode.SURROUND);
@@ -91,6 +124,24 @@ public class CTCollectionTemplateServiceImpl
 
 	@Override
 	public int getCTCollectionTemplatesCount(String keywords) {
+		try {
+			PermissionChecker permissionChecker = getPermissionChecker();
+
+			if (!permissionChecker.hasPermission(
+					null, CTCollectionTemplate.class.getName(),
+					CompanyThreadLocal.getCompanyId(), ActionKeys.VIEW)) {
+
+				return 0;
+			}
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return 0;
+		}
+
 		String[] keywordsArray = _customSQL.keywords(
 			keywords, true, WildcardMode.SURROUND);
 
@@ -128,6 +179,9 @@ public class CTCollectionTemplateServiceImpl
 		return ctCollectionTemplateLocalService.updateCTCollectionTemplate(
 			ctCollectionTemplateId, name, description, json);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CTCollectionTemplateServiceImpl.class);
 
 	@Reference(
 		target = "(model.class.name=com.liferay.change.tracking.model.CTCollectionTemplate)"

@@ -197,6 +197,17 @@ public class ObjectEntryFolderResourceTest
 
 	@Override
 	@Test
+	public void testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringEquals()
+		throws Exception {
+
+		super.
+			testGetScopeScopeKeyObjectEntryFoldersPageWithFilterStringEquals();
+
+		_testGetScopeScopeKeyObjectEntryFoldersPageWithFilterFolderIdAndTitle();
+	}
+
+	@Override
+	@Test
 	public void testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCode()
 		throws Exception {
 
@@ -880,6 +891,55 @@ public class ObjectEntryFolderResourceTest
 
 			_testGetObjectEntryFolderActions(false);
 		}
+	}
+
+	private void _testGetScopeScopeKeyObjectEntryFoldersPageWithFilterFolderIdAndTitle()
+		throws Exception {
+
+		String scopeKey =
+			testGetScopeScopeKeyObjectEntryFoldersPage_getScopeKey();
+
+		ObjectEntryFolder objectEntryFolder1 = randomObjectEntryFolder();
+
+		objectEntryFolder1 =
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder1);
+
+		ObjectEntryFolder objectEntryFolder2 = randomObjectEntryFolder();
+
+		objectEntryFolder2.setParentObjectEntryFolderId(
+			objectEntryFolder1.getId());
+
+		objectEntryFolder2 =
+			testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+				scopeKey, objectEntryFolder2);
+
+		ObjectEntryFolder objectEntryFolder3 = randomObjectEntryFolder();
+
+		objectEntryFolder3.setParentObjectEntryFolderId(
+			objectEntryFolder1.getId());
+
+		testGetScopeScopeKeyObjectEntryFoldersPage_addObjectEntryFolder(
+			scopeKey, objectEntryFolder3);
+
+		Page<ObjectEntryFolder> page =
+			objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+				scopeKey, null, null, null,
+				"folderId eq " + objectEntryFolder1.getId(),
+				Pagination.of(1, 10), null);
+
+		Assert.assertEquals(2, page.getTotalCount());
+
+		page = objectEntryFolderResource.getScopeScopeKeyObjectEntryFoldersPage(
+			scopeKey, null, null, null,
+			StringBundler.concat(
+				"folderId eq ", objectEntryFolder1.getId(), " and title eq '",
+				objectEntryFolder2.getTitle(), "'"),
+			Pagination.of(1, 10), null);
+
+		assertEquals(
+			Collections.singletonList(objectEntryFolder2),
+			(List<ObjectEntryFolder>)page.getItems());
 	}
 
 	private void _testPatchScopeScopeKeyObjectEntryFolderByExternalReferenceCodeWithGroupKey()

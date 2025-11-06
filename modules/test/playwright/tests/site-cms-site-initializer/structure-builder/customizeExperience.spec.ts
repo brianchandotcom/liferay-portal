@@ -235,3 +235,27 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Control menu is not shown in the page editor when customizing the experience',
+	{
+		tag: '@LPD-69912',
+	},
+	async ({page, structureBuilderPage}) => {
+
+		// Create structure
+
+		await structureBuilderPage.createStructureFromData({
+			label: `StructureName${getRandomInt()}`,
+			page: structureBuilderPage,
+		});
+
+		// Customize the experience
+
+		await structureBuilderPage.customizeExperience();
+
+		// Check the control menu is not shown
+
+		await expect(page.locator('.control-menu')).not.toBeVisible();
+	}
+);

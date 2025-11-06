@@ -188,22 +188,10 @@ public class PageElementsTestUtil {
 			classNameReference.setCollectionType(
 				CollectionReference.CollectionType.COLLECTION_PROVIDER);
 
-			TemplateListStyle templateListStyle = new TemplateListStyle();
-
-			templateListStyle.setCollectionDisplayListStyleType(
-				CollectionDisplayListStyle.CollectionDisplayListStyleType.
-					TEMPLATE);
-			templateListStyle.setListItemStyleClassName(
-				"com.liferay.asset.internal.info.renderer." +
-					"AssetEntryFullContentInfoItemRenderer");
-			templateListStyle.setListStyleClassName(
-				"com.liferay.asset.info.internal.list.renderer." +
-					"NumberedAssetEntryBasicInfoListRenderer");
-			templateListStyle.setTemplateKey(RandomTestUtil.randomString());
-
 			return new CollectionDisplayPageElementDefinition() {
 				{
-					setCollectionDisplayListStyle(templateListStyle);
+					setCollectionDisplayListStyle(
+						_getCollectionDisplayListStyle());
 					setCollectionDisplayViewports(
 						new CollectionDisplayViewport[0]);
 					setCollectionSettings(
@@ -387,6 +375,22 @@ public class PageElementsTestUtil {
 				StringPool.BLANK, position));
 
 		return pageElements.toArray(new PageElement[0]);
+	}
+
+	private static CollectionDisplayListStyle _getCollectionDisplayListStyle() {
+		TemplateListStyle templateListStyle = new TemplateListStyle();
+
+		templateListStyle.setCollectionDisplayListStyleType(
+			CollectionDisplayListStyle.CollectionDisplayListStyleType.TEMPLATE);
+		templateListStyle.setListItemStyleClassName(
+			"com.liferay.asset.internal.info.renderer." +
+				"AssetEntryFullContentInfoItemRenderer");
+		templateListStyle.setListStyleClassName(
+			"com.liferay.asset.info.internal.list.renderer." +
+				"NumberedAssetEntryBasicInfoListRenderer");
+		templateListStyle.setTemplateKey(RandomTestUtil.randomString());
+
+		return templateListStyle;
 	}
 
 	private static PageElement _getCollectionDisplayPageElement(

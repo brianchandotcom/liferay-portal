@@ -6,6 +6,8 @@
 	height: 80px;
 	justify-content: center;
 	padding: 32px 24px;
+	position: relative;
+	z-index: 1000;
 
 	.cp_footer_container {
 		align-items: center;

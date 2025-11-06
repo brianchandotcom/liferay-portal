@@ -10,6 +10,7 @@ import {
 	RangeSelector,
 	TrendClassification,
 	buildQueryString,
+	getPercentage,
 	getSafeRangeSelector,
 	getStatsColor,
 	getStatsIcon,
@@ -108,7 +109,7 @@ const ContentAndFilesCard: React.FC<IContentAndFilesCard> = ({
 					value: metrics?.tagsCount ?? 0,
 				},
 			],
-			percentage: Math.abs(metrics?.trend.percentage ?? 0),
+			percentage: getPercentage(metrics?.trend.percentage ?? 0),
 			statsColor: getStatsColor(
 				metrics?.trend.classification ?? TrendClassification.Neutral
 			),

@@ -185,7 +185,7 @@ export default function transformViewsItemProps({
 	views,
 }: ViewsItemsProps) {
 	return views.map((view) => {
-		if (view.name === 'cards') {
+		if (view.name === 'cards' || view.name === 'gallery') {
 			view.setItemComponentProps = ({
 				item,
 				props,

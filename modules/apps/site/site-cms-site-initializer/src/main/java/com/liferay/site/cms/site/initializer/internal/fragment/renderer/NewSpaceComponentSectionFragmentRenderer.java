@@ -90,7 +90,7 @@ public class NewSpaceComponentSectionFragmentRenderer
 			return LanguageUtil.get(
 				httpServletRequest,
 				"spaces-are-essential-for-organizing,-defining,-and-managing-" +
-					"your-content-and-files.-before-you-get-started-create-" +
+					"your-content-and-files.-before-you-get-started,-create-" +
 						"your-first-space");
 		}
 

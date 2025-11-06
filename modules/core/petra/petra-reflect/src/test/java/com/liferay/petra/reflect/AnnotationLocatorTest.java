@@ -248,7 +248,7 @@ public class AnnotationLocatorTest {
 		while ((clazz = queue.poll()) != null) {
 			actualClassHierarchy.add(clazz);
 
-			_QUEUE_SUPER_TYPES_METHOD.invoke(null, queue, clazz);
+			_QUEUE_SUPER_TYPES_METHOD.invoke(null, clazz, queue);
 		}
 
 		Assert.assertEquals(expectedClassHierarchy, actualClassHierarchy);
@@ -728,7 +728,7 @@ public class AnnotationLocatorTest {
 
 			java.lang.reflect.Method queueSuperTypesMethod =
 				AnnotationLocator.class.getDeclaredMethod(
-					"_queueSuperTypes", Queue.class, Class.class);
+					"_queueSuperTypes", Class.class, Queue.class);
 
 			queueSuperTypesMethod.setAccessible(true);
 

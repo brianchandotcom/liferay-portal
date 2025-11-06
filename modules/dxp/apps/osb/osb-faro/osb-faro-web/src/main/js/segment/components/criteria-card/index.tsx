@@ -1,10 +1,9 @@
-import autobind from 'autobind-decorator';
 import Card from 'shared/components/Card';
 import ClayButton from '@clayui/button';
 import CriteriaView from './CriteriaView';
 import getCN from 'classnames';
 import Label from 'shared/components/Label';
-import React from 'react';
+import React, {useState} from 'react';
 import {ReportContainer} from 'shared/components/download-report/DownloadPDFReport';
 import {Segment} from 'shared/util/records';
 import {SegmentTypes} from 'shared/util/constants';
@@ -25,98 +24,84 @@ interface ICriteriaCardState {
 	truncate: boolean;
 }
 
-class CriteriaCard extends React.Component<
-	ICriteriaCardProps,
-	ICriteriaCardState
-> {
-	state = {
+const CriteriaCard: React.FC<ICriteriaCardProps> = ({
+	criteriaString,
+	includeAnonymousUsers,
+	segment,
+	timeZoneId
+}) => {
+	const _criteriaViewRef = React.createRef<HTMLDivElement>();
+
+	const [cardState, setCardState] = useState<ICriteriaCardState>({
 		expand: false,
 		truncate: true
+	});
+
+	const hideOverflow = !cardState.expand && cardState.truncate;
+
+	const handleClick = () => {
+		setCardState({...cardState, expand: true});
 	};
 
-	private _criteriaViewRef = React.createRef<HTMLDivElement>();
-
-	componentDidMount() {
-		this.updateCriteriaTruncation();
-
-		window.addEventListener('resize', this.updateCriteriaTruncation);
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.updateCriteriaTruncation);
-	}
-
-	@autobind
-	handleClick() {
-		this.setState({expand: true});
-	}
-
-	@autobind
-	updateCriteriaTruncation() {
-		const node = this._criteriaViewRef.current;
+	const updateCriteriaTruncation = () => {
+		const node = _criteriaViewRef.current;
 
 		if (node) {
 			const {bottom} = node.getBoundingClientRect();
 
-			this.setState({
+			setCardState({
+				...cardState,
 				truncate: bottom > window.innerHeight - HEADER_MARGIN
 			});
 		}
-	}
+	};
 
-	render() {
-		const {
-			props: {criteriaString, includeAnonymousUsers, segment, timeZoneId},
-			state: {expand, truncate}
-		} = this;
+	window.addEventListener('resize', updateCriteriaTruncation);
 
-		const hideOverflow = !expand && truncate;
+	return (
+		<Card
+			className='criteria-card-root'
+			reportContainer={
+				segment.segmentType === SegmentTypes.Batch &&
+				ReportContainer.SegmentCriteriaCard
+			}
+		>
+			<Card.Header>
+				<Card.Title>
+					{Liferay.Language.get('segment-criteria')}
+				</Card.Title>
 
-		return (
-			<Card
-				className='criteria-card-root'
-				reportContainer={
-					segment.segmentType === SegmentTypes.Batch &&
-					ReportContainer.SegmentCriteriaCard
-				}
-			>
-				<Card.Header>
-					<Card.Title>
-						{Liferay.Language.get('segment-criteria')}
-					</Card.Title>
-
-					{includeAnonymousUsers && (
-						<Label display='secondary' size='lg' uppercase>
-							{Liferay.Language.get('include-anonymous')}
-						</Label>
-					)}
-				</Card.Header>
-
-				<Card.Body className={getCN({truncate: hideOverflow})}>
-					<CriteriaView
-						criteria={translateQueryToCriteria(criteriaString)}
-						ref={this._criteriaViewRef}
-						timeZoneId={timeZoneId}
-					/>
-				</Card.Body>
-
-				{hideOverflow && (
-					<div className='fade-out-cover'>
-						<div className='view-all-button-container'>
-							<ClayButton
-								className='button-root'
-								displayType='unstyled'
-								onClick={this.handleClick}
-								size='sm'
-							>
-								{Liferay.Language.get('view-all-criteria')}
-							</ClayButton>
-						</div>
-					</div>
+				{includeAnonymousUsers && (
+					<Label display='secondary' size='lg' uppercase>
+						{Liferay.Language.get('include-anonymous')}
+					</Label>
 				)}
-			</Card>
-		);
-	}
-}
+			</Card.Header>
+
+			<Card.Body className={getCN({truncate: hideOverflow})}>
+				<CriteriaView
+					criteria={translateQueryToCriteria(criteriaString)}
+					ref={_criteriaViewRef}
+					timeZoneId={timeZoneId}
+				/>
+			</Card.Body>
+
+			{hideOverflow && (
+				<div className='fade-out-cover'>
+					<div className='view-all-button-container'>
+						<ClayButton
+							className='button-root'
+							displayType='unstyled'
+							onClick={handleClick}
+							size='sm'
+						>
+							{Liferay.Language.get('view-all-criteria')}
+						</ClayButton>
+					</div>
+				</div>
+			)}
+		</Card>
+	);
+};
 
 export default withReferencedObjectsProvider(CriteriaCard);

@@ -1,6 +1,8 @@
 .dynamic-outline-container {
+	max-height: 60vh;
+	overflow: auto;
 	position: fixed;
-	z-index: 1000;
+	z-index: 100;
 
 	& > div {
 		color: var(--color-neutral-7);
@@ -8,21 +10,21 @@
 		margin-bottom: 0.75rem;
 		text-transform: uppercase;
 	}
-	
+
 	.dynamic-outline li {
 		margin-bottom: 0.75rem;
-	
+
 		a {
 			color: inherit;
 			cursor: pointer;
 			font-size: 1rem;
 			text-decoration: none;
-	
+
 			&:hover {
 				color: var(--color-action-primary-active);
 				font-weight: 600;
 			}
-	
+
 			&.active {
 				color: var(--color-action-primary-active);
 				font-weight: 600;

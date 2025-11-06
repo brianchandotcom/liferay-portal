@@ -6,6 +6,7 @@
 package com.liferay.portal.kernel.dao.db;
 
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 
 import java.io.IOException;
@@ -36,6 +37,11 @@ public interface DB {
 	public void addIndexes(
 			Connection connection, List<IndexMetadata> indexMetadatas)
 		throws IOException, SQLException;
+
+	public SafeCloseable addTemporaryIndex(
+			Connection connection, String tableName, boolean unique,
+			String... columnNames)
+		throws Exception;
 
 	public void alterColumnName(
 			Connection connection, String tableName, String oldColumnName,

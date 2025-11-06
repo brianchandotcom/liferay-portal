@@ -41,6 +41,8 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
+import com.liferay.sharing.configuration.SharingConfiguration;
+import com.liferay.sharing.configuration.SharingConfigurationFactory;
 import com.liferay.sharing.interpreter.SharingEntryInterpreter;
 import com.liferay.sharing.interpreter.SharingEntryInterpreterProvider;
 import com.liferay.sharing.model.SharingEntry;
@@ -81,12 +83,15 @@ public class SharedAssetDTOConverter
 
 	@Override
 	public SharedAsset toDTO(
-		DTOConverterContext dtoConverterContext, SharingEntry sharingEntry) {
+			DTOConverterContext dtoConverterContext, SharingEntry sharingEntry)
+		throws PortalException {
 
 		String mimeType = _getMimeType(sharingEntry);
 		SharingEntryInterpreter sharingEntryInterpreter =
 			_sharingEntryInterpreterProvider.getSharingEntryInterpreter(
 				sharingEntry);
+
+		Group group = _groupLocalService.getGroup(sharingEntry.getGroupId());
 
 		return new SharedAsset() {
 			{
@@ -156,12 +161,7 @@ public class SharedAssetDTOConverter
 				setId(sharingEntry::getSharingEntryId);
 				setShareable(sharingEntry::isShareable);
 				setSiteName(
-					() -> {
-						Group group = _groupLocalService.getGroup(
-							sharingEntry.getGroupId());
-
-						return group.getName(dtoConverterContext.getLocale());
-					});
+					() -> group.getName(dtoConverterContext.getLocale()));
 				setTitle(
 					() -> {
 						if (sharingEntryInterpreter == null) {
@@ -170,6 +170,20 @@ public class SharedAssetDTOConverter
 
 						return sharingEntryInterpreter.getTitle(
 							sharingEntry, dtoConverterContext.getLocale());
+					});
+				setVisible(
+					() -> {
+						if ((sharingEntryInterpreter == null) ||
+							!sharingEntryInterpreter.isVisible(sharingEntry)) {
+
+							return false;
+						}
+
+						SharingConfiguration groupSharingConfiguration =
+							_sharingConfigurationFactory.
+								getGroupSharingConfiguration(group);
+
+						return groupSharingConfiguration.isEnabled();
 					});
 			}
 		};
@@ -377,6 +391,9 @@ public class SharedAssetDTOConverter
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private SharingConfigurationFactory _sharingConfigurationFactory;
 
 	@Reference
 	private SharingEntryInterpreterProvider _sharingEntryInterpreterProvider;

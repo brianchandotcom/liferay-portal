@@ -20,7 +20,6 @@ import com.liferay.portal.verify.VerifyProcess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -109,7 +108,7 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 			}
 
 			List<String> tableNames = dbInspector.getTableNames(null);
-			List<String> usedTableNames = new ArrayList<>();
+			Set<String> usedTableNames = new HashSet<>();
 
 			tableNames.remove(dbInspector.normalizeName("ClassName_"));
 
@@ -131,6 +130,20 @@ public class ClassNameDataCleanupVerifyProcess extends VerifyProcess {
 						if (resultSet.next()) {
 							usedTableNames.add(tableName);
 						}
+					}
+				}
+			}
+
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						"select 1 from ResourcePermission where name = ?")) {
+
+				preparedStatement.setString(1, value);
+
+				try (ResultSet resultSet = preparedStatement.executeQuery()) {
+					if (resultSet.next()) {
+						usedTableNames.add(
+							dbInspector.normalizeName("ResourcePermission"));
 					}
 				}
 			}
